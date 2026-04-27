@@ -1,0 +1,88 @@
+import { ListCategory } from "@/types";
+
+export const SITE_NAME = "RGuide";
+export const SITE_DESCRIPTION =
+  "Discover curated Google Maps lists by continent, country, and city.";
+
+export const CATEGORIES: ListCategory[] = [
+  "Food",
+  "Nightlife",
+  "Nature",
+  "Culture",
+  "Stay",
+  "Activities",
+];
+
+export const CATEGORY_STYLES: Record<
+  ListCategory,
+  {
+    badge: string;
+    filterActive: string;
+    stopNumber: string;
+    stopDot: string;
+    mapColor: string;
+    mapGlowColor: string;
+    poiColor: string;
+  }
+> = {
+  Food: {
+    badge: "bg-amber-100 text-amber-800",
+    filterActive: "border-amber-500 bg-amber-500 text-white",
+    stopNumber: "bg-amber-500 text-white",
+    stopDot: "bg-amber-500",
+    mapColor: "#f59e0b",
+    mapGlowColor: "#fbbf24",
+    poiColor: "#b45309",
+  },
+  Nightlife: {
+    badge: "bg-indigo-100 text-indigo-800",
+    filterActive: "border-indigo-500 bg-indigo-500 text-white",
+    stopNumber: "bg-indigo-500 text-white",
+    stopDot: "bg-indigo-500",
+    mapColor: "#6366f1",
+    mapGlowColor: "#818cf8",
+    poiColor: "#4338ca",
+  },
+  Culture: {
+    badge: "bg-rose-100 text-rose-800",
+    filterActive: "border-rose-500 bg-rose-500 text-white",
+    stopNumber: "bg-rose-500 text-white",
+    stopDot: "bg-rose-500",
+    mapColor: "#f43f5e",
+    mapGlowColor: "#fb7185",
+    poiColor: "#be123c",
+  },
+  Stay: {
+    badge: "bg-sky-100 text-sky-800",
+    filterActive: "border-sky-500 bg-sky-500 text-white",
+    stopNumber: "bg-sky-500 text-white",
+    stopDot: "bg-sky-500",
+    mapColor: "#0ea5e9",
+    mapGlowColor: "#38bdf8",
+    poiColor: "#0369a1",
+  },
+  Nature: {
+    badge: "bg-emerald-100 text-emerald-800",
+    filterActive: "border-emerald-500 bg-emerald-500 text-white",
+    stopNumber: "bg-emerald-500 text-white",
+    stopDot: "bg-emerald-500",
+    mapColor: "#10b981",
+    mapGlowColor: "#34d399",
+    poiColor: "#047857",
+  },
+  Activities: {
+    badge: "bg-orange-100 text-orange-800",
+    filterActive: "border-orange-500 bg-orange-500 text-white",
+    stopNumber: "bg-orange-500 text-white",
+    stopDot: "bg-orange-500",
+    mapColor: "#f97316",
+    mapGlowColor: "#fb923c",
+    poiColor: "#c2410c",
+  },
+};
+
+export const SORT_OPTIONS = [
+  { label: "Newest", value: "newest" },
+  { label: "Most Popular", value: "most-popular" },
+  { label: "Most Upvoted", value: "most-upvoted" },
+] as const;

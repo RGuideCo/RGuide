@@ -1,0 +1,3902 @@
+{
+  "Birmingham|United States": [
+    {
+      "id": "birmingham-altadena-forest-estates",
+      "name": "Altadena Forest Estates",
+      "coordinates": [
+        33.4403851,
+        -86.7527659
+      ]
+    },
+    {
+      "id": "birmingham-altadena-ridge-estates",
+      "name": "Altadena Ridge Estates",
+      "coordinates": [
+        33.4334408,
+        -86.7466547
+      ]
+    },
+    {
+      "id": "birmingham-altadena-woods",
+      "name": "Altadena Woods",
+      "coordinates": [
+        33.4053863,
+        -86.7474878
+      ]
+    },
+    {
+      "id": "birmingham-anderson-place-historic-district",
+      "name": "Anderson Place Historic District",
+      "coordinates": [
+        33.493439,
+        -86.8005452
+      ]
+    },
+    {
+      "id": "birmingham-anns-trailer-court",
+      "name": "Anns Trailer Court",
+      "coordinates": [
+        33.384555,
+        -86.9688817
+      ]
+    },
+    {
+      "id": "birmingham-arbor-hill",
+      "name": "Arbor Hill",
+      "coordinates": [
+        33.3574083,
+        -86.8159069
+      ]
+    }
+  ],
+  "Wilmington|United States": [
+    {
+      "id": "wilmington-11th-st-bridge",
+      "name": "11th St. Bridge",
+      "coordinates": [
+        39.7430541,
+        -75.533409
+      ]
+    },
+    {
+      "id": "wilmington-9th-ward-area",
+      "name": "9th Ward Area",
+      "coordinates": [
+        39.7595924,
+        -75.5391274
+      ]
+    },
+    {
+      "id": "wilmington-academy-hill",
+      "name": "Academy Hill",
+      "coordinates": [
+        39.6511574,
+        -75.7726366
+      ]
+    },
+    {
+      "id": "wilmington-adare-village",
+      "name": "Adare Village",
+      "coordinates": [
+        39.7561764,
+        -75.7045569
+      ]
+    },
+    {
+      "id": "wilmington-andover",
+      "name": "Andover",
+      "coordinates": [
+        39.947867,
+        -75.5094357
+      ]
+    },
+    {
+      "id": "wilmington-anvil-park",
+      "name": "Anvil Park",
+      "coordinates": [
+        39.6537519,
+        -75.7747722
+      ]
+    }
+  ],
+  "Boise|United States": [
+    {
+      "id": "boise-avimor",
+      "name": "Avimor",
+      "coordinates": [
+        43.7785442,
+        -116.2555648
+      ]
+    },
+    {
+      "id": "boise-basque-block",
+      "name": "Basque Block",
+      "coordinates": [
+        43.6136884,
+        -116.2018705
+      ]
+    },
+    {
+      "id": "boise-bodo",
+      "name": "BoDo",
+      "coordinates": [
+        43.6133345,
+        -116.2057114
+      ]
+    },
+    {
+      "id": "boise-boise-heights",
+      "name": "Boise Heights",
+      "coordinates": [
+        43.6312393,
+        -116.187894
+      ]
+    },
+    {
+      "id": "boise-central-bench",
+      "name": "Central Bench",
+      "coordinates": [
+        43.597173,
+        -116.2435715
+      ]
+    },
+    {
+      "id": "boise-collister",
+      "name": "Collister",
+      "coordinates": [
+        43.6582217,
+        -116.2481757
+      ]
+    }
+  ],
+  "Indianapolis|United States": [
+    {
+      "id": "indianapolis-abney-glen",
+      "name": "Abney Glen",
+      "coordinates": [
+        39.9607774,
+        -86.2239279
+      ]
+    },
+    {
+      "id": "indianapolis-allisonville",
+      "name": "Allisonville",
+      "coordinates": [
+        39.9051174,
+        -86.0786516
+      ]
+    },
+    {
+      "id": "indianapolis-annally-downs",
+      "name": "Annally Downs",
+      "coordinates": [
+        39.9392517,
+        -86.2153314
+      ]
+    },
+    {
+      "id": "indianapolis-arrowhead-mobile-home-court",
+      "name": "Arrowhead Mobile Home Court",
+      "coordinates": [
+        39.7313946,
+        -85.8832086
+      ]
+    },
+    {
+      "id": "indianapolis-arsenal-heights",
+      "name": "Arsenal Heights",
+      "coordinates": [
+        39.7692136,
+        -86.1329098
+      ]
+    },
+    {
+      "id": "indianapolis-ashbrooke",
+      "name": "Ashbrooke",
+      "coordinates": [
+        39.935984,
+        -86.2259222
+      ]
+    }
+  ],
+  "Louisville|United States": [
+    {
+      "id": "louisville-abby-woods",
+      "name": "Abby Woods",
+      "coordinates": [
+        38.3307178,
+        -85.7219183
+      ]
+    },
+    {
+      "id": "louisville-armstrong-farms",
+      "name": "Armstrong Farms",
+      "coordinates": [
+        38.3385615,
+        -85.7241556
+      ]
+    },
+    {
+      "id": "louisville-arsitocrat-place",
+      "name": "Arsitocrat Place",
+      "coordinates": [
+        38.3184782,
+        -85.7428202
+      ]
+    },
+    {
+      "id": "louisville-beechmont",
+      "name": "Beechmont",
+      "coordinates": [
+        38.1800045,
+        -85.7700026
+      ]
+    },
+    {
+      "id": "louisville-bonnycastle-neighborhood",
+      "name": "Bonnycastle Neighborhood",
+      "coordinates": [
+        38.2328445,
+        -85.698807
+      ]
+    },
+    {
+      "id": "louisville-boulder-creek",
+      "name": "Boulder Creek",
+      "coordinates": [
+        38.3477501,
+        -85.6797799
+      ]
+    }
+  ],
+  "Portland|United States": [
+    {
+      "id": "portland-me-amari-springs",
+      "name": "Amari Springs",
+      "coordinates": [
+        43.531795,
+        -70.459012
+      ]
+    },
+    {
+      "id": "portland-me-arts-district",
+      "name": "Arts District",
+      "coordinates": [
+        43.6548931,
+        -70.2613666
+      ]
+    },
+    {
+      "id": "portland-me-babb-corner",
+      "name": "Babb Corner",
+      "coordinates": [
+        43.6298034,
+        -70.4500519
+      ]
+    },
+    {
+      "id": "portland-me-back-cove",
+      "name": "Back Cove",
+      "coordinates": [
+        43.6787604,
+        -70.2795069
+      ]
+    },
+    {
+      "id": "portland-me-baker-corner",
+      "name": "Baker Corner",
+      "coordinates": [
+        43.8247995,
+        -70.3883861
+      ]
+    },
+    {
+      "id": "portland-me-bar-mills",
+      "name": "Bar Mills",
+      "coordinates": [
+        43.6133675,
+        -70.5499318
+      ]
+    }
+  ],
+  "Jackson|United States": [
+    {
+      "id": "jackson-bates-park",
+      "name": "Bates Park",
+      "coordinates": [
+        32.27848,
+        -90.1320311
+      ]
+    },
+    {
+      "id": "jackson-mclaurin-heights",
+      "name": "McLaurin Heights",
+      "coordinates": [
+        32.2766173,
+        -90.1117908
+      ]
+    },
+    {
+      "id": "jackson-melvin-heights",
+      "name": "Melvin Heights",
+      "coordinates": [
+        32.2704247,
+        -90.1403647
+      ]
+    },
+    {
+      "id": "jackson-patton-place",
+      "name": "Patton Place",
+      "coordinates": [
+        32.2743477,
+        -90.1189693
+      ]
+    },
+    {
+      "id": "jackson-pine-park",
+      "name": "Pine Park",
+      "coordinates": [
+        32.2698691,
+        -90.1325867
+      ]
+    },
+    {
+      "id": "jackson-randall-place",
+      "name": "Randall Place",
+      "coordinates": [
+        32.2695913,
+        -90.1253643
+      ]
+    }
+  ],
+  "St. Louis|United States": [
+    {
+      "id": "st-louis-academy",
+      "name": "Academy",
+      "coordinates": [
+        38.6584211,
+        -90.2672264
+      ]
+    },
+    {
+      "id": "st-louis-arbor-terrace",
+      "name": "Arbor Terrace",
+      "coordinates": [
+        38.7000511,
+        -90.2834467
+      ]
+    },
+    {
+      "id": "st-louis-baden",
+      "name": "Baden",
+      "coordinates": [
+        38.7151961,
+        -90.2338352
+      ]
+    },
+    {
+      "id": "st-louis-ballas-estates-drive-neighborhood",
+      "name": "Ballas Estates Drive Neighborhood",
+      "coordinates": [
+        38.5987171,
+        -90.4427954
+      ]
+    },
+    {
+      "id": "st-louis-benton-park",
+      "name": "Benton Park",
+      "coordinates": [
+        38.5986775,
+        -90.2197553
+      ]
+    },
+    {
+      "id": "st-louis-benton-park-west",
+      "name": "Benton Park West",
+      "coordinates": [
+        38.5979773,
+        -90.2300147
+      ]
+    }
+  ],
+  "Billings|United States": [
+    {
+      "id": "billings-cameron-park",
+      "name": "Cameron Park",
+      "coordinates": [
+        45.7995839,
+        -108.5824771
+      ]
+    },
+    {
+      "id": "billings-copper-ridge",
+      "name": "Copper Ridge",
+      "coordinates": [
+        45.8013407,
+        -108.6845405
+      ]
+    },
+    {
+      "id": "billings-east-central",
+      "name": "East Central",
+      "coordinates": [
+        45.7695418,
+        -108.5538322
+      ]
+    },
+    {
+      "id": "billings-east-downtown",
+      "name": "East Downtown",
+      "coordinates": [
+        45.7938745,
+        -108.4856453
+      ]
+    },
+    {
+      "id": "billings-heights",
+      "name": "Heights",
+      "coordinates": [
+        45.8193049,
+        -108.4841546
+      ]
+    },
+    {
+      "id": "billings-highland",
+      "name": "Highland",
+      "coordinates": [
+        45.7917989,
+        -108.5290361
+      ]
+    }
+  ],
+  "Omaha|United States": [
+    {
+      "id": "omaha-aksarben",
+      "name": "Aksarben",
+      "coordinates": [
+        41.2415603,
+        -96.0095029
+      ]
+    },
+    {
+      "id": "omaha-aksarben-village",
+      "name": "Aksarben Village",
+      "coordinates": [
+        41.2382949,
+        -96.0133514
+      ]
+    },
+    {
+      "id": "omaha-beechwood",
+      "name": "Beechwood",
+      "coordinates": [
+        41.3248863,
+        -95.9431948
+      ]
+    },
+    {
+      "id": "omaha-benson",
+      "name": "Benson",
+      "coordinates": [
+        41.2849745,
+        -96.0071935
+      ]
+    },
+    {
+      "id": "omaha-blackstone",
+      "name": "Blackstone",
+      "coordinates": [
+        41.2578294,
+        -95.9733138
+      ]
+    },
+    {
+      "id": "omaha-cedar-grove",
+      "name": "Cedar Grove",
+      "coordinates": [
+        41.1054157,
+        -95.9901157
+      ]
+    }
+  ],
+  "Manchester|United States": [
+    {
+      "id": "manchester-amherst-village-historic-district",
+      "name": "Amherst Village Historic District",
+      "coordinates": [
+        42.8614747,
+        -71.6503494
+      ]
+    },
+    {
+      "id": "manchester-amoskeag-millyard",
+      "name": "Amoskeag Millyard",
+      "coordinates": [
+        42.992677,
+        -71.4680331
+      ]
+    },
+    {
+      "id": "manchester-bakersville",
+      "name": "Bakersville",
+      "coordinates": [
+        42.9725664,
+        -71.4630872
+      ]
+    },
+    {
+      "id": "manchester-blodgett",
+      "name": "Blodgett",
+      "coordinates": [
+        43.127042,
+        -71.454478
+      ]
+    },
+    {
+      "id": "manchester-bow-junction",
+      "name": "Bow Junction",
+      "coordinates": [
+        43.1732475,
+        -71.5262298
+      ]
+    },
+    {
+      "id": "manchester-bow-mills",
+      "name": "Bow Mills",
+      "coordinates": [
+        43.167026,
+        -71.5331266
+      ]
+    }
+  ],
+  "Newark|United States": [
+    {
+      "id": "newark-academy-heights",
+      "name": "Academy Heights",
+      "coordinates": [
+        40.7426299,
+        -74.2598646
+      ]
+    },
+    {
+      "id": "newark-albemarle-kenmore-terraces-historic-district",
+      "name": "Albemarle-Kenmore Terraces Historic District",
+      "coordinates": [
+        40.6487867,
+        -73.9592283
+      ]
+    },
+    {
+      "id": "newark-alphabet-city",
+      "name": "Alphabet City",
+      "coordinates": [
+        40.7251022,
+        -73.9795833
+      ]
+    },
+    {
+      "id": "newark-annadale",
+      "name": "Annadale",
+      "coordinates": [
+        40.5445496,
+        -74.1765324
+      ]
+    },
+    {
+      "id": "newark-arcola",
+      "name": "Arcola",
+      "coordinates": [
+        40.9261695,
+        -74.0891582
+      ]
+    },
+    {
+      "id": "newark-arlington",
+      "name": "Arlington",
+      "coordinates": [
+        40.6323257,
+        -74.1651437
+      ]
+    }
+  ],
+  "Fargo|United States": [
+    {
+      "id": "fargo-amber-plains-second-subdivision",
+      "name": "Amber Plains Second Subdivision",
+      "coordinates": [
+        46.7704057,
+        -96.8023884
+      ]
+    },
+    {
+      "id": "fargo-amber-valley",
+      "name": "Amber Valley",
+      "coordinates": [
+        46.8436636,
+        -96.8728852
+      ]
+    },
+    {
+      "id": "fargo-anderson-park",
+      "name": "Anderson Park",
+      "coordinates": [
+        46.8398525,
+        -96.8516395
+      ]
+    },
+    {
+      "id": "fargo-arbor-glen",
+      "name": "Arbor Glen",
+      "coordinates": [
+        46.8530137,
+        -96.8787942
+      ]
+    },
+    {
+      "id": "fargo-ashmoor-glen-first-addition",
+      "name": "Ashmoor Glen First Addition",
+      "coordinates": [
+        46.8799932,
+        -97.0591515
+      ]
+    },
+    {
+      "id": "fargo-bennett",
+      "name": "Bennett",
+      "coordinates": [
+        46.7960417,
+        -96.8117621
+      ]
+    }
+  ],
+  "Oklahoma City|United States": [
+    {
+      "id": "oklahoma-city-altalawn",
+      "name": "Altalawn",
+      "coordinates": [
+        35.4995477,
+        -97.4972381
+      ]
+    },
+    {
+      "id": "oklahoma-city-alvira-heights",
+      "name": "Alvira Heights",
+      "coordinates": [
+        35.5045305,
+        -97.490742
+      ]
+    },
+    {
+      "id": "oklahoma-city-apple-village",
+      "name": "Apple Village",
+      "coordinates": [
+        35.6450891,
+        -97.488136
+      ]
+    },
+    {
+      "id": "oklahoma-city-arrowhead-hills",
+      "name": "Arrowhead Hills",
+      "coordinates": [
+        35.6309775,
+        -97.4361902
+      ]
+    },
+    {
+      "id": "oklahoma-city-arrowhead-lake",
+      "name": "Arrowhead Lake",
+      "coordinates": [
+        35.6364748,
+        -97.4405204
+      ]
+    },
+    {
+      "id": "oklahoma-city-arrowhead-trails",
+      "name": "Arrowhead Trails",
+      "coordinates": [
+        35.6279636,
+        -97.431351
+      ]
+    }
+  ],
+  "Providence|United States": [
+    {
+      "id": "providence-abbott-run",
+      "name": "Abbott Run",
+      "coordinates": [
+        41.9553769,
+        -71.3889456
+      ]
+    },
+    {
+      "id": "providence-allendale",
+      "name": "Allendale",
+      "coordinates": [
+        41.8500997,
+        -71.4706149
+      ]
+    },
+    {
+      "id": "providence-annawomscutt",
+      "name": "Annawomscutt",
+      "coordinates": [
+        41.740379,
+        -71.3439413
+      ]
+    },
+    {
+      "id": "providence-apponaug-historic-district",
+      "name": "Apponaug Historic District",
+      "coordinates": [
+        41.6990157,
+        -71.4581516
+      ]
+    },
+    {
+      "id": "providence-arctic",
+      "name": "Arctic",
+      "coordinates": [
+        41.703156,
+        -71.5283945
+      ]
+    },
+    {
+      "id": "providence-arkwright",
+      "name": "Arkwright",
+      "coordinates": [
+        41.7287113,
+        -71.5483953
+      ]
+    }
+  ],
+  "Charleston|United States": [
+    {
+      "id": "charleston-sc-aquarium-wharf",
+      "name": "Aquarium Wharf",
+      "coordinates": [
+        32.7901988,
+        -79.9273402
+      ]
+    },
+    {
+      "id": "charleston-sc-ashley-acres",
+      "name": "Ashley Acres",
+      "coordinates": [
+        32.8615639,
+        -80.0542573
+      ]
+    },
+    {
+      "id": "charleston-sc-ashley-heights",
+      "name": "Ashley Heights",
+      "coordinates": [
+        32.9339382,
+        -80.0548285
+      ]
+    },
+    {
+      "id": "charleston-sc-ashley-junction",
+      "name": "Ashley Junction",
+      "coordinates": [
+        32.8690639,
+        -79.9956439
+      ]
+    },
+    {
+      "id": "charleston-sc-ashley-shores",
+      "name": "Ashley Shores",
+      "coordinates": [
+        32.8444559,
+        -79.9924029
+      ]
+    },
+    {
+      "id": "charleston-sc-ashley-villas",
+      "name": "Ashley Villas",
+      "coordinates": [
+        32.8593417,
+        -80.0523129
+      ]
+    }
+  ],
+  "Sioux Falls|United States": [
+    {
+      "id": "sioux-falls-all-saints",
+      "name": "All Saints",
+      "coordinates": [
+        43.5373384,
+        -96.7279192
+      ]
+    },
+    {
+      "id": "sioux-falls-baltic-heights",
+      "name": "Baltic Heights",
+      "coordinates": [
+        43.7646579,
+        -96.728657
+      ]
+    },
+    {
+      "id": "sioux-falls-boekhoff-subdivision",
+      "name": "Boekhoff Subdivision",
+      "coordinates": [
+        43.5433095,
+        -96.8406081
+      ]
+    },
+    {
+      "id": "sioux-falls-cactus-heights",
+      "name": "Cactus Heights",
+      "coordinates": [
+        43.5602525,
+        -96.6672703
+      ]
+    },
+    {
+      "id": "sioux-falls-canterbury-village",
+      "name": "Canterbury Village",
+      "coordinates": [
+        43.5597222,
+        -96.6600536
+      ]
+    },
+    {
+      "id": "sioux-falls-cathedral-historic-district",
+      "name": "Cathedral Historic District",
+      "coordinates": [
+        43.5531563,
+        -96.7351273
+      ]
+    }
+  ],
+  "Salt Lake City|United States": [
+    {
+      "id": "salt-lake-city-9th-9th",
+      "name": "9th & 9th",
+      "coordinates": [
+        40.7497888,
+        -111.865394
+      ]
+    },
+    {
+      "id": "salt-lake-city-alpine-meadows",
+      "name": "Alpine Meadows",
+      "coordinates": [
+        40.7057796,
+        -111.994661
+      ]
+    },
+    {
+      "id": "salt-lake-city-alta-heights",
+      "name": "Alta Heights",
+      "coordinates": [
+        40.5491153,
+        -111.8563225
+      ]
+    },
+    {
+      "id": "salt-lake-city-alta-hills",
+      "name": "Alta Hills",
+      "coordinates": [
+        40.593162,
+        -111.8029167
+      ]
+    },
+    {
+      "id": "salt-lake-city-alta-vista",
+      "name": "Alta Vista",
+      "coordinates": [
+        40.5924482,
+        -111.844655
+      ]
+    },
+    {
+      "id": "salt-lake-city-alta-vista-subdivision-number-1",
+      "name": "Alta Vista Subdivision Number 1",
+      "coordinates": [
+        40.5666153,
+        -111.817432
+      ]
+    }
+  ],
+  "Richmond|United States": [
+    {
+      "id": "richmond-abbey-village",
+      "name": "Abbey Village",
+      "coordinates": [
+        37.4885468,
+        -77.6586263
+      ]
+    },
+    {
+      "id": "richmond-addison-at-wyndham",
+      "name": "Addison at Wyndham",
+      "coordinates": [
+        37.6847241,
+        -77.5927569
+      ]
+    },
+    {
+      "id": "richmond-alexandria-station",
+      "name": "Alexandria Station",
+      "coordinates": [
+        37.5084293,
+        -77.6619721
+      ]
+    },
+    {
+      "id": "richmond-amber-forest",
+      "name": "Amber Forest",
+      "coordinates": [
+        37.4743771,
+        -77.6252618
+      ]
+    },
+    {
+      "id": "richmond-ambergate",
+      "name": "Ambergate",
+      "coordinates": [
+        37.5305583,
+        -77.616536
+      ]
+    },
+    {
+      "id": "richmond-ampt-hill",
+      "name": "Ampt Hill",
+      "coordinates": [
+        37.4518145,
+        -77.4447058
+      ]
+    }
+  ],
+  "new-york-city": [
+    {
+      "id": "new-york-city-academy-heights",
+      "name": "Academy Heights",
+      "coordinates": [
+        40.7426299,
+        -74.2598646
+      ]
+    },
+    {
+      "id": "new-york-city-albemarle-kenmore-terraces-historic-district",
+      "name": "Albemarle-Kenmore Terraces Historic District",
+      "coordinates": [
+        40.6487867,
+        -73.9592283
+      ]
+    },
+    {
+      "id": "new-york-city-alphabet-city",
+      "name": "Alphabet City",
+      "coordinates": [
+        40.7251022,
+        -73.9795833
+      ]
+    },
+    {
+      "id": "new-york-city-annadale",
+      "name": "Annadale",
+      "coordinates": [
+        40.5445496,
+        -74.1765324
+      ]
+    },
+    {
+      "id": "new-york-city-arcola",
+      "name": "Arcola",
+      "coordinates": [
+        40.9261695,
+        -74.0891582
+      ]
+    },
+    {
+      "id": "new-york-city-arlington",
+      "name": "Arlington",
+      "coordinates": [
+        40.6323257,
+        -74.1651437
+      ]
+    }
+  ],
+  "los-angeles": [
+    {
+      "id": "los-angeles-adams-square",
+      "name": "Adams Square",
+      "coordinates": [
+        34.1336193,
+        -118.241185
+      ]
+    },
+    {
+      "id": "los-angeles-alla",
+      "name": "Alla",
+      "coordinates": [
+        33.9815928,
+        -118.4296807
+      ]
+    },
+    {
+      "id": "los-angeles-alvarado-terrace-historic-district",
+      "name": "Alvarado Terrace Historic District",
+      "coordinates": [
+        34.0451045,
+        -118.2812397
+      ]
+    },
+    {
+      "id": "los-angeles-baird-park",
+      "name": "Baird Park",
+      "coordinates": [
+        34.0869544,
+        -118.1811831
+      ]
+    },
+    {
+      "id": "los-angeles-bandini",
+      "name": "Bandini",
+      "coordinates": [
+        34.00668,
+        -118.1678487
+      ]
+    },
+    {
+      "id": "los-angeles-beachwood-canyon",
+      "name": "Beachwood Canyon",
+      "coordinates": [
+        34.1222919,
+        -118.3213845
+      ]
+    }
+  ],
+  "chicago": [
+    {
+      "id": "chicago-altgeld-gardens",
+      "name": "Altgeld Gardens",
+      "coordinates": [
+        41.6553312,
+        -87.6002295
+      ]
+    },
+    {
+      "id": "chicago-andersonville",
+      "name": "Andersonville",
+      "coordinates": [
+        41.979857,
+        -87.6682752
+      ]
+    },
+    {
+      "id": "chicago-andrews-and-hurds-subdivision",
+      "name": "Andrews and Hurds Subdivision",
+      "coordinates": [
+        41.6667011,
+        -87.6319916
+      ]
+    },
+    {
+      "id": "chicago-arcade-row",
+      "name": "Arcade Row",
+      "coordinates": [
+        41.6905901,
+        -87.6092136
+      ]
+    },
+    {
+      "id": "chicago-arcadia-terrace",
+      "name": "Arcadia Terrace",
+      "coordinates": [
+        41.9868088,
+        -87.6944016
+      ]
+    },
+    {
+      "id": "chicago-archer-limits",
+      "name": "Archer Limits",
+      "coordinates": [
+        41.8061435,
+        -87.7494991
+      ]
+    }
+  ],
+  "houston": [
+    {
+      "id": "houston-afton-oaks",
+      "name": "Afton Oaks",
+      "coordinates": [
+        29.7363773,
+        -95.4537249
+      ]
+    },
+    {
+      "id": "houston-airline",
+      "name": "Airline",
+      "coordinates": [
+        29.8903337,
+        -95.3943036
+      ]
+    },
+    {
+      "id": "houston-alabama-place",
+      "name": "Alabama Place",
+      "coordinates": [
+        29.7368431,
+        -95.4140711
+      ]
+    },
+    {
+      "id": "houston-almeda",
+      "name": "Almeda",
+      "coordinates": [
+        29.604122,
+        -95.4171624
+      ]
+    },
+    {
+      "id": "houston-amber-wood",
+      "name": "Amber Wood",
+      "coordinates": [
+        29.9255619,
+        -95.2816629
+      ]
+    },
+    {
+      "id": "houston-arbor-vineyard",
+      "name": "Arbor Vineyard",
+      "coordinates": [
+        29.907239,
+        -95.5491608
+      ]
+    }
+  ],
+  "phoenix": [
+    {
+      "id": "phoenix-5th-avenue-shops-boutiques",
+      "name": "5th Avenue Shops & Boutiques",
+      "coordinates": [
+        33.4975779,
+        -111.9281858
+      ]
+    },
+    {
+      "id": "phoenix-a-1-trailer-park",
+      "name": "A-1 Trailer Park",
+      "coordinates": [
+        33.4486554,
+        -112.0090352
+      ]
+    },
+    {
+      "id": "phoenix-aderra",
+      "name": "Aderra",
+      "coordinates": [
+        33.594053,
+        -111.981722
+      ]
+    },
+    {
+      "id": "phoenix-alamar",
+      "name": "Alamar",
+      "coordinates": [
+        33.404368,
+        -112.3233991
+      ]
+    },
+    {
+      "id": "phoenix-alta-mira",
+      "name": "Alta Mira",
+      "coordinates": [
+        33.3301896,
+        -111.906065
+      ]
+    },
+    {
+      "id": "phoenix-alta-mira-at-rancho-santa-fe",
+      "name": "Alta Mira at Rancho Santa Fe",
+      "coordinates": [
+        33.4704252,
+        -112.328114
+      ]
+    }
+  ],
+  "philadelphia": [
+    {
+      "id": "philadelphia-abbotsford-homes",
+      "name": "Abbotsford Homes",
+      "coordinates": [
+        40.0134455,
+        -75.1746224
+      ]
+    },
+    {
+      "id": "philadelphia-academy-garden",
+      "name": "Academy Garden",
+      "coordinates": [
+        40.063016,
+        -75.0097774
+      ]
+    },
+    {
+      "id": "philadelphia-academyville",
+      "name": "Academyville",
+      "coordinates": [
+        40.010668,
+        -75.242681
+      ]
+    },
+    {
+      "id": "philadelphia-allegheny-west",
+      "name": "Allegheny West",
+      "coordinates": [
+        40.0084457,
+        -75.1779559
+      ]
+    },
+    {
+      "id": "philadelphia-allen-lane",
+      "name": "Allen Lane",
+      "coordinates": [
+        40.0565002,
+        -75.1974001
+      ]
+    },
+    {
+      "id": "philadelphia-alluvium",
+      "name": "Alluvium",
+      "coordinates": [
+        39.8347395,
+        -74.9435761
+      ]
+    }
+  ],
+  "san-antonio": [
+    {
+      "id": "san-antonio-alta-vista",
+      "name": "Alta Vista",
+      "coordinates": [
+        29.4556947,
+        -98.5028091
+      ]
+    },
+    {
+      "id": "san-antonio-amhurst",
+      "name": "Amhurst",
+      "coordinates": [
+        29.4236038,
+        -98.7240917
+      ]
+    },
+    {
+      "id": "san-antonio-arrowhead",
+      "name": "Arrowhead",
+      "coordinates": [
+        29.6415002,
+        -98.4963485
+      ]
+    },
+    {
+      "id": "san-antonio-arsenal",
+      "name": "Arsenal",
+      "coordinates": [
+        29.4179129,
+        -98.4953854
+      ]
+    },
+    {
+      "id": "san-antonio-austin-grant",
+      "name": "Austin Grant",
+      "coordinates": [
+        29.4690963,
+        -98.7384254
+      ]
+    },
+    {
+      "id": "san-antonio-bavarian-forest",
+      "name": "Bavarian Forest",
+      "coordinates": [
+        29.5662969,
+        -98.6578894
+      ]
+    }
+  ],
+  "dallas": [
+    {
+      "id": "dallas-arts-district",
+      "name": "Arts District",
+      "coordinates": [
+        32.7883249,
+        -96.7993474
+      ]
+    },
+    {
+      "id": "dallas-asian-trade-district",
+      "name": "Asian Trade District",
+      "coordinates": [
+        32.8956326,
+        -96.8912794
+      ]
+    },
+    {
+      "id": "dallas-beltline-ashmoore",
+      "name": "Beltline Ashmoore",
+      "coordinates": [
+        32.5931714,
+        -96.7936342
+      ]
+    },
+    {
+      "id": "dallas-bishop-arts-district",
+      "name": "Bishop Arts District",
+      "coordinates": [
+        32.7493336,
+        -96.8278997
+      ]
+    },
+    {
+      "id": "dallas-bonton",
+      "name": "Bonton",
+      "coordinates": [
+        32.7456501,
+        -96.7502039
+      ]
+    },
+    {
+      "id": "dallas-cypress-waters",
+      "name": "Cypress Waters",
+      "coordinates": [
+        32.9293547,
+        -96.9816184
+      ]
+    }
+  ],
+  "jacksonville": [
+    {
+      "id": "jacksonville-admirals-inlet",
+      "name": "Admirals Inlet",
+      "coordinates": [
+        30.1748934,
+        -81.6413422
+      ]
+    },
+    {
+      "id": "jacksonville-alexander-pointe",
+      "name": "Alexander Pointe",
+      "coordinates": [
+        30.1607139,
+        -81.7502318
+      ]
+    },
+    {
+      "id": "jacksonville-avondale",
+      "name": "Avondale",
+      "coordinates": [
+        30.304406,
+        -81.7112086
+      ]
+    },
+    {
+      "id": "jacksonville-belle-rive",
+      "name": "Belle Rive",
+      "coordinates": [
+        30.2082019,
+        -81.5569153
+      ]
+    },
+    {
+      "id": "jacksonville-brentwood",
+      "name": "Brentwood",
+      "coordinates": [
+        30.3669053,
+        -81.6601922
+      ]
+    },
+    {
+      "id": "jacksonville-brooklyn",
+      "name": "Brooklyn",
+      "coordinates": [
+        30.3215926,
+        -81.6738715
+      ]
+    }
+  ],
+  "toronto": [
+    {
+      "id": "toronto-agincourt",
+      "name": "Agincourt",
+      "coordinates": [
+        43.7853531,
+        -79.2785494
+      ]
+    },
+    {
+      "id": "toronto-agincourt-centre",
+      "name": "Agincourt Centre",
+      "coordinates": [
+        43.783285,
+        -79.2882576
+      ]
+    },
+    {
+      "id": "toronto-agincourt-north",
+      "name": "Agincourt North",
+      "coordinates": [
+        43.8080383,
+        -79.2664391
+      ]
+    },
+    {
+      "id": "toronto-airport-corporate-centre",
+      "name": "Airport Corporate Centre",
+      "coordinates": [
+        43.6566749,
+        -79.6034622
+      ]
+    },
+    {
+      "id": "toronto-alderwood",
+      "name": "Alderwood",
+      "coordinates": [
+        43.6017173,
+        -79.5452325
+      ]
+    },
+    {
+      "id": "toronto-alexandra-park",
+      "name": "Alexandra Park",
+      "coordinates": [
+        43.6503798,
+        -79.40162
+      ]
+    }
+  ],
+  "vancouver": [
+    {
+      "id": "vancouver-aberdeen-village",
+      "name": "Aberdeen Village",
+      "coordinates": [
+        49.1820612,
+        -123.1334365
+      ]
+    },
+    {
+      "id": "vancouver-alexandra",
+      "name": "Alexandra",
+      "coordinates": [
+        49.1809476,
+        -123.1190795
+      ]
+    },
+    {
+      "id": "vancouver-altamont",
+      "name": "Altamont",
+      "coordinates": [
+        49.3430929,
+        -123.201754
+      ]
+    },
+    {
+      "id": "vancouver-barnet",
+      "name": "Barnet",
+      "coordinates": [
+        49.2907612,
+        -122.9312839
+      ]
+    },
+    {
+      "id": "vancouver-belvedere",
+      "name": "Belvedere",
+      "coordinates": [
+        49.3324417,
+        -122.8924687
+      ]
+    },
+    {
+      "id": "vancouver-big-bend",
+      "name": "Big Bend",
+      "coordinates": [
+        49.1988827,
+        -122.9872878
+      ]
+    }
+  ],
+  "mexico-city": [
+    {
+      "id": "mexico-city-1a-secci-n-del-bosque-de-chapultepec",
+      "name": "1a. Sección del Bosque de Chapultepec",
+      "coordinates": [
+        19.4218002,
+        -99.1881929
+      ]
+    },
+    {
+      "id": "mexico-city-1ra-ampliaci-n-santiago-acahualtepec",
+      "name": "1ra Ampliación Santiago Acahualtepec",
+      "coordinates": [
+        19.3523187,
+        -99.0106074
+      ]
+    },
+    {
+      "id": "mexico-city-24-de-abril",
+      "name": "24 de Abril",
+      "coordinates": [
+        19.4163154,
+        -99.1165178
+      ]
+    },
+    {
+      "id": "mexico-city-2a-ampliaci-n-barrio-san-miguel-san-felipe-terremotes",
+      "name": "2a. Ampliación Barrio San Miguel (San Felipe Terremotes)",
+      "coordinates": [
+        19.3510823,
+        -99.071332
+      ]
+    },
+    {
+      "id": "mexico-city-2a-secci-n-del-bosque-de-chapultepec",
+      "name": "2a. Sección del Bosque de Chapultepec",
+      "coordinates": [
+        19.4126439,
+        -99.2038347
+      ]
+    },
+    {
+      "id": "mexico-city-2da-ampliaci-n-santiago-acahualtepec",
+      "name": "2da Ampliación Santiago Acahualtepec",
+      "coordinates": [
+        19.3485501,
+        -99.0136191
+      ]
+    }
+  ],
+  "guadalajara": [
+    {
+      "id": "guadalajara-12-de-diciembre",
+      "name": "12 de Diciembre",
+      "coordinates": [
+        20.6471147,
+        -103.4616542
+      ]
+    },
+    {
+      "id": "guadalajara-1o-de-mayo",
+      "name": "1o de Mayo",
+      "coordinates": [
+        20.6175886,
+        -103.3616514
+      ]
+    },
+    {
+      "id": "guadalajara-27-de-septiembre",
+      "name": "27 de Septiembre",
+      "coordinates": [
+        20.726587,
+        -103.3603318
+      ]
+    },
+    {
+      "id": "guadalajara-4-estaciones-valle-dorado",
+      "name": "4 Estaciones Valle Dorado",
+      "coordinates": [
+        20.5197674,
+        -103.3609302
+      ]
+    },
+    {
+      "id": "guadalajara-5-de-mayo-1a-secci-n",
+      "name": "5 de Mayo 1a. Sección",
+      "coordinates": [
+        20.6182514,
+        -103.3577032
+      ]
+    },
+    {
+      "id": "guadalajara-5-de-mayo-2a-secci-n",
+      "name": "5 de Mayo 2a. Sección",
+      "coordinates": [
+        20.6235332,
+        -103.3562226
+      ]
+    }
+  ],
+  "rio-de-janeiro": [
+    {
+      "id": "rio-de-janeiro-argentino",
+      "name": "Argentino",
+      "coordinates": [
+        -22.834835,
+        -43.3078158
+      ]
+    },
+    {
+      "id": "rio-de-janeiro-arpoador",
+      "name": "Arpoador",
+      "coordinates": [
+        -22.9885801,
+        -43.1916762
+      ]
+    },
+    {
+      "id": "rio-de-janeiro-bairro-ara-jo",
+      "name": "Bairro Araújo",
+      "coordinates": [
+        -22.8244861,
+        -43.3213454
+      ]
+    },
+    {
+      "id": "rio-de-janeiro-bairro-peixoto",
+      "name": "Bairro Peixoto",
+      "coordinates": [
+        -22.9665791,
+        -43.1903709
+      ]
+    },
+    {
+      "id": "rio-de-janeiro-baixa-do-sapateiro",
+      "name": "Baixa do Sapateiro",
+      "coordinates": [
+        -22.8615417,
+        -43.2423859
+      ]
+    },
+    {
+      "id": "rio-de-janeiro-barro",
+      "name": "Barro",
+      "coordinates": [
+        -22.962649,
+        -43.1906524
+      ]
+    }
+  ],
+  "sao-paulo": [
+    {
+      "id": "sao-paulo-alpes-da-cantareira",
+      "name": "Alpes da Cantareira",
+      "coordinates": [
+        -23.4098146,
+        -46.6505242
+      ]
+    },
+    {
+      "id": "sao-paulo-alto-da-lapa",
+      "name": "Alto da Lapa",
+      "coordinates": [
+        -23.5273913,
+        -46.7130594
+      ]
+    },
+    {
+      "id": "sao-paulo-altos-da-cantareira",
+      "name": "Altos da Cantareira",
+      "coordinates": [
+        -23.4221802,
+        -46.6505885
+      ]
+    },
+    {
+      "id": "sao-paulo-bairro-da-gl-ria",
+      "name": "Bairro da Glória",
+      "coordinates": [
+        -23.669731,
+        -46.5238005
+      ]
+    },
+    {
+      "id": "sao-paulo-beverly-hills-park",
+      "name": "Beverly Hills Park",
+      "coordinates": [
+        -23.4069199,
+        -46.6411257
+      ]
+    },
+    {
+      "id": "sao-paulo-campos-da-cantareira",
+      "name": "Campos da Cantareira",
+      "coordinates": [
+        -23.3789152,
+        -46.639731
+      ]
+    }
+  ],
+  "buenos-aires": [
+    {
+      "id": "buenos-aires-17-de-noviembre-o-campo-tongui",
+      "name": "17 de noviembre o Campo Tongui",
+      "coordinates": [
+        -34.7253199,
+        -58.4545174
+      ]
+    },
+    {
+      "id": "buenos-aires-9-de-julio",
+      "name": "9 de Julio",
+      "coordinates": [
+        -34.5605116,
+        -58.5686659
+      ]
+    },
+    {
+      "id": "buenos-aires-abasto",
+      "name": "Abasto",
+      "coordinates": [
+        -34.6037283,
+        -58.4125926
+      ]
+    },
+    {
+      "id": "buenos-aires-alas",
+      "name": "Alas",
+      "coordinates": [
+        -34.7324807,
+        -58.5334829
+      ]
+    },
+    {
+      "id": "buenos-aires-alto-palermo",
+      "name": "Alto Palermo",
+      "coordinates": [
+        -34.5866184,
+        -58.4132086
+      ]
+    },
+    {
+      "id": "buenos-aires-asentamiento-el-campito",
+      "name": "Asentamiento El Campito",
+      "coordinates": [
+        -34.6482271,
+        -58.4221632
+      ]
+    }
+  ],
+  "mendoza": [
+    {
+      "id": "mendoza-13-de-diciembre",
+      "name": "13 de Diciembre",
+      "coordinates": [
+        -33.0361533,
+        -68.8913757
+      ]
+    },
+    {
+      "id": "mendoza-30-de-octubre",
+      "name": "30 de Octubre",
+      "coordinates": [
+        -32.8448039,
+        -68.8139189
+      ]
+    },
+    {
+      "id": "mendoza-altos-de-vistalba",
+      "name": "Altos De Vistalba",
+      "coordinates": [
+        -33.0261882,
+        -68.9018397
+      ]
+    },
+    {
+      "id": "mendoza-amtaga-ii",
+      "name": "Amtaga II",
+      "coordinates": [
+        -32.8480728,
+        -68.8571524
+      ]
+    },
+    {
+      "id": "mendoza-aoma",
+      "name": "AOMA",
+      "coordinates": [
+        -33.01055,
+        -68.7997701
+      ]
+    },
+    {
+      "id": "mendoza-arenas-raffo",
+      "name": "Arenas Raffo",
+      "coordinates": [
+        -32.956956,
+        -68.7119651
+      ]
+    }
+  ],
+  "bogota": [
+    {
+      "id": "bogota-7-de-agosto",
+      "name": "7 de Agosto",
+      "coordinates": [
+        4.6586107,
+        -74.0734494
+      ]
+    },
+    {
+      "id": "bogota-abraham-lincoln",
+      "name": "Abraham Lincoln",
+      "coordinates": [
+        4.5575302,
+        -74.1236931
+      ]
+    },
+    {
+      "id": "bogota-aguas-claras",
+      "name": "Aguas Claras",
+      "coordinates": [
+        4.5599502,
+        -74.0679473
+      ]
+    },
+    {
+      "id": "bogota-alameda-del-parque",
+      "name": "Alameda del Parque",
+      "coordinates": [
+        4.60426,
+        -74.201948
+      ]
+    },
+    {
+      "id": "bogota-lamos-norte",
+      "name": "Álamos Norte",
+      "coordinates": [
+        4.7034413,
+        -74.1167135
+      ]
+    },
+    {
+      "id": "bogota-lamos-sur",
+      "name": "Álamos Sur",
+      "coordinates": [
+        4.6903918,
+        -74.1128997
+      ]
+    }
+  ],
+  "medellin": [
+    {
+      "id": "medellin-alameda",
+      "name": "Alameda",
+      "coordinates": [
+        6.2352271,
+        -75.5948124
+      ]
+    },
+    {
+      "id": "medellin-aldea-pablo-vi",
+      "name": "Aldea Pablo VI",
+      "coordinates": [
+        6.2882866,
+        -75.5420673
+      ]
+    },
+    {
+      "id": "medellin-alejandr-a",
+      "name": "Alejandría",
+      "coordinates": [
+        6.199969,
+        -75.5689736
+      ]
+    },
+    {
+      "id": "medellin-alejandro-echavarr-a",
+      "name": "Alejandro Echavarría",
+      "coordinates": [
+        6.23877,
+        -75.5463481
+      ]
+    },
+    {
+      "id": "medellin-alfonso-l-pez",
+      "name": "Alfonso López",
+      "coordinates": [
+        6.284893,
+        -75.576009
+      ]
+    },
+    {
+      "id": "medellin-altamira",
+      "name": "Altamira",
+      "coordinates": [
+        6.2798278,
+        -75.5813526
+      ]
+    }
+  ],
+  "paris": [
+    {
+      "id": "paris-agro-quartier-de-montjean",
+      "name": "Agro-Quartier de Montjean",
+      "coordinates": [
+        48.7456395,
+        2.3449068
+      ]
+    },
+    {
+      "id": "paris-allende",
+      "name": "Allende",
+      "coordinates": [
+        48.9434457,
+        2.3655129
+      ]
+    },
+    {
+      "id": "paris-amblainvilliers",
+      "name": "Amblainvilliers",
+      "coordinates": [
+        48.7388697,
+        2.2419254
+      ]
+    },
+    {
+      "id": "paris-ancienne-chocolaterie-menier",
+      "name": "Ancienne Chocolaterie Menier",
+      "coordinates": [
+        48.8570361,
+        2.6223815
+      ]
+    },
+    {
+      "id": "paris-avenir-parisien",
+      "name": "Avenir Parisien",
+      "coordinates": [
+        48.9231214,
+        2.4192195
+      ]
+    },
+    {
+      "id": "paris-barb-s",
+      "name": "Barbès",
+      "coordinates": [
+        48.8839388,
+        2.3493707
+      ]
+    }
+  ],
+  "lyon": [
+    {
+      "id": "lyon-amancey",
+      "name": "Amancey",
+      "coordinates": [
+        45.8712835,
+        4.6401787
+      ]
+    },
+    {
+      "id": "lyon-aux-vicards",
+      "name": "Aux Vicards",
+      "coordinates": [
+        45.9071102,
+        4.8276973
+      ]
+    },
+    {
+      "id": "lyon-balmont",
+      "name": "Balmont",
+      "coordinates": [
+        45.9381685,
+        4.8093884
+      ]
+    },
+    {
+      "id": "lyon-batailly",
+      "name": "Batailly",
+      "coordinates": [
+        45.8716205,
+        4.7000639
+      ]
+    },
+    {
+      "id": "lyon-beaunant",
+      "name": "Beaunant",
+      "coordinates": [
+        45.7164429,
+        4.7818959
+      ]
+    },
+    {
+      "id": "lyon-bel-air-1",
+      "name": "Bel Air 1",
+      "coordinates": [
+        45.6926142,
+        4.9497555
+      ]
+    }
+  ],
+  "rome": [
+    {
+      "id": "rome-acqua-acetosa",
+      "name": "Acqua Acetosa",
+      "coordinates": [
+        41.9361393,
+        12.4906921
+      ]
+    },
+    {
+      "id": "rome-balduina",
+      "name": "Balduina",
+      "coordinates": [
+        41.9202104,
+        12.4420089
+      ]
+    },
+    {
+      "id": "rome-belpoggio",
+      "name": "Belpoggio",
+      "coordinates": [
+        41.9931533,
+        12.5199218
+      ]
+    },
+    {
+      "id": "rome-borgo-dei-massimi",
+      "name": "Borgo dei Massimi",
+      "coordinates": [
+        41.8428459,
+        12.3886018
+      ]
+    },
+    {
+      "id": "rome-capannelle",
+      "name": "Capannelle",
+      "coordinates": [
+        41.8287865,
+        12.5668267
+      ]
+    },
+    {
+      "id": "rome-casal-bruciato",
+      "name": "Casal Bruciato",
+      "coordinates": [
+        41.9097937,
+        12.5505298
+      ]
+    }
+  ],
+  "milan": [
+    {
+      "id": "milan-abbadesse",
+      "name": "Abbadesse",
+      "coordinates": [
+        45.4900958,
+        9.1959507
+      ]
+    },
+    {
+      "id": "milan-assiano",
+      "name": "Assiano",
+      "coordinates": [
+        45.4544167,
+        9.0584739
+      ]
+    },
+    {
+      "id": "milan-battiloca",
+      "name": "Battiloca",
+      "coordinates": [
+        45.5620201,
+        9.1506679
+      ]
+    },
+    {
+      "id": "milan-belgioioso",
+      "name": "Belgioioso",
+      "coordinates": [
+        45.5222424,
+        9.1047957
+      ]
+    },
+    {
+      "id": "milan-birona",
+      "name": "Birona",
+      "coordinates": [
+        45.5970009,
+        9.2507138
+      ]
+    },
+    {
+      "id": "milan-bolgiano",
+      "name": "Bolgiano",
+      "coordinates": [
+        45.4212633,
+        9.2780524
+      ]
+    }
+  ],
+  "barcelona": [
+    {
+      "id": "barcelona-25-de-setembre",
+      "name": "25 de Setembre",
+      "coordinates": [
+        41.4840518,
+        2.0390689
+      ]
+    },
+    {
+      "id": "barcelona-almeda",
+      "name": "Almeda",
+      "coordinates": [
+        41.3528061,
+        2.0875999
+      ]
+    },
+    {
+      "id": "barcelona-ngela-roca",
+      "name": "Àngela Roca",
+      "coordinates": [
+        41.3017732,
+        2.0048721
+      ]
+    },
+    {
+      "id": "barcelona-aqualonga",
+      "name": "Aqualonga",
+      "coordinates": [
+        41.4570892,
+        2.0502079
+      ]
+    },
+    {
+      "id": "barcelona-artigues",
+      "name": "Artigues",
+      "coordinates": [
+        41.4339314,
+        2.2202393
+      ]
+    },
+    {
+      "id": "barcelona-arxiu",
+      "name": "Arxiu",
+      "coordinates": [
+        41.4641159,
+        2.0696535
+      ]
+    }
+  ],
+  "madrid": [
+    {
+      "id": "madrid-altamira",
+      "name": "Altamira",
+      "coordinates": [
+        40.4742623,
+        -3.7051047
+      ]
+    },
+    {
+      "id": "madrid-asentamiento-chabolista",
+      "name": "Asentamiento chabolista",
+      "coordinates": [
+        40.350448,
+        -3.7470916
+      ]
+    },
+    {
+      "id": "madrid-barranco-crinche",
+      "name": "Barranco Crinche",
+      "coordinates": [
+        40.3276905,
+        -3.8330103
+      ]
+    },
+    {
+      "id": "madrid-barrio-de-la-latina",
+      "name": "Barrio de la Latina",
+      "coordinates": [
+        40.4123753,
+        -3.7110551
+      ]
+    },
+    {
+      "id": "madrid-barrio-de-la-pradera",
+      "name": "Barrio de la Pradera",
+      "coordinates": [
+        40.4006494,
+        -3.7227637
+      ]
+    },
+    {
+      "id": "madrid-barrio-de-las-letras",
+      "name": "Barrio de las Letras",
+      "coordinates": [
+        40.4152686,
+        -3.7008917
+      ]
+    }
+  ],
+  "lisbon": [
+    {
+      "id": "lisbon-abelheira",
+      "name": "Abelheira",
+      "coordinates": [
+        38.8281335,
+        -9.2965718
+      ]
+    },
+    {
+      "id": "lisbon-ab-boda",
+      "name": "Abóboda",
+      "coordinates": [
+        38.7292128,
+        -9.3274688
+      ]
+    },
+    {
+      "id": "lisbon-afonsoeiro",
+      "name": "Afonsoeiro",
+      "coordinates": [
+        38.6987433,
+        -8.9532352
+      ]
+    },
+    {
+      "id": "lisbon-lamo",
+      "name": "Álamo",
+      "coordinates": [
+        38.6356121,
+        -9.0920878
+      ]
+    },
+    {
+      "id": "lisbon-alcani-a",
+      "name": "Alcaniça",
+      "coordinates": [
+        38.6666123,
+        -9.1859861
+      ]
+    },
+    {
+      "id": "lisbon-aldeia-de-santa-isabel",
+      "name": "Aldeia de Santa Isabel",
+      "coordinates": [
+        38.7665293,
+        -9.3479684
+      ]
+    }
+  ],
+  "porto": [
+    {
+      "id": "porto-abo-nha",
+      "name": "Aboínha",
+      "coordinates": [
+        41.1211498,
+        -8.543358
+      ]
+    },
+    {
+      "id": "porto-agra",
+      "name": "Agra",
+      "coordinates": [
+        41.213385,
+        -8.5942307
+      ]
+    },
+    {
+      "id": "porto-agra-do-amial",
+      "name": "Agra do Amial",
+      "coordinates": [
+        41.1765025,
+        -8.6092342
+      ]
+    },
+    {
+      "id": "porto-agramonte",
+      "name": "Agramonte",
+      "coordinates": [
+        41.1568272,
+        -8.6314005
+      ]
+    },
+    {
+      "id": "porto-agrupamento-habitacional-da-pasteleira",
+      "name": "Agrupamento Habitacional da Pasteleira",
+      "coordinates": [
+        41.1529917,
+        -8.657056
+      ]
+    },
+    {
+      "id": "porto-agrupamento-habitacional-das-condominhas",
+      "name": "Agrupamento Habitacional das Condominhas",
+      "coordinates": [
+        41.1520937,
+        -8.650498
+      ]
+    }
+  ],
+  "marrakesh": [
+    {
+      "id": "marrakesh-agdal",
+      "name": "Agdal",
+      "coordinates": [
+        31.594399,
+        -7.994835
+      ]
+    },
+    {
+      "id": "marrakesh-al-fadel",
+      "name": "Al Fadel",
+      "coordinates": [
+        31.6775717,
+        -8.0242961
+      ]
+    },
+    {
+      "id": "marrakesh-alhadika-lahna",
+      "name": "Alhadika Lahna",
+      "coordinates": [
+        31.5704754,
+        -7.9855934
+      ]
+    },
+    {
+      "id": "marrakesh-ambre-marrekesch-gold-city",
+      "name": "Ambre Marrekesch Gold City",
+      "coordinates": [
+        31.602118,
+        -8.0032416
+      ]
+    },
+    {
+      "id": "marrakesh-amerchich",
+      "name": "Amerchich",
+      "coordinates": [
+        31.6695899,
+        -8.0044112
+      ]
+    },
+    {
+      "id": "marrakesh-assif",
+      "name": "Assif",
+      "coordinates": [
+        31.6543389,
+        -8.0056702
+      ]
+    }
+  ],
+  "casablanca": [
+    {
+      "id": "casablanca-ahl-assalam",
+      "name": "Ahl Assalam",
+      "coordinates": [
+        33.5851845,
+        -7.4798982
+      ]
+    },
+    {
+      "id": "casablanca-a-n-chifaa",
+      "name": "Aîn-Chifaa",
+      "coordinates": [
+        33.5708833,
+        -7.5844916
+      ]
+    },
+    {
+      "id": "casablanca-al-quds",
+      "name": "Al Quds",
+      "coordinates": [
+        33.5376217,
+        -7.6689929
+      ]
+    },
+    {
+      "id": "casablanca-almaz",
+      "name": "Almaz ألماز",
+      "coordinates": [
+        33.508014,
+        -7.6852231
+      ]
+    },
+    {
+      "id": "casablanca-anassi",
+      "name": "Anassi",
+      "coordinates": [
+        33.5909369,
+        -7.491909
+      ]
+    },
+    {
+      "id": "casablanca-anfa-a-ropostale",
+      "name": "Anfa Aéropostale",
+      "coordinates": [
+        33.5594236,
+        -7.6679458
+      ]
+    }
+  ],
+  "cape-town": [
+    {
+      "id": "cape-town-blouberg-hill-estate",
+      "name": "Blouberg Hill Estate",
+      "coordinates": [
+        -33.7863081,
+        18.4621256
+      ]
+    },
+    {
+      "id": "cape-town-bremerhof",
+      "name": "Bremerhof",
+      "coordinates": [
+        -33.894776,
+        18.6065347
+      ]
+    },
+    {
+      "id": "cape-town-century-place",
+      "name": "Century Place",
+      "coordinates": [
+        -33.8932277,
+        18.5028099
+      ]
+    },
+    {
+      "id": "cape-town-de-waterkant",
+      "name": "De Waterkant",
+      "coordinates": [
+        -33.9151142,
+        18.4188855
+      ]
+    },
+    {
+      "id": "cape-town-deuvil-s-peak-estate",
+      "name": "Deuvil's Peak Estate",
+      "coordinates": [
+        -33.9375728,
+        18.4290145
+      ]
+    },
+    {
+      "id": "cape-town-dune-ridge-estate-1-2",
+      "name": "Dune Ridge Estate 1 & 2",
+      "coordinates": [
+        -33.7956598,
+        18.4649943
+      ]
+    }
+  ],
+  "johannesburg": [
+    {
+      "id": "johannesburg-eagle-canyon-golf-estate",
+      "name": "Eagle Canyon Golf Estate",
+      "coordinates": [
+        -26.0869778,
+        27.9230371
+      ]
+    },
+    {
+      "id": "johannesburg-maboneng-precinct",
+      "name": "Maboneng Precinct",
+      "coordinates": [
+        -26.2035757,
+        28.0599517
+      ]
+    },
+    {
+      "id": "johannesburg-opmekaar",
+      "name": "Opmekaar",
+      "coordinates": [
+        -26.2345663,
+        28.2185448
+      ]
+    },
+    {
+      "id": "johannesburg-summit-village",
+      "name": "Summit Village",
+      "coordinates": [
+        -26.1493606,
+        27.8883207
+      ]
+    },
+    {
+      "id": "johannesburg-abbotsford",
+      "name": "Abbotsford",
+      "coordinates": [
+        -26.1431769,
+        28.0684413
+      ]
+    },
+    {
+      "id": "johannesburg-abmarie-ah",
+      "name": "Abmarie AH",
+      "coordinates": [
+        -26.336423,
+        28.0133365
+      ]
+    }
+  ],
+  "nairobi": [
+    {
+      "id": "nairobi-72-estates",
+      "name": "72 Estates",
+      "coordinates": [
+        -1.2091958,
+        36.8224694
+      ]
+    },
+    {
+      "id": "nairobi-accra-court",
+      "name": "Accra Court",
+      "coordinates": [
+        -1.2528411,
+        36.9475314
+      ]
+    },
+    {
+      "id": "nairobi-allsops",
+      "name": "Allsops",
+      "coordinates": [
+        -1.247572,
+        36.8698511
+      ]
+    },
+    {
+      "id": "nairobi-asmara-court",
+      "name": "Asmara Court",
+      "coordinates": [
+        -1.2524114,
+        36.9474627
+      ]
+    },
+    {
+      "id": "nairobi-baraka-court",
+      "name": "Baraka Court",
+      "coordinates": [
+        -1.2532594,
+        36.9475559
+      ]
+    },
+    {
+      "id": "nairobi-barua",
+      "name": "Barua",
+      "coordinates": [
+        -1.193434,
+        36.839939
+      ]
+    }
+  ],
+  "kyoto": [
+    {
+      "id": "kyoto-aburahashizumecho",
+      "name": "Aburahashizumecho",
+      "coordinates": [
+        35.025653,
+        135.753523
+      ]
+    },
+    {
+      "id": "kyoto-aburanokojicho",
+      "name": "Aburanokojicho",
+      "coordinates": [
+        34.988309,
+        135.753716
+      ]
+    },
+    {
+      "id": "kyoto-aburayacho",
+      "name": "Aburayacho",
+      "coordinates": [
+        35.009331,
+        135.764068
+      ]
+    },
+    {
+      "id": "kyoto-ainocho",
+      "name": "Ainocho",
+      "coordinates": [
+        35.002973,
+        135.764009
+      ]
+    },
+    {
+      "id": "kyoto-aioicho",
+      "name": "Aioicho",
+      "coordinates": [
+        35.01624,
+        135.757605
+      ]
+    },
+    {
+      "id": "kyoto-aizenjicho",
+      "name": "Aizenjicho",
+      "coordinates": [
+        35.0234071,
+        135.7437336
+      ]
+    }
+  ],
+  "bangkok": [
+    {
+      "id": "bangkok-akhan-songkhro",
+      "name": "Akhan Songkhro",
+      "coordinates": [
+        13.7163135,
+        100.5368833
+      ]
+    },
+    {
+      "id": "bangkok-amnuaysuk",
+      "name": "Amnuaysuk",
+      "coordinates": [
+        13.7291888,
+        100.4689891
+      ]
+    },
+    {
+      "id": "bangkok-apichat",
+      "name": "Apichat",
+      "coordinates": [
+        13.6363064,
+        100.5950161
+      ]
+    },
+    {
+      "id": "bangkok-ari",
+      "name": "Ari",
+      "coordinates": [
+        13.7804591,
+        100.5409757
+      ]
+    },
+    {
+      "id": "bangkok-ari-samphan",
+      "name": "Ari Samphan",
+      "coordinates": [
+        13.776849,
+        100.5366317
+      ]
+    },
+    {
+      "id": "bangkok-asok",
+      "name": "Asok",
+      "coordinates": [
+        13.7366488,
+        100.5614449
+      ]
+    }
+  ],
+  "chiang-mai": [
+    {
+      "id": "chiang-mai-baan-tha-ma-o",
+      "name": "Baan Tha Ma-o",
+      "coordinates": [
+        18.6860814,
+        98.9954
+      ]
+    },
+    {
+      "id": "chiang-mai-ban-chai-sathan",
+      "name": "Ban Chai Sathan",
+      "coordinates": [
+        18.7307721,
+        99.0502882
+      ]
+    },
+    {
+      "id": "chiang-mai-ban-chiang-yuen",
+      "name": "Ban Chiang Yuen",
+      "coordinates": [
+        18.7103596,
+        99.0389597
+      ]
+    },
+    {
+      "id": "chiang-mai-ban-choeng-doi",
+      "name": "Ban Choeng Doi",
+      "coordinates": [
+        18.8731587,
+        99.1364944
+      ]
+    },
+    {
+      "id": "chiang-mai-ban-doi-rim-than",
+      "name": "Ban Doi Rim Than",
+      "coordinates": [
+        18.7770467,
+        98.8544875
+      ]
+    },
+    {
+      "id": "chiang-mai-ban-don-chan-phatthana",
+      "name": "Ban Don Chan Phatthana",
+      "coordinates": [
+        18.7623796,
+        99.0321276
+      ]
+    }
+  ],
+  "seoul": [
+    {
+      "id": "seoul-daehangno-street",
+      "name": "Daehangno Street",
+      "coordinates": [
+        37.5816817,
+        127.0033082
+      ]
+    },
+    {
+      "id": "seoul-dobong-2-i-dong",
+      "name": "Dobong 2(i)-dong",
+      "coordinates": [
+        37.6831651,
+        127.0478105
+      ]
+    },
+    {
+      "id": "seoul-garosu-gil",
+      "name": "Garosu-gil",
+      "coordinates": [
+        37.5206268,
+        127.023175
+      ]
+    },
+    {
+      "id": "seoul-gyeongnidan-gil",
+      "name": "Gyeongnidan-gil",
+      "coordinates": [
+        37.5399668,
+        126.9920123
+      ]
+    },
+    {
+      "id": "seoul-hongdae-street",
+      "name": "Hongdae Street",
+      "coordinates": [
+        37.5544418,
+        126.9225125
+      ]
+    },
+    {
+      "id": "seoul-jongno-1-ga",
+      "name": "Jongno 1-ga",
+      "coordinates": [
+        37.57032,
+        126.98209
+      ]
+    }
+  ],
+  "busan": [
+    {
+      "id": "busan-allak-dong",
+      "name": "Allak-dong",
+      "coordinates": [
+        35.1955604,
+        129.1062237
+      ]
+    },
+    {
+      "id": "busan-ami-dong-1-il-ga",
+      "name": "Ami-dong 1(il)-ga",
+      "coordinates": [
+        35.0991427,
+        129.0189689
+      ]
+    },
+    {
+      "id": "busan-ami-dong-2-i-ga",
+      "name": "Ami-dong 2(i)-ga",
+      "coordinates": [
+        35.10033,
+        129.0144
+      ]
+    },
+    {
+      "id": "busan-amnam-dong",
+      "name": "Amnam-dong",
+      "coordinates": [
+        35.0751352,
+        129.0152617
+      ]
+    },
+    {
+      "id": "busan-an-dong",
+      "name": "An-dong",
+      "coordinates": [
+        35.23401,
+        128.91662
+      ]
+    },
+    {
+      "id": "busan-bansong-dong",
+      "name": "Bansong-dong",
+      "coordinates": [
+        35.2263679,
+        129.1473085
+      ]
+    }
+  ],
+  "dubai": [
+    {
+      "id": "dubai-abu-shagara",
+      "name": "Abu Shagara",
+      "coordinates": [
+        25.3358087,
+        55.396361
+      ]
+    },
+    {
+      "id": "dubai-al-fahidi",
+      "name": "Al Fahidi",
+      "coordinates": [
+        25.2641373,
+        55.2889513
+      ]
+    },
+    {
+      "id": "dubai-al-khail-gate-residential",
+      "name": "Al Khail Gate Residential",
+      "coordinates": [
+        25.1402838,
+        55.2520943
+      ]
+    },
+    {
+      "id": "dubai-al-mizhar-1",
+      "name": "Al Mizhar 1",
+      "coordinates": [
+        25.2453456,
+        55.4401969
+      ]
+    },
+    {
+      "id": "dubai-al-mizhar-2",
+      "name": "Al Mizhar 2",
+      "coordinates": [
+        25.2431351,
+        55.4607968
+      ]
+    },
+    {
+      "id": "dubai-al-mizhar-4",
+      "name": "Al Mizhar 4",
+      "coordinates": [
+        25.2639056,
+        55.4477997
+      ]
+    }
+  ],
+  "sydney": [
+    {
+      "id": "sydney-allambie",
+      "name": "Allambie",
+      "coordinates": [
+        -33.7733265,
+        151.2594443
+      ]
+    },
+    {
+      "id": "sydney-balmoral",
+      "name": "Balmoral",
+      "coordinates": [
+        -33.8316667,
+        151.2511111
+      ]
+    },
+    {
+      "id": "sydney-bantry-bay",
+      "name": "Bantry Bay",
+      "coordinates": [
+        -33.7584429,
+        151.2304111
+      ]
+    },
+    {
+      "id": "sydney-barra-brui",
+      "name": "Barra Brui",
+      "coordinates": [
+        -33.7483333,
+        151.1677778
+      ]
+    },
+    {
+      "id": "sydney-ben-buckler",
+      "name": "Ben Buckler",
+      "coordinates": [
+        -33.891517,
+        151.2841942
+      ]
+    },
+    {
+      "id": "sydney-bungaroo",
+      "name": "Bungaroo",
+      "coordinates": [
+        -33.7316667,
+        151.1844444
+      ]
+    }
+  ],
+  "melbourne": [
+    {
+      "id": "melbourne-alanbrae-estate",
+      "name": "Alanbrae Estate",
+      "coordinates": [
+        -37.6716261,
+        144.8889511
+      ]
+    },
+    {
+      "id": "melbourne-balwyn-east",
+      "name": "Balwyn East",
+      "coordinates": [
+        -37.8033458,
+        145.1017273
+      ]
+    },
+    {
+      "id": "melbourne-batman-s-hill",
+      "name": "Batman's Hill",
+      "coordinates": [
+        -37.8202026,
+        144.9493352
+      ]
+    },
+    {
+      "id": "melbourne-beacon-cove",
+      "name": "Beacon Cove",
+      "coordinates": [
+        -37.8402499,
+        144.9312003
+      ]
+    },
+    {
+      "id": "melbourne-bennettswood",
+      "name": "Bennettswood",
+      "coordinates": [
+        -37.8491836,
+        145.1099433
+      ]
+    },
+    {
+      "id": "melbourne-chinatown",
+      "name": "Chinatown",
+      "coordinates": [
+        -37.8118113,
+        144.9676286
+      ]
+    }
+  ],
+  "auckland": [
+    {
+      "id": "auckland-airfield-quarters",
+      "name": "Airfield Quarters",
+      "coordinates": [
+        -36.7904233,
+        174.6666971
+      ]
+    },
+    {
+      "id": "auckland-aotea-arts-quarter",
+      "name": "Aotea Arts Quarter",
+      "coordinates": [
+        -36.8517648,
+        174.7628802
+      ]
+    },
+    {
+      "id": "auckland-beverley-hills",
+      "name": "Beverley Hills",
+      "coordinates": [
+        -36.8670345,
+        174.8781043
+      ]
+    },
+    {
+      "id": "auckland-britomart",
+      "name": "Britomart",
+      "coordinates": [
+        -36.8444307,
+        174.768641
+      ]
+    },
+    {
+      "id": "auckland-carlaw-park",
+      "name": "Carlaw Park",
+      "coordinates": [
+        -36.8529957,
+        174.7748007
+      ]
+    },
+    {
+      "id": "auckland-cheltenham",
+      "name": "Cheltenham",
+      "coordinates": [
+        -36.8238595,
+        174.8081964
+      ]
+    }
+  ],
+  "queenstown": [
+    {
+      "id": "queenstown-fernhill",
+      "name": "Fernhill",
+      "coordinates": [
+        -45.0381753,
+        168.6357408
+      ]
+    },
+    {
+      "id": "queenstown-goldfield-heights",
+      "name": "Goldfield Heights",
+      "coordinates": [
+        -45.0236861,
+        168.6923377
+      ]
+    },
+    {
+      "id": "queenstown-hanleys-farm",
+      "name": "Hanleys Farm",
+      "coordinates": [
+        -45.0639246,
+        168.7481066
+      ]
+    },
+    {
+      "id": "queenstown-homestead-bay",
+      "name": "Homestead Bay",
+      "coordinates": [
+        -45.0853801,
+        168.7393376
+      ]
+    },
+    {
+      "id": "queenstown-kawarau-falls",
+      "name": "Kawarau Falls",
+      "coordinates": [
+        -45.0295513,
+        168.7139726
+      ]
+    },
+    {
+      "id": "queenstown-kelvin-heights",
+      "name": "Kelvin Heights",
+      "coordinates": [
+        -45.0466397,
+        168.6876631
+      ]
+    }
+  ],
+  "san-diego": [
+    {
+      "id": "san-diego-3roots",
+      "name": "3Roots",
+      "coordinates": [
+        32.8937051,
+        -117.1639964
+      ]
+    },
+    {
+      "id": "san-diego-albatros",
+      "name": "Albatros",
+      "coordinates": [
+        32.5064059,
+        -117.0983264
+      ]
+    },
+    {
+      "id": "san-diego-alberto-bustamante",
+      "name": "Alberto Bustamante",
+      "coordinates": [
+        32.5126788,
+        -117.0986482
+      ]
+    },
+    {
+      "id": "san-diego-alcott-estates",
+      "name": "Alcott Estates",
+      "coordinates": [
+        32.8331005,
+        -117.2199831
+      ]
+    },
+    {
+      "id": "san-diego-alta-vista",
+      "name": "Alta Vista",
+      "coordinates": [
+        32.6936427,
+        -117.0631116
+      ]
+    },
+    {
+      "id": "san-diego-anexa-divina-providencia",
+      "name": "Anexa Divina Providencia",
+      "coordinates": [
+        32.5017334,
+        -117.0816605
+      ]
+    }
+  ],
+  "tokyo": [
+    {
+      "id": "tokyo-7-eleven",
+      "name": "7-Eleven",
+      "coordinates": [
+        35.7865814,
+        139.8102923
+      ]
+    },
+    {
+      "id": "tokyo-adachi-1-chome",
+      "name": "Adachi 1-chome",
+      "coordinates": [
+        35.7627329,
+        139.8064327
+      ]
+    },
+    {
+      "id": "tokyo-adachi-2-chome",
+      "name": "Adachi 2-chome",
+      "coordinates": [
+        35.7597141,
+        139.8109711
+      ]
+    },
+    {
+      "id": "tokyo-adachi-3-chome",
+      "name": "Adachi 3-chome",
+      "coordinates": [
+        35.7631682,
+        139.8108101
+      ]
+    },
+    {
+      "id": "tokyo-adachi-4-chome",
+      "name": "Adachi 4-chome",
+      "coordinates": [
+        35.7660933,
+        139.805671
+      ]
+    },
+    {
+      "id": "tokyo-agebacho",
+      "name": "Agebacho",
+      "coordinates": [
+        35.7020137,
+        139.7430736
+      ]
+    }
+  ],
+  "miami": [
+    {
+      "id": "miami-anchor-mobile-home-park",
+      "name": "Anchor Mobile Home Park",
+      "coordinates": [
+        25.845,
+        -80.3097222
+      ]
+    },
+    {
+      "id": "miami-centris",
+      "name": "Centris",
+      "coordinates": [
+        25.6578693,
+        -80.3291339
+      ]
+    },
+    {
+      "id": "miami-chinese-village",
+      "name": "Chinese Village",
+      "coordinates": [
+        25.7224335,
+        -80.2645116
+      ]
+    },
+    {
+      "id": "miami-coconut-grove",
+      "name": "Coconut Grove",
+      "coordinates": [
+        25.7126013,
+        -80.2569947
+      ]
+    },
+    {
+      "id": "miami-design-district",
+      "name": "Design District",
+      "coordinates": [
+        25.81466,
+        -80.1914321
+      ]
+    },
+    {
+      "id": "miami-dinner-key",
+      "name": "Dinner Key",
+      "coordinates": [
+        25.7285131,
+        -80.2346905
+      ]
+    }
+  ],
+  "orlando": [
+    {
+      "id": "orlando-airport-north",
+      "name": "Airport North",
+      "coordinates": [
+        28.4689539,
+        -81.310089
+      ]
+    },
+    {
+      "id": "orlando-alexander-ridge",
+      "name": "Alexander Ridge",
+      "coordinates": [
+        28.5070766,
+        -81.6222881
+      ]
+    },
+    {
+      "id": "orlando-ambergate",
+      "name": "Ambergate",
+      "coordinates": [
+        28.665857,
+        -81.4927099
+      ]
+    },
+    {
+      "id": "orlando-americana",
+      "name": "Americana",
+      "coordinates": [
+        28.4852294,
+        -81.4045036
+      ]
+    },
+    {
+      "id": "orlando-angebilt-addition",
+      "name": "Angebilt Addition",
+      "coordinates": [
+        28.5127626,
+        -81.3949212
+      ]
+    },
+    {
+      "id": "orlando-ashton",
+      "name": "Ashton",
+      "coordinates": [
+        28.3531052,
+        -81.4311735
+      ]
+    }
+  ],
+  "las-vegas": [
+    {
+      "id": "las-vegas-18b-the-las-vegas-arts-district",
+      "name": "18b: The Las Vegas Arts District",
+      "coordinates": [
+        36.1595296,
+        -115.1512789
+      ]
+    },
+    {
+      "id": "las-vegas-ascaya",
+      "name": "Ascaya",
+      "coordinates": [
+        35.9926694,
+        -115.057438
+      ]
+    },
+    {
+      "id": "las-vegas-astra",
+      "name": "Astra",
+      "coordinates": [
+        36.2033085,
+        -115.3780747
+      ]
+    },
+    {
+      "id": "las-vegas-berkley-square",
+      "name": "Berkley Square",
+      "coordinates": [
+        36.1904892,
+        -115.149473
+      ]
+    },
+    {
+      "id": "las-vegas-bonanza-village",
+      "name": "Bonanza Village",
+      "coordinates": [
+        36.1830254,
+        -115.165279
+      ]
+    },
+    {
+      "id": "las-vegas-buffalo-ranch",
+      "name": "Buffalo Ranch",
+      "coordinates": [
+        36.1054989,
+        -115.266553
+      ]
+    }
+  ],
+  "san-francisco": [
+    {
+      "id": "san-francisco-7th-street-historic-district",
+      "name": "7th Street Historic District",
+      "coordinates": [
+        37.8066052,
+        -122.3001107
+      ]
+    },
+    {
+      "id": "san-francisco-adams-point",
+      "name": "Adams Point",
+      "coordinates": [
+        37.810403,
+        -122.2559026
+      ]
+    },
+    {
+      "id": "san-francisco-alamo-square",
+      "name": "Alamo Square",
+      "coordinates": [
+        37.776356,
+        -122.4347284
+      ]
+    },
+    {
+      "id": "san-francisco-albany-hill",
+      "name": "Albany Hill",
+      "coordinates": [
+        37.8941896,
+        -122.3041675
+      ]
+    },
+    {
+      "id": "san-francisco-almonte",
+      "name": "Almonte",
+      "coordinates": [
+        37.8899262,
+        -122.5249749
+      ]
+    },
+    {
+      "id": "san-francisco-anza-vista",
+      "name": "Anza Vista",
+      "coordinates": [
+        37.7808364,
+        -122.4431489
+      ]
+    }
+  ],
+  "washington-dc": [
+    {
+      "id": "washington-dc-16th-street-heights",
+      "name": "16th Street Heights",
+      "coordinates": [
+        38.9503318,
+        -77.0327194
+      ]
+    },
+    {
+      "id": "washington-dc-9th-st-nw-13th-st-nw-washington-dc",
+      "name": "9th St NW-13th St NW, Washington DC",
+      "coordinates": [
+        38.9193244,
+        -77.0257325
+      ]
+    },
+    {
+      "id": "washington-dc-a-country-place",
+      "name": "A Country Place",
+      "coordinates": [
+        38.9551105,
+        -77.2760935
+      ]
+    },
+    {
+      "id": "washington-dc-accotink-heights",
+      "name": "Accotink Heights",
+      "coordinates": [
+        38.8353903,
+        -77.2127596
+      ]
+    },
+    {
+      "id": "washington-dc-acredale",
+      "name": "Acredale",
+      "coordinates": [
+        38.9984824,
+        -76.936711
+      ]
+    },
+    {
+      "id": "washington-dc-adams-morgan",
+      "name": "Adams Morgan",
+      "coordinates": [
+        38.9215002,
+        -77.0421992
+      ]
+    }
+  ],
+  "honolulu": [
+    {
+      "id": "honolulu-battleship-cove",
+      "name": "Battleship Cove",
+      "coordinates": [
+        21.3653159,
+        -157.9547144
+      ]
+    },
+    {
+      "id": "honolulu-black-point",
+      "name": "Black Point",
+      "coordinates": [
+        21.2586766,
+        -157.7933676
+      ]
+    },
+    {
+      "id": "honolulu-city-center",
+      "name": "City Center",
+      "coordinates": [
+        21.3321542,
+        -158.079723
+      ]
+    },
+    {
+      "id": "honolulu-downtown",
+      "name": "Downtown",
+      "coordinates": [
+        21.308945,
+        -157.8613412
+      ]
+    },
+    {
+      "id": "honolulu-haha-ione",
+      "name": "Hahaʻione",
+      "coordinates": [
+        21.299074,
+        -157.709642
+      ]
+    },
+    {
+      "id": "honolulu-hawai-i-kai",
+      "name": "Hawai’i Kai",
+      "coordinates": [
+        21.2863293,
+        -157.7104651
+      ]
+    }
+  ],
+  "boston": [
+    {
+      "id": "boston-aberdeen",
+      "name": "Aberdeen",
+      "coordinates": [
+        42.3402792,
+        -71.1467618
+      ]
+    },
+    {
+      "id": "boston-admirals-hill",
+      "name": "Admirals Hill",
+      "coordinates": [
+        42.390097,
+        -71.0475511
+      ]
+    },
+    {
+      "id": "boston-allston-heights",
+      "name": "Allston Heights",
+      "coordinates": [
+        42.3525778,
+        -71.1402512
+      ]
+    },
+    {
+      "id": "boston-allston-village",
+      "name": "Allston Village",
+      "coordinates": [
+        42.3530097,
+        -71.1321027
+      ]
+    },
+    {
+      "id": "boston-angleside",
+      "name": "Angleside",
+      "coordinates": [
+        42.35862,
+        -71.2594145
+      ]
+    },
+    {
+      "id": "boston-arlington-heights",
+      "name": "Arlington Heights",
+      "coordinates": [
+        42.4203737,
+        -71.1800546
+      ]
+    }
+  ],
+  "new-orleans": [
+    {
+      "id": "new-orleans-barrington-park",
+      "name": "Barrington Park",
+      "coordinates": [
+        30.0477009,
+        -89.9647909
+      ]
+    },
+    {
+      "id": "new-orleans-camp-leroy-johnson",
+      "name": "Camp Leroy Johnson",
+      "coordinates": [
+        30.0306715,
+        -90.0416103
+      ]
+    },
+    {
+      "id": "new-orleans-central-business-district",
+      "name": "Central Business District",
+      "coordinates": [
+        29.9496614,
+        -90.0708076
+      ]
+    },
+    {
+      "id": "new-orleans-floral-acres",
+      "name": "Floral Acres",
+      "coordinates": [
+        29.9488358,
+        -90.2368899
+      ]
+    },
+    {
+      "id": "new-orleans-french-market",
+      "name": "French Market",
+      "coordinates": [
+        29.9593429,
+        -90.0602566
+      ]
+    },
+    {
+      "id": "new-orleans-lake-forest",
+      "name": "Lake Forest",
+      "coordinates": [
+        30.026441,
+        -89.9880627
+      ]
+    }
+  ],
+  "nashville": [
+    {
+      "id": "nashville-amalie-point",
+      "name": "Amalie Point",
+      "coordinates": [
+        36.049183,
+        -86.7232509
+      ]
+    },
+    {
+      "id": "nashville-arbor-hills-apartments",
+      "name": "Arbor Hills Apartments",
+      "coordinates": [
+        36.0405305,
+        -86.6684809
+      ]
+    },
+    {
+      "id": "nashville-arbors-of-brentwood",
+      "name": "Arbors of Brentwood",
+      "coordinates": [
+        36.0476584,
+        -86.7403815
+      ]
+    },
+    {
+      "id": "nashville-arlington-heights",
+      "name": "Arlington Heights",
+      "coordinates": [
+        35.9997015,
+        -86.7080928
+      ]
+    },
+    {
+      "id": "nashville-ashlawn-place",
+      "name": "Ashlawn Place",
+      "coordinates": [
+        36.0491109,
+        -86.7425212
+      ]
+    },
+    {
+      "id": "nashville-ashley-park",
+      "name": "Ashley Park",
+      "coordinates": [
+        36.039931,
+        -86.7330117
+      ]
+    }
+  ],
+  "seattle": [
+    {
+      "id": "seattle-41-point-5",
+      "name": "41 Point 5",
+      "coordinates": [
+        47.5724505,
+        -122.1112629
+      ]
+    },
+    {
+      "id": "seattle-addison-park",
+      "name": "Addison Park",
+      "coordinates": [
+        47.4366464,
+        -122.1571835
+      ]
+    },
+    {
+      "id": "seattle-admiral",
+      "name": "Admiral",
+      "coordinates": [
+        47.5811953,
+        -122.3865457
+      ]
+    },
+    {
+      "id": "seattle-agate-point",
+      "name": "Agate Point",
+      "coordinates": [
+        47.7127611,
+        -122.5541294
+      ]
+    },
+    {
+      "id": "seattle-alaska-junction",
+      "name": "Alaska Junction",
+      "coordinates": [
+        47.5611534,
+        -122.3867396
+      ]
+    },
+    {
+      "id": "seattle-alder-crossing",
+      "name": "Alder Crossing",
+      "coordinates": [
+        47.4871045,
+        -122.152253
+      ]
+    }
+  ],
+  "london": [
+    {
+      "id": "london-abbeville-village",
+      "name": "Abbeville Village",
+      "coordinates": [
+        51.4545041,
+        -0.1398146
+      ]
+    },
+    {
+      "id": "london-abbey-estate",
+      "name": "Abbey Estate",
+      "coordinates": [
+        51.5381912,
+        -0.1870524
+      ]
+    },
+    {
+      "id": "london-abbots-manor-estate",
+      "name": "Abbots Manor Estate",
+      "coordinates": [
+        51.4902131,
+        -0.1468857
+      ]
+    },
+    {
+      "id": "london-aberfeldy-village",
+      "name": "Aberfeldy Village",
+      "coordinates": [
+        51.5134439,
+        -0.0039524
+      ]
+    },
+    {
+      "id": "london-acorn-estate",
+      "name": "Acorn Estate",
+      "coordinates": [
+        51.4756498,
+        -0.0625121
+      ]
+    },
+    {
+      "id": "london-acorn-walk",
+      "name": "Acorn Walk",
+      "coordinates": [
+        51.5052864,
+        -0.0347479
+      ]
+    }
+  ],
+  "amsterdam": [
+    {
+      "id": "amsterdam-t-kalf",
+      "name": "'t Kalf",
+      "coordinates": [
+        52.4685308,
+        4.8345798
+      ]
+    },
+    {
+      "id": "amsterdam-akkerland",
+      "name": "Akkerland",
+      "coordinates": [
+        52.3352034,
+        4.9510036
+      ]
+    },
+    {
+      "id": "amsterdam-amstel-iii",
+      "name": "Amstel III",
+      "coordinates": [
+        52.303915,
+        4.9449664
+      ]
+    },
+    {
+      "id": "amsterdam-anne-frank",
+      "name": "Anne Frank",
+      "coordinates": [
+        52.337003,
+        4.9619199
+      ]
+    },
+    {
+      "id": "amsterdam-architectenbuurt",
+      "name": "Architectenbuurt",
+      "coordinates": [
+        52.3681151,
+        4.9427366
+      ]
+    },
+    {
+      "id": "amsterdam-bajeskwartier",
+      "name": "Bajeskwartier",
+      "coordinates": [
+        52.3388749,
+        4.9241455
+      ]
+    }
+  ],
+  "berlin": [
+    {
+      "id": "berlin-aeg-siedlung",
+      "name": "AEG-Siedlung",
+      "coordinates": [
+        52.6109715,
+        13.3456637
+      ]
+    },
+    {
+      "id": "berlin-alt-biesdorf",
+      "name": "Alt-Biesdorf",
+      "coordinates": [
+        52.5090739,
+        13.5549965
+      ]
+    },
+    {
+      "id": "berlin-alt-blankenburg",
+      "name": "Alt-Blankenburg",
+      "coordinates": [
+        52.5931966,
+        13.4561212
+      ]
+    },
+    {
+      "id": "berlin-alt-bohnsdorf",
+      "name": "Alt-Bohnsdorf",
+      "coordinates": [
+        52.3994812,
+        13.5555943
+      ]
+    },
+    {
+      "id": "berlin-alt-buch",
+      "name": "Alt-Buch",
+      "coordinates": [
+        52.6354886,
+        13.4990323
+      ]
+    },
+    {
+      "id": "berlin-alt-buckow",
+      "name": "Alt-Buckow",
+      "coordinates": [
+        52.4225014,
+        13.432637
+      ]
+    }
+  ],
+  "prague": [
+    {
+      "id": "prague-balabenka",
+      "name": "Balabenka",
+      "coordinates": [
+        50.1045179,
+        14.4823639
+      ]
+    },
+    {
+      "id": "prague-blatov",
+      "name": "Blatov",
+      "coordinates": [
+        50.0783408,
+        14.6441365
+      ]
+    },
+    {
+      "id": "prague-botanika",
+      "name": "Botanika",
+      "coordinates": [
+        50.0564382,
+        14.3476768
+      ]
+    },
+    {
+      "id": "prague-b-ezov",
+      "name": "Březová",
+      "coordinates": [
+        49.9142882,
+        14.4162978
+      ]
+    },
+    {
+      "id": "prague-britsk-tvr",
+      "name": "Britská čtvrť",
+      "coordinates": [
+        50.0475402,
+        14.3031321
+      ]
+    },
+    {
+      "id": "prague-ern-v-l",
+      "name": "Černý Vůl",
+      "coordinates": [
+        50.1483911,
+        14.3333294
+      ]
+    }
+  ],
+  "vienna": [
+    {
+      "id": "vienna-abtbergen",
+      "name": "Abtbergen",
+      "coordinates": [
+        48.1984393,
+        16.2773387
+      ]
+    },
+    {
+      "id": "vienna-afrikanerviertel",
+      "name": "Afrikanerviertel",
+      "coordinates": [
+        48.2177156,
+        16.3840484
+      ]
+    },
+    {
+      "id": "vienna-alliiertenviertel",
+      "name": "Alliiertenviertel",
+      "coordinates": [
+        48.2261161,
+        16.3875469
+      ]
+    },
+    {
+      "id": "vienna-alt-gersthof",
+      "name": "Alt-Gersthof",
+      "coordinates": [
+        48.2378409,
+        16.3207066
+      ]
+    },
+    {
+      "id": "vienna-am-kempelenpark",
+      "name": "Am Kempelenpark",
+      "coordinates": [
+        48.1737343,
+        16.3956056
+      ]
+    },
+    {
+      "id": "vienna-am-sch-pfwerk",
+      "name": "Am Schöpfwerk",
+      "coordinates": [
+        48.1601905,
+        16.3297042
+      ]
+    }
+  ]
+}

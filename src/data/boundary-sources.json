@@ -1,0 +1,142 @@
+{
+  "miami-official-neighborhoods": {
+    "provider": "City of Miami Open Data",
+    "datasetUrl": "https://opendata.arcgis.com/datasets/2f54a0cbd67046f2bd100fb735176e6c_0.geojson",
+    "datasetId": "2f54a0cbd67046f2bd100fb735176e6c_0",
+    "format": "geojson",
+    "matchField": "LABEL",
+    "mappings": {
+      "miami::little-havana": [
+        "East Little Havana"
+      ],
+      "miami::design-district": [
+        "Design District"
+      ],
+      "miami::brickell": [
+        "Brickell Business District",
+        "Brickell Residential District",
+        "Brickell Village",
+        "West Brickell",
+        "Brickell Key"
+      ],
+      "miami::coconut-grove": [
+        "North Grove",
+        "Grove Center",
+        "East Grove",
+        "South Grove",
+        "South Grove Bayside",
+        "West Grove"
+      ]
+    }
+  },
+  "miami-wynwood-bid-street-boundary": {
+    "provider": "City of Miami - Clerk BID boundary notice",
+    "datasetUrl": "https://www.miami.gov/My-Government/Departments/City-Clerks-Office/Wynwood-Business-Improvement-District-Re-Establishment/Wynwood-BID-Re-Establishment-Notices",
+    "format": "street-boundary-derived-polygon",
+    "matchField": "manual",
+    "geometryByBoundaryKey": {
+      "miami::wynwood": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -80.2031933,
+              25.8037174
+            ],
+            [
+              -80.1951157,
+              25.8039704
+            ],
+            [
+              -80.1948353,
+              25.7955768
+            ],
+            [
+              -80.2031933,
+              25.7953000
+            ],
+            [
+              -80.2031933,
+              25.8037174
+            ]
+          ]
+        ]
+      }
+    }
+  },
+  "san-francisco-analysis-neighborhoods": {
+    "provider": "City and County of San Francisco Open Data",
+    "datasetUrl": "https://data.sfgov.org/resource/j2bu-swwd.geojson",
+    "datasetId": "j2bu-swwd",
+    "format": "geojson",
+    "matchField": "nhood",
+    "mappings": {
+      "san-francisco::mission-district": [
+        "Mission"
+      ],
+      "san-francisco::north-beach": [
+        "North Beach"
+      ],
+      "san-francisco::hayes-valley": [
+        "Hayes Valley"
+      ],
+      "san-francisco::marina-district": [
+        "Marina"
+      ],
+      "san-francisco::sunset-district": [
+        "Sunset/Parkside"
+      ]
+    }
+  },
+  "chicago-neighborhoods-2012": {
+    "provider": "City of Chicago Open Data",
+    "datasetUrl": "https://data.cityofchicago.org/api/geospatial/y6yq-dbs2?method=export&format=GeoJSON",
+    "datasetId": "y6yq-dbs2",
+    "format": "geojson",
+    "matchField": "pri_neigh",
+    "mappings": {
+      "chicago::wicker-park": [
+        "Wicker Park"
+      ],
+      "chicago::pilsen": [
+        "Lower West Side"
+      ]
+    }
+  },
+  "london-wards-gla": {
+    "provider": "Greater London Authority GIS",
+    "datasetUrl": "https://gis2.london.gov.uk/server/rest/services/apps/cultural_infrastructure_map_context_layers/MapServer/3/query?where=1%3D1&outFields=ward_name&returnGeometry=true&outSR=4326&f=geojson",
+    "datasetId": "cultural_infrastructure_map_context_layers/MapServer/3",
+    "format": "geojson",
+    "matchField": "ward_name",
+    "mappings": {
+      "london::soho": [
+        "West End"
+      ],
+      "london::shoreditch": [
+        "Hoxton East & Shoreditch"
+      ],
+      "london::camden": [
+        "Camden Town"
+      ],
+      "london::south-bank": [
+        "Waterloo & South Bank"
+      ],
+      "london::covent-garden": [
+        "Holborn & Covent Garden"
+      ],
+      "london::bloomsbury": [
+        "Bloomsbury"
+      ],
+      "london::marylebone": [
+        "Marylebone"
+      ],
+      "london::notting-hill": [
+        "Pembridge",
+        "Norland",
+        "Notting Dale",
+        "Colville"
+      ]
+    }
+  }
+}

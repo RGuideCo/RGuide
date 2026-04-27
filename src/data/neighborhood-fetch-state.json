@@ -1,0 +1,11 @@
+{
+  "cities": {},
+  "boundaries": {
+    "nashville::12south": {
+      "at": 1776160950234,
+      "attempts": 1,
+      "message": "no boundary",
+      "reason": "fetch-error"
+    }
+  }
+}
