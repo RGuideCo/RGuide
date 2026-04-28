@@ -8,6 +8,8 @@ import { useAppStore } from "@/store/app-store";
 
 export function AuthModal() {
   const { authModalOpen, authMode, closeAuthModal, openAuthModal } = useAppStore();
+  const allowPublicSignup = process.env.NEXT_PUBLIC_ALLOW_PUBLIC_SIGNUP === "true";
+  const activeAuthMode = allowPublicSignup ? authMode : "login";
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -17,7 +19,7 @@ export function AuthModal() {
 
   useEffect(() => {
     setMessage("");
-  }, [authMode]);
+  }, [activeAuthMode]);
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -31,7 +33,7 @@ export function AuthModal() {
     setIsSubmitting(true);
 
     try {
-      if (authMode === "signup") {
+      if (activeAuthMode === "signup") {
         const { data, error } = await supabase.auth.signUp({
           email,
           password,
@@ -93,14 +95,16 @@ export function AuthModal() {
           {authMode === "login" ? "Welcome back" : "Create account"}
         </p>
         <h2 className="mt-3 text-2xl font-semibold text-slate-900">
-          {authMode === "login" ? "Sign in to continue" : "Join RGuide"}
+          {activeAuthMode === "login" ? "Sign in to continue" : "Join RGuide"}
         </h2>
         <p className="mt-2 text-sm text-slate-600">
-          Sign in with the email and password connected to your RGuide account.
+          {allowPublicSignup
+            ? "Sign in with the email and password connected to your RGuide account."
+            : "RGuide is invite-only while the first public guides are being tested."}
         </p>
 
         <form onSubmit={handleSubmit} className="mt-6 space-y-4">
-          {authMode === "signup" ? (
+          {activeAuthMode === "signup" ? (
             <label className="block text-sm">
               <span className="mb-2 block font-medium text-slate-700">Name</span>
               <input
@@ -132,7 +136,7 @@ export function AuthModal() {
               value={password}
               onChange={(event) => setPassword(event.target.value)}
               placeholder="Password"
-              autoComplete={authMode === "login" ? "current-password" : "new-password"}
+              autoComplete={activeAuthMode === "login" ? "current-password" : "new-password"}
               minLength={6}
               required
               className="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-slate-900"
@@ -152,22 +156,24 @@ export function AuthModal() {
           >
             {isSubmitting
               ? "Working..."
-              : authMode === "login"
+              : activeAuthMode === "login"
                 ? "Log in"
                 : "Create account"}
           </button>
         </form>
 
-        <div className="mt-4 text-sm text-slate-600">
-          {authMode === "login" ? "Need an account?" : "Already have an account?"}{" "}
-          <button
-            type="button"
-            onClick={() => openAuthModal(authMode === "login" ? "signup" : "login")}
-            className="font-medium text-orange-600 hover:text-orange-700"
-          >
-            {authMode === "login" ? "Sign up" : "Log in"}
-          </button>
-        </div>
+        {allowPublicSignup ? (
+          <div className="mt-4 text-sm text-slate-600">
+            {activeAuthMode === "login" ? "Need an account?" : "Already have an account?"}{" "}
+            <button
+              type="button"
+              onClick={() => openAuthModal(activeAuthMode === "login" ? "signup" : "login")}
+              className="font-medium text-orange-600 hover:text-orange-700"
+            >
+              {activeAuthMode === "login" ? "Sign up" : "Log in"}
+            </button>
+          </div>
+        ) : null}
       </div>
     </div>
   );
