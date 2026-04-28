@@ -349,9 +349,10 @@ export function SplitScreenSection({ continents }: SplitScreenSectionProps) {
       return previewUrl;
     });
     setProfileEditMessage(null);
+    void handleProfileSave(file);
   };
 
-  const handleProfileSave = async () => {
+  const handleProfileSave = async (avatarFileOverride?: File | null) => {
     if (!currentUser) {
       return;
     }
@@ -370,7 +371,7 @@ export function SplitScreenSection({ continents }: SplitScreenSectionProps) {
     const { avatarUrl, error } = await updateSupabaseProfile({
       name: nextName,
       bio: nextBio || "Building a personal city guide with RGuide.",
-      avatarFile: profileAvatarFile,
+      avatarFile: avatarFileOverride ?? profileAvatarFile,
       fallbackAvatarUrl: currentUser.avatar,
     });
 
@@ -3873,7 +3874,14 @@ export function SplitScreenSection({ continents }: SplitScreenSectionProps) {
                         activeProfileLeftRail === "places-been" ? "items-start text-left" : "items-center text-center"
                       }`}
                     >
-                      <span
+                      <button
+                        type="button"
+                        onClick={() => {
+                          if (activeProfileLeftRail === "edit-profile") {
+                            profileAvatarInputRef.current?.click();
+                          }
+                        }}
+                        disabled={activeProfileLeftRail !== "edit-profile"}
                         className={`profile-left-avatar inline-flex shrink-0 overflow-hidden rounded-full ${
                           isEnteringProfileShell
                             ? "transition-none"
@@ -3882,38 +3890,87 @@ export function SplitScreenSection({ continents }: SplitScreenSectionProps) {
                           activeProfileLeftRail === "places-been"
                             ? "mt-0 h-0 w-0 -translate-y-2 scale-75 opacity-0"
                             : "h-24 w-24 translate-y-0 scale-100 opacity-100"
+                        } ${
+                          activeProfileLeftRail === "edit-profile"
+                            ? "group relative cursor-pointer border border-slate-200 bg-white"
+                            : ""
                         }`}
+                        aria-label="Change profile picture"
                       >
                         <img
-                          src={currentUser.avatar}
+                          src={profileAvatarPreview || currentUser.avatar}
                           alt={currentUser.name}
                           className="h-full w-full object-cover"
                         />
-                      </span>
+                        {activeProfileLeftRail === "edit-profile" ? (
+                          <span className="absolute inset-0 flex items-center justify-center bg-slate-950/35 text-white opacity-0 transition group-hover:opacity-100">
+                            <Camera className="h-5 w-5" />
+                          </span>
+                        ) : null}
+                      </button>
+                      <input
+                        ref={profileAvatarInputRef}
+                        type="file"
+                        accept="image/*"
+                        onChange={(event) => handleProfileAvatarChange(event.target.files?.[0] ?? null)}
+                        className="hidden"
+                      />
                       <div
                         className={`relative w-full overflow-visible transition-[height,margin] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] ${
-                          activeProfileLeftRail === "places-been" ? "mt-0 h-6" : "mt-4 h-10"
+                          activeProfileLeftRail === "places-been" ? "mt-0 h-6" : "mt-4 h-auto min-h-10"
                         }`}
                       >
-                        <h2
-                          className={`profile-left-name absolute top-0 font-semibold transition-[left,transform,font-size,color] duration-[620ms] ease-[cubic-bezier(0.22,1,0.36,1)] ${
+                        {activeProfileLeftRail === "edit-profile" ? (
+                          <input
+                            value={profileNameDraft}
+                            onChange={(event) => setProfileNameDraft(event.target.value)}
+                            onBlur={() => void handleProfileSave()}
+                            onKeyDown={(event) => {
+                              if (event.key === "Enter") {
+                                event.currentTarget.blur();
+                              }
+                            }}
+                            className="mx-auto block w-full max-w-[16rem] rounded-xl border border-slate-200 bg-white px-3 py-2 text-center text-2xl font-semibold text-slate-900 outline-none transition focus:border-slate-400"
+                            aria-label="Profile name"
+                          />
+                        ) : (
+                          <h2
+                            className={`profile-left-name absolute top-0 font-semibold transition-[left,transform,font-size,color] duration-[620ms] ease-[cubic-bezier(0.22,1,0.36,1)] ${
+                              activeProfileLeftRail === "places-been"
+                                ? "left-0 translate-x-0 text-sm uppercase tracking-[0.1em] text-slate-500"
+                                : "left-1/2 -translate-x-1/2 text-2xl text-slate-900"
+                            }`}
+                          >
+                            {currentUser.name}
+                          </h2>
+                        )}
+                      </div>
+                      {activeProfileLeftRail === "edit-profile" ? (
+                        <textarea
+                          value={profileBioDraft}
+                          onChange={(event) => setProfileBioDraft(event.target.value)}
+                          onBlur={() => void handleProfileSave()}
+                          rows={3}
+                          maxLength={220}
+                          className="mt-2 w-full resize-none rounded-xl border border-slate-200 bg-white px-3 py-2 text-center text-sm text-slate-600 outline-none transition focus:border-slate-400"
+                          aria-label="Profile bio"
+                        />
+                      ) : (
+                        <p
+                          className={`profile-left-bio w-full overflow-hidden text-sm text-slate-600 transition-[max-height,opacity,transform,margin] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] ${
                             activeProfileLeftRail === "places-been"
-                              ? "left-0 translate-x-0 text-sm uppercase tracking-[0.1em] text-slate-500"
-                              : "left-1/2 -translate-x-1/2 text-2xl text-slate-900"
+                              ? "mt-0 max-h-0 -translate-y-1 opacity-0"
+                              : "mt-2 max-h-16 translate-y-0 opacity-100"
                           }`}
                         >
-                          {currentUser.name}
-                        </h2>
-                      </div>
-                      <p
-                        className={`profile-left-bio w-full overflow-hidden text-sm text-slate-600 transition-[max-height,opacity,transform,margin] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] ${
-                          activeProfileLeftRail === "places-been"
-                            ? "mt-0 max-h-0 -translate-y-1 opacity-0"
-                            : "mt-2 max-h-16 translate-y-0 opacity-100"
-                        }`}
-                      >
-                        {currentUser.bio}
-                      </p>
+                          {currentUser.bio}
+                        </p>
+                      )}
+                      {activeProfileLeftRail === "edit-profile" && profileEditMessage ? (
+                        <p className="mt-2 rounded-full border border-slate-200 bg-white px-3 py-1 text-xs text-slate-600">
+                          {isSavingProfile ? "Saving..." : profileEditMessage}
+                        </p>
+                      ) : null}
                       {activeProfileLeftRail === "places-been" ? (
                         <div className="mt-2 flex min-h-0 flex-1 w-full flex-col text-left">
                           <p className="text-[10px] uppercase tracking-[0.12em] text-slate-500">Places been</p>
@@ -4127,81 +4184,6 @@ export function SplitScreenSection({ continents }: SplitScreenSectionProps) {
                         </div>
                       ) : null}
                     </div>
-                    {activeProfileLeftRail === "edit-profile" ? (
-                      <div className="mt-4 min-h-0 flex-1 space-y-3 overflow-y-auto rounded-xl border border-slate-200 bg-stone-50 p-3 text-left">
-                        <div>
-                          <p className="text-[10px] font-semibold uppercase tracking-[0.12em] text-slate-500">
-                            Profile
-                          </p>
-                          <p className="mt-1 text-xs text-slate-500">
-                            Your public creator profile.
-                          </p>
-                        </div>
-                        <div className="flex items-center gap-3">
-                          <button
-                            type="button"
-                            onClick={() => profileAvatarInputRef.current?.click()}
-                            className="group relative h-16 w-16 shrink-0 overflow-hidden rounded-full border border-slate-200 bg-white"
-                            aria-label="Change profile picture"
-                            title="Change profile picture"
-                          >
-                            <img
-                              src={profileAvatarPreview || currentUser.avatar}
-                              alt={currentUser.name}
-                              className="h-full w-full object-cover"
-                            />
-                            <span className="absolute inset-0 flex items-center justify-center bg-slate-950/35 text-white opacity-0 transition group-hover:opacity-100">
-                              <Camera className="h-5 w-5" />
-                            </span>
-                          </button>
-                          <input
-                            ref={profileAvatarInputRef}
-                            type="file"
-                            accept="image/*"
-                            onChange={(event) => handleProfileAvatarChange(event.target.files?.[0] ?? null)}
-                            className="hidden"
-                          />
-                          <button
-                            type="button"
-                            onClick={() => profileAvatarInputRef.current?.click()}
-                            className="rounded-full border border-slate-300 bg-white px-3 py-1.5 text-xs font-medium text-slate-700 transition hover:border-slate-400 hover:text-slate-900"
-                          >
-                            Change photo
-                          </button>
-                        </div>
-                        <label className="block text-xs font-medium text-slate-600">
-                          Name
-                          <input
-                            value={profileNameDraft}
-                            onChange={(event) => setProfileNameDraft(event.target.value)}
-                            className="mt-1 w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm text-slate-900 outline-none transition focus:border-slate-400"
-                          />
-                        </label>
-                        <label className="block text-xs font-medium text-slate-600">
-                          Bio
-                          <textarea
-                            value={profileBioDraft}
-                            onChange={(event) => setProfileBioDraft(event.target.value)}
-                            rows={4}
-                            maxLength={220}
-                            className="mt-1 w-full resize-none rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm text-slate-900 outline-none transition focus:border-slate-400"
-                          />
-                        </label>
-                        {profileEditMessage ? (
-                          <p className="rounded-xl border border-slate-200 bg-white px-3 py-2 text-xs text-slate-600">
-                            {profileEditMessage}
-                          </p>
-                        ) : null}
-                        <button
-                          type="button"
-                          onClick={handleProfileSave}
-                          disabled={isSavingProfile}
-                          className="w-full rounded-full bg-slate-900 px-4 py-2 text-sm font-medium text-white transition hover:bg-slate-800 disabled:cursor-not-allowed disabled:bg-slate-400"
-                        >
-                          {isSavingProfile ? "Saving..." : "Save profile"}
-                        </button>
-                      </div>
-                    ) : null}
                     {activeProfileLeftRail !== "places-been" && activeProfileLeftRail !== "edit-profile" ? (
                       <div className="profile-left-stats mt-5 grid grid-cols-3 gap-2">
                       <div className="profile-left-stat-card rounded-xl border border-slate-200 bg-stone-50 px-3 py-2 text-center">
