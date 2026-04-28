@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
 import { Search, UserRound, X } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
@@ -143,11 +142,9 @@ export function Header() {
               <span className="header-mode-flip-wrap h-full w-full">
                 <span className={`header-mode-flip-card ${isProfileShellActive ? "is-profile" : ""}`}>
                   <span className="header-mode-flip-face overflow-hidden rounded-full">
-                    <Image
+                    <img
                       src={currentUser.avatar}
                       alt={currentUser.name}
-                      width={44}
-                      height={44}
                       className="h-full w-full object-cover"
                     />
                   </span>

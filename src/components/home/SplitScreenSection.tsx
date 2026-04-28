@@ -2,6 +2,7 @@
 
 import {
   Building2,
+  Camera,
   ChevronDown,
   ChevronRight,
   Flag,
@@ -65,6 +66,7 @@ import { useItineraryWorkspace } from "@/components/home/use-itinerary-workspace
 import { getCountryFlagEmoji } from "@/lib/country-flag";
 import { CATEGORY_STYLES } from "@/lib/constants";
 import { getAllLists, getListsForCity, getListsForContinent, getListsForCountry } from "@/lib/mock-data";
+import { updateSupabaseProfile } from "@/lib/supabase/profile";
 import { useAppStore } from "@/store/app-store";
 import { Continent, ListCategory, MapList, SelectionState, SubmissionType } from "@/types";
 
@@ -176,6 +178,7 @@ function MobileBrowseSelect({
 
 export function SplitScreenSection({ continents }: SplitScreenSectionProps) {
   const currentUser = useAppStore((state) => state.currentUser);
+  const setCurrentUser = useAppStore((state) => state.setCurrentUser);
   const isProfileShellActive = useAppStore((state) => state.isProfileShellActive);
   const setProfileShellActive = useAppStore((state) => state.setProfileShellActive);
   const favoriteIds = useAppStore((state) => state.favoriteIds);
@@ -281,6 +284,12 @@ export function SplitScreenSection({ continents }: SplitScreenSectionProps) {
     id: number;
     coordinates: [number, number];
   } | null>(null);
+  const [profileNameDraft, setProfileNameDraft] = useState("");
+  const [profileBioDraft, setProfileBioDraft] = useState("");
+  const [profileAvatarPreview, setProfileAvatarPreview] = useState("");
+  const [profileAvatarFile, setProfileAvatarFile] = useState<File | null>(null);
+  const [profileEditMessage, setProfileEditMessage] = useState<string | null>(null);
+  const [isSavingProfile, setIsSavingProfile] = useState(false);
   const [exitingRailIcons, setExitingRailIcons] = useState<Partial<Record<ExitingRailIcon["kind"], ExitingRailIcon>>>({});
   const [profileIntroNonce, setProfileIntroNonce] = useState(0);
   const [displayShellMode, setDisplayShellMode] = useState<"explorer" | "profile">(
@@ -299,6 +308,7 @@ export function SplitScreenSection({ continents }: SplitScreenSectionProps) {
   const postMorphRevealTimeoutsRef = useRef<ReturnType<typeof setTimeout>[]>([]);
   const shellModeTimeoutsRef = useRef<ReturnType<typeof setTimeout>[]>([]);
   const wasProfileModeRef = useRef(false);
+  const profileAvatarInputRef = useRef<HTMLInputElement | null>(null);
   const previousProfileLeftRailRef = useRef<(typeof profileLeftRailOptions)[number]["id"] | null>(null);
   const globeRailVideoRef = useRef<HTMLVideoElement | null>(null);
   const previousRailIconsRef = useRef<Record<ExitingRailIcon["kind"], ExitingRailIcon | null>>({
@@ -311,6 +321,75 @@ export function SplitScreenSection({ continents }: SplitScreenSectionProps) {
   const leftPaneRef = useRef<HTMLDivElement | null>(null);
   const mapViewportPanelRef = useRef<HTMLDivElement | null>(null);
   const rightPaneRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    setProfileNameDraft(currentUser?.name ?? "");
+    setProfileBioDraft(currentUser?.bio ?? "");
+    setProfileAvatarPreview(currentUser?.avatar ?? "");
+    setProfileAvatarFile(null);
+    setProfileEditMessage(null);
+  }, [currentUser?.avatar, currentUser?.bio, currentUser?.id, currentUser?.name]);
+
+  const handleProfileAvatarChange = (file: File | null) => {
+    if (!file) {
+      return;
+    }
+
+    if (!file.type.startsWith("image/")) {
+      setProfileEditMessage("Choose an image file for your profile picture.");
+      return;
+    }
+
+    const previewUrl = URL.createObjectURL(file);
+    setProfileAvatarFile(file);
+    setProfileAvatarPreview((current) => {
+      if (current.startsWith("blob:")) {
+        URL.revokeObjectURL(current);
+      }
+      return previewUrl;
+    });
+    setProfileEditMessage(null);
+  };
+
+  const handleProfileSave = async () => {
+    if (!currentUser) {
+      return;
+    }
+
+    const nextName = profileNameDraft.trim();
+    const nextBio = profileBioDraft.trim();
+
+    if (!nextName) {
+      setProfileEditMessage("Add a display name.");
+      return;
+    }
+
+    setIsSavingProfile(true);
+    setProfileEditMessage(null);
+
+    const { avatarUrl, error } = await updateSupabaseProfile({
+      name: nextName,
+      bio: nextBio || "Building a personal city guide with RGuide.",
+      avatarFile: profileAvatarFile,
+      fallbackAvatarUrl: currentUser.avatar,
+    });
+
+    setIsSavingProfile(false);
+
+    if (error) {
+      setProfileEditMessage(error.message);
+      return;
+    }
+
+    setProfileAvatarFile(null);
+    setCurrentUser({
+      ...currentUser,
+      name: nextName,
+      bio: nextBio || "Building a personal city guide with RGuide.",
+      avatar: avatarUrl,
+    });
+    setProfileEditMessage("Profile updated.");
+  };
   const titleRef = useRef<HTMLHeadingElement | null>(null);
   const titleTextRef = useRef<HTMLSpanElement | null>(null);
   const detailRef = useRef<HTMLDivElement | null>(null);
@@ -4048,7 +4127,82 @@ export function SplitScreenSection({ continents }: SplitScreenSectionProps) {
                         </div>
                       ) : null}
                     </div>
-                    {activeProfileLeftRail !== "places-been" ? (
+                    {activeProfileLeftRail === "edit-profile" ? (
+                      <div className="mt-4 min-h-0 flex-1 space-y-3 overflow-y-auto rounded-xl border border-slate-200 bg-stone-50 p-3 text-left">
+                        <div>
+                          <p className="text-[10px] font-semibold uppercase tracking-[0.12em] text-slate-500">
+                            Profile
+                          </p>
+                          <p className="mt-1 text-xs text-slate-500">
+                            Your public creator profile.
+                          </p>
+                        </div>
+                        <div className="flex items-center gap-3">
+                          <button
+                            type="button"
+                            onClick={() => profileAvatarInputRef.current?.click()}
+                            className="group relative h-16 w-16 shrink-0 overflow-hidden rounded-full border border-slate-200 bg-white"
+                            aria-label="Change profile picture"
+                            title="Change profile picture"
+                          >
+                            <img
+                              src={profileAvatarPreview || currentUser.avatar}
+                              alt={currentUser.name}
+                              className="h-full w-full object-cover"
+                            />
+                            <span className="absolute inset-0 flex items-center justify-center bg-slate-950/35 text-white opacity-0 transition group-hover:opacity-100">
+                              <Camera className="h-5 w-5" />
+                            </span>
+                          </button>
+                          <input
+                            ref={profileAvatarInputRef}
+                            type="file"
+                            accept="image/*"
+                            onChange={(event) => handleProfileAvatarChange(event.target.files?.[0] ?? null)}
+                            className="hidden"
+                          />
+                          <button
+                            type="button"
+                            onClick={() => profileAvatarInputRef.current?.click()}
+                            className="rounded-full border border-slate-300 bg-white px-3 py-1.5 text-xs font-medium text-slate-700 transition hover:border-slate-400 hover:text-slate-900"
+                          >
+                            Change photo
+                          </button>
+                        </div>
+                        <label className="block text-xs font-medium text-slate-600">
+                          Name
+                          <input
+                            value={profileNameDraft}
+                            onChange={(event) => setProfileNameDraft(event.target.value)}
+                            className="mt-1 w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm text-slate-900 outline-none transition focus:border-slate-400"
+                          />
+                        </label>
+                        <label className="block text-xs font-medium text-slate-600">
+                          Bio
+                          <textarea
+                            value={profileBioDraft}
+                            onChange={(event) => setProfileBioDraft(event.target.value)}
+                            rows={4}
+                            maxLength={220}
+                            className="mt-1 w-full resize-none rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm text-slate-900 outline-none transition focus:border-slate-400"
+                          />
+                        </label>
+                        {profileEditMessage ? (
+                          <p className="rounded-xl border border-slate-200 bg-white px-3 py-2 text-xs text-slate-600">
+                            {profileEditMessage}
+                          </p>
+                        ) : null}
+                        <button
+                          type="button"
+                          onClick={handleProfileSave}
+                          disabled={isSavingProfile}
+                          className="w-full rounded-full bg-slate-900 px-4 py-2 text-sm font-medium text-white transition hover:bg-slate-800 disabled:cursor-not-allowed disabled:bg-slate-400"
+                        >
+                          {isSavingProfile ? "Saving..." : "Save profile"}
+                        </button>
+                      </div>
+                    ) : null}
+                    {activeProfileLeftRail !== "places-been" && activeProfileLeftRail !== "edit-profile" ? (
                       <div className="profile-left-stats mt-5 grid grid-cols-3 gap-2">
                       <div className="profile-left-stat-card rounded-xl border border-slate-200 bg-stone-50 px-3 py-2 text-center">
                         <p className="text-[10px] uppercase tracking-[0.12em] text-slate-500">Countries</p>
@@ -4064,7 +4218,7 @@ export function SplitScreenSection({ continents }: SplitScreenSectionProps) {
                       </div>
                       </div>
                     ) : null}
-                    {activeProfileLeftRail !== "places-been" ? (
+                    {activeProfileLeftRail !== "places-been" && activeProfileLeftRail !== "edit-profile" ? (
                       <div className="mt-3 rounded-xl border border-slate-200 bg-stone-50 p-3">
                         <p className="text-[10px] uppercase tracking-[0.12em] text-slate-500">Favorites</p>
                         <div className="mt-2 space-y-1.5">
