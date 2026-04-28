@@ -62,6 +62,8 @@ export interface GuideStop {
   name: string;
   coordinates: [number, number];
   description: string;
+  price?: "$" | "$$" | "$$$";
+  priceSource?: string;
   places?: GuideStop[];
   hours?:
     | string

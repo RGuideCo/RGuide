@@ -8,7 +8,7 @@ const footerLinks = [
 
 export function Footer() {
   return (
-    <footer className="border-t border-slate-200/80 bg-white/70">
+    <footer className="hidden border-t border-slate-200/80 bg-white/70 lg:block">
       <div className="page-shell flex flex-col gap-6 py-10 sm:flex-row sm:items-end sm:justify-between">
         <div>
           <p className="text-lg font-semibold text-slate-900">RGuide</p>

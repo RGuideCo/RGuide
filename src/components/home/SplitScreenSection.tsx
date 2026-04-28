@@ -5,18 +5,19 @@ import {
   Camera,
   ChevronDown,
   ChevronRight,
-  ChevronUp,
   Flag,
   Globe2,
+  Heart,
   ListFilter,
   Map as MapIcon,
   MapPin,
   Plus,
+  User,
   X,
 } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
-import type { ReactNode } from "react";
+import type { PointerEvent as ReactPointerEvent, ReactNode } from "react";
 
 import { MapListCard } from "@/components/cards/MapListCard";
 import { SubmitListForm } from "@/components/list/SubmitListForm";
@@ -50,14 +51,15 @@ import {
   contextualFoodCuisinesByCity,
   contextualFoodCuisinesByCountry,
   contextualFoodCuisinesByScope,
+  doesListMatchFoodPrice,
   doesListMatchSubcategory,
+  filterListStopsByFoodPrice,
   generalFoodCuisines,
   getDefaultSelection,
   guideRailActiveColorById,
   guideRailFillOnActiveIds,
   guideRailOptions,
   inferFoodCuisine,
-  inferFoodPrice,
   inferNightlifeBarType,
   isItineraryList,
   isPrivateJournalExperience,
@@ -324,8 +326,13 @@ export function SplitScreenSection({ continents }: SplitScreenSectionProps) {
   const [pendingSourcesOpenGuideId, setPendingSourcesOpenGuideId] = useState<string | null>(null);
   const [closingGuide, setClosingGuide] = useState<MapList | null>(null);
   const [isMobileListSheetExpanded, setIsMobileListSheetExpanded] = useState(false);
+  const [isMobileListSheetDragging, setIsMobileListSheetDragging] = useState(false);
+  const [mobileListSheetDragHeight, setMobileListSheetDragHeight] = useState<number | null>(null);
   const [isMobileCategoryMenuOpen, setIsMobileCategoryMenuOpen] = useState(false);
   const [isMobileCategoryMenuClosing, setIsMobileCategoryMenuClosing] = useState(false);
+  const mobileListSheetDraggingRef = useRef(false);
+  const mobileListSheetDragStartRef = useRef({ y: 0, height: 0 });
+  const mobileListSheetTapCandidateRef = useRef(false);
   const mobileCategoryCloseTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const [mobileAllSelection, setMobileAllSelection] = useState({
     country: false,
@@ -1569,14 +1576,14 @@ export function SplitScreenSection({ continents }: SplitScreenSectionProps) {
   const filteredLists = (
     activeCategory === "Food"
       ? categoryFilteredLists.filter((list) => {
-          const matchesPrice = activeFoodPrice ? inferFoodPrice(list) === activeFoodPrice : true;
+          const matchesPrice = activeFoodPrice ? doesListMatchFoodPrice(list, activeFoodPrice) : true;
           const matchesCuisine =
             activeFoodCuisine === FOOD_CUISINE_ANY
               ? true
               : inferFoodCuisine(list, activeFoodCuisineOptions) === activeFoodCuisine;
           const matchesSubcategory = activeSubcategory ? doesListMatchSubcategory(list, activeSubcategory) : true;
           return matchesPrice && matchesCuisine && matchesSubcategory;
-        })
+        }).map((list) => filterListStopsByFoodPrice(list, activeFoodPrice))
       : activeCategory === "Nightlife"
         ? categoryFilteredLists.filter((list) => {
             const matchesSubcategory = activeSubcategory ? doesListMatchSubcategory(list, activeSubcategory) : true;
@@ -1663,6 +1670,13 @@ export function SplitScreenSection({ continents }: SplitScreenSectionProps) {
     ? categorySubcategoriesByScope[subcategoryScope][visibleSubcategoryCategory]
     : [];
   const categoryTitleLabel = activeCategoryOption?.label ?? hoveredCategoryLabel ?? "Categories";
+  const mobileGuideSelectors = [
+    { id: "r-guides" as const, label: "R Guides", shortLabel: "R", icon: null },
+    { id: "user-guides" as const, label: "User Guides", shortLabel: "User", icon: User },
+    { id: "favorites" as const, label: "Favorites", shortLabel: "Fav", icon: Heart },
+  ];
+  const activeMobileGuideSelector =
+    mobileGuideSelectors.find((selector) => selector.id === activeGuideRail) ?? mobileGuideSelectors[0];
   const isMobileCategoryMenuExpanded = isMobileCategoryMenuOpen || isMobileCategoryMenuClosing;
   const openMobileCategoryMenu = () => {
     if (mobileCategoryCloseTimeoutRef.current) {
@@ -1692,6 +1706,72 @@ export function SplitScreenSection({ continents }: SplitScreenSectionProps) {
       return;
     }
     openMobileCategoryMenu();
+  };
+  const getMobileListSheetBounds = () => {
+    if (typeof window === "undefined") {
+      return { min: 144, max: 504 };
+    }
+    return {
+      min: 144,
+      max: Math.round(window.innerHeight * 0.6),
+    };
+  };
+  const handleMobileListSheetDragStart = (event: ReactPointerEvent<HTMLElement>) => {
+    if (typeof window === "undefined" || window.innerWidth >= 1024) {
+      return;
+    }
+    const target = event.target as HTMLElement | null;
+    const isSheetHandle = Boolean(target?.closest("[data-mobile-sheet-handle]"));
+    if (!isSheetHandle && target?.closest("button, a, input, select, textarea")) {
+      return;
+    }
+    const currentHeight = rightPaneRef.current?.getBoundingClientRect().height ?? getMobileListSheetBounds().min;
+    mobileListSheetDragStartRef.current = {
+      y: event.clientY,
+      height: currentHeight,
+    };
+    mobileListSheetTapCandidateRef.current = true;
+    mobileListSheetDraggingRef.current = true;
+    setIsMobileListSheetDragging(true);
+    setMobileListSheetDragHeight(currentHeight);
+    event.currentTarget.setPointerCapture(event.pointerId);
+  };
+  const handleMobileListSheetDragMove = (event: ReactPointerEvent<HTMLElement>) => {
+    if (!mobileListSheetDraggingRef.current) {
+      return;
+    }
+    const { min, max } = getMobileListSheetBounds();
+    const deltaY = event.clientY - mobileListSheetDragStartRef.current.y;
+    if (Math.abs(deltaY) > 6) {
+      mobileListSheetTapCandidateRef.current = false;
+    }
+    const nextHeight = Math.min(max, Math.max(min, mobileListSheetDragStartRef.current.height - deltaY));
+    setMobileListSheetDragHeight(nextHeight);
+  };
+  const handleMobileListSheetDragEnd = (event: ReactPointerEvent<HTMLElement>) => {
+    if (!mobileListSheetDraggingRef.current) {
+      return;
+    }
+    const { min, max } = getMobileListSheetBounds();
+    const finalHeight = mobileListSheetDragHeight ?? mobileListSheetDragStartRef.current.height;
+    if (mobileListSheetTapCandidateRef.current) {
+      if (isGuideTakingFullListPane) {
+        setExpandedGuideId(null);
+        setClosingGuide(null);
+        setIsMobileListSheetExpanded(false);
+      } else {
+        setIsMobileListSheetExpanded((current) => !current);
+      }
+    } else {
+      setIsMobileListSheetExpanded(finalHeight >= min + (max - min) * 0.42);
+    }
+    mobileListSheetTapCandidateRef.current = false;
+    mobileListSheetDraggingRef.current = false;
+    setIsMobileListSheetDragging(false);
+    setMobileListSheetDragHeight(null);
+    if (event.currentTarget.hasPointerCapture(event.pointerId)) {
+      event.currentTarget.releasePointerCapture(event.pointerId);
+    }
   };
   const handleCategoryToggle = (category: ListCategory) => {
     setActiveSubcategory(null);
@@ -2703,10 +2783,10 @@ export function SplitScreenSection({ continents }: SplitScreenSectionProps) {
             )}
           </div>
         <div className="min-w-0 flex-1">
-          <div className="mx-auto w-full max-w-[1600px] px-1 sm:px-2 lg:px-2">
+          <div className="w-full lg:mx-auto lg:max-w-[1600px] lg:px-2">
           <div
             ref={shellViewportRef}
-            className={`relative h-[100svh] min-h-[38rem] w-full bg-white shadow-sm lg:min-h-0 lg:rounded-2xl lg:border lg:border-slate-200/80 ${
+            className={`relative h-[100svh] min-h-[38rem] w-full bg-white lg:min-h-0 lg:rounded-2xl lg:border lg:border-slate-200/80 lg:shadow-sm ${
               isSubcategoryMenuOpen && !isGuideTakingFullListPane ? "overflow-visible" : "overflow-hidden"
             } ${explorerPaneHeight}`}
           >
@@ -4685,36 +4765,87 @@ export function SplitScreenSection({ continents }: SplitScreenSectionProps) {
 
             <div
               ref={rightPaneRef}
-              className={`pointer-events-auto absolute inset-x-0 bottom-0 z-40 rounded-t-xl border-t border-slate-200 bg-white shadow-[0_-12px_32px_rgba(15,23,42,0.18)] transition-[height,padding] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] lg:relative lg:inset-auto lg:z-20 lg:rounded-none lg:border-t-0 lg:shadow-none ${
+              className={`pointer-events-auto absolute inset-x-0 bottom-0 z-40 rounded-t-xl rounded-tl-none border-t border-slate-200 bg-white shadow-[0_-12px_32px_rgba(15,23,42,0.18)] ${
+                isMobileListSheetDragging ? "transition-none" : "transition-[height,padding] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)]"
+              } lg:relative lg:inset-auto lg:z-20 lg:rounded-none lg:border-t-0 lg:shadow-none ${
                 isMobileListSheetExpanded ? "h-[60svh]" : "h-36"
               } ${
-                isGuideTakingFullListPane ? "p-0" : "px-4 pb-4 pt-2 lg:p-5"
+                isGuideTakingFullListPane ? "p-0" : "p-3 lg:p-5"
               } overflow-visible ${
                 isSubcategoryMenuOpen && !isGuideTakingFullListPane ? "lg:overflow-visible" : "lg:overflow-hidden"
               } lg:ml-0 lg:w-full lg:h-auto ${explorerPaneHeight}`}
+              style={mobileListSheetDragHeight === null ? undefined : { height: `${mobileListSheetDragHeight}px` }}
+              onPointerMove={handleMobileListSheetDragMove}
+              onPointerUp={handleMobileListSheetDragEnd}
+              onPointerCancel={handleMobileListSheetDragEnd}
             >
-              <div className={`flex h-full flex-col ${paneTransitionClass}`}>
+              <div
+                className="mobile-rguides-tab absolute left-0 -top-7 z-[80] flex h-7 min-w-[6.25rem] touch-none items-center rounded-t-lg border border-b-0 border-slate-200 bg-slate-950 px-3 text-[10px] font-semibold uppercase tracking-[0.16em] text-white shadow-[0_-5px_12px_rgba(15,23,42,0.12)] transition-opacity duration-300 lg:hidden"
+                data-mobile-sheet-handle
+                onPointerDown={handleMobileListSheetDragStart}
+                onPointerMove={handleMobileListSheetDragMove}
+                onPointerUp={handleMobileListSheetDragEnd}
+                onPointerCancel={handleMobileListSheetDragEnd}
+              >
+                {activeMobileGuideSelector.label}
+              </div>
+              <div
+                className={`absolute right-4 -top-8 z-[90] flex h-7 items-center justify-end gap-2.5 transition-[opacity,transform] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] lg:hidden ${
+                  isMobileCategoryMenuExpanded || isGuideTakingFullListPane
+                    ? "pointer-events-none -translate-y-1 opacity-0"
+                    : "translate-y-0 opacity-100"
+                }`}
+              >
+                {mobileGuideSelectors.map((selector) => {
+                  const isActive = activeGuideRail === selector.id;
+                  const SelectorIcon = selector.icon;
+                  return (
+                    <button
+                      key={selector.id}
+                      type="button"
+                      onClick={() => {
+                        setActiveGuideRail(selector.id);
+                        setExpandedGuideId(null);
+                        setClosingGuide(null);
+                      }}
+                      className={`flex h-5 w-5 items-center justify-center rounded-full border text-[9px] font-semibold transition ${
+                        isActive
+                          ? "border-slate-900 bg-slate-900 text-white shadow-sm"
+                          : "border-slate-200 bg-white text-slate-700 shadow-sm"
+                      }`}
+                      aria-label={selector.label}
+                      title={selector.label}
+                    >
+                      {SelectorIcon ? <SelectorIcon className="h-2.5 w-2.5" /> : selector.shortLabel}
+                    </button>
+                  );
+                })}
+              </div>
+              <button
+                type="button"
+                className="absolute left-1/2 -top-7 z-[85] flex h-7 -translate-x-1/2 touch-none items-center justify-center transition-opacity duration-300 lg:hidden"
+                data-mobile-sheet-handle
+                onPointerDown={handleMobileListSheetDragStart}
+                onPointerMove={handleMobileListSheetDragMove}
+                onPointerUp={handleMobileListSheetDragEnd}
+                onPointerCancel={handleMobileListSheetDragEnd}
+                aria-label="Drag guides panel"
+              >
+                <span className="h-1.5 w-12 rounded-full bg-slate-300/80" />
+              </button>
+              <div className="pointer-events-none absolute inset-0 z-[82] rounded-t-xl rounded-tl-none bg-white lg:rounded-none" aria-hidden="true" />
+              <div className={`relative z-[85] flex h-full flex-col ${paneTransitionClass}`}>
                 <div
                   className={`relative flex shrink-0 items-center transition-[height,margin-bottom] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] lg:hidden ${
                     isGuideTakingFullListPane ? "mb-0 h-0" : "mb-2 h-8"
                   }`}
+                  onPointerDown={handleMobileListSheetDragStart}
                 >
                   <div className={`min-w-0 pr-12 transition-opacity duration-200 ${isMobileCategoryMenuExpanded || isGuideTakingFullListPane ? "opacity-0" : "opacity-100"}`}>
                     <p className="truncate text-xs font-semibold uppercase tracking-[0.14em] text-slate-500">
                       {categoryTitleLabel}
                     </p>
                   </div>
-	                  <button
-	                    type="button"
-	                    onClick={() => setIsMobileListSheetExpanded((current) => !current)}
-	                    className="absolute -top-9 left-1/2 flex h-7 w-16 -translate-x-1/2 items-center justify-center text-slate-500"
-	                    aria-label={isMobileListSheetExpanded ? "Collapse guides" : "Expand guides"}
-	                  >
-	                    <ChevronUp
-	                      className={`h-4 w-4 transition-transform duration-300 ${isMobileListSheetExpanded ? "rotate-180" : ""}`}
-	                      aria-hidden="true"
-	                    />
-	                  </button>
                   <div
                     className={`absolute right-0 top-0 z-[95] flex h-8 items-center justify-end overflow-hidden rounded-full bg-white transition-[width,opacity,transform] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] ${
                       isMobileCategoryMenuExpanded ? "w-full" : "w-8"
@@ -4723,61 +4854,60 @@ export function SplitScreenSection({ continents }: SplitScreenSectionProps) {
                     }`}
                   >
                     <div
-                      className="flex min-w-0 flex-1 items-center justify-between gap-1 pl-1"
+                      className={`grid min-w-0 flex-1 items-center transition-[padding,grid-template-columns] duration-300 ${
+                        isMobileCategoryMenuExpanded ? "grid-cols-6 gap-2 pl-1 pr-2" : "grid-cols-1 justify-items-end pl-1"
+                      }`}
                     >
-                        {categoryOptions.map((option, index) => (
-                          <button
-                            key={option.label}
-                            type="button"
-                            onClick={() => {
-                              setActiveSubcategory(null);
-                              setActiveFoodPrice(null);
-                              setActiveFoodOpenTime("Now");
-                              setIsFoodOpenTimeMenuOpen(false);
-                              setActiveFoodCuisine(FOOD_CUISINE_ANY);
-                              setIsFoodCuisineMenuOpen(false);
-                              setActiveNightlifeBarType(NIGHTLIFE_BAR_TYPE_ANY);
-                              setIsNightlifeBarMenuOpen(false);
-                              setActiveCategory(option.category);
-                              closeMobileCategoryMenu();
-                            }}
-                            className={`flex h-7 w-7 shrink-0 items-center justify-center rounded-full border bg-white text-slate-600 shadow-sm transition-[opacity,transform,background-color,color,border-color] duration-300 ${
-                              isMobileCategoryMenuOpen ? "translate-x-0 scale-100 opacity-100" : "pointer-events-none translate-x-8 scale-75 opacity-0"
-                            }`}
-                            style={{
-                              borderColor: CATEGORY_STYLES[option.category].mapColor,
-                              transitionDelay: isMobileCategoryMenuOpen ? `${120 + index * 35}ms` : "0ms",
-                            }}
-                            aria-label={option.label}
-                          >
-                            <option.icon className="h-3.5 w-3.5" />
-                          </button>
-                        ))}
+                        {categoryOptions.map((option, index) => {
+                          const isActive = activeCategory === option.category;
+                          return (
+                            <button
+                              key={option.label}
+                              type="button"
+                              onClick={() => handleCategoryToggle(option.category)}
+                              className={`flex h-6 w-6 shrink-0 items-center justify-center rounded-full border shadow-sm transition-[opacity,transform,background-color,color,border-color] duration-300 ${
+                                isMobileCategoryMenuOpen ? "translate-x-0 scale-100 opacity-100" : "pointer-events-none translate-x-8 scale-75 opacity-0"
+                              } ${isActive ? "text-white" : "bg-white text-slate-600"}`}
+                              style={{
+                                backgroundColor: isActive ? CATEGORY_STYLES[option.category].mapColor : undefined,
+                                borderColor: CATEGORY_STYLES[option.category].mapColor,
+                                transitionDelay: isMobileCategoryMenuOpen ? `${120 + index * 35}ms` : "0ms",
+                              }}
+                              aria-label={isActive ? `Clear ${option.label}` : option.label}
+                              aria-pressed={isActive}
+                            >
+                              <option.icon className="h-3 w-3" />
+                            </button>
+                          );
+                        })}
                     </div>
                     <button
                       type="button"
                       onClick={toggleMobileCategoryMenu}
-                      className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-full transition-colors ${
+                      className={`flex h-7 w-7 shrink-0 items-center justify-center rounded-full border shadow-sm transition-[background-color,color,border-color] ${
                         isMobileCategoryMenuExpanded
-                          ? "text-slate-700"
+                          ? "border-slate-200 bg-white text-slate-700"
                           : activeCategoryOption
                             ? "text-white"
-                            : "text-slate-700"
+                            : "border-slate-200 bg-white text-slate-700"
                       }`}
                       style={
                         activeCategoryOption && !isMobileCategoryMenuExpanded
-                          ? { backgroundColor: CATEGORY_STYLES[activeCategoryOption.category].mapColor }
+                          ? {
+                              backgroundColor: CATEGORY_STYLES[activeCategoryOption.category].mapColor,
+                              borderColor: CATEGORY_STYLES[activeCategoryOption.category].mapColor,
+                            }
                           : undefined
                       }
                       aria-label="Open categories"
                       aria-expanded={isMobileCategoryMenuOpen}
                     >
                       {isMobileCategoryMenuExpanded ? (
-                        <X className="h-3.5 w-3.5" />
+                        <X className="h-3 w-3" />
                       ) : activeCategoryOption ? (
-                        <activeCategoryOption.icon className="h-3.5 w-3.5" />
+                        <activeCategoryOption.icon className="h-3 w-3" />
                       ) : (
-                        <ListFilter className="h-3.5 w-3.5" />
+                        <ListFilter className="h-3 w-3" />
                       )}
                     </button>
                   </div>

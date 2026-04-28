@@ -279,6 +279,8 @@ export function MapListCard({
     name: stop.name,
     coordinates: stop.coordinates,
     description: stop.description,
+    price: stop.price,
+    priceSource: stop.priceSource,
     hours: stop.hours,
   });
   const buildNestedStopFromList = (): MapList["stops"][number] => {
@@ -305,6 +307,8 @@ export function MapListCard({
           name: stop.name,
           coordinates: stop.coordinates,
           description: stop.description,
+          price: stop.price,
+          priceSource: stop.priceSource,
           hours: stop.hours,
           places: stop.places?.map((place, index) => cloneStopForGuideAddition(place, idPrefix, index)),
         };
@@ -421,7 +425,7 @@ export function MapListCard({
   return (
     <article
       className={`group surface relative overflow-hidden transition-[background-color,border-color] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] ${
-        fillPane && expanded ? "flex h-full max-h-full min-h-0 flex-col !rounded-t-xl !rounded-b-none !border-0 !shadow-none lg:!rounded-l-none lg:!rounded-r-2xl" : ""
+        fillPane && expanded ? "flex h-full max-h-full min-h-0 flex-col !rounded-tr-xl !rounded-l-none !rounded-b-none !border-0 !shadow-none lg:!rounded-l-none lg:!rounded-r-2xl" : ""
       } ${expanded ? "border border-slate-300 !bg-slate-50 px-3 pb-3 pt-0" : "p-3"}`}
       style={!expanded ? { borderColor: categoryStyle.mapColor } : undefined}
       onMouseEnter={() => onHoverStart?.(list)}
@@ -642,6 +646,14 @@ export function MapListCard({
                               />
                             )}
                             <span className="min-w-0 flex-1 font-semibold">{stop.name}</span>
+                            {stop.price ? (
+                              <span
+                                title={stop.priceSource ? `Price source: ${stop.priceSource}` : "Restaurant price tier"}
+                                className="rounded-full bg-white px-2 py-0.5 text-[10px] font-semibold text-slate-500 ring-1 ring-slate-200"
+                              >
+                                {stop.price}
+                              </span>
+                            ) : null}
                             {stop.places?.length ? (
                               <span className="rounded-full bg-slate-100 px-2 py-0.5 text-[10px] font-medium uppercase tracking-[0.08em] text-slate-600">
                                 {stop.places.length} places

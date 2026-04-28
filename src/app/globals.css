@@ -681,3 +681,25 @@ textarea:focus-visible {
 .profile-submit-right-expand-in {
   animation: profile-submit-right-expand-in 640ms cubic-bezier(0.22, 1, 0.36, 1) both;
 }
+
+@media (max-width: 1023px) {
+  .mobile-rguides-tab {
+    overflow: visible;
+  }
+
+  .mobile-rguides-tab::before {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    right: -10px;
+    z-index: -1;
+    height: 10px;
+    width: 10px;
+    pointer-events: none;
+    border-left: 1px solid rgb(226 232 240);
+    border-bottom: 1px solid rgb(226 232 240);
+    border-bottom-left-radius: 10px;
+    background: transparent;
+    box-shadow: -4px 4px 0 3px rgb(2 6 23);
+  }
+}

@@ -9,7 +9,9 @@
     "lint": "tsc --noEmit",
     "typecheck": "tsc --noEmit",
     "enrich:neighborhoods": "node scripts/fetch-city-neighborhoods.mjs",
-    "enrich:boundaries": "node scripts/fetch-city-neighborhoods.mjs --boundaries-only"
+    "enrich:boundaries": "node scripts/fetch-city-neighborhoods.mjs --boundaries-only",
+    "export:editorial-guides": "node scripts/export-editorial-guides-sql.mjs",
+    "push:editorial-guides": "node scripts/push-editorial-guides.mjs"
   },
   "dependencies": {
     "@ffmpeg-installer/ffmpeg": "^1.1.0",
@@ -24,6 +26,7 @@
     "lucide-react": "latest",
     "maplibre-gl": "^5.22.0",
     "next": "latest",
+    "pg": "^8.20.0",
     "polygon-clipping": "^0.15.7",
     "react": "latest",
     "react-dom": "latest",

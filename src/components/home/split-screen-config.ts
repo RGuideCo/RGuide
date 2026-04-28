@@ -225,6 +225,14 @@ export const categorySubcategoriesByScope: Record<SubcategoryScope, Record<ListC
 };
 
 export function inferFoodPrice(list: MapList): FoodPriceTier {
+  const stopPrices = list.stops.map((stop) => stop.price).filter((price): price is FoodPriceTier => Boolean(price));
+  if (stopPrices.length) {
+    if (stopPrices.includes("$$")) {
+      return "$$";
+    }
+    return stopPrices.includes("$") ? "$" : "$$$";
+  }
+
   const text = `${list.title} ${list.description}`.toLowerCase();
   if (/(michelin|tasting|chef'?s table|omakase|fine dining|luxury|degustation|signature menu)/.test(text)) {
     return "$$$";
@@ -233,6 +241,27 @@ export function inferFoodPrice(list: MapList): FoodPriceTier {
     return "$";
   }
   return "$$";
+}
+
+export function doesListMatchFoodPrice(list: MapList, priceTier: FoodPriceTier): boolean {
+  const stopPrices = list.stops.map((stop) => stop.price).filter(Boolean);
+  return stopPrices.length ? stopPrices.includes(priceTier) : inferFoodPrice(list) === priceTier;
+}
+
+export function filterListStopsByFoodPrice(list: MapList, priceTier: FoodPriceTier | null): MapList {
+  if (!priceTier) {
+    return list;
+  }
+
+  const pricedStops = list.stops.filter((stop) => stop.price === priceTier);
+  if (!pricedStops.length) {
+    return list;
+  }
+
+  return {
+    ...list,
+    stops: pricedStops,
+  };
 }
 
 export function inferFoodCuisine(list: MapList, cuisineOptions: string[]): string {
