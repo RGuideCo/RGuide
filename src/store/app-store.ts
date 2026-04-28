@@ -5,6 +5,10 @@ import { persist } from "zustand/middleware";
 
 import { mapLists } from "@/data";
 import { slugify } from "@/lib/utils";
+import {
+  deleteSubmittedGuide,
+  saveSubmittedGuide,
+} from "@/lib/supabase/submitted-guides";
 import { MapList, SubmissionType, User } from "@/types";
 
 type AuthMode = "login" | "signup";
@@ -55,6 +59,7 @@ interface AppState {
   submittedLists: MapList[];
   openAuthModal: (mode?: AuthMode) => void;
   setCurrentUser: (user: User | null) => void;
+  setSubmittedLists: (lists: MapList[]) => void;
   setProfileShellActive: (active: boolean) => void;
   closeAuthModal: () => void;
   logout: () => void;
@@ -107,6 +112,7 @@ export const useAppStore = create<AppState>()(
           authMode: mode,
         }),
       setCurrentUser: (user) => set({ currentUser: user }),
+      setSubmittedLists: (lists) => set({ submittedLists: lists }),
       setProfileShellActive: (active) => set({ isProfileShellActive: active }),
       closeAuthModal: () => set({ authModalOpen: false }),
       logout: () => set({ currentUser: null }),
@@ -365,6 +371,7 @@ export const useAppStore = create<AppState>()(
         set((state) => ({
           submittedLists: [nextList, ...state.submittedLists],
         }));
+        void saveSubmittedGuide(nextList);
 
         return {
           ok: true,
@@ -439,6 +446,7 @@ export const useAppStore = create<AppState>()(
             list.id === listId ? updatedList : list,
           ),
         }));
+        void saveSubmittedGuide(updatedList);
 
         return {
           ok: true,
@@ -475,6 +483,7 @@ export const useAppStore = create<AppState>()(
         set((state) => ({
           submittedLists: state.submittedLists.filter((list) => list.id !== listId),
         }));
+        void deleteSubmittedGuide(listId);
 
         return {
           ok: true,
@@ -483,23 +492,35 @@ export const useAppStore = create<AppState>()(
       },
       setJournalVisibility: (listId, visibility) =>
         get().requireAuth(() =>
-          set((state) => ({
-            submittedLists: state.submittedLists.map((list) => {
-              if (list.id !== listId || list.submissionType !== "journal") {
+          set((state) => {
+            let updatedJournal: MapList | null = null;
+            const submittedLists = state.submittedLists.map((list) => {
+              if (
+                list.id !== listId ||
+                list.submissionType !== "journal" ||
+                !state.currentUser ||
+                list.creator.id !== state.currentUser.id
+              ) {
                 return list;
               }
-              if (!state.currentUser || list.creator.id !== state.currentUser.id) {
-                return list;
-              }
-              return {
+
+              updatedJournal = {
                 ...list,
                 journal: {
                   ...list.journal,
                   visibility,
                 },
               };
-            }),
-          })),
+
+              return updatedJournal;
+            });
+
+            if (updatedJournal) {
+              void saveSubmittedGuide(updatedJournal);
+            }
+
+            return { submittedLists };
+          }),
         ),
     }),
     {

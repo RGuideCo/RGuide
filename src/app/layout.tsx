@@ -3,6 +3,7 @@ import type { ReactNode } from "react";
 
 import { AuthModal } from "@/components/auth/AuthModal";
 import { AuthSync } from "@/components/auth/AuthSync";
+import { SubmittedGuidesSync } from "@/components/auth/SubmittedGuidesSync";
 import { Footer } from "@/components/layout/Footer";
 import { Header } from "@/components/layout/Header";
 import { SITE_DESCRIPTION, SITE_NAME } from "@/lib/constants";
@@ -37,6 +38,7 @@ export default function RootLayout({
     <html lang="en">
       <body>
         <AuthSync />
+        <SubmittedGuidesSync />
         <Header />
         <main>{children}</main>
         <Footer />
