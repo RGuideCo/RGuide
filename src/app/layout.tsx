@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import type { ReactNode } from "react";
 
 import { AuthModal } from "@/components/auth/AuthModal";
+import { AuthSync } from "@/components/auth/AuthSync";
 import { Footer } from "@/components/layout/Footer";
 import { Header } from "@/components/layout/Header";
 import { SITE_DESCRIPTION, SITE_NAME } from "@/lib/constants";
@@ -35,6 +36,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
+        <AuthSync />
         <Header />
         <main>{children}</main>
         <Footer />

@@ -13,6 +13,8 @@
   },
   "dependencies": {
     "@ffmpeg-installer/ffmpeg": "^1.1.0",
+    "@supabase/ssr": "^0.10.2",
+    "@supabase/supabase-js": "^2.105.0",
     "capitals-coordinates": "^1.2.0",
     "clsx": "^2.1.1",
     "countries-list": "^3.3.0",

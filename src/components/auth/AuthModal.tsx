@@ -1,12 +1,78 @@
 "use client";
 
 import { X } from "lucide-react";
+import { FormEvent, useEffect, useState } from "react";
 
+import { getSupabaseBrowserClient } from "@/lib/supabase/client";
 import { useAppStore } from "@/store/app-store";
 
 export function AuthModal() {
-  const { authModalOpen, authMode, closeAuthModal, loginAsMockUser, openAuthModal } =
-    useAppStore();
+  const { authModalOpen, authMode, closeAuthModal, openAuthModal } = useAppStore();
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [message, setMessage] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const supabase = getSupabaseBrowserClient();
+
+  useEffect(() => {
+    setMessage("");
+  }, [authMode]);
+
+  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    setMessage("");
+
+    if (!supabase) {
+      setMessage("Supabase is not configured yet. Add the project URL and publishable key.");
+      return;
+    }
+
+    setIsSubmitting(true);
+
+    try {
+      if (authMode === "signup") {
+        const { data, error } = await supabase.auth.signUp({
+          email,
+          password,
+          options: {
+            data: {
+              full_name: name.trim() || email.split("@")[0],
+            },
+            emailRedirectTo:
+              typeof window !== "undefined" ? window.location.origin : undefined,
+          },
+        });
+
+        if (error) {
+          setMessage(error.message);
+          return;
+        }
+
+        if (!data.session) {
+          setMessage("Check your email to confirm your account, then log in.");
+          return;
+        }
+
+        closeAuthModal();
+        return;
+      }
+
+      const { error } = await supabase.auth.signInWithPassword({
+        email,
+        password,
+      });
+
+      if (error) {
+        setMessage(error.message);
+        return;
+      }
+
+      closeAuthModal();
+    } finally {
+      setIsSubmitting(false);
+    }
+  }
 
   if (!authModalOpen) {
     return null;
@@ -30,15 +96,32 @@ export function AuthModal() {
           {authMode === "login" ? "Sign in to continue" : "Join RGuide"}
         </h2>
         <p className="mt-2 text-sm text-slate-600">
-          Front-end demo only. TODO: connect Supabase Auth and secure server actions later.
+          Sign in with the email and password connected to your RGuide account.
         </p>
 
-        <form className="mt-6 space-y-4">
+        <form onSubmit={handleSubmit} className="mt-6 space-y-4">
+          {authMode === "signup" ? (
+            <label className="block text-sm">
+              <span className="mb-2 block font-medium text-slate-700">Name</span>
+              <input
+                type="text"
+                value={name}
+                onChange={(event) => setName(event.target.value)}
+                placeholder="Your name"
+                autoComplete="name"
+                className="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-slate-900"
+              />
+            </label>
+          ) : null}
           <label className="block text-sm">
             <span className="mb-2 block font-medium text-slate-700">Email</span>
             <input
               type="email"
+              value={email}
+              onChange={(event) => setEmail(event.target.value)}
               placeholder="traveler@example.com"
+              autoComplete="email"
+              required
               className="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-slate-900"
             />
           </label>
@@ -46,17 +129,32 @@ export function AuthModal() {
             <span className="mb-2 block font-medium text-slate-700">Password</span>
             <input
               type="password"
-              placeholder="••••••••"
+              value={password}
+              onChange={(event) => setPassword(event.target.value)}
+              placeholder="Password"
+              autoComplete={authMode === "login" ? "current-password" : "new-password"}
+              minLength={6}
+              required
               className="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-slate-900"
             />
           </label>
 
+          {message ? (
+            <p className="rounded-2xl border border-orange-200 bg-orange-50 px-4 py-3 text-sm text-orange-800">
+              {message}
+            </p>
+          ) : null}
+
           <button
-            type="button"
-            onClick={loginAsMockUser}
-            className="w-full rounded-2xl bg-slate-900 px-4 py-3 text-sm font-medium text-white hover:bg-slate-800"
+            type="submit"
+            disabled={isSubmitting}
+            className="w-full rounded-2xl bg-slate-900 px-4 py-3 text-sm font-medium text-white hover:bg-slate-800 disabled:cursor-not-allowed disabled:bg-slate-400"
           >
-            {authMode === "login" ? "Login with mock account" : "Create mock account"}
+            {isSubmitting
+              ? "Working..."
+              : authMode === "login"
+                ? "Log in"
+                : "Create account"}
           </button>
         </form>
 

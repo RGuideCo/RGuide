@@ -10,35 +10,6 @@ import { MapList, SubmissionType, User } from "@/types";
 type AuthMode = "login" | "signup";
 const DEFAULT_ITINERARY_PLAYLIST_ID = "itinerary-primary";
 
-const mockLoggedInUser: User = {
-  id: "user-brodriguezdesign",
-  name: "Brian Rodriguez",
-  email: "brodriguezdesign@gmail.com",
-  joinedAt: "2026-01-10T00:00:00.000Z",
-  avatar: "https://images.unsplash.com/photo-1499092346589-b9b6be3e94b2?auto=format&fit=crop&w=400&q=80",
-  bio: "Design-led city explorer building map guides and place-based experiences.",
-};
-
-function normalizeKnownProfile(user: User | null | undefined): User | null {
-  if (!user) {
-    return null;
-  }
-
-  if (user.id === "user-brodriguezdesign" || user.email === "brodriguezdesign@gmail.com") {
-    return {
-      ...user,
-      id: "user-brodriguezdesign",
-      name: "Brian Rodriguez",
-      email: "brodriguezdesign@gmail.com",
-      joinedAt: "2026-01-10T00:00:00.000Z",
-      avatar: "https://images.unsplash.com/photo-1499092346589-b9b6be3e94b2?auto=format&fit=crop&w=400&q=80",
-      bio: "Design-led city explorer building map guides and place-based experiences.",
-    };
-  }
-
-  return user;
-}
-
 interface SubmitInput {
   submissionType: SubmissionType;
   url: string;
@@ -83,9 +54,9 @@ interface AppState {
   placesBeenByUserId: Record<string, PlacesBeenEntries>;
   submittedLists: MapList[];
   openAuthModal: (mode?: AuthMode) => void;
+  setCurrentUser: (user: User | null) => void;
   setProfileShellActive: (active: boolean) => void;
   closeAuthModal: () => void;
-  loginAsMockUser: () => void;
   logout: () => void;
   requireAuth: (callback?: () => void) => void;
   toggleFavorite: (listId: string) => void;
@@ -109,7 +80,7 @@ interface AppState {
 export const useAppStore = create<AppState>()(
   persist(
     (set, get) => ({
-      currentUser: mockLoggedInUser,
+      currentUser: null,
       isProfileShellActive: false,
       authModalOpen: false,
       authMode: "login",
@@ -135,13 +106,9 @@ export const useAppStore = create<AppState>()(
           authModalOpen: true,
           authMode: mode,
         }),
+      setCurrentUser: (user) => set({ currentUser: user }),
       setProfileShellActive: (active) => set({ isProfileShellActive: active }),
       closeAuthModal: () => set({ authModalOpen: false }),
-      loginAsMockUser: () =>
-        set({
-          currentUser: mockLoggedInUser,
-          authModalOpen: false,
-        }),
       logout: () => set({ currentUser: null }),
       requireAuth: (callback) => {
         const { currentUser, openAuthModal } = get();
@@ -537,7 +504,7 @@ export const useAppStore = create<AppState>()(
     }),
     {
       name: "rguide-app-store",
-      version: 4,
+      version: 5,
       partialize: (state) => ({
         currentUser: state.currentUser,
         favoriteIds: state.favoriteIds,
@@ -555,7 +522,7 @@ export const useAppStore = create<AppState>()(
 
         if (!state) {
           return {
-            currentUser: mockLoggedInUser,
+            currentUser: null,
             isProfileShellActive: false,
             authModalOpen: false,
             authMode: "login",
@@ -581,7 +548,7 @@ export const useAppStore = create<AppState>()(
 
         return {
           ...state,
-          currentUser: normalizeKnownProfile(state.currentUser ?? null) ?? mockLoggedInUser,
+          currentUser: null,
           isProfileShellActive: state.isProfileShellActive ?? false,
           favoriteIds: state.favoriteIds ?? [],
           votedIds: state.votedIds ?? [],

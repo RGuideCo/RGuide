@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useState } from "react";
 import { Menu, X } from "lucide-react";
 
+import { getSupabaseBrowserClient } from "@/lib/supabase/client";
 import { useAppStore } from "@/store/app-store";
 
 export function MobileMenu() {
@@ -42,7 +43,8 @@ export function MobileMenu() {
           {currentUser ? (
             <button
               type="button"
-              onClick={() => {
+              onClick={async () => {
+                await getSupabaseBrowserClient()?.auth.signOut();
                 logout();
                 setOpen(false);
               }}
