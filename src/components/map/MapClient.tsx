@@ -88,6 +88,7 @@ type GuideStopFeatureProperties = {
   name: string;
   rank: number;
   rankLabel: string;
+  markerImage: string;
   category: MapList["category"];
   isNested: boolean;
   placesBeenKind: "countries" | "cities" | "places" | "default";
@@ -180,6 +181,7 @@ const GUIDE_STOP_DOT_BASE_RADIUS = { lowZoom: 8.2, highZoom: 10.4 } as const;
 const GUIDE_STOP_CITY_GLOW_SCALE = 11 / 15;
 const GUIDE_STOP_CITY_DOT_SCALE = 0.794;
 const POI_DIAMOND_IMAGE_PREFIX = "poi-diamond";
+const GUIDE_STOP_MARKER_IMAGE_PREFIX = "guide-stop-marker";
 const continentFocusPresets: Record<
   string,
   {
@@ -692,6 +694,59 @@ function getPoiDiamondImageName(category: string) {
   return `${POI_DIAMOND_IMAGE_PREFIX}-${category.toLowerCase()}`;
 }
 
+function getGuideStopMarkerImageName(category: string, label: string) {
+  return `${GUIDE_STOP_MARKER_IMAGE_PREFIX}-${category.toLowerCase()}-${label.replace(/[^a-z0-9]/gi, "-").toLowerCase()}`;
+}
+
+function createGuideStopMarkerImage(color: string, label: string) {
+  const size = 56;
+  const canvas = document.createElement("canvas");
+  canvas.width = size;
+  canvas.height = size;
+  const ctx = canvas.getContext("2d");
+  if (!ctx) {
+    return { width: size, height: size, data: new Uint8Array(size * size * 4) };
+  }
+
+  ctx.save();
+  ctx.translate(size / 2, size / 2);
+  ctx.fillStyle = color;
+  ctx.strokeStyle = "#ffffff";
+  ctx.lineWidth = 3;
+  ctx.beginPath();
+  ctx.arc(0, 0, 20, 0, Math.PI * 2);
+  ctx.fill();
+  ctx.stroke();
+  ctx.restore();
+
+  ctx.save();
+  ctx.fillStyle = "#ffffff";
+  ctx.font = label.length > 1 ? "700 20px 'Noto Sans', Arial, sans-serif" : "700 23px 'Noto Sans', Arial, sans-serif";
+  ctx.textAlign = "center";
+  ctx.textBaseline = "middle";
+  ctx.fillText(label, size / 2, size / 2 + 0.5);
+  ctx.restore();
+
+  return ctx.getImageData(0, 0, size, size);
+}
+
+function ensureGuideStopMarkerImages(map: maplibregl.Map, guideStopData: FeatureCollection<Point, GuideStopFeatureProperties>) {
+  for (const feature of guideStopData.features) {
+    if (feature.properties.isNested) {
+      continue;
+    }
+    const imageName = feature.properties.markerImage;
+    if (map.hasImage(imageName)) {
+      continue;
+    }
+    map.addImage(
+      imageName,
+      createGuideStopMarkerImage(CATEGORY_STYLES[feature.properties.category].mapColor, feature.properties.rankLabel),
+      { pixelRatio: 2 },
+    );
+  }
+}
+
 function createPoiDiamondImage(color: string) {
   const canvas = document.createElement("canvas");
   canvas.width = 68;
@@ -758,6 +813,7 @@ function createGuideStopData(
         name: stop.name,
         rank: index + 1,
         rankLabel: String(index + 1),
+        markerImage: getGuideStopMarkerImageName(activeGuide?.category ?? "Activities", String(index + 1)),
         category: activeGuide?.category ?? "Activities",
         isNested: false,
         placesBeenKind,
@@ -774,6 +830,7 @@ function createGuideStopData(
         name: place.name,
         rank: index + 1 + (placeIndex + 1) / 100,
         rankLabel: String.fromCharCode(65 + (placeIndex % 26)),
+        markerImage: "",
         category: activeGuide?.category ?? "Activities",
         isNested: true,
         placesBeenKind: "default" as const,
@@ -1251,28 +1308,19 @@ function addMapLayers(map: maplibregl.Map) {
 
   map.addLayer({
     id: "guide-stop-points",
-    type: "circle",
+    type: "symbol",
     source: GUIDE_STOP_SOURCE_ID,
     layout: {
-      "circle-sort-key": ["*", -1, ["get", "rank"]],
+      "icon-image": ["get", "markerImage"],
+      "icon-size": ["interpolate", ["linear"], ["zoom"], 3, 0.8, 8, 0.96],
+      "symbol-sort-key": ["*", -1, ["get", "rank"]],
+      "icon-allow-overlap": true,
+      "icon-ignore-placement": true,
     },
     filter: ["!=", ["get", "isNested"], true],
     paint: {
-      "circle-radius": [
-        "interpolate",
-        ["linear"],
-        ["zoom"],
-        3,
-        GUIDE_STOP_DOT_BASE_RADIUS.lowZoom,
-        8,
-        GUIDE_STOP_DOT_BASE_RADIUS.highZoom,
-      ],
-      "circle-color": GUIDE_STOP_COLOR_MATCH,
-      "circle-stroke-color": "#ffffff",
-      "circle-stroke-width": 1,
-      "circle-opacity": 0.96,
-      "circle-radius-transition": { duration: 380, delay: 0 },
-      "circle-opacity-transition": { duration: 280, delay: 0 },
+      "icon-opacity": 0.98,
+      "icon-opacity-transition": { duration: 280, delay: 0 },
     },
   }, "continent-labels");
 
@@ -1336,7 +1384,7 @@ function addMapLayers(map: maplibregl.Map) {
     type: "symbol",
     source: GUIDE_STOP_SOURCE_ID,
     minzoom: 3,
-    filter: ["!=", ["get", "isNested"], true],
+    filter: ["==", ["get", "id"], "__none__"],
     layout: {
       "text-field": ["get", "rankLabel"],
       "text-size": ["interpolate", ["linear"], ["zoom"], 3, 10.8, 8, 12.6],
@@ -1408,6 +1456,10 @@ function addMapLayers(map: maplibregl.Map) {
       "text-halo-width": 0.4,
     },
   }, "continent-labels");
+
+  if (map.getLayer("guide-stop-points") && map.getLayer("guide-stop-labels")) {
+    map.moveLayer("guide-stop-points", "guide-stop-labels");
+  }
 }
 
 export function MapClient({
@@ -2066,6 +2118,7 @@ export function MapClient({
     (map.getSource(CONTINENT_LABEL_SOURCE_ID) as GeoJSONSource).setData(continentLabelData);
     (map.getSource(CITY_SOURCE_ID) as GeoJSONSource).setData(cityData);
     (map.getSource(STATE_LABEL_SOURCE_ID) as GeoJSONSource).setData(stateLabelData);
+    ensureGuideStopMarkerImages(map, guideStopData);
     (map.getSource(GUIDE_STOP_SOURCE_ID) as GeoJSONSource).setData(guideStopData);
     (map.getSource(NEIGHBORHOOD_BOUNDARY_SOURCE_ID) as GeoJSONSource).setData(neighborhoodBoundaryData);
   }, [cityData, continentLabelData, countryData, guideStopData, neighborhoodBoundaryData, stateLabelData]);
@@ -2288,7 +2341,11 @@ export function MapClient({
       activeGuide.id,
       activeGuideFitNonce,
       activeGuideStopSignature,
+      visibleNestedStopParentIds.join(","),
       viewportModeRef.current,
+      viewportInsetsRef.current
+        ? `${viewportInsetsRef.current.top},${viewportInsetsRef.current.right},${viewportInsetsRef.current.bottom},${viewportInsetsRef.current.left}`
+        : "",
     ].join("|");
     if (activeGuideCameraKeyRef.current === nextCameraKey) {
       return;
@@ -2296,6 +2353,44 @@ export function MapClient({
     activeGuideCameraKeyRef.current = nextCameraKey;
     selectionCameraKeyRef.current = null;
     const activeViewportInsets = getViewportInsets(map, viewportModeRef.current, viewportInsetsRef.current);
+    const focusedStopId = visibleNestedStopParentIds[visibleNestedStopParentIds.length - 1] ?? null;
+    const focusedStop = focusedStopId
+      ? activeGuide.stops.find((stop) => stop.id === focusedStopId)
+      : null;
+
+    if (focusedStop) {
+      const [lat, lng] = focusedStop.coordinates;
+      const focusedBounds = new LngLatBounds([lng, lat], [lng, lat]);
+      for (const place of focusedStop.places ?? []) {
+        const [placeLat, placeLng] = place.coordinates;
+        focusedBounds.extend([placeLng, placeLat]);
+      }
+      const focusPadding = clampPaddingToMap(
+        map,
+        mergePadding({ top: 48, right: 52, bottom: 56, left: 52 }, activeViewportInsets),
+      );
+
+      if ((focusedStop.places ?? []).length === 0 || getBoundsArea(focusedBounds) < 0.000001) {
+        map.easeTo({
+          center: [lng, lat],
+          zoom: Math.max(map.getZoom(), 14.2),
+          padding: focusPadding,
+          duration: 1150,
+          easing: smoothCameraEasing,
+          essential: true,
+        });
+        return;
+      }
+
+      map.fitBounds(focusedBounds, {
+        padding: focusPadding,
+        maxZoom: 15.4,
+        duration: 1250,
+        easing: smoothCameraEasing,
+        essential: true,
+      });
+      return;
+    }
 
     if (activeGuide.stops.length === 1) {
       const [lat, lng] = activeGuide.stops[0].coordinates;
@@ -2343,6 +2438,8 @@ export function MapClient({
     activeGuideFitNonce,
     activeGuideStopSignature,
     styleReadyTick,
+    visibleNestedStopParentIds,
+    viewportInsets,
   ]);
 
   useEffect(() => {

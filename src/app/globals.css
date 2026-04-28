@@ -54,6 +54,12 @@ textarea:focus-visible {
   pointer-events: auto;
 }
 
+@media (max-width: 1023px) {
+  .rguide-map-layer .maplibregl-ctrl-top-right {
+    display: none;
+  }
+}
+
 .explorer-map-pane {
   contain: layout paint;
 }

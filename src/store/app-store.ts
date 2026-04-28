@@ -47,6 +47,7 @@ interface PlacesBeenEntries {
 interface AppState {
   currentUser: User | null;
   isProfileShellActive: boolean;
+  isMobileSearchOpen: boolean;
   authModalOpen: boolean;
   authMode: AuthMode;
   favoriteIds: string[];
@@ -61,6 +62,7 @@ interface AppState {
   setCurrentUser: (user: User | null) => void;
   setSubmittedLists: (lists: MapList[]) => void;
   setProfileShellActive: (active: boolean) => void;
+  setMobileSearchOpen: (active: boolean) => void;
   closeAuthModal: () => void;
   logout: () => void;
   requireAuth: (callback?: () => void) => void;
@@ -87,6 +89,7 @@ export const useAppStore = create<AppState>()(
     (set, get) => ({
       currentUser: null,
       isProfileShellActive: false,
+      isMobileSearchOpen: false,
       authModalOpen: false,
       authMode: "login",
       favoriteIds: [],
@@ -114,6 +117,7 @@ export const useAppStore = create<AppState>()(
       setCurrentUser: (user) => set({ currentUser: user }),
       setSubmittedLists: (lists) => set({ submittedLists: lists }),
       setProfileShellActive: (active) => set({ isProfileShellActive: active }),
+      setMobileSearchOpen: (active) => set({ isMobileSearchOpen: active }),
       closeAuthModal: () => set({ authModalOpen: false }),
       logout: () => set({ currentUser: null }),
       requireAuth: (callback) => {

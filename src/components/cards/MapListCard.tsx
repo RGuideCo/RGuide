@@ -421,7 +421,7 @@ export function MapListCard({
   return (
     <article
       className={`group surface relative overflow-hidden transition-[background-color,border-color] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] ${
-        fillPane && expanded ? "flex h-full max-h-full min-h-0 flex-col !rounded-l-none !border-0 !shadow-none" : ""
+        fillPane && expanded ? "flex h-full max-h-full min-h-0 flex-col !rounded-t-xl !rounded-b-none !border-0 !shadow-none lg:!rounded-l-none lg:!rounded-r-2xl" : ""
       } ${expanded ? "border border-slate-300 !bg-slate-50 px-3 pb-3 pt-0" : "p-3"}`}
       style={!expanded ? { borderColor: categoryStyle.mapColor } : undefined}
       onMouseEnter={() => onHoverStart?.(list)}
@@ -436,7 +436,13 @@ export function MapListCard({
       }}
     >
       <div
-        className={`flex items-center justify-between gap-3 ${expanded ? "sticky top-0 z-10 -mx-3 -mt-3 min-h-14 border-b px-3 py-2 text-white backdrop-blur" : ""}`}
+        className={`flex items-center justify-between gap-3 ${
+          expanded
+            ? `sticky top-0 z-10 -mx-3 min-h-14 border-b px-3 py-2 text-white backdrop-blur ${
+                fillPane ? "" : "-mt-3"
+              }`
+            : ""
+        }`}
         style={
           expanded
             ? {
@@ -570,7 +576,7 @@ export function MapListCard({
             key={`${list.id}-${expanded ? "expanded" : "collapsed"}`}
             className={`${fillPane && expanded ? "min-h-0 touch-pan-y overflow-y-auto overscroll-contain pr-1 pb-3" : "overflow-hidden"}`}
           >
-            <div className="pt-4">
+            <div className="pt-2">
               <p className="guide-content-cascade-item text-[11px] font-medium uppercase tracking-[0.2em] text-slate-500">
                 Description
               </p>

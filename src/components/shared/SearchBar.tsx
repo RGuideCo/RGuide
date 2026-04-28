@@ -12,9 +12,10 @@ interface SearchBarProps {
   className?: string;
   autoFocus?: boolean;
   onResultSelect?: () => void;
+  compact?: boolean;
 }
 
-export function SearchBar({ className, autoFocus = false, onResultSelect }: SearchBarProps) {
+export function SearchBar({ className, autoFocus = false, onResultSelect, compact = false }: SearchBarProps) {
   const [query, setQuery] = useState("");
   const searchId = useId();
 
@@ -52,8 +53,13 @@ export function SearchBar({ className, autoFocus = false, onResultSelect }: Sear
       <label className="sr-only" htmlFor={searchId}>
         Search cities and lists
       </label>
-      <div className="flex items-center gap-3 rounded-full border border-white/70 bg-white/90 px-4 py-3 shadow-soft">
-        <Search className="h-4 w-4 text-slate-400" />
+      <div
+        className={clsx(
+          "flex items-center rounded-full border border-white/70 bg-white/90 shadow-soft",
+          compact ? "h-8 gap-2 px-3" : "gap-3 px-4 py-3",
+        )}
+      >
+        <Search className={clsx("text-slate-400", compact ? "h-3.5 w-3.5" : "h-4 w-4")} />
         <input
           id={searchId}
           type="search"
@@ -61,7 +67,10 @@ export function SearchBar({ className, autoFocus = false, onResultSelect }: Sear
           onChange={(event) => setQuery(event.target.value)}
           placeholder="Search cities, countries, or list titles"
           autoFocus={autoFocus}
-          className="w-full bg-transparent text-sm text-slate-900 placeholder:text-slate-400"
+          className={clsx(
+            "w-full appearance-none border-0 bg-transparent p-0 text-slate-900 outline-none ring-0 shadow-none placeholder:text-slate-400 focus:border-0 focus:bg-transparent focus:outline-none focus:ring-0",
+            compact ? "text-xs" : "text-sm",
+          )}
         />
       </div>
 

@@ -5,14 +5,18 @@ import {
   Camera,
   ChevronDown,
   ChevronRight,
+  ChevronUp,
   Flag,
   Globe2,
+  ListFilter,
   Map as MapIcon,
   MapPin,
   Plus,
+  X,
 } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
+import type { ReactNode } from "react";
 
 import { MapListCard } from "@/components/cards/MapListCard";
 import { SubmitListForm } from "@/components/list/SubmitListForm";
@@ -86,6 +90,12 @@ type MobileBrowseSelectOption = {
   label: string;
 };
 
+const MOBILE_ALL_COUNTRIES_VALUE = "__all-countries";
+const MOBILE_ALL_REGIONS_VALUE = "__all-regions";
+const MOBILE_ALL_STATES_VALUE = "__all-states";
+const MOBILE_ALL_CITIES_VALUE = "__all-cities";
+const MOBILE_ALL_NEIGHBORHOODS_VALUE = "__all-neighborhoods";
+
 type ExitingRailIcon =
   | { kind: "continent"; id: string; name: string }
   | { kind: "country"; name: string; flag: string | null }
@@ -97,69 +107,156 @@ function MobileBrowseSelect({
   value,
   placeholder,
   options,
+  selectedIcon,
+  forceIconButton = false,
+  centeredMenu = false,
+  showPlaceholderOption = true,
   onChange,
 }: {
   label: string;
   value: string;
   placeholder: string;
   options: MobileBrowseSelectOption[];
+  selectedIcon?: ReactNode;
+  forceIconButton?: boolean;
+  centeredMenu?: boolean;
+  showPlaceholderOption?: boolean;
   onChange: (value: string) => void;
 }) {
   const [isOpen, setIsOpen] = useState(false);
+  const [menuPointerLeft, setMenuPointerLeft] = useState<number | null>(null);
+  const [menuTop, setMenuTop] = useState<number | null>(null);
+  const triggerRef = useRef<HTMLButtonElement | null>(null);
   const selectedOption = options.find((option) => option.value === value);
+  const isIconButton = forceIconButton || Boolean(selectedOption && selectedIcon);
+  const shouldCenterMenu = isIconButton && centeredMenu;
+  const handleOptionSelect = (nextValue: string) => {
+    onChange(nextValue);
+    setIsOpen(false);
+  };
+  const openMenu = () => {
+    if (shouldCenterMenu) {
+      const triggerRect = triggerRef.current?.getBoundingClientRect();
+      const menuWidth = Math.min(288, Math.max(0, window.innerWidth - 24));
+      const menuLeft = (window.innerWidth - menuWidth) / 2;
+      if (triggerRect) {
+        const pointerLeft = triggerRect.left + triggerRect.width / 2 - menuLeft;
+        setMenuPointerLeft(Math.min(menuWidth - 18, Math.max(18, pointerLeft)));
+        setMenuTop(triggerRect.bottom + 10);
+      }
+    }
+    setIsOpen((current) => !current);
+  };
 
   return (
-    <div className="relative" onBlur={(event) => {
+    <div className={isIconButton ? "relative shrink-0" : "relative mx-auto w-full max-w-[18rem] basis-full"} onBlur={(event) => {
       if (!event.currentTarget.contains(event.relatedTarget)) {
         setIsOpen(false);
       }
     }}>
       <button
+        ref={triggerRef}
         type="button"
-        onClick={() => setIsOpen((current) => !current)}
-        className="flex h-10 w-full items-center justify-between gap-3 rounded-xl border border-slate-200 bg-white/95 px-3 text-left text-sm font-semibold text-slate-900 shadow-[0_8px_18px_rgba(15,23,42,0.06)] transition hover:border-slate-300 focus-visible:ring-orange-500/50"
+        onClick={openMenu}
+        className={
+          isIconButton
+            ? "flex h-8 w-8 items-center justify-center rounded-full border border-slate-200 bg-white/95 text-slate-800 shadow-[0_8px_18px_rgba(15,23,42,0.08)] transition hover:border-slate-300 focus-visible:ring-orange-500/50"
+            : "flex h-10 w-full items-center justify-between gap-3 rounded-xl border border-slate-200 bg-white/95 px-3 text-left text-sm font-semibold text-slate-900 shadow-[0_8px_18px_rgba(15,23,42,0.06)] transition hover:border-slate-300 focus-visible:ring-orange-500/50"
+        }
         aria-haspopup="listbox"
         aria-expanded={isOpen}
         aria-label={label}
+        title={selectedOption?.label ?? placeholder}
       >
-        <span className={selectedOption ? "truncate" : "truncate text-slate-500"}>
-          {selectedOption?.label ?? placeholder}
-        </span>
-        <ChevronDown
-          className={`h-4 w-4 shrink-0 text-slate-400 transition-transform ${isOpen ? "rotate-180" : ""}`}
-          aria-hidden="true"
-        />
+        {isIconButton ? (
+          selectedIcon ?? (
+            <video
+              muted
+              loop
+              autoPlay
+              playsInline
+              preload="auto"
+              poster="/assets/rotating-earth-still.png"
+              className="h-8 w-8 rounded-full object-cover"
+            >
+              <source src="/assets/rotating-earth.webm" type="video/webm" />
+              <source src="/assets/rotating-earth.mp4" type="video/mp4" />
+            </video>
+          )
+        ) : (
+          <>
+            <span className={selectedOption ? "truncate" : "truncate text-slate-500"}>
+              {selectedOption?.label ?? placeholder}
+            </span>
+            <ChevronDown
+              className={`h-4 w-4 shrink-0 text-slate-400 transition-transform ${isOpen ? "rotate-180" : ""}`}
+              aria-hidden="true"
+            />
+          </>
+        )}
       </button>
 
       {isOpen ? (
         <div
           role="listbox"
           aria-label={label}
-          className="absolute left-0 right-0 top-[calc(100%+0.35rem)] z-[90] max-h-56 overflow-y-auto rounded-xl border border-slate-200 bg-white p-1 shadow-xl"
+          className={`absolute top-[calc(100%+0.65rem)] z-[90] max-h-56 overflow-y-auto rounded-xl border border-slate-200 bg-white p-1 shadow-xl ${
+            shouldCenterMenu
+              ? ""
+              : isIconButton
+                ? "left-1/2 w-56 -translate-x-1/2"
+                : "left-0 right-0"
+          }`}
+          style={
+            shouldCenterMenu
+              ? {
+                  position: "fixed",
+                  left: "50%",
+                  right: "auto",
+                  top: menuTop !== null ? `${menuTop}px` : "4.25rem",
+                  width: "min(18rem, calc(100vw - 1.5rem))",
+                  transform: "translateX(-50%)",
+                }
+              : undefined
+          }
         >
-          <button
-            type="button"
-            role="option"
-            aria-selected={!value}
-            onClick={() => {
-              onChange("");
-              setIsOpen(false);
-            }}
-            className={`block w-full rounded-lg px-3 py-2 text-left text-sm font-medium transition ${
-              !value ? "bg-orange-50 text-orange-700" : "text-slate-600 hover:bg-stone-100 hover:text-slate-900"
+          <span
+            className={`pointer-events-none absolute -top-1.5 h-3 w-3 rotate-45 border-l border-t border-slate-200 bg-white ${
+              shouldCenterMenu
+                ? ""
+                : isIconButton
+                  ? "left-1/2 -translate-x-1/2"
+                  : "left-5"
             }`}
-          >
-            {placeholder}
-          </button>
+            style={shouldCenterMenu && menuPointerLeft !== null ? { left: `${menuPointerLeft - 6}px` } : undefined}
+            aria-hidden="true"
+          />
+          {showPlaceholderOption ? (
+            <button
+              type="button"
+              role="option"
+              aria-selected={!value}
+              onPointerDown={(event) => {
+                event.preventDefault();
+                event.stopPropagation();
+                handleOptionSelect("");
+              }}
+              className={`mb-1 flex w-full items-center rounded-lg px-3 py-3 text-left text-base font-semibold transition ${
+                !value ? "bg-orange-50 text-orange-700" : "bg-stone-50 text-slate-800 hover:bg-stone-100 hover:text-slate-950"
+              }`}
+            >
+              <span>{placeholder}</span>
+            </button>
+          ) : null}
           {options.map((option) => (
             <button
               key={option.value}
               type="button"
               role="option"
               aria-selected={value === option.value}
+              onMouseDown={(event) => event.preventDefault()}
               onClick={() => {
-                onChange(option.value);
-                setIsOpen(false);
+                handleOptionSelect(option.value);
               }}
               className={`block w-full rounded-lg px-3 py-2 text-left text-sm font-medium transition ${
                 value === option.value
@@ -180,6 +277,7 @@ export function SplitScreenSection({ continents }: SplitScreenSectionProps) {
   const currentUser = useAppStore((state) => state.currentUser);
   const setCurrentUser = useAppStore((state) => state.setCurrentUser);
   const isProfileShellActive = useAppStore((state) => state.isProfileShellActive);
+  const isMobileSearchOpen = useAppStore((state) => state.isMobileSearchOpen);
   const setProfileShellActive = useAppStore((state) => state.setProfileShellActive);
   const favoriteIds = useAppStore((state) => state.favoriteIds);
   const votedIds = useAppStore((state) => state.votedIds);
@@ -225,6 +323,17 @@ export function SplitScreenSection({ continents }: SplitScreenSectionProps) {
   const [expandedGuideId, setExpandedGuideId] = useState<string | null>(null);
   const [pendingSourcesOpenGuideId, setPendingSourcesOpenGuideId] = useState<string | null>(null);
   const [closingGuide, setClosingGuide] = useState<MapList | null>(null);
+  const [isMobileListSheetExpanded, setIsMobileListSheetExpanded] = useState(false);
+  const [isMobileCategoryMenuOpen, setIsMobileCategoryMenuOpen] = useState(false);
+  const [isMobileCategoryMenuClosing, setIsMobileCategoryMenuClosing] = useState(false);
+  const mobileCategoryCloseTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const [mobileAllSelection, setMobileAllSelection] = useState({
+    country: false,
+    region: false,
+    state: false,
+    city: false,
+    neighborhood: false,
+  });
   const [continentLabelRevealKey, setContinentLabelRevealKey] = useState(0);
   const [countryRevealKey, setCountryRevealKey] = useState(0);
   const [continentTitleMorph, setContinentTitleMorph] = useState<{
@@ -1554,6 +1663,36 @@ export function SplitScreenSection({ continents }: SplitScreenSectionProps) {
     ? categorySubcategoriesByScope[subcategoryScope][visibleSubcategoryCategory]
     : [];
   const categoryTitleLabel = activeCategoryOption?.label ?? hoveredCategoryLabel ?? "Categories";
+  const isMobileCategoryMenuExpanded = isMobileCategoryMenuOpen || isMobileCategoryMenuClosing;
+  const openMobileCategoryMenu = () => {
+    if (mobileCategoryCloseTimeoutRef.current) {
+      clearTimeout(mobileCategoryCloseTimeoutRef.current);
+      mobileCategoryCloseTimeoutRef.current = null;
+    }
+    setIsMobileCategoryMenuClosing(false);
+    setIsMobileCategoryMenuOpen(true);
+  };
+  const closeMobileCategoryMenu = () => {
+    if (!isMobileCategoryMenuOpen && !isMobileCategoryMenuClosing) {
+      return;
+    }
+    if (mobileCategoryCloseTimeoutRef.current) {
+      clearTimeout(mobileCategoryCloseTimeoutRef.current);
+    }
+    setIsMobileCategoryMenuOpen(false);
+    setIsMobileCategoryMenuClosing(true);
+    mobileCategoryCloseTimeoutRef.current = setTimeout(() => {
+      setIsMobileCategoryMenuClosing(false);
+      mobileCategoryCloseTimeoutRef.current = null;
+    }, 260);
+  };
+  const toggleMobileCategoryMenu = () => {
+    if (isMobileCategoryMenuOpen) {
+      closeMobileCategoryMenu();
+      return;
+    }
+    openMobileCategoryMenu();
+  };
   const handleCategoryToggle = (category: ListCategory) => {
     setActiveSubcategory(null);
     setActiveFoodPrice(null);
@@ -1563,10 +1702,11 @@ export function SplitScreenSection({ continents }: SplitScreenSectionProps) {
     setIsFoodCuisineMenuOpen(false);
     setActiveNightlifeBarType(NIGHTLIFE_BAR_TYPE_ANY);
     setIsNightlifeBarMenuOpen(false);
+    closeMobileCategoryMenu();
     setActiveCategory((current) => (current === category ? null : category));
   };
   const explorerPaneHeight = "lg:h-[calc(100svh-7.75rem)]";
-  const explorerBodyMaxHeight = "max-h-[calc(100svh-13.75rem)]";
+  const explorerBodyMaxHeight = "max-h-full lg:max-h-[calc(100svh-13.75rem)]";
 
   useEffect(() => {
     if (activeCategory) {
@@ -1598,6 +1738,14 @@ export function SplitScreenSection({ continents }: SplitScreenSectionProps) {
       clearTimeout(cleanupTimeoutId);
     };
   }, [activeCategory, visibleSubcategoryCategory]);
+
+  useEffect(() => {
+    return () => {
+      if (mobileCategoryCloseTimeoutRef.current) {
+        clearTimeout(mobileCategoryCloseTimeoutRef.current);
+      }
+    };
+  }, []);
 
   useEffect(() => {
     setHoveredCategoryLabel(null);
@@ -1742,6 +1890,8 @@ export function SplitScreenSection({ continents }: SplitScreenSectionProps) {
     setIsFoodCuisineMenuOpen(false);
     setIsNightlifeBarMenuOpen(false);
     setHoveredCategoryLabel(null);
+    setIsMobileListSheetExpanded(true);
+    closeMobileCategoryMenu();
   }, [isGuideTakingFullListPane]);
   const scrollGuideIntoView = (guideId: string) => {
     requestAnimationFrame(() => {
@@ -2313,11 +2463,15 @@ export function SplitScreenSection({ continents }: SplitScreenSectionProps) {
         : rightRect
           ? clamp(shellRect.right - Math.max(shellRect.left, rightRect.left), 0, shellRect.width)
           : 0;
+      const visibleBottom =
+        shellRect.width < 1024 && rightRect
+          ? clamp(shellRect.bottom - Math.max(shellRect.top, rightRect.top), 0, shellRect.height)
+          : 10;
 
       const nextInsets: MapViewportInsets = {
         top: 10,
         right: Math.round(visibleRight),
-        bottom: 10,
+        bottom: Math.round(visibleBottom),
         left: Math.round(visibleLeft),
       };
 
@@ -2359,12 +2513,12 @@ export function SplitScreenSection({ continents }: SplitScreenSectionProps) {
       window.removeEventListener("resize", updateViewportInsets);
       observer?.disconnect();
     };
-  }, [displayShellMode, isProfileMode, isProfileSubmitLayout]);
+  }, [displayShellMode, isGuideTakingFullListPane, isMobileListSheetExpanded, isProfileMode, isProfileSubmitLayout]);
 
   return (
-    <section id="map-explorer" className="w-full py-2 sm:py-4 lg:pb-0 lg:pt-2">
+    <section id="map-explorer" className="w-full py-0 lg:pb-0 lg:pt-2">
       <div className="flex w-full flex-col items-stretch gap-2 lg:flex-row lg:items-start lg:gap-0">
-        <div className={`z-20 flex w-full shrink-0 flex-row items-center gap-3 overflow-x-auto px-3 py-1 sm:px-4 lg:w-14 lg:translate-x-1 lg:flex-col lg:overflow-visible lg:px-0 lg:py-0 lg:pt-7 ${railTransitionClass}`}>
+        <div className={`z-20 hidden w-full shrink-0 flex-row items-center gap-3 overflow-x-auto px-3 py-1 sm:px-4 lg:flex lg:w-14 lg:translate-x-1 lg:flex-col lg:overflow-visible lg:px-0 lg:py-0 lg:pt-7 ${railTransitionClass}`}>
             {isProfileMode ? (
               <>
                 {activeProfileLeftRail === "places-been" && currentUser ? (
@@ -2552,7 +2706,7 @@ export function SplitScreenSection({ continents }: SplitScreenSectionProps) {
           <div className="mx-auto w-full max-w-[1600px] px-1 sm:px-2 lg:px-2">
           <div
             ref={shellViewportRef}
-            className={`relative w-full rounded-xl border border-slate-200/80 bg-white shadow-sm sm:rounded-2xl ${
+            className={`relative h-[100svh] min-h-[38rem] w-full bg-white shadow-sm lg:min-h-0 lg:rounded-2xl lg:border lg:border-slate-200/80 ${
               isSubcategoryMenuOpen && !isGuideTakingFullListPane ? "overflow-visible" : "overflow-hidden"
             } ${explorerPaneHeight}`}
           >
@@ -2597,10 +2751,313 @@ export function SplitScreenSection({ continents }: SplitScreenSectionProps) {
               onSelectCity={handleSelectCityFromList}
               onSelectSubarea={handleSelectSubarea}
               onSelectState={handleSelectState}
-            />
-          </div>
-          <div
-            className="pointer-events-none relative z-10 grid grid-rows-[auto_minmax(18rem,42svh)_auto] gap-0 lg:h-full lg:grid-rows-none lg:[grid-template-columns:var(--shell-cols)]"
+	            />
+	          </div>
+			          <div className={`pointer-events-auto absolute left-1/2 top-3 z-[60] w-[min(22rem,calc(100%-7.25rem))] -translate-x-1/2 space-y-2 transition-opacity duration-200 lg:hidden ${
+			            isMobileSearchOpen ? "pointer-events-none opacity-0" : "opacity-100"
+			          }`}>
+		            <div className="grid items-start gap-2">
+		              <div className="flex min-w-0 flex-wrap items-start justify-center gap-1.5">
+		                <MobileBrowseSelect
+		                  label="Select continent"
+		                  value={selection.continentId ?? ""}
+		                  placeholder="Browse destinations"
+		                  forceIconButton
+		                  centeredMenu
+		                  showPlaceholderOption={false}
+		                  options={continents.map((continent) => ({
+		                    value: continent.id,
+		                    label: continent.name,
+		                  }))}
+		                  selectedIcon={
+		                    selection.continentId ? (
+		                      <img
+		                        src={`/assets/continents/${selection.continentId}.svg`}
+		                        alt=""
+		                        aria-hidden="true"
+		                        className="h-5 w-auto opacity-85"
+		                      />
+		                    ) : undefined
+		                  }
+			                  onChange={(continentId) => {
+			                    if (continentId) {
+			                      setMobileAllSelection({ country: false, region: false, state: false, city: false, neighborhood: false });
+			                      handleSelectContinent(continentId);
+		                    } else {
+		                      setMobileAllSelection({ country: false, region: false, state: false, city: false, neighborhood: false });
+		                      handleResetToGlobalView();
+		                    }
+		                  }}
+	                />
+
+	                {activeLocation.continent ? (
+	                  <MobileBrowseSelect
+		                    label="Select country"
+			                    value={selection.countryId ?? (mobileAllSelection.country ? MOBILE_ALL_COUNTRIES_VALUE : "")}
+			                    placeholder="Select country"
+			                    showPlaceholderOption={false}
+			                    options={[
+			                      { value: MOBILE_ALL_COUNTRIES_VALUE, label: "All countries" },
+			                      ...activeLocation.continent.countries
+		                        .slice()
+		                        .sort((left, right) => left.name.localeCompare(right.name))
+		                        .map((country) => ({
+		                          value: country.id,
+			                          label: country.name,
+			                        })),
+			                    ]}
+			                    selectedIcon={
+			                      mobileAllSelection.country ? (
+			                        <Flag className="h-3.5 w-3.5" />
+			                      ) : activeLocation.country ? (
+			                        <span className="inline-flex min-w-[1rem] items-center justify-center text-base leading-none">
+			                          {getCountryFlagEmoji(activeLocation.country.name) ?? activeLocation.country.name.slice(0, 2)}
+			                        </span>
+		                      ) : undefined
+		                    }
+			                    centeredMenu
+			                    onChange={(countryId) => {
+			                      if (countryId === MOBILE_ALL_COUNTRIES_VALUE) {
+			                        setMobileAllSelection({ country: true, region: false, state: false, city: false, neighborhood: false });
+			                        handleSelectContinent(activeLocation.continent!.id);
+			                      } else if (countryId) {
+			                        setMobileAllSelection({ country: false, region: false, state: false, city: false, neighborhood: false });
+			                        handleSelectCountry(activeLocation.continent!.id, countryId);
+		                      } else {
+		                        setMobileAllSelection({ country: false, region: false, state: false, city: false, neighborhood: false });
+		                        handleSelectContinent(activeLocation.continent!.id);
+		                      }
+		                    }}
+	                  />
+	                ) : null}
+
+	                {activeLocation.country && activeCountrySubareas.length ? (
+	                  <MobileBrowseSelect
+	                    label="Select region"
+		                    value={selection.countrySubareaId ?? (mobileAllSelection.region ? MOBILE_ALL_REGIONS_VALUE : "")}
+		                    placeholder="All regions"
+		                    showPlaceholderOption={false}
+		                    options={[
+		                      { value: MOBILE_ALL_REGIONS_VALUE, label: "All regions" },
+		                      ...activeCountrySubareas
+		                        .slice()
+		                        .sort((left, right) => left.name.localeCompare(right.name))
+		                        .map((subarea) => ({
+		                          value: subarea.id,
+			                          label: formatBreadcrumbName(subarea.name),
+			                        })),
+		                    ]}
+			                    selectedIcon={
+			                      activeCountrySubarea || mobileAllSelection.region ? <MapIcon className="h-3.5 w-3.5" /> : undefined
+			                    }
+			                    centeredMenu
+			                    onChange={(subareaId) => {
+			                      if (subareaId === MOBILE_ALL_REGIONS_VALUE) {
+			                        setMobileAllSelection((current) => ({ ...current, region: true, state: false, city: false, neighborhood: false }));
+			                        handleSelectCountry(activeLocation.continent!.id, activeLocation.country!.id);
+			                      } else if (subareaId) {
+			                        setMobileAllSelection((current) => ({ ...current, region: false, state: false, city: false, neighborhood: false }));
+			                        handleSelectCountrySubarea(
+	                          activeLocation.continent!.id,
+	                          activeLocation.country!.id,
+	                          subareaId,
+	                        );
+		                      } else {
+		                        setMobileAllSelection((current) => ({ ...current, region: false, state: false, city: false, neighborhood: false }));
+		                        handleSelectCountry(activeLocation.continent!.id, activeLocation.country!.id);
+		                      }
+		                    }}
+	                  />
+	                ) : null}
+
+	                {activeLocation.country && activeCountryStates.length ? (
+	                  <MobileBrowseSelect
+	                    label={`Select ${countryStateLabelLower}`}
+		                    value={selection.stateId ?? (mobileAllSelection.state ? MOBILE_ALL_STATES_VALUE : "")}
+		                    placeholder={`All ${countryStateLabelLower}`}
+		                    showPlaceholderOption={false}
+		                    options={[
+		                      { value: MOBILE_ALL_STATES_VALUE, label: `All ${countryStateLabelLower}` },
+		                      ...activeCountryStates
+		                        .slice()
+		                        .sort((left, right) => left.name.localeCompare(right.name))
+		                        .map((state) => ({
+		                          value: state.id,
+			                          label: formatBreadcrumbName(state.name),
+			                        })),
+		                    ]}
+			                    selectedIcon={
+			                      mobileAllSelection.state ? (
+			                        <Flag className="h-3.5 w-3.5" />
+			                      ) : activeLocation.state ? (
+			                        <StateShapeIcon
+		                          countryId={activeLocation.country.id}
+		                          stateId={activeLocation.state.id}
+		                          className="h-4 w-5"
+		                        />
+		                      ) : undefined
+		                    }
+			                    centeredMenu
+			                    onChange={(stateId) => {
+			                      if (stateId === MOBILE_ALL_STATES_VALUE) {
+			                        setMobileAllSelection((current) => ({ ...current, state: true, city: false, neighborhood: false }));
+			                        if (activeCountrySubarea) {
+			                          handleSelectCountrySubarea(
+			                            activeLocation.continent!.id,
+			                            activeLocation.country!.id,
+			                            activeCountrySubarea.id,
+			                          );
+			                        } else {
+			                          handleSelectCountry(activeLocation.continent!.id, activeLocation.country!.id);
+			                        }
+			                      } else if (stateId) {
+			                        setMobileAllSelection((current) => ({ ...current, state: false, city: false, neighborhood: false }));
+			                        const state = activeCountryStates.find((item) => item.id === stateId);
+	                        if (state) {
+	                          handleSelectState(
+	                            activeLocation.continent!.id,
+	                            activeLocation.country!.id,
+	                            state.countrySubareaId,
+	                            state.id,
+	                          );
+	                        }
+		                      } else if (activeCountrySubarea) {
+		                        setMobileAllSelection((current) => ({ ...current, state: false, city: false, neighborhood: false }));
+		                        handleSelectCountrySubarea(
+	                          activeLocation.continent!.id,
+	                          activeLocation.country!.id,
+	                          activeCountrySubarea.id,
+	                        );
+		                      } else {
+		                        setMobileAllSelection((current) => ({ ...current, state: false, city: false, neighborhood: false }));
+		                        handleSelectCountry(activeLocation.continent!.id, activeLocation.country!.id);
+		                      }
+		                    }}
+	                  />
+	                ) : null}
+
+	                {activeLocation.country && activeCountryCities.length ? (
+		                  <MobileBrowseSelect
+		                    label="Select city"
+			                    value={selection.cityId ?? (mobileAllSelection.city ? MOBILE_ALL_CITIES_VALUE : "")}
+			                    placeholder="All cities"
+		                    showPlaceholderOption={false}
+		                    options={[
+		                      { value: MOBILE_ALL_CITIES_VALUE, label: "All cities" },
+		                      ...activeCountryCities
+		                        .slice()
+		                        .sort((left, right) => left.name.localeCompare(right.name))
+		                        .map((city) => ({
+		                          value: city.id,
+			                          label: city.name,
+			                        })),
+		                    ]}
+			                    selectedIcon={activeLocation.city || mobileAllSelection.city ? <Building2 className="h-3.5 w-3.5" /> : undefined}
+			                    centeredMenu
+			                    onChange={(cityId) => {
+			                      if (cityId === MOBILE_ALL_CITIES_VALUE) {
+			                        setMobileAllSelection((current) => ({ ...current, city: true, neighborhood: false }));
+			                        if (activeLocation.state) {
+			                          handleSelectState(
+			                            activeLocation.continent!.id,
+			                            activeLocation.country!.id,
+			                            activeLocation.state.countrySubareaId,
+			                            activeLocation.state.id,
+			                          );
+			                        } else if (activeCountrySubarea) {
+			                          handleSelectCountrySubarea(
+			                            activeLocation.continent!.id,
+			                            activeLocation.country!.id,
+			                            activeCountrySubarea.id,
+			                          );
+			                        } else {
+			                          handleSelectCountry(activeLocation.continent!.id, activeLocation.country!.id);
+			                        }
+			                      } else if (cityId) {
+			                        setMobileAllSelection((current) => ({ ...current, city: false, neighborhood: false }));
+			                        handleSelectCity(activeLocation.continent!.id, activeLocation.country!.id, cityId);
+		                      } else if (activeLocation.state) {
+		                        setMobileAllSelection((current) => ({ ...current, city: false, neighborhood: false }));
+		                        handleSelectState(
+	                          activeLocation.continent!.id,
+	                          activeLocation.country!.id,
+	                          activeLocation.state.countrySubareaId,
+	                          activeLocation.state.id,
+	                        );
+		                      } else if (activeCountrySubarea) {
+		                        setMobileAllSelection((current) => ({ ...current, city: false, neighborhood: false }));
+		                        handleSelectCountrySubarea(
+	                          activeLocation.continent!.id,
+	                          activeLocation.country!.id,
+	                          activeCountrySubarea.id,
+	                        );
+		                      } else {
+		                        setMobileAllSelection((current) => ({ ...current, city: false, neighborhood: false }));
+		                        handleSelectCountry(activeLocation.continent!.id, activeLocation.country!.id);
+		                      }
+		                    }}
+	                  />
+	                ) : null}
+
+	                {activeLocation.city && cityListItems.length ? (
+	                  <MobileBrowseSelect
+	                    label="Select neighborhood"
+		                    value={selection.nestedSubareaId ?? selection.subareaId ?? (mobileAllSelection.neighborhood ? MOBILE_ALL_NEIGHBORHOODS_VALUE : "")}
+		                    placeholder="All neighborhoods"
+		                    showPlaceholderOption={false}
+		                    options={[
+		                      { value: MOBILE_ALL_NEIGHBORHOODS_VALUE, label: "All neighborhoods" },
+		                      ...cityListItems.map((item) => ({
+			                        value: item.id,
+			                        label: formatBreadcrumbName(item.name),
+			                      })),
+		                    ]}
+			                    selectedIcon={
+			                      selection.nestedSubareaId || selection.subareaId || mobileAllSelection.neighborhood ? (
+			                        <MapPin className="h-3.5 w-3.5" />
+		                      ) : undefined
+		                    }
+			                    centeredMenu
+			                    onChange={(itemId) => {
+			                      if (itemId === MOBILE_ALL_NEIGHBORHOODS_VALUE || !itemId) {
+			                        setMobileAllSelection((current) => ({ ...current, neighborhood: true }));
+			                        setFocusedCountrySignal(null);
+		                        setSelection({
+		                          continentId: activeLocation.continent!.id,
+		                          countryId: activeLocation.country!.id,
+		                          countrySubareaId: activeLocation.city!.countrySubareaId,
+		                          stateId: activeLocation.city!.stateId,
+		                          cityId: activeLocation.city!.id,
+		                        });
+		                        return;
+			                      }
+			                      setMobileAllSelection((current) => ({ ...current, neighborhood: false }));
+		                      const item = cityListItems.find((entry) => entry.id === itemId);
+	                      if (item?.isNested) {
+	                        handleSelectNestedSubarea(
+	                          activeLocation.continent!.id,
+	                          activeLocation.country!.id,
+	                          activeLocation.city!.id,
+	                          activeLocation.subarea!.id,
+	                          item.id,
+	                        );
+	                      } else {
+	                        handleSelectSubarea(
+	                          activeLocation.continent!.id,
+	                          activeLocation.country!.id,
+	                          activeLocation.city!.id,
+	                          itemId,
+	                        );
+	                      }
+	                    }}
+	                  />
+	                ) : null}
+	              </div>
+
+		            </div>
+		          </div>
+		          <div
+            className="pointer-events-none relative z-10 grid h-full grid-rows-[minmax(0,1fr)] gap-0 lg:grid-rows-none lg:[grid-template-columns:var(--shell-cols)]"
             style={
               {
                 "--shell-cols": isLeftPaneCollapsed
@@ -2611,7 +3068,7 @@ export function SplitScreenSection({ continents }: SplitScreenSectionProps) {
           >
             <div
               ref={leftPaneRef}
-              className={`pointer-events-auto relative z-30 flex min-h-0 flex-col overflow-visible bg-slate-100 p-4 transition-[transform,opacity] ease-[cubic-bezier(0.22,1,0.36,1)] lg:z-auto lg:h-full lg:overflow-hidden lg:p-5 ${
+              className={`pointer-events-auto relative z-30 hidden min-h-0 flex-col overflow-visible bg-slate-100 p-4 transition-[transform,opacity] ease-[cubic-bezier(0.22,1,0.36,1)] lg:z-auto lg:flex lg:h-full lg:overflow-hidden lg:p-5 ${
                 isLeftPaneCollapsed
                   ? "duration-[620ms] -translate-x-20 opacity-0 pointer-events-none"
                   : "duration-500 translate-x-0 opacity-100"
@@ -4222,19 +4679,111 @@ export function SplitScreenSection({ continents }: SplitScreenSectionProps) {
 
             <div
               ref={mapViewportPanelRef}
-              className="explorer-map-pane min-h-0 min-w-0 pointer-events-none border-y border-slate-200 p-0 lg:border-x lg:border-y-0"
+              className="explorer-map-pane min-h-0 min-w-0 pointer-events-none border-slate-200 p-0 lg:border-x lg:border-y-0"
               aria-hidden="true"
             />
 
             <div
               ref={rightPaneRef}
-              className={`pointer-events-auto relative z-20 bg-white transition-[padding] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] ${
-                isGuideTakingFullListPane ? "p-0" : "p-5"
-              } ${isSubcategoryMenuOpen && !isGuideTakingFullListPane ? "overflow-visible" : "overflow-hidden"} lg:ml-0 lg:w-full ${explorerPaneHeight}`}
+              className={`pointer-events-auto absolute inset-x-0 bottom-0 z-40 rounded-t-xl border-t border-slate-200 bg-white shadow-[0_-12px_32px_rgba(15,23,42,0.18)] transition-[height,padding] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] lg:relative lg:inset-auto lg:z-20 lg:rounded-none lg:border-t-0 lg:shadow-none ${
+                isMobileListSheetExpanded ? "h-[60svh]" : "h-36"
+              } ${
+                isGuideTakingFullListPane ? "p-0" : "px-4 pb-4 pt-2 lg:p-5"
+              } overflow-visible ${
+                isSubcategoryMenuOpen && !isGuideTakingFullListPane ? "lg:overflow-visible" : "lg:overflow-hidden"
+              } lg:ml-0 lg:w-full lg:h-auto ${explorerPaneHeight}`}
             >
               <div className={`flex h-full flex-col ${paneTransitionClass}`}>
                 <div
-                  className={`mx-auto w-full max-w-[36rem] space-y-3 transition-[max-height,opacity,transform,padding-bottom] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] ${
+                  className={`relative flex shrink-0 items-center transition-[height,margin-bottom] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] lg:hidden ${
+                    isGuideTakingFullListPane ? "mb-0 h-0" : "mb-2 h-8"
+                  }`}
+                >
+                  <div className={`min-w-0 pr-12 transition-opacity duration-200 ${isMobileCategoryMenuExpanded || isGuideTakingFullListPane ? "opacity-0" : "opacity-100"}`}>
+                    <p className="truncate text-xs font-semibold uppercase tracking-[0.14em] text-slate-500">
+                      {categoryTitleLabel}
+                    </p>
+                  </div>
+	                  <button
+	                    type="button"
+	                    onClick={() => setIsMobileListSheetExpanded((current) => !current)}
+	                    className="absolute -top-9 left-1/2 flex h-7 w-16 -translate-x-1/2 items-center justify-center text-slate-500"
+	                    aria-label={isMobileListSheetExpanded ? "Collapse guides" : "Expand guides"}
+	                  >
+	                    <ChevronUp
+	                      className={`h-4 w-4 transition-transform duration-300 ${isMobileListSheetExpanded ? "rotate-180" : ""}`}
+	                      aria-hidden="true"
+	                    />
+	                  </button>
+                  <div
+                    className={`absolute right-0 top-0 z-[95] flex h-8 items-center justify-end overflow-hidden rounded-full bg-white transition-[width,opacity,transform] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] ${
+                      isMobileCategoryMenuExpanded ? "w-full" : "w-8"
+                    } ${
+                      isGuideTakingFullListPane ? "pointer-events-none -translate-y-2 opacity-0" : "translate-y-0 opacity-100"
+                    }`}
+                  >
+                    <div
+                      className="flex min-w-0 flex-1 items-center justify-between gap-1 pl-1"
+                    >
+                        {categoryOptions.map((option, index) => (
+                          <button
+                            key={option.label}
+                            type="button"
+                            onClick={() => {
+                              setActiveSubcategory(null);
+                              setActiveFoodPrice(null);
+                              setActiveFoodOpenTime("Now");
+                              setIsFoodOpenTimeMenuOpen(false);
+                              setActiveFoodCuisine(FOOD_CUISINE_ANY);
+                              setIsFoodCuisineMenuOpen(false);
+                              setActiveNightlifeBarType(NIGHTLIFE_BAR_TYPE_ANY);
+                              setIsNightlifeBarMenuOpen(false);
+                              setActiveCategory(option.category);
+                              closeMobileCategoryMenu();
+                            }}
+                            className={`flex h-7 w-7 shrink-0 items-center justify-center rounded-full border bg-white text-slate-600 shadow-sm transition-[opacity,transform,background-color,color,border-color] duration-300 ${
+                              isMobileCategoryMenuOpen ? "translate-x-0 scale-100 opacity-100" : "pointer-events-none translate-x-8 scale-75 opacity-0"
+                            }`}
+                            style={{
+                              borderColor: CATEGORY_STYLES[option.category].mapColor,
+                              transitionDelay: isMobileCategoryMenuOpen ? `${120 + index * 35}ms` : "0ms",
+                            }}
+                            aria-label={option.label}
+                          >
+                            <option.icon className="h-3.5 w-3.5" />
+                          </button>
+                        ))}
+                    </div>
+                    <button
+                      type="button"
+                      onClick={toggleMobileCategoryMenu}
+                      className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-full transition-colors ${
+                        isMobileCategoryMenuExpanded
+                          ? "text-slate-700"
+                          : activeCategoryOption
+                            ? "text-white"
+                            : "text-slate-700"
+                      }`}
+                      style={
+                        activeCategoryOption && !isMobileCategoryMenuExpanded
+                          ? { backgroundColor: CATEGORY_STYLES[activeCategoryOption.category].mapColor }
+                          : undefined
+                      }
+                      aria-label="Open categories"
+                      aria-expanded={isMobileCategoryMenuOpen}
+                    >
+                      {isMobileCategoryMenuExpanded ? (
+                        <X className="h-3.5 w-3.5" />
+                      ) : activeCategoryOption ? (
+                        <activeCategoryOption.icon className="h-3.5 w-3.5" />
+                      ) : (
+                        <ListFilter className="h-3.5 w-3.5" />
+                      )}
+                    </button>
+                  </div>
+                </div>
+                <div
+                  className={`mx-auto hidden w-full max-w-[36rem] space-y-3 transition-[max-height,opacity,transform,padding-bottom] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] lg:block ${
                     activeGuideRail === "itinerary"
                       ? "hidden"
                       : isGuideTakingFullListPane
@@ -5031,7 +5580,7 @@ export function SplitScreenSection({ continents }: SplitScreenSectionProps) {
           </div>
         </div>
         </div>
-        <div className={`z-20 flex w-full shrink-0 flex-row items-center gap-3 overflow-x-auto px-3 py-1 sm:px-4 lg:w-14 lg:-translate-x-1 lg:flex-col lg:overflow-visible lg:px-0 lg:py-0 lg:pt-7 ${railTransitionClass}`}>
+        <div className={`z-20 hidden w-full shrink-0 flex-row items-center gap-3 overflow-x-auto px-3 py-1 sm:px-4 lg:flex lg:w-14 lg:-translate-x-1 lg:flex-col lg:overflow-visible lg:px-0 lg:py-0 lg:pt-7 ${railTransitionClass}`}>
             {isProfileMode ? (
               profileRightRailOptions.map((option, index) => (
                 <div
