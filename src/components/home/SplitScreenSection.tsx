@@ -453,22 +453,66 @@ export function SplitScreenSection({ continents, initialRouteState, seoContent }
   const mapViewportPanelRef = useRef<HTMLDivElement | null>(null);
   const rightPaneRef = useRef<HTMLDivElement | null>(null);
   const initialRouteStateKey = JSON.stringify(initialRouteState ?? null);
+  const selectionRef = useRef(selection);
+  const activeCategoryRef = useRef(activeCategory);
+  const expandedGuideIdRef = useRef(expandedGuideId);
+
+  useEffect(() => {
+    selectionRef.current = selection;
+  }, [selection]);
+
+  useEffect(() => {
+    activeCategoryRef.current = activeCategory;
+  }, [activeCategory]);
+
+  useEffect(() => {
+    expandedGuideIdRef.current = expandedGuideId;
+  }, [expandedGuideId]);
 
   useEffect(() => {
     if (!initialRouteState) {
       return;
     }
 
-    setSelection(initialRouteState.selection);
-    setActiveCategory(initialRouteState.activeCategory ?? null);
-    setActiveSubcategory(null);
-    setExpandedGuideId(initialRouteState.expandedGuideId ?? null);
-    setClosingGuide(null);
-    setVisibleNestedStopParentIds([]);
-    if (initialRouteState.expandedGuideId) {
+    const nextCategory = initialRouteState.activeCategory ?? null;
+    const nextGuideId = initialRouteState.expandedGuideId ?? null;
+    const currentSelection = selectionRef.current;
+    const currentCategory = activeCategoryRef.current;
+    const currentGuideId = expandedGuideIdRef.current;
+    const isSameSelection =
+      currentSelection.continentId === initialRouteState.selection.continentId &&
+      currentSelection.continentSubareaId === initialRouteState.selection.continentSubareaId &&
+      currentSelection.countryId === initialRouteState.selection.countryId &&
+      currentSelection.countrySubareaId === initialRouteState.selection.countrySubareaId &&
+      currentSelection.stateId === initialRouteState.selection.stateId &&
+      currentSelection.cityId === initialRouteState.selection.cityId &&
+      currentSelection.subareaId === initialRouteState.selection.subareaId &&
+      currentSelection.nestedSubareaId === initialRouteState.selection.nestedSubareaId;
+    const isSameRouteState =
+      isSameSelection &&
+      currentCategory === nextCategory &&
+      currentGuideId === nextGuideId;
+
+    if (isSameRouteState) {
+      return;
+    }
+
+    if (!isSameSelection) {
+      setSelection(initialRouteState.selection);
+    }
+    if (currentCategory !== nextCategory) {
+      setActiveCategory(nextCategory);
+      setActiveSubcategory(null);
+    }
+    if (currentGuideId !== nextGuideId) {
+      setExpandedGuideId(nextGuideId);
+      setClosingGuide(null);
+      setVisibleNestedStopParentIds([]);
+    }
+    if (nextGuideId && currentGuideId !== nextGuideId) {
       setActiveGuideFitNonce((current) => current + 1);
     }
-  }, [initialRouteState, initialRouteStateKey]);
+  }, [initialRouteStateKey]);
 
   useEffect(() => {
     setProfileNameDraft(currentUser?.name ?? "");

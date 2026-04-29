@@ -1581,6 +1581,33 @@ export function MapClient({
     () => createNeighborhoodBoundaryData(activeNeighborhoodBoundary),
     [activeNeighborhoodBoundary],
   );
+  const selectionCameraKey = useMemo(
+    () =>
+      [
+        viewportMode,
+        selection.continentId ?? "",
+        selection.continentSubareaId ?? "",
+        selection.countryId ?? "",
+        selection.countrySubareaId ?? "",
+        selection.stateId ?? "",
+        selection.cityId ?? "",
+        selection.subareaId ?? "",
+        selection.nestedSubareaId ?? "",
+        activeNeighborhoodBoundary?.properties.name ?? "",
+      ].join("|"),
+    [
+      activeNeighborhoodBoundary,
+      selection.cityId,
+      selection.continentId,
+      selection.continentSubareaId,
+      selection.countryId,
+      selection.countrySubareaId,
+      selection.nestedSubareaId,
+      selection.stateId,
+      selection.subareaId,
+      viewportMode,
+    ],
+  );
   const selectedBoundaryIso3 = useMemo(() => {
     const iso3Set = new Set<string>();
 
@@ -2351,7 +2378,7 @@ export function MapClient({
       return;
     }
     activeGuideCameraKeyRef.current = nextCameraKey;
-    selectionCameraKeyRef.current = null;
+    selectionCameraKeyRef.current = selectionCameraKey;
     const activeViewportInsets = getViewportInsets(map, viewportModeRef.current, viewportInsetsRef.current);
     const focusedStopId = visibleNestedStopParentIds[visibleNestedStopParentIds.length - 1] ?? null;
     const focusedStop = focusedStopId
@@ -2437,6 +2464,7 @@ export function MapClient({
     activeGuide,
     activeGuideFitNonce,
     activeGuideStopSignature,
+    selectionCameraKey,
     styleReadyTick,
     visibleNestedStopParentIds,
     viewportInsets,
@@ -2450,18 +2478,7 @@ export function MapClient({
     if (viewportMode !== "submit" && activeGuide?.stops?.length) {
       return;
     }
-    const nextCameraKey = [
-      viewportModeRef.current,
-      selection.continentId ?? "",
-      selection.continentSubareaId ?? "",
-      selection.countryId ?? "",
-      selection.countrySubareaId ?? "",
-      selection.stateId ?? "",
-      selection.cityId ?? "",
-      selection.subareaId ?? "",
-      selection.nestedSubareaId ?? "",
-      activeNeighborhoodBoundary?.properties.name ?? "",
-    ].join("|");
+    const nextCameraKey = selectionCameraKey;
     if (selectionCameraKeyRef.current === nextCameraKey) {
       return;
     }

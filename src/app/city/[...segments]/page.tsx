@@ -2,13 +2,18 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 
 import { SplitScreenSection } from "@/components/home/SplitScreenSection";
+import { CityRouteSeoIndex } from "@/components/seo/CityRouteSeoIndex";
 import { getContinents } from "@/lib/mock-data";
-import { resolveCityDeepLink } from "@/lib/deep-link-routes";
+import { getCityDeepLinkStaticParams, resolveCityDeepLink } from "@/lib/deep-link-routes";
 
 interface CityDeepLinkPageProps {
   params: Promise<{
     segments: string[];
   }>;
+}
+
+export function generateStaticParams() {
+  return getCityDeepLinkStaticParams();
 }
 
 export async function generateMetadata({ params }: CityDeepLinkPageProps): Promise<Metadata> {
@@ -74,6 +79,7 @@ export default async function CityDeepLinkPage({ params }: CityDeepLinkPageProps
           intro: route.intro,
         }}
       />
+      <CityRouteSeoIndex route={route} />
     </>
   );
 }

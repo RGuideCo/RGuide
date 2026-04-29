@@ -1,6 +1,7 @@
 import { ListCategory } from "@/types";
 
 export const SITE_NAME = "RGuide";
+export const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://rguide.co";
 export const SITE_DESCRIPTION =
   "Discover curated Google Maps lists by continent, country, and city.";
 

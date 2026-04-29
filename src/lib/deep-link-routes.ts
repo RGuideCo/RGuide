@@ -96,10 +96,18 @@ function normalizeNeighborhoodName(value?: string | null) {
     .toLowerCase();
 }
 
-function getListsForCityRoute(city: City, neighborhood?: SubArea, category?: ListCategory) {
+export function getPublishedServerGuides() {
+  return mapLists;
+}
+
+export function normalizeRouteNeighborhoodName(value?: string | null) {
+  return normalizeNeighborhoodName(value);
+}
+
+export function getListsForCityRoute(city: City, neighborhood?: Pick<SubArea, "name">, category?: ListCategory) {
   const neighborhoodKey = normalizeNeighborhoodName(neighborhood?.name);
 
-  return mapLists.filter((list) => {
+  return getPublishedServerGuides().filter((list) => {
     if (list.location.scope !== "city" || list.location.city !== city.name) {
       return false;
     }
@@ -114,6 +122,61 @@ function getListsForCityRoute(city: City, neighborhood?: SubArea, category?: Lis
     }
     return true;
   });
+}
+
+export function getAllListsForCityRoute(city: City, category?: ListCategory) {
+  return getPublishedServerGuides().filter((list) => {
+    if (list.location.scope !== "city" || list.location.city !== city.name) {
+      return false;
+    }
+    if (category && list.category !== category) {
+      return false;
+    }
+    return true;
+  });
+}
+
+export function getIndexableListsForCityRoute(
+  city: City,
+  neighborhood?: Pick<SubArea, "name">,
+  category?: ListCategory,
+  guide?: MapList,
+) {
+  if (guide) {
+    return [guide];
+  }
+  return neighborhood ? getListsForCityRoute(city, neighborhood, category) : getAllListsForCityRoute(city, category);
+}
+
+export function getNeighborhoodsForCityRoute(city: City) {
+  return (city.subareas ?? []).flatMap((subarea) => [
+    { neighborhood: subarea, parentNeighborhood: undefined as SubArea | undefined },
+    ...(subarea.subareas ?? []).map((nestedSubarea) => ({
+      neighborhood: nestedSubarea,
+      parentNeighborhood: subarea,
+    })),
+  ]);
+}
+
+export function getCategoriesForCityRoute(city: City, neighborhood?: Pick<SubArea, "name">) {
+  const lists = neighborhood ? getListsForCityRoute(city, neighborhood) : getAllListsForCityRoute(city);
+  return CATEGORIES.filter((category) => lists.some((list) => list.category === category));
+}
+
+export function getRelatedCityRouteGuides(route: Pick<CityDeepLinkResolution, "city" | "neighborhood" | "category" | "guide">) {
+  const sameScope = getListsForCityRoute(route.city, route.neighborhood, route.category)
+    .filter((list) => list.id !== route.guide?.id)
+    .sort((left, right) => right.upvotes - left.upvotes || left.title.localeCompare(right.title));
+
+  if (sameScope.length >= 4 || !route.guide) {
+    return sameScope;
+  }
+
+  const cityWide = getListsForCityRoute(route.city, undefined, route.guide.category)
+    .filter((list) => list.id !== route.guide?.id && !sameScope.some((item) => item.id === list.id))
+    .sort((left, right) => right.upvotes - left.upvotes || left.title.localeCompare(right.title));
+
+  return [...sameScope, ...cityWide];
 }
 
 function buildSelection(city: City, neighborhood?: NeighborhoodMatch): SelectionState {
@@ -245,7 +308,7 @@ export function resolveCityDeepLink(rawSegments: string[]): CityDeepLinkResoluti
   }
 
   const neighborhood = neighborhoodMatch?.subarea;
-  const lists = getListsForCityRoute(city, neighborhood, category);
+  const lists = getIndexableListsForCityRoute(city, neighborhood, category, guide);
   const canonicalPath = guide
     ? getCanonicalGuidePath(city, guide, neighborhood)
     : category
@@ -301,4 +364,57 @@ export function resolveCityDeepLink(rawSegments: string[]): CityDeepLinkResoluti
       guide ? buildGuideData(guide, canonicalPath) : buildItemListData(lists, canonicalPath, h1),
     ],
   };
+}
+
+export function getCityDeepLinkStaticParams() {
+  const params: Array<{ segments: string[] }> = [];
+  const addPath = (path: string) => {
+    const segments = path.split("/").filter(Boolean).slice(1);
+    if (!segments.length) {
+      return;
+    }
+    params.push({ segments });
+  };
+
+  const seen = new Set<string>();
+  const addUniquePath = (path: string) => {
+    if (seen.has(path)) {
+      return;
+    }
+    seen.add(path);
+    addPath(path);
+  };
+
+  for (const city of cities) {
+    const cityLists = getListsForCityRoute(city);
+    const cityNeighborhoods = getNeighborhoodsForCityRoute(city);
+    if (cityLists.length || cityNeighborhoods.length) {
+      addUniquePath(getCanonicalCityPath(city));
+    }
+
+    for (const category of getCategoriesForCityRoute(city)) {
+      addUniquePath(getCanonicalCityCategoryPath(city, category));
+    }
+
+    for (const { neighborhood } of cityNeighborhoods) {
+      const neighborhoodLists = getListsForCityRoute(city, neighborhood);
+      if (!neighborhoodLists.length) {
+        continue;
+      }
+
+      addUniquePath(getCanonicalCityNeighborhoodPath(city, neighborhood));
+      for (const category of getCategoriesForCityRoute(city, neighborhood)) {
+        addUniquePath(getCanonicalCityCategoryPath(city, category, neighborhood));
+      }
+      for (const guide of neighborhoodLists) {
+        addUniquePath(getCanonicalGuidePath(city, guide, neighborhood));
+      }
+    }
+
+    for (const guide of cityLists) {
+      addUniquePath(getCanonicalGuidePath(city, guide));
+    }
+  }
+
+  return params;
 }
