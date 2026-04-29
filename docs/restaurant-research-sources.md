@@ -21,6 +21,12 @@ Prefer a restaurant when at least two independent sources support it and one of 
 
 Replace or downgrade a restaurant when recent sources show it is closed, mostly sustained by atmosphere over food, repeatedly flagged as poor value, outside the intended neighborhood, or weakly supported compared with nearby alternatives.
 
+## Guide Naming
+
+Keep SEO fields stable and keyword-forward: `slug`, `seoSlug`, `seoTitle`, and `seoDescription` should preserve searchable phrases such as "best restaurants", "best bars", or "best dive bars" for Google and route consistency.
+
+Use `title` as the human-facing guide name. It should be contextual, specific to the neighborhood and list personality, and less generic than the SEO phrase. Avoid repeating labels like "Restaurants Worth Booking", "Best Dives", "High Volume Hits", "Culture Anchors", or "Hotels and Hostels" across neighborhoods unless there is no better local angle. Good titles should hint at why the list exists: the room style, local rhythm, scene, landmark cluster, price posture, or dominant itinerary.
+
 ## Price Tiers
 
 - `$`: quick, casual, budget, market, counter, or mostly inexpensive meals.
