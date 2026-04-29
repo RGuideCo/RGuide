@@ -2119,9 +2119,7 @@ export function SplitScreenSection({ continents, initialRouteState, seoContent }
     ? railFilteredLists.filter((list) => list.id !== displayedGuide.id)
     : railFilteredLists;
   const activeSeoPlaceLabel = activeLocation.city
-    ? [activeLocation.nestedSubarea?.name ?? activeLocation.subarea?.name, activeLocation.city.name]
-        .filter(Boolean)
-        .join(", ")
+    ? activeLocation.nestedSubarea?.name ?? activeLocation.subarea?.name ?? activeLocation.city.name
     : activeDirectoryMeta.title;
   const visibleSeoHeading = expandedGuide
     ? `${expandedGuide.title} in ${activeSeoPlaceLabel}`
