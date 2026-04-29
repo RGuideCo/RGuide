@@ -209,7 +209,11 @@ export const mapLists: MapList[] = [
   {
     id: "list-barcelona-top-parks",
     slug: "barcelona-top-parks-in-the-city",
-    title: "Top Parks in the City",
+    seoSlug: "best-parks",
+    seoTitle: "Best Parks in Barcelona",
+    seoDescription:
+      "Best parks in Barcelona for Gaudi architecture, hilltop views, historic gardens, Ciutadella lawns, Montjuic walks, and green spaces worth saving.",
+    title: "Green Escapes and Hilltop Views",
     description:
       "A Barcelona green-space route built around landmark parks, historic gardens, and major hilltop viewpoints, with a mix of architecture, culture, and city panoramas.",
     url: "https://www.google.com/maps/search/top+parks+in+barcelona",
@@ -312,7 +316,11 @@ export const mapLists: MapList[] = [
   {
     id: "list-barcelona-gothic-quarter-restaurants",
     slug: "barcelona-gothic-quarter-restaurants",
-    title: "Restaurants Worth Booking",
+    seoSlug: "best-restaurants",
+    seoTitle: "Best Restaurants in the Gothic Quarter, Barcelona",
+    seoDescription:
+      "Best restaurants in the Gothic Quarter, Barcelona, from historic Catalan dining rooms to modern tasting menus and old-town spots that avoid the tourist-trap pattern.",
+    title: "Old-City Tables That Hold Up",
     description: "Gothic Quarter restaurants that avoid the old-town tourist trap pattern, from historic Catalan dining rooms to tight modern tasting menus.",
     url: "https://www.google.com/maps/search/gothic+quarter+restaurants+barcelona",
     category: "Food",
@@ -341,7 +349,11 @@ export const mapLists: MapList[] = [
   {
     id: "list-barcelona-el-born-restaurants",
     slug: "barcelona-el-born-restaurants",
-    title: "Restaurants Worth Booking",
+    seoSlug: "best-restaurants",
+    seoTitle: "Best Restaurants in El Born, Barcelona",
+    seoDescription:
+      "Best restaurants in El Born, Barcelona, including seafood counters, natural-wine rooms, tapas classics, market-adjacent kitchens, and booking-worthy local favorites.",
+    title: "Cava, Counters, and Cool Rooms",
     description: "El Born restaurants with real pull: seafood counters, natural-wine rooms, market-adjacent kitchens, and tapas classics that still justify the crowd.",
     url: "https://www.google.com/maps/search/el+born+restaurants+barcelona",
     category: "Food",
@@ -369,7 +381,11 @@ export const mapLists: MapList[] = [
   {
     id: "list-barcelona-eixample-restaurants",
     slug: "barcelona-eixample-restaurants",
-    title: "Restaurants Worth Booking",
+    seoSlug: "best-restaurants",
+    seoTitle: "Best Restaurants in Eixample, Barcelona",
+    seoDescription:
+      "Best restaurants in Eixample, Barcelona, from destination tasting menus and polished tapas counters to design-hotel dining rooms and reliable group-friendly classics.",
+    title: "Big-Deal Tables and Tapas",
     description: "Eixample dining picks across destination tasting menus, polished tapas counters, hotel dining rooms, and reliable group-friendly classics.",
     url: "https://www.google.com/maps/search/eixample+restaurants+barcelona",
     category: "Food",
@@ -400,7 +416,11 @@ export const mapLists: MapList[] = [
   {
     id: "list-barcelona-gracia-restaurants",
     slug: "barcelona-gracia-restaurants",
-    title: "Restaurants Worth Booking",
+    seoSlug: "best-restaurants",
+    seoTitle: "Best Restaurants in Gràcia, Barcelona",
+    seoDescription:
+      "Best restaurants in Gràcia, Barcelona, covering chef-led rooms, market lunches, creative tapas, casual local favorites, and neighborhood dining worth booking.",
+    title: "Village Tables Worth the Walk",
     description: "Gràcia restaurants that match the neighborhood's village rhythm: chef-led rooms, market lunches, creative tapas, and unfussy local favorites.",
     url: "https://www.google.com/maps/search/gracia+restaurants+barcelona",
     category: "Food",
@@ -428,7 +448,11 @@ export const mapLists: MapList[] = [
   {
     id: "list-barcelona-poble-sec-restaurants",
     slug: "barcelona-poble-sec-restaurants",
-    title: "Restaurants Worth Booking",
+    seoSlug: "best-restaurants",
+    seoTitle: "Best Restaurants in Poble-sec, Barcelona",
+    seoDescription:
+      "Best restaurants in Poble-sec, Barcelona, for serious tapas, Montjuic-view rice, Venetian-Catalan plates, and dinner stops near theaters and Sala Apolo.",
+    title: "Blai Bites and Montjuïc Meals",
     description: "Poble-sec restaurants for serious tapas, Montjuic-view rice, Venetian-Catalan plates, and dinner stops that make sense before theater or Apolo.",
     url: "https://www.google.com/maps/search/poble+sec+restaurants+barcelona",
     category: "Food",
@@ -457,7 +481,11 @@ export const mapLists: MapList[] = [
   {
     id: "list-barcelona-gothic-quarter-culture",
     slug: "barcelona-gothic-quarter-culture",
-    title: "Culture Anchors",
+    seoSlug: "best-museums-and-cultural-stops",
+    seoTitle: "Best Museums and Cultural Stops in the Gothic Quarter, Barcelona",
+    seoDescription:
+      "Best museums and cultural stops in the Gothic Quarter, Barcelona, including Roman Barcino layers, cathedral streets, civic landmarks, and historic squares.",
+    title: "Roman Stones and Cathedral Shadows",
     description: "Old-city cultural stops in the Gothic Quarter, built around Roman layers, cathedral streets, civic history, and intimate historic squares.",
     url: "https://www.google.com/maps/search/gothic+quarter+culture+barcelona",
     category: "Culture",
@@ -482,7 +510,11 @@ export const mapLists: MapList[] = [
   {
     id: "list-barcelona-el-born-culture",
     slug: "barcelona-el-born-culture",
-    title: "Culture Anchors",
+    seoSlug: "best-museums-and-cultural-stops",
+    seoTitle: "Best Museums and Cultural Stops in El Born, Barcelona",
+    seoDescription:
+      "Best museums and cultural stops in El Born, Barcelona, from the Picasso Museum and Santa Maria del Mar to medieval memory sites and Modernista music rooms.",
+    title: "Picasso, Markets, and Memory",
     description: "El Born cultural stops connecting Picasso, medieval mercantile Barcelona, music, and the neighborhood's dense museum-and-church circuit.",
     url: "https://www.google.com/maps/search/el+born+culture+barcelona",
     category: "Culture",
@@ -507,7 +539,11 @@ export const mapLists: MapList[] = [
   {
     id: "list-barcelona-eixample-culture",
     slug: "barcelona-eixample-culture",
-    title: "Culture Anchors",
+    seoSlug: "best-museums-and-cultural-stops",
+    seoTitle: "Best Museums and Cultural Stops in Eixample, Barcelona",
+    seoDescription:
+      "Best museums and cultural stops in Eixample, Barcelona, focused on Gaudi houses, Sagrada Familia, Modernista architecture, and design landmarks across the grid.",
+    title: "Modernisme Power Walk",
     description: "Eixample architecture and design stops, from Gaudí's major houses to Modernista institutions that define the grid.",
     url: "https://www.google.com/maps/search/eixample+culture+barcelona",
     category: "Culture",
@@ -532,7 +568,11 @@ export const mapLists: MapList[] = [
   {
     id: "list-barcelona-gracia-culture",
     slug: "barcelona-gracia-culture",
-    title: "Culture Anchors",
+    seoSlug: "best-museums-and-cultural-stops",
+    seoTitle: "Best Museums and Cultural Stops in Gràcia, Barcelona",
+    seoDescription:
+      "Best museums and cultural stops in Gràcia, Barcelona, balancing Park Guell and Casa Vicens with plazas, cinemas, markets, and neighborhood public life.",
+    title: "Gaudí Beginnings and Plaza Life",
     description: "Gràcia culture stops that balance Gaudí tourism with the neighborhood's plazas, cinemas, markets, and village-scale public life.",
     url: "https://www.google.com/maps/search/gracia+culture+barcelona",
     category: "Culture",
@@ -557,7 +597,11 @@ export const mapLists: MapList[] = [
   {
     id: "list-barcelona-poble-sec-culture",
     slug: "barcelona-poble-sec-culture",
-    title: "Culture Anchors",
+    seoSlug: "best-museums-and-cultural-stops",
+    seoTitle: "Best Museums and Cultural Stops in Poble-sec, Barcelona",
+    seoDescription:
+      "Best museums and cultural stops in Poble-sec and Montjuic, Barcelona, including MNAC, Fundacio Joan Miro, CaixaForum, hilltop history, and performance spaces.",
+    title: "Montjuïc Museum Day",
     description: "Poble-sec and Montjuïc culture stops for museums, performance spaces, hilltop history, and the city's strongest art-and-view cluster.",
     url: "https://www.google.com/maps/search/poble+sec+montjuic+culture+barcelona",
     category: "Culture",
@@ -583,7 +627,11 @@ export const mapLists: MapList[] = [
   {
     id: "list-barcelona-gothic-quarter-stays",
     slug: "barcelona-gothic-quarter-stays",
-    title: "Hotels and Hostels",
+    seoSlug: "best-places-to-stay",
+    seoTitle: "Best Places to Stay in the Gothic Quarter, Barcelona",
+    seoDescription:
+      "Best places to stay in the Gothic Quarter, Barcelona, for old-city hotels, boutique stays, hostels, cathedral access, and walkable historic lanes.",
+    title: "Sleep in the Old City",
     description: "Gothic Quarter stays for travelers who want old-city texture, walkability, and immediate access to cathedral lanes without relying on taxis.",
     url: "https://www.google.com/maps/search/gothic+quarter+hotels+hostels+barcelona",
     category: "Stay",
@@ -607,7 +655,11 @@ export const mapLists: MapList[] = [
   {
     id: "list-barcelona-el-born-stays",
     slug: "barcelona-el-born-stays",
-    title: "Hotels and Hostels",
+    seoSlug: "best-places-to-stay",
+    seoTitle: "Best Places to Stay in El Born, Barcelona",
+    seoDescription:
+      "Best places to stay in El Born, Barcelona, including boutique hotels, practical hostals, museum-street bases, Ciutadella access, and lively old-town lodging.",
+    title: "Boutique Beds by the Market",
     description: "El Born stays for travelers who want boutiques, museum streets, Ciutadella access, and a livelier old-town feel than the cathedral core.",
     url: "https://www.google.com/maps/search/el+born+hotels+hostels+barcelona",
     category: "Stay",
@@ -631,7 +683,11 @@ export const mapLists: MapList[] = [
   {
     id: "list-barcelona-eixample-stays",
     slug: "barcelona-eixample-stays",
-    title: "Hotels and Hostels",
+    seoSlug: "best-places-to-stay",
+    seoTitle: "Best Places to Stay in Eixample, Barcelona",
+    seoDescription:
+      "Best places to stay in Eixample, Barcelona, for design hotels, central transit, Modernista architecture, hostels, and calmer bases outside the old-city lanes.",
+    title: "Design Hotels on the Grid",
     description: "Eixample stays for design hotels, central transit, Modernista architecture, and a calmer base than the tight old-city lanes.",
     url: "https://www.google.com/maps/search/eixample+hotels+hostels+barcelona",
     category: "Stay",
@@ -655,7 +711,11 @@ export const mapLists: MapList[] = [
   {
     id: "list-barcelona-gracia-stays",
     slug: "barcelona-gracia-stays",
-    title: "Hotels and Hostels",
+    seoSlug: "best-places-to-stay",
+    seoTitle: "Best Places to Stay in Gràcia, Barcelona",
+    seoDescription:
+      "Best places to stay in Gràcia, Barcelona, for village-like plazas, Park Guell access, budget hostels, boutique lodging, and a less tourist-saturated base.",
+    title: "Village-Base Stays",
     description: "Gràcia stays for travelers who want village-like plazas, better local dining access, and a less tourist-saturated base above Diagonal.",
     url: "https://www.google.com/maps/search/gracia+hotels+hostels+barcelona",
     category: "Stay",
@@ -679,7 +739,11 @@ export const mapLists: MapList[] = [
   {
     id: "list-barcelona-poble-sec-stays",
     slug: "barcelona-poble-sec-stays",
-    title: "Hotels and Hostels",
+    seoSlug: "best-places-to-stay",
+    seoTitle: "Best Places to Stay in Poble-sec, Barcelona",
+    seoDescription:
+      "Best places to stay in Poble-sec, Barcelona, for Montjuic access, theater nights, Sala Apolo proximity, budget rooms, and a base between old town and the hill.",
+    title: "Sleep Near Montjuïc",
     description: "Poble-sec stays for Montjuïc access, theater nights, Apolo proximity, and a useful base between old town and the hill.",
     url: "https://www.google.com/maps/search/poble+sec+hotels+hostels+barcelona",
     category: "Stay",
@@ -703,7 +767,11 @@ export const mapLists: MapList[] = [
   {
     id: "list-barcelona-eixample-dive-bars",
     slug: "barcelona-eixample-dive-bars",
-    title: "Best Dives",
+    seoSlug: "best-dive-bars",
+    seoTitle: "Best Dive Bars in Eixample, Barcelona",
+    seoDescription:
+      "Best dive bars in Eixample, Barcelona, covering local small bars, classic counters, vermouth spots, and lower-key late-night neighborhood drinking.",
+    title: "Low-Key Drinks on the Grid",
     description: "Local small bars across Eixample with neighborhood character, lower-key energy, and classic late-night rhythm.",
     url: "https://www.google.com/maps/search/eixample+dive+bars+barcelona",
     category: "Nightlife",
@@ -728,7 +796,11 @@ export const mapLists: MapList[] = [
   {
     id: "list-barcelona-eixample-popular-bars",
     slug: "barcelona-eixample-popular-bars",
-    title: "High Volume Hits",
+    seoSlug: "best-bars",
+    seoTitle: "Best Bars in Eixample, Barcelona",
+    seoDescription:
+      "Best bars in Eixample, Barcelona, including classic cocktail rooms, speakeasy-style stops, high-demand nightlife, and central bars worth planning around.",
+    title: "Polished Nights Around Passeig",
     description: "Major draw bars and cocktail rooms around Eixample and central Barcelona with consistent high demand.",
     url: "https://www.google.com/maps/search/eixample+popular+bars+barcelona",
     category: "Nightlife",
@@ -752,7 +824,11 @@ export const mapLists: MapList[] = [
   {
     id: "list-barcelona-born-dive-bars",
     slug: "barcelona-el-born-dive-bars",
-    title: "Best Dives",
+    seoSlug: "best-dive-bars",
+    seoTitle: "Best Dive Bars in El Born, Barcelona",
+    seoDescription:
+      "Best dive bars in El Born, Barcelona, for old-school cava, tapas counters, vermouth stops, wine bars, and smaller neighborhood drinking culture.",
+    title: "Cava Corners and Wine Dens",
     description: "Smaller bars around El Born mixing old-school cava, tapas counters, and local neighborhood drinking culture.",
     url: "https://www.google.com/maps/search/el+born+dive+bars+barcelona",
     category: "Nightlife",
@@ -777,7 +853,11 @@ export const mapLists: MapList[] = [
   {
     id: "list-barcelona-born-popular-bars",
     slug: "barcelona-el-born-popular-bars",
-    title: "High Volume Hits",
+    seoSlug: "best-bars",
+    seoTitle: "Best Bars in El Born, Barcelona",
+    seoDescription:
+      "Best bars in El Born, Barcelona, including destination cocktail bars, speakeasy-style rooms, high-traffic nightlife, and late-night spots with real momentum.",
+    title: "Born After-Dark Staples",
     description: "High-traffic nightlife and cocktail venues in El Born known for lines, hype, and late-night momentum.",
     url: "https://www.google.com/maps/search/el+born+popular+bars+barcelona",
     category: "Nightlife",
@@ -802,7 +882,11 @@ export const mapLists: MapList[] = [
   {
     id: "list-barcelona-gothic-dive-bars",
     slug: "barcelona-gothic-quarter-dive-bars",
-    title: "Best Dives",
+    seoSlug: "best-dive-bars",
+    seoTitle: "Best Dive Bars in the Gothic Quarter, Barcelona",
+    seoDescription:
+      "Best dive bars in the Gothic Quarter, Barcelona, from old-city counter bars and gritty classics to late-night locals with real neighborhood character.",
+    title: "Old-City Hideout Bars",
     description: "Old-city small bars and gritty classics in the Gothic Quarter with authentic late-night neighborhood character.",
     url: "https://www.google.com/maps/search/gothic+quarter+dive+bars+barcelona",
     category: "Nightlife",
@@ -827,7 +911,11 @@ export const mapLists: MapList[] = [
   {
     id: "list-barcelona-gothic-popular-bars",
     slug: "barcelona-gothic-quarter-popular-nightlife",
-    title: "High Volume Hits",
+    seoSlug: "best-bars",
+    seoTitle: "Best Bars in the Gothic Quarter, Barcelona",
+    seoDescription:
+      "Best bars in the Gothic Quarter, Barcelona, including cocktail rooms, live-music venues, busy old-city nightlife, and Plaça Reial late-night anchors.",
+    title: "Plaça Reial Night Machines",
     description: "Bigger nightlife and music-led venues in and around the Gothic Quarter core.",
     url: "https://www.google.com/maps/search/gothic+quarter+popular+nightlife+barcelona",
     category: "Nightlife",
@@ -852,7 +940,11 @@ export const mapLists: MapList[] = [
   {
     id: "list-barcelona-gracia-dive-bars",
     slug: "barcelona-gracia-dive-bars",
-    title: "Best Dives",
+    seoSlug: "best-dive-bars",
+    seoTitle: "Best Dive Bars in Gràcia, Barcelona",
+    seoDescription:
+      "Best dive bars in Gràcia, Barcelona, covering smaller neighborhood bars, bodegas, natural-wine stops, vermouth rooms, and relaxed late-night hangouts.",
+    title: "Village Bars with Regulars",
     description: "Smaller neighborhood bars across Gràcia with local crowd patterns and less formal nightlife settings.",
     url: "https://www.google.com/maps/search/gracia+dive+bars+barcelona",
     category: "Nightlife",
@@ -877,7 +969,11 @@ export const mapLists: MapList[] = [
   {
     id: "list-barcelona-gracia-popular-bars",
     slug: "barcelona-gracia-popular-nightlife",
-    title: "High Volume Hits",
+    seoSlug: "best-bars",
+    seoTitle: "Best Bars in Gràcia, Barcelona",
+    seoDescription:
+      "Best bars in Gràcia, Barcelona, including plaza nightlife, independent music rooms, classic cocktail spots, and stronger destination bars with event pull.",
+    title: "Gràcia Nights That Travel",
     description: "Well-known and larger nightlife options in Gràcia with stronger event and destination pull.",
     url: "https://www.google.com/maps/search/gracia+popular+nightlife+barcelona",
     category: "Nightlife",
@@ -902,7 +998,11 @@ export const mapLists: MapList[] = [
   {
     id: "list-barcelona-poblesec-dive-bars",
     slug: "barcelona-poble-sec-dive-bars",
-    title: "Best Dives",
+    seoSlug: "best-dive-bars",
+    seoTitle: "Best Dive Bars in Poble-sec, Barcelona",
+    seoDescription:
+      "Best dive bars in Poble-sec, Barcelona, from old-school bodegas and Carrer de Blai pintxos stops to standing-room tapas bars and neighborhood drinks.",
+    title: "Bodega Crawl on Blai",
     description: "Small and neighborhood-heavy bars in Poble-sec, from bodegas to standing-room tapas stops.",
     url: "https://www.google.com/maps/search/poble+sec+dive+bars+barcelona",
     category: "Nightlife",
@@ -927,7 +1027,11 @@ export const mapLists: MapList[] = [
   {
     id: "list-barcelona-poblesec-popular-bars",
     slug: "barcelona-poble-sec-popular-nightlife",
-    title: "High Volume Hits",
+    seoSlug: "best-bars",
+    seoTitle: "Best Bars in Poble-sec, Barcelona",
+    seoDescription:
+      "Best bars in Poble-sec, Barcelona, including club anchors, queer-friendly cocktail rooms, theater-adjacent nightlife, and bigger venues with citywide draw.",
+    title: "Apolo Orbit and Big Nights",
     description: "Bigger nightlife anchors around Poble-sec, including club and event venues with broader city draw.",
     url: "https://www.google.com/maps/search/poble+sec+popular+nightlife+barcelona",
     category: "Nightlife",

@@ -16,7 +16,6 @@ import {
   X,
 } from "lucide-react";
 import Link from "next/link";
-import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 import type { PointerEvent as ReactPointerEvent, ReactNode } from "react";
 
@@ -78,6 +77,7 @@ import {
   getCanonicalCityNeighborhoodPath,
   getCanonicalCityPath,
   getCanonicalGuidePath,
+  resolveCityDeepLink,
 } from "@/lib/deep-link-routes";
 import { updateSupabaseProfile } from "@/lib/supabase/profile";
 import { getEditorialLists, useAppStore } from "@/store/app-store";
@@ -288,8 +288,6 @@ function MobileBrowseSelect({
 }
 
 export function SplitScreenSection({ continents, initialRouteState, seoContent }: SplitScreenSectionProps) {
-  const router = useRouter();
-  const pathname = usePathname();
   const currentUser = useAppStore((state) => state.currentUser);
   const setCurrentUser = useAppStore((state) => state.setCurrentUser);
   const isProfileShellActive = useAppStore((state) => state.isProfileShellActive);
@@ -515,6 +513,33 @@ export function SplitScreenSection({ continents, initialRouteState, seoContent }
   }, [initialRouteStateKey]);
 
   useEffect(() => {
+    const handlePopState = () => {
+      const citySegments = window.location.pathname.split("/").filter(Boolean);
+      if (citySegments[0] !== "city") {
+        return;
+      }
+      const route = resolveCityDeepLink(citySegments.slice(1));
+      if (!route) {
+        return;
+      }
+
+      const currentGuideId = expandedGuideIdRef.current;
+      setSelection(route.selection);
+      setActiveCategory(route.activeCategory ?? null);
+      setActiveSubcategory(null);
+      setExpandedGuideId(route.expandedGuideId ?? null);
+      setClosingGuide(null);
+      setVisibleNestedStopParentIds([]);
+      if (route.expandedGuideId && currentGuideId !== route.expandedGuideId) {
+        setActiveGuideFitNonce((current) => current + 1);
+      }
+    };
+
+    window.addEventListener("popstate", handlePopState);
+    return () => window.removeEventListener("popstate", handlePopState);
+  }, []);
+
+  useEffect(() => {
     setProfileNameDraft(currentUser?.name ?? "");
     setProfileBioDraft(currentUser?.bio ?? "");
     setProfileAvatarPreview(currentUser?.avatar ?? "");
@@ -688,8 +713,8 @@ export function SplitScreenSection({ continents, initialRouteState, seoContent }
     });
   };
   const pushExplorerPath = (path: string) => {
-    if (pathname !== path) {
-      router.push(path, { scroll: false });
+    if (typeof window !== "undefined" && window.location.pathname !== path) {
+      window.history.pushState(null, "", path);
     }
   };
   const getCityRouteContext = (nextSelection: SelectionState) => {

@@ -53,12 +53,109 @@ export function getCanonicalCityCategoryPath(
   return `${basePath}/${slugify(category)}`;
 }
 
-export function getCanonicalGuidePath(
+function normalizeRouteText(value?: string | null) {
+  return (value ?? "")
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/\s*\([^)]*\)\s*/g, " ")
+    .replace(/\s{2,}/g, " ")
+    .trim()
+    .toLowerCase();
+}
+
+type GuideSeoSeed = Pick<MapList, "category" | "title" | "slug" | "description" | "seoSlug" | "seoTitle" | "seoDescription">;
+
+function getGuideIntentLabel(guide: GuideSeoSeed) {
+  if (guide.seoTitle?.trim()) {
+    return guide.seoTitle.trim();
+  }
+
+  const text = `${guide.title} ${guide.slug} ${guide.description}`.toLowerCase();
+
+  if (guide.category === "Nightlife") {
+    if (/\bcocktail|speakeasy|martini|mixology\b/.test(text)) return "best cocktail bars";
+    if (/\bdive|dives|dive-bars?\b/.test(text)) return "best dive bars";
+    if (/\bclub|dance|late-night|nightclub\b/.test(text)) return "best clubs";
+    if (/\bpopular|high volume|hits|busy|hype\b/.test(text)) return "popular bars";
+    return "best bars";
+  }
+
+  if (guide.category === "Food") {
+    if (/\btapas\b/.test(text)) return "best tapas";
+    if (/\bcoffee|cafe|bakery|brunch\b/.test(text)) return "best cafes";
+    if (/\bcheap|budget|casual\b/.test(text)) return "best casual restaurants";
+    return "best restaurants";
+  }
+
+  if (guide.category === "Culture") return "best museums and cultural stops";
+  if (guide.category === "Stay") return "best places to stay";
+  if (guide.category === "Nature") return "best parks and nature spots";
+  return "best things to do";
+}
+
+export function getGuideSeoSlug(guide: GuideSeoSeed) {
+  return slugify(guide.seoSlug?.trim() || getGuideIntentLabel(guide));
+}
+
+export function getGuideSeoTitle(
+  guide: GuideSeoSeed,
   city: Pick<City, "name">,
-  guide: Pick<MapList, "slug" | "category">,
   neighborhood?: Pick<SubArea, "name">,
 ) {
-  return `${getCanonicalCityCategoryPath(city, guide.category, neighborhood)}/${guide.slug}`;
+  if (guide.seoTitle?.trim()) {
+    return guide.seoTitle.trim();
+  }
+
+  const placeLabel = neighborhood ? `${neighborhood.name}, ${city.name}` : city.name;
+  return `${getGuideIntentLabel(guide)} in ${placeLabel}`;
+}
+
+export function getGuideSeoDescription(
+  guide: GuideSeoSeed,
+  city: Pick<City, "name">,
+  neighborhood?: Pick<SubArea, "name">,
+) {
+  const seoTitle = getGuideSeoTitle(guide, city, neighborhood);
+  return guide.seoDescription?.trim() || `${seoTitle}. ${guide.description}`;
+}
+
+export function getGuideRouteSlug(
+  city: Pick<City, "name">,
+  guide: GuideSeoSeed & Pick<MapList, "id">,
+  neighborhood?: Pick<SubArea, "name">,
+) {
+  const baseSlug = getGuideSeoSlug(guide);
+  const neighborhoodKey = normalizeRouteText(neighborhood?.name);
+  const duplicateCount = mapLists.filter(
+    (list) =>
+      list.location.scope === "city" &&
+      list.location.city === city.name &&
+      list.category === guide.category &&
+      normalizeRouteText(list.location.neighborhood) === neighborhoodKey &&
+      getGuideSeoSlug(list) === baseSlug,
+  ).length;
+
+  if (duplicateCount <= 1) {
+    return baseSlug;
+  }
+
+  const suffix = guide.slug
+    .replace(slugify(city.name), "")
+    .replace(neighborhood ? slugify(neighborhood.name) : "", "")
+    .replace(slugify(guide.category), "")
+    .replace(baseSlug, "")
+    .replace(/^-+|-+$/g, "")
+    .replace(/-{2,}/g, "-");
+
+  return `${baseSlug}-${suffix || slugify(guide.id)}`;
+}
+
+export function getCanonicalGuidePath(
+  city: Pick<City, "name">,
+  guide: GuideSeoSeed & Pick<MapList, "id">,
+  neighborhood?: Pick<SubArea, "name">,
+) {
+  return `${getCanonicalCityCategoryPath(city, guide.category, neighborhood)}/${getGuideRouteSlug(city, guide, neighborhood)}`;
 }
 
 export function getCityBySimpleSlug(citySlug: string) {
@@ -87,13 +184,7 @@ function findNeighborhood(city: City, neighborhoodSlug?: string): NeighborhoodMa
 }
 
 function normalizeNeighborhoodName(value?: string | null) {
-  return (value ?? "")
-    .normalize("NFD")
-    .replace(/[\u0300-\u036f]/g, "")
-    .replace(/\s*\([^)]*\)\s*/g, " ")
-    .replace(/\s{2,}/g, " ")
-    .trim()
-    .toLowerCase();
+  return normalizeRouteText(value);
 }
 
 export function getPublishedServerGuides() {
@@ -225,7 +316,11 @@ function buildItemListData(lists: MapList[], canonicalPath: string, name: string
     itemListElement: lists.slice(0, 20).map((list, index) => ({
       "@type": "ListItem",
       position: index + 1,
-      name: list.title,
+      name: getGuideSeoTitle(
+        list,
+        { name: list.location.city ?? "" },
+        list.location.neighborhood ? { name: list.location.neighborhood } : undefined,
+      ),
       url: getCanonicalGuidePath(
         { name: list.location.city ?? "" },
         list,
@@ -236,11 +331,16 @@ function buildItemListData(lists: MapList[], canonicalPath: string, name: string
 }
 
 function buildGuideData(guide: MapList, canonicalPath: string) {
+  const city = { name: guide.location.city ?? guide.location.country };
+  const neighborhood = guide.location.neighborhood ? { name: guide.location.neighborhood } : undefined;
+  const seoDescription = getGuideSeoDescription(guide, city, neighborhood);
+
   return {
     "@context": "https://schema.org",
     "@type": "CreativeWork",
-    name: guide.title,
-    description: guide.description,
+    name: getGuideSeoTitle(guide, city, neighborhood),
+    alternateName: guide.title,
+    description: seoDescription,
     url: canonicalPath,
     about: guide.category,
     author: {
@@ -295,7 +395,13 @@ export function resolveCityDeepLink(rawSegments: string[]): CityDeepLinkResoluti
   if (rest[cursor]) {
     const guideSlug = rest[cursor];
     const candidateLists = getListsForCityRoute(city, neighborhoodMatch?.subarea, category);
-    guide = candidateLists.find((list) => list.slug === guideSlug || slugify(list.title) === guideSlug);
+    guide = candidateLists.find(
+      (list) =>
+        list.slug === guideSlug ||
+        slugify(list.title) === guideSlug ||
+        getGuideSeoSlug(list) === guideSlug ||
+        getGuideRouteSlug(city, list, neighborhoodMatch?.subarea) === guideSlug,
+    );
     if (!guide) {
       return null;
     }
@@ -318,29 +424,30 @@ export function resolveCityDeepLink(rawSegments: string[]): CityDeepLinkResoluti
         : getCanonicalCityPath(city);
 
   const placeLabel = neighborhood ? `${neighborhood.name}, ${city.name}` : city.name;
+  const guideSeoTitle = guide ? getGuideSeoTitle(guide, city, neighborhood) : null;
   const h1 = guide
-    ? `${guide.title} in ${placeLabel}`
+    ? guideSeoTitle!
     : category
       ? `${category} in ${placeLabel}`
       : neighborhood
         ? `${neighborhood.name}, ${city.name}`
         : `${city.name} guides`;
   const title = guide
-    ? `${guide.title} in ${placeLabel}`
+    ? `${guideSeoTitle}: ${guide.title}`
     : category
       ? `${category} guides in ${placeLabel}`
       : neighborhood
         ? `${neighborhood.name}, ${city.name} guides`
         : `${city.name} travel guides`;
   const description = guide
-    ? guide.description
+    ? getGuideSeoDescription(guide, city, neighborhood)
     : category
       ? `Curated ${category.toLowerCase()} Google Maps lists for ${placeLabel}, including local favorites and places worth saving.`
       : neighborhood?.description
         ? `${neighborhood.description} Browse curated Google Maps lists for ${placeLabel}.`
         : `Browse curated Google Maps lists for ${placeLabel}, with guides for food, nightlife, culture, nature, stays, and activities.`;
   const intro = guide
-    ? guide.description
+    ? getGuideSeoDescription(guide, city, neighborhood)
     : category
       ? `Explore ${category.toLowerCase()} guides for ${placeLabel}, ranked and mapped so you can choose where to go next.`
       : neighborhood?.description ?? city.description;

@@ -6,6 +6,7 @@ import {
   getCanonicalCityNeighborhoodPath,
   getCanonicalCityPath,
   getCanonicalGuidePath,
+  getGuideSeoTitle,
   getIndexableListsForCityRoute,
   getCategoriesForCityRoute,
   getListsForCityRoute,
@@ -26,6 +27,7 @@ function pluralize(count: number, singular: string, plural = `${singular}s`) {
 function GuidePreviewCard({ guide, priority = false }: { guide: MapList; priority?: boolean }) {
   const neighborhood = guide.location.neighborhood ? { name: guide.location.neighborhood } : undefined;
   const href = getCanonicalGuidePath({ name: guide.location.city ?? "" }, guide, neighborhood);
+  const seoTitle = getGuideSeoTitle({ ...guide }, { name: guide.location.city ?? "" }, neighborhood);
   const stops = guide.stops.slice(0, priority ? 6 : 3);
 
   return (
@@ -41,9 +43,12 @@ function GuidePreviewCard({ guide, priority = false }: { guide: MapList; priorit
       </div>
       <h3 className="mt-2 text-base font-semibold text-slate-950">
         <Link href={href} className="hover:text-orange-700">
-          {guide.title}
+          {seoTitle}
         </Link>
       </h3>
+      {guide.title !== seoTitle ? (
+        <p className="mt-1 text-xs font-medium text-slate-500">Guide: {guide.title}</p>
+      ) : null}
       <p className="mt-2 text-sm leading-6 text-slate-600">{guide.description}</p>
       {stops.length ? (
         <ul className="mt-3 grid gap-2 text-sm text-slate-700 sm:grid-cols-2">
@@ -182,7 +187,14 @@ export function CityRouteSeoIndex({ route }: CityRouteSeoIndexProps) {
                   <span className="block text-[11px] font-semibold uppercase tracking-[0.14em] text-slate-500">
                     {guide.category}
                   </span>
-                  <span className="mt-1 block text-sm font-semibold text-slate-950">{guide.title}</span>
+                  <span className="mt-1 block text-sm font-semibold text-slate-950">
+                    {getGuideSeoTitle(
+                      guide,
+                      { name: guide.location.city ?? route.city.name },
+                      guide.location.neighborhood ? { name: guide.location.neighborhood } : undefined,
+                    )}
+                  </span>
+                  <span className="mt-1 block text-xs font-medium text-slate-500">Guide: {guide.title}</span>
                   <span className="mt-1 line-clamp-2 block text-xs leading-5 text-slate-600">{guide.description}</span>
                 </Link>
               ))}

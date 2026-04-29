@@ -30,6 +30,9 @@ export interface LocationRef {
 export interface MapList {
   id: string;
   slug: string;
+  seoSlug?: string;
+  seoTitle?: string;
+  seoDescription?: string;
   title: string;
   description: string;
   url: string;

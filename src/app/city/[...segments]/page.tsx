@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { notFound } from "next/navigation";
+import { notFound, permanentRedirect } from "next/navigation";
 
 import { SplitScreenSection } from "@/components/home/SplitScreenSection";
 import { CityRouteSeoIndex } from "@/components/seo/CityRouteSeoIndex";
@@ -56,6 +56,11 @@ export default async function CityDeepLinkPage({ params }: CityDeepLinkPageProps
 
   if (!route) {
     notFound();
+  }
+
+  const requestedPath = `/city/${segments.join("/")}`;
+  if (route.guide && requestedPath !== route.canonicalPath) {
+    permanentRedirect(route.canonicalPath);
   }
 
   return (
