@@ -1,5 +1,5 @@
-import capitals from "capitals-coordinates";
 import { getCountryCode, getCountryData } from "countries-list";
+import capitalCoordinates from "@/data/capital-coordinates.json";
 import fetchedCityNeighborhoods from "@/data/city-neighborhoods.json";
 import worldCountries from "@/data/world-countries.json";
 import { slugify } from "@/lib/utils";
@@ -15,7 +15,7 @@ type WorldCountrySeed = {
 };
 
 const worldCountrySeeds = worldCountries as unknown as WorldCountrySeed[];
-const capitalFeatures = capitals.rawData as Array<{
+const capitalFeatures = capitalCoordinates as unknown as Array<{
   geometry?: { coordinates?: [number, number] };
   properties?: { capital?: string; country?: string };
 }>;
