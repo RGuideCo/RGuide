@@ -79,9 +79,8 @@ import {
   getCanonicalCityPath,
   getCanonicalGuidePath,
 } from "@/lib/deep-link-routes";
-import { getAllLists, getListsForCity, getListsForContinent, getListsForCountry } from "@/lib/mock-data";
 import { updateSupabaseProfile } from "@/lib/supabase/profile";
-import { useAppStore } from "@/store/app-store";
+import { getEditorialLists, useAppStore } from "@/store/app-store";
 import { Continent, ListCategory, MapList, SelectionState, SubmissionType } from "@/types";
 
 interface SplitScreenSectionProps {
@@ -307,6 +306,7 @@ export function SplitScreenSection({ continents, initialRouteState, seoContent }
   const updateSubmittedList = useAppStore((state) => state.updateSubmittedList);
   const itineraryPlaylists = useAppStore((state) => state.itineraryPlaylists);
   const removeStopFromItineraryPlaylist = useAppStore((state) => state.removeStopFromItineraryPlaylist);
+  const editorialLists = useAppStore((state) => state.editorialLists);
   const submittedLists = useAppStore((state) => state.submittedLists);
   const [selection, setSelection] = useState<SelectionState>(() => initialRouteState?.selection ?? getDefaultSelection(continents));
   const [focusedCountrySignal, setFocusedCountrySignal] = useState<{
@@ -1389,23 +1389,36 @@ export function SplitScreenSection({ continents, initialRouteState, seoContent }
     cityUsesNestedDistricts,
   ]);
 
+  const activeEditorialLists = useMemo(() => getEditorialLists(editorialLists), [editorialLists]);
   const selectedCityLists = useMemo(
-    () => (activeLocation.city ? getListsForCity(activeLocation.city) : []),
-    [activeLocation.city],
+    () =>
+      activeLocation.city
+        ? activeEditorialLists.filter(
+            (list) => list.location.scope === "city" && list.location.city === activeLocation.city?.name,
+          )
+        : [],
+    [activeEditorialLists, activeLocation.city],
   );
   const selectedCountryLists = useMemo(
     () =>
       activeLocation.country
-        ? getListsForCountry({
-            country: activeLocation.country.name,
-            continent: activeLocation.continent?.name ?? activeLocation.country.continent,
-          })
+        ? activeEditorialLists.filter(
+            (list) =>
+              list.location.scope === "country" &&
+              list.location.country === activeLocation.country?.name &&
+              list.location.continent === (activeLocation.continent?.name ?? activeLocation.country?.continent),
+          )
         : [],
-    [activeLocation.continent?.name, activeLocation.country],
+    [activeEditorialLists, activeLocation.continent?.name, activeLocation.country],
   );
   const selectedContinentLists = useMemo(
-    () => (activeLocation.continent ? getListsForContinent({ continent: activeLocation.continent.name }) : []),
-    [activeLocation.continent],
+    () =>
+      activeLocation.continent
+        ? activeEditorialLists.filter(
+            (list) => list.location.scope === "continent" && list.location.continent === activeLocation.continent?.name,
+          )
+        : [],
+    [activeEditorialLists, activeLocation.continent],
   );
   const coreActiveLists = activeLocation.city
     ? selectedCityLists
@@ -1436,7 +1449,7 @@ export function SplitScreenSection({ continents, initialRouteState, seoContent }
     [coreActiveLists, submittedActiveLists],
   );
   const globalMergedLists = useMemo(() => {
-    const merged = [...submittedLists, ...getAllLists()];
+    const merged = [...submittedLists, ...activeEditorialLists];
     const seen = new Set<string>();
     return merged.filter((list) => {
       if (isPrivateJournalExperience(list) && list.creator.id !== currentUser?.id) {
@@ -1448,7 +1461,7 @@ export function SplitScreenSection({ continents, initialRouteState, seoContent }
       seen.add(list.id);
       return true;
     });
-  }, [currentUser?.id, submittedLists]);
+  }, [activeEditorialLists, currentUser?.id, submittedLists]);
   const profileLists = useMemo(
     () => (currentUser ? globalMergedLists.filter((list) => list.creator.id === currentUser.id) : []),
     [currentUser, globalMergedLists],

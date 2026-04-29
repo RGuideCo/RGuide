@@ -5,8 +5,9 @@ import Link from "next/link";
 import { Search } from "lucide-react";
 import { useId, useMemo, useState } from "react";
 
-import { cities, mapLists } from "@/data";
+import { cities } from "@/data";
 import { getCityHref, getListHref } from "@/lib/routes";
+import { getEditorialLists, useAppStore } from "@/store/app-store";
 
 interface SearchBarProps {
   className?: string;
@@ -16,8 +17,10 @@ interface SearchBarProps {
 }
 
 export function SearchBar({ className, autoFocus = false, onResultSelect, compact = false }: SearchBarProps) {
+  const editorialLists = useAppStore((state) => state.editorialLists);
   const [query, setQuery] = useState("");
   const searchId = useId();
+  const searchableLists = useMemo(() => getEditorialLists(editorialLists), [editorialLists]);
 
   const results = useMemo(() => {
     if (!query.trim()) {
@@ -35,7 +38,7 @@ export function SearchBar({ className, autoFocus = false, onResultSelect, compac
         href: getCityHref(city),
       }));
 
-    const listMatches = mapLists
+    const listMatches = searchableLists
       .filter((list) => list.title.toLowerCase().includes(normalized))
       .slice(0, 4)
       .map((list) => ({
@@ -46,7 +49,7 @@ export function SearchBar({ className, autoFocus = false, onResultSelect, compac
       }));
 
     return [...cityMatches, ...listMatches].slice(0, 6);
-  }, [query]);
+  }, [query, searchableLists]);
 
   return (
     <div className={clsx("relative w-full max-w-xl", className)}>

@@ -57,9 +57,11 @@ interface AppState {
   itineraryStopScheduleById: Record<string, { date?: string; time?: string }>;
   itineraryPlaylists: ItineraryPlaylist[];
   placesBeenByUserId: Record<string, PlacesBeenEntries>;
+  editorialLists: MapList[];
   submittedLists: MapList[];
   openAuthModal: (mode?: AuthMode) => void;
   setCurrentUser: (user: User | null) => void;
+  setEditorialLists: (lists: MapList[]) => void;
   setSubmittedLists: (lists: MapList[]) => void;
   setProfileShellActive: (active: boolean) => void;
   setMobileSearchOpen: (active: boolean) => void;
@@ -108,6 +110,7 @@ export const useAppStore = create<AppState>()(
         },
       ],
       placesBeenByUserId: {},
+      editorialLists: [],
       submittedLists: [],
       openAuthModal: (mode = "login") =>
         set({
@@ -115,6 +118,7 @@ export const useAppStore = create<AppState>()(
           authMode: mode,
         }),
       setCurrentUser: (user) => set({ currentUser: user }),
+      setEditorialLists: (lists) => set({ editorialLists: lists }),
       setSubmittedLists: (lists) => set({ submittedLists: lists }),
       setProfileShellActive: (active) => set({ isProfileShellActive: active }),
       setMobileSearchOpen: (active) => set({ isMobileSearchOpen: active }),
@@ -567,6 +571,7 @@ export const useAppStore = create<AppState>()(
               },
             ],
             placesBeenByUserId: {},
+            editorialLists: [],
             submittedLists: [],
           } as unknown as AppState;
         }
@@ -594,6 +599,7 @@ export const useAppStore = create<AppState>()(
                   },
                 ],
           placesBeenByUserId: state.placesBeenByUserId ?? {},
+          editorialLists: [],
           submittedLists: state.submittedLists ?? [],
           authModalOpen: false,
           authMode: state.authMode ?? "login",
@@ -603,6 +609,10 @@ export const useAppStore = create<AppState>()(
   ),
 );
 
-export function getMergedLists(submittedLists: MapList[]) {
-  return [...submittedLists, ...mapLists];
+export function getEditorialLists(editorialLists: MapList[]) {
+  return editorialLists.length ? editorialLists : mapLists;
+}
+
+export function getMergedLists(submittedLists: MapList[], editorialLists: MapList[] = []) {
+  return [...submittedLists, ...getEditorialLists(editorialLists)];
 }

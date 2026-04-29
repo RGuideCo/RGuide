@@ -4,17 +4,17 @@ import { useMemo } from "react";
 
 import { MapListCard } from "@/components/cards/MapListCard";
 import { EmptyState } from "@/components/shared/EmptyState";
-import { mapLists } from "@/data";
-import { useAppStore } from "@/store/app-store";
+import { getEditorialLists, useAppStore } from "@/store/app-store";
 
 export default function FavoritesPage() {
   const favoriteIds = useAppStore((state) => state.favoriteIds);
+  const editorialLists = useAppStore((state) => state.editorialLists);
   const submittedLists = useAppStore((state) => state.submittedLists);
 
   const lists = useMemo(() => {
-    const merged = [...submittedLists, ...mapLists];
+    const merged = [...submittedLists, ...getEditorialLists(editorialLists)];
     return merged.filter((list) => favoriteIds.includes(list.id));
-  }, [favoriteIds, submittedLists]);
+  }, [editorialLists, favoriteIds, submittedLists]);
 
   return (
     <div className="page-shell py-10">
