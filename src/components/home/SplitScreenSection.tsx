@@ -3719,7 +3719,7 @@ export function SplitScreenSection({ continents, initialRouteState, seoContent }
                         }}
                       >
                         {visibleIntroCopy ? (
-                          <p className="text-sm leading-5 text-slate-600">
+                          <p className="ml-3 border-l border-slate-200 pl-3 text-sm leading-5 text-slate-600">
                             {visibleIntroCopy}
                           </p>
                         ) : null}
