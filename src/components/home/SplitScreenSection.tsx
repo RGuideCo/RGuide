@@ -2124,11 +2124,11 @@ export function SplitScreenSection({ continents, initialRouteState, seoContent }
   const visibleSeoHeading = expandedGuide
     ? `${expandedGuide.title} in ${activeSeoPlaceLabel}`
     : activeCategory && activeLocation.city
-      ? activeDirectoryMeta.title
+      ? activeSeoPlaceLabel
       : seoContent?.h1 ?? activeDirectoryMeta.title;
   const visibleSeoContextLabel =
     !expandedGuide && activeCategory && activeLocation.city
-      ? `${activeCategory} in ${activeSeoPlaceLabel}`
+      ? `${activeCategory} in`
       : null;
   const visibleIntroCopy = expandedGuide
     ? expandedGuide.description
