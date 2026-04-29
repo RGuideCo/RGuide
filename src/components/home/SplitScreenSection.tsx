@@ -2124,8 +2124,12 @@ export function SplitScreenSection({ continents, initialRouteState, seoContent }
   const visibleSeoHeading = expandedGuide
     ? `${expandedGuide.title} in ${activeSeoPlaceLabel}`
     : activeCategory && activeLocation.city
-      ? `${activeCategory} in ${activeSeoPlaceLabel}`
+      ? activeDirectoryMeta.title
       : seoContent?.h1 ?? activeDirectoryMeta.title;
+  const visibleSeoContextLabel =
+    !expandedGuide && activeCategory && activeLocation.city
+      ? `${activeCategory} in ${activeSeoPlaceLabel}`
+      : null;
   const visibleIntroCopy = expandedGuide
     ? expandedGuide.description
     : activeCategory && activeLocation.city
@@ -3429,6 +3433,11 @@ export function SplitScreenSection({ continents, initialRouteState, seoContent }
                     className={`min-w-0 ${continentTitleMorph ? "invisible" : "visible"}`}
                     aria-hidden={continentTitleMorph ? "true" : "false"}
                   >
+                    {visibleSeoContextLabel ? (
+                      <p className="mb-1 text-sm font-medium text-slate-600">
+                        {visibleSeoContextLabel}
+                      </p>
+                    ) : null}
                     <h1
                       ref={titleRef}
                       className="text-2xl font-semibold text-slate-900"
