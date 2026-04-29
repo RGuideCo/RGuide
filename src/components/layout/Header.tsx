@@ -109,11 +109,11 @@ export function Header() {
         </div>
 
         <div className="hidden min-w-0 lg:block lg:flex-1">
-          <div className="mx-auto w-full max-w-[1600px] px-1 sm:px-2 lg:px-2">
+          <div className="w-full px-1 sm:px-2 lg:px-2">
             <div className="grid items-center lg:grid-cols-[minmax(280px,0.66fr)_minmax(0,1.14fr)_minmax(576px,1.2fr)]">
               <div className="hidden lg:block" />
               <div className="hidden lg:block" />
-              <SearchBar className="ml-auto w-full lg:max-w-none" />
+              <SearchBar className="ml-auto" />
             </div>
           </div>
         </div>

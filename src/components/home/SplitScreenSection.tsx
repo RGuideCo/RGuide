@@ -2809,7 +2809,7 @@ export function SplitScreenSection({ continents, initialRouteState, seoContent }
   return (
     <section id="map-explorer" className="w-full py-0 lg:pb-0 lg:pt-2">
       <div className="flex w-full flex-col items-stretch gap-2 lg:flex-row lg:items-start lg:gap-0">
-        <div className={`z-20 hidden w-full shrink-0 flex-row items-center gap-3 overflow-x-auto px-3 py-1 sm:px-4 lg:flex lg:w-14 lg:translate-x-1 lg:flex-col lg:overflow-visible lg:px-0 lg:py-0 lg:pt-7 ${railTransitionClass}`}>
+        <div className={`z-20 hidden w-full shrink-0 flex-row items-center justify-center gap-3 overflow-x-auto px-3 py-1 sm:px-4 lg:flex lg:w-14 lg:flex-col lg:overflow-visible lg:px-0 lg:py-0 lg:pt-7 ${railTransitionClass}`}>
             {isProfileMode ? (
               <>
                 {activeProfileLeftRail === "places-been" && currentUser ? (
@@ -2994,7 +2994,7 @@ export function SplitScreenSection({ continents, initialRouteState, seoContent }
             )}
           </div>
         <div className="min-w-0 flex-1">
-          <div className="w-full lg:mx-auto lg:max-w-[1600px] lg:px-2">
+          <div className="w-full lg:px-2">
           <div
             ref={shellViewportRef}
             className={`relative h-[100svh] min-h-[38rem] w-full bg-white lg:min-h-0 lg:rounded-2xl lg:border lg:border-slate-200/80 lg:shadow-sm ${
@@ -5926,7 +5926,7 @@ export function SplitScreenSection({ continents, initialRouteState, seoContent }
           </div>
         </div>
         </div>
-        <div className={`z-20 hidden w-full shrink-0 flex-row items-center gap-3 overflow-x-auto px-3 py-1 sm:px-4 lg:flex lg:w-14 lg:-translate-x-1 lg:flex-col lg:overflow-visible lg:px-0 lg:py-0 lg:pt-7 ${railTransitionClass}`}>
+        <div className={`z-20 hidden w-full shrink-0 flex-row items-center justify-center gap-3 overflow-x-auto px-3 py-1 sm:px-4 lg:flex lg:w-14 lg:-translate-x-1 lg:flex-col lg:overflow-visible lg:px-0 lg:py-0 lg:pt-7 ${railTransitionClass}`}>
             {isProfileMode ? (
               profileRightRailOptions.map((option, index) => (
                 <div
