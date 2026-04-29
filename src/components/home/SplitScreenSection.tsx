@@ -16,6 +16,7 @@ import {
   X,
 } from "lucide-react";
 import Link from "next/link";
+import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 import type { PointerEvent as ReactPointerEvent, ReactNode } from "react";
 
@@ -71,6 +72,13 @@ import { usePersistedPlacesBeen } from "@/components/home/use-persisted-places-b
 import { useItineraryWorkspace } from "@/components/home/use-itinerary-workspace";
 import { getCountryFlagEmoji } from "@/lib/country-flag";
 import { CATEGORY_STYLES } from "@/lib/constants";
+import {
+  CityDeepLinkState,
+  getCanonicalCityCategoryPath,
+  getCanonicalCityNeighborhoodPath,
+  getCanonicalCityPath,
+  getCanonicalGuidePath,
+} from "@/lib/deep-link-routes";
 import { getAllLists, getListsForCity, getListsForContinent, getListsForCountry } from "@/lib/mock-data";
 import { updateSupabaseProfile } from "@/lib/supabase/profile";
 import { useAppStore } from "@/store/app-store";
@@ -78,6 +86,11 @@ import { Continent, ListCategory, MapList, SelectionState, SubmissionType } from
 
 interface SplitScreenSectionProps {
   continents: Continent[];
+  initialRouteState?: CityDeepLinkState;
+  seoContent?: {
+    h1: string;
+    intro: string;
+  };
 }
 
 type MapViewportInsets = {
@@ -275,7 +288,9 @@ function MobileBrowseSelect({
   );
 }
 
-export function SplitScreenSection({ continents }: SplitScreenSectionProps) {
+export function SplitScreenSection({ continents, initialRouteState, seoContent }: SplitScreenSectionProps) {
+  const router = useRouter();
+  const pathname = usePathname();
   const currentUser = useAppStore((state) => state.currentUser);
   const setCurrentUser = useAppStore((state) => state.setCurrentUser);
   const isProfileShellActive = useAppStore((state) => state.isProfileShellActive);
@@ -293,12 +308,12 @@ export function SplitScreenSection({ continents }: SplitScreenSectionProps) {
   const itineraryPlaylists = useAppStore((state) => state.itineraryPlaylists);
   const removeStopFromItineraryPlaylist = useAppStore((state) => state.removeStopFromItineraryPlaylist);
   const submittedLists = useAppStore((state) => state.submittedLists);
-  const [selection, setSelection] = useState<SelectionState>(() => getDefaultSelection(continents));
+  const [selection, setSelection] = useState<SelectionState>(() => initialRouteState?.selection ?? getDefaultSelection(continents));
   const [focusedCountrySignal, setFocusedCountrySignal] = useState<{
     countryId: string;
     nonce: number;
   } | null>(null);
-  const [activeCategory, setActiveCategory] = useState<ListCategory | null>(null);
+  const [activeCategory, setActiveCategory] = useState<ListCategory | null>(initialRouteState?.activeCategory ?? null);
   const [visibleSubcategoryCategory, setVisibleSubcategoryCategory] = useState<ListCategory | null>(null);
   const [isSubcategoryClosing, setIsSubcategoryClosing] = useState(false);
   const [isSubcategoryCollapsing, setIsSubcategoryCollapsing] = useState(false);
@@ -322,7 +337,7 @@ export function SplitScreenSection({ continents }: SplitScreenSectionProps) {
   const [selectedGuideStopNonce, setSelectedGuideStopNonce] = useState(0);
   const [activeGuideFitNonce, setActiveGuideFitNonce] = useState(0);
   const [activeGuideRail, setActiveGuideRail] = useState<(typeof guideRailOptions)[number]["id"]>("r-guides");
-  const [expandedGuideId, setExpandedGuideId] = useState<string | null>(null);
+  const [expandedGuideId, setExpandedGuideId] = useState<string | null>(initialRouteState?.expandedGuideId ?? null);
   const [pendingSourcesOpenGuideId, setPendingSourcesOpenGuideId] = useState<string | null>(null);
   const [closingGuide, setClosingGuide] = useState<MapList | null>(null);
   const [isMobileListSheetExpanded, setIsMobileListSheetExpanded] = useState(false);
@@ -437,6 +452,23 @@ export function SplitScreenSection({ continents }: SplitScreenSectionProps) {
   const leftPaneRef = useRef<HTMLDivElement | null>(null);
   const mapViewportPanelRef = useRef<HTMLDivElement | null>(null);
   const rightPaneRef = useRef<HTMLDivElement | null>(null);
+  const initialRouteStateKey = JSON.stringify(initialRouteState ?? null);
+
+  useEffect(() => {
+    if (!initialRouteState) {
+      return;
+    }
+
+    setSelection(initialRouteState.selection);
+    setActiveCategory(initialRouteState.activeCategory ?? null);
+    setActiveSubcategory(null);
+    setExpandedGuideId(initialRouteState.expandedGuideId ?? null);
+    setClosingGuide(null);
+    setVisibleNestedStopParentIds([]);
+    if (initialRouteState.expandedGuideId) {
+      setActiveGuideFitNonce((current) => current + 1);
+    }
+  }, [initialRouteState, initialRouteStateKey]);
 
   useEffect(() => {
     setProfileNameDraft(currentUser?.name ?? "");
@@ -610,6 +642,35 @@ export function SplitScreenSection({ continents }: SplitScreenSectionProps) {
         morphFrameRef.current = null;
       });
     });
+  };
+  const pushExplorerPath = (path: string) => {
+    if (pathname !== path) {
+      router.push(path, { scroll: false });
+    }
+  };
+  const getCityRouteContext = (nextSelection: SelectionState) => {
+    const continent = continents.find((item) => item.id === nextSelection.continentId);
+    const country = continent?.countries.find((item) => item.id === nextSelection.countryId);
+    const city = country?.cities.find((item) => item.id === nextSelection.cityId);
+    const parentSubarea = city?.subareas?.find((item) => item.id === nextSelection.subareaId);
+    const neighborhood = nextSelection.nestedSubareaId
+      ? parentSubarea?.subareas?.find((item) => item.id === nextSelection.nestedSubareaId)
+      : parentSubarea;
+
+    return city ? { city, neighborhood } : null;
+  };
+  const getCurrentCityRoutePath = (categoryOverride: ListCategory | null = activeCategory) => {
+    const context = getCityRouteContext(selection);
+    if (!context) {
+      return null;
+    }
+    if (categoryOverride) {
+      return getCanonicalCityCategoryPath(context.city, categoryOverride, context.neighborhood);
+    }
+    if (context.neighborhood) {
+      return getCanonicalCityNeighborhoodPath(context.city, context.neighborhood);
+    }
+    return getCanonicalCityPath(context.city);
   };
   const handleSelectContinent = (continentId: string) => {
     setFocusedCountrySignal(null);
@@ -808,15 +869,15 @@ export function SplitScreenSection({ continents }: SplitScreenSectionProps) {
     const country = continent?.countries.find((item) => item.id === countryId);
     const city = country?.cities.find((item) => item.id === cityId);
 
-    setSelection((current) => {
-      const nextSelection = {
-        continentId,
-        countryId,
-        countrySubareaId: city?.countrySubareaId,
-        stateId: city?.stateId,
-        cityId,
-      };
+    const nextSelection = {
+      continentId,
+      countryId,
+      countrySubareaId: city?.countrySubareaId,
+      stateId: city?.stateId,
+      cityId,
+    };
 
+    setSelection((current) => {
       const isSameCitySelection =
         current.continentId === continentId &&
         current.countryId === countryId &&
@@ -834,6 +895,14 @@ export function SplitScreenSection({ continents }: SplitScreenSectionProps) {
 
       return current;
     });
+
+    if (city) {
+      setActiveCategory(null);
+      setActiveSubcategory(null);
+      setExpandedGuideId(null);
+      setClosingGuide(null);
+      pushExplorerPath(getCanonicalCityPath(city));
+    }
   };
   const handleSelectCityFromList = (
     continentId: string,
@@ -915,27 +984,41 @@ export function SplitScreenSection({ continents }: SplitScreenSectionProps) {
     subareaId: string,
   ) => {
     setFocusedCountrySignal(null);
-    setSelection((current) =>
-      current.continentId === continentId &&
-      current.countryId === countryId &&
-      current.cityId === cityId &&
-      current.subareaId === subareaId
-        ? {
-            continentId,
-            countryId,
-            countrySubareaId: current.countrySubareaId,
-            stateId: current.stateId,
-            cityId,
-          }
-        : {
-            continentId,
-            countryId,
-            countrySubareaId: current.countrySubareaId,
-            stateId: current.stateId,
-            cityId,
-            subareaId,
-          },
-    );
+    const isSameSubarea =
+      selection.continentId === continentId &&
+      selection.countryId === countryId &&
+      selection.cityId === cityId &&
+      selection.subareaId === subareaId &&
+      !selection.nestedSubareaId;
+    const nextSelection = isSameSubarea
+      ? {
+          continentId,
+          countryId,
+          countrySubareaId: selection.countrySubareaId,
+          stateId: selection.stateId,
+          cityId,
+        }
+      : {
+          continentId,
+          countryId,
+          countrySubareaId: selection.countrySubareaId,
+          stateId: selection.stateId,
+          cityId,
+          subareaId,
+        };
+    const context = getCityRouteContext(nextSelection);
+    setSelection(nextSelection);
+    setExpandedGuideId(null);
+    setClosingGuide(null);
+    if (context) {
+      const nextPath =
+        activeCategory && context.neighborhood
+          ? getCanonicalCityCategoryPath(context.city, activeCategory, context.neighborhood)
+          : context.neighborhood
+            ? getCanonicalCityNeighborhoodPath(context.city, context.neighborhood)
+            : getCanonicalCityPath(context.city);
+      pushExplorerPath(nextPath);
+    }
   };
   const handleSelectNestedSubarea = (
     continentId: string,
@@ -945,30 +1028,43 @@ export function SplitScreenSection({ continents }: SplitScreenSectionProps) {
     nestedSubareaId: string,
   ) => {
     setFocusedCountrySignal(null);
-    setSelection((current) =>
-      current.continentId === continentId &&
-      current.countryId === countryId &&
-      current.cityId === cityId &&
-      current.subareaId === subareaId &&
-      current.nestedSubareaId === nestedSubareaId
-        ? {
-            continentId,
-            countryId,
-            countrySubareaId: current.countrySubareaId,
-            stateId: current.stateId,
-            cityId,
-            subareaId,
-          }
-        : {
-            continentId,
-            countryId,
-            countrySubareaId: current.countrySubareaId,
-            stateId: current.stateId,
-            cityId,
-            subareaId,
-            nestedSubareaId,
-          },
-    );
+    const isSameNestedSubarea =
+      selection.continentId === continentId &&
+      selection.countryId === countryId &&
+      selection.cityId === cityId &&
+      selection.subareaId === subareaId &&
+      selection.nestedSubareaId === nestedSubareaId;
+    const nextSelection = isSameNestedSubarea
+      ? {
+          continentId,
+          countryId,
+          countrySubareaId: selection.countrySubareaId,
+          stateId: selection.stateId,
+          cityId,
+          subareaId,
+        }
+      : {
+          continentId,
+          countryId,
+          countrySubareaId: selection.countrySubareaId,
+          stateId: selection.stateId,
+          cityId,
+          subareaId,
+          nestedSubareaId,
+        };
+    const context = getCityRouteContext(nextSelection);
+    setSelection(nextSelection);
+    setExpandedGuideId(null);
+    setClosingGuide(null);
+    if (context) {
+      const nextPath =
+        activeCategory && context.neighborhood
+          ? getCanonicalCityCategoryPath(context.city, activeCategory, context.neighborhood)
+          : context.neighborhood
+            ? getCanonicalCityNeighborhoodPath(context.city, context.neighborhood)
+            : getCanonicalCityPath(context.city);
+      pushExplorerPath(nextPath);
+    }
   };
   const handleSelectCountrySubarea = (
     continentId: string,
@@ -1774,6 +1870,7 @@ export function SplitScreenSection({ continents }: SplitScreenSectionProps) {
     }
   };
   const handleCategoryToggle = (category: ListCategory) => {
+    const nextCategory = activeCategory === category ? null : category;
     setActiveSubcategory(null);
     setActiveFoodPrice(null);
     setActiveFoodOpenTime("Now");
@@ -1783,7 +1880,13 @@ export function SplitScreenSection({ continents }: SplitScreenSectionProps) {
     setActiveNightlifeBarType(NIGHTLIFE_BAR_TYPE_ANY);
     setIsNightlifeBarMenuOpen(false);
     closeMobileCategoryMenu();
-    setActiveCategory((current) => (current === category ? null : category));
+    setExpandedGuideId(null);
+    setClosingGuide(null);
+    setActiveCategory(nextCategory);
+    const nextPath = getCurrentCityRoutePath(nextCategory);
+    if (nextPath) {
+      pushExplorerPath(nextPath);
+    }
   };
   const explorerPaneHeight = "lg:h-[calc(100svh-7.75rem)]";
   const explorerBodyMaxHeight = "max-h-full lg:max-h-[calc(100svh-13.75rem)]";
@@ -1958,6 +2061,21 @@ export function SplitScreenSection({ continents }: SplitScreenSectionProps) {
   const remainingGuides = displayedGuide
     ? railFilteredLists.filter((list) => list.id !== displayedGuide.id)
     : railFilteredLists;
+  const activeSeoPlaceLabel = activeLocation.city
+    ? [activeLocation.nestedSubarea?.name ?? activeLocation.subarea?.name, activeLocation.city.name]
+        .filter(Boolean)
+        .join(", ")
+    : activeDirectoryMeta.title;
+  const visibleSeoHeading = expandedGuide
+    ? `${expandedGuide.title} in ${activeSeoPlaceLabel}`
+    : activeCategory && activeLocation.city
+      ? `${activeCategory} in ${activeSeoPlaceLabel}`
+      : seoContent?.h1 ?? activeDirectoryMeta.title;
+  const visibleIntroCopy = expandedGuide
+    ? expandedGuide.description
+    : activeCategory && activeLocation.city
+      ? `Explore ${activeCategory.toLowerCase()} guides for ${activeSeoPlaceLabel}, ranked and mapped so you can choose where to go next.`
+      : seoContent?.intro ?? activeLocationDescription;
   const categoryIconLookup = useMemo(
     () => new Map(categoryOptions.map((option) => [option.category, option.icon] as const)),
     [],
@@ -2312,6 +2430,10 @@ export function SplitScreenSection({ continents }: SplitScreenSectionProps) {
       setClosingGuide(expandedGuide);
       setExpandedGuideId(null);
       setVisibleNestedStopParentIds([]);
+      const nextPath = getCurrentCityRoutePath(nextList.category);
+      if (nextPath) {
+        pushExplorerPath(nextPath);
+      }
       closingGuideTimeoutRef.current = setTimeout(() => {
         setClosingGuide(null);
         closingGuideTimeoutRef.current = null;
@@ -2323,7 +2445,12 @@ export function SplitScreenSection({ continents }: SplitScreenSectionProps) {
     setClosingGuide(null);
     setVisibleNestedStopParentIds([]);
     setExpandedGuideId(nextList.id);
+    setActiveCategory(nextList.category);
     setActiveGuideFitNonce((current) => current + 1);
+    const context = getCityRouteContext(selection);
+    if (context) {
+      pushExplorerPath(getCanonicalGuidePath(context.city, nextList, context.neighborhood));
+    }
     scrollGuideIntoView(nextList.id);
   };
   const handleProfileGuideToggle = (nextList: MapList) => {
@@ -3247,14 +3374,14 @@ export function SplitScreenSection({ continents }: SplitScreenSectionProps) {
                     className={`min-w-0 ${continentTitleMorph ? "invisible" : "visible"}`}
                     aria-hidden={continentTitleMorph ? "true" : "false"}
                   >
-                    <h2
+                    <h1
                       ref={titleRef}
                       className="text-2xl font-semibold text-slate-900"
                     >
                       <span ref={titleTextRef} className="inline-block">
-                        {activeDirectoryMeta.title}
+                        {visibleSeoHeading}
                       </span>
-                    </h2>
+                    </h1>
                     <div
                       ref={detailRef}
                       className="mt-1 text-sm text-slate-600 transition-all duration-300"
@@ -3516,7 +3643,7 @@ export function SplitScreenSection({ continents }: SplitScreenSectionProps) {
                         <p>{formatBreadcrumbName(activeDirectoryMeta.detail)}</p>
                       )}
                     </div>
-                    {activeLocation.city || activeLocationDescription ? (
+                    {activeLocation.city || visibleIntroCopy ? (
                       <div
                         className={`mt-2 transition-all duration-300 ${activeLocation.city ? "min-h-[3.75rem]" : ""}`}
                         style={{
@@ -3527,9 +3654,9 @@ export function SplitScreenSection({ continents }: SplitScreenSectionProps) {
                               : "translateY(-8px)",
                         }}
                       >
-                        {activeLocationDescription ? (
+                        {visibleIntroCopy ? (
                           <p className="text-sm leading-5 text-slate-600">
-                            {activeLocationDescription}
+                            {visibleIntroCopy}
                           </p>
                         ) : null}
                       </div>
