@@ -9,6 +9,7 @@ import {
   Globe2,
   Heart,
   ListFilter,
+  Footprints,
   Map as MapIcon,
   MapPin,
   Plus,
@@ -3839,9 +3840,31 @@ export function SplitScreenSection({ continents, initialRouteState, seoContent, 
                         }}
                       >
                         {visibleIntroCopy ? (
-                          <p className="ml-3 border-l border-slate-200 pl-3 text-sm leading-5 text-slate-600">
+                          <p className="ml-3 h-[3.75rem] overflow-hidden border-l border-slate-200 pl-3 text-sm leading-5 text-slate-600">
                             {visibleIntroCopy}
                           </p>
+                        ) : null}
+                        {!expandedGuide ? (
+                          <div className="mt-3 flex justify-end gap-2">
+                            <button
+                              type="button"
+                              className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-slate-200 bg-white text-slate-600 shadow-sm transition hover:border-slate-300 hover:text-slate-900"
+                              aria-label={`Add ${activeSeoPlaceLabel} to favorites`}
+                              title="Add to favorites"
+                            >
+                              <Heart className="h-3.5 w-3.5" />
+                            </button>
+                            {activeLocation.city ? (
+                              <button
+                                type="button"
+                                className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-slate-200 bg-white text-slate-600 shadow-sm transition hover:border-slate-300 hover:text-slate-900"
+                                aria-label={`Tour ${activeSeoPlaceLabel}`}
+                                title="Neighborhood tour coming soon"
+                              >
+                                <Footprints className="h-3.5 w-3.5" />
+                              </button>
+                            ) : null}
+                          </div>
                         ) : null}
                       </div>
                     ) : null}
