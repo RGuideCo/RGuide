@@ -133,6 +133,117 @@ type ExitingRailIcon =
   | { kind: "state"; id: string; name: string; countryId?: string }
   | { kind: "city"; id: string; name: string; continentId: string; countryId: string };
 
+const cityHighlightCategoryOrder: Array<{ label: string; category: ListCategory }> = [
+  { label: "Food", category: "Food" },
+  { label: "Nightlife", category: "Nightlife" },
+  { label: "Culture", category: "Culture" },
+  { label: "Stay", category: "Stay" },
+  { label: "Vibe", category: "Activities" },
+];
+
+const cityHighlightThemes: Record<ListCategory, string[]> = {
+  Food: ["Tapas", "Seafood", "Michelin"],
+  Nightlife: ["Late", "Bars", "Cocktails"],
+  Culture: ["Architecture", "Museums", "History"],
+  Stay: ["Boutique", "Hostels", "Walkable"],
+  Nature: ["Views", "Urban parks", "Waterfront"],
+  Activities: ["Social", "Walkable", "Energy"],
+};
+
+const cityDescriptionOverrides: Record<string, string> = {
+  barcelona:
+    "Barcelona is a dense Mediterranean city where Gothic lanes, Eixample's Modernista landmarks, late tapas dinners, natural-wine bars, design hotels, social hostels, hilltop parks, and beachside days all sit within a few metro stops.",
+};
+
+function getCityHighlightSearchText(list: MapList) {
+  return [
+    list.title,
+    list.seoTitle,
+    list.seoDescription,
+    list.description,
+    list.slug,
+    list.location.neighborhood,
+    ...list.stops.map((stop) => stop.description),
+  ]
+    .filter((value): value is string => Boolean(value))
+    .join(" ")
+    .toLowerCase();
+}
+
+function doesGuideMatchHighlightTheme(list: MapList, theme: string) {
+  const text = getCityHighlightSearchText(list);
+
+  switch (theme) {
+    case "Tapas":
+      return /\b(tapas|pintxos|bites|counter|cava|vermouth|blai)\b/.test(text);
+    case "Seafood":
+      return /\b(seafood|fish|shellfish|clams|squid|rice)\b/.test(text);
+    case "Michelin-level dining":
+    case "Michelin":
+      return /\b(michelin|tasting menu|fine dining|chef-led|destination restaurant|special-occasion)\b/.test(text);
+    case "Late hours":
+    case "Late":
+      return /\b(late|late-night|nightlife|after-dark|party|club|apolo)\b/.test(text);
+    case "Bar hopping zones":
+    case "Bars":
+      return /\b(bar hopping|bar circuit|bars|pub|vermouth|plaza|old-city|neighborhood)\b/.test(text);
+    case "Cocktail bars":
+    case "Cocktails":
+      return /\b(cocktail|speakeasy|popular bars|destination nightlife)\b/.test(text);
+    case "Architecture":
+      return /\b(architecture|gaudi|gaudí|modernista|gothic|landmark)\b/.test(text);
+    case "Museums":
+      return /\b(museum|museums|gallery|galleries|collection|artist)\b/.test(text);
+    case "Historic quarters":
+    case "History":
+      return /\b(historic|old-city|old city|quarter|cathedral|heritage|memory)\b/.test(text);
+    case "Boutique hotels":
+    case "Boutique":
+      return /\b(boutique|hotel|design|private rooms|stylish)\b/.test(text);
+    case "Social hostels":
+    case "Hostels":
+      return /\b(hostel|hostels|dorm|social|solo travelers|backpackers)\b/.test(text);
+    case "Walkable bases":
+    case "Walkable":
+      return /\b(walkable|base|location|transit|neighborhood|walking)\b/.test(text);
+    case "Social":
+      return /\b(social|bars|nightlife|hostel|group|solo travelers)\b/.test(text);
+    case "High energy":
+    case "Energy":
+      return /\b(high energy|weekend|nightcap|party|busy|packed|circuit)\b/.test(text);
+    case "Views":
+      return /\b(view|views|lookout|hilltop|scenic|panorama)\b/.test(text);
+    case "Urban parks":
+      return /\b(park|parks|gardens|green)\b/.test(text);
+    case "Waterfront":
+      return /\b(waterfront|coastal|beach|river|harbor|harbour)\b/.test(text);
+    default:
+      return false;
+  }
+}
+
+function getDarkCategoryTextColor(category: ListCategory) {
+  const color = CATEGORY_STYLES[category].mapColor;
+  const normalized = color.startsWith("#") ? color.slice(1) : color;
+
+  if (normalized.length !== 6) {
+    return color;
+  }
+
+  const red = Number.parseInt(normalized.slice(0, 2), 16);
+  const green = Number.parseInt(normalized.slice(2, 4), 16);
+  const blue = Number.parseInt(normalized.slice(4, 6), 16);
+
+  if (![red, green, blue].every(Number.isFinite)) {
+    return color;
+  }
+
+  const mix = (channel: number) => Math.round(channel * 0.34);
+  const toHex = (channel: number) => mix(channel).toString(16).padStart(2, "0");
+
+  return `#${toHex(red)}${toHex(green)}${toHex(blue)}`;
+}
+
 function MobileBrowseSelect({
   label,
   value,
@@ -1374,7 +1485,7 @@ export function SplitScreenSection({ continents, initialRouteState, seoContent, 
   const activeLocationDescriptionRaw =
     activeLocation.nestedSubarea?.description ??
     activeLocation.subarea?.description ??
-    activeLocation.city?.description ??
+    (activeLocation.city ? cityDescriptionOverrides[activeLocation.city.id] ?? activeLocation.city.description : undefined) ??
     activeLocation.state?.description ??
     activeLocation.country?.description;
   const activeLocationDescription = formatLocationDescription(activeLocationDescriptionRaw) || null;
@@ -2212,20 +2323,83 @@ export function SplitScreenSection({ continents, initialRouteState, seoContent, 
     ? `${expandedGuide.title} in ${activeSeoPlaceLabel}`
     : activeCategory && activeLocation.city
       ? activeSeoPlaceLabel
-      : seoContent?.h1 ?? activeDirectoryMeta.title;
+      : activeDirectoryMeta.title;
   const visibleSeoContextLabel =
-    !expandedGuide && activeCategory && activeLocation.city
-      ? `${activeCategory} in`
+    !expandedGuide
+      ? activeCategory && activeLocation.city
+        ? `${activeCategory} in`
+        : "Explore"
       : null;
+  const visibleLocationDetail = [
+    activeLocation.city?.name,
+    activeLocation.country?.name ?? activeLocation.city?.country,
+  ]
+    .filter(Boolean)
+    .join(", ");
+  const categoryCityDescriptions: Partial<Record<ListCategory, string>> = {
+    Food: `${activeSeoPlaceLabel} is built around long lunches, late dinners, tapas counters, seafood rooms, market cooking, and ambitious reservations that shift by neighborhood.`,
+    Nightlife: `${activeSeoPlaceLabel} runs late, with compact bar circuits, vermouth counters, cocktail rooms, music venues, and social streets that make nights easy to stretch.`,
+    Culture: `${activeSeoPlaceLabel} layers Modernista architecture, medieval streets, major museums, design landmarks, and public squares into a city that rewards slow wandering.`,
+    Stay: `${activeSeoPlaceLabel} has a wide stay scene, from design hotels and boutique guesthouses to social hostels and practical bases near transit, nightlife, and the old city.`,
+    Nature: `${activeSeoPlaceLabel} balances dense urban neighborhoods with parks, viewpoints, waterfront walks, gardens, and easy open-air breaks between city routes.`,
+    Activities: `${activeSeoPlaceLabel} is social, walkable, and high energy, with compact routes that can move from architecture and food to beach time, bars, and late-night neighborhoods.`,
+  };
+  const visibleSeoIntroCopy = activeLocation.city
+    ? activeCategory
+      ? categoryCityDescriptions[activeCategory]
+      : activeLocation.nestedSubarea || activeLocation.subarea
+        ? `${activeSeoPlaceLabel} is a ${visibleLocationDetail} neighborhood shaped by its street life, dining rhythm, architecture, bars, local routes, and the way visitors move through it.`
+        : activeLocationDescription
+    : null;
   const visibleIntroCopy = expandedGuide
     ? expandedGuide.description
     : activeCategory && activeLocation.city
-      ? `Explore ${activeCategory.toLowerCase()} guides for ${activeSeoPlaceLabel}, ranked and mapped so you can choose where to go next.`
-      : seoContent?.intro ?? activeLocationDescription;
-  const categoryIconLookup = useMemo(
-    () => new Map(categoryOptions.map((option) => [option.category, option.icon] as const)),
-    [],
-  );
+      ? visibleSeoIntroCopy
+      : visibleSeoIntroCopy ?? activeLocationDescription ?? seoContent?.intro;
+  const cityHighlightRows = useMemo(() => {
+    if (!activeLocation.city || !allActiveLists.length) {
+      return [];
+    }
+
+    const cityScopeLists = allActiveLists
+      .filter(
+        (list) =>
+          list.location.scope === "city" &&
+          list.location.city === activeLocation.city!.name &&
+          (!activeNeighborhoodKey ||
+            normalizeNeighborhoodName(list.location.neighborhood) === activeNeighborhoodKey),
+      )
+      .slice()
+      .sort((left, right) => right.upvotes - left.upvotes || left.title.localeCompare(right.title));
+
+    return cityHighlightCategoryOrder.flatMap((entry) => {
+      const categoryGuides = cityScopeLists.filter((list) => list.category === entry.category);
+      const usedGuideIds = new Set<string>();
+      const items = cityHighlightThemes[entry.category].flatMap((theme) => {
+        const guide =
+          categoryGuides.find((list) => !usedGuideIds.has(list.id) && doesGuideMatchHighlightTheme(list, theme)) ??
+          categoryGuides.find((list) => !usedGuideIds.has(list.id));
+
+        if (!guide) {
+          return [];
+        }
+
+        usedGuideIds.add(guide.id);
+        return [{ label: theme, guide }];
+      });
+
+      if (!items.length) {
+        return [];
+      }
+
+      return [
+        {
+          ...entry,
+          items,
+        },
+      ];
+    });
+  }, [activeLocation.city, activeNeighborhoodKey, allActiveLists]);
   useEffect(() => {
     if (!isGuideTakingFullListPane) {
       return;
@@ -2593,6 +2767,41 @@ export function SplitScreenSection({ continents, initialRouteState, seoContent, 
     setExpandedGuideId(nextList.id);
     setActiveCategory(nextList.category);
     setActiveGuideFitNonce((current) => current + 1);
+    const context = getCityRouteContext(selection);
+    if (context) {
+      pushExplorerPath(getCanonicalGuidePath(context.city, nextList, context.neighborhood));
+    }
+    scrollGuideIntoView(nextList.id);
+  };
+  const handleCityHighlightGuideSelect = (nextList: MapList) => {
+    if (closingGuideTimeoutRef.current) {
+      clearTimeout(closingGuideTimeoutRef.current);
+      closingGuideTimeoutRef.current = null;
+    }
+
+    setActiveGuideRail(nextList.creator.name.startsWith("R ") ? "r-guides" : "user-guides");
+    setActiveSubcategory(null);
+    setActiveFoodPrice(null);
+    setActiveFoodOpenTime("Now");
+    setIsFoodOpenTimeMenuOpen(false);
+    setActiveFoodCuisine(FOOD_CUISINE_ANY);
+    setIsFoodCuisineMenuOpen(false);
+    setActiveNightlifeBarType(NIGHTLIFE_BAR_TYPE_ANY);
+    setIsNightlifeBarMenuOpen(false);
+    closeMobileCategoryMenu();
+
+    if (expandedGuideId === nextList.id) {
+      scrollGuideIntoView(nextList.id);
+      return;
+    }
+
+    captureGuideLayoutPositions();
+    setClosingGuide(null);
+    setVisibleNestedStopParentIds([]);
+    setExpandedGuideId(nextList.id);
+    setActiveCategory(nextList.category);
+    setActiveGuideFitNonce((current) => current + 1);
+
     const context = getCityRouteContext(selection);
     if (context) {
       pushExplorerPath(getCanonicalGuidePath(context.city, nextList, context.neighborhood));
@@ -3830,7 +4039,7 @@ export function SplitScreenSection({ continents, initialRouteState, seoContent, 
                     </div>
                     {activeLocation.city || visibleIntroCopy ? (
                       <div
-                        className={`mt-2 transition-all duration-300 ${activeLocation.city ? "min-h-[3.75rem]" : ""}`}
+                        className="mt-2 transition-all duration-300"
                         style={{
                           opacity: postMorphRevealPhase >= 2 ? 1 : 0,
                           transform:
@@ -3840,7 +4049,7 @@ export function SplitScreenSection({ continents, initialRouteState, seoContent, 
                         }}
                       >
                         {visibleIntroCopy ? (
-                          <p className="ml-3 h-[3.75rem] overflow-hidden border-l border-slate-200 pl-3 text-sm leading-5 text-slate-600">
+                          <p className="ml-3 h-[6rem] overflow-hidden border-l border-slate-200 pl-3 text-sm leading-5 text-slate-600">
                             {visibleIntroCopy}
                           </p>
                         ) : null}
@@ -3864,6 +4073,50 @@ export function SplitScreenSection({ continents, initialRouteState, seoContent, 
                                 <Footprints className="h-3.5 w-3.5" />
                               </button>
                             ) : null}
+                          </div>
+                        ) : null}
+                        {!expandedGuide && cityHighlightRows.length ? (
+                          <div className="mt-3 space-y-1.5 overflow-hidden text-sm leading-5">
+                            {cityHighlightRows.map((row) => {
+                              const isActiveRow = activeCategory === row.category;
+                              const rowColor = CATEGORY_STYLES[row.category].mapColor;
+                              const contentColor = getDarkCategoryTextColor(row.category);
+
+                              return (
+                                <div
+                                  key={`${row.label}-${row.category}`}
+                                  className="flex min-w-0 items-center gap-1.5 whitespace-nowrap"
+                                >
+                                  <button
+                                    type="button"
+                                    onClick={() => handleCategoryToggle(row.category)}
+                                    className="shrink-0 font-semibold transition hover:underline"
+                                    style={{ color: rowColor }}
+                                    aria-pressed={isActiveRow}
+                                    aria-label={`Filter ${activeSeoPlaceLabel} guides by ${row.label}`}
+                                  >
+                                    {row.label}
+                                  </button>
+                                  <span className="shrink-0" style={{ color: contentColor }}>: </span>
+                                  <span className="min-w-0 flex-1 truncate" style={{ color: contentColor }}>
+                                    {row.items.map((item, index) => (
+                                      <span key={`${item.guide.id}-${item.label}`}>
+                                        {index > 0 ? <span>, </span> : null}
+                                        <button
+                                          type="button"
+                                          onClick={() => handleCityHighlightGuideSelect(item.guide)}
+                                          className="font-medium transition hover:underline"
+                                          style={{ color: contentColor }}
+                                          title={item.guide.title}
+                                        >
+                                          {item.label}
+                                        </button>
+                                      </span>
+                                    ))}
+                                  </span>
+                                </div>
+                              );
+                            })}
                           </div>
                         ) : null}
                       </div>

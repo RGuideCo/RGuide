@@ -24,8 +24,8 @@ export async function generateMetadata({ params }: CategoryPageProps): Promise<M
   }
 
   return {
-    title: `${label} Lists`,
-    description: `Browse curated Google Maps ${label.toLowerCase()} lists across RGuide destinations.`,
+    title: `${label} Guides`,
+    description: `Browse curated ${label.toLowerCase()} travel guides across RGuide destinations.`,
   };
 }
 

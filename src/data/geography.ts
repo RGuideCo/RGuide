@@ -2109,7 +2109,7 @@ const curatedCitySeeds: Record<string, Omit<City, "listCount">[]> = {
       coordinates: [41.3874, 2.1686],
       image: cityImage("barcelona"),
       description:
-        "A visually rich Mediterranean city known for late dinners, modernist landmarks, and beach days.",
+        "Barcelona is a dense Mediterranean city where Gothic lanes, Eixample's Modernista landmarks, late tapas dinners, natural-wine bars, design hotels, social hostels, hilltop parks, and beachside days all sit within a few metro stops.",
     },
     {
       id: "madrid",

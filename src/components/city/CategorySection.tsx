@@ -24,7 +24,7 @@ export function CategorySection({ category, lists }: CategorySectionProps) {
             the initial HTML response.
           </p>
         </div>
-        <p className="text-xs text-slate-600">{lists.length} curated Google Maps lists</p>
+        <p className="text-xs text-slate-600">{lists.length} curated travel guides</p>
       </header>
       <ol className="space-y-4">
         {lists.map((list) => (

@@ -330,7 +330,7 @@ export const useAppStore = create<AppState>()(
           openAuthModal("signup");
           return {
             ok: false,
-            message: "Sign in to submit a Google Maps list.",
+            message: "Sign in to submit a guide.",
           };
         }
 

@@ -21,7 +21,7 @@ export async function generateMetadata({ params }: CreatorPageProps): Promise<Me
 
   return {
     title: creator.name,
-    description: `Browse curated Google Maps lists published by ${creator.name}.`,
+    description: `Browse curated travel guides published by ${creator.name}.`,
   };
 }
 

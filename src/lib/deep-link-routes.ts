@@ -442,10 +442,10 @@ export function resolveCityDeepLink(rawSegments: string[]): CityDeepLinkResoluti
   const description = guide
     ? getGuideSeoDescription(guide, city, neighborhood)
     : category
-      ? `Curated ${category.toLowerCase()} Google Maps lists for ${placeLabel}, including local favorites and places worth saving.`
+      ? `Curated ${category.toLowerCase()} travel guides for ${placeLabel}, including local favorites and places worth saving.`
       : neighborhood?.description
-        ? `${neighborhood.description} Browse curated Google Maps lists for ${placeLabel}.`
-        : `Browse curated Google Maps lists for ${placeLabel}, with guides for food, nightlife, culture, nature, stays, and activities.`;
+        ? `${neighborhood.description} Browse curated travel guides for ${placeLabel}.`
+        : `Browse curated travel guides for ${placeLabel}, with picks for food, nightlife, culture, nature, stays, and activities.`;
   const intro = guide
     ? getGuideSeoDescription(guide, city, neighborhood)
     : category

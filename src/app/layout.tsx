@@ -13,7 +13,7 @@ import "@/app/globals.css";
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
-    default: `${SITE_NAME} | Curated Google Maps Lists`,
+    default: `${SITE_NAME} | Curated Travel Guides`,
     template: `%s | ${SITE_NAME}`,
   },
   description: SITE_DESCRIPTION,

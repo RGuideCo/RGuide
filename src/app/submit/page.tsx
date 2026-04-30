@@ -5,7 +5,7 @@ import { SubmitWorkspace } from "@/components/list/SubmitWorkspace";
 
 export const metadata: Metadata = {
   title: "Submit a List",
-  description: "Front-end submission flow for curated Google Maps guides on RGuide.",
+  description: "Front-end submission flow for curated travel guides on RGuide.",
 };
 
 export default function SubmitPage() {
