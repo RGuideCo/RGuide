@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 
-import { CreatorHubContent } from "@/components/creator/CreatorHubContent";
+import { SplitScreenSection } from "@/components/home/SplitScreenSection";
 import { continents } from "@/data";
 import { getListsByCreator } from "@/lib/mock-data";
 
@@ -33,8 +33,6 @@ export default async function CreatorPage({ params }: CreatorPageProps) {
     notFound();
   }
 
-  const guides = lists.filter((list) => list.submissionType !== "journal");
-  const journals = lists.filter((list) => list.submissionType === "journal");
   const itineraryCount = lists.filter(
     (list) =>
       list.stops.length >= 3 || /\bitinerary|route|day\s*\d+\b/i.test(`${list.title} ${list.description}`),
@@ -54,28 +52,18 @@ export default async function CreatorPage({ params }: CreatorPageProps) {
     : 1;
 
   return (
-    <div className="w-full px-3 py-4 sm:px-4 sm:py-6 lg:px-6">
-      <div className="flex w-full items-start">
-        <section className="min-w-0 flex-1">
-          <CreatorHubContent
-            creatorId={creator.id}
-            guides={guides}
-            journals={journals}
-            continents={continents}
-            creator={{
-              name: creator.name,
-              avatar: creator.avatar,
-              bio: creator.bio,
-            }}
-            stats={{
-              yearsAsUser,
-              favoritesCount,
-              itineraryCount,
-              placesBeenCount,
-            }}
-          />
-        </section>
-      </div>
-    </div>
+    <SplitScreenSection
+      continents={continents}
+      publicProfile={{
+        creator,
+        lists,
+        stats: {
+          yearsAsUser,
+          favoritesCount,
+          itineraryCount,
+          placesBeenCount,
+        },
+      }}
+    />
   );
 }

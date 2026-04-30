@@ -14,7 +14,7 @@ import {
   Settings,
   Sparkles,
   Trees,
-  User,
+  Users,
   UtensilsCrossed,
 } from "lucide-react";
 
@@ -388,7 +388,7 @@ export const REVEAL_BODY_MS = 140;
 
 export const guideRailOptions = [
   { id: "r-guides", label: "R Guides", shortLabel: "R", icon: null },
-  { id: "user-guides", label: "User Guides", shortLabel: "User", icon: User },
+  { id: "user-guides", label: "User Guides", shortLabel: "User", icon: Users },
   { id: "favorites", label: "Favorites", shortLabel: "Fav", icon: Heart },
   { id: "itinerary", label: "Itinerary", shortLabel: "Trip", icon: Route },
   { id: "trending", label: "Trending", shortLabel: "Trend", icon: Flame },

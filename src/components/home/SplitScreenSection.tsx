@@ -12,7 +12,7 @@ import {
   Map as MapIcon,
   MapPin,
   Plus,
-  User,
+  Users,
   X,
 } from "lucide-react";
 import Link from "next/link";
@@ -89,6 +89,22 @@ interface SplitScreenSectionProps {
   seoContent?: {
     h1: string;
     intro: string;
+  };
+  publicProfile?: {
+    creator: {
+      id: string;
+      name: string;
+      avatar: string;
+      bio: string;
+      joinedAt?: string;
+    };
+    lists: MapList[];
+    stats: {
+      yearsAsUser: number;
+      favoritesCount: number;
+      itineraryCount: number;
+      placesBeenCount: number;
+    };
   };
 }
 
@@ -287,7 +303,7 @@ function MobileBrowseSelect({
   );
 }
 
-export function SplitScreenSection({ continents, initialRouteState, seoContent }: SplitScreenSectionProps) {
+export function SplitScreenSection({ continents, initialRouteState, seoContent, publicProfile }: SplitScreenSectionProps) {
   const currentUser = useAppStore((state) => state.currentUser);
   const setCurrentUser = useAppStore((state) => state.setCurrentUser);
   const isProfileShellActive = useAppStore((state) => state.isProfileShellActive);
@@ -440,6 +456,8 @@ export function SplitScreenSection({ continents, initialRouteState, seoContent }
   const profileAvatarInputRef = useRef<HTMLInputElement | null>(null);
   const previousProfileLeftRailRef = useRef<(typeof profileLeftRailOptions)[number]["id"] | null>(null);
   const globeRailVideoRef = useRef<HTMLVideoElement | null>(null);
+  const isPublicProfileMode = Boolean(publicProfile);
+  const [isPublicProfileEntering, setIsPublicProfileEntering] = useState(isPublicProfileMode);
   const previousRailIconsRef = useRef<Record<ExitingRailIcon["kind"], ExitingRailIcon | null>>({
     continent: null,
     country: null,
@@ -1565,6 +1583,33 @@ export function SplitScreenSection({ continents, initialRouteState, seoContent }
       (list) => !isItineraryList(list, noKnownItineraryIds),
     );
   }, [activeProfileRightRail, favoriteIds, globalMergedLists, noKnownItineraryIds, profileGuides, profileItineraries, profileJournals]);
+  const publicProfileLists = useMemo(
+    () =>
+      publicProfile
+        ? publicProfile.lists.filter(
+            (list) => list.journal?.visibility !== "private" || list.creator.id === currentUser?.id,
+          )
+        : [],
+    [currentUser?.id, publicProfile],
+  );
+  const publicProfileGuideLists = useMemo(
+    () =>
+      publicProfileLists.filter(
+        (list) => list.submissionType !== "journal" && !isItineraryList(list, noKnownItineraryIds),
+      ),
+    [noKnownItineraryIds, publicProfileLists],
+  );
+  const publicProfilePlacesBeen = useMemo(
+    () =>
+      Array.from(
+        new Set(
+          publicProfileLists
+            .flatMap((list) => [list.location.country, list.location.city])
+            .filter((value): value is string => Boolean(value)),
+        ),
+      ),
+    [publicProfileLists],
+  );
   const profileDisplayedGuide = useMemo(
     () => profileRailLists.find((list) => list.id === profileExpandedGuideId) ?? profileRailLists[0] ?? null,
     [profileExpandedGuideId, profileRailLists],
@@ -1778,6 +1823,12 @@ export function SplitScreenSection({ continents, initialRouteState, seoContent }
     .slice()
     .sort((left, right) => right.upvotes - left.upvotes || left.title.localeCompare(right.title));
   const railFilteredLists = useMemo(() => {
+    if (isPublicProfileMode) {
+      return publicProfileGuideLists
+        .slice()
+        .sort((left, right) => right.upvotes - left.upvotes || left.title.localeCompare(right.title));
+    }
+
     const now = new Date();
     const sevenDaysAgo = new Date(now);
     sevenDaysAgo.setDate(now.getDate() - 7);
@@ -1837,7 +1888,17 @@ export function SplitScreenSection({ continents, initialRouteState, seoContent }
       });
     }
     return filteredLists;
-  }, [activeGuideRail, favoriteIds, filteredLists, globalMergedLists, itineraryIds, itineraryPlaylists, votedIds]);
+  }, [
+    activeGuideRail,
+    favoriteIds,
+    filteredLists,
+    globalMergedLists,
+    isPublicProfileMode,
+    itineraryIds,
+    itineraryPlaylists,
+    publicProfileGuideLists,
+    votedIds,
+  ]);
   const activeCategoryOption = activeCategory
     ? categoryOptions.find((option) => option.category === activeCategory) ?? null
     : null;
@@ -1850,7 +1911,7 @@ export function SplitScreenSection({ continents, initialRouteState, seoContent }
   const categoryTitleLabel = activeCategoryOption?.label ?? hoveredCategoryLabel ?? "Categories";
   const mobileGuideSelectors = [
     { id: "r-guides" as const, label: "R Guides", shortLabel: "R", icon: null },
-    { id: "user-guides" as const, label: "User Guides", shortLabel: "User", icon: User },
+    { id: "user-guides" as const, label: "User Guides", shortLabel: "User", icon: Users },
     { id: "favorites" as const, label: "Favorites", shortLabel: "Fav", icon: Heart },
   ];
   const activeMobileGuideSelector =
@@ -2136,7 +2197,7 @@ export function SplitScreenSection({ continents, initialRouteState, seoContent }
     : isProfileMode
       ? profileExpandedGuide
       : expandedGuide;
-  const isGuideTakingFullListPane = Boolean(expandedGuide && activeGuideRail !== "itinerary");
+  const isGuideTakingFullListPane = Boolean(expandedGuide && activeGuideRail !== "itinerary" && !isPublicProfileMode);
   const isLeftPaneCollapsed = isProfileSubmitLayout || isGuideTakingFullListPane || isProfileGuideTakingFullListPane;
   const isSubcategoryMenuOpen =
     isFoodOpenTimeMenuOpen || isFoodCuisineMenuOpen || isNightlifeBarMenuOpen;
@@ -2606,12 +2667,16 @@ export function SplitScreenSection({ continents, initialRouteState, seoContent }
     setIsProfileSubmitting(true);
   };
   useEffect(() => {
+    if (isPublicProfileMode && isProfileShellActive) {
+      setProfileShellActive(false);
+      return;
+    }
     if (isProfileShellActive && !currentUser) {
       setProfileShellActive(false);
     }
-  }, [currentUser, isProfileShellActive, setProfileShellActive]);
+  }, [currentUser, isProfileShellActive, isPublicProfileMode, setProfileShellActive]);
   const targetShellMode: "explorer" | "profile" =
-    isProfileShellActive && currentUser ? "profile" : "explorer";
+    isProfileShellActive && currentUser && !isPublicProfileMode ? "profile" : "explorer";
   const paneTransitionClass =
     shellTransitionPhase === "exiting"
       ? "pane-content-exit"
@@ -2624,6 +2689,8 @@ export function SplitScreenSection({ continents, initialRouteState, seoContent }
       : shellTransitionPhase === "entering"
         ? "rail-switch-enter"
         : "";
+  const publicProfilePaneTransitionClass = isPublicProfileEntering ? "pane-content-enter" : "";
+  const publicProfileRailTransitionClass = isPublicProfileEntering ? "rail-switch-enter" : "";
   const railEnteringMode =
     shellTransitionPhase === "entering" ? displayShellMode : null;
   const profileRailItemStyle = (index: number) =>
@@ -2642,6 +2709,19 @@ export function SplitScreenSection({ continents, initialRouteState, seoContent }
       : undefined;
   const isEnteringProfileShell =
     shellTransitionPhase === "entering" && displayShellMode === "profile";
+  useEffect(() => {
+    if (!isPublicProfileMode) {
+      setIsPublicProfileEntering(false);
+      return;
+    }
+
+    setIsPublicProfileEntering(true);
+    const timeoutId = window.setTimeout(() => {
+      setIsPublicProfileEntering(false);
+    }, 1240);
+
+    return () => window.clearTimeout(timeoutId);
+  }, [isPublicProfileMode, publicProfile?.creator.id]);
   useEffect(() => {
     if (displayShellMode === targetShellMode) {
       if (shellTransitionPhase === "entering" || shellTransitionPhase === "exiting") {
@@ -2809,7 +2889,7 @@ export function SplitScreenSection({ continents, initialRouteState, seoContent }
   return (
     <section id="map-explorer" className="w-full py-0 lg:pb-0 lg:pt-2">
       <div className="flex w-full flex-col items-stretch gap-2 lg:flex-row lg:items-start lg:gap-0">
-        <div className={`z-20 hidden w-full shrink-0 flex-row items-center justify-center gap-3 overflow-x-auto px-3 py-1 sm:px-4 lg:flex lg:w-14 lg:flex-col lg:overflow-visible lg:px-0 lg:py-0 lg:pt-7 ${railTransitionClass}`}>
+        <div className={`z-20 hidden w-full shrink-0 flex-row items-center justify-center gap-3 overflow-x-auto px-3 py-1 sm:px-4 lg:flex lg:w-14 lg:flex-col lg:overflow-visible lg:px-0 lg:py-0 lg:pt-7 ${railTransitionClass} ${publicProfileRailTransitionClass}`}>
             {isProfileMode ? (
               <>
                 {activeProfileLeftRail === "places-been" && currentUser ? (
@@ -2859,43 +2939,58 @@ export function SplitScreenSection({ continents, initialRouteState, seoContent }
               </>
             ) : (
               <>
-              <button
-                type="button"
-                onClick={handleResetToGlobalView}
-                onPointerEnter={() => {
-                  const video = globeRailVideoRef.current;
-                  if (video) {
-                    try {
-                      video.currentTime = 0;
-                    } catch {}
-                    void video.play().catch(() => undefined);
-                  }
-                }}
-                onPointerLeave={() => {
-                  globeRailVideoRef.current?.pause();
-                }}
-                onBlur={() => {
-                  globeRailVideoRef.current?.pause();
-                }}
-                className={`guide-rail-button rail-switch-item margin-shell-pop-in flex h-10 w-10 items-center justify-center rounded-full transition hover:scale-105 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-400/70 ${
-                  activeRailLevel === "global" ? "guide-rail-button-active" : ""
-                }`}
-                aria-label={isGlobalViewActive ? "Global view active" : "Return to global view"}
-                title={isGlobalViewActive ? "Global view" : "Back to global view"}
-              >
-                <video
-                  ref={globeRailVideoRef}
-                  muted
-                  loop
-                  playsInline
-                  preload="auto"
-                  poster="/assets/rotating-earth-still.png"
-                  className="h-10 w-10 drop-shadow-[0_2px_4px_rgba(15,23,42,0.35)]"
+              {publicProfile ? (
+                <button
+                  type="button"
+                  className="guide-rail-button rail-switch-item flex h-10 w-10 items-center justify-center overflow-hidden rounded-full border border-slate-200/90 bg-white/95 shadow-sm transition hover:scale-105 hover:border-slate-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-400/70 guide-rail-button-active"
+                  aria-label={`${publicProfile.creator.name} profile`}
+                  title={`${publicProfile.creator.name} profile`}
                 >
-                  <source src="/assets/rotating-earth.webm" type="video/webm" />
-                  <source src="/assets/rotating-earth.mp4" type="video/mp4" />
-                </video>
-              </button>
+                  <img
+                    src={publicProfile.creator.avatar}
+                    alt={publicProfile.creator.name}
+                    className="h-full w-full object-cover"
+                  />
+                </button>
+              ) : (
+                <button
+                  type="button"
+                  onClick={handleResetToGlobalView}
+                  onPointerEnter={() => {
+                    const video = globeRailVideoRef.current;
+                    if (video) {
+                      try {
+                        video.currentTime = 0;
+                      } catch {}
+                      void video.play().catch(() => undefined);
+                    }
+                  }}
+                  onPointerLeave={() => {
+                    globeRailVideoRef.current?.pause();
+                  }}
+                  onBlur={() => {
+                    globeRailVideoRef.current?.pause();
+                  }}
+                  className={`guide-rail-button rail-switch-item margin-shell-pop-in flex h-10 w-10 items-center justify-center rounded-full transition hover:scale-105 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-400/70 ${
+                    activeRailLevel === "global" ? "guide-rail-button-active" : ""
+                  }`}
+                  aria-label={isGlobalViewActive ? "Global view active" : "Return to global view"}
+                  title={isGlobalViewActive ? "Global view" : "Back to global view"}
+                >
+                  <video
+                    ref={globeRailVideoRef}
+                    muted
+                    loop
+                    playsInline
+                    preload="auto"
+                    poster="/assets/rotating-earth-still.png"
+                    className="h-10 w-10 drop-shadow-[0_2px_4px_rgba(15,23,42,0.35)]"
+                  >
+                    <source src="/assets/rotating-earth.webm" type="video/webm" />
+                    <source src="/assets/rotating-earth.mp4" type="video/mp4" />
+                  </video>
+                </button>
+              )}
             {displayedContinentRailIcon?.kind === "continent" ? (
               <button
                 type="button"
@@ -4614,6 +4709,62 @@ export function SplitScreenSection({ continents, initialRouteState, seoContent }
                 )}
               </div>
               </div>
+              {publicProfile ? (
+                <div className="profile-left-pane profile-left-intro absolute inset-0 z-20 bg-slate-100 p-5">
+                  <div className={`left-pane-content flex h-full min-h-0 flex-col p-1 ${publicProfilePaneTransitionClass}`}>
+                    <div className="flex flex-col items-center text-center">
+                      <span className="profile-left-avatar inline-flex h-24 w-24 shrink-0 overflow-hidden rounded-full">
+                        <img
+                          src={publicProfile.creator.avatar}
+                          alt={publicProfile.creator.name}
+                          className="h-full w-full object-cover"
+                        />
+                      </span>
+                      <p className="profile-left-kicker mt-4 text-sm font-medium uppercase tracking-[0.24em] text-orange-600">
+                        Profile
+                      </p>
+                      <h2 className="profile-left-name mt-2 text-2xl font-semibold text-slate-900">
+                        {publicProfile.creator.name}
+                      </h2>
+                      <p className="profile-left-bio mt-2 text-sm text-slate-600">
+                        {publicProfile.creator.bio}
+                      </p>
+                    </div>
+                    <div className="profile-left-stats mt-5 grid grid-cols-2 gap-2">
+                      <div className="profile-left-stat-card rounded-xl border border-slate-200 bg-stone-50 px-3 py-2 text-center">
+                        <p className="text-[10px] uppercase tracking-[0.12em] text-slate-500">Years</p>
+                        <p className="mt-1 text-base font-semibold text-slate-900">{publicProfile.stats.yearsAsUser}</p>
+                      </div>
+                      <div className="profile-left-stat-card rounded-xl border border-slate-200 bg-stone-50 px-3 py-2 text-center">
+                        <p className="text-[10px] uppercase tracking-[0.12em] text-slate-500">Favorites</p>
+                        <p className="mt-1 text-base font-semibold text-slate-900">{publicProfile.stats.favoritesCount}</p>
+                      </div>
+                      <div className="profile-left-stat-card rounded-xl border border-slate-200 bg-stone-50 px-3 py-2 text-center">
+                        <p className="text-[10px] uppercase tracking-[0.12em] text-slate-500">Guides</p>
+                        <p className="mt-1 text-base font-semibold text-slate-900">{publicProfileGuideLists.length}</p>
+                      </div>
+                      <div className="profile-left-stat-card rounded-xl border border-slate-200 bg-stone-50 px-3 py-2 text-center">
+                        <p className="text-[10px] uppercase tracking-[0.12em] text-slate-500">Places</p>
+                        <p className="mt-1 text-base font-semibold text-slate-900">{publicProfile.stats.placesBeenCount}</p>
+                      </div>
+                    </div>
+                    <div className="pane-cascade-item mt-3 min-h-0 flex-1 overflow-hidden rounded-xl border border-slate-200 bg-stone-50 p-3">
+                      <p className="text-[10px] uppercase tracking-[0.12em] text-slate-500">Places been</p>
+                      <div className="mt-2 max-h-full space-y-1.5 overflow-y-auto pr-1">
+                        {publicProfilePlacesBeen.length ? (
+                          publicProfilePlacesBeen.map((place) => (
+                            <div key={place} className="rounded-lg bg-white/75 px-2.5 py-1.5 text-sm font-medium text-slate-800">
+                              {place}
+                            </div>
+                          ))
+                        ) : (
+                          <p className="text-sm text-slate-500">No places shared yet.</p>
+                        )}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              ) : null}
               {isProfileMode && currentUser ? (
                 <div
                   key={`profile-left-intro-${profileIntroNonce}`}
@@ -5050,7 +5201,7 @@ export function SplitScreenSection({ continents, initialRouteState, seoContent }
                 <span className="h-1.5 w-12 rounded-full bg-slate-300/80" />
               </button>
               <div className="pointer-events-none absolute inset-0 z-[82] rounded-t-xl rounded-tl-none bg-white lg:rounded-none" aria-hidden="true" />
-              <div className={`relative z-[85] flex h-full flex-col ${paneTransitionClass}`}>
+              <div className={`relative z-[85] flex h-full flex-col ${paneTransitionClass} ${publicProfilePaneTransitionClass}`}>
                 <div
                   className={`relative flex shrink-0 items-center transition-[height,margin-bottom] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] lg:hidden ${
                     isGuideTakingFullListPane ? "mb-0 h-0" : "mb-2 h-8"
@@ -5130,7 +5281,7 @@ export function SplitScreenSection({ continents, initialRouteState, seoContent }
                 </div>
                 <div
                   className={`mx-auto hidden w-full max-w-[36rem] space-y-3 transition-[max-height,opacity,transform,padding-bottom] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] lg:block ${
-                    activeGuideRail === "itinerary"
+                    activeGuideRail === "itinerary" || isPublicProfileMode
                       ? "hidden"
                       : isGuideTakingFullListPane
                         ? "pointer-events-none max-h-0 -translate-y-6 pb-0 opacity-0"
@@ -5926,8 +6077,19 @@ export function SplitScreenSection({ continents, initialRouteState, seoContent }
           </div>
         </div>
         </div>
-        <div className={`z-20 hidden w-full shrink-0 flex-row items-center justify-center gap-3 overflow-x-auto px-3 py-1 sm:px-4 lg:flex lg:w-14 lg:-translate-x-1 lg:flex-col lg:overflow-visible lg:px-0 lg:py-0 lg:pt-7 ${railTransitionClass}`}>
-            {isProfileMode ? (
+        <div className={`z-20 hidden w-full shrink-0 flex-row items-center justify-center gap-3 overflow-x-auto px-3 py-1 sm:px-4 lg:flex lg:w-14 lg:-translate-x-1 lg:flex-col lg:overflow-visible lg:px-0 lg:py-0 lg:pt-7 ${railTransitionClass} ${publicProfileRailTransitionClass}`}>
+            {isPublicProfileMode ? (
+              <div className="rail-switch-item relative h-10 w-10">
+                <button
+                  type="button"
+                  className="guide-rail-button guide-rail-button-active relative z-10 flex h-10 w-10 items-center justify-center rounded-full border border-slate-900 bg-white/95 text-slate-900 shadow-sm"
+                  aria-label="Guides"
+                  title="Guides"
+                >
+                  <MapIcon className="h-4 w-4" />
+                </button>
+              </div>
+            ) : isProfileMode ? (
               profileRightRailOptions.map((option, index) => (
                 <div
                   key={option.id}
