@@ -6,6 +6,11 @@
 
 :root {
   color-scheme: light;
+  --rguide-paper: #f3f4f1;
+  --rguide-ink: #171717;
+  --rguide-line: rgba(23, 23, 23, 0.16);
+  --rguide-panel: rgba(250, 250, 247, 0.96);
+  --rguide-panel-alt: rgba(233, 235, 232, 0.84);
 }
 
 html {
@@ -13,10 +18,17 @@ html {
 }
 
 body {
-  @apply bg-stone-50 text-slate-900 antialiased;
+  @apply bg-slate-100 font-sans text-slate-900 antialiased;
   background-image:
-    radial-gradient(circle at top, rgba(14, 165, 233, 0.08), transparent 26%),
-    radial-gradient(circle at bottom right, rgba(249, 115, 22, 0.08), transparent 22%);
+    radial-gradient(circle at top left, rgba(177, 184, 188, 0.2), transparent 24%),
+    radial-gradient(circle at bottom right, rgba(123, 132, 136, 0.12), transparent 22%);
+  background-color: var(--rguide-paper);
+  background-position:
+    0 0,
+    0 0;
+  background-size:
+    auto,
+    auto;
   font-size: 15px;
 }
 
@@ -74,11 +86,69 @@ textarea:focus-visible {
 }
 
 .section-title {
-  @apply text-xl font-semibold tracking-tight text-slate-900 sm:text-2xl;
+  @apply text-xl font-semibold text-slate-900 sm:text-2xl;
 }
 
 .surface {
-  @apply rounded-2xl border border-slate-200/80 bg-white shadow-sm backdrop-blur;
+  @apply rounded-lg border border-slate-950/15 bg-white shadow-sm backdrop-blur;
+  background-color: var(--rguide-panel);
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.74) inset,
+    0 10px 28px rgba(23, 23, 23, 0.07);
+}
+
+.frosted-pane-left,
+.frosted-pane-right {
+  background-color: rgba(250, 250, 247, 0.8);
+  background-image: linear-gradient(135deg, rgba(250, 250, 247, 0.95), rgba(233, 235, 232, 0.82));
+  backdrop-filter: blur(18px) saturate(1.08);
+  -webkit-backdrop-filter: blur(18px) saturate(1.08);
+}
+
+.frosted-pane-left {
+  box-shadow:
+    inset -1px 0 0 rgba(23, 23, 23, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.68);
+}
+
+.frosted-pane-right {
+  background-image: linear-gradient(145deg, rgba(250, 250, 247, 0.97), rgba(233, 235, 232, 0.86) 52%, rgba(246, 247, 244, 0.92));
+  box-shadow:
+    inset 1px 0 0 rgba(255, 255, 255, 0.64),
+    inset 0 1px 0 rgba(255, 255, 255, 0.72),
+    0 -12px 32px rgba(23, 23, 23, 0.15);
+}
+
+.collapsed-guide-card {
+  isolation: isolate;
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.98), rgba(250, 250, 247, 0.96)),
+    rgba(255, 255, 255, 0.94);
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.92) inset,
+    0 10px 26px rgba(15, 23, 42, 0.08);
+}
+
+.collapsed-guide-card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  opacity: 0;
+  background:
+    radial-gradient(circle at 8% 18%, color-mix(in srgb, var(--guide-accent, #94a3b8) 8%, transparent), transparent 38%),
+    linear-gradient(135deg, color-mix(in srgb, var(--guide-accent, #94a3b8) 5%, rgba(255, 255, 255, 0)), rgba(123, 132, 136, 0.04));
+  transition: opacity 240ms ease;
+}
+
+.collapsed-guide-card:hover::after,
+.collapsed-guide-card:focus-within::after {
+  opacity: 0.78;
+}
+
+.te-kicker {
+  @apply font-mono uppercase;
+  letter-spacing: 0.14em;
 }
 
 .subcategory-cascade-item {

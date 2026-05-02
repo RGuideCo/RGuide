@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { Host_Grotesk } from "next/font/google";
 import type { ReactNode } from "react";
 
 import { AuthModal } from "@/components/auth/AuthModal";
@@ -9,6 +10,12 @@ import { Header } from "@/components/layout/Header";
 import { SITE_DESCRIPTION, SITE_NAME, SITE_URL } from "@/lib/constants";
 
 import "@/app/globals.css";
+
+const hostGrotesk = Host_Grotesk({
+  subsets: ["latin"],
+  variable: "--font-host-grotesk",
+  display: "swap",
+});
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
@@ -36,7 +43,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body>
+      <body className={hostGrotesk.variable}>
         <AuthSync />
         <SubmittedGuidesSync />
         <Header />

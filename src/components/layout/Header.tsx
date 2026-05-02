@@ -68,7 +68,7 @@ export function Header() {
   }, []);
 
   return (
-    <header className="fixed inset-x-0 top-0 z-50 bg-transparent lg:relative lg:inset-auto lg:z-30 lg:bg-stone-50">
+    <header className="fixed inset-x-0 top-0 z-50 bg-transparent lg:relative lg:inset-auto lg:z-30 lg:border-b lg:border-slate-950/10 lg:bg-[#f3f4f1]/95">
       <div className="flex w-full flex-wrap items-center gap-x-3 gap-y-2 px-3 py-3 sm:px-4 lg:flex-nowrap lg:gap-0 lg:px-0 lg:py-3">
         <div
           className={`absolute right-3 top-3 z-40 flex items-center gap-2 transition-[width,opacity] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] lg:hidden ${
@@ -101,8 +101,8 @@ export function Header() {
         </div>
         <div className="absolute left-3 top-3 w-auto shrink-0 drop-shadow-[0_1px_2px_rgba(255,255,255,0.8)] lg:static lg:w-14 lg:translate-x-3 lg:drop-shadow-none">
           <Link href="/" onClick={() => setProfileShellActive(false)} className="shrink-0">
-            <span className="hidden text-xl font-semibold tracking-tight text-slate-950 lg:inline">RGuide</span>
-            <span className="inline-flex h-8 w-8 items-center justify-center rounded-full bg-slate-950 text-sm font-semibold tracking-tight text-white shadow-sm lg:hidden">
+            <span className="hidden font-mono text-[1.05rem] font-semibold uppercase tracking-[0.16em] text-slate-950 lg:inline">RGuide</span>
+            <span className="inline-flex h-8 w-8 items-center justify-center rounded-lg bg-slate-950 font-mono text-sm font-semibold text-white shadow-sm lg:hidden">
               R
             </span>
           </Link>

@@ -424,10 +424,14 @@ export function MapListCard({
 
   return (
     <article
-      className={`group surface relative overflow-hidden transition-[background-color,border-color] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] ${
+      className={`group surface relative overflow-hidden transition-[background-color,border-color,box-shadow,transform] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] ${
         fillPane && expanded ? "flex h-full max-h-full min-h-0 flex-col !rounded-tr-xl !rounded-l-none !rounded-b-none !border-0 !shadow-none lg:!rounded-l-none lg:!rounded-r-2xl" : ""
-      } ${expanded ? "border border-slate-300 !bg-slate-50 px-3 pb-3 pt-0" : "p-3"}`}
-      style={!expanded ? { borderColor: categoryStyle.mapColor } : undefined}
+      } ${
+        expanded
+          ? "border border-slate-300 !bg-slate-50 px-3 pb-3 pt-0"
+          : "collapsed-guide-card p-3 hover:border-slate-950/30 hover:shadow-[0_18px_34px_rgba(23,23,23,0.13)] focus-within:border-slate-950/30 focus-within:shadow-[0_18px_34px_rgba(23,23,23,0.13)]"
+      }`}
+      style={!expanded ? ({ "--guide-accent": categoryStyle.mapColor, borderColor: categoryStyle.mapColor } as React.CSSProperties) : undefined}
       onMouseEnter={() => onHoverStart?.(list)}
       onMouseLeave={() => {
         onStopHoverChange?.(null);
@@ -439,6 +443,18 @@ export function MapListCard({
         onHoverEnd?.();
       }}
     >
+      {!expanded ? (
+        <>
+          <span
+            className="pointer-events-none absolute left-0 top-3 h-[calc(100%-1.5rem)] w-1 origin-left rounded-r-full opacity-75 transition-[width,opacity] duration-300 group-hover:w-1.5 group-hover:opacity-100 group-focus-within:w-1.5 group-focus-within:opacity-100"
+            style={{ backgroundColor: categoryStyle.mapColor }}
+            aria-hidden="true"
+          />
+          <span className="pointer-events-none absolute bottom-2 right-3 translate-y-1 font-mono text-[9px] font-semibold uppercase tracking-[0.16em] text-slate-400 opacity-0 transition-[opacity,transform] duration-300 group-hover:translate-y-0 group-hover:opacity-100 group-focus-within:translate-y-0 group-focus-within:opacity-100">
+            Open
+          </span>
+        </>
+      ) : null}
       <div
         className={`flex items-center justify-between gap-3 ${
           expanded
@@ -466,15 +482,15 @@ export function MapListCard({
               className="flex w-full items-center justify-between gap-2 text-left"
             >
               <span className="min-w-0 flex-1">
-                <h3 className={`min-w-0 text-base font-semibold leading-5 ${expanded ? "text-white" : "text-slate-900"}`}>{list.title}</h3>
+                <h3 className={`min-w-0 text-base font-semibold leading-5 transition-colors ${expanded ? "text-white" : "text-slate-900 group-hover:text-slate-950"}`}>{list.title}</h3>
                 {locationSubtitle ? (
-                  <span className={`mt-0.5 block truncate text-xs font-medium ${expanded ? "text-white/75" : "text-slate-500"}`}>
+                  <span className={`mt-0.5 block truncate font-mono text-[10px] font-medium uppercase tracking-[0.1em] ${expanded ? "text-white/75" : "text-slate-500"}`}>
                     {locationSubtitle}
                   </span>
                 ) : null}
               </span>
               <ChevronDown
-                className={`h-4 w-4 shrink-0 transition-transform ${expanded ? "rotate-180 text-white" : "text-slate-400"}`}
+                className={`h-4 w-4 shrink-0 transition-transform duration-300 ${expanded ? "rotate-180 text-white" : "text-slate-400 group-hover:translate-y-0.5 group-hover:text-slate-900 group-focus-within:translate-y-0.5 group-focus-within:text-slate-900"}`}
               />
             </button>
           ) : (
@@ -562,9 +578,15 @@ export function MapListCard({
       </div>
       {!expandable ? (
         <div className="mt-3">
-          <p className="text-[11px] font-medium uppercase tracking-[0.2em] text-slate-500">Description</p>
+          <p className="te-kicker text-[11px] font-medium text-slate-500">Description</p>
           <p className="mt-2 px-3 text-sm leading-5 text-slate-600">{list.description}</p>
         </div>
+      ) : null}
+
+      {expandable && !expanded ? (
+        <p className="mt-0 max-h-0 overflow-hidden px-3 text-xs leading-5 text-slate-500 opacity-0 transition-[max-height,margin,opacity] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:mt-2 group-hover:max-h-10 group-hover:opacity-100 group-focus-within:mt-2 group-focus-within:max-h-10 group-focus-within:opacity-100">
+          {list.description}
+        </p>
       ) : null}
 
       {expandable ? (

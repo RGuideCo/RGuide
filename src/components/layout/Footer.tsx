@@ -1,4 +1,7 @@
+"use client";
+
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 const footerLinks = [
   { href: "/submit", label: "Submit a list" },
@@ -7,6 +10,13 @@ const footerLinks = [
 ];
 
 export function Footer() {
+  const pathname = usePathname();
+  const isExplorerRoute = pathname === "/" || pathname.startsWith("/city/");
+
+  if (isExplorerRoute) {
+    return null;
+  }
+
   return (
     <footer className="hidden border-t border-slate-200/80 bg-white/70 lg:block">
       <div className="page-shell flex flex-col gap-6 py-10 sm:flex-row sm:items-end sm:justify-between">

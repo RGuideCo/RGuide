@@ -66,3 +66,9 @@ src/
 - Auth, favorites sync, analytics, and database writes are mocked for now.
 - TODO comments mark future Supabase/Auth/server integration points.
 - The map is isolated to a client-only Leaflet component to avoid SSR issues.
+
+## Editorial References
+
+- [Editorial guide population reference](docs/editorial-guide-population-reference.md)
+- [Restaurant research sources](docs/restaurant-research-sources.md)
+- [Stay research sources](docs/stay-research-sources.md)

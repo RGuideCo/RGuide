@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import { notFound, permanentRedirect } from "next/navigation";
 
 import { SplitScreenSection } from "@/components/home/SplitScreenSection";
-import { CityRouteSeoIndex } from "@/components/seo/CityRouteSeoIndex";
 import { getContinents } from "@/lib/mock-data";
 import { getCityDeepLinkStaticParams, resolveCityDeepLink } from "@/lib/deep-link-routes";
 
@@ -84,7 +83,6 @@ export default async function CityDeepLinkPage({ params }: CityDeepLinkPageProps
           intro: route.intro,
         }}
       />
-      <CityRouteSeoIndex route={route} />
     </>
   );
 }

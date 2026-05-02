@@ -8,6 +8,25 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      fontFamily: {
+        sans: [
+          "var(--font-host-grotesk)",
+          "Helvetica Neue",
+          "Helvetica",
+          "Arial",
+          "ui-sans-serif",
+          "system-ui",
+          "sans-serif",
+        ],
+        mono: [
+          "SFMono-Regular",
+          "Menlo",
+          "Monaco",
+          "Consolas",
+          "Liberation Mono",
+          "monospace",
+        ],
+      },
       colors: {
         ink: "#0f172a",
         mist: "#f8fafc",

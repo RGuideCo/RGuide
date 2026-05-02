@@ -9,7 +9,7 @@ import {
   deleteSubmittedGuide,
   saveSubmittedGuide,
 } from "@/lib/supabase/submitted-guides";
-import { MapList, SubmissionType, User } from "@/types";
+import { MapList, SelectionState, SubmissionType, User } from "@/types";
 
 type AuthMode = "login" | "signup";
 const DEFAULT_ITINERARY_PLAYLIST_ID = "itinerary-primary";
@@ -44,6 +44,15 @@ interface PlacesBeenEntries {
   places: string[];
 }
 
+export interface FavoriteLocation {
+  id: string;
+  kind: "country" | "city" | "neighborhood";
+  name: string;
+  detail: string;
+  selection: SelectionState;
+  createdAt: string;
+}
+
 interface AppState {
   currentUser: User | null;
   isProfileShellActive: boolean;
@@ -51,6 +60,7 @@ interface AppState {
   authModalOpen: boolean;
   authMode: AuthMode;
   favoriteIds: string[];
+  favoriteLocations: FavoriteLocation[];
   votedIds: string[];
   itineraryIds: string[];
   itineraryStopIds: string[];
@@ -69,6 +79,7 @@ interface AppState {
   logout: () => void;
   requireAuth: (callback?: () => void) => void;
   toggleFavorite: (listId: string) => void;
+  toggleFavoriteLocation: (location: FavoriteLocation) => void;
   toggleUpvote: (listId: string) => void;
   toggleItinerary: (listId: string) => void;
   toggleItineraryStop: (stopKey: string) => void;
@@ -95,6 +106,7 @@ export const useAppStore = create<AppState>()(
       authModalOpen: false,
       authMode: "login",
       favoriteIds: [],
+      favoriteLocations: [],
       votedIds: [],
       itineraryIds: [],
       itineraryStopIds: [],
@@ -139,6 +151,12 @@ export const useAppStore = create<AppState>()(
           favoriteIds: state.favoriteIds.includes(listId)
             ? state.favoriteIds.filter((id) => id !== listId)
             : [...state.favoriteIds, listId],
+        })),
+      toggleFavoriteLocation: (location) =>
+        set((state) => ({
+          favoriteLocations: state.favoriteLocations.some((item) => item.id === location.id)
+            ? state.favoriteLocations.filter((item) => item.id !== location.id)
+            : [location, ...state.favoriteLocations],
         })),
       toggleUpvote: (listId) => {
         get().requireAuth(() =>
@@ -537,6 +555,7 @@ export const useAppStore = create<AppState>()(
       partialize: (state) => ({
         currentUser: state.currentUser,
         favoriteIds: state.favoriteIds,
+        favoriteLocations: state.favoriteLocations,
         votedIds: state.votedIds,
         itineraryIds: state.itineraryIds,
         itineraryStopIds: state.itineraryStopIds,
@@ -556,6 +575,7 @@ export const useAppStore = create<AppState>()(
             authModalOpen: false,
             authMode: "login",
             favoriteIds: [],
+            favoriteLocations: [],
             votedIds: [],
             itineraryIds: [],
             itineraryStopIds: [],
@@ -581,6 +601,7 @@ export const useAppStore = create<AppState>()(
           currentUser: null,
           isProfileShellActive: state.isProfileShellActive ?? false,
           favoriteIds: state.favoriteIds ?? [],
+          favoriteLocations: state.favoriteLocations ?? [],
           votedIds: state.votedIds ?? [],
           itineraryIds: state.itineraryIds ?? [],
           itineraryStopIds: state.itineraryStopIds ?? [],
