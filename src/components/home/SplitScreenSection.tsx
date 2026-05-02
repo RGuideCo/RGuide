@@ -5802,13 +5802,13 @@ export function SplitScreenSection({ continents, initialRouteState, seoContent, 
                   </div>
                 </div>
                 <div
-                  className={`mx-auto hidden w-full max-w-[36rem] space-y-3 transition-[max-height,opacity,transform,padding-bottom] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] lg:block ${
+                  className={`relative mx-auto hidden w-full max-w-[36rem] space-y-3 transition-[max-height,opacity,transform,padding-bottom] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] lg:block ${
                     activeGuideRail === "itinerary" || isPublicProfileMode
                       ? "hidden"
                       : isGuideTakingFullListPane
                         ? "pointer-events-none max-h-0 -translate-y-6 pb-0 opacity-0"
                         : "max-h-56 translate-y-0 pb-2 opacity-100"
-                  } ${isSubcategoryMenuOpen ? "overflow-visible" : "overflow-hidden"}`}
+                  } ${isSubcategoryMenuOpen ? "z-[140] overflow-visible" : "z-10 overflow-hidden"}`}
                 >
                   <div className="grid grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] items-center gap-2">
                     <div className="grid w-full grid-cols-3 justify-items-start gap-2">
@@ -6161,7 +6161,7 @@ export function SplitScreenSection({ continents, initialRouteState, seoContent, 
 
                 <div
                   data-guides-scroll
-                  className={`flex min-h-0 flex-1 flex-col gap-4 transition-[margin-top,padding-bottom,padding-right] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] ${
+                  className={`relative z-0 flex min-h-0 flex-1 flex-col gap-4 transition-[margin-top,padding-bottom,padding-right] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] ${
                     isGuideTakingFullListPane ? "mt-0" : "mt-2"
                   } ${isGuideTakingFullListPane ? "h-full max-h-full overflow-hidden pb-0 pr-0 overscroll-contain" : `${explorerBodyMaxHeight} overflow-y-auto pb-0 pr-1`}`}
                 >

@@ -2886,36 +2886,88 @@ const europeanCountryDescriptions: Record<string, string> = {
     "A multi-nation destination with global cities, coastal rail routes, and deep regional contrast across England, Scotland, Wales, and Northern Ireland.",
 };
 
-function buildCountryDescription(country: WorldCountrySeed, hasCuratedCities: boolean): string {
-  if (country.continentId === "europe") {
-    return (
-      europeanCountryDescriptions[country.id] ??
-      `${country.name} is a European destination with layered urban history, strong regional variety, and practical multi-city routing.`
+const countryDescriptionLimit = 320;
+const capitalNameOverrides: Record<string, string> = {
+  "united-republic-of-tanzania": "Dodoma",
+  ukraine: "Kyiv",
+};
+
+function appendIfFits(base: string, addition: string, limit = countryDescriptionLimit): string {
+  const normalized = `${base} ${addition}`.replace(/\s+/g, " ").trim();
+  return normalized.length <= limit ? normalized : base;
+}
+
+function cityCoverageClause(country: WorldCountrySeed, capitalName: string | undefined, curatedCities: Array<Omit<City, "listCount">>) {
+  const cityNames = curatedCities
+    .map((city) => city.name)
+    .filter((name, index, names) => names.indexOf(name) === index)
+    .slice(0, 3);
+
+  if (cityNames.length > 1) {
+    const lastCity = cityNames[cityNames.length - 1];
+    return `${cityNames.slice(0, -1).join(", ")} and ${lastCity}`;
+  }
+
+  return cityNames[0] ?? capitalName ?? country.name;
+}
+
+function buildCountryDescription(country: WorldCountrySeed): string {
+  const capitalFeature = countryCapitalLookup.get(normalizePlaceName(country.name));
+  const capitalName = capitalNameOverrides[country.id] ?? capitalFeature?.capital;
+  const curatedCities = curatedCitySeeds[country.id] ?? [];
+  const europeBase = europeanCountryDescriptions[country.id];
+  const continentContext: Record<string, { base: string; route: string }> = {
+    "North America": {
+      base: "big-city routes, coastlines, road-trip corridors, and strong regional identities",
+      route: "food, nightlife, nature, culture, stays, and activities across city and regional routes",
+    },
+    "South America": {
+      base: "vibrant city culture, dramatic landscapes, late-night neighborhoods, and high-contrast regional trips",
+      route: "food, music, nature, culture, stays, and activities across cities and scenic regions",
+    },
+    Europe: {
+      base: "walkable historic centers, rail-friendly routing, regional food scenes, and dense cultural coverage",
+      route: "food, nightlife, nature, culture, stays, and activities across city breaks and regional loops",
+    },
+    Africa: {
+      base: "major city hubs, natural landmarks, heritage sites, and regionally distinct travel styles",
+      route: "food, culture, nature, stays, nightlife, and activities across city and regional routes",
+    },
+    Asia: {
+      base: "capital hubs, deep food culture, temples or heritage sites, and wide regional variety",
+      route: "food, nightlife, nature, culture, stays, and activities across capitals and regional hubs",
+    },
+    Oceania: {
+      base: "coastal cities, outdoors-first routes, island or road-trip travel, and destination-style itineraries",
+      route: "food, nature, culture, stays, nightlife, and activities across cities and scenic routes",
+    },
+  };
+
+  const context =
+    continentContext[country.continentName] ?? {
+      base: "city and regional travel routes with varied local character",
+      route: "food, nightlife, nature, culture, stays, and activities across practical trip routes",
+    };
+  const coverage = cityCoverageClause(country, capitalName, curatedCities);
+
+  if (europeBase) {
+    return appendIfFits(
+      `${europeBase} Use ${country.name} for ${context.route}, anchored by ${coverage}.`,
+      "Regional routes keep browsing useful as fuller guides are added.",
     );
   }
 
-  const capitalFeature = countryCapitalLookup.get(normalizePlaceName(country.name));
-  const capitalName = capitalFeature?.capital;
-  const continentContext: Record<string, string> = {
-    "North America": "big-city routes, coast-to-coast contrasts, and strong regional identities",
-    "South America": "vibrant city culture, dramatic landscapes, and high-contrast regional trips",
-    Europe: "walkable historic centers, rail-friendly routes, and dense cultural coverage",
-    Africa: "major urban hubs, natural landmarks, and regionally distinct travel styles",
-    Asia: "high-density city experiences, deep food culture, and wide regional variety",
-    Oceania: "coastal cities, outdoors-first routes, and destination-style itineraries",
-  };
-
-  const context = continentContext[country.continentName] ?? "city and regional travel routes with varied local character";
-
-  if (hasCuratedCities) {
-    return capitalName
-      ? `${country.name} combines ${context}, with ${capitalName} and other key destinations offering strong trip-planning coverage.`
-      : `${country.name} combines ${context}, with key destinations offering strong trip-planning coverage.`;
+  if (curatedCities.length) {
+    return appendIfFits(
+      `${country.name} is a destination in ${country.continentName} shaped by ${context.base}. Use it for ${context.route}, anchored by ${coverage}.`,
+      "Regional routes extend the trip beyond the anchor city.",
+    );
   }
 
-  return capitalName
-    ? `${country.name} offers ${context}, with guide coverage currently centered on ${capitalName} and expanding across more destinations.`
-    : `${country.name} offers ${context}, with guide coverage expanding across more destinations.`;
+  return appendIfFits(
+    `${country.name} is a destination in ${country.continentName} shaped by ${context.base}. Guide coverage starts with ${coverage}, then expands into seed regions for food, culture, nature, stays, nightlife, and activities.`,
+    "Those seeds keep browsing useful while fuller guides are added.",
+  );
 }
 
 function createCountry(country: WorldCountrySeed): Country {
@@ -2925,7 +2977,7 @@ function createCountry(country: WorldCountrySeed): Country {
       name: country.name,
       continent: country.continentName,
       description:
-        "A continent-scale destination where regions, states, and cities each feel distinct, from dense East Coast corridors to Pacific and desert routes.",
+        "The United States is a continent-scale destination where states, regions, and cities feel distinct, from dense East Coast corridors and Great Lakes culture to Pacific, desert, mountain, Gulf, and island routes for food, nightlife, nature, stays, culture, and activities.",
       subareas: usaRegionSeeds,
       states: usaStateSeeds.map((state) => ({
         ...state,
@@ -2953,7 +3005,7 @@ function createCountry(country: WorldCountrySeed): Country {
       id: country.id,
       name: country.name,
       continent: country.continentName,
-      description: buildCountryDescription(country, Boolean(curatedCities.length)),
+      description: buildCountryDescription(country),
       subareas,
       states: ukStateSeeds,
       bounds: country.bounds,
@@ -2976,7 +3028,7 @@ function createCountry(country: WorldCountrySeed): Country {
     id: country.id,
     name: country.name,
     continent: country.continentName,
-    description: buildCountryDescription(country, Boolean(curatedCities?.length)),
+    description: buildCountryDescription(country),
     subareas,
     bounds: country.bounds,
     cities: (curatedCities ? [...curatedCities, ...regionCities] : fallbackCities).map((city) => ({
