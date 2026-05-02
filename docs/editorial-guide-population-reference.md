@@ -18,8 +18,8 @@ Required list-level fields:
 - `seoSlug`: reusable SEO phrase such as `best-restaurants`, `best-bars`, `best-hostels`, `best-things-to-do`, or `best-parks`.
 - `seoTitle`: direct search phrase, usually `Best {Category} in {Neighborhood}, {City}`.
 - `seoDescription`: concise search-facing summary with the city, category, and real selection angle.
-- `title`: human-facing guide title. Make it specific and editorial, not generic.
-- `description`: one-sentence guide summary explaining the list's purpose.
+- `title`: human-facing guide title. Make it specific, editorial, and contextual to the area. Keep the SEO/search wording out of the visible title unless it is genuinely useful to the reader.
+- `description`: one-sentence guide summary explaining the list's purpose and local angle.
 - `url`: Google Maps search or shared-list URL.
 - `category`: one of `Food`, `Nightlife`, `Nature`, `Culture`, `Stay`, `Activities`.
 - `location`: city/country/continent, optional neighborhood, `scope: "city"`.
@@ -64,6 +64,26 @@ Use a source-backed editorial standard, not a generic "top-rated" standard.
 - Use official venue/property pages for names, ticketing posture, amenities, and schedule details.
 - Replace weak picks when recent sources show closure, poor value, tourist-trap patterns, safety concerns, or a mismatch with the guide audience.
 - For citywide rollups, pull the strongest neighborhood picks together. Do not build citywide lists as disconnected search-result lists.
+
+## SEO Names vs Guide Names
+
+Keep search fields stable and generic; make visible guide copy editorial.
+
+- `slug`, `seoSlug`, `seoTitle`, and `seoDescription` should stay keyword-forward so Google can still understand queries like `best dive bars`, `best restaurants`, `best hostels`, or `best things to do`.
+- The visible `title` should not simply repeat the SEO phrase or city name. Use a memorable guide name that reflects the neighborhood, route, scene, cuisine, or trip use case.
+- Avoid putting the city name in a visible `title` when the page context already shows the city. Use it only when there is a real disambiguation need.
+- Neighborhood titles should feel local: reference the old-city lanes, market, waterfront, hill, plaza culture, nightlife strip, architecture grid, or other place-specific context.
+- Citywide rollup titles should communicate selection logic: cross-town essentials, counter meals, late-night rooms, hostel bases, museum spine, weekend route, etc.
+- List descriptions should be more than a category label. Name the geography, the reason this guide exists, the kind of stops included, and the best-use context.
+- Do not change SEO fields just because the visible title changes. Preserve indexed routes unless there is a clear product or SEO reason to migrate them.
+
+Good pattern:
+
+```text
+seoTitle: Best Dive Bars in Barcelona
+title: Cellars, Counters, and Late-Night Regulars
+description: Low-key drinking rooms pulled from the strongest neighborhood guides, favoring bodegas, cava counters, old taverns, and music-adjacent bars over polished cocktail destinations.
+```
 
 ## Barcelona Category Examples
 
