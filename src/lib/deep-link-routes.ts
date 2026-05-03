@@ -1,7 +1,8 @@
 import { cities, continents, mapLists } from "@/data";
 import { CATEGORIES } from "@/lib/constants";
+import { getCitiesFromContinents } from "@/lib/geography-tree";
 import { slugify } from "@/lib/utils";
-import { City, ListCategory, MapList, SelectionState, SubArea } from "@/types";
+import { City, Continent, ListCategory, MapList, SelectionState, SubArea } from "@/types";
 
 export type CityDeepLinkState = {
   selection: SelectionState;
@@ -158,8 +159,8 @@ export function getCanonicalGuidePath(
   return `${getCanonicalCityCategoryPath(city, guide.category, neighborhood)}/${getGuideRouteSlug(city, guide, neighborhood)}`;
 }
 
-export function getCityBySimpleSlug(citySlug: string) {
-  return cities.find((city) => slugify(city.name) === citySlug);
+export function getCityBySimpleSlug(citySlug: string, citySource: City[] = cities) {
+  return citySource.find((city) => slugify(city.name) === citySlug);
 }
 
 function findNeighborhood(city: City, neighborhoodSlug?: string): NeighborhoodMatch | undefined {
@@ -270,8 +271,8 @@ export function getRelatedCityRouteGuides(route: Pick<CityDeepLinkResolution, "c
   return [...sameScope, ...cityWide];
 }
 
-function buildSelection(city: City, neighborhood?: NeighborhoodMatch): SelectionState {
-  const continent = continents.find((item) => item.name === city.continent);
+function buildSelection(city: City, neighborhood?: NeighborhoodMatch, continentSource: Continent[] = continents): SelectionState {
+  const continent = continentSource.find((item) => item.name === city.continent);
   const country = continent?.countries.find((item) => item.name === city.country);
 
   return {
@@ -356,14 +357,19 @@ function buildGuideData(guide: MapList, canonicalPath: string) {
   };
 }
 
-export function resolveCityDeepLink(rawSegments: string[]): CityDeepLinkResolution | null {
+export function resolveCityDeepLink(
+  rawSegments: string[],
+  routeData: { continents?: Continent[]; cities?: City[] } = {},
+): CityDeepLinkResolution | null {
+  const continentSource = routeData.continents ?? continents;
+  const citySource = routeData.cities ?? (routeData.continents ? getCitiesFromContinents(routeData.continents) : cities);
   const segments = cleanSegments(rawSegments);
   const [citySlug, ...cityRest] = segments;
-  let city = citySlug ? getCityBySimpleSlug(citySlug) : undefined;
+  let city = citySlug ? getCityBySimpleSlug(citySlug, citySource) : undefined;
   let rest = cityRest;
 
   if (!city && segments.length >= 3) {
-    city = getCityBySimpleSlug(segments[2]);
+    city = getCityBySimpleSlug(segments[2], citySource);
     rest = segments.slice(3);
   }
 
@@ -459,7 +465,7 @@ export function resolveCityDeepLink(rawSegments: string[]): CityDeepLinkResoluti
     category,
     guide,
     canonicalPath,
-    selection: buildSelection(city, neighborhoodMatch),
+    selection: buildSelection(city, neighborhoodMatch, continentSource),
     activeCategory: category,
     expandedGuideId: guide?.id,
     title,

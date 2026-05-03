@@ -1,8 +1,10 @@
 import { SplitScreenSection } from "@/components/home/SplitScreenSection";
-import { getContinents } from "@/lib/mock-data";
+import { getContinentsWithDestinationDescriptions } from "@/lib/destination-descriptions";
 
-export default function HomePage() {
-  const continents = getContinents();
+export const dynamic = "force-dynamic";
+
+export default async function HomePage() {
+  const continents = await getContinentsWithDestinationDescriptions();
 
   return (
     <>

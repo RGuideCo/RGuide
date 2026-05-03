@@ -2,8 +2,9 @@ import type { Metadata } from "next";
 import { notFound, permanentRedirect } from "next/navigation";
 
 import { SplitScreenSection } from "@/components/home/SplitScreenSection";
-import { getContinents } from "@/lib/mock-data";
+import { getContinentsWithDestinationDescriptions } from "@/lib/destination-descriptions";
 import { getCityDeepLinkStaticParams, resolveCityDeepLink } from "@/lib/deep-link-routes";
+import { getCitiesFromContinents } from "@/lib/geography-tree";
 
 interface CityDeepLinkPageProps {
   params: Promise<{
@@ -11,13 +12,19 @@ interface CityDeepLinkPageProps {
   }>;
 }
 
+export const dynamic = "force-dynamic";
+
 export function generateStaticParams() {
   return getCityDeepLinkStaticParams();
 }
 
 export async function generateMetadata({ params }: CityDeepLinkPageProps): Promise<Metadata> {
   const { segments } = await params;
-  const route = resolveCityDeepLink(segments);
+  const continents = await getContinentsWithDestinationDescriptions();
+  const route = resolveCityDeepLink(segments, {
+    continents,
+    cities: getCitiesFromContinents(continents),
+  });
 
   if (!route) {
     return { title: "City not found" };
@@ -51,7 +58,11 @@ export async function generateMetadata({ params }: CityDeepLinkPageProps): Promi
 
 export default async function CityDeepLinkPage({ params }: CityDeepLinkPageProps) {
   const { segments } = await params;
-  const route = resolveCityDeepLink(segments);
+  const continents = await getContinentsWithDestinationDescriptions();
+  const route = resolveCityDeepLink(segments, {
+    continents,
+    cities: getCitiesFromContinents(continents),
+  });
 
   if (!route) {
     notFound();
@@ -72,7 +83,7 @@ export default async function CityDeepLinkPage({ params }: CityDeepLinkPageProps
         />
       ))}
       <SplitScreenSection
-        continents={getContinents()}
+        continents={continents}
         initialRouteState={{
           selection: route.selection,
           activeCategory: route.activeCategory,

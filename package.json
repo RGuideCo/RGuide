@@ -11,7 +11,9 @@
     "enrich:neighborhoods": "node scripts/fetch-city-neighborhoods.mjs",
     "enrich:boundaries": "node scripts/fetch-city-neighborhoods.mjs --boundaries-only",
     "export:editorial-guides": "node scripts/export-editorial-guides-sql.mjs",
-    "push:editorial-guides": "node scripts/push-editorial-guides.mjs"
+    "push:editorial-guides": "node scripts/push-editorial-guides.mjs",
+    "export:destination-descriptions": "node scripts/export-destination-descriptions-sql.mjs",
+    "push:destination-descriptions": "node scripts/push-destination-descriptions.mjs"
   },
   "dependencies": {
     "@ffmpeg-installer/ffmpeg": "^1.1.0",
