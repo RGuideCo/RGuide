@@ -78,6 +78,36 @@ function buildLocationSubtitle(list: MapList) {
     .join(" • ");
 }
 
+type GuideSource = NonNullable<MapList["sources"]>[number];
+
+function buildGuideMeta(list: MapList) {
+  const placeCount = list.stops.length;
+  const placeLabel = `${placeCount} ${placeCount === 1 ? "place" : "places"}`;
+  return `${list.category} • ${placeLabel}`;
+}
+
+function getSourceDisplayName(source: GuideSource) {
+  return source.name
+    .replace(/\s+[-–|].*$/, "")
+    .replace(/\s*\([^)]*\)\s*$/, "")
+    .trim();
+}
+
+function buildSourceSummary(sources: GuideSource[]) {
+  const uniqueNames = sources
+    .map(getSourceDisplayName)
+    .filter(Boolean)
+    .filter((name, index, all) => all.findIndex((item) => item.toLowerCase() === name.toLowerCase()) === index);
+  const visibleNames = uniqueNames.slice(0, 2);
+  const extraCount = uniqueNames.length - visibleNames.length;
+
+  if (!visibleNames.length) {
+    return `${sources.length} ${sources.length === 1 ? "source" : "sources"}`;
+  }
+
+  return `${visibleNames.join(", ")}${extraCount > 0 ? ` +${extraCount}` : ""}`;
+}
+
 function getAlphaMarker(index: number) {
   return String.fromCharCode(65 + (index % 26));
 }
@@ -123,6 +153,7 @@ export function MapListCard({
   const canEditOwnItinerary = isOwnGuide && isItineraryGuide && Boolean(onEditItinerary);
   const categoryStyle = CATEGORY_STYLES[list.category];
   const locationSubtitle = buildLocationSubtitle(list);
+  const guideMeta = buildGuideMeta(list);
   const visibleUpvotes = list.upvotes + (hasVoted ? 1 : 0);
   const [expandedStopIds, setExpandedStopIds] = useState<string[]>([]);
   const [expandedPlaceIds, setExpandedPlaceIds] = useState<string[]>([]);
@@ -139,6 +170,8 @@ export function MapListCard({
   const isRGuide = list.creator.name.startsWith("R ");
   const allSources = isRGuide ? list.sources ?? [] : [];
   const sourcePreview = allSources.slice(0, 5);
+  const sourceStripPreview = allSources.slice(0, 3);
+  const sourceSummary = allSources.length ? buildSourceSummary(allSources) : null;
   const [sourcesPinnedOpen, setSourcesPinnedOpen] = useState(false);
   const sourcesOpen = Boolean(allSources.length) && sourcesPinnedOpen;
 
@@ -201,6 +234,25 @@ export function MapListCard({
     } catch {
       return "";
     }
+  };
+
+  const openSourcesFromCard = () => {
+    if (sourcesOpen) {
+      setSourcesPinnedOpen(false);
+      return;
+    }
+
+    if (expandable && !expanded) {
+      if (onRequestOpenSourcesWhenCollapsed) {
+        onRequestOpenSourcesWhenCollapsed(list);
+      } else {
+        onToggleExpand?.(list);
+        setSourcesPinnedOpen(true);
+      }
+      return;
+    }
+
+    setSourcesPinnedOpen(true);
   };
 
   const getDirectionsHref = (stop: { name: string }) => {
@@ -483,11 +535,9 @@ export function MapListCard({
             >
               <span className="min-w-0 flex-1">
                 <h3 className={`min-w-0 text-base font-semibold leading-5 transition-colors ${expanded ? "text-white" : "text-slate-900 group-hover:text-slate-950"}`}>{list.title}</h3>
-                {locationSubtitle ? (
-                  <span className={`mt-0.5 block truncate font-mono text-[10px] font-medium uppercase tracking-[0.1em] ${expanded ? "text-white/75" : "text-slate-500"}`}>
-                    {locationSubtitle}
-                  </span>
-                ) : null}
+                <span className={`mt-0.5 block truncate font-mono text-[10px] font-medium uppercase tracking-[0.1em] ${expanded ? "text-white/75" : "text-slate-500"}`}>
+                  {guideMeta}
+                </span>
               </span>
               <ChevronDown
                 className={`h-4 w-4 shrink-0 transition-transform duration-300 ${expanded ? "rotate-180 text-white" : "text-slate-400 group-hover:translate-y-0.5 group-hover:text-slate-900 group-focus-within:translate-y-0.5 group-focus-within:text-slate-900"}`}
@@ -576,6 +626,35 @@ export function MapListCard({
           ) : null}
         </div>
       </div>
+      {expandable && !expanded && sourceSummary ? (
+        <div
+          className="mt-2 flex w-full items-center gap-2 border-t border-slate-200/80 pt-2 pl-0.5 text-left"
+          aria-label="Guide sources"
+        >
+          <span className="font-mono text-[9px] font-semibold uppercase tracking-[0.16em] text-slate-400">
+            Sourced
+          </span>
+          <span className="h-px w-4 shrink-0 bg-slate-300/80" aria-hidden="true" />
+          <span className="flex shrink-0 items-center gap-1">
+            {sourceStripPreview.map((source, index) => (
+              <span
+                key={`${list.id}-source-strip-${source.name}-${index}`}
+                className="inline-flex h-4 w-4 items-center justify-center overflow-hidden bg-white ring-1 ring-slate-200"
+                title={source.name}
+              >
+                <img
+                  src={getSourceIconUrl(source.url)}
+                  alt=""
+                  className="h-3 w-3"
+                />
+              </span>
+            ))}
+          </span>
+          <span className="min-w-0 flex-1 truncate text-[11px] font-medium leading-none text-slate-600">
+            {sourceSummary}
+          </span>
+        </div>
+      ) : null}
       {!expandable ? (
         <div className="mt-3">
           <p className="te-kicker text-[11px] font-medium text-slate-500">Description</p>
@@ -612,11 +691,52 @@ export function MapListCard({
               >
                 {list.description}
               </p>
+              {sourceSummary ? (
+                <button
+                  type="button"
+                  onClick={(event) => {
+                    event.stopPropagation();
+                    openSourcesFromCard();
+                  }}
+                  className="guide-content-cascade-item mt-3 flex w-full items-center gap-2 border-t border-slate-200/80 pt-2 pl-0.5 text-left transition hover:border-slate-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-300"
+                  style={{ animationDelay: "70ms" }}
+                  aria-label="Show guide sources"
+                  aria-expanded={sourcesOpen}
+                >
+                  <span className="font-mono text-[9px] font-semibold uppercase tracking-[0.16em] text-slate-400">
+                    Sourced
+                  </span>
+                  <span className="h-px w-4 shrink-0 bg-slate-300/80" aria-hidden="true" />
+                  <span className="flex shrink-0 items-center gap-1">
+                    {sourceStripPreview.map((source, index) => (
+                      <span
+                        key={`${list.id}-expanded-source-strip-${source.name}-${index}`}
+                        className="inline-flex h-4 w-4 items-center justify-center overflow-hidden bg-white ring-1 ring-slate-200"
+                        title={source.name}
+                      >
+                        <img
+                          src={getSourceIconUrl(source.url)}
+                          alt=""
+                          className="h-3 w-3"
+                        />
+                      </span>
+                    ))}
+                  </span>
+                  <span className="min-w-0 flex-1 truncate text-[11px] font-medium leading-none text-slate-600">
+                    {sourceSummary}
+                  </span>
+                  <ChevronDown
+                    className={`h-3.5 w-3.5 shrink-0 text-slate-400 transition-transform ${
+                      sourcesOpen ? "rotate-180" : ""
+                    }`}
+                  />
+                </button>
+              ) : null}
               {list.stops.length ? (
                 <>
                   <p
                     className="guide-content-cascade-item mt-4 text-[11px] font-medium uppercase tracking-[0.2em] text-slate-500"
-                    style={{ animationDelay: "90ms" }}
+                    style={{ animationDelay: sourceSummary ? "115ms" : "90ms" }}
                   >
                     Places of Interest
                   </p>
@@ -873,22 +993,7 @@ export function MapListCard({
                     type="button"
                     onClick={(event) => {
                       event.stopPropagation();
-                      if (sourcesOpen) {
-                        setSourcesPinnedOpen(false);
-                        return;
-                      }
-
-                      if (expandable && !expanded) {
-                        if (onRequestOpenSourcesWhenCollapsed) {
-                          onRequestOpenSourcesWhenCollapsed(list);
-                        } else {
-                          onToggleExpand?.(list);
-                          setSourcesPinnedOpen(true);
-                        }
-                        return;
-                      }
-
-                      setSourcesPinnedOpen(true);
+                      openSourcesFromCard();
                     }}
                     className="flex items-center justify-center gap-1 rounded-full px-1 py-0.5 hover:bg-stone-100"
                     aria-label="Show sources"

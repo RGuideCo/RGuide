@@ -5,6 +5,7 @@ import {
   Camera,
   ChevronDown,
   ChevronRight,
+  CloudSun,
   Flag,
   Globe2,
   Heart,
@@ -151,11 +152,71 @@ const cityHighlightThemes: Record<ListCategory, string[]> = {
   Activities: ["Social", "Walkable", "Energy"],
 };
 
-const cityDescriptionOverrides: Record<string, string> = {
-  barcelona:
-    "Barcelona is a dense Mediterranean city where Gothic lanes, Eixample's Modernista landmarks, late tapas dinners, natural-wine bars, design hotels, social hostels, hilltop parks, and beachside days all sit within a few metro stops.",
+const categoryCityDescriptionOverrides: Record<string, Partial<Record<ListCategory, string>>> = {
+  berlin: {
+    Food: "Berlin food works best as a neighborhood map: Turkish counters in Kreuzberg and Neukolln, modern German rooms, third-wave cafes, natural-wine bistros, market halls, currywurst stops, and serious reservation dinners threaded through transit-friendly districts.",
+    Nightlife:
+      "Berlin nightlife is built for late decisions: smoky kneipen, natural-wine rooms, canal bars, queer dance floors, techno institutions, courtyard clubs, and low-key neighborhood stops that shift sharply between Mitte, Kreuzberg, Neukolln, and Friedrichshain.",
+    Culture:
+      "Berlin culture should read by district: Museum Island and Prussian collections in Mitte, Cold War and Wall sites across the east-west spine, contemporary galleries, memorials, Bauhaus traces, and repurposed industrial spaces that reward slower routes.",
+    Stay: "Berlin stays are about choosing your base carefully: central museum access in Mitte, nightlife reach in Kreuzberg or Friedrichshain, quieter westside hotels in Charlottenburg, apartment-style rooms in Prenzlauer Berg, and practical hostels near U-Bahn and S-Bahn links.",
+    Nature:
+      "Berlin open-air time is woven into the city through Tiergarten, Tempelhofer Feld, canal paths, palace gardens, lakeside day trips, Spree-side walks, and neighborhood park breaks that help long museum, food, and nightlife routes breathe.",
+    Activities:
+      "Berlin itineraries work as stitched districts rather than a single center, moving from museums and Wall history to market halls, park resets, canal walks, galleries, neighborhood dinners, and late bars without wasting transit time or flattening the city into one route.",
+  },
 };
 const explorerDescriptionCharacterLimit = 320;
+
+type CityWeather = {
+  temperature: number;
+  condition: string;
+};
+
+const weatherCodeLabels: Record<number, string> = {
+  0: "Clear",
+  1: "Mostly clear",
+  2: "Partly cloudy",
+  3: "Cloudy",
+  45: "Fog",
+  48: "Fog",
+  51: "Drizzle",
+  53: "Drizzle",
+  55: "Drizzle",
+  56: "Freezing drizzle",
+  57: "Freezing drizzle",
+  61: "Rain",
+  63: "Rain",
+  65: "Heavy rain",
+  66: "Freezing rain",
+  67: "Freezing rain",
+  71: "Snow",
+  73: "Snow",
+  75: "Heavy snow",
+  77: "Snow grains",
+  80: "Showers",
+  81: "Showers",
+  82: "Heavy showers",
+  85: "Snow showers",
+  86: "Snow showers",
+  95: "Thunderstorm",
+  96: "Thunderstorm",
+  99: "Thunderstorm",
+};
+
+function getWeatherLabel(code: number) {
+  return weatherCodeLabels[code] ?? "Weather";
+}
+
+function normalizeCelsiusTemperature(temperature: number, unit?: string) {
+  const normalizedUnit = unit?.toLowerCase() ?? "";
+
+  if (normalizedUnit.includes("f")) {
+    return (temperature - 32) * (5 / 9);
+  }
+
+  return temperature;
+}
 
 function capExplorerDescription(description: string, limit = explorerDescriptionCharacterLimit) {
   const normalized = description.trim().replace(/\s+/g, " ");
@@ -197,6 +258,103 @@ function FavoriteLocationRow({
         <span className="block truncate font-medium text-slate-800">{location.name}</span>
       </span>
     </button>
+  );
+}
+
+function CityWeatherChip({
+  cityId,
+  cityName,
+  coordinates,
+}: {
+  cityId?: string;
+  cityName?: string;
+  coordinates?: [number, number];
+}) {
+  const [weather, setWeather] = useState<CityWeather | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
+
+  useEffect(() => {
+    if (!cityId || !coordinates) {
+      setWeather(null);
+      setIsLoading(false);
+      return;
+    }
+
+    const controller = new AbortController();
+    const endpoint = new URL("https://api.open-meteo.com/v1/forecast");
+    endpoint.searchParams.set("latitude", coordinates[0].toString());
+    endpoint.searchParams.set("longitude", coordinates[1].toString());
+    endpoint.searchParams.set("current", "temperature_2m,weather_code");
+    endpoint.searchParams.set("temperature_unit", "celsius");
+    endpoint.searchParams.set("forecast_days", "1");
+
+    setIsLoading(true);
+    setWeather(null);
+
+    fetch(endpoint.toString(), { cache: "no-store", signal: controller.signal })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error(`Weather request failed: ${response.status}`);
+        }
+        return response.json() as Promise<{
+          current_units?: {
+            temperature_2m?: string;
+          };
+          current?: {
+            temperature_2m?: number;
+            weather_code?: number;
+          };
+        }>;
+      })
+      .then((data) => {
+        const temperature = data.current?.temperature_2m;
+        const code = data.current?.weather_code;
+        if (typeof temperature !== "number" || typeof code !== "number") {
+          setWeather(null);
+          return;
+        }
+        setWeather({
+          temperature: normalizeCelsiusTemperature(temperature, data.current_units?.temperature_2m),
+          condition: getWeatherLabel(code),
+        });
+      })
+      .catch((error) => {
+        if ((error as Error).name !== "AbortError") {
+          setWeather(null);
+        }
+      })
+      .finally(() => {
+        if (!controller.signal.aborted) {
+          setIsLoading(false);
+        }
+      });
+
+    return () => controller.abort();
+  }, [cityId, coordinates]);
+
+  if (!cityId || !coordinates || (!weather && !isLoading)) {
+    return null;
+  }
+
+  return (
+    <div
+      className="absolute right-5 top-5 z-20 flex max-w-[7rem] items-start justify-end gap-1.5 text-right text-xs text-slate-600"
+      title={weather ? `${cityName ?? "City"} weather: ${Math.round(weather.temperature)}°C, ${weather.condition}` : "Loading weather"}
+      aria-live="polite"
+    >
+      <CloudSun className="h-8 w-8 shrink-0 self-stretch text-orange-500" aria-hidden="true" />
+      {weather ? (
+        <span className="min-w-0 leading-tight">
+          <span className="block text-sm font-semibold text-slate-900">
+            {Math.round(weather.temperature)}
+            °C
+          </span>
+          <span className="block truncate font-medium">{weather.condition}</span>
+        </span>
+      ) : (
+        <span className="font-medium">...</span>
+      )}
+    </div>
   );
 }
 
@@ -1532,7 +1690,7 @@ export function SplitScreenSection({ continents, initialRouteState, seoContent, 
   const activeLocationDescriptionRaw =
     activeLocation.nestedSubarea?.description ??
     activeLocation.subarea?.description ??
-    (activeLocation.city ? cityDescriptionOverrides[activeLocation.city.id] ?? activeLocation.city.description : undefined) ??
+    activeLocation.city?.description ??
     activeLocation.state?.description ??
     activeLocation.country?.description;
   const activeLocationDescription = formatLocationDescription(activeLocationDescriptionRaw) || null;
@@ -2527,10 +2685,11 @@ export function SplitScreenSection({ continents, initialRouteState, seoContent, 
     Activities: `${activeSeoPlaceLabel} is social, walkable, and high energy, with compact routes that can move from architecture and food to beach time, bars, and late-night neighborhoods.`,
   };
   const visibleSeoIntroCopy = activeLocation.city
-    ? activeCategory
-      ? categoryCityDescriptions[activeCategory]
-      : activeLocation.nestedSubarea || activeLocation.subarea
-        ? `${activeSeoPlaceLabel} is a ${visibleLocationDetail} neighborhood shaped by its street life, dining rhythm, architecture, bars, local routes, and the way visitors move through it.`
+    ? activeLocation.nestedSubarea || activeLocation.subarea
+      ? activeLocationDescription ??
+        `${activeSeoPlaceLabel} is a ${visibleLocationDetail} neighborhood shaped by its street life, dining rhythm, architecture, bars, local routes, and the way visitors move through it.`
+      : activeCategory
+        ? categoryCityDescriptionOverrides[activeLocation.city.id]?.[activeCategory] ?? categoryCityDescriptions[activeCategory]
         : activeLocationDescription
     : null;
   const visibleIntroCopy = expandedGuide
@@ -3873,6 +4032,11 @@ export function SplitScreenSection({ continents, initialRouteState, seoContent, 
               }`}
             >
               <div className={`left-pane-content flex h-full min-h-0 flex-col ${paneTransitionClass}`}>
+              <CityWeatherChip
+                cityId={activeLocation.city?.id}
+                cityName={activeLocation.city?.name}
+                coordinates={activeLocation.city?.coordinates}
+              />
               {continentTitleMorph ? (
                 <div
                   className="pointer-events-none absolute z-30 overflow-hidden opacity-100"
@@ -3964,13 +4128,13 @@ export function SplitScreenSection({ continents, initialRouteState, seoContent, 
                     aria-hidden={continentTitleMorph ? "true" : "false"}
                   >
                     {visibleSeoContextLabel ? (
-                      <p className="mb-1 text-sm font-medium text-slate-600">
+                      <p className="mb-1 max-w-[calc(100%-8rem)] text-sm font-medium text-slate-600">
                         {visibleSeoContextLabel}
                       </p>
                     ) : null}
                     <h1
                       ref={titleRef}
-                      className="text-2xl font-semibold text-slate-900"
+                      className="max-w-[calc(100%-8rem)] text-2xl font-semibold text-slate-900"
                     >
                       <span ref={titleTextRef} className="inline-block">
                         {visibleSeoHeading}
@@ -3979,7 +4143,7 @@ export function SplitScreenSection({ continents, initialRouteState, seoContent, 
                     {!isFavoritesRailActive ? (
                       <div
                         ref={detailRef}
-                        className="mt-1 text-sm text-slate-600 transition-all duration-300"
+                        className="mt-1 max-w-[calc(100%-8rem)] text-sm text-slate-600 transition-all duration-300"
                         style={{
                           opacity: postMorphRevealPhase >= 1 ? 1 : 0,
                           transform:

@@ -226,6 +226,26 @@ Barcelona source stack:
 - Google Maps: https://maps.google.com
 - Tripadvisor Barcelona nightlife: https://www.tripadvisor.com/Attractions-g187497-Activities-c20-Barcelona_Catalonia.html
 
+Nightlife source requirements:
+
+- Every R Guide nightlife list needs 5+ list-level sources before publication.
+- The 5+ sources must be meaningfully varied. Do not count five pages from the same publisher as five independent signals.
+- Use at least one neighborhood-specific source for neighborhood nightlife lists when one exists.
+- Use at least one official venue/bar source for popular bars, clubs, live-music rooms, cabaret rooms, or high-demand cocktail destinations.
+- Use at least one map/platform source for current operating confidence, but do not let platform ratings alone choose the list.
+- Check for closure signals before saving a stop. If a source marks a place closed, remove or replace it unless a newer official source proves it has reopened.
+- If a guide title is neighborhood-specific, every stop should be in that neighborhood or directly on its edge with the description explaining the edge case.
+- When stronger current sources surface better picks, replace weak or out-of-neighborhood stops rather than only adding sources.
+
+Barcelona neighborhood source packs:
+
+- Eixample: Time Out Eixample/bar pages, Condé Nast Traveler bar reviews, World's 50 Best Bars, Sips official, Ajuntament de Barcelona listings, The Infatuation, National Geographic vermouth coverage, Google Maps.
+- El Born: Time Out El Born bars, World's 50 Best Bars, Paradiso official, Condé Nast Traveler Paradiso, The Infatuation Barcelona bars, Lonely Planet bars, neighborhood nightlife guides, Google Maps.
+- Gothic Quarter: Time Out Gothic Quarter bars, Jamboree official, Barcelona.cat/Jamboree, Culture Trip Gothic bars, ShBarcelona Gothic bars, Barcelona Secreta/Jamboree, Google Maps.
+- Gràcia: Time Out Gràcia bars, Lonely Planet Gràcia bars, Bobby Gin official, Old Fashioned official, Condé Nast Traveler Old Fashioned/Barcelona bars, Fem Gràcia, Barcelona Urbana gin-bar coverage, Google Maps.
+- Poble-sec: Time Out Poble-sec bars, Sala Apolo official, Tinta Roja official, Bodega Saltó official, Quimet & Quimet official, Barcelona Food Experience, Barcelona Urbana Poble-sec guide, Barcelona city listings, Google Maps.
+- Citywide Barcelona nightlife: World's 50 Best Bars, Resident Advisor events, Time Out best bars, Condé Nast Traveler best bars, official venue/bar sites, Barcelona Turisme, Google Maps, and neighborhood source packs from the included stops.
+
 For other cities, separate:
 
 - Low-key bars: bodegas, pubs, neighborhood taverns, wine bars, dive bars, casual cocktail rooms.
@@ -261,16 +281,50 @@ R Guide descriptions should be practical, source-aware, and editorial. The tone 
 
 List descriptions:
 
-- One sentence is usually enough.
+- Use the same elevated editorial style as city and neighborhood descriptions. One sentence can work for very compact guides, but two sentences are preferred when the guide card has room.
 - Explorer city/category description cap: 320 characters. Write city intro and category intro copy so the useful meaning fits inside that limit.
-- Name the geography and the reason the list exists.
-- Mention the category mix or user scenario.
+- Aim for 220-320 characters. Get close to the cap when it helps the card feel balanced, but do not pad.
+- The first sentence should name the geography and the distinctive reason the list exists.
+- The second sentence should explain the best-use context: when to use the guide, what kind of night/day it solves, or what tradeoff it makes.
+- For neighborhood guides, make the list description feel local to that neighborhood rather than only naming the category.
+- For citywide guides, explain the selection logic across neighborhoods instead of sounding like a generic "best of" bucket.
 - Avoid generic claims like "something for everyone."
+- Avoid keyword chains. Fewer details with stronger editorial meaning are better than a list of every possible stop type.
+
+City descriptions:
+
+- Use the same 320-character explorer cap, and aim close to the cap without padding. A practical target is 270-320 characters.
+- Prefer two sentences. The first sentence should establish the city's specific travel identity; the second should explain how the city works as a route, base, or browsing experience.
+- Keep the voice punchy and descriptive, not like a string of category keywords. Name fewer things, but make the chosen details carry more local meaning.
+- Avoid ending city descriptions with generic utility copy like `Use it for food, nightlife, stays...`.
+- Avoid long inventory chains such as `museums, wine bars, hotels, parks, markets, cafes, galleries...` unless the rhythm has a clear editorial point.
+- Preserve distinctive style by writing to the city's geography and pacing: district logic, transit, late nights, waterfronts, mountains, old-city lanes, market culture, hotel-base tradeoffs, or day-trip pressure.
+- Every city description should be readable in the explorer card without linebreak tricks. Do not add manual line breaks to fill the card height.
+
+Good city pattern:
+
+```text
+Berlin is a spread-out capital where Cold War memory, museum corridors, canal neighborhoods, and club culture sit beside practical transit choices. It works best when the route is split by district, with parks, lakes, late rooms, and quiet wine bars giving each day its own temperature.
+```
+
+Neighborhood descriptions:
+
+- Use the same 320-character explorer cap and aim for the same 270-320 character band when the copy appears in the explorer panel.
+- Prefer two sentences: one sentence for what makes the neighborhood distinct, and one sentence for how it works as a route, base, or timing choice.
+- Be quite specific to the neighborhood. Name the street pattern, anchor institution, market, nightlife strip, waterfront, park edge, old-city role, transit logic, or local dining rhythm that makes it different from nearby areas.
+- Avoid generic phrases like `key neighborhood`, `local character`, `everyday favorites`, or `strong guide-building potential` unless they are replaced with concrete local detail.
+- Neighborhood copy should not merely repeat the city description at smaller scale. It should explain why this pocket deserves its own saved-map view.
+
+Good neighborhood pattern:
+
+```text
+Kreuzberg is Berlin's canal-and-counterculture district, shaped by Turkish food, street art, market halls, bars, and a stubbornly independent day-to-night rhythm. It works best on foot, moving from Kottbusser Tor and the Landwehr Canal toward dinner, drinks, and small stops that feel more local than polished.
+```
 
 Country descriptions:
 
 - Use the same 320-character explorer cap as city and category intro copy.
-- Treat Barcelona's city description as the model: one dense sentence naming the geography, the trip texture, and the mix of R Guide categories a traveler can browse.
+- Country descriptions can stay slightly more summary-driven than city descriptions, but should still name real travel dimensions rather than generic identity claims.
 - When a country has curated city coverage, name the strongest anchor cities or capital-region coverage.
 - When fuller guide coverage is not available yet, make the description honest by saying coverage starts with the capital or seed regions, then expands into practical regional routes.
 - Include useful travel dimensions rather than generic identity claims: food, nightlife, nature, culture, stays, activities, rail/road/ferry routing, coast, mountains, islands, heritage cities, or regional loops.

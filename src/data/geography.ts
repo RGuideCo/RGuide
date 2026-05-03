@@ -44,6 +44,115 @@ const countryCapitalLookup = new Map(
 const cityImage = (query: string) =>
   `https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1200&q=80&${query}`;
 
+type NeighborhoodAngle = {
+  identity: string;
+  route: string;
+};
+
+const specificNeighborhoodAngles = new Map<string, NeighborhoodAngle>([
+  [
+    "berlin|mitte",
+    {
+      identity: "Berlin's museum-and-memory center, where Museum Island, Brandenburg Gate, courtyards, galleries, and government landmarks sit inside the city's most practical transit grid",
+      route: "It works best as a culture-heavy base, with big landmarks handled early and quieter courtyards, restaurants, or Spree walks used to soften the day",
+    },
+  ],
+  [
+    "berlin|friedrichshain",
+    {
+      identity: "Berlin's eastside pressure point, where the East Side Gallery, RAW-Gelande, river paths, clubs, and late bars keep history and nightlife close together",
+      route: "It works best when the route starts loose and ends late, leaving room for Spree-side walks, casual food, and plans that change after dark",
+    },
+  ],
+  [
+    "berlin|kreuzberg",
+    {
+      identity: "Berlin's canal-and-counterculture district, shaped by Turkish food, street art, market halls, bars, and a stubbornly independent day-to-night rhythm",
+      route: "It works best on foot, moving from Kottbusser Tor and the Landwehr Canal toward dinner, drinks, and small stops that feel more local than polished",
+    },
+  ],
+  [
+    "berlin|charlottenburg",
+    {
+      identity: "Berlin's polished westside district, with palace gardens, old cinemas, Kurfurstendamm shopping, classic hotels, and calmer streets than the eastern nightlife zones",
+      route: "It works best for slower museum, shopping, and dinner days, especially when the trip needs elegance, transit ease, and a break from late-night Berlin",
+    },
+  ],
+  [
+    "berlin|prenzlauer berg",
+    {
+      identity: "Berlin's restored northside neighborhood, where leafy squares, weekend markets, cafes, family life, and old apartment blocks make the city feel gentler",
+      route: "It works best as a slow morning or early-evening route, with Kollwitzplatz, Mauerpark, and low-key restaurants setting the pace instead of landmarks",
+    },
+  ],
+  [
+    "berlin|tiergarten",
+    {
+      identity: "Berlin's central green reset, bordered by the Reichstag, embassy quarter, Kulturforum, Victory Column, and long paths through the city's largest park",
+      route: "It works best between heavier museum or memorial stops, giving the day space to breathe before crossing back into Mitte or the westside districts",
+    },
+  ],
+]);
+
+const neighborhoodNameAngles = new Map<string, NeighborhoodAngle>([
+  [
+    "downtown",
+    {
+      identity: "the practical center, where transit, hotels, offices, landmark streets, and first-time routes tend to concentrate",
+      route: "It works best as a base layer for the city, useful for orientation before the route branches into more specific food, culture, or nightlife districts",
+    },
+  ],
+  [
+    "old city",
+    {
+      identity: "the historic core, where older streets, landmark buildings, visitor routes, and compact cultural stops carry most of the first-pass context",
+      route: "It works best on foot, with the main sights treated as a spine and meals or quieter side streets keeping the route from feeling dutiful",
+    },
+  ],
+  [
+    "museum district",
+    {
+      identity: "the culture-heavy district, where major institutions, broad civic streets, hotels, and slower daytime routes give the city an easy museum spine",
+      route: "It works best when the day is paced around one or two anchors, leaving room for nearby food, parks, and short walks between stops",
+    },
+  ],
+  [
+    "arts district",
+    {
+      identity: "the creative district, where galleries, converted spaces, murals, studios, bars, and restaurants make the city feel more street-level",
+      route: "It works best in the late afternoon into evening, when browsing, dinner, and drinks can sit close together without too much transit",
+    },
+  ],
+  [
+    "chinatown",
+    {
+      identity: "the food-and-market district, where restaurants, bakeries, groceries, late meals, and dense street life make the city feel more immediate",
+      route: "It works best as a meal-led route, with a few specific counters or rooms chosen before wandering the surrounding blocks",
+    },
+  ],
+  [
+    "little italy",
+    {
+      identity: "the dining-forward district, where old immigrant identity, patios, bakeries, restaurants, and evening foot traffic give the neighborhood an easy social rhythm",
+      route: "It works best when dinner is the anchor, with enough time on either side for coffee, drinks, waterfront walks, or nearby city-center stops",
+    },
+  ],
+  [
+    "west end",
+    {
+      identity: "the theater-and-nightlife district, where showtimes, restaurants, bars, hotels, and busy central streets shape the neighborhood's rhythm",
+      route: "It works best when plans are timed around an evening anchor, leaving the afternoon for shopping, galleries, or a slower meal nearby",
+    },
+  ],
+  [
+    "soho",
+    {
+      identity: "the compact entertainment district, where dining rooms, bars, shops, theaters, and late foot traffic make the city feel dense and social",
+      route: "It works best as an evening route, with a few reservations or saved bars keeping the energy focused instead of turning into aimless wandering",
+    },
+  ],
+]);
+
 const citySubareaSeeds = new Map<string, SubArea[]>([
   [
     "New York City|United States",
@@ -704,35 +813,35 @@ const citySubareaSeeds = new Map<string, SubArea[]>([
         name: "Gothic Quarter",
         coordinates: [41.3839, 2.1763],
         description:
-          "Barcelona's medieval core, full of narrow lanes, historic squares, and landmark architecture around the cathedral and old city center.",
+          "The Gothic Quarter is Barcelona at its tightest: medieval lanes, cathedral squares, Roman fragments, and tourist pressure all packed into the old city. It works best when the route avoids aimless wandering, using a few historic anchors, quieter side streets, and selective food stops.",
       },
       {
         id: "el-born",
         name: "El Born",
         coordinates: [41.3852, 2.1823],
         description:
-          "A stylish old-town quarter known for design shops, tapas bars, Santa Maria del Mar, and some of the city's best nighttime wandering.",
+          "El Born is Barcelona's stylish old-town pocket, where Santa Maria del Mar, design shops, wine bars, narrow lanes, and the Picasso Museum sit close together. It works best from late afternoon into night, when browsing can turn into tapas, drinks, and slower nearby plaza time.",
       },
       {
         id: "eixample",
         name: "Eixample",
         coordinates: [41.3917, 2.1649],
         description:
-          "A grand, grid-planned district with Modernist landmarks, broad avenues, strong dining, and some of Barcelona's most polished city energy.",
+          "Eixample is Barcelona's grand grid, where Modernista facades, Passeig de Gracia, polished hotels, and serious restaurants give the city its broadest rhythm. It works best for architecture-led days that need easy transit, strong dining, and room to reset between landmarks.",
       },
       {
         id: "gracia",
         name: "Gracia",
         coordinates: [41.4036, 2.1565],
         description:
-          "A village-like neighborhood of plazas, cafes, and independent shops that feels more local, relaxed, and bohemian than the city center.",
+          "Gracia is the village-feeling Barcelona neighborhood where small plazas, independent shops, cafes, and local bars make the city feel less managed. It works best as a slower route, with short walks between squares and enough time to let dinner or drinks choose the next stop.",
       },
       {
         id: "poble-sec",
         name: "Poble-sec",
         coordinates: [41.3745, 2.1648],
         description:
-          "A lively hillside neighborhood known for tapas, theaters, and a strong evening scene around Carrer de Blai and the foot of Montjuic.",
+          "Poble-sec is Barcelona's Montjuic-edge neighborhood, where theaters, tapas bars, Carrer de Blai, and hillside streets turn a compact area into an evening route. It works best when paired with park or museum time above it, then allowed to slide downhill into dinner and drinks.",
       },
     ],
   ],
@@ -1607,59 +1716,59 @@ const usaCitySeeds: Array<
     countrySubareaId: string;
   }
 > = [
-  { id: "birmingham", name: "Birmingham", coordinates: [33.5186, -86.8104], stateId: "alabama", countrySubareaId: "southeast", image: cityImage("birmingham"), description: "Alabama's best-known urban hub, with historic districts, food culture, and a growing creative scene." },
-  { id: "anchorage", name: "Anchorage", coordinates: [61.2181, -149.9003], stateId: "alaska", countrySubareaId: "pacific", image: cityImage("anchorage"), description: "Alaska's main city base for mountain views, day trips, and practical northern itineraries." },
-  { id: "phoenix", name: "Phoenix", coordinates: [33.4484, -112.074], stateId: "arizona", countrySubareaId: "southwest", image: cityImage("phoenix"), description: "Desert light, resort access, and a steadily improving urban core make Phoenix a major Southwest anchor." },
-  { id: "little-rock", name: "Little Rock", coordinates: [34.7465, -92.2896], stateId: "arkansas", countrySubareaId: "southeast", image: cityImage("littlerock"), description: "A compact river city with approachable neighborhoods and a strong local-food backbone." },
-  { id: "los-angeles", name: "Los Angeles", coordinates: [34.0522, -118.2437], stateId: "california", countrySubareaId: "west-coast", image: cityImage("losangeles"), description: "Sunlit sprawl where beach culture, design spots, and destination dining all coexist." },
-  { id: "san-francisco", name: "San Francisco", coordinates: [37.7749, -122.4194], stateId: "california", countrySubareaId: "west-coast", image: cityImage("sanfrancisco"), description: "A compact, high-demand city with iconic waterfront views, dense neighborhoods, and strong food-and-culture pull." },
-  { id: "denver", name: "Denver", coordinates: [39.7392, -104.9903], stateId: "colorado", countrySubareaId: "southwest", image: cityImage("denver"), description: "A strong urban base for mountain access, neighborhood food scenes, and polished city weekends." },
-  { id: "new-haven", name: "New Haven", coordinates: [41.3083, -72.9279], stateId: "connecticut", countrySubareaId: "northeast", image: cityImage("newhaven"), description: "Walkable and culture-rich, with a strong food scene and easy Northeast connectivity." },
-  { id: "wilmington", name: "Wilmington", coordinates: [39.7447, -75.5484], stateId: "delaware", countrySubareaId: "southeast", image: cityImage("wilmington"), description: "A compact Mid-Atlantic city suited to short cultural and dining-focused guide routes." },
-  { id: "miami", name: "Miami", coordinates: [25.7617, -80.1918], stateId: "florida", countrySubareaId: "southeast", image: cityImage("miami"), description: "A high-energy coastal city where nightlife, design, and beach culture define the trip." },
-  { id: "orlando", name: "Orlando", coordinates: [28.5383, -81.3792], stateId: "florida", countrySubareaId: "southeast", image: cityImage("orlando"), description: "A major U.S. leisure destination with year-round tourism demand, convention traffic, and fast-growing local neighborhoods." },
-  { id: "atlanta", name: "Atlanta", coordinates: [33.749, -84.388], stateId: "georgia", countrySubareaId: "southeast", image: cityImage("atlanta"), description: "A major Southeast hub with strong food, music, and neighborhood-driven local discovery." },
-  { id: "honolulu", name: "Honolulu", coordinates: [21.3069, -157.8583], stateId: "hawaii", countrySubareaId: "pacific", image: cityImage("honolulu"), description: "Island-city energy with beaches, dining, and easy access to classic Hawaii itineraries." },
-  { id: "boise", name: "Boise", coordinates: [43.615, -116.2023], stateId: "idaho", countrySubareaId: "west-coast", image: cityImage("boise"), description: "An increasingly polished small city with river access, breweries, and mountain-day-trip appeal." },
-  { id: "chicago", name: "Chicago", coordinates: [41.8781, -87.6298], stateId: "illinois", countrySubareaId: "midwest", image: cityImage("chicago"), description: "Lakefront energy, strong neighborhood identities, and one of the best food-and-culture combinations in the country." },
-  { id: "indianapolis", name: "Indianapolis", coordinates: [39.7684, -86.1581], stateId: "indiana", countrySubareaId: "midwest", image: cityImage("indianapolis"), description: "A steady, easy-to-navigate Midwest city with sports, dining districts, and weekend-trip usability." },
-  { id: "des-moines", name: "Des Moines", coordinates: [41.5868, -93.625], stateId: "iowa", countrySubareaId: "midwest", image: cityImage("desmoines"), description: "A manageable city with growing food, brewery, and civic-cultural offerings." },
-  { id: "wichita", name: "Wichita", coordinates: [37.6872, -97.3301], stateId: "kansas", countrySubareaId: "midwest", image: cityImage("wichita"), description: "Kansas' main urban stop, useful for regional dining, arts, and road-trip planning." },
-  { id: "louisville", name: "Louisville", coordinates: [38.2527, -85.7585], stateId: "kentucky", countrySubareaId: "southeast", image: cityImage("louisville"), description: "Bourbon, food, and riverfront culture make Louisville a strong anchor city for Kentucky." },
-  { id: "new-orleans", name: "New Orleans", coordinates: [29.9511, -90.0715], stateId: "louisiana", countrySubareaId: "southeast", image: cityImage("neworleans"), description: "One of the country's most distinctive food, music, and nightlife cities." },
-  { id: "portland-me", name: "Portland", coordinates: [43.6591, -70.2568], stateId: "maine", countrySubareaId: "northeast", image: cityImage("portlandmaine"), description: "A coastal favorite with standout seafood, walkability, and a polished small-city feel." },
-  { id: "baltimore", name: "Baltimore", coordinates: [39.2904, -76.6122], stateId: "maryland", countrySubareaId: "southeast", image: cityImage("baltimore"), description: "Harbor views, strong local character, and neighborhood-specific routes make Baltimore a useful guide city." },
-  { id: "washington-dc", name: "Washington, DC", coordinates: [38.9072, -77.0369], stateId: "district-of-columbia", countrySubareaId: "northeast", image: cityImage("washingtondc"), description: "A monument-and-museum capital with highly visited neighborhoods, late-night corridors, and year-round travel demand." },
-  { id: "boston", name: "Boston", coordinates: [42.3601, -71.0589], stateId: "massachusetts", countrySubareaId: "northeast", image: cityImage("boston"), description: "Historic, walkable, and dense with food, sports, and day-trip-friendly neighborhoods." },
-  { id: "detroit", name: "Detroit", coordinates: [42.3314, -83.0458], stateId: "michigan", countrySubareaId: "midwest", image: cityImage("detroit"), description: "Design, music, and strong neighborhood reinvention make Detroit a compelling urban guide city." },
-  { id: "minneapolis", name: "Minneapolis", coordinates: [44.9778, -93.265], stateId: "minnesota", countrySubareaId: "midwest", image: cityImage("minneapolis"), description: "A thoughtful, outdoor-friendly city with strong dining and cultural infrastructure." },
-  { id: "jackson", name: "Jackson", coordinates: [32.2988, -90.1848], stateId: "mississippi", countrySubareaId: "southeast", image: cityImage("jacksonms"), description: "Mississippi's primary city base for music history, local food, and regional itineraries." },
-  { id: "st-louis", name: "St. Louis", coordinates: [38.627, -90.1994], stateId: "missouri", countrySubareaId: "midwest", image: cityImage("stlouis"), description: "A big-river city with deep sports, food, and landmark-driven local routes." },
-  { id: "billings", name: "Billings", coordinates: [45.7833, -108.5007], stateId: "montana", countrySubareaId: "midwest", image: cityImage("billings"), description: "A practical Montana hub for outdoor access and broader regional route-building." },
-  { id: "omaha", name: "Omaha", coordinates: [41.2565, -95.9345], stateId: "nebraska", countrySubareaId: "midwest", image: cityImage("omaha"), description: "A reliable Midwest city for food, music, and easy district-based exploration." },
-  { id: "las-vegas", name: "Las Vegas", coordinates: [36.1699, -115.1398], stateId: "nevada", countrySubareaId: "southwest", image: cityImage("lasvegas"), description: "A destination-scale city that mixes nightlife, resorts, and day-trip access into one dense guide market." },
-  { id: "manchester", name: "Manchester", coordinates: [42.9956, -71.4548], stateId: "new-hampshire", countrySubareaId: "northeast", image: cityImage("manchesternh"), description: "A practical New Hampshire anchor for urban stops and nearby mountain itineraries." },
-  { id: "newark", name: "Newark", coordinates: [40.7357, -74.1724], stateId: "new-jersey", countrySubareaId: "northeast", image: cityImage("newark"), description: "A transit-connected city that works well as a North Jersey and metro-area guide base." },
-  { id: "albuquerque", name: "Albuquerque", coordinates: [35.0844, -106.6504], stateId: "new-mexico", countrySubareaId: "southwest", image: cityImage("albuquerque"), description: "A strong Southwest anchor with desert landscapes, culture, and road-trip potential." },
-  { id: "new-york-city", name: "New York City", coordinates: [40.7128, -74.006], stateId: "new-york", countrySubareaId: "northeast", subareas: citySubareaSeeds.get("New York City|United States"), image: cityImage("nyc"), description: "A dense, always-on city with world-class food, nightlife, and neighborhood-level discovery." },
-  { id: "charlotte", name: "Charlotte", coordinates: [35.2271, -80.8431], stateId: "north-carolina", countrySubareaId: "southeast", image: cityImage("charlotte"), description: "A growing Southeast city with a polished core, strong dining, and practical base-city appeal." },
-  { id: "fargo", name: "Fargo", coordinates: [46.8772, -96.7898], stateId: "north-dakota", countrySubareaId: "midwest", image: cityImage("fargo"), description: "North Dakota's main urban stop for a more curated, local-feeling Midwest guide layer." },
-  { id: "columbus", name: "Columbus", coordinates: [39.9612, -82.9988], stateId: "ohio", countrySubareaId: "midwest", image: cityImage("columbus"), description: "A youthful, fast-growing city with food, sports, and district-driven exploration." },
-  { id: "oklahoma-city", name: "Oklahoma City", coordinates: [35.4676, -97.5164], stateId: "oklahoma", countrySubareaId: "southwest", image: cityImage("oklahomacity"), description: "A broad, accessible city with strong Western identity and an improving urban core." },
-  { id: "portland-or", name: "Portland", coordinates: [45.5152, -122.6784], stateId: "oregon", countrySubareaId: "west-coast", image: cityImage("portlandoregon"), description: "A favorite for food, coffee, and neighborhood-led local curation." },
-  { id: "philadelphia", name: "Philadelphia", coordinates: [39.9526, -75.1652], stateId: "pennsylvania", countrySubareaId: "northeast", image: cityImage("philadelphia"), description: "Compact, historic, and neighborhood-driven, with excellent dining, walkability, and a strong sense of local texture." },
-  { id: "providence", name: "Providence", coordinates: [41.824, -71.4128], stateId: "rhode-island", countrySubareaId: "northeast", image: cityImage("providence"), description: "A creative, food-friendly small city with just enough density for tight local guides." },
-  { id: "charleston-sc", name: "Charleston", coordinates: [32.7765, -79.9311], stateId: "south-carolina", countrySubareaId: "southeast", image: cityImage("charlestonsc"), description: "One of the Southeast's strongest hospitality, food, and historic-city destinations." },
-  { id: "sioux-falls", name: "Sioux Falls", coordinates: [43.5446, -96.7311], stateId: "south-dakota", countrySubareaId: "midwest", image: cityImage("siouxfalls"), description: "South Dakota's clearest city base for practical regional guides and stopovers." },
-  { id: "nashville", name: "Nashville", coordinates: [36.1627, -86.7816], stateId: "tennessee", countrySubareaId: "southeast", image: cityImage("nashville"), description: "A high-visibility city for music, nightlife, and fast-moving weekend itineraries." },
-  { id: "dallas", name: "Dallas", coordinates: [32.7767, -96.797], stateId: "texas", countrySubareaId: "southwest", image: cityImage("dallas"), description: "Big-city scale with strong dining, retail, and district-based exploration that works well across different trip styles." },
-  { id: "salt-lake-city", name: "Salt Lake City", coordinates: [40.7608, -111.891], stateId: "utah", countrySubareaId: "southwest", image: cityImage("saltlakecity"), description: "A clean, mountain-ringed city that works well as both an urban and outdoors-oriented hub." },
-  { id: "burlington", name: "Burlington", coordinates: [44.4759, -73.2121], stateId: "vermont", countrySubareaId: "northeast", image: cityImage("burlington"), description: "A small but beloved New England city with lake views, food, and easy local texture." },
-  { id: "richmond", name: "Richmond", coordinates: [37.5407, -77.436], stateId: "virginia", countrySubareaId: "southeast", image: cityImage("richmond"), description: "A strong Southeast city for food, design, and river-linked neighborhood exploration." },
-  { id: "seattle", name: "Seattle", coordinates: [47.6062, -122.3321], stateId: "washington", countrySubareaId: "west-coast", image: cityImage("seattle"), description: "Coffee, water views, tech polish, and neighborhood micro-scenes make Seattle list-friendly." },
-  { id: "charleston-wv", name: "Charleston", coordinates: [38.3498, -81.6326], stateId: "west-virginia", countrySubareaId: "southeast", image: cityImage("charlestonwv"), description: "West Virginia's core city base for state-level discovery and practical itineraries." },
-  { id: "milwaukee", name: "Milwaukee", coordinates: [43.0389, -87.9065], stateId: "wisconsin", countrySubareaId: "midwest", image: cityImage("milwaukee"), description: "Lakefront character, beer culture, and neighborhood grit give Milwaukee strong guide potential." },
-  { id: "cheyenne", name: "Cheyenne", coordinates: [41.14, -104.8202], stateId: "wyoming", countrySubareaId: "midwest", image: cityImage("cheyenne"), description: "A practical Wyoming anchor for statewide travel routes and wider high-plains planning." },
+  { id: "birmingham", name: "Birmingham", coordinates: [33.5186, -86.8104], stateId: "alabama", countrySubareaId: "southeast", image: cityImage("birmingham"), description: "Birmingham is a civil-rights and food-led Alabama anchor where historic districts, barbecue and meat-and-three stops, breweries, galleries, and Red Mountain day routes make a practical Southeast city base. It rewards a firm point of view: tight geography, realistic pacing, and a few anchors worth crossing town for." },
+  { id: "anchorage", name: "Anchorage", coordinates: [61.2181, -149.9003], stateId: "alaska", countrySubareaId: "pacific", image: cityImage("anchorage"), description: "Anchorage is Alaska's main urban base for trips that need mountain views, local seafood, museums, breweries, coastal trails, and road access toward glaciers, wildlife routes, and wider south-central Alaska. It rewards a firm point of view: tight geography, realistic pacing, and a few anchors worth crossing town for." },
+  { id: "phoenix", name: "Phoenix", coordinates: [33.4484, -112.074], stateId: "arizona", countrySubareaId: "southwest", image: cityImage("phoenix"), description: "Phoenix works as a desert metro base where resort stays, Sonoran food, cocktail bars, art districts, golf, trailheads, and Scottsdale or Tempe side routes shape a city-and-nature trip. The best days hinge on timing: start in the city, then let the season, drive, and landscape decide how far the route stretches." },
+  { id: "little-rock", name: "Little Rock", coordinates: [34.7465, -92.2896], stateId: "arkansas", countrySubareaId: "southeast", image: cityImage("littlerock"), description: "Little Rock is a compact Arkansas river city where civil-rights history, breweries, neighborhood restaurants, market streets, and short outdoor routes make the capital useful for regional road trips. It rewards a firm point of view: tight geography, realistic pacing, and a few anchors worth crossing town for." },
+  { id: "los-angeles", name: "Los Angeles", coordinates: [34.0522, -118.2437], stateId: "california", countrySubareaId: "west-coast", image: cityImage("losangeles"), description: "Los Angeles is a spread-out coastal city where beach days, studio history, design hotels, destination restaurants, taco routes, museums, nightlife, and canyon or freeway geography shape the trip by neighborhood. It rewards a point of view: tight geography, realistic pacing, and a few anchors worth crossing town for." },
+  { id: "san-francisco", name: "San Francisco", coordinates: [37.7749, -122.4194], stateId: "california", countrySubareaId: "west-coast", image: cityImage("sanfrancisco"), description: "San Francisco is a compact bay city where steep neighborhoods, ferry and waterfront views, serious restaurants, park walks, museums, cocktail rooms, and quick Marin or wine-country routes fit into tight days. It rewards a firm point of view: tight geography, realistic pacing, and a few anchors worth crossing town for." },
+  { id: "denver", name: "Denver", coordinates: [39.7392, -104.9903], stateId: "colorado", countrySubareaId: "southwest", image: cityImage("denver"), description: "Denver is a mountain-facing city base for brewery districts, RiNo art, Union Station hotels, sports nights, regional food, Red Rocks plans, and foothill or ski-country routes that start just beyond town. It rewards a firm point of view: tight geography, realistic pacing, and a few anchors worth crossing town for." },
+  { id: "new-haven", name: "New Haven", coordinates: [41.3083, -72.9279], stateId: "connecticut", countrySubareaId: "northeast", image: cityImage("newhaven"), description: "New Haven is a walkable Northeast city where Yale museums, pizza institutions, compact bars, historic greens, waterfront pockets, and rail access make it useful for food and culture-focused short trips. It rewards a firm point of view: tight geography, realistic pacing, and a few anchors worth crossing town for." },
+  { id: "wilmington", name: "Wilmington", coordinates: [39.7447, -75.5484], stateId: "delaware", countrySubareaId: "southeast", image: cityImage("wilmington"), description: "Wilmington is a compact Mid-Atlantic base where riverfront walks, DuPont-era estates, neighborhood dining, small museums, and easy rail or road links make Delaware browsing more than a pass-through. It rewards a firm point of view: tight geography, realistic pacing, and a few anchors worth crossing town for." },
+  { id: "miami", name: "Miami", coordinates: [25.7617, -80.1918], stateId: "florida", countrySubareaId: "southeast", image: cityImage("miami"), description: "Miami is a coastal city where beach days, Cuban and Caribbean food, design hotels, art districts, late clubs, rooftop bars, and Everglades or Keys routes turn the trip into neighborhood choices. It rewards a firm point of view: tight geography, realistic pacing, and a few anchors worth crossing town for." },
+  { id: "orlando", name: "Orlando", coordinates: [28.5383, -81.3792], stateId: "florida", countrySubareaId: "southeast", image: cityImage("orlando"), description: "Orlando is more than theme-park logistics, with resort stays, convention routes, Mills 50 and Winter Park food, cocktail bars, lakes, and day trips that make the city useful before and after parks. It rewards a firm point of view: tight geography, realistic pacing, and a few anchors worth crossing town for." },
+  { id: "atlanta", name: "Atlanta", coordinates: [33.749, -84.388], stateId: "georgia", countrySubareaId: "southeast", image: cityImage("atlanta"), description: "Atlanta is a Southeast hub where civil-rights history, BeltLine neighborhoods, destination dining, music, sports, cocktail rooms, and tree-covered districts create practical food, culture, and nightlife routes. It rewards a point of view: tight geography, realistic pacing, and a few anchors worth crossing town for." },
+  { id: "honolulu", name: "Honolulu", coordinates: [21.3069, -157.8583], stateId: "hawaii", countrySubareaId: "pacific", image: cityImage("honolulu"), description: "Honolulu is an island-city base where Waikiki stays, plate lunches, surf breaks, Chinatown bars, palace history, beach parks, and windward or North Shore routes connect city browsing with Oahu days. It rewards a firm point of view: tight geography, realistic pacing, and a few anchors worth crossing town for." },
+  { id: "boise", name: "Boise", coordinates: [43.615, -116.2023], stateId: "idaho", countrySubareaId: "west-coast", image: cityImage("boise"), description: "Boise is a polished small-city base where river paths, Basque food, breweries, foothill trails, downtown hotels, and mountain or wine-country side trips make Idaho routes easy to build. It rewards a firm point of view: tight geography, realistic pacing, and a few anchors worth crossing town for." },
+  { id: "chicago", name: "Chicago", coordinates: [41.8781, -87.6298], stateId: "illinois", countrySubareaId: "midwest", image: cityImage("chicago"), description: "Chicago is a lakefront city where architecture, neighborhood food, museums, sports, jazz and cocktail rooms, river walks, and train-connected districts make dense city routes feel clear by area. It rewards a firm point of view: tight geography, realistic pacing, and a few anchors worth crossing town for." },
+  { id: "indianapolis", name: "Indianapolis", coordinates: [39.7684, -86.1581], stateId: "indiana", countrySubareaId: "midwest", image: cityImage("indianapolis"), description: "Indianapolis is an easy Midwest city base where sports venues, Mass Ave bars, museums, canal walks, breweries, race-week energy, hotel districts, and neighborhood restaurants shape short trips. It rewards a point of view: tight geography, realistic pacing, and a few anchors worth crossing town for." },
+  { id: "des-moines", name: "Des Moines", coordinates: [41.5868, -93.625], stateId: "iowa", countrySubareaId: "midwest", image: cityImage("desmoines"), description: "Des Moines is a manageable capital city where East Village restaurants, breweries, public art, farmers markets, civic museums, and road-trip access make Iowa browsing feel practical and local. It works best on foot, with landmarks as the spine and meals or neighborhood detours keeping it from feeling dutiful." },
+  { id: "wichita", name: "Wichita", coordinates: [37.6872, -97.3301], stateId: "kansas", countrySubareaId: "midwest", image: cityImage("wichita"), description: "Wichita is Kansas' main urban stop for river walks, aviation history, Old Town dining, breweries, museums, and regional road-trip planning across the plains. The payoff is pairing the view with a real plan: a useful base, a few strong anchors, and room for weather, too." },
+  { id: "louisville", name: "Louisville", coordinates: [38.2527, -85.7585], stateId: "kentucky", countrySubareaId: "southeast", image: cityImage("louisville"), description: "Louisville is a river city where bourbon rooms, NuLu restaurants, live music, horse-racing history, museum stops, and neighborhood bars make a strong Kentucky city-and-region anchor. The payoff is pairing the view with a real plan: a useful base, a few strong anchors, and room for the weather." },
+  { id: "new-orleans", name: "New Orleans", coordinates: [29.9511, -90.0715], stateId: "louisiana", countrySubareaId: "southeast", image: cityImage("neworleans"), description: "New Orleans is a deeply distinctive city where Creole and Cajun food, live music, cocktail history, courtyard hotels, neighborhood walks, and late-night rooms shape trips beyond Bourbon Street. It works best on foot, with landmarks as the spine and meals or neighborhood detours keeping it from feeling dutiful." },
+  { id: "portland-me", name: "Portland", coordinates: [43.6591, -70.2568], stateId: "maine", countrySubareaId: "northeast", image: cityImage("portlandmaine"), description: "Portland, Maine is a compact coastal city where seafood counters, bakeries, breweries, harbor walks, design-forward inns, and island or lighthouse routes make a tight New England food base. It rewards a firm point of view: tight geography, realistic pacing, and a few anchors worth crossing town for." },
+  { id: "baltimore", name: "Baltimore", coordinates: [39.2904, -76.6122], stateId: "maryland", countrySubareaId: "southeast", image: cityImage("baltimore"), description: "Baltimore is a harbor city where rowhouse neighborhoods, crab houses, markets, museums, dive bars, art spaces, and waterfront walks give Mid-Atlantic routes a strong local edge. The payoff is pairing the view with a real plan: a useful base, a few strong anchors, and room for the weather." },
+  { id: "washington-dc", name: "Washington, DC", coordinates: [38.9072, -77.0369], stateId: "district-of-columbia", countrySubareaId: "northeast", image: cityImage("washingtondc"), description: "Washington, DC is a museum-and-monument capital where federal landmarks, neighborhood dining, cocktail corridors, hotel bases, parks, embassies, waterfront pockets, and easy transit make culture-heavy trips efficient. It rewards a point of view: tight geography, realistic pacing, and a few anchors worth the detour." },
+  { id: "boston", name: "Boston", coordinates: [42.3601, -71.0589], stateId: "massachusetts", countrySubareaId: "northeast", image: cityImage("boston"), description: "Boston is a compact historic city where harbor walks, universities, sports bars, seafood, Italian dinners, museums, and Cambridge or North Shore side routes fit cleanly into walkable days. It rewards a firm point of view: tight geography, realistic pacing, and a few anchors worth crossing town for." },
+  { id: "detroit", name: "Detroit", coordinates: [42.3314, -83.0458], stateId: "michigan", countrySubareaId: "midwest", image: cityImage("detroit"), description: "Detroit is a design and music city where downtown renewal, Eastern Market food, riverfront walks, architecture, galleries, cocktail rooms, and neighborhood history shape a strong Midwest route. It rewards a firm point of view: tight geography, realistic pacing, and a few anchors worth crossing town for." },
+  { id: "minneapolis", name: "Minneapolis", coordinates: [44.9778, -93.265], stateId: "minnesota", countrySubareaId: "midwest", image: cityImage("minneapolis"), description: "Minneapolis is an outdoor-friendly city where lakes, river paths, theater, museums, breweries, Nordic-leaning dining, and neighborhood districts keep culture and nature close together. It rewards a firm point of view: tight geography, realistic pacing, and a few anchors worth crossing town for." },
+  { id: "jackson", name: "Jackson", coordinates: [32.2988, -90.1848], stateId: "mississippi", countrySubareaId: "southeast", image: cityImage("jacksonms"), description: "Jackson is Mississippi's capital base for civil-rights history, blues and soul-food routes, museums, neighborhood restaurants, and wider Delta or Natchez Trace trip planning. It works best on foot, with landmarks as the spine and meals or neighborhood detours keeping it from feeling dutiful." },
+  { id: "st-louis", name: "St. Louis", coordinates: [38.627, -90.1994], stateId: "missouri", countrySubareaId: "midwest", image: cityImage("stlouis"), description: "St. Louis is a Mississippi River city where Gateway Arch views, blues rooms, barbecue, Italian Hill dining, Forest Park museums, sports, and neighborhood bars make varied Midwest routes. It rewards a firm point of view: tight geography, realistic pacing, and a few anchors worth crossing town for." },
+  { id: "billings", name: "Billings", coordinates: [45.7833, -108.5007], stateId: "montana", countrySubareaId: "midwest", image: cityImage("billings"), description: "Billings is a practical Montana hub where Rimrocks views, breweries, downtown food, Western history, and road access toward Yellowstone country help organize wider high-plains travel. The best days hinge on timing: start in the city, then let the season, drive, and landscape decide how far the route stretches." },
+  { id: "omaha", name: "Omaha", coordinates: [41.2565, -95.9345], stateId: "nebraska", countrySubareaId: "midwest", image: cityImage("omaha"), description: "Omaha is a steady Midwest city where Old Market streets, riverfront paths, music rooms, steakhouses, coffee, museums, and neighborhood food make short routes easy to plan. The payoff is pairing the view with a real plan: a useful base, a few strong anchors, and room for the weather." },
+  { id: "las-vegas", name: "Las Vegas", coordinates: [36.1699, -115.1398], stateId: "nevada", countrySubareaId: "southwest", image: cityImage("lasvegas"), description: "Las Vegas is a destination city where Strip resorts, late restaurants, cocktail rooms, shows, Chinatown food, downtown bars, pools, and desert day trips make planning about pace and budget. The best days hinge on timing: start in the city, then let the season, drive, and landscape decide how far the route stretches." },
+  { id: "manchester", name: "Manchester", coordinates: [42.9956, -71.4548], stateId: "new-hampshire", countrySubareaId: "northeast", image: cityImage("manchesternh"), description: "Manchester is a practical New Hampshire anchor where mill-district history, local restaurants, breweries, river walks, and White Mountains or seacoast routes keep city stops useful. The payoff is pairing the view with a real plan: a useful base, a few strong anchors, and room for the weather." },
+  { id: "newark", name: "Newark", coordinates: [40.7357, -74.1724], stateId: "new-jersey", countrySubareaId: "northeast", image: cityImage("newark"), description: "Newark is a transit-rich North Jersey base where Portuguese and Brazilian food, arts venues, parks, airport logistics, and rail links make metro-area routes more flexible. The eating and drinking land best when they feel rooted in place, with enough neighborhood logic to carry a full day." },
+  { id: "albuquerque", name: "Albuquerque", coordinates: [35.0844, -106.6504], stateId: "new-mexico", countrySubareaId: "southwest", image: cityImage("albuquerque"), description: "Albuquerque is a high-desert city where Pueblo and Route 66 history, chile-heavy food, breweries, Sandia views, balloon events, and Santa Fe or desert road trips define the route. The best days hinge on timing: start in the city, then let the season, drive, and landscape decide how far the route stretches." },
+  { id: "new-york-city", name: "New York City", coordinates: [40.7128, -74.006], stateId: "new-york", countrySubareaId: "northeast", subareas: citySubareaSeeds.get("New York City|United States"), image: cityImage("nyc"), description: "New York City is a dense five-borough city where neighborhood food, museums, theater, parks, cocktail rooms, hotels, and late transit make every guide choice about geography and pace. It works best on foot, with landmarks as the spine and meals or neighborhood detours keeping it from feeling dutiful." },
+  { id: "charlotte", name: "Charlotte", coordinates: [35.2271, -80.8431], stateId: "north-carolina", countrySubareaId: "southeast", image: cityImage("charlotte"), description: "Charlotte is a fast-growing Southeast city where Uptown business travel, breweries, sports, barbecue, modern Southern dining, greenways, and neighborhood districts create practical weekend routes. It rewards a firm point of view: tight geography, realistic pacing, and a few anchors worth crossing town for." },
+  { id: "fargo", name: "Fargo", coordinates: [46.8772, -96.7898], stateId: "north-dakota", countrySubareaId: "midwest", image: cityImage("fargo"), description: "Fargo is North Dakota's clearest urban stop, with downtown restaurants, breweries, arts spaces, river walks, and regional road-trip logistics giving the plains a local-feeling base. The payoff is pairing the view with a real plan: a useful base, a few strong anchors, and room for the weather." },
+  { id: "columbus", name: "Columbus", coordinates: [39.9612, -82.9988], stateId: "ohio", countrySubareaId: "midwest", image: cityImage("columbus"), description: "Columbus is a youthful Midwest city where campus energy, Short North dining, breweries, sports, markets, museums, and German Village walks make district-based routes easy. It works best on foot, with landmarks as the spine and meals or neighborhood detours keeping it from feeling dutiful." },
+  { id: "oklahoma-city", name: "Oklahoma City", coordinates: [35.4676, -97.5164], stateId: "oklahoma", countrySubareaId: "southwest", image: cityImage("oklahomacity"), description: "Oklahoma City is a broad capital where Western heritage, the memorial district, Stockyards dining, breweries, Paseo arts, Scissortail Park, and road-trip pacing shape the visit. It works best on foot, with landmarks as the spine and meals or neighborhood detours keeping it from feeling dutiful." },
+  { id: "portland-or", name: "Portland", coordinates: [45.5152, -122.6784], stateId: "oregon", countrySubareaId: "west-coast", image: cityImage("portlandoregon"), description: "Portland, Oregon is a neighborhood-led city where food carts, coffee, bookstores, breweries, cocktail bars, gardens, design hotels, and Columbia Gorge or coast routes fit naturally together. It rewards a firm point of view: tight geography, realistic pacing, and a few anchors worth crossing town for." },
+  { id: "philadelphia", name: "Philadelphia", coordinates: [39.9526, -75.1652], stateId: "pennsylvania", countrySubareaId: "northeast", image: cityImage("philadelphia"), description: "Philadelphia is a compact historic city where old-city landmarks, serious restaurants, markets, museums, sports bars, riverfronts, and neighborhood taverns reward walking over rushing. It rewards a firm point of view: tight geography, realistic pacing, and a few anchors worth crossing town for." },
+  { id: "providence", name: "Providence", coordinates: [41.824, -71.4128], stateId: "rhode-island", countrySubareaId: "northeast", image: cityImage("providence"), description: "Providence is a creative small city where Federal Hill food, RISD culture, river walks, cocktail bars, bakeries, and compact neighborhoods make tight New England routes feel full. The payoff is pairing the view with a real plan: a useful base, a few strong anchors, and room for the weather." },
+  { id: "charleston-sc", name: "Charleston", coordinates: [32.7765, -79.9311], stateId: "south-carolina", countrySubareaId: "southeast", image: cityImage("charlestonsc"), description: "Charleston is a polished Southern coastal city where historic streets, seafood, Lowcountry cooking, boutique stays, cocktail rooms, beaches, and plantation or harbor routes shape the trip. It rewards a firm point of view: tight geography, realistic pacing, and a few anchors worth crossing town for." },
+  { id: "sioux-falls", name: "Sioux Falls", coordinates: [43.5446, -96.7311], stateId: "south-dakota", countrySubareaId: "midwest", image: cityImage("siouxfalls"), description: "Sioux Falls is South Dakota's clearest city base, with Falls Park, breweries, downtown dining, river paths, local museums, and regional stopover routes across the eastern plains. The payoff is pairing the view with a real plan: a useful base, a few strong anchors, and room for the weather." },
+  { id: "nashville", name: "Nashville", coordinates: [36.1627, -86.7816], stateId: "tennessee", countrySubareaId: "southeast", image: cityImage("nashville"), description: "Nashville is a music-first city where honky-tonks, songwriter rooms, hot chicken, boutique hotels, cocktail bars, museums, coffee stops, vintage shops, and fast-moving neighborhoods shape high-demand weekend trips. It rewards a point of view: tight geography, realistic pacing, and a few anchors worth crossing town for." },
+  { id: "dallas", name: "Dallas", coordinates: [32.7767, -96.797], stateId: "texas", countrySubareaId: "southwest", image: cityImage("dallas"), description: "Dallas is a big, district-driven city where steakhouse and Tex-Mex meals, art museums, design shopping, hotel bars, sports, and Deep Ellum or Bishop Arts routes shape the visit. It works best on foot, with landmarks as the spine and meals or neighborhood detours keeping it from feeling dutiful." },
+  { id: "salt-lake-city", name: "Salt Lake City", coordinates: [40.7608, -111.891], stateId: "utah", countrySubareaId: "southwest", image: cityImage("saltlakecity"), description: "Salt Lake City is a mountain-ringed base where downtown dining, breweries, temple history, ski logistics, trail access, and Great Salt Lake or canyon routes connect city and outdoors. It rewards a firm point of view: tight geography, realistic pacing, and a few anchors worth crossing town for." },
+  { id: "burlington", name: "Burlington", coordinates: [44.4759, -73.2121], stateId: "vermont", countrySubareaId: "northeast", image: cityImage("burlington"), description: "Burlington is a small Lake Champlain city where farm-to-table food, breweries, college-town energy, waterfront paths, indie shops, and Green Mountain routes make Vermont browsing easy. It rewards a firm point of view: tight geography, realistic pacing, and a few anchors worth crossing town for." },
+  { id: "richmond", name: "Richmond", coordinates: [37.5407, -77.436], stateId: "virginia", countrySubareaId: "southeast", image: cityImage("richmond"), description: "Richmond is a river city where murals, breweries, museums, historic districts, modern Southern food, design shops, and James River trails give Virginia routes a strong local center. The payoff is pairing the view with a real plan: a useful base, a few strong anchors, and room for the weather." },
+  { id: "seattle", name: "Seattle", coordinates: [47.6062, -122.3321], stateId: "washington", countrySubareaId: "west-coast", image: cityImage("seattle"), description: "Seattle is a water-and-mountain city where coffee, Pike Place, seafood, music history, cocktail rooms, ferries, parks, and island or national-park day trips shape neighborhood routes. It rewards a firm point of view: tight geography, realistic pacing, and a few anchors worth crossing town for." },
+  { id: "charleston-wv", name: "Charleston", coordinates: [38.3498, -81.6326], stateId: "west-virginia", countrySubareaId: "southeast", image: cityImage("charlestonwv"), description: "Charleston, West Virginia is a compact capital base where riverfront walks, Appalachian food, state history, music, and mountain or New River routes keep statewide trips grounded. The payoff is pairing the view with a real plan: a useful base, a few strong anchors, and room for the weather." },
+  { id: "milwaukee", name: "Milwaukee", coordinates: [43.0389, -87.9065], stateId: "wisconsin", countrySubareaId: "midwest", image: cityImage("milwaukee"), description: "Milwaukee is a lakefront city where beer halls, markets, festivals, art museums, taverns, sports, and neighborhood food routes give Wisconsin trips a strong urban anchor. The payoff is pairing the view with a real plan: a useful base, a few strong anchors, and room for the weather." },
+  { id: "cheyenne", name: "Cheyenne", coordinates: [41.14, -104.8202], stateId: "wyoming", countrySubareaId: "midwest", image: cityImage("cheyenne"), description: "Cheyenne is a high-plains capital where railroad history, rodeo culture, state museums, downtown bars, and wider Wyoming road routes make it a practical western stop. It works best on foot, with landmarks as the spine and meals or neighborhood detours keeping it from feeling dutiful." },
 ];
 
 function withSeededSubareas(city: Omit<City, "listCount">): Omit<City, "listCount"> {
@@ -1669,23 +1778,53 @@ function withSeededSubareas(city: Omit<City, "listCount">): Omit<City, "listCoun
     subareaName: string,
     cityName: string,
     parentSubareaName?: string,
+    existingDescription?: string,
   ) => {
-    if (parentSubareaName) {
-      const parentLabel = nycBoroughNames.has(parentSubareaName)
-        ? `${parentSubareaName} borough`
-        : parentSubareaName;
-      return `${subareaName} is a neighborhood in ${parentLabel}, ${cityName}, with a strong mix of local food, culture, and walkable streets.`;
+    const normalizedName = normalizePlaceName(subareaName);
+    const cityKey = `${normalizePlaceName(cityName)}|${normalizedName}`;
+    const angle =
+      specificNeighborhoodAngles.get(cityKey) ??
+      neighborhoodNameAngles.get(normalizedName) ??
+      [...neighborhoodNameAngles.entries()].find(([key]) => normalizedName.includes(key))?.[1];
+    const baseDescription =
+      existingDescription?.trim() ??
+      (angle
+        ? `${subareaName} is ${angle.identity}.`
+        : parentSubareaName
+          ? `${subareaName} is a distinct pocket of ${parentSubareaName}, ${cityName}, where the local route is shaped by its street pattern, everyday stops, and relationship to the wider district.`
+          : `${subareaName} is a distinct ${cityName} neighborhood where the local route is shaped by its street pattern, everyday stops, and relationship to the wider city.`);
+
+    if (baseDescription.length >= 270) {
+      return baseDescription;
     }
 
-    return `${subareaName} is a key neighborhood in ${cityName}, with local character, everyday favorites, and strong guide-building potential.`;
+    const parentLabel = parentSubareaName
+      ? nycBoroughNames.has(parentSubareaName)
+        ? `${parentSubareaName} borough`
+        : parentSubareaName
+      : null;
+    const routeSentence =
+      angle?.route ??
+      (parentLabel
+        ? `It works best as a ${parentLabel} route with a few clear anchors, enough walking time, and room for food or nightlife stops that make the area feel specific.`
+        : `It works best with a focused route, using a few clear anchors, realistic walking time, and food or nightlife stops that make the area feel specific.`);
+    const expanded = `${baseDescription} ${routeSentence}`;
+
+    if (expanded.length <= 320) {
+      return expanded;
+    }
+
+    const shorterRoute = parentLabel
+      ? `It works best as a ${parentLabel} route with clear anchors, realistic walking time, and stops that make the area feel specific.`
+      : "It works best with clear anchors, realistic walking time, and stops that make the area feel specific.";
+    return `${baseDescription} ${shorterRoute}`;
   };
 
   const withSubareaDescriptions = (subareas: SubArea[], parentSubareaName?: string): SubArea[] =>
     subareas.map((subarea) => ({
       ...subarea,
       description:
-        subarea.description ??
-        buildNeighborhoodDescription(subarea.name, city.name, parentSubareaName),
+        buildNeighborhoodDescription(subarea.name, city.name, parentSubareaName, subarea.description),
       subareas: subarea.subareas?.length
         ? withSubareaDescriptions(subarea.subareas, subarea.name)
         : undefined,
@@ -1720,7 +1859,7 @@ const curatedCitySeeds: Record<string, Omit<City, "listCount">[]> = {
       subareas: citySubareaSeeds.get("New York City|United States"),
       image: cityImage("nyc"),
       description:
-        "A dense, always-on city with world-class food, nightlife, and neighborhood-level discovery.",
+        "New York City is a dense, always-on city where museums, restaurants, cocktail bars, parks, hotels, shops, and subway-linked neighborhoods make the useful trip shift block by block. It works best on foot, with landmarks as the spine and meals or neighborhood detours keeping it from feeling dutiful.",
     },
     {
       id: "los-angeles",
@@ -1731,7 +1870,7 @@ const curatedCitySeeds: Record<string, Omit<City, "listCount">[]> = {
       countrySubareaId: "west-coast",
       image: cityImage("losangeles"),
       description:
-        "Sunlit sprawl where beach culture, design spots, and destination dining all coexist.",
+        "Los Angeles is sunlit sprawl where beach mornings, studio history, taco routes, design hotels, museums, canyon drives, shopping streets, and destination dining all coexist by neighborhood. It rewards a point of view: tight geography, realistic pacing, and a few anchors worth crossing town for.",
     },
     {
       id: "chicago",
@@ -1742,7 +1881,7 @@ const curatedCitySeeds: Record<string, Omit<City, "listCount">[]> = {
       countrySubareaId: "midwest",
       image: cityImage("chicago"),
       description:
-        "Lakefront energy, strong neighborhood identities, and one of the best food-and-culture combinations in the country.",
+        "Chicago is a lakefront city where architecture, museums, neighborhood taverns, deep food traditions, sports, hotels, river walks, and summer beaches make routes work by season and train line. It rewards a firm point of view: tight geography, realistic pacing, and a few anchors worth crossing town for.",
     },
     {
       id: "houston",
@@ -1753,7 +1892,7 @@ const curatedCitySeeds: Record<string, Omit<City, "listCount">[]> = {
       countrySubareaId: "southwest",
       image: cityImage("houston"),
       description:
-        "A huge, fast-growing city where global food scenes, arts institutions, and sprawling local favorites all mix together.",
+        "Houston is a huge, fast-growing city where global restaurants, museums, markets, cocktail bars, sports, hotel districts, parks, and sprawling local favorites make planning about neighborhoods and drive time. It rewards a firm point of view: tight geography, realistic pacing, and a few anchors worth crossing town for.",
     },
     {
       id: "phoenix",
@@ -1764,7 +1903,7 @@ const curatedCitySeeds: Record<string, Omit<City, "listCount">[]> = {
       countrySubareaId: "southwest",
       image: cityImage("phoenix"),
       description:
-        "Desert light, resort escapes, and a growing urban core make Phoenix a useful base for both city and nature routes.",
+        "Phoenix is a desert metro where resort pools, Sonoran food, cocktail bars, art districts, golf, trailheads, Scottsdale stops, and Tempe side routes make the city useful for urban and nature days. The best days hinge on timing: start in the city, then let the season, drive, and landscape set the route.",
     },
     {
       id: "philadelphia",
@@ -1775,7 +1914,7 @@ const curatedCitySeeds: Record<string, Omit<City, "listCount">[]> = {
       countrySubareaId: "northeast",
       image: cityImage("philadelphia"),
       description:
-        "Compact, historic, and neighborhood-driven, with excellent dining, walkability, and a strong sense of local texture.",
+        "Philadelphia is compact, historic, and neighborhood-driven, with museums, rowhouse streets, market food, restaurants, parks, bars, hotels, and walkable districts that keep the trip local after the landmark stops. It rewards a point of view: tight geography, realistic pacing, and a few anchors worth crossing town for.",
     },
     {
       id: "san-antonio",
@@ -1786,7 +1925,7 @@ const curatedCitySeeds: Record<string, Omit<City, "listCount">[]> = {
       countrySubareaId: "southwest",
       image: cityImage("sanantonio"),
       description:
-        "A warm, fast-growing city where riverfront staples, cultural sites, and laid-back local picks fit together easily.",
+        "San Antonio is a warm, fast-growing city where riverfront staples, missions, Tex-Mex institutions, cocktail bars, hotels, markets, Pearl-area dining, and relaxed local picks fit into easy days. It rewards a firm point of view: tight geography, realistic pacing, and a few anchors worth crossing town for.",
     },
     {
       id: "san-diego",
@@ -1797,7 +1936,7 @@ const curatedCitySeeds: Record<string, Omit<City, "listCount">[]> = {
       countrySubareaId: "west-coast",
       image: cityImage("sandiego"),
       description:
-        "Beach access, easy weather, and polished neighborhoods make San Diego ideal for slower, lifestyle-led curation.",
+        "San Diego is a beach-and-neighborhood city where tacos, breweries, surf breaks, parks, hotels, harbor walks, Balboa museums, and coastal day routes make slower lifestyle-led curation feel natural. It rewards a firm point of view: tight geography, realistic pacing, and a few anchors worth crossing town for.",
     },
     {
       id: "dallas",
@@ -1808,7 +1947,7 @@ const curatedCitySeeds: Record<string, Omit<City, "listCount">[]> = {
       countrySubareaId: "southwest",
       image: cityImage("dallas"),
       description:
-        "Big-city scale with strong dining, retail, and district-based exploration that works well across different trip styles.",
+        "Dallas is a big-scale city where steakhouses, design districts, museums, hotels, cocktail bars, retail corridors, sports, and quick side trips make guide routes work best by area and itinerary style. It rewards a firm point of view: tight geography, realistic pacing, and a few anchors worth crossing town for.",
     },
     {
       id: "jacksonville",
@@ -1819,7 +1958,7 @@ const curatedCitySeeds: Record<string, Omit<City, "listCount">[]> = {
       countrySubareaId: "southeast",
       image: cityImage("jacksonville"),
       description:
-        "A broad, river-and-coast city with enough space to mix urban neighborhoods, beach time, and local favorites into one route.",
+        "Jacksonville is a broad river-and-coast city where beach time, breweries, seafood, arts districts, parks, hotels, St. Johns River views, and local favorites stretch across practical drive-based routes. It rewards a firm point of view: tight geography, realistic pacing, and a few anchors worth crossing town for.",
     },
     {
       id: "miami",
@@ -1830,7 +1969,7 @@ const curatedCitySeeds: Record<string, Omit<City, "listCount">[]> = {
       countrySubareaId: "southeast",
       image: cityImage("miami"),
       description:
-        "A high-energy coastal city where nightlife, design, and beach culture define the trip.",
+        "Miami is a high-energy coastal city where beaches, Cuban and Caribbean food, art districts, design hotels, rooftop bars, late clubs, waterfront walks, and Keys or Everglades side routes define the trip. It rewards a firm point of view: tight geography, realistic pacing, and a few anchors worth crossing town for.",
     },
     {
       id: "orlando",
@@ -1841,7 +1980,7 @@ const curatedCitySeeds: Record<string, Omit<City, "listCount">[]> = {
       countrySubareaId: "southeast",
       image: cityImage("orlando"),
       description:
-        "A major U.S. leisure destination with year-round tourism demand, convention traffic, and fast-growing local neighborhoods.",
+        "Orlando is more than park logistics: resort stays, convention days, lakes, Winter Park afternoons, Mills 50 meals, outlet runs, food halls, and cocktail stops all change how the trip works. The useful route gives visitors something good before, between, and after the ticketed main event.",
     },
     {
       id: "las-vegas",
@@ -1852,7 +1991,7 @@ const curatedCitySeeds: Record<string, Omit<City, "listCount">[]> = {
       countrySubareaId: "southwest",
       image: cityImage("lasvegas"),
       description:
-        "A destination-scale city that mixes nightlife, resorts, and day-trip access into one dense guide market.",
+        "Las Vegas is a destination-scale city where resorts, dining rooms, shows, clubs, spas, desert day trips, downtown bars, and off-Strip neighborhoods turn a dense guide market into very different trips. It rewards a firm point of view: tight geography, realistic pacing, and a few anchors worth crossing town for.",
     },
     {
       id: "san-francisco",
@@ -1863,7 +2002,7 @@ const curatedCitySeeds: Record<string, Omit<City, "listCount">[]> = {
       countrySubareaId: "west-coast",
       image: cityImage("sanfrancisco"),
       description:
-        "A compact, high-demand city with iconic waterfront views, dense neighborhoods, and strong food-and-culture pull.",
+        "San Francisco is a compact high-demand city where waterfront views, steep neighborhoods, ferry rides, parks, museums, restaurants, cocktail rooms, and quick Marin or wine-country routes fit into tight days. It rewards a firm point of view: tight geography, realistic pacing, and a few anchors worth crossing town for.",
     },
     {
       id: "washington-dc",
@@ -1874,7 +2013,7 @@ const curatedCitySeeds: Record<string, Omit<City, "listCount">[]> = {
       countrySubareaId: "northeast",
       image: cityImage("washingtondc"),
       description:
-        "A monument-and-museum capital with highly visited neighborhoods, late-night corridors, and year-round travel demand.",
+        "Washington, DC is a monument-and-museum capital where federal landmarks, hotel bases, parks, embassies, restaurants, cocktail corridors, and transit-linked neighborhoods make culture-heavy trips efficient. It rewards a firm point of view: tight geography, realistic pacing, and a few anchors worth crossing town for.",
     },
     {
       id: "honolulu",
@@ -1885,7 +2024,7 @@ const curatedCitySeeds: Record<string, Omit<City, "listCount">[]> = {
       countrySubareaId: "pacific",
       image: cityImage("honolulu"),
       description:
-        "Island-city energy with beaches, dining, and easy access to classic Hawaii itineraries.",
+        "Honolulu is an island city where beaches, surf breaks, hotels, food halls, hikes, historic sites, cocktail bars, and Oahu day routes make the useful guide balance resort ease with local neighborhoods. It rewards a firm point of view: tight geography, realistic pacing, and a few anchors worth crossing town for.",
     },
     {
       id: "boston",
@@ -1896,7 +2035,7 @@ const curatedCitySeeds: Record<string, Omit<City, "listCount">[]> = {
       countrySubareaId: "northeast",
       image: cityImage("boston"),
       description:
-        "Historic, walkable, and dense with food, sports, and day-trip-friendly neighborhoods.",
+        "Boston is historic, walkable, and dense, with museums, universities, sports nights, seafood, hotels, harbor walks, neighborhood restaurants, and rail-friendly side trips packed into compact city days. It rewards a firm point of view: tight geography, realistic pacing, and a few anchors worth crossing town for.",
     },
     {
       id: "new-orleans",
@@ -1907,7 +2046,7 @@ const curatedCitySeeds: Record<string, Omit<City, "listCount">[]> = {
       countrySubareaId: "southeast",
       image: cityImage("neworleans"),
       description:
-        "One of the country's most distinctive food, music, and nightlife cities.",
+        "New Orleans is a deeply distinctive city where music, Creole cooking, cocktail history, courtyard hotels, streetcars, markets, and cemetery walks all pull beyond Bourbon Street. The best days move slowly on purpose, letting neighborhood texture carry the trip into late plans.",
     },
     {
       id: "nashville",
@@ -1918,7 +2057,7 @@ const curatedCitySeeds: Record<string, Omit<City, "listCount">[]> = {
       countrySubareaId: "southeast",
       image: cityImage("nashville"),
       description:
-        "A high-visibility city for music, nightlife, and fast-moving weekend itineraries.",
+        "Nashville is a music-first weekend city, but the best routes look past Broadway into songwriter rooms, hot chicken counters, vintage shops, hotel districts, and neighborhood bars. It rewards a tight plan that lets daytime browsing build naturally toward late shows and second stops.",
     },
     {
       id: "seattle",
@@ -1929,7 +2068,7 @@ const curatedCitySeeds: Record<string, Omit<City, "listCount">[]> = {
       countrySubareaId: "west-coast",
       image: cityImage("seattle"),
       description:
-        "Coffee, water views, tech polish, and neighborhood micro-scenes make Seattle list-friendly.",
+        "Seattle is a water-and-hill city where coffee, markets, seafood, music rooms, design hotels, ferry views, museums, parks, and neighborhood micro-scenes make routes depend on weather and transit. It rewards a firm point of view: tight geography, realistic pacing, and a few anchors worth crossing town for.",
     },
   ],
   canada: [
@@ -1941,7 +2080,7 @@ const curatedCitySeeds: Record<string, Omit<City, "listCount">[]> = {
       coordinates: [43.6532, -79.3832],
       image: cityImage("toronto"),
       description:
-        "A multicultural city packed with polished neighborhoods, indie coffee shops, and late-night eats.",
+        "Toronto is a dense multicultural city where neighborhood food, design hotels, coffee, museums, sports, Lake Ontario walks, and late-night districts make practical routes by area. The payoff is pairing the view with a real plan: a useful base, a few strong anchors, and room for the weather.",
     },
     {
       id: "vancouver",
@@ -1951,7 +2090,7 @@ const curatedCitySeeds: Record<string, Omit<City, "listCount">[]> = {
       coordinates: [49.2827, -123.1207],
       image: cityImage("vancouver"),
       description:
-        "A mountain-framed city known for waterfront views, easy day trips, and strong brunch culture.",
+        "Vancouver is a mountain-and-water city where sushi, cafes, seawall walks, design hotels, beaches, cocktail rooms, and North Shore or island day trips keep city and nature close. The payoff is pairing the view with a real plan: a useful base, a few strong anchors, and room for the weather.",
     },
   ],
   mexico: [
@@ -1964,7 +2103,7 @@ const curatedCitySeeds: Record<string, Omit<City, "listCount">[]> = {
       countrySubareaId: "central",
       image: cityImage("mexicocity"),
       description:
-        "Layered, creative, and endlessly walkable, with standout markets and neighborhoods full of character.",
+        "Mexico City is a layered high-altitude capital where markets, museums, taco routes, design hotels, cocktail bars, parks, and Roma, Condesa, Centro, and Coyoacan shape the trip. It works best on foot, with landmarks as the spine and meals or neighborhood detours keeping it from feeling dutiful.",
     },
     {
       id: "guadalajara",
@@ -1975,7 +2114,7 @@ const curatedCitySeeds: Record<string, Omit<City, "listCount">[]> = {
       countrySubareaId: "west",
       image: cityImage("guadalajara"),
       description:
-        "A vibrant western hub balancing tequila country day trips with modern dining and nightlife.",
+        "Guadalajara is a western Mexico hub where tequila-country day trips, mariachi history, modern dining, markets, design hotels, plazas, and late bars build a strong regional route. It works best on foot, with landmarks as the spine and meals or neighborhood detours keeping it from feeling dutiful.",
     },
   ],
   brazil: [
@@ -1987,7 +2126,7 @@ const curatedCitySeeds: Record<string, Omit<City, "listCount">[]> = {
       coordinates: [-22.9068, -43.1729],
       image: cityImage("rio"),
       description:
-        "Beach-driven energy, iconic views, and neighborhoods where music, food, and nightlife spill into the streets.",
+        "Rio de Janeiro is a beach-and-mountain city where viewpoints, samba nights, boteco food, design stays, museum stops, and Copacabana, Ipanema, Santa Teresa, and Lapa shape the trip. The payoff is pairing the view with a real plan: a useful base, a few strong anchors, and room for the weather.",
     },
     {
       id: "sao-paulo",
@@ -1997,7 +2136,7 @@ const curatedCitySeeds: Record<string, Omit<City, "listCount">[]> = {
       coordinates: [-23.5558, -46.6396],
       image: cityImage("saopaulo"),
       description:
-        "A massive creative capital with serious restaurant density and deep local scenes.",
+        "Sao Paulo is a vast creative capital where the food, galleries, bars, and design hotels reward travelers who choose a few districts instead of chasing the whole map. The city feels strongest when Japanese, Italian, market, and late-night routes are planned with real pacing.",
     },
   ],
   argentina: [
@@ -2009,7 +2148,7 @@ const curatedCitySeeds: Record<string, Omit<City, "listCount">[]> = {
       coordinates: [-34.6037, -58.3816],
       image: cityImage("buenosaires"),
       description:
-        "Elegant and late-night friendly, with leafy barrios, classic cafes, and a strong arts identity.",
+        "Buenos Aires is a late-night city of parrillas, cafes, bookstores, tango rooms, leafy barrios, markets, and long dinners that rarely reward rushing. The strongest routes let Palermo, Recoleta, San Telmo, and La Boca each carry a different mood from afternoon walks into drinks.",
     },
     {
       id: "mendoza",
@@ -2019,7 +2158,7 @@ const curatedCitySeeds: Record<string, Omit<City, "listCount">[]> = {
       coordinates: [-32.8895, -68.8458],
       image: cityImage("mendoza"),
       description:
-        "Wine country gateway with sunny plazas, mountain views, and easy outdoor escapes.",
+        "Mendoza is a wine-country gateway where sunny plazas, grill restaurants, vineyard lodges, Andes views, tasting rooms, and outdoor routes make the city a base for slower regional travel. The best days hinge on timing: start in the city, then let the season, drive, and landscape decide how far the route stretches.",
     },
   ],
   colombia: [
@@ -2031,7 +2170,7 @@ const curatedCitySeeds: Record<string, Omit<City, "listCount">[]> = {
       coordinates: [4.711, -74.0721],
       image: cityImage("bogota"),
       description:
-        "High-altitude capital filled with coffee, contemporary dining, and culture-rich districts.",
+        "Bogota is a high-altitude capital where coffee, museums, markets, contemporary restaurants, Chapinero bars, La Candelaria history, and mountain views create culture-heavy routes. The best days hinge on timing: start in the city, then let the season, drive, and landscape decide how far the route stretches.",
     },
     {
       id: "medellin",
@@ -2041,7 +2180,7 @@ const curatedCitySeeds: Record<string, Omit<City, "listCount">[]> = {
       coordinates: [6.2442, -75.5812],
       image: cityImage("medellin"),
       description:
-        "Spring-like weather, hillside viewpoints, and a thriving creative and nightlife scene.",
+        "Medellin is a valley city where spring weather, metro and cable-car routes, El Poblado dining, Laureles cafes, Comuna 13 tours, nightlife, and mountain views define the trip. The best days hinge on timing: start in the city, then let the season, drive, and landscape decide how far the route stretches.",
     },
   ],
   france: [
@@ -2053,7 +2192,7 @@ const curatedCitySeeds: Record<string, Omit<City, "listCount">[]> = {
       coordinates: [48.8566, 2.3522],
       image: cityImage("paris"),
       description:
-        "Grand boulevards, cafe culture, and a dense spread of museums, wine bars, and neighborhood favorites.",
+        "Paris is a dense city of museums, bistros, wine bars, fashion streets, parks, hotels, and neighborhood routes where the useful trip shifts by arrondissement rather than landmark count. It works best on foot, with landmarks as the spine and meals or neighborhood detours keeping it from feeling dutiful.",
     },
     {
       id: "lyon",
@@ -2063,7 +2202,7 @@ const curatedCitySeeds: Record<string, Omit<City, "listCount">[]> = {
       coordinates: [45.764, 4.8357],
       image: cityImage("lyon"),
       description:
-        "One of Europe's best food cities, anchored by riverside promenades and historic quarters.",
+        "Lyon is a river city built for food-led travel, with bouchons, market halls, old-town lanes, traboules, wine bars, Roman history, and easy Beaujolais or Alpine side routes. The payoff is pairing the view with a real plan: a useful base, a few strong anchors, and room for the weather.",
     },
   ],
   italy: [
@@ -2075,7 +2214,7 @@ const curatedCitySeeds: Record<string, Omit<City, "listCount">[]> = {
       coordinates: [41.9028, 12.4964],
       image: cityImage("rome"),
       description:
-        "Ancient sites, lively piazzas, and deep neighborhood dining make Rome a list-friendly city.",
+        "Rome is a layered capital where ancient sites, piazzas, trattorias, wine bars, churches, boutique stays, and neighborhood routes through Trastevere, Monti, Prati, and Centro Storico set the pace. It works best on foot, with landmarks as the spine and meals or neighborhood detours keeping it from feeling dutiful.",
     },
     {
       id: "milan",
@@ -2085,7 +2224,7 @@ const curatedCitySeeds: Record<string, Omit<City, "listCount">[]> = {
       coordinates: [45.4642, 9.19],
       image: cityImage("milan"),
       description:
-        "Fashion-forward and efficient, with standout aperitivo culture and contemporary design spots.",
+        "Milan is a design and fashion city where aperitivo, contemporary art, shopping streets, polished hotels, restaurants, canals, and rail links make a sharp northern Italy base. The eating and drinking land best when they feel rooted in place, with enough neighborhood logic to carry a full day.",
     },
   ],
   greece: [
@@ -2097,7 +2236,7 @@ const curatedCitySeeds: Record<string, Omit<City, "listCount">[]> = {
       coordinates: [37.9838, 23.7275],
       image: cityImage("athens"),
       description:
-        "An ancient-meets-modern capital where archaeological landmarks, dense neighborhood dining, and lively nightlife overlap in a compact urban core.",
+        "Athens is a compact capital where ancient sites, rooftop bars, tavernas, galleries, markets, boutique stays, and beach or island routes meet in lively central neighborhoods. The payoff is pairing the view with a real plan: a useful base, a few strong anchors, and room for the weather.",
     },
   ],
   spain: [
@@ -2109,7 +2248,7 @@ const curatedCitySeeds: Record<string, Omit<City, "listCount">[]> = {
       coordinates: [41.3874, 2.1686],
       image: cityImage("barcelona"),
       description:
-        "Barcelona is a dense Mediterranean city where Gothic lanes, Eixample's Modernista landmarks, late tapas dinners, natural-wine bars, design hotels, social hostels, hilltop parks, and beachside days all sit within a few metro stops.",
+        "Barcelona is a dense Mediterranean city where Gothic lanes, Eixample's Modernista landmarks, late tapas dinners, natural-wine bars, design hotels, social hostels, hilltop parks, and beachside days all sit within a few metro stops. The trick is making that richness practical without flattening it into a checklist.",
     },
     {
       id: "madrid",
@@ -2119,7 +2258,7 @@ const curatedCitySeeds: Record<string, Omit<City, "listCount">[]> = {
       coordinates: [40.4168, -3.7038],
       image: cityImage("madrid"),
       description:
-        "Big museums, energetic nightlife, and generous plazas define the capital's pace.",
+        "Madrid is a late-running capital where big museums, tapas streets, market halls, vermouth bars, Retiro walks, galleries, and generous plazas set an easy rhythm. The route works best when daytime culture has room to loosen into La Latina, Chueca, or Malasana after dark nights.",
     },
   ],
   portugal: [
@@ -2131,7 +2270,7 @@ const curatedCitySeeds: Record<string, Omit<City, "listCount">[]> = {
       coordinates: [38.7223, -9.1393],
       image: cityImage("lisbon"),
       description:
-        "A hillside capital of miradouros, tiled streets, historic trams, and neighborhood scenes spanning Alfama, Baixa, and Bairro Alto.",
+        "Lisbon is a hillside Atlantic capital where miradouros, tiled lanes, seafood, wine bars, design stays, trams, fado rooms, and Belem, Alfama, Baixa, and Bairro Alto routes define the visit. It works best on foot, with landmarks as the spine and meals or neighborhood detours keeping it from feeling dutiful.",
     },
     {
       id: "porto",
@@ -2141,7 +2280,7 @@ const curatedCitySeeds: Record<string, Omit<City, "listCount">[]> = {
       coordinates: [41.1579, -8.6291],
       image: cityImage("porto"),
       description:
-        "Compact, scenic, and easy to navigate, with riverside walks and strong local tavern culture.",
+        "Porto is a compact Douro city where riverside walks, port lodges, tiled churches, taverns, design hotels, wine bars, and day trips into the valley keep routes tight and scenic. The payoff is pairing the view with a real plan: a useful base, a few strong anchors, and room for the weather.",
     },
   ],
   "united-kingdom": [
@@ -2155,7 +2294,7 @@ const curatedCitySeeds: Record<string, Omit<City, "listCount">[]> = {
       countrySubareaId: "london-southeast",
       image: cityImage("london"),
       description:
-        "A global city with layered history, museum density, and neighborhood scenes that shift block by block.",
+        "London is a multi-center city where museums, pubs, markets, restaurants, theater, hotels, parks, and rail-linked neighborhoods make every guide work best by area and transit line. It works best on foot, with landmarks as the spine and meals or neighborhood detours keeping it from feeling dutiful.",
     },
     {
       id: "edinburgh",
@@ -2167,7 +2306,7 @@ const curatedCitySeeds: Record<string, Omit<City, "listCount">[]> = {
       countrySubareaId: "scotland",
       image: cityImage("edinburgh"),
       description:
-        "A compact capital of castle views, festival energy, and walkable old-and-new-town contrasts.",
+        "Edinburgh is a compact capital where castle views, Old Town closes, New Town streets, whisky bars, festival rooms, hill walks, and rail or coast routes fit into walkable days. The payoff is pairing the view with a real plan: a useful base, a few strong anchors, and room for the weather.",
     },
     {
       id: "cardiff",
@@ -2179,7 +2318,7 @@ const curatedCitySeeds: Record<string, Omit<City, "listCount">[]> = {
       countrySubareaId: "wales-northern-ireland",
       image: cityImage("cardiff"),
       description:
-        "A waterfront-friendly Welsh capital with stadium culture, easy rail links, and quick coast-and-valley access.",
+        "Cardiff is a Welsh capital where castle history, stadium nights, arcades, bay walks, pubs, food halls, and rail trips to coast or valleys make compact routes easy. The payoff is pairing the view with a real plan: a useful base, a few strong anchors, and room for the weather.",
     },
     {
       id: "belfast",
@@ -2191,7 +2330,7 @@ const curatedCitySeeds: Record<string, Omit<City, "listCount">[]> = {
       countrySubareaId: "wales-northern-ireland",
       image: cityImage("belfast"),
       description:
-        "Northern Ireland's main city for food, nightlife, and day routes to coast roads and Giant's Causeway country.",
+        "Belfast is a compact Northern Ireland city where Titanic history, pubs, markets, murals, restaurants, Cathedral Quarter bars, and coast-road day trips make a strong city base. The payoff is pairing the view with a real plan: a useful base, a few strong anchors, and room for the weather.",
     },
   ],
   netherlands: [
@@ -2203,7 +2342,7 @@ const curatedCitySeeds: Record<string, Omit<City, "listCount">[]> = {
       coordinates: [52.3676, 4.9041],
       image: cityImage("amsterdam"),
       description:
-        "Canals, cycling streets, and high-quality food and design scenes make Amsterdam one of Europe's most browsed city breaks.",
+        "Amsterdam is a canal city where cycling streets, museums, brown cafes, design hotels, Indonesian meals, markets, parks, and neighborhood routes keep high-demand browsing practical. It works best on foot, with landmarks as the spine and meals or neighborhood detours keeping it from feeling dutiful.",
     },
   ],
   germany: [
@@ -2215,7 +2354,7 @@ const curatedCitySeeds: Record<string, Omit<City, "listCount">[]> = {
       coordinates: [52.52, 13.405],
       image: cityImage("berlin"),
       description:
-        "A large, creative city with distinct neighborhood identities, nightlife depth, and strong museum and gallery coverage.",
+        "Berlin is a spread-out capital where Cold War memory, museum corridors, canal neighborhoods, and club culture sit beside practical transit choices. It works best when the route is split by district, with parks, lakes, late rooms, and quiet wine bars giving each day its own temperature.",
     },
   ],
   "czech-republic": [
@@ -2227,7 +2366,7 @@ const curatedCitySeeds: Record<string, Omit<City, "listCount">[]> = {
       coordinates: [50.0755, 14.4378],
       image: cityImage("prague"),
       description:
-        "A high-demand European city break with compact historic districts, river views, and strong cafe and nightlife zones.",
+        "Prague is a compact river city where castle routes, old-town lanes, beer halls, cafes, design stays, galleries, and Vltava walks help visitors move beyond the busiest squares. The payoff is pairing the view with a real plan: a useful base, a few strong anchors, and room for the weather.",
     },
   ],
   austria: [
@@ -2239,7 +2378,7 @@ const curatedCitySeeds: Record<string, Omit<City, "listCount">[]> = {
       coordinates: [48.2082, 16.3738],
       image: cityImage("vienna"),
       description:
-        "A polished cultural capital known for grand architecture, coffeehouse tradition, and highly walkable central districts.",
+        "Vienna is a polished cultural capital where imperial museums, coffeehouses, wine taverns, concert halls, design hotels, markets, and ring-road walks make a refined city break. It works best on foot, with landmarks as the spine and meals or neighborhood detours keeping it from feeling dutiful.",
     },
   ],
   morocco: [
@@ -2251,7 +2390,7 @@ const curatedCitySeeds: Record<string, Omit<City, "listCount">[]> = {
       coordinates: [31.6295, -7.9811],
       image: cityImage("marrakesh"),
       description:
-        "Historic riads, medina lanes, rooftop dining, and market-rich sensory overload.",
+        "Marrakesh is a medina-and-garden city where riad stays, souks, rooftop meals, hammams, palace sites, cocktail courtyards, and Atlas or desert routes shape the trip. The best days hinge on timing: start in the city, then let the season, drive, and landscape decide how far the route stretches.",
     },
     {
       id: "casablanca",
@@ -2261,7 +2400,7 @@ const curatedCitySeeds: Record<string, Omit<City, "listCount">[]> = {
       coordinates: [33.5731, -7.5898],
       image: cityImage("casablanca"),
       description:
-        "A coastal city mixing Art Deco architecture, modern cafes, and fast-moving local life.",
+        "Casablanca is a coastal business city where Art Deco streets, Hassan II Mosque, cafes, seafood rooms, corniche walks, modern hotels, and rail links make a practical Moroccan base. The payoff is pairing the view with a real plan: a useful base, a few strong anchors, and room for the weather.",
     },
   ],
   "south-africa": [
@@ -2273,7 +2412,7 @@ const curatedCitySeeds: Record<string, Omit<City, "listCount">[]> = {
       coordinates: [-33.9249, 18.4241],
       image: cityImage("capetown"),
       description:
-        "Mountain-and-ocean drama with strong food, wine, and outdoor day-trip options.",
+        "Cape Town is a mountain-and-ocean city where beaches, wine routes, Table Mountain, design hotels, markets, restaurants, history sites, and coastal drives define the trip. The payoff is pairing the view with a real plan: a useful base, a few strong anchors, and room for the weather.",
     },
     {
       id: "johannesburg",
@@ -2283,7 +2422,7 @@ const curatedCitySeeds: Record<string, Omit<City, "listCount">[]> = {
       coordinates: [-26.2041, 28.0473],
       image: cityImage("johannesburg"),
       description:
-        "A creative city with neighborhood reinvention, standout galleries, and modern dining.",
+        "Johannesburg is a creative inland city where galleries, Apartheid Museum context, markets, restaurants, rooftop bars, design districts, and township or heritage routes need planned geography. It works best on foot, with landmarks as the spine and meals or neighborhood detours keeping it from feeling dutiful.",
     },
   ],
   kenya: [
@@ -2295,7 +2434,7 @@ const curatedCitySeeds: Record<string, Omit<City, "listCount">[]> = {
       coordinates: [-1.2921, 36.8219],
       image: cityImage("nairobi"),
       description:
-        "A fast-growing urban hub where cafes, design spaces, and safari gateways meet.",
+        "Nairobi is an urban safari gateway where cafes, design shops, national-park access, museums, markets, restaurants, and hotel bases connect city life with wider Kenya routes. The best days hinge on timing: start in the city, then let the season, drive, and landscape decide how far the route stretches.",
     },
   ],
   japan: [
@@ -2307,7 +2446,7 @@ const curatedCitySeeds: Record<string, Omit<City, "listCount">[]> = {
       coordinates: [35.6762, 139.6503],
       image: cityImage("tokyo"),
       description:
-        "Dense, efficient, and endlessly rewarding for food, nightlife, shopping, and neighborhood wandering.",
+        "Tokyo is a vast rail-connected city where ramen counters, sushi rooms, cocktail bars, shopping streets, design hotels, museums, gardens, and neighborhood micro-routes reward precision. It works best on foot, with landmarks as the spine and meals or neighborhood detours keeping it from feeling dutiful.",
     },
     {
       id: "kyoto",
@@ -2317,7 +2456,7 @@ const curatedCitySeeds: Record<string, Omit<City, "listCount">[]> = {
       coordinates: [35.0116, 135.7681],
       image: cityImage("kyoto"),
       description:
-        "Temple walks, tea houses, and thoughtful design details make Kyoto ideal for curation.",
+        "Kyoto is a temple-and-neighborhood city where shrines, tea houses, ryokan stays, gardens, markets, craft shops, and quiet evening routes need slower timing and careful geography. It works best on foot, with landmarks as the spine and meals or neighborhood detours keeping it from feeling dutiful.",
     },
   ],
   thailand: [
@@ -2329,7 +2468,7 @@ const curatedCitySeeds: Record<string, Omit<City, "listCount">[]> = {
       coordinates: [13.7563, 100.5018],
       image: cityImage("bangkok"),
       description:
-        "A high-energy city of temples, rooftop bars, malls, and legendary street food density.",
+        "Bangkok is a high-energy capital where street food, temples, malls, river routes, rooftop bars, design hotels, markets, and late-night neighborhoods make planning about heat and pacing. It rewards a firm point of view: tight geography, realistic pacing, and a few anchors worth crossing town for.",
     },
     {
       id: "chiang-mai",
@@ -2339,7 +2478,7 @@ const curatedCitySeeds: Record<string, Omit<City, "listCount">[]> = {
       coordinates: [18.7883, 98.9853],
       image: cityImage("chiangmai"),
       description:
-        "Laid-back northern city with night markets, cafe culture, and nearby nature routes.",
+        "Chiang Mai is a northern Thai base where old-city temples, night markets, cafes, cooking classes, mountain routes, elephant sanctuaries, and relaxed stays support slower trips. The best days hinge on timing: start in the city, then let the season, drive, and landscape decide how far the route stretches.",
     },
   ],
   "south-korea": [
@@ -2351,7 +2490,7 @@ const curatedCitySeeds: Record<string, Omit<City, "listCount">[]> = {
       coordinates: [37.5665, 126.978],
       image: cityImage("seoul"),
       description:
-        "Fast, stylish, and layered with shopping districts, palace grounds, and all-night food scenes.",
+        "Seoul is a fast, stylish city where palace grounds, barbecue nights, markets, cafes, design hotels, shopping districts, museums, and all-night food routes shift by subway stop. It works best on foot, with landmarks as the spine and meals or neighborhood detours keeping it from feeling dutiful.",
     },
     {
       id: "busan",
@@ -2361,7 +2500,7 @@ const curatedCitySeeds: Record<string, Omit<City, "listCount">[]> = {
       coordinates: [35.1796, 129.0756],
       image: cityImage("busan"),
       description:
-        "Coastal energy with seafood markets, beaches, hillside neighborhoods, and great cafe views.",
+        "Busan is a coastal Korean city where beaches, seafood markets, hillside villages, cafes, temples, harbor views, and nightlife around Seomyeon and Haeundae shape the trip. The payoff is pairing the view with a real plan: a useful base, a few strong anchors, and room for the weather.",
     },
   ],
   uae: [
@@ -2373,7 +2512,7 @@ const curatedCitySeeds: Record<string, Omit<City, "listCount">[]> = {
       coordinates: [25.2048, 55.2708],
       image: cityImage("dubai"),
       description:
-        "High-gloss skyline, destination dining, big retail, and desert-edge experiences.",
+        "Dubai is a high-gloss desert city where skyline hotels, malls, beaches, destination restaurants, rooftop bars, heritage quarters, and desert or marina experiences define planning. The payoff is pairing the view with a real plan: a useful base, a few strong anchors, and room for the weather.",
     },
   ],
   australia: [
@@ -2385,7 +2524,7 @@ const curatedCitySeeds: Record<string, Omit<City, "listCount">[]> = {
       coordinates: [-33.8688, 151.2093],
       image: cityImage("sydney"),
       description:
-        "Harbor views, coastal walks, and polished neighborhoods with strong cafe culture.",
+        "Sydney is a harbor-and-coast city where ferries, beaches, seafood, coffee, coastal walks, design hotels, museums, and neighborhood dining make outdoors-first routes easy. The payoff is pairing the view with a real plan: a useful base, a few strong anchors, and room for the weather.",
     },
     {
       id: "melbourne",
@@ -2395,7 +2534,7 @@ const curatedCitySeeds: Record<string, Omit<City, "listCount">[]> = {
       coordinates: [-37.8136, 144.9631],
       image: cityImage("melbourne"),
       description:
-        "Laneway bars, coffee, markets, and a creative identity that rewards local guides.",
+        "Melbourne is a laneway city where coffee, markets, bars, galleries, live music, design hotels, trams, and neighborhood dining routes make culture feel local and repeatable. The strongest routes build toward evening, using daytime wandering as the setup instead of treating nightlife like a separate checklist.",
     },
   ],
   "new-zealand": [
@@ -2408,7 +2547,7 @@ const curatedCitySeeds: Record<string, Omit<City, "listCount">[]> = {
       countrySubareaId: "north-island",
       image: cityImage("auckland"),
       description:
-        "Harbor city with island day trips, neighborhood dining, and easy outdoors access.",
+        "Auckland is a harbor city where island ferries, volcano walks, seafood, neighborhood dining, wine routes, design stays, and North Island road trips start close to town. The payoff is pairing the view with a real plan: a useful base, a few strong anchors, and room for the weather.",
     },
     {
       id: "nelson",
@@ -2419,7 +2558,7 @@ const curatedCitySeeds: Record<string, Omit<City, "listCount">[]> = {
       countrySubareaId: "south-island",
       image: cityImage("nelson-new-zealand"),
       description:
-        "Sunny gateway city for the top of the South Island, with nearby national parks, beaches, and a relaxed local pace.",
+        "Nelson is a sunny top-of-South base where beaches, galleries, breweries, markets, coastal walks, and Abel Tasman or wine-country routes make slower South Island browsing work. The payoff is pairing the view with a real plan: a useful base, a few strong anchors, and room for the weather.",
     },
     {
       id: "queenstown",
@@ -2430,7 +2569,7 @@ const curatedCitySeeds: Record<string, Omit<City, "listCount">[]> = {
       countrySubareaId: "south-island",
       image: cityImage("queenstown"),
       description:
-        "Adventure-focused alpine town with lake views and a steady stream of activities.",
+        "Queenstown is an alpine lake town where adventure operators, mountain views, wine routes, lodge stays, bars, scenic drives, and day trips shape a high-demand outdoors itinerary. The payoff is pairing the view with a real plan: a useful base, a few strong anchors, and room for the weather.",
     },
   ],
   fiji: [
@@ -2442,7 +2581,7 @@ const curatedCitySeeds: Record<string, Omit<City, "listCount">[]> = {
       coordinates: [-17.7765, 177.435],
       image: cityImage("nadi"),
       description:
-        "Island hub with resort gateways, local markets, and easy ocean adventures.",
+        "Nadi is Fiji's main arrival hub, useful for resort transfers, markets, temples, marina departures, island day trips, local food stops, and practical beach-route logistics. The payoff is pairing the view with a real plan: a useful base, a few strong anchors, and room for the weather.",
     },
   ],
 };
