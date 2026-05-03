@@ -233,7 +233,7 @@ Nightlife source requirements:
 - Use at least one neighborhood-specific source for neighborhood nightlife lists when one exists.
 - Use at least one official venue/bar source for popular bars, clubs, live-music rooms, cabaret rooms, or high-demand cocktail destinations.
 - Use at least one map/platform source for current operating confidence, but do not let platform ratings alone choose the list.
-- Check for closure signals before saving a stop. If a source marks a place closed, remove or replace it unless a newer official source proves it has reopened.
+- Check for closure signals before saving a stop. If a source marks a place closed, temporarily closed, or announces a near-term indefinite closure, remove or replace it unless a newer official source proves it has reopened.
 - If a guide title is neighborhood-specific, every stop should be in that neighborhood or directly on its edge with the description explaining the edge case.
 - When stronger current sources surface better picks, replace weak or out-of-neighborhood stops rather than only adding sources.
 
