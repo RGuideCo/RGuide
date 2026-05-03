@@ -789,6 +789,9 @@ export function SplitScreenSection({ continents, initialRouteState, seoContent, 
   const selectionRef = useRef(selection);
   const activeCategoryRef = useRef(activeCategory);
   const expandedGuideIdRef = useRef(expandedGuideId);
+  const categoryBeforeGuideExpandRef = useRef<ListCategory | null>(
+    initialRouteState?.expandedGuideId ? initialRouteState.activeCategory ?? null : null,
+  );
 
   useEffect(() => {
     selectionRef.current = selection;
@@ -1075,6 +1078,12 @@ export function SplitScreenSection({ continents, initialRouteState, seoContent, 
       return getCanonicalCityNeighborhoodPath(context.city, context.neighborhood);
     }
     return getCanonicalCityPath(context.city);
+  };
+  const restoreCategoryAfterGuideCollapse = () => {
+    const restoredCategory = categoryBeforeGuideExpandRef.current;
+    categoryBeforeGuideExpandRef.current = null;
+    setActiveCategory(restoredCategory);
+    return restoredCategory;
   };
   const handleSelectContinent = (continentId: string) => {
     setFocusedCountrySignal(null);
@@ -2443,6 +2452,7 @@ export function SplitScreenSection({ continents, initialRouteState, seoContent, 
     if (mobileListSheetTapCandidateRef.current) {
       if (isGuideTakingFullListPane) {
         setExpandedGuideId(null);
+        restoreCategoryAfterGuideCollapse();
         setClosingGuide(null);
         setIsMobileListSheetExpanded(false);
       } else {
@@ -2471,6 +2481,7 @@ export function SplitScreenSection({ continents, initialRouteState, seoContent, 
     setIsNightlifeBarMenuOpen(false);
     closeMobileCategoryMenu();
     setExpandedGuideId(null);
+    categoryBeforeGuideExpandRef.current = null;
     setClosingGuide(null);
     setActiveCategory(nextCategory);
     const nextPath = getCurrentCityRoutePath(nextCategory);
@@ -3091,10 +3102,11 @@ export function SplitScreenSection({ continents, initialRouteState, seoContent, 
     }
 
     if (expandedGuideId === nextList.id && expandedGuide) {
+      const restoredCategory = restoreCategoryAfterGuideCollapse();
       setClosingGuide(expandedGuide);
       setExpandedGuideId(null);
       setVisibleNestedStopParentIds([]);
-      const nextPath = getCurrentCityRoutePath(nextList.category);
+      const nextPath = getCurrentCityRoutePath(restoredCategory);
       if (nextPath) {
         pushExplorerPath(nextPath);
       }
@@ -3106,6 +3118,9 @@ export function SplitScreenSection({ continents, initialRouteState, seoContent, 
     }
 
     captureGuideLayoutPositions();
+    if (!expandedGuideId) {
+      categoryBeforeGuideExpandRef.current = activeCategory;
+    }
     setClosingGuide(null);
     setVisibleNestedStopParentIds([]);
     setExpandedGuideId(nextList.id);
@@ -3140,6 +3155,9 @@ export function SplitScreenSection({ continents, initialRouteState, seoContent, 
     }
 
     captureGuideLayoutPositions();
+    if (!expandedGuideId) {
+      categoryBeforeGuideExpandRef.current = activeCategory;
+    }
     setClosingGuide(null);
     setVisibleNestedStopParentIds([]);
     setExpandedGuideId(nextList.id);
@@ -3172,6 +3190,7 @@ export function SplitScreenSection({ continents, initialRouteState, seoContent, 
   };
   const handleOpenItineraryGuide = (list: MapList) => {
     setActiveCategory(null);
+    categoryBeforeGuideExpandRef.current = null;
     setActiveSubcategory(null);
     if (expandedGuideId !== list.id) {
       handleGuideToggle(list);
