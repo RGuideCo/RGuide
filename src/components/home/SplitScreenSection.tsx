@@ -2642,12 +2642,14 @@ export function SplitScreenSection({ continents, initialRouteState, seoContent, 
       return;
     }
 
-    const expandedList = railFilteredLists.find((list) => list.id === expandedGuideId);
+    const expandedList =
+      railFilteredLists.find((list) => list.id === expandedGuideId) ??
+      globalMergedLists.find((list) => list.id === expandedGuideId);
 
     if (expandedList) {
       setActiveCategory(expandedList.category);
     }
-  }, [expandedGuideId, railFilteredLists]);
+  }, [expandedGuideId, globalMergedLists, railFilteredLists]);
 
   useEffect(() => {
     setExpandedGuideId(null);
@@ -2661,7 +2663,9 @@ export function SplitScreenSection({ continents, initialRouteState, seoContent, 
   }, [isProfileSubmitLayout]);
 
   const expandedGuide =
-    railFilteredLists.find((list) => list.id === expandedGuideId) ?? null;
+    railFilteredLists.find((list) => list.id === expandedGuideId) ??
+    globalMergedLists.find((list) => list.id === expandedGuideId) ??
+    null;
   const displayedGuide = expandedGuide ?? closingGuide;
   const activeMapGuide = isProfileSubmitLayout
     ? profileSubmissionPreviewList
@@ -2676,6 +2680,24 @@ export function SplitScreenSection({ continents, initialRouteState, seoContent, 
   const remainingGuides = displayedGuide
     ? railFilteredLists.filter((list) => list.id !== displayedGuide.id)
     : railFilteredLists;
+  const recentRGuideLists = useMemo(() => {
+    if (!isGlobalSelection || activeGuideRail !== "r-guides") {
+      return [];
+    }
+
+    const worldwideGuideIds = new Set(railFilteredLists.map((list) => list.id));
+    return globalMergedLists
+      .filter((list) => list.creator.name.startsWith("R ") && !worldwideGuideIds.has(list.id))
+      .slice()
+      .sort((left, right) => {
+        const rightDate = Date.parse(right.createdAt);
+        const leftDate = Date.parse(left.createdAt);
+        const rightTime = Number.isFinite(rightDate) ? rightDate : 0;
+        const leftTime = Number.isFinite(leftDate) ? leftDate : 0;
+        return rightTime - leftTime || right.upvotes - left.upvotes || left.title.localeCompare(right.title);
+      })
+      .slice(0, 10);
+  }, [activeGuideRail, globalMergedLists, isGlobalSelection, railFilteredLists]);
   const activeSeoPlaceLabel = activeLocation.city
     ? activeLocation.nestedSubarea?.name ?? activeLocation.subarea?.name ?? activeLocation.city.name
     : activeDirectoryMeta.title;
@@ -6585,7 +6607,8 @@ export function SplitScreenSection({ continents, initialRouteState, seoContent, 
                       ) : null}
                     </div>
                   ) : (
-                    railFilteredLists.map((list) => (
+                    <>
+                      {railFilteredLists.map((list) => (
                         <div
                           key={list.id}
                           ref={(node) => {
@@ -6611,7 +6634,38 @@ export function SplitScreenSection({ continents, initialRouteState, seoContent, 
                             forceExpandStopNonce={selectedGuideStopNonce}
                           />
                         </div>
-                    ))
+                      ))}
+                      {recentRGuideLists.length ? (
+                        <div className="space-y-4 border-t border-slate-200 pt-4">
+                          <p className="px-1 text-[11px] font-medium uppercase tracking-[0.2em] text-slate-500">
+                            Recent RGuides
+                          </p>
+                          {recentRGuideLists.map((list) => (
+                            <div
+                              key={`recent-rguide-${list.id}`}
+                              ref={(node) => {
+                                guideRefs.current[list.id] = node;
+                              }}
+                              className="scroll-mt-2"
+                            >
+                              <MapListCard
+                                list={list}
+                                expandable
+                                expanded={false}
+                                onToggleExpand={handleGuideToggle}
+                                onHoverStart={setHoveredGuide}
+                                onHoverEnd={() => setHoveredGuide(null)}
+                                onStopHoverChange={setHoveredStopId}
+                                onStopSelect={handleGuideStopSelect}
+                                hoveredStopId={hoveredStopId}
+                                forceExpandStopId={selectedGuideStopId}
+                                forceExpandStopNonce={selectedGuideStopNonce}
+                              />
+                            </div>
+                          ))}
+                        </div>
+                      ) : null}
+                    </>
                   )}
                 </div>
               </div>

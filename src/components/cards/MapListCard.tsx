@@ -84,7 +84,8 @@ type GuideSource = NonNullable<MapList["sources"]>[number];
 function buildGuideMeta(list: MapList) {
   const placeCount = list.stops.length;
   const placeLabel = `${placeCount} ${placeCount === 1 ? "place" : "places"}`;
-  return `${list.category} • ${placeLabel}`;
+  const locationLabel = buildLocationSubtitle(list);
+  return [list.category, placeLabel, locationLabel].filter(Boolean).join(" • ");
 }
 
 const SAMPLE_POI_PHOTOS = [
