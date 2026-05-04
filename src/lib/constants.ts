@@ -1,7 +1,7 @@
 import { ListCategory } from "@/types";
 
 export const SITE_NAME = "RGuide";
-export const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://rguide.co";
+export const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.rguide.co";
 export const SITE_DESCRIPTION =
   "Discover curated travel guides by continent, country, and city.";
 
