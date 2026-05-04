@@ -54,6 +54,13 @@ export const users: User[] = [
     bio: "R Guide editorial desk for top activities, landmarks, and must-do experiences.",
   },
   {
+    id: "user-rguide-history",
+    name: "R History",
+    joinedAt: "2021-01-01T00:00:00.000Z",
+    avatar: rGuideAvatar,
+    bio: "R Guide editorial desk for historical journeys, mapped routes, timelines, and place-based story layers.",
+  },
+  {
     id: "user-gabriel-soyka",
     name: "Gabriel Soyka",
     email: "gabriel.m.soyka@gmail.com",

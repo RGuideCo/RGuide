@@ -33,6 +33,7 @@ const rCulture = users.find((user) => user.id === "user-rguide-culture");
 const rStay = users.find((user) => user.id === "user-rguide-stay");
 const rNightlife = users.find((user) => user.id === "user-rguide-nightlife");
 const rActivities = users.find((user) => user.id === "user-rguide-activities");
+const rHistory = users.find((user) => user.id === "user-rguide-history");
 const gabriel = users.find((user) => user.id === "user-gabriel-soyka");
 const restaurantHoursLunchDinner = {
   mon: "1:00 PM-4:00 PM, 8:00 PM-11:00 PM",
@@ -206,7 +207,476 @@ const elXampanyetHours = {
   sun: "Closed",
 };
 
-export const mapLists: MapList[] = [
+function normalizeStopPhotoKey(value: string) {
+  return value
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/[^a-z0-9]+/gi, " ")
+    .trim()
+    .toLowerCase();
+}
+
+const guideStopPhotosByName: Record<string, string> = {
+  "360 hostel borne": "https://360-hostel-barcelona-artsculture.hotelbcn-barcelona.com/data/Imgs/700x500w/17428/1742855/1742855753/360-hostel-borne-barcelona-img-2.JPEG",
+  "abirradero": "http://static1.squarespace.com/static/612df270cb5b2832a82ac1c4/t/612df30039503c777eeea6c1/1630401280673/Abirradero+White.png?format=1500w",
+  "alamo square park": "https://upload.wikimedia.org/wikipedia/commons/c/cb/Painted_Ladies%2C_Alamo_Square.jpg",
+  "almanac barcelona": "https://almanac-barcelona.hotelbcn-barcelona.com/data/Pictures/700x500w/16517/1651761/1651761882/barcelona-almanac-barcelona-picture-2.JPEG",
+  "amoeba music": "https://upload.wikimedia.org/wikipedia/commons/f/ff/AmoebaSF.jpg",
+  "arc house barcelona": "https://hostelarchouse.barcelonahotel.org/data/Imgs/OriginalPhoto/13487/1348734/1348734539/arc-house-barcelona-barcelona-img-1.JPEG",
+  "bar brutal": "http://barbrutal.com/cdn/shop/files/Brutal_Trial_Websize_1600x1067.jpg?v=1770045996",
+  "bar calabria": "https://images.unsplash.com/photo-1514933651103-005eec06c04b?auto=format&fit=crop&w=900&q=80",
+  "bar canigo": "https://images.unsplash.com/photo-1514933651103-005eec06c04b?auto=format&fit=crop&w=900&q=80",
+  "bar del pla": "https://barcelonanavigator.com/wp-content/uploads/2016/05/Jordi.jpg",
+  "bar la plata": "https://secure.gravatar.com/blavatar/4e2974ab882ad9285d09d713405063240324735e2a920c514435e4f4291d855f?s=200&#038;ts=1777873979",
+  "bar lobo": "https://966e7448.delivery.rocketcdn.me/wp-content/uploads/grupos-bar-lobo.jpg",
+  "bar malasang": "https://images.unsplash.com/photo-1514933651103-005eec06c04b?auto=format&fit=crop&w=900&q=80",
+  "bar marsella": "https://www.barcelona-life.com/wp-content/uploads/2018/02/marsella-barcelona.jpg",
+  "bar mut": "https://api.nnhotels.com/storage/171219/5a58ce53eca45bad3b1b015a/xl/bar-mut-pau-claris-192-2jpg-1.jpg",
+  "bar oviso": "https://baroviso.shop/public/media/baroviso-shop/logo-share.jpg",
+  "bar salvatge": "https://barsalvatge.com/wp-content/uploads/2017/11/logo_2.png",
+  "bar sauvage": "https://images.unsplash.com/photo-1514933651103-005eec06c04b?auto=format&fit=crop&w=900&q=80",
+  "bar torpedo": "https://itin-dev.wanderlogstatic.com/freeImageSmall/1T14WQnNnaoumU2q8H206tZbFgm9r3f2",
+  "barcelona cathedral": "https://www.barcelonacatedral.com/wp-content/themes/hotel-barcelona-catedral-2019/images/logo.png",
+  "barcelona central garden": "https://barcelonacentralgarden.top/wp-content/uploads/2025/11/imgi_360_113306583.jpg",
+  "basilica de santa maria del mar": "https://upload.wikimedia.org/wikipedia/commons/4/4c/Santa_Maria_del_Mar%2C_Barcelona_02.jpg",
+  "bemba smash burger": "https://lh5.googleusercontent.com/p/AF1QipPGy52GLF6bRtn426WdJUPVsiCjbkQx_nf9_Za0=w408-h306-k-no",
+  "biercab": "https://images.unsplash.com/photo-1608270586620-248524c67de9?auto=format&fit=crop&w=900&q=80",
+  "bison paddock": "https://poloroutes.com/img_uploads/tourist-places/8071091689762129.jpg",
+  "bistrot levante": "https://images.unsplash.com/photo-1552566626-52f8b828add9?auto=format&fit=crop&w=900&q=80",
+  "black swan hostel": "https://blackswanhostels.com/wp-content/uploads/2024/07/Imagen-de-WhatsApp-2024-06-19-a-las-19.44.31_27805d15-e1724665627758.jpg",
+  "bobby gin": "https://www.bobbygin.com/wp-content/uploads/2021/06/MG_4691.jpg",
+  "bobby s free": "https://www.bobbysfree.com/wp-content/uploads/2019/02/logo-persiana-copa-nombre-300x248.png",
+  "bodega bonay": "http://static1.squarespace.com/static/694bad66bf0fa208c5e3f281/t/695fbab39f749158f927d97c/1767881395722/atable.jpeg?format=1500w",
+  "bodega joan": "https://cdn.prod.website-files.com/649bffef1ea0320a4ff37c9f/649c01ab052368397680fa21_5_b.jpg",
+  "bodega quimet": "https://cdn2.editmysite.com/images/site/footer/og-image-placeholder-blank.png",
+  "bodega salto": "https://bodegasalto.net/wp-content/uploads/2023/05/milkers-bodega-vinos-salto-barcelona-poble-sec.jpeg",
+  "bormuth": "https://images.unsplash.com/photo-1529193591184-b1d58069ecdd?auto=format&fit=crop&w=900&q=80",
+  "born barcelona hostel": "https://www.bornbarcelonahostel.com/wp-content/uploads/2012/04/1150-150x150.jpg",
+  "caixaforum barcelona": "https://upload.wikimedia.org/wikipedia/commons/f/f2/CaixaForum_Art_Gallery%2C_Barcelona%2C_Catalonia%2C_Spain_%28Ank_Kumar%2C_Infosys_Limited%29_03.jpg",
+  "cal pep": "https://bodegacalpep.com/wp-content/uploads/2025/07/cropped-Logo1.png",
+  "capet": "https://static.wixstatic.com/media/fdc945_2b2a24bff92540c8b37ff6bd1c06be5a~mv2.jpg/v1/fill/w_1024,h_683,al_c/fdc945_2b2a24bff92540c8b37ff6bd1c06be5a~mv2.jpg",
+  "casa amatller": "https://upload.wikimedia.org/wikipedia/commons/3/3f/Barcelona_-_Casa_Amatller_1.jpg",
+  "casa batllo": "https://casa-batllo-barcelona.com/wp-content/uploads/2026/01/19944e616eb84ad3b204463508875f98.jpeg",
+  "casa bonay": "https://hotel-casa-bonay.hotelbcn-barcelona.com/data/Photos/700x500w/12731/1273117/1273117090.JPEG",
+  "casa delfin": "https://www.casadelfin.com/media/favicons/open-graph.png",
+  "casa gracia": "https://www.casagraciabcn.com/wp-content/uploads/2024/02/casa-gracia-barcelona-hostel.jpg",
+  "casa mila la pedrera": "https://estatics-nasia.dtibcn.cat/nasia-pro/media/2015%2C05%2C1-2-2-2-8-DISE-La-Pedrera-29-4-9-AL-01-760x428.jpg",
+  "casa vicens": "https://casa-vicens-barcelona.com/wp-content/uploads/2026/01/9528674f03c44fe0b5fad6f5a055e924-1.jpg",
+  "catalonia park guell": "https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=900&q=80",
+  "cerveceria catalana": "https://static.wixstatic.com/media/fae8fc_8b397159d3774db6b2f37b7e4299dd2f%7Emv2.png/v1/fit/w_2500,h_1330,al_c/fae8fc_8b397159d3774db6b2f37b7e4299dd2f%7Emv2.png",
+  "chic basic born boutique hotel": "https://www.chicandbasic.com/data/webp/big-chic-and-basic-born-habitaciones-cabecera637.jpg",
+  "cines verdi": "https://barcelona.cines-verdi.com/img/cinema/logo.png",
+  "collage cocktail bar": "https://www.diffordsguide.com/assets/images/default/global/ogimage.jpg",
+  "con gracia": "https://images.unsplash.com/photo-1414235077428-338989a2e8c0?auto=format&fit=crop&w=900&q=80",
+  "creps al born": "https://fishhotels-sites.s3.eu-west-3.amazonaws.com/uploads/1f127c8f-ef19-4d26-b21a-33e867a76144/originals/rec-entorno-crepes-5192.jpg",
+  "cuines santa caterina": "https://966e7448.delivery.rocketcdn.me/wp-content/uploads/thumb-CUINES-DE-SANTA-CATERINA.jpg",
+  "de young museum": "https://drupal-prod.visitcalifornia.com/sites/default/files/styles/opengraph_1200x630/public/2022-04/VC_deYoung-Museum_gty-1322127331-RM_1280x640.jpg.webp?itok=WKjMo8jr",
+  "disfrutar": "https://www.disfrutarbarcelona.com/api/uploads/restaurant/slider/images/original/cd60e682ef18d378de9e38ab983d2f2b_phpup3Axy.jpg",
+  "dow jones bar": "https://arewabxlefttuhzucoxx.supabase.co/storage/v1/object/public/bar_attachments/e968db8f-51bd-43a0-988d-8fba01def671/dow.png",
+  "dr stravinsky": "https://drstravinsky.cat/wp-content/uploads/2022/10/dr-stravinsky-text.png",
+  "dry martini": "https://barmagazine.com/og-bars.jpg",
+  "duboce park": "https://friendsofdubocepark.org/wp-content/uploads/2022/09/screen-shot-2022-09-29-at-10.55.52-pm-1.png",
+  "dux": "https://duxborne.com/wp-content/uploads/2024/10/Dux-descubre-una-de-las-mejores-coctelerias-barcelona.webp",
+  "el born centre de cultura i memoria": "https://upload.wikimedia.org/wikipedia/commons/7/71/El_Born_Centre_de_Cultura_i_Mem%C3%B2ria_%2832715417280%29.jpg",
+  "el nacional": "https://www.elnacionalbcn.com/wp-content/uploads/2018/11/newspaper.png",
+  "el xampanyet": "https://cdn.wherevi.com/12295-wvphoto-1.jpg",
+  "elephanta": "https://firebasestorage.googleapis.com/v0/b/soundclubfirebasestorage.appspot.com/o/uploads%2Fimage%2Fprofile%2F1715075373573-Official_Logo_FB_.jpg?alt=media",
+  "els quatre gats": "https://4gats.com/wp-content/uploads/2021/09/4gats-restaurant.jpg",
+  "factory hostels barcelona": "https://factorysuites.com/wp-content/uploads/2024/06/Factory-Hostel-logo-web.png",
+  "ferry building": "https://www.ferrybuildingmarketplace.com/wp-content/uploads/Hudson_Ferry-Building_v01_A03-web-e1673549910651.jpeg",
+  "fisherman s wharf": "https://dfht7c9lgb1wh.cloudfront.net/clients/logos/000/000/482/original/fishermans-logo-1560780383.png?1560780383",
+  "fismuler": "https://framerusercontent.com/images/FZZB2fFlZNw7ZBUUtWI1Mwh0.png",
+  "fundacio antoni tapies": "https://upload.wikimedia.org/wikipedia/commons/d/d0/Fundaci%C3%B3_Antoni_T%C3%A0pies%2C_Barcelona_03.jpg",
+  "fundacio joan miro": "https://www.fmirobcn.org/media/img/320x320.jpg",
+  "grandview park": "https://www.inside-guide-to-san-francisco-tourism.com/images/san-francisco-bay-view-from-summit-grandview-park.jpg",
+  "gut": "http://gut.es/wp-content/uploads/GUT-Better-Than-Good-scaled.jpg",
+  "h10 madison": "https://upload.wikimedia.org/wikipedia/commons/c/c2/084_Casa_Manuel_Bargu%C3%B1%C3%B3%2C_actual_hotel_H10_Madison%2C_c._Dr._Joaquim_Pou_2-4_%28Barcelona%29.jpg",
+  "harlem jazz club": "https://offloadmedia.feverup.com/barcelonasecreta.com/wp-content/uploads/2025/10/09170057/shutterstock_2452562975.jpg",
+  "heliogabal": "https://www.heliogabal.com/wp-content/uploads/2021/10/Foto-Helio.jpg",
+  "hellobcn hostel": "https://lirp.cdn-website.com/16736e71/dms3rep/multi/opt/P1020869-1920w.JPG",
+  "hostal apolo": "https://hostal-apolo.hotelbcn-barcelona.com/data/Pics/700x500w/11543/1154375/1154375259/hostal-apolo-barcelona-pic-2.JPEG",
+  "hostal bcn port": "https://www.yomobcnport.com/idb/84500/yomoBCNPort__OGG_optimizada-1200x630.jpg",
+  "hostal orleans": "https://hostal-orleans-barcelona.hotelbcn-barcelona.com/data/Pictures/700x500w/17194/1719436/1719436165/barcelona-hostal-orleans-picture-2.JPEG",
+  "hostel new york": "https://hostel-new-york.hotelbcn-barcelona.com/data/Photos/700x500w/4184/418492/418492161.JPEG",
+  "hotel brummell": "https://hotelbrummell.brummellprojects.com/wp-content/uploads/sites/2/2023/03/1440x1480px_0001_2880x1600px_0019_BRUMMELL_EXT_H-12.jpg",
+  "hotel coronado": "https://coronado-barcelona.hotelbcn-barcelona.com/data/Imgs/700x500w/17149/1714994/1714994675/hotel-coronado-barcelona-img-2.JPEG",
+  "hotel neri": "https://www.hotelneri.com/img/Hotel%20Neri%20(2).jpg.jpg",
+  "hotel ronda lesseps": "https://www.hotellesseps.com/wp-content/uploads/sites/436/2024/05/HRL-2024-Terrassa-Gran-01.jpg",
+  "ideal cocktail bar": "https://revolutionrockbar.es/wp-content/uploads/ideal-cocktail-bar.avif",
+  "innside by melia barcelona apolo": "https://innsidebymeliaapolo.barcelonahotel.org/data/Photos/OriginalPhoto/17655/1765572/1765572628/photo-innside-by-melia-barcelona-apolo-barcelona-1.JPEG",
+  "itaca hostel": "https://itacahostel.com/wp-content/uploads/2024/11/cropped-Logo-Itaca-Hostel-Verde-300x300.png",
+  "jamboree": "https://offloadmedia.feverup.com/barcelonasecreta.com/wp-content/uploads/2025/11/07103833/d5dc3e42-58ab-11ef-9897-42b55136ae18-1.jpg",
+  "k k hotel picasso": "https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=900&q=80",
+  "kabul party hostel barcelona": "https://www.kabul.es/wp-content/uploads/2019/12/Barcelona-13.jpg",
+  "kak koy": "https://www.kakure.es/wp-content/uploads/young-asian-woman-eating-sashimi-set-in-japanese-r-2023-11-27-04-59-45-utc.jpg",
+  "kimpton vividora hotel": "https://kimptonvividorahotel.com/content/thumbs/800_450/content/imgsxml/galerias/panel_herohome/1/1.2home-modulo2-2-48281b2464805dda29f360f127321c7c.jpg",
+  "l entresol": "https://images.unsplash.com/photo-1514933651103-005eec06c04b?auto=format&fit=crop&w=900&q=80",
+  "la federica": "https://images.unsplash.com/photo-1529193591184-b1d58069ecdd?auto=format&fit=crop&w=900&q=80",
+  "la fourmi": "https://www.barcelona-life.com/wp-content/uploads/2018/02/la-fourmi-barcelona.jpg",
+  "la panxa del bisbe": "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=900&q=80",
+  "la platilleria": "https://media-cdn.tripadvisor.com/media/photo-o/09/24/e4/7a/la-platilleria.jpg",
+  "la pubilla": "https://static3.grubbio.com/885g-albums-1.jpg",
+  "la sosenga": "https://images.gestionaweb.cat/7664/imgf-1200-630/logo-la-sosenga-png.png",
+  "la tasqueta de blai": "https://cdn.prod.website-files.com/5ebbeb680f69fd550e86ffe0/646b2281b0cb4aa3d71740c5__DSC8523.jpg",
+  "la tieta": "https://www.bodegalatieta.com/wp-content/uploads/2019/12/final_5dac66d6a2c2c80014c420e4_9.gif",
+  "la vinya del senyor": "https://static.wixstatic.com/media/0ce084_ee82ea19b8b54aafbd8115734c59a303~mv2_d_3264_2448_s_4_2.jpg/v1/fill/w_1000,h_750,al_c,q_85,usm_0.66_1.00_0.01/0ce084_ee82ea19b8b54aafbd8115734c59a303~mv2_d_3264_2448_s_4_2.jpg",
+  "la whiskeria": "https://lawhiskeria.es/wp-content/uploads/2022/12/whiskeria_cocktail_bar_emblem.png",
+  "laut": "https://linktr.ee/og/image/lautbarcelona.jpg",
+  "legion of honor": "https://www.famsf.org/storage/images/17c073c6-ccbe-4cff-9d05-83cf4d6a69cd/digital-22-image-social-share-r1.jpg?crop=1200,628,x0,y0&format=jpg&quality=80",
+  "lombard st": "https://drupal-prod.visitcalifornia.com/sites/default/files/styles/opengraph_1200x630/public/2021-12/VC_Lombard-Street_gty-1158272202-RF_1280x640.jpg.webp?itok=KkSxfJSb",
+  "manchester bar": "https://cdn0.salir.com/es/places/9/2/0/manchester-bar_142029_0_600.jpg",
+  "mano rota": "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=900&q=80",
+  "margarit": "https://www.novacircle.com/images/french_9-compressed.webp",
+  "mariposa negra": "https://mariposanegrabar.com/wp-content/uploads/home-1-e1669196546384.jpg",
+  "martinez": "https://martinezbarcelona.com/web/wp-content/uploads/2025/05/Foto_Home4-2048x1097.jpg",
+  "mercat de la llibertat": "https://fishhotels-sites.s3.eu-west-3.amazonaws.com/uploads/abd3aef8-30d4-48d4-9244-4e801c1a130c/originals/mercat-de-la-llibertat003.jpg",
+  "mercer hotel barcelona": "https://www.mercerhoteles.com/imagenes/logo-og.jpg",
+  "mikkeller bar barcelona": "https://secure.gravatar.com/blavatar/86efd48ae017b482dc1c8ebf78bab99db52bf44952e73931e5df30b50c7423a0?s=200&#038;ts=1777874589",
+  "milk bar bistro": "https://milkbarcelona.com/wp-content/uploads/2023/01/milk-profile-firebug.jpg",
+  "mission dolores park": "https://parksofsanfrancisco.com/static/seo/parks-thumbnail.png",
+  "mnac": "https://upload.wikimedia.org/wikipedia/commons/a/a2/Museu_Nacional_d%27Art_de_Catalunya_%28MNAC%29_National_Art_Museum_of_Catalonia.jpg",
+  "moco museum barcelona": "https://www.mocomuseum.com/app/uploads/2025/12/FullSizeRender-scaled.jpg",
+  "montjuic castle": "https://upload.wikimedia.org/wikipedia/commons/d/de/%CE%9A%CE%AC%CF%83%CF%84%CF%81%CE%BF_%CE%9C%CE%BF%CE%BD%CE%B6%CE%BF%CF%85%CE%AF%CE%BA_3231_-_3233.jpg",
+  "montjuic park": "https://www.barcelona.cat/sites/default/files/styles/facebook/public/montjuic_d_600x315_2.jpg?itok=eZrB9ZmW",
+  "morro fi": "https://barmagazine.com/og-bars.jpg",
+  "muhba placa del rei": "https://upload.wikimedia.org/wikipedia/commons/b/be/MUHBA_Casa_Padellas_Pla%C3%A7a_del_rei_2.JPG",
+  "museu picasso": "https://commons.wikimedia.org/wiki/Special:FilePath/Palau%20Berenguer%20d%27Aguilar.jpg",
+  "nevermind": "https://www.barcelona-life.com/wp-content/uploads/2018/02/nevermind-barcelona-1.jpg",
+  "onefam batllo": "https://onefamhostels.com/wp-content/uploads/2023/08/onefambatllo_dayactivity_bunkers.png",
+  "onefam paralelo": "https://onefamhostels.com/wp-content/uploads/2023/08/694306_hostel-one-paralelo-room-6.jpg",
+  "paco meralgo": "https://restaurantpacomeralgo.com/wp-content/uploads/2024/05/paco4.jpg",
+  "palace of fine arts": "https://upload.wikimedia.org/wikipedia/commons/0/0c/Palace_of_Fine_Arts_San_Francisco_January_2014_003.jpg",
+  "palau de la generalitat": "https://irbarcelona.org/wp-content/uploads/2012/08/palau-generalitat-cat.jpg",
+  "palau de la musica catalana": "https://www.palaudelamusica.com/wp-content/uploads/2026/04/palaudelamusica-logo.png",
+  "paradiso": "https://paradiso.cat/wp-content/uploads/2020/06/bck_premios-scaled_op.jpg",
+  "parc de cervantes": "https://estatics-nasia.dtibcn.cat/nasia-pro/media/2016%2C01%2CAZ8Q3185-760x428.jpg",
+  "parc de la ciutadella": "https://estatics-nasia.dtibcn.cat/nasia-pro/media/2015%2C12%2CAZ8Q2726-760x428.jpg",
+  "parc del guinardo bunkers del carmel": "https://thirdeyetraveller.com/wp-content/uploads/Carmel-del-Bunkers-Barcelona-6.jpg",
+  "parc del laberint d horta": "https://estatics-nasia.dtibcn.cat/nasia-pro/media/2016%2C01%2CAZ8Q6392-760x428.jpg",
+  "parc guell": "https://estatics-nasia.dtibcn.cat/nasia-pro/media/2016%2C06%2CAZ8Q8387-C%25C3%25B2pia-760x428.jpg",
+  "park guell": "https://upload.wikimedia.org/wikipedia/commons/4/4d/Park_G%C3%BCell_01.jpg",
+  "park hotel barcelona": "https://upload.wikimedia.org/wikipedia/commons/d/d4/Hotel_Park_%28I%29.jpg",
+  "pars teatro hostel": "https://parshostels.com/wp-content/uploads/2019/01/teatro-8798.jpg",
+  "pipa club": "https://www.barcelonapipaclub.es/wp-content/uploads/2025/01/barcelonapipaclub_pipa-300x200.png",
+  "placa de sant felip neri": "https://www.nomads-travel-guide.com/wp-content/uploads/2026/01/San_Felip_Neri_Square_in_Barcelona-scaled.jpg",
+  "placa del sol": "https://estatics-nasia.dtibcn.cat/nasia-pro/media/201601PlaC3A7a-del-Sol-1-web.optimized.948b1120.jpg",
+  "plataforma": "https://images.ctfassets.net/a4oylpwiu3rz/1Y44Rp2be5pIEvlAMxoI2V/113ed3f50f8ba0b82b0f515161f16e41/Plataforma.jpg",
+  "poble espanyol": "https://cdn.getyourguide.com/img/tour/cc7791c0d9865ff9.jpeg/68.jpg",
+  "praktik bakery": "https://www.hotelpraktikbakery.com/wp-content/uploads/sites/18/HOTEL-PRAKTIK-BAKERY-HOME-1.jpg",
+  "primavera hostel": "https://www.primavera-hostel.com/wp-content/uploads/2026/03/mg_4888_1.webp",
+  "quimet quimet": "https://quimetiquimet.com/wp-content/uploads/logo2.png",
+  "rocket hostels gracia": "https://rocket-hostels-gracia.barcelonahotels.it/cmn/img/htl/2235/2235994/2235994p1l.jpg",
+  "rodeo beach coastal trailhead": "https://www.marincountyvisitor.com/wp-content/uploads/2024/11/Rodeo-Beach.jpg",
+  "safestay barcelona gothic": "https://www.safestay.com/wp-content/uploads/2023/06/BCNPG-2023-Low-Res-58.jpg",
+  "sagrada familia": "https://upload.wikimedia.org/wikipedia/commons/7/74/Sagrada_Familia_March_2015-10a.jpg",
+  "sala apolo": "https://sala-apolo.com/bundles/app/newsletterImg/Newsletter-Header-Mobile-01-640x466.jpg",
+  "sant jordi hostels rock palace": "https://images.unsplash.com/photo-1555854877-bab0e564b8d5?auto=format&fit=crop&w=900&q=80",
+  "sensi bistro": "https://www.barcelona-life.com/wp-content/uploads/2022/02/le-bistro-sensi-barcelona.jpg",
+  "shoronpo": "https://images.unsplash.com/photo-1563245372-f21724e3856d?auto=format&fit=crop&w=900&q=80",
+  "sidecar factory club": "https://www.nightclubsbarcelona.es/wp-content/uploads/2023/03/barcelona-nights-slider-1.png",
+  "sips": "https://cdn.enprimeurclub.com/storage/v1/object/public/images/locations/recDakVqtmov28sO5/hero1.jpg?width=1200&quality=85&aspect_ratio=1.91%3A1&crop_gravity=center",
+  "sol de nit": "http://www.cafedelsoldenit.es/data/1710/contenidos/thumb_30930_contenidos_optimized.jpeg",
+  "sonder la casa del sol": "https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=900&q=80",
+  "teatre grec": "https://www.teatrebarcelona.com/wp-content/uploads/2020/04/teatre_grec-scaled.jpg",
+  "temple of augustus": "https://upload.wikimedia.org/wikipedia/commons/c/ca/Temple_August_Barcelona_20130905_3.JPG",
+  "the alchemix": "https://alotea.com/opengraph-image.jpg",
+  "the barcelona edition": "https://cache.marriott.com/content/dam/marriott-renditions/BCNEB/bcneb-terrace-2734-hor-wide.jpg?output-quality=70&interpolation=progressive-bilinear&downsize=1336px:*",
+  "the one barcelona": "https://static.hoteltreats.com/site/styles/hero/s3/2019-12/9-2-17_Terraza-piscina-de-dia_0056.jpg?itok=KLPQ2WKO",
+  "the original old fashioned": "https://static.wixstatic.com/media/67d5d7_4d79c11d3d504bb88c009a21a1f3ab13~mv2.jpg/v1/fill/w_2500,h_3750,al_c/67d5d7_4d79c11d3d504bb88c009a21a1f3ab13~mv2.jpg",
+  "tinta roja": "http://static1.squarespace.com/static/62971853214afa278ea454ab/t/62978a677d1aba4060811595/1654098535605/BIG-logo-main-yellow.jpg?format=1500w",
+  "vermont st the real crookedest street in the world": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/61/Vermont_Street_%28San_Francisco%29.jpg/1280px-Vermont_Street_%28San_Francisco%29.jpg",
+  "xemei": "https://barcelonanavigator.com/wp-content/uploads/2015/09/rsz__mg_1561.jpg",
+  "yeah barcelona hostel": "https://yeahostels.com/web/wp-content/uploads/2025/08/Brand-Yeah-Hostels-page.png",
+};
+
+function addGuideStopPhotos(list: MapList): MapList {
+  return {
+    ...list,
+    stops: list.stops.map((stop) => {
+      const photo = guideStopPhotosByName[normalizeStopPhotoKey(stop.name)];
+
+      return {
+        ...stop,
+        ...(photo && !stop.photo ? { photo } : {}),
+        places: stop.places?.map((place) => {
+          const placePhoto = guideStopPhotosByName[normalizeStopPhotoKey(place.name)];
+          return {
+            ...place,
+            ...(placePhoto && !place.photo ? { photo: placePhoto } : {}),
+          };
+        }),
+      };
+    }),
+  };
+}
+
+const rawMapLists: MapList[] = [
+  {
+    id: "list-r-history-magellan-elcano-circumnavigation",
+    slug: "magellan-elcano-first-voyage-around-the-world",
+    seoSlug: "magellan-elcano-circumnavigation-route",
+    seoTitle: "Magellan-Elcano First Voyage Around the World Route",
+    seoDescription:
+      "A mapped historical journey following the 1519-1522 Magellan-Elcano circumnavigation from Spain across the Atlantic, Pacific, Indian Ocean, and back.",
+    title: "Magellan-Elcano: First Voyage Around the World",
+    description:
+      "Trace the 1519-1522 expedition from Seville and Sanlucar through South America, the Pacific, the Philippines, the Spice Islands, the Indian Ocean, and the return to Spain. Magellan led the voyage, but Juan Sebastian Elcano and the Victoria completed the circumnavigation.",
+    photo: "https://commons.wikimedia.org/wiki/Special:FilePath/Magellan_Elcano_Circumnavigation-en.svg",
+    url: "https://www.google.com/maps/search/Magellan-Elcano+circumnavigation+route",
+    category: "Culture",
+    location: {
+      country: "World",
+      continent: "Global",
+      scope: "continent",
+    },
+    creator: {
+      id: rHistory?.id ?? "user-rguide-history",
+      name: rHistory?.name ?? "R History",
+      avatar: rHistory?.avatar ?? "",
+    },
+    upvotes: 0,
+    createdAt: "2026-05-04T00:00:00.000Z",
+    stops: [
+      {
+        id: "magellan-sanlucar-departure",
+        name: "Sanlucar de Barrameda",
+        coordinates: [36.7787, -6.3515],
+        photo: "https://commons.wikimedia.org/wiki/Special:FilePath/Sanlucar_barrameda_ocaso_desde_bajo_guia.jpg",
+        hours: "September 20, 1519",
+        description:
+          "The fleet left Sanlucar at the mouth of the Guadalquivir, turning a royal contract signed inland at Seville into an ocean voyage. This is the threshold between preparation and risk: five ships, a multinational crew, and a westward plan to reach the Spice Islands without crossing Portuguese-controlled waters.",
+      },
+      {
+        id: "magellan-canary-islands",
+        name: "Canary Islands",
+        coordinates: [28.2916, -16.6291],
+        photo: "https://commons.wikimedia.org/wiki/Special:FilePath/Teide_from_north_2006.jpg",
+        hours: "September 26, 1519",
+        description:
+          "The Canaries were the fleet's last familiar Atlantic provisioning stop before committing to the long southwest crossing. From here the expedition moved out of routine Iberian sailing lanes and into the practical problem that defined the voyage: finding a passage through an unknown American coastline.",
+      },
+      {
+        id: "magellan-santa-lucia-bay",
+        name: "Santa Lucia Bay / Rio de Janeiro Bay",
+        coordinates: [-22.9068, -43.1729],
+        photo: "https://commons.wikimedia.org/wiki/Special:FilePath/Ba%C3%ADa_de_Guanabara_vista_do_P%C3%A3o_de_A%C3%A7%C3%BAcar_2020.jpg",
+        hours: "December 13, 1519",
+        description:
+          "After crossing the Atlantic, the ships reached Santa Lucia Bay, now Rio de Janeiro Bay. This Brazil stop gave the crew water, food, repairs, and a first sustained encounter with the South American coast before the voyage shifted from crossing ocean to probing shoreline for a hidden route west.",
+      },
+      {
+        id: "magellan-rio-de-solis",
+        name: "Rio de Solis / Rio de la Plata",
+        coordinates: [-34.9011, -56.1645],
+        photo: "https://commons.wikimedia.org/wiki/Special:FilePath/Rio_de_la_Plata_BA_2.JPG",
+        hours: "January 12, 1520",
+        description:
+          "At Rio de Solis, now the Rio de la Plata, the fleet investigated a vast estuary that looked like it might be the long-sought passage. It was not, but the stop captures the uncertainty of the search: every inlet along the coast had to be tested before Magellan could rule it out.",
+      },
+      {
+        id: "magellan-puerto-san-julian",
+        name: "Puerto San Julian",
+        coordinates: [-49.3069, -67.7298],
+        photo: "https://commons.wikimedia.org/wiki/Special:FilePath/Puerto_San_julian_santa_cruz_argentina.jpg",
+        hours: "March 31, 1520",
+        description:
+          "Puerto San Julian became the expedition's winter anchorage and its political breaking point. Cold, hunger, and doubt fed a mutiny among Spanish captains, and Magellan's harsh suppression of it kept the voyage alive while also revealing how fragile command had become so far from Spain.",
+      },
+      {
+        id: "magellan-cabo-virgenes",
+        name: "Cabo Virgenes / Cape Virgenes",
+        coordinates: [-52.3333, -68.35],
+        photo: "https://commons.wikimedia.org/wiki/Special:FilePath/Faro_en_Cabo_V%C3%ADrgenes_2719.jpg",
+        hours: "October 21, 1520",
+        description:
+          "Cabo Virgenes marked the eastern mouth of the passage Magellan had been seeking for more than a year. The fleet entered cautiously, because this could still have been another dead-end bay, but the geography finally began to open into a navigable route through the southern continent.",
+      },
+      {
+        id: "magellan-strait",
+        name: "All Saints Strait / Strait of Magellan",
+        coordinates: [-53.1638, -70.9171],
+        photo: "https://commons.wikimedia.org/wiki/Special:FilePath/StraitOfMagellan.jpg",
+        hours: "November 28, 1520",
+        description:
+          "The route through All Saints Strait, later named the Strait of Magellan, solved the voyage's central navigational problem. One ship deserted during the passage, but the remaining vessels emerged into the ocean Magellan named the Pacific, changing the scale of the expedition overnight.",
+      },
+      {
+        id: "magellan-cabo-deseado",
+        name: "Cabo Deseado",
+        coordinates: [-53.0, -74.35],
+        photo: "https://commons.wikimedia.org/wiki/Special:FilePath/Map_of_the_Strait_of_Magellan_Developed_by_the_Schouten_and_Le_Maire_Expedition%2C_1616_WDL3971.png",
+        hours: "November 28, 1520",
+        description:
+          "Cabo Deseado marks the western exit from the strait on the route map. It is less a settlement stop than a passage marker: the moment the expedition left the maze of Patagonian channels and committed to an ocean crossing far larger than anyone aboard expected.",
+      },
+      {
+        id: "magellan-sharks-islands",
+        name: "Sharks' Islands / Puka-Puka",
+        coordinates: [-14.8208, -138.8128],
+        photo: "https://commons.wikimedia.org/wiki/Special:FilePath/Pukapuka_Aerial_efs_1280.jpg",
+        hours: "January 21, 1521",
+        description:
+          "The Sharks' Islands, often identified with Puka-Puka, appear on the route as a pass-by rather than a true relief stop. Their importance is scale: after weeks of hunger and illness, even a remote atoll became a navigational clue in an ocean the expedition badly underestimated.",
+      },
+      {
+        id: "magellan-san-pablo-island",
+        name: "San Pablo Island / Vostok Island or Flint Island",
+        coordinates: [-10.1, -152.3],
+        photo: "https://commons.wikimedia.org/wiki/Special:FilePath/Vostok_Island_AKK.jpg",
+        hours: "February 4, 1521",
+        description:
+          "San Pablo Island, commonly associated with Vostok Island or Flint Island, was another lonely Pacific pass-by. It shows the brutal sparseness of this leg: the fleet could sight land and still fail to find the water, food, or anchorage needed to recover.",
+      },
+      {
+        id: "magellan-ladrones-islands",
+        name: "Ladrones Islands / Mariana Islands",
+        coordinates: [13.4443, 144.7937],
+        photo: "https://commons.wikimedia.org/wiki/Special:FilePath/Umatac_Bay%2C_Guam_-_DSC00951.JPG",
+        hours: "March 6, 1521",
+        description:
+          "The fleet reached the Ladrones Islands, now the Marianas, after the punishing Pacific crossing. Guam brought contact, conflict, and desperately needed supplies; it also confirmed that the expedition had crossed a true ocean, not the narrower sea imagined before departure.",
+      },
+      {
+        id: "magellan-samar",
+        name: "Samar",
+        coordinates: [11.6, 125.0],
+        photo: "https://commons.wikimedia.org/wiki/Special:FilePath/Islands_of_Samar_and_Leyte_from_space.jpg",
+        hours: "March 16, 1521",
+        description:
+          "Samar is the first Philippine landfall marked on the route. For the exhausted crews, it signaled entry into a new island world of pilots, trade networks, languages, and alliances that would shape the next phase more than open-ocean navigation did.",
+      },
+      {
+        id: "magellan-homonhon",
+        name: "Homonhon",
+        coordinates: [10.75, 125.72],
+        photo: "https://commons.wikimedia.org/wiki/Special:FilePath/Homonhon_Island%2C_Guiuan%2C_Eastern_Samar_at_sunset.jpg",
+        hours: "March 17, 1521",
+        description:
+          "Homonhon was the first Philippine stopover after landfall. The anchorage gave the crew a chance to recover from the Pacific crossing and began the sequence of local encounters that pulled Magellan from exploration into diplomacy and power politics.",
+      },
+      {
+        id: "magellan-limasawa",
+        name: "Limasawa",
+        coordinates: [9.938, 125.074],
+        photo: "https://commons.wikimedia.org/wiki/Special:FilePath/First_Mass_in_the_Philippines.jpg",
+        hours: "March 28, 1521",
+        description:
+          "Limasawa sits between Homonhon and Cebu in the Philippine stage of the voyage. It matters because the expedition was no longer simply surviving; it was being guided through regional waters by local knowledge and entering a dense political landscape.",
+      },
+      {
+        id: "magellan-cebu",
+        name: "Cebu",
+        coordinates: [10.3157, 123.8854],
+        photo: "https://commons.wikimedia.org/wiki/Special:FilePath/Magellan%27s_Cross%2C_Cebu_City%2C_Jan_2024.jpg",
+        hours: "April 7, 1521",
+        description:
+          "Cebu became the expedition's central Philippine alliance stop. Magellan negotiated with Rajah Humabon, staged conversions, and tried to bind navigation, trade, and Christian empire into one project, a choice that soon pulled him into conflicts the fleet did not understand.",
+      },
+      {
+        id: "magellan-mactan",
+        name: "Mactan",
+        coordinates: [10.3103, 123.9494],
+        photo: "https://commons.wikimedia.org/wiki/Special:FilePath/MactanShrine.jpg",
+        hours: "April 27, 1521",
+        description:
+          "Mactan is the rupture point of the journey. Magellan was killed in battle against forces led by Lapulapu, so the voyage remembered under his name was completed without him by survivors who now had to escape the political consequences of his final gamble.",
+      },
+      {
+        id: "magellan-palawan",
+        name: "Palawan",
+        coordinates: [9.8349, 118.7384],
+        photo: "https://commons.wikimedia.org/wiki/Special:FilePath/El_Nido_Palawan.jpg",
+        hours: "June 21, 1521",
+        description:
+          "Palawan appears after the crisis at Cebu and Mactan as the remaining expedition searched for pilots, food, and a route onward. The voyage was now smaller, weaker, and more dependent on local maritime expertise to reach the Spice Islands.",
+      },
+      {
+        id: "magellan-brunei",
+        name: "Brunei",
+        coordinates: [4.9031, 114.9398],
+        photo: "https://commons.wikimedia.org/wiki/Special:FilePath/Omar_Ali_Saifuddien_Mosque%2C_Bandar_Seri_Begawan.jpg",
+        hours: "August 17-September 21, 1521",
+        description:
+          "Brunei was a major stop in a wealthy trading world already connected across Southeast Asia. For the surviving crew, it showed that the expedition had reached the commercial networks it sought, but still had to navigate politics, suspicion, and scarcity before reaching the Moluccas.",
+      },
+      {
+        id: "magellan-tidore",
+        name: "Tidore",
+        coordinates: [0.6966, 127.4361],
+        photo: "https://commons.wikimedia.org/wiki/Special:FilePath/Tidore_Island_Indonesia_Daytime.jpg",
+        hours: "November 8, 1521",
+        description:
+          "Tidore was the commercial destination: the Spice Islands that made the whole risky westward route worth attempting. Here the surviving ships loaded cloves, proving the route could reach Asia from the west even though the cost in ships and lives had been staggering.",
+      },
+      {
+        id: "magellan-ambon",
+        name: "Ambon Island",
+        coordinates: [-3.6554, 128.1908],
+        photo: "https://commons.wikimedia.org/wiki/Special:FilePath/Ambon%2C_Maluku%2C_Indonesia.jpg",
+        hours: "December 29, 1521",
+        description:
+          "Ambon belongs to the homeward leg under Elcano, after the expedition had split around the damaged Trinidad and the Victoria's desperate westward return. It marks the shift from reaching the Spice Islands to surviving the escape from them.",
+      },
+      {
+        id: "magellan-timor",
+        name: "Timor",
+        coordinates: [-9.175, 124.65],
+        photo: "https://commons.wikimedia.org/wiki/Special:FilePath/Landscape_in_East_Timor.jpg",
+        hours: "January 25, 1522",
+        description:
+          "Timor was the last major Southeast Asian point before the Victoria crossed the Indian Ocean. From here Elcano avoided Portuguese ports where possible, choosing a dangerous open-ocean return over capture on the established eastern route.",
+      },
+      {
+        id: "magellan-cape-good-hope",
+        name: "Cape of Good Hope",
+        coordinates: [-34.3568, 18.474],
+        photo: "https://commons.wikimedia.org/wiki/Special:FilePath/Cape_Point_at_Cape_of_Good_hope_Aerial_View_-_panoramio.jpg",
+        hours: "May 19, 1522",
+        description:
+          "Passing the Cape of Good Hope put the Victoria back into the Atlantic world, but not into safety. Elcano's crew was starving, the ship was worn down, and the Portuguese-controlled route around Africa forced them to keep moving with little margin for repair or rest.",
+      },
+      {
+        id: "magellan-cape-verde",
+        name: "Cape Verde Islands",
+        coordinates: [16.886, -24.988],
+        photo: "https://commons.wikimedia.org/wiki/Special:FilePath/Coastline_Santo_Antao.JPG",
+        hours: "July 9, 1522",
+        description:
+          "Cape Verde was the final danger point before Spain. The crew tried to obtain supplies while hiding the fact that they had come from the Spice Islands by sailing westward; Portuguese authorities detained some men, and the Victoria escaped with only a remnant aboard.",
+      },
+      {
+        id: "magellan-sanlucar-return",
+        name: "Sanlucar de Barrameda Return",
+        coordinates: [36.7787, -6.3515],
+        photo: "https://commons.wikimedia.org/wiki/Special:FilePath/Magellan_Nao_Victoria_return_memorial%2C_1522_AD_-_Cathedral_of_Seville_-_Sevilla%2C_Spain_-_DSC07584.JPG",
+        hours: "September 6, 1522",
+        description:
+          "The Victoria returned to Sanlucar with eighteen surviving Europeans aboard, closing the first recorded circumnavigation. The route ended where it began, but the meaning had changed: the world was now proven navigable as a connected ocean system, at enormous human cost.",
+      },
+    ],
+    sources: [
+      {
+        name: "Encyclopaedia Britannica - Ferdinand Magellan, Circumnavigation of the globe",
+        url: "https://www.britannica.com/biography/Ferdinand-Magellan/Circumnavigation-of-the-globe",
+      },
+      {
+        name: "HISTORY - Magellan's expedition circumnavigates globe",
+        url: "https://www.history.com/this-day-in-history/magellans-expedition-circumnavigates-globe",
+      },
+      {
+        name: "JSTOR - Antonio Pigafetta, First Voyage Around the World",
+        url: "https://www.jstor.org/stable/10.3138/9781442684928",
+      },
+      {
+        name: "Origins - Magellan's Circumnavigation of the Earth",
+        url: "https://origins.osu.edu/milestones/magellan-circumnavigation-earth",
+      },
+      {
+        name: "Wikimedia Commons - Magellan Elcano Circumnavigation route map",
+        url: "https://commons.wikimedia.org/wiki/File:Magellan_Elcano_Circumnavigation-en.svg",
+      },
+    ],
+  },
   {
     id: "list-barcelona-top-parks",
     slug: "barcelona-top-parks-in-the-city",
@@ -1919,3 +2389,5 @@ export const mapLists: MapList[] = [
     sources: [{ name: "Personal experience", url: "https://maps.google.com/?q=Rodeo+Beach+Coastal+Trailhead" }],
   },
 ];
+
+export const mapLists: MapList[] = rawMapLists.map(addGuideStopPhotos);

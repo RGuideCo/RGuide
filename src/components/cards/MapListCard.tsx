@@ -164,6 +164,7 @@ export function MapListCard({
   const isOwnGuide = Boolean(currentUser && currentUser.id === list.creator.id);
   const isOwnEditableGuide = isOwnGuide && !isItineraryGuide;
   const canEditOwnItinerary = isOwnGuide && isItineraryGuide && Boolean(onEditItinerary);
+  const isHistoricalGuide = list.creator.id === "user-rguide-history";
   const categoryStyle = CATEGORY_STYLES[list.category];
   const locationSubtitle = buildLocationSubtitle(list);
   const guideMeta = buildGuideMeta(list);
@@ -1133,7 +1134,9 @@ export function MapListCard({
                                 <div className="min-w-0">
                                   {resolvedStopHours ? (
                                     <p className="text-[11px] leading-4 text-slate-500">
-                                      <span className="font-medium text-slate-600">{`Hours (${weekdayLabel}):`}</span>{" "}
+                                      <span className="font-medium text-slate-600">
+                                        {isHistoricalGuide ? "Date:" : `Hours (${weekdayLabel}):`}
+                                      </span>{" "}
                                       <span>{resolvedStopHours}</span>
                                     </p>
                                   ) : null}

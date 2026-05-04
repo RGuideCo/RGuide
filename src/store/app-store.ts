@@ -631,7 +631,14 @@ export const useAppStore = create<AppState>()(
 );
 
 export function getEditorialLists(editorialLists: MapList[]) {
-  return editorialLists.length ? editorialLists : mapLists;
+  if (!editorialLists.length) {
+    return mapLists;
+  }
+
+  const remoteIds = new Set(editorialLists.map((list) => list.id));
+  const localOnlyLists = mapLists.filter((list) => !remoteIds.has(list.id));
+
+  return [...editorialLists, ...localOnlyLists];
 }
 
 export function getMergedLists(submittedLists: MapList[], editorialLists: MapList[] = []) {

@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useRef, useState } from "react";
-import type { Feature, FeatureCollection, Geometry, Point } from "geojson";
+import type { Feature, FeatureCollection, Geometry, LineString, Point } from "geojson";
 import type { ExpressionSpecification } from "@maplibre/maplibre-gl-style-spec";
 import maplibregl, { GeoJSONSource, LngLatBounds } from "maplibre-gl";
 
@@ -95,6 +95,11 @@ type GuideStopFeatureProperties = {
   placesBeenKind: "countries" | "cities" | "places" | "default";
 };
 
+type GuideRouteFeatureProperties = {
+  id: string;
+  category: MapList["category"];
+};
+
 type NeighborhoodBoundaryProperties = {
   id: string;
   name: string;
@@ -119,6 +124,7 @@ const MAP_STYLE = "https://tiles.openfreemap.org/styles/liberty";
 const COUNTRY_SOURCE_ID = "countries";
 const CONTINENT_LABEL_SOURCE_ID = "continent-labels";
 const CITY_SOURCE_ID = "cities";
+const GUIDE_ROUTE_SOURCE_ID = "guide-route";
 const GUIDE_STOP_SOURCE_ID = "guide-stops";
 const STATE_LABEL_SOURCE_ID = "state-labels";
 const NEIGHBORHOOD_BOUNDARY_SOURCE_ID = "neighborhood-boundaries";
@@ -881,6 +887,281 @@ function createGuideStopData(
   };
 }
 
+function splitRouteSegmentAtAntimeridian(
+  start: [number, number],
+  end: [number, number],
+): Array<[[number, number], [number, number]]> {
+  const [startLng, startLat] = start;
+  const [endLng, endLat] = end;
+  const deltaLng = endLng - startLng;
+
+  if (Math.abs(deltaLng) <= 180) {
+    return [[start, end]];
+  }
+
+  const crossingLng = deltaLng > 0 ? -180 : 180;
+  const wrappedEndLng = deltaLng > 0 ? endLng - 360 : endLng + 360;
+  const interpolation = (crossingLng - startLng) / (wrappedEndLng - startLng);
+  const crossingLat = startLat + (endLat - startLat) * interpolation;
+  const pairedCrossingLng = crossingLng === -180 ? 180 : -180;
+
+  return [
+    [start, [crossingLng, crossingLat]],
+    [[pairedCrossingLng, crossingLat], end],
+  ];
+}
+
+function getMagellanElcanoRouteCoordinates(activeGuide: MapList): Array<[number, number]> {
+  const stopCoordinates = new Map(
+    activeGuide.stops.map((stop) => [stop.id, [stop.coordinates[1], stop.coordinates[0]] as [number, number]]),
+  );
+  const seaAnchors: Record<string, [number, number]> = {
+    "magellan-sanlucar-departure": [-6.35, 36.78],
+    "magellan-canary-islands": [-16.35, 28.35],
+    "magellan-santa-lucia-bay": [-43.12, -22.83],
+    "magellan-rio-de-solis": [-56.1, -35.0],
+    "magellan-puerto-san-julian": [-67.63, -49.28],
+    "magellan-cabo-virgenes": [-68.35, -52.33],
+    "magellan-cabo-deseado": [-74.35, -53.0],
+    "magellan-sharks-islands": [-138.8, -14.8],
+    "magellan-san-pablo-island": [-152.3, -10.1],
+    "magellan-ladrones-islands": [144.75, 13.35],
+    "magellan-samar": [125.2, 11.35],
+    "magellan-homonhon": [125.75, 10.75],
+    "magellan-limasawa": [125.12, 9.95],
+    "magellan-cebu": [123.91, 10.27],
+    "magellan-mactan": [123.98, 10.27],
+    "magellan-palawan": [118.75, 9.78],
+    "magellan-brunei": [115.02, 5.05],
+    "magellan-tidore": [127.43, 0.76],
+    "magellan-ambon": [128.18, -3.65],
+    "magellan-timor": [124.35, -9.45],
+    "magellan-cape-good-hope": [18.44, -34.42],
+    "magellan-cape-verde": [-24.99, 16.88],
+    "magellan-sanlucar-return": [-6.35, 36.78],
+  };
+  const routePoint = (stopId: string) => seaAnchors[stopId] ?? stopCoordinates.get(stopId)!;
+  const requiredStops = [
+    "magellan-sanlucar-departure",
+    "magellan-canary-islands",
+    "magellan-santa-lucia-bay",
+    "magellan-rio-de-solis",
+    "magellan-puerto-san-julian",
+    "magellan-cabo-virgenes",
+    "magellan-strait",
+    "magellan-cabo-deseado",
+    "magellan-sharks-islands",
+    "magellan-san-pablo-island",
+    "magellan-ladrones-islands",
+    "magellan-samar",
+    "magellan-homonhon",
+    "magellan-limasawa",
+    "magellan-cebu",
+    "magellan-mactan",
+    "magellan-palawan",
+    "magellan-brunei",
+    "magellan-tidore",
+    "magellan-ambon",
+    "magellan-timor",
+    "magellan-cape-good-hope",
+    "magellan-cape-verde",
+    "magellan-sanlucar-return",
+  ];
+
+  if (requiredStops.some((stopId) => !stopCoordinates.has(stopId))) {
+    return activeGuide.stops.map((stop) => [stop.coordinates[1], stop.coordinates[0]] as [number, number]);
+  }
+
+  return [
+    routePoint("magellan-sanlucar-departure"),
+    routePoint("magellan-canary-islands"),
+    [-20.2, 20.0],
+    [-26.8, 5.5],
+    [-34.2, -11.2],
+    [-40.8, -20.4],
+    routePoint("magellan-santa-lucia-bay"),
+    [-45.3, -28.8],
+    routePoint("magellan-rio-de-solis"),
+    [-60.8, -42.6],
+    routePoint("magellan-puerto-san-julian"),
+    routePoint("magellan-cabo-virgenes"),
+    routePoint("magellan-strait"),
+    routePoint("magellan-cabo-deseado"),
+    [-88.0, -45.5],
+    [-106.0, -34.0],
+    [-124.0, -23.5],
+    routePoint("magellan-sharks-islands"),
+    routePoint("magellan-san-pablo-island"),
+    [-170.0, -2.5],
+    [178.0, 5.2],
+    [160.0, 10.5],
+    routePoint("magellan-ladrones-islands"),
+    [138.0, 12.7],
+    [131.0, 12.0],
+    routePoint("magellan-samar"),
+    routePoint("magellan-homonhon"),
+    routePoint("magellan-limasawa"),
+    routePoint("magellan-cebu"),
+    routePoint("magellan-mactan"),
+    [123.55, 9.65],
+    [121.4, 9.55],
+    routePoint("magellan-palawan"),
+    [116.6, 7.6],
+    routePoint("magellan-brunei"),
+    [117.4, 5.6],
+    [120.2, 5.2],
+    [123.2, 4.4],
+    [125.5, 2.8],
+    [127.1, 1.35],
+    routePoint("magellan-tidore"),
+    routePoint("magellan-ambon"),
+    routePoint("magellan-timor"),
+    [102.0, -16.0],
+    [78.0, -25.0],
+    [54.0, -32.0],
+    [32.0, -36.0],
+    routePoint("magellan-cape-good-hope"),
+    [13.5, -34.8],
+    [4.5, -27.5],
+    [-4.8, -14.8],
+    [-13.6, -1.4],
+    [-19.6, 12.0],
+    routePoint("magellan-cape-verde"),
+    [-23.8, 22.4],
+    [-21.2, 30.8],
+    [-15.0, 36.3],
+    routePoint("magellan-sanlucar-return"),
+  ];
+}
+
+function normalizeRouteLongitudes(coordinates: Array<[number, number]>): Array<[number, number]> {
+  if (!coordinates.length) {
+    return coordinates;
+  }
+
+  const normalized: Array<[number, number]> = [coordinates[0]];
+
+  for (let index = 1; index < coordinates.length; index += 1) {
+    const [rawLng, lat] = coordinates[index];
+    const previousLng = normalized[index - 1][0];
+    let lng = rawLng;
+
+    while (lng - previousLng > 180) {
+      lng -= 360;
+    }
+    while (lng - previousLng < -180) {
+      lng += 360;
+    }
+
+    normalized.push([lng, lat]);
+  }
+
+  return normalized;
+}
+
+function wrapLongitude(lng: number) {
+  if (lng < -180 || lng > 180) {
+    return ((((lng + 180) % 360) + 360) % 360) - 180;
+  }
+
+  return lng;
+}
+
+function smoothRouteCoordinates(coordinates: Array<[number, number]>): Array<[number, number]> {
+  if (coordinates.length < 3) {
+    return coordinates;
+  }
+
+  const normalized = normalizeRouteLongitudes(coordinates);
+  const smoothed: Array<[number, number]> = [];
+
+  for (let index = 0; index < normalized.length - 1; index += 1) {
+    const previous = normalized[Math.max(0, index - 1)];
+    const current = normalized[index];
+    const next = normalized[index + 1];
+    const afterNext = normalized[Math.min(normalized.length - 1, index + 2)];
+    const segmentDistance = Math.hypot(next[0] - current[0], next[1] - current[1]);
+    const steps = Math.min(18, Math.max(5, Math.ceil(segmentDistance / 4)));
+
+    for (let step = 0; step < steps; step += 1) {
+      const t = step / steps;
+      const t2 = t * t;
+      const t3 = t2 * t;
+      const lng =
+        0.5 *
+        ((2 * current[0]) +
+          (-previous[0] + next[0]) * t +
+          (2 * previous[0] - 5 * current[0] + 4 * next[0] - afterNext[0]) * t2 +
+          (-previous[0] + 3 * current[0] - 3 * next[0] + afterNext[0]) * t3);
+      const lat =
+        0.5 *
+        ((2 * current[1]) +
+          (-previous[1] + next[1]) * t +
+          (2 * previous[1] - 5 * current[1] + 4 * next[1] - afterNext[1]) * t2 +
+          (-previous[1] + 3 * current[1] - 3 * next[1] + afterNext[1]) * t3);
+
+      smoothed.push([wrapLongitude(lng), lat]);
+    }
+  }
+
+  const last = normalized[normalized.length - 1];
+  smoothed.push([wrapLongitude(last[0]), last[1]]);
+
+  return smoothed;
+}
+
+function createGuideRouteData(activeGuide?: MapList | null): FeatureCollection<LineString, GuideRouteFeatureProperties> {
+  const shouldShowRoute = activeGuide?.creator.id === "user-rguide-history" && (activeGuide.stops?.length ?? 0) > 1;
+
+  if (!shouldShowRoute || !activeGuide) {
+    return {
+      type: "FeatureCollection",
+      features: [],
+    };
+  }
+
+  const routeSegments: Array<Array<[number, number]>> = [];
+  const baseRouteCoordinates =
+    activeGuide.id === "list-r-history-magellan-elcano-circumnavigation"
+      ? getMagellanElcanoRouteCoordinates(activeGuide)
+      : activeGuide.stops.map((stop) => [stop.coordinates[1], stop.coordinates[0]] as [number, number]);
+  const routeCoordinates =
+    activeGuide.id === "list-r-history-magellan-elcano-circumnavigation"
+      ? baseRouteCoordinates
+      : smoothRouteCoordinates(baseRouteCoordinates);
+
+  for (let index = 1; index < routeCoordinates.length; index += 1) {
+    const splitSegments = splitRouteSegmentAtAntimeridian(routeCoordinates[index - 1], routeCoordinates[index]);
+    for (const [segmentStart, segmentEnd] of splitSegments) {
+      const currentSegment = routeSegments[routeSegments.length - 1];
+      if (
+        currentSegment &&
+        currentSegment[currentSegment.length - 1][0] === segmentStart[0] &&
+        currentSegment[currentSegment.length - 1][1] === segmentStart[1]
+      ) {
+        currentSegment.push(segmentEnd);
+      } else {
+        routeSegments.push([segmentStart, segmentEnd]);
+      }
+    }
+  }
+
+  return {
+    type: "FeatureCollection",
+    features: routeSegments.map((coordinates, index) => ({
+      type: "Feature" as const,
+      properties: {
+        id: `${activeGuide.id}-route-${index + 1}`,
+        category: activeGuide.category,
+      },
+      geometry: {
+        type: "LineString" as const,
+        coordinates,
+      },
+    })),
+  };
+}
+
 function createNeighborhoodBoundaryData(
   activeFeature?: Feature<Geometry, NeighborhoodBoundaryProperties> | null,
 ): FeatureCollection<Geometry, NeighborhoodBoundaryProperties> {
@@ -1316,6 +1597,39 @@ function addMapLayers(map: maplibregl.Map) {
   }, cityDotBeforeLayerId);
 
   map.addLayer({
+    id: "guide-route-casing",
+    type: "line",
+    source: GUIDE_ROUTE_SOURCE_ID,
+    layout: {
+      "line-cap": "round",
+      "line-join": "round",
+    },
+    paint: {
+      "line-color": "rgba(15, 23, 42, 0.42)",
+      "line-opacity": 0.24,
+      "line-width": ["interpolate", ["linear"], ["zoom"], 1.5, 3.2, 4, 4.1, 8, 5.2],
+      "line-blur": 0.45,
+      "line-dasharray": [1.2, 1.4],
+    },
+  }, "continent-labels");
+
+  map.addLayer({
+    id: "guide-route-line",
+    type: "line",
+    source: GUIDE_ROUTE_SOURCE_ID,
+    layout: {
+      "line-cap": "round",
+      "line-join": "round",
+    },
+    paint: {
+      "line-color": GUIDE_STOP_COLOR_MATCH,
+      "line-opacity": 0.46,
+      "line-width": ["interpolate", ["linear"], ["zoom"], 1.5, 1.6, 4, 2.2, 8, 3.2],
+      "line-dasharray": [1.2, 1.6],
+    },
+  }, "continent-labels");
+
+  map.addLayer({
     id: "guide-stop-glow",
     type: "circle",
     source: GUIDE_STOP_SOURCE_ID,
@@ -1575,6 +1889,10 @@ export function MapClient({
     () => createGuideStopData(activeGuide, visibleNestedStopParentIds),
     [activeGuide, visibleNestedStopParentIds],
   );
+  const guideRouteData = useMemo(
+    () => createGuideRouteData(activeGuide),
+    [activeGuide],
+  );
   const guideStopDataRef = useRef(guideStopData);
   const activeGuideStopSignature = useMemo(
     () =>
@@ -1743,6 +2061,11 @@ export function MapClient({
       map.addSource(STATE_LABEL_SOURCE_ID, {
         type: "geojson",
         data: stateLabelData,
+      });
+
+      map.addSource(GUIDE_ROUTE_SOURCE_ID, {
+        type: "geojson",
+        data: guideRouteData,
       });
 
       map.addSource(GUIDE_STOP_SOURCE_ID, {
@@ -2188,10 +2511,11 @@ export function MapClient({
     (map.getSource(CONTINENT_LABEL_SOURCE_ID) as GeoJSONSource).setData(continentLabelData);
     (map.getSource(CITY_SOURCE_ID) as GeoJSONSource).setData(cityData);
     (map.getSource(STATE_LABEL_SOURCE_ID) as GeoJSONSource).setData(stateLabelData);
+    (map.getSource(GUIDE_ROUTE_SOURCE_ID) as GeoJSONSource).setData(guideRouteData);
     ensureGuideStopMarkerImages(map, guideStopData);
     (map.getSource(GUIDE_STOP_SOURCE_ID) as GeoJSONSource).setData(guideStopData);
     (map.getSource(NEIGHBORHOOD_BOUNDARY_SOURCE_ID) as GeoJSONSource).setData(neighborhoodBoundaryData);
-  }, [cityData, continentLabelData, countryData, guideStopData, neighborhoodBoundaryData, stateLabelData]);
+  }, [cityData, continentLabelData, countryData, guideRouteData, guideStopData, neighborhoodBoundaryData, stateLabelData]);
 
   const activeGuidePulseStopId = useMemo(() => {
     const renderedStopIds = new Set(guideStopData.features.map((feature) => feature.properties.id));

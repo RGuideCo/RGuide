@@ -1939,11 +1939,22 @@ export function SplitScreenSection({ continents, initialRouteState, seoContent, 
         : [],
     [activeEditorialLists, activeLocation.continent],
   );
+  const selectedGlobalLists = useMemo(
+    () =>
+      isGlobalSelection
+        ? activeEditorialLists.filter(
+            (list) => list.location.scope === "continent" && list.location.continent === "Global",
+          )
+        : [],
+    [activeEditorialLists, isGlobalSelection],
+  );
   const coreActiveLists = activeLocation.city
     ? selectedCityLists
     : activeLocation.country
       ? selectedCountryLists
-      : selectedContinentLists;
+      : activeLocation.continent
+        ? selectedContinentLists
+        : selectedGlobalLists;
   const submittedActiveLists = useMemo(
     () =>
       submittedLists.filter((list) =>
@@ -1959,9 +1970,11 @@ export function SplitScreenSection({ continents, initialRouteState, seoContent, 
               list.location.continent === (activeLocation.continent?.name ?? activeLocation.country.continent)
             : activeLocation.continent
               ? list.location.scope === "continent" && list.location.continent === activeLocation.continent.name
-              : false),
+              : isGlobalSelection
+                ? list.location.scope === "continent" && list.location.continent === "Global"
+                : false),
       ),
-    [activeLocation.city, activeLocation.continent, activeLocation.country, currentUser?.id, submittedLists],
+    [activeLocation.city, activeLocation.continent, activeLocation.country, currentUser?.id, isGlobalSelection, submittedLists],
   );
   const allActiveLists = useMemo(
     () => [...coreActiveLists, ...submittedActiveLists],
