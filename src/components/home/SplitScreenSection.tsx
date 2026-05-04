@@ -3188,6 +3188,11 @@ export function SplitScreenSection({ continents, initialRouteState, seoContent, 
   const handleAutoOpenSourcesHandled = (listId: string) => {
     setPendingSourcesOpenGuideId((current) => (current === listId ? null : current));
   };
+  const handleGuideStopSelect = (stopId: string) => {
+    setHoveredStopId(stopId);
+    setSelectedGuideStopId(stopId);
+    setSelectedGuideStopNonce((current) => current + 1);
+  };
   const handleOpenItineraryGuide = (list: MapList) => {
     setActiveCategory(null);
     categoryBeforeGuideExpandRef.current = null;
@@ -3705,6 +3710,7 @@ export function SplitScreenSection({ continents, initialRouteState, seoContent, 
               activeGuideFitNonce={activeGuideFitNonce}
               visibleNestedStopParentIds={visibleNestedStopParentIds}
               hoveredStopId={hoveredStopId}
+              selectedStopId={selectedGuideStopId}
               onHoverGuideStop={setHoveredStopId}
               onSelectGuideStop={(stopId) => {
                 setHoveredStopId(stopId);
@@ -6521,6 +6527,7 @@ export function SplitScreenSection({ continents, initialRouteState, seoContent, 
                           onHoverStart={setHoveredGuide}
                           onHoverEnd={() => setHoveredGuide(null)}
                           onStopHoverChange={setHoveredStopId}
+                          onStopSelect={handleGuideStopSelect}
                           hoveredStopId={hoveredStopId}
                           onExpandedStopIdsChange={setVisibleNestedStopParentIds}
                           forceExpandStopId={selectedGuideStopId}
@@ -6554,6 +6561,7 @@ export function SplitScreenSection({ continents, initialRouteState, seoContent, 
                               onHoverStart={setHoveredGuide}
                               onHoverEnd={() => setHoveredGuide(null)}
                               onStopHoverChange={setHoveredStopId}
+                              onStopSelect={handleGuideStopSelect}
                               hoveredStopId={hoveredStopId}
                               forceExpandStopId={selectedGuideStopId}
                               forceExpandStopNonce={selectedGuideStopNonce}
@@ -6584,6 +6592,7 @@ export function SplitScreenSection({ continents, initialRouteState, seoContent, 
                             onHoverStart={setHoveredGuide}
                             onHoverEnd={() => setHoveredGuide(null)}
                             onStopHoverChange={setHoveredStopId}
+                            onStopSelect={handleGuideStopSelect}
                             hoveredStopId={hoveredStopId}
                             forceExpandStopId={selectedGuideStopId}
                             forceExpandStopNonce={selectedGuideStopNonce}
@@ -6710,6 +6719,7 @@ export function SplitScreenSection({ continents, initialRouteState, seoContent, 
                             onHoverStart={setHoveredGuide}
                             onHoverEnd={() => setHoveredGuide(null)}
                             onStopHoverChange={setHoveredStopId}
+                            onStopSelect={handleGuideStopSelect}
                             hoveredStopId={hoveredStopId}
                             onExpandedStopIdsChange={setVisibleNestedStopParentIds}
                             forceExpandStopId={selectedGuideStopId}
@@ -6728,6 +6738,7 @@ export function SplitScreenSection({ continents, initialRouteState, seoContent, 
                               onHoverStart={setHoveredGuide}
                               onHoverEnd={() => setHoveredGuide(null)}
                               onStopHoverChange={setHoveredStopId}
+                              onStopSelect={handleGuideStopSelect}
                               hoveredStopId={hoveredStopId}
                               forceExpandStopId={selectedGuideStopId}
                               forceExpandStopNonce={selectedGuideStopNonce}

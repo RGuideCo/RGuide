@@ -5,7 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { createPortal } from "react-dom";
-import { ChevronDown, Navigation, Plus, ThumbsUp } from "lucide-react";
+import { ChevronDown, Navigation, Plus, ThumbsUp, X } from "lucide-react";
 
 import { getCreatorHref, getListHref } from "@/lib/routes";
 import { resolveStopHours } from "@/lib/seasonal-hours";
@@ -19,6 +19,7 @@ interface MapListCardProps {
   onHoverStart?: (list: MapList) => void;
   onHoverEnd?: () => void;
   onStopHoverChange?: (stopId: string | null) => void;
+  onStopSelect?: (stopId: string) => void;
   hoveredStopId?: string | null;
   forceExpandStopId?: string | null;
   forceExpandStopNonce?: number;
@@ -86,6 +87,12 @@ function buildGuideMeta(list: MapList) {
   return `${list.category} • ${placeLabel}`;
 }
 
+const SAMPLE_POI_PHOTOS = [
+  "https://images.unsplash.com/photo-1583422409516-2895a77efded?auto=format&fit=crop&w=900&q=80",
+  "https://images.unsplash.com/photo-1514933651103-005eec06c04b?auto=format&fit=crop&w=900&q=80",
+  "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=900&q=80",
+];
+
 function getSourceDisplayName(source: GuideSource) {
   return source.name
     .replace(/\s+[-–|].*$/, "")
@@ -112,11 +119,16 @@ function getAlphaMarker(index: number) {
   return String.fromCharCode(65 + (index % 26));
 }
 
+function getSamplePoiPhoto(index: number) {
+  return SAMPLE_POI_PHOTOS[index % SAMPLE_POI_PHOTOS.length];
+}
+
 export function MapListCard({
   list,
   onHoverStart,
   onHoverEnd,
   onStopHoverChange,
+  onStopSelect,
   hoveredStopId,
   forceExpandStopId,
   forceExpandStopNonce = 0,
@@ -165,6 +177,10 @@ export function MapListCard({
   const [newGuideName, setNewGuideName] = useState("");
   const [itineraryPickerMessage, setItineraryPickerMessage] = useState<string | null>(null);
   const [guidePickerMessage, setGuidePickerMessage] = useState<string | null>(null);
+  const [photoPreview, setPhotoPreview] = useState<null | { src: string; title: string }>(null);
+  const [stopListEndPadding, setStopListEndPadding] = useState(0);
+  const [stopListMaxScrollTop, setStopListMaxScrollTop] = useState<number | null>(null);
+  const [pendingScrollStopId, setPendingScrollStopId] = useState<string | null>(null);
   const [mounted, setMounted] = useState(false);
   const showStopNumbers = true;
   const isRGuide = list.creator.name.startsWith("R ");
@@ -175,15 +191,63 @@ export function MapListCard({
   const [sourcesPinnedOpen, setSourcesPinnedOpen] = useState(false);
   const sourcesOpen = Boolean(allSources.length) && sourcesPinnedOpen;
 
-  const toggleStop = (stopId: string) => {
-    setExpandedStopIds((current) =>
-      current.includes(stopId) ? current.filter((id) => id !== stopId) : [...current, stopId],
-    );
-  };
   const togglePlace = (placeId: string) => {
     setExpandedPlaceIds((current) =>
       current.includes(placeId) ? current.filter((id) => id !== placeId) : [...current, placeId],
     );
+  };
+  const openPhotoPreview = (photo: { src: string; title: string }) => {
+    setPhotoPreview(photo);
+  };
+  const closePhotoPreview = () => {
+    setPhotoPreview(null);
+  };
+  const scrollStopToTop = (stopId: string) => {
+    const runScroll = () => {
+      const stopElement = document.getElementById(`guide-stop-item-${list.id}-${stopId}`);
+      const listElement = document.getElementById(`guide-stop-list-${list.id}`);
+
+      if (!stopElement || !listElement) {
+        return;
+      }
+
+      const stopRect = stopElement.getBoundingClientRect();
+      const listRect = listElement.getBoundingClientRect();
+      const targetTop = listElement.scrollTop + stopRect.top - listRect.top;
+
+      listElement.scrollTo({
+        top: targetTop,
+        behavior: "smooth",
+      });
+    };
+
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        runScroll();
+        window.setTimeout(runScroll, 180);
+      });
+    });
+  };
+  const openStopFromPhoto = (stopId: string) => {
+    setExpandedStopIds((current) => (current.includes(stopId) ? current : [...current, stopId]));
+    onStopHoverChange?.(stopId);
+    setPendingScrollStopId(stopId);
+  };
+  const activateGuideStop = (stopId: string) => {
+    onStopSelect?.(stopId);
+    openStopFromPhoto(stopId);
+  };
+  const activateNestedGuideStop = (stopId: string, parentStopId: string) => {
+    onStopSelect?.(stopId);
+    setPendingScrollStopId(parentStopId);
+  };
+  const toggleStopWithActivation = (stopId: string) => {
+    if (expandedStopIds.includes(stopId)) {
+      setExpandedStopIds((current) => current.filter((id) => id !== stopId));
+      return;
+    }
+
+    activateGuideStop(stopId);
   };
 
   useEffect(() => {
@@ -212,6 +276,7 @@ export function MapListCard({
     setExpandedStopIds((current) =>
       current.includes(parentStopId) ? current : [...current, parentStopId],
     );
+    setPendingScrollStopId(parentStopId);
   }, [expanded, forceExpandStopId, forceExpandStopNonce, list.stops]);
 
   useEffect(() => {
@@ -226,6 +291,67 @@ export function MapListCard({
   useEffect(() => {
     setMounted(true);
   }, []);
+
+  useEffect(() => {
+    if (!expanded || !fillPane || !list.stops.length) {
+      setStopListEndPadding(0);
+      setStopListMaxScrollTop(null);
+      return;
+    }
+
+    const updateEndPadding = () => {
+      const listElement = document.getElementById(`guide-stop-list-${list.id}`);
+      const lastStop = list.stops[list.stops.length - 1];
+      const lastStopSentinel = lastStop
+        ? document.getElementById(`guide-stop-top-${list.id}-${lastStop.id}`)
+        : null;
+
+      if (!listElement || !lastStopSentinel) {
+        setStopListEndPadding(0);
+        setStopListMaxScrollTop(null);
+        return;
+      }
+
+      const listRect = listElement.getBoundingClientRect();
+      const sentinelRect = lastStopSentinel.getBoundingClientRect();
+      const previousPadding = Number.parseFloat(window.getComputedStyle(listElement).paddingBottom) || 0;
+      const sentinelTop = listElement.scrollTop + sentinelRect.top - listRect.top;
+      const naturalScrollHeight = listElement.scrollHeight - previousPadding;
+      const nextPadding = Math.max(0, Math.ceil(sentinelTop + listElement.clientHeight - naturalScrollHeight));
+
+      setStopListEndPadding(nextPadding);
+      setStopListMaxScrollTop(Math.max(0, Math.ceil(sentinelTop)));
+    };
+
+    const scheduleUpdate = () => {
+      requestAnimationFrame(updateEndPadding);
+    };
+
+    scheduleUpdate();
+    const updateTimeouts = [180, 360].map((delay) => window.setTimeout(updateEndPadding, delay));
+    window.addEventListener("resize", updateEndPadding);
+    return () => {
+      updateTimeouts.forEach((timeoutId) => window.clearTimeout(timeoutId));
+      window.removeEventListener("resize", updateEndPadding);
+    };
+  }, [expanded, expandedStopIds, fillPane, list.id, list.stops]);
+
+  useEffect(() => {
+    if (!expanded || !pendingScrollStopId || !expandedStopIds.includes(pendingScrollStopId)) {
+      return;
+    }
+
+    scrollStopToTop(pendingScrollStopId);
+    const scrollTimeouts = [260, 520].map((delay) =>
+      window.setTimeout(() => scrollStopToTop(pendingScrollStopId), delay),
+    );
+    const clearPendingTimeout = window.setTimeout(() => setPendingScrollStopId(null), 620);
+
+    return () => {
+      scrollTimeouts.forEach((timeoutId) => window.clearTimeout(timeoutId));
+      window.clearTimeout(clearPendingTimeout);
+    };
+  }, [expanded, expandedStopIds, pendingScrollStopId]);
 
   const getSourceIconUrl = (url: string) => {
     try {
@@ -477,7 +603,7 @@ export function MapListCard({
   return (
     <article
       className={`group surface relative overflow-hidden transition-[background-color,border-color,box-shadow,transform] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] ${
-        fillPane && expanded ? "flex h-full max-h-full min-h-0 flex-col !rounded-tr-xl !rounded-l-none !rounded-b-none !border-0 !shadow-none lg:!rounded-l-none lg:!rounded-r-2xl" : ""
+        fillPane && expanded ? "flex h-full max-h-full min-h-0 flex-col !rounded-tr-lg !rounded-l-none !rounded-b-none !border-0 !shadow-none lg:!rounded-l-none lg:!rounded-r-lg" : ""
       } ${
         expanded
           ? "border border-slate-300 !bg-slate-50 px-3 pb-3 pt-0"
@@ -497,18 +623,18 @@ export function MapListCard({
     >
       {!expanded ? (
         <>
-          <span
-            className="pointer-events-none absolute left-0 top-3 h-[calc(100%-1.5rem)] w-1 origin-left rounded-r-full opacity-75 transition-[width,opacity] duration-300 group-hover:w-1.5 group-hover:opacity-100 group-focus-within:w-1.5 group-focus-within:opacity-100"
+          <div
+            className="pointer-events-none absolute left-0 top-3 z-20 h-[calc(100%-1.5rem)] w-1 origin-left rounded-r-full opacity-75 transition-[width,opacity] duration-300 group-hover:w-1.5 group-hover:opacity-100 group-focus-within:w-1.5 group-focus-within:opacity-100"
             style={{ backgroundColor: categoryStyle.mapColor }}
             aria-hidden="true"
           />
-          <span className="pointer-events-none absolute bottom-2 right-3 translate-y-1 font-mono text-[9px] font-semibold uppercase tracking-[0.16em] text-slate-400 opacity-0 transition-[opacity,transform] duration-300 group-hover:translate-y-0 group-hover:opacity-100 group-focus-within:translate-y-0 group-focus-within:opacity-100">
+          <span className="pointer-events-none absolute bottom-2 right-3 z-20 translate-y-1 font-mono text-[9px] font-semibold uppercase tracking-[0.16em] text-slate-400 opacity-0 transition-[opacity,transform] duration-300 group-hover:translate-y-0 group-hover:opacity-100 group-focus-within:translate-y-0 group-focus-within:opacity-100">
             Open
           </span>
         </>
       ) : null}
       <div
-        className={`flex items-center justify-between gap-3 ${
+        className={`relative z-10 flex items-center justify-between gap-3 overflow-hidden ${
           expanded
             ? `sticky top-0 z-10 -mx-3 min-h-14 border-b px-3 py-2 text-white backdrop-blur ${
                 fillPane ? "" : "-mt-3"
@@ -524,7 +650,7 @@ export function MapListCard({
             : undefined
         }
       >
-        <div className="min-w-0 flex-1">
+        <div className="relative z-10 min-w-0 flex-1">
           {expandable ? (
             <button
               type="button"
@@ -554,7 +680,7 @@ export function MapListCard({
             </>
           )}
         </div>
-        <div className="flex shrink-0 items-center gap-1.5">
+        <div className="relative z-10 flex shrink-0 items-center gap-1.5">
           {isOwnEditableGuide ? (
             onEditGuide ? (
               <button
@@ -628,7 +754,7 @@ export function MapListCard({
       </div>
       {expandable && !expanded && sourceSummary ? (
         <div
-          className="mt-2 flex w-full items-center gap-2 border-t border-slate-200/80 pt-2 pl-0.5 text-left"
+          className="relative z-10 mt-2 flex w-full items-center gap-2 border-t border-slate-950/15 pt-2 pl-0.5 text-left"
           aria-label="Guide sources"
         >
           <span className="font-mono text-[9px] font-semibold uppercase tracking-[0.16em] text-slate-400">
@@ -674,23 +800,53 @@ export function MapListCard({
           className={`grid transition-[grid-template-rows,opacity,margin,background-color] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] ${
             expanded ? "mt-2 grid-rows-[1fr] opacity-100" : "mt-0 grid-rows-[0fr] opacity-0"
           } ${fillPane && expanded ? "min-h-0 flex-1 basis-0" : ""} ${
-            expanded ? "bg-slate-50" : ""
+            expanded ? "relative -mx-3 bg-slate-50 px-3" : ""
           }`}
         >
           <div
             key={`${list.id}-${expanded ? "expanded" : "collapsed"}`}
-            className={`${fillPane && expanded ? "min-h-0 touch-pan-y overflow-y-auto overscroll-contain pr-1 pb-3" : "overflow-hidden"}`}
+            className={`${fillPane && expanded ? "flex min-h-0 flex-1 flex-col overflow-hidden pb-3" : "overflow-hidden"}`}
           >
-            <div className="pt-2">
-              <p className="guide-content-cascade-item text-[11px] font-medium uppercase tracking-[0.2em] text-slate-500">
+            <div className={`${fillPane && expanded ? "flex min-h-0 flex-1 flex-col" : ""} relative pt-2`}>
+              <p className="guide-content-cascade-item relative z-10 text-[11px] font-medium uppercase tracking-[0.2em] text-slate-500">
                 Description
               </p>
               <p
-                className="guide-content-cascade-item mt-2 px-3 text-sm leading-5 text-slate-600"
+                className="guide-content-cascade-item relative z-10 mt-2 px-3 text-sm leading-5 text-slate-600"
                 style={{ animationDelay: "45ms" }}
               >
                 {list.description}
               </p>
+              {list.stops.length ? (
+                <div
+                  className="guide-content-cascade-item relative z-10 mt-3"
+                  style={{ animationDelay: "65ms" }}
+                  aria-label="POI photos"
+                >
+                  <div className="ordered-poi-photo-strip">
+                    {list.stops.map((stop, index) => {
+                      const stopPhoto = stop.photo ?? getSamplePoiPhoto(index);
+                      const isStopExpanded = expandedStopIds.includes(stop.id);
+                      return (
+                        <button
+                          key={`${list.id}-photo-nav-${stop.id}`}
+                          type="button"
+                          onClick={() => activateGuideStop(stop.id)}
+                          onMouseEnter={() => onStopHoverChange?.(stop.id)}
+                          onMouseLeave={() => onStopHoverChange?.(null)}
+                          className={`ordered-poi-photo ${isStopExpanded ? "ordered-poi-photo-active" : ""}`}
+                          style={{ "--guide-accent": categoryStyle.mapColor } as React.CSSProperties}
+                          aria-label={`Open ${stop.name}`}
+                          title={stop.name}
+                        >
+                          <img src={stopPhoto} alt="" className="h-full w-full object-cover" />
+                          <span className="ordered-poi-photo-index">{index + 1}</span>
+                        </button>
+                      );
+                    })}
+                  </div>
+                </div>
+              ) : null}
               {sourceSummary ? (
                 <button
                   type="button"
@@ -698,7 +854,7 @@ export function MapListCard({
                     event.stopPropagation();
                     openSourcesFromCard();
                   }}
-                  className="guide-content-cascade-item mt-3 flex w-full items-center gap-2 border-t border-slate-200/80 pt-2 pl-0.5 text-left transition hover:border-slate-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-300"
+                  className="guide-content-cascade-item relative z-10 mt-3 flex w-full items-center gap-2 border-t border-slate-200/80 pt-2 pl-0.5 text-left transition hover:border-slate-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-300"
                   style={{ animationDelay: "70ms" }}
                   aria-label="Show guide sources"
                   aria-expanded={sourcesOpen}
@@ -735,75 +891,122 @@ export function MapListCard({
               {list.stops.length ? (
                 <>
                   <p
-                    className="guide-content-cascade-item mt-4 text-[11px] font-medium uppercase tracking-[0.2em] text-slate-500"
+                    className="guide-content-cascade-item relative z-10 mt-4 text-[11px] font-medium uppercase tracking-[0.2em] text-slate-500"
                     style={{ animationDelay: sourceSummary ? "115ms" : "90ms" }}
                   >
                     Places of Interest
                   </p>
-                  <ol className="mt-2 grid gap-2">
+                  <ol
+                    id={`guide-stop-list-${list.id}`}
+                    onScroll={(event) => {
+                      if (stopListMaxScrollTop === null) {
+                        return;
+                      }
+                      const element = event.currentTarget;
+                      if (element.scrollTop > stopListMaxScrollTop) {
+                        element.scrollTop = stopListMaxScrollTop;
+                      }
+                    }}
+                    style={
+                      fillPane && expanded && stopListEndPadding > 0
+                        ? { paddingBottom: stopListEndPadding }
+                        : undefined
+                    }
+                    className={`relative z-10 mt-2 grid gap-2 ${
+                      fillPane && expanded
+                        ? "guide-stop-list min-h-0 flex-1 touch-pan-y auto-rows-max overflow-y-auto overscroll-contain pr-1"
+                        : ""
+                    }`}
+                  >
                     {list.stops.map((stop, index) => (
                       (() => {
                         const stopContent = splitStopDescriptionAndHours(stop.description);
                         const resolvedStopHours = resolveStopHours(stop) ?? stopContent.hours;
                         const stopItineraryId = `${list.id}:${stop.id}`;
+                        const stopPhoto = stop.photo ?? getSamplePoiPhoto(index);
                         const isStopInItinerary =
                           itineraryStopIds.includes(stopItineraryId) ||
                           itineraryPlaylists.some((playlist) => playlist.stopKeys.includes(stopItineraryId));
+                        const isStopExpanded = expandedStopIds.includes(stop.id);
+                        const isStopMapSelected = forceExpandStopId === stop.id;
                         return (
                       <li
+                        id={`guide-stop-item-${list.id}-${stop.id}`}
                         key={stop.id}
                         className="guide-content-cascade-item list-none"
                         style={{ animationDelay: `${140 + index * 45}ms` }}
                       >
+                        {index === list.stops.length - 1 ? (
+                          <span id={`guide-stop-top-${list.id}-${stop.id}`} className="block h-0" aria-hidden="true" />
+                        ) : null}
                         <section
                           onMouseEnter={() => onStopHoverChange?.(stop.id)}
                           onMouseLeave={() => onStopHoverChange?.(null)}
-                          className={`rounded-2xl border border-slate-200 bg-white/80 transition-[transform,box-shadow] duration-150 will-change-transform ${
-                            hoveredStopId === stop.id || expandedStopIds.includes(stop.id) ? "-translate-y-0.5 shadow-md" : ""
-                          }`}
+                          data-active={isStopMapSelected}
+                          data-expanded={isStopExpanded}
+                          className="expanded-guide-stop-card transition-[border-color,box-shadow,background-color] duration-150"
+                          style={{ "--guide-accent": categoryStyle.mapColor } as React.CSSProperties}
                         >
                         <div
-                          className="flex w-full items-center gap-2 px-3 py-2 text-left text-sm text-slate-700"
+                          className="flex w-full items-center gap-2 px-3 py-2.5 pl-4 text-left text-sm text-slate-700"
                         >
+                          {showStopNumbers ? (
+                            <button
+                              type="button"
+                              onClick={(event) => {
+                                event.stopPropagation();
+                                activateGuideStop(stop.id);
+                              }}
+                              onFocus={() => onStopHoverChange?.(stop.id)}
+                              onBlur={() => onStopHoverChange?.(null)}
+                              className="inline-flex h-6 w-6 shrink-0 items-center justify-center rounded-md font-mono text-[10px] font-semibold text-white shadow-sm transition hover:brightness-95 focus-visible:ring-2 focus-visible:ring-slate-400/50"
+                              style={{ backgroundColor: categoryStyle.mapColor }}
+                              aria-label={`Select ${stop.name} on map`}
+                              title={`Select ${stop.name} on map`}
+                            >
+                              {index + 1}
+                            </button>
+                          ) : (
+                            <button
+                              type="button"
+                              onClick={(event) => {
+                                event.stopPropagation();
+                                activateGuideStop(stop.id);
+                              }}
+                              onFocus={() => onStopHoverChange?.(stop.id)}
+                              onBlur={() => onStopHoverChange?.(null)}
+                              className="inline-flex h-2.5 w-2.5 shrink-0 rounded-full"
+                              style={{ backgroundColor: categoryStyle.mapColor }}
+                              aria-label={`Select ${stop.name} on map`}
+                              title={`Select ${stop.name} on map`}
+                            />
+                          )}
                           <button
                             type="button"
-                            onClick={() => toggleStop(stop.id)}
+                            onClick={() => toggleStopWithActivation(stop.id)}
                             onFocus={() => onStopHoverChange?.(stop.id)}
                             onBlur={() => onStopHoverChange?.(null)}
-                            aria-expanded={expandedStopIds.includes(stop.id)}
+                            aria-expanded={isStopExpanded}
                             aria-controls={`guide-stop-panel-${list.id}-${stop.id}`}
                             className="flex min-w-0 flex-1 items-center gap-2 text-left"
                           >
-                            {showStopNumbers ? (
-                              <span
-                                className="inline-flex h-5 w-5 items-center justify-center rounded-full text-[10px] font-semibold text-white"
-                                style={{ backgroundColor: categoryStyle.mapColor }}
-                              >
-                                {index + 1}
-                              </span>
-                            ) : (
-                              <span
-                                className="inline-flex h-2.5 w-2.5 rounded-full"
-                                style={{ backgroundColor: categoryStyle.mapColor }}
-                              />
-                            )}
-                            <span className="min-w-0 flex-1 font-semibold">{stop.name}</span>
+                            <span className="min-w-0 flex-1 text-[13px] font-semibold text-slate-900">{stop.name}</span>
                             {stop.price ? (
                               <span
                                 title={stop.priceSource ? `Price source: ${stop.priceSource}` : "Restaurant price tier"}
-                                className="rounded-full bg-white px-2 py-0.5 text-[10px] font-semibold text-slate-500 ring-1 ring-slate-200"
+                                className="rounded-md bg-white/80 px-2 py-0.5 text-[10px] font-semibold text-slate-500 ring-1 ring-slate-950/10"
                               >
                                 {stop.price}
                               </span>
                             ) : null}
                             {stop.places?.length ? (
-                              <span className="rounded-full bg-slate-100 px-2 py-0.5 text-[10px] font-medium uppercase tracking-[0.08em] text-slate-600">
+                              <span className="rounded-md bg-slate-950/[0.04] px-2 py-0.5 text-[10px] font-medium uppercase text-slate-600 ring-1 ring-slate-950/[0.04]">
                                 {stop.places.length} places
                               </span>
                             ) : null}
                             <ChevronDown
                               className={`h-4 w-4 shrink-0 text-slate-400 transition-transform ${
-                                expandedStopIds.includes(stop.id) ? "rotate-180" : ""
+                                isStopExpanded ? "rotate-180" : ""
                               }`}
                             />
                           </button>
@@ -811,61 +1014,106 @@ export function MapListCard({
                         <div
                           id={`guide-stop-panel-${list.id}-${stop.id}`}
                           className={`grid transition-[grid-template-rows,opacity] duration-150 ease-out ${
-                            expandedStopIds.includes(stop.id) ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0"
+                            isStopExpanded ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0"
                           }`}
                         >
                           <div className="overflow-hidden">
-                            <div className="border-t border-slate-200 px-3 py-3">
-                              <p className="px-3 text-sm leading-5 text-slate-600">{stopContent.summary}</p>
+                            <div className="border-t border-slate-950/10 px-4 py-3">
+                              <div className="expanded-poi-bio">
+                                <button
+                                  type="button"
+                                  onClick={(event) => {
+                                    event.stopPropagation();
+                                    openPhotoPreview({ src: stopPhoto, title: stop.name });
+                                  }}
+                                  className="expanded-poi-bio-photo"
+                                  aria-label={`Open photo of ${stop.name}`}
+                                  title={`Open photo of ${stop.name}`}
+                                >
+                                  <img src={stopPhoto} alt="" className="h-full w-full object-cover" />
+                                </button>
+                                <p className="min-w-0 text-sm leading-5 text-slate-600">{stopContent.summary}</p>
+                              </div>
                               {stop.places?.length ? (
                                 <div className="mt-3">
                                   <div className="mb-2 flex items-center gap-2">
-                                    <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-slate-500">POI</p>
-                                    <div className="h-px flex-1 bg-slate-200" />
+                                    <p className="font-mono text-[10px] font-semibold uppercase text-slate-500">POI</p>
+                                    <div className="h-px flex-1 bg-slate-950/10" />
                                   </div>
-                                  <div className="space-y-2 pl-4">
+                                  <div className="space-y-2">
                                   {stop.places.map((place, placeIndex) => (
+                                    (() => {
+                                      const placePhoto = place.photo ?? getSamplePoiPhoto(index + placeIndex + 1);
+                                      const isPlaceExpanded = expandedPlaceIds.includes(place.id);
+                                      const isPlaceMapSelected = forceExpandStopId === place.id;
+                                      return (
                                     <div
                                       key={place.id}
                                       onMouseEnter={() => onStopHoverChange?.(place.id)}
                                       onMouseLeave={() => onStopHoverChange?.(null)}
-                                      className={`flex items-start gap-2 rounded-xl border border-slate-200 bg-stone-50 px-3 py-1.5 transition-[transform,opacity] duration-150 will-change-transform ${
-                                        hoveredStopId === place.id ? "-translate-y-0.5" : ""
-                                      }`}
+                                      data-active={isPlaceMapSelected}
+                                      data-expanded={isPlaceExpanded}
+                                      className="expanded-guide-place-card flex items-start gap-2 px-3 py-2 pl-3.5 transition-[border-color,background-color] duration-150"
+                                      style={{ "--guide-poi-accent": categoryStyle.poiColor } as React.CSSProperties}
                                     >
-                                      <span
-                                        className="mt-0.5 inline-flex h-5 w-5 shrink-0 rotate-45 items-center justify-center rounded-[4px] text-[10px] font-semibold text-white"
+                                      <button
+                                        type="button"
+                                        onClick={(event) => {
+                                          event.stopPropagation();
+                                          activateNestedGuideStop(place.id, stop.id);
+                                        }}
+                                        onFocus={() => onStopHoverChange?.(place.id)}
+                                        onBlur={() => onStopHoverChange?.(null)}
+                                        className="mt-0.5 inline-flex h-5 w-5 shrink-0 rotate-45 items-center justify-center rounded-[5px] font-mono text-[10px] font-semibold text-white shadow-sm"
                                         style={{ backgroundColor: categoryStyle.poiColor }}
+                                        aria-label={`Select ${place.name} on map`}
+                                        title={`Select ${place.name} on map`}
                                       >
                                         <span className="-rotate-45">{getAlphaMarker(placeIndex)}</span>
-                                      </span>
+                                      </button>
                                       <div className="min-w-0 flex-1 pt-0.5">
                                         <button
                                           type="button"
                                           onClick={() => togglePlace(place.id)}
                                           className="flex min-h-5 w-full items-center gap-2 text-left"
-                                          aria-expanded={expandedPlaceIds.includes(place.id)}
+                                          aria-expanded={isPlaceExpanded}
                                         >
-                                          <span className="min-w-0 flex-1 text-xs font-semibold text-slate-800">{place.name}</span>
+                                          <span className="min-w-0 flex-1 text-xs font-semibold text-slate-900">{place.name}</span>
                                           <ChevronDown
                                             className={`h-3.5 w-3.5 shrink-0 text-slate-400 transition-transform ${
-                                              expandedPlaceIds.includes(place.id) ? "rotate-180" : ""
+                                              isPlaceExpanded ? "rotate-180" : ""
                                             }`}
                                           />
                                         </button>
                                         <div
                                           className={`grid transition-[grid-template-rows,opacity,margin] duration-150 ease-out ${
-                                            expandedPlaceIds.includes(place.id)
+                                            isPlaceExpanded
                                               ? "mt-1 grid-rows-[1fr] opacity-100"
                                               : "mt-0 grid-rows-[0fr] opacity-0"
                                           }`}
                                         >
                                           <div className="overflow-hidden">
-                                            <p className="text-xs leading-4 text-slate-600">{place.description}</p>
+                                            <div className="expanded-poi-bio expanded-poi-bio-place pb-1">
+                                              <button
+                                                type="button"
+                                                onClick={(event) => {
+                                                  event.stopPropagation();
+                                                  openPhotoPreview({ src: placePhoto, title: place.name });
+                                                }}
+                                                className="expanded-poi-bio-photo expanded-poi-bio-photo-place"
+                                                aria-label={`Open photo of ${place.name}`}
+                                                title={`Open photo of ${place.name}`}
+                                              >
+                                                <img src={placePhoto} alt="" className="h-full w-full object-cover" />
+                                              </button>
+                                              <p className="min-w-0 text-xs leading-4 text-slate-600">{place.description}</p>
+                                            </div>
                                           </div>
                                         </div>
                                       </div>
                                     </div>
+                                      );
+                                    })()
                                   ))}
                                   </div>
                                 </div>
@@ -884,10 +1132,10 @@ export function MapListCard({
                                     <button
                                       type="button"
                                       onClick={() => openAddPickerForStop(stopItineraryId)}
-                                      className={`inline-flex items-center gap-1.5 rounded-full border px-3 py-1.5 text-[11px] font-medium transition ${
+                                      className={`inline-flex items-center gap-1.5 rounded-md border px-2.5 py-1.5 text-[11px] font-medium transition ${
                                         isStopInItinerary
                                           ? "border-emerald-600 bg-emerald-600 text-white"
-                                          : "border-slate-200 bg-white text-slate-700 hover:text-slate-900"
+                                          : "border-slate-950/10 bg-white/80 text-slate-700 hover:border-slate-950/20 hover:text-slate-900"
                                       }`}
                                       aria-label="Add"
                                       title="Add"
@@ -904,7 +1152,7 @@ export function MapListCard({
                                             current === stop.id ? null : stop.id,
                                           )
                                         }
-                                        className="inline-flex items-center rounded-full border border-slate-200 bg-white px-2 py-1.5 text-[11px] font-medium text-slate-700 hover:text-slate-900"
+                                        className="inline-flex items-center rounded-md border border-slate-950/10 bg-white/80 px-2 py-1.5 text-[11px] font-medium text-slate-700 hover:border-slate-950/20 hover:text-slate-900"
                                         aria-label="Directions"
                                         title="Directions"
                                       >
@@ -915,7 +1163,7 @@ export function MapListCard({
                                         href={getDirectionsHref(stop)}
                                         target="_blank"
                                         rel="noreferrer"
-                                        className="inline-flex items-center rounded-full border border-slate-200 bg-white px-2 py-1.5 text-[11px] font-medium text-slate-700 hover:text-slate-900"
+                                        className="inline-flex items-center rounded-md border border-slate-950/10 bg-white/80 px-2 py-1.5 text-[11px] font-medium text-slate-700 hover:border-slate-950/20 hover:text-slate-900"
                                         aria-label="Directions"
                                         title="Directions"
                                       >
@@ -1092,6 +1340,35 @@ export function MapListCard({
       {mounted
         ? createPortal(
             <>
+              {photoPreview ? (
+                <div
+                  className="fixed inset-0 z-[80] flex items-center justify-center bg-slate-950/55 p-4 backdrop-blur-sm"
+                  onClick={closePhotoPreview}
+                >
+                  <div
+                    className="relative w-full max-w-3xl overflow-hidden rounded-lg border border-white/20 bg-slate-950 shadow-2xl"
+                    onClick={(event) => event.stopPropagation()}
+                  >
+                    <button
+                      type="button"
+                      onClick={closePhotoPreview}
+                      className="absolute right-3 top-3 z-10 inline-flex h-8 w-8 items-center justify-center rounded-md bg-white/90 text-slate-700 shadow-sm transition hover:bg-white hover:text-slate-950"
+                      aria-label="Close photo"
+                      title="Close photo"
+                    >
+                      <X className="h-4 w-4" />
+                    </button>
+                    <img
+                      src={photoPreview.src}
+                      alt={photoPreview.title}
+                      className="max-h-[78vh] w-full object-contain"
+                    />
+                    <div className="border-t border-white/10 bg-slate-950 px-4 py-3">
+                      <p className="text-sm font-semibold text-white">{photoPreview.title}</p>
+                    </div>
+                  </div>
+                </div>
+              ) : null}
               {itineraryPickerTarget ? (
                 <div
                   className="fixed inset-0 z-[70] flex items-center justify-center bg-slate-900/35 p-4"

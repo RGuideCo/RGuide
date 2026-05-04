@@ -26,6 +26,7 @@ interface InteractiveMapProps {
   activeGuideFitNonce?: number;
   visibleNestedStopParentIds?: string[];
   hoveredStopId?: string | null;
+  selectedStopId?: string | null;
   onHoverGuideStop?: (stopId: string | null) => void;
   onSelectGuideStop?: (stopId: string) => void;
   onSubmitMapClick?: (coordinates: [number, number]) => void;

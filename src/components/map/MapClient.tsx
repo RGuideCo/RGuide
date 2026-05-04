@@ -29,6 +29,7 @@ interface MapClientProps {
   activeGuideFitNonce?: number;
   visibleNestedStopParentIds?: string[];
   hoveredStopId?: string | null;
+  selectedStopId?: string | null;
   onHoverGuideStop?: (stopId: string | null) => void;
   onSelectGuideStop?: (stopId: string) => void;
   onSubmitMapClick?: (coordinates: [number, number]) => void;
@@ -730,21 +731,53 @@ function createGuideStopMarkerImage(color: string, label: string) {
   return ctx.getImageData(0, 0, size, size);
 }
 
+function addGuideStopMarkerImage(
+  map: maplibregl.Map,
+  imageName: string,
+  category: MapList["category"],
+  label: string,
+) {
+  if (map.hasImage(imageName)) {
+    return;
+  }
+  map.addImage(
+    imageName,
+    createGuideStopMarkerImage(CATEGORY_STYLES[category].mapColor, label),
+    { pixelRatio: 2 },
+  );
+}
+
 function ensureGuideStopMarkerImages(map: maplibregl.Map, guideStopData: FeatureCollection<Point, GuideStopFeatureProperties>) {
   for (const feature of guideStopData.features) {
     if (feature.properties.isNested) {
       continue;
     }
-    const imageName = feature.properties.markerImage;
-    if (map.hasImage(imageName)) {
-      continue;
-    }
-    map.addImage(
-      imageName,
-      createGuideStopMarkerImage(CATEGORY_STYLES[feature.properties.category].mapColor, feature.properties.rankLabel),
-      { pixelRatio: 2 },
+    addGuideStopMarkerImage(
+      map,
+      feature.properties.markerImage,
+      feature.properties.category,
+      feature.properties.rankLabel,
     );
   }
+}
+
+function addMissingGuideStopMarkerImage(
+  map: maplibregl.Map,
+  imageName: string,
+  guideStopData: FeatureCollection<Point, GuideStopFeatureProperties>,
+) {
+  const markerFeature = guideStopData.features.find(
+    (feature) => !feature.properties.isNested && feature.properties.markerImage === imageName,
+  );
+  if (!markerFeature) {
+    return;
+  }
+  addGuideStopMarkerImage(
+    map,
+    imageName,
+    markerFeature.properties.category,
+    markerFeature.properties.rankLabel,
+  );
 }
 
 function createPoiDiamondImage(color: string) {
@@ -1476,6 +1509,7 @@ export function MapClient({
   activeGuideFitNonce = 0,
   visibleNestedStopParentIds = [],
   hoveredStopId,
+  selectedStopId,
   onHoverGuideStop,
   onSelectGuideStop,
   onSubmitMapClick,
@@ -1541,6 +1575,7 @@ export function MapClient({
     () => createGuideStopData(activeGuide, visibleNestedStopParentIds),
     [activeGuide, visibleNestedStopParentIds],
   );
+  const guideStopDataRef = useRef(guideStopData);
   const activeGuideStopSignature = useMemo(
     () =>
       (activeGuide?.stops ?? [])
@@ -1659,6 +1694,9 @@ export function MapClient({
     };
   }, [continents, onHoverGuideStop, onSelectCity, onSelectContinent, onSelectCountry, onSelectGuideStop, onSelectSubarea, onSelectState, onSubmitMapClick, selection]);
   useEffect(() => {
+    guideStopDataRef.current = guideStopData;
+  }, [guideStopData]);
+  useEffect(() => {
     viewportModeRef.current = viewportMode;
   }, [viewportMode]);
   useEffect(() => {
@@ -1716,6 +1754,11 @@ export function MapClient({
         type: "geojson",
         data: neighborhoodBoundaryData,
       });
+
+      map.on("styleimagemissing", (event: { id: string }) => {
+        addMissingGuideStopMarkerImage(map, event.id, guideStopDataRef.current);
+      });
+      ensureGuideStopMarkerImages(map, guideStopData);
 
       try {
         addMapLayers(map);
@@ -2150,7 +2193,12 @@ export function MapClient({
     (map.getSource(NEIGHBORHOOD_BOUNDARY_SOURCE_ID) as GeoJSONSource).setData(neighborhoodBoundaryData);
   }, [cityData, continentLabelData, countryData, guideStopData, neighborhoodBoundaryData, stateLabelData]);
 
-  const activeGuidePulseStopId = hoveredStopId ?? visibleNestedStopParentIds[0] ?? null;
+  const activeGuidePulseStopId = useMemo(() => {
+    const renderedStopIds = new Set(guideStopData.features.map((feature) => feature.properties.id));
+    const candidateStopIds = [hoveredStopId, selectedStopId, visibleNestedStopParentIds[0] ?? null];
+
+    return candidateStopIds.find((stopId): stopId is string => Boolean(stopId && renderedStopIds.has(stopId))) ?? null;
+  }, [guideStopData, hoveredStopId, selectedStopId, visibleNestedStopParentIds]);
 
   useEffect(() => {
     const map = mapRef.current;

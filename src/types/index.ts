@@ -35,6 +35,7 @@ export interface MapList {
   seoDescription?: string;
   title: string;
   description: string;
+  photo?: string;
   url: string;
   category: ListCategory;
   submissionType?: SubmissionType;
@@ -65,6 +66,7 @@ export interface GuideStop {
   name: string;
   coordinates: [number, number];
   description: string;
+  photo?: string;
   price?: "$" | "$$" | "$$$";
   priceSource?: string;
   places?: GuideStop[];
