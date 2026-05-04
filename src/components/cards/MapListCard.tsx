@@ -92,6 +92,7 @@ const SAMPLE_POI_PHOTOS = [
   "https://images.unsplash.com/photo-1514933651103-005eec06c04b?auto=format&fit=crop&w=900&q=80",
   "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=900&q=80",
 ];
+const STOP_SCROLL_TOP_INSET = 4;
 
 function getSourceDisplayName(source: GuideSource) {
   return source.name
@@ -213,10 +214,10 @@ export function MapListCard({
 
       const stopRect = stopElement.getBoundingClientRect();
       const listRect = listElement.getBoundingClientRect();
-      const targetTop = listElement.scrollTop + stopRect.top - listRect.top;
+      const targetTop = listElement.scrollTop + stopRect.top - listRect.top - STOP_SCROLL_TOP_INSET;
 
       listElement.scrollTo({
-        top: targetTop,
+        top: Math.max(0, targetTop),
         behavior: "smooth",
       });
     };
@@ -320,7 +321,7 @@ export function MapListCard({
       const nextPadding = Math.max(0, Math.ceil(sentinelTop + listElement.clientHeight - naturalScrollHeight));
 
       setStopListEndPadding(nextPadding);
-      setStopListMaxScrollTop(Math.max(0, Math.ceil(sentinelTop)));
+      setStopListMaxScrollTop(Math.max(0, Math.ceil(sentinelTop - STOP_SCROLL_TOP_INSET)));
     };
 
     const scheduleUpdate = () => {
@@ -914,7 +915,7 @@ export function MapListCard({
                     }
                     className={`relative z-10 mt-2 grid gap-2 ${
                       fillPane && expanded
-                        ? "guide-stop-list min-h-0 flex-1 touch-pan-y auto-rows-max overflow-y-auto overscroll-contain pr-1"
+                        ? "guide-stop-list min-h-0 flex-1 touch-pan-y auto-rows-max overflow-y-auto overscroll-contain pt-0.5 pr-1"
                         : ""
                     }`}
                   >
@@ -983,14 +984,12 @@ export function MapListCard({
                           )}
                           <button
                             type="button"
-                            onClick={() => toggleStopWithActivation(stop.id)}
+                            onClick={() => activateGuideStop(stop.id)}
                             onFocus={() => onStopHoverChange?.(stop.id)}
                             onBlur={() => onStopHoverChange?.(null)}
-                            aria-expanded={isStopExpanded}
-                            aria-controls={`guide-stop-panel-${list.id}-${stop.id}`}
                             className="flex min-w-0 flex-1 items-center gap-2 text-left"
                           >
-                            <span className="min-w-0 flex-1 text-[13px] font-semibold text-slate-900">{stop.name}</span>
+                            <span className="min-w-0 flex-1 text-sm font-semibold text-slate-900">{stop.name}</span>
                             {stop.price ? (
                               <span
                                 title={stop.priceSource ? `Price source: ${stop.priceSource}` : "Restaurant price tier"}
@@ -1004,8 +1003,20 @@ export function MapListCard({
                                 {stop.places.length} places
                               </span>
                             ) : null}
+                          </button>
+                          <button
+                            type="button"
+                            onClick={() => toggleStopWithActivation(stop.id)}
+                            onFocus={() => onStopHoverChange?.(stop.id)}
+                            onBlur={() => onStopHoverChange?.(null)}
+                            aria-expanded={isStopExpanded}
+                            aria-controls={`guide-stop-panel-${list.id}-${stop.id}`}
+                            className="inline-flex h-7 w-7 shrink-0 items-center justify-center rounded-md text-slate-400 transition hover:bg-slate-950/[0.04] hover:text-slate-600 focus-visible:ring-2 focus-visible:ring-slate-300"
+                            aria-label={`${isStopExpanded ? "Collapse" : "Expand"} ${stop.name}`}
+                            title={`${isStopExpanded ? "Collapse" : "Expand"} ${stop.name}`}
+                          >
                             <ChevronDown
-                              className={`h-4 w-4 shrink-0 text-slate-400 transition-transform ${
+                              className={`h-4 w-4 shrink-0 transition-transform ${
                                 isStopExpanded ? "rotate-180" : ""
                               }`}
                             />
@@ -1078,7 +1089,7 @@ export function MapListCard({
                                           className="flex min-h-5 w-full items-center gap-2 text-left"
                                           aria-expanded={isPlaceExpanded}
                                         >
-                                          <span className="min-w-0 flex-1 text-xs font-semibold text-slate-900">{place.name}</span>
+                                          <span className="min-w-0 flex-1 text-sm font-semibold text-slate-900">{place.name}</span>
                                           <ChevronDown
                                             className={`h-3.5 w-3.5 shrink-0 text-slate-400 transition-transform ${
                                               isPlaceExpanded ? "rotate-180" : ""
