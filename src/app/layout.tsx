@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Host_Grotesk } from "next/font/google";
 import type { ReactNode } from "react";
 
+import { Analytics } from "@vercel/analytics/next";
 import { AuthModal } from "@/components/auth/AuthModal";
 import { AuthSync } from "@/components/auth/AuthSync";
 import { SubmittedGuidesSync } from "@/components/auth/SubmittedGuidesSync";
@@ -50,6 +51,7 @@ export default function RootLayout({
         <main>{children}</main>
         <Footer />
         <AuthModal />
+        <Analytics />
       </body>
     </html>
   );
