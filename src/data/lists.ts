@@ -216,7 +216,7 @@ export const mapLists: MapList[] = [
       "Best parks in Barcelona for Gaudi architecture, hilltop views, historic gardens, Ciutadella lawns, Montjuic walks, and green spaces worth saving.",
     title: "Green Escapes and Hilltop Views",
     description:
-      "Landmark parks, historic gardens, and hilltop viewpoints for days that need Gaudi mosaics, Ciutadella lawns, Montjuic paths, rose beds, or a skyline reset.",
+      "Use this when the day needs air between dense neighborhoods: Gaudi mosaics, Ciutadella lawns, Montjuic paths, rose beds, and hilltop viewpoints that turn a walk into a real route without leaving the city behind.",
     url: "https://www.google.com/maps/search/top+parks+in+barcelona",
     category: "Nature",
     location: {
@@ -322,7 +322,7 @@ export const mapLists: MapList[] = [
     seoDescription:
       "Best restaurants in the Gothic Quarter, Barcelona, from historic Catalan dining rooms to modern tasting menus and old-town spots that avoid the tourist-trap pattern.",
     title: "Old-City Tables That Hold Up",
-    description: "A food-first route through the Gothic lanes, favoring Catalan taverns, compact bistros, robata counters, and small tasting rooms that hold their own against old-town churn.",
+    description: "The Gothic Quarter can punish lazy restaurant searches, so this guide favors rooms with a reason to book: Catalan taverns, compact bistros, robata counters, and small tasting menus that hold their own inside the tourist-heavy lanes.",
     url: "https://www.google.com/maps/search/gothic+quarter+restaurants+barcelona",
     category: "Food",
     location: { city: "Barcelona", neighborhood: "Gothic Quarter", country: "Spain", continent: "Europe", scope: "city" },
@@ -355,7 +355,7 @@ export const mapLists: MapList[] = [
     seoDescription:
       "Best restaurants in El Born, Barcelona, including seafood counters, natural-wine rooms, tapas classics, market-adjacent kitchens, and booking-worthy local favorites.",
     title: "Cava, Counters, and Cool Rooms",
-    description: "Born dining for a neighborhood built on museum streets and late tables: seafood counters, cava rooms, natural-wine dinners, and market-adjacent crowd-pleasers.",
+    description: "El Born works best when dinner stays close to the neighborhood's museum streets and late-night pulse. This guide mixes seafood counters, cava rooms, natural-wine dinners, market-adjacent kitchens, and a few places that justify the crowd.",
     url: "https://www.google.com/maps/search/el+born+restaurants+barcelona",
     category: "Food",
     location: { city: "Barcelona", neighborhood: "El Born", country: "Spain", continent: "Europe", scope: "city" },
@@ -387,7 +387,7 @@ export const mapLists: MapList[] = [
     seoDescription:
       "Best restaurants in Eixample, Barcelona, from destination tasting menus and polished tapas counters to design-hotel dining rooms and reliable group-friendly classics.",
     title: "Big-Deal Tables and Tapas",
-    description: "Grid-side dining for Modernista days and polished nights, from tasting-menu reservations to hotel-linked natural wine, tapas counters, and group-friendly central rooms.",
+    description: "Eixample is where polished meals fit naturally into architecture days: tasting-menu reservations, hotel-linked natural wine, tapas counters, and group-friendly rooms that make sense around Passeig de Gracia and the grid.",
     url: "https://www.google.com/maps/search/eixample+restaurants+barcelona",
     category: "Food",
     location: { city: "Barcelona", neighborhood: "Eixample", country: "Spain", continent: "Europe", scope: "city" },
@@ -422,7 +422,7 @@ export const mapLists: MapList[] = [
     seoDescription:
       "Best restaurants in Gràcia, Barcelona, covering chef-led rooms, market lunches, creative tapas, casual local favorites, and neighborhood dining worth booking.",
     title: "Village Tables Worth the Walk",
-    description: "Meals that fit Gracia's plaza rhythm: market lunches, chef-led dinners, creative tapas, lighter Mediterranean rooms, and casual hits above Diagonal.",
+    description: "Gracia rewards meals that match its slower plaza rhythm. Use this for market lunches, chef-led dinners, creative tapas, lighter Mediterranean rooms, and casual hits that make staying above Diagonal feel intentional.",
     url: "https://www.google.com/maps/search/gracia+restaurants+barcelona",
     category: "Food",
     location: { city: "Barcelona", neighborhood: "Gràcia", country: "Spain", continent: "Europe", scope: "city" },
@@ -454,7 +454,7 @@ export const mapLists: MapList[] = [
     seoDescription:
       "Best restaurants in Poble-sec, Barcelona, for serious tapas, Montjuic-view rice, Venetian-Catalan plates, and dinner stops near theaters and Sala Apolo.",
     title: "Blai Bites and Montjuïc Meals",
-    description: "Poble-sec dining for the Montjuic slope and Parallel nights: standing montaditos, terrace rice, Venetian-Catalan plates, and pre-theater reservations.",
+    description: "Poble-sec meals work around the hill, the theaters, and the Blai crawl. This guide balances standing montaditos, terrace rice, Venetian-Catalan plates, and reservations that make sense before Apolo or after Montjuic.",
     url: "https://www.google.com/maps/search/poble+sec+restaurants+barcelona",
     category: "Food",
     location: { city: "Barcelona", neighborhood: "Poble-sec", country: "Spain", continent: "Europe", scope: "city" },
@@ -488,7 +488,7 @@ export const mapLists: MapList[] = [
       "Best restaurants in Barcelona, from world-class tasting menus and seafood counters to natural-wine rooms, tavern classics, market lunches, and neighborhood meals worth crossing town for.",
     title: "Tables Worth Crossing Town For",
     description:
-      "A cross-town shortlist for meals that shape the trip: destination tasting menus, old taverns, counter seafood, natural-wine rooms, tapas classics, and practical neighborhood anchors.",
+      "A cross-town restaurant shortlist for meals that can shape the trip, not just fill a slot: destination tasting menus, old taverns, counter seafood, natural-wine rooms, tapas classics, and practical neighborhood anchors.",
     url: "https://www.google.com/maps/search/best+restaurants+barcelona",
     category: "Food",
     location: { city: "Barcelona", country: "Spain", continent: "Europe", scope: "city" },
@@ -641,7 +641,7 @@ export const mapLists: MapList[] = [
       "Best tapas in Barcelona, from standing-room montaditos and cava counters to polished small plates, vermouth rooms, classic taverns, and neighborhood tapas bars worth planning around.",
     title: "Counters, Conservas, and Vermouth Plates",
     description:
-      "Tapas spots where the meal is built one plate at a time: standing montaditos, cava-and-anchovy counters, polished small plates, vermouth stops, and reliable group rooms.",
+      "A tapas route for building the meal one plate at a time: standing montaditos, cava-and-anchovy counters, polished small plates, vermouth stops, and reliable group rooms that still feel specific rather than interchangeable.",
     url: "https://www.google.com/maps/search/best+tapas+barcelona",
     category: "Food",
     location: { city: "Barcelona", country: "Spain", continent: "Europe", scope: "city" },
@@ -676,7 +676,7 @@ export const mapLists: MapList[] = [
       "Best seafood in Barcelona, from Born seafood counters and Montjuïc rice terraces to robata fish, Venetian-Catalan plates, market taverns, and polished seafood rooms.",
     title: "Fish Counters and Rice With a View",
     description:
-      "Seafood beyond the beachside paella default: Born counters, Montjuic rice terraces, robata fish, preserved anchovies, Venetian-Catalan plates, and polished raw-bar dinners.",
+      "Seafood beyond the beachside paella default, with each stop doing a different job: Born counters, Montjuic rice terraces, robata fish, preserved anchovies, Venetian-Catalan plates, and polished raw-bar dinners.",
     url: "https://www.google.com/maps/search/best+seafood+barcelona",
     category: "Food",
     location: { city: "Barcelona", country: "Spain", continent: "Europe", scope: "city" },
@@ -711,7 +711,7 @@ export const mapLists: MapList[] = [
       "Best Catalan food in Barcelona, from old taverns and market lunches to contemporary Catalan tasting menus, polished bistros, tapas counters, and regional cooking worth booking.",
     title: "Taverns, Markets, and Modern Catalan Rooms",
     description:
-      "Regional cooking with a sense of place: old taverns, market lunches, seasonal Catalan rooms, polished bistros, and tapas counters that still feel rooted in local habits.",
+      "A Catalan-food guide that leans into regional habits instead of vague Mediterranean branding: old taverns, market lunches, seasonal rooms, polished bistros, and tapas counters rooted in local routines.",
     url: "https://www.google.com/maps/search/best+catalan+food+barcelona",
     category: "Food",
     location: { city: "Barcelona", country: "Spain", continent: "Europe", scope: "city" },
@@ -746,7 +746,7 @@ export const mapLists: MapList[] = [
       "Best fine dining in Barcelona, from world-famous tasting menus and Michelin-backed rooms to chef-led Catalan dinners, seafood splurges, and polished reservations.",
     title: "Reservations to Build the Trip Around",
     description:
-      "Plan-ahead meals for the expensive filter: global tasting menus, Michelin-backed Catalan cooking, seafood splurges, and chef-led neighborhood rooms with real occasion energy.",
+      "Use this for the expensive meals that need planning, deposits, or a protected evening: global tasting menus, Michelin-backed Catalan cooking, seafood splurges, and chef-led neighborhood rooms with real occasion energy.",
     url: "https://www.google.com/maps/search/best+fine+dining+barcelona",
     category: "Food",
     location: { city: "Barcelona", country: "Spain", continent: "Europe", scope: "city" },
@@ -781,7 +781,7 @@ export const mapLists: MapList[] = [
     seoDescription:
       "Best museums and cultural stops in the Gothic Quarter, Barcelona, including Roman Barcino layers, cathedral streets, civic landmarks, and historic squares.",
     title: "Roman Stones and Cathedral Shadows",
-    description: "A compact old-city culture route through Roman foundations, cathedral streets, civic halls, and small squares that make the Gothic Quarter readable beyond atmosphere.",
+    description: "The Gothic Quarter is most useful when its history becomes legible, not just atmospheric. This route ties Roman foundations, cathedral streets, civic halls, and intimate squares into a compact old-city culture walk.",
     url: "https://www.google.com/maps/search/gothic+quarter+culture+barcelona",
     category: "Culture",
     location: { city: "Barcelona", neighborhood: "Gothic Quarter", country: "Spain", continent: "Europe", scope: "city" },
@@ -810,7 +810,7 @@ export const mapLists: MapList[] = [
     seoDescription:
       "Best museums and cultural stops in El Born, Barcelona, from the Picasso Museum and Santa Maria del Mar to medieval memory sites and Modernista music rooms.",
     title: "Picasso, Markets, and Memory",
-    description: "Born culture for a museum-heavy afternoon: Picasso context, merchant-guild architecture, market memory, music rooms, and Ciutadella-side history in tight walking range.",
+    description: "El Born's cultural strength is density: Picasso context, merchant-guild architecture, market memory, music rooms, and Ciutadella-side history all sit close enough to make one strong museum-heavy afternoon.",
     url: "https://www.google.com/maps/search/el+born+culture+barcelona",
     category: "Culture",
     location: { city: "Barcelona", neighborhood: "El Born", country: "Spain", continent: "Europe", scope: "city" },
@@ -839,7 +839,7 @@ export const mapLists: MapList[] = [
     seoDescription:
       "Best museums and cultural stops in Eixample, Barcelona, focused on Gaudi houses, Sagrada Familia, Modernista architecture, and design landmarks across the grid.",
     title: "Modernisme Power Walk",
-    description: "A grid-walk through the city's showpiece architecture, pairing Gaudi houses with Modernista institutions, design history, and central avenues that reward slow looking.",
+    description: "Eixample's grid turns architecture into a walkable sequence. Use this for Gaudi houses, Modernista institutions, design history, and central avenues where the details reward slowing down instead of rushing between icons.",
     url: "https://www.google.com/maps/search/eixample+culture+barcelona",
     category: "Culture",
     location: { city: "Barcelona", neighborhood: "Eixample", country: "Spain", continent: "Europe", scope: "city" },
@@ -868,7 +868,7 @@ export const mapLists: MapList[] = [
     seoDescription:
       "Best museums and cultural stops in Gràcia, Barcelona, balancing Park Guell and Casa Vicens with plazas, cinemas, markets, and neighborhood public life.",
     title: "Gaudí Beginnings and Plaza Life",
-    description: "Gracia culture that keeps Gaudi's early work in conversation with plaza life, independent cinemas, market routines, and the neighborhood's village-scale public spaces.",
+    description: "Gracia culture works best when Gaudi is only part of the story. This guide pairs early architecture with plaza life, independent cinemas, market routines, and the public spaces that keep the district village-scaled.",
     url: "https://www.google.com/maps/search/gracia+culture+barcelona",
     category: "Culture",
     location: { city: "Barcelona", neighborhood: "Gràcia", country: "Spain", continent: "Europe", scope: "city" },
@@ -897,7 +897,7 @@ export const mapLists: MapList[] = [
     seoDescription:
       "Best museums and cultural stops in Poble-sec and Montjuic, Barcelona, including MNAC, Fundacio Joan Miro, CaixaForum, hilltop history, and performance spaces.",
     title: "Montjuïc Museum Day",
-    description: "A hill-and-theater culture route for Poble-sec and Montjuic, built around major museums, performance spaces, Olympic layers, gardens, and skyline breaks.",
+    description: "Poble-sec and Montjuic turn culture into a hill day: major museums, performance spaces, Olympic layers, gardens, and skyline breaks. Use it when the route should feel less cramped than the old-city circuit.",
     url: "https://www.google.com/maps/search/poble+sec+montjuic+culture+barcelona",
     category: "Culture",
     location: { city: "Barcelona", neighborhood: "Poble-sec", country: "Spain", continent: "Europe", scope: "city" },
@@ -927,7 +927,7 @@ export const mapLists: MapList[] = [
     seoDescription:
       "Best places to stay in the Gothic Quarter, Barcelona, for old-city hotels, boutique stays, hostels, cathedral access, and walkable historic lanes.",
     title: "Sleep in the Old City",
-    description: "Old-city stays for travelers who want cathedral-lane walkability, late-night convenience, and historic texture while accepting tighter streets and heavier visitor traffic.",
+    description: "Stay here when walkability matters more than quiet: cathedral lanes, late-night convenience, and old-city texture are the upside, while tighter streets and heavier visitor traffic are the tradeoff.",
     url: "https://www.google.com/maps/search/gothic+quarter+hotels+hostels+barcelona",
     category: "Stay",
     location: { city: "Barcelona", neighborhood: "Gothic Quarter", country: "Spain", continent: "Europe", scope: "city" },
@@ -955,7 +955,7 @@ export const mapLists: MapList[] = [
     seoDescription:
       "Best places to stay in El Born, Barcelona, including boutique hotels, practical hostals, museum-street bases, Ciutadella access, and lively old-town lodging.",
     title: "Boutique Beds by the Market",
-    description: "Born bases for travelers who want boutique rooms near museum streets, Santa Caterina, Ciutadella, and a livelier old-town edge than the cathedral core.",
+    description: "El Born is the old-town base for travelers who want energy without sleeping on the loudest Gothic lanes. Expect boutique rooms near museum streets, Santa Caterina, Ciutadella, and a livelier edge after dark.",
     url: "https://www.google.com/maps/search/el+born+hotels+hostels+barcelona",
     category: "Stay",
     location: { city: "Barcelona", neighborhood: "El Born", country: "Spain", continent: "Europe", scope: "city" },
@@ -983,7 +983,7 @@ export const mapLists: MapList[] = [
     seoDescription:
       "Best places to stay in Eixample, Barcelona, for design hotels, central transit, Modernista architecture, hostels, and calmer bases outside the old-city lanes.",
     title: "Design Hotels on the Grid",
-    description: "Grid-side bases for design hotels, clean transit, Modernista walks, and a calmer sleep setup than the old-city lanes without giving up central access.",
+    description: "Eixample is the practical polished base: design hotels, cleaner transit, Modernista walks, and wider streets. Use it when central access matters but the old-city sleep setup feels too cramped.",
     url: "https://www.google.com/maps/search/eixample+hotels+hostels+barcelona",
     category: "Stay",
     location: { city: "Barcelona", neighborhood: "Eixample", country: "Spain", continent: "Europe", scope: "city" },
@@ -1011,7 +1011,7 @@ export const mapLists: MapList[] = [
     seoDescription:
       "Best places to stay in Gràcia, Barcelona, for village-like plazas, Park Guell access, budget hostels, boutique lodging, and a less tourist-saturated base.",
     title: "Village-Base Stays",
-    description: "Gracia stays for travelers who want plaza evenings, neighborhood dining, Park Guell access, and a less saturated sleep base above Diagonal.",
+    description: "Gracia works for travelers who want the stay to feel like a neighborhood, not only a launchpad. The tradeoff is being above Diagonal; the payoff is plaza evenings, local dining, and easier Park Guell access.",
     url: "https://www.google.com/maps/search/gracia+hotels+hostels+barcelona",
     category: "Stay",
     location: { city: "Barcelona", neighborhood: "Gràcia", country: "Spain", continent: "Europe", scope: "city" },
@@ -1039,7 +1039,7 @@ export const mapLists: MapList[] = [
     seoDescription:
       "Best places to stay in Poble-sec, Barcelona, for Montjuic access, theater nights, Sala Apolo proximity, budget rooms, and a base between old town and the hill.",
     title: "Sleep Near Montjuïc",
-    description: "Poble-sec bases for Montjuic days, theater nights, Apolo plans, and easy metro movement between old-town streets and the hill.",
+    description: "Poble-sec is a strategic base when the trip leans toward Montjuic, theaters, Apolo, or Blai nights. It keeps old-town access close while giving the stay a hill-and-neighborhood rhythm.",
     url: "https://www.google.com/maps/search/poble+sec+hotels+hostels+barcelona",
     category: "Stay",
     location: { city: "Barcelona", neighborhood: "Poble-sec", country: "Spain", continent: "Europe", scope: "city" },
@@ -1067,7 +1067,7 @@ export const mapLists: MapList[] = [
     seoDescription:
       "Best hostels in Barcelona, pulling the strongest hostel pick from each neighborhood guide for social dorms, private rooms, location, and traveler fit.",
     title: "Social Bases Across the Map",
-    description: "A hostel shortlist that balances party energy, cleaner dorm infrastructure, private-room flexibility, transit, and neighborhood fit from the old city to Gracia and Poble-sec.",
+    description: "A hostel shortlist built around traveler fit, not just bed price: party energy, cleaner dorm infrastructure, private-room flexibility, transit, and neighborhood tradeoffs from the old city to Gracia and Poble-sec.",
     url: "https://www.google.com/maps/search/best+hostels+barcelona",
     category: "Stay",
     location: { city: "Barcelona", country: "Spain", continent: "Europe", scope: "city" },
@@ -1096,7 +1096,7 @@ export const mapLists: MapList[] = [
     seoDescription:
       "Best hostels in the Gothic Quarter, Barcelona, including old-city party hostels, cathedral-area dorms, budget private rooms, and walkable bases near Placa Reial and El Born.",
     title: "Old-City Dorms and Party Bases",
-    description: "Gothic Quarter hostel picks for travelers choosing between Placa Reial party energy, cathedral-side calm, and simple budget beds close to the oldest lanes.",
+    description: "Gothic Quarter hostels are about choosing your old-city intensity. This guide separates Placa Reial party energy, cathedral-side calm, and simple budget beds close to the oldest lanes.",
     url: "https://www.google.com/maps/search/gothic+quarter+hostels+barcelona",
     category: "Stay",
     location: { city: "Barcelona", neighborhood: "Gothic Quarter", country: "Spain", continent: "Europe", scope: "city" },
@@ -1123,7 +1123,7 @@ export const mapLists: MapList[] = [
     seoDescription:
       "Best hostels in El Born, Barcelona, covering Arc de Triomf bases, social dorms, budget private rooms, and hostel stays close to Santa Maria del Mar, Ciutadella, and the Picasso Museum.",
     title: "Dorms by Ciutadella and the Born",
-    description: "Born hostel picks for travelers who want Ciutadella, Arc de Triomf, museum streets, and social dorm energy without sleeping deep in the busiest Gothic lanes.",
+    description: "El Born hostels suit travelers who want social dorm energy near Ciutadella, Arc de Triomf, and museum streets without sleeping deep in the busiest Gothic lanes. Use this for old-town access with a slightly softer landing.",
     url: "https://www.google.com/maps/search/el+born+hostels+barcelona",
     category: "Stay",
     location: { city: "Barcelona", neighborhood: "El Born", country: "Spain", continent: "Europe", scope: "city" },
@@ -1150,7 +1150,7 @@ export const mapLists: MapList[] = [
     seoDescription:
       "Best hostels in Eixample, Barcelona, including social hostels near Sagrada Familia, cocktail-friendly bases, central dorms, and calmer garden-style hostels near Passeig de Gracia.",
     title: "Grid-Side Social Hostels",
-    description: "Eixample hostel picks for travelers who want central transit, cleaner dorm infrastructure, and social programming outside the densest old-town streets.",
+    description: "Eixample hostels are the cleaner, transit-friendly option: social programming and dorm infrastructure without the densest old-town streets, useful for longer stays or first-timers.",
     url: "https://www.google.com/maps/search/eixample+hostels+barcelona",
     category: "Stay",
     location: { city: "Barcelona", neighborhood: "Eixample", country: "Spain", continent: "Europe", scope: "city" },
@@ -1179,7 +1179,7 @@ export const mapLists: MapList[] = [
     seoDescription:
       "Best hostels in Gracia, Barcelona, for village-like plazas, Park Guell access, social dorms, quieter hillside bases, and budget stays above Diagonal.",
     title: "Village Hostel Bases",
-    description: "Gracia hostel picks for travelers who want plaza life, Park Guell access, and a less old-town-saturated sleep base above Diagonal.",
+    description: "Gracia hostels trade central chaos for plaza life, Park Guell access, and a more local sleep base above Diagonal. Use this when the hostel should support slower neighborhood days and less old-town churn.",
     url: "https://www.google.com/maps/search/gracia+hostels+barcelona",
     category: "Stay",
     location: { city: "Barcelona", neighborhood: "Gràcia", country: "Spain", continent: "Europe", scope: "city" },
@@ -1207,7 +1207,7 @@ export const mapLists: MapList[] = [
     seoDescription:
       "Best hostels in Poble-sec, Barcelona, for Parallel nightlife, Carrer de Blai tapas, Montjuic access, budget dorms, and social stays near Sala Apolo.",
     title: "Parallel Backpacker Bases",
-    description: "Poble-sec hostel picks for travelers who want Carrer de Blai tapas, Montjuic days, Apolo nights, and quick metro access from Parallel.",
+    description: "Poble-sec hostels work for travelers who want a cheaper, social base near Carrer de Blai tapas, Montjuic days, Apolo nights, and quick metro access from Parallel. It is the practical pick for hill days and late nights.",
     url: "https://www.google.com/maps/search/poble+sec+hostels+barcelona",
     category: "Stay",
     location: { city: "Barcelona", neighborhood: "Poble-sec", country: "Spain", continent: "Europe", scope: "city" },
@@ -1235,7 +1235,7 @@ export const mapLists: MapList[] = [
     seoDescription:
       "Best dive bars in Eixample, Barcelona, covering local small bars, classic counters, vermouth spots, and lower-key late-night neighborhood drinking.",
     title: "Low-Key Drinks on the Grid",
-    description: "Eixample does low-key nights through corners of the grid rather than one obvious strip: vermouth counters, craft-beer rooms, bodegas, and local bars tucked between broad avenues. Use this when dinner needs an easy second act without committing to the city's destination cocktail scene.",
+    description: "Eixample does low-key nights through corners of the grid rather than one obvious strip: vermouth counters, craft-beer rooms, bodegas, and local bars tucked between broad avenues. Use it when dinner needs an easy second act without a destination-cocktail commitment.",
     url: "https://www.google.com/maps/search/eixample+dive+bars+barcelona",
     category: "Nightlife",
     location: { city: "Barcelona", neighborhood: "Eixample", country: "Spain", continent: "Europe", scope: "city" },
@@ -1269,7 +1269,7 @@ export const mapLists: MapList[] = [
     seoDescription:
       "Best bars in Eixample, Barcelona, including classic cocktail rooms, speakeasy-style stops, high-demand nightlife, and central bars worth planning around.",
     title: "Polished Nights Around Passeig",
-    description: "Eixample is Barcelona's most polished cocktail district, where old martini rituals, world-ranked rooms, and speakeasy doors sit inside the city grid. Use this for a planned night with stronger service, higher prices, and drinks that deserve more attention than a casual bar hop.",
+    description: "Eixample is the polished cocktail district: old martini rituals, world-ranked rooms, and speakeasy doors tucked into the grid. Use this for a planned night with stronger service, higher prices, and drinks that deserve more attention than a casual hop.",
     url: "https://www.google.com/maps/search/eixample+popular+bars+barcelona",
     category: "Nightlife",
     location: { city: "Barcelona", neighborhood: "Eixample", country: "Spain", continent: "Europe", scope: "city" },
@@ -1304,7 +1304,7 @@ export const mapLists: MapList[] = [
     seoDescription:
       "Best dive bars in El Born, Barcelona, for old-school cava, tapas counters, vermouth stops, wine bars, and smaller neighborhood drinking culture.",
     title: "Cava Corners and Wine Dens",
-    description: "El Born's quieter bar route works because the neighborhood is tight: cava counters, wine rooms, vermouth stops, and old tapas bars sit within a few medieval blocks. Use this before or after dinner when the night should stay loose, walkable, and more conversational than theatrical.",
+    description: "El Born's quieter bar route works because the neighborhood is tight: cava counters, wine rooms, vermouth stops, and old tapas bars sit within a few medieval blocks. Use it before or after dinner when the night should stay loose, walkable, and conversational.",
     url: "https://www.google.com/maps/search/el+born+dive+bars+barcelona",
     category: "Nightlife",
     location: { city: "Barcelona", neighborhood: "El Born", country: "Spain", continent: "Europe", scope: "city" },
@@ -1337,7 +1337,7 @@ export const mapLists: MapList[] = [
     seoDescription:
       "Best bars in El Born, Barcelona, including destination cocktail bars, speakeasy-style rooms, high-traffic nightlife, and late-night spots with real momentum.",
     title: "Born After-Dark Staples",
-    description: "El Born is where Barcelona turns old lanes into destination nightlife, with hidden cocktail doors, busy rooms, and bars whose wait is part of the signal. Use this when the night should feel like an event, not just a drink between dinner and bed.",
+    description: "El Born turns old lanes into destination nightlife, with hidden cocktail doors, busy rooms, and waits that are part of the signal. Use this when the night should feel like an event, not just a drink between dinner and bed.",
     url: "https://www.google.com/maps/search/el+born+popular+bars+barcelona",
     category: "Nightlife",
     location: { city: "Barcelona", neighborhood: "El Born", country: "Spain", continent: "Europe", scope: "city" },
@@ -1371,7 +1371,7 @@ export const mapLists: MapList[] = [
     seoDescription:
       "Best dive bars in the Gothic Quarter, Barcelona, from old-city counter bars and gritty classics to late-night locals with real neighborhood character.",
     title: "Old-City Hideout Bars",
-    description: "The Gothic Quarter is easiest to get wrong at night, so this route favors old-city bars with actual texture: standing counters, indie dives, art-history rooms, and late spots with some scuff left. Use it when you want the center's energy without surrendering the whole night to tourist churn.",
+    description: "The Gothic Quarter is easiest to get wrong at night, so this route favors old-city bars with actual texture: standing counters, indie dives, art-history rooms, and late spots with some scuff left. Use it when you want central energy without tourist churn.",
     url: "https://www.google.com/maps/search/gothic+quarter+dive+bars+barcelona",
     category: "Nightlife",
     location: { city: "Barcelona", neighborhood: "Gothic Quarter", country: "Spain", continent: "Europe", scope: "city" },
@@ -1404,7 +1404,7 @@ export const mapLists: MapList[] = [
     seoDescription:
       "Best bars in the Gothic Quarter, Barcelona, including cocktail rooms, live-music venues, busy old-city nightlife, and Plaça Reial late-night anchors.",
     title: "Plaça Reial Night Machines",
-    description: "The Gothic Quarter's bigger nights gather around Placa Reial and the central lanes, where jazz rooms, clubs, live sets, and cocktail bars keep the old city awake. Use this for a structured late plan when music, crowds, and a final room matter more than quiet discovery.",
+    description: "The Gothic Quarter's bigger nights gather around Placa Reial and the central lanes, where jazz rooms, clubs, live sets, and cocktail bars keep the old city awake. Use this when music, crowds, and a final room matter more than quiet discovery.",
     url: "https://www.google.com/maps/search/gothic+quarter+popular+nightlife+barcelona",
     category: "Nightlife",
     location: { city: "Barcelona", neighborhood: "Gothic Quarter", country: "Spain", continent: "Europe", scope: "city" },
@@ -1437,7 +1437,7 @@ export const mapLists: MapList[] = [
     seoDescription:
       "Best dive bars in Gràcia, Barcelona, covering smaller neighborhood bars, bodegas, natural-wine stops, vermouth rooms, and relaxed late-night hangouts.",
     title: "Village Bars with Regulars",
-    description: "Gracia's low-key nights move at plaza speed, with bodegas, vermouth, small wine rooms, and casual bars serving regulars before visitors notice the rhythm. Use this when the plan should feel local, slow, and easy to stretch across a few nearby squares.",
+    description: "Gracia's low-key nights move at plaza speed, with bodegas, vermouth, small wine rooms, and casual bars serving regulars before visitors notice the rhythm. Use this when the plan should feel slow, local, and easy to stretch across nearby squares.",
     url: "https://www.google.com/maps/search/gracia+dive+bars+barcelona",
     category: "Nightlife",
     location: { city: "Barcelona", neighborhood: "Gràcia", country: "Spain", continent: "Europe", scope: "city" },
@@ -1470,7 +1470,7 @@ export const mapLists: MapList[] = [
     seoDescription:
       "Best bars in Gràcia, Barcelona, including plaza nightlife, independent music rooms, classic cocktail spots, and stronger destination bars with event pull.",
     title: "Gràcia Nights That Travel",
-    description: "Gracia's stronger nightlife keeps the village feel but adds destination pull: independent music, gin bars, whiskey rooms, plaza terraces, and small venues with a loyal crowd. Use this when you want a night that travels beyond the center without losing neighborhood scale.",
+    description: "Gracia's stronger nightlife keeps the village feel but adds destination pull: independent music, gin bars, whiskey rooms, plaza terraces, and small venues with loyal crowds. Use this when you want a night beyond the center without losing neighborhood scale.",
     url: "https://www.google.com/maps/search/gracia+popular+nightlife+barcelona",
     category: "Nightlife",
     location: { city: "Barcelona", neighborhood: "Gràcia", country: "Spain", continent: "Europe", scope: "city" },
@@ -1506,7 +1506,7 @@ export const mapLists: MapList[] = [
     seoDescription:
       "Best dive bars in Poble-sec, Barcelona, from old-school bodegas and Carrer de Blai pintxos stops to standing-room tapas bars and neighborhood drinks.",
     title: "Bodega Crawl on Blai",
-    description: "Poble-sec is built for a compact crawl, with Carrer de Blai, old bodegas, standing montaditos, craft beer, and vermouth rooms packed below Montjuic. Use this before Apolo, after a hill day, or when dinner and drinks should blur without needing a reservation-heavy plan.",
+    description: "Poble-sec is built for a compact crawl, with Carrer de Blai, old bodegas, standing montaditos, craft beer, and vermouth rooms packed below Montjuic. Use this before Apolo, after a hill day, or when dinner and drinks should blur without a reservation-heavy plan.",
     url: "https://www.google.com/maps/search/poble+sec+dive+bars+barcelona",
     category: "Nightlife",
     location: { city: "Barcelona", neighborhood: "Poble-sec", country: "Spain", continent: "Europe", scope: "city" },
@@ -1581,7 +1581,7 @@ export const mapLists: MapList[] = [
     seoDescription:
       "Best dive bars in Barcelona, pulling the strongest smaller bar picks from Eixample, El Born, the Gothic Quarter, Gràcia, and Poble-sec.",
     title: "Cellars, Counters, and Late-Night Regulars",
-    description: "Barcelona's best low-key bar route is not one neighborhood, but a set of old rooms that still explain the city: absinthe history, cava counters, Gothic taverns, Gracia regulars, and Poble-sec montaditos. Use this when you want character before polish and a night that can stay casual.",
+    description: "The best low-key bar route is not one neighborhood, but a set of old rooms that still explain the city: absinthe history, cava counters, Gothic taverns, Gracia regulars, and Poble-sec montaditos. Use this when you want character before polish.",
     url: "https://www.google.com/maps/search/best+dive+bars+barcelona",
     category: "Nightlife",
     location: { city: "Barcelona", country: "Spain", continent: "Europe", scope: "city" },
@@ -1612,7 +1612,7 @@ export const mapLists: MapList[] = [
     seoDescription:
       "Best bars in Barcelona, aggregating the biggest destination cocktail rooms, live-music spots, and high-demand nightlife picks from each neighborhood guide.",
     title: "Cocktails, Clubs, and Rooms With Gravity",
-    description: "Barcelona's destination nightlife now runs from world-ranked cocktail rooms to Plaça Reial music clubs, Gracia venues, and the Apolo orbit in Poble-sec. Use this when the night deserves planning, queues, tickets, or a room people cross town to reach.",
+    description: "Destination nightlife runs from world-ranked cocktail rooms to Placa Reial music clubs, Gracia venues, and the Apolo orbit in Poble-sec. Use this when the night deserves planning, queues, tickets, or a room people cross town to reach.",
     url: "https://www.google.com/maps/search/best+bars+barcelona",
     category: "Nightlife",
     location: { city: "Barcelona", country: "Spain", continent: "Europe", scope: "city" },
@@ -1647,7 +1647,7 @@ export const mapLists: MapList[] = [
     seoDescription:
       "Best culture in Barcelona, aggregating the strongest museum, architecture, memory, and landmark picks from each neighborhood guide.",
     title: "Cathedrals, Modernisme, and Museum Hills",
-    description: "A culture spine across the strongest neighborhood picks, connecting Gothic foundations, Born merchant history, Eixample architecture, Gracia Gaudi, and Montjuic art.",
+    description: "A culture spine for reading the city across neighborhoods: Gothic foundations, Born merchant history, Eixample architecture, Gracia Gaudi, and Montjuic art. Use it when you want the essential cultural stops without treating them as disconnected landmarks.",
     url: "https://www.google.com/maps/search/best+culture+barcelona",
     category: "Culture",
     location: { city: "Barcelona", country: "Spain", continent: "Europe", scope: "city" },
@@ -1677,7 +1677,7 @@ export const mapLists: MapList[] = [
     seoDescription:
       "Best one-day Barcelona itinerary, combining one essential culture stop, one restaurant, one neighborhood walk, one low-key bar, and one destination nightlife option.",
     title: "One Strong Day, No Filler",
-    description: "A focused first-day route that chooses one great architecture stop, a counter lunch, old-city wandering, a salty cava pause, and a final cocktail spectacle.",
+    description: "A focused first-day route that chooses one great architecture stop, a counter lunch, old-city wandering, a salty cava pause, and a final cocktail spectacle. It is built to feel complete without pretending you can see everything in one day.",
     url: "https://www.google.com/maps/search/best+things+to+do+barcelona+one+day",
     category: "Activities",
     location: { city: "Barcelona", country: "Spain", continent: "Europe", scope: "city" },
@@ -1706,7 +1706,7 @@ export const mapLists: MapList[] = [
     seoDescription:
       "Best Barcelona weekend itinerary, mixing culture, restaurants, dive bars, popular nightlife, hostel/stay context, and neighborhood pacing across two days.",
     title: "Two Nights, Five Neighborhood Moods",
-    description: "A weekend route with room to breathe: Gracia base energy, Eixample architecture, old-city nights, Montjuic art, Poble-sec bites, and one proper late finish.",
+    description: "A weekend route with room to breathe: Gracia base energy, Eixample architecture, old-city nights, Montjuic art, Poble-sec bites, and one proper late finish. Use it when two days should feel paced, not stuffed.",
     url: "https://www.google.com/maps/search/barcelona+weekend+itinerary",
     category: "Activities",
     location: { city: "Barcelona", country: "Spain", continent: "Europe", scope: "city" },
@@ -1738,7 +1738,7 @@ export const mapLists: MapList[] = [
     seoDescription:
       "Best one-week Barcelona itinerary, using the strongest citywide picks across restaurants, culture, dive bars, popular bars, hostels, stays, neighborhoods, and Montjuïc.",
     title: "A Week From Gràcia to the Hill",
-    description: "A longer route that lets the city's categories spread out: hostel base, Gaudi starts, old-city history, tasting-menu splurge, Born nightlife, Montjuic reset, and Poble-sec finish.",
+    description: "A longer route that lets the categories spread out instead of competing for one day: hostel base, Gaudi starts, old-city history, tasting-menu splurge, Born nightlife, Montjuic reset, and Poble-sec finish.",
     url: "https://www.google.com/maps/search/barcelona+one+week+itinerary",
     category: "Activities",
     location: { city: "Barcelona", country: "Spain", continent: "Europe", scope: "city" },
