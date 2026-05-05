@@ -1,0 +1,190 @@
+{
+  "san-antonio::downtown-river-walk": {
+    "type": "Feature",
+    "properties": {
+      "id": "san-antonio::downtown-river-walk",
+      "cityId": "san-antonio",
+      "city": "San Antonio",
+      "country": "United States",
+      "name": "Downtown River Walk",
+      "parentName": null,
+      "displayName": "United States San Antonio Arsenal, River Walk, Arsenal, Downtown, San Antonio, Bexar County, Texas, 78205, United States",
+      "source": {
+        "provider": "Nominatim / OpenStreetMap",
+        "datasetUrl": "https://nominatim.openstreetmap.org/search",
+        "query": "Downtown River Walk, San Antonio, United States"
+      }
+    },
+    "geometry": {
+      "type": "Point",
+      "coordinates": [
+        -98.4936121,
+        29.4166391
+      ]
+    }
+  },
+  "san-antonio::pearl": {
+    "type": "Feature",
+    "properties": {
+      "id": "san-antonio::pearl",
+      "cityId": "san-antonio",
+      "city": "San Antonio",
+      "country": "United States",
+      "name": "Pearl",
+      "parentName": null,
+      "displayName": "Pearl, San Antonio, Bexar County, Texas, 78215, United States",
+      "source": {
+        "provider": "Nominatim / OpenStreetMap",
+        "datasetUrl": "https://nominatim.openstreetmap.org/search",
+        "query": "Pearl, San Antonio, United States"
+      }
+    },
+    "geometry": {
+      "type": "Point",
+      "coordinates": [
+        -98.4803062,
+        29.4425009
+      ]
+    }
+  },
+  "san-antonio::southtown": {
+    "type": "Feature",
+    "properties": {
+      "id": "san-antonio::southtown",
+      "cityId": "san-antonio",
+      "city": "San Antonio",
+      "country": "United States",
+      "name": "Southtown",
+      "parentName": null,
+      "displayName": "Southtown, San Antonio, Bexar County, Texas, 78204, United States",
+      "source": {
+        "provider": "Nominatim / OpenStreetMap",
+        "datasetUrl": "https://nominatim.openstreetmap.org/search",
+        "query": "Southtown, San Antonio, United States"
+      }
+    },
+    "geometry": {
+      "type": "Point",
+      "coordinates": [
+        -98.4911786,
+        29.4102053
+      ]
+    }
+  },
+  "san-antonio::king-william": {
+    "type": "Feature",
+    "properties": {
+      "id": "san-antonio::king-william",
+      "cityId": "san-antonio",
+      "city": "San Antonio",
+      "country": "United States",
+      "name": "King William",
+      "parentName": null,
+      "displayName": "King William, Southtown, San Antonio, Bexar County, Texas, 78205, United States",
+      "source": {
+        "provider": "Nominatim / OpenStreetMap",
+        "datasetUrl": "https://nominatim.openstreetmap.org/search",
+        "query": "King William, San Antonio, United States"
+      }
+    },
+    "geometry": {
+      "type": "Point",
+      "coordinates": [
+        -98.4915819,
+        29.4142371
+      ]
+    }
+  },
+  "san-antonio::market-square": {
+    "type": "Feature",
+    "properties": {
+      "id": "san-antonio::market-square",
+      "cityId": "san-antonio",
+      "city": "San Antonio",
+      "country": "United States",
+      "name": "Market Square",
+      "parentName": null,
+      "displayName": "Market Square, 514, West Commerce Street, Cattleman's Square, San Antonio, Bexar County, Texas, 78207, United States",
+      "source": {
+        "provider": "Nominatim / OpenStreetMap",
+        "datasetUrl": "https://nominatim.openstreetmap.org/search",
+        "query": "Market Square, San Antonio, United States"
+      }
+    },
+    "geometry": {
+      "type": "Polygon",
+      "coordinates": [
+        [
+          [
+            -98.501067,
+            29.4247563
+          ],
+          [
+            -98.5003677,
+            29.4246791
+          ],
+          [
+            -98.4990077,
+            29.4244498
+          ],
+          [
+            -98.4985916,
+            29.4244153
+          ],
+          [
+            -98.498428,
+            29.4243993
+          ],
+          [
+            -98.4983642,
+            29.4244368
+          ],
+          [
+            -98.4983057,
+            29.4250184
+          ],
+          [
+            -98.4982547,
+            29.4253501
+          ],
+          [
+            -98.4982895,
+            29.4254296
+          ],
+          [
+            -98.4985219,
+            29.4255135
+          ],
+          [
+            -98.4987445,
+            29.4255293
+          ],
+          [
+            -98.4991731,
+            29.4255665
+          ],
+          [
+            -98.4994503,
+            29.4255921
+          ],
+          [
+            -98.5000698,
+            29.425617
+          ],
+          [
+            -98.5002362,
+            29.4256203
+          ],
+          [
+            -98.5009417,
+            29.4256864
+          ],
+          [
+            -98.501067,
+            29.4247563
+          ]
+        ]
+      ]
+    }
+  }
+}

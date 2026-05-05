@@ -1,0 +1,122 @@
+{
+  "philadelphia::rittenhouse-square": {
+    "type": "Feature",
+    "properties": {
+      "id": "philadelphia::rittenhouse-square",
+      "cityId": "philadelphia",
+      "city": "Philadelphia",
+      "country": "United States",
+      "name": "Rittenhouse Square",
+      "parentName": null,
+      "displayName": "Rittenhouse Square, Center City, Philadelphia, Philadelphia County, Pennsylvania, 19102, United States",
+      "source": {
+        "provider": "Nominatim / OpenStreetMap",
+        "datasetUrl": "https://nominatim.openstreetmap.org/search",
+        "query": "Rittenhouse Square, Philadelphia, United States"
+      }
+    },
+    "geometry": {
+      "type": "Point",
+      "coordinates": [
+        -75.1701362,
+        39.9489111
+      ]
+    }
+  },
+  "philadelphia::fishtown": {
+    "type": "Feature",
+    "properties": {
+      "id": "philadelphia::fishtown",
+      "cityId": "philadelphia",
+      "city": "Philadelphia",
+      "country": "United States",
+      "name": "Fishtown",
+      "parentName": null,
+      "displayName": "Fishtown, River Wards, Philadelphia, Philadelphia County, Pennsylvania, 19125, United States",
+      "source": {
+        "provider": "Nominatim / OpenStreetMap",
+        "datasetUrl": "https://nominatim.openstreetmap.org/search",
+        "query": "Fishtown, Philadelphia, United States"
+      }
+    },
+    "geometry": {
+      "type": "Point",
+      "coordinates": [
+        -75.1304082,
+        39.9732555
+      ]
+    }
+  },
+  "philadelphia::old-city": {
+    "type": "Feature",
+    "properties": {
+      "id": "philadelphia::old-city",
+      "cityId": "philadelphia",
+      "city": "Philadelphia",
+      "country": "United States",
+      "name": "Old City",
+      "parentName": null,
+      "displayName": "Old City, Center City, Philadelphia, Philadelphia County, Pennsylvania, 19106, United States",
+      "source": {
+        "provider": "Nominatim / OpenStreetMap",
+        "datasetUrl": "https://nominatim.openstreetmap.org/search",
+        "query": "Old City, Philadelphia, United States"
+      }
+    },
+    "geometry": {
+      "type": "Point",
+      "coordinates": [
+        -75.1468014,
+        39.9523828
+      ]
+    }
+  },
+  "philadelphia::midtown-village": {
+    "type": "Feature",
+    "properties": {
+      "id": "philadelphia::midtown-village",
+      "cityId": "philadelphia",
+      "city": "Philadelphia",
+      "country": "United States",
+      "name": "Midtown Village",
+      "parentName": null,
+      "displayName": "Green Eggs Cafe, 1301, Locust Street, Washington Square West, Center City, Philadelphia, Philadelphia County, Pennsylvania, 19103, United States",
+      "source": {
+        "provider": "Nominatim / OpenStreetMap",
+        "datasetUrl": "https://nominatim.openstreetmap.org/search",
+        "query": "Midtown Village, Philadelphia, United States"
+      }
+    },
+    "geometry": {
+      "type": "Point",
+      "coordinates": [
+        -75.1624047,
+        39.9483204
+      ]
+    }
+  },
+  "philadelphia::washington-square-west": {
+    "type": "Feature",
+    "properties": {
+      "id": "philadelphia::washington-square-west",
+      "cityId": "philadelphia",
+      "city": "Philadelphia",
+      "country": "United States",
+      "name": "Washington Square West",
+      "parentName": null,
+      "displayName": "Washington Square West, Center City, Philadelphia, Philadelphia County, Pennsylvania, 19109, United States",
+      "source": {
+        "provider": "Nominatim / OpenStreetMap",
+        "datasetUrl": "https://nominatim.openstreetmap.org/search",
+        "query": "Washington Square West, Philadelphia, United States"
+      }
+    },
+    "geometry": {
+      "type": "Point",
+      "coordinates": [
+        -75.1584306,
+        39.9474581
+      ]
+    }
+  }
+}

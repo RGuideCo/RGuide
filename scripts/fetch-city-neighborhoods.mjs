@@ -13,7 +13,9 @@ const NOMINATIM_ENDPOINT = "https://nominatim.openstreetmap.org/search";
 const ROOT = process.cwd();
 const SOURCE_PATH = path.join(ROOT, "src/data/geography.ts");
 const OUTPUT_PATH = path.join(ROOT, "src/data/city-neighborhoods.json");
-const BOUNDARY_OUTPUT_PATH = path.join(ROOT, "src/data/neighborhood-boundaries.json");
+const BOUNDARY_OUTPUT_DIR = path.join(ROOT, "src/data/boundaries");
+const BOUNDARY_INDEX_PATH = path.join(BOUNDARY_OUTPUT_DIR, "index.ts");
+const LEGACY_BOUNDARY_OUTPUT_PATH = path.join(ROOT, "src/data/neighborhood-boundaries.json");
 const FETCH_STATE_PATH = path.join(ROOT, "src/data/neighborhood-fetch-state.json");
 const BOUNDARY_SOURCE_CONFIG_PATH = path.join(ROOT, "src/data/boundary-sources.json");
 const REQUEST_HEADERS = {
@@ -280,7 +282,96 @@ async function readJsonFile(filePath, fallback) {
 }
 
 async function writeJsonFile(filePath, value) {
+  await fs.mkdir(path.dirname(filePath), { recursive: true });
   await fs.writeFile(filePath, `${JSON.stringify(value, null, 2)}\n`);
+}
+
+function boundaryCityIdFromKey(boundaryKey) {
+  return String(boundaryKey).split("::")[0];
+}
+
+function camelCaseBoundaryName(cityId) {
+  return `${String(cityId)
+    .replace(/[^a-z0-9]+/gi, " ")
+    .trim()
+    .split(/\s+/)
+    .map((part, index) => {
+      const lower = part.toLowerCase();
+      return index === 0 ? lower : `${lower.charAt(0).toUpperCase()}${lower.slice(1)}`;
+    })
+    .join("")}Boundaries`;
+}
+
+async function readBoundaryResults() {
+  const results = {
+    ...(await readJsonFile(LEGACY_BOUNDARY_OUTPUT_PATH, {})),
+  };
+
+  let files = [];
+  try {
+    files = await fs.readdir(BOUNDARY_OUTPUT_DIR);
+  } catch {
+    return results;
+  }
+
+  for (const file of files.filter((item) => item.endsWith(".json")).sort()) {
+    Object.assign(results, await readJsonFile(path.join(BOUNDARY_OUTPUT_DIR, file), {}));
+  }
+
+  return results;
+}
+
+async function writeBoundaryIndexFile() {
+  let files = [];
+  try {
+    files = (await fs.readdir(BOUNDARY_OUTPUT_DIR)).filter((file) => file.endsWith(".json")).sort();
+  } catch {
+    files = [];
+  }
+
+  const imports = files.map((file) => {
+    const cityId = file.replace(/\.json$/, "");
+    return {
+      cityId,
+      name: camelCaseBoundaryName(cityId),
+    };
+  });
+
+  const source = `import type { Feature, Geometry } from "geojson";
+${imports.map(({ cityId, name }) => `import ${name} from "@/data/boundaries/${cityId}.json";`).join("\n")}
+
+type NeighborhoodBoundaryProperties = {
+  id: string;
+  name: string;
+};
+
+export type NeighborhoodBoundaryMap = Record<string, Feature<Geometry, NeighborhoodBoundaryProperties>>;
+
+const boundaryCollections = [
+${imports.map(({ name }) => `  ${name},`).join("\n")}
+] as Array<Record<string, Feature<Geometry, NeighborhoodBoundaryProperties>>>;
+
+export const neighborhoodBoundaryFeatures: NeighborhoodBoundaryMap = Object.assign({}, ...boundaryCollections);
+
+export default neighborhoodBoundaryFeatures;
+`;
+
+  await fs.mkdir(BOUNDARY_OUTPUT_DIR, { recursive: true });
+  await fs.writeFile(BOUNDARY_INDEX_PATH, source);
+}
+
+async function writeBoundaryResult(boundaryKey, feature, boundaryResults) {
+  boundaryResults[boundaryKey] = feature;
+
+  const cityId = boundaryCityIdFromKey(boundaryKey);
+  const cityBoundaryResults = Object.fromEntries(
+    Object.entries(boundaryResults)
+      .filter(([key]) => boundaryCityIdFromKey(key) === cityId)
+      .sort(([a], [b]) => a.localeCompare(b)),
+  );
+
+  await writeJsonFile(path.join(BOUNDARY_OUTPUT_DIR, `${cityId}.json`), cityBoundaryResults);
+  await writeBoundaryIndexFile();
 }
 
 function shouldRetryFailure(failureState, includeFailures) {
@@ -802,7 +893,7 @@ async function main() {
   const datasetCache = new Map();
   const cityFailures = normalizeFetchState(await readJsonFile(FETCH_STATE_PATH, { cities: {}, boundaries: {} }));
   const results = await readJsonFile(OUTPUT_PATH, {});
-  const boundaryResults = await readJsonFile(BOUNDARY_OUTPUT_PATH, {});
+  const boundaryResults = await readBoundaryResults();
 
   const filteredCities = cities.filter((city) => args.cityIds.size === 0 || args.cityIds.has(city.id));
   const filteredTargets = curatedNeighborhoodTargets.filter((target) => {
@@ -872,9 +963,8 @@ async function main() {
       try {
         const feature = await fetchBoundaryForNeighborhood(target, boundarySources, datasetCache);
         if (feature) {
-          boundaryResults[target.boundaryKey] = feature;
+          await writeBoundaryResult(target.boundaryKey, feature, boundaryResults);
           cityFailures.boundaries = clearFailure(cityFailures.boundaries, target.boundaryKey);
-          await writeJsonFile(BOUNDARY_OUTPUT_PATH, boundaryResults);
           console.error(`${target.boundaryKey}: boundary`);
         } else {
           cityFailures.boundaries = recordFailure(

@@ -7,8 +7,8 @@ import maplibregl, { GeoJSONSource, LngLatBounds } from "maplibre-gl";
 
 import { mapLists } from "@/data/lists";
 import { countryBoundaryFeatures } from "@/data/map-boundaries";
+import neighborhoodBoundaryFeatures from "@/data/boundaries";
 import laNeighborhoodBoundaryFeatures from "@/data/la-neighborhood-boundaries.json";
-import neighborhoodBoundaryFeatures from "@/data/neighborhood-boundaries.json";
 import nycBoroughBoundaryFeatures from "@/data/nyc-borough-boundaries.json";
 import nycNeighborhoodBoundaryFeatures from "@/data/nyc-neighborhood-boundaries.json";
 import worldCountries from "@/data/world-countries.json";

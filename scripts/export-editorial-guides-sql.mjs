@@ -4,9 +4,9 @@ import vm from "vm";
 import ts from "typescript";
 
 const ROOT = process.cwd();
-const USERS_PATH = path.join(ROOT, "src/data/users.ts");
 const LISTS_PATH = path.join(ROOT, "src/data/lists.ts");
 const OUTPUT_PATH = path.join(ROOT, "supabase/editorial-guides.sql");
+const moduleCache = new Map();
 
 function transpileTs(filePath) {
   const source = fs.readFileSync(filePath, "utf8");
@@ -35,16 +35,57 @@ function runCommonJs(code, filePath, requireImpl) {
   return module.exports;
 }
 
-const usersExports = runCommonJs(transpileTs(USERS_PATH), USERS_PATH, (specifier) => {
-  throw new Error(`Unexpected require from users.ts: ${specifier}`);
-});
+function resolveLocalModule(specifier, fromFilePath) {
+  const basePath = specifier.startsWith("@/")
+    ? path.join(ROOT, "src", specifier.slice(2))
+    : specifier.startsWith(".")
+      ? path.resolve(path.dirname(fromFilePath), specifier)
+      : null;
 
-const listsExports = runCommonJs(transpileTs(LISTS_PATH), LISTS_PATH, (specifier) => {
-  if (specifier === "@/data/users") {
-    return usersExports;
+  if (!basePath) {
+    return null;
   }
-  throw new Error(`Unexpected require from lists.ts: ${specifier}`);
-});
+
+  const candidates = [
+    basePath,
+    `${basePath}.ts`,
+    `${basePath}.tsx`,
+    `${basePath}.json`,
+    path.join(basePath, "index.ts"),
+    path.join(basePath, "index.tsx"),
+    path.join(basePath, "index.json"),
+  ];
+
+  return (
+    candidates.find((candidate) => fs.existsSync(candidate) && fs.statSync(candidate).isFile()) ??
+    null
+  );
+}
+
+function loadLocalModule(filePath) {
+  if (moduleCache.has(filePath)) {
+    return moduleCache.get(filePath);
+  }
+
+  if (filePath.endsWith(".json")) {
+    const jsonExports = JSON.parse(fs.readFileSync(filePath, "utf8"));
+    moduleCache.set(filePath, jsonExports);
+    return jsonExports;
+  }
+
+  const exports = runCommonJs(transpileTs(filePath), filePath, (specifier) => {
+    const resolved = resolveLocalModule(specifier, filePath);
+    if (resolved) {
+      return loadLocalModule(resolved);
+    }
+    throw new Error(`Unexpected require from ${path.relative(ROOT, filePath)}: ${specifier}`);
+  });
+
+  moduleCache.set(filePath, exports);
+  return exports;
+}
+
+const listsExports = loadLocalModule(LISTS_PATH);
 
 const mapLists = listsExports.mapLists;
 if (!Array.isArray(mapLists)) {

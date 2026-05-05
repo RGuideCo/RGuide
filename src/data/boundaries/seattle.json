@@ -1,0 +1,122 @@
+{
+  "seattle::capitol-hill-seattle": {
+    "type": "Feature",
+    "properties": {
+      "id": "seattle::capitol-hill-seattle",
+      "cityId": "seattle",
+      "city": "Seattle",
+      "country": "United States",
+      "name": "Capitol Hill",
+      "parentName": null,
+      "displayName": "Capitol Hill, Seattle, King County, Washington, 98102, United States",
+      "source": {
+        "provider": "Nominatim / OpenStreetMap",
+        "datasetUrl": "https://nominatim.openstreetmap.org/search",
+        "query": "Capitol Hill, Seattle, Washington, USA"
+      }
+    },
+    "geometry": {
+      "type": "Point",
+      "coordinates": [
+        -122.318368,
+        47.6238307
+      ]
+    }
+  },
+  "seattle::belltown": {
+    "type": "Feature",
+    "properties": {
+      "id": "seattle::belltown",
+      "cityId": "seattle",
+      "city": "Seattle",
+      "country": "United States",
+      "name": "Belltown",
+      "parentName": null,
+      "displayName": "Belltown, Seattle, King County, Washington, 98121, United States",
+      "source": {
+        "provider": "Nominatim / OpenStreetMap",
+        "datasetUrl": "https://nominatim.openstreetmap.org/search",
+        "query": "Belltown, Seattle, Washington, USA"
+      }
+    },
+    "geometry": {
+      "type": "Point",
+      "coordinates": [
+        -122.3453607,
+        47.6132311
+      ]
+    }
+  },
+  "seattle::ballard": {
+    "type": "Feature",
+    "properties": {
+      "id": "seattle::ballard",
+      "cityId": "seattle",
+      "city": "Seattle",
+      "country": "United States",
+      "name": "Ballard",
+      "parentName": null,
+      "displayName": "Ballard, Seattle, King County, Washington, 98127, United States",
+      "source": {
+        "provider": "Nominatim / OpenStreetMap",
+        "datasetUrl": "https://nominatim.openstreetmap.org/search",
+        "query": "Ballard, Seattle, Washington, USA"
+      }
+    },
+    "geometry": {
+      "type": "Point",
+      "coordinates": [
+        -122.3862233,
+        47.6765073
+      ]
+    }
+  },
+  "seattle::fremont-seattle": {
+    "type": "Feature",
+    "properties": {
+      "id": "seattle::fremont-seattle",
+      "cityId": "seattle",
+      "city": "Seattle",
+      "country": "United States",
+      "name": "Fremont",
+      "parentName": null,
+      "displayName": "Fremont, Seattle, King County, Washington, 98109, United States",
+      "source": {
+        "provider": "Nominatim / OpenStreetMap",
+        "datasetUrl": "https://nominatim.openstreetmap.org/search",
+        "query": "Fremont, Seattle, Washington, USA"
+      }
+    },
+    "geometry": {
+      "type": "Point",
+      "coordinates": [
+        -122.3499861,
+        47.6504529
+      ]
+    }
+  },
+  "seattle::pioneer-square-seattle": {
+    "type": "Feature",
+    "properties": {
+      "id": "seattle::pioneer-square-seattle",
+      "cityId": "seattle",
+      "city": "Seattle",
+      "country": "United States",
+      "name": "Pioneer Square",
+      "parentName": null,
+      "displayName": "Pioneer Square, 3rd Avenue, West Edge, First Hill, Seattle, King County, Washington, 98104, United States",
+      "source": {
+        "provider": "Nominatim / OpenStreetMap",
+        "datasetUrl": "https://nominatim.openstreetmap.org/search",
+        "query": "Pioneer Square, Seattle, Washington, USA"
+      }
+    },
+    "geometry": {
+      "type": "Point",
+      "coordinates": [
+        -122.3313539,
+        47.6027217
+      ]
+    }
+  }
+}

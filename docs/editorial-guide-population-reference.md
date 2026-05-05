@@ -373,10 +373,16 @@ Stay guide requirement:
 - Use hostel-focused SEO for hostel guides, such as `best-hostels`, `Best Hostels in {Neighborhood}, {City}`, and slugs ending in `hostels`.
 - If a neighborhood has few or no credible hostels, still create a hostel guide only when there are enough source-backed nearby options that honestly serve that neighborhood; otherwise note the gap and use the closest suitable hostel area in the description.
 
+Data entry workflow:
+
+- Add or edit editorial guide data in the matching city module under `src/data/guides/`, such as `src/data/guides/barcelona.ts` or `src/data/guides/madrid.ts`.
+- Add a new city module and register it in `src/data/guides/index.ts` when starting coverage for a new city.
+- Treat `supabase/editorial-guides.sql` as generated output. Regenerate it from latest `main` after city branches are merged, not while multiple cities are being populated in parallel.
+
 Neighborhood polygon requirement:
 
 - Neighborhood guide work should include real boundary polygons when the app needs neighborhood map views; do not leave placeholder markers as the final state.
-- Store reusable boundary source configuration in `src/data/boundary-sources.json` and generated/imported shapes in `src/data/neighborhood-boundaries.json`.
+- Store reusable boundary source configuration in `src/data/boundary-sources.json` and generated/imported shapes in city files under `src/data/boundaries/`.
 - Prefer official municipal or regional GIS sources first. Good source types include city open-data portals, ArcGIS FeatureServer/MapServer GeoJSON exports, borough/district shapefiles, and official administrative boundary datasets.
 - If official data is unavailable or too coarse, use OpenStreetMap/Nominatim/Overpass as a fallback and document any query overrides in `scripts/fetch-city-neighborhoods.mjs`.
 - Refresh boundaries with `node scripts/fetch-city-neighborhoods.mjs --boundaries-only --city <city-id> --refresh-existing`, then verify changed keys, geometry types, and visible map fit before shipping.

@@ -1,0 +1,598 @@
+{
+  "jacksonville::riverside-avondale": {
+    "type": "Feature",
+    "properties": {
+      "id": "jacksonville::riverside-avondale",
+      "cityId": "jacksonville",
+      "city": "Jacksonville",
+      "country": "United States",
+      "name": "Riverside-Avondale",
+      "parentName": null,
+      "displayName": "West Riverside School, Park Street, Avondale, Murray Hill, Jacksonville, Duval County, Florida, 32205, United States",
+      "source": {
+        "provider": "Nominatim / OpenStreetMap",
+        "datasetUrl": "https://nominatim.openstreetmap.org/search",
+        "query": "Riverside-Avondale, Jacksonville, United States"
+      }
+    },
+    "geometry": {
+      "type": "Polygon",
+      "coordinates": [
+        [
+          [
+            -81.6965268,
+            30.3082856
+          ],
+          [
+            -81.6963057,
+            30.3081202
+          ],
+          [
+            -81.6962734,
+            30.308096
+          ],
+          [
+            -81.6962033,
+            30.3080435
+          ],
+          [
+            -81.6961351,
+            30.3079925
+          ],
+          [
+            -81.6960625,
+            30.3079381
+          ],
+          [
+            -81.6958403,
+            30.3081648
+          ],
+          [
+            -81.6956181,
+            30.3083915
+          ],
+          [
+            -81.6956701,
+            30.3084283
+          ],
+          [
+            -81.6956625,
+            30.3084414
+          ],
+          [
+            -81.6959514,
+            30.308656
+          ],
+          [
+            -81.6960539,
+            30.3085488
+          ],
+          [
+            -81.6960041,
+            30.3085079
+          ],
+          [
+            -81.6959795,
+            30.3085288
+          ],
+          [
+            -81.6958795,
+            30.3084532
+          ],
+          [
+            -81.6959784,
+            30.308355
+          ],
+          [
+            -81.6960858,
+            30.3084358
+          ],
+          [
+            -81.6961779,
+            30.3083454
+          ],
+          [
+            -81.6960709,
+            30.3082643
+          ],
+          [
+            -81.6961478,
+            30.3081831
+          ],
+          [
+            -81.6962939,
+            30.3082893
+          ],
+          [
+            -81.69626,
+            30.3083239
+          ],
+          [
+            -81.6962815,
+            30.3083397
+          ],
+          [
+            -81.6962738,
+            30.3083481
+          ],
+          [
+            -81.6963179,
+            30.3083792
+          ],
+          [
+            -81.6963069,
+            30.3083924
+          ],
+          [
+            -81.6963608,
+            30.308432
+          ],
+          [
+            -81.6963722,
+            30.3084205
+          ],
+          [
+            -81.6963842,
+            30.3084294
+          ],
+          [
+            -81.6965268,
+            30.3082856
+          ]
+        ]
+      ]
+    }
+  },
+  "jacksonville::san-marco": {
+    "type": "Feature",
+    "properties": {
+      "id": "jacksonville::san-marco",
+      "cityId": "jacksonville",
+      "city": "Jacksonville",
+      "country": "United States",
+      "name": "San Marco",
+      "parentName": null,
+      "displayName": "San Marco, Jacksonville, Duval County, Florida, United States",
+      "source": {
+        "provider": "Nominatim / OpenStreetMap",
+        "datasetUrl": "https://nominatim.openstreetmap.org/search",
+        "query": "San Marco, Jacksonville, United States"
+      }
+    },
+    "geometry": {
+      "type": "Polygon",
+      "coordinates": [
+        [
+          [
+            -81.6605779,
+            30.3139707
+          ],
+          [
+            -81.660528,
+            30.3077721
+          ],
+          [
+            -81.6604749,
+            30.3076078
+          ],
+          [
+            -81.6604342,
+            30.3075153
+          ],
+          [
+            -81.660304,
+            30.3072681
+          ],
+          [
+            -81.6602419,
+            30.3071502
+          ],
+          [
+            -81.6590638,
+            30.3052588
+          ],
+          [
+            -81.6601581,
+            30.3047957
+          ],
+          [
+            -81.659847,
+            30.3043279
+          ],
+          [
+            -81.6570789,
+            30.299752
+          ],
+          [
+            -81.6564781,
+            30.2994741
+          ],
+          [
+            -81.6561992,
+            30.2991406
+          ],
+          [
+            -81.6560298,
+            30.2987046
+          ],
+          [
+            -81.6560006,
+            30.298641
+          ],
+          [
+            -81.6548366,
+            30.295676
+          ],
+          [
+            -81.6543366,
+            30.2958819
+          ],
+          [
+            -81.6541565,
+            30.2959561
+          ],
+          [
+            -81.6454891,
+            30.2995227
+          ],
+          [
+            -81.6454382,
+            30.2995945
+          ],
+          [
+            -81.6453362,
+            30.2998261
+          ],
+          [
+            -81.6452799,
+            30.2999905
+          ],
+          [
+            -81.6451082,
+            30.3001271
+          ],
+          [
+            -81.6446684,
+            30.2995806
+          ],
+          [
+            -81.6419647,
+            30.3001549
+          ],
+          [
+            -81.6409669,
+            30.3003309
+          ],
+          [
+            -81.6409991,
+            30.2999048
+          ],
+          [
+            -81.639261,
+            30.2998677
+          ],
+          [
+            -81.6392825,
+            30.3014981
+          ],
+          [
+            -81.6400228,
+            30.3014703
+          ],
+          [
+            -81.6400442,
+            30.3023966
+          ],
+          [
+            -81.6392718,
+            30.302554
+          ],
+          [
+            -81.6391859,
+            30.3038138
+          ],
+          [
+            -81.6420512,
+            30.3037653
+          ],
+          [
+            -81.642362,
+            30.3042219
+          ],
+          [
+            -81.6426851,
+            30.304644
+          ],
+          [
+            -81.643017,
+            30.3050004
+          ],
+          [
+            -81.643355,
+            30.3053355
+          ],
+          [
+            -81.6449653,
+            30.306566
+          ],
+          [
+            -81.6453437,
+            30.3068909
+          ],
+          [
+            -81.6457041,
+            30.3072387
+          ],
+          [
+            -81.6460412,
+            30.3076192
+          ],
+          [
+            -81.6463413,
+            30.3080047
+          ],
+          [
+            -81.6465764,
+            30.3083478
+          ],
+          [
+            -81.6470454,
+            30.3091779
+          ],
+          [
+            -81.647267,
+            30.309478
+          ],
+          [
+            -81.6474673,
+            30.3097507
+          ],
+          [
+            -81.6477015,
+            30.3100048
+          ],
+          [
+            -81.6479419,
+            30.3102269
+          ],
+          [
+            -81.6481766,
+            30.3104287
+          ],
+          [
+            -81.6484367,
+            30.3106192
+          ],
+          [
+            -81.6488517,
+            30.3108933
+          ],
+          [
+            -81.6492362,
+            30.3111521
+          ],
+          [
+            -81.6494958,
+            30.3113405
+          ],
+          [
+            -81.6497662,
+            30.3115543
+          ],
+          [
+            -81.650036,
+            30.3117808
+          ],
+          [
+            -81.6503319,
+            30.3120412
+          ],
+          [
+            -81.6512622,
+            30.3129514
+          ],
+          [
+            -81.6514252,
+            30.3131101
+          ],
+          [
+            -81.6515759,
+            30.3132471
+          ],
+          [
+            -81.6517521,
+            30.3133842
+          ],
+          [
+            -81.6519131,
+            30.3134953
+          ],
+          [
+            -81.6520795,
+            30.3135995
+          ],
+          [
+            -81.6522487,
+            30.3136943
+          ],
+          [
+            -81.65244,
+            30.3137918
+          ],
+          [
+            -81.6526445,
+            30.3138788
+          ],
+          [
+            -81.6528664,
+            30.3139589
+          ],
+          [
+            -81.6530973,
+            30.31403
+          ],
+          [
+            -81.6533625,
+            30.3140965
+          ],
+          [
+            -81.6535812,
+            30.3141384
+          ],
+          [
+            -81.6538026,
+            30.3141692
+          ],
+          [
+            -81.654041,
+            30.3141861
+          ],
+          [
+            -81.6543002,
+            30.3141932
+          ],
+          [
+            -81.654778,
+            30.3141838
+          ],
+          [
+            -81.6552265,
+            30.3141765
+          ],
+          [
+            -81.6556941,
+            30.3141679
+          ],
+          [
+            -81.6561293,
+            30.3141579
+          ],
+          [
+            -81.656549,
+            30.3141396
+          ],
+          [
+            -81.6569036,
+            30.3141251
+          ],
+          [
+            -81.6572621,
+            30.3140997
+          ],
+          [
+            -81.6586343,
+            30.3140092
+          ],
+          [
+            -81.6590046,
+            30.3139917
+          ],
+          [
+            -81.6594121,
+            30.3139807
+          ],
+          [
+            -81.6597568,
+            30.3139731
+          ],
+          [
+            -81.6605779,
+            30.3139707
+          ]
+        ]
+      ]
+    }
+  },
+  "jacksonville::springfield": {
+    "type": "Feature",
+    "properties": {
+      "id": "jacksonville::springfield",
+      "cityId": "jacksonville",
+      "city": "Jacksonville",
+      "country": "United States",
+      "name": "Springfield",
+      "parentName": null,
+      "displayName": "Springfield, Jacksonville, Duval County, Florida, 32206, United States",
+      "source": {
+        "provider": "Nominatim / OpenStreetMap",
+        "datasetUrl": "https://nominatim.openstreetmap.org/search",
+        "query": "Springfield, Jacksonville, United States"
+      }
+    },
+    "geometry": {
+      "type": "Point",
+      "coordinates": [
+        -81.6534289,
+        30.3457949
+      ]
+    }
+  },
+  "jacksonville::jacksonville-beach": {
+    "type": "Feature",
+    "properties": {
+      "id": "jacksonville::jacksonville-beach",
+      "cityId": "jacksonville",
+      "city": "Jacksonville",
+      "country": "United States",
+      "name": "Jacksonville Beach",
+      "parentName": null,
+      "displayName": "WoodSpring Suites Jacksonville Beach Blvd., Saland Way, Pine Meadows, Jacksonville, Duval County, Florida, 33216, United States",
+      "source": {
+        "provider": "Nominatim / OpenStreetMap",
+        "datasetUrl": "https://nominatim.openstreetmap.org/search",
+        "query": "Jacksonville Beach, Jacksonville, United States"
+      }
+    },
+    "geometry": {
+      "type": "Polygon",
+      "coordinates": [
+        [
+          [
+            -81.5372692,
+            30.2854621
+          ],
+          [
+            -81.5372663,
+            30.2853283
+          ],
+          [
+            -81.5366421,
+            30.2853385
+          ],
+          [
+            -81.536645,
+            30.2854723
+          ],
+          [
+            -81.5372692,
+            30.2854621
+          ]
+        ]
+      ]
+    }
+  },
+  "jacksonville::murray-hill": {
+    "type": "Feature",
+    "properties": {
+      "id": "jacksonville::murray-hill",
+      "cityId": "jacksonville",
+      "city": "Jacksonville",
+      "country": "United States",
+      "name": "Murray Hill",
+      "parentName": null,
+      "displayName": "Murray Hill, Jacksonville, Duval County, Florida, 33205, United States",
+      "source": {
+        "provider": "Nominatim / OpenStreetMap",
+        "datasetUrl": "https://nominatim.openstreetmap.org/search",
+        "query": "Murray Hill, Jacksonville, United States"
+      }
+    },
+    "geometry": {
+      "type": "Point",
+      "coordinates": [
+        -81.7161753,
+        30.3081979
+      ]
+    }
+  }
+}

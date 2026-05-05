@@ -1,0 +1,7217 @@
+import type { MapList } from "@/types";
+
+export const barcelonaCoreGuides = [
+  {
+    "id": "list-barcelona-top-parks",
+    "slug": "barcelona-top-parks-in-the-city",
+    "seoSlug": "best-parks",
+    "seoTitle": "Best Parks in Barcelona",
+    "seoDescription": "Best parks in Barcelona for Gaudi architecture, hilltop views, historic gardens, Ciutadella lawns, Montjuic walks, and green spaces worth saving.",
+    "title": "Green Escapes and Hilltop Views",
+    "description": "Use this when the day needs air between dense neighborhoods: Gaudi mosaics, Ciutadella lawns, Montjuic paths, rose beds, and hilltop viewpoints that turn a walk into a real route without leaving the city behind.",
+    "url": "https://www.google.com/maps/search/top+parks+in+barcelona",
+    "category": "Nature",
+    "location": {
+      "city": "Barcelona",
+      "country": "Spain",
+      "continent": "Europe",
+      "scope": "city"
+    },
+    "creator": {
+      "id": "user-rguide-nature",
+      "name": "R Nature",
+      "avatar": "data:image/svg+xml;utf8,%0A%20%20%20%20%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22160%22%20height%3D%22160%22%20viewBox%3D%220%200%20160%20160%22%3E%0A%20%20%20%20%20%20%3Crect%20width%3D%22160%22%20height%3D%22160%22%20rx%3D%2280%22%20fill%3D%22%230f766e%22%20%2F%3E%0A%20%20%20%20%20%20%3Ctext%20x%3D%2250%25%22%20y%3D%2254%25%22%20text-anchor%3D%22middle%22%20dominant-baseline%3D%22middle%22%0A%20%20%20%20%20%20%20%20font-family%3D%22Arial%2C%20sans-serif%22%20font-size%3D%2276%22%20font-weight%3D%22700%22%20fill%3D%22white%22%3ER%3C%2Ftext%3E%0A%20%20%20%20%3C%2Fsvg%3E%0A%20%20"
+    },
+    "upvotes": 0,
+    "createdAt": "2026-04-17T00:00:00.000Z",
+    "stops": [
+      {
+        "id": "park-guell",
+        "name": "Parc Guell",
+        "coordinates": [
+          41.4145,
+          2.1527
+        ],
+        "description": "Parc Guell is the nature guide's architecture-meets-viewpoint anchor, combining Gaudi's sculptural landscape, mosaic terraces, and hillside city views. Book the monumental zone when needed and treat the visit as a planned half-day stop rather than a casual park detour.",
+        "hours": {
+          "default": "Daily ~9:30 AM-7:30 PM."
+        },
+        "photo": "https://estatics-nasia.dtibcn.cat/nasia-pro/media/2016%2C06%2CAZ8Q8387-C%25C3%25B2pia-760x428.jpg"
+      },
+      {
+        "id": "parc-de-la-ciutadella",
+        "name": "Parc de la Ciutadella",
+        "coordinates": [
+          41.3888,
+          2.186
+        ],
+        "description": "Parc de la Ciutadella gives the list its central, easy-access green space, with 19th-century exhibition history, the Cascada Monumental, lake boating, and broad lawns. Use it as the reset between El Born, the zoo edge, and the waterfront when the route needs open air without leaving the center.",
+        "hours": {
+          "default": "Daily ~10:00 AM-10:30 PM."
+        },
+        "photo": "https://estatics-nasia.dtibcn.cat/nasia-pro/media/2015%2C12%2CAZ8Q2726-760x428.jpg"
+      },
+      {
+        "id": "montjuic-park",
+        "name": "Montjuic Park",
+        "coordinates": [
+          41.363,
+          2.1679
+        ],
+        "description": "Montjuic Park is the big hill-day pick, linking gardens, lookouts, museums, castle approaches, Olympic-era venues, and botanical spaces. It is best for travelers who want nature, culture, and views in one slower route rather than a single quick photo stop.",
+        "hours": {
+          "default": "Park 24h; gardens/sites ~10:00 AM-sunset."
+        },
+        "photo": "https://www.barcelona.cat/sites/default/files/styles/facebook/public/montjuic_d_600x315_2.jpg?itok=eZrB9ZmW"
+      },
+      {
+        "id": "parc-del-laberint-dhorta",
+        "name": "Parc del Laberint d'Horta",
+        "coordinates": [
+          41.4397,
+          2.1477
+        ],
+        "description": "Parc del Laberint d'Horta brings a quieter garden experience to the guide, with an 18th-century cypress maze, neoclassical design, and romantic landscaping near Collserola. Use it when the city center feels too dense and the plan can support a more intentional trip north.",
+        "hours": {
+          "winter": "10:00 AM-6:00 PM",
+          "spring": "10:00 AM-7:00 PM",
+          "summer": "10:00 AM-8:00 PM",
+          "fall": "10:00 AM-7:00 PM"
+        },
+        "photo": "https://estatics-nasia.dtibcn.cat/nasia-pro/media/2016%2C01%2CAZ8Q6392-760x428.jpg"
+      },
+      {
+        "id": "parc-de-cervantes",
+        "name": "Parc de Cervantes",
+        "coordinates": [
+          41.3871,
+          2.1123
+        ],
+        "description": "Parc de Cervantes earns its place through the rose collection, with thousands of bushes and peak blooms from late spring into summer. It is a seasonal, calmer Pedralbes stop that works best when the route is already leaning west or needs a quieter garden break.",
+        "hours": {
+          "default": "Daily 8:00 AM-sunset."
+        },
+        "photo": "https://estatics-nasia.dtibcn.cat/nasia-pro/media/2016%2C01%2CAZ8Q3185-760x428.jpg"
+      },
+      {
+        "id": "parc-del-guinardo-bunkers-del-carmel",
+        "name": "Parc del Guinardo / Bunkers del Carmel",
+        "coordinates": [
+          41.4183,
+          2.1527
+        ],
+        "description": "Parc del Guinardo and the Bunkers del Carmel give the guide its strongest panoramic payoff, with Turo de la Rovira's former anti-aircraft battery remains and wide skyline views. Go for sunset or clear-weather views, but plan the climb and crowds instead of treating it like a simple neighborhood park.",
+        "hours": {
+          "default": "Park 24h; Bunkers ~8:30 AM-7:30 PM (night-restricted)."
+        },
+        "photo": "https://thirdeyetraveller.com/wp-content/uploads/Carmel-del-Bunkers-Barcelona-6.jpg"
+      }
+    ],
+    "sources": [
+      {
+        "name": "Turisme de Barcelona - Parks & Gardens",
+        "url": "https://www.barcelonaturisme.com/wv3/en/page/32/parks-and-gardens.html"
+      },
+      {
+        "name": "Ajuntament de Barcelona - Parks directory",
+        "url": "https://ajuntament.barcelona.cat/ecologiaurbana/en/services/the-city-works/parks-and-gardens"
+      },
+      {
+        "name": "Lonely Planet - Best parks in Barcelona",
+        "url": "https://www.lonelyplanet.com/articles/best-parks-barcelona"
+      },
+      {
+        "name": "Time Out - Best parks and gardens in Barcelona",
+        "url": "https://www.timeout.com/barcelona/things-to-do/best-parks-in-barcelona"
+      },
+      {
+        "name": "Conde Nast Traveler - Barcelona destination",
+        "url": "https://www.cntraveler.com/destinations/barcelona"
+      },
+      {
+        "name": "Park Guell official",
+        "url": "https://parkguell.barcelona/en"
+      },
+      {
+        "name": "UNESCO - Works of Antoni Gaudi",
+        "url": "https://whc.unesco.org/en/list/320"
+      },
+      {
+        "name": "Parc de la Ciutadella page",
+        "url": "https://www.barcelonaturisme.com/wv3/en/page/117/parc-de-la-ciutadella.html"
+      },
+      {
+        "name": "Montjuic page",
+        "url": "https://www.barcelonaturisme.com/wv3/en/page/120/montjuic.html"
+      },
+      {
+        "name": "Parc del Laberint d'Horta page",
+        "url": "https://www.barcelonaturisme.com/wv3/en/page/118/parc-del-laberint-dhorta.html"
+      },
+      {
+        "name": "Parc de Cervantes page",
+        "url": "https://www.barcelonaturisme.com/wv3/en/page/119/parc-de-cervantes.html"
+      },
+      {
+        "name": "Turo de la Rovira / Bunkers del Carmel page",
+        "url": "https://www.barcelonaturisme.com/wv3/en/page/124/turo-de-la-rovira.html"
+      },
+      {
+        "name": "Google Maps",
+        "url": "https://maps.google.com"
+      },
+      {
+        "name": "Tripadvisor - Barcelona parks attractions",
+        "url": "https://www.tripadvisor.com/Attractions-g187497-Activities-c57-Barcelona_Catalonia.html"
+      }
+    ]
+  },
+  {
+    "id": "list-barcelona-gothic-quarter-restaurants",
+    "slug": "barcelona-gothic-quarter-restaurants",
+    "seoSlug": "best-restaurants",
+    "seoTitle": "Best Restaurants in the Gothic Quarter, Barcelona",
+    "seoDescription": "Best restaurants in the Gothic Quarter, Barcelona, from historic Catalan dining rooms to modern tasting menus and old-town spots that avoid the tourist-trap pattern.",
+    "title": "Old-City Tables That Hold Up",
+    "description": "The Gothic Quarter can punish lazy restaurant searches, so this guide favors rooms with a reason to book: Catalan taverns, compact bistros, robata counters, and small tasting menus that hold their own inside the tourist-heavy lanes.",
+    "url": "https://www.google.com/maps/search/gothic+quarter+restaurants+barcelona",
+    "category": "Food",
+    "location": {
+      "city": "Barcelona",
+      "neighborhood": "Gothic Quarter",
+      "country": "Spain",
+      "continent": "Europe",
+      "scope": "city"
+    },
+    "creator": {
+      "id": "user-rguide-food",
+      "name": "R Food",
+      "avatar": "data:image/svg+xml;utf8,%0A%20%20%20%20%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22160%22%20height%3D%22160%22%20viewBox%3D%220%200%20160%20160%22%3E%0A%20%20%20%20%20%20%3Crect%20width%3D%22160%22%20height%3D%22160%22%20rx%3D%2280%22%20fill%3D%22%230f766e%22%20%2F%3E%0A%20%20%20%20%20%20%3Ctext%20x%3D%2250%25%22%20y%3D%2254%25%22%20text-anchor%3D%22middle%22%20dominant-baseline%3D%22middle%22%0A%20%20%20%20%20%20%20%20font-family%3D%22Arial%2C%20sans-serif%22%20font-size%3D%2276%22%20font-weight%3D%22700%22%20fill%3D%22white%22%3ER%3C%2Ftext%3E%0A%20%20%20%20%3C%2Fsvg%3E%0A%20%20"
+    },
+    "upvotes": 0,
+    "createdAt": "2026-04-29T00:00:00.000Z",
+    "stops": [
+      {
+        "id": "gothic-la-sosenga",
+        "name": "La Sosenga",
+        "coordinates": [
+          41.3826,
+          2.1749
+        ],
+        "description": "Source cross-checks point to La Sosenga as one of the stronger food-first choices inside the Gothic Quarter: a small Catalan room that updates older recipes through seasonal, tasting-menu-style cooking rather than leaning on old-city atmosphere alone. Time Out and map-review signals support it as a better reservation for diners who want regional cooking, careful plating, and a quieter meal than the tourist-heavy lanes usually provide.",
+        "price": "$$",
+        "priceSource": "Time Out",
+        "hours": {
+          "mon": "Closed",
+          "tue": "1:00 PM-4:00 PM",
+          "wed": "1:00 PM-4:00 PM",
+          "thu": "1:00 PM-4:00 PM",
+          "fri": "1:00 PM-4:00 PM, 8:00 PM-11:00 PM",
+          "sat": "1:00 PM-4:00 PM, 8:00 PM-11:00 PM",
+          "sun": "Closed"
+        },
+        "photo": "https://images.gestionaweb.cat/7664/img-2560-1440/captura-de-pantalla-2025-09-24-a-les-9-24-50.png"
+      },
+      {
+        "id": "gothic-bistrot-levante",
+        "name": "Bistrot Levante",
+        "coordinates": [
+          41.3833,
+          2.1769
+        ],
+        "description": "Eater's Old City coverage and Google Maps signals make Bistrot Levante useful as a modern counterpoint to the Gothic Quarter's traditional taverns. The draw is not landmark history; it is a compact bistro on Placeta de Manuel Ribé with Eastern Mediterranean flavors, good vegetable-forward plates, and a calmer room that works for lunch or dinner when nearby streets are packed.",
+        "price": "$$",
+        "priceSource": "Eater / Google Maps",
+        "hours": {
+          "mon": "12:30 PM-4:00 PM, 7:30 PM-11:00 PM",
+          "tue": "12:30 PM-4:00 PM, 7:30 PM-11:00 PM",
+          "wed": "12:30 PM-4:00 PM, 7:30 PM-11:00 PM",
+          "thu": "12:30 PM-4:00 PM, 7:30 PM-11:00 PM",
+          "fri": "12:30 PM-4:00 PM, 7:30 PM-11:30 PM",
+          "sat": "12:30 PM-4:00 PM, 7:30 PM-11:30 PM",
+          "sun": "12:30 PM-4:00 PM, 7:30 PM-11:00 PM"
+        },
+        "photo": "https://images.unsplash.com/photo-1552566626-52f8b828add9?auto=format&fit=crop&w=900&q=80"
+      },
+      {
+        "id": "gothic-kak-koy",
+        "name": "Kak Koy",
+        "coordinates": [
+          41.385,
+          2.1755
+        ],
+        "description": "Kak Koy is included as the high-end, source-backed alternative in the Gothic core: Eater highlights its robata approach, and map/booking signals show it functions more like a focused Japanese grill counter than a broad tapas stop. It is best for diners who want Barcelona seafood and market produce filtered through precise charcoal cooking, bar seating, and a reservation-led dinner rhythm.",
+        "price": "$$$",
+        "priceSource": "Eater / Google Maps",
+        "hours": {
+          "mon": "Closed",
+          "tue": "7:00 PM-10:30 PM",
+          "wed": "7:00 PM-10:30 PM",
+          "thu": "7:00 PM-10:30 PM",
+          "fri": "7:00 PM-10:30 PM",
+          "sat": "7:00 PM-10:30 PM",
+          "sun": "Closed"
+        },
+        "photo": "https://www.kakure.es/wp-content/uploads/young-asian-woman-eating-sashimi-set-in-japanese-r-2023-11-27-04-59-45-utc.jpg"
+      },
+      {
+        "id": "gothic-la-plata-restaurant",
+        "name": "Bar La Plata",
+        "coordinates": [
+          41.3818,
+          2.1799
+        ],
+        "description": "Bar La Plata earns its spot through longevity, traveler-review consistency, and a menu that has stayed intentionally short since 1945. The value is the whole old-tavern package: fried fish, tomato salad, butifarra, house wine, fast counter service, and a room that still feels local despite being deep in the Gothic Quarter.",
+        "price": "$",
+        "priceSource": "Tripadvisor / Google Maps",
+        "hours": {
+          "mon": "Closed",
+          "tue": "12:00 PM-3:30 PM, 7:00 PM-11:00 PM",
+          "wed": "12:00 PM-3:30 PM, 7:00 PM-11:00 PM",
+          "thu": "12:00 PM-3:30 PM, 7:00 PM-11:00 PM",
+          "fri": "12:00 PM-3:30 PM, 7:00 PM-11:00 PM",
+          "sat": "12:00 PM-3:30 PM, 7:00 PM-11:00 PM",
+          "sun": "Closed"
+        },
+        "photo": "https://barlaplata.com/wp-content/uploads/2024/04/img_7003-1.jpg"
+      },
+      {
+        "id": "gothic-capet",
+        "name": "Capet",
+        "coordinates": [
+          41.3816,
+          2.1764
+        ],
+        "description": "Capet is the polished small-restaurant pick in this set, supported by MICHELIN and reservation-platform signals rather than social hype. It works for a serious dinner in the Gothic lanes: contemporary Catalan cooking, a controlled chef-led menu, and enough intimacy to feel special without the scale or price jump of Barcelona's major destination tasting rooms.",
+        "price": "$$$",
+        "priceSource": "MICHELIN Guide / Resy",
+        "hours": {
+          "mon": "Closed",
+          "tue": "7:00 PM-10:30 PM",
+          "wed": "7:00 PM-10:30 PM",
+          "thu": "7:00 PM-10:30 PM",
+          "fri": "7:00 PM-10:30 PM",
+          "sat": "7:00 PM-10:30 PM",
+          "sun": "Closed"
+        },
+        "photo": "https://static.wixstatic.com/media/fdc945_2b2a24bff92540c8b37ff6bd1c06be5a~mv2.jpg/v1/fill/w_1024,h_683,al_c/fdc945_2b2a24bff92540c8b37ff6bd1c06be5a~mv2.jpg"
+      },
+      {
+        "id": "gothic-sensi-bistro",
+        "name": "Sensi Bistro",
+        "coordinates": [
+          41.3803,
+          2.1771
+        ],
+        "description": "Sensi Bistro stays on the list because Tripadvisor and Google Maps show sustained demand from visitors looking for creative tapas that are more composed than the surrounding old-city churn. It is group-friendly, shareable, and practical near Plaça Reial, with the caveat that it is more polished international bistro-tapas than a hidden local institution.",
+        "price": "$$",
+        "priceSource": "Tripadvisor / Google Maps",
+        "hours": {
+          "mon": "12:30 PM-4:00 PM, 7:30 PM-11:00 PM",
+          "tue": "12:30 PM-4:00 PM, 7:30 PM-11:00 PM",
+          "wed": "12:30 PM-4:00 PM, 7:30 PM-11:00 PM",
+          "thu": "12:30 PM-4:00 PM, 7:30 PM-11:00 PM",
+          "fri": "12:30 PM-4:00 PM, 7:30 PM-11:30 PM",
+          "sat": "12:30 PM-4:00 PM, 7:30 PM-11:30 PM",
+          "sun": "12:30 PM-4:00 PM, 7:30 PM-11:00 PM"
+        },
+        "photo": "https://www.barcelona-life.com/wp-content/uploads/2022/02/le-bistro-sensi-barcelona.jpg"
+      }
+    ],
+    "sources": [
+      {
+        "name": "Time Out - Best restaurants in Barcelona",
+        "url": "https://www.timeout.com/barcelona/restaurants/best-restaurants-in-barcelona"
+      },
+      {
+        "name": "The Infatuation - Best Restaurants in Barcelona",
+        "url": "https://www.theinfatuation.com/barcelona/guides/best-restaurants-hotels-barcelona"
+      },
+      {
+        "name": "Eater - Old City restaurants",
+        "url": "https://www.eater.com/maps/barcelona-old-city-gothic-quarter-best-restaurants"
+      },
+      {
+        "name": "MICHELIN Guide - Capet",
+        "url": "https://guide.michelin.com/us/en/catalunya/barcelona/restaurant/capet"
+      },
+      {
+        "name": "Restaurants for Kings - Gothic Quarter restaurants",
+        "url": "https://restaurantsforkings.com/blog/gothic-quarter-barcelona-restaurants-guide-2026.html"
+      },
+      {
+        "name": "Tripadvisor - Gothic Quarter restaurants",
+        "url": "https://www.tripadvisor.com/Restaurants-g187497-zfn7237169-Barcelona_Catalonia.html"
+      },
+      {
+        "name": "Google Maps",
+        "url": "https://maps.google.com"
+      }
+    ]
+  },
+  {
+    "id": "list-barcelona-el-born-restaurants",
+    "slug": "barcelona-el-born-restaurants",
+    "seoSlug": "best-restaurants",
+    "seoTitle": "Best Restaurants in El Born, Barcelona",
+    "seoDescription": "Best restaurants in El Born, Barcelona, including seafood counters, natural-wine rooms, tapas classics, market-adjacent kitchens, and booking-worthy local favorites.",
+    "title": "Cava, Counters, and Cool Rooms",
+    "description": "El Born works best when dinner stays close to the neighborhood's museum streets and late-night pulse. This guide mixes seafood counters, cava rooms, natural-wine dinners, market-adjacent kitchens, and a few places that justify the crowd.",
+    "url": "https://www.google.com/maps/search/el+born+restaurants+barcelona",
+    "category": "Food",
+    "location": {
+      "city": "Barcelona",
+      "neighborhood": "El Born",
+      "country": "Spain",
+      "continent": "Europe",
+      "scope": "city"
+    },
+    "creator": {
+      "id": "user-rguide-food",
+      "name": "R Food",
+      "avatar": "data:image/svg+xml;utf8,%0A%20%20%20%20%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22160%22%20height%3D%22160%22%20viewBox%3D%220%200%20160%20160%22%3E%0A%20%20%20%20%20%20%3Crect%20width%3D%22160%22%20height%3D%22160%22%20rx%3D%2280%22%20fill%3D%22%230f766e%22%20%2F%3E%0A%20%20%20%20%20%20%3Ctext%20x%3D%2250%25%22%20y%3D%2254%25%22%20text-anchor%3D%22middle%22%20dominant-baseline%3D%22middle%22%0A%20%20%20%20%20%20%20%20font-family%3D%22Arial%2C%20sans-serif%22%20font-size%3D%2276%22%20font-weight%3D%22700%22%20fill%3D%22white%22%3ER%3C%2Ftext%3E%0A%20%20%20%20%3C%2Fsvg%3E%0A%20%20"
+    },
+    "upvotes": 0,
+    "createdAt": "2026-04-29T00:00:00.000Z",
+    "stops": [
+      {
+        "id": "born-cal-pep-restaurant",
+        "name": "Cal Pep",
+        "coordinates": [
+          41.3835,
+          2.1839
+        ],
+        "description": "Cal Pep is a Born classic repeatedly validated by editorial guides and traveler demand: the experience centers on the counter, rapid-fire seafood tapas, and letting the kitchen steer you through clams, squid, fried fish, and seasonal specials. It is expensive for the format, but the draw is the performance of the room as much as the food.",
+        "price": "$$$",
+        "priceSource": "The Infatuation / Google Maps",
+        "hours": {
+          "mon": "Closed",
+          "tue": "1:00 PM-3:30 PM, 8:00 PM-11:00 PM",
+          "wed": "1:00 PM-3:30 PM, 8:00 PM-11:00 PM",
+          "thu": "1:00 PM-3:30 PM, 8:00 PM-11:00 PM",
+          "fri": "1:00 PM-3:30 PM, 8:00 PM-11:30 PM",
+          "sat": "1:00 PM-3:30 PM, 8:00 PM-11:30 PM",
+          "sun": "Closed"
+        },
+        "photo": "https://static.wixstatic.com/media/57144e_89f865012fdb4db8bc8bec1b2fdeede3~mv2.jpg"
+      },
+      {
+        "id": "born-bar-del-pla-restaurant",
+        "name": "Bar del Pla",
+        "coordinates": [
+          41.3857,
+          2.1817
+        ],
+        "description": "Bar del Pla is supported by The Infatuation, Google Maps, and natural-wine chatter as one of El Born's more reliable modern tapas rooms. It balances Catalan comfort, creative small plates, and a bistro-like wine program, making it a strong booking when you want the neighborhood's energy without defaulting to a tourist-facing tapas counter.",
+        "price": "$$",
+        "priceSource": "The Infatuation / Google Maps",
+        "hours": {
+          "mon": "12:30 PM-4:00 PM, 7:30 PM-11:00 PM",
+          "tue": "12:30 PM-4:00 PM, 7:30 PM-11:00 PM",
+          "wed": "12:30 PM-4:00 PM, 7:30 PM-11:00 PM",
+          "thu": "12:30 PM-4:00 PM, 7:30 PM-11:00 PM",
+          "fri": "12:30 PM-4:00 PM, 7:30 PM-11:30 PM",
+          "sat": "12:30 PM-4:00 PM, 7:30 PM-11:30 PM",
+          "sun": "12:30 PM-4:00 PM, 7:30 PM-11:00 PM"
+        },
+        "photo": "https://barcelonanavigator.com/wp-content/uploads/2016/05/Jordi.jpg"
+      },
+      {
+        "id": "born-fismuler",
+        "name": "Fismuler",
+        "coordinates": [
+          41.3867,
+          2.1846
+        ],
+        "description": "Fismuler is a higher-price Born pick because sources consistently frame it as a destination meal, not just a neighborhood stop. The appeal is raw seafood, seasonal Mediterranean plates, a stylish Rec Comtal dining room, and the now-famous cheesecake; it suits a longer dinner where design, wine, and pacing matter.",
+        "price": "$$$",
+        "priceSource": "The Infatuation / Google Maps",
+        "hours": {
+          "mon": "12:30 PM-4:00 PM, 7:30 PM-11:00 PM",
+          "tue": "12:30 PM-4:00 PM, 7:30 PM-11:00 PM",
+          "wed": "12:30 PM-4:00 PM, 7:30 PM-11:00 PM",
+          "thu": "12:30 PM-4:00 PM, 7:30 PM-11:00 PM",
+          "fri": "12:30 PM-4:00 PM, 7:30 PM-11:30 PM",
+          "sat": "12:30 PM-4:00 PM, 7:30 PM-11:30 PM",
+          "sun": "12:30 PM-4:00 PM, 7:30 PM-11:00 PM"
+        },
+        "photo": "https://framerusercontent.com/images/FZZB2fFlZNw7ZBUUtWI1Mwh0.png"
+      },
+      {
+        "id": "born-bar-brutal",
+        "name": "Bar Brutal",
+        "coordinates": [
+          41.3849,
+          2.1811
+        ],
+        "description": "Bar Brutal is included for its natural-wine importance and continued social proof across editorial guides and geo-tagged dining posts. It is best for curious drinkers who want dinner to revolve around low-intervention bottles, lively service, and snackable plates, with the understanding that the wine culture is the main reason to go.",
+        "price": "$$",
+        "priceSource": "The Infatuation / Instagram",
+        "hours": {
+          "mon": "7:00 PM-12:00 AM",
+          "tue": "7:00 PM-12:00 AM",
+          "wed": "7:00 PM-12:00 AM",
+          "thu": "7:00 PM-12:00 AM",
+          "fri": "1:00 PM-4:00 PM, 7:00 PM-12:30 AM",
+          "sat": "1:00 PM-4:00 PM, 7:00 PM-12:30 AM",
+          "sun": "1:00 PM-4:00 PM, 7:00 PM-12:00 AM"
+        },
+        "photo": "http://barbrutal.com/cdn/shop/files/Brutal_Trial_Websize_1600x1067.jpg?v=1770045996"
+      },
+      {
+        "id": "born-cuines-santa-caterina",
+        "name": "Cuines Santa Caterina",
+        "coordinates": [
+          41.3867,
+          2.1788
+        ],
+        "description": "Cuines Santa Caterina is the practical market-adjacent anchor in El Born: sources and review volume point to it as reliable rather than rare. Under the Santa Caterina market roof, it covers rice, noodles, grilled dishes, and broad all-day hours, making it useful for groups, mixed appetites, and days when fixed Spanish meal times are inconvenient.",
+        "price": "$$",
+        "priceSource": "The Infatuation / Google Maps",
+        "hours": {
+          "mon": "12:00 PM-12:00 AM",
+          "tue": "12:00 PM-12:00 AM",
+          "wed": "12:00 PM-12:00 AM",
+          "thu": "12:00 PM-12:00 AM",
+          "fri": "12:00 PM-1:00 AM",
+          "sat": "12:00 PM-1:00 AM",
+          "sun": "12:00 PM-12:00 AM"
+        },
+        "photo": "https://966e7448.delivery.rocketcdn.me/wp-content/uploads/thumb-CUINES-DE-SANTA-CATERINA.jpg"
+      },
+      {
+        "id": "born-el-xampanyet-restaurant",
+        "name": "El Xampanyet",
+        "coordinates": [
+          41.3847,
+          2.1836
+        ],
+        "description": "El Xampanyet is one of the clearest source-backed Born classics, with editorial guides and traveler reviews agreeing on the same strengths: cava, anchovies, conservas, simple tapas, and a room that is almost always crowded. Treat it as a short, loud, salty stop near the Picasso Museum rather than a slow sit-down dinner.",
+        "price": "$",
+        "priceSource": "The Infatuation / Tripadvisor",
+        "hours": {
+          "mon": "7:00 PM-11:00 PM",
+          "tue": "12:00 PM-3:30 PM, 7:00 PM-11:00 PM",
+          "wed": "12:00 PM-3:30 PM, 7:00 PM-11:00 PM",
+          "thu": "12:00 PM-3:30 PM, 7:00 PM-11:00 PM",
+          "fri": "12:00 PM-3:30 PM, 7:00 PM-11:00 PM",
+          "sat": "12:00 PM-3:30 PM",
+          "sun": "Closed"
+        },
+        "photo": "https://www.elxampanyet.com/wp-content/uploads/2024/10/Iriarte_0132-2048x1353.jpg"
+      }
+    ],
+    "sources": [
+      {
+        "name": "The Infatuation - El Born",
+        "url": "https://www.theinfatuation.com/barcelona/neighborhoods/el-born"
+      },
+      {
+        "name": "The Infatuation - Best Restaurants in Barcelona",
+        "url": "https://www.theinfatuation.com/barcelona/guides/best-restaurants-hotels-barcelona"
+      },
+      {
+        "name": "Eater - Old City restaurants",
+        "url": "https://www.eater.com/maps/barcelona-old-city-gothic-quarter-best-restaurants"
+      },
+      {
+        "name": "Time Out - Barcelona restaurants",
+        "url": "https://www.timeout.com/barcelona/restaurants"
+      },
+      {
+        "name": "Tripadvisor - Barcelona restaurants",
+        "url": "https://www.tripadvisor.com/Restaurants-g187497-Barcelona_Catalonia.html"
+      },
+      {
+        "name": "Google Maps",
+        "url": "https://maps.google.com"
+      }
+    ]
+  },
+  {
+    "id": "list-barcelona-eixample-restaurants",
+    "slug": "barcelona-eixample-restaurants",
+    "seoSlug": "best-restaurants",
+    "seoTitle": "Best Restaurants in Eixample, Barcelona",
+    "seoDescription": "Best restaurants in Eixample, Barcelona, from destination tasting menus and polished tapas counters to design-hotel dining rooms and reliable group-friendly classics.",
+    "title": "Big-Deal Tables and Tapas",
+    "description": "Eixample is where polished meals fit naturally into architecture days: tasting-menu reservations, hotel-linked natural wine, tapas counters, and group-friendly rooms that make sense around Passeig de Gracia and the grid.",
+    "url": "https://www.google.com/maps/search/eixample+restaurants+barcelona",
+    "category": "Food",
+    "location": {
+      "city": "Barcelona",
+      "neighborhood": "Eixample",
+      "country": "Spain",
+      "continent": "Europe",
+      "scope": "city"
+    },
+    "creator": {
+      "id": "user-rguide-food",
+      "name": "R Food",
+      "avatar": "data:image/svg+xml;utf8,%0A%20%20%20%20%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22160%22%20height%3D%22160%22%20viewBox%3D%220%200%20160%20160%22%3E%0A%20%20%20%20%20%20%3Crect%20width%3D%22160%22%20height%3D%22160%22%20rx%3D%2280%22%20fill%3D%22%230f766e%22%20%2F%3E%0A%20%20%20%20%20%20%3Ctext%20x%3D%2250%25%22%20y%3D%2254%25%22%20text-anchor%3D%22middle%22%20dominant-baseline%3D%22middle%22%0A%20%20%20%20%20%20%20%20font-family%3D%22Arial%2C%20sans-serif%22%20font-size%3D%2276%22%20font-weight%3D%22700%22%20fill%3D%22white%22%3ER%3C%2Ftext%3E%0A%20%20%20%20%3C%2Fsvg%3E%0A%20%20"
+    },
+    "upvotes": 0,
+    "createdAt": "2026-04-29T00:00:00.000Z",
+    "stops": [
+      {
+        "id": "eixample-disfrutar",
+        "name": "Disfrutar",
+        "coordinates": [
+          41.3878,
+          2.1533
+        ],
+        "description": "Disfrutar is the global destination restaurant in this data set, supported by MICHELIN's top recognition and World's 50 Best placement. The elBulli-alumni kitchen is known for highly technical, playful tasting menus, so it belongs in the expensive filter and should be framed as a trip-defining reservation rather than a neighborhood dinner.",
+        "price": "$$$",
+        "priceSource": "MICHELIN Guide / World's 50 Best",
+        "hours": {
+          "mon": "Closed",
+          "tue": "1:00 PM-2:15 PM, 8:00 PM-9:15 PM",
+          "wed": "1:00 PM-2:15 PM, 8:00 PM-9:15 PM",
+          "thu": "1:00 PM-2:15 PM, 8:00 PM-9:15 PM",
+          "fri": "1:00 PM-2:15 PM, 8:00 PM-9:15 PM",
+          "sat": "1:00 PM-2:15 PM, 8:00 PM-9:15 PM",
+          "sun": "Closed"
+        },
+        "photo": "https://www.disfrutarbarcelona.com/api/uploads/restaurant/images/original/0c171d8288ac922fcd372beaceccb58d_phpQfnqi9.jpg"
+      },
+      {
+        "id": "eixample-bar-mut-restaurant",
+        "name": "Bar Mut",
+        "coordinates": [
+          41.3917,
+          2.1554
+        ],
+        "description": "Bar Mut is a polished Eixample bistro pick with strong guide and map signals around wine, seasonal Catalan plates, and late lunch-to-dinner demand near Passeig de Gràcia. It is pricier than a casual tapas bar, but useful when travelers want a classic Barcelona room that still feels compact and food-focused.",
+        "price": "$$$",
+        "priceSource": "The Infatuation / Google Maps",
+        "hours": {
+          "mon": "12:30 PM-4:00 PM, 7:30 PM-11:00 PM",
+          "tue": "12:30 PM-4:00 PM, 7:30 PM-11:00 PM",
+          "wed": "12:30 PM-4:00 PM, 7:30 PM-11:00 PM",
+          "thu": "12:30 PM-4:00 PM, 7:30 PM-11:00 PM",
+          "fri": "12:30 PM-4:00 PM, 7:30 PM-11:30 PM",
+          "sat": "12:30 PM-4:00 PM, 7:30 PM-11:30 PM",
+          "sun": "12:30 PM-4:00 PM, 7:30 PM-11:00 PM"
+        },
+        "photo": "https://api.nnhotels.com/storage/171219/5a58ce53eca45bad3b1b015a/xl/bar-mut-pau-claris-192-2jpg-1.jpg"
+      },
+      {
+        "id": "eixample-bodega-bonay",
+        "name": "Bodega Bonay",
+        "coordinates": [
+          41.3918,
+          2.1746
+        ],
+        "description": "Bodega Bonay is included because The Infatuation and reservation signals position it as one of Eixample's better hotel-linked dining rooms. The draw is Casa Bonay's design ecosystem: natural wine, anchovies, cecina, pastas, and long lunches that feel stylish without requiring a tasting menu.",
+        "price": "$$",
+        "priceSource": "The Infatuation / Resy",
+        "hours": {
+          "mon": "12:30 PM-4:00 PM, 7:30 PM-11:00 PM",
+          "tue": "12:30 PM-4:00 PM, 7:30 PM-11:00 PM",
+          "wed": "12:30 PM-4:00 PM, 7:30 PM-11:00 PM",
+          "thu": "12:30 PM-4:00 PM, 7:30 PM-11:00 PM",
+          "fri": "12:30 PM-4:00 PM, 7:30 PM-11:30 PM",
+          "sat": "12:30 PM-4:00 PM, 7:30 PM-11:30 PM",
+          "sun": "12:30 PM-4:00 PM, 7:30 PM-11:00 PM"
+        },
+        "photo": "https://cdn-hhbfohb.nitrocdn.com/MWVuFFQrOubRCgucqTrIdzQgXRECTcge/assets/images/optimized/rev-41ae578/casabonay.com/wp-content/uploads/2020/12/ATP9564@antp-900x1196.jpg"
+      },
+      {
+        "id": "eixample-paco-meralgo",
+        "name": "Paco Meralgo",
+        "coordinates": [
+          41.3915,
+          2.1519
+        ],
+        "description": "Paco Meralgo is the reliable mid-range tapas counter for Eixample, backed more by review volume and practical usefulness than by novelty. It works when diners want croquettes, bombas, seafood, and quick service in a polished room, especially when higher-profile reservations are unavailable.",
+        "price": "$$",
+        "priceSource": "Google Maps / Tripadvisor",
+        "hours": {
+          "mon": "12:30 PM-4:00 PM, 7:30 PM-11:00 PM",
+          "tue": "12:30 PM-4:00 PM, 7:30 PM-11:00 PM",
+          "wed": "12:30 PM-4:00 PM, 7:30 PM-11:00 PM",
+          "thu": "12:30 PM-4:00 PM, 7:30 PM-11:00 PM",
+          "fri": "12:30 PM-4:00 PM, 7:30 PM-11:30 PM",
+          "sat": "12:30 PM-4:00 PM, 7:30 PM-11:30 PM",
+          "sun": "12:30 PM-4:00 PM, 7:30 PM-11:00 PM"
+        },
+        "photo": "https://restaurantpacomeralgo.com/wp-content/uploads/2024/05/paco4.jpg"
+      },
+      {
+        "id": "eixample-cerveceria-catalana",
+        "name": "Cervecería Catalana",
+        "coordinates": [
+          41.3921,
+          2.1602
+        ],
+        "description": "Cervecería Catalana remains on the list because Google Maps and Tripadvisor volume confirm its role as a high-demand tapas machine. It is not hidden, but it is consistent: fast counter service, montaditos, seafood, tortillas, and a wait that is often part of the experience rather than a sign to abandon the plan.",
+        "price": "$$",
+        "priceSource": "Google Maps / Tripadvisor",
+        "hours": {
+          "mon": "12:00 PM-12:00 AM",
+          "tue": "12:00 PM-12:00 AM",
+          "wed": "12:00 PM-12:00 AM",
+          "thu": "12:00 PM-12:00 AM",
+          "fri": "12:00 PM-1:00 AM",
+          "sat": "12:00 PM-1:00 AM",
+          "sun": "12:00 PM-12:00 AM"
+        },
+        "photo": "https://static.wixstatic.com/media/fae8fc_8b397159d3774db6b2f37b7e4299dd2f%7Emv2.png/v1/fit/w_2500,h_1330,al_c/fae8fc_8b397159d3774db6b2f37b7e4299dd2f%7Emv2.png"
+      },
+      {
+        "id": "eixample-el-nacional-restaurant",
+        "name": "El Nacional",
+        "coordinates": [
+          41.3917,
+          2.168
+        ],
+        "description": "El Nacional is best understood as a logistics and atmosphere pick rather than a critic's secret. Time Out and map data support it as a central, visually memorable food hall with separate counters for meat, seafood, tapas, and drinks, making it especially useful for groups near Passeig de Gràcia.",
+        "price": "$$",
+        "priceSource": "Time Out / Google Maps",
+        "hours": {
+          "mon": "12:00 PM-12:00 AM",
+          "tue": "12:00 PM-12:00 AM",
+          "wed": "12:00 PM-12:00 AM",
+          "thu": "12:00 PM-12:00 AM",
+          "fri": "12:00 PM-1:00 AM",
+          "sat": "12:00 PM-1:00 AM",
+          "sun": "12:00 PM-12:00 AM"
+        },
+        "photo": "https://www.elnacionalbcn.com/wp-content/uploads/2023/03/La-Parada.webp"
+      }
+    ],
+    "sources": [
+      {
+        "name": "The Infatuation - Best Restaurants in Eixample",
+        "url": "https://www.theinfatuation.com/barcelona/guides/best-restaurants-eixample"
+      },
+      {
+        "name": "The Infatuation - Best Restaurants in Barcelona",
+        "url": "https://www.theinfatuation.com/barcelona/guides/best-restaurants-hotels-barcelona"
+      },
+      {
+        "name": "Eater - Best Restaurants in Barcelona",
+        "url": "https://www.eater.com/maps/best-restaurants-barcelona-spain"
+      },
+      {
+        "name": "MICHELIN Guide - Disfrutar",
+        "url": "https://guide.michelin.com/us/en/catalunya/barcelona/restaurant/disfrutar"
+      },
+      {
+        "name": "World's 50 Best - Disfrutar",
+        "url": "https://www.theworlds50best.com/discovery/Establishments/Spain/Barcelona/Disfrutar.html"
+      },
+      {
+        "name": "Time Out - Best restaurants in Barcelona",
+        "url": "https://www.timeout.com/barcelona/restaurants/best-restaurants-in-barcelona"
+      },
+      {
+        "name": "Tripadvisor - Barcelona restaurants",
+        "url": "https://www.tripadvisor.com/Restaurants-g187497-Barcelona_Catalonia.html"
+      },
+      {
+        "name": "Barcelonaando - Eixample guide",
+        "url": "https://barcelonando.com/eixample/"
+      },
+      {
+        "name": "Google Maps",
+        "url": "https://maps.google.com"
+      }
+    ]
+  },
+  {
+    "id": "list-barcelona-gracia-restaurants",
+    "slug": "barcelona-gracia-restaurants",
+    "seoSlug": "best-restaurants",
+    "seoTitle": "Best Restaurants in Gràcia, Barcelona",
+    "seoDescription": "Best restaurants in Gràcia, Barcelona, covering chef-led rooms, market lunches, creative tapas, casual local favorites, and neighborhood dining worth booking.",
+    "title": "Village Tables Worth the Walk",
+    "description": "Gracia rewards meals that match its slower plaza rhythm. Use this for market lunches, chef-led dinners, creative tapas, lighter Mediterranean rooms, and casual hits that make staying above Diagonal feel intentional.",
+    "url": "https://www.google.com/maps/search/gracia+restaurants+barcelona",
+    "category": "Food",
+    "location": {
+      "city": "Barcelona",
+      "neighborhood": "Gràcia",
+      "country": "Spain",
+      "continent": "Europe",
+      "scope": "city"
+    },
+    "creator": {
+      "id": "user-rguide-food",
+      "name": "R Food",
+      "avatar": "data:image/svg+xml;utf8,%0A%20%20%20%20%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22160%22%20height%3D%22160%22%20viewBox%3D%220%200%20160%20160%22%3E%0A%20%20%20%20%20%20%3Crect%20width%3D%22160%22%20height%3D%22160%22%20rx%3D%2280%22%20fill%3D%22%230f766e%22%20%2F%3E%0A%20%20%20%20%20%20%3Ctext%20x%3D%2250%25%22%20y%3D%2254%25%22%20text-anchor%3D%22middle%22%20dominant-baseline%3D%22middle%22%0A%20%20%20%20%20%20%20%20font-family%3D%22Arial%2C%20sans-serif%22%20font-size%3D%2276%22%20font-weight%3D%22700%22%20fill%3D%22white%22%3ER%3C%2Ftext%3E%0A%20%20%20%20%3C%2Fsvg%3E%0A%20%20"
+    },
+    "upvotes": 0,
+    "createdAt": "2026-04-29T00:00:00.000Z",
+    "stops": [
+      {
+        "id": "gracia-bemba",
+        "name": "Bemba Smash Burger",
+        "coordinates": [
+          41.407,
+          2.1583
+        ],
+        "description": "Bemba earns the cheap-eats slot because current Eater coverage and social geo-tags point to it as a focused Gràcia burger counter rather than a generic fast-food option. The appeal is a tight smash-burger menu, quality patties, house pickles, and quick execution in a neighborhood otherwise dominated by tapas and sit-down rooms.",
+        "price": "$",
+        "priceSource": "Eater / Instagram",
+        "hours": {
+          "mon": "12:30 PM-4:00 PM, 7:30 PM-11:00 PM",
+          "tue": "12:30 PM-4:00 PM, 7:30 PM-11:00 PM",
+          "wed": "12:30 PM-4:00 PM, 7:30 PM-11:00 PM",
+          "thu": "12:30 PM-4:00 PM, 7:30 PM-11:00 PM",
+          "fri": "12:30 PM-4:00 PM, 7:30 PM-11:30 PM",
+          "sat": "12:30 PM-4:00 PM, 7:30 PM-11:30 PM",
+          "sun": "12:30 PM-4:00 PM, 7:30 PM-11:00 PM"
+        },
+        "photo": "https://lh5.googleusercontent.com/p/AF1QipPGy52GLF6bRtn426WdJUPVsiCjbkQx_nf9_Za0=w408-h306-k-no"
+      },
+      {
+        "id": "gracia-con-gracia",
+        "name": "Con Gracia",
+        "coordinates": [
+          41.3979,
+          2.1599
+        ],
+        "description": "Con Gracia is the neighborhood's special-occasion restaurant in this set, supported by Time Out and strong map signals for tasting-menu dining. It suits travelers who want a quieter Gràcia dinner with wine pairing, chef-led pacing, and more polish than the plaza bars, while staying smaller than Eixample's headline fine-dining rooms.",
+        "price": "$$$",
+        "priceSource": "Time Out / Google Maps",
+        "hours": {
+          "mon": "Closed",
+          "tue": "7:00 PM-10:30 PM",
+          "wed": "7:00 PM-10:30 PM",
+          "thu": "7:00 PM-10:30 PM",
+          "fri": "7:00 PM-10:30 PM",
+          "sat": "7:00 PM-10:30 PM",
+          "sun": "Closed"
+        },
+        "photo": "https://images.unsplash.com/photo-1414235077428-338989a2e8c0?auto=format&fit=crop&w=900&q=80"
+      },
+      {
+        "id": "gracia-la-pubilla",
+        "name": "La Pubilla",
+        "coordinates": [
+          41.4025,
+          2.1534
+        ],
+        "description": "La Pubilla is included for its market-facing Catalan cooking and sustained local/traveler review strength. The best use case is breakfast or lunch near Mercat de la Llibertat, where the food reads as daily neighborhood cooking rather than destination theatrics: stews, eggs, seasonal plates, and a room that turns over with regulars.",
+        "price": "$$",
+        "priceSource": "Tripadvisor / Google Maps",
+        "hours": {
+          "mon": "8:30 AM-4:00 PM",
+          "tue": "8:30 AM-4:00 PM",
+          "wed": "8:30 AM-4:00 PM",
+          "thu": "8:30 AM-4:00 PM",
+          "fri": "8:30 AM-4:00 PM",
+          "sat": "9:00 AM-4:00 PM",
+          "sun": "Closed"
+        },
+        "photo": "https://static3.grubbio.com/885g-albums-1.jpg"
+      },
+      {
+        "id": "gracia-gut",
+        "name": "Gut",
+        "coordinates": [
+          41.4002,
+          2.1568
+        ],
+        "description": "Gut is the softer, lighter Gràcia option, supported by Time Out and map data for Mediterranean-Asian plates, vegetables, and gluten-free or health-conscious flexibility. It is useful when the group wants something brighter than fried tapas without leaving the neighborhood's relaxed evening rhythm.",
+        "price": "$$",
+        "priceSource": "Time Out / Google Maps",
+        "hours": {
+          "mon": "12:30 PM-4:00 PM, 7:30 PM-11:00 PM",
+          "tue": "12:30 PM-4:00 PM, 7:30 PM-11:00 PM",
+          "wed": "12:30 PM-4:00 PM, 7:30 PM-11:00 PM",
+          "thu": "12:30 PM-4:00 PM, 7:30 PM-11:00 PM",
+          "fri": "12:30 PM-4:00 PM, 7:30 PM-11:30 PM",
+          "sat": "12:30 PM-4:00 PM, 7:30 PM-11:30 PM",
+          "sun": "12:30 PM-4:00 PM, 7:30 PM-11:00 PM"
+        },
+        "photo": "http://gut.es/wp-content/uploads/GUT-Better-Than-Good-scaled.jpg"
+      },
+      {
+        "id": "gracia-la-panxa-del-bisbe",
+        "name": "La Panxa del Bisbe",
+        "coordinates": [
+          41.4031,
+          2.1549
+        ],
+        "description": "La Panxa del Bisbe is a small creative tapas room that sources frame as more personal than the surrounding plaza bars. It is best for diners who still want a shareable Catalan format but with more attention to composition, seasonal specials, and a room small enough that booking matters.",
+        "price": "$$",
+        "priceSource": "Time Out / Google Maps",
+        "hours": {
+          "mon": "Closed",
+          "tue": "1:00 PM-3:30 PM, 8:00 PM-11:00 PM",
+          "wed": "1:00 PM-3:30 PM, 8:00 PM-11:00 PM",
+          "thu": "1:00 PM-3:30 PM, 8:00 PM-11:00 PM",
+          "fri": "1:00 PM-3:30 PM, 8:00 PM-11:30 PM",
+          "sat": "1:00 PM-3:30 PM, 8:00 PM-11:30 PM",
+          "sun": "Closed"
+        },
+        "photo": "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=900&q=80"
+      },
+      {
+        "id": "gracia-shoronpo",
+        "name": "Shoronpo",
+        "coordinates": [
+          41.3981,
+          2.1572
+        ],
+        "description": "Shoronpo is included as a newer Gràcia food hit confirmed through Eater and social geo-tag momentum. It gives the neighborhood list a non-tapas option: ramen, soup dumplings, tantanmen, and fried snacks in a busy room where demand suggests planning ahead rather than treating it as a casual fallback.",
+        "price": "$$",
+        "priceSource": "Eater / Instagram",
+        "hours": {
+          "mon": "12:30 PM-4:00 PM, 7:30 PM-11:00 PM",
+          "tue": "12:30 PM-4:00 PM, 7:30 PM-11:00 PM",
+          "wed": "12:30 PM-4:00 PM, 7:30 PM-11:00 PM",
+          "thu": "12:30 PM-4:00 PM, 7:30 PM-11:00 PM",
+          "fri": "12:30 PM-4:00 PM, 7:30 PM-11:30 PM",
+          "sat": "12:30 PM-4:00 PM, 7:30 PM-11:30 PM",
+          "sun": "12:30 PM-4:00 PM, 7:30 PM-11:00 PM"
+        },
+        "photo": "https://images.unsplash.com/photo-1563245372-f21724e3856d?auto=format&fit=crop&w=900&q=80"
+      }
+    ],
+    "sources": [
+      {
+        "name": "Time Out - Gràcia guide",
+        "url": "https://www.timeout.com/barcelona/things-to-do/gracia"
+      },
+      {
+        "name": "Time Out - Con Gracia",
+        "url": "https://www.timeout.com/barcelona/restaurants/con-gracia"
+      },
+      {
+        "name": "Eater - Best Restaurants in Barcelona",
+        "url": "https://www.eater.com/maps/best-restaurants-barcelona-spain"
+      },
+      {
+        "name": "The Infatuation - Barcelona guides",
+        "url": "https://www.theinfatuation.com/barcelona/guides"
+      },
+      {
+        "name": "Tripadvisor - La Pubilla",
+        "url": "https://www.tripadvisor.com/Restaurant_Review-g187497-d3800375-Reviews-La_Pubilla-Barcelona_Catalonia.html"
+      },
+      {
+        "name": "Google Maps",
+        "url": "https://maps.google.com"
+      }
+    ]
+  },
+  {
+    "id": "list-barcelona-poble-sec-restaurants",
+    "slug": "barcelona-poble-sec-restaurants",
+    "seoSlug": "best-restaurants",
+    "seoTitle": "Best Restaurants in Poble-sec, Barcelona",
+    "seoDescription": "Best restaurants in Poble-sec, Barcelona, for serious tapas, Montjuic-view rice, Venetian-Catalan plates, and dinner stops near theaters and Sala Apolo.",
+    "title": "Blai Bites and Montjuïc Meals",
+    "description": "Poble-sec meals work around the hill, the theaters, and the Blai crawl. This guide balances standing montaditos, terrace rice, Venetian-Catalan plates, and reservations that make sense before Apolo or after Montjuic.",
+    "url": "https://www.google.com/maps/search/poble+sec+restaurants+barcelona",
+    "category": "Food",
+    "location": {
+      "city": "Barcelona",
+      "neighborhood": "Poble-sec",
+      "country": "Spain",
+      "continent": "Europe",
+      "scope": "city"
+    },
+    "creator": {
+      "id": "user-rguide-food",
+      "name": "R Food",
+      "avatar": "data:image/svg+xml;utf8,%0A%20%20%20%20%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22160%22%20height%3D%22160%22%20viewBox%3D%220%200%20160%20160%22%3E%0A%20%20%20%20%20%20%3Crect%20width%3D%22160%22%20height%3D%22160%22%20rx%3D%2280%22%20fill%3D%22%230f766e%22%20%2F%3E%0A%20%20%20%20%20%20%3Ctext%20x%3D%2250%25%22%20y%3D%2254%25%22%20text-anchor%3D%22middle%22%20dominant-baseline%3D%22middle%22%0A%20%20%20%20%20%20%20%20font-family%3D%22Arial%2C%20sans-serif%22%20font-size%3D%2276%22%20font-weight%3D%22700%22%20fill%3D%22white%22%3ER%3C%2Ftext%3E%0A%20%20%20%20%3C%2Fsvg%3E%0A%20%20"
+    },
+    "upvotes": 0,
+    "createdAt": "2026-04-29T00:00:00.000Z",
+    "stops": [
+      {
+        "id": "poblesec-quimet-quimet-restaurant",
+        "name": "Quimet & Quimet",
+        "coordinates": [
+          41.3738,
+          2.1635
+        ],
+        "description": "Quimet & Quimet is one of Poble-sec's most source-consistent food stops, supported by its own current hours, traveler reviews, and long-running editorial reputation. It is standing-room only, built around montaditos layered with smoked, preserved, and tinned ingredients, and works best as an early, focused stop with no expectation of lingering.",
+        "price": "$$",
+        "priceSource": "Official site / Tripadvisor",
+        "hours": {
+          "mon": "12:00 PM-4:00 PM, 6:00 PM-10:30 PM",
+          "tue": "12:00 PM-4:00 PM, 6:00 PM-10:30 PM",
+          "wed": "12:00 PM-4:00 PM, 6:00 PM-10:30 PM",
+          "thu": "12:00 PM-4:00 PM, 6:00 PM-10:30 PM",
+          "fri": "12:00 PM-4:00 PM, 6:00 PM-10:30 PM",
+          "sat": "Closed",
+          "sun": "Closed"
+        },
+        "photo": "https://quimetiquimet.com/wp-content/uploads/tapbg.jpg"
+      },
+      {
+        "id": "poblesec-martinez",
+        "name": "Martínez",
+        "coordinates": [
+          41.3692,
+          2.1661
+        ],
+        "description": "Martínez is the expensive Poble-sec/Montjuïc meal because sources frame it around terrace setting, seafood rice, and city-port views. It is less about neighborhood grit and more about a planned daytime reservation: paella, fideuà, Catalan wine, and a long lunch above the city.",
+        "price": "$$$",
+        "priceSource": "Eater / The Infatuation",
+        "hours": {
+          "mon": "12:30 PM-4:00 PM, 7:30 PM-11:00 PM",
+          "tue": "12:30 PM-4:00 PM, 7:30 PM-11:00 PM",
+          "wed": "12:30 PM-4:00 PM, 7:30 PM-11:00 PM",
+          "thu": "12:30 PM-4:00 PM, 7:30 PM-11:00 PM",
+          "fri": "12:30 PM-4:00 PM, 7:30 PM-11:30 PM",
+          "sat": "12:30 PM-4:00 PM, 7:30 PM-11:30 PM",
+          "sun": "12:30 PM-4:00 PM, 7:30 PM-11:00 PM"
+        },
+        "photo": "https://martinezbarcelona.com/web/wp-content/uploads/2025/05/Foto_Home4-2048x1097.jpg"
+      },
+      {
+        "id": "poblesec-xemei",
+        "name": "Xemei",
+        "coordinates": [
+          41.3718,
+          2.1668
+        ],
+        "description": "Xemei is a Venetian-leaning Barcelona favorite with support from Eater-style city guides and local food coverage. It adds range to Poble-sec with seafood, pastas, and Italian-Adriatic flavors, while the room keeps the slightly chaotic, lively feel that fits the neighborhood better than a formal fine-dining setup.",
+        "price": "$$",
+        "priceSource": "Eater / El País",
+        "hours": {
+          "mon": "Closed",
+          "tue": "1:00 PM-3:30 PM, 8:00 PM-11:00 PM",
+          "wed": "1:00 PM-3:30 PM, 8:00 PM-11:00 PM",
+          "thu": "1:00 PM-3:30 PM, 8:00 PM-11:00 PM",
+          "fri": "1:00 PM-3:30 PM, 8:00 PM-11:30 PM",
+          "sat": "1:00 PM-3:30 PM, 8:00 PM-11:30 PM",
+          "sun": "Closed"
+        },
+        "photo": "https://barcelonanavigator.com/wp-content/uploads/2015/09/rsz__mg_1561.jpg"
+      },
+      {
+        "id": "poblesec-la-platilleria-restaurant",
+        "name": "La Platilleria",
+        "coordinates": [
+          41.3746,
+          2.1658
+        ],
+        "description": "La Platilleria is the warm small-plates choice for a Poble-sec dinner that does not need to become a full tasting-menu event. Review signals support it for approachable service, compact plates, and a location that works before theater, after Montjuïc, or as a calmer alternative to the busiest Carrer de Blai stops.",
+        "price": "$$",
+        "priceSource": "Google Maps / Tripadvisor",
+        "hours": {
+          "mon": "Closed",
+          "tue": "1:00 PM-3:30 PM, 8:00 PM-11:00 PM",
+          "wed": "1:00 PM-3:30 PM, 8:00 PM-11:00 PM",
+          "thu": "1:00 PM-3:30 PM, 8:00 PM-11:00 PM",
+          "fri": "1:00 PM-3:30 PM, 8:00 PM-11:30 PM",
+          "sat": "1:00 PM-3:30 PM, 8:00 PM-11:30 PM",
+          "sun": "Closed"
+        },
+        "photo": "https://media-cdn.tripadvisor.com/media/photo-o/09/24/e4/7a/la-platilleria.jpg"
+      },
+      {
+        "id": "poblesec-margarit",
+        "name": "Margarit",
+        "coordinates": [
+          41.3732,
+          2.1646
+        ],
+        "description": "Margarit is a newer Poble-sec pick validated by Eater and social geo-tags, useful because it brings Mediterranean-Greek cooking and natural-wine energy to the Montjuïc slope. The appeal is dips, grilled vegetables, seafood, and a relaxed room that feels current without drifting into hype-only territory.",
+        "price": "$$",
+        "priceSource": "Eater / Instagram",
+        "hours": {
+          "mon": "12:30 PM-4:00 PM, 7:30 PM-11:00 PM",
+          "tue": "12:30 PM-4:00 PM, 7:30 PM-11:00 PM",
+          "wed": "12:30 PM-4:00 PM, 7:30 PM-11:00 PM",
+          "thu": "12:30 PM-4:00 PM, 7:30 PM-11:00 PM",
+          "fri": "12:30 PM-4:00 PM, 7:30 PM-11:30 PM",
+          "sat": "12:30 PM-4:00 PM, 7:30 PM-11:30 PM",
+          "sun": "12:30 PM-4:00 PM, 7:30 PM-11:00 PM"
+        },
+        "photo": "https://www.novacircle.com/images/french_9-compressed.webp"
+      },
+      {
+        "id": "poblesec-mano-rota",
+        "name": "Mano Rota",
+        "coordinates": [
+          41.374,
+          2.1681
+        ],
+        "description": "Mano Rota is the chef-driven Poble-sec reservation, included for its creative Latin American and Mediterranean tasting-menu approach and strong local review profile. It belongs in the expensive filter because the experience is more structured, ambitious, and dinner-focused than the neighborhood's pintxos and tavern circuit.",
+        "price": "$$$",
+        "priceSource": "Barcelona Metropolitan / Google Maps",
+        "hours": {
+          "mon": "Closed",
+          "tue": "7:00 PM-10:30 PM",
+          "wed": "7:00 PM-10:30 PM",
+          "thu": "7:00 PM-10:30 PM",
+          "fri": "7:00 PM-10:30 PM",
+          "sat": "7:00 PM-10:30 PM",
+          "sun": "Closed"
+        },
+        "photo": "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=900&q=80"
+      }
+    ],
+    "sources": [
+      {
+        "name": "The Infatuation - Best Restaurants in Barcelona",
+        "url": "https://www.theinfatuation.com/barcelona/guides/best-restaurants-hotels-barcelona"
+      },
+      {
+        "name": "Eater - Best Restaurants in Barcelona",
+        "url": "https://www.eater.com/maps/best-restaurants-barcelona-spain"
+      },
+      {
+        "name": "Time Out - Barcelona restaurants",
+        "url": "https://www.timeout.com/barcelona/restaurants"
+      },
+      {
+        "name": "Time Out - Poble-sec bars",
+        "url": "https://www.timeout.com/barcelona/bars-and-pubs/poble-sec-bars"
+      },
+      {
+        "name": "Quimet & Quimet official",
+        "url": "https://quimetiquimet.com/en/"
+      },
+      {
+        "name": "Tripadvisor - Quimet & Quimet",
+        "url": "https://www.tripadvisor.com/Restaurant_Review-g187497-d717377-Reviews-Quimet_Quimet-Barcelona_Catalonia.html"
+      },
+      {
+        "name": "Google Maps",
+        "url": "https://maps.google.com"
+      }
+    ]
+  },
+  {
+    "id": "list-barcelona-citywide-restaurants",
+    "slug": "barcelona-citywide-restaurants",
+    "seoSlug": "best-restaurants",
+    "seoTitle": "Best Restaurants in Barcelona",
+    "seoDescription": "Best restaurants in Barcelona, from world-class tasting menus and seafood counters to natural-wine rooms, tavern classics, market lunches, and neighborhood meals worth crossing town for.",
+    "title": "Tables Worth Crossing Town For",
+    "description": "A cross-town restaurant shortlist for meals that can shape the trip, not just fill a slot: destination tasting menus, old taverns, counter seafood, natural-wine rooms, tapas classics, and practical neighborhood anchors.",
+    "url": "https://www.google.com/maps/search/best+restaurants+barcelona",
+    "category": "Food",
+    "location": {
+      "city": "Barcelona",
+      "country": "Spain",
+      "continent": "Europe",
+      "scope": "city"
+    },
+    "creator": {
+      "id": "user-rguide-food",
+      "name": "R Food",
+      "avatar": "data:image/svg+xml;utf8,%0A%20%20%20%20%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22160%22%20height%3D%22160%22%20viewBox%3D%220%200%20160%20160%22%3E%0A%20%20%20%20%20%20%3Crect%20width%3D%22160%22%20height%3D%22160%22%20rx%3D%2280%22%20fill%3D%22%230f766e%22%20%2F%3E%0A%20%20%20%20%20%20%3Ctext%20x%3D%2250%25%22%20y%3D%2254%25%22%20text-anchor%3D%22middle%22%20dominant-baseline%3D%22middle%22%0A%20%20%20%20%20%20%20%20font-family%3D%22Arial%2C%20sans-serif%22%20font-size%3D%2276%22%20font-weight%3D%22700%22%20fill%3D%22white%22%3ER%3C%2Ftext%3E%0A%20%20%20%20%3C%2Fsvg%3E%0A%20%20"
+    },
+    "upvotes": 0,
+    "createdAt": "2026-05-02T00:00:00.000Z",
+    "stops": [
+      {
+        "id": "citywide-disfrutar",
+        "name": "Disfrutar",
+        "coordinates": [
+          41.3878,
+          2.1533
+        ],
+        "description": "Disfrutar is the citywide special-occasion anchor because MICHELIN and World's 50 Best both support its status as Barcelona's global fine-dining reference. The meal is a technical, playful tasting-menu commitment from elBulli alumni, so it belongs in the expensive filter and should be planned as the trip-defining reservation rather than a flexible dinner stop.",
+        "price": "$$$",
+        "priceSource": "MICHELIN Guide / World's 50 Best",
+        "hours": {
+          "mon": "Closed",
+          "tue": "1:00 PM-2:15 PM, 8:00 PM-9:15 PM",
+          "wed": "1:00 PM-2:15 PM, 8:00 PM-9:15 PM",
+          "thu": "1:00 PM-2:15 PM, 8:00 PM-9:15 PM",
+          "fri": "1:00 PM-2:15 PM, 8:00 PM-9:15 PM",
+          "sat": "1:00 PM-2:15 PM, 8:00 PM-9:15 PM",
+          "sun": "Closed"
+        },
+        "photo": "https://www.disfrutarbarcelona.com/api/uploads/restaurant/images/original/0c171d8288ac922fcd372beaceccb58d_phpQfnqi9.jpg"
+      },
+      {
+        "id": "citywide-cal-pep",
+        "name": "Cal Pep",
+        "coordinates": [
+          41.3835,
+          2.1839
+        ],
+        "description": "Cal Pep represents the Born seafood-counter experience that still justifies the demand: fast pacing, tight seating, and a kitchen-led progression through clams, squid, fried fish, and seasonal tapas. The Infatuation and map-review signals back it as expensive for the format but valuable when the room's performance is part of the meal.",
+        "price": "$$$",
+        "priceSource": "The Infatuation / Google Maps",
+        "hours": {
+          "mon": "Closed",
+          "tue": "1:00 PM-3:30 PM, 8:00 PM-11:00 PM",
+          "wed": "1:00 PM-3:30 PM, 8:00 PM-11:00 PM",
+          "thu": "1:00 PM-3:30 PM, 8:00 PM-11:00 PM",
+          "fri": "1:00 PM-3:30 PM, 8:00 PM-11:30 PM",
+          "sat": "1:00 PM-3:30 PM, 8:00 PM-11:30 PM",
+          "sun": "Closed"
+        },
+        "photo": "https://static.wixstatic.com/media/57144e_89f865012fdb4db8bc8bec1b2fdeede3~mv2.jpg"
+      },
+      {
+        "id": "citywide-quimet-quimet",
+        "name": "Quimet & Quimet",
+        "coordinates": [
+          41.3738,
+          2.1635
+        ],
+        "description": "Quimet & Quimet is the classic Poble-sec stop that earns citywide placement because official hours, Time Out, traveler reviews, and long-running food-guide consensus all point to the same thing: a tiny standing-room bodega built around montaditos, conservas, beer, and vermouth. Go early and treat it as a focused pre-dinner stop, not a lingering restaurant.",
+        "price": "$$",
+        "priceSource": "Official site / Time Out / Tripadvisor",
+        "hours": {
+          "mon": "12:00 PM-4:00 PM, 6:00 PM-10:30 PM",
+          "tue": "12:00 PM-4:00 PM, 6:00 PM-10:30 PM",
+          "wed": "12:00 PM-4:00 PM, 6:00 PM-10:30 PM",
+          "thu": "12:00 PM-4:00 PM, 6:00 PM-10:30 PM",
+          "fri": "12:00 PM-4:00 PM, 6:00 PM-10:30 PM",
+          "sat": "Closed",
+          "sun": "Closed"
+        },
+        "photo": "https://quimetiquimet.com/wp-content/uploads/tapbg.jpg"
+      },
+      {
+        "id": "citywide-bar-del-pla",
+        "name": "Bar del Pla",
+        "coordinates": [
+          41.3857,
+          2.1817
+        ],
+        "description": "Bar del Pla is the modern tapas-and-wine pick for travelers who want El Born energy without defaulting to the loudest old-city counters. The Infatuation, Google Maps, and natural-wine source signals support it for creative Catalan small plates, a bistro rhythm, and a reservation-worthy room that works for a real dinner.",
+        "price": "$$",
+        "priceSource": "The Infatuation / Google Maps",
+        "hours": {
+          "mon": "12:30 PM-4:00 PM, 7:30 PM-11:00 PM",
+          "tue": "12:30 PM-4:00 PM, 7:30 PM-11:00 PM",
+          "wed": "12:30 PM-4:00 PM, 7:30 PM-11:00 PM",
+          "thu": "12:30 PM-4:00 PM, 7:30 PM-11:00 PM",
+          "fri": "12:30 PM-4:00 PM, 7:30 PM-11:30 PM",
+          "sat": "12:30 PM-4:00 PM, 7:30 PM-11:30 PM",
+          "sun": "12:30 PM-4:00 PM, 7:30 PM-11:00 PM"
+        },
+        "photo": "https://barcelonanavigator.com/wp-content/uploads/2016/05/Jordi.jpg"
+      },
+      {
+        "id": "citywide-bodega-bonay",
+        "name": "Bodega Bonay",
+        "coordinates": [
+          41.3918,
+          2.1746
+        ],
+        "description": "Bodega Bonay gives the citywide list a stylish Eixample lunch or dinner that does not require tasting-menu money. The Infatuation's 2026 review and reservation signals frame it around Casa Bonay's design-hotel ecosystem, Catalan natural wine, anchovies, cured meats, pastas, and a social long-lunch scene.",
+        "price": "$$",
+        "priceSource": "The Infatuation / TheFork",
+        "hours": {
+          "mon": "12:30 PM-4:00 PM, 7:30 PM-11:00 PM",
+          "tue": "12:30 PM-4:00 PM, 7:30 PM-11:00 PM",
+          "wed": "12:30 PM-4:00 PM, 7:30 PM-11:00 PM",
+          "thu": "12:30 PM-4:00 PM, 7:30 PM-11:00 PM",
+          "fri": "12:30 PM-4:00 PM, 7:30 PM-11:30 PM",
+          "sat": "12:30 PM-4:00 PM, 7:30 PM-11:30 PM",
+          "sun": "12:30 PM-4:00 PM, 7:30 PM-11:00 PM"
+        },
+        "photo": "https://cdn-hhbfohb.nitrocdn.com/MWVuFFQrOubRCgucqTrIdzQgXRECTcge/assets/images/optimized/rev-41ae578/casabonay.com/wp-content/uploads/2020/12/ATP9564@antp-900x1196.jpg"
+      },
+      {
+        "id": "citywide-la-sosenga",
+        "name": "La Sosenga",
+        "coordinates": [
+          41.3826,
+          2.1749
+        ],
+        "description": "La Sosenga is the Gothic Quarter safeguard against generic old-town dining: a small Catalan room where the reason to book is seasonal cooking and a calmer pace, not just location. Time Out and map-review validation make it useful for diners who want regional flavor and careful plating inside the tourist-heavy core.",
+        "price": "$$",
+        "priceSource": "Time Out / Google Maps",
+        "hours": {
+          "mon": "Closed",
+          "tue": "1:00 PM-4:00 PM",
+          "wed": "1:00 PM-4:00 PM",
+          "thu": "1:00 PM-4:00 PM",
+          "fri": "1:00 PM-4:00 PM, 8:00 PM-11:00 PM",
+          "sat": "1:00 PM-4:00 PM, 8:00 PM-11:00 PM",
+          "sun": "Closed"
+        },
+        "photo": "https://images.gestionaweb.cat/7664/img-2560-1440/captura-de-pantalla-2025-09-24-a-les-9-24-50.png"
+      },
+      {
+        "id": "citywide-bar-la-plata",
+        "name": "Bar La Plata",
+        "coordinates": [
+          41.3818,
+          2.1799
+        ],
+        "description": "Bar La Plata is the cheap classic because its value is unusually clear: a short menu, fried fish, tomato salad, butifarra, house wine, and a Gothic Quarter room that has not inflated itself into a concept. Tripadvisor and Google Maps support it as a practical old-tavern stop when the plan needs something quick, local-feeling, and low-fuss.",
+        "price": "$",
+        "priceSource": "Tripadvisor / Google Maps",
+        "hours": {
+          "mon": "Closed",
+          "tue": "12:00 PM-3:30 PM, 7:00 PM-11:00 PM",
+          "wed": "12:00 PM-3:30 PM, 7:00 PM-11:00 PM",
+          "thu": "12:00 PM-3:30 PM, 7:00 PM-11:00 PM",
+          "fri": "12:00 PM-3:30 PM, 7:00 PM-11:00 PM",
+          "sat": "12:00 PM-3:30 PM, 7:00 PM-11:00 PM",
+          "sun": "Closed"
+        },
+        "photo": "https://barlaplata.com/wp-content/uploads/2024/04/img_7003-1.jpg"
+      },
+      {
+        "id": "citywide-la-pubilla",
+        "name": "La Pubilla",
+        "coordinates": [
+          41.4025,
+          2.1534
+        ],
+        "description": "La Pubilla is the Gràcia market-lunch pick, useful because it shows Barcelona's daily Catalan cooking away from the old-city circuit. The support is more practical than hype-driven: sustained review strength, Mercat de la Llibertat proximity, stews, eggs, seasonal plates, and daytime hours that make it best for breakfast or lunch.",
+        "price": "$$",
+        "priceSource": "Tripadvisor / Google Maps",
+        "hours": {
+          "mon": "8:30 AM-4:00 PM",
+          "tue": "8:30 AM-4:00 PM",
+          "wed": "8:30 AM-4:00 PM",
+          "thu": "8:30 AM-4:00 PM",
+          "fri": "8:30 AM-4:00 PM",
+          "sat": "9:00 AM-4:00 PM",
+          "sun": "Closed"
+        },
+        "photo": "https://static3.grubbio.com/885g-albums-1.jpg"
+      },
+      {
+        "id": "citywide-martinez",
+        "name": "Martínez",
+        "coordinates": [
+          41.3692,
+          2.1661
+        ],
+        "description": "Martínez is the citywide long-lunch pick for seafood rice, terrace setting, and Montjuïc-to-port views. Eater and The Infatuation-style source signals make it less a neighborhood tavern and more a planned daytime reservation where paella, fideuà, Catalan wine, and the view are the point.",
+        "price": "$$$",
+        "priceSource": "Eater / The Infatuation",
+        "hours": {
+          "mon": "12:30 PM-4:00 PM, 7:30 PM-11:00 PM",
+          "tue": "12:30 PM-4:00 PM, 7:30 PM-11:00 PM",
+          "wed": "12:30 PM-4:00 PM, 7:30 PM-11:00 PM",
+          "thu": "12:30 PM-4:00 PM, 7:30 PM-11:00 PM",
+          "fri": "12:30 PM-4:00 PM, 7:30 PM-11:30 PM",
+          "sat": "12:30 PM-4:00 PM, 7:30 PM-11:30 PM",
+          "sun": "12:30 PM-4:00 PM, 7:30 PM-11:00 PM"
+        },
+        "photo": "https://martinezbarcelona.com/web/wp-content/uploads/2025/05/Foto_Home4-2048x1097.jpg"
+      },
+      {
+        "id": "citywide-bemba",
+        "name": "Bemba Smash Burger",
+        "coordinates": [
+          41.407,
+          2.1583
+        ],
+        "description": "Bemba is the cheap, current counterweight to Barcelona's tapas-heavy shortlists. Eater and social geo-tag signals support it as a focused Gràcia smash-burger stop with quality patties, house pickles, and quick execution, best used when the day needs a casual meal that still feels chosen.",
+        "price": "$",
+        "priceSource": "Eater / Instagram",
+        "hours": {
+          "mon": "12:30 PM-4:00 PM, 7:30 PM-11:00 PM",
+          "tue": "12:30 PM-4:00 PM, 7:30 PM-11:00 PM",
+          "wed": "12:30 PM-4:00 PM, 7:30 PM-11:00 PM",
+          "thu": "12:30 PM-4:00 PM, 7:30 PM-11:00 PM",
+          "fri": "12:30 PM-4:00 PM, 7:30 PM-11:30 PM",
+          "sat": "12:30 PM-4:00 PM, 7:30 PM-11:30 PM",
+          "sun": "12:30 PM-4:00 PM, 7:30 PM-11:00 PM"
+        },
+        "photo": "https://lh5.googleusercontent.com/p/AF1QipPGy52GLF6bRtn426WdJUPVsiCjbkQx_nf9_Za0=w408-h306-k-no"
+      },
+      {
+        "id": "citywide-bar-brutal",
+        "name": "Bar Brutal",
+        "coordinates": [
+          41.3849,
+          2.1811
+        ],
+        "description": "Bar Brutal earns a citywide slot for natural-wine culture as much as for food. Editorial, social, and map signals make it a strong dinner for curious drinkers who want low-intervention bottles, lively service, and snackable plates in El Born, with the caveat that wine is the main reason to choose it.",
+        "price": "$$",
+        "priceSource": "The Infatuation / Instagram",
+        "hours": {
+          "mon": "7:00 PM-12:00 AM",
+          "tue": "7:00 PM-12:00 AM",
+          "wed": "7:00 PM-12:00 AM",
+          "thu": "7:00 PM-12:00 AM",
+          "fri": "1:00 PM-4:00 PM, 7:00 PM-12:30 AM",
+          "sat": "1:00 PM-4:00 PM, 7:00 PM-12:30 AM",
+          "sun": "1:00 PM-4:00 PM, 7:00 PM-12:00 AM"
+        },
+        "photo": "http://barbrutal.com/cdn/shop/files/Brutal_Trial_Websize_1600x1067.jpg?v=1770045996"
+      },
+      {
+        "id": "citywide-capet",
+        "name": "Capet",
+        "coordinates": [
+          41.3816,
+          2.1764
+        ],
+        "description": "Capet is the polished small-room alternative to Barcelona's famous tasting-menu destinations. MICHELIN and reservation-platform signals support it for contemporary Catalan cooking in the Gothic lanes, so it belongs in the expensive filter but stays useful for travelers who want intimacy and control rather than a headline restaurant production.",
+        "price": "$$$",
+        "priceSource": "MICHELIN Guide / Resy",
+        "hours": {
+          "mon": "Closed",
+          "tue": "7:00 PM-10:30 PM",
+          "wed": "7:00 PM-10:30 PM",
+          "thu": "7:00 PM-10:30 PM",
+          "fri": "7:00 PM-10:30 PM",
+          "sat": "7:00 PM-10:30 PM",
+          "sun": "Closed"
+        },
+        "photo": "https://static.wixstatic.com/media/fdc945_2b2a24bff92540c8b37ff6bd1c06be5a~mv2.jpg/v1/fill/w_1024,h_683,al_c/fdc945_2b2a24bff92540c8b37ff6bd1c06be5a~mv2.jpg"
+      }
+    ],
+    "sources": [
+      {
+        "name": "Eater - Best Restaurants in Barcelona",
+        "url": "https://www.eater.com/maps/best-restaurants-barcelona-spain"
+      },
+      {
+        "name": "Eater - Old City restaurants",
+        "url": "https://www.eater.com/maps/barcelona-old-city-gothic-quarter-best-restaurants"
+      },
+      {
+        "name": "The Infatuation - Best Restaurants in Barcelona",
+        "url": "https://www.theinfatuation.com/barcelona/guides/best-restaurants-hotels-barcelona"
+      },
+      {
+        "name": "The Infatuation - Bodega Bonay",
+        "url": "https://www.theinfatuation.com/barcelona/reviews/bodega-bonay"
+      },
+      {
+        "name": "Time Out - Best restaurants in Barcelona",
+        "url": "https://www.timeout.com/barcelona/restaurants/best-restaurants-in-barcelona"
+      },
+      {
+        "name": "Time Out - Quimet i Quimet",
+        "url": "https://www.timeout.com/barcelona/restaurants/quimet-i-quimet"
+      },
+      {
+        "name": "MICHELIN Guide - Disfrutar",
+        "url": "https://guide.michelin.com/us/en/catalunya/barcelona/restaurant/disfrutar"
+      },
+      {
+        "name": "MICHELIN Guide - Capet",
+        "url": "https://guide.michelin.com/us/en/catalunya/barcelona/restaurant/capet"
+      },
+      {
+        "name": "World's 50 Best - Disfrutar",
+        "url": "https://www.theworlds50best.com/discovery/Establishments/Spain/Barcelona/Disfrutar.html"
+      },
+      {
+        "name": "Quimet & Quimet official",
+        "url": "https://quimetiquimet.com/en/"
+      },
+      {
+        "name": "Tripadvisor - Barcelona restaurants",
+        "url": "https://www.tripadvisor.com/Restaurants-g187497-Barcelona_Catalonia.html"
+      },
+      {
+        "name": "Google Maps",
+        "url": "https://maps.google.com"
+      }
+    ]
+  },
+  {
+    "id": "list-barcelona-citywide-tapas",
+    "slug": "barcelona-citywide-tapas",
+    "seoSlug": "best-tapas",
+    "seoTitle": "Best Tapas in Barcelona",
+    "seoDescription": "Best tapas in Barcelona, from standing-room montaditos and cava counters to polished small plates, vermouth rooms, classic taverns, and neighborhood tapas bars worth planning around.",
+    "title": "Counters, Conservas, and Vermouth Plates",
+    "description": "A tapas route for building the meal one plate at a time: standing montaditos, cava-and-anchovy counters, polished small plates, vermouth stops, and reliable group rooms that still feel specific rather than interchangeable.",
+    "url": "https://www.google.com/maps/search/best+tapas+barcelona",
+    "category": "Food",
+    "location": {
+      "city": "Barcelona",
+      "country": "Spain",
+      "continent": "Europe",
+      "scope": "city"
+    },
+    "creator": {
+      "id": "user-rguide-food",
+      "name": "R Food",
+      "avatar": "data:image/svg+xml;utf8,%0A%20%20%20%20%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22160%22%20height%3D%22160%22%20viewBox%3D%220%200%20160%20160%22%3E%0A%20%20%20%20%20%20%3Crect%20width%3D%22160%22%20height%3D%22160%22%20rx%3D%2280%22%20fill%3D%22%230f766e%22%20%2F%3E%0A%20%20%20%20%20%20%3Ctext%20x%3D%2250%25%22%20y%3D%2254%25%22%20text-anchor%3D%22middle%22%20dominant-baseline%3D%22middle%22%0A%20%20%20%20%20%20%20%20font-family%3D%22Arial%2C%20sans-serif%22%20font-size%3D%2276%22%20font-weight%3D%22700%22%20fill%3D%22white%22%3ER%3C%2Ftext%3E%0A%20%20%20%20%3C%2Fsvg%3E%0A%20%20"
+    },
+    "upvotes": 0,
+    "createdAt": "2026-05-02T00:00:00.000Z",
+    "stops": [
+      {
+        "id": "barcelona-tapas-quimet-quimet",
+        "name": "Quimet & Quimet",
+        "coordinates": [
+          41.3738,
+          2.1635
+        ],
+        "description": "Quimet & Quimet is the tapas essential because multiple source types agree on its very specific appeal: standing-room service, house-made conservas, montaditos, beer, vermouth, and a bottle-lined room that has barely enough space to pause. Go when it opens, order decisively, and treat it as a short, high-impact Poble-sec stop.",
+        "price": "$$",
+        "priceSource": "Official site / The Infatuation / Time Out",
+        "hours": {
+          "mon": "12:00 PM-4:00 PM, 6:00 PM-10:30 PM",
+          "tue": "12:00 PM-4:00 PM, 6:00 PM-10:30 PM",
+          "wed": "12:00 PM-4:00 PM, 6:00 PM-10:30 PM",
+          "thu": "12:00 PM-4:00 PM, 6:00 PM-10:30 PM",
+          "fri": "12:00 PM-4:00 PM, 6:00 PM-10:30 PM",
+          "sat": "Closed",
+          "sun": "Closed"
+        },
+        "photo": "https://quimetiquimet.com/wp-content/uploads/tapbg.jpg"
+      },
+      {
+        "id": "barcelona-tapas-el-xampanyet",
+        "name": "El Xampanyet",
+        "coordinates": [
+          41.3847,
+          2.1836
+        ],
+        "description": "El Xampanyet is the Born classic for cava, anchovies, conservas, and simple tapas in a room that is almost always crowded. The Infatuation, Tripadvisor, and long-running visitor demand make it best as a loud pre-museum or pre-dinner stop rather than a slow meal.",
+        "price": "$",
+        "priceSource": "The Infatuation / Tripadvisor",
+        "hours": {
+          "mon": "7:00 PM-11:00 PM",
+          "tue": "12:00 PM-3:30 PM, 7:00 PM-11:00 PM",
+          "wed": "12:00 PM-3:30 PM, 7:00 PM-11:00 PM",
+          "thu": "12:00 PM-3:30 PM, 7:00 PM-11:00 PM",
+          "fri": "12:00 PM-3:30 PM, 7:00 PM-11:00 PM",
+          "sat": "12:00 PM-3:30 PM",
+          "sun": "Closed"
+        },
+        "photo": "https://www.elxampanyet.com/wp-content/uploads/2024/10/Iriarte_0132-2048x1353.jpg"
+      },
+      {
+        "id": "barcelona-tapas-bar-del-pla",
+        "name": "Bar del Pla",
+        "coordinates": [
+          41.3857,
+          2.1817
+        ],
+        "description": "Bar del Pla is the modern tapas room when the plan needs a full dinner, not just snacks at a counter. Source signals support it for creative Catalan plates, natural wine, and a lively El Born room that feels more curated than the tourist-facing tapas traffic nearby.",
+        "price": "$$",
+        "priceSource": "The Infatuation / Google Maps",
+        "hours": {
+          "mon": "12:30 PM-4:00 PM, 7:30 PM-11:00 PM",
+          "tue": "12:30 PM-4:00 PM, 7:30 PM-11:00 PM",
+          "wed": "12:30 PM-4:00 PM, 7:30 PM-11:00 PM",
+          "thu": "12:30 PM-4:00 PM, 7:30 PM-11:00 PM",
+          "fri": "12:30 PM-4:00 PM, 7:30 PM-11:30 PM",
+          "sat": "12:30 PM-4:00 PM, 7:30 PM-11:30 PM",
+          "sun": "12:30 PM-4:00 PM, 7:30 PM-11:00 PM"
+        },
+        "photo": "https://barcelonanavigator.com/wp-content/uploads/2016/05/Jordi.jpg"
+      },
+      {
+        "id": "barcelona-tapas-paco-meralgo",
+        "name": "Paco Meralgo",
+        "coordinates": [
+          41.3915,
+          2.1519
+        ],
+        "description": "Paco Meralgo is the reliable Eixample tapas counter: croquettes, bombas, seafood, tortillas, and quick service in a polished room. It belongs here because it solves the practical problem of a good tapas meal when the highest-demand reservations are unavailable.",
+        "price": "$$",
+        "priceSource": "Google Maps / Tripadvisor",
+        "hours": {
+          "mon": "12:30 PM-4:00 PM, 7:30 PM-11:00 PM",
+          "tue": "12:30 PM-4:00 PM, 7:30 PM-11:00 PM",
+          "wed": "12:30 PM-4:00 PM, 7:30 PM-11:00 PM",
+          "thu": "12:30 PM-4:00 PM, 7:30 PM-11:00 PM",
+          "fri": "12:30 PM-4:00 PM, 7:30 PM-11:30 PM",
+          "sat": "12:30 PM-4:00 PM, 7:30 PM-11:30 PM",
+          "sun": "12:30 PM-4:00 PM, 7:30 PM-11:00 PM"
+        },
+        "photo": "https://restaurantpacomeralgo.com/wp-content/uploads/2024/05/paco4.jpg"
+      },
+      {
+        "id": "barcelona-tapas-cerveceria-catalana",
+        "name": "Cervecería Catalana",
+        "coordinates": [
+          41.3921,
+          2.1602
+        ],
+        "description": "Cervecería Catalana is not hidden, but it is one of the city's clearest high-volume tapas machines. Map and traveler-review volume support it for montaditos, seafood, tortillas, counter speed, and a wait that often feels built into the experience near Passeig de Gràcia.",
+        "price": "$$",
+        "priceSource": "Google Maps / Tripadvisor",
+        "hours": {
+          "mon": "12:00 PM-12:00 AM",
+          "tue": "12:00 PM-12:00 AM",
+          "wed": "12:00 PM-12:00 AM",
+          "thu": "12:00 PM-12:00 AM",
+          "fri": "12:00 PM-1:00 AM",
+          "sat": "12:00 PM-1:00 AM",
+          "sun": "12:00 PM-12:00 AM"
+        },
+        "photo": "https://static.wixstatic.com/media/fae8fc_8b397159d3774db6b2f37b7e4299dd2f%7Emv2.png/v1/fit/w_2500,h_1330,al_c/fae8fc_8b397159d3774db6b2f37b7e4299dd2f%7Emv2.png"
+      },
+      {
+        "id": "barcelona-tapas-la-platilleria",
+        "name": "La Platilleria",
+        "coordinates": [
+          41.3746,
+          2.1658
+        ],
+        "description": "La Platilleria gives Poble-sec a calmer small-plates option beyond the busiest Carrer de Blai circuit. Review signals support it for approachable service, compact plates, and a flexible dinner rhythm before theater, after Montjuïc, or before an Apolo night.",
+        "price": "$$",
+        "priceSource": "Google Maps / Tripadvisor",
+        "hours": {
+          "mon": "Closed",
+          "tue": "1:00 PM-3:30 PM, 8:00 PM-11:00 PM",
+          "wed": "1:00 PM-3:30 PM, 8:00 PM-11:00 PM",
+          "thu": "1:00 PM-3:30 PM, 8:00 PM-11:00 PM",
+          "fri": "1:00 PM-3:30 PM, 8:00 PM-11:30 PM",
+          "sat": "1:00 PM-3:30 PM, 8:00 PM-11:30 PM",
+          "sun": "Closed"
+        },
+        "photo": "https://media-cdn.tripadvisor.com/media/photo-o/09/24/e4/7a/la-platilleria.jpg"
+      },
+      {
+        "id": "barcelona-tapas-sensi-bistro",
+        "name": "Sensi Bistro",
+        "coordinates": [
+          41.3803,
+          2.1771
+        ],
+        "description": "Sensi Bistro is the group-friendly creative-tapas choice in the Gothic Quarter. Tripadvisor and Google Maps show sustained visitor demand, but the caveat matters: this is polished bistro-tapas near Plaça Reial, not a hidden local bodega.",
+        "price": "$$",
+        "priceSource": "Tripadvisor / Google Maps",
+        "hours": {
+          "mon": "12:30 PM-4:00 PM, 7:30 PM-11:00 PM",
+          "tue": "12:30 PM-4:00 PM, 7:30 PM-11:00 PM",
+          "wed": "12:30 PM-4:00 PM, 7:30 PM-11:00 PM",
+          "thu": "12:30 PM-4:00 PM, 7:30 PM-11:00 PM",
+          "fri": "12:30 PM-4:00 PM, 7:30 PM-11:30 PM",
+          "sat": "12:30 PM-4:00 PM, 7:30 PM-11:30 PM",
+          "sun": "12:30 PM-4:00 PM, 7:30 PM-11:00 PM"
+        },
+        "photo": "https://www.barcelona-life.com/wp-content/uploads/2022/02/le-bistro-sensi-barcelona.jpg"
+      }
+    ],
+    "sources": [
+      {
+        "name": "The Infatuation - Best Tapas Spots in Barcelona",
+        "url": "https://www.theinfatuation.com/barcelona/guides/best-tapas-spots-barcelona"
+      },
+      {
+        "name": "Time Out - Barcelona's best tapas bars",
+        "url": "https://www.timeout.com/barcelona/restaurants/barcelonas-best-tapas-bars"
+      },
+      {
+        "name": "Eater - Best Restaurants in Barcelona",
+        "url": "https://www.eater.com/maps/best-restaurants-barcelona-spain"
+      },
+      {
+        "name": "Eater - Old City restaurants",
+        "url": "https://www.eater.com/maps/barcelona-old-city-gothic-quarter-best-restaurants"
+      },
+      {
+        "name": "Quimet & Quimet official",
+        "url": "https://quimetiquimet.com/en/"
+      },
+      {
+        "name": "Tripadvisor - Barcelona restaurants",
+        "url": "https://www.tripadvisor.com/Restaurants-g187497-Barcelona_Catalonia.html"
+      },
+      {
+        "name": "Google Maps",
+        "url": "https://maps.google.com"
+      }
+    ]
+  },
+  {
+    "id": "list-barcelona-citywide-seafood",
+    "slug": "barcelona-citywide-seafood",
+    "seoSlug": "best-seafood",
+    "seoTitle": "Best Seafood in Barcelona",
+    "seoDescription": "Best seafood in Barcelona, from Born seafood counters and Montjuïc rice terraces to robata fish, Venetian-Catalan plates, market taverns, and polished seafood rooms.",
+    "title": "Fish Counters and Rice With a View",
+    "description": "Seafood beyond the beachside paella default, with each stop doing a different job: Born counters, Montjuic rice terraces, robata fish, preserved anchovies, Venetian-Catalan plates, and polished raw-bar dinners.",
+    "url": "https://www.google.com/maps/search/best+seafood+barcelona",
+    "category": "Food",
+    "location": {
+      "city": "Barcelona",
+      "country": "Spain",
+      "continent": "Europe",
+      "scope": "city"
+    },
+    "creator": {
+      "id": "user-rguide-food",
+      "name": "R Food",
+      "avatar": "data:image/svg+xml;utf8,%0A%20%20%20%20%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22160%22%20height%3D%22160%22%20viewBox%3D%220%200%20160%20160%22%3E%0A%20%20%20%20%20%20%3Crect%20width%3D%22160%22%20height%3D%22160%22%20rx%3D%2280%22%20fill%3D%22%230f766e%22%20%2F%3E%0A%20%20%20%20%20%20%3Ctext%20x%3D%2250%25%22%20y%3D%2254%25%22%20text-anchor%3D%22middle%22%20dominant-baseline%3D%22middle%22%0A%20%20%20%20%20%20%20%20font-family%3D%22Arial%2C%20sans-serif%22%20font-size%3D%2276%22%20font-weight%3D%22700%22%20fill%3D%22white%22%3ER%3C%2Ftext%3E%0A%20%20%20%20%3C%2Fsvg%3E%0A%20%20"
+    },
+    "upvotes": 0,
+    "createdAt": "2026-05-02T00:00:00.000Z",
+    "stops": [
+      {
+        "id": "barcelona-seafood-cal-pep",
+        "name": "Cal Pep",
+        "coordinates": [
+          41.3835,
+          2.1839
+        ],
+        "description": "Cal Pep is the seafood-counter classic: quick pacing, tight seats, clams, squid, fried fish, and seasonal specials that arrive with little ceremony. The Infatuation and traveler-review demand support it as expensive for the format, but the performance of the Born counter is the point.",
+        "price": "$$$",
+        "priceSource": "The Infatuation / Google Maps",
+        "hours": {
+          "mon": "Closed",
+          "tue": "1:00 PM-3:30 PM, 8:00 PM-11:00 PM",
+          "wed": "1:00 PM-3:30 PM, 8:00 PM-11:00 PM",
+          "thu": "1:00 PM-3:30 PM, 8:00 PM-11:00 PM",
+          "fri": "1:00 PM-3:30 PM, 8:00 PM-11:30 PM",
+          "sat": "1:00 PM-3:30 PM, 8:00 PM-11:30 PM",
+          "sun": "Closed"
+        },
+        "photo": "https://static.wixstatic.com/media/57144e_89f865012fdb4db8bc8bec1b2fdeede3~mv2.jpg"
+      },
+      {
+        "id": "barcelona-seafood-martinez",
+        "name": "Martínez",
+        "coordinates": [
+          41.3692,
+          2.1661
+        ],
+        "description": "Martínez is the planned seafood-rice lunch: terrace, Montjuïc slope, port views, paella, fideuà, and Catalan wine. Eater and The Infatuation-style signals make it better framed as a daytime reservation than as a spontaneous neighborhood meal.",
+        "price": "$$$",
+        "priceSource": "Eater / The Infatuation",
+        "hours": {
+          "mon": "12:30 PM-4:00 PM, 7:30 PM-11:00 PM",
+          "tue": "12:30 PM-4:00 PM, 7:30 PM-11:00 PM",
+          "wed": "12:30 PM-4:00 PM, 7:30 PM-11:00 PM",
+          "thu": "12:30 PM-4:00 PM, 7:30 PM-11:00 PM",
+          "fri": "12:30 PM-4:00 PM, 7:30 PM-11:30 PM",
+          "sat": "12:30 PM-4:00 PM, 7:30 PM-11:30 PM",
+          "sun": "12:30 PM-4:00 PM, 7:30 PM-11:00 PM"
+        },
+        "photo": "https://martinezbarcelona.com/web/wp-content/uploads/2025/05/Foto_Home4-2048x1097.jpg"
+      },
+      {
+        "id": "barcelona-seafood-kak-koy",
+        "name": "Kak Koy",
+        "coordinates": [
+          41.385,
+          2.1755
+        ],
+        "description": "Kak Koy brings a different seafood angle to the Gothic core, using Japanese robata technique on Barcelona market produce and fish. Eater and map/booking signals make it a focused, reservation-led dinner for diners who want charcoal cooking instead of another tapas spread.",
+        "price": "$$$",
+        "priceSource": "Eater / Google Maps",
+        "hours": {
+          "mon": "Closed",
+          "tue": "7:00 PM-10:30 PM",
+          "wed": "7:00 PM-10:30 PM",
+          "thu": "7:00 PM-10:30 PM",
+          "fri": "7:00 PM-10:30 PM",
+          "sat": "7:00 PM-10:30 PM",
+          "sun": "Closed"
+        },
+        "photo": "https://www.kakure.es/wp-content/uploads/young-asian-woman-eating-sashimi-set-in-japanese-r-2023-11-27-04-59-45-utc.jpg"
+      },
+      {
+        "id": "barcelona-seafood-fismuler",
+        "name": "Fismuler",
+        "coordinates": [
+          41.3867,
+          2.1846
+        ],
+        "description": "Fismuler is a stylish Born seafood-and-seasonal-plates dinner rather than a barebones fish house. The Infatuation and map signals support it for raw seafood, Mediterranean plates, a design-forward room, and the kind of longer meal where pacing and wine matter.",
+        "price": "$$$",
+        "priceSource": "The Infatuation / Google Maps",
+        "hours": {
+          "mon": "12:30 PM-4:00 PM, 7:30 PM-11:00 PM",
+          "tue": "12:30 PM-4:00 PM, 7:30 PM-11:00 PM",
+          "wed": "12:30 PM-4:00 PM, 7:30 PM-11:00 PM",
+          "thu": "12:30 PM-4:00 PM, 7:30 PM-11:00 PM",
+          "fri": "12:30 PM-4:00 PM, 7:30 PM-11:30 PM",
+          "sat": "12:30 PM-4:00 PM, 7:30 PM-11:30 PM",
+          "sun": "12:30 PM-4:00 PM, 7:30 PM-11:00 PM"
+        },
+        "photo": "https://framerusercontent.com/images/FZZB2fFlZNw7ZBUUtWI1Mwh0.png"
+      },
+      {
+        "id": "barcelona-seafood-xemei",
+        "name": "Xemei",
+        "coordinates": [
+          41.3718,
+          2.1668
+        ],
+        "description": "Xemei is the Venetian-Catalan seafood pick in Poble-sec, useful when the citywide list needs fish and pasta without a formal fine-dining posture. Eater-style guides and local food coverage back it for Adriatic flavors, seafood, and a lively room that fits the neighborhood.",
+        "price": "$$",
+        "priceSource": "Eater / El País",
+        "hours": {
+          "mon": "Closed",
+          "tue": "1:00 PM-3:30 PM, 8:00 PM-11:00 PM",
+          "wed": "1:00 PM-3:30 PM, 8:00 PM-11:00 PM",
+          "thu": "1:00 PM-3:30 PM, 8:00 PM-11:00 PM",
+          "fri": "1:00 PM-3:30 PM, 8:00 PM-11:30 PM",
+          "sat": "1:00 PM-3:30 PM, 8:00 PM-11:30 PM",
+          "sun": "Closed"
+        },
+        "photo": "https://barcelonanavigator.com/wp-content/uploads/2015/09/rsz__mg_1561.jpg"
+      },
+      {
+        "id": "barcelona-seafood-el-xampanyet",
+        "name": "El Xampanyet",
+        "coordinates": [
+          41.3847,
+          2.1836
+        ],
+        "description": "El Xampanyet works in seafood as a conservas-and-anchovy stop rather than a full fish dinner. Editorial guides and traveler reviews support it for cava, preserved seafood, salty tapas, and a fast Born stop near the Picasso Museum.",
+        "price": "$",
+        "priceSource": "The Infatuation / Tripadvisor",
+        "hours": {
+          "mon": "7:00 PM-11:00 PM",
+          "tue": "12:00 PM-3:30 PM, 7:00 PM-11:00 PM",
+          "wed": "12:00 PM-3:30 PM, 7:00 PM-11:00 PM",
+          "thu": "12:00 PM-3:30 PM, 7:00 PM-11:00 PM",
+          "fri": "12:00 PM-3:30 PM, 7:00 PM-11:00 PM",
+          "sat": "12:00 PM-3:30 PM",
+          "sun": "Closed"
+        },
+        "photo": "https://www.elxampanyet.com/wp-content/uploads/2024/10/Iriarte_0132-2048x1353.jpg"
+      },
+      {
+        "id": "barcelona-seafood-el-nacional",
+        "name": "El Nacional",
+        "coordinates": [
+          41.3917,
+          2.168
+        ],
+        "description": "El Nacional is included as the logistics-friendly seafood option: central, visually memorable, open long hours, and useful for groups that need meat, tapas, drinks, and seafood counters under one roof. Time Out and map data support it as practical rather than rare.",
+        "price": "$$",
+        "priceSource": "Time Out / Google Maps",
+        "hours": {
+          "mon": "12:00 PM-12:00 AM",
+          "tue": "12:00 PM-12:00 AM",
+          "wed": "12:00 PM-12:00 AM",
+          "thu": "12:00 PM-12:00 AM",
+          "fri": "12:00 PM-1:00 AM",
+          "sat": "12:00 PM-1:00 AM",
+          "sun": "12:00 PM-12:00 AM"
+        },
+        "photo": "https://www.elnacionalbcn.com/wp-content/uploads/2023/03/La-Parada.webp"
+      }
+    ],
+    "sources": [
+      {
+        "name": "The Infatuation - Seafood in Barcelona",
+        "url": "https://www.theinfatuation.com/barcelona/cuisines/seafood"
+      },
+      {
+        "name": "The Infatuation - Best Restaurants in Barcelona",
+        "url": "https://www.theinfatuation.com/barcelona/guides/best-restaurants-hotels-barcelona"
+      },
+      {
+        "name": "Eater - Best Restaurants in Barcelona",
+        "url": "https://www.eater.com/maps/best-restaurants-barcelona-spain"
+      },
+      {
+        "name": "Eater - Old City restaurants",
+        "url": "https://www.eater.com/maps/barcelona-old-city-gothic-quarter-best-restaurants"
+      },
+      {
+        "name": "Time Out - Best restaurants in Barcelona",
+        "url": "https://www.timeout.com/barcelona/restaurants/best-restaurants-in-barcelona"
+      },
+      {
+        "name": "Tripadvisor - Barcelona restaurants",
+        "url": "https://www.tripadvisor.com/Restaurants-g187497-Barcelona_Catalonia.html"
+      },
+      {
+        "name": "Google Maps",
+        "url": "https://maps.google.com"
+      }
+    ]
+  },
+  {
+    "id": "list-barcelona-citywide-catalan-food",
+    "slug": "barcelona-citywide-catalan-food",
+    "seoSlug": "best-catalan-food",
+    "seoTitle": "Best Catalan Food in Barcelona",
+    "seoDescription": "Best Catalan food in Barcelona, from old taverns and market lunches to contemporary Catalan tasting menus, polished bistros, tapas counters, and regional cooking worth booking.",
+    "title": "Taverns, Markets, and Modern Catalan Rooms",
+    "description": "A Catalan-food guide that leans into regional habits instead of vague Mediterranean branding: old taverns, market lunches, seasonal rooms, polished bistros, and tapas counters rooted in local routines.",
+    "url": "https://www.google.com/maps/search/best+catalan+food+barcelona",
+    "category": "Food",
+    "location": {
+      "city": "Barcelona",
+      "country": "Spain",
+      "continent": "Europe",
+      "scope": "city"
+    },
+    "creator": {
+      "id": "user-rguide-food",
+      "name": "R Food",
+      "avatar": "data:image/svg+xml;utf8,%0A%20%20%20%20%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22160%22%20height%3D%22160%22%20viewBox%3D%220%200%20160%20160%22%3E%0A%20%20%20%20%20%20%3Crect%20width%3D%22160%22%20height%3D%22160%22%20rx%3D%2280%22%20fill%3D%22%230f766e%22%20%2F%3E%0A%20%20%20%20%20%20%3Ctext%20x%3D%2250%25%22%20y%3D%2254%25%22%20text-anchor%3D%22middle%22%20dominant-baseline%3D%22middle%22%0A%20%20%20%20%20%20%20%20font-family%3D%22Arial%2C%20sans-serif%22%20font-size%3D%2276%22%20font-weight%3D%22700%22%20fill%3D%22white%22%3ER%3C%2Ftext%3E%0A%20%20%20%20%3C%2Fsvg%3E%0A%20%20"
+    },
+    "upvotes": 0,
+    "createdAt": "2026-05-02T00:00:00.000Z",
+    "stops": [
+      {
+        "id": "barcelona-catalan-la-sosenga",
+        "name": "La Sosenga",
+        "coordinates": [
+          41.3826,
+          2.1749
+        ],
+        "description": "La Sosenga is the contemporary Catalan anchor because Time Out frames it around Catalan culinary history, seasonal suppliers, and a monthly tasting menu that stays rooted in regional cooking. It is the Gothic Quarter pick for diners who want old-city location without old-city formula.",
+        "price": "$$",
+        "priceSource": "Time Out / Google Maps",
+        "hours": {
+          "mon": "Closed",
+          "tue": "1:00 PM-4:00 PM",
+          "wed": "1:00 PM-4:00 PM",
+          "thu": "1:00 PM-4:00 PM",
+          "fri": "1:00 PM-4:00 PM, 8:00 PM-11:00 PM",
+          "sat": "1:00 PM-4:00 PM, 8:00 PM-11:00 PM",
+          "sun": "Closed"
+        },
+        "photo": "https://images.gestionaweb.cat/7664/img-2560-1440/captura-de-pantalla-2025-09-24-a-les-9-24-50.png"
+      },
+      {
+        "id": "barcelona-catalan-la-pubilla",
+        "name": "La Pubilla",
+        "coordinates": [
+          41.4025,
+          2.1534
+        ],
+        "description": "La Pubilla is the Catalan market-lunch stop: stews, eggs, seasonal plates, and a room tied to Mercat de la Llibertat rather than to sightseeing traffic. Review strength and map signals make it especially useful for breakfast or lunch in Gràcia.",
+        "price": "$$",
+        "priceSource": "Tripadvisor / Google Maps",
+        "hours": {
+          "mon": "8:30 AM-4:00 PM",
+          "tue": "8:30 AM-4:00 PM",
+          "wed": "8:30 AM-4:00 PM",
+          "thu": "8:30 AM-4:00 PM",
+          "fri": "8:30 AM-4:00 PM",
+          "sat": "9:00 AM-4:00 PM",
+          "sun": "Closed"
+        },
+        "photo": "https://static3.grubbio.com/885g-albums-1.jpg"
+      },
+      {
+        "id": "barcelona-catalan-bar-la-plata",
+        "name": "Bar La Plata",
+        "coordinates": [
+          41.3818,
+          2.1799
+        ],
+        "description": "Bar La Plata is the cheap Catalan tavern classic: fried fish, tomato salad, butifarra, house wine, and a short menu that has stayed focused for decades. Tripadvisor and Google Maps support it as a rare Gothic Quarter room that still feels like a practical local stop.",
+        "price": "$",
+        "priceSource": "Tripadvisor / Google Maps",
+        "hours": {
+          "mon": "Closed",
+          "tue": "12:00 PM-3:30 PM, 7:00 PM-11:00 PM",
+          "wed": "12:00 PM-3:30 PM, 7:00 PM-11:00 PM",
+          "thu": "12:00 PM-3:30 PM, 7:00 PM-11:00 PM",
+          "fri": "12:00 PM-3:30 PM, 7:00 PM-11:00 PM",
+          "sat": "12:00 PM-3:30 PM, 7:00 PM-11:00 PM",
+          "sun": "Closed"
+        },
+        "photo": "https://barlaplata.com/wp-content/uploads/2024/04/img_7003-1.jpg"
+      },
+      {
+        "id": "barcelona-catalan-capet",
+        "name": "Capet",
+        "coordinates": [
+          41.3816,
+          2.1764
+        ],
+        "description": "Capet is the refined Catalan reservation in the Gothic lanes, supported by MICHELIN and booking-platform signals. It belongs in the expensive filter because the cooking is chef-led and controlled, but the room remains intimate enough to feel like a focused city meal rather than a grand production.",
+        "price": "$$$",
+        "priceSource": "MICHELIN Guide / Resy",
+        "hours": {
+          "mon": "Closed",
+          "tue": "7:00 PM-10:30 PM",
+          "wed": "7:00 PM-10:30 PM",
+          "thu": "7:00 PM-10:30 PM",
+          "fri": "7:00 PM-10:30 PM",
+          "sat": "7:00 PM-10:30 PM",
+          "sun": "Closed"
+        },
+        "photo": "https://static.wixstatic.com/media/fdc945_2b2a24bff92540c8b37ff6bd1c06be5a~mv2.jpg/v1/fill/w_1024,h_683,al_c/fdc945_2b2a24bff92540c8b37ff6bd1c06be5a~mv2.jpg"
+      },
+      {
+        "id": "barcelona-catalan-bar-mut",
+        "name": "Bar Mut",
+        "coordinates": [
+          41.3917,
+          2.1554
+        ],
+        "description": "Bar Mut is the polished Eixample Catalan bistro: seasonal plates, wine, late lunch-to-dinner energy, and a room that feels classic without being casual. The Infatuation and map signals support it when travelers want Catalan cooking near Passeig de Gràcia with more polish than a tapas crawl.",
+        "price": "$$$",
+        "priceSource": "The Infatuation / Google Maps",
+        "hours": {
+          "mon": "12:30 PM-4:00 PM, 7:30 PM-11:00 PM",
+          "tue": "12:30 PM-4:00 PM, 7:30 PM-11:00 PM",
+          "wed": "12:30 PM-4:00 PM, 7:30 PM-11:00 PM",
+          "thu": "12:30 PM-4:00 PM, 7:30 PM-11:00 PM",
+          "fri": "12:30 PM-4:00 PM, 7:30 PM-11:30 PM",
+          "sat": "12:30 PM-4:00 PM, 7:30 PM-11:30 PM",
+          "sun": "12:30 PM-4:00 PM, 7:30 PM-11:00 PM"
+        },
+        "photo": "https://api.nnhotels.com/storage/171219/5a58ce53eca45bad3b1b015a/xl/bar-mut-pau-claris-192-2jpg-1.jpg"
+      },
+      {
+        "id": "barcelona-catalan-paco-meralgo",
+        "name": "Paco Meralgo",
+        "coordinates": [
+          41.3915,
+          2.1519
+        ],
+        "description": "Paco Meralgo gives the Catalan list a reliable mid-range tapas-counter format: croquettes, bombas, seafood, tortillas, and quick service. It is not the most obscure pick, but source and review volume make it useful when the goal is a solid Catalan meal without fine-dining cost.",
+        "price": "$$",
+        "priceSource": "Google Maps / Tripadvisor",
+        "hours": {
+          "mon": "12:30 PM-4:00 PM, 7:30 PM-11:00 PM",
+          "tue": "12:30 PM-4:00 PM, 7:30 PM-11:00 PM",
+          "wed": "12:30 PM-4:00 PM, 7:30 PM-11:00 PM",
+          "thu": "12:30 PM-4:00 PM, 7:30 PM-11:00 PM",
+          "fri": "12:30 PM-4:00 PM, 7:30 PM-11:30 PM",
+          "sat": "12:30 PM-4:00 PM, 7:30 PM-11:30 PM",
+          "sun": "12:30 PM-4:00 PM, 7:30 PM-11:00 PM"
+        },
+        "photo": "https://restaurantpacomeralgo.com/wp-content/uploads/2024/05/paco4.jpg"
+      },
+      {
+        "id": "barcelona-catalan-bodega-bonay",
+        "name": "Bodega Bonay",
+        "coordinates": [
+          41.3918,
+          2.1746
+        ],
+        "description": "Bodega Bonay represents current Catalan dining through the Casa Bonay lens: natural wine, anchovies, cured meats, pastas, and a design-hotel room that works for a stylish long lunch. The Infatuation and reservation signals make it a modern counterpoint to the old taverns.",
+        "price": "$$",
+        "priceSource": "The Infatuation / TheFork",
+        "hours": {
+          "mon": "12:30 PM-4:00 PM, 7:30 PM-11:00 PM",
+          "tue": "12:30 PM-4:00 PM, 7:30 PM-11:00 PM",
+          "wed": "12:30 PM-4:00 PM, 7:30 PM-11:00 PM",
+          "thu": "12:30 PM-4:00 PM, 7:30 PM-11:00 PM",
+          "fri": "12:30 PM-4:00 PM, 7:30 PM-11:30 PM",
+          "sat": "12:30 PM-4:00 PM, 7:30 PM-11:30 PM",
+          "sun": "12:30 PM-4:00 PM, 7:30 PM-11:00 PM"
+        },
+        "photo": "https://cdn-hhbfohb.nitrocdn.com/MWVuFFQrOubRCgucqTrIdzQgXRECTcge/assets/images/optimized/rev-41ae578/casabonay.com/wp-content/uploads/2020/12/ATP9564@antp-900x1196.jpg"
+      }
+    ],
+    "sources": [
+      {
+        "name": "Time Out - Best restaurants in Barcelona",
+        "url": "https://www.timeout.com/barcelona/restaurants/best-restaurants-in-barcelona"
+      },
+      {
+        "name": "Time Out - Barcelona's best tapas bars",
+        "url": "https://www.timeout.com/barcelona/restaurants/barcelonas-best-tapas-bars"
+      },
+      {
+        "name": "The Infatuation - Barcelona restaurants",
+        "url": "https://www.theinfatuation.com/barcelona"
+      },
+      {
+        "name": "The Infatuation - Best Restaurants in Barcelona",
+        "url": "https://www.theinfatuation.com/barcelona/guides/best-restaurants-hotels-barcelona"
+      },
+      {
+        "name": "MICHELIN Guide - Barcelona restaurants",
+        "url": "https://guide.michelin.com/us/en/catalunya/barcelona/restaurants"
+      },
+      {
+        "name": "Tripadvisor - Barcelona restaurants",
+        "url": "https://www.tripadvisor.com/Restaurants-g187497-Barcelona_Catalonia.html"
+      },
+      {
+        "name": "Google Maps",
+        "url": "https://maps.google.com"
+      }
+    ]
+  },
+  {
+    "id": "list-barcelona-citywide-fine-dining",
+    "slug": "barcelona-citywide-fine-dining",
+    "seoSlug": "best-fine-dining",
+    "seoTitle": "Best Fine Dining in Barcelona",
+    "seoDescription": "Best fine dining in Barcelona, from world-famous tasting menus and Michelin-backed rooms to chef-led Catalan dinners, seafood splurges, and polished reservations.",
+    "title": "Reservations to Build the Trip Around",
+    "description": "Use this for the expensive meals that need planning, deposits, or a protected evening: global tasting menus, Michelin-backed Catalan cooking, seafood splurges, and chef-led neighborhood rooms with real occasion energy.",
+    "url": "https://www.google.com/maps/search/best+fine+dining+barcelona",
+    "category": "Food",
+    "location": {
+      "city": "Barcelona",
+      "country": "Spain",
+      "continent": "Europe",
+      "scope": "city"
+    },
+    "creator": {
+      "id": "user-rguide-food",
+      "name": "R Food",
+      "avatar": "data:image/svg+xml;utf8,%0A%20%20%20%20%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22160%22%20height%3D%22160%22%20viewBox%3D%220%200%20160%20160%22%3E%0A%20%20%20%20%20%20%3Crect%20width%3D%22160%22%20height%3D%22160%22%20rx%3D%2280%22%20fill%3D%22%230f766e%22%20%2F%3E%0A%20%20%20%20%20%20%3Ctext%20x%3D%2250%25%22%20y%3D%2254%25%22%20text-anchor%3D%22middle%22%20dominant-baseline%3D%22middle%22%0A%20%20%20%20%20%20%20%20font-family%3D%22Arial%2C%20sans-serif%22%20font-size%3D%2276%22%20font-weight%3D%22700%22%20fill%3D%22white%22%3ER%3C%2Ftext%3E%0A%20%20%20%20%3C%2Fsvg%3E%0A%20%20"
+    },
+    "upvotes": 0,
+    "createdAt": "2026-05-02T00:00:00.000Z",
+    "stops": [
+      {
+        "id": "barcelona-fine-disfrutar",
+        "name": "Disfrutar",
+        "coordinates": [
+          41.3878,
+          2.1533
+        ],
+        "description": "Disfrutar is Barcelona's global fine-dining reference, backed by MICHELIN and World's 50 Best. The technical, playful tasting menu from elBulli alumni is the meal to build a trip around, with reservations and cost treated as part of the experience rather than a footnote.",
+        "price": "$$$",
+        "priceSource": "MICHELIN Guide / World's 50 Best",
+        "hours": {
+          "mon": "Closed",
+          "tue": "1:00 PM-2:15 PM, 8:00 PM-9:15 PM",
+          "wed": "1:00 PM-2:15 PM, 8:00 PM-9:15 PM",
+          "thu": "1:00 PM-2:15 PM, 8:00 PM-9:15 PM",
+          "fri": "1:00 PM-2:15 PM, 8:00 PM-9:15 PM",
+          "sat": "1:00 PM-2:15 PM, 8:00 PM-9:15 PM",
+          "sun": "Closed"
+        },
+        "photo": "https://www.disfrutarbarcelona.com/api/uploads/restaurant/images/original/0c171d8288ac922fcd372beaceccb58d_phpQfnqi9.jpg"
+      },
+      {
+        "id": "barcelona-fine-capet",
+        "name": "Capet",
+        "coordinates": [
+          41.3816,
+          2.1764
+        ],
+        "description": "Capet is the intimate fine-dining alternative in the Gothic Quarter, supported by MICHELIN and reservation-platform signals. It suits travelers who want contemporary Catalan cooking and chef-led pacing without the scale, price, or theatrical commitment of Barcelona's headline tasting-menu rooms.",
+        "price": "$$$",
+        "priceSource": "MICHELIN Guide / Resy",
+        "hours": {
+          "mon": "Closed",
+          "tue": "7:00 PM-10:30 PM",
+          "wed": "7:00 PM-10:30 PM",
+          "thu": "7:00 PM-10:30 PM",
+          "fri": "7:00 PM-10:30 PM",
+          "sat": "7:00 PM-10:30 PM",
+          "sun": "Closed"
+        },
+        "photo": "https://static.wixstatic.com/media/fdc945_2b2a24bff92540c8b37ff6bd1c06be5a~mv2.jpg/v1/fill/w_1024,h_683,al_c/fdc945_2b2a24bff92540c8b37ff6bd1c06be5a~mv2.jpg"
+      },
+      {
+        "id": "barcelona-fine-con-gracia",
+        "name": "Con Gracia",
+        "coordinates": [
+          41.3979,
+          2.1599
+        ],
+        "description": "Con Gracia gives Gràcia a special-occasion slot: tasting-menu structure, wine pairing, and a quieter room than the neighborhood's plaza bars. Time Out and map signals support it for travelers who want polish while staying outside the Eixample fine-dining corridor.",
+        "price": "$$$",
+        "priceSource": "Time Out / Google Maps",
+        "hours": {
+          "mon": "Closed",
+          "tue": "7:00 PM-10:30 PM",
+          "wed": "7:00 PM-10:30 PM",
+          "thu": "7:00 PM-10:30 PM",
+          "fri": "7:00 PM-10:30 PM",
+          "sat": "7:00 PM-10:30 PM",
+          "sun": "Closed"
+        },
+        "photo": "https://images.unsplash.com/photo-1414235077428-338989a2e8c0?auto=format&fit=crop&w=900&q=80"
+      },
+      {
+        "id": "barcelona-fine-mano-rota",
+        "name": "Mano Rota",
+        "coordinates": [
+          41.374,
+          2.1681
+        ],
+        "description": "Mano Rota is the Poble-sec chef-led reservation, combining Latin American and Mediterranean ideas in a more structured format than the neighborhood's pintxos and tavern circuit. Its local review profile and tasting-menu posture put it in the expensive, plan-ahead lane.",
+        "price": "$$$",
+        "priceSource": "Barcelona Metropolitan / Google Maps",
+        "hours": {
+          "mon": "Closed",
+          "tue": "7:00 PM-10:30 PM",
+          "wed": "7:00 PM-10:30 PM",
+          "thu": "7:00 PM-10:30 PM",
+          "fri": "7:00 PM-10:30 PM",
+          "sat": "7:00 PM-10:30 PM",
+          "sun": "Closed"
+        },
+        "photo": "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=900&q=80"
+      },
+      {
+        "id": "barcelona-fine-martinez",
+        "name": "Martínez",
+        "coordinates": [
+          41.3692,
+          2.1661
+        ],
+        "description": "Martínez is the seafood-rice splurge rather than a tasting-menu room: terrace, port views, paella, fideuà, and a long lunch above the city. Eater and The Infatuation-style signals make it a fine-dining-adjacent reservation when setting matters as much as the plate.",
+        "price": "$$$",
+        "priceSource": "Eater / The Infatuation",
+        "hours": {
+          "mon": "12:30 PM-4:00 PM, 7:30 PM-11:00 PM",
+          "tue": "12:30 PM-4:00 PM, 7:30 PM-11:00 PM",
+          "wed": "12:30 PM-4:00 PM, 7:30 PM-11:00 PM",
+          "thu": "12:30 PM-4:00 PM, 7:30 PM-11:00 PM",
+          "fri": "12:30 PM-4:00 PM, 7:30 PM-11:30 PM",
+          "sat": "12:30 PM-4:00 PM, 7:30 PM-11:30 PM",
+          "sun": "12:30 PM-4:00 PM, 7:30 PM-11:00 PM"
+        },
+        "photo": "https://martinezbarcelona.com/web/wp-content/uploads/2025/05/Foto_Home4-2048x1097.jpg"
+      },
+      {
+        "id": "barcelona-fine-cal-pep",
+        "name": "Cal Pep",
+        "coordinates": [
+          41.3835,
+          2.1839
+        ],
+        "description": "Cal Pep is expensive for a counter, but it belongs in fine dining because the kitchen-led seafood progression, demand, and performance of the room make it a planned experience. The Infatuation and map signals support treating it as a splurge meal, not casual tapas.",
+        "price": "$$$",
+        "priceSource": "The Infatuation / Google Maps",
+        "hours": {
+          "mon": "Closed",
+          "tue": "1:00 PM-3:30 PM, 8:00 PM-11:00 PM",
+          "wed": "1:00 PM-3:30 PM, 8:00 PM-11:00 PM",
+          "thu": "1:00 PM-3:30 PM, 8:00 PM-11:00 PM",
+          "fri": "1:00 PM-3:30 PM, 8:00 PM-11:30 PM",
+          "sat": "1:00 PM-3:30 PM, 8:00 PM-11:30 PM",
+          "sun": "Closed"
+        },
+        "photo": "https://static.wixstatic.com/media/57144e_89f865012fdb4db8bc8bec1b2fdeede3~mv2.jpg"
+      },
+      {
+        "id": "barcelona-fine-bar-mut",
+        "name": "Bar Mut",
+        "coordinates": [
+          41.3917,
+          2.1554
+        ],
+        "description": "Bar Mut is the polished bistro end of Barcelona fine dining: wine, seasonal Catalan plates, late lunch-to-dinner demand, and a compact Eixample room near Passeig de Gràcia. It works when the brief is expensive and classic, but not a full tasting menu.",
+        "price": "$$$",
+        "priceSource": "The Infatuation / Google Maps",
+        "hours": {
+          "mon": "12:30 PM-4:00 PM, 7:30 PM-11:00 PM",
+          "tue": "12:30 PM-4:00 PM, 7:30 PM-11:00 PM",
+          "wed": "12:30 PM-4:00 PM, 7:30 PM-11:00 PM",
+          "thu": "12:30 PM-4:00 PM, 7:30 PM-11:00 PM",
+          "fri": "12:30 PM-4:00 PM, 7:30 PM-11:30 PM",
+          "sat": "12:30 PM-4:00 PM, 7:30 PM-11:30 PM",
+          "sun": "12:30 PM-4:00 PM, 7:30 PM-11:00 PM"
+        },
+        "photo": "https://api.nnhotels.com/storage/171219/5a58ce53eca45bad3b1b015a/xl/bar-mut-pau-claris-192-2jpg-1.jpg"
+      }
+    ],
+    "sources": [
+      {
+        "name": "The Infatuation - Fine Dining in Barcelona",
+        "url": "https://www.theinfatuation.com/barcelona/perfect-for/fine-dining"
+      },
+      {
+        "name": "The Infatuation - Best Restaurants in Barcelona",
+        "url": "https://www.theinfatuation.com/barcelona/guides/best-restaurants-hotels-barcelona"
+      },
+      {
+        "name": "MICHELIN Guide - Barcelona restaurants",
+        "url": "https://guide.michelin.com/us/en/catalunya/barcelona/restaurants"
+      },
+      {
+        "name": "MICHELIN Guide - Disfrutar",
+        "url": "https://guide.michelin.com/us/en/catalunya/barcelona/restaurant/disfrutar"
+      },
+      {
+        "name": "MICHELIN Guide - Capet",
+        "url": "https://guide.michelin.com/us/en/catalunya/barcelona/restaurant/capet"
+      },
+      {
+        "name": "World's 50 Best - Disfrutar",
+        "url": "https://www.theworlds50best.com/discovery/Establishments/Spain/Barcelona/Disfrutar.html"
+      },
+      {
+        "name": "Time Out - Best restaurants in Barcelona",
+        "url": "https://www.timeout.com/barcelona/restaurants/best-restaurants-in-barcelona"
+      },
+      {
+        "name": "Google Maps",
+        "url": "https://maps.google.com"
+      }
+    ]
+  },
+  {
+    "id": "list-barcelona-gothic-quarter-culture",
+    "slug": "barcelona-gothic-quarter-culture",
+    "seoSlug": "best-museums-and-cultural-stops",
+    "seoTitle": "Best Museums and Cultural Stops in the Gothic Quarter, Barcelona",
+    "seoDescription": "Best museums and cultural stops in the Gothic Quarter, Barcelona, including Roman Barcino layers, cathedral streets, civic landmarks, and historic squares.",
+    "title": "Roman Stones and Cathedral Shadows",
+    "description": "The Gothic Quarter is most useful when its history becomes legible, not just atmospheric. This route ties Roman foundations, cathedral streets, civic halls, and intimate squares into a compact old-city culture walk.",
+    "url": "https://www.google.com/maps/search/gothic+quarter+culture+barcelona",
+    "category": "Culture",
+    "location": {
+      "city": "Barcelona",
+      "neighborhood": "Gothic Quarter",
+      "country": "Spain",
+      "continent": "Europe",
+      "scope": "city"
+    },
+    "creator": {
+      "id": "user-rguide-culture",
+      "name": "R Culture",
+      "avatar": "data:image/svg+xml;utf8,%0A%20%20%20%20%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22160%22%20height%3D%22160%22%20viewBox%3D%220%200%20160%20160%22%3E%0A%20%20%20%20%20%20%3Crect%20width%3D%22160%22%20height%3D%22160%22%20rx%3D%2280%22%20fill%3D%22%230f766e%22%20%2F%3E%0A%20%20%20%20%20%20%3Ctext%20x%3D%2250%25%22%20y%3D%2254%25%22%20text-anchor%3D%22middle%22%20dominant-baseline%3D%22middle%22%0A%20%20%20%20%20%20%20%20font-family%3D%22Arial%2C%20sans-serif%22%20font-size%3D%2276%22%20font-weight%3D%22700%22%20fill%3D%22white%22%3ER%3C%2Ftext%3E%0A%20%20%20%20%3C%2Fsvg%3E%0A%20%20"
+    },
+    "upvotes": 0,
+    "createdAt": "2026-04-29T00:00:00.000Z",
+    "stops": [
+      {
+        "id": "gothic-barcelona-cathedral",
+        "name": "Barcelona Cathedral",
+        "coordinates": [
+          41.3839,
+          2.1762
+        ],
+        "description": "Barcelona Cathedral is the Gothic Quarter's anchor because official tourism sources and visitor guides consistently use it to explain the neighborhood's medieval identity. The visit is not only the nave: the cloister, choir, rooftop, geese, and surrounding cathedral square make it the best single stop for understanding how religious architecture shapes the old-city street pattern.",
+        "hours": {
+          "mon": "9:00 AM-8:00 PM",
+          "tue": "9:00 AM-8:00 PM",
+          "wed": "9:00 AM-8:00 PM",
+          "thu": "9:00 AM-8:00 PM",
+          "fri": "9:00 AM-8:00 PM",
+          "sat": "9:00 AM-8:00 PM",
+          "sun": "9:00 AM-8:00 PM"
+        },
+        "photo": "https://upload.wikimedia.org/wikipedia/commons/6/63/Barcelona_Cathedral_Saint_Eulalia.jpg"
+      },
+      {
+        "id": "gothic-muhba-placa-del-rei",
+        "name": "MUHBA Plaça del Rei",
+        "coordinates": [
+          41.3845,
+          2.1777
+        ],
+        "description": "MUHBA Plaça del Rei is included for its unusually clear layering of Roman Barcino and medieval Barcelona. Official museum material highlights the underground archaeological route, palace halls, and royal-city context, making this one of the strongest stops for travelers who want the Gothic Quarter to feel historically legible rather than just atmospheric.",
+        "hours": {
+          "mon": "Closed",
+          "tue": "10:00 AM-7:00 PM",
+          "wed": "10:00 AM-7:00 PM",
+          "thu": "10:00 AM-7:00 PM",
+          "fri": "10:00 AM-7:00 PM",
+          "sat": "10:00 AM-7:00 PM",
+          "sun": "10:00 AM-7:00 PM"
+        },
+        "photo": "https://upload.wikimedia.org/wikipedia/commons/b/be/MUHBA_Casa_Padellas_Pla%C3%A7a_del_rei_2.JPG"
+      },
+      {
+        "id": "gothic-temple-august",
+        "name": "Temple of Augustus",
+        "coordinates": [
+          41.3842,
+          2.1776
+        ],
+        "description": "The Temple of Augustus is a compact but high-value Roman stop, supported by Barcelona history sources because it reveals four surviving columns inside a medieval courtyard. It works best as a quick cultural detour: a small, quiet reminder that the Gothic Quarter's narrow lanes sit directly on top of the Roman city.",
+        "hours": {
+          "mon": "Closed",
+          "tue": "10:00 AM-7:00 PM",
+          "wed": "10:00 AM-7:00 PM",
+          "thu": "10:00 AM-7:00 PM",
+          "fri": "10:00 AM-7:00 PM",
+          "sat": "10:00 AM-7:00 PM",
+          "sun": "10:00 AM-7:00 PM"
+        },
+        "photo": "https://upload.wikimedia.org/wikipedia/commons/c/ca/Temple_August_Barcelona_20130905_3.JPG"
+      },
+      {
+        "id": "gothic-placa-sant-felip-neri",
+        "name": "Plaça de Sant Felip Neri",
+        "coordinates": [
+          41.3834,
+          2.1752
+        ],
+        "description": "Plaça de Sant Felip Neri is here because guide sources repeatedly call out its emotional and architectural weight. The square combines Baroque stonework, schoolyard quiet, and visible Civil War damage, so it gives the old city a more reflective pause than the busier cathedral and Plaça Reial circuits.",
+        "hours": {
+          "mon": "Open public space",
+          "tue": "Open public space",
+          "wed": "Open public space",
+          "thu": "Open public space",
+          "fri": "Open public space",
+          "sat": "Open public space",
+          "sun": "Open public space"
+        },
+        "photo": "https://www.nomads-travel-guide.com/wp-content/uploads/2026/01/San_Felip_Neri_Square_in_Barcelona-scaled.jpg"
+      },
+      {
+        "id": "gothic-palau-generalitat",
+        "name": "Palau de la Generalitat",
+        "coordinates": [
+          41.3829,
+          2.1771
+        ],
+        "description": "Palau de la Generalitat belongs as a civic-history landmark rather than a casual museum stop. Official and tourism sources frame it as the seat of Catalonia's government, and viewing it from Plaça de Sant Jaume helps connect the Gothic Quarter's ceremonial architecture with present-day Catalan political life.",
+        "hours": {
+          "mon": "Exterior viewing; guided visits by schedule",
+          "tue": "Exterior viewing; guided visits by schedule",
+          "wed": "Exterior viewing; guided visits by schedule",
+          "thu": "Exterior viewing; guided visits by schedule",
+          "fri": "Exterior viewing; guided visits by schedule",
+          "sat": "Exterior viewing; guided visits by schedule",
+          "sun": "Exterior viewing; guided visits by schedule"
+        },
+        "photo": "https://irbarcelona.org/wp-content/uploads/2012/08/palau-generalitat-cat.jpg"
+      }
+    ],
+    "sources": [
+      {
+        "name": "Barcelona Turisme - Gothic Quarter",
+        "url": "https://www.barcelonaturisme.com"
+      },
+      {
+        "name": "MUHBA official",
+        "url": "https://www.barcelona.cat/museuhistoria/"
+      },
+      {
+        "name": "Barcelona Cathedral official",
+        "url": "https://catedralbcn.org"
+      },
+      {
+        "name": "Time Out - Barcelona things to do",
+        "url": "https://www.timeout.com/barcelona/things-to-do/best-things-to-do-in-barcelona"
+      }
+    ]
+  },
+  {
+    "id": "list-barcelona-el-born-culture",
+    "slug": "barcelona-el-born-culture",
+    "seoSlug": "best-museums-and-cultural-stops",
+    "seoTitle": "Best Museums and Cultural Stops in El Born, Barcelona",
+    "seoDescription": "Best museums and cultural stops in El Born, Barcelona, from the Picasso Museum and Santa Maria del Mar to medieval memory sites and Modernista music rooms.",
+    "title": "Picasso, Markets, and Memory",
+    "description": "El Born's cultural strength is density: Picasso context, merchant-guild architecture, market memory, music rooms, and Ciutadella-side history all sit close enough to make one strong museum-heavy afternoon.",
+    "url": "https://www.google.com/maps/search/el+born+culture+barcelona",
+    "category": "Culture",
+    "location": {
+      "city": "Barcelona",
+      "neighborhood": "El Born",
+      "country": "Spain",
+      "continent": "Europe",
+      "scope": "city"
+    },
+    "creator": {
+      "id": "user-rguide-culture",
+      "name": "R Culture",
+      "avatar": "data:image/svg+xml;utf8,%0A%20%20%20%20%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22160%22%20height%3D%22160%22%20viewBox%3D%220%200%20160%20160%22%3E%0A%20%20%20%20%20%20%3Crect%20width%3D%22160%22%20height%3D%22160%22%20rx%3D%2280%22%20fill%3D%22%230f766e%22%20%2F%3E%0A%20%20%20%20%20%20%3Ctext%20x%3D%2250%25%22%20y%3D%2254%25%22%20text-anchor%3D%22middle%22%20dominant-baseline%3D%22middle%22%0A%20%20%20%20%20%20%20%20font-family%3D%22Arial%2C%20sans-serif%22%20font-size%3D%2276%22%20font-weight%3D%22700%22%20fill%3D%22white%22%3ER%3C%2Ftext%3E%0A%20%20%20%20%3C%2Fsvg%3E%0A%20%20"
+    },
+    "upvotes": 0,
+    "createdAt": "2026-04-29T00:00:00.000Z",
+    "stops": [
+      {
+        "id": "born-picasso-museum",
+        "name": "Museu Picasso",
+        "coordinates": [
+          41.3853,
+          2.1815
+        ],
+        "description": "Museu Picasso is El Born's essential museum because official collection material and city guides emphasize Picasso's formative Barcelona years. The five medieval palaces are part of the experience, and the strongest reason to go is the depth of early work, Blue Period context, and the Las Meninas series rather than a greatest-hits survey.",
+        "hours": {
+          "mon": "Closed",
+          "tue": "9:00 AM-8:00 PM",
+          "wed": "9:00 AM-8:00 PM",
+          "thu": "9:00 AM-9:00 PM",
+          "fri": "9:00 AM-9:00 PM",
+          "sat": "9:00 AM-9:00 PM",
+          "sun": "9:00 AM-8:00 PM"
+        },
+        "photo": "https://commons.wikimedia.org/wiki/Special:FilePath/Palau%20Berenguer%20d%27Aguilar.jpg"
+      },
+      {
+        "id": "born-santa-maria-del-mar",
+        "name": "Basílica de Santa Maria del Mar",
+        "coordinates": [
+          41.3839,
+          2.1822
+        ],
+        "description": "Santa Maria del Mar is included as the neighborhood-made Gothic counterpoint to Barcelona Cathedral. Tourism and heritage sources highlight its Ribera guild origins, clean Catalan Gothic proportions, and soaring stone interior, making it one of the best places to feel El Born's medieval merchant history in architectural form.",
+        "hours": {
+          "mon": "9:00 AM-8:00 PM",
+          "tue": "9:00 AM-8:00 PM",
+          "wed": "9:00 AM-8:00 PM",
+          "thu": "9:00 AM-8:00 PM",
+          "fri": "9:00 AM-8:00 PM",
+          "sat": "9:00 AM-8:00 PM",
+          "sun": "9:00 AM-8:00 PM"
+        },
+        "photo": "https://upload.wikimedia.org/wikipedia/commons/4/4c/Santa_Maria_del_Mar%2C_Barcelona_02.jpg"
+      },
+      {
+        "id": "born-ccm",
+        "name": "El Born Centre de Cultura i Memòria",
+        "coordinates": [
+          41.3867,
+          2.1833
+        ],
+        "description": "El Born Centre de Cultura i Memòria is valuable because official sources position it as both a preserved market hall and an archaeological memory site. The exposed 1700s street remains make the consequences of 1714 and the transformation of the neighborhood easier to grasp than a standard museum panel would.",
+        "hours": {
+          "mon": "Closed",
+          "tue": "10:00 AM-7:00 PM",
+          "wed": "10:00 AM-7:00 PM",
+          "thu": "10:00 AM-7:00 PM",
+          "fri": "10:00 AM-7:00 PM",
+          "sat": "10:00 AM-7:00 PM",
+          "sun": "10:00 AM-7:00 PM"
+        },
+        "photo": "https://upload.wikimedia.org/wikipedia/commons/7/71/El_Born_Centre_de_Cultura_i_Mem%C3%B2ria_%2832715417280%29.jpg"
+      },
+      {
+        "id": "born-palau-musica",
+        "name": "Palau de la Música Catalana",
+        "coordinates": [
+          41.3876,
+          2.1753
+        ],
+        "description": "Palau de la Música Catalana appears in El Born-adjacent culture lists because official and UNESCO-linked sources consistently treat it as one of Barcelona's great Modernista interiors. The stained-glass skylight, ceramic columns, sculptural facade, and live-concert use make it worth seeing by tour or performance rather than only from the sidewalk.",
+        "hours": {
+          "mon": "9:00 AM-9:00 PM",
+          "tue": "9:00 AM-9:00 PM",
+          "wed": "9:00 AM-9:00 PM",
+          "thu": "9:00 AM-9:00 PM",
+          "fri": "9:00 AM-9:00 PM",
+          "sat": "9:00 AM-9:00 PM",
+          "sun": "9:00 AM-3:30 PM"
+        },
+        "photo": "https://upload.wikimedia.org/wikipedia/commons/7/77/Palau_de_la_M%C3%BAsica_Catalana-Palace_of_Catalan_Music_%28Image_2%29.jpg"
+      },
+      {
+        "id": "born-moco-museum",
+        "name": "Moco Museum Barcelona",
+        "coordinates": [
+          41.3852,
+          2.181
+        ],
+        "description": "Moco Museum is included as a contemporary counterweight to El Born's heavy historic circuit. Its source profile is more visitor-demand and modern-art driven than civic-history driven, with street art, immersive work, and recognizable names making it useful for travelers who want a lighter museum after Picasso or Santa Maria del Mar.",
+        "hours": {
+          "mon": "9:00 AM-8:00 PM",
+          "tue": "9:00 AM-8:00 PM",
+          "wed": "9:00 AM-8:00 PM",
+          "thu": "9:00 AM-8:00 PM",
+          "fri": "9:00 AM-8:00 PM",
+          "sat": "9:00 AM-8:00 PM",
+          "sun": "9:00 AM-8:00 PM"
+        },
+        "photo": "https://www.mocomuseum.com/app/uploads/2025/12/FullSizeRender-scaled.jpg"
+      }
+    ],
+    "sources": [
+      {
+        "name": "Museu Picasso official",
+        "url": "https://museupicassobcn.cat"
+      },
+      {
+        "name": "Palau de la Música Catalana official",
+        "url": "https://www.palaumusica.cat"
+      },
+      {
+        "name": "El Born CCM official",
+        "url": "https://elbornculturaimemoria.barcelona.cat"
+      },
+      {
+        "name": "Barcelona Turisme",
+        "url": "https://www.barcelonaturisme.com"
+      }
+    ]
+  },
+  {
+    "id": "list-barcelona-eixample-culture",
+    "slug": "barcelona-eixample-culture",
+    "seoSlug": "best-museums-and-cultural-stops",
+    "seoTitle": "Best Museums and Cultural Stops in Eixample, Barcelona",
+    "seoDescription": "Best museums and cultural stops in Eixample, Barcelona, focused on Gaudi houses, Sagrada Familia, Modernista architecture, and design landmarks across the grid.",
+    "title": "Modernisme Power Walk",
+    "description": "Eixample's grid turns architecture into a walkable sequence. Use this for Gaudi houses, Modernista institutions, design history, and central avenues where the details reward slowing down instead of rushing between icons.",
+    "url": "https://www.google.com/maps/search/eixample+culture+barcelona",
+    "category": "Culture",
+    "location": {
+      "city": "Barcelona",
+      "neighborhood": "Eixample",
+      "country": "Spain",
+      "continent": "Europe",
+      "scope": "city"
+    },
+    "creator": {
+      "id": "user-rguide-culture",
+      "name": "R Culture",
+      "avatar": "data:image/svg+xml;utf8,%0A%20%20%20%20%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22160%22%20height%3D%22160%22%20viewBox%3D%220%200%20160%20160%22%3E%0A%20%20%20%20%20%20%3Crect%20width%3D%22160%22%20height%3D%22160%22%20rx%3D%2280%22%20fill%3D%22%230f766e%22%20%2F%3E%0A%20%20%20%20%20%20%3Ctext%20x%3D%2250%25%22%20y%3D%2254%25%22%20text-anchor%3D%22middle%22%20dominant-baseline%3D%22middle%22%0A%20%20%20%20%20%20%20%20font-family%3D%22Arial%2C%20sans-serif%22%20font-size%3D%2276%22%20font-weight%3D%22700%22%20fill%3D%22white%22%3ER%3C%2Ftext%3E%0A%20%20%20%20%3C%2Fsvg%3E%0A%20%20"
+    },
+    "upvotes": 0,
+    "createdAt": "2026-04-29T00:00:00.000Z",
+    "stops": [
+      {
+        "id": "eixample-sagrada-familia",
+        "name": "Sagrada Família",
+        "coordinates": [
+          41.4036,
+          2.1744
+        ],
+        "description": "Sagrada Família is the Eixample landmark every source converges on: official material, UNESCO context, and visitor guides all frame it as Gaudí's unfinished masterwork. The reason to list it is the interior experience as much as the facade: branching columns, colored glass, symbolic towers, and the visible story of construction still unfolding.",
+        "hours": {
+          "mon": "9:00 AM-8:00 PM",
+          "tue": "9:00 AM-8:00 PM",
+          "wed": "9:00 AM-8:00 PM",
+          "thu": "9:00 AM-8:00 PM",
+          "fri": "9:00 AM-8:00 PM",
+          "sat": "9:00 AM-8:00 PM",
+          "sun": "9:00 AM-8:00 PM"
+        },
+        "photo": "https://upload.wikimedia.org/wikipedia/commons/7/74/Sagrada_Familia_March_2015-10a.jpg"
+      },
+      {
+        "id": "eixample-casa-batllo",
+        "name": "Casa Batlló",
+        "coordinates": [
+          41.3917,
+          2.1649
+        ],
+        "description": "Casa Batlló is included because official and guide sources treat it as one of the clearest examples of Gaudí turning a private house into a total artwork. The roofline, tiled facade, bone-like structure, light well, and immersive interpretation make it more than a photo stop on Passeig de Gràcia.",
+        "hours": {
+          "mon": "9:00 AM-10:00 PM",
+          "tue": "9:00 AM-10:00 PM",
+          "wed": "9:00 AM-10:00 PM",
+          "thu": "9:00 AM-10:00 PM",
+          "fri": "9:00 AM-10:00 PM",
+          "sat": "9:00 AM-10:00 PM",
+          "sun": "9:00 AM-10:00 PM"
+        },
+        "photo": "https://casa-batllo-barcelona.com/wp-content/uploads/2026/01/19944e616eb84ad3b204463508875f98.jpeg"
+      },
+      {
+        "id": "eixample-la-pedrera",
+        "name": "Casa Milà / La Pedrera",
+        "coordinates": [
+          41.3954,
+          2.1619
+        ],
+        "description": "Casa Milà / La Pedrera belongs as the broader domestic-architecture lesson in Eixample. Official sources emphasize the undulating stone facade, attic structure, apartment design, and rooftop chimneys, so it works well for travelers who want to understand how Gaudí translated movement and natural forms into an inhabited building.",
+        "hours": {
+          "mon": "9:00 AM-8:00 PM",
+          "tue": "9:00 AM-8:00 PM",
+          "wed": "9:00 AM-8:00 PM",
+          "thu": "9:00 AM-8:00 PM",
+          "fri": "9:00 AM-8:00 PM",
+          "sat": "9:00 AM-8:00 PM",
+          "sun": "9:00 AM-8:00 PM"
+        },
+        "photo": "https://estatics-nasia.dtibcn.cat/nasia-pro/media/2015%2C05%2C1-2-2-2-8-DISE-La-Pedrera-29-4-9-AL-01-760x428.jpg"
+      },
+      {
+        "id": "eixample-fundacio-tapies",
+        "name": "Fundació Antoni Tàpies",
+        "coordinates": [
+          41.391,
+          2.163
+        ],
+        "description": "Fundació Antoni Tàpies is included because it combines a major Catalan artist with a Modernista industrial building, giving Eixample culture a modern-art layer beyond Gaudí. Source material highlights Tàpies' textured, material-heavy work and the building's distinctive rooftop sculpture, making it a focused stop for art-minded visitors.",
+        "hours": {
+          "mon": "Closed",
+          "tue": "10:00 AM-7:00 PM",
+          "wed": "10:00 AM-7:00 PM",
+          "thu": "10:00 AM-7:00 PM",
+          "fri": "10:00 AM-7:00 PM",
+          "sat": "10:00 AM-7:00 PM",
+          "sun": "10:00 AM-7:00 PM"
+        },
+        "photo": "https://upload.wikimedia.org/wikipedia/commons/d/d0/Fundaci%C3%B3_Antoni_T%C3%A0pies%2C_Barcelona_03.jpg"
+      },
+      {
+        "id": "eixample-casa-amatller",
+        "name": "Casa Amatller",
+        "coordinates": [
+          41.3915,
+          2.165
+        ],
+        "description": "Casa Amatller is a useful corrective to Gaudí-only Eixample itineraries. Official and tourism sources position Puig i Cadafalch's house as a key part of the Block of Discord, with stepped gables, decorative craft, and chocolate-family history that help explain the competitive Modernista energy of Passeig de Gràcia.",
+        "hours": {
+          "mon": "10:00 AM-7:00 PM",
+          "tue": "10:00 AM-7:00 PM",
+          "wed": "10:00 AM-7:00 PM",
+          "thu": "10:00 AM-7:00 PM",
+          "fri": "10:00 AM-7:00 PM",
+          "sat": "10:00 AM-7:00 PM",
+          "sun": "10:00 AM-7:00 PM"
+        },
+        "photo": "https://upload.wikimedia.org/wikipedia/commons/3/3f/Barcelona_-_Casa_Amatller_1.jpg"
+      }
+    ],
+    "sources": [
+      {
+        "name": "Sagrada Família official",
+        "url": "https://sagradafamilia.org"
+      },
+      {
+        "name": "Casa Batlló official",
+        "url": "https://www.casabatllo.es"
+      },
+      {
+        "name": "La Pedrera official",
+        "url": "https://www.lapedrera.com"
+      },
+      {
+        "name": "UNESCO - Works of Antoni Gaudí",
+        "url": "https://whc.unesco.org/en/list/320"
+      }
+    ]
+  },
+  {
+    "id": "list-barcelona-gracia-culture",
+    "slug": "barcelona-gracia-culture",
+    "seoSlug": "best-museums-and-cultural-stops",
+    "seoTitle": "Best Museums and Cultural Stops in Gràcia, Barcelona",
+    "seoDescription": "Best museums and cultural stops in Gràcia, Barcelona, balancing Park Guell and Casa Vicens with plazas, cinemas, markets, and neighborhood public life.",
+    "title": "Gaudí Beginnings and Plaza Life",
+    "description": "Gracia culture works best when Gaudi is only part of the story. This guide pairs early architecture with plaza life, independent cinemas, market routines, and the public spaces that keep the district village-scaled.",
+    "url": "https://www.google.com/maps/search/gracia+culture+barcelona",
+    "category": "Culture",
+    "location": {
+      "city": "Barcelona",
+      "neighborhood": "Gràcia",
+      "country": "Spain",
+      "continent": "Europe",
+      "scope": "city"
+    },
+    "creator": {
+      "id": "user-rguide-culture",
+      "name": "R Culture",
+      "avatar": "data:image/svg+xml;utf8,%0A%20%20%20%20%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22160%22%20height%3D%22160%22%20viewBox%3D%220%200%20160%20160%22%3E%0A%20%20%20%20%20%20%3Crect%20width%3D%22160%22%20height%3D%22160%22%20rx%3D%2280%22%20fill%3D%22%230f766e%22%20%2F%3E%0A%20%20%20%20%20%20%3Ctext%20x%3D%2250%25%22%20y%3D%2254%25%22%20text-anchor%3D%22middle%22%20dominant-baseline%3D%22middle%22%0A%20%20%20%20%20%20%20%20font-family%3D%22Arial%2C%20sans-serif%22%20font-size%3D%2276%22%20font-weight%3D%22700%22%20fill%3D%22white%22%3ER%3C%2Ftext%3E%0A%20%20%20%20%3C%2Fsvg%3E%0A%20%20"
+    },
+    "upvotes": 0,
+    "createdAt": "2026-04-29T00:00:00.000Z",
+    "stops": [
+      {
+        "id": "gracia-park-guell-culture",
+        "name": "Park Güell",
+        "coordinates": [
+          41.4145,
+          2.1527
+        ],
+        "description": "Park Güell is listed through both official and UNESCO context because it turns Gràcia's hillside into Gaudí's large-scale urban experiment. The mosaic terrace, viaducts, gatehouses, serpentine bench, and city views make it a cultural stop, not just a park, especially when paired with the neighborhood below.",
+        "hours": {
+          "mon": "9:30 AM-7:30 PM",
+          "tue": "9:30 AM-7:30 PM",
+          "wed": "9:30 AM-7:30 PM",
+          "thu": "9:30 AM-7:30 PM",
+          "fri": "9:30 AM-7:30 PM",
+          "sat": "9:30 AM-7:30 PM",
+          "sun": "9:30 AM-7:30 PM"
+        },
+        "photo": "https://upload.wikimedia.org/wikipedia/commons/4/4d/Park_G%C3%BCell_01.jpg"
+      },
+      {
+        "id": "gracia-casa-vicens",
+        "name": "Casa Vicens",
+        "coordinates": [
+          41.4035,
+          2.1507
+        ],
+        "description": "Casa Vicens is included because official sources identify it as Gaudí's first major house and an early statement of his style. Its ceramic surfaces, botanical motifs, Islamic-influenced geometry, and domestic scale make it one of the best ways to see Gaudí before the later, more monumental works.",
+        "hours": {
+          "mon": "9:00 AM-8:00 PM",
+          "tue": "9:00 AM-8:00 PM",
+          "wed": "9:00 AM-8:00 PM",
+          "thu": "9:00 AM-8:00 PM",
+          "fri": "9:00 AM-8:00 PM",
+          "sat": "9:00 AM-8:00 PM",
+          "sun": "9:00 AM-8:00 PM"
+        },
+        "photo": "https://casa-vicens-barcelona.com/wp-content/uploads/2026/01/9528674f03c44fe0b5fad6f5a055e924-1.jpg"
+      },
+      {
+        "id": "gracia-cines-verdi",
+        "name": "Cines Verdi",
+        "coordinates": [
+          41.4033,
+          2.1564
+        ],
+        "description": "Cines Verdi represents Gràcia's everyday cultural life rather than a monument. Local guides and neighborhood knowledge support it as a long-running original-language cinema, useful for festival programming, independent films, and understanding why Gràcia still feels like a lived-in village instead of only a sightseeing zone.",
+        "hours": {
+          "mon": "Showtimes vary",
+          "tue": "Showtimes vary",
+          "wed": "Showtimes vary",
+          "thu": "Showtimes vary",
+          "fri": "Showtimes vary",
+          "sat": "Showtimes vary",
+          "sun": "Showtimes vary"
+        },
+        "photo": "https://barcelona.cines-verdi.com/img/cinema/logo.png"
+      },
+      {
+        "id": "gracia-placa-del-sol",
+        "name": "Plaça del Sol",
+        "coordinates": [
+          41.401,
+          2.1574
+        ],
+        "description": "Plaça del Sol is included because guide sources consistently describe Gràcia through its plazas, and this is the neighborhood's clearest social stage. The value is observational: terraces, evening gatherings, musicians, and local routines that explain the district's village identity better than a formal attraction would.",
+        "hours": {
+          "mon": "Open public space",
+          "tue": "Open public space",
+          "wed": "Open public space",
+          "thu": "Open public space",
+          "fri": "Open public space",
+          "sat": "Open public space",
+          "sun": "Open public space"
+        },
+        "photo": "https://estatics-nasia.dtibcn.cat/nasia-pro/media/201601PlaC3A7a-del-Sol-1-web.optimized.948b1120.jpg"
+      },
+      {
+        "id": "gracia-mercat-llibertat",
+        "name": "Mercat de la Llibertat",
+        "coordinates": [
+          41.4002,
+          2.1532
+        ],
+        "description": "Mercat de la Llibertat gives the Gràcia list a daily-life anchor. City and tourism sources frame it as a restored 19th-century market hall, and it is best used for morning food culture, neighborhood pacing, and a quieter look at local shopping before the evening plaza scene takes over.",
+        "hours": {
+          "mon": "8:00 AM-2:00 PM",
+          "tue": "8:00 AM-8:00 PM",
+          "wed": "8:00 AM-2:00 PM",
+          "thu": "8:00 AM-8:00 PM",
+          "fri": "8:00 AM-8:00 PM",
+          "sat": "8:00 AM-3:00 PM",
+          "sun": "Closed"
+        },
+        "photo": "https://fishhotels-sites.s3.eu-west-3.amazonaws.com/uploads/abd3aef8-30d4-48d4-9244-4e801c1a130c/originals/mercat-de-la-llibertat003.jpg"
+      }
+    ],
+    "sources": [
+      {
+        "name": "Park Güell official",
+        "url": "https://parkguell.barcelona"
+      },
+      {
+        "name": "Casa Vicens official",
+        "url": "https://casavicens.org"
+      },
+      {
+        "name": "Time Out - Gràcia guide",
+        "url": "https://www.timeout.com/barcelona/things-to-do/gracia"
+      },
+      {
+        "name": "Barcelona Turisme",
+        "url": "https://www.barcelonaturisme.com"
+      }
+    ]
+  },
+  {
+    "id": "list-barcelona-poble-sec-culture",
+    "slug": "barcelona-poble-sec-culture",
+    "seoSlug": "best-museums-and-cultural-stops",
+    "seoTitle": "Best Museums and Cultural Stops in Poble-sec, Barcelona",
+    "seoDescription": "Best museums and cultural stops in Poble-sec and Montjuic, Barcelona, including MNAC, Fundacio Joan Miro, CaixaForum, hilltop history, and performance spaces.",
+    "title": "Montjuïc Museum Day",
+    "description": "Poble-sec and Montjuic turn culture into a hill day: major museums, performance spaces, Olympic layers, gardens, and skyline breaks. Use it when the route should feel less cramped than the old-city circuit.",
+    "url": "https://www.google.com/maps/search/poble+sec+montjuic+culture+barcelona",
+    "category": "Culture",
+    "location": {
+      "city": "Barcelona",
+      "neighborhood": "Poble-sec",
+      "country": "Spain",
+      "continent": "Europe",
+      "scope": "city"
+    },
+    "creator": {
+      "id": "user-rguide-culture",
+      "name": "R Culture",
+      "avatar": "data:image/svg+xml;utf8,%0A%20%20%20%20%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22160%22%20height%3D%22160%22%20viewBox%3D%220%200%20160%20160%22%3E%0A%20%20%20%20%20%20%3Crect%20width%3D%22160%22%20height%3D%22160%22%20rx%3D%2280%22%20fill%3D%22%230f766e%22%20%2F%3E%0A%20%20%20%20%20%20%3Ctext%20x%3D%2250%25%22%20y%3D%2254%25%22%20text-anchor%3D%22middle%22%20dominant-baseline%3D%22middle%22%0A%20%20%20%20%20%20%20%20font-family%3D%22Arial%2C%20sans-serif%22%20font-size%3D%2276%22%20font-weight%3D%22700%22%20fill%3D%22white%22%3ER%3C%2Ftext%3E%0A%20%20%20%20%3C%2Fsvg%3E%0A%20%20"
+    },
+    "upvotes": 0,
+    "createdAt": "2026-04-29T00:00:00.000Z",
+    "stops": [
+      {
+        "id": "poblesec-mnac",
+        "name": "MNAC",
+        "coordinates": [
+          41.3688,
+          2.1536
+        ],
+        "description": "MNAC is the Montjuïc heavyweight because official museum sources place major Catalan art history inside the Palau Nacional. Its Romanesque frescoes, Gothic work, modernisme, photography, and terrace views make it the strongest single museum stop for understanding Catalonia's visual culture at scale.",
+        "hours": {
+          "mon": "Closed",
+          "tue": "10:00 AM-8:00 PM",
+          "wed": "10:00 AM-8:00 PM",
+          "thu": "10:00 AM-8:00 PM",
+          "fri": "10:00 AM-8:00 PM",
+          "sat": "10:00 AM-8:00 PM",
+          "sun": "10:00 AM-3:00 PM"
+        },
+        "photo": "https://upload.wikimedia.org/wikipedia/commons/a/a2/Museu_Nacional_d%27Art_de_Catalunya_%28MNAC%29_National_Art_Museum_of_Catalonia.jpg"
+      },
+      {
+        "id": "poblesec-fundacio-joan-miro",
+        "name": "Fundació Joan Miró",
+        "coordinates": [
+          41.3686,
+          2.1592
+        ],
+        "description": "Fundació Joan Miró is included because official sources and guide coverage agree on the strength of both the collection and the building. The Sert-designed museum, sculpture terraces, works on paper, and Miró's color language make it a calmer, more focused Montjuïc alternative to MNAC's encyclopedic scale.",
+        "hours": {
+          "mon": "Closed",
+          "tue": "10:00 AM-7:00 PM",
+          "wed": "10:00 AM-7:00 PM",
+          "thu": "10:00 AM-7:00 PM",
+          "fri": "10:00 AM-7:00 PM",
+          "sat": "10:00 AM-7:00 PM",
+          "sun": "10:00 AM-7:00 PM"
+        },
+        "photo": "https://upload.wikimedia.org/wikipedia/commons/9/9d/Fundaci%C3%B3_Mir%C3%B3.JPG"
+      },
+      {
+        "id": "poblesec-caixaforum",
+        "name": "CaixaForum Barcelona",
+        "coordinates": [
+          41.3717,
+          2.1491
+        ],
+        "description": "CaixaForum Barcelona earns its place as a flexible exhibition stop in a converted Modernista textile factory. Source material highlights the industrial architecture and rotating programming, so it is useful when travelers want a shorter culture visit near Plaça d'Espanya without committing to a large permanent collection.",
+        "hours": {
+          "mon": "10:00 AM-7:00 PM",
+          "tue": "10:00 AM-7:00 PM",
+          "wed": "10:00 AM-7:00 PM",
+          "thu": "10:00 AM-7:00 PM",
+          "fri": "10:00 AM-7:00 PM",
+          "sat": "10:00 AM-7:00 PM",
+          "sun": "10:00 AM-7:00 PM"
+        },
+        "photo": "https://upload.wikimedia.org/wikipedia/commons/f/f2/CaixaForum_Art_Gallery%2C_Barcelona%2C_Catalonia%2C_Spain_%28Ank_Kumar%2C_Infosys_Limited%29_03.jpg"
+      },
+      {
+        "id": "poblesec-montjuic-castle",
+        "name": "Montjuïc Castle",
+        "coordinates": [
+          41.3634,
+          2.1661
+        ],
+        "description": "Montjuïc Castle is included for its layered military and civic history as much as its views. Tourism sources connect it to the hill's defensive role, port control, and later political memory, making it a strong endpoint for a cable-car route, garden walk, or broader Montjuïc history day.",
+        "hours": {
+          "mon": "9:00 AM-8:00 PM",
+          "tue": "9:00 AM-8:00 PM",
+          "wed": "9:00 AM-8:00 PM",
+          "thu": "9:00 AM-8:00 PM",
+          "fri": "9:00 AM-8:00 PM",
+          "sat": "9:00 AM-8:00 PM",
+          "sun": "9:00 AM-8:00 PM"
+        },
+        "photo": "https://upload.wikimedia.org/wikipedia/commons/d/de/%CE%9A%CE%AC%CF%83%CF%84%CF%81%CE%BF_%CE%9C%CE%BF%CE%BD%CE%B6%CE%BF%CF%85%CE%AF%CE%BA_3231_-_3233.jpg"
+      },
+      {
+        "id": "poblesec-poble-espanyol",
+        "name": "Poble Espanyol",
+        "coordinates": [
+          41.3687,
+          2.1475
+        ],
+        "description": "Poble Espanyol is a 1929 exhibition-era site that sources frame as an open-air survey of Spanish regional architecture and craft. It is not a normal village, and that is the point: the value is workshops, event programming, plazas, and a compact, staged look at architectural styles from across Spain.",
+        "hours": {
+          "mon": "9:00 AM-8:00 PM",
+          "tue": "9:00 AM-8:00 PM",
+          "wed": "9:00 AM-8:00 PM",
+          "thu": "9:00 AM-8:00 PM",
+          "fri": "9:00 AM-8:00 PM",
+          "sat": "9:00 AM-8:00 PM",
+          "sun": "9:00 AM-8:00 PM"
+        },
+        "photo": "https://cdn.getyourguide.com/img/tour/cc7791c0d9865ff9.jpeg/68.jpg"
+      },
+      {
+        "id": "poblesec-teatre-grec",
+        "name": "Teatre Grec",
+        "coordinates": [
+          41.3704,
+          2.1598
+        ],
+        "description": "Teatre Grec belongs because it ties Poble-sec/Montjuïc to performance culture and summer festival life. Built into a former quarry, it is most meaningful during programmed events, but the amphitheater and gardens also make sense as part of a daytime walk through the hill's cultural landscape.",
+        "hours": {
+          "mon": "Open public gardens; performances by schedule",
+          "tue": "Open public gardens; performances by schedule",
+          "wed": "Open public gardens; performances by schedule",
+          "thu": "Open public gardens; performances by schedule",
+          "fri": "Open public gardens; performances by schedule",
+          "sat": "Open public gardens; performances by schedule",
+          "sun": "Open public gardens; performances by schedule"
+        },
+        "photo": "https://www.teatrebarcelona.com/wp-content/uploads/2020/04/teatre_grec-scaled.jpg"
+      }
+    ],
+    "sources": [
+      {
+        "name": "MNAC official",
+        "url": "https://www.museunacional.cat"
+      },
+      {
+        "name": "Fundació Joan Miró official",
+        "url": "https://www.fmirobcn.org"
+      },
+      {
+        "name": "CaixaForum Barcelona",
+        "url": "https://caixaforum.org"
+      },
+      {
+        "name": "Barcelona Turisme - Montjuïc",
+        "url": "https://www.barcelonaturisme.com"
+      }
+    ]
+  },
+  {
+    "id": "list-barcelona-gothic-quarter-stays",
+    "slug": "barcelona-gothic-quarter-stays",
+    "seoSlug": "best-places-to-stay",
+    "seoTitle": "Best Places to Stay in the Gothic Quarter, Barcelona",
+    "seoDescription": "Best places to stay in the Gothic Quarter, Barcelona, for old-city hotels, boutique stays, hostels, cathedral access, and walkable historic lanes.",
+    "title": "Sleep in the Old City",
+    "description": "Stay here when walkability matters more than quiet: cathedral lanes, late-night convenience, and old-city texture are the upside, while tighter streets and heavier visitor traffic are the tradeoff.",
+    "url": "https://www.google.com/maps/search/gothic+quarter+hotels+hostels+barcelona",
+    "category": "Stay",
+    "location": {
+      "city": "Barcelona",
+      "neighborhood": "Gothic Quarter",
+      "country": "Spain",
+      "continent": "Europe",
+      "scope": "city"
+    },
+    "creator": {
+      "id": "user-rguide-stay",
+      "name": "R Stay",
+      "avatar": "data:image/svg+xml;utf8,%0A%20%20%20%20%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22160%22%20height%3D%22160%22%20viewBox%3D%220%200%20160%20160%22%3E%0A%20%20%20%20%20%20%3Crect%20width%3D%22160%22%20height%3D%22160%22%20rx%3D%2280%22%20fill%3D%22%230f766e%22%20%2F%3E%0A%20%20%20%20%20%20%3Ctext%20x%3D%2250%25%22%20y%3D%2254%25%22%20text-anchor%3D%22middle%22%20dominant-baseline%3D%22middle%22%0A%20%20%20%20%20%20%20%20font-family%3D%22Arial%2C%20sans-serif%22%20font-size%3D%2276%22%20font-weight%3D%22700%22%20fill%3D%22white%22%3ER%3C%2Ftext%3E%0A%20%20%20%20%3C%2Fsvg%3E%0A%20%20"
+    },
+    "upvotes": 0,
+    "createdAt": "2026-04-29T00:00:00.000Z",
+    "stops": [
+      {
+        "id": "gothic-hotel-neri",
+        "name": "Hotel Neri",
+        "coordinates": [
+          41.3833,
+          2.1754
+        ],
+        "description": "Hotel Neri is the Gothic Quarter stay for travelers who want historic texture without giving up boutique comfort. Hotel-guide and map signals support it for its restored palace setting beside Sant Felip Neri, quiet rooms, and intimate scale, making it better for a romantic old-city base than for resort-style amenities.",
+        "hours": {
+          "mon": "24 hours",
+          "tue": "24 hours",
+          "wed": "24 hours",
+          "thu": "24 hours",
+          "fri": "24 hours",
+          "sat": "24 hours",
+          "sun": "24 hours"
+        },
+        "photo": "https://www.hotelneri.com/img/Hotel%20Neri%20(2).jpg.jpg"
+      },
+      {
+        "id": "gothic-mercer-hotel",
+        "name": "Mercer Hotel Barcelona",
+        "coordinates": [
+          41.3826,
+          2.1784
+        ],
+        "description": "Mercer Hotel Barcelona is included as the luxury heritage stay in the Gothic core. Source coverage repeatedly points to the Roman wall fragments, medieval fabric, courtyard calm, and high-service positioning, so it is best for travelers who want the old city built into the property itself.",
+        "hours": {
+          "mon": "24 hours",
+          "tue": "24 hours",
+          "wed": "24 hours",
+          "thu": "24 hours",
+          "fri": "24 hours",
+          "sat": "24 hours",
+          "sun": "24 hours"
+        },
+        "photo": "https://www.mercerhoteles.com/imagenes/logo-og.jpg"
+      },
+      {
+        "id": "gothic-kimpton-vividora",
+        "name": "Kimpton Vividora Hotel",
+        "coordinates": [
+          41.3843,
+          2.1741
+        ],
+        "description": "Kimpton Vividora is the polished lifestyle-hotel option near the cathedral, backed by hotel guides and Google Travel demand. Its value is central logistics, design-forward rooms, rooftop views, and a more contemporary service model for visitors who want the Gothic Quarter without staying in a small historic inn.",
+        "hours": {
+          "mon": "24 hours",
+          "tue": "24 hours",
+          "wed": "24 hours",
+          "thu": "24 hours",
+          "fri": "24 hours",
+          "sat": "24 hours",
+          "sun": "24 hours"
+        },
+        "photo": "https://kimptonvividorahotel.com/content/thumbs/800_450/content/imgsxml/galerias/panel_herohome/1/1.2home-modulo2-2-48281b2464805dda29f360f127321c7c.jpg"
+      },
+      {
+        "id": "gothic-h10-madison",
+        "name": "H10 Madison",
+        "coordinates": [
+          41.386,
+          2.176
+        ],
+        "description": "H10 Madison is included because hotel sources and map demand show it as a practical central stay with a strong rooftop setup. It works well for first-time visitors who want cathedral access, Palau de la Música proximity, Plaça Catalunya transit, and a hotel that is straightforward rather than overly precious.",
+        "hours": {
+          "mon": "24 hours",
+          "tue": "24 hours",
+          "wed": "24 hours",
+          "thu": "24 hours",
+          "fri": "24 hours",
+          "sat": "24 hours",
+          "sun": "24 hours"
+        },
+        "photo": "https://upload.wikimedia.org/wikipedia/commons/c/c2/084_Casa_Manuel_Bargu%C3%B1%C3%B3%2C_actual_hotel_H10_Madison%2C_c._Dr._Joaquim_Pou_2-4_%28Barcelona%29.jpg"
+      },
+      {
+        "id": "gothic-safestay-gothic",
+        "name": "Safestay Barcelona Gothic",
+        "coordinates": [
+          41.3838,
+          2.1786
+        ],
+        "description": "Safestay Barcelona Gothic gives the old-city list a budget option supported by location and hostel-platform visibility. The reason to choose it is not luxury; it is dorm pricing, social travel, and a base that sits between Gothic lanes, El Born, and the museum/bar circuit.",
+        "hours": {
+          "mon": "24 hours",
+          "tue": "24 hours",
+          "wed": "24 hours",
+          "thu": "24 hours",
+          "fri": "24 hours",
+          "sat": "24 hours",
+          "sun": "24 hours"
+        },
+        "photo": "https://www.safestay.com/wp-content/uploads/2023/06/BCNPG-2023-Low-Res-58.jpg"
+      }
+    ],
+    "sources": [
+      {
+        "name": "Time Out - Best hotels in Barcelona",
+        "url": "https://www.timeout.com/barcelona/hotels/best-hotels-in-barcelona"
+      },
+      {
+        "name": "Conde Nast Traveler - Barcelona hotels",
+        "url": "https://www.cntraveler.com/gallery/best-hotels-in-barcelona"
+      },
+      {
+        "name": "Google Travel",
+        "url": "https://www.google.com/travel/hotels"
+      }
+    ]
+  },
+  {
+    "id": "list-barcelona-el-born-stays",
+    "slug": "barcelona-el-born-stays",
+    "seoSlug": "best-places-to-stay",
+    "seoTitle": "Best Places to Stay in El Born, Barcelona",
+    "seoDescription": "Best places to stay in El Born, Barcelona, including boutique hotels, practical hostals, museum-street bases, Ciutadella access, and lively old-town lodging.",
+    "title": "Boutique Beds by the Market",
+    "description": "El Born is the old-town base for travelers who want energy without sleeping on the loudest Gothic lanes. Expect boutique rooms near museum streets, Santa Caterina, Ciutadella, and a livelier edge after dark.",
+    "url": "https://www.google.com/maps/search/el+born+hotels+hostels+barcelona",
+    "category": "Stay",
+    "location": {
+      "city": "Barcelona",
+      "neighborhood": "El Born",
+      "country": "Spain",
+      "continent": "Europe",
+      "scope": "city"
+    },
+    "creator": {
+      "id": "user-rguide-stay",
+      "name": "R Stay",
+      "avatar": "data:image/svg+xml;utf8,%0A%20%20%20%20%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22160%22%20height%3D%22160%22%20viewBox%3D%220%200%20160%20160%22%3E%0A%20%20%20%20%20%20%3Crect%20width%3D%22160%22%20height%3D%22160%22%20rx%3D%2280%22%20fill%3D%22%230f766e%22%20%2F%3E%0A%20%20%20%20%20%20%3Ctext%20x%3D%2250%25%22%20y%3D%2254%25%22%20text-anchor%3D%22middle%22%20dominant-baseline%3D%22middle%22%0A%20%20%20%20%20%20%20%20font-family%3D%22Arial%2C%20sans-serif%22%20font-size%3D%2276%22%20font-weight%3D%22700%22%20fill%3D%22white%22%3ER%3C%2Ftext%3E%0A%20%20%20%20%3C%2Fsvg%3E%0A%20%20"
+    },
+    "upvotes": 0,
+    "createdAt": "2026-04-29T00:00:00.000Z",
+    "stops": [
+      {
+        "id": "born-barcelona-edition",
+        "name": "The Barcelona EDITION",
+        "coordinates": [
+          41.3869,
+          2.1763
+        ],
+        "description": "The Barcelona EDITION is El Born's strongest luxury stay because hotel guides and Google Travel signals consistently point to its Santa Caterina Market location, rooftop scene, restaurants, and high-design service. It suits travelers who want old-town energy but prefer a five-star, contemporary hotel ecosystem.",
+        "hours": {
+          "mon": "24 hours",
+          "tue": "24 hours",
+          "wed": "24 hours",
+          "thu": "24 hours",
+          "fri": "24 hours",
+          "sat": "24 hours",
+          "sun": "24 hours"
+        },
+        "photo": "https://cache.marriott.com/content/dam/marriott-renditions/BCNEB/bcneb-terrace-2734-hor-wide.jpg?output-quality=70&interpolation=progressive-bilinear&downsize=1336px:*"
+      },
+      {
+        "id": "born-kk-picasso",
+        "name": "K+K Hotel Picasso",
+        "coordinates": [
+          41.3867,
+          2.1852
+        ],
+        "description": "K+K Hotel Picasso is included as a practical edge-of-Born hotel with park and museum access. Source signals support it for the rooftop pool, quieter location near Parc de la Ciutadella, and easy walks to the Picasso Museum, Estació de França, and Born restaurants.",
+        "hours": {
+          "mon": "24 hours",
+          "tue": "24 hours",
+          "wed": "24 hours",
+          "thu": "24 hours",
+          "fri": "24 hours",
+          "sat": "24 hours",
+          "sun": "24 hours"
+        },
+        "photo": "https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=900&q=80"
+      },
+      {
+        "id": "born-park-hotel",
+        "name": "Park Hotel Barcelona",
+        "coordinates": [
+          41.3847,
+          2.1855
+        ],
+        "description": "Park Hotel Barcelona is a logistics-first Born stay: guides and map data support it for Estació de França, waterfront walks, and quick access into El Born. It is best for travelers who value transit and neighborhood dining over a high-design hotel experience.",
+        "hours": {
+          "mon": "24 hours",
+          "tue": "24 hours",
+          "wed": "24 hours",
+          "thu": "24 hours",
+          "fri": "24 hours",
+          "sat": "24 hours",
+          "sun": "24 hours"
+        },
+        "photo": "https://upload.wikimedia.org/wikipedia/commons/d/d4/Hotel_Park_%28I%29.jpg"
+      },
+      {
+        "id": "born-chic-basic",
+        "name": "chic&basic Born Boutique Hotel",
+        "coordinates": [
+          41.386,
+          2.1838
+        ],
+        "description": "chic&basic Born Boutique Hotel is included because it matches the neighborhood's design-shop personality better than a generic chain stay. Its 19th-century building, playful interiors, and central Born location make it useful for travelers who want style and walkability at a more moderate level than the EDITION.",
+        "hours": {
+          "mon": "24 hours",
+          "tue": "24 hours",
+          "wed": "24 hours",
+          "thu": "24 hours",
+          "fri": "24 hours",
+          "sat": "24 hours",
+          "sun": "24 hours"
+        },
+        "photo": "https://www.chicandbasic.com/data/webp/big-chic-and-basic-born-habitaciones-cabecera637.jpg"
+      },
+      {
+        "id": "born-hostal-orleans",
+        "name": "Hostal Orleans",
+        "coordinates": [
+          41.3845,
+          2.1863
+        ],
+        "description": "Hostal Orleans keeps the El Born list honest for budget travelers. Its source value is location and simplicity: near the station, park, waterfront, and Born museums, with basic rooms that make sense when the priority is spending the trip budget on food, culture, and nightlife.",
+        "hours": {
+          "mon": "24 hours",
+          "tue": "24 hours",
+          "wed": "24 hours",
+          "thu": "24 hours",
+          "fri": "24 hours",
+          "sat": "24 hours",
+          "sun": "24 hours"
+        },
+        "photo": "https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=900&q=80"
+      }
+    ],
+    "sources": [
+      {
+        "name": "Time Out - Best hotels in Barcelona",
+        "url": "https://www.timeout.com/barcelona/hotels/best-hotels-in-barcelona"
+      },
+      {
+        "name": "Conde Nast Traveler - Barcelona hotels",
+        "url": "https://www.cntraveler.com/gallery/best-hotels-in-barcelona"
+      },
+      {
+        "name": "Google Travel",
+        "url": "https://www.google.com/travel/hotels"
+      }
+    ]
+  },
+  {
+    "id": "list-barcelona-eixample-stays",
+    "slug": "barcelona-eixample-stays",
+    "seoSlug": "best-places-to-stay",
+    "seoTitle": "Best Places to Stay in Eixample, Barcelona",
+    "seoDescription": "Best places to stay in Eixample, Barcelona, for design hotels, central transit, Modernista architecture, hostels, and calmer bases outside the old-city lanes.",
+    "title": "Design Hotels on the Grid",
+    "description": "Eixample is the practical polished base: design hotels, cleaner transit, Modernista walks, and wider streets. Use it when central access matters but the old-city sleep setup feels too cramped.",
+    "url": "https://www.google.com/maps/search/eixample+hotels+hostels+barcelona",
+    "category": "Stay",
+    "location": {
+      "city": "Barcelona",
+      "neighborhood": "Eixample",
+      "country": "Spain",
+      "continent": "Europe",
+      "scope": "city"
+    },
+    "creator": {
+      "id": "user-rguide-stay",
+      "name": "R Stay",
+      "avatar": "data:image/svg+xml;utf8,%0A%20%20%20%20%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22160%22%20height%3D%22160%22%20viewBox%3D%220%200%20160%20160%22%3E%0A%20%20%20%20%20%20%3Crect%20width%3D%22160%22%20height%3D%22160%22%20rx%3D%2280%22%20fill%3D%22%230f766e%22%20%2F%3E%0A%20%20%20%20%20%20%3Ctext%20x%3D%2250%25%22%20y%3D%2254%25%22%20text-anchor%3D%22middle%22%20dominant-baseline%3D%22middle%22%0A%20%20%20%20%20%20%20%20font-family%3D%22Arial%2C%20sans-serif%22%20font-size%3D%2276%22%20font-weight%3D%22700%22%20fill%3D%22white%22%3ER%3C%2Ftext%3E%0A%20%20%20%20%3C%2Fsvg%3E%0A%20%20"
+    },
+    "upvotes": 0,
+    "createdAt": "2026-04-29T00:00:00.000Z",
+    "stops": [
+      {
+        "id": "eixample-casa-bonay-hotel",
+        "name": "Casa Bonay",
+        "coordinates": [
+          41.3918,
+          2.1746
+        ],
+        "description": "Casa Bonay is the Eixample design-hotel anchor because travel guides and restaurant sources connect the rooms to a broader local ecosystem of coffee, natural wine, rooftop space, and dining. It works for travelers who want neighborhood life inside the hotel rather than a purely corporate base.",
+        "hours": {
+          "mon": "24 hours",
+          "tue": "24 hours",
+          "wed": "24 hours",
+          "thu": "24 hours",
+          "fri": "24 hours",
+          "sat": "24 hours",
+          "sun": "24 hours"
+        },
+        "photo": "https://cdn-hhbfohb.nitrocdn.com/MWVuFFQrOubRCgucqTrIdzQgXRECTcge/assets/images/optimized/rev-41ae578/casabonay.com/wp-content/uploads/2020/12/ATP9564@antp-900x1196.jpg"
+      },
+      {
+        "id": "eixample-almanac",
+        "name": "Almanac Barcelona",
+        "coordinates": [
+          41.3906,
+          2.1683
+        ],
+        "description": "Almanac Barcelona is included as a polished luxury option near Passeig de Gràcia, supported by hotel-guide coverage and Google Travel demand. The draw is central positioning, contemporary rooms, rooftop views, and easy access to Eixample architecture without the density of the old city.",
+        "hours": {
+          "mon": "24 hours",
+          "tue": "24 hours",
+          "wed": "24 hours",
+          "thu": "24 hours",
+          "fri": "24 hours",
+          "sat": "24 hours",
+          "sun": "24 hours"
+        },
+        "photo": "https://almanac-barcelona.hotelbcn-barcelona.com/data/Pictures/700x500w/16517/1651761/1651761882/barcelona-almanac-barcelona-picture-2.JPEG"
+      },
+      {
+        "id": "eixample-praktik-bakery",
+        "name": "Praktik Bakery",
+        "coordinates": [
+          41.3952,
+          2.1639
+        ],
+        "description": "Praktik Bakery is useful because hotel sources consistently remember the concept: a boutique stay built around an actual bakery. It is a mid-range Eixample pick for travelers who care about morning routine, smell-of-bread atmosphere, and walkability more than big-lobby luxury.",
+        "hours": {
+          "mon": "24 hours",
+          "tue": "24 hours",
+          "wed": "24 hours",
+          "thu": "24 hours",
+          "fri": "24 hours",
+          "sat": "24 hours",
+          "sun": "24 hours"
+        },
+        "photo": "https://www.hotelpraktikbakery.com/wp-content/uploads/sites/18/HOTEL-PRAKTIK-BAKERY-HOME-1.jpg"
+      },
+      {
+        "id": "eixample-the-one",
+        "name": "The One Barcelona",
+        "coordinates": [
+          41.3958,
+          2.1624
+        ],
+        "description": "The One Barcelona is the higher-end Eixample stay near La Pedrera, chosen for rooftop pool appeal, quiet luxury positioning, and proximity to Passeig de Gràcia. It is a good fit when the traveler wants architectural sightseeing access with a calmer hotel feel than the Gothic Quarter.",
+        "hours": {
+          "mon": "24 hours",
+          "tue": "24 hours",
+          "wed": "24 hours",
+          "thu": "24 hours",
+          "fri": "24 hours",
+          "sat": "24 hours",
+          "sun": "24 hours"
+        },
+        "photo": "https://static.hoteltreats.com/site/styles/hero/s3/2019-12/9-2-17_Terraza-piscina-de-dia_0056.jpg?itok=KLPQ2WKO"
+      },
+      {
+        "id": "eixample-yeah-hostel",
+        "name": "Yeah Barcelona Hostel",
+        "coordinates": [
+          41.3983,
+          2.1654
+        ],
+        "description": "Yeah Barcelona Hostel is included because it gives Eixample a social, budget-conscious option with dorms and private rooms. Its location works especially well for travelers splitting time between Gràcia, Sagrada Família, and Eixample dining, while still wanting hostel programming and shared spaces.",
+        "hours": {
+          "mon": "24 hours",
+          "tue": "24 hours",
+          "wed": "24 hours",
+          "thu": "24 hours",
+          "fri": "24 hours",
+          "sat": "24 hours",
+          "sun": "24 hours"
+        },
+        "photo": "https://yeahostels.com/web/wp-content/uploads/2025/08/Location-Reception02.jpg"
+      }
+    ],
+    "sources": [
+      {
+        "name": "Time Out - Best hotels in Barcelona",
+        "url": "https://www.timeout.com/barcelona/hotels/best-hotels-in-barcelona"
+      },
+      {
+        "name": "The Infatuation - Barcelona hotels/restaurants guide",
+        "url": "https://www.theinfatuation.com/barcelona/guides/best-restaurants-hotels-barcelona"
+      },
+      {
+        "name": "Google Travel",
+        "url": "https://www.google.com/travel/hotels"
+      }
+    ]
+  },
+  {
+    "id": "list-barcelona-gracia-stays",
+    "slug": "barcelona-gracia-stays",
+    "seoSlug": "best-places-to-stay",
+    "seoTitle": "Best Places to Stay in Gràcia, Barcelona",
+    "seoDescription": "Best places to stay in Gràcia, Barcelona, for village-like plazas, Park Guell access, budget hostels, boutique lodging, and a less tourist-saturated base.",
+    "title": "Village-Base Stays",
+    "description": "Gracia works for travelers who want the stay to feel like a neighborhood, not only a launchpad. The tradeoff is being above Diagonal; the payoff is plaza evenings, local dining, and easier Park Guell access.",
+    "url": "https://www.google.com/maps/search/gracia+hotels+hostels+barcelona",
+    "category": "Stay",
+    "location": {
+      "city": "Barcelona",
+      "neighborhood": "Gràcia",
+      "country": "Spain",
+      "continent": "Europe",
+      "scope": "city"
+    },
+    "creator": {
+      "id": "user-rguide-stay",
+      "name": "R Stay",
+      "avatar": "data:image/svg+xml;utf8,%0A%20%20%20%20%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22160%22%20height%3D%22160%22%20viewBox%3D%220%200%20160%20160%22%3E%0A%20%20%20%20%20%20%3Crect%20width%3D%22160%22%20height%3D%22160%22%20rx%3D%2280%22%20fill%3D%22%230f766e%22%20%2F%3E%0A%20%20%20%20%20%20%3Ctext%20x%3D%2250%25%22%20y%3D%2254%25%22%20text-anchor%3D%22middle%22%20dominant-baseline%3D%22middle%22%0A%20%20%20%20%20%20%20%20font-family%3D%22Arial%2C%20sans-serif%22%20font-size%3D%2276%22%20font-weight%3D%22700%22%20fill%3D%22white%22%3ER%3C%2Ftext%3E%0A%20%20%20%20%3C%2Fsvg%3E%0A%20%20"
+    },
+    "upvotes": 0,
+    "createdAt": "2026-04-29T00:00:00.000Z",
+    "stops": [
+      {
+        "id": "gracia-casa-gracia",
+        "name": "Casa Gràcia",
+        "coordinates": [
+          41.3978,
+          2.1578
+        ],
+        "description": "Casa Gràcia is the most flexible Gràcia stay because sources position it between hostel, hotel, and social hub. On the Diagonal edge, it works for private rooms, dorms, communal spaces, and travelers who want immediate access to Gràcia plazas without losing Eixample transit connections.",
+        "hours": {
+          "mon": "24 hours",
+          "tue": "24 hours",
+          "wed": "24 hours",
+          "thu": "24 hours",
+          "fri": "24 hours",
+          "sat": "24 hours",
+          "sun": "24 hours"
+        },
+        "photo": "https://room00hostel.com/assets/images/barcelona/slider-hotel/1.webp"
+      },
+      {
+        "id": "gracia-sonder-la-casa-del-sol",
+        "name": "Sonder La Casa del Sol",
+        "coordinates": [
+          41.4009,
+          2.1576
+        ],
+        "description": "Sonder La Casa del Sol is included for its exact neighborhood fit: compact boutique lodging right by Plaça del Sol. It suits travelers who want to step directly into Gràcia's terrace culture, accept a smaller property format, and use the neighborhood itself as the main amenity.",
+        "hours": {
+          "mon": "24 hours",
+          "tue": "24 hours",
+          "wed": "24 hours",
+          "thu": "24 hours",
+          "fri": "24 hours",
+          "sat": "24 hours",
+          "sun": "24 hours"
+        },
+        "photo": "https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=900&q=80"
+      },
+      {
+        "id": "gracia-hotel-ronda-lesseps",
+        "name": "Hotel Ronda Lesseps",
+        "coordinates": [
+          41.4069,
+          2.1495
+        ],
+        "description": "Hotel Ronda Lesseps is a practical northern Gràcia base, supported by map and hotel-platform signals for value, metro access, and proximity to Park Güell. It is best for travelers who prefer quieter nights and do not need to sleep in the most central plaza zone.",
+        "hours": {
+          "mon": "24 hours",
+          "tue": "24 hours",
+          "wed": "24 hours",
+          "thu": "24 hours",
+          "fri": "24 hours",
+          "sat": "24 hours",
+          "sun": "24 hours"
+        },
+        "photo": "https://www.hotellesseps.com/wp-content/uploads/sites/436/2024/05/HRL-2024-Terrassa-Gran-01.jpg"
+      },
+      {
+        "id": "gracia-rocket-hostels",
+        "name": "Rocket Hostels Gràcia",
+        "coordinates": [
+          41.4108,
+          2.1514
+        ],
+        "description": "Rocket Hostels Gràcia earns a place as the low-cost hillside option near Park Güell. The fit is specific: backpackers or budget travelers who want a smaller hostel, less old-town noise, and easier access to the upper Gràcia/Collserola side of the city.",
+        "hours": {
+          "mon": "24 hours",
+          "tue": "24 hours",
+          "wed": "24 hours",
+          "thu": "24 hours",
+          "fri": "24 hours",
+          "sat": "24 hours",
+          "sun": "24 hours"
+        },
+        "photo": "https://images.unsplash.com/photo-1555854877-bab0e564b8d5?auto=format&fit=crop&w=900&q=80"
+      },
+      {
+        "id": "gracia-catalonia-park-guell",
+        "name": "Catalonia Park Güell",
+        "coordinates": [
+          41.4115,
+          2.1459
+        ],
+        "description": "Catalonia Park Güell is a value hotel for travelers using Gràcia as a quieter northern base. Source signals point to practical rooms, pool/value appeal, and metro reach, so it belongs for guests prioritizing price and Park Güell access over boutique-neighborhood charm.",
+        "hours": {
+          "mon": "24 hours",
+          "tue": "24 hours",
+          "wed": "24 hours",
+          "thu": "24 hours",
+          "fri": "24 hours",
+          "sat": "24 hours",
+          "sun": "24 hours"
+        },
+        "photo": "https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=900&q=80"
+      }
+    ],
+    "sources": [
+      {
+        "name": "Time Out - Barcelona hotels",
+        "url": "https://www.timeout.com/barcelona/hotels"
+      },
+      {
+        "name": "Google Travel",
+        "url": "https://www.google.com/travel/hotels"
+      },
+      {
+        "name": "Barcelona Turisme accommodation directory",
+        "url": "https://www.barcelonaturisme.com"
+      }
+    ]
+  },
+  {
+    "id": "list-barcelona-poble-sec-stays",
+    "slug": "barcelona-poble-sec-stays",
+    "seoSlug": "best-places-to-stay",
+    "seoTitle": "Best Places to Stay in Poble-sec, Barcelona",
+    "seoDescription": "Best places to stay in Poble-sec, Barcelona, for Montjuic access, theater nights, Sala Apolo proximity, budget rooms, and a base between old town and the hill.",
+    "title": "Sleep Near Montjuïc",
+    "description": "Poble-sec is a strategic base when the trip leans toward Montjuic, theaters, Apolo, or Blai nights. It keeps old-town access close while giving the stay a hill-and-neighborhood rhythm.",
+    "url": "https://www.google.com/maps/search/poble+sec+hotels+hostels+barcelona",
+    "category": "Stay",
+    "location": {
+      "city": "Barcelona",
+      "neighborhood": "Poble-sec",
+      "country": "Spain",
+      "continent": "Europe",
+      "scope": "city"
+    },
+    "creator": {
+      "id": "user-rguide-stay",
+      "name": "R Stay",
+      "avatar": "data:image/svg+xml;utf8,%0A%20%20%20%20%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22160%22%20height%3D%22160%22%20viewBox%3D%220%200%20160%20160%22%3E%0A%20%20%20%20%20%20%3Crect%20width%3D%22160%22%20height%3D%22160%22%20rx%3D%2280%22%20fill%3D%22%230f766e%22%20%2F%3E%0A%20%20%20%20%20%20%3Ctext%20x%3D%2250%25%22%20y%3D%2254%25%22%20text-anchor%3D%22middle%22%20dominant-baseline%3D%22middle%22%0A%20%20%20%20%20%20%20%20font-family%3D%22Arial%2C%20sans-serif%22%20font-size%3D%2276%22%20font-weight%3D%22700%22%20fill%3D%22white%22%3ER%3C%2Ftext%3E%0A%20%20%20%20%3C%2Fsvg%3E%0A%20%20"
+    },
+    "upvotes": 0,
+    "createdAt": "2026-04-29T00:00:00.000Z",
+    "stops": [
+      {
+        "id": "poblesec-hotel-brummell",
+        "name": "Hotel Brummell",
+        "coordinates": [
+          41.3713,
+          2.166
+        ],
+        "description": "Hotel Brummell is Poble-sec's design-led stay, supported by hotel-guide attention for its calm local setting near Montjuïc, small scale, and stylish common spaces. It is the best fit when travelers want the neighborhood's food and theater access without staying in a large Paral·lel hotel.",
+        "hours": {
+          "mon": "24 hours",
+          "tue": "24 hours",
+          "wed": "24 hours",
+          "thu": "24 hours",
+          "fri": "24 hours",
+          "sat": "24 hours",
+          "sun": "24 hours"
+        },
+        "photo": "https://hotelbrummell.brummellprojects.com/wp-content/uploads/sites/2/2023/03/1440x1480px_0001_2880x1600px_0019_BRUMMELL_EXT_H-12.jpg"
+      },
+      {
+        "id": "poblesec-innside-apolo",
+        "name": "INNSiDE by Meliá Barcelona Apolo",
+        "coordinates": [
+          41.3749,
+          2.1701
+        ],
+        "description": "INNSiDE by Meliá Barcelona Apolo is the practical large-hotel choice by Paral·lel and Sala Apolo. Source and map signals support it for nightlife access, metro convenience, conference-scale reliability, and easy walks toward the old town, port, and Poble-sec tapas streets.",
+        "hours": {
+          "mon": "24 hours",
+          "tue": "24 hours",
+          "wed": "24 hours",
+          "thu": "24 hours",
+          "fri": "24 hours",
+          "sat": "24 hours",
+          "sun": "24 hours"
+        },
+        "photo": "https://innsidebymeliaapolo.barcelonahotel.org/data/Photos/OriginalPhoto/17655/1765572/1765572628/photo-innside-by-melia-barcelona-apolo-barcelona-1.JPEG"
+      },
+      {
+        "id": "poblesec-hostal-apolo",
+        "name": "Hostal Apolo",
+        "coordinates": [
+          41.3747,
+          2.169
+        ],
+        "description": "Hostal Apolo is included as a simple budget base in the theater-and-club corridor. The value is location rather than amenities: quick access to Paral·lel, Sala Apolo, Carrer de Blai, and Montjuïc for travelers who need an affordable room more than a design stay.",
+        "hours": {
+          "mon": "24 hours",
+          "tue": "24 hours",
+          "wed": "24 hours",
+          "thu": "24 hours",
+          "fri": "24 hours",
+          "sat": "24 hours",
+          "sun": "24 hours"
+        },
+        "photo": "https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=900&q=80"
+      },
+      {
+        "id": "poblesec-coronado",
+        "name": "Hotel Coronado",
+        "coordinates": [
+          41.3744,
+          2.1669
+        ],
+        "description": "Hotel Coronado is another no-frills Poble-sec option supported by map visibility and location utility. It works for short stays focused on tapas, shows, and transit, especially when the traveler wants to spend less on the room and stay close to Carrer de Blai.",
+        "hours": {
+          "mon": "24 hours",
+          "tue": "24 hours",
+          "wed": "24 hours",
+          "thu": "24 hours",
+          "fri": "24 hours",
+          "sat": "24 hours",
+          "sun": "24 hours"
+        },
+        "photo": "https://coronado-barcelona.hotelbcn-barcelona.com/data/Imgs/700x500w/17149/1714994/1714994675/hotel-coronado-barcelona-img-2.JPEG"
+      },
+      {
+        "id": "poblesec-hostal-bcn-port",
+        "name": "Hostal Bcn Port",
+        "coordinates": [
+          41.3753,
+          2.1758
+        ],
+        "description": "Hostal Bcn Port is included for travelers whose Barcelona logistics involve the port side of Poble-sec. It is budget-friendly, simple, and useful for cruise-adjacent stays or Rambla-to-Montjuïc walking routes, with less neighborhood charm than Brummell but stronger practical positioning.",
+        "hours": {
+          "mon": "24 hours",
+          "tue": "24 hours",
+          "wed": "24 hours",
+          "thu": "24 hours",
+          "fri": "24 hours",
+          "sat": "24 hours",
+          "sun": "24 hours"
+        },
+        "photo": "https://www.yomobcnport.com/idb/84500/YOMO-BCN-PORT-14-1440x800.jpg"
+      }
+    ],
+    "sources": [
+      {
+        "name": "Time Out - Barcelona hotels",
+        "url": "https://www.timeout.com/barcelona/hotels"
+      },
+      {
+        "name": "Google Travel",
+        "url": "https://www.google.com/travel/hotels"
+      },
+      {
+        "name": "Barcelona Turisme accommodation directory",
+        "url": "https://www.barcelonaturisme.com"
+      }
+    ]
+  },
+  {
+    "id": "list-barcelona-citywide-hostels",
+    "slug": "barcelona-best-hostels-citywide",
+    "seoSlug": "best-hostels",
+    "seoTitle": "Best Hostels in Barcelona",
+    "seoDescription": "Best hostels in Barcelona, pulling the strongest hostel pick from each neighborhood guide for social dorms, private rooms, location, and traveler fit.",
+    "title": "Social Bases Across the Map",
+    "description": "A hostel shortlist built around traveler fit, not just bed price: party energy, cleaner dorm infrastructure, private-room flexibility, transit, and neighborhood tradeoffs from the old city to Gracia and Poble-sec.",
+    "url": "https://www.google.com/maps/search/best+hostels+barcelona",
+    "category": "Stay",
+    "location": {
+      "city": "Barcelona",
+      "country": "Spain",
+      "continent": "Europe",
+      "scope": "city"
+    },
+    "creator": {
+      "id": "user-rguide-stay",
+      "name": "R Stay",
+      "avatar": "data:image/svg+xml;utf8,%0A%20%20%20%20%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22160%22%20height%3D%22160%22%20viewBox%3D%220%200%20160%20160%22%3E%0A%20%20%20%20%20%20%3Crect%20width%3D%22160%22%20height%3D%22160%22%20rx%3D%2280%22%20fill%3D%22%230f766e%22%20%2F%3E%0A%20%20%20%20%20%20%3Ctext%20x%3D%2250%25%22%20y%3D%2254%25%22%20text-anchor%3D%22middle%22%20dominant-baseline%3D%22middle%22%0A%20%20%20%20%20%20%20%20font-family%3D%22Arial%2C%20sans-serif%22%20font-size%3D%2276%22%20font-weight%3D%22700%22%20fill%3D%22white%22%3ER%3C%2Ftext%3E%0A%20%20%20%20%3C%2Fsvg%3E%0A%20%20"
+    },
+    "upvotes": 0,
+    "createdAt": "2026-04-29T00:00:00.000Z",
+    "stops": [
+      {
+        "id": "barcelona-hostel-shortlist-kabul",
+        "name": "Kabul Party Hostel Barcelona",
+        "coordinates": [
+          41.3802,
+          2.1758
+        ],
+        "description": "Kabul is the citywide pick for travelers who want Barcelona's hostel scene to double as the nightlife plan. Hostelworld, Google Maps, and long-running backpacker coverage consistently support it for Plaça Reial location, organized social programming, rooftop/common-space energy, and fast access to the Gothic Quarter bar circuit; it is a strong fit for outgoing solo travelers, not for light sleepers.",
+        "hours": {
+          "mon": "24 hours",
+          "tue": "24 hours",
+          "wed": "24 hours",
+          "thu": "24 hours",
+          "fri": "24 hours",
+          "sat": "24 hours",
+          "sun": "24 hours"
+        },
+        "photo": "https://www.kabul.es/wp-content/uploads/2019/12/Barcelona-13.jpg"
+      },
+      {
+        "id": "barcelona-hostel-shortlist-360-borne",
+        "name": "360 Hostel Borne",
+        "coordinates": [
+          41.3898,
+          2.1805
+        ],
+        "description": "360 Hostel Borne is the El Born/Arc de Triomf representative because it gives travelers a social base without placing the dorms directly on the loudest old-town streets. Hostel-platform and map signals point to shared meals, activities, kitchen/common-space usefulness, and easy walks to Ciutadella, El Born, and central transit.",
+        "hours": {
+          "mon": "24 hours",
+          "tue": "24 hours",
+          "wed": "24 hours",
+          "thu": "24 hours",
+          "fri": "24 hours",
+          "sat": "24 hours",
+          "sun": "24 hours"
+        },
+        "photo": "https://360hostel.com/wp-content/uploads/2023/05/image00012.jpg"
+      },
+      {
+        "id": "barcelona-hostel-shortlist-yeah",
+        "name": "Yeah Barcelona Hostel",
+        "coordinates": [
+          41.3983,
+          2.1654
+        ],
+        "description": "Yeah Barcelona is the Eixample pick because it combines polished dorms, private rooms, and structured social programming in a location that works for Sagrada Familia, lower Gracia, and Eixample dining. Multiple hostel and map sources make it one of the safest all-around recommendations when travelers want social energy without sleeping in the Gothic core.",
+        "hours": {
+          "mon": "24 hours",
+          "tue": "24 hours",
+          "wed": "24 hours",
+          "thu": "24 hours",
+          "fri": "24 hours",
+          "sat": "24 hours",
+          "sun": "24 hours"
+        },
+        "photo": "https://yeahostels.com/web/wp-content/uploads/2025/08/Location-Reception02.jpg"
+      },
+      {
+        "id": "barcelona-hostel-shortlist-casa-gracia",
+        "name": "Casa Gracia",
+        "coordinates": [
+          41.3978,
+          2.1578
+        ],
+        "description": "Casa Gracia is the Gracia pick because it bridges hostel, hotel, and neighborhood social hub better than a pure dorm property. Source signals support it for dorm/private flexibility, Diagonal transit, communal programming, and immediate access to Gracia's plaza-and-restaurant life, making it especially useful for travelers who want style and a less old-town-heavy base.",
+        "hours": {
+          "mon": "24 hours",
+          "tue": "24 hours",
+          "wed": "24 hours",
+          "thu": "24 hours",
+          "fri": "24 hours",
+          "sat": "24 hours",
+          "sun": "24 hours"
+        },
+        "photo": "https://room00hostel.com/assets/images/barcelona/slider-hotel/1.webp"
+      },
+      {
+        "id": "barcelona-hostel-shortlist-onefam-paralelo",
+        "name": "Onefam Paralelo",
+        "coordinates": [
+          41.374,
+          2.1658
+        ],
+        "description": "Onefam Paralelo is the Poble-sec pick for solo travelers who want staff-led activities and a built-in group dynamic near Carrer de Blai, Montjuic, and Sala Apolo. Hostelworld and map signals support it as a community-first stay rather than just a cheap bed, which makes it the strongest representative for the neighborhood.",
+        "hours": {
+          "mon": "24 hours",
+          "tue": "24 hours",
+          "wed": "24 hours",
+          "thu": "24 hours",
+          "fri": "24 hours",
+          "sat": "24 hours",
+          "sun": "24 hours"
+        },
+        "photo": "https://onefamhostels.com/wp-content/uploads/2025/09/01entrance-onefam-paralelo-barcelona.jpg"
+      }
+    ],
+    "sources": [
+      {
+        "name": "Hostelworld - Barcelona hostels",
+        "url": "https://www.hostelworld.com/st/hostels/europe/spain/barcelona/"
+      },
+      {
+        "name": "Google Maps - Barcelona hostels",
+        "url": "https://www.google.com/maps/search/best+hostels+barcelona"
+      },
+      {
+        "name": "Casa Gracia official",
+        "url": "https://www.casagraciabcn.com/"
+      },
+      {
+        "name": "Onefam Hostels - Barcelona",
+        "url": "https://onefamhostels.com/"
+      }
+    ]
+  },
+  {
+    "id": "list-barcelona-gothic-quarter-hostels",
+    "slug": "barcelona-gothic-quarter-hostels",
+    "seoSlug": "best-hostels",
+    "seoTitle": "Best Hostels in the Gothic Quarter, Barcelona",
+    "seoDescription": "Best hostels in the Gothic Quarter, Barcelona, including old-city party hostels, cathedral-area dorms, budget private rooms, and walkable bases near Placa Reial and El Born.",
+    "title": "Old-City Dorms and Party Bases",
+    "description": "Gothic Quarter hostels are about choosing your old-city intensity. This guide separates Placa Reial party energy, cathedral-side calm, and simple budget beds close to the oldest lanes.",
+    "url": "https://www.google.com/maps/search/gothic+quarter+hostels+barcelona",
+    "category": "Stay",
+    "location": {
+      "city": "Barcelona",
+      "neighborhood": "Gothic Quarter",
+      "country": "Spain",
+      "continent": "Europe",
+      "scope": "city"
+    },
+    "creator": {
+      "id": "user-rguide-stay",
+      "name": "R Stay",
+      "avatar": "data:image/svg+xml;utf8,%0A%20%20%20%20%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22160%22%20height%3D%22160%22%20viewBox%3D%220%200%20160%20160%22%3E%0A%20%20%20%20%20%20%3Crect%20width%3D%22160%22%20height%3D%22160%22%20rx%3D%2280%22%20fill%3D%22%230f766e%22%20%2F%3E%0A%20%20%20%20%20%20%3Ctext%20x%3D%2250%25%22%20y%3D%2254%25%22%20text-anchor%3D%22middle%22%20dominant-baseline%3D%22middle%22%0A%20%20%20%20%20%20%20%20font-family%3D%22Arial%2C%20sans-serif%22%20font-size%3D%2276%22%20font-weight%3D%22700%22%20fill%3D%22white%22%3ER%3C%2Ftext%3E%0A%20%20%20%20%3C%2Fsvg%3E%0A%20%20"
+    },
+    "upvotes": 0,
+    "createdAt": "2026-04-29T00:00:00.000Z",
+    "stops": [
+      {
+        "id": "gothic-hostel-kabul",
+        "name": "Kabul Party Hostel Barcelona",
+        "coordinates": [
+          41.3802,
+          2.1758
+        ],
+        "description": "Kabul is the Gothic Quarter pick when the hostel itself is part of the nightlife plan. Hostelworld and long-running traveler coverage consistently frame it around Plaça Reial location, organized social programming, rooftop/common-space energy, and fast access to late bars; it is better for outgoing backpackers than for quiet sleepers.",
+        "hours": {
+          "mon": "24 hours",
+          "tue": "24 hours",
+          "wed": "24 hours",
+          "thu": "24 hours",
+          "fri": "24 hours",
+          "sat": "24 hours",
+          "sun": "24 hours"
+        },
+        "photo": "https://www.kabul.es/wp-content/uploads/2019/12/Barcelona-13.jpg"
+      },
+      {
+        "id": "gothic-hostel-itaca",
+        "name": "Itaca Hostel",
+        "coordinates": [
+          41.385,
+          2.1749
+        ],
+        "description": "Itaca is the calmer cathedral-area counterweight to Kabul: small-scale, central, and practical for travelers who want Gothic lanes, Plaça Catalunya, and old-city walking routes without committing to a party-hostel atmosphere. Hostelworld and review signals support it for location and simple dorm/private value.",
+        "hours": {
+          "mon": "24 hours",
+          "tue": "24 hours",
+          "wed": "24 hours",
+          "thu": "24 hours",
+          "fri": "24 hours",
+          "sat": "24 hours",
+          "sun": "24 hours"
+        },
+        "photo": "https://itacahostel.com/wp-content/uploads/2024/11/iteca-hostel-actividades.jpg"
+      },
+      {
+        "id": "gothic-hostel-safestay-gothic",
+        "name": "Safestay Barcelona Gothic",
+        "coordinates": [
+          41.3838,
+          2.1786
+        ],
+        "description": "Safestay Barcelona Gothic sits between the Gothic Quarter and El Born, making it useful for travelers who want budget beds close to Jaume I, the Picasso Museum, and cathedral lanes. It is a chain hostel rather than a boutique stay, but the value is location, scale, and predictable dorm infrastructure.",
+        "hours": {
+          "mon": "24 hours",
+          "tue": "24 hours",
+          "wed": "24 hours",
+          "thu": "24 hours",
+          "fri": "24 hours",
+          "sat": "24 hours",
+          "sun": "24 hours"
+        },
+        "photo": "https://www.safestay.com/wp-content/uploads/2023/06/BCNPG-2023-Low-Res-58.jpg"
+      },
+      {
+        "id": "gothic-hostel-new-york",
+        "name": "Hostel New York",
+        "coordinates": [
+          41.381,
+          2.1807
+        ],
+        "description": "Hostel New York is the no-frills old-city option: basic, cheap, and positioned for travelers who care more about being near the port, Barceloneta, and Gothic nightlife than about design or a heavy social program. Use it as the budget fallback in this neighborhood set.",
+        "hours": {
+          "mon": "24 hours",
+          "tue": "24 hours",
+          "wed": "24 hours",
+          "thu": "24 hours",
+          "fri": "24 hours",
+          "sat": "24 hours",
+          "sun": "24 hours"
+        },
+        "photo": "https://images.unsplash.com/photo-1555854877-bab0e564b8d5?auto=format&fit=crop&w=900&q=80"
+      }
+    ],
+    "sources": [
+      {
+        "name": "Hostelworld - Barcelona hostels",
+        "url": "https://www.hostelworld.com/st/hostels/europe/spain/barcelona/"
+      },
+      {
+        "name": "Hostelworld - Kabul Party Hostel Barcelona",
+        "url": "https://www.hostelworld.com/pwa/hosteldetails.php/Kabul-Party-Hostel-Barcelona/Barcelona/722"
+      },
+      {
+        "name": "Google Maps - Gothic Quarter hostels",
+        "url": "https://www.google.com/maps/search/gothic+quarter+hostels+barcelona"
+      }
+    ]
+  },
+  {
+    "id": "list-barcelona-el-born-hostels",
+    "slug": "barcelona-el-born-hostels",
+    "seoSlug": "best-hostels",
+    "seoTitle": "Best Hostels in El Born, Barcelona",
+    "seoDescription": "Best hostels in El Born, Barcelona, covering Arc de Triomf bases, social dorms, budget private rooms, and hostel stays close to Santa Maria del Mar, Ciutadella, and the Picasso Museum.",
+    "title": "Dorms by Ciutadella and the Born",
+    "description": "El Born hostels suit travelers who want social dorm energy near Ciutadella, Arc de Triomf, and museum streets without sleeping deep in the busiest Gothic lanes. Use this for old-town access with a slightly softer landing.",
+    "url": "https://www.google.com/maps/search/el+born+hostels+barcelona",
+    "category": "Stay",
+    "location": {
+      "city": "Barcelona",
+      "neighborhood": "El Born",
+      "country": "Spain",
+      "continent": "Europe",
+      "scope": "city"
+    },
+    "creator": {
+      "id": "user-rguide-stay",
+      "name": "R Stay",
+      "avatar": "data:image/svg+xml;utf8,%0A%20%20%20%20%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22160%22%20height%3D%22160%22%20viewBox%3D%220%200%20160%20160%22%3E%0A%20%20%20%20%20%20%3Crect%20width%3D%22160%22%20height%3D%22160%22%20rx%3D%2280%22%20fill%3D%22%230f766e%22%20%2F%3E%0A%20%20%20%20%20%20%3Ctext%20x%3D%2250%25%22%20y%3D%2254%25%22%20text-anchor%3D%22middle%22%20dominant-baseline%3D%22middle%22%0A%20%20%20%20%20%20%20%20font-family%3D%22Arial%2C%20sans-serif%22%20font-size%3D%2276%22%20font-weight%3D%22700%22%20fill%3D%22white%22%3ER%3C%2Ftext%3E%0A%20%20%20%20%3C%2Fsvg%3E%0A%20%20"
+    },
+    "upvotes": 0,
+    "createdAt": "2026-04-29T00:00:00.000Z",
+    "stops": [
+      {
+        "id": "born-hostel-360-borne",
+        "name": "360 Hostel Borne",
+        "coordinates": [
+          41.3898,
+          2.1805
+        ],
+        "description": "360 Hostel Borne is the strongest El Born/Arc de Triomf hostel for travelers who want a social base without sleeping directly on the loudest old-town streets. Hostelworld and hostel-listing signals point to organized activities, communal kitchen/common space, and easy walks to Ciutadella, El Born, and central transit.",
+        "hours": {
+          "mon": "24 hours",
+          "tue": "24 hours",
+          "wed": "24 hours",
+          "thu": "24 hours",
+          "fri": "24 hours",
+          "sat": "24 hours",
+          "sun": "24 hours"
+        },
+        "photo": "https://360hostel.com/wp-content/uploads/2023/05/image00012.jpg"
+      },
+      {
+        "id": "born-hostel-born-barcelona",
+        "name": "Born Barcelona Hostel",
+        "coordinates": [
+          41.3903,
+          2.1811
+        ],
+        "description": "Born Barcelona Hostel works as the quieter, smaller-format pick near Arc de Triomf and the upper edge of El Born. It suits travelers who want the neighborhood's museum and park access but prefer a practical bed-and-base setup over a party-hostel identity.",
+        "hours": {
+          "mon": "24 hours",
+          "tue": "24 hours",
+          "wed": "24 hours",
+          "thu": "24 hours",
+          "fri": "24 hours",
+          "sat": "24 hours",
+          "sun": "24 hours"
+        },
+        "photo": "https://www.bornbarcelonahostel.com/wp-content/uploads/2012/12/nuestras-habitaciones.jpg"
+      },
+      {
+        "id": "born-hostel-arc-house",
+        "name": "Arc House Barcelona",
+        "coordinates": [
+          41.3908,
+          2.1867
+        ],
+        "description": "Arc House is included for budget travelers prioritizing Parc de la Ciutadella, Estacio del Nord, and fast walks into El Born. Source signals are more value-and-location driven than experience-led, so it belongs as a practical low-cost option rather than the most characterful stay.",
+        "hours": {
+          "mon": "24 hours",
+          "tue": "24 hours",
+          "wed": "24 hours",
+          "thu": "24 hours",
+          "fri": "24 hours",
+          "sat": "24 hours",
+          "sun": "24 hours"
+        },
+        "photo": "https://images.unsplash.com/photo-1555854877-bab0e564b8d5?auto=format&fit=crop&w=900&q=80"
+      },
+      {
+        "id": "born-hostel-black-swan",
+        "name": "Black Swan Hostel",
+        "coordinates": [
+          41.3907,
+          2.1773
+        ],
+        "description": "Black Swan sits just west of El Born near Arc de Triomf, but it earns a spot because hostel sources consistently highlight the social setup, tours, shared meals, and central transit reach. It is best for solo travelers who want an activity-forward hostel close to the Born without old-town noise at the door.",
+        "hours": {
+          "mon": "24 hours",
+          "tue": "24 hours",
+          "wed": "24 hours",
+          "thu": "24 hours",
+          "fri": "24 hours",
+          "sat": "24 hours",
+          "sun": "24 hours"
+        },
+        "photo": "https://blackswanhostels.com/wp-content/uploads/2024/07/Imagen-de-WhatsApp-2024-06-19-a-las-19.44.31_27805d15-e1724665627758.jpg"
+      }
+    ],
+    "sources": [
+      {
+        "name": "Hostelworld - Barcelona hostels",
+        "url": "https://www.hostelworld.com/st/hostels/europe/spain/barcelona/"
+      },
+      {
+        "name": "Google Maps - El Born hostels",
+        "url": "https://www.google.com/maps/search/el+born+hostels+barcelona"
+      },
+      {
+        "name": "360 Hostel Borne official",
+        "url": "https://360hostelbcn.com/"
+      }
+    ]
+  },
+  {
+    "id": "list-barcelona-eixample-hostels",
+    "slug": "barcelona-eixample-hostels",
+    "seoSlug": "best-hostels",
+    "seoTitle": "Best Hostels in Eixample, Barcelona",
+    "seoDescription": "Best hostels in Eixample, Barcelona, including social hostels near Sagrada Familia, cocktail-friendly bases, central dorms, and calmer garden-style hostels near Passeig de Gracia.",
+    "title": "Grid-Side Social Hostels",
+    "description": "Eixample hostels are the cleaner, transit-friendly option: social programming and dorm infrastructure without the densest old-town streets, useful for longer stays or first-timers.",
+    "url": "https://www.google.com/maps/search/eixample+hostels+barcelona",
+    "category": "Stay",
+    "location": {
+      "city": "Barcelona",
+      "neighborhood": "Eixample",
+      "country": "Spain",
+      "continent": "Europe",
+      "scope": "city"
+    },
+    "creator": {
+      "id": "user-rguide-stay",
+      "name": "R Stay",
+      "avatar": "data:image/svg+xml;utf8,%0A%20%20%20%20%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22160%22%20height%3D%22160%22%20viewBox%3D%220%200%20160%20160%22%3E%0A%20%20%20%20%20%20%3Crect%20width%3D%22160%22%20height%3D%22160%22%20rx%3D%2280%22%20fill%3D%22%230f766e%22%20%2F%3E%0A%20%20%20%20%20%20%3Ctext%20x%3D%2250%25%22%20y%3D%2254%25%22%20text-anchor%3D%22middle%22%20dominant-baseline%3D%22middle%22%0A%20%20%20%20%20%20%20%20font-family%3D%22Arial%2C%20sans-serif%22%20font-size%3D%2276%22%20font-weight%3D%22700%22%20fill%3D%22white%22%3ER%3C%2Ftext%3E%0A%20%20%20%20%3C%2Fsvg%3E%0A%20%20"
+    },
+    "upvotes": 0,
+    "createdAt": "2026-04-29T00:00:00.000Z",
+    "stops": [
+      {
+        "id": "eixample-hostel-yeah",
+        "name": "Yeah Barcelona Hostel",
+        "coordinates": [
+          41.3983,
+          2.1654
+        ],
+        "description": "Yeah Barcelona is the Eixample hostel to beat for social energy without the old-city chaos. Hostelworld and traveler sources repeatedly support it for organized dinners and tours, modern dorms, private rooms, and a location that splits the difference between Sagrada Familia, Gracia, and Eixample restaurants.",
+        "hours": {
+          "mon": "24 hours",
+          "tue": "24 hours",
+          "wed": "24 hours",
+          "thu": "24 hours",
+          "fri": "24 hours",
+          "sat": "24 hours",
+          "sun": "24 hours"
+        },
+        "photo": "https://yeahostels.com/web/wp-content/uploads/2025/08/Location-Reception02.jpg"
+      },
+      {
+        "id": "eixample-hostel-rock-palace",
+        "name": "Sant Jordi Hostels Rock Palace",
+        "coordinates": [
+          41.3897,
+          2.1608
+        ],
+        "description": "Sant Jordi Rock Palace is the music-themed Eixample option with stronger group energy: rooftop pool, themed interiors, and easy reach to Passeig de Gracia and late-night central bars. It is better for travelers who want a polished social hostel than for anyone seeking quiet minimalism.",
+        "hours": {
+          "mon": "24 hours",
+          "tue": "24 hours",
+          "wed": "24 hours",
+          "thu": "24 hours",
+          "fri": "24 hours",
+          "sat": "24 hours",
+          "sun": "24 hours"
+        },
+        "photo": "https://www.santjordihostels.com/wp-content/uploads/Mobile_fixed_banner_rock_palace_001-2018_v4.jpg"
+      },
+      {
+        "id": "eixample-hostel-onefam-batllo",
+        "name": "Onefam Batllo",
+        "coordinates": [
+          41.386,
+          2.1604
+        ],
+        "description": "Onefam Batllo is included for solo travelers who want structured social programming and a central Eixample base. Hostelworld signals tend to emphasize community, staff-led activities, and an easy walk to Casa Batllo and Passeig de Gracia, so it works as the social alternative to larger hostels.",
+        "hours": {
+          "mon": "24 hours",
+          "tue": "24 hours",
+          "wed": "24 hours",
+          "thu": "24 hours",
+          "fri": "24 hours",
+          "sat": "24 hours",
+          "sun": "24 hours"
+        },
+        "photo": "https://onefamhostels.com/wp-content/uploads/2025/09/01entrance-onefam-batllo-hostel-barcelona-scaled.jpg"
+      },
+      {
+        "id": "eixample-hostel-central-garden",
+        "name": "Barcelona Central Garden",
+        "coordinates": [
+          41.3905,
+          2.171
+        ],
+        "description": "Barcelona Central Garden is the calmer Eixample pick, useful for travelers who want a smaller hostel, terrace/garden feel, and central access without a party-hostel rhythm. It is a strong fit for couples, older backpackers, or first-time visitors who value sleep and walkability.",
+        "hours": {
+          "mon": "24 hours",
+          "tue": "24 hours",
+          "wed": "24 hours",
+          "thu": "24 hours",
+          "fri": "24 hours",
+          "sat": "24 hours",
+          "sun": "24 hours"
+        },
+        "photo": "https://images.unsplash.com/photo-1555854877-bab0e564b8d5?auto=format&fit=crop&w=900&q=80"
+      },
+      {
+        "id": "eixample-hostel-primavera",
+        "name": "Primavera Hostel",
+        "coordinates": [
+          41.3976,
+          2.164
+        ],
+        "description": "Primavera Hostel rounds out the Eixample list as a budget-friendly, design-light option near Verdaguer and Sagrada Familia routes. The draw is practical location, private-room/dorm flexibility, and easier access to Eixample and Gracia than hostels deep in the Gothic core.",
+        "hours": {
+          "mon": "24 hours",
+          "tue": "24 hours",
+          "wed": "24 hours",
+          "thu": "24 hours",
+          "fri": "24 hours",
+          "sat": "24 hours",
+          "sun": "24 hours"
+        },
+        "photo": "https://www.primavera-hostel.com/wp-content/uploads/2026/03/mg_4888_1.webp"
+      }
+    ],
+    "sources": [
+      {
+        "name": "Hostelworld - Barcelona hostels",
+        "url": "https://www.hostelworld.com/st/hostels/europe/spain/barcelona/"
+      },
+      {
+        "name": "Hostelworld - Yeah Barcelona Hostel",
+        "url": "https://www.hostelworld.com/pwa/hosteldetails.php/Yeah-Barcelona-Hostel/Barcelona/81652"
+      },
+      {
+        "name": "Google Maps - Eixample hostels",
+        "url": "https://www.google.com/maps/search/eixample+hostels+barcelona"
+      },
+      {
+        "name": "Sant Jordi Hostels official",
+        "url": "https://www.santjordihostels.com/"
+      }
+    ]
+  },
+  {
+    "id": "list-barcelona-gracia-hostels",
+    "slug": "barcelona-gracia-hostels",
+    "seoSlug": "best-hostels",
+    "seoTitle": "Best Hostels in Gracia, Barcelona",
+    "seoDescription": "Best hostels in Gracia, Barcelona, for village-like plazas, Park Guell access, social dorms, quieter hillside bases, and budget stays above Diagonal.",
+    "title": "Village Hostel Bases",
+    "description": "Gracia hostels trade central chaos for plaza life, Park Guell access, and a more local sleep base above Diagonal. Use this when the hostel should support slower neighborhood days and less old-town churn.",
+    "url": "https://www.google.com/maps/search/gracia+hostels+barcelona",
+    "category": "Stay",
+    "location": {
+      "city": "Barcelona",
+      "neighborhood": "Gràcia",
+      "country": "Spain",
+      "continent": "Europe",
+      "scope": "city"
+    },
+    "creator": {
+      "id": "user-rguide-stay",
+      "name": "R Stay",
+      "avatar": "data:image/svg+xml;utf8,%0A%20%20%20%20%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22160%22%20height%3D%22160%22%20viewBox%3D%220%200%20160%20160%22%3E%0A%20%20%20%20%20%20%3Crect%20width%3D%22160%22%20height%3D%22160%22%20rx%3D%2280%22%20fill%3D%22%230f766e%22%20%2F%3E%0A%20%20%20%20%20%20%3Ctext%20x%3D%2250%25%22%20y%3D%2254%25%22%20text-anchor%3D%22middle%22%20dominant-baseline%3D%22middle%22%0A%20%20%20%20%20%20%20%20font-family%3D%22Arial%2C%20sans-serif%22%20font-size%3D%2276%22%20font-weight%3D%22700%22%20fill%3D%22white%22%3ER%3C%2Ftext%3E%0A%20%20%20%20%3C%2Fsvg%3E%0A%20%20"
+    },
+    "upvotes": 0,
+    "createdAt": "2026-04-29T00:00:00.000Z",
+    "stops": [
+      {
+        "id": "gracia-hostel-casa-gracia",
+        "name": "Casa Gracia",
+        "coordinates": [
+          41.3978,
+          2.1578
+        ],
+        "description": "Casa Gracia is the best all-purpose Gracia hostel because it bridges hostel, hotel, and social hub. Hostelworld and hotel-platform signals support it for dorm/private flexibility, strong Diagonal transit, communal programming, and immediate access to Gracia's plaza-and-restaurant life.",
+        "hours": {
+          "mon": "24 hours",
+          "tue": "24 hours",
+          "wed": "24 hours",
+          "thu": "24 hours",
+          "fri": "24 hours",
+          "sat": "24 hours",
+          "sun": "24 hours"
+        },
+        "photo": "https://room00hostel.com/assets/images/barcelona/slider-hotel/1.webp"
+      },
+      {
+        "id": "gracia-hostel-rocket",
+        "name": "Rocket Hostels Gracia",
+        "coordinates": [
+          41.4108,
+          2.1514
+        ],
+        "description": "Rocket Hostels Gracia is the pure backpacker pick for travelers who want Park Guell access and a smaller, less central sleep base. It makes most sense for budget travelers who prefer quiet hillside nights over old-town nightlife at the door.",
+        "hours": {
+          "mon": "24 hours",
+          "tue": "24 hours",
+          "wed": "24 hours",
+          "thu": "24 hours",
+          "fri": "24 hours",
+          "sat": "24 hours",
+          "sun": "24 hours"
+        },
+        "photo": "https://images.unsplash.com/photo-1555854877-bab0e564b8d5?auto=format&fit=crop&w=900&q=80"
+      },
+      {
+        "id": "gracia-hostel-factory",
+        "name": "Factory Hostels Barcelona",
+        "coordinates": [
+          41.4124,
+          2.1555
+        ],
+        "description": "Factory Hostels is included for Park Guell and upper-Gracia positioning plus a quieter hostel rhythm. It is less useful for late-night city-center bar hopping, but strong for travelers prioritizing price, views, and morning access to Gaudi routes.",
+        "hours": {
+          "mon": "24 hours",
+          "tue": "24 hours",
+          "wed": "24 hours",
+          "thu": "24 hours",
+          "fri": "24 hours",
+          "sat": "24 hours",
+          "sun": "24 hours"
+        },
+        "photo": "https://factorybcn.com/wp-content/uploads/2022/01/factory-hostels-great-space.jpg"
+      },
+      {
+        "id": "gracia-hostel-yeah-edge",
+        "name": "Yeah Barcelona Hostel",
+        "coordinates": [
+          41.3983,
+          2.1654
+        ],
+        "description": "Yeah Barcelona technically sits on the Eixample/Gracia edge, but it belongs in the Gracia hostel comparison because it is one of the strongest social hostels within easy walking distance of the neighborhood's lower plazas. Use it when social programming matters more than being deep inside Gracia.",
+        "hours": {
+          "mon": "24 hours",
+          "tue": "24 hours",
+          "wed": "24 hours",
+          "thu": "24 hours",
+          "fri": "24 hours",
+          "sat": "24 hours",
+          "sun": "24 hours"
+        },
+        "photo": "https://yeahostels.com/web/wp-content/uploads/2025/08/Location-Reception02.jpg"
+      }
+    ],
+    "sources": [
+      {
+        "name": "Hostelworld - Barcelona hostels",
+        "url": "https://www.hostelworld.com/st/hostels/europe/spain/barcelona/"
+      },
+      {
+        "name": "Casa Gracia official",
+        "url": "https://www.casagraciabcn.com/"
+      },
+      {
+        "name": "Rocket Hostels Gracia official",
+        "url": "https://www.rockethostels.com/"
+      },
+      {
+        "name": "Google Maps - Gracia hostels",
+        "url": "https://www.google.com/maps/search/gracia+hostels+barcelona"
+      }
+    ]
+  },
+  {
+    "id": "list-barcelona-poble-sec-hostels",
+    "slug": "barcelona-poble-sec-hostels",
+    "seoSlug": "best-hostels",
+    "seoTitle": "Best Hostels in Poble-sec, Barcelona",
+    "seoDescription": "Best hostels in Poble-sec, Barcelona, for Parallel nightlife, Carrer de Blai tapas, Montjuic access, budget dorms, and social stays near Sala Apolo.",
+    "title": "Parallel Backpacker Bases",
+    "description": "Poble-sec hostels work for travelers who want a cheaper, social base near Carrer de Blai tapas, Montjuic days, Apolo nights, and quick metro access from Parallel. It is the practical pick for hill days and late nights.",
+    "url": "https://www.google.com/maps/search/poble+sec+hostels+barcelona",
+    "category": "Stay",
+    "location": {
+      "city": "Barcelona",
+      "neighborhood": "Poble-sec",
+      "country": "Spain",
+      "continent": "Europe",
+      "scope": "city"
+    },
+    "creator": {
+      "id": "user-rguide-stay",
+      "name": "R Stay",
+      "avatar": "data:image/svg+xml;utf8,%0A%20%20%20%20%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22160%22%20height%3D%22160%22%20viewBox%3D%220%200%20160%20160%22%3E%0A%20%20%20%20%20%20%3Crect%20width%3D%22160%22%20height%3D%22160%22%20rx%3D%2280%22%20fill%3D%22%230f766e%22%20%2F%3E%0A%20%20%20%20%20%20%3Ctext%20x%3D%2250%25%22%20y%3D%2254%25%22%20text-anchor%3D%22middle%22%20dominant-baseline%3D%22middle%22%0A%20%20%20%20%20%20%20%20font-family%3D%22Arial%2C%20sans-serif%22%20font-size%3D%2276%22%20font-weight%3D%22700%22%20fill%3D%22white%22%3ER%3C%2Ftext%3E%0A%20%20%20%20%3C%2Fsvg%3E%0A%20%20"
+    },
+    "upvotes": 0,
+    "createdAt": "2026-04-29T00:00:00.000Z",
+    "stops": [
+      {
+        "id": "poblesec-hostel-onefam-paralelo",
+        "name": "Onefam Paralelo",
+        "coordinates": [
+          41.374,
+          2.1658
+        ],
+        "description": "Onefam Paralelo is the top Poble-sec hostel for solo travelers and people who want the hostel to organize the social side of the trip. Hostelworld signals consistently emphasize staff-led activities, community dinners, and the location near Carrer de Blai, Montjuic, and Sala Apolo.",
+        "hours": {
+          "mon": "24 hours",
+          "tue": "24 hours",
+          "wed": "24 hours",
+          "thu": "24 hours",
+          "fri": "24 hours",
+          "sat": "24 hours",
+          "sun": "24 hours"
+        },
+        "photo": "https://onefamhostels.com/wp-content/uploads/2025/09/01entrance-onefam-paralelo-barcelona.jpg"
+      },
+      {
+        "id": "poblesec-hostel-hellobcn",
+        "name": "HelloBCN Hostel",
+        "coordinates": [
+          41.3752,
+          2.1687
+        ],
+        "description": "HelloBCN is the practical Parallel base: bigger, straightforward, and well positioned for metro access, Poble-sec tapas, and Apolo nights. It works when travelers want price, lockers, and simple dorm infrastructure over boutique character.",
+        "hours": {
+          "mon": "24 hours",
+          "tue": "24 hours",
+          "wed": "24 hours",
+          "thu": "24 hours",
+          "fri": "24 hours",
+          "sat": "24 hours",
+          "sun": "24 hours"
+        },
+        "photo": "https://lirp.cdn-website.com/16736e71/dms3rep/multi/opt/P1020869-1920w.JPG"
+      },
+      {
+        "id": "poblesec-hostel-pars-teatro",
+        "name": "Pars Teatro Hostel",
+        "coordinates": [
+          41.3761,
+          2.1747
+        ],
+        "description": "Pars Teatro sits closer to the port and Parallel edge and brings a more character-heavy backpacker feel. Source signals support it for social common spaces and a theatrical interior, making it a good fit for travelers who want personality and old-town reach.",
+        "hours": {
+          "mon": "24 hours",
+          "tue": "24 hours",
+          "wed": "24 hours",
+          "thu": "24 hours",
+          "fri": "24 hours",
+          "sat": "24 hours",
+          "sun": "24 hours"
+        },
+        "photo": "https://parshostels.com/wp-content/uploads/2019/01/teatro-8798.jpg"
+      },
+      {
+        "id": "poblesec-hostel-hostal-apolo",
+        "name": "Hostal Apolo",
+        "coordinates": [
+          41.3747,
+          2.169
+        ],
+        "description": "Hostal Apolo is not a classic party hostel, but it gives the Poble-sec set a low-cost private-room fallback beside Parallel and Sala Apolo. It is useful for travelers who want budget lodging and location but not a dorm-based social scene.",
+        "hours": {
+          "mon": "24 hours",
+          "tue": "24 hours",
+          "wed": "24 hours",
+          "thu": "24 hours",
+          "fri": "24 hours",
+          "sat": "24 hours",
+          "sun": "24 hours"
+        },
+        "photo": "https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=900&q=80"
+      }
+    ],
+    "sources": [
+      {
+        "name": "Hostelworld - Barcelona hostels",
+        "url": "https://www.hostelworld.com/st/hostels/europe/spain/barcelona/"
+      },
+      {
+        "name": "Hostelworld - Onefam Paralelo",
+        "url": "https://www.hostelworld.com/pwa/hosteldetails.php/Onefam-Paralelo/Barcelona/2962"
+      },
+      {
+        "name": "Google Maps - Poble-sec hostels",
+        "url": "https://www.google.com/maps/search/poble+sec+hostels+barcelona"
+      },
+      {
+        "name": "Onefam Hostels official",
+        "url": "https://onefamhostels.com/"
+      }
+    ]
+  },
+  {
+    "id": "list-barcelona-eixample-dive-bars",
+    "slug": "barcelona-eixample-dive-bars",
+    "seoSlug": "best-dive-bars",
+    "seoTitle": "Best Dive Bars in Eixample, Barcelona",
+    "seoDescription": "Best dive bars in Eixample, Barcelona, covering local small bars, classic counters, vermouth spots, and lower-key late-night neighborhood drinking.",
+    "title": "Low-Key Drinks on the Grid",
+    "description": "Eixample does low-key nights through corners of the grid rather than one obvious strip: vermouth counters, craft-beer rooms, bodegas, and local bars tucked between broad avenues. Use it when dinner needs an easy second act without a destination-cocktail commitment.",
+    "url": "https://www.google.com/maps/search/eixample+dive+bars+barcelona",
+    "category": "Nightlife",
+    "location": {
+      "city": "Barcelona",
+      "neighborhood": "Eixample",
+      "country": "Spain",
+      "continent": "Europe",
+      "scope": "city"
+    },
+    "creator": {
+      "id": "user-rguide-nightlife",
+      "name": "R Nightlife",
+      "avatar": "data:image/svg+xml;utf8,%0A%20%20%20%20%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22160%22%20height%3D%22160%22%20viewBox%3D%220%200%20160%20160%22%3E%0A%20%20%20%20%20%20%3Crect%20width%3D%22160%22%20height%3D%22160%22%20rx%3D%2280%22%20fill%3D%22%230f766e%22%20%2F%3E%0A%20%20%20%20%20%20%3Ctext%20x%3D%2250%25%22%20y%3D%2254%25%22%20text-anchor%3D%22middle%22%20dominant-baseline%3D%22middle%22%0A%20%20%20%20%20%20%20%20font-family%3D%22Arial%2C%20sans-serif%22%20font-size%3D%2276%22%20font-weight%3D%22700%22%20fill%3D%22white%22%3ER%3C%2Ftext%3E%0A%20%20%20%20%3C%2Fsvg%3E%0A%20%20"
+    },
+    "upvotes": 0,
+    "createdAt": "2026-04-21T00:00:00.000Z",
+    "stops": [
+      {
+        "id": "eixample-morro-fi",
+        "name": "Morro Fi",
+        "coordinates": [
+          41.3839,
+          2.1576
+        ],
+        "description": "Morro Fi gives the Eixample route a precise vermouth counter: house vermouth, conservas, gildas, and a room that feels local without needing to be hidden. Use it before dinner or as a short aperitif stop when the grid needs something more casual than cocktails.",
+        "hours": {
+          "mon": "12:00 PM-11:00 PM",
+          "tue": "12:00 PM-11:00 PM",
+          "wed": "12:00 PM-11:00 PM",
+          "thu": "12:00 PM-11:30 PM",
+          "fri": "12:00 PM-12:00 AM",
+          "sat": "12:00 PM-12:00 AM",
+          "sun": "12:00 PM-10:30 PM"
+        },
+        "photo": "https://barmagazine.com/og-bars.jpg"
+      },
+      {
+        "id": "eixample-bar-malasang",
+        "name": "Bar Malasang",
+        "coordinates": [
+          41.3891,
+          2.1591
+        ],
+        "description": "Bar Malasang keeps the Eixample list grounded with low lighting, vinyl energy, and a room that behaves more like a neighborhood hangout than a destination bar. It works best after dinner when you want one more drink without stepping into the city's polished cocktail circuit.",
+        "hours": {
+          "mon": "6:00 PM-12:30 AM",
+          "tue": "6:00 PM-12:30 AM",
+          "wed": "6:00 PM-1:00 AM",
+          "thu": "6:00 PM-1:30 AM",
+          "fri": "6:00 PM-2:30 AM",
+          "sat": "6:00 PM-2:30 AM",
+          "sun": "6:00 PM-12:00 AM"
+        },
+        "photo": "https://images.unsplash.com/photo-1514933651103-005eec06c04b?auto=format&fit=crop&w=900&q=80"
+      },
+      {
+        "id": "eixample-garage-beer",
+        "name": "Garage Beer Co. Universitat",
+        "coordinates": [
+          41.3848,
+          2.1585
+        ],
+        "description": "Garage Beer Co. Universitat keeps the craft-beer slot current with house beers, rotating releases, guest taps, and a casual room on Consell de Cent. It is the right replacement-style pick when the guide needs something open, useful, and beer-led rather than another vermouth or cocktail stop.",
+        "hours": {
+          "mon": "5:00 PM-12:00 AM",
+          "tue": "5:00 PM-12:00 AM",
+          "wed": "5:00 PM-12:00 AM",
+          "thu": "5:00 PM-12:00 AM",
+          "fri": "5:00 PM-3:00 AM",
+          "sat": "4:00 PM-3:00 AM",
+          "sun": "4:00 PM-12:00 AM"
+        }
+      },
+      {
+        "id": "eixample-bodega-joan",
+        "name": "Bodega Joan",
+        "coordinates": [
+          41.396,
+          2.1684
+        ],
+        "description": "Bodega Joan gives the Eixample list an old-school bodega pace: vermouth, tapas, and a dining-room feel that can handle a slower evening. Use it when the group wants something more substantial than a drink but less formal than a reservation-led restaurant plan.",
+        "hours": {
+          "mon": "12:00 PM-11:00 PM",
+          "tue": "12:00 PM-11:00 PM",
+          "wed": "12:00 PM-11:00 PM",
+          "thu": "12:00 PM-11:30 PM",
+          "fri": "12:00 PM-12:00 AM",
+          "sat": "12:00 PM-12:00 AM",
+          "sun": "12:00 PM-10:30 PM"
+        },
+        "photo": "https://cdn.prod.website-files.com/649bffef1ea0320a4ff37c9f/649c01ab052368397680fa21_5_b.jpg"
+      },
+      {
+        "id": "eixample-bar-calabria",
+        "name": "Bar Calabria",
+        "coordinates": [
+          41.3789,
+          2.1518
+        ],
+        "description": "Bar Calabria is here for the simple local-bar function: affordable pours, low ceremony, and a steady post-work crowd away from the showier parts of Eixample. It fits the guide when you need an easy neighborhood stop instead of a bar people cross town to photograph.",
+        "hours": {
+          "mon": "12:00 PM-12:30 AM",
+          "tue": "12:00 PM-12:30 AM",
+          "wed": "12:00 PM-12:30 AM",
+          "thu": "12:00 PM-1:30 AM",
+          "fri": "12:00 PM-2:00 AM",
+          "sat": "12:00 PM-2:00 AM",
+          "sun": "12:00 PM-12:00 AM"
+        },
+        "photo": "https://images.unsplash.com/photo-1514933651103-005eec06c04b?auto=format&fit=crop&w=900&q=80"
+      },
+      {
+        "id": "eixample-biercab",
+        "name": "BierCab",
+        "coordinates": [
+          41.3853,
+          2.1582
+        ],
+        "description": "BierCab adds a deeper tap-list option to the Eixample crawl, with casual food and enough range for groups that do not want cocktails. It is most useful as a flexible midpoint: easy to meet at, easy to linger in, and less precious than the area's famous drink rooms.",
+        "hours": {
+          "mon": "12:00 PM-12:30 AM",
+          "tue": "12:00 PM-12:30 AM",
+          "wed": "12:00 PM-12:30 AM",
+          "thu": "12:00 PM-1:30 AM",
+          "fri": "12:00 PM-2:00 AM",
+          "sat": "12:00 PM-2:00 AM",
+          "sun": "12:00 PM-12:00 AM"
+        },
+        "photo": "https://images.unsplash.com/photo-1608270586620-248524c67de9?auto=format&fit=crop&w=900&q=80"
+      }
+    ],
+    "sources": [
+      {
+        "name": "Time Out - Best bars in Barcelona",
+        "url": "https://www.timeout.com/barcelona/bars-and-pubs/best-bars-in-barcelona"
+      },
+      {
+        "name": "Time Out - Morro Fi",
+        "url": "https://www.timeout.es/barcelona/es/bares-y-pubs/morro-fi"
+      },
+      {
+        "name": "The Infatuation - Morro Fi",
+        "url": "https://www.theinfatuation.com/barcelona/reviews/morro-fi"
+      },
+      {
+        "name": "National Geographic - Barcelona vermouth bars",
+        "url": "https://www.nationalgeographic.com/travel/article/barcelona-food-guide-markets-vermouth-bars"
+      },
+      {
+        "name": "Garage Beer Co. official",
+        "url": "https://garagebeer.co/"
+      },
+      {
+        "name": "Tripadvisor - Garage Beer Co.",
+        "url": "https://www.tripadvisor.com/Restaurant_Review-g187497-d7990129-Reviews-Garage_Beer_Co-Barcelona_Catalonia.html"
+      },
+      {
+        "name": "Time Out - BierCab",
+        "url": "https://www.timeout.com/barcelona/bars-and-pubs/biercab"
+      },
+      {
+        "name": "Barcelona Turisme",
+        "url": "https://www.barcelonaturisme.com"
+      },
+      {
+        "name": "Google Maps",
+        "url": "https://maps.google.com"
+      }
+    ]
+  },
+  {
+    "id": "list-barcelona-eixample-popular-bars",
+    "slug": "barcelona-eixample-popular-bars",
+    "seoSlug": "best-bars",
+    "seoTitle": "Best Bars in Eixample, Barcelona",
+    "seoDescription": "Best bars in Eixample, Barcelona, including classic cocktail rooms, speakeasy-style stops, high-demand nightlife, and central bars worth planning around.",
+    "title": "Polished Nights Around Passeig",
+    "description": "Eixample is the polished cocktail district: old martini rituals, world-ranked rooms, and speakeasy doors tucked into the grid. Use this for a planned night with stronger service, higher prices, and drinks that deserve more attention than a casual hop.",
+    "url": "https://www.google.com/maps/search/eixample+popular+bars+barcelona",
+    "category": "Nightlife",
+    "location": {
+      "city": "Barcelona",
+      "neighborhood": "Eixample",
+      "country": "Spain",
+      "continent": "Europe",
+      "scope": "city"
+    },
+    "creator": {
+      "id": "user-rguide-nightlife",
+      "name": "R Nightlife",
+      "avatar": "data:image/svg+xml;utf8,%0A%20%20%20%20%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22160%22%20height%3D%22160%22%20viewBox%3D%220%200%20160%20160%22%3E%0A%20%20%20%20%20%20%3Crect%20width%3D%22160%22%20height%3D%22160%22%20rx%3D%2280%22%20fill%3D%22%230f766e%22%20%2F%3E%0A%20%20%20%20%20%20%3Ctext%20x%3D%2250%25%22%20y%3D%2254%25%22%20text-anchor%3D%22middle%22%20dominant-baseline%3D%22middle%22%0A%20%20%20%20%20%20%20%20font-family%3D%22Arial%2C%20sans-serif%22%20font-size%3D%2276%22%20font-weight%3D%22700%22%20fill%3D%22white%22%3ER%3C%2Ftext%3E%0A%20%20%20%20%3C%2Fsvg%3E%0A%20%20"
+    },
+    "upvotes": 0,
+    "createdAt": "2026-04-21T00:00:00.000Z",
+    "stops": [
+      {
+        "id": "eixample-dry-martini",
+        "name": "Dry Martini",
+        "coordinates": [
+          41.3902,
+          2.1552
+        ],
+        "description": "Dry Martini belongs in the Eixample popular list because it represents Barcelona's old-school cocktail discipline rather than a trend cycle. Go when the night calls for a proper martini, polished service, and a quieter kind of status than the newer world-ranked rooms.",
+        "hours": {
+          "mon": "1:00 PM-2:30 AM",
+          "tue": "1:00 PM-2:30 AM",
+          "wed": "1:00 PM-2:30 AM",
+          "thu": "1:00 PM-2:30 AM",
+          "fri": "1:00 PM-3:00 AM",
+          "sat": "1:00 PM-3:00 AM",
+          "sun": "4:30 PM-1:00 AM"
+        },
+        "photo": "https://barmagazine.com/og-bars.jpg"
+      },
+      {
+        "id": "eixample-sips",
+        "name": "Sips",
+        "coordinates": [
+          41.3889,
+          2.1567
+        ],
+        "description": "Sips is the high-demand Eixample stop where the cocktail itself becomes the main event: precise, theatrical, and internationally recognized. Treat it as a planned reservation or queue-worthy destination, not a casual backup after dinner.",
+        "hours": {
+          "mon": "6:00 PM-12:30 AM",
+          "tue": "6:00 PM-12:30 AM",
+          "wed": "6:00 PM-1:00 AM",
+          "thu": "6:00 PM-1:30 AM",
+          "fri": "6:00 PM-2:30 AM",
+          "sat": "6:00 PM-2:30 AM",
+          "sun": "6:00 PM-12:00 AM"
+        },
+        "photo": "https://cdn.enprimeurclub.com/storage/v1/object/public/images/locations/recDakVqtmov28sO5/hero1.jpg?width=1200&quality=85&aspect_ratio=1.91%3A1&crop_gravity=center"
+      },
+      {
+        "id": "eixample-bobbys-free",
+        "name": "Bobby's Free",
+        "coordinates": [
+          41.3942,
+          2.1595
+        ],
+        "description": "Bobby's Free gives the guide its playful speakeasy slot, with the barbershop entrance and premium cocktails doing more than simple neighborhood-bar work. It is best for a group that wants a reveal, a queue-tolerant late start, and a more animated Eixample night.",
+        "hours": {
+          "mon": "6:00 PM-12:30 AM",
+          "tue": "6:00 PM-12:30 AM",
+          "wed": "6:00 PM-1:00 AM",
+          "thu": "6:00 PM-1:30 AM",
+          "fri": "6:00 PM-2:30 AM",
+          "sat": "6:00 PM-2:30 AM",
+          "sun": "6:00 PM-12:00 AM"
+        },
+        "photo": "https://www.bobbysfree.com/wp-content/uploads/2019/02/logo-persiana-copa-nombre-300x248.png"
+      },
+      {
+        "id": "eixample-the-alchemix",
+        "name": "The Alchemix",
+        "coordinates": [
+          41.3893,
+          2.159
+        ],
+        "description": "The Alchemix is useful when the night should feel designed around both food and drink, not just a round of cocktails. Its gastro-cocktail format makes it a stronger planned stop for curious drinkers than for a loose crawl.",
+        "hours": {
+          "mon": "6:00 PM-12:30 AM",
+          "tue": "6:00 PM-12:30 AM",
+          "wed": "6:00 PM-1:00 AM",
+          "thu": "6:00 PM-1:30 AM",
+          "fri": "6:00 PM-2:30 AM",
+          "sat": "6:00 PM-2:30 AM",
+          "sun": "6:00 PM-12:00 AM"
+        },
+        "photo": "https://alotea.com/opengraph-image.jpg"
+      },
+      {
+        "id": "eixample-ideal-cocktail",
+        "name": "Ideal Cocktail Bar",
+        "coordinates": [
+          41.3886,
+          2.1575
+        ],
+        "description": "Ideal Cocktail Bar gives the Eixample set a classic room with old-school service, deep technique, and less spectacle than the newer destination bars. Use it for a calmer after-dinner plan when the drink quality matters but the night should not become a scene.",
+        "hours": {
+          "mon": "6:00 PM-12:30 AM",
+          "tue": "6:00 PM-12:30 AM",
+          "wed": "6:00 PM-1:00 AM",
+          "thu": "6:00 PM-1:30 AM",
+          "fri": "6:00 PM-2:30 AM",
+          "sat": "6:00 PM-2:30 AM",
+          "sun": "6:00 PM-12:00 AM"
+        },
+        "photo": "https://revolutionrockbar.es/wp-content/uploads/ideal-cocktail-bar.avif"
+      }
+    ],
+    "sources": [
+      {
+        "name": "World's 50 Best Bars - Sips",
+        "url": "https://www.theworlds50best.com/bars/the-list/sips.html"
+      },
+      {
+        "name": "Sips official",
+        "url": "https://sips.barcelona/"
+      },
+      {
+        "name": "Ajuntament de Barcelona - Sips",
+        "url": "https://guia.barcelona.cat/detall/cocteleria-sips-drinkery-house_75990421116.html"
+      },
+      {
+        "name": "Condé Nast Traveler - Dry Martini",
+        "url": "https://www.cntraveler.com/bars/barcelona/dry-martini"
+      },
+      {
+        "name": "Time Out - Best bars in Barcelona",
+        "url": "https://www.timeout.com/barcelona/bars-and-pubs/best-bars-in-barcelona"
+      },
+      {
+        "name": "Time Out - Dry Martini",
+        "url": "https://www.timeout.com/barcelona/music-and-nightlife/dry-martini"
+      },
+      {
+        "name": "Time Out - Ideal Cocktail Bar",
+        "url": "https://www.timeout.com/barcelona/bars-and-pubs/ideal-cocktail-bar"
+      },
+      {
+        "name": "Time Out - The Alchemix",
+        "url": "https://www.timeout.com/barcelona/bars-and-pubs/the-alchemix"
+      },
+      {
+        "name": "Bobby's Free official",
+        "url": "https://www.bobbysfree.com/en/"
+      },
+      {
+        "name": "Google Maps",
+        "url": "https://maps.google.com"
+      }
+    ]
+  },
+  {
+    "id": "list-barcelona-born-dive-bars",
+    "slug": "barcelona-el-born-dive-bars",
+    "seoSlug": "best-dive-bars",
+    "seoTitle": "Best Dive Bars in El Born, Barcelona",
+    "seoDescription": "Best dive bars in El Born, Barcelona, for old-school cava, tapas counters, vermouth stops, wine bars, and smaller neighborhood drinking culture.",
+    "title": "Cava Corners and Wine Dens",
+    "description": "El Born's quieter bar route works because the neighborhood is tight: cava counters, wine rooms, vermouth stops, and old tapas bars sit within a few medieval blocks. Use it before or after dinner when the night should stay loose, walkable, and conversational.",
+    "url": "https://www.google.com/maps/search/el+born+dive+bars+barcelona",
+    "category": "Nightlife",
+    "location": {
+      "city": "Barcelona",
+      "neighborhood": "El Born",
+      "country": "Spain",
+      "continent": "Europe",
+      "scope": "city"
+    },
+    "creator": {
+      "id": "user-rguide-nightlife",
+      "name": "R Nightlife",
+      "avatar": "data:image/svg+xml;utf8,%0A%20%20%20%20%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22160%22%20height%3D%22160%22%20viewBox%3D%220%200%20160%20160%22%3E%0A%20%20%20%20%20%20%3Crect%20width%3D%22160%22%20height%3D%22160%22%20rx%3D%2280%22%20fill%3D%22%230f766e%22%20%2F%3E%0A%20%20%20%20%20%20%3Ctext%20x%3D%2250%25%22%20y%3D%2254%25%22%20text-anchor%3D%22middle%22%20dominant-baseline%3D%22middle%22%0A%20%20%20%20%20%20%20%20font-family%3D%22Arial%2C%20sans-serif%22%20font-size%3D%2276%22%20font-weight%3D%22700%22%20fill%3D%22white%22%3ER%3C%2Ftext%3E%0A%20%20%20%20%3C%2Fsvg%3E%0A%20%20"
+    },
+    "upvotes": 0,
+    "createdAt": "2026-04-21T00:00:00.000Z",
+    "stops": [
+      {
+        "id": "born-el-xampanyet",
+        "name": "El Xampanyet",
+        "coordinates": [
+          41.3847,
+          2.1836
+        ],
+        "description": "El Xampanyet is the Born counter classic: house cava, anchovies, tilework, and a packed room that turns a quick drink into a neighborhood ritual. It is best used as a salty, high-energy bridge before dinner or before a more serious Born cocktail stop.",
+        "hours": {
+          "mon": "7:00 PM-11:00 PM",
+          "tue": "12:00 PM-3:30 PM, 7:00 PM-11:00 PM",
+          "wed": "12:00 PM-3:30 PM, 7:00 PM-11:00 PM",
+          "thu": "12:00 PM-3:30 PM, 7:00 PM-11:00 PM",
+          "fri": "12:00 PM-3:30 PM, 7:00 PM-11:00 PM",
+          "sat": "12:00 PM-3:30 PM",
+          "sun": "Closed"
+        },
+        "photo": "https://www.elxampanyet.com/wp-content/uploads/2024/10/Iriarte_0132-2048x1353.jpg"
+      },
+      {
+        "id": "born-bar-del-pla",
+        "name": "Bar del Pla",
+        "coordinates": [
+          41.3857,
+          2.1817
+        ],
+        "description": "Bar del Pla gives the Born guide a narrow, food-led room where dinner and drinks naturally overlap. Use it when the group needs real tapas plates and wine energy before moving into the neighborhood's louder late-night circuit.",
+        "hours": {
+          "mon": "6:00 PM-12:30 AM",
+          "tue": "6:00 PM-12:30 AM",
+          "wed": "6:00 PM-1:00 AM",
+          "thu": "6:00 PM-1:30 AM",
+          "fri": "6:00 PM-2:30 AM",
+          "sat": "6:00 PM-2:30 AM",
+          "sun": "6:00 PM-12:00 AM"
+        },
+        "photo": "https://barcelonanavigator.com/wp-content/uploads/2016/05/Jordi.jpg"
+      },
+      {
+        "id": "born-bar-sauvage",
+        "name": "Bar Sauvage",
+        "coordinates": [
+          41.3854,
+          2.1813
+        ],
+        "description": "Bar Sauvage adds a younger, design-forward cocktail pulse to the Born route without making the guide only about speakeasies. It works best later, when the old tapas counters start to feel too quiet and the group wants more movement.",
+        "hours": {
+          "mon": "6:00 PM-12:30 AM",
+          "tue": "6:00 PM-12:30 AM",
+          "wed": "6:00 PM-1:00 AM",
+          "thu": "6:00 PM-1:30 AM",
+          "fri": "6:00 PM-2:30 AM",
+          "sat": "6:00 PM-2:30 AM",
+          "sun": "6:00 PM-12:00 AM"
+        },
+        "photo": "https://images.unsplash.com/photo-1514933651103-005eec06c04b?auto=format&fit=crop&w=900&q=80"
+      },
+      {
+        "id": "born-bormuth",
+        "name": "Bormuth",
+        "coordinates": [
+          41.3839,
+          2.1811
+        ],
+        "description": "Bormuth is the reliable tapas-and-vermouth stop near Passeig del Born, useful because it keeps steady all-day turnover without requiring a delicate plan. It fits the guide as a practical group option when you want the Born's energy with a little more seating and food support.",
+        "hours": {
+          "mon": "12:00 PM-12:30 AM",
+          "tue": "12:00 PM-12:30 AM",
+          "wed": "12:00 PM-12:30 AM",
+          "thu": "12:00 PM-1:30 AM",
+          "fri": "12:00 PM-2:00 AM",
+          "sat": "12:00 PM-2:00 AM",
+          "sun": "12:00 PM-12:00 AM"
+        },
+        "photo": "https://images.unsplash.com/photo-1529193591184-b1d58069ecdd?auto=format&fit=crop&w=900&q=80"
+      },
+      {
+        "id": "born-casa-delfin",
+        "name": "Casa Delfín",
+        "coordinates": [
+          41.3834,
+          2.1824
+        ],
+        "description": "Casa Delfín gives the Born list a plaza-side classic for vermouth, tapas, and people-watching that can work from afternoon into night. Use it when the route needs an easy pause near the market and Santa Maria del Mar rather than a tightly timed cocktail booking.",
+        "hours": {
+          "mon": "12:00 PM-12:30 AM",
+          "tue": "12:00 PM-12:30 AM",
+          "wed": "12:00 PM-12:30 AM",
+          "thu": "12:00 PM-1:30 AM",
+          "fri": "12:00 PM-2:00 AM",
+          "sat": "12:00 PM-2:00 AM",
+          "sun": "12:00 PM-12:00 AM"
+        },
+        "photo": "https://www.casadelfin.com/media/favicons/open-graph.png"
+      },
+      {
+        "id": "born-la-vinya",
+        "name": "La Vinya del Senyor",
+        "coordinates": [
+          41.3836,
+          2.1828
+        ],
+        "description": "La Vinya del Senyor earns its place by putting a serious by-the-glass wine stop directly across from Santa Maria del Mar. It is best for a slower terrace pause when the group wants the Born's architecture in view and the night to stay conversational.",
+        "hours": {
+          "mon": "12:00 PM-11:00 PM",
+          "tue": "12:00 PM-11:00 PM",
+          "wed": "12:00 PM-11:00 PM",
+          "thu": "12:00 PM-11:30 PM",
+          "fri": "12:00 PM-12:00 AM",
+          "sat": "12:00 PM-12:00 AM",
+          "sun": "12:00 PM-10:30 PM"
+        },
+        "photo": "https://static.wixstatic.com/media/0ce084_ee82ea19b8b54aafbd8115734c59a303~mv2_d_3264_2448_s_4_2.jpg/v1/fill/w_1000,h_750,al_c,q_85,usm_0.66_1.00_0.01/0ce084_ee82ea19b8b54aafbd8115734c59a303~mv2_d_3264_2448_s_4_2.jpg"
+      }
+    ],
+    "sources": [
+      {
+        "name": "Time Out - El Born bars",
+        "url": "https://www.timeout.com/barcelona/bars-and-pubs/el-born-bars"
+      },
+      {
+        "name": "Barcelona Urbana - El Born nightlife guide",
+        "url": "https://barcelonaurbana.com/en/blog/el-born-barcelona-nightlife-guide/"
+      },
+      {
+        "name": "El Born neighborhood nightlife",
+        "url": "https://www.el-born.com/bars"
+      },
+      {
+        "name": "El Xampanyet profile",
+        "url": "https://barsforkings.com/bars/barcelona/el-xampanyet/"
+      },
+      {
+        "name": "Lonely Planet - Barcelona bars",
+        "url": "https://www.lonelyplanet.com/spain/barcelona/bars"
+      },
+      {
+        "name": "The Infatuation - Barcelona bars",
+        "url": "https://www.theinfatuation.com/barcelona/cuisines/bar"
+      },
+      {
+        "name": "Tripadvisor",
+        "url": "https://www.tripadvisor.com"
+      }
+    ]
+  },
+  {
+    "id": "list-barcelona-born-popular-bars",
+    "slug": "barcelona-el-born-popular-bars",
+    "seoSlug": "best-bars",
+    "seoTitle": "Best Bars in El Born, Barcelona",
+    "seoDescription": "Best bars in El Born, Barcelona, including destination cocktail bars, speakeasy-style rooms, high-traffic nightlife, and late-night spots with real momentum.",
+    "title": "Born After-Dark Staples",
+    "description": "El Born turns old lanes into destination nightlife, with hidden cocktail doors, busy rooms, and waits that are part of the signal. Use this when the night should feel like an event, not just a drink between dinner and bed.",
+    "url": "https://www.google.com/maps/search/el+born+popular+bars+barcelona",
+    "category": "Nightlife",
+    "location": {
+      "city": "Barcelona",
+      "neighborhood": "El Born",
+      "country": "Spain",
+      "continent": "Europe",
+      "scope": "city"
+    },
+    "creator": {
+      "id": "user-rguide-nightlife",
+      "name": "R Nightlife",
+      "avatar": "data:image/svg+xml;utf8,%0A%20%20%20%20%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22160%22%20height%3D%22160%22%20viewBox%3D%220%200%20160%20160%22%3E%0A%20%20%20%20%20%20%3Crect%20width%3D%22160%22%20height%3D%22160%22%20rx%3D%2280%22%20fill%3D%22%230f766e%22%20%2F%3E%0A%20%20%20%20%20%20%3Ctext%20x%3D%2250%25%22%20y%3D%2254%25%22%20text-anchor%3D%22middle%22%20dominant-baseline%3D%22middle%22%0A%20%20%20%20%20%20%20%20font-family%3D%22Arial%2C%20sans-serif%22%20font-size%3D%2276%22%20font-weight%3D%22700%22%20fill%3D%22white%22%3ER%3C%2Ftext%3E%0A%20%20%20%20%3C%2Fsvg%3E%0A%20%20"
+    },
+    "upvotes": 0,
+    "createdAt": "2026-04-21T00:00:00.000Z",
+    "stops": [
+      {
+        "id": "born-paradiso",
+        "name": "Paradiso",
+        "coordinates": [
+          41.3859,
+          2.1822
+        ],
+        "description": "Paradiso is the Born's headline cocktail stop because the room, hidden entrance, and theatrical drinks have become part of Barcelona's global bar reputation. Build the queue into the plan and use it as the night's main event, not as a quick drink between stops.",
+        "hours": {
+          "mon": "6:00 PM-12:30 AM",
+          "tue": "6:00 PM-12:30 AM",
+          "wed": "6:00 PM-1:00 AM",
+          "thu": "6:00 PM-1:30 AM",
+          "fri": "6:00 PM-2:30 AM",
+          "sat": "6:00 PM-2:30 AM",
+          "sun": "6:00 PM-12:00 AM"
+        },
+        "photo": "https://paradiso.cat/wp-content/uploads/2020/06/bck_premios-scaled_op.jpg"
+      },
+      {
+        "id": "born-collage",
+        "name": "Collage Cocktail Bar",
+        "coordinates": [
+          41.385,
+          2.182
+        ],
+        "description": "Collage Cocktail Bar gives the Born route a colorful craft-cocktail room that is easier to use with groups than the most in-demand trophy bars. It is a good later start when the night wants polish and energy without making the whole plan depend on one door.",
+        "hours": {
+          "mon": "6:00 PM-12:30 AM",
+          "tue": "6:00 PM-12:30 AM",
+          "wed": "6:00 PM-1:00 AM",
+          "thu": "6:00 PM-1:30 AM",
+          "fri": "6:00 PM-2:30 AM",
+          "sat": "6:00 PM-2:30 AM",
+          "sun": "6:00 PM-12:00 AM"
+        },
+        "photo": "https://www.diffordsguide.com/assets/images/default/global/ogimage.jpg"
+      },
+      {
+        "id": "born-creps",
+        "name": "Creps al Born",
+        "coordinates": [
+          41.3844,
+          2.182
+        ],
+        "description": "Creps al Born is a high-energy staple where cocktails, crepes, and late-night social traffic blur together in a very Born way. Use it when the group wants movement and informality rather than a hushed cocktail tasting.",
+        "hours": {
+          "mon": "6:00 PM-12:30 AM",
+          "tue": "6:00 PM-12:30 AM",
+          "wed": "6:00 PM-1:00 AM",
+          "thu": "6:00 PM-1:30 AM",
+          "fri": "6:00 PM-2:30 AM",
+          "sat": "6:00 PM-2:30 AM",
+          "sun": "6:00 PM-12:00 AM"
+        },
+        "photo": "https://fishhotels-sites.s3.eu-west-3.amazonaws.com/uploads/1f127c8f-ef19-4d26-b21a-33e867a76144/originals/rec-entorno-crepes-5192.jpg"
+      },
+      {
+        "id": "born-stravinsky",
+        "name": "Dr. Stravinsky",
+        "coordinates": [
+          41.3858,
+          2.1804
+        ],
+        "description": "Dr. Stravinsky gives the Born list a serious experimental-cocktail anchor, with in-house infusions, distillations, and signatures that reward attention. It works best for drinkers who want technique and flavor exploration more than a simple late-night crowd.",
+        "hours": {
+          "mon": "5:00 PM-2:00 AM",
+          "tue": "5:00 PM-2:00 AM",
+          "wed": "5:00 PM-2:00 AM",
+          "thu": "5:00 PM-2:00 AM",
+          "fri": "12:00 PM-4:30 PM, 5:00 PM-3:00 AM",
+          "sat": "12:00 PM-4:30 PM, 5:00 PM-3:00 AM",
+          "sun": "12:00 PM-4:30 PM, 5:00 PM-2:00 AM"
+        },
+        "photo": "https://drstravinsky.cat/wp-content/uploads/2022/10/dr-stravinsky-text.png"
+      },
+      {
+        "id": "born-mariposa-negra",
+        "name": "Mariposa Negra",
+        "coordinates": [
+          41.3849,
+          2.1819
+        ],
+        "description": "Mariposa Negra adds a moodier destination-cocktail option to the Born route, with dramatic interior styling and enough demand to create a line. Use it when the evening wants atmosphere and visual impact without leaving the neighborhood's compact nightlife core.",
+        "hours": {
+          "mon": "6:00 PM-12:30 AM",
+          "tue": "6:00 PM-12:30 AM",
+          "wed": "6:00 PM-1:00 AM",
+          "thu": "6:00 PM-1:30 AM",
+          "fri": "6:00 PM-2:30 AM",
+          "sat": "6:00 PM-2:30 AM",
+          "sun": "6:00 PM-12:00 AM"
+        },
+        "photo": "https://mariposanegrabar.com/wp-content/uploads/home-1-e1669196546384.jpg"
+      },
+      {
+        "id": "born-dux",
+        "name": "Dux",
+        "coordinates": [
+          41.3863,
+          2.1807
+        ],
+        "description": "Dux is the bustling Born stop for when the neighborhood is already moving and the group wants cocktails without slowing down. It captures the area's busy nightlife spillover, making it useful as a flexible late stop rather than a quiet destination.",
+        "hours": {
+          "mon": "6:00 PM-12:30 AM",
+          "tue": "6:00 PM-12:30 AM",
+          "wed": "6:00 PM-1:00 AM",
+          "thu": "6:00 PM-1:30 AM",
+          "fri": "6:00 PM-2:30 AM",
+          "sat": "6:00 PM-2:30 AM",
+          "sun": "6:00 PM-12:00 AM"
+        },
+        "photo": "https://duxborne.com/wp-content/uploads/2024/10/Dux-descubre-una-de-las-mejores-coctelerias-barcelona.webp"
+      }
+    ],
+    "sources": [
+      {
+        "name": "World's 50 Best Bars - Paradiso",
+        "url": "https://www.theworlds50best.com/bars/the-list/paradiso.html"
+      },
+      {
+        "name": "Paradiso official",
+        "url": "https://www.paradiso.cat"
+      },
+      {
+        "name": "Condé Nast Traveler - Paradiso",
+        "url": "https://www.cntraveler.com/bars/barcelona/paradiso"
+      },
+      {
+        "name": "Time Out - El Born bars",
+        "url": "https://www.timeout.com/barcelona/bars-and-pubs/el-born-bars"
+      },
+      {
+        "name": "Barcelona Urbana - El Born nightlife guide",
+        "url": "https://barcelonaurbana.com/en/blog/el-born-barcelona-nightlife-guide/"
+      },
+      {
+        "name": "The Infatuation - Barcelona bars",
+        "url": "https://www.theinfatuation.com/barcelona/cuisines/bar"
+      },
+      {
+        "name": "Lonely Planet - Barcelona bars",
+        "url": "https://www.lonelyplanet.com/spain/barcelona/bars"
+      },
+      {
+        "name": "Tripadvisor",
+        "url": "https://www.tripadvisor.com"
+      }
+    ]
+  },
+  {
+    "id": "list-barcelona-gothic-dive-bars",
+    "slug": "barcelona-gothic-quarter-dive-bars",
+    "seoSlug": "best-dive-bars",
+    "seoTitle": "Best Dive Bars in the Gothic Quarter, Barcelona",
+    "seoDescription": "Best dive bars in the Gothic Quarter, Barcelona, from old-city counter bars and gritty classics to late-night locals with real neighborhood character.",
+    "title": "Old-City Hideout Bars",
+    "description": "The Gothic Quarter is easiest to get wrong at night, so this route favors old-city bars with actual texture: standing counters, indie dives, art-history rooms, and late spots with some scuff left. Use it when you want central energy without tourist churn.",
+    "url": "https://www.google.com/maps/search/gothic+quarter+dive+bars+barcelona",
+    "category": "Nightlife",
+    "location": {
+      "city": "Barcelona",
+      "neighborhood": "Gothic Quarter",
+      "country": "Spain",
+      "continent": "Europe",
+      "scope": "city"
+    },
+    "creator": {
+      "id": "user-rguide-nightlife",
+      "name": "R Nightlife",
+      "avatar": "data:image/svg+xml;utf8,%0A%20%20%20%20%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22160%22%20height%3D%22160%22%20viewBox%3D%220%200%20160%20160%22%3E%0A%20%20%20%20%20%20%3Crect%20width%3D%22160%22%20height%3D%22160%22%20rx%3D%2280%22%20fill%3D%22%230f766e%22%20%2F%3E%0A%20%20%20%20%20%20%3Ctext%20x%3D%2250%25%22%20y%3D%2254%25%22%20text-anchor%3D%22middle%22%20dominant-baseline%3D%22middle%22%0A%20%20%20%20%20%20%20%20font-family%3D%22Arial%2C%20sans-serif%22%20font-size%3D%2276%22%20font-weight%3D%22700%22%20fill%3D%22white%22%3ER%3C%2Ftext%3E%0A%20%20%20%20%3C%2Fsvg%3E%0A%20%20"
+    },
+    "upvotes": 0,
+    "createdAt": "2026-04-21T00:00:00.000Z",
+    "stops": [
+      {
+        "id": "gothic-la-plata",
+        "name": "Bar La Plata",
+        "coordinates": [
+          41.3818,
+          2.1799
+        ],
+        "description": "Bar La Plata is the Gothic Quarter's standing-bar anchor: short menu, fast service, and a vermouth rhythm that feels older than the surrounding tourist churn. Use it as a compact food-and-drink pause before the route turns toward darker late-night rooms.",
+        "hours": {
+          "mon": "12:00 PM-12:30 AM",
+          "tue": "12:00 PM-12:30 AM",
+          "wed": "12:00 PM-12:30 AM",
+          "thu": "12:00 PM-1:30 AM",
+          "fri": "12:00 PM-2:00 AM",
+          "sat": "12:00 PM-2:00 AM",
+          "sun": "12:00 PM-12:00 AM"
+        },
+        "photo": "https://barlaplata.com/wp-content/uploads/2024/04/img_7003-1.jpg"
+      },
+      {
+        "id": "gothic-manchester",
+        "name": "Manchester Bar",
+        "coordinates": [
+          41.3828,
+          2.1736
+        ],
+        "description": "Manchester Bar gives the Gothic list its alternative-music dive texture, with dark interiors, indie playlists, and a crowd that feels less polished than the central cocktail rooms. It is best when you want the old city to feel lived-in rather than staged.",
+        "hours": {
+          "mon": "6:00 PM-12:30 AM",
+          "tue": "6:00 PM-12:30 AM",
+          "wed": "6:00 PM-1:00 AM",
+          "thu": "6:00 PM-1:30 AM",
+          "fri": "6:00 PM-2:30 AM",
+          "sat": "6:00 PM-2:30 AM",
+          "sun": "6:00 PM-12:00 AM"
+        },
+        "photo": "https://cdn0.salir.com/es/places/9/2/0/manchester-bar_142029_0_600.jpg"
+      },
+      {
+        "id": "gothic-oviso",
+        "name": "Bar Oviso",
+        "coordinates": [
+          41.3824,
+          2.1739
+        ],
+        "description": "Bar Oviso works as a compact Gothic starter: low-key beers, easy conversation, and enough old-city location value to make the next stop simple. Use it before live music, clubs, or a Born crossover when the night needs a relaxed first room.",
+        "hours": {
+          "mon": "6:00 PM-12:30 AM",
+          "tue": "6:00 PM-12:30 AM",
+          "wed": "6:00 PM-1:00 AM",
+          "thu": "6:00 PM-1:30 AM",
+          "fri": "6:00 PM-2:30 AM",
+          "sat": "6:00 PM-2:30 AM",
+          "sun": "6:00 PM-12:00 AM"
+        },
+        "photo": "https://baroviso.shop/public/media/baroviso-shop/logo-share.jpg"
+      },
+      {
+        "id": "gothic-lobo",
+        "name": "Bar Lobo",
+        "coordinates": [
+          41.3837,
+          2.1711
+        ],
+        "description": "Bar Lobo gives the Gothic guide a larger all-day fallback where early dinner can roll naturally into drinks. It is useful for mixed groups that need space, food, and centrality before deciding whether the night becomes a bar crawl.",
+        "hours": {
+          "mon": "12:00 PM-12:30 AM",
+          "tue": "12:00 PM-12:30 AM",
+          "wed": "12:00 PM-12:30 AM",
+          "thu": "12:00 PM-1:30 AM",
+          "fri": "12:00 PM-2:00 AM",
+          "sat": "12:00 PM-2:00 AM",
+          "sun": "12:00 PM-12:00 AM"
+        },
+        "photo": "https://966e7448.delivery.rocketcdn.me/wp-content/uploads/grupos-bar-lobo.jpg"
+      },
+      {
+        "id": "gothic-nevermind",
+        "name": "Nevermind",
+        "coordinates": [
+          41.3814,
+          2.1744
+        ],
+        "description": "Nevermind adds the Gothic Quarter's skate-and-grunge counterweight: cheap pours, rougher styling, and strong late-night footfall. It fits when the route needs a louder, less precious stop after the historic bars and cafe rooms.",
+        "hours": {
+          "mon": "6:00 PM-12:30 AM",
+          "tue": "6:00 PM-12:30 AM",
+          "wed": "6:00 PM-1:00 AM",
+          "thu": "6:00 PM-1:30 AM",
+          "fri": "6:00 PM-2:30 AM",
+          "sat": "6:00 PM-2:30 AM",
+          "sun": "6:00 PM-12:00 AM"
+        },
+        "photo": "https://www.barcelona-life.com/wp-content/uploads/2018/02/nevermind-barcelona-1.jpg"
+      },
+      {
+        "id": "gothic-els-quatre-gats",
+        "name": "Els Quatre Gats",
+        "coordinates": [
+          41.3853,
+          2.1756
+        ],
+        "description": "Els Quatre Gats gives the Gothic route cultural weight as a modernista cafe-bar tied to Barcelona's art history. Use it earlier in the evening when you want atmosphere and context more than a hard-drinking late-night stop.",
+        "hours": {
+          "mon": "12:00 PM-11:00 PM",
+          "tue": "12:00 PM-11:00 PM",
+          "wed": "12:00 PM-11:00 PM",
+          "thu": "12:00 PM-11:30 PM",
+          "fri": "12:00 PM-12:00 AM",
+          "sat": "12:00 PM-12:00 AM",
+          "sun": "12:00 PM-10:30 PM"
+        },
+        "photo": "https://4gats.com/wp-content/uploads/2021/09/4gats-restaurant.jpg"
+      }
+    ],
+    "sources": [
+      {
+        "name": "Time Out - Gothic Quarter bars",
+        "url": "https://www.timeout.com/barcelona/bars-and-pubs/gothic-quarter-bars"
+      },
+      {
+        "name": "The Culture Trip - Gothic bars",
+        "url": "https://theculturetrip.com/europe/spain/articles/best-bars-in-the-gothic-quarter-barcelona"
+      },
+      {
+        "name": "ShBarcelona - Gothic Quarter bars",
+        "url": "https://www.shbarcelona.com/blog/en/best-bars-gothic-quarter/"
+      },
+      {
+        "name": "Barcelona Turisme",
+        "url": "https://www.barcelonaturisme.com"
+      },
+      {
+        "name": "Ajuntament de Barcelona - Gothic Quarter listings",
+        "url": "https://guia.barcelona.cat"
+      },
+      {
+        "name": "Google Maps",
+        "url": "https://maps.google.com"
+      },
+      {
+        "name": "Tripadvisor",
+        "url": "https://www.tripadvisor.com"
+      }
+    ]
+  },
+  {
+    "id": "list-barcelona-gothic-popular-bars",
+    "slug": "barcelona-gothic-quarter-popular-nightlife",
+    "seoSlug": "best-bars",
+    "seoTitle": "Best Bars in the Gothic Quarter, Barcelona",
+    "seoDescription": "Best bars in the Gothic Quarter, Barcelona, including cocktail rooms, live-music venues, busy old-city nightlife, and Plaça Reial late-night anchors.",
+    "title": "Plaça Reial Night Machines",
+    "description": "The Gothic Quarter's bigger nights gather around Placa Reial and the central lanes, where jazz rooms, clubs, live sets, and cocktail bars keep the old city awake. Use this when music, crowds, and a final room matter more than quiet discovery.",
+    "url": "https://www.google.com/maps/search/gothic+quarter+popular+nightlife+barcelona",
+    "category": "Nightlife",
+    "location": {
+      "city": "Barcelona",
+      "neighborhood": "Gothic Quarter",
+      "country": "Spain",
+      "continent": "Europe",
+      "scope": "city"
+    },
+    "creator": {
+      "id": "user-rguide-nightlife",
+      "name": "R Nightlife",
+      "avatar": "data:image/svg+xml;utf8,%0A%20%20%20%20%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22160%22%20height%3D%22160%22%20viewBox%3D%220%200%20160%20160%22%3E%0A%20%20%20%20%20%20%3Crect%20width%3D%22160%22%20height%3D%22160%22%20rx%3D%2280%22%20fill%3D%22%230f766e%22%20%2F%3E%0A%20%20%20%20%20%20%3Ctext%20x%3D%2250%25%22%20y%3D%2254%25%22%20text-anchor%3D%22middle%22%20dominant-baseline%3D%22middle%22%0A%20%20%20%20%20%20%20%20font-family%3D%22Arial%2C%20sans-serif%22%20font-size%3D%2276%22%20font-weight%3D%22700%22%20fill%3D%22white%22%3ER%3C%2Ftext%3E%0A%20%20%20%20%3C%2Fsvg%3E%0A%20%20"
+    },
+    "upvotes": 0,
+    "createdAt": "2026-04-21T00:00:00.000Z",
+    "stops": [
+      {
+        "id": "gothic-milk",
+        "name": "Milk Bar & Bistro",
+        "coordinates": [
+          41.3799,
+          2.1762
+        ],
+        "description": "Milk Bar & Bistro works in the popular Gothic guide because it can shift from food into cocktails without forcing the group to move immediately. It is useful near Plaça Reial when the night needs a social, accessible room before music or club plans.",
+        "hours": {
+          "mon": "6:00 PM-12:30 AM",
+          "tue": "6:00 PM-12:30 AM",
+          "wed": "6:00 PM-1:00 AM",
+          "thu": "6:00 PM-1:30 AM",
+          "fri": "6:00 PM-2:30 AM",
+          "sat": "6:00 PM-2:30 AM",
+          "sun": "6:00 PM-12:00 AM"
+        },
+        "photo": "https://milkbarcelona.com/wp-content/uploads/2023/01/milk-profile-firebug.jpg"
+      },
+      {
+        "id": "gothic-harlem",
+        "name": "Harlem Jazz Club",
+        "coordinates": [
+          41.3819,
+          2.176
+        ],
+        "description": "Harlem Jazz Club gives the Gothic list a live-music anchor with jazz, funk, and touring sets in the old city core. Check the bill first, then use it when the night should be organized around a performance instead of another bar queue.",
+        "hours": {
+          "mon": "6:00 PM-12:30 AM",
+          "tue": "6:00 PM-12:30 AM",
+          "wed": "6:00 PM-1:00 AM",
+          "thu": "6:00 PM-1:30 AM",
+          "fri": "6:00 PM-2:30 AM",
+          "sat": "6:00 PM-2:30 AM",
+          "sun": "6:00 PM-12:00 AM"
+        },
+        "photo": "https://offloadmedia.feverup.com/barcelonasecreta.com/wp-content/uploads/2025/10/09170057/shutterstock_2452562975.jpg"
+      },
+      {
+        "id": "gothic-dow-jones",
+        "name": "Dow Jones Bar",
+        "coordinates": [
+          41.3816,
+          2.1752
+        ],
+        "description": "Dow Jones Bar adds a deliberately chaotic concept stop, with drink prices moving like a stock exchange ticker and the crowd reacting to the board. It is best for groups that want novelty and energy rather than a refined cocktail room.",
+        "hours": {
+          "mon": "6:00 PM-12:30 AM",
+          "tue": "6:00 PM-12:30 AM",
+          "wed": "6:00 PM-1:00 AM",
+          "thu": "6:00 PM-1:30 AM",
+          "fri": "6:00 PM-2:30 AM",
+          "sat": "6:00 PM-2:30 AM",
+          "sun": "6:00 PM-12:00 AM"
+        },
+        "photo": "https://arewabxlefttuhzucoxx.supabase.co/storage/v1/object/public/bar_attachments/e968db8f-51bd-43a0-988d-8fba01def671/dow.png"
+      },
+      {
+        "id": "gothic-pipa",
+        "name": "Pipa Club",
+        "coordinates": [
+          41.381,
+          2.1766
+        ],
+        "description": "Pipa Club gives the Gothic route a more hidden, members-club-style feel for cocktails, live sessions, and late sets. Use it when the group wants a room with history and a little mystery rather than the obvious Plaça Reial circuit.",
+        "hours": {
+          "mon": "6:00 PM-12:30 AM",
+          "tue": "6:00 PM-12:30 AM",
+          "wed": "6:00 PM-1:00 AM",
+          "thu": "6:00 PM-1:30 AM",
+          "fri": "6:00 PM-2:30 AM",
+          "sat": "6:00 PM-2:30 AM",
+          "sun": "6:00 PM-12:00 AM"
+        },
+        "photo": "https://www.barcelonapipaclub.es/wp-content/uploads/2025/01/barcelonapipaclub_pipa-300x200.png"
+      },
+      {
+        "id": "gothic-jamboree",
+        "name": "Jamboree",
+        "coordinates": [
+          41.3802,
+          2.1757
+        ],
+        "description": "Jamboree belongs in the Gothic popular list as a Plaça Reial institution with decades of jazz, live music, and late club programming behind it. Check the night's format, because it can function as a concert stop or the final dance-floor move.",
+        "hours": {
+          "mon": "10:00 PM-2:30 AM",
+          "tue": "10:00 PM-2:30 AM",
+          "wed": "10:00 PM-3:30 AM",
+          "thu": "10:00 PM-4:30 AM",
+          "fri": "10:00 PM-5:00 AM",
+          "sat": "10:00 PM-5:00 AM",
+          "sun": "10:00 PM-2:30 AM"
+        },
+        "photo": "https://offloadmedia.feverup.com/barcelonasecreta.com/wp-content/uploads/2025/11/07103833/d5dc3e42-58ab-11ef-9897-42b55136ae18-1.jpg"
+      },
+      {
+        "id": "gothic-sidecar",
+        "name": "Sidecar Factory Club",
+        "coordinates": [
+          41.3805,
+          2.1756
+        ],
+        "description": "Sidecar Factory Club gives the guide a direct late-night music-club finish right off Plaça Reial. It is the practical pick when the group wants guitars, DJs, and crowd density instead of another seated cocktail stop.",
+        "hours": {
+          "mon": "10:00 PM-2:30 AM",
+          "tue": "10:00 PM-2:30 AM",
+          "wed": "10:00 PM-3:30 AM",
+          "thu": "10:00 PM-4:30 AM",
+          "fri": "10:00 PM-5:00 AM",
+          "sat": "10:00 PM-5:00 AM",
+          "sun": "10:00 PM-2:30 AM"
+        },
+        "photo": "https://www.nightclubsbarcelona.es/wp-content/uploads/2023/03/barcelona-nights-slider-1.png"
+      }
+    ],
+    "sources": [
+      {
+        "name": "Jamboree official",
+        "url": "https://jamboreejazz.com/en/"
+      },
+      {
+        "name": "Barcelona.cat - Jamboree",
+        "url": "https://www.barcelona.cat/es/que-hacer-en-bcn/cultura/detall/jamboree-92205145712"
+      },
+      {
+        "name": "Time Out - Gothic Quarter bars",
+        "url": "https://www.timeout.com/barcelona/bars-and-pubs/gothic-quarter-bars"
+      },
+      {
+        "name": "The Culture Trip - Gothic bars",
+        "url": "https://theculturetrip.com/europe/spain/articles/best-bars-in-the-gothic-quarter-barcelona"
+      },
+      {
+        "name": "ShBarcelona - Gothic Quarter bars",
+        "url": "https://www.shbarcelona.com/blog/en/best-bars-gothic-quarter/"
+      },
+      {
+        "name": "Barcelona Secreta - Jamboree",
+        "url": "https://barcelonasecreta.com/en/jamboree-barcelona-club-jazz-concerts/"
+      },
+      {
+        "name": "Tripadvisor",
+        "url": "https://www.tripadvisor.com"
+      }
+    ]
+  },
+  {
+    "id": "list-barcelona-gracia-dive-bars",
+    "slug": "barcelona-gracia-dive-bars",
+    "seoSlug": "best-dive-bars",
+    "seoTitle": "Best Dive Bars in Gràcia, Barcelona",
+    "seoDescription": "Best dive bars in Gràcia, Barcelona, covering smaller neighborhood bars, bodegas, natural-wine stops, vermouth rooms, and relaxed late-night hangouts.",
+    "title": "Village Bars with Regulars",
+    "description": "Gracia's low-key nights move at plaza speed, with bodegas, vermouth, small wine rooms, and casual bars serving regulars before visitors notice the rhythm. Use this when the plan should feel slow, local, and easy to stretch across nearby squares.",
+    "url": "https://www.google.com/maps/search/gracia+dive+bars+barcelona",
+    "category": "Nightlife",
+    "location": {
+      "city": "Barcelona",
+      "neighborhood": "Gràcia",
+      "country": "Spain",
+      "continent": "Europe",
+      "scope": "city"
+    },
+    "creator": {
+      "id": "user-rguide-nightlife",
+      "name": "R Nightlife",
+      "avatar": "data:image/svg+xml;utf8,%0A%20%20%20%20%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22160%22%20height%3D%22160%22%20viewBox%3D%220%200%20160%20160%22%3E%0A%20%20%20%20%20%20%3Crect%20width%3D%22160%22%20height%3D%22160%22%20rx%3D%2280%22%20fill%3D%22%230f766e%22%20%2F%3E%0A%20%20%20%20%20%20%3Ctext%20x%3D%2250%25%22%20y%3D%2254%25%22%20text-anchor%3D%22middle%22%20dominant-baseline%3D%22middle%22%0A%20%20%20%20%20%20%20%20font-family%3D%22Arial%2C%20sans-serif%22%20font-size%3D%2276%22%20font-weight%3D%22700%22%20fill%3D%22white%22%3ER%3C%2Ftext%3E%0A%20%20%20%20%3C%2Fsvg%3E%0A%20%20"
+    },
+    "upvotes": 0,
+    "createdAt": "2026-04-21T00:00:00.000Z",
+    "stops": [
+      {
+        "id": "gracia-canigo",
+        "name": "Bar Canigó",
+        "coordinates": [
+          41.4012,
+          2.1609
+        ],
+        "description": "Bar Canigó belongs here because it captures Gràcia's everyday bar rhythm better than a destination cocktail room would. Use it for vermouth, casual beers, and a table that lets you watch the neighborhood move at plaza speed.",
+        "hours": {
+          "mon": "12:00 PM-11:00 PM",
+          "tue": "12:00 PM-11:00 PM",
+          "wed": "12:00 PM-11:00 PM",
+          "thu": "12:00 PM-11:30 PM",
+          "fri": "12:00 PM-12:00 AM",
+          "sat": "12:00 PM-12:00 AM",
+          "sun": "12:00 PM-10:30 PM"
+        },
+        "photo": "https://images.unsplash.com/photo-1514933651103-005eec06c04b?auto=format&fit=crop&w=900&q=80"
+      },
+      {
+        "id": "gracia-bodega-quimet",
+        "name": "Bodega Quimet",
+        "coordinates": [
+          41.4041,
+          2.156
+        ],
+        "description": "Bodega Quimet is the old-bodega anchor of the guide: shelves, counter snacks, preserved things, and a regular-heavy feel that makes the stop more about local ritual than novelty. It works best early, before the night gets louder.",
+        "hours": {
+          "mon": "12:00 PM-11:00 PM",
+          "tue": "12:00 PM-11:00 PM",
+          "wed": "12:00 PM-11:00 PM",
+          "thu": "12:00 PM-11:30 PM",
+          "fri": "12:00 PM-12:00 AM",
+          "sat": "12:00 PM-12:00 AM",
+          "sun": "12:00 PM-10:30 PM"
+        },
+        "photo": "https://www.bodegaquimet.com/img-trans/productos/24272/fotos/1024-67ac8ea167c99-bar-bodega-quimet.png"
+      },
+      {
+        "id": "gracia-fourmi",
+        "name": "La Fourmi",
+        "coordinates": [
+          41.4026,
+          2.1582
+        ],
+        "description": "La Fourmi gives the route a softer social bar: relaxed service, low-pressure drinks, and enough neighborhood warmth to stretch a post-dinner stop into a longer conversation. It is useful when the group wants atmosphere without a big-night agenda.",
+        "hours": {
+          "mon": "6:00 PM-12:30 AM",
+          "tue": "6:00 PM-12:30 AM",
+          "wed": "6:00 PM-1:00 AM",
+          "thu": "6:00 PM-1:30 AM",
+          "fri": "6:00 PM-2:30 AM",
+          "sat": "6:00 PM-2:30 AM",
+          "sun": "6:00 PM-12:00 AM"
+        },
+        "photo": "https://www.barcelona-life.com/wp-content/uploads/2018/02/la-fourmi-barcelona.jpg"
+      },
+      {
+        "id": "gracia-torpedo",
+        "name": "Bar Torpedo",
+        "coordinates": [
+          41.3998,
+          2.1575
+        ],
+        "description": "Bar Torpedo is the compact late stop for when Gràcia's slower evening needs a little momentum. The appeal is not polish; it is tight-room energy, upbeat music, and a crowd that makes sense after plaza drinks or a casual dinner nearby.",
+        "hours": {
+          "mon": "6:00 PM-12:30 AM",
+          "tue": "6:00 PM-12:30 AM",
+          "wed": "6:00 PM-1:00 AM",
+          "thu": "6:00 PM-1:30 AM",
+          "fri": "6:00 PM-2:30 AM",
+          "sat": "6:00 PM-2:30 AM",
+          "sun": "6:00 PM-12:00 AM"
+        },
+        "photo": "https://itin-dev.wanderlogstatic.com/freeImageSmall/1T14WQnNnaoumU2q8H206tZbFgm9r3f2"
+      },
+      {
+        "id": "gracia-entresol",
+        "name": "L'Entresòl",
+        "coordinates": [
+          41.4005,
+          2.1594
+        ],
+        "description": "L'Entresòl adds a more cocktail-minded stop without breaking the guide's low-key promise. Go when you want classic gin-and-tonic or mixed-drink structure in a den-like room rather than the queue-and-spectacle feel of the central cocktail bars.",
+        "hours": {
+          "mon": "6:00 PM-12:30 AM",
+          "tue": "6:00 PM-12:30 AM",
+          "wed": "6:00 PM-1:00 AM",
+          "thu": "6:00 PM-1:30 AM",
+          "fri": "6:00 PM-2:30 AM",
+          "sat": "6:00 PM-2:30 AM",
+          "sun": "6:00 PM-12:00 AM"
+        },
+        "photo": "https://images.unsplash.com/photo-1514933651103-005eec06c04b?auto=format&fit=crop&w=900&q=80"
+      },
+      {
+        "id": "gracia-salvatge",
+        "name": "Bar Salvatge",
+        "coordinates": [
+          41.4021,
+          2.1611
+        ],
+        "description": "Bar Salvatge gives the Gràcia list its natural-wine edge, with casual pours, snackable pacing, and a room built more for conversation than performance. It is the best fit when the night should stay current but still feel neighborhood-scaled.",
+        "hours": {
+          "mon": "6:00 PM-12:30 AM",
+          "tue": "6:00 PM-12:30 AM",
+          "wed": "6:00 PM-1:00 AM",
+          "thu": "6:00 PM-1:30 AM",
+          "fri": "6:00 PM-2:30 AM",
+          "sat": "6:00 PM-2:30 AM",
+          "sun": "6:00 PM-12:00 AM"
+        },
+        "photo": "https://barsalvatge.com/wp-content/uploads/2017/11/logo_2.png"
+      }
+    ],
+    "sources": [
+      {
+        "name": "Time Out - Gràcia bars",
+        "url": "https://www.timeout.com/barcelona/bars-and-pubs/gracia-bars"
+      },
+      {
+        "name": "Lonely Planet - Gràcia bars",
+        "url": "https://www.lonelyplanet.com/spain/barcelona/gracia/bars"
+      },
+      {
+        "name": "Bodega Quimet official",
+        "url": "https://www.bodegaquimet.com/en/inicio"
+      },
+      {
+        "name": "Fem Gràcia - Bobby Gin",
+        "url": "https://www.femgracia.cat/es/negocio/bobby-gin"
+      },
+      {
+        "name": "Barcelona Urbana - Gin and tonic bars",
+        "url": "https://barcelonaurbana.com/en/blog/best-gin-tonic-bars-barcelona/"
+      },
+      {
+        "name": "Barcelona Turisme",
+        "url": "https://www.barcelonaturisme.com"
+      },
+      {
+        "name": "Google Maps",
+        "url": "https://maps.google.com"
+      }
+    ]
+  },
+  {
+    "id": "list-barcelona-gracia-popular-bars",
+    "slug": "barcelona-gracia-popular-nightlife",
+    "seoSlug": "best-bars",
+    "seoTitle": "Best Bars in Gràcia, Barcelona",
+    "seoDescription": "Best bars in Gràcia, Barcelona, including plaza nightlife, independent music rooms, classic cocktail spots, and stronger destination bars with event pull.",
+    "title": "Gràcia Nights That Travel",
+    "description": "Gracia's stronger nightlife keeps the village feel but adds destination pull: independent music, gin bars, whiskey rooms, plaza terraces, and small venues with loyal crowds. Use this when you want a night beyond the center without losing neighborhood scale.",
+    "url": "https://www.google.com/maps/search/gracia+popular+nightlife+barcelona",
+    "category": "Nightlife",
+    "location": {
+      "city": "Barcelona",
+      "neighborhood": "Gràcia",
+      "country": "Spain",
+      "continent": "Europe",
+      "scope": "city"
+    },
+    "creator": {
+      "id": "user-rguide-nightlife",
+      "name": "R Nightlife",
+      "avatar": "data:image/svg+xml;utf8,%0A%20%20%20%20%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22160%22%20height%3D%22160%22%20viewBox%3D%220%200%20160%20160%22%3E%0A%20%20%20%20%20%20%3Crect%20width%3D%22160%22%20height%3D%22160%22%20rx%3D%2280%22%20fill%3D%22%230f766e%22%20%2F%3E%0A%20%20%20%20%20%20%3Ctext%20x%3D%2250%25%22%20y%3D%2254%25%22%20text-anchor%3D%22middle%22%20dominant-baseline%3D%22middle%22%0A%20%20%20%20%20%20%20%20font-family%3D%22Arial%2C%20sans-serif%22%20font-size%3D%2276%22%20font-weight%3D%22700%22%20fill%3D%22white%22%3ER%3C%2Ftext%3E%0A%20%20%20%20%3C%2Fsvg%3E%0A%20%20"
+    },
+    "upvotes": 0,
+    "createdAt": "2026-04-21T00:00:00.000Z",
+    "stops": [
+      {
+        "id": "gracia-sol-de-nit",
+        "name": "Sol de Nit",
+        "coordinates": [
+          41.4014,
+          2.1577
+        ],
+        "description": "Sol de Nit anchors the Gràcia popular route with plaza energy, terrace spill, and a crowd that makes sense before the night moves indoors. Use it as the social first stop when the neighborhood's squares are part of the appeal.",
+        "hours": {
+          "mon": "6:00 PM-12:30 AM",
+          "tue": "6:00 PM-12:30 AM",
+          "wed": "6:00 PM-1:00 AM",
+          "thu": "6:00 PM-1:30 AM",
+          "fri": "6:00 PM-2:30 AM",
+          "sat": "6:00 PM-2:30 AM",
+          "sun": "6:00 PM-12:00 AM"
+        },
+        "photo": "http://www.cafedelsoldenit.es/data/1710/contenidos/thumb_30930_contenidos_optimized.jpeg"
+      },
+      {
+        "id": "gracia-heliogabal",
+        "name": "Heliogàbal",
+        "coordinates": [
+          41.4029,
+          2.1588
+        ],
+        "description": "Heliogàbal is the Gràcia music-room anchor, pairing independent programming with a bar scale that still feels neighborhood-specific. Check the schedule and use it when the night should revolve around a small live set rather than a generic drinks plan.",
+        "hours": {
+          "mon": "6:00 PM-12:30 AM",
+          "tue": "6:00 PM-12:30 AM",
+          "wed": "6:00 PM-1:00 AM",
+          "thu": "6:00 PM-1:30 AM",
+          "fri": "6:00 PM-2:30 AM",
+          "sat": "6:00 PM-2:30 AM",
+          "sun": "6:00 PM-12:00 AM"
+        },
+        "photo": "https://www.heliogabal.com/wp-content/uploads/2021/10/Foto-Helio.jpg"
+      },
+      {
+        "id": "gracia-bobby-gin",
+        "name": "Bobby Gin",
+        "coordinates": [
+          41.3999,
+          2.1582
+        ],
+        "description": "Bobby Gin gives Gràcia a destination cocktail reason beyond the center, especially for gin-and-tonic drinkers who care about the serve. It is polished enough for a planned stop but still works within a neighborhood night instead of replacing it.",
+        "hours": {
+          "mon": "6:00 PM-12:30 AM",
+          "tue": "6:00 PM-12:30 AM",
+          "wed": "6:00 PM-1:00 AM",
+          "thu": "6:00 PM-1:30 AM",
+          "fri": "6:00 PM-2:30 AM",
+          "sat": "6:00 PM-2:30 AM",
+          "sun": "6:00 PM-12:00 AM"
+        },
+        "photo": "https://www.bobbygin.com/wp-content/uploads/2021/06/MG_4691.jpg"
+      },
+      {
+        "id": "gracia-whiskeria",
+        "name": "La Whiskeria",
+        "coordinates": [
+          41.4036,
+          2.1585
+        ],
+        "description": "La Whiskeria adds the quieter premium lane to the Gràcia route, with a whisky-forward list and a more deliberate drinking pace. Use it when the group wants spirits depth and conversation instead of plaza noise or live-music volume.",
+        "hours": {
+          "mon": "6:00 PM-12:30 AM",
+          "tue": "6:00 PM-12:30 AM",
+          "wed": "6:00 PM-1:00 AM",
+          "thu": "6:00 PM-1:30 AM",
+          "fri": "6:00 PM-2:30 AM",
+          "sat": "6:00 PM-2:30 AM",
+          "sun": "6:00 PM-12:00 AM"
+        },
+        "photo": "https://lawhiskeria.es/wp-content/uploads/2022/12/whiskeria_cocktail_bar_emblem.png"
+      },
+      {
+        "id": "gracia-elephanta",
+        "name": "Elephanta",
+        "coordinates": [
+          41.4028,
+          2.1576
+        ],
+        "description": "Elephanta gives the Gràcia list a cozy gin-and-cocktail room with softer lighting and a strong neighborhood following. It is best for a slower destination drink when you want the area to feel local but still a little elevated.",
+        "hours": {
+          "mon": "6:00 PM-12:30 AM",
+          "tue": "6:00 PM-12:30 AM",
+          "wed": "6:00 PM-1:00 AM",
+          "thu": "6:00 PM-1:30 AM",
+          "fri": "6:00 PM-2:30 AM",
+          "sat": "6:00 PM-2:30 AM",
+          "sun": "6:00 PM-12:00 AM"
+        },
+        "photo": "https://firebasestorage.googleapis.com/v0/b/soundclubfirebasestorage.appspot.com/o/uploads%2Fimage%2Fprofile%2F1715075373573-Official_Logo_FB_.jpg?alt=media"
+      },
+      {
+        "id": "gracia-old-fashioned",
+        "name": "The Original Old Fashioned",
+        "coordinates": [
+          41.3981,
+          2.1596
+        ],
+        "description": "The Original Old Fashioned is the tiny, bartender-led Gràcia cocktail stop for old-fashioneds, whiskey, gin, and classics that need attention. Use it as a deliberate final drink rather than a noisy midpoint in the crawl.",
+        "hours": {
+          "mon": "6:00 PM-12:30 AM",
+          "tue": "6:00 PM-12:30 AM",
+          "wed": "6:00 PM-1:00 AM",
+          "thu": "6:00 PM-1:30 AM",
+          "fri": "6:00 PM-2:30 AM",
+          "sat": "6:00 PM-2:30 AM",
+          "sun": "6:00 PM-12:00 AM"
+        },
+        "photo": "https://static.wixstatic.com/media/67d5d7_4d79c11d3d504bb88c009a21a1f3ab13~mv2.jpg/v1/fill/w_2500,h_3750,al_c/67d5d7_4d79c11d3d504bb88c009a21a1f3ab13~mv2.jpg"
+      }
+    ],
+    "sources": [
+      {
+        "name": "Bobby Gin official",
+        "url": "https://www.bobbygin.com/en/"
+      },
+      {
+        "name": "Old Fashioned official",
+        "url": "https://www.theoriginaloldfashioned.com/"
+      },
+      {
+        "name": "Elephanta official",
+        "url": "https://elephanta.cat/es/contacto/"
+      },
+      {
+        "name": "Condé Nast Traveler - Old Fashioned",
+        "url": "https://www.cntraveler.com/bars/barcelona/old-fashioned-gin-tonic-and-cocktail-bar"
+      },
+      {
+        "name": "Condé Nast Traveler - Best bars in Barcelona",
+        "url": "https://www.cntraveler.com/gallery/best-bars-in-barcelona"
+      },
+      {
+        "name": "Time Out - Gràcia bars",
+        "url": "https://www.timeout.com/barcelona/bars-and-pubs/gracia-bars"
+      },
+      {
+        "name": "Lonely Planet - Gràcia bars",
+        "url": "https://www.lonelyplanet.com/spain/barcelona/gracia/bars"
+      },
+      {
+        "name": "Barcelona Urbana - Gin and tonic bars",
+        "url": "https://barcelonaurbana.com/en/blog/best-gin-tonic-bars-barcelona/"
+      },
+      {
+        "name": "Fem Gràcia - Elephanta",
+        "url": "https://www.femgracia.cat/es/negocio/elephanta-ginbar-cocteleria"
+      },
+      {
+        "name": "Barcelona Turisme",
+        "url": "https://www.barcelonaturisme.com"
+      }
+    ]
+  },
+  {
+    "id": "list-barcelona-poblesec-dive-bars",
+    "slug": "barcelona-poble-sec-dive-bars",
+    "seoSlug": "best-dive-bars",
+    "seoTitle": "Best Dive Bars in Poble-sec, Barcelona",
+    "seoDescription": "Best dive bars in Poble-sec, Barcelona, from old-school bodegas and Carrer de Blai pintxos stops to standing-room tapas bars and neighborhood drinks.",
+    "title": "Bodega Crawl on Blai",
+    "description": "Poble-sec is built for a compact crawl, with Carrer de Blai, old bodegas, standing montaditos, craft beer, and vermouth rooms packed below Montjuic. Use this before Apolo, after a hill day, or when dinner and drinks should blur without a reservation-heavy plan.",
+    "url": "https://www.google.com/maps/search/poble+sec+dive+bars+barcelona",
+    "category": "Nightlife",
+    "location": {
+      "city": "Barcelona",
+      "neighborhood": "Poble-sec",
+      "country": "Spain",
+      "continent": "Europe",
+      "scope": "city"
+    },
+    "creator": {
+      "id": "user-rguide-nightlife",
+      "name": "R Nightlife",
+      "avatar": "data:image/svg+xml;utf8,%0A%20%20%20%20%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22160%22%20height%3D%22160%22%20viewBox%3D%220%200%20160%20160%22%3E%0A%20%20%20%20%20%20%3Crect%20width%3D%22160%22%20height%3D%22160%22%20rx%3D%2280%22%20fill%3D%22%230f766e%22%20%2F%3E%0A%20%20%20%20%20%20%3Ctext%20x%3D%2250%25%22%20y%3D%2254%25%22%20text-anchor%3D%22middle%22%20dominant-baseline%3D%22middle%22%0A%20%20%20%20%20%20%20%20font-family%3D%22Arial%2C%20sans-serif%22%20font-size%3D%2276%22%20font-weight%3D%22700%22%20fill%3D%22white%22%3ER%3C%2Ftext%3E%0A%20%20%20%20%3C%2Fsvg%3E%0A%20%20"
+    },
+    "upvotes": 0,
+    "createdAt": "2026-04-21T00:00:00.000Z",
+    "stops": [
+      {
+        "id": "poblesec-bodega-salto",
+        "name": "Bodega Saltó",
+        "coordinates": [
+          41.3726,
+          2.1673
+        ],
+        "description": "Bodega Saltó is the Poble-sec character anchor, with eccentric decor, old-bodega energy, and a room that feels more bohemian than polished. It works best before or after Carrer de Blai when the route needs personality, not just pintxos volume.",
+        "hours": {
+          "mon": "6:00 PM-12:30 AM",
+          "tue": "6:00 PM-12:30 AM",
+          "wed": "6:00 PM-1:00 AM",
+          "thu": "6:00 PM-1:30 AM",
+          "fri": "6:00 PM-2:30 AM",
+          "sat": "6:00 PM-2:30 AM",
+          "sun": "6:00 PM-12:00 AM"
+        },
+        "photo": "https://bodegasalto.net/wp-content/uploads/2023/05/milkers-bodega-vinos-salto-barcelona-poble-sec.jpeg"
+      },
+      {
+        "id": "poblesec-la-tieta",
+        "name": "La Tieta",
+        "coordinates": [
+          41.3747,
+          2.1677
+        ],
+        "description": "La Tieta gives the Poble-sec dive route a marble-bar wine-and-vermouth stop that fits naturally into the Carrer de Blai crawl. Use it when the group wants small plates and a terrace-paced pause before the night gets louder.",
+        "hours": {
+          "mon": "6:00 PM-12:30 AM",
+          "tue": "6:00 PM-12:30 AM",
+          "wed": "6:00 PM-1:00 AM",
+          "thu": "6:00 PM-1:30 AM",
+          "fri": "6:00 PM-2:30 AM",
+          "sat": "6:00 PM-2:30 AM",
+          "sun": "6:00 PM-12:00 AM"
+        },
+        "photo": "https://www.bodegalatieta.com/wp-content/uploads/2019/12/final_5dac66d6a2c2c80014c420e4_9.gif"
+      },
+      {
+        "id": "poblesec-tasqueta-blai",
+        "name": "La Tasqueta de Blai",
+        "coordinates": [
+          41.3737,
+          2.1669
+        ],
+        "description": "La Tasqueta de Blai is the practical pintxos stop for understanding why Carrer de Blai works as a crawl street. It is crowded and direct, so use it for quick bites and momentum rather than a lingering dinner.",
+        "hours": {
+          "mon": "6:00 PM-12:30 AM",
+          "tue": "6:00 PM-12:30 AM",
+          "wed": "6:00 PM-1:00 AM",
+          "thu": "6:00 PM-1:30 AM",
+          "fri": "6:00 PM-2:30 AM",
+          "sat": "6:00 PM-2:30 AM",
+          "sun": "6:00 PM-12:00 AM"
+        },
+        "photo": "https://cdn.prod.website-files.com/5ebbeb680f69fd550e86ffe0/646b2281b0cb4aa3d71740c5__DSC8523.jpg"
+      },
+      {
+        "id": "poblesec-quimet-quimet",
+        "name": "Quimet & Quimet",
+        "coordinates": [
+          41.3738,
+          2.1635
+        ],
+        "description": "Quimet & Quimet is the Poble-sec institution: standing-only, bottle-lined, and built around montaditos that justify the stop even on a short route. Go early, keep the visit compact, and let it launch the rest of the Blai or Paral·lel evening.",
+        "hours": {
+          "mon": "12:00 PM-11:00 PM",
+          "tue": "12:00 PM-11:00 PM",
+          "wed": "12:00 PM-11:00 PM",
+          "thu": "12:00 PM-11:30 PM",
+          "fri": "12:00 PM-12:00 AM",
+          "sat": "12:00 PM-12:00 AM",
+          "sun": "12:00 PM-10:30 PM"
+        },
+        "photo": "https://quimetiquimet.com/wp-content/uploads/tapbg.jpg"
+      },
+      {
+        "id": "poblesec-abirradero",
+        "name": "Abirradero",
+        "coordinates": [
+          41.374,
+          2.1703
+        ],
+        "description": "Abirradero broadens the Poble-sec crawl beyond vermouth and pintxos with craft beer, casual food, and a taproom pace. It is useful when the group wants a sit-down reset before deciding whether the night heads toward Apolo.",
+        "hours": {
+          "mon": "12:00 PM-12:30 AM",
+          "tue": "12:00 PM-12:30 AM",
+          "wed": "12:00 PM-12:30 AM",
+          "thu": "12:00 PM-1:30 AM",
+          "fri": "12:00 PM-2:00 AM",
+          "sat": "12:00 PM-2:00 AM",
+          "sun": "12:00 PM-12:00 AM"
+        },
+        "photo": "http://static1.squarespace.com/static/612df270cb5b2832a82ac1c4/t/612df30039503c777eeea6c1/1630401280673/Abirradero+White.png?format=1500w"
+      },
+      {
+        "id": "poblesec-platilleria",
+        "name": "La Platilleria",
+        "coordinates": [
+          41.3746,
+          2.1658
+        ],
+        "description": "La Platilleria gives the Poble-sec set a warmer small-plates rhythm, where dinner can stay casual and still feel chosen. Use it when the group wants food, conversation, and a neighborhood room before the late-night options take over.",
+        "hours": {
+          "mon": "6:00 PM-12:30 AM",
+          "tue": "6:00 PM-12:30 AM",
+          "wed": "6:00 PM-1:00 AM",
+          "thu": "6:00 PM-1:30 AM",
+          "fri": "6:00 PM-2:30 AM",
+          "sat": "6:00 PM-2:30 AM",
+          "sun": "6:00 PM-12:00 AM"
+        },
+        "photo": "https://media-cdn.tripadvisor.com/media/photo-o/09/24/e4/7a/la-platilleria.jpg"
+      }
+    ],
+    "sources": [
+      {
+        "name": "Bodega Saltó official",
+        "url": "https://bodegasalto.net/"
+      },
+      {
+        "name": "Quimet & Quimet official",
+        "url": "https://quimetiquimet.com/en/"
+      },
+      {
+        "name": "Time Out - Poble-sec bars",
+        "url": "https://www.timeout.com/barcelona/bars-and-pubs/poble-sec-bars"
+      },
+      {
+        "name": "Time Out - La Tieta",
+        "url": "https://www.timeout.com/barcelona/bars-and-pubs/la-tieta"
+      },
+      {
+        "name": "Barcelona Food Experience - Abirradero",
+        "url": "https://www.barcelonafoodexperience.com/blog/abirradero"
+      },
+      {
+        "name": "Barcelona Urbana - Poble-sec guide",
+        "url": "https://barcelonaurbana.com/en/blog/poble-sec-barcelona-guide/"
+      },
+      {
+        "name": "The Culture Trip - Poble-sec bars",
+        "url": "https://theculturetrip.com/europe/spain/articles/best-bars-in-poble-sec-barcelona"
+      },
+      {
+        "name": "Tripadvisor - Abirradero",
+        "url": "https://www.tripadvisor.com/Restaurant_Review-g187497-d8738631-Reviews-Abirradero-Barcelona_Catalonia.html"
+      },
+      {
+        "name": "Tripadvisor",
+        "url": "https://www.tripadvisor.com"
+      }
+    ]
+  },
+  {
+    "id": "list-barcelona-poblesec-popular-bars",
+    "slug": "barcelona-poble-sec-popular-nightlife",
+    "seoSlug": "best-bars",
+    "seoTitle": "Best Bars in Poble-sec, Barcelona",
+    "seoDescription": "Best bars in Poble-sec, Barcelona, including club anchors, queer-friendly cocktail rooms, theater-adjacent nightlife, and bigger venues with citywide draw.",
+    "title": "Apolo Orbit and Big Nights",
+    "description": "Poble-sec gets louder around Parallel, where clubs, cabaret rooms, queer-friendly bars, theater energy, and late DJ floors sit beside the Blai crawl. Use this when the night needs a real finish after tapas, Montjuic, or a show-heavy evening.",
+    "url": "https://www.google.com/maps/search/poble+sec+popular+nightlife+barcelona",
+    "category": "Nightlife",
+    "location": {
+      "city": "Barcelona",
+      "neighborhood": "Poble-sec",
+      "country": "Spain",
+      "continent": "Europe",
+      "scope": "city"
+    },
+    "creator": {
+      "id": "user-rguide-nightlife",
+      "name": "R Nightlife",
+      "avatar": "data:image/svg+xml;utf8,%0A%20%20%20%20%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22160%22%20height%3D%22160%22%20viewBox%3D%220%200%20160%20160%22%3E%0A%20%20%20%20%20%20%3Crect%20width%3D%22160%22%20height%3D%22160%22%20rx%3D%2280%22%20fill%3D%22%230f766e%22%20%2F%3E%0A%20%20%20%20%20%20%3Ctext%20x%3D%2250%25%22%20y%3D%2254%25%22%20text-anchor%3D%22middle%22%20dominant-baseline%3D%22middle%22%0A%20%20%20%20%20%20%20%20font-family%3D%22Arial%2C%20sans-serif%22%20font-size%3D%2276%22%20font-weight%3D%22700%22%20fill%3D%22white%22%3ER%3C%2Ftext%3E%0A%20%20%20%20%3C%2Fsvg%3E%0A%20%20"
+    },
+    "upvotes": 0,
+    "createdAt": "2026-04-21T00:00:00.000Z",
+    "stops": [
+      {
+        "id": "poblesec-federica",
+        "name": "La Federica",
+        "coordinates": [
+          41.3736,
+          2.1675
+        ],
+        "description": "La Federica gives the Poble-sec popular route a queer-friendly social room with cocktails, warmth, and enough weekend demand to feel like a real stop. It is best when the night should start welcoming and conversational before moving toward clubs or cabaret.",
+        "hours": {
+          "mon": "6:00 PM-12:30 AM",
+          "tue": "6:00 PM-12:30 AM",
+          "wed": "6:00 PM-1:00 AM",
+          "thu": "6:00 PM-1:30 AM",
+          "fri": "6:00 PM-2:30 AM",
+          "sat": "6:00 PM-2:30 AM",
+          "sun": "6:00 PM-12:00 AM"
+        },
+        "photo": "https://images.unsplash.com/photo-1529193591184-b1d58069ecdd?auto=format&fit=crop&w=900&q=80"
+      },
+      {
+        "id": "poblesec-apolo",
+        "name": "Sala Apolo",
+        "coordinates": [
+          41.3752,
+          2.1696
+        ],
+        "description": "Sala Apolo is the Poble-sec heavyweight: a multi-room club and concert institution with electronic, indie, and citywide programming pull. Check the lineup and use it as the final anchor, because it can define the whole night.",
+        "hours": {
+          "mon": "10:00 PM-2:30 AM",
+          "tue": "10:00 PM-2:30 AM",
+          "wed": "10:00 PM-3:30 AM",
+          "thu": "10:00 PM-4:30 AM",
+          "fri": "10:00 PM-5:00 AM",
+          "sat": "10:00 PM-5:00 AM",
+          "sun": "10:00 PM-2:30 AM"
+        },
+        "photo": "https://sala-apolo.com/bundles/app/newsletterImg/Newsletter-Header-Mobile-01-640x466.jpg"
+      },
+      {
+        "id": "poblesec-laut",
+        "name": "LAUT",
+        "coordinates": [
+          41.3734,
+          2.1686
+        ],
+        "description": "LAUT gives Poble-sec a smaller electronic-club option for focused late sessions and local programming. It is the better fit when Apolo feels too massive but the night still needs a proper dance-floor endpoint.",
+        "hours": {
+          "mon": "10:00 PM-2:30 AM",
+          "tue": "10:00 PM-2:30 AM",
+          "wed": "10:00 PM-3:30 AM",
+          "thu": "10:00 PM-4:30 AM",
+          "fri": "10:00 PM-5:00 AM",
+          "sat": "10:00 PM-5:00 AM",
+          "sun": "10:00 PM-2:30 AM"
+        },
+        "photo": "https://linktr.ee/og/image/lautbarcelona.jpg"
+      },
+      {
+        "id": "poblesec-tinta-roja",
+        "name": "Tinta Roja",
+        "coordinates": [
+          41.3717,
+          2.1655
+        ],
+        "description": "Tinta Roja adds the performance-room side of Poble-sec, with cabaret, tango, comedy, music, and offbeat nights that start at the bar. Check the event schedule first, then use it when the plan wants a show rather than a standard bar hop.",
+        "hours": {
+          "mon": "Event schedule (check venue)",
+          "tue": "Event schedule (check venue)",
+          "wed": "Event schedule (check venue)",
+          "thu": "Event schedule (check venue)",
+          "fri": "Event schedule (check venue)",
+          "sat": "Event schedule (check venue)",
+          "sun": "Event schedule (check venue)"
+        },
+        "photo": "http://static1.squarespace.com/static/62971853214afa278ea454ab/t/62978a677d1aba4060811595/1654098535605/BIG-logo-main-yellow.jpg?format=1500w"
+      },
+      {
+        "id": "poblesec-la-tieta-popular",
+        "name": "La Tieta",
+        "coordinates": [
+          41.3747,
+          2.1677
+        ],
+        "description": "La Tieta works in the popular Poble-sec route as the bridge between Blai tapas and a louder Paral·lel finish. It gives the group wine, vermouth, cocktails, and a social pause before committing to a club or performance room.",
+        "hours": {
+          "mon": "6:00 PM-12:30 AM",
+          "tue": "6:00 PM-12:30 AM",
+          "wed": "6:00 PM-1:00 AM",
+          "thu": "6:00 PM-1:30 AM",
+          "fri": "6:00 PM-2:30 AM",
+          "sat": "6:00 PM-2:30 AM",
+          "sun": "6:00 PM-12:00 AM"
+        },
+        "photo": "https://www.bodegalatieta.com/wp-content/uploads/2019/12/final_5dac66d6a2c2c80014c420e4_9.gif"
+      },
+      {
+        "id": "poblesec-plataforma",
+        "name": "Plataforma",
+        "coordinates": [
+          41.3742,
+          2.1673
+        ],
+        "description": "Plataforma gives the Poble-sec list a less polished late-club finish, with alternative, pop, rock, and throwback DJ nights above Paral·lel. Use it when the group wants dancing without the larger commitment or production scale of Apolo.",
+        "hours": {
+          "mon": "10:00 PM-2:30 AM",
+          "tue": "10:00 PM-2:30 AM",
+          "wed": "10:00 PM-3:30 AM",
+          "thu": "10:00 PM-4:30 AM",
+          "fri": "10:00 PM-5:00 AM",
+          "sat": "10:00 PM-5:00 AM",
+          "sun": "10:00 PM-2:30 AM"
+        },
+        "photo": "https://images.ctfassets.net/a4oylpwiu3rz/1Y44Rp2be5pIEvlAMxoI2V/113ed3f50f8ba0b82b0f515161f16e41/Plataforma.jpg"
+      }
+    ],
+    "sources": [
+      {
+        "name": "Sala Apolo official",
+        "url": "https://www.sala-apolo.com/en/about"
+      },
+      {
+        "name": "Time Out - Sala Apolo",
+        "url": "https://www.timeout.com/barcelona/clubs/sala-apolo"
+      },
+      {
+        "name": "LAUT official",
+        "url": "https://laut.es/info"
+      },
+      {
+        "name": "Time Out - LAUT",
+        "url": "https://www.timeout.com/barcelona/clubs/laut"
+      },
+      {
+        "name": "Barcelona.cat - Sala LAUT",
+        "url": "https://www.barcelona.cat/en/what-to-do-in-bcn/culture/auditoria/sala-laut-99400669414"
+      },
+      {
+        "name": "Tinta Roja official",
+        "url": "https://www.tinta-roja.cat/en"
+      },
+      {
+        "name": "Time Out - Tinta Roja",
+        "url": "https://www.timeout.com/barcelona/music-and-nightlife/tinta-roja"
+      },
+      {
+        "name": "La Federica - Barcelona city listing",
+        "url": "https://ajuntament.barcelona.cat/dretsidiversitat/es/detail/bar-la-federica_99400738981"
+      },
+      {
+        "name": "Time Out - La Tieta",
+        "url": "https://www.timeout.com/barcelona/bars-and-pubs/la-tieta"
+      },
+      {
+        "name": "Plataforma - The Bar España",
+        "url": "https://es.thebar.com/locales/discotecas-clubs/bacelona/plataforma"
+      },
+      {
+        "name": "Time Out - Poble-sec bars",
+        "url": "https://www.timeout.com/barcelona/bars-and-pubs/poble-sec-bars"
+      },
+      {
+        "name": "The Culture Trip - Poble-sec bars",
+        "url": "https://theculturetrip.com/europe/spain/articles/best-bars-in-poble-sec-barcelona"
+      },
+      {
+        "name": "Barcelona Yellow - Sala Apolo",
+        "url": "https://www.barcelonayellow.com/bcn/nightlife/clubs-lounges/sala-apolo"
+      },
+      {
+        "name": "Tripadvisor",
+        "url": "https://www.tripadvisor.com"
+      }
+    ]
+  },
+  {
+    "id": "list-barcelona-citywide-dive-bars",
+    "slug": "barcelona-best-dive-bars-citywide",
+    "seoSlug": "best-dive-bars",
+    "seoTitle": "Best Dive Bars in Barcelona",
+    "seoDescription": "Best dive bars in Barcelona, pulling the strongest smaller bar picks from Eixample, El Born, the Gothic Quarter, Gràcia, and Poble-sec.",
+    "title": "Cellars, Counters, and Late-Night Regulars",
+    "description": "The best low-key bar route is not one neighborhood, but a set of old rooms that still explain the city: absinthe history, cava counters, Gothic taverns, Gracia regulars, and Poble-sec montaditos. Use this when you want character before polish.",
+    "url": "https://www.google.com/maps/search/best+dive+bars+barcelona",
+    "category": "Nightlife",
+    "location": {
+      "city": "Barcelona",
+      "country": "Spain",
+      "continent": "Europe",
+      "scope": "city"
+    },
+    "creator": {
+      "id": "user-rguide-nightlife",
+      "name": "R Nightlife",
+      "avatar": "data:image/svg+xml;utf8,%0A%20%20%20%20%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22160%22%20height%3D%22160%22%20viewBox%3D%220%200%20160%20160%22%3E%0A%20%20%20%20%20%20%3Crect%20width%3D%22160%22%20height%3D%22160%22%20rx%3D%2280%22%20fill%3D%22%230f766e%22%20%2F%3E%0A%20%20%20%20%20%20%3Ctext%20x%3D%2250%25%22%20y%3D%2254%25%22%20text-anchor%3D%22middle%22%20dominant-baseline%3D%22middle%22%0A%20%20%20%20%20%20%20%20font-family%3D%22Arial%2C%20sans-serif%22%20font-size%3D%2276%22%20font-weight%3D%22700%22%20fill%3D%22white%22%3ER%3C%2Ftext%3E%0A%20%20%20%20%3C%2Fsvg%3E%0A%20%20"
+    },
+    "upvotes": 0,
+    "createdAt": "2026-04-29T00:00:00.000Z",
+    "stops": [
+      {
+        "id": "citywide-dive-bar-marsella",
+        "name": "Bar Marsella",
+        "coordinates": [
+          41.3852,
+          2.1619
+        ],
+        "description": "Bar Marsella is the Raval-edge pick because it brings the strongest old-Barcelona dive-bar identity in the citywide set: absinthe history, worn-in rooms, late-night traffic, and enough grit to counter polished cocktail Barcelona. Use it as a late, atmospheric stop when the citywide route needs texture rather than refinement.",
+        "hours": {
+          "mon": "6:00 PM-12:30 AM",
+          "tue": "6:00 PM-12:30 AM",
+          "wed": "6:00 PM-1:00 AM",
+          "thu": "6:00 PM-1:30 AM",
+          "fri": "6:00 PM-2:30 AM",
+          "sat": "6:00 PM-2:30 AM",
+          "sun": "6:00 PM-12:00 AM"
+        },
+        "photo": "https://www.barcelona-life.com/wp-content/uploads/2018/02/marsella-barcelona.jpg"
+      },
+      {
+        "id": "citywide-dive-el-xampanyet",
+        "name": "El Xampanyet",
+        "coordinates": [
+          41.3847,
+          2.1836
+        ],
+        "description": "El Xampanyet is the El Born representative because it turns cava, anchovies, conservas, and packed counter service into a complete Barcelona bar ritual. It is tourist-famous now, but still earns the slot because the room's pace, short-order food, and standing-room energy are exactly why the Born bar crawl works.",
+        "hours": {
+          "mon": "7:00 PM-11:00 PM",
+          "tue": "12:00 PM-3:30 PM, 7:00 PM-11:00 PM",
+          "wed": "12:00 PM-3:30 PM, 7:00 PM-11:00 PM",
+          "thu": "12:00 PM-3:30 PM, 7:00 PM-11:00 PM",
+          "fri": "12:00 PM-3:30 PM, 7:00 PM-11:00 PM",
+          "sat": "12:00 PM-3:30 PM",
+          "sun": "Closed"
+        },
+        "photo": "https://www.elxampanyet.com/wp-content/uploads/2024/10/Iriarte_0132-2048x1353.jpg"
+      },
+      {
+        "id": "citywide-dive-la-plata",
+        "name": "Bar La Plata",
+        "coordinates": [
+          41.3818,
+          2.1799
+        ],
+        "description": "Bar La Plata is the Gothic Quarter pick for travelers who want an old-city bar that does not need a concept. The draw is a short historic menu, house wine/vermouth rhythm, fast service, and a room that still feels specific rather than generic despite its central location.",
+        "hours": {
+          "mon": "12:00 PM-12:30 AM",
+          "tue": "12:00 PM-12:30 AM",
+          "wed": "12:00 PM-12:30 AM",
+          "thu": "12:00 PM-1:30 AM",
+          "fri": "12:00 PM-2:00 AM",
+          "sat": "12:00 PM-2:00 AM",
+          "sun": "12:00 PM-12:00 AM"
+        },
+        "photo": "https://barlaplata.com/wp-content/uploads/2024/04/img_7003-1.jpg"
+      },
+      {
+        "id": "citywide-dive-canigo",
+        "name": "Bar Canigó",
+        "coordinates": [
+          41.4012,
+          2.1609
+        ],
+        "description": "Bar Canigó is the Gràcia pick because it captures the neighborhood's regular-driven plaza culture better than a destination cocktail room would. It works for vermouth, casual beers, and observing the village-like evening rhythm that separates Gràcia from the old-city nightlife circuit.",
+        "hours": {
+          "mon": "12:00 PM-11:00 PM",
+          "tue": "12:00 PM-11:00 PM",
+          "wed": "12:00 PM-11:00 PM",
+          "thu": "12:00 PM-11:30 PM",
+          "fri": "12:00 PM-12:00 AM",
+          "sat": "12:00 PM-12:00 AM",
+          "sun": "12:00 PM-10:30 PM"
+        },
+        "photo": "https://images.unsplash.com/photo-1514933651103-005eec06c04b?auto=format&fit=crop&w=900&q=80"
+      },
+      {
+        "id": "citywide-dive-quimet-quimet",
+        "name": "Quimet & Quimet",
+        "coordinates": [
+          41.3738,
+          2.1635
+        ],
+        "description": "Quimet & Quimet is the Poble-sec anchor because it is small, standing-only, and deeply tied to the neighborhood's bottle-and-montadito culture. It is more famous than hidden, but the format is still pure Barcelona: quick pours, tight space, exceptional tins, and a crowd that turns food into bar energy.",
+        "hours": {
+          "mon": "12:00 PM-11:00 PM",
+          "tue": "12:00 PM-11:00 PM",
+          "wed": "12:00 PM-11:00 PM",
+          "thu": "12:00 PM-11:30 PM",
+          "fri": "12:00 PM-12:00 AM",
+          "sat": "12:00 PM-12:00 AM",
+          "sun": "12:00 PM-10:30 PM"
+        },
+        "photo": "https://quimetiquimet.com/wp-content/uploads/tapbg.jpg"
+      }
+    ],
+    "sources": [
+      {
+        "name": "Time Out - Best bars in Barcelona",
+        "url": "https://www.timeout.com/barcelona/bars-and-pubs/best-bars-in-barcelona"
+      },
+      {
+        "name": "Lonely Planet - Barcelona bars",
+        "url": "https://www.lonelyplanet.com/spain/barcelona/bars"
+      },
+      {
+        "name": "The Culture Trip - Gothic Quarter bars",
+        "url": "https://theculturetrip.com/europe/spain/articles/best-bars-in-the-gothic-quarter-barcelona"
+      },
+      {
+        "name": "The Culture Trip - Poble-sec bars",
+        "url": "https://theculturetrip.com/europe/spain/articles/best-bars-in-poble-sec-barcelona"
+      },
+      {
+        "name": "Barcelona Turisme",
+        "url": "https://www.barcelonaturisme.com"
+      },
+      {
+        "name": "Google Maps",
+        "url": "https://maps.google.com"
+      }
+    ]
+  },
+  {
+    "id": "list-barcelona-citywide-popular-bars",
+    "slug": "barcelona-best-popular-bars-citywide",
+    "seoSlug": "best-bars",
+    "seoTitle": "Best Bars in Barcelona",
+    "seoDescription": "Best bars in Barcelona, aggregating the biggest destination cocktail rooms, live-music spots, and high-demand nightlife picks from each neighborhood guide.",
+    "title": "Cocktails, Clubs, and Rooms With Gravity",
+    "description": "Destination nightlife runs from world-ranked cocktail rooms to Placa Reial music clubs, Gracia venues, and the Apolo orbit in Poble-sec. Use this when the night deserves planning, queues, tickets, or a room people cross town to reach.",
+    "url": "https://www.google.com/maps/search/best+bars+barcelona",
+    "category": "Nightlife",
+    "location": {
+      "city": "Barcelona",
+      "country": "Spain",
+      "continent": "Europe",
+      "scope": "city"
+    },
+    "creator": {
+      "id": "user-rguide-nightlife",
+      "name": "R Nightlife",
+      "avatar": "data:image/svg+xml;utf8,%0A%20%20%20%20%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22160%22%20height%3D%22160%22%20viewBox%3D%220%200%20160%20160%22%3E%0A%20%20%20%20%20%20%3Crect%20width%3D%22160%22%20height%3D%22160%22%20rx%3D%2280%22%20fill%3D%22%230f766e%22%20%2F%3E%0A%20%20%20%20%20%20%3Ctext%20x%3D%2250%25%22%20y%3D%2254%25%22%20text-anchor%3D%22middle%22%20dominant-baseline%3D%22middle%22%0A%20%20%20%20%20%20%20%20font-family%3D%22Arial%2C%20sans-serif%22%20font-size%3D%2276%22%20font-weight%3D%22700%22%20fill%3D%22white%22%3ER%3C%2Ftext%3E%0A%20%20%20%20%3C%2Fsvg%3E%0A%20%20"
+    },
+    "upvotes": 0,
+    "createdAt": "2026-04-29T00:00:00.000Z",
+    "stops": [
+      {
+        "id": "citywide-popular-sips",
+        "name": "Sips",
+        "coordinates": [
+          41.3889,
+          2.1567
+        ],
+        "description": "Sips is the Eixample benchmark because Barcelona's modern cocktail reputation now runs through its Muntaner room. The drinks are precise and theatrical, and the global recognition makes it a planned destination rather than a casual first drink.",
+        "hours": {
+          "mon": "6:00 PM-12:30 AM",
+          "tue": "6:00 PM-12:30 AM",
+          "wed": "6:00 PM-1:00 AM",
+          "thu": "6:00 PM-1:30 AM",
+          "fri": "6:00 PM-2:30 AM",
+          "sat": "6:00 PM-2:30 AM",
+          "sun": "6:00 PM-12:00 AM"
+        },
+        "photo": "https://cdn.enprimeurclub.com/storage/v1/object/public/images/locations/recDakVqtmov28sO5/hero1.jpg?width=1200&quality=85&aspect_ratio=1.91%3A1&crop_gravity=center"
+      },
+      {
+        "id": "citywide-popular-paradiso",
+        "name": "Paradiso",
+        "coordinates": [
+          41.3859,
+          2.1822
+        ],
+        "description": "Paradiso is the El Born pick because it is one of Barcelona's clearest destination bars, with theatrical cocktails, international recognition, and queues that prove how much of the experience is spectacle. Use it when the point is a big-deal cocktail stop, not a casual neighborhood drink.",
+        "hours": {
+          "mon": "6:00 PM-12:30 AM",
+          "tue": "6:00 PM-12:30 AM",
+          "wed": "6:00 PM-1:00 AM",
+          "thu": "6:00 PM-1:30 AM",
+          "fri": "6:00 PM-2:30 AM",
+          "sat": "6:00 PM-2:30 AM",
+          "sun": "6:00 PM-12:00 AM"
+        },
+        "photo": "https://paradiso.cat/wp-content/uploads/2020/06/bck_premios-scaled_op.jpg"
+      },
+      {
+        "id": "citywide-popular-jamboree",
+        "name": "Jamboree",
+        "coordinates": [
+          41.3802,
+          2.1757
+        ],
+        "description": "Jamboree is the Gothic Quarter representative because it turns Plaça Reial into a late-night music anchor. It belongs in a citywide guide for travelers who want Barcelona nightlife to include live sets, club programming, and a room with institutional memory.",
+        "hours": {
+          "mon": "10:00 PM-2:30 AM",
+          "tue": "10:00 PM-2:30 AM",
+          "wed": "10:00 PM-3:30 AM",
+          "thu": "10:00 PM-4:30 AM",
+          "fri": "10:00 PM-5:00 AM",
+          "sat": "10:00 PM-5:00 AM",
+          "sun": "10:00 PM-2:30 AM"
+        },
+        "photo": "https://offloadmedia.feverup.com/barcelonasecreta.com/wp-content/uploads/2025/11/07103833/d5dc3e42-58ab-11ef-9897-42b55136ae18-1.jpg"
+      },
+      {
+        "id": "citywide-popular-heliogabal",
+        "name": "Heliogàbal",
+        "coordinates": [
+          41.4029,
+          2.1588
+        ],
+        "description": "Heliogàbal is the Gràcia pick because it brings independent music and neighborhood bar culture together in a way that feels specific to the district. It is smaller than the big old-city venues, but the event pull and local music identity make it a real destination.",
+        "hours": {
+          "mon": "6:00 PM-12:30 AM",
+          "tue": "6:00 PM-12:30 AM",
+          "wed": "6:00 PM-1:00 AM",
+          "thu": "6:00 PM-1:30 AM",
+          "fri": "6:00 PM-2:30 AM",
+          "sat": "6:00 PM-2:30 AM",
+          "sun": "6:00 PM-12:00 AM"
+        },
+        "photo": "https://www.heliogabal.com/wp-content/uploads/2021/10/Foto-Helio.jpg"
+      },
+      {
+        "id": "citywide-popular-apolo",
+        "name": "Sala Apolo",
+        "coordinates": [
+          41.3752,
+          2.1696
+        ],
+        "description": "Sala Apolo is the Poble-sec pick and the city's large-format nightlife anchor in this set. It works for club nights, concerts, and late plans that need more than a bar stool, especially when the evening is already moving along Paral·lel or Carrer de Blai.",
+        "hours": {
+          "mon": "10:00 PM-2:30 AM",
+          "tue": "10:00 PM-2:30 AM",
+          "wed": "10:00 PM-3:30 AM",
+          "thu": "10:00 PM-4:30 AM",
+          "fri": "10:00 PM-5:00 AM",
+          "sat": "10:00 PM-5:00 AM",
+          "sun": "10:00 PM-2:30 AM"
+        },
+        "photo": "https://sala-apolo.com/bundles/app/newsletterImg/Newsletter-Header-Mobile-01-640x466.jpg"
+      }
+    ],
+    "sources": [
+      {
+        "name": "World's 50 Best Bars - Sips",
+        "url": "https://www.theworlds50best.com/bars/the-list/sips.html"
+      },
+      {
+        "name": "World's 50 Best Bars",
+        "url": "https://www.worlds50bestbars.com"
+      },
+      {
+        "name": "Sips official",
+        "url": "https://sips.barcelona/"
+      },
+      {
+        "name": "Condé Nast Traveler - Sips",
+        "url": "https://www.cntraveler.com/story/sips-barcelona-menu"
+      },
+      {
+        "name": "Resident Advisor - Barcelona events",
+        "url": "https://ra.co/events/es/barcelona"
+      },
+      {
+        "name": "Time Out - Best bars in Barcelona",
+        "url": "https://www.timeout.com/barcelona/bars-and-pubs/best-bars-in-barcelona"
+      },
+      {
+        "name": "Sala Apolo official",
+        "url": "https://www.sala-apolo.com/en"
+      },
+      {
+        "name": "Jamboree official",
+        "url": "https://jamboreejazz.com/en/"
+      },
+      {
+        "name": "Paradiso official",
+        "url": "https://www.paradiso.cat"
+      },
+      {
+        "name": "Google Maps",
+        "url": "https://maps.google.com"
+      }
+    ]
+  },
+  {
+    "id": "list-barcelona-citywide-culture",
+    "slug": "barcelona-best-culture-citywide",
+    "seoSlug": "best-culture",
+    "seoTitle": "Best Culture in Barcelona",
+    "seoDescription": "Best culture in Barcelona, aggregating the strongest museum, architecture, memory, and landmark picks from each neighborhood guide.",
+    "title": "Cathedrals, Modernisme, and Museum Hills",
+    "description": "A culture spine for reading the city across neighborhoods: Gothic foundations, Born merchant history, Eixample architecture, Gracia Gaudi, and Montjuic art. Use it when you want the essential cultural stops without treating them as disconnected landmarks.",
+    "url": "https://www.google.com/maps/search/best+culture+barcelona",
+    "category": "Culture",
+    "location": {
+      "city": "Barcelona",
+      "country": "Spain",
+      "continent": "Europe",
+      "scope": "city"
+    },
+    "creator": {
+      "id": "user-rguide-culture",
+      "name": "R Culture",
+      "avatar": "data:image/svg+xml;utf8,%0A%20%20%20%20%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22160%22%20height%3D%22160%22%20viewBox%3D%220%200%20160%20160%22%3E%0A%20%20%20%20%20%20%3Crect%20width%3D%22160%22%20height%3D%22160%22%20rx%3D%2280%22%20fill%3D%22%230f766e%22%20%2F%3E%0A%20%20%20%20%20%20%3Ctext%20x%3D%2250%25%22%20y%3D%2254%25%22%20text-anchor%3D%22middle%22%20dominant-baseline%3D%22middle%22%0A%20%20%20%20%20%20%20%20font-family%3D%22Arial%2C%20sans-serif%22%20font-size%3D%2276%22%20font-weight%3D%22700%22%20fill%3D%22white%22%3ER%3C%2Ftext%3E%0A%20%20%20%20%3C%2Fsvg%3E%0A%20%20"
+    },
+    "upvotes": 0,
+    "createdAt": "2026-04-29T00:00:00.000Z",
+    "stops": [
+      {
+        "id": "citywide-culture-barcelona-cathedral",
+        "name": "Barcelona Cathedral",
+        "coordinates": [
+          41.3839,
+          2.1762
+        ],
+        "description": "Barcelona Cathedral is the Gothic Quarter's clearest cultural anchor because it makes the old city legible: medieval street pattern, cloister, choir, rooftop views, and a square organized around religious architecture. Use it early in the culture route so the surrounding lanes read as history, not just atmosphere.",
+        "hours": {
+          "mon": "9:00 AM-8:00 PM",
+          "tue": "9:00 AM-8:00 PM",
+          "wed": "9:00 AM-8:00 PM",
+          "thu": "9:00 AM-8:00 PM",
+          "fri": "9:00 AM-8:00 PM",
+          "sat": "9:00 AM-8:00 PM",
+          "sun": "9:00 AM-8:00 PM"
+        },
+        "photo": "https://upload.wikimedia.org/wikipedia/commons/6/63/Barcelona_Cathedral_Saint_Eulalia.jpg"
+      },
+      {
+        "id": "citywide-culture-santa-maria-del-mar",
+        "name": "Basílica de Santa Maria del Mar",
+        "coordinates": [
+          41.3839,
+          2.1822
+        ],
+        "description": "Santa Maria del Mar is the El Born representative because it tells the neighborhood's merchant and guild story in stone. The cleaner Catalan Gothic interior contrasts with the cathedral and gives visitors a powerful cultural stop without needing a full museum-length visit.",
+        "hours": {
+          "mon": "9:00 AM-8:00 PM",
+          "tue": "9:00 AM-8:00 PM",
+          "wed": "9:00 AM-8:00 PM",
+          "thu": "9:00 AM-8:00 PM",
+          "fri": "9:00 AM-8:00 PM",
+          "sat": "9:00 AM-8:00 PM",
+          "sun": "9:00 AM-8:00 PM"
+        },
+        "photo": "https://upload.wikimedia.org/wikipedia/commons/4/4c/Santa_Maria_del_Mar%2C_Barcelona_02.jpg"
+      },
+      {
+        "id": "citywide-culture-casa-batllo",
+        "name": "Casa Batlló",
+        "coordinates": [
+          41.3917,
+          2.1649
+        ],
+        "description": "Casa Batlló is the Eixample pick because it concentrates Barcelona's Modernista fantasy into one high-impact visit. It is tourist-heavy for good reason: facade, interiors, roofline, craft detail, and Passeig de Gràcia context make it one of the city's most useful architecture stops.",
+        "hours": {
+          "mon": "9:00 AM-8:00 PM",
+          "tue": "9:00 AM-8:00 PM",
+          "wed": "9:00 AM-8:00 PM",
+          "thu": "9:00 AM-8:00 PM",
+          "fri": "9:00 AM-8:00 PM",
+          "sat": "9:00 AM-8:00 PM",
+          "sun": "9:00 AM-8:00 PM"
+        },
+        "photo": "https://casa-batllo-barcelona.com/wp-content/uploads/2026/01/19944e616eb84ad3b204463508875f98.jpeg"
+      },
+      {
+        "id": "citywide-culture-casa-vicens",
+        "name": "Casa Vicens",
+        "coordinates": [
+          41.4035,
+          2.1507
+        ],
+        "description": "Casa Vicens is the Gràcia pick because it shows Gaudí before the monumental greatest-hits version. The domestic scale, ceramic surfaces, garden logic, and early stylistic experiments make it a more intimate architecture visit than the central icons.",
+        "hours": {
+          "mon": "9:00 AM-8:00 PM",
+          "tue": "9:00 AM-8:00 PM",
+          "wed": "9:00 AM-8:00 PM",
+          "thu": "9:00 AM-8:00 PM",
+          "fri": "9:00 AM-8:00 PM",
+          "sat": "9:00 AM-8:00 PM",
+          "sun": "9:00 AM-8:00 PM"
+        },
+        "photo": "https://casa-vicens-barcelona.com/wp-content/uploads/2026/01/9528674f03c44fe0b5fad6f5a055e924-1.jpg"
+      },
+      {
+        "id": "citywide-culture-joan-miro",
+        "name": "Fundació Joan Miró",
+        "coordinates": [
+          41.3686,
+          2.1592
+        ],
+        "description": "Fundació Joan Miró is the Poble-sec/Montjuïc pick because it combines a focused artist collection with a building and hillside setting that feel inseparable from the visit. It gives the citywide list a quieter art stop after the dense architecture of the center.",
+        "hours": {
+          "mon": "Closed",
+          "tue": "10:00 AM-7:00 PM",
+          "wed": "10:00 AM-7:00 PM",
+          "thu": "10:00 AM-7:00 PM",
+          "fri": "10:00 AM-7:00 PM",
+          "sat": "10:00 AM-7:00 PM",
+          "sun": "10:00 AM-7:00 PM"
+        },
+        "photo": "https://upload.wikimedia.org/wikipedia/commons/9/9d/Fundaci%C3%B3_Mir%C3%B3.JPG"
+      }
+    ],
+    "sources": [
+      {
+        "name": "Barcelona Turisme",
+        "url": "https://www.barcelonaturisme.com"
+      },
+      {
+        "name": "Casa Batlló official",
+        "url": "https://www.casabatllo.es"
+      },
+      {
+        "name": "Casa Vicens official",
+        "url": "https://casavicens.org"
+      },
+      {
+        "name": "Fundació Joan Miró official",
+        "url": "https://www.fmirobcn.org"
+      },
+      {
+        "name": "Google Maps",
+        "url": "https://maps.google.com"
+      }
+    ]
+  }
+] satisfies MapList[];
+
+export const barcelonaItineraryGuides = [
+  {
+    "id": "list-barcelona-one-day-activities",
+    "slug": "barcelona-one-day-itinerary",
+    "seoSlug": "best-things-to-do",
+    "seoTitle": "Best Things to Do in Barcelona in One Day",
+    "seoDescription": "Best one-day Barcelona itinerary, combining one essential culture stop, one restaurant, one neighborhood walk, one low-key bar, and one destination nightlife option.",
+    "title": "One Strong Day, No Filler",
+    "description": "A focused first-day route that chooses one great architecture stop, a counter lunch, old-city wandering, a salty cava pause, and a final cocktail spectacle. It is built to feel complete without pretending you can see everything in one day.",
+    "url": "https://www.google.com/maps/search/best+things+to+do+barcelona+one+day",
+    "category": "Activities",
+    "location": {
+      "city": "Barcelona",
+      "country": "Spain",
+      "continent": "Europe",
+      "scope": "city"
+    },
+    "creator": {
+      "id": "user-rguide-activities",
+      "name": "R Activities",
+      "avatar": "data:image/svg+xml;utf8,%0A%20%20%20%20%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22160%22%20height%3D%22160%22%20viewBox%3D%220%200%20160%20160%22%3E%0A%20%20%20%20%20%20%3Crect%20width%3D%22160%22%20height%3D%22160%22%20rx%3D%2280%22%20fill%3D%22%230f766e%22%20%2F%3E%0A%20%20%20%20%20%20%3Ctext%20x%3D%2250%25%22%20y%3D%2254%25%22%20text-anchor%3D%22middle%22%20dominant-baseline%3D%22middle%22%0A%20%20%20%20%20%20%20%20font-family%3D%22Arial%2C%20sans-serif%22%20font-size%3D%2276%22%20font-weight%3D%22700%22%20fill%3D%22white%22%3ER%3C%2Ftext%3E%0A%20%20%20%20%3C%2Fsvg%3E%0A%20%20"
+    },
+    "upvotes": 0,
+    "createdAt": "2026-04-29T00:00:00.000Z",
+    "stops": [
+      {
+        "id": "barcelona-day-casa-batllo",
+        "name": "Casa Batlló",
+        "coordinates": [
+          41.3917,
+          2.1649
+        ],
+        "description": "Start with the culture category at Casa Batlló because one day in Barcelona needs a high-impact Modernista anchor. It gives first-time visitors architecture, craft, rooftop drama, and Passeig de Gràcia context without sending them across the city before lunch.",
+        "hours": {
+          "mon": "9:00 AM-8:00 PM",
+          "tue": "9:00 AM-8:00 PM",
+          "wed": "9:00 AM-8:00 PM",
+          "thu": "9:00 AM-8:00 PM",
+          "fri": "9:00 AM-8:00 PM",
+          "sat": "9:00 AM-8:00 PM",
+          "sun": "9:00 AM-8:00 PM"
+        },
+        "photo": "https://casa-batllo-barcelona.com/wp-content/uploads/2026/01/19944e616eb84ad3b204463508875f98.jpeg"
+      },
+      {
+        "id": "barcelona-day-cal-pep",
+        "name": "Cal Pep",
+        "coordinates": [
+          41.3835,
+          2.1839
+        ],
+        "description": "Use Cal Pep as the food stop because the counter format turns lunch into a Barcelona experience rather than just a meal. Seafood tapas, quick pacing, and Born location make it easy to transition from architecture into the old-city afternoon.",
+        "price": "$$$",
+        "priceSource": "The Infatuation / Google Maps",
+        "hours": {
+          "mon": "Closed",
+          "tue": "1:00 PM-3:30 PM, 8:00 PM-11:00 PM",
+          "wed": "1:00 PM-3:30 PM, 8:00 PM-11:00 PM",
+          "thu": "1:00 PM-3:30 PM, 8:00 PM-11:00 PM",
+          "fri": "1:00 PM-3:30 PM, 8:00 PM-11:30 PM",
+          "sat": "1:00 PM-3:30 PM, 8:00 PM-11:30 PM",
+          "sun": "Closed"
+        },
+        "photo": "https://static.wixstatic.com/media/57144e_89f865012fdb4db8bc8bec1b2fdeede3~mv2.jpg"
+      },
+      {
+        "id": "barcelona-day-santa-maria",
+        "name": "Basílica de Santa Maria del Mar",
+        "coordinates": [
+          41.3839,
+          2.1822
+        ],
+        "description": "Make Santa Maria del Mar the afternoon culture stop because it is close to lunch, short enough for a one-day route, and central to the Born's merchant history. It gives the itinerary a clear architectural pause before the evening shifts into cava counters and cocktail rooms.",
+        "hours": {
+          "mon": "9:00 AM-8:00 PM",
+          "tue": "9:00 AM-8:00 PM",
+          "wed": "9:00 AM-8:00 PM",
+          "thu": "9:00 AM-8:00 PM",
+          "fri": "9:00 AM-8:00 PM",
+          "sat": "9:00 AM-8:00 PM",
+          "sun": "9:00 AM-8:00 PM"
+        },
+        "photo": "https://upload.wikimedia.org/wikipedia/commons/4/4c/Santa_Maria_del_Mar%2C_Barcelona_02.jpg"
+      },
+      {
+        "id": "barcelona-day-xampanyet",
+        "name": "El Xampanyet",
+        "coordinates": [
+          41.3847,
+          2.1836
+        ],
+        "description": "Move into the dive-bar category at El Xampanyet for cava, anchovies, and a packed counter that feels more Barcelona-specific than a generic aperitif. It is a short, loud, salty bridge between sightseeing and dinner-hour nightlife.",
+        "hours": {
+          "mon": "7:00 PM-11:00 PM",
+          "tue": "12:00 PM-3:30 PM, 7:00 PM-11:00 PM",
+          "wed": "12:00 PM-3:30 PM, 7:00 PM-11:00 PM",
+          "thu": "12:00 PM-3:30 PM, 7:00 PM-11:00 PM",
+          "fri": "12:00 PM-3:30 PM, 7:00 PM-11:00 PM",
+          "sat": "12:00 PM-3:30 PM",
+          "sun": "Closed"
+        },
+        "photo": "https://www.elxampanyet.com/wp-content/uploads/2024/10/Iriarte_0132-2048x1353.jpg"
+      },
+      {
+        "id": "barcelona-day-paradiso",
+        "name": "Paradiso",
+        "coordinates": [
+          41.3859,
+          2.1822
+        ],
+        "description": "End with the popular-bar category at Paradiso when the day calls for one memorable cocktail spectacle. The line can be part of the plan, so this works best as the final stop rather than a fragile mid-route reservation.",
+        "hours": {
+          "mon": "6:00 PM-12:30 AM",
+          "tue": "6:00 PM-12:30 AM",
+          "wed": "6:00 PM-1:00 AM",
+          "thu": "6:00 PM-1:30 AM",
+          "fri": "6:00 PM-2:30 AM",
+          "sat": "6:00 PM-2:30 AM",
+          "sun": "6:00 PM-12:00 AM"
+        },
+        "photo": "https://paradiso.cat/wp-content/uploads/2020/06/bck_premios-scaled_op.jpg"
+      }
+    ],
+    "sources": [
+      {
+        "name": "Barcelona Turisme",
+        "url": "https://www.barcelonaturisme.com"
+      },
+      {
+        "name": "The Infatuation - Best Restaurants in Barcelona",
+        "url": "https://www.theinfatuation.com/barcelona/guides/best-restaurants-hotels-barcelona"
+      },
+      {
+        "name": "Time Out - Best bars in Barcelona",
+        "url": "https://www.timeout.com/barcelona/bars-and-pubs/best-bars-in-barcelona"
+      },
+      {
+        "name": "Google Maps",
+        "url": "https://maps.google.com"
+      }
+    ]
+  },
+  {
+    "id": "list-barcelona-weekend-activities",
+    "slug": "barcelona-weekend-itinerary",
+    "seoSlug": "best-things-to-do",
+    "seoTitle": "Best Things to Do in Barcelona for a Weekend",
+    "seoDescription": "Best Barcelona weekend itinerary, mixing culture, restaurants, dive bars, popular nightlife, hostel/stay context, and neighborhood pacing across two days.",
+    "title": "Two Nights, Five Neighborhood Moods",
+    "description": "A weekend route with room to breathe: Gracia base energy, Eixample architecture, old-city nights, Montjuic art, Poble-sec bites, and one proper late finish. Use it when two days should feel paced, not stuffed.",
+    "url": "https://www.google.com/maps/search/barcelona+weekend+itinerary",
+    "category": "Activities",
+    "location": {
+      "city": "Barcelona",
+      "country": "Spain",
+      "continent": "Europe",
+      "scope": "city"
+    },
+    "creator": {
+      "id": "user-rguide-activities",
+      "name": "R Activities",
+      "avatar": "data:image/svg+xml;utf8,%0A%20%20%20%20%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22160%22%20height%3D%22160%22%20viewBox%3D%220%200%20160%20160%22%3E%0A%20%20%20%20%20%20%3Crect%20width%3D%22160%22%20height%3D%22160%22%20rx%3D%2280%22%20fill%3D%22%230f766e%22%20%2F%3E%0A%20%20%20%20%20%20%3Ctext%20x%3D%2250%25%22%20y%3D%2254%25%22%20text-anchor%3D%22middle%22%20dominant-baseline%3D%22middle%22%0A%20%20%20%20%20%20%20%20font-family%3D%22Arial%2C%20sans-serif%22%20font-size%3D%2276%22%20font-weight%3D%22700%22%20fill%3D%22white%22%3ER%3C%2Ftext%3E%0A%20%20%20%20%3C%2Fsvg%3E%0A%20%20"
+    },
+    "upvotes": 0,
+    "createdAt": "2026-04-29T00:00:00.000Z",
+    "stops": [
+      {
+        "id": "barcelona-weekend-casa-gracia",
+        "name": "Casa Gracia",
+        "coordinates": [
+          41.3978,
+          2.1578
+        ],
+        "description": "Use Casa Gracia as the stay-category anchor for the weekend because it splits the difference between hostel social energy, private-room flexibility, and easy transit. Starting from Gràcia keeps the route from becoming only an old-city weekend.",
+        "hours": {
+          "mon": "24 hours",
+          "tue": "24 hours",
+          "wed": "24 hours",
+          "thu": "24 hours",
+          "fri": "24 hours",
+          "sat": "24 hours",
+          "sun": "24 hours"
+        },
+        "photo": "https://room00hostel.com/assets/images/barcelona/slider-hotel/1.webp"
+      },
+      {
+        "id": "barcelona-weekend-casa-batllo",
+        "name": "Casa Batlló",
+        "coordinates": [
+          41.3917,
+          2.1649
+        ],
+        "description": "Casa Batlló handles the headline culture slot on day one because it is central, visually immediate, and easy to pair with an Eixample lunch or Passeig de Gràcia walk. Book it as the major architecture moment, then let the rest of the day loosen up.",
+        "hours": {
+          "mon": "9:00 AM-8:00 PM",
+          "tue": "9:00 AM-8:00 PM",
+          "wed": "9:00 AM-8:00 PM",
+          "thu": "9:00 AM-8:00 PM",
+          "fri": "9:00 AM-8:00 PM",
+          "sat": "9:00 AM-8:00 PM",
+          "sun": "9:00 AM-8:00 PM"
+        },
+        "photo": "https://casa-batllo-barcelona.com/wp-content/uploads/2026/01/19944e616eb84ad3b204463508875f98.jpeg"
+      },
+      {
+        "id": "barcelona-weekend-bodega-bonay",
+        "name": "Bodega Bonay",
+        "coordinates": [
+          41.3918,
+          2.1746
+        ],
+        "description": "Bodega Bonay is the weekend food stop when the plan needs a stylish but manageable meal rather than a tasting-menu commitment. It keeps the route in Eixample while adding natural wine, anchovies, pastas, and a design-hotel setting.",
+        "price": "$$",
+        "priceSource": "The Infatuation / Resy",
+        "hours": {
+          "mon": "12:30 PM-4:00 PM, 7:30 PM-11:00 PM",
+          "tue": "12:30 PM-4:00 PM, 7:30 PM-11:00 PM",
+          "wed": "12:30 PM-4:00 PM, 7:30 PM-11:00 PM",
+          "thu": "12:30 PM-4:00 PM, 7:30 PM-11:00 PM",
+          "fri": "12:30 PM-4:00 PM, 7:30 PM-11:30 PM",
+          "sat": "12:30 PM-4:00 PM, 7:30 PM-11:30 PM",
+          "sun": "12:30 PM-4:00 PM, 7:30 PM-11:00 PM"
+        },
+        "photo": "https://cdn-hhbfohb.nitrocdn.com/MWVuFFQrOubRCgucqTrIdzQgXRECTcge/assets/images/optimized/rev-41ae578/casabonay.com/wp-content/uploads/2020/12/ATP9564@antp-900x1196.jpg"
+      },
+      {
+        "id": "barcelona-weekend-bar-marsella",
+        "name": "Bar Marsella",
+        "coordinates": [
+          41.3852,
+          2.1619
+        ],
+        "description": "Bar Marsella gives the weekend a dive-bar texture after the polished daytime stops. Its worn-in absinthe history and late-night feel work especially well before moving toward Gothic/Born nightlife.",
+        "hours": {
+          "mon": "6:00 PM-12:30 AM",
+          "tue": "6:00 PM-12:30 AM",
+          "wed": "6:00 PM-1:00 AM",
+          "thu": "6:00 PM-1:30 AM",
+          "fri": "6:00 PM-2:30 AM",
+          "sat": "6:00 PM-2:30 AM",
+          "sun": "6:00 PM-12:00 AM"
+        },
+        "photo": "https://www.barcelona-life.com/wp-content/uploads/2018/02/marsella-barcelona.jpg"
+      },
+      {
+        "id": "barcelona-weekend-joan-miro",
+        "name": "Fundació Joan Miró",
+        "coordinates": [
+          41.3686,
+          2.1592
+        ],
+        "description": "Fundació Joan Miró anchors day two with Montjuïc culture, a focused museum visit, and a hillside setting that slows the pace after a late night. It gives the weekend route a calm art stop without making the day feel underbuilt.",
+        "hours": {
+          "mon": "Closed",
+          "tue": "10:00 AM-7:00 PM",
+          "wed": "10:00 AM-7:00 PM",
+          "thu": "10:00 AM-7:00 PM",
+          "fri": "10:00 AM-7:00 PM",
+          "sat": "10:00 AM-7:00 PM",
+          "sun": "10:00 AM-7:00 PM"
+        },
+        "photo": "https://upload.wikimedia.org/wikipedia/commons/9/9d/Fundaci%C3%B3_Mir%C3%B3.JPG"
+      },
+      {
+        "id": "barcelona-weekend-quimet-quimet",
+        "name": "Quimet & Quimet",
+        "coordinates": [
+          41.3738,
+          2.1635
+        ],
+        "description": "Quimet & Quimet is the Poble-sec food-and-bar hybrid for the weekend route. Standing montaditos and bottles make it practical before Carrer de Blai or a club night while still feeling like a real Barcelona institution.",
+        "hours": {
+          "mon": "12:00 PM-11:00 PM",
+          "tue": "12:00 PM-11:00 PM",
+          "wed": "12:00 PM-11:00 PM",
+          "thu": "12:00 PM-11:30 PM",
+          "fri": "12:00 PM-12:00 AM",
+          "sat": "12:00 PM-12:00 AM",
+          "sun": "12:00 PM-10:30 PM"
+        },
+        "photo": "https://quimetiquimet.com/wp-content/uploads/tapbg.jpg"
+      },
+      {
+        "id": "barcelona-weekend-apolo",
+        "name": "Sala Apolo",
+        "coordinates": [
+          41.3752,
+          2.1696
+        ],
+        "description": "Sala Apolo is the popular-nightlife finish because weekends need at least one venue with citywide pull. Check the programming, then treat it as the big final stop rather than a casual bar-hop stop.",
+        "hours": {
+          "mon": "10:00 PM-2:30 AM",
+          "tue": "10:00 PM-2:30 AM",
+          "wed": "10:00 PM-3:30 AM",
+          "thu": "10:00 PM-4:30 AM",
+          "fri": "10:00 PM-5:00 AM",
+          "sat": "10:00 PM-5:00 AM",
+          "sun": "10:00 PM-2:30 AM"
+        },
+        "photo": "https://sala-apolo.com/bundles/app/newsletterImg/Newsletter-Header-Mobile-01-640x466.jpg"
+      }
+    ],
+    "sources": [
+      {
+        "name": "Barcelona Turisme",
+        "url": "https://www.barcelonaturisme.com"
+      },
+      {
+        "name": "The Infatuation - Best Restaurants in Barcelona",
+        "url": "https://www.theinfatuation.com/barcelona/guides/best-restaurants-hotels-barcelona"
+      },
+      {
+        "name": "Time Out - Best bars in Barcelona",
+        "url": "https://www.timeout.com/barcelona/bars-and-pubs/best-bars-in-barcelona"
+      },
+      {
+        "name": "Fundació Joan Miró official",
+        "url": "https://www.fmirobcn.org"
+      },
+      {
+        "name": "Google Maps",
+        "url": "https://maps.google.com"
+      }
+    ]
+  },
+  {
+    "id": "list-barcelona-week-activities",
+    "slug": "barcelona-week-itinerary",
+    "seoSlug": "best-things-to-do",
+    "seoTitle": "Best Things to Do in Barcelona for a Week",
+    "seoDescription": "Best one-week Barcelona itinerary, using the strongest citywide picks across restaurants, culture, dive bars, popular bars, hostels, stays, neighborhoods, and Montjuïc.",
+    "title": "A Week From Gràcia to the Hill",
+    "description": "A longer route that lets the categories spread out instead of competing for one day: hostel base, Gaudi starts, old-city history, tasting-menu splurge, Born nightlife, Montjuic reset, and Poble-sec finish.",
+    "url": "https://www.google.com/maps/search/barcelona+one+week+itinerary",
+    "category": "Activities",
+    "location": {
+      "city": "Barcelona",
+      "country": "Spain",
+      "continent": "Europe",
+      "scope": "city"
+    },
+    "creator": {
+      "id": "user-rguide-activities",
+      "name": "R Activities",
+      "avatar": "data:image/svg+xml;utf8,%0A%20%20%20%20%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22160%22%20height%3D%22160%22%20viewBox%3D%220%200%20160%20160%22%3E%0A%20%20%20%20%20%20%3Crect%20width%3D%22160%22%20height%3D%22160%22%20rx%3D%2280%22%20fill%3D%22%230f766e%22%20%2F%3E%0A%20%20%20%20%20%20%3Ctext%20x%3D%2250%25%22%20y%3D%2254%25%22%20text-anchor%3D%22middle%22%20dominant-baseline%3D%22middle%22%0A%20%20%20%20%20%20%20%20font-family%3D%22Arial%2C%20sans-serif%22%20font-size%3D%2276%22%20font-weight%3D%22700%22%20fill%3D%22white%22%3ER%3C%2Ftext%3E%0A%20%20%20%20%3C%2Fsvg%3E%0A%20%20"
+    },
+    "upvotes": 0,
+    "createdAt": "2026-04-29T00:00:00.000Z",
+    "stops": [
+      {
+        "id": "barcelona-week-yeah-hostel",
+        "name": "Yeah Barcelona Hostel",
+        "coordinates": [
+          41.3983,
+          2.1654
+        ],
+        "description": "Use Yeah Barcelona as the hostel-category base for a week because the location works for Eixample, Gràcia, and Sagrada Família while the social programming helps longer-stay travelers find plans. It is especially useful when the itinerary needs an affordable base that can create community without relying on random bar crawls.",
+        "hours": {
+          "mon": "24 hours",
+          "tue": "24 hours",
+          "wed": "24 hours",
+          "thu": "24 hours",
+          "fri": "24 hours",
+          "sat": "24 hours",
+          "sun": "24 hours"
+        },
+        "photo": "https://yeahostels.com/web/wp-content/uploads/2025/08/Location-Reception02.jpg"
+      },
+      {
+        "id": "barcelona-week-casa-vicens",
+        "name": "Casa Vicens",
+        "coordinates": [
+          41.4035,
+          2.1507
+        ],
+        "description": "Start the week in Gràcia with Casa Vicens so the architecture story begins before the giant Gaudí icons. It is smaller, more domestic, and gives the neighborhood's village rhythm a cultural anchor.",
+        "hours": {
+          "mon": "9:00 AM-8:00 PM",
+          "tue": "9:00 AM-8:00 PM",
+          "wed": "9:00 AM-8:00 PM",
+          "thu": "9:00 AM-8:00 PM",
+          "fri": "9:00 AM-8:00 PM",
+          "sat": "9:00 AM-8:00 PM",
+          "sun": "9:00 AM-8:00 PM"
+        },
+        "photo": "https://casa-vicens-barcelona.com/wp-content/uploads/2026/01/9528674f03c44fe0b5fad6f5a055e924-1.jpg"
+      },
+      {
+        "id": "barcelona-week-bemba",
+        "name": "Bemba Smash Burger",
+        "coordinates": [
+          41.407,
+          2.1583
+        ],
+        "description": "Bemba fills the casual-food slot for a longer trip: quick, current, and useful when the week should include a cheap meal that is not another tapas fallback. It also keeps the first Gràcia day light.",
+        "price": "$",
+        "priceSource": "Eater / Instagram",
+        "hours": {
+          "mon": "12:30 PM-4:00 PM, 7:30 PM-11:00 PM",
+          "tue": "12:30 PM-4:00 PM, 7:30 PM-11:00 PM",
+          "wed": "12:30 PM-4:00 PM, 7:30 PM-11:00 PM",
+          "thu": "12:30 PM-4:00 PM, 7:30 PM-11:00 PM",
+          "fri": "12:30 PM-4:00 PM, 7:30 PM-11:30 PM",
+          "sat": "12:30 PM-4:00 PM, 7:30 PM-11:30 PM",
+          "sun": "12:30 PM-4:00 PM, 7:30 PM-11:00 PM"
+        },
+        "photo": "https://lh5.googleusercontent.com/p/AF1QipPGy52GLF6bRtn426WdJUPVsiCjbkQx_nf9_Za0=w408-h306-k-no"
+      },
+      {
+        "id": "barcelona-week-casa-batllo",
+        "name": "Casa Batlló",
+        "coordinates": [
+          41.3917,
+          2.1649
+        ],
+        "description": "Casa Batlló carries the major Eixample culture day with the strongest high-impact architecture stop in the central grid. Give it time rather than squeezing it into a rushed old-city morning.",
+        "hours": {
+          "mon": "9:00 AM-8:00 PM",
+          "tue": "9:00 AM-8:00 PM",
+          "wed": "9:00 AM-8:00 PM",
+          "thu": "9:00 AM-8:00 PM",
+          "fri": "9:00 AM-8:00 PM",
+          "sat": "9:00 AM-8:00 PM",
+          "sun": "9:00 AM-8:00 PM"
+        },
+        "photo": "https://casa-batllo-barcelona.com/wp-content/uploads/2026/01/19944e616eb84ad3b204463508875f98.jpeg"
+      },
+      {
+        "id": "barcelona-week-disfrutar",
+        "name": "Disfrutar",
+        "coordinates": [
+          41.3878,
+          2.1533
+        ],
+        "description": "Disfrutar is the destination-restaurant slot for a full week because a longer itinerary can justify one trip-defining reservation. Keep it as the special meal, not a casual add-on, and build the day around the booking.",
+        "price": "$$$",
+        "priceSource": "MICHELIN Guide / World's 50 Best",
+        "hours": {
+          "mon": "Closed",
+          "tue": "1:00 PM-2:15 PM, 8:00 PM-9:15 PM",
+          "wed": "1:00 PM-2:15 PM, 8:00 PM-9:15 PM",
+          "thu": "1:00 PM-2:15 PM, 8:00 PM-9:15 PM",
+          "fri": "1:00 PM-2:15 PM, 8:00 PM-9:15 PM",
+          "sat": "1:00 PM-2:15 PM, 8:00 PM-9:15 PM",
+          "sun": "Closed"
+        },
+        "photo": "https://www.disfrutarbarcelona.com/api/uploads/restaurant/images/original/0c171d8288ac922fcd372beaceccb58d_phpQfnqi9.jpg"
+      },
+      {
+        "id": "barcelona-week-muhba",
+        "name": "MUHBA Plaça del Rei",
+        "coordinates": [
+          41.3845,
+          2.1777
+        ],
+        "description": "MUHBA Plaça del Rei gives the old-city portion historical depth instead of letting the Gothic Quarter become only atmosphere. The underground Roman route and palace context make Barcelona's layers easier to read for the rest of the week.",
+        "hours": {
+          "mon": "Closed",
+          "tue": "10:00 AM-7:00 PM",
+          "wed": "10:00 AM-7:00 PM",
+          "thu": "10:00 AM-7:00 PM",
+          "fri": "10:00 AM-7:00 PM",
+          "sat": "10:00 AM-7:00 PM",
+          "sun": "10:00 AM-7:00 PM"
+        },
+        "photo": "https://upload.wikimedia.org/wikipedia/commons/b/be/MUHBA_Casa_Padellas_Pla%C3%A7a_del_rei_2.JPG"
+      },
+      {
+        "id": "barcelona-week-la-plata",
+        "name": "Bar La Plata",
+        "coordinates": [
+          41.3818,
+          2.1799
+        ],
+        "description": "Bar La Plata is the low-key Gothic bar stop for the week: simple, historic, fast, and food-adjacent. It is best used as a compact vermouth-and-bites pause before moving into the Born or waterfront.",
+        "hours": {
+          "mon": "12:00 PM-12:30 AM",
+          "tue": "12:00 PM-12:30 AM",
+          "wed": "12:00 PM-12:30 AM",
+          "thu": "12:00 PM-1:30 AM",
+          "fri": "12:00 PM-2:00 AM",
+          "sat": "12:00 PM-2:00 AM",
+          "sun": "12:00 PM-12:00 AM"
+        },
+        "photo": "https://barlaplata.com/wp-content/uploads/2024/04/img_7003-1.jpg"
+      },
+      {
+        "id": "barcelona-week-santa-maria",
+        "name": "Basílica de Santa Maria del Mar",
+        "coordinates": [
+          41.3839,
+          2.1822
+        ],
+        "description": "Santa Maria del Mar anchors the El Born day with architecture that explains the neighborhood's medieval merchant identity. Pair it with the Picasso Museum area, Ciutadella, or a cava stop nearby.",
+        "hours": {
+          "mon": "9:00 AM-8:00 PM",
+          "tue": "9:00 AM-8:00 PM",
+          "wed": "9:00 AM-8:00 PM",
+          "thu": "9:00 AM-8:00 PM",
+          "fri": "9:00 AM-8:00 PM",
+          "sat": "9:00 AM-8:00 PM",
+          "sun": "9:00 AM-8:00 PM"
+        },
+        "photo": "https://upload.wikimedia.org/wikipedia/commons/4/4c/Santa_Maria_del_Mar%2C_Barcelona_02.jpg"
+      },
+      {
+        "id": "barcelona-week-paradiso",
+        "name": "Paradiso",
+        "coordinates": [
+          41.3859,
+          2.1822
+        ],
+        "description": "Paradiso is the popular-bar slot for the Born night because a week gives you room to accept the queue and make the cocktail spectacle the event. Save it for a night with slack in the schedule so the wait feels intentional rather than disruptive.",
+        "hours": {
+          "mon": "6:00 PM-12:30 AM",
+          "tue": "6:00 PM-12:30 AM",
+          "wed": "6:00 PM-1:00 AM",
+          "thu": "6:00 PM-1:30 AM",
+          "fri": "6:00 PM-2:30 AM",
+          "sat": "6:00 PM-2:30 AM",
+          "sun": "6:00 PM-12:00 AM"
+        },
+        "photo": "https://paradiso.cat/wp-content/uploads/2020/06/bck_premios-scaled_op.jpg"
+      },
+      {
+        "id": "barcelona-week-joan-miro",
+        "name": "Fundació Joan Miró",
+        "coordinates": [
+          41.3686,
+          2.1592
+        ],
+        "description": "Fundació Joan Miró gives the Montjuïc day a focused art center before the route turns toward gardens, views, or Poble-sec. It is a smart midweek reset after denser old-city days.",
+        "hours": {
+          "mon": "Closed",
+          "tue": "10:00 AM-7:00 PM",
+          "wed": "10:00 AM-7:00 PM",
+          "thu": "10:00 AM-7:00 PM",
+          "fri": "10:00 AM-7:00 PM",
+          "sat": "10:00 AM-7:00 PM",
+          "sun": "10:00 AM-7:00 PM"
+        },
+        "photo": "https://upload.wikimedia.org/wikipedia/commons/9/9d/Fundaci%C3%B3_Mir%C3%B3.JPG"
+      },
+      {
+        "id": "barcelona-week-quimet-quimet",
+        "name": "Quimet & Quimet",
+        "coordinates": [
+          41.3738,
+          2.1635
+        ],
+        "description": "Quimet & Quimet is the Poble-sec food-and-dive-bar bridge, with standing montaditos and bottles that fit a weeklong itinerary better than another formal dinner. Go early and let it launch a Carrer de Blai evening.",
+        "hours": {
+          "mon": "12:00 PM-11:00 PM",
+          "tue": "12:00 PM-11:00 PM",
+          "wed": "12:00 PM-11:00 PM",
+          "thu": "12:00 PM-11:30 PM",
+          "fri": "12:00 PM-12:00 AM",
+          "sat": "12:00 PM-12:00 AM",
+          "sun": "12:00 PM-10:30 PM"
+        },
+        "photo": "https://quimetiquimet.com/wp-content/uploads/tapbg.jpg"
+      },
+      {
+        "id": "barcelona-week-apolo",
+        "name": "Sala Apolo",
+        "coordinates": [
+          41.3752,
+          2.1696
+        ],
+        "description": "Sala Apolo closes the week with the city's bigger nightlife energy: concerts, club programming, and a real reason to stay out late. It is the final category contrast after museums, restaurants, hostels, and small bars.",
+        "hours": {
+          "mon": "10:00 PM-2:30 AM",
+          "tue": "10:00 PM-2:30 AM",
+          "wed": "10:00 PM-3:30 AM",
+          "thu": "10:00 PM-4:30 AM",
+          "fri": "10:00 PM-5:00 AM",
+          "sat": "10:00 PM-5:00 AM",
+          "sun": "10:00 PM-2:30 AM"
+        },
+        "photo": "https://sala-apolo.com/bundles/app/newsletterImg/Newsletter-Header-Mobile-01-640x466.jpg"
+      }
+    ],
+    "sources": [
+      {
+        "name": "Barcelona Turisme",
+        "url": "https://www.barcelonaturisme.com"
+      },
+      {
+        "name": "The Infatuation - Best Restaurants in Barcelona",
+        "url": "https://www.theinfatuation.com/barcelona/guides/best-restaurants-hotels-barcelona"
+      },
+      {
+        "name": "Eater - Best Restaurants in Barcelona",
+        "url": "https://www.eater.com/maps/best-restaurants-barcelona-spain"
+      },
+      {
+        "name": "MICHELIN Guide - Disfrutar",
+        "url": "https://guide.michelin.com/us/en/catalunya/barcelona/restaurant/disfrutar"
+      },
+      {
+        "name": "Time Out - Best bars in Barcelona",
+        "url": "https://www.timeout.com/barcelona/bars-and-pubs/best-bars-in-barcelona"
+      },
+      {
+        "name": "Hostelworld - Barcelona hostels",
+        "url": "https://www.hostelworld.com/st/hostels/europe/spain/barcelona/"
+      },
+      {
+        "name": "Google Maps",
+        "url": "https://maps.google.com"
+      }
+    ]
+  }
+] satisfies MapList[];
+
+export const barcelonaGuides = [
+  ...barcelonaCoreGuides,
+  ...barcelonaItineraryGuides,
+] satisfies MapList[];

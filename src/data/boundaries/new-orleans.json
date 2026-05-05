@@ -1,0 +1,97 @@
+{
+  "new-orleans::french-quarter": {
+    "type": "Feature",
+    "properties": {
+      "id": "new-orleans::french-quarter",
+      "cityId": "new-orleans",
+      "city": "New Orleans",
+      "country": "United States",
+      "name": "French Quarter",
+      "parentName": null,
+      "displayName": "French Quarter, New Orleans, Orleans Parish, Louisiana, 70116, United States"
+    },
+    "geometry": {
+      "type": "Point",
+      "coordinates": [
+        -90.0655403,
+        29.9594926
+      ]
+    }
+  },
+  "new-orleans::marigny": {
+    "type": "Feature",
+    "properties": {
+      "id": "new-orleans::marigny",
+      "cityId": "new-orleans",
+      "city": "New Orleans",
+      "country": "United States",
+      "name": "Marigny",
+      "parentName": null,
+      "displayName": "Faubourg Marigny, New Orleans, Orleans Parish, Louisiana, 70116, United States"
+    },
+    "geometry": {
+      "type": "Point",
+      "coordinates": [
+        -90.054238,
+        29.965759
+      ]
+    }
+  },
+  "new-orleans::garden-district": {
+    "type": "Feature",
+    "properties": {
+      "id": "new-orleans::garden-district",
+      "cityId": "new-orleans",
+      "city": "New Orleans",
+      "country": "United States",
+      "name": "Garden District",
+      "parentName": null,
+      "displayName": "Garden District, New Orleans, Orleans Parish, Louisiana, 70113, United States"
+    },
+    "geometry": {
+      "type": "Point",
+      "coordinates": [
+        -90.0844053,
+        29.9296054
+      ]
+    }
+  },
+  "new-orleans::warehouse-district": {
+    "type": "Feature",
+    "properties": {
+      "id": "new-orleans::warehouse-district",
+      "cityId": "new-orleans",
+      "city": "New Orleans",
+      "country": "United States",
+      "name": "Warehouse District",
+      "parentName": null,
+      "displayName": "Warehouse District, New Orleans, Orleans Parish, Louisiana, 70130, United States"
+    },
+    "geometry": {
+      "type": "Point",
+      "coordinates": [
+        -90.0676178,
+        29.9450179
+      ]
+    }
+  },
+  "new-orleans::treme": {
+    "type": "Feature",
+    "properties": {
+      "id": "new-orleans::treme",
+      "cityId": "new-orleans",
+      "city": "New Orleans",
+      "country": "United States",
+      "name": "Treme",
+      "parentName": null,
+      "displayName": "Tremé, French Quarter, New Orleans, Orleans Parish, Louisiana, 70116, United States"
+    },
+    "geometry": {
+      "type": "Point",
+      "coordinates": [
+        -90.0681068,
+        29.966746
+      ]
+    }
+  }
+}

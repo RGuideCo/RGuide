@@ -14,7 +14,7 @@ Required workflow:
    - Keep existing neighborhoods when they are still accurate and useful.
    - Replace a neighborhood only when evidence shows it is incorrect, low relevance, or materially weaker than an alternative.
    - If uncertain, prefer keeping the current neighborhood and improving its boundary/description.
-3. Audit current boundaries in \`src/data/neighborhood-boundaries.json\`.
+3. Audit current boundaries in \`src/data/boundaries/<city-id>.json\`.
 4. If boundaries are missing or wrong, use authoritative sources in this order:
    - Official city/regional GIS open data
    - OpenStreetMap boundary relations / administrative polygons
@@ -30,7 +30,7 @@ Required workflow:
    - Final geometry should be \`Polygon\` or intentionally \`MultiPolygon\`.
 10. Run QA:
    - \`npm run typecheck\`
-   - Verify changed neighborhood keys and geometry types in \`src/data/neighborhood-boundaries.json\`.
+   - Verify changed neighborhood keys and geometry types in the matching \`src/data/boundaries/<city-id>.json\` file.
 11. Do independent cross-checking before finalizing:
    - Validate each kept/replaced neighborhood against at least two reliable references (official tourism/city data, official GIS, or high-quality map data).
    - Record why each replacement happened, or explicitly note that existing neighborhoods were retained.

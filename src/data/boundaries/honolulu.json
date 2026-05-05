@@ -1,0 +1,122 @@
+{
+  "honolulu::waikiki": {
+    "type": "Feature",
+    "properties": {
+      "id": "honolulu::waikiki",
+      "cityId": "honolulu",
+      "city": "Honolulu",
+      "country": "United States",
+      "name": "Waikiki",
+      "parentName": null,
+      "displayName": "Waikīkī, Honolulu, Honolulu County, Hawaii, 96815, United States",
+      "source": {
+        "provider": "Nominatim / OpenStreetMap",
+        "datasetUrl": "https://nominatim.openstreetmap.org/search",
+        "query": "Waikiki, Honolulu, Hawaii, USA"
+      }
+    },
+    "geometry": {
+      "type": "Point",
+      "coordinates": [
+        -157.8285713,
+        21.2793568
+      ]
+    }
+  },
+  "honolulu::kakaako": {
+    "type": "Feature",
+    "properties": {
+      "id": "honolulu::kakaako",
+      "cityId": "honolulu",
+      "city": "Honolulu",
+      "country": "United States",
+      "name": "Kakaako",
+      "parentName": null,
+      "displayName": "Kaka‘ako, Honolulu, Honolulu County, Hawaii, 96850, United States",
+      "source": {
+        "provider": "Nominatim / OpenStreetMap",
+        "datasetUrl": "https://nominatim.openstreetmap.org/search",
+        "query": "Kakaako, Honolulu, Hawaii, USA"
+      }
+    },
+    "geometry": {
+      "type": "Point",
+      "coordinates": [
+        -157.85795,
+        21.2986295
+      ]
+    }
+  },
+  "honolulu::chinatown-honolulu": {
+    "type": "Feature",
+    "properties": {
+      "id": "honolulu::chinatown-honolulu",
+      "cityId": "honolulu",
+      "city": "Honolulu",
+      "country": "United States",
+      "name": "Chinatown",
+      "parentName": null,
+      "displayName": "Chinatown, Honolulu, Honolulu County, Hawaii, 96808, United States",
+      "source": {
+        "provider": "Nominatim / OpenStreetMap",
+        "datasetUrl": "https://nominatim.openstreetmap.org/search",
+        "query": "Chinatown, Honolulu, Hawaii, USA"
+      }
+    },
+    "geometry": {
+      "type": "Point",
+      "coordinates": [
+        -157.8628003,
+        21.3129031
+      ]
+    }
+  },
+  "honolulu::diamond-head": {
+    "type": "Feature",
+    "properties": {
+      "id": "honolulu::diamond-head",
+      "cityId": "honolulu",
+      "city": "Honolulu",
+      "country": "United States",
+      "name": "Diamond Head",
+      "parentName": null,
+      "displayName": "Diamond Head, Honolulu, Honolulu County, Hawaii, 96828, United States",
+      "source": {
+        "provider": "Nominatim / OpenStreetMap",
+        "datasetUrl": "https://nominatim.openstreetmap.org/search",
+        "query": "Diamond Head, Honolulu, Hawaii, USA"
+      }
+    },
+    "geometry": {
+      "type": "Point",
+      "coordinates": [
+        -157.8116771,
+        21.2597515
+      ]
+    }
+  },
+  "honolulu::manoa": {
+    "type": "Feature",
+    "properties": {
+      "id": "honolulu::manoa",
+      "cityId": "honolulu",
+      "city": "Honolulu",
+      "country": "United States",
+      "name": "Manoa",
+      "parentName": null,
+      "displayName": "Mānoa, East Honolulu, Honolulu, Honolulu County, Hawaii, 96848, United States",
+      "source": {
+        "provider": "Nominatim / OpenStreetMap",
+        "datasetUrl": "https://nominatim.openstreetmap.org/search",
+        "query": "Manoa, Honolulu, Hawaii, USA"
+      }
+    },
+    "geometry": {
+      "type": "Point",
+      "coordinates": [
+        -157.8118169,
+        21.3093848
+      ]
+    }
+  }
+}
