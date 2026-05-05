@@ -15,6 +15,41 @@ type WorldCountrySeed = {
 };
 
 const worldCountrySeeds = worldCountries as unknown as WorldCountrySeed[];
+const supplementalWorldCountrySeeds: WorldCountrySeed[] = [
+  {
+    id: "hong-kong",
+    name: "Hong Kong",
+    continentId: "asia",
+    continentName: "Asia",
+    coordinates: [22.3193, 114.1694],
+    bounds: [
+      [22.14, 113.82],
+      [22.57, 114.43],
+    ],
+  },
+  {
+    id: "macau",
+    name: "Macau",
+    continentId: "asia",
+    continentName: "Asia",
+    coordinates: [22.1987, 113.5439],
+    bounds: [
+      [22.11, 113.52],
+      [22.23, 113.6],
+    ],
+  },
+  {
+    id: "singapore",
+    name: "Singapore",
+    continentId: "asia",
+    continentName: "Asia",
+    coordinates: [1.3521, 103.8198],
+    bounds: [
+      [1.16, 103.6],
+      [1.48, 104.1],
+    ],
+  },
+];
 const capitalFeatures = capitalCoordinates as unknown as Array<{
   geometry?: { coordinates?: [number, number] };
   properties?: { capital?: string; country?: string };
@@ -44,10 +79,183 @@ const countryCapitalLookup = new Map(
 const cityImage = (query: string) =>
   `https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1200&q=80&${query}`;
 
+const topCityDescriptionOverrides = new Map<string, string>([
+  [
+    "paris",
+    "Paris is a dense city where museums, bistros, wine bars, fashion streets, parks, hotels, and river walks change character by arrondissement. It works best as a set of neighborhood routes, with landmarks as anchors and meals, gardens, or side streets keeping the day from becoming a checklist.",
+  ],
+  [
+    "london",
+    "London is a multi-center city where museums, pubs, markets, theater, parks, hotels, and rail-linked neighborhoods make every plan depend on area and transit line. It works best in focused clusters, letting meals, parks, and evening anchors keep the sprawl practical.",
+  ],
+  [
+    "istanbul",
+    "Istanbul is a Bosphorus city where imperial landmarks, ferries, mosques, markets, meyhanes, rooftop views, and Asian-European neighborhood shifts shape the trip. It works best when each day has a crossing, a meal rhythm, and enough room for streets between major sights.",
+  ],
+  [
+    "rome",
+    "Rome is a layered capital where ancient sites, piazzas, trattorias, churches, wine bars, boutique stays, and walkable neighborhoods overlap constantly. It works best when monuments are spaced with meals, quiet streets, and evening routes through places like Monti or Trastevere.",
+  ],
+  [
+    "barcelona",
+    "Barcelona is a dense Mediterranean city where Gothic lanes, Eixample architecture, tapas timing, natural-wine bars, design stays, hostels, hill parks, and beach edges sit close together. The useful route turns that abundance into a few clear neighborhoods instead of a checklist.",
+  ],
+  [
+    "lisbon",
+    "Lisbon is a hillside Atlantic capital where miradouros, tiled lanes, seafood, wine bars, trams, fado rooms, design stays, and river-facing neighborhoods shape the visit. It works best with climbs, meals, views, and transit planned together so the hills feel rewarding.",
+  ],
+  [
+    "amsterdam",
+    "Amsterdam is a canal city where cycling streets, museums, brown cafes, design hotels, Indonesian meals, markets, parks, and ferries keep browsing practical. It works best when the old center is balanced with quieter neighborhoods, parks, and water-level routes.",
+  ],
+  [
+    "madrid",
+    "Madrid is a late-running capital where major museums, tapas streets, market halls, vermouth bars, Retiro walks, galleries, and generous plazas set the rhythm. It works best when daytime culture loosens into La Latina, Chueca, Malasana, or a late dinner nearby.",
+  ],
+  [
+    "prague",
+    "Prague is a compact river city where castle routes, old-town lanes, beer halls, cafes, design stays, galleries, and Vltava walks can crowd the same day. It works best when the busiest squares become a starting point, not the whole plan.",
+  ],
+  [
+    "berlin",
+    "Berlin is a spread-out capital where Cold War memory, museum corridors, canal neighborhoods, and club culture sit beside practical transit choices. It works best when the route is split by district, with parks, lakes, late rooms, and quiet wine bars giving each day its own temperature.",
+  ],
+  [
+    "new-york-city",
+    "New York City is a dense five-borough city where neighborhood food, museums, theater, parks, cocktail rooms, hotels, and late transit make every guide choice about geography and pace. It works best on foot, with landmarks as anchors and meals or detours carrying the route.",
+  ],
+  [
+    "miami",
+    "Miami is a high-energy coastal city where beaches, Cuban and Caribbean food, art districts, design hotels, rooftop bars, late clubs, waterfront walks, and Keys or Everglades side routes define the trip. It works best when beach time, nightlife, and car logistics are planned together.",
+  ],
+  [
+    "los-angeles",
+    "Los Angeles is sunlit sprawl where beach mornings, studio history, taco routes, design hotels, museums, canyon drives, shopping streets, and destination dining coexist by neighborhood. It works best with tight geography and a few anchors worth crossing town for.",
+  ],
+  [
+    "orlando",
+    "Orlando is more than park logistics: resort stays, convention days, lakes, Winter Park afternoons, Mills 50 meals, outlet runs, food halls, and cocktail stops all change how the trip works. The useful route gives visitors something good before, between, and after ticketed days.",
+  ],
+  [
+    "san-francisco",
+    "San Francisco is a compact bay city where steep neighborhoods, ferry views, parks, museums, restaurants, cocktail rooms, waterfronts, and quick Marin or wine-country routes fit into tight days. It works best with realistic hills, transit, and a few strong neighborhood anchors.",
+  ],
+  [
+    "las-vegas",
+    "Las Vegas is a destination-scale city where resorts, dining rooms, shows, clubs, spas, pools, downtown bars, Chinatown food, and desert day trips turn one map into very different trips. It works best when reservations, distance, budget, and recovery time are part of the plan.",
+  ],
+  [
+    "washington-dc",
+    "Washington, DC is a monument-and-museum capital where federal landmarks, parks, embassies, restaurants, cocktail corridors, hotel bases, and transit-linked neighborhoods make culture-heavy trips efficient. It works best when free museums are paced with meals and local districts.",
+  ],
+  [
+    "chicago",
+    "Chicago is a lakefront city where architecture, museums, neighborhood taverns, deep food traditions, sports, hotels, river walks, and summer beaches make routes work by season and train line. It works best when the lake, Loop, and neighborhood meals each get room.",
+  ],
+  [
+    "boston",
+    "Boston is a compact historic city where harbor walks, universities, sports nights, seafood, Italian dinners, museums, pubs, and Cambridge or North Shore side routes fit cleanly into walkable days. It works best when old streets, transit, and meal anchors stay close.",
+  ],
+  [
+    "honolulu",
+    "Honolulu is an island-city base where Waikiki stays, beaches, surf breaks, plate lunches, Chinatown bars, palace history, hikes, and windward or North Shore routes connect city browsing with Oahu days. It works best when weather, drive time, and beach recovery are built in.",
+  ],
+  [
+    "bangkok",
+    "Bangkok is a high-energy capital where street food, temples, malls, river routes, rooftop bars, design hotels, markets, and late-night neighborhoods make planning about heat and pacing. It works best when transit, traffic, shade, and meals shape the order of the day.",
+  ],
+  [
+    "hong-kong",
+    "Hong Kong is a vertical harbor city where Cantonese dining, markets, ferries, hikes, cocktail bars, hotels, and island-Kowloon contrasts compress huge variety into short distances. It works best by MTR, tram, ferry, and escalator, with food and views guiding the route.",
+  ],
+  [
+    "macau",
+    "Macau is a compact resort-and-heritage city where Portuguese-Chinese streets, casino hotels, bakeries, food lanes, shows, temples, churches, and Cotai scale sit close together. It works best when old-city wandering is paired with clear resort or ferry logistics.",
+  ],
+  [
+    "dubai",
+    "Dubai is a high-gloss desert city where skyline hotels, malls, beaches, destination restaurants, rooftop bars, heritage quarters, marina life, and desert experiences define planning. It works best when heat, bookings, drive time, and neighborhood purpose are decided early.",
+  ],
+  [
+    "singapore",
+    "Singapore is an efficient city-state where hawker centers, gardens, malls, hotels, cocktail bars, heritage districts, transit, and waterfront spectacle make compact routes easy. It works best when heat, MRT access, food stops, and indoor-outdoor pacing are planned together.",
+  ],
+  [
+    "kuala-lumpur",
+    "Kuala Lumpur is a tower-and-market capital where malls, hawker streets, Malay, Chinese, and Indian food, hotels, rooftop bars, Batu Caves, and traffic tradeoffs shape the visit. It works best when transit, taxis, heat, and meal neighborhoods are part of the route.",
+  ],
+  [
+    "tokyo",
+    "Tokyo is a vast rail-connected city where ramen counters, sushi rooms, cocktail bars, shopping streets, design hotels, museums, gardens, and neighborhood micro-routes reward precision. It works best when each day is clustered by station, meal timing, and evening energy.",
+  ],
+  [
+    "seoul",
+    "Seoul is a fast, stylish city where palace grounds, barbecue nights, markets, cafes, design hotels, shopping districts, museums, mountains, and all-night food routes shift by subway stop. It works best when each cluster has a meal, a walk, and a late option.",
+  ],
+  [
+    "phuket",
+    "Phuket is an island destination where beach bases, old-town food, resort stays, nightlife strips, boat trips, viewpoints, markets, and weather-season tradeoffs shape the plan. It works best when the chosen beach, transport, and day-trip rhythm match the trip style.",
+  ],
+  [
+    "mecca",
+    "Mecca is a pilgrimage-first city where mosque access, hotel proximity, crowd flow, shopping corridors, food courts, regional meals, and rest windows shape every practical choice. It works best when movement, prayer timing, group needs, and recovery are planned respectfully.",
+  ],
+  [
+    "cancun",
+    "Cancun is a resort-zone city where beaches, clubs, malls, seafood, hotel dining, cenotes, Isla Mujeres ferries, and Riviera Maya day routes compete for time. It works best when resort ease, downtown value, nightlife, and day-trip transport are separated clearly.",
+  ],
+  [
+    "cusco",
+    "Cusco is a high-altitude Andean base where Inca walls, colonial churches, markets, cafes, pisco rooms, boutique stays, and Sacred Valley or Machu Picchu logistics shape the trip. It works best with acclimatization, stairs, train timing, and slower first days.",
+  ],
+  [
+    "mexico-city",
+    "Mexico City is a layered high-altitude capital where markets, museums, taco routes, design hotels, cocktail bars, parks, and Roma, Condesa, Centro, and Coyoacan shape the trip. It works best when altitude, traffic, and neighborhood scale guide the day.",
+  ],
+  [
+    "buenos-aires",
+    "Buenos Aires is a late-night city of parrillas, cafes, bookstores, tango rooms, leafy barrios, markets, wine bars, and long dinners that rarely reward rushing. The strongest routes let Palermo, Recoleta, San Telmo, and La Boca carry different moods.",
+  ],
+  [
+    "rio-de-janeiro",
+    "Rio de Janeiro is a beach-and-mountain city where viewpoints, samba nights, boteco food, design stays, museum stops, and Copacabana, Ipanema, Santa Teresa, and Lapa shape the trip. It works best when weather, safety, and transport are part of the route.",
+  ],
+  [
+    "lima",
+    "Lima is a Pacific-cliff capital where ceviche, Nikkei and criollo food, museums, colonial streets, design hotels, Barranco nights, and coastal parks shape the trip. It works best when lunch is treated as an anchor and cliffside neighborhoods pace the day.",
+  ],
+  [
+    "medellin",
+    "Medellin is a valley city where spring weather, metro and cable-car routes, El Poblado dining, Laureles cafes, Comuna 13 context, nightlife, and mountain views define the trip. It works best when mobility, safety, and neighborhood energy guide each route.",
+  ],
+  [
+    "quito",
+    "Quito is a high-altitude Andean capital where churches, plazas, markets, museums, volcano views, boutique stays, chocolate stops, and equator or cloud-forest day routes shape the visit. It works best when altitude, weather, and safety guide the pacing.",
+  ],
+  [
+    "antigua-guatemala",
+    "Antigua Guatemala is a colonial-grid base where volcano views, courtyard hotels, coffee, markets, church ruins, Spanish-school rhythm, and Lake Atitlan or volcano routes shape the trip. It works best with cobblestone pacing, weather windows, and slow courtyard time.",
+  ],
+  [
+    "bogota",
+    "Bogota is a high-altitude capital where coffee, museums, markets, contemporary restaurants, Chapinero bars, La Candelaria history, and mountain views create culture-heavy routes. It works best when altitude, traffic, safety, and neighborhood choice are planned together.",
+  ],
+]);
+
+function withTopCityDescription<T extends { id: string; description: string }>(city: T): T {
+  const description = topCityDescriptionOverrides.get(city.id);
+  return description ? { ...city, description } : city;
+}
+
 type NeighborhoodAngle = {
   identity: string;
   route: string;
 };
+
+function withTerminalPeriod(value: string) {
+  const trimmed = value.trim();
+  return /[.!?]$/.test(trimmed) ? trimmed : `${trimmed}.`;
+}
 
 const specificNeighborhoodAngles = new Map<string, NeighborhoodAngle>([
   [
@@ -90,6 +298,321 @@ const specificNeighborhoodAngles = new Map<string, NeighborhoodAngle>([
     {
       identity: "Berlin's central green reset, bordered by the Reichstag, embassy quarter, Kulturforum, Victory Column, and long paths through the city's largest park",
       route: "It works best between heavier museum or memorial stops, giving the day space to breathe before crossing back into Mitte or the westside districts",
+    },
+  ],
+  [
+    "san francisco|mission district",
+    {
+      identity: "San Francisco's mural-lined food and nightlife district, where taquerias, bakeries, Dolores Park, vintage shops, and late bars keep the city at street level",
+      route: "It works best as a day-to-night walk, with one clear food anchor and enough room for alleys, park time, and a slower second stop",
+    },
+  ],
+  [
+    "san francisco|north beach",
+    {
+      identity: "San Francisco's Italian-heritage and Beat-era pocket, packed with cafes, old bars, City Lights, Washington Square, and steep routes toward Telegraph Hill",
+      route: "It works best in the evening, when dinner, drinks, bookstores, and hilltop views can sit close together without much transit",
+    },
+  ],
+  [
+    "san francisco|hayes valley",
+    {
+      identity: "San Francisco's compact design-and-dining corridor, where boutiques, cocktail rooms, performing-arts venues, and Patricia's Green make a polished central route",
+      route: "It works best for a tight afternoon or pre-show plan, with shopping, dinner, and a nearby bar doing more work than sightseeing",
+    },
+  ],
+  [
+    "san francisco|marina district",
+    {
+      identity: "San Francisco's bay-facing social district, where Chestnut Street, Fort Mason, waterfront paths, and Golden Gate views give the city a breezier rhythm",
+      route: "It works best when paired with a walk toward the Presidio or Crissy Field, then brought back to food, drinks, and easy neighborhood streets",
+    },
+  ],
+  [
+    "san francisco|sunset district",
+    {
+      identity: "San Francisco's foggy westside grid, where Ocean Beach, Golden Gate Park, Asian bakeries, casual restaurants, and surf-town edges stretch the city outward",
+      route: "It works best as a slower outer-neighborhood route, built around park time, beach weather, and a few food stops worth crossing town for",
+    },
+  ],
+  [
+    "los angeles|downtown la",
+    {
+      identity: "LA's most vertical neighborhood, where old theaters, museums, rooftops, Arts District edges, food halls, and transit lines create a denser city route",
+      route: "It works best with a tight cluster, using one cultural anchor and one food or drink stop instead of trying to cross too much of the basin",
+    },
+  ],
+  [
+    "los angeles|silver lake",
+    {
+      identity: "LA's hillside creative district, where reservoir walks, indie shops, coffee, music rooms, and neighborhood restaurants make the city feel smaller",
+      route: "It works best by car-light hopping along Sunset and nearby side streets, with enough time for browsing, dinner, and a late drink",
+    },
+  ],
+  [
+    "los angeles|koreatown",
+    {
+      identity: "LA's dense late-night food district, where Korean barbecue, spas, karaoke rooms, cocktail bars, and apartment-block street life run deep into the night",
+      route: "It works best as a meal-led evening, with parking or rideshare sorted early and a second stop chosen before the table clears",
+    },
+  ],
+  [
+    "los angeles|venice",
+    {
+      identity: "LA's beachside collision of boardwalk energy, canals, Abbot Kinney shopping, wellness stops, and sunset walks along the Pacific",
+      route: "It works best when the day is allowed to drift, but anchored by one beach walk, one meal, and a realistic plan for traffic",
+    },
+  ],
+  [
+    "los angeles|west hollywood",
+    {
+      identity: "LA's design, hotel, and nightlife strip, where the Sunset Strip, Santa Monica Boulevard, galleries, clubs, and destination restaurants stay close together",
+      route: "It works best after dark, with reservations or tickets doing the organizing and short rides replacing long cross-town moves",
+    },
+  ],
+  [
+    "miami|wynwood",
+    {
+      identity: "Miami's mural-and-warehouse district, where galleries, breweries, design shops, clubs, and restaurant patios turn short blocks into a high-energy route",
+      route: "It works best from late afternoon into night, with art handled early and food or drinks chosen before the crowds thicken",
+    },
+  ],
+  [
+    "miami|little havana",
+    {
+      identity: "Miami's Cuban cultural corridor, centered on Calle Ocho, ventanitas, domino tables, music rooms, cigar shops, and old-school cafes",
+      route: "It works best as a food-and-culture walk, using a few specific counters, music stops, and side streets instead of treating it as a quick photo stop",
+    },
+  ],
+  [
+    "miami|coconut grove",
+    {
+      identity: "Miami's leafy bayfront village, where marina views, old tropical streets, cafes, gardens, and relaxed restaurants soften the city's harder edges",
+      route: "It works best as a slower daytime route, with shade, waterfront time, and a meal carrying more weight than a checklist",
+    },
+  ],
+  [
+    "miami|brickell",
+    {
+      identity: "Miami's glossy high-rise district, where hotel bars, rooftop rooms, finance towers, river views, and fast dining make the city feel polished and vertical",
+      route: "It works best for a compact night out or business-travel base, with views, dinner, and drinks kept within a few blocks",
+    },
+  ],
+  [
+    "miami|design district",
+    {
+      identity: "Miami's luxury design pocket, where fashion houses, galleries, public art, architecture, and polished restaurants make browsing feel curated",
+      route: "It works best as a controlled afternoon, pairing shops and art with one strong meal instead of stretching the route too wide",
+    },
+  ],
+  [
+    "washington dc|georgetown",
+    {
+      identity: "DC's historic river-and-campus district, where brick sidewalks, rowhouses, canal paths, boutiques, and waterfront restaurants make the city feel older",
+      route: "It works best on foot, with shopping or campus walks balanced by a canal, river, or dinner anchor",
+    },
+  ],
+  [
+    "washington dc|dupont circle",
+    {
+      identity: "DC's embassy-and-townhouse hub, where bookstores, galleries, cafes, hotels, and the circle itself create an easy central base",
+      route: "It works best as a flexible route between museums, dinner, and drinks, especially when the day needs transit ease without feeling sterile",
+    },
+  ],
+  [
+    "washington dc|shaw",
+    {
+      identity: "DC's music-and-restaurant corridor, where U Street edges, historic theaters, cocktail bars, and rowhouse blocks carry strong night energy",
+      route: "It works best after late afternoon, with one food anchor and enough time for music, drinks, or a short walk into nearby neighborhoods",
+    },
+  ],
+  [
+    "washington dc|adams morgan",
+    {
+      identity: "DC's steep, messy, late-running neighborhood, where global restaurants, bars, music rooms, and old apartment blocks keep the route lively",
+      route: "It works best as an evening plan, with dinner first and room for a second stop once the street wakes up",
+    },
+  ],
+  [
+    "washington dc|capitol hill",
+    {
+      identity: "DC's civic-and-residential district, where the Capitol, Eastern Market, rowhouses, parks, and neighborhood restaurants sit in a calmer grid",
+      route: "It works best as a morning or early evening walk, with market time or a meal softening the monument-heavy side of the city",
+    },
+  ],
+  [
+    "seattle|capitol hill",
+    {
+      identity: "Seattle's densest food, bar, and music neighborhood, where indie venues, queer nightlife, coffee, restaurants, and Volunteer Park shape the route",
+      route: "It works best from late afternoon onward, using one meal or venue as the anchor and letting nearby bars or shops fill the gaps",
+    },
+  ],
+  [
+    "seattle|belltown",
+    {
+      identity: "Seattle's hotel-and-nightlife corridor, where bars, music rooms, restaurants, waterfront access, and downtown edges keep plans compact",
+      route: "It works best as a central evening base, with dinner, drinks, and a waterfront or Pike Place detour kept close together",
+    },
+  ],
+  [
+    "seattle|ballard",
+    {
+      identity: "Seattle's maritime northside neighborhood, where breweries, Nordic history, music rooms, restaurants, and the locks give it a slower local pull",
+      route: "It works best as a half-day route, moving from shops and food toward sunset water views or a low-key night out",
+    },
+  ],
+  [
+    "seattle|fremont",
+    {
+      identity: "Seattle's offbeat canal-side pocket, where public art, vintage shops, breweries, tech offices, and bridge views keep the mood informal",
+      route: "It works best as a casual daytime-to-evening route, with browsing, beer, and a short walk doing most of the work",
+    },
+  ],
+  [
+    "seattle|pioneer square",
+    {
+      identity: "Seattle's oldest district, where brick warehouses, galleries, stadium crowds, underground-history tours, and cocktail bars create a rougher downtown texture",
+      route: "It works best around an event, gallery stop, or early drink, with timing used carefully so the route feels intentional",
+    },
+  ],
+  [
+    "tokyo|shibuya",
+    {
+      identity: "Tokyo's high-volume youth and shopping district, where crossings, department stores, music bars, ramen counters, and backstreets keep the pace fast",
+      route: "It works best after lunch into night, with one shopping or food anchor keeping the density from turning into pure drift",
+    },
+  ],
+  [
+    "tokyo|shinjuku",
+    {
+      identity: "Tokyo's vertical entertainment and transit machine, where neon alleys, department stores, hotel bars, gardens, and late food sit above one of the world's busiest stations",
+      route: "It works best when split by mood: calm garden or shopping first, then a tighter evening route through food and drinks",
+    },
+  ],
+  [
+    "tokyo|ginza",
+    {
+      identity: "Tokyo's polished shopping and dining grid, where flagship stores, department basements, galleries, cocktail bars, and classic restaurants make luxury feel precise",
+      route: "It works best as a controlled afternoon or evening, with browsing, one reservation, and nearby drinks carrying the plan",
+    },
+  ],
+  [
+    "tokyo|asakusa",
+    {
+      identity: "Tokyo's old-town visitor district, where Senso-ji, market streets, river views, and snack counters keep traditional city rhythms visible",
+      route: "It works best early or near dusk, with temple time balanced by food streets and a short walk toward the Sumida",
+    },
+  ],
+  [
+    "tokyo|roppongi",
+    {
+      identity: "Tokyo's art, hotel, and nightlife district, where Mori Art Museum, design stops, embassies, restaurants, and late bars share the same hills",
+      route: "It works best as an evening route, with museum or view time leading into dinner and a selective late-night plan",
+    },
+  ],
+  [
+    "boston|back bay",
+    {
+      identity: "Boston's brownstone-and-boulevard district, where Newbury Street, the Public Garden, Copley Square, hotels, and polished restaurants form a classic central route",
+      route: "It works best as an easy walking base, with shopping, architecture, and dinner kept close instead of overloading the day",
+    },
+  ],
+  [
+    "boston|beacon hill",
+    {
+      identity: "Boston's steep historic pocket, where brick sidewalks, gas lamps, Acorn Street, State House views, and quiet residential lanes carry the atmosphere",
+      route: "It works best as a short, careful walk, paired with the Common, a museum, or dinner nearby so it does not become just a photo detour",
+    },
+  ],
+  [
+    "boston|north end",
+    {
+      identity: "Boston's Italian-heritage and Revolutionary-history district, where pastry lines, red-sauce rooms, old churches, and harbor edges pack into tight streets",
+      route: "It works best when dinner or a history stop is the anchor, leaving time for a slow walk rather than a rushed food crawl",
+    },
+  ],
+  [
+    "boston|south end",
+    {
+      identity: "Boston's restaurant-rich rowhouse district, where Victorian streets, galleries, wine bars, and pocket parks make a quieter counterpoint to the core",
+      route: "It works best at dinner hour, with one reservation and enough walking time to let the streets do the atmospheric work",
+    },
+  ],
+  [
+    "boston|seaport district",
+    {
+      identity: "Boston's newer waterfront district, where harbor paths, glass towers, seafood rooms, event venues, and design hotels give the city a modern edge",
+      route: "It works best when the weather cooperates, pairing a harbor walk with one restaurant, museum, or concert anchor",
+    },
+  ],
+  [
+    "milan|brera",
+    {
+      identity: "Milan's artful old-center quarter, where galleries, the Pinacoteca, boutiques, courtyards, aperitivo spots, and narrow streets keep the route elegant",
+      route: "It works best as a late-afternoon route, with browsing and art sliding naturally into aperitivo or dinner nearby",
+    },
+  ],
+  [
+    "milan|navigli",
+    {
+      identity: "Milan's canal-side social district, where aperitivo terraces, vintage shops, restaurants, and late bars make the city loosen after work",
+      route: "It works best in the evening, with canal walks and drinks timed before the busiest dinner stretch",
+    },
+  ],
+  [
+    "milan|porta venezia",
+    {
+      identity: "Milan's diverse eastside district, where Liberty architecture, gardens, queer nightlife, global food, and shopping corridors sit close together",
+      route: "It works best as a flexible route between park time, dinner, and drinks, especially when the center feels too polished",
+    },
+  ],
+  [
+    "milan|isola",
+    {
+      identity: "Milan's northside design pocket, where new towers, old neighborhood streets, music rooms, restaurants, and creative studios meet around Garibaldi",
+      route: "It works best from afternoon into night, with architecture views balanced by smaller food and bar stops",
+    },
+  ],
+  [
+    "milan|quadrilatero doro",
+    {
+      identity: "Milan's luxury fashion grid, where Via Montenapoleone, showrooms, historic palazzi, cafes, and high-end hotels turn shopping into the main architecture",
+      route: "It works best as a precise browse, paired with one cafe, design stop, or nearby museum rather than a long wandering route",
+    },
+  ],
+  [
+    "vienna|innere stadt",
+    {
+      identity: "Vienna's imperial first district, where palaces, churches, museums, cafes, and shopping streets form the city's most concentrated historic loop",
+      route: "It works best early or late, with one major cultural anchor and enough cafe time to keep the grandeur from feeling mechanical",
+    },
+  ],
+  [
+    "vienna|leopoldstadt",
+    {
+      identity: "Vienna's island district, where Prater park, canals, markets, Jewish history, and newer food scenes give the city a looser eastern edge",
+      route: "It works best as a park-and-neighborhood route, especially when the center needs more air and less formality",
+    },
+  ],
+  [
+    "vienna|neubau",
+    {
+      identity: "Vienna's design-forward seventh district, where MuseumsQuartier edges, indie shops, cafes, bars, and small galleries make the city feel younger",
+      route: "It works best from afternoon into evening, with browsing, museum time, and dinner kept within a tight grid",
+    },
+  ],
+  [
+    "vienna|mariahilf",
+    {
+      identity: "Vienna's shopping-and-side-street district, where Mariahilfer Strasse, courtyards, cafes, theaters, and Naschmarkt edges keep plans practical",
+      route: "It works best as a flexible central route, using shopping or food as the anchor instead of chasing landmarks",
+    },
+  ],
+  [
+    "vienna|wieden",
+    {
+      identity: "Vienna's elegant fourth district, where Karlskirche, galleries, cafes, university edges, and quiet residential streets sit just below the Ring",
+      route: "It works best as a calmer culture route, paired with Belvedere, Naschmarkt, or a nearby dinner",
     },
   ],
 ]);
@@ -1786,13 +2309,12 @@ function withSeededSubareas(city: Omit<City, "listCount">): Omit<City, "listCoun
       specificNeighborhoodAngles.get(cityKey) ??
       neighborhoodNameAngles.get(normalizedName) ??
       [...neighborhoodNameAngles.entries()].find(([key]) => normalizedName.includes(key))?.[1];
-    const baseDescription =
-      existingDescription?.trim() ??
-      (angle
-        ? `${subareaName} is ${angle.identity}.`
-        : parentSubareaName
-          ? `${subareaName} is a distinct pocket of ${parentSubareaName}, ${cityName}, where the local route is shaped by its street pattern, everyday stops, and relationship to the wider district.`
-          : `${subareaName} is a distinct ${cityName} neighborhood where the local route is shaped by its street pattern, everyday stops, and relationship to the wider city.`);
+    const baseDescription = angle
+      ? withTerminalPeriod(`${subareaName} is ${angle.identity}`)
+      : existingDescription?.trim() ??
+        (parentSubareaName
+          ? `${subareaName} is a ${parentSubareaName}, ${cityName} pocket that works better as a tight route than as part of a broad borough sweep.`
+          : `${subareaName} is a ${cityName} neighborhood that works better as a tight route than as part of a broad citywide sweep.`);
 
     if (baseDescription.length >= 270) {
       return baseDescription;
@@ -1804,10 +2326,10 @@ function withSeededSubareas(city: Omit<City, "listCount">): Omit<City, "listCoun
         : parentSubareaName
       : null;
     const routeSentence =
-      angle?.route ??
+      (angle ? withTerminalPeriod(angle.route) : null) ??
       (parentLabel
-        ? `It works best as a ${parentLabel} route with a few clear anchors, enough walking time, and room for food or nightlife stops that make the area feel specific.`
-        : `It works best with a focused route, using a few clear anchors, realistic walking time, and food or nightlife stops that make the area feel specific.`);
+        ? `It works best as a ${parentLabel} route when the picks name a real cluster, street edge, park, market, waterfront, or night strip instead of spreading across the map.`
+        : `It works best when the picks name a real cluster, street edge, park, market, waterfront, or night strip instead of spreading across the map.`);
     const expanded = `${baseDescription} ${routeSentence}`;
 
     if (expanded.length <= 320) {
@@ -1815,8 +2337,8 @@ function withSeededSubareas(city: Omit<City, "listCount">): Omit<City, "listCoun
     }
 
     const shorterRoute = parentLabel
-      ? `It works best as a ${parentLabel} route with clear anchors, realistic walking time, and stops that make the area feel specific.`
-      : "It works best with clear anchors, realistic walking time, and stops that make the area feel specific.";
+      ? `It works best as a ${parentLabel} route with a clear cluster, realistic walking time, and concrete local anchors.`
+      : "It works best with a clear cluster, realistic walking time, and concrete local anchors.";
     return `${baseDescription} ${shorterRoute}`;
   };
 
@@ -2116,6 +2638,16 @@ const curatedCitySeeds: Record<string, Omit<City, "listCount">[]> = {
       description:
         "Guadalajara is a western Mexico hub where tequila-country day trips, mariachi history, modern dining, markets, design hotels, plazas, and late bars build a strong regional route. It works best on foot, with landmarks as the spine and meals or neighborhood detours keeping it from feeling dutiful.",
     },
+    {
+      id: "cancun",
+      name: "Cancun",
+      country: "Mexico",
+      continent: "North America",
+      coordinates: [21.1619, -86.8515],
+      countrySubareaId: "south",
+      image: cityImage("cancun"),
+      description: topCityDescriptionOverrides.get("cancun")!,
+    },
   ],
   brazil: [
     {
@@ -2183,6 +2715,48 @@ const curatedCitySeeds: Record<string, Omit<City, "listCount">[]> = {
         "Medellin is a valley city where spring weather, metro and cable-car routes, El Poblado dining, Laureles cafes, Comuna 13 tours, nightlife, and mountain views define the trip. The best days hinge on timing: start in the city, then let the season, drive, and landscape decide how far the route stretches.",
     },
   ],
+  peru: [
+    {
+      id: "lima",
+      name: "Lima",
+      country: "Peru",
+      continent: "South America",
+      coordinates: [-12.0464, -77.0428],
+      image: cityImage("lima"),
+      description: topCityDescriptionOverrides.get("lima")!,
+    },
+    {
+      id: "cusco",
+      name: "Cusco",
+      country: "Peru",
+      continent: "South America",
+      coordinates: [-13.5319, -71.9675],
+      image: cityImage("cusco"),
+      description: topCityDescriptionOverrides.get("cusco")!,
+    },
+  ],
+  ecuador: [
+    {
+      id: "quito",
+      name: "Quito",
+      country: "Ecuador",
+      continent: "South America",
+      coordinates: [-0.1807, -78.4678],
+      image: cityImage("quito"),
+      description: topCityDescriptionOverrides.get("quito")!,
+    },
+  ],
+  guatemala: [
+    {
+      id: "antigua-guatemala",
+      name: "Antigua Guatemala",
+      country: "Guatemala",
+      continent: "North America",
+      coordinates: [14.5586, -90.7295],
+      image: cityImage("antigua"),
+      description: topCityDescriptionOverrides.get("antigua-guatemala")!,
+    },
+  ],
   france: [
     {
       id: "paris",
@@ -2237,6 +2811,17 @@ const curatedCitySeeds: Record<string, Omit<City, "listCount">[]> = {
       image: cityImage("athens"),
       description:
         "Athens is a compact capital where ancient sites, rooftop bars, tavernas, galleries, markets, boutique stays, and beach or island routes meet in lively central neighborhoods. The payoff is pairing the view with a real plan: a useful base, a few strong anchors, and room for the weather.",
+    },
+  ],
+  turkey: [
+    {
+      id: "istanbul",
+      name: "Istanbul",
+      country: "Turkey",
+      continent: "Europe",
+      coordinates: [41.0082, 28.9784],
+      image: cityImage("istanbul"),
+      description: topCityDescriptionOverrides.get("istanbul")!,
     },
   ],
   spain: [
@@ -2480,6 +3065,15 @@ const curatedCitySeeds: Record<string, Omit<City, "listCount">[]> = {
       description:
         "Chiang Mai is a northern Thai base where old-city temples, night markets, cafes, cooking classes, mountain routes, elephant sanctuaries, and relaxed stays support slower trips. The best days hinge on timing: start in the city, then let the season, drive, and landscape decide how far the route stretches.",
     },
+    {
+      id: "phuket",
+      name: "Phuket",
+      country: "Thailand",
+      continent: "Asia",
+      coordinates: [7.8804, 98.3923],
+      image: cityImage("phuket"),
+      description: topCityDescriptionOverrides.get("phuket")!,
+    },
   ],
   "south-korea": [
     {
@@ -2513,6 +3107,61 @@ const curatedCitySeeds: Record<string, Omit<City, "listCount">[]> = {
       image: cityImage("dubai"),
       description:
         "Dubai is a high-gloss desert city where skyline hotels, malls, beaches, destination restaurants, rooftop bars, heritage quarters, and desert or marina experiences define planning. The payoff is pairing the view with a real plan: a useful base, a few strong anchors, and room for the weather.",
+    },
+  ],
+  malaysia: [
+    {
+      id: "kuala-lumpur",
+      name: "Kuala Lumpur",
+      country: "Malaysia",
+      continent: "Asia",
+      coordinates: [3.139, 101.6869],
+      image: cityImage("kualalumpur"),
+      description: topCityDescriptionOverrides.get("kuala-lumpur")!,
+    },
+  ],
+  "saudi-arabia": [
+    {
+      id: "mecca",
+      name: "Mecca",
+      country: "Saudi Arabia",
+      continent: "Asia",
+      coordinates: [21.3891, 39.8579],
+      image: cityImage("mecca"),
+      description: topCityDescriptionOverrides.get("mecca")!,
+    },
+  ],
+  "hong-kong": [
+    {
+      id: "hong-kong",
+      name: "Hong Kong",
+      country: "Hong Kong",
+      continent: "Asia",
+      coordinates: [22.3193, 114.1694],
+      image: cityImage("hongkong"),
+      description: topCityDescriptionOverrides.get("hong-kong")!,
+    },
+  ],
+  macau: [
+    {
+      id: "macau",
+      name: "Macau",
+      country: "Macau",
+      continent: "Asia",
+      coordinates: [22.1987, 113.5439],
+      image: cityImage("macau"),
+      description: topCityDescriptionOverrides.get("macau")!,
+    },
+  ],
+  singapore: [
+    {
+      id: "singapore",
+      name: "Singapore",
+      country: "Singapore",
+      continent: "Asia",
+      coordinates: [1.3521, 103.8198],
+      image: cityImage("singapore"),
+      description: topCityDescriptionOverrides.get("singapore")!,
     },
   ],
   australia: [
@@ -3127,7 +3776,7 @@ function createCountry(country: WorldCountrySeed): Country {
       bounds: country.bounds,
       cities: usaCitySeeds.map((city) => ({
         ...withSeededSubareas({
-          ...city,
+          ...withTopCityDescription(city),
           country: country.name,
           continent: country.continentName,
         }),
@@ -3149,7 +3798,7 @@ function createCountry(country: WorldCountrySeed): Country {
       states: ukStateSeeds,
       bounds: country.bounds,
       cities: curatedCities.map((city) => ({
-        ...withSeededSubareas(assignCityToNearestSubarea(city, subareas)),
+        ...withSeededSubareas(assignCityToNearestSubarea(withTopCityDescription(city), subareas)),
         listCount: 0,
       })),
     };
@@ -3171,7 +3820,7 @@ function createCountry(country: WorldCountrySeed): Country {
     subareas,
     bounds: country.bounds,
     cities: (curatedCities ? [...curatedCities, ...regionCities] : fallbackCities).map((city) => ({
-      ...withSeededSubareas(assignCityToNearestSubarea(city, subareas)),
+      ...withSeededSubareas(assignCityToNearestSubarea(withTopCityDescription(city), subareas)),
       listCount: 0,
     })),
   };
@@ -3180,7 +3829,7 @@ function createCountry(country: WorldCountrySeed): Country {
 export const continents: Continent[] = continentDefinitions.map((continent) => ({
   ...continent,
   subareas: buildContinentSubareas(continent),
-  countries: worldCountrySeeds
+  countries: [...worldCountrySeeds, ...supplementalWorldCountrySeeds]
     .filter((country) => country.continentId === continent.id)
     .sort((left, right) => left.name.localeCompare(right.name))
     .map(createCountry),
