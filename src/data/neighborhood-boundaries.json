@@ -169880,18 +169880,73 @@
       "country": "Italy",
       "name": "Centro Storico",
       "parentName": null,
-      "displayName": "Centro storico, Anguillara Sabazia, Roma Capitale, Lazio, 00061, Italia",
+      "displayName": "Centro Storico",
       "source": {
-        "provider": "Nominatim / OpenStreetMap",
-        "datasetUrl": "https://nominatim.openstreetmap.org/search",
-        "query": "Centro Storico, Roma, Italia"
+        "sourceId": "rome-urban-zone-centro-storico",
+        "provider": "Manual boundary from Rome urban zone 1A references",
+        "datasetUrl": "https://www.mapparoma.info/zone-urbanistiche/centro-storico/",
+        "datasetId": "rome-urban-zone-1a-centro-storico",
+        "format": "manual-geojson",
+        "matchField": "manual",
+        "labels": [
+          "Centro Storico"
+        ],
+        "notes": "manual geometry override"
       }
     },
     "geometry": {
-      "type": "Point",
+      "type": "Polygon",
       "coordinates": [
-        12.2696656,
-        42.0933831
+        [
+          [
+            12.4648,
+            41.9082
+          ],
+          [
+            12.4677,
+            41.9122
+          ],
+          [
+            12.4764,
+            41.912
+          ],
+          [
+            12.4858,
+            41.9077
+          ],
+          [
+            12.4902,
+            41.9016
+          ],
+          [
+            12.4884,
+            41.895
+          ],
+          [
+            12.4845,
+            41.8912
+          ],
+          [
+            12.4767,
+            41.8869
+          ],
+          [
+            12.4692,
+            41.8876
+          ],
+          [
+            12.4634,
+            41.8922
+          ],
+          [
+            12.4614,
+            41.8991
+          ],
+          [
+            12.4648,
+            41.9082
+          ]
+        ]
       ]
     }
   },

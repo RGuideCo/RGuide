@@ -194,7 +194,6 @@ const boundaryQueryOverrides = {
   "madrid::barrio-de-las-letras": ["Cortes, Madrid, Spain", "Barrio de las Letras, Madrid, Spain"],
   "madrid::retiro": ["Retiro, Madrid, Spain"],
   "rome::centro-storico": [
-    "Municipio Roma I, Roma Capitale, Lazio, Italia",
     "Centro Storico, Roma, Italia",
     "Centro Storico, Rome, Italy",
   ],

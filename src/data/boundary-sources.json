@@ -145,6 +145,70 @@
       ]
     }
   },
+  "rome-urban-zone-centro-storico": {
+    "provider": "Manual boundary from Rome urban zone 1A references",
+    "datasetUrl": "https://www.mapparoma.info/zone-urbanistiche/centro-storico/",
+    "datasetId": "rome-urban-zone-1a-centro-storico",
+    "format": "manual-geojson",
+    "matchField": "manual",
+    "geometryByBoundaryKey": {
+      "rome::centro-storico": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              12.4648,
+              41.9082
+            ],
+            [
+              12.4677,
+              41.9122
+            ],
+            [
+              12.4764,
+              41.912
+            ],
+            [
+              12.4858,
+              41.9077
+            ],
+            [
+              12.4902,
+              41.9016
+            ],
+            [
+              12.4884,
+              41.895
+            ],
+            [
+              12.4845,
+              41.8912
+            ],
+            [
+              12.4767,
+              41.8869
+            ],
+            [
+              12.4692,
+              41.8876
+            ],
+            [
+              12.4634,
+              41.8922
+            ],
+            [
+              12.4614,
+              41.8991
+            ],
+            [
+              12.4648,
+              41.9082
+            ]
+          ]
+        ]
+      }
+    }
+  },
   "london-wards-gla": {
     "provider": "Greater London Authority GIS",
     "datasetUrl": "https://gis2.london.gov.uk/server/rest/services/apps/cultural_infrastructure_map_context_layers/MapServer/3/query?where=1%3D1&outFields=ward_name&returnGeometry=true&outSR=4326&f=geojson",
