@@ -1915,12 +1915,12 @@ const rawMapLists: MapList[] = [
     upvotes: 0,
     createdAt: "2026-04-21T00:00:00.000Z",
     stops: [
-      { id: "gracia-canigo", name: "Bar Canigó", coordinates: [41.4012, 2.1609], description: "Classic Gràcia neighborhood bar with vermouth culture and long-standing regulars.", hours: nightlifeHoursDayEvening },
-      { id: "gracia-bodega-quimet", name: "Bodega Quimet", coordinates: [41.4041, 2.156], description: "Traditional bodega atmosphere with counter snacks and a local first-name crowd.", hours: nightlifeHoursDayEvening },
-      { id: "gracia-fourmi", name: "La Fourmi", coordinates: [41.4026, 2.1582], description: "Cozy social bar with laid-back service and a relaxed post-dinner pace.", hours: nightlifeHoursEveningLate },
-      { id: "gracia-torpedo", name: "Bar Torpedo", coordinates: [41.3998, 2.1575], description: "Small-format late spot with upbeat playlists and reliable Gràcia night traffic.", hours: nightlifeHoursEveningLate },
-      { id: "gracia-entresol", name: "L'Entresòl", coordinates: [41.4005, 2.1594], description: "Gin-and-cocktail bar known for classic serves and a den-style interior.", hours: nightlifeHoursEveningLate },
-      { id: "gracia-salvatge", name: "Bar Salvatge", coordinates: [41.4021, 2.1611], description: "Natural-wine-focused bar where casual pours and neighborhood conversation dominate.", hours: nightlifeHoursEveningLate },
+      { id: "gracia-canigo", name: "Bar Canigó", coordinates: [41.4012, 2.1609], description: "Bar Canigó belongs here because it captures Gràcia's everyday bar rhythm better than a destination cocktail room would. Use it for vermouth, casual beers, and a table that lets you watch the neighborhood move at plaza speed.", hours: nightlifeHoursDayEvening },
+      { id: "gracia-bodega-quimet", name: "Bodega Quimet", coordinates: [41.4041, 2.156], description: "Bodega Quimet is the old-bodega anchor of the guide: shelves, counter snacks, preserved things, and a regular-heavy feel that makes the stop more about local ritual than novelty. It works best early, before the night gets louder.", hours: nightlifeHoursDayEvening },
+      { id: "gracia-fourmi", name: "La Fourmi", coordinates: [41.4026, 2.1582], description: "La Fourmi gives the route a softer social bar: relaxed service, low-pressure drinks, and enough neighborhood warmth to stretch a post-dinner stop into a longer conversation. It is useful when the group wants atmosphere without a big-night agenda.", hours: nightlifeHoursEveningLate },
+      { id: "gracia-torpedo", name: "Bar Torpedo", coordinates: [41.3998, 2.1575], description: "Bar Torpedo is the compact late stop for when Gràcia's slower evening needs a little momentum. The appeal is not polish; it is tight-room energy, upbeat music, and a crowd that makes sense after plaza drinks or a casual dinner nearby.", hours: nightlifeHoursEveningLate },
+      { id: "gracia-entresol", name: "L'Entresòl", coordinates: [41.4005, 2.1594], description: "L'Entresòl adds a more cocktail-minded stop without breaking the guide's low-key promise. Go when you want classic gin-and-tonic or mixed-drink structure in a den-like room rather than the queue-and-spectacle feel of the central cocktail bars.", hours: nightlifeHoursEveningLate },
+      { id: "gracia-salvatge", name: "Bar Salvatge", coordinates: [41.4021, 2.1611], description: "Bar Salvatge gives the Gràcia list its natural-wine edge, with casual pours, snackable pacing, and a room built more for conversation than performance. It is the best fit when the night should stay current but still feel neighborhood-scaled.", hours: nightlifeHoursEveningLate },
     ],
     sources: [
       { name: "Time Out - Gràcia bars", url: "https://www.timeout.com/barcelona/bars-and-pubs/gracia-bars" },
