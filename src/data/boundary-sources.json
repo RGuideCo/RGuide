@@ -103,6 +103,48 @@
       ]
     }
   },
+  "madrid-official-barrios": {
+    "provider": "Ayuntamiento de Madrid",
+    "datasetUrl": "https://services-eu1.arcgis.com/UrtTdLP2PYSxwtI6/arcgis/rest/services/L%C3%ADmites_administrativos_oficiales_del_Ayuntamiento_de_Madrid/FeatureServer/1/query?where=1%3D1&outFields=CODDIS,NOMDIS,COD_BAR,NOMBRE,COD_DISBAR&returnGeometry=true&outSR=4326&f=geojson",
+    "datasetId": "Limites_administrativos_oficiales_del_Ayuntamiento_de_Madrid/FeatureServer/1",
+    "format": "arcgis-geojson",
+    "matchField": "NOMBRE",
+    "mappings": {
+      "madrid::sol-centro": [
+        "Sol"
+      ],
+      "madrid::barrio-de-las-letras": [
+        "Cortes"
+      ],
+      "madrid::malasana": [
+        "Universidad"
+      ],
+      "madrid::la-latina": [
+        "Palacio"
+      ],
+      "madrid::chueca": [
+        "Justicia"
+      ],
+      "madrid::lavapies": [
+        "Embajadores"
+      ]
+    }
+  },
+  "madrid-official-districts": {
+    "provider": "Ayuntamiento de Madrid",
+    "datasetUrl": "https://services-eu1.arcgis.com/UrtTdLP2PYSxwtI6/arcgis/rest/services/L%C3%ADmites_administrativos_oficiales_del_Ayuntamiento_de_Madrid/FeatureServer/2/query?where=1%3D1&outFields=COD_DIS,NOMBRE&returnGeometry=true&outSR=4326&f=geojson",
+    "datasetId": "Limites_administrativos_oficiales_del_Ayuntamiento_de_Madrid/FeatureServer/2",
+    "format": "arcgis-geojson",
+    "matchField": "NOMBRE",
+    "mappings": {
+      "madrid::retiro": [
+        "Retiro"
+      ],
+      "madrid::salamanca": [
+        "Salamanca"
+      ]
+    }
+  },
   "london-wards-gla": {
     "provider": "Greater London Authority GIS",
     "datasetUrl": "https://gis2.london.gov.uk/server/rest/services/apps/cultural_infrastructure_map_context_layers/MapServer/3/query?where=1%3D1&outFields=ward_name&returnGeometry=true&outSR=4326&f=geojson",
