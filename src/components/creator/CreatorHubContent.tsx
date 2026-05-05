@@ -32,6 +32,9 @@ type CreatorRailId = "guides" | "experiences" | "itineraries";
 type CreatorLeftRailId = "places-been" | "settings" | "edit-profile";
 
 function isItineraryGuide(list: MapList) {
+  if (list.submissionType === "itinerary") {
+    return true;
+  }
   const hasGeneratedItineraryStops = list.stops.some((stop) => stop.id.startsWith("itinerary-stop-"));
   const hasItineraryTitle = /\bitinerary\b/i.test(list.title);
   const hasCompiledItineraryDescription = /^compiled itinerary with \d+ saved locations\.?$/i.test(
@@ -49,7 +52,7 @@ const creatorRailOptions: Array<{
 }> = [
   { id: "guides", label: "Guides", icon: User, addHref: "/submit?type=guide", addLabel: "Add guide" },
   { id: "experiences", label: "Experiences", icon: BookOpen, addHref: "/submit?type=journal", addLabel: "Add experience" },
-  { id: "itineraries", label: "Itineraries", icon: Route, addHref: "/submit?type=guide", addLabel: "Add itinerary" },
+  { id: "itineraries", label: "Itineraries", icon: Route, addHref: "/submit?type=itinerary", addLabel: "Add itinerary" },
 ];
 
 const creatorLeftRailOptions: Array<{

@@ -352,6 +352,9 @@ export function doesListMatchSubcategory(list: MapList, subcategory: string): bo
 }
 
 export function isItineraryList(list: MapList, itineraryListIds: Set<string>): boolean {
+  if (list.submissionType === "itinerary") {
+    return true;
+  }
   if (itineraryListIds.has(list.id)) {
     return true;
   }

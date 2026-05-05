@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -59,6 +59,9 @@ function splitStopDescriptionAndHours(description: string) {
   };
 }
 function isItineraryLikeGuide(list: MapList) {
+  if (list.submissionType === "itinerary") {
+    return true;
+  }
   const hasGeneratedItineraryStops = list.stops.some((stop) => stop.id.startsWith("itinerary-stop-"));
   const hasItineraryTitle = /\bitinerary\b/i.test(list.title);
   const hasCompiledItineraryDescription = /^compiled itinerary with \d+ saved locations\.?$/i.test(
@@ -85,7 +88,47 @@ function buildGuideMeta(list: MapList) {
   const placeCount = list.stops.length;
   const placeLabel = `${placeCount} ${placeCount === 1 ? "place" : "places"}`;
   const locationLabel = buildLocationSubtitle(list);
-  return [list.category, placeLabel, locationLabel].filter(Boolean).join(" • ");
+  const typeLabel = list.submissionType === "itinerary" ? "Itinerary" : list.category;
+  return [typeLabel, placeLabel, locationLabel].filter(Boolean).join(" • ");
+}
+
+function getLocalDateKey(date: Date) {
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, "0");
+  const day = String(date.getDate()).padStart(2, "0");
+  return `${year}-${month}-${day}`;
+}
+
+function addDays(dateKey: string, days: number) {
+  const date = new Date(`${dateKey}T00:00:00`);
+  date.setDate(date.getDate() + days);
+  return getLocalDateKey(date);
+}
+
+function getItineraryStopDate(list: MapList, stop: MapList["stops"][number], index: number) {
+  if (stop.itineraryDate) {
+    return stop.itineraryDate;
+  }
+  if (list.itinerary?.startDate && stop.itineraryDay && stop.itineraryDay > 0) {
+    return addDays(list.itinerary.startDate, stop.itineraryDay - 1);
+  }
+  if (list.itinerary?.startDate) {
+    return list.itinerary.startDate;
+  }
+  return `day-${stop.itineraryDay ?? index + 1}`;
+}
+
+function formatItineraryDayLabel(dateKey: string, index: number) {
+  const dayLabel = `Day ${index + 1}`;
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(dateKey)) {
+    return dayLabel;
+  }
+  const formatted = new Intl.DateTimeFormat(undefined, {
+    month: "short",
+    day: "numeric",
+    year: "numeric",
+  }).format(new Date(`${dateKey}T00:00:00`));
+  return `${dayLabel} - ${formatted}`;
 }
 
 const SAMPLE_POI_PHOTOS = [
@@ -193,6 +236,21 @@ export function MapListCard({
   const sourceSummary = allSources.length ? buildSourceSummary(allSources) : null;
   const [sourcesPinnedOpen, setSourcesPinnedOpen] = useState(false);
   const sourcesOpen = Boolean(allSources.length) && sourcesPinnedOpen;
+  const itineraryStopGroups = isItineraryGuide
+    ? list.stops.reduce<Array<{ dateKey: string; stops: Array<{ stop: MapList["stops"][number]; index: number }> }>>(
+        (groups, stop, index) => {
+          const dateKey = getItineraryStopDate(list, stop, index);
+          const existingGroup = groups.find((group) => group.dateKey === dateKey);
+          if (existingGroup) {
+            existingGroup.stops.push({ stop, index });
+            return groups;
+          }
+          groups.push({ dateKey, stops: [{ stop, index }] });
+          return groups;
+        },
+        [],
+      )
+    : [];
 
   const togglePlace = (placeId: string) => {
     setExpandedPlaceIds((current) =>
@@ -449,6 +507,7 @@ export function MapListCard({
       entry.creator.id === currentUser?.id &&
       entry.id !== list.id &&
       entry.submissionType !== "journal" &&
+      entry.submissionType !== "itinerary" &&
       !isItineraryLikeGuide(entry),
   );
   const cloneStopForGuideAddition = (
@@ -700,7 +759,7 @@ export function MapListCard({
               </button>
             ) : (
               <Link
-                href={`/submit?edit=${encodeURIComponent(list.id)}&type=${list.submissionType === "journal" ? "journal" : "guide"}`}
+                href={`/submit?edit=${encodeURIComponent(list.id)}&type=${list.submissionType ?? "guide"}`}
                 onClick={(event) => event.stopPropagation()}
                 className="inline-flex items-center rounded-full border border-slate-200 bg-white px-2 py-1 text-[11px] font-medium text-slate-700 hover:border-slate-300 hover:text-slate-900"
                 aria-label="Edit guide"
@@ -932,7 +991,35 @@ export function MapListCard({
                           itineraryPlaylists.some((playlist) => playlist.stopKeys.includes(stopItineraryId));
                         const isStopExpanded = expandedStopIds.includes(stop.id);
                         const isStopMapSelected = forceExpandStopId === stop.id;
+                        const itineraryDateKey = isItineraryGuide ? getItineraryStopDate(list, stop, index) : "";
+                        const previousItineraryDateKey =
+                          isItineraryGuide && index > 0
+                            ? getItineraryStopDate(list, list.stops[index - 1], index - 1)
+                            : "";
+                        const itineraryGroupIndex = itineraryStopGroups.findIndex(
+                          (group) => group.dateKey === itineraryDateKey,
+                        );
+                        const shouldShowItineraryDay =
+                          isItineraryGuide && itineraryDateKey !== previousItineraryDateKey;
                         return (
+                      <Fragment key={`${list.id}-stop-row-${stop.id}`}>
+                      {shouldShowItineraryDay ? (
+                        <li
+                          key={`${list.id}-itinerary-day-${itineraryDateKey}`}
+                          className="guide-content-cascade-item list-none pt-2 first:pt-0"
+                          style={{ animationDelay: `${120 + index * 45}ms` }}
+                        >
+                          <div className="flex items-center gap-2">
+                            <span
+                              className="rounded-full px-2 py-1 text-[10px] font-semibold uppercase tracking-[0.12em] text-white"
+                              style={{ backgroundColor: categoryStyle.mapColor }}
+                            >
+                              {formatItineraryDayLabel(itineraryDateKey, itineraryGroupIndex)}
+                            </span>
+                            <div className="h-px flex-1 bg-slate-200" />
+                          </div>
+                        </li>
+                      ) : null}
                       <li
                         id={`guide-stop-item-${list.id}-${stop.id}`}
                         key={stop.id}
@@ -1218,6 +1305,7 @@ export function MapListCard({
                         </div>
                         </section>
                       </li>
+                      </Fragment>
                         );
                       })()
                     ))}

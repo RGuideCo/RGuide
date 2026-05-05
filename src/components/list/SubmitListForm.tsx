@@ -185,6 +185,7 @@ interface ManualGuideLocation {
   name: string;
   context: string;
   description: string;
+  itineraryDate?: string;
   country?: string;
   continent?: string;
   coordinates?: [number, number];
@@ -194,6 +195,7 @@ interface ManualGuideLocation {
 interface DraftManualLocation {
   name: string;
   context: string;
+  itineraryDate?: string;
   country?: string;
   continent?: string;
   coordinates?: [number, number];
@@ -209,6 +211,53 @@ type PreviewGuideStop = {
   places: ManualGuideLocation[] | undefined;
   rank: number;
 };
+
+function getLocalDateKey(date: Date) {
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, "0");
+  const day = String(date.getDate()).padStart(2, "0");
+  return `${year}-${month}-${day}`;
+}
+
+function addDays(dateKey: string, days: number) {
+  const date = new Date(`${dateKey}T00:00:00`);
+  date.setDate(date.getDate() + days);
+  return getLocalDateKey(date);
+}
+
+function buildDateRange(startDate: string, endDate: string) {
+  if (!startDate || !endDate) return [];
+  const start = new Date(`${startDate}T00:00:00`);
+  const end = new Date(`${endDate}T00:00:00`);
+  if (Number.isNaN(start.getTime()) || Number.isNaN(end.getTime()) || end < start) {
+    return [];
+  }
+  const days: string[] = [];
+  const cursor = new Date(start);
+  while (cursor <= end && days.length < 60) {
+    days.push(getLocalDateKey(cursor));
+    cursor.setDate(cursor.getDate() + 1);
+  }
+  return days;
+}
+
+function getItineraryDayForDate(date: string | undefined, startDate: string) {
+  if (!date || !startDate) return undefined;
+  const start = new Date(`${startDate}T00:00:00`);
+  const current = new Date(`${date}T00:00:00`);
+  if (Number.isNaN(start.getTime()) || Number.isNaN(current.getTime())) {
+    return undefined;
+  }
+  return Math.floor((current.getTime() - start.getTime()) / 86400000) + 1;
+}
+
+function formatDayOption(dateKey: string, index: number) {
+  const formatted = new Intl.DateTimeFormat(undefined, {
+    month: "short",
+    day: "numeric",
+  }).format(new Date(`${dateKey}T00:00:00`));
+  return `Day ${index + 1} - ${formatted}`;
+}
 
 export function SubmitListForm({
   onSelectionChange,
@@ -275,6 +324,8 @@ export function SubmitListForm({
   const [descriptionApplied, setDescriptionApplied] = useState(false);
   const [journalNote, setJournalNote] = useState("");
   const [visitedAt, setVisitedAt] = useState("");
+  const [itineraryStartDate, setItineraryStartDate] = useState("");
+  const [itineraryEndDate, setItineraryEndDate] = useState("");
   const [category, setCategory] = useState(CATEGORIES[0]);
   const [message, setMessage] = useState<string | null>(null);
   const [appliedAddQueryKey, setAppliedAddQueryKey] = useState<string | null>(null);
@@ -288,6 +339,8 @@ export function SubmitListForm({
     setDescriptionApplied(false);
     setJournalNote("");
     setVisitedAt("");
+    setItineraryStartDate("");
+    setItineraryEndDate("");
     setContinentId("");
     setCountryId("");
     setRegionId("");
@@ -537,10 +590,16 @@ export function SubmitListForm({
     onSubmissionModeChange?.(nextSubmissionType, nextGuideSubmissionVariant);
   };
   const isUrlValid = !url || urlPattern.test(url);
-  const isGuideSubmission = activeSubmissionType === "guide";
+  const isGuideSubmission = activeSubmissionType === "guide" || activeSubmissionType === "itinerary";
   const isExperienceSubmission = activeSubmissionType === "journal";
   const isGuideStyleSubmission = isGuideSubmission || isExperienceSubmission;
-  const isItinerarySubmission = isGuideSubmission && activeGuideSubmissionVariant === "itinerary";
+  const isItinerarySubmission =
+    activeSubmissionType === "itinerary" || (activeSubmissionType === "guide" && activeGuideSubmissionVariant === "itinerary");
+  const effectiveSubmissionType: SubmissionType = isItinerarySubmission ? "itinerary" : activeSubmissionType;
+  const itineraryDayOptions = useMemo(
+    () => buildDateRange(itineraryStartDate, itineraryEndDate),
+    [itineraryEndDate, itineraryStartDate],
+  );
   const submissionNoun = isItinerarySubmission
     ? "itinerary"
     : isExperienceSubmission
@@ -568,7 +627,13 @@ export function SubmitListForm({
       description: description.trim() || `Draft ${submissionNoun} in progress.`,
       url: "https://www.google.com/maps",
       category,
-      submissionType: activeSubmissionType,
+      submissionType: effectiveSubmissionType,
+      itinerary: isItinerarySubmission
+        ? {
+            startDate: itineraryStartDate || undefined,
+            endDate: itineraryEndDate || undefined,
+          }
+        : undefined,
       location: {
         scope: selectedCity?.name ? "city" : selectedCountry?.name ? "country" : "continent",
         continent: fallbackContinent,
@@ -588,6 +653,10 @@ export function SubmitListForm({
         name: stop.name,
         coordinates: stop.coordinates,
         description: stop.description,
+        itineraryDate: isItinerarySubmission ? manualGuideLocations[stop.rank - 1]?.itineraryDate : undefined,
+        itineraryDay: isItinerarySubmission
+          ? getItineraryDayForDate(manualGuideLocations[stop.rank - 1]?.itineraryDate, itineraryStartDate)
+          : undefined,
         places: stop.places?.map((place, placeIndex) => ({
           id: `preview-place-${place.id}-${placeIndex}`,
           name: place.name.trim() || `Place ${placeIndex + 1}`,
@@ -605,8 +674,13 @@ export function SubmitListForm({
     currentUser?.id,
     currentUser?.name,
     description,
+    effectiveSubmissionType,
     guideInputMode,
+    isItinerarySubmission,
     isGuideStyleSubmission,
+    itineraryEndDate,
+    itineraryStartDate,
+    manualGuideLocations,
     onPreviewListChange,
     previewStops,
     selectedCity,
@@ -637,6 +711,7 @@ export function SubmitListForm({
     setDraftManualLocation({
       name: locationName,
       context,
+      itineraryDate: isItinerarySubmission ? itineraryDayOptions[0] : undefined,
       country: selectedCountry?.name,
       continent: selectedContinent?.name,
       coordinates: mapPinnedLocation.coordinates,
@@ -649,6 +724,8 @@ export function SubmitListForm({
   }, [
     guideInputMode,
     isGuideStyleSubmission,
+    isItinerarySubmission,
+    itineraryDayOptions,
     manualGuideLocations.length,
     mapPinnedLocation,
     selectedCity?.name,
@@ -665,7 +742,7 @@ export function SubmitListForm({
       return;
     }
     if (mode === "itinerary") {
-      setSubmissionMode("guide", "itinerary");
+      setSubmissionMode("itinerary", "itinerary");
       setGuideInputMode("manual");
       return;
     }
@@ -679,6 +756,23 @@ export function SubmitListForm({
       setGuideInputMode("manual");
     }
   }, [isItinerarySubmission]);
+  useEffect(() => {
+    if (!isItinerarySubmission || itineraryDayOptions.length === 0) {
+      return;
+    }
+    setManualGuideLocations((current) =>
+      current.map((location) =>
+        location.itineraryDate && itineraryDayOptions.includes(location.itineraryDate)
+          ? location
+          : { ...location, itineraryDate: itineraryDayOptions[0] },
+      ),
+    );
+    setDraftManualLocation((current) =>
+      current && (!current.itineraryDate || !itineraryDayOptions.includes(current.itineraryDate))
+        ? { ...current, itineraryDate: itineraryDayOptions[0] }
+        : current,
+    );
+  }, [isItinerarySubmission, itineraryDayOptions]);
   useEffect(() => {
     if (
       (activeSubmissionType === "guide" || activeSubmissionType === "journal") &&
@@ -709,7 +803,7 @@ export function SubmitListForm({
       if (modeFromQuery === "journal") {
         setSubmissionMode("journal", "guide");
       } else {
-        setSubmissionMode("guide", modeFromQuery === "itinerary" ? "itinerary" : "guide");
+        setSubmissionMode(modeFromQuery === "itinerary" ? "itinerary" : "guide", modeFromQuery === "itinerary" ? "itinerary" : "guide");
       }
       setGuideInputMode("manual");
       setManualGuideLocations((current) => {
@@ -724,6 +818,7 @@ export function SubmitListForm({
             name: addName,
             context: [addCountry, addContinent].filter(Boolean).join(" • "),
             description: "",
+            itineraryDate: modeFromQuery === "itinerary" ? itineraryDayOptions[0] : undefined,
             country: addCountry || undefined,
             continent: addContinent || undefined,
             coordinates:
@@ -747,7 +842,7 @@ export function SubmitListForm({
       );
     }
     setAppliedAddQueryKey(queryKey);
-  }, [appliedAddQueryKey, description, searchParams, title]);
+  }, [appliedAddQueryKey, description, itineraryDayOptions, searchParams, title]);
 
   useEffect(() => {
     const query = locationSearch.trim();
@@ -963,6 +1058,7 @@ export function SubmitListForm({
       setDraftManualLocation({
         name: locationName,
         context,
+        itineraryDate: isItinerarySubmission ? itineraryDayOptions[0] : undefined,
         country: locationCountry,
         continent: locationContinent,
         coordinates: suggestionOverride?.coordinates ?? inferred?.coordinates,
@@ -1007,6 +1103,10 @@ export function SubmitListForm({
       setMessage("Add a description for this location first.");
       return;
     }
+    if (isItinerarySubmission && !draftManualLocation.itineraryDate) {
+      setMessage("Choose which day this POI belongs to.");
+      return;
+    }
     const nextId = `manual-location-${Date.now()}-${Math.random().toString(36).slice(2, 7)}`;
     setManualGuideLocations((current) => [
       ...current,
@@ -1015,6 +1115,7 @@ export function SubmitListForm({
         name: draftManualLocation.name.trim(),
         context: draftManualLocation.context,
         description: draftManualDescription.trim(),
+        itineraryDate: draftManualLocation.itineraryDate,
         country: draftManualLocation.country,
         continent: draftManualLocation.continent,
         coordinates: draftManualLocation.coordinates,
@@ -1242,15 +1343,23 @@ export function SubmitListForm({
 
   const handleEditSubmittedList = (list: MapList) => {
     setEditingListId(list.id);
+    const isItineraryList =
+      list.submissionType === "itinerary" ||
+      list.stops.some((stop) => stop.id.startsWith("itinerary-stop-")) ||
+      /\bitinerary\b/i.test(list.title);
     setSubmissionMode(
-      list.submissionType ?? "guide",
-      /\bitinerary\b/i.test(list.title) ? "itinerary" : "guide",
+      isItineraryList ? "itinerary" : list.submissionType ?? "guide",
+      isItineraryList ? "itinerary" : "guide",
     );
     setTitle(list.title);
     setDescription(list.description);
     setDescriptionApplied(true);
     setCategory(list.category);
     setUrl(list.url === "https://www.google.com/maps" ? "" : list.url);
+    setItineraryStartDate(list.itinerary?.startDate ?? list.stops.find((stop) => stop.itineraryDate)?.itineraryDate ?? "");
+    setItineraryEndDate(
+      list.itinerary?.endDate ?? [...list.stops].reverse().find((stop) => stop.itineraryDate)?.itineraryDate ?? "",
+    );
     setMessage(null);
 
     const locationText = [list.location.neighborhood, list.location.city, list.location.country, list.location.continent]
@@ -1268,7 +1377,7 @@ export function SubmitListForm({
     }
 
     const manualModeCandidate =
-      (list.submissionType ?? "guide") === "guide" &&
+      (list.submissionType ?? "guide") !== "journal" &&
       list.stops.length > 0;
 
     setGuideInputMode(manualModeCandidate ? "manual" : "google");
@@ -1279,6 +1388,7 @@ export function SubmitListForm({
           name: stop.name,
           context: [list.location.country, list.location.continent].filter(Boolean).join(" • "),
           description: stop.description,
+          itineraryDate: stop.itineraryDate,
           coordinates: stop.coordinates,
           places: stop.places?.map((place, placeIndex) => ({
             id: `edit-place-${place.id}-${placeIndex}`,
@@ -1414,6 +1524,21 @@ export function SubmitListForm({
       return;
     }
 
+    if (isItinerarySubmission) {
+      if (!itineraryStartDate || !itineraryEndDate) {
+        setMessage("Add start and end dates for this itinerary.");
+        return;
+      }
+      if (itineraryDayOptions.length === 0) {
+        setMessage("The itinerary end date must be on or after the start date.");
+        return;
+      }
+      if (manualGuideLocations.some((location) => !location.itineraryDate)) {
+        setMessage("Choose a day for every POI in this itinerary.");
+        return;
+      }
+    }
+
     const resolvedUrl =
       requiresGoogleUrl
         ? url.trim()
@@ -1425,6 +1550,10 @@ export function SubmitListForm({
             name: location.name,
             coordinates: location.coordinates ?? selectedCity?.coordinates ?? [0, 0],
             description: location.description.trim() || `${location.name} stop`,
+            itineraryDate: isItinerarySubmission ? location.itineraryDate : undefined,
+            itineraryDay: isItinerarySubmission
+              ? getItineraryDayForDate(location.itineraryDate, itineraryStartDate)
+              : undefined,
             places: location.places?.map((place, placeIndex) => ({
               id: `nested-stop-${slugify(`${place.name}-${placeIndex + 1}`)}`,
               name: place.name.trim() || `Place ${placeIndex + 1}`,
@@ -1435,7 +1564,7 @@ export function SubmitListForm({
         : [];
 
     const submissionPayload = {
-      submissionType: activeSubmissionType,
+      submissionType: effectiveSubmissionType,
       url: resolvedUrl,
       title,
       description,
@@ -1446,6 +1575,8 @@ export function SubmitListForm({
       neighborhood: selectedNeighborhood?.name ?? (!selectedCity ? selectedRegion?.name : undefined),
       visitedAt: activeSubmissionType === "journal" ? visitedAt : undefined,
       journalNote: activeSubmissionType === "journal" ? journalNote : undefined,
+      itineraryStartDate: isItinerarySubmission ? itineraryStartDate : undefined,
+      itineraryEndDate: isItinerarySubmission ? itineraryEndDate : undefined,
       stops: manualStops,
     };
     const response = editingListId
@@ -1575,7 +1706,7 @@ export function SubmitListForm({
               <button
                 type="button"
                 onClick={() => {
-                  setSubmissionMode("guide", "itinerary");
+                  setSubmissionMode("itinerary", "itinerary");
                   setGuideInputMode("manual");
                 }}
                 className={`rounded-full px-3 py-1 text-xs font-medium transition ${
@@ -1902,6 +2033,35 @@ export function SubmitListForm({
         <>
           {canShowPostDescriptionStep ? (
             <>
+              {isItinerarySubmission ? (
+                <div className="grid gap-3 sm:grid-cols-2">
+                  <label className="block text-sm">
+                    <span className="mb-2 block font-medium text-slate-700">Start date</span>
+                    <input
+                      type="date"
+                      value={itineraryStartDate}
+                      onChange={(event) => {
+                        const nextStart = event.target.value;
+                        setItineraryStartDate(nextStart);
+                        if (itineraryEndDate && itineraryEndDate < nextStart) {
+                          setItineraryEndDate(nextStart);
+                        }
+                      }}
+                      className="w-full rounded-2xl border border-slate-200 px-4 py-3"
+                    />
+                  </label>
+                  <label className="block text-sm">
+                    <span className="mb-2 block font-medium text-slate-700">End date</span>
+                    <input
+                      type="date"
+                      value={itineraryEndDate}
+                      min={itineraryStartDate || undefined}
+                      onChange={(event) => setItineraryEndDate(event.target.value)}
+                      className="w-full rounded-2xl border border-slate-200 px-4 py-3"
+                    />
+                  </label>
+                </div>
+              ) : null}
               <div className="grid gap-5 md:grid-cols-1">
                 <div className="block text-sm">
                   <div className="mb-2 flex items-center justify-between">
@@ -2122,6 +2282,11 @@ export function SubmitListForm({
                                     {index + 1}
                                   </span>
                                   <span className="min-w-0 flex-1 truncate font-semibold">{location.name}</span>
+                                  {isItinerarySubmission && location.itineraryDate ? (
+                                    <span className="rounded-full bg-slate-100 px-2 py-0.5 text-[10px] font-medium uppercase tracking-[0.08em] text-slate-600">
+                                      Day {getItineraryDayForDate(location.itineraryDate, itineraryStartDate) ?? "?"}
+                                    </span>
+                                  ) : null}
                                   {location.places?.length ? (
                                     <span className="rounded-full bg-slate-100 px-2 py-0.5 text-[10px] font-medium uppercase tracking-[0.08em] text-slate-600">
                                       {location.places.length} places
@@ -2142,6 +2307,31 @@ export function SubmitListForm({
                                 >
                                   <div className="overflow-hidden">
                                     <div className="border-t border-slate-200 px-3 py-3">
+                                      {isItinerarySubmission ? (
+                                        <label className="mb-3 block text-xs font-medium text-slate-600">
+                                          Day
+                                          <select
+                                            value={location.itineraryDate ?? ""}
+                                            onChange={(event) =>
+                                              setManualGuideLocations((current) =>
+                                                current.map((item) =>
+                                                  item.id === location.id
+                                                    ? { ...item, itineraryDate: event.target.value }
+                                                    : item,
+                                                ),
+                                              )
+                                            }
+                                            className="mt-1 w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm text-slate-700"
+                                          >
+                                            <option value="">Choose day</option>
+                                            {itineraryDayOptions.map((dateKey, dayIndex) => (
+                                              <option key={dateKey} value={dateKey}>
+                                                {formatDayOption(dateKey, dayIndex)}
+                                              </option>
+                                            ))}
+                                          </select>
+                                        </label>
+                                      ) : null}
                                       <p
                                         className={`cursor-text overflow-hidden px-3 text-sm leading-5 text-slate-600 transition-[max-height,opacity,transform,margin] duration-180 ease-[cubic-bezier(0.22,1,0.36,1)] ${
                                           editingManualLocationId === location.id
@@ -2444,6 +2634,27 @@ export function SubmitListForm({
                           />
                           {draftManualLocation.context ? (
                             <p className="mt-0.5 text-xs text-slate-500">{draftManualLocation.context}</p>
+                          ) : null}
+                          {isItinerarySubmission ? (
+                            <label className="mt-2 block text-xs font-medium text-slate-600">
+                              Day
+                              <select
+                                value={draftManualLocation.itineraryDate ?? ""}
+                                onChange={(event) =>
+                                  setDraftManualLocation((current) =>
+                                    current ? { ...current, itineraryDate: event.target.value } : current,
+                                  )
+                                }
+                                className="mt-1 w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm text-slate-700"
+                              >
+                                <option value="">Choose day</option>
+                                {itineraryDayOptions.map((dateKey, dayIndex) => (
+                                  <option key={dateKey} value={dateKey}>
+                                    {formatDayOption(dateKey, dayIndex)}
+                                  </option>
+                                ))}
+                              </select>
+                            </label>
                           ) : null}
                           <textarea
                             value={draftManualDescription}

@@ -26,6 +26,8 @@ interface SubmitInput {
   neighborhood?: string;
   visitedAt?: string;
   journalNote?: string;
+  itineraryStartDate?: string;
+  itineraryEndDate?: string;
   stops?: MapList["stops"];
 }
 
@@ -353,6 +355,7 @@ export const useAppStore = create<AppState>()(
         }
 
         const isJournal = input.submissionType === "journal";
+        const isItinerary = input.submissionType === "itinerary";
         const trimmedDescription = input.description.trim();
         const trimmedJournalNote = (input.journalNote ?? "").trim();
         const journalDescription = [trimmedDescription, trimmedJournalNote]
@@ -370,6 +373,12 @@ export const useAppStore = create<AppState>()(
           url: input.url,
           category: isJournal ? "Activities" : input.category,
           submissionType: input.submissionType,
+          itinerary: isItinerary
+            ? {
+                startDate: input.itineraryStartDate,
+                endDate: input.itineraryEndDate,
+              }
+            : undefined,
           journal: isJournal
             ? {
                 visitedAt: input.visitedAt,
@@ -404,6 +413,8 @@ export const useAppStore = create<AppState>()(
           message:
             input.submissionType === "journal"
               ? "Experience saved."
+              : input.submissionType === "itinerary"
+                ? "Itinerary saved."
               : "Guide saved.",
           list: nextList,
         };
@@ -435,6 +446,7 @@ export const useAppStore = create<AppState>()(
         }
 
         const isJournal = input.submissionType === "journal";
+        const isItinerary = input.submissionType === "itinerary";
         const trimmedDescription = input.description.trim();
         const trimmedJournalNote = (input.journalNote ?? "").trim();
         const journalDescription = [trimmedDescription, trimmedJournalNote]
@@ -450,6 +462,12 @@ export const useAppStore = create<AppState>()(
           url: input.url,
           category: isJournal ? "Activities" : input.category,
           submissionType: input.submissionType,
+          itinerary: isItinerary
+            ? {
+                startDate: input.itineraryStartDate,
+                endDate: input.itineraryEndDate,
+              }
+            : undefined,
           journal: isJournal
             ? {
                 visitedAt: input.visitedAt,

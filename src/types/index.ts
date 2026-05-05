@@ -6,7 +6,7 @@ export type ListCategory =
   | "Stay"
   | "Activities";
 
-export type SubmissionType = "guide" | "journal";
+export type SubmissionType = "guide" | "journal" | "itinerary";
 
 export type RegionKind = "north" | "south" | "east" | "west" | "central";
 
@@ -39,6 +39,10 @@ export interface MapList {
   url: string;
   category: ListCategory;
   submissionType?: SubmissionType;
+  itinerary?: {
+    startDate?: string;
+    endDate?: string;
+  };
   journal?: {
     visitedAt?: string;
     note?: string;
@@ -70,6 +74,8 @@ export interface GuideStop {
   price?: "$" | "$$" | "$$$";
   priceSource?: string;
   places?: GuideStop[];
+  itineraryDate?: string;
+  itineraryDay?: number;
   hours?:
     | string
     | {
