@@ -33,8 +33,8 @@ export const madridNeighborhoodGuides = [
           40.4172,
           -3.7003
         ],
-        "description": "Historic old-Madrid dining room for a formal central meal, croquetas, consomme, and a sense of Sol before it became only a pass-through zone.",
-        "price": "$$$",
+        "description": "Lhardy earns its spot in the Sol & Centro food guide because it fills a clear meal role for this route. Historic old-Madrid dining room for a formal central meal, croquetas, consomme, and a sense of Sol before it became only a pass-through zone. Use it when the meal should be a reservation anchor rather than a casual crawl stop.",
+        "price": "$$",
         "priceSource": "The Infatuation / Google Maps",
         "hours": {
           "mon": "12:30 PM-4:00 PM, 7:30 PM-11:00 PM",
@@ -54,7 +54,7 @@ export const madridNeighborhoodGuides = [
           40.4172,
           -3.7044
         ],
-        "description": "Standing-room cod, croquettes, beer, and quick service make Casa Labra the useful counter stop near Puerta del Sol.",
+        "description": "Casa Labra earns its spot in the Sol & Centro food guide because it fills a clear meal role for this route. Standing-room cod, croquettes, beer, and quick service make Casa Labra the useful counter stop near Puerta del Sol. Use it when you want a compact local-feeling stop that can sit before drinks or sightseeing.",
         "price": "$",
         "priceSource": "Time Out / Google Maps",
         "hours": {
@@ -75,8 +75,8 @@ export const madridNeighborhoodGuides = [
           40.4154,
           -3.7091
         ],
-        "description": "The polished market-hall choice near Plaza Mayor, best for groups and snack-led grazing rather than a quiet local meal.",
-        "price": "$$",
+        "description": "Mercado de San Miguel earns its spot in the Sol & Centro food guide because it fills a clear meal role for this route. The polished market-hall choice near Plaza Mayor, best for groups and snack-led grazing rather than a quiet local meal. Use it when the group needs flexible grazing, uneven appetites, or a quick reset between sights.",
+        "price": "$",
         "priceSource": "Time Out / Google Maps",
         "hours": {
           "mon": "12:00 PM-12:00 AM",
@@ -96,7 +96,7 @@ export const madridNeighborhoodGuides = [
           40.4168,
           -3.7068
         ],
-        "description": "The central churros-and-chocolate classic, useful late, early, or as a sweet reset between Plaza Mayor and Sol.",
+        "description": "Chocolatería San Ginés earns its spot in the Sol & Centro food guide because it fills a clear meal role for this route. The central churros-and-chocolate classic, useful late, early, or as a sweet reset between Plaza Mayor and Sol. Use it when the route needs a focused sweet stop or casual reset rather than another full meal.",
         "price": "$",
         "priceSource": "Google Maps / Tripadvisor",
         "hours": {
@@ -166,7 +166,7 @@ export const madridNeighborhoodGuides = [
           40.4172,
           -3.7044
         ],
-        "description": "A classic central beer-and-croquette counter that works as a first drink before the night gets more complicated.",
+        "description": "Casa Labra belongs in the Sol & Centro nightlife guide because it gives the night a defined role rather than another loose bar pin. A classic central beer-and-croquette counter that works as a first drink before the night gets more complicated. Use it when the group needs a clear mood, crowd, and second-stop direction before moving on.",
         "hours": {
           "mon": "12:00 PM-11:00 PM",
           "tue": "12:00 PM-11:00 PM",
@@ -185,7 +185,7 @@ export const madridNeighborhoodGuides = [
           40.4171,
           -3.7062
         ],
-        "description": "A polished rooftop above the central churn, useful when the plan needs skyline and hotel-bar control rather than tavern noise.",
+        "description": "The Madrid EDITION Roof belongs in the Sol & Centro nightlife guide because it gives the night a defined role rather than another loose bar pin. A polished rooftop above the central churn, useful when the plan needs skyline and hotel-bar control rather than tavern noise. Use it when the first drink should come with a view and an easy group meet-up point.",
         "hours": {
           "mon": "6:00 PM-12:30 AM",
           "tue": "6:00 PM-12:30 AM",
@@ -204,7 +204,7 @@ export const madridNeighborhoodGuides = [
           40.421,
           -3.6976
         ],
-        "description": "A late piano-bar institution near Gran Via where singing, crowd energy, and old Madrid showmanship are the point.",
+        "description": "Toni 2 Piano Bar belongs in the Sol & Centro nightlife guide because it gives the night a defined role rather than another loose bar pin. A late piano-bar institution near Gran Via where singing, crowd energy, and old Madrid showmanship are the point. Use it when the night is meant to continue past dinner into music, tickets, or a louder final room.",
         "hours": {
           "mon": "10:00 PM-2:30 AM",
           "tue": "10:00 PM-2:30 AM",
@@ -223,7 +223,7 @@ export const madridNeighborhoodGuides = [
           40.4214,
           -3.7028
         ],
-        "description": "A central cocktail room that gives the Sol/Gran Via area a quieter, more deliberate drink before moving into Chueca or Malasana.",
+        "description": "Josealfredo belongs in the Sol & Centro nightlife guide because it gives the night a defined role rather than another loose bar pin. A central cocktail room that gives the Sol/Gran Via area a quieter, more deliberate drink before moving into Chueca or Malasana. Use it when one well-made drink is the event, not just a stop between bars.",
         "hours": {
           "mon": "6:00 PM-12:30 AM",
           "tue": "6:00 PM-12:30 AM",
@@ -295,7 +295,7 @@ export const madridNeighborhoodGuides = [
           40.4172,
           -3.7015
         ],
-        "description": "The high-budget Canalejas base for travelers who want Sol access with polished service, dining, spa, and a quieter room standard.",
+        "description": "Four Seasons Hotel Madrid belongs in the Sol & Centro stay guide because it solves a specific base tradeoff. The high-budget Canalejas base for travelers who want Sol access with polished service, dining, spa, and a quieter room standard. Choose it when service, quiet, and room quality should carry as much weight as location.",
         "hours": {
           "mon": "24 hours",
           "tue": "24 hours",
@@ -314,7 +314,7 @@ export const madridNeighborhoodGuides = [
           40.4171,
           -3.7062
         ],
-        "description": "A design-forward central hotel with rooftop energy, useful for travelers who want Plaza Mayor and Sol close without choosing a traditional grand hotel.",
+        "description": "The Madrid EDITION belongs in the Sol & Centro stay guide because it solves a specific base tradeoff. A design-forward central hotel with rooftop energy, useful for travelers who want Plaza Mayor and Sol close without choosing a traditional grand hotel. Choose it when service, quiet, and room quality should carry as much weight as location.",
         "hours": {
           "mon": "24 hours",
           "tue": "24 hours",
@@ -333,7 +333,7 @@ export const madridNeighborhoodGuides = [
           40.415,
           -3.7074
         ],
-        "description": "A Plaza Mayor-facing stay for travelers who want historic-center atmosphere and the ability to walk almost everywhere.",
+        "description": "Pestana Plaza Mayor Madrid belongs in the Sol & Centro stay guide because it solves a specific base tradeoff. A Plaza Mayor-facing stay for travelers who want historic-center atmosphere and the ability to walk almost everywhere. Choose it when location, sleep quality, and budget need to be balanced honestly instead of picked by map distance alone.",
         "hours": {
           "mon": "24 hours",
           "tue": "24 hours",
@@ -352,7 +352,7 @@ export const madridNeighborhoodGuides = [
           40.4145,
           -3.7073
         ],
-        "description": "The social hostel/private-room option by Plaza Mayor and La Latina, with rooftop energy and strong central logistics.",
+        "description": "The Hat Madrid belongs in the Sol & Centro stay guide because it solves a specific base tradeoff. The social hostel/private-room option by Plaza Mayor and La Latina, with rooftop energy and strong central logistics. Choose it when budget, shared spaces, and meeting other travelers matter more than a quiet hotel reset.",
         "hours": {
           "mon": "24 hours",
           "tue": "24 hours",
@@ -416,7 +416,7 @@ export const madridNeighborhoodGuides = [
           40.4169,
           -3.7036
         ],
-        "description": "Madrid's kilometer-zero square and the easiest place to understand the city's radial, crowded, ceremonial center.",
+        "description": "Puerta del Sol earns the Sol & Centro culture slot because it turns the neighborhood route into more than scenery. Madrid's kilometer-zero square and the easiest place to understand the city's radial, crowded, ceremonial center. Use it to give the Sol & Centro route a concrete cultural anchor instead of only atmosphere.",
         "hours": {
           "mon": "Open public space",
           "tue": "Open public space",
@@ -435,7 +435,7 @@ export const madridNeighborhoodGuides = [
           40.4155,
           -3.7074
         ],
-        "description": "The old central plaza for Habsburg Madrid, arcades, ceremonies, and the historic geometry around the market streets.",
+        "description": "Plaza Mayor earns the Sol & Centro culture slot because it turns the neighborhood route into more than scenery. The old central plaza for Habsburg Madrid, arcades, ceremonies, and the historic geometry around the market streets. Use it slowly, as a place to read the neighborhood rhythm rather than a quick photo pin.",
         "hours": {
           "mon": "Open public space",
           "tue": "Open public space",
@@ -454,7 +454,7 @@ export const madridNeighborhoodGuides = [
           40.4179,
           -3.7143
         ],
-        "description": "The royal-history anchor west of Sol, best paired with Plaza de Oriente, Almudena, and a La Latina evening.",
+        "description": "Royal Palace of Madrid earns the Sol & Centro culture slot because it turns the neighborhood route into more than scenery. The royal-history anchor west of Sol, best paired with Plaza de Oriente, Almudena, and a La Latina evening. Use it slowly, as a place to read the neighborhood rhythm rather than a quick photo pin.",
         "hours": {
           "mon": "9:00 AM-8:00 PM",
           "tue": "9:00 AM-8:00 PM",
@@ -473,7 +473,7 @@ export const madridNeighborhoodGuides = [
           40.4156,
           -3.7146
         ],
-        "description": "The palace-side cathedral gives the Royal Madrid route a religious and architectural counterpoint.",
+        "description": "Almudena Cathedral earns the Sol & Centro culture slot because it turns the neighborhood route into more than scenery. The palace-side cathedral gives the Royal Madrid route a religious and architectural counterpoint. Pair it with nearby lanes and food stops so the history stays connected to the walk.",
         "hours": {
           "mon": "9:00 AM-8:00 PM",
           "tue": "9:00 AM-8:00 PM",
@@ -541,8 +541,8 @@ export const madridNeighborhoodGuides = [
           40.4144,
           -3.6981
         ],
-        "description": "A compact Cortes dinner for modern Spanish plates, first dates, and pre-theater plans that need more care than a tourist tapas crawl.",
-        "price": "$$",
+        "description": "La Malontina earns its spot in the Barrio de las Letras food guide because it fills a clear meal role for this route. A compact Cortes dinner for modern Spanish plates, first dates, and pre-theater plans that need more care than a tourist tapas crawl. Use it when you want a compact local-feeling stop that can sit before drinks or sightseeing.",
+        "price": "$",
         "priceSource": "The Infatuation / Google Maps",
         "hours": {
           "mon": "Closed",
@@ -562,8 +562,8 @@ export const madridNeighborhoodGuides = [
           40.4136,
           -3.7003
         ],
-        "description": "A historic tavern on Huertas for vermouth, traditional plates, and the old literary-quarter atmosphere.",
-        "price": "$$",
+        "description": "Casa Alberto earns its spot in the Barrio de las Letras food guide because it fills a clear meal role for this route. A historic tavern on Huertas for vermouth, traditional plates, and the old literary-quarter atmosphere. Use it when you want a compact local-feeling stop that can sit before drinks or sightseeing.",
+        "price": "$",
         "priceSource": "Time Out / Google Maps",
         "hours": {
           "mon": "12:30 PM-4:00 PM, 7:30 PM-11:00 PM",
@@ -583,8 +583,8 @@ export const madridNeighborhoodGuides = [
           40.4133,
           -3.6994
         ],
-        "description": "A polished neighborhood restaurant for shared modern Spanish plates near the Art Walk and Plaza Santa Ana.",
-        "price": "$$$",
+        "description": "TriCiclo earns its spot in the Barrio de las Letras food guide because it fills a clear meal role for this route. A polished neighborhood restaurant for shared modern Spanish plates near the Art Walk and Plaza Santa Ana. Use it when the route needs a focused sweet stop or casual reset rather than another full meal.",
+        "price": "$$",
         "priceSource": "MICHELIN Guide / Google Maps",
         "hours": {
           "mon": "Closed",
@@ -604,8 +604,8 @@ export const madridNeighborhoodGuides = [
           40.4148,
           -3.7003
         ],
-        "description": "A restored tavern that works for tapas, vermouth, and old-room detail before the night moves toward Salmon Guru or Huertas.",
-        "price": "$$",
+        "description": "Viva Madrid earns its spot in the Barrio de las Letras food guide because it fills a clear meal role for this route. A restored tavern that works for tapas, vermouth, and old-room detail before the night moves toward Salmon Guru or Huertas. Use it when you want a compact local-feeling stop that can sit before drinks or sightseeing.",
+        "price": "$",
         "priceSource": "Time Out / Google Maps",
         "hours": {
           "mon": "12:00 PM-12:30 AM",
@@ -674,7 +674,7 @@ export const madridNeighborhoodGuides = [
           40.4159,
           -3.6997
         ],
-        "description": "The world-ranked cocktail room that gives Las Letras its destination-drink gravity.",
+        "description": "Salmon Guru belongs in the Barrio de las Letras nightlife guide because it gives the night a defined role rather than another loose bar pin. The world-ranked cocktail room that gives Las Letras its destination-drink gravity. Use it when one well-made drink is the event, not just a stop between bars.",
         "hours": {
           "mon": "6:00 PM-12:30 AM",
           "tue": "6:00 PM-12:30 AM",
@@ -693,7 +693,7 @@ export const madridNeighborhoodGuides = [
           40.415,
           -3.6992
         ],
-        "description": "A classic sherry bar with old-room rules and a strong sense of Madrid before cocktail spectacle took over.",
+        "description": "La Venencia belongs in the Barrio de las Letras nightlife guide because it gives the night a defined role rather than another loose bar pin. A classic sherry bar with old-room rules and a strong sense of Madrid before cocktail spectacle took over. Use it when one well-made drink is the event, not just a stop between bars.",
         "hours": {
           "mon": "6:00 PM-12:00 AM",
           "tue": "6:00 PM-12:00 AM",
@@ -712,7 +712,7 @@ export const madridNeighborhoodGuides = [
           40.4148,
           -3.7003
         ],
-        "description": "Restored tilework, vermouth, cocktails, and a tavern-to-nightlife bridge in the literary quarter.",
+        "description": "Viva Madrid belongs in the Barrio de las Letras nightlife guide because it gives the night a defined role rather than another loose bar pin. Restored tilework, vermouth, cocktails, and a tavern-to-nightlife bridge in the literary quarter. Use it when one well-made drink is the event, not just a stop between bars.",
         "hours": {
           "mon": "12:00 PM-12:30 AM",
           "tue": "12:00 PM-12:30 AM",
@@ -731,7 +731,7 @@ export const madridNeighborhoodGuides = [
           40.4142,
           -3.7009
         ],
-        "description": "A Plaza Santa Ana jazz institution for a seated, music-led night instead of a bar crawl.",
+        "description": "Café Central belongs in the Barrio de las Letras nightlife guide because it gives the night a defined role rather than another loose bar pin. A Plaza Santa Ana jazz institution for a seated, music-led night instead of a bar crawl. Use it when the night should have a seated performance or communal room instead of another standing bar.",
         "hours": {
           "mon": "Event schedule (check venue)",
           "tue": "Event schedule (check venue)",
@@ -803,7 +803,7 @@ export const madridNeighborhoodGuides = [
           40.4135,
           -3.7002
         ],
-        "description": "A neighborhood-fit boutique stay for travelers who want Huertas, Plaza Santa Ana, and the Art Walk close without choosing a luxury palace hotel.",
+        "description": "Room Mate Alba belongs in the Barrio de las Letras stay guide because it solves a specific base tradeoff. A neighborhood-fit boutique stay for travelers who want Huertas, Plaza Santa Ana, and the Art Walk close without choosing a luxury palace hotel. Choose it when service, quiet, and room quality should carry as much weight as location.",
         "hours": {
           "mon": "24 hours",
           "tue": "24 hours",
@@ -822,7 +822,7 @@ export const madridNeighborhoodGuides = [
           40.4142,
           -3.701
         ],
-        "description": "A Plaza Santa Ana base with nightlife and theater at the door, best for travelers who value location and energy over maximum quiet.",
+        "description": "ME Madrid Reina Victoria belongs in the Barrio de las Letras stay guide because it solves a specific base tradeoff. A Plaza Santa Ana base with nightlife and theater at the door, best for travelers who value location and energy over maximum quiet. Choose it when location, sleep quality, and budget need to be balanced honestly instead of picked by map distance alone.",
         "hours": {
           "mon": "24 hours",
           "tue": "24 hours",
@@ -841,7 +841,7 @@ export const madridNeighborhoodGuides = [
           40.4153,
           -3.695
         ],
-        "description": "A grand Art Walk hotel for Prado/Thyssen access and a more formal stay on the edge of Las Letras.",
+        "description": "The Westin Palace Madrid belongs in the Barrio de las Letras stay guide because it solves a specific base tradeoff. A grand Art Walk hotel for Prado/Thyssen access and a more formal stay on the edge of Las Letras. Choose it when service, quiet, and room quality should carry as much weight as location.",
         "hours": {
           "mon": "24 hours",
           "tue": "24 hours",
@@ -860,7 +860,7 @@ export const madridNeighborhoodGuides = [
           40.417,
           -3.6969
         ],
-        "description": "A central hotel between Las Letras, Gran Via, and Cibeles, useful when the plan mixes museums, shopping, and bars.",
+        "description": "NH Collection Madrid Suecia belongs in the Barrio de las Letras stay guide because it solves a specific base tradeoff. A central hotel between Las Letras, Gran Via, and Cibeles, useful when the plan mixes museums, shopping, and bars. Choose it when location, sleep quality, and budget need to be balanced honestly instead of picked by map distance alone.",
         "hours": {
           "mon": "24 hours",
           "tue": "24 hours",
@@ -924,7 +924,7 @@ export const madridNeighborhoodGuides = [
           40.4142,
           -3.6978
         ],
-        "description": "The most direct literary-house stop in the neighborhood, grounding the Golden Age story in a real domestic setting.",
+        "description": "Casa Museo Lope de Vega earns the Barrio de las Letras culture slot because it turns the neighborhood route into more than scenery. The most direct literary-house stop in the neighborhood, grounding the Golden Age story in a real domestic setting. Use it to give the Barrio de las Letras route a concrete cultural anchor instead of only atmosphere.",
         "hours": {
           "mon": "Closed",
           "tue": "10:00 AM-7:00 PM",
@@ -943,7 +943,7 @@ export const madridNeighborhoodGuides = [
           40.4144,
           -3.7007
         ],
-        "description": "A Plaza Santa Ana theater anchor that keeps Las Letras connected to live performance, not only plaques and streets.",
+        "description": "Teatro Español earns the Barrio de las Letras culture slot because it turns the neighborhood route into more than scenery. A Plaza Santa Ana theater anchor that keeps Las Letras connected to live performance, not only plaques and streets. Use it when the cultural stop should be live and time-specific rather than another daytime landmark.",
         "hours": {
           "mon": "Event schedule (check venue)",
           "tue": "Event schedule (check venue)",
@@ -962,7 +962,7 @@ export const madridNeighborhoodGuides = [
           40.4138,
           -3.6921
         ],
-        "description": "The eastern cultural heavyweight for the neighborhood, close enough to pair with Huertas before or after the museum.",
+        "description": "Museo Nacional del Prado earns the Barrio de las Letras culture slot because it turns the neighborhood route into more than scenery. The eastern cultural heavyweight for the neighborhood, close enough to pair with Huertas before or after the museum. Use it as the route's indoor anchor before letting Barrio de las Letras open back into streets, meals, or evening stops.",
         "hours": {
           "mon": "10:00 AM-8:00 PM",
           "tue": "10:00 AM-8:00 PM",
@@ -981,7 +981,7 @@ export const madridNeighborhoodGuides = [
           40.411,
           -3.6932
         ],
-        "description": "A compact exhibition and architecture stop at the Atocha edge of the neighborhood.",
+        "description": "CaixaForum Madrid earns the Barrio de las Letras culture slot because it turns the neighborhood route into more than scenery. A compact exhibition and architecture stop at the Atocha edge of the neighborhood. Use it as the route's indoor anchor before letting Barrio de las Letras open back into streets, meals, or evening stops.",
         "hours": {
           "mon": "10:00 AM-7:00 PM",
           "tue": "10:00 AM-7:00 PM",
@@ -1049,8 +1049,8 @@ export const madridNeighborhoodGuides = [
           40.421,
           -3.6757
         ],
-        "description": "A Retiro/Ibiza tavern for wines, tapas, and a quieter local meal after the park or museums.",
-        "price": "$$",
+        "description": "La Catapa earns its spot in the Retiro food guide because it fills a clear meal role for this route. A Retiro/Ibiza tavern for wines, tapas, and a quieter local meal after the park or museums. Use it when you want a compact local-feeling stop that can sit before drinks or sightseeing.",
+        "price": "$",
         "priceSource": "Google Maps / local food coverage",
         "hours": {
           "mon": "12:30 PM-4:00 PM, 7:30 PM-11:00 PM",
@@ -1070,8 +1070,8 @@ export const madridNeighborhoodGuides = [
           40.4216,
           -3.6764
         ],
-        "description": "A polished small-plates room near Ibiza for seafood, rice, and a more deliberate neighborhood dinner.",
-        "price": "$$",
+        "description": "KultO earns its spot in the Retiro food guide because it fills a clear meal role for this route. A polished small-plates room near Ibiza for seafood, rice, and a more deliberate neighborhood dinner. Use it when the route needs a focused sweet stop or casual reset rather than another full meal.",
+        "price": "$",
         "priceSource": "MICHELIN Guide / Google Maps",
         "hours": {
           "mon": "Closed",
@@ -1091,8 +1091,8 @@ export const madridNeighborhoodGuides = [
           40.4193,
           -3.6882
         ],
-        "description": "The in-park dining and drinks complex, useful when the day should stay inside Retiro rather than moving back toward Sol.",
-        "price": "$$$",
+        "description": "Florida Retiro earns its spot in the Retiro food guide because it fills a clear meal role for this route. The in-park dining and drinks complex, useful when the day should stay inside Retiro rather than moving back toward Sol. Use it when the route needs a focused sweet stop or casual reset rather than another full meal.",
+        "price": "$$",
         "priceSource": "Time Out / Google Maps",
         "hours": {
           "mon": "12:00 PM-12:00 AM",
@@ -1112,8 +1112,8 @@ export const madridNeighborhoodGuides = [
           40.4196,
           -3.6815
         ],
-        "description": "A friendly Retiro room for groups, casual dinners, and park-adjacent meals that do not need to be formal.",
-        "price": "$$",
+        "description": "El Perro y la Galleta earns its spot in the Retiro food guide because it fills a clear meal role for this route. A friendly Retiro room for groups, casual dinners, and park-adjacent meals that do not need to be formal. Use it when the meal should be a reservation anchor rather than a casual crawl stop.",
+        "price": "$",
         "priceSource": "Google Maps / Tripadvisor",
         "hours": {
           "mon": "12:30 PM-4:00 PM, 7:30 PM-11:00 PM",
@@ -1182,7 +1182,7 @@ export const madridNeighborhoodGuides = [
           40.4193,
           -3.6882
         ],
-        "description": "The park's most obvious dinner-to-drinks complex, useful when staying inside Retiro is the point.",
+        "description": "Florida Retiro belongs in the Retiro nightlife guide because it gives the night a defined role rather than another loose bar pin. The park's most obvious dinner-to-drinks complex, useful when staying inside Retiro is the point. Use it when the group needs a clear mood, crowd, and second-stop direction before moving on.",
         "hours": {
           "mon": "6:00 PM-12:30 AM",
           "tue": "6:00 PM-12:30 AM",
@@ -1201,7 +1201,7 @@ export const madridNeighborhoodGuides = [
           40.4156,
           -3.6926
         ],
-        "description": "A refined hotel-bar choice near the Prado and Retiro for a quiet cocktail after museum time.",
+        "description": "Pictura at Mandarin Oriental Ritz belongs in the Retiro nightlife guide because it gives the night a defined role rather than another loose bar pin. A refined hotel-bar choice near the Prado and Retiro for a quiet cocktail after museum time. Use it when one well-made drink is the event, not just a stop between bars.",
         "hours": {
           "mon": "6:00 PM-12:30 AM",
           "tue": "6:00 PM-12:30 AM",
@@ -1220,7 +1220,7 @@ export const madridNeighborhoodGuides = [
           40.421,
           -3.6757
         ],
-        "description": "Wine and tapas make La Catapa a practical Retiro aperitif stop rather than a late-night destination.",
+        "description": "La Catapa belongs in the Retiro nightlife guide because it gives the night a defined role rather than another loose bar pin. Wine and tapas make La Catapa a practical Retiro aperitif stop rather than a late-night destination. Use it when the night is meant to continue past dinner into music, tickets, or a louder final room.",
         "hours": {
           "mon": "12:00 PM-11:00 PM",
           "tue": "12:00 PM-11:00 PM",
@@ -1239,7 +1239,7 @@ export const madridNeighborhoodGuides = [
           40.4202,
           -3.6887
         ],
-        "description": "A Puerta de Alcalá-adjacent cocktail and restaurant room for a polished Retiro-edge night.",
+        "description": "Ramses belongs in the Retiro nightlife guide because it gives the night a defined role rather than another loose bar pin. A Puerta de Alcalá-adjacent cocktail and restaurant room for a polished Retiro-edge night. Use it when the night is meant to continue past dinner into music, tickets, or a louder final room.",
         "hours": {
           "mon": "6:00 PM-12:30 AM",
           "tue": "6:00 PM-12:30 AM",
@@ -1311,7 +1311,7 @@ export const madridNeighborhoodGuides = [
           40.4156,
           -3.6926
         ],
-        "description": "The grand luxury choice beside the Prado and Retiro, with the strongest museum-and-park positioning in the city.",
+        "description": "Mandarin Oriental Ritz, Madrid belongs in the Retiro stay guide because it solves a specific base tradeoff. The grand luxury choice beside the Prado and Retiro, with the strongest museum-and-park positioning in the city. Choose it when service, quiet, and room quality should carry as much weight as location.",
         "hours": {
           "mon": "24 hours",
           "tue": "24 hours",
@@ -1330,7 +1330,7 @@ export const madridNeighborhoodGuides = [
           40.4166,
           -3.6891
         ],
-        "description": "A practical Alfonso XII stay facing Retiro, good for park mornings and museum walks without luxury pricing.",
+        "description": "Petit Palace Savoy Alfonso XII belongs in the Retiro stay guide because it solves a specific base tradeoff. A practical Alfonso XII stay facing Retiro, good for park mornings and museum walks without luxury pricing. Choose it when service, quiet, and room quality should carry as much weight as location.",
         "hours": {
           "mon": "24 hours",
           "tue": "24 hours",
@@ -1349,7 +1349,7 @@ export const madridNeighborhoodGuides = [
           40.4076,
           -3.6909
         ],
-        "description": "A design hotel by Atocha for travelers using rail connections while staying close to Reina Sofia, Prado, and Retiro.",
+        "description": "Only YOU Hotel Atocha belongs in the Retiro stay guide because it solves a specific base tradeoff. A design hotel by Atocha for travelers using rail connections while staying close to Reina Sofia, Prado, and Retiro. Choose it when you want the neighborhood on foot without choosing a large corporate-feeling base.",
         "hours": {
           "mon": "24 hours",
           "tue": "24 hours",
@@ -1368,7 +1368,7 @@ export const madridNeighborhoodGuides = [
           40.4119,
           -3.6943
         ],
-        "description": "A budget-to-midrange base for museum days and Atocha access, useful when the trip should spend money on meals and culture instead of rooms.",
+        "description": "Latroupe Prado belongs in the Retiro stay guide because it solves a specific base tradeoff. A budget-to-midrange base for museum days and Atocha access, useful when the trip should spend money on meals and culture instead of rooms. Choose it when museum days or onward rail connections are doing more work than nightlife access.",
         "hours": {
           "mon": "24 hours",
           "tue": "24 hours",
@@ -1432,7 +1432,7 @@ export const madridNeighborhoodGuides = [
           40.4153,
           -3.6844
         ],
-        "description": "Madrid's central green reset, with lake walks, monuments, gardens, and enough scale to balance museum-heavy days.",
+        "description": "El Retiro Park earns the Retiro culture slot because it turns the neighborhood route into more than scenery. Madrid's central green reset, with lake walks, monuments, gardens, and enough scale to balance museum-heavy days. Use it as the route's indoor anchor before letting Retiro open back into streets, meals, or evening stops.",
         "hours": {
           "mon": "Open public space",
           "tue": "Open public space",
@@ -1451,7 +1451,7 @@ export const madridNeighborhoodGuides = [
           40.4199,
           -3.6887
         ],
-        "description": "The monumental gate that marks the Retiro edge and gives the neighborhood one of Madrid's clearest civic landmarks.",
+        "description": "Puerta de Alcalá earns the Retiro culture slot because it turns the neighborhood route into more than scenery. The monumental gate that marks the Retiro edge and gives the neighborhood one of Madrid's clearest civic landmarks. Use it as an outdoor reset that still explains the neighborhood geography.",
         "hours": {
           "mon": "Open public space",
           "tue": "Open public space",
@@ -1470,7 +1470,7 @@ export const madridNeighborhoodGuides = [
           40.4138,
           -3.6921
         ],
-        "description": "The Prado sits on Retiro's cultural edge and makes the neighborhood one of Madrid's best museum bases.",
+        "description": "Museo Nacional del Prado earns the Retiro culture slot because it turns the neighborhood route into more than scenery. The Prado sits on Retiro's cultural edge and makes the neighborhood one of Madrid's best museum bases. Use it as the route's indoor anchor before letting Retiro open back into streets, meals, or evening stops.",
         "hours": {
           "mon": "10:00 AM-8:00 PM",
           "tue": "10:00 AM-8:00 PM",
@@ -1489,7 +1489,7 @@ export const madridNeighborhoodGuides = [
           40.4141,
           -3.6896
         ],
-        "description": "A Prado-linked historic building that hints at the former Buen Retiro palace landscape around the park.",
+        "description": "Casón del Buen Retiro earns the Retiro culture slot because it turns the neighborhood route into more than scenery. A Prado-linked historic building that hints at the former Buen Retiro palace landscape around the park. Pair it with nearby lanes and food stops so the history stays connected to the walk.",
         "hours": {
           "mon": "Closed",
           "tue": "10:00 AM-7:00 PM",
@@ -1557,8 +1557,8 @@ export const madridNeighborhoodGuides = [
           40.4285,
           -3.7041
         ],
-        "description": "A tiny kitchen-facing tasting-menu room that gives Malasana a modern destination dinner without leaving the neighborhood's small-scale feel.",
-        "price": "$$$",
+        "description": "Playing Solo earns its spot in the Malasana food guide because it fills a clear meal role for this route. A tiny kitchen-facing tasting-menu room that gives Malasana a modern destination dinner without leaving the neighborhood's small-scale feel. Use it when the meal should be a reservation anchor rather than a casual crawl stop.",
+        "price": "$$",
         "priceSource": "The Infatuation",
         "hours": {
           "mon": "Closed",
@@ -1578,8 +1578,8 @@ export const madridNeighborhoodGuides = [
           40.4265,
           -3.7007
         ],
-        "description": "A warm Lebanese room near Barceló, useful when the neighborhood needs generous spices and vegetables rather than another tapas default.",
-        "price": "$$",
+        "description": "Aredna earns its spot in the Malasana food guide because it fills a clear meal role for this route. A warm Lebanese room near Barceló, useful when the neighborhood needs generous spices and vegetables rather than another tapas default. Use it when you want a compact local-feeling stop that can sit before drinks or sightseeing.",
+        "price": "$",
         "priceSource": "The Infatuation / Google Maps",
         "hours": {
           "mon": "12:30 PM-4:00 PM, 7:30 PM-11:00 PM",
@@ -1599,8 +1599,8 @@ export const madridNeighborhoodGuides = [
           40.4265,
           -3.7045
         ],
-        "description": "A Malasana standby for casual meals, brunch energy, and groups that need something easy before the night gets louder.",
-        "price": "$$",
+        "description": "Ojalá earns its spot in the Malasana food guide because it fills a clear meal role for this route. A Malasana standby for casual meals, brunch energy, and groups that need something easy before the night gets louder. Use it when the plan needs an easy social table before the neighborhood turns louder.",
+        "price": "$",
         "priceSource": "Google Maps / Time Out",
         "hours": {
           "mon": "12:00 PM-12:00 AM",
@@ -1620,8 +1620,8 @@ export const madridNeighborhoodGuides = [
           40.4254,
           -3.7053
         ],
-        "description": "A neighborhood small-plates room that fits the Malasana rhythm: social, informal, and useful before drinks around Dos de Mayo.",
-        "price": "$$",
+        "description": "La Musa earns its spot in the Malasana food guide because it fills a clear meal role for this route. A neighborhood small-plates room that fits the Malasana rhythm: social, informal, and useful before drinks around Dos de Mayo. Use it when the meal should be a reservation anchor rather than a casual crawl stop.",
+        "price": "$",
         "priceSource": "Google Maps / Tripadvisor",
         "hours": {
           "mon": "12:30 PM-4:00 PM, 7:30 PM-11:00 PM",
@@ -1690,7 +1690,7 @@ export const madridNeighborhoodGuides = [
           40.4234,
           -3.7036
         ],
-        "description": "A classic-cocktail room for starting a Malasana night with structure before moving into louder bars.",
+        "description": "1862 Dry Bar belongs in the Malasana nightlife guide because it gives the night a defined role rather than another loose bar pin. A classic-cocktail room for starting a Malasana night with structure before moving into louder bars. Use it when one well-made drink is the event, not just a stop between bars.",
         "hours": {
           "mon": "6:00 PM-12:30 AM",
           "tue": "6:00 PM-12:30 AM",
@@ -1709,7 +1709,7 @@ export const madridNeighborhoodGuides = [
           40.4264,
           -3.7004
         ],
-        "description": "The electronic-club anchor near Barceló, with programming that makes it a planned late stop rather than a random dance floor.",
+        "description": "Mondo Disko belongs in the Malasana nightlife guide because it gives the night a defined role rather than another loose bar pin. The electronic-club anchor near Barceló, with programming that makes it a planned late stop rather than a random dance floor. Use it when the night is meant to continue past dinner into music, tickets, or a louder final room.",
         "hours": {
           "mon": "Event schedule (check venue)",
           "tue": "Event schedule (check venue)",
@@ -1728,7 +1728,7 @@ export const madridNeighborhoodGuides = [
           40.4267,
           -3.7044
         ],
-        "description": "A Movida-linked Malasana classic for rock-and-roll nostalgia, affordable drinks, and late neighborhood energy.",
+        "description": "La Vía Láctea belongs in the Malasana nightlife guide because it gives the night a defined role rather than another loose bar pin. A Movida-linked Malasana classic for rock-and-roll nostalgia, affordable drinks, and late neighborhood energy. Use it when the night is meant to continue past dinner into music, tickets, or a louder final room.",
         "hours": {
           "mon": "6:00 PM-12:30 AM",
           "tue": "6:00 PM-12:30 AM",
@@ -1747,7 +1747,7 @@ export const madridNeighborhoodGuides = [
           40.4271,
           -3.7042
         ],
-        "description": "A pop-culture dive with kitsch, music, and the kind of unpolished room that makes Malasana feel like itself.",
+        "description": "TupperWare belongs in the Malasana nightlife guide because it gives the night a defined role rather than another loose bar pin. A pop-culture dive with kitsch, music, and the kind of unpolished room that makes Malasana feel like itself. Use it when the night should have a seated performance or communal room instead of another standing bar.",
         "hours": {
           "mon": "6:00 PM-12:30 AM",
           "tue": "6:00 PM-12:30 AM",
@@ -1819,7 +1819,7 @@ export const madridNeighborhoodGuides = [
           40.4252,
           -3.6999
         ],
-        "description": "A polished edge-of-Malasana hotel that keeps the neighborhood close while giving the stay more calm and spa-level reset.",
+        "description": "URSO Hotel & Spa Madrid belongs in the Malasana stay guide because it solves a specific base tradeoff. A polished edge-of-Malasana hotel that keeps the neighborhood close while giving the stay more calm and spa-level reset. Choose it when service, quiet, and room quality should carry as much weight as location.",
         "hours": {
           "mon": "24 hours",
           "tue": "24 hours",
@@ -1838,7 +1838,7 @@ export const madridNeighborhoodGuides = [
           40.4287,
           -3.7039
         ],
-        "description": "A social hostel option for travelers who want activities, dorm value, and immediate Malasana nightlife access.",
+        "description": "Onefam Madrid belongs in the Malasana stay guide because it solves a specific base tradeoff. A social hostel option for travelers who want activities, dorm value, and immediate Malasana nightlife access. Choose it when budget, shared spaces, and meeting other travelers matter more than a quiet hotel reset.",
         "hours": {
           "mon": "24 hours",
           "tue": "24 hours",
@@ -1857,7 +1857,7 @@ export const madridNeighborhoodGuides = [
           40.4248,
           -3.7009
         ],
-        "description": "A design hostel/hotel hybrid near Tribunal that works for social travelers who still want a more styled room than a basic dorm.",
+        "description": "Bastardo Hostel belongs in the Malasana stay guide because it solves a specific base tradeoff. A design hostel/hotel hybrid near Tribunal that works for social travelers who still want a more styled room than a basic dorm. Choose it when budget, shared spaces, and meeting other travelers matter more than a quiet hotel reset.",
         "hours": {
           "mon": "24 hours",
           "tue": "24 hours",
@@ -1876,7 +1876,7 @@ export const madridNeighborhoodGuides = [
           40.4292,
           -3.7037
         ],
-        "description": "A straightforward value hotel for travelers who want Malasana location without hostel format or luxury cost.",
+        "description": "Ibis Madrid Centro belongs in the Malasana stay guide because it solves a specific base tradeoff. A straightforward value hotel for travelers who want Malasana location without hostel format or luxury cost. Choose it when budget, shared spaces, and meeting other travelers matter more than a quiet hotel reset.",
         "hours": {
           "mon": "24 hours",
           "tue": "24 hours",
@@ -1940,7 +1940,7 @@ export const madridNeighborhoodGuides = [
           40.4259,
           -3.7009
         ],
-        "description": "The neighborhood's clearest museum anchor, useful for reading Madrid's urban history before walking Malasana itself.",
+        "description": "Museo de Historia de Madrid earns the Malasana culture slot because it turns the neighborhood route into more than scenery. The neighborhood's clearest museum anchor, useful for reading Madrid's urban history before walking Malasana itself. Use it as the route's indoor anchor before letting Malasana open back into streets, meals, or evening stops.",
         "hours": {
           "mon": "Closed",
           "tue": "10:00 AM-7:00 PM",
@@ -1959,7 +1959,7 @@ export const madridNeighborhoodGuides = [
           40.4266,
           -3.7045
         ],
-        "description": "The social and symbolic heart of Malasana, tied to the 1808 uprising and still central to neighborhood life.",
+        "description": "Plaza del Dos de Mayo earns the Malasana culture slot because it turns the neighborhood route into more than scenery. The social and symbolic heart of Malasana, tied to the 1808 uprising and still central to neighborhood life. Use it slowly, as a place to read the neighborhood rhythm rather than a quick photo pin.",
         "hours": {
           "mon": "Open public space",
           "tue": "Open public space",
@@ -1978,7 +1978,7 @@ export const madridNeighborhoodGuides = [
           40.4273,
           -3.7103
         ],
-        "description": "A major cultural center for exhibitions, concerts, talks, and contemporary programming on Malasana's western edge.",
+        "description": "Centro de Cultura Contemporánea Condeduque earns the Malasana culture slot because it turns the neighborhood route into more than scenery. A major cultural center for exhibitions, concerts, talks, and contemporary programming on Malasana's western edge. Use it as the route's indoor anchor before letting Malasana open back into streets, meals, or evening stops.",
         "hours": {
           "mon": "Closed",
           "tue": "10:00 AM-7:00 PM",
@@ -1997,7 +1997,7 @@ export const madridNeighborhoodGuides = [
           40.4219,
           -3.7042
         ],
-        "description": "A historic theater that gives the neighborhood a live-performance anchor between Gran Via and the bar streets.",
+        "description": "Teatro Lara earns the Malasana culture slot because it turns the neighborhood route into more than scenery. A historic theater that gives the neighborhood a live-performance anchor between Gran Via and the bar streets. Use it when the cultural stop should be live and time-specific rather than another daytime landmark.",
         "hours": {
           "mon": "Event schedule (check venue)",
           "tue": "Event schedule (check venue)",
@@ -2065,8 +2065,8 @@ export const madridNeighborhoodGuides = [
           40.4113,
           -3.7115
         ],
-        "description": "A La Latina tapas anchor known for tortilla and a more polished Cava Baja meal than a random crawl stop.",
-        "price": "$$",
+        "description": "Juana La Loca earns its spot in the La Latina food guide because it fills a clear meal role for this route. A La Latina tapas anchor known for tortilla and a more polished Cava Baja meal than a random crawl stop. Use it when you want a compact local-feeling stop that can sit before drinks or sightseeing.",
+        "price": "$",
         "priceSource": "The Infatuation / Google Maps",
         "hours": {
           "mon": "12:30 PM-4:00 PM, 7:30 PM-11:00 PM",
@@ -2086,8 +2086,8 @@ export const madridNeighborhoodGuides = [
           40.412,
           -3.7106
         ],
-        "description": "The classic old-Madrid dining room for huevos rotos and a splurge-leaning La Latina lunch or dinner.",
-        "price": "$$$",
+        "description": "Casa Lucio earns its spot in the La Latina food guide because it fills a clear meal role for this route. The classic old-Madrid dining room for huevos rotos and a splurge-leaning La Latina lunch or dinner. Use it when the meal should be a reservation anchor rather than a casual crawl stop.",
+        "price": "$$",
         "priceSource": "Time Out / Google Maps",
         "hours": {
           "mon": "12:30 PM-4:00 PM, 7:30 PM-11:00 PM",
@@ -2107,8 +2107,8 @@ export const madridNeighborhoodGuides = [
           40.4115,
           -3.7114
         ],
-        "description": "A vermouth-and-tapas stop on Cava Baja for keeping the meal small, social, and neighborhood-specific.",
-        "price": "$$",
+        "description": "Taberna La Concha earns its spot in the La Latina food guide because it fills a clear meal role for this route. A vermouth-and-tapas stop on Cava Baja for keeping the meal small, social, and neighborhood-specific. Use it when you want a compact local-feeling stop that can sit before drinks or sightseeing.",
+        "price": "$",
         "priceSource": "Google Maps / Tripadvisor",
         "hours": {
           "mon": "12:00 PM-12:30 AM",
@@ -2128,7 +2128,7 @@ export const madridNeighborhoodGuides = [
           40.4115,
           -3.7089
         ],
-        "description": "The market stop for a less formal La Latina food plan near the metro, plazas, and El Rastro approaches.",
+        "description": "Mercado de la Cebada earns its spot in the La Latina food guide because it fills a clear meal role for this route. The market stop for a less formal La Latina food plan near the metro, plazas, and El Rastro approaches. Use it when the group needs flexible grazing, uneven appetites, or a quick reset between sights.",
         "price": "$",
         "priceSource": "Google Maps / local guides",
         "hours": {
@@ -2198,7 +2198,7 @@ export const madridNeighborhoodGuides = [
           40.4113,
           -3.711
         ],
-        "description": "A La Latina rooftop classic for views, groups, and a first drink above the Cava Baja flow.",
+        "description": "El Viajero belongs in the La Latina nightlife guide because it gives the night a defined role rather than another loose bar pin. A La Latina rooftop classic for views, groups, and a first drink above the Cava Baja flow. Use it when the first drink should come with a view and an easy group meet-up point.",
         "hours": {
           "mon": "12:00 PM-12:30 AM",
           "tue": "12:00 PM-12:30 AM",
@@ -2217,7 +2217,7 @@ export const madridNeighborhoodGuides = [
           40.4115,
           -3.7114
         ],
-        "description": "Vermouth, tapas, and compact Cava Baja energy for a low-friction La Latina night.",
+        "description": "Taberna La Concha belongs in the La Latina nightlife guide because it gives the night a defined role rather than another loose bar pin. Vermouth, tapas, and compact Cava Baja energy for a low-friction La Latina night. Use it when you want a lower-friction start with food, vermouth, or wine still in the mix.",
         "hours": {
           "mon": "12:00 PM-12:30 AM",
           "tue": "12:00 PM-12:30 AM",
@@ -2236,7 +2236,7 @@ export const madridNeighborhoodGuides = [
           40.4112,
           -3.7086
         ],
-        "description": "A late music room near La Latina for DJs, funk, soul, and a louder finish after tapas.",
+        "description": "Marula Café belongs in the La Latina nightlife guide because it gives the night a defined role rather than another loose bar pin. A late music room near La Latina for DJs, funk, soul, and a louder finish after tapas. Use it when the night is meant to continue past dinner into music, tickets, or a louder final room.",
         "hours": {
           "mon": "10:00 PM-2:30 AM",
           "tue": "10:00 PM-2:30 AM",
@@ -2255,7 +2255,7 @@ export const madridNeighborhoodGuides = [
           40.4102,
           -3.7093
         ],
-        "description": "A small club and live-room option when the night moves beyond taverns and rooftops.",
+        "description": "ContraClub belongs in the La Latina nightlife guide because it gives the night a defined role rather than another loose bar pin. A small club and live-room option when the night moves beyond taverns and rooftops. Use it when the first drink should come with a view and an easy group meet-up point.",
         "hours": {
           "mon": "Event schedule (check venue)",
           "tue": "Event schedule (check venue)",
@@ -2327,7 +2327,7 @@ export const madridNeighborhoodGuides = [
           40.4145,
           -3.7073
         ],
-        "description": "The social hostel/private-room option that keeps Plaza Mayor, La Latina, and Cava Baja in easy reach.",
+        "description": "The Hat Madrid belongs in the La Latina stay guide because it solves a specific base tradeoff. The social hostel/private-room option that keeps Plaza Mayor, La Latina, and Cava Baja in easy reach. Choose it when budget, shared spaces, and meeting other travelers matter more than a quiet hotel reset.",
         "hours": {
           "mon": "24 hours",
           "tue": "24 hours",
@@ -2346,7 +2346,7 @@ export const madridNeighborhoodGuides = [
           40.4124,
           -3.7105
         ],
-        "description": "A boutique old-city stay on Cava Baja for travelers who want the tapas street as the base, not just the evening plan.",
+        "description": "Posada del León de Oro belongs in the La Latina stay guide because it solves a specific base tradeoff. A boutique old-city stay on Cava Baja for travelers who want the tapas street as the base, not just the evening plan. Choose it when you want the neighborhood on foot without choosing a large corporate-feeling base.",
         "hours": {
           "mon": "24 hours",
           "tue": "24 hours",
@@ -2365,7 +2365,7 @@ export const madridNeighborhoodGuides = [
           40.4113,
           -3.708
         ],
-        "description": "A high-utility hostel near La Latina and Tirso de Molina, useful for budget travelers who want social energy and central walks.",
+        "description": "Ok Hostel Madrid belongs in the La Latina stay guide because it solves a specific base tradeoff. A high-utility hostel near La Latina and Tirso de Molina, useful for budget travelers who want social energy and central walks. Choose it when budget, shared spaces, and meeting other travelers matter more than a quiet hotel reset.",
         "hours": {
           "mon": "24 hours",
           "tue": "24 hours",
@@ -2384,7 +2384,7 @@ export const madridNeighborhoodGuides = [
           40.412,
           -3.7048
         ],
-        "description": "A modern Tirso de Molina hostel that keeps La Latina, Lavapies, and Sol all close.",
+        "description": "2060 The Newton Hostel belongs in the La Latina stay guide because it solves a specific base tradeoff. A modern Tirso de Molina hostel that keeps La Latina, Lavapies, and Sol all close. Choose it when budget, shared spaces, and meeting other travelers matter more than a quiet hotel reset.",
         "hours": {
           "mon": "24 hours",
           "tue": "24 hours",
@@ -2448,7 +2448,7 @@ export const madridNeighborhoodGuides = [
           40.4086,
           -3.7071
         ],
-        "description": "Madrid's famous Sunday flea market and the clearest cultural ritual around La Latina and Lavapies.",
+        "description": "El Rastro earns the La Latina culture slot because it turns the neighborhood route into more than scenery. Madrid's famous Sunday flea market and the clearest cultural ritual around La Latina and Lavapies. Use it slowly, as a place to read the neighborhood rhythm rather than a quick photo pin.",
         "hours": {
           "mon": "Closed",
           "tue": "Closed",
@@ -2467,7 +2467,7 @@ export const madridNeighborhoodGuides = [
           40.4109,
           -3.7148
         ],
-        "description": "A monumental church stop that adds architecture and religious history to a La Latina walk.",
+        "description": "Basílica de San Francisco el Grande earns the La Latina culture slot because it turns the neighborhood route into more than scenery. A monumental church stop that adds architecture and religious history to a La Latina walk. Pair it with nearby lanes and food stops so the history stays connected to the walk.",
         "hours": {
           "mon": "9:00 AM-8:00 PM",
           "tue": "9:00 AM-8:00 PM",
@@ -2486,7 +2486,7 @@ export const madridNeighborhoodGuides = [
           40.4123,
           -3.7118
         ],
-        "description": "One of the neighborhood's most atmospheric old plazas, best read slowly between churches, lanes, and tapas stops.",
+        "description": "Plaza de la Paja earns the La Latina culture slot because it turns the neighborhood route into more than scenery. One of the neighborhood's most atmospheric old plazas, best read slowly between churches, lanes, and tapas stops. Use it slowly, as a place to read the neighborhood rhythm rather than a quick photo pin.",
         "hours": {
           "mon": "Open public space",
           "tue": "Open public space",
@@ -2505,7 +2505,7 @@ export const madridNeighborhoodGuides = [
           40.412,
           -3.7108
         ],
-        "description": "The tavern street that turns La Latina's food and nightlife into a cultural route rather than just a meal plan.",
+        "description": "Cava Baja earns the La Latina culture slot because it turns the neighborhood route into more than scenery. The tavern street that turns La Latina's food and nightlife into a cultural route rather than just a meal plan. Use it slowly, as a place to read the neighborhood rhythm rather than a quick photo pin.",
         "hours": {
           "mon": "Open public space",
           "tue": "Open public space",
@@ -2573,8 +2573,8 @@ export const madridNeighborhoodGuides = [
           40.4208,
           -3.7005
         ],
-        "description": "The neighborhood's wine-led dining room and cocktail-bar crossover, ideal for a Chueca dinner that keeps going downstairs.",
-        "price": "$$$",
+        "description": "Angelita earns its spot in the Chueca food guide because it fills a clear meal role for this route. The neighborhood's wine-led dining room and cocktail-bar crossover, ideal for a Chueca dinner that keeps going downstairs. Use it when the route needs a focused sweet stop or casual reset rather than another full meal.",
+        "price": "$$",
         "priceSource": "The Infatuation / World's 50 Best Bars",
         "hours": {
           "mon": "1:00 PM-4:00 PM, 8:00 PM-11:00 PM",
@@ -2594,8 +2594,8 @@ export const madridNeighborhoodGuides = [
           40.4228,
           -3.6972
         ],
-        "description": "The practical Chueca market hall for groups, rooftop dining, and flexible meals before or after bars.",
-        "price": "$$",
+        "description": "Mercado de San Antón earns its spot in the Chueca food guide because it fills a clear meal role for this route. The practical Chueca market hall for groups, rooftop dining, and flexible meals before or after bars. Use it when the group needs flexible grazing, uneven appetites, or a quick reset between sights.",
+        "price": "$",
         "priceSource": "Google Maps / Time Out",
         "hours": {
           "mon": "12:00 PM-12:00 AM",
@@ -2615,8 +2615,8 @@ export const madridNeighborhoodGuides = [
           40.4248,
           -3.6971
         ],
-        "description": "A high-end Chueca/Salesas tasting-menu room for travelers who want a serious reservation close to the neighborhood's nightlife spine.",
-        "price": "$$$",
+        "description": "DSTAgE earns its spot in the Chueca food guide because it fills a clear meal role for this route. A high-end Chueca/Salesas tasting-menu room for travelers who want a serious reservation close to the neighborhood's nightlife spine. Use it when the meal should be a reservation anchor rather than a casual crawl stop.",
+        "price": "$$",
         "priceSource": "MICHELIN Guide / Google Maps",
         "hours": {
           "mon": "Closed",
@@ -2636,8 +2636,8 @@ export const madridNeighborhoodGuides = [
           40.4216,
           -3.6986
         ],
-        "description": "A lively fusion-leaning Chueca dinner for groups who want big flavors and a social room before cocktails.",
-        "price": "$$",
+        "description": "Kuoco 360 earns its spot in the Chueca food guide because it fills a clear meal role for this route. A lively fusion-leaning Chueca dinner for groups who want big flavors and a social room before cocktails. Use it when the plan needs an easy social table before the neighborhood turns louder.",
+        "price": "$",
         "priceSource": "Google Maps / Tripadvisor",
         "hours": {
           "mon": "12:30 PM-4:00 PM, 7:30 PM-11:00 PM",
@@ -2706,7 +2706,7 @@ export const madridNeighborhoodGuides = [
           40.4208,
           -3.7005
         ],
-        "description": "A world-ranked basement cocktail bar beneath a wine-led restaurant, best for a serious Chueca drink.",
+        "description": "Angelita belongs in the Chueca nightlife guide because it gives the night a defined role rather than another loose bar pin. A world-ranked basement cocktail bar beneath a wine-led restaurant, best for a serious Chueca drink. Use it when one well-made drink is the event, not just a stop between bars.",
         "hours": {
           "mon": "6:00 PM-12:30 AM",
           "tue": "6:00 PM-12:30 AM",
@@ -2725,7 +2725,7 @@ export const madridNeighborhoodGuides = [
           40.4221,
           -3.6984
         ],
-        "description": "A current Chueca cocktail room with plant-filled styling and a more neighborhood-scaled mood.",
+        "description": "Ficus Bar belongs in the Chueca nightlife guide because it gives the night a defined role rather than another loose bar pin. A current Chueca cocktail room with plant-filled styling and a more neighborhood-scaled mood. Use it when one well-made drink is the event, not just a stop between bars.",
         "hours": {
           "mon": "6:00 PM-12:30 AM",
           "tue": "6:00 PM-12:30 AM",
@@ -2744,7 +2744,7 @@ export const madridNeighborhoodGuides = [
           40.4204,
           -3.6999
         ],
-        "description": "A Gran Via-adjacent cocktail classic for old Madrid glamour and a more polished start to the night.",
+        "description": "Museo Chicote belongs in the Chueca nightlife guide because it gives the night a defined role rather than another loose bar pin. A Gran Via-adjacent cocktail classic for old Madrid glamour and a more polished start to the night. Use it when the night is meant to continue past dinner into music, tickets, or a louder final room.",
         "hours": {
           "mon": "6:00 PM-12:30 AM",
           "tue": "6:00 PM-12:30 AM",
@@ -2763,7 +2763,7 @@ export const madridNeighborhoodGuides = [
           40.421,
           -3.6976
         ],
-        "description": "A late piano-bar institution for singalong energy when Chueca should end theatrically.",
+        "description": "Toni 2 Piano Bar belongs in the Chueca nightlife guide because it gives the night a defined role rather than another loose bar pin. A late piano-bar institution for singalong energy when Chueca should end theatrically. Use it when the night is meant to continue past dinner into music, tickets, or a louder final room.",
         "hours": {
           "mon": "10:00 PM-2:30 AM",
           "tue": "10:00 PM-2:30 AM",
@@ -2835,7 +2835,7 @@ export const madridNeighborhoodGuides = [
           40.4235,
           -3.6964
         ],
-        "description": "A strong Chueca boutique stay with nightlife, shopping, and cocktail bars close without feeling like a hostel base.",
+        "description": "Only YOU Boutique Hotel Madrid belongs in the Chueca stay guide because it solves a specific base tradeoff. A strong Chueca boutique stay with nightlife, shopping, and cocktail bars close without feeling like a hostel base. Choose it when budget, shared spaces, and meeting other travelers matter more than a quiet hotel reset.",
         "hours": {
           "mon": "24 hours",
           "tue": "24 hours",
@@ -2854,7 +2854,7 @@ export const madridNeighborhoodGuides = [
           40.4206,
           -3.6981
         ],
-        "description": "A Plaza de Pedro Zerolo hotel for travelers who want Chueca energy and rooftop/social access right outside.",
+        "description": "Room Mate Óscar belongs in the Chueca stay guide because it solves a specific base tradeoff. A Plaza de Pedro Zerolo hotel for travelers who want Chueca energy and rooftop/social access right outside. Choose it when budget, shared spaces, and meeting other travelers matter more than a quiet hotel reset.",
         "hours": {
           "mon": "24 hours",
           "tue": "24 hours",
@@ -2873,7 +2873,7 @@ export const madridNeighborhoodGuides = [
           40.4198,
           -3.6995
         ],
-        "description": "A polished newer central hotel for travelers who want Gran Via and Chueca within a few blocks.",
+        "description": "Brach Madrid belongs in the Chueca stay guide because it solves a specific base tradeoff. A polished newer central hotel for travelers who want Gran Via and Chueca within a few blocks. Choose it when location, sleep quality, and budget need to be balanced honestly instead of picked by map distance alone.",
         "hours": {
           "mon": "24 hours",
           "tue": "24 hours",
@@ -2892,7 +2892,7 @@ export const madridNeighborhoodGuides = [
           40.4166,
           -3.699
         ],
-        "description": "A design-led luxury option between Chueca, Sol, and Las Letras for travelers who want central nightlife reach with a grown-up hotel feel.",
+        "description": "Hotel Urban belongs in the Chueca stay guide because it solves a specific base tradeoff. A design-led luxury option between Chueca, Sol, and Las Letras for travelers who want central nightlife reach with a grown-up hotel feel. Choose it when service, quiet, and room quality should carry as much weight as location.",
         "hours": {
           "mon": "24 hours",
           "tue": "24 hours",
@@ -2956,7 +2956,7 @@ export const madridNeighborhoodGuides = [
           40.425,
           -3.6986
         ],
-        "description": "A house-museum that gives Chueca/Salesas a quieter cultural stop away from the big Prado-triangle crowds.",
+        "description": "Museo del Romanticismo earns the Chueca culture slot because it turns the neighborhood route into more than scenery. A house-museum that gives Chueca/Salesas a quieter cultural stop away from the big Prado-triangle crowds. Use it as the route's indoor anchor before letting Chueca open back into streets, meals, or evening stops.",
         "hours": {
           "mon": "Closed",
           "tue": "10:00 AM-7:00 PM",
@@ -2975,7 +2975,7 @@ export const madridNeighborhoodGuides = [
           40.4227,
           -3.6976
         ],
-        "description": "The neighborhood's social center and a compact way to understand Chueca's identity as a public, queer, central Madrid space.",
+        "description": "Plaza de Chueca earns the Chueca culture slot because it turns the neighborhood route into more than scenery. The neighborhood's social center and a compact way to understand Chueca's identity as a public, queer, central Madrid space. Use it slowly, as a place to read the neighborhood rhythm rather than a quick photo pin.",
         "hours": {
           "mon": "Open public space",
           "tue": "Open public space",
@@ -2994,7 +2994,7 @@ export const madridNeighborhoodGuides = [
           40.42,
           -3.7016
         ],
-        "description": "The architectural and theatrical boulevard that frames Chueca's southern edge and links the neighborhood to central Madrid spectacle.",
+        "description": "Gran Vía earns the Chueca culture slot because it turns the neighborhood route into more than scenery. The architectural and theatrical boulevard that frames Chueca's southern edge and links the neighborhood to central Madrid spectacle. Use it to give the Chueca route a concrete cultural anchor instead of only atmosphere.",
         "hours": {
           "mon": "Open public space",
           "tue": "Open public space",
@@ -3013,7 +3013,7 @@ export const madridNeighborhoodGuides = [
           40.4247,
           -3.6968
         ],
-        "description": "A modernista landmark on the Salesas edge, useful for reading the neighborhood's architecture beyond bars and shops.",
+        "description": "Palacio de Longoria earns the Chueca culture slot because it turns the neighborhood route into more than scenery. A modernista landmark on the Salesas edge, useful for reading the neighborhood's architecture beyond bars and shops. Use it to give the Chueca route a concrete cultural anchor instead of only atmosphere.",
         "hours": {
           "mon": "Open public space",
           "tue": "Open public space",
@@ -3094,7 +3094,8 @@ export const madridCitywideGuides = [
           "fri": "12:30 PM-4:00 PM, 7:30 PM-11:30 PM",
           "sat": "12:30 PM-4:00 PM, 7:30 PM-11:30 PM",
           "sun": "12:30 PM-4:00 PM, 7:30 PM-11:00 PM"
-        }
+        },
+        "photo": "https://static.wixstatic.com/media/06eb95_8150892a0c8e475faa7ac767c480455e%7Emv2.jpg/v1/fit/w_2500,h_1330,al_c/06eb95_8150892a0c8e475faa7ac767c480455e%7Emv2.jpg"
       },
       {
         "id": "madrid-food-la-malontina",
@@ -3198,7 +3199,8 @@ export const madridCitywideGuides = [
           "fri": "1:00 PM-6:30 PM, 7:30 PM-12:00 AM",
           "sat": "Closed",
           "sun": "Closed"
-        }
+        },
+        "photo": "https://diverxo.com/wp-content/uploads/2021/12/xo-obra-opt.webp"
       },
       {
         "id": "madrid-food-smoked-room",
@@ -3218,7 +3220,8 @@ export const madridCitywideGuides = [
           "fri": "1:00 PM-4:00 PM, 8:30 PM-1:00 AM",
           "sat": "1:00 PM-4:00 PM, 8:30 PM-1:00 AM",
           "sun": "Closed"
-        }
+        },
+        "photo": "https://smokedroomrestaurants.com/wp-content/uploads/2025/07/SR_home_carrusel-1.jpg"
       }
     ],
     "sources": [
@@ -3658,7 +3661,8 @@ export const madridCitywideGuides = [
           "fri": "10:00 AM-7:00 PM",
           "sat": "10:00 AM-7:00 PM",
           "sun": "10:00 AM-7:00 PM"
-        }
+        },
+        "photo": "https://www.esmadrid.com/sites/default/files/styles/content_type_full/public/recursosturisticos/infoturistica/F_E_EA_1210_GD_reina_sofia_40_alta.jpg?itok=uJ0FjMIo"
       },
       {
         "id": "madrid-culture-thyssen",
@@ -3676,7 +3680,8 @@ export const madridCitywideGuides = [
           "fri": "10:00 AM-7:00 PM",
           "sat": "10:00 AM-7:00 PM",
           "sun": "10:00 AM-7:00 PM"
-        }
+        },
+        "photo": "https://www.esmadrid.com/sites/default/files/styles/content_type_full/public/recursosturisticos/infoturistica/museo_thyssen.jpg?itok=8LiTSzHG"
       },
       {
         "id": "madrid-culture-royal-palace",
@@ -3713,7 +3718,8 @@ export const madridCitywideGuides = [
           "fri": "Open public space",
           "sat": "Open public space",
           "sun": "Open public space"
-        }
+        },
+        "photo": "https://commons.wikimedia.org/wiki/Special:FilePath/Barrio_de_las_Letras_%28Madrid%29_01.jpg"
       },
       {
         "id": "madrid-culture-caixaforum",
@@ -3750,7 +3756,8 @@ export const madridCitywideGuides = [
           "fri": "10:00 AM-7:00 PM",
           "sat": "10:00 AM-7:00 PM",
           "sun": "10:00 AM-7:00 PM"
-        }
+        },
+        "photo": "https://www.esmadrid.com/sites/default/files/styles/content_type_full/public/recursosturisticos/infoturistica/matadero_francescopinton.jpg?itok=oVqXhyOi"
       }
     ],
     "sources": [
