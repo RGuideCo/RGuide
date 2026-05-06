@@ -257,6 +257,26 @@ export function MapListCard({
       current.includes(placeId) ? current.filter((id) => id !== placeId) : [...current, placeId],
     );
   };
+  const hasActiveTextSelection = () =>
+    typeof window !== "undefined" && Boolean(window.getSelection()?.toString().trim());
+  const activateGuideHeader = () => {
+    if (hasActiveTextSelection()) {
+      return;
+    }
+    onToggleExpand?.(list);
+  };
+  const activateStopHeader = (stopId: string) => {
+    if (hasActiveTextSelection()) {
+      return;
+    }
+    activateGuideStop(stopId);
+  };
+  const activatePlaceHeader = (placeId: string) => {
+    if (hasActiveTextSelection()) {
+      return;
+    }
+    togglePlace(placeId);
+  };
   const openPhotoPreview = (photo: { src: string; title: string }) => {
     setPhotoPreview(photo);
   };
@@ -714,23 +734,40 @@ export function MapListCard({
       >
         <div className="relative z-10 min-w-0 flex-1">
           {expandable ? (
-            <button
-              type="button"
-              onClick={() => onToggleExpand?.(list)}
-              aria-expanded={expanded}
-              aria-controls={`guide-panel-${list.id}`}
-              className="flex w-full items-center justify-between gap-2 text-left"
-            >
-              <span className="min-w-0 flex-1">
+            <div className="flex w-full items-center justify-between gap-2 text-left">
+              <div
+                role="button"
+                tabIndex={0}
+                onClick={activateGuideHeader}
+                onKeyDown={(event) => {
+                  if (event.key === "Enter" || event.key === " ") {
+                    event.preventDefault();
+                    onToggleExpand?.(list);
+                  }
+                }}
+                aria-expanded={expanded}
+                aria-controls={`guide-panel-${list.id}`}
+                className="min-w-0 flex-1 cursor-pointer select-text"
+              >
                 <h3 className={`min-w-0 text-base font-semibold leading-5 transition-colors ${expanded ? "text-white" : "text-slate-900 group-hover:text-slate-950"}`}>{list.title}</h3>
                 <span className={`mt-0.5 block truncate font-mono text-[10px] font-medium uppercase tracking-[0.1em] ${expanded ? "text-white/75" : "text-slate-500"}`}>
                   {guideMeta}
                 </span>
-              </span>
-              <ChevronDown
-                className={`h-4 w-4 shrink-0 transition-transform duration-300 ${expanded ? "rotate-180 text-white" : "text-slate-400 group-hover:translate-y-0.5 group-hover:text-slate-900 group-focus-within:translate-y-0.5 group-focus-within:text-slate-900"}`}
-              />
-            </button>
+              </div>
+              <button
+                type="button"
+                onClick={() => onToggleExpand?.(list)}
+                aria-expanded={expanded}
+                aria-controls={`guide-panel-${list.id}`}
+                className="inline-flex h-7 w-7 shrink-0 items-center justify-center rounded-md"
+                aria-label={`${expanded ? "Collapse" : "Expand"} ${list.title}`}
+                title={`${expanded ? "Collapse" : "Expand"} ${list.title}`}
+              >
+                <ChevronDown
+                  className={`h-4 w-4 shrink-0 transition-transform duration-300 ${expanded ? "rotate-180 text-white" : "text-slate-400 group-hover:translate-y-0.5 group-hover:text-slate-900 group-focus-within:translate-y-0.5 group-focus-within:text-slate-900"}`}
+                />
+              </button>
+            </div>
           ) : (
             <>
               <h3 className="min-w-0 text-base font-semibold leading-5 text-slate-900">
@@ -1071,12 +1108,19 @@ export function MapListCard({
                               title={`Select ${stop.name} on map`}
                             />
                           )}
-                          <button
-                            type="button"
-                            onClick={() => activateGuideStop(stop.id)}
+                          <div
+                            role="button"
+                            tabIndex={0}
+                            onClick={() => activateStopHeader(stop.id)}
+                            onKeyDown={(event) => {
+                              if (event.key === "Enter" || event.key === " ") {
+                                event.preventDefault();
+                                activateGuideStop(stop.id);
+                              }
+                            }}
                             onFocus={() => onStopHoverChange?.(stop.id)}
                             onBlur={() => onStopHoverChange?.(null)}
-                            className="flex min-w-0 flex-1 items-center gap-2 text-left"
+                            className="flex min-w-0 flex-1 cursor-pointer select-text items-center gap-2 text-left"
                           >
                             <span className="min-w-0 flex-1 text-sm font-semibold text-slate-900">{stop.name}</span>
                             {stop.price ? (
@@ -1092,7 +1136,7 @@ export function MapListCard({
                                 {stop.places.length} places
                               </span>
                             ) : null}
-                          </button>
+                          </div>
                           <button
                             type="button"
                             onClick={() => toggleStopWithActivation(stop.id)}
@@ -1172,19 +1216,37 @@ export function MapListCard({
                                         <span className="-rotate-45">{getAlphaMarker(placeIndex)}</span>
                                       </button>
                                       <div className="min-w-0 flex-1 pt-0.5">
-                                        <button
-                                          type="button"
-                                          onClick={() => togglePlace(place.id)}
-                                          className="flex min-h-5 w-full items-center gap-2 text-left"
-                                          aria-expanded={isPlaceExpanded}
-                                        >
+                                        <div className="flex min-h-5 w-full items-center gap-2 text-left">
+                                          <div
+                                            role="button"
+                                            tabIndex={0}
+                                            onClick={() => activatePlaceHeader(place.id)}
+                                            onKeyDown={(event) => {
+                                              if (event.key === "Enter" || event.key === " ") {
+                                                event.preventDefault();
+                                                togglePlace(place.id);
+                                              }
+                                            }}
+                                            className="min-w-0 flex-1 cursor-pointer select-text"
+                                            aria-expanded={isPlaceExpanded}
+                                          >
                                           <span className="min-w-0 flex-1 text-sm font-semibold text-slate-900">{place.name}</span>
+                                          </div>
+                                          <button
+                                            type="button"
+                                            onClick={() => togglePlace(place.id)}
+                                            className="inline-flex h-6 w-6 shrink-0 items-center justify-center rounded-md"
+                                            aria-expanded={isPlaceExpanded}
+                                            aria-label={`${isPlaceExpanded ? "Collapse" : "Expand"} ${place.name}`}
+                                            title={`${isPlaceExpanded ? "Collapse" : "Expand"} ${place.name}`}
+                                          >
                                           <ChevronDown
                                             className={`h-3.5 w-3.5 shrink-0 text-slate-400 transition-transform ${
                                               isPlaceExpanded ? "rotate-180" : ""
                                             }`}
                                           />
-                                        </button>
+                                          </button>
+                                        </div>
                                         <div
                                           className={`grid transition-[grid-template-rows,opacity,margin] duration-150 ease-out ${
                                             isPlaceExpanded
