@@ -934,7 +934,7 @@ export const madridNeighborhoodGuides = [
           "sat": "10:00 AM-7:00 PM",
           "sun": "10:00 AM-7:00 PM"
         },
-        "photo": "https://upload.wikimedia.org/wikipedia/commons/1/1c/Casa_Museo_Lope_de_Vega_%28Madrid%29_01.jpg"
+        "photo": "https://www.esmadrid.com/sites/default/files/styles/content_type_full/public/recursosturisticos/infoturistica/lopedevega_1404306650.973.jpg?itok=-KLt48Xj"
       },
       {
         "id": "letras-culture-teatro-espanol",
@@ -953,7 +953,7 @@ export const madridNeighborhoodGuides = [
           "sat": "Event schedule (check venue)",
           "sun": "Event schedule (check venue)"
         },
-        "photo": "https://upload.wikimedia.org/wikipedia/commons/b/b4/Teatro_Espa%C3%B1ol_%28Madrid%29_01.jpg"
+        "photo": "https://www.esmadrid.com/sites/default/files/styles/content_type_full/public/recursosturisticos/infoturistica/teatroedespanol_1412607578.39.jpg?itok=lRsgry7e"
       },
       {
         "id": "letras-culture-prado",
@@ -991,7 +991,7 @@ export const madridNeighborhoodGuides = [
           "sat": "10:00 AM-7:00 PM",
           "sun": "10:00 AM-7:00 PM"
         },
-        "photo": "https://upload.wikimedia.org/wikipedia/commons/7/77/CaixaForum_Madrid_%28Spain%29.jpg"
+        "photo": "https://www.esmadrid.com/sites/default/files/styles/content_type_full/public/recursosturisticos/infoturistica/caisaforum3_1403031677.923.jpg?itok=mD360Nrf"
       }
     ],
     "sources": [
