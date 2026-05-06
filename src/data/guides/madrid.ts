@@ -307,7 +307,7 @@ export const madridNeighborhoodGuides = [
           "sat": "24 hours",
           "sun": "24 hours"
         },
-        "photo": "https://cf.bstatic.com/xdata/images/hotel/max1024x768/253695581.jpg?k=91850f32b01adac51407a238343ec660f96cf6fc8b5f65cf53e2d468b8dcf8f6&o=&hp=1"
+        "photo": "https://www.esmadrid.com/sites/default/files/styles/content_type_full/public/recursosturisticos/alojamientos/canalejas.jpg?itok=CiqEovlB"
       },
       {
         "id": "stay-edition",
@@ -328,7 +328,7 @@ export const madridNeighborhoodGuides = [
           "sat": "24 hours",
           "sun": "24 hours"
         },
-        "photo": "https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=900&q=80"
+        "photo": "https://www.editionhotels.com/wp-content/uploads/2022/06/220503_EDT_Madrid2_16-1-scaled.jpg"
       },
       {
         "id": "stay-pestana-plaza-mayor",
@@ -349,7 +349,7 @@ export const madridNeighborhoodGuides = [
           "sat": "24 hours",
           "sun": "24 hours"
         },
-        "photo": "https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=900&q=80"
+        "photo": "https://www.esmadrid.com/sites/default/files/styles/content_type_full/public/recursosturisticos/alojamientos/pmayor-rooftop-6.png?itok=NDid8Rwi"
       },
       {
         "id": "stay-seven-islas",
@@ -370,7 +370,7 @@ export const madridNeighborhoodGuides = [
           "sat": "24 hours",
           "sun": "24 hours"
         },
-        "photo": "https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=900&q=80"
+        "photo": "https://www.esmadrid.com/sites/default/files/styles/content_type_full/public/recursosturisticos/alojamientos/Hotelsieteislas2_1396466553.194.png?itok=4YqGukxN"
       }
     ],
     "sources": [
@@ -444,7 +444,7 @@ export const madridNeighborhoodGuides = [
           "sat": "24 hours",
           "sun": "24 hours"
         },
-        "photo": "https://images.unsplash.com/photo-1555854877-bab0e564b8d5?auto=format&fit=crop&w=900&q=80"
+        "photo": "https://www.esmadrid.com/sites/default/files/styles/content_type_full/public/recursosturisticos/alojamientos/hat1_1416304717.033.jpg?itok=Xb5nkS9E"
       },
       {
         "id": "stay-onefam-sungate",
@@ -465,7 +465,7 @@ export const madridNeighborhoodGuides = [
           "sat": "24 hours",
           "sun": "24 hours"
         },
-        "photo": "https://images.unsplash.com/photo-1555854877-bab0e564b8d5?auto=format&fit=crop&w=900&q=80"
+        "photo": "https://a.hwstatic.com/image/upload/f_auto,q_auto,h_720,c_limit,e_sharpen,e_improve,e_vibrance:60/propertyimages/3/312767/bc8cojhqtnv9cawrxw1z.jpg"
       },
       {
         "id": "stay-2060-newton",
@@ -486,7 +486,7 @@ export const madridNeighborhoodGuides = [
           "sat": "24 hours",
           "sun": "24 hours"
         },
-        "photo": "https://images.unsplash.com/photo-1555854877-bab0e564b8d5?auto=format&fit=crop&w=900&q=80"
+        "photo": "https://a.hwstatic.com/image/upload/f_auto,q_auto,h_720,c_limit,e_sharpen,e_improve,e_vibrance:60/propertyimages/2/282289/89.jpg"
       },
       {
         "id": "stay-ok-hostel",
@@ -507,7 +507,7 @@ export const madridNeighborhoodGuides = [
           "sat": "24 hours",
           "sun": "24 hours"
         },
-        "photo": "https://images.unsplash.com/photo-1555854877-bab0e564b8d5?auto=format&fit=crop&w=900&q=80"
+        "photo": "https://a.hwstatic.com/image/upload/f_auto,q_auto,h_720,c_limit,e_sharpen,e_improve,e_vibrance:60/propertyimages/9/94332/nibn7kmmmvkunz0dsq6i.jpg"
       }
     ],
     "sources": [
@@ -972,7 +972,7 @@ export const madridNeighborhoodGuides = [
           "sat": "24 hours",
           "sun": "24 hours"
         },
-        "photo": "https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=900&q=80"
+        "photo": "https://room-matehotels.com/content/thumbs/800_450/content/imgsxml/panel_herohotel/meetalba2173.jpg"
       },
       {
         "id": "stay-me-madrid-reina-victoria",
@@ -993,7 +993,7 @@ export const madridNeighborhoodGuides = [
           "sat": "24 hours",
           "sun": "24 hours"
         },
-        "photo": "https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=900&q=80"
+        "photo": "https://dam.melia.com/melia/accounts/f8/4000018/projects/127/assets/de/66524/5f48e5011a0440c7be13092894b942bc-1634821397.jpg?im=RegionOfInterestCrop=(1200,600),regionOfInterest=(1900,1357)"
       },
       {
         "id": "stay-westin-palace",
@@ -1014,7 +1014,7 @@ export const madridNeighborhoodGuides = [
           "sat": "24 hours",
           "sun": "24 hours"
         },
-        "photo": "https://upload.wikimedia.org/wikipedia/commons/9/9e/Hotel_Palace_%28Madrid%29_01.jpg"
+        "photo": "https://www.esmadrid.com/sites/default/files/styles/content_type_full/public/recursosturisticos/alojamientos/palace_hotel_1_0.jpg?itok=UHAjN4EK"
       },
       {
         "id": "stay-nh-collection-suecia",
@@ -1035,7 +1035,7 @@ export const madridNeighborhoodGuides = [
           "sat": "24 hours",
           "sun": "24 hours"
         },
-        "photo": "https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=900&q=80"
+        "photo": "https://www.esmadrid.com/sites/default/files/styles/content_type_full/public/recursosturisticos/alojamientos/nh_collection_madrid_suecia_2.jpg?itok=EM3rGblz"
       }
     ],
     "sources": [
@@ -1109,7 +1109,7 @@ export const madridNeighborhoodGuides = [
           "sat": "24 hours",
           "sun": "24 hours"
         },
-        "photo": "https://images.unsplash.com/photo-1555854877-bab0e564b8d5?auto=format&fit=crop&w=900&q=80"
+        "photo": "https://a.hwstatic.com/image/upload/f_auto,q_auto,h_720,c_limit,e_sharpen,e_improve,e_vibrance:60/propertyimages/3/316771/nrxc9mgcinzkjcoy2d57.jpg"
       },
       {
         "id": "stay-2060-newton",
@@ -1130,7 +1130,7 @@ export const madridNeighborhoodGuides = [
           "sat": "24 hours",
           "sun": "24 hours"
         },
-        "photo": "https://images.unsplash.com/photo-1555854877-bab0e564b8d5?auto=format&fit=crop&w=900&q=80"
+        "photo": "https://a.hwstatic.com/image/upload/f_auto,q_auto,h_720,c_limit,e_sharpen,e_improve,e_vibrance:60/propertyimages/2/282289/89.jpg"
       },
       {
         "id": "stay-the-hat",
@@ -1151,7 +1151,7 @@ export const madridNeighborhoodGuides = [
           "sat": "24 hours",
           "sun": "24 hours"
         },
-        "photo": "https://images.unsplash.com/photo-1555854877-bab0e564b8d5?auto=format&fit=crop&w=900&q=80"
+        "photo": "https://www.esmadrid.com/sites/default/files/styles/content_type_full/public/recursosturisticos/alojamientos/hat1_1416304717.033.jpg?itok=Xb5nkS9E"
       },
       {
         "id": "stay-ok-hostel",
@@ -1172,7 +1172,7 @@ export const madridNeighborhoodGuides = [
           "sat": "24 hours",
           "sun": "24 hours"
         },
-        "photo": "https://images.unsplash.com/photo-1555854877-bab0e564b8d5?auto=format&fit=crop&w=900&q=80"
+        "photo": "https://a.hwstatic.com/image/upload/f_auto,q_auto,h_720,c_limit,e_sharpen,e_improve,e_vibrance:60/propertyimages/9/94332/nibn7kmmmvkunz0dsq6i.jpg"
       }
     ],
     "sources": [
@@ -1637,7 +1637,7 @@ export const madridNeighborhoodGuides = [
           "sat": "24 hours",
           "sun": "24 hours"
         },
-        "photo": "https://upload.wikimedia.org/wikipedia/commons/6/62/Hotel_Ritz_%28Madrid%29_01.jpg"
+        "photo": "https://www.esmadrid.com/sites/default/files/styles/content_type_full/public/recursosturisticos/alojamientos/palm_court_02.jpg?itok=ZKcgkcTr"
       },
       {
         "id": "stay-petit-palace-savoy",
@@ -1658,7 +1658,7 @@ export const madridNeighborhoodGuides = [
           "sat": "24 hours",
           "sun": "24 hours"
         },
-        "photo": "https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=900&q=80"
+        "photo": "https://www.esmadrid.com/sites/default/files/styles/content_type_full/public/recursosturisticos/alojamientos/savoy.png?itok=F6Aan7uU"
       },
       {
         "id": "stay-only-you-atocha",
@@ -1679,7 +1679,7 @@ export const madridNeighborhoodGuides = [
           "sat": "24 hours",
           "sun": "24 hours"
         },
-        "photo": "https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=900&q=80"
+        "photo": "https://www.esmadrid.com/sites/default/files/styles/content_type_full/public/recursosturisticos/alojamientos/img-05-oy-atocha-lobby539.jpg?itok=c4YDChBZ"
       },
       {
         "id": "stay-westin-palace",
@@ -1700,7 +1700,7 @@ export const madridNeighborhoodGuides = [
           "sat": "24 hours",
           "sun": "24 hours"
         },
-        "photo": "https://upload.wikimedia.org/wikipedia/commons/9/9e/Hotel_Palace_%28Madrid%29_01.jpg"
+        "photo": "https://www.esmadrid.com/sites/default/files/styles/content_type_full/public/recursosturisticos/alojamientos/palace_hotel_1_0.jpg?itok=UHAjN4EK"
       }
     ],
     "sources": [
@@ -1774,7 +1774,7 @@ export const madridNeighborhoodGuides = [
           "sat": "24 hours",
           "sun": "24 hours"
         },
-        "photo": "https://images.unsplash.com/photo-1555854877-bab0e564b8d5?auto=format&fit=crop&w=900&q=80"
+        "photo": "https://a.hwstatic.com/image/upload/f_auto,q_auto,h_720,c_limit,e_sharpen,e_improve,e_vibrance:60/propertyimages/3/316771/nrxc9mgcinzkjcoy2d57.jpg"
       },
       {
         "id": "stay-2060-newton",
@@ -1795,7 +1795,7 @@ export const madridNeighborhoodGuides = [
           "sat": "24 hours",
           "sun": "24 hours"
         },
-        "photo": "https://images.unsplash.com/photo-1555854877-bab0e564b8d5?auto=format&fit=crop&w=900&q=80"
+        "photo": "https://a.hwstatic.com/image/upload/f_auto,q_auto,h_720,c_limit,e_sharpen,e_improve,e_vibrance:60/propertyimages/2/282289/89.jpg"
       },
       {
         "id": "stay-ok-hostel",
@@ -1816,7 +1816,7 @@ export const madridNeighborhoodGuides = [
           "sat": "24 hours",
           "sun": "24 hours"
         },
-        "photo": "https://images.unsplash.com/photo-1555854877-bab0e564b8d5?auto=format&fit=crop&w=900&q=80"
+        "photo": "https://a.hwstatic.com/image/upload/f_auto,q_auto,h_720,c_limit,e_sharpen,e_improve,e_vibrance:60/propertyimages/9/94332/nibn7kmmmvkunz0dsq6i.jpg"
       }
     ],
     "sources": [
@@ -2281,7 +2281,7 @@ export const madridNeighborhoodGuides = [
           "sat": "24 hours",
           "sun": "24 hours"
         },
-        "photo": "https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=900&q=80"
+        "photo": "https://www.esmadrid.com/sites/default/files/styles/content_type_full/public/recursosturisticos/alojamientos/hotel_urso_6.png?itok=Xn5BALuE"
       },
       {
         "id": "stay-seven-islas",
@@ -2302,7 +2302,7 @@ export const madridNeighborhoodGuides = [
           "sat": "24 hours",
           "sun": "24 hours"
         },
-        "photo": "https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=900&q=80"
+        "photo": "https://www.esmadrid.com/sites/default/files/styles/content_type_full/public/recursosturisticos/alojamientos/Hotelsieteislas2_1396466553.194.png?itok=4YqGukxN"
       },
       {
         "id": "stay-ibis-centro",
@@ -2323,7 +2323,7 @@ export const madridNeighborhoodGuides = [
           "sat": "24 hours",
           "sun": "24 hours"
         },
-        "photo": "https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=900&q=80"
+        "photo": "https://www.esmadrid.com/sites/default/files/styles/content_type_full/public/recursosturisticos/alojamientos/ibiscentro.jpg?itok=EL8xBR9o"
       },
       {
         "id": "stay-brach",
@@ -2344,7 +2344,7 @@ export const madridNeighborhoodGuides = [
           "sat": "24 hours",
           "sun": "24 hours"
         },
-        "photo": "https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=900&q=80"
+        "photo": "https://www.esmadrid.com/sites/default/files/styles/content_type_full/public/recursosturisticos/alojamientos/brach_madrid.png?itok=5ISq44-B"
       }
     ],
     "sources": [
@@ -2418,7 +2418,7 @@ export const madridNeighborhoodGuides = [
           "sat": "24 hours",
           "sun": "24 hours"
         },
-        "photo": "https://images.unsplash.com/photo-1555854877-bab0e564b8d5?auto=format&fit=crop&w=900&q=80"
+        "photo": "https://a.hwstatic.com/image/upload/f_auto,q_auto,h_720,c_limit,e_sharpen,e_improve,e_vibrance:60/propertyimages/2/286369/exa4nsdjxhbyf1gdfk9l.jpg"
       },
       {
         "id": "stay-bastardo",
@@ -2439,7 +2439,7 @@ export const madridNeighborhoodGuides = [
           "sat": "24 hours",
           "sun": "24 hours"
         },
-        "photo": "https://images.unsplash.com/photo-1555854877-bab0e564b8d5?auto=format&fit=crop&w=900&q=80"
+        "photo": "https://a.hwstatic.com/image/upload/f_auto,q_auto,h_720,c_limit,e_sharpen,e_improve,e_vibrance:60/propertyimages/2/295483/mvaxq6golqqla0fyh3jw.jpg"
       },
       {
         "id": "stay-room00-chueca",
@@ -2460,7 +2460,7 @@ export const madridNeighborhoodGuides = [
           "sat": "24 hours",
           "sun": "24 hours"
         },
-        "photo": "https://images.unsplash.com/photo-1555854877-bab0e564b8d5?auto=format&fit=crop&w=900&q=80"
+        "photo": "https://a.hwstatic.com/image/upload/f_auto,q_auto,h_720,c_limit,e_sharpen,e_improve,e_vibrance:60/propertyimages/8/83795/ohbhqjhitvwpqc14oim1.jpg"
       }
     ],
     "sources": [
@@ -2925,7 +2925,7 @@ export const madridNeighborhoodGuides = [
           "sat": "24 hours",
           "sun": "24 hours"
         },
-        "photo": "https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=900&q=80"
+        "photo": "https://posadadelleondeoro.com/wp-content/uploads/FACHADA-ILUMINADA-HORIZONTAL.jpeg"
       },
       {
         "id": "stay-pestana-plaza-mayor",
@@ -2946,7 +2946,7 @@ export const madridNeighborhoodGuides = [
           "sat": "24 hours",
           "sun": "24 hours"
         },
-        "photo": "https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=900&q=80"
+        "photo": "https://www.esmadrid.com/sites/default/files/styles/content_type_full/public/recursosturisticos/alojamientos/pmayor-rooftop-6.png?itok=NDid8Rwi"
       },
       {
         "id": "stay-edition",
@@ -2967,7 +2967,7 @@ export const madridNeighborhoodGuides = [
           "sat": "24 hours",
           "sun": "24 hours"
         },
-        "photo": "https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=900&q=80"
+        "photo": "https://www.editionhotels.com/wp-content/uploads/2022/06/220503_EDT_Madrid2_16-1-scaled.jpg"
       },
       {
         "id": "stay-room-mate-alba",
@@ -2988,7 +2988,7 @@ export const madridNeighborhoodGuides = [
           "sat": "24 hours",
           "sun": "24 hours"
         },
-        "photo": "https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=900&q=80"
+        "photo": "https://room-matehotels.com/content/thumbs/800_450/content/imgsxml/panel_herohotel/meetalba2173.jpg"
       }
     ],
     "sources": [
@@ -3062,7 +3062,7 @@ export const madridNeighborhoodGuides = [
           "sat": "24 hours",
           "sun": "24 hours"
         },
-        "photo": "https://images.unsplash.com/photo-1555854877-bab0e564b8d5?auto=format&fit=crop&w=900&q=80"
+        "photo": "https://www.esmadrid.com/sites/default/files/styles/content_type_full/public/recursosturisticos/alojamientos/hat1_1416304717.033.jpg?itok=Xb5nkS9E"
       },
       {
         "id": "stay-ok-hostel",
@@ -3083,7 +3083,7 @@ export const madridNeighborhoodGuides = [
           "sat": "24 hours",
           "sun": "24 hours"
         },
-        "photo": "https://images.unsplash.com/photo-1555854877-bab0e564b8d5?auto=format&fit=crop&w=900&q=80"
+        "photo": "https://a.hwstatic.com/image/upload/f_auto,q_auto,h_720,c_limit,e_sharpen,e_improve,e_vibrance:60/propertyimages/9/94332/nibn7kmmmvkunz0dsq6i.jpg"
       },
       {
         "id": "stay-2060-newton",
@@ -3104,7 +3104,7 @@ export const madridNeighborhoodGuides = [
           "sat": "24 hours",
           "sun": "24 hours"
         },
-        "photo": "https://images.unsplash.com/photo-1555854877-bab0e564b8d5?auto=format&fit=crop&w=900&q=80"
+        "photo": "https://a.hwstatic.com/image/upload/f_auto,q_auto,h_720,c_limit,e_sharpen,e_improve,e_vibrance:60/propertyimages/2/282289/89.jpg"
       },
       {
         "id": "stay-latroupe-prado",
@@ -3125,7 +3125,7 @@ export const madridNeighborhoodGuides = [
           "sat": "24 hours",
           "sun": "24 hours"
         },
-        "photo": "https://images.unsplash.com/photo-1555854877-bab0e564b8d5?auto=format&fit=crop&w=900&q=80"
+        "photo": "https://a.hwstatic.com/image/upload/f_auto,q_auto,h_720,c_limit,e_sharpen,e_improve,e_vibrance:60/propertyimages/3/316771/nrxc9mgcinzkjcoy2d57.jpg"
       }
     ],
     "sources": [
@@ -3590,7 +3590,7 @@ export const madridNeighborhoodGuides = [
           "sat": "24 hours",
           "sun": "24 hours"
         },
-        "photo": "https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=900&q=80"
+        "photo": "https://www.onlyyouhotels.com/content/imgsxml/galerias/panel_fullheader/1/cabecera-web-oyb1439.jpg"
       },
       {
         "id": "stay-room-mate-oscar",
@@ -3611,7 +3611,7 @@ export const madridNeighborhoodGuides = [
           "sat": "24 hours",
           "sun": "24 hours"
         },
-        "photo": "https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=900&q=80"
+        "photo": "https://room-matehotels.com/content/thumbs/779_438/content/imgsxml/panel_hotelinfo/meetoscarfirst244.jpg"
       },
       {
         "id": "stay-brach",
@@ -3632,7 +3632,7 @@ export const madridNeighborhoodGuides = [
           "sat": "24 hours",
           "sun": "24 hours"
         },
-        "photo": "https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=900&q=80"
+        "photo": "https://www.esmadrid.com/sites/default/files/styles/content_type_full/public/recursosturisticos/alojamientos/brach_madrid.png?itok=5ISq44-B"
       },
       {
         "id": "stay-hotel-urban",
@@ -3653,7 +3653,7 @@ export const madridNeighborhoodGuides = [
           "sat": "24 hours",
           "sun": "24 hours"
         },
-        "photo": "https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=900&q=80"
+        "photo": "https://estaticos.esmadrid.com/cdn/farfuture/cM2k86GK-36mHxQlNgr81uGvG4p_z6EISlKk1Jvncd0/mtime:1725608929/sites/default/files/styles/content_type_full/public/recursosturisticos/alojamientos/hotel_urban_5_gl_1.png?itok=gfHW7zGs"
       },
       {
         "id": "stay-urso",
@@ -3674,7 +3674,7 @@ export const madridNeighborhoodGuides = [
           "sat": "24 hours",
           "sun": "24 hours"
         },
-        "photo": "https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=900&q=80"
+        "photo": "https://www.esmadrid.com/sites/default/files/styles/content_type_full/public/recursosturisticos/alojamientos/hotel_urso_6.png?itok=Xn5BALuE"
       }
     ],
     "sources": [
@@ -3748,7 +3748,7 @@ export const madridNeighborhoodGuides = [
           "sat": "24 hours",
           "sun": "24 hours"
         },
-        "photo": "https://images.unsplash.com/photo-1555854877-bab0e564b8d5?auto=format&fit=crop&w=900&q=80"
+        "photo": "https://a.hwstatic.com/image/upload/f_auto,q_auto,h_720,c_limit,e_sharpen,e_improve,e_vibrance:60/propertyimages/8/83795/ohbhqjhitvwpqc14oim1.jpg"
       },
       {
         "id": "stay-bastardo",
@@ -3769,7 +3769,7 @@ export const madridNeighborhoodGuides = [
           "sat": "24 hours",
           "sun": "24 hours"
         },
-        "photo": "https://images.unsplash.com/photo-1555854877-bab0e564b8d5?auto=format&fit=crop&w=900&q=80"
+        "photo": "https://a.hwstatic.com/image/upload/f_auto,q_auto,h_720,c_limit,e_sharpen,e_improve,e_vibrance:60/propertyimages/2/295483/mvaxq6golqqla0fyh3jw.jpg"
       },
       {
         "id": "stay-onefam-madrid",
@@ -3790,7 +3790,7 @@ export const madridNeighborhoodGuides = [
           "sat": "24 hours",
           "sun": "24 hours"
         },
-        "photo": "https://images.unsplash.com/photo-1555854877-bab0e564b8d5?auto=format&fit=crop&w=900&q=80"
+        "photo": "https://a.hwstatic.com/image/upload/f_auto,q_auto,h_720,c_limit,e_sharpen,e_improve,e_vibrance:60/propertyimages/2/286369/exa4nsdjxhbyf1gdfk9l.jpg"
       }
     ],
     "sources": [
@@ -4364,7 +4364,7 @@ export const madridCitywideGuides = [
           "sat": "24 hours",
           "sun": "24 hours"
         },
-        "photo": "https://cf.bstatic.com/xdata/images/hotel/max1024x768/253695581.jpg?k=91850f32b01adac51407a238343ec660f96cf6fc8b5f65cf53e2d468b8dcf8f6&o=&hp=1"
+        "photo": "https://www.esmadrid.com/sites/default/files/styles/content_type_full/public/recursosturisticos/alojamientos/canalejas.jpg?itok=CiqEovlB"
       },
       {
         "id": "stay-mandarin-oriental-ritz",
@@ -4385,7 +4385,7 @@ export const madridCitywideGuides = [
           "sat": "24 hours",
           "sun": "24 hours"
         },
-        "photo": "https://upload.wikimedia.org/wikipedia/commons/6/62/Hotel_Ritz_%28Madrid%29_01.jpg"
+        "photo": "https://www.esmadrid.com/sites/default/files/styles/content_type_full/public/recursosturisticos/alojamientos/palm_court_02.jpg?itok=ZKcgkcTr"
       },
       {
         "id": "stay-only-you-boutique",
@@ -4406,7 +4406,7 @@ export const madridCitywideGuides = [
           "sat": "24 hours",
           "sun": "24 hours"
         },
-        "photo": "https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=900&q=80"
+        "photo": "https://www.onlyyouhotels.com/content/imgsxml/galerias/panel_fullheader/1/cabecera-web-oyb1439.jpg"
       },
       {
         "id": "stay-urso",
@@ -4427,7 +4427,7 @@ export const madridCitywideGuides = [
           "sat": "24 hours",
           "sun": "24 hours"
         },
-        "photo": "https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=900&q=80"
+        "photo": "https://www.esmadrid.com/sites/default/files/styles/content_type_full/public/recursosturisticos/alojamientos/hotel_urso_6.png?itok=Xn5BALuE"
       },
       {
         "id": "stay-edition",
@@ -4448,7 +4448,7 @@ export const madridCitywideGuides = [
           "sat": "24 hours",
           "sun": "24 hours"
         },
-        "photo": "https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=900&q=80"
+        "photo": "https://www.editionhotels.com/wp-content/uploads/2022/06/220503_EDT_Madrid2_16-1-scaled.jpg"
       },
       {
         "id": "stay-pestana-plaza-mayor",
@@ -4469,7 +4469,7 @@ export const madridCitywideGuides = [
           "sat": "24 hours",
           "sun": "24 hours"
         },
-        "photo": "https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=900&q=80"
+        "photo": "https://www.esmadrid.com/sites/default/files/styles/content_type_full/public/recursosturisticos/alojamientos/pmayor-rooftop-6.png?itok=NDid8Rwi"
       },
       {
         "id": "stay-seven-islas",
@@ -4490,7 +4490,7 @@ export const madridCitywideGuides = [
           "sat": "24 hours",
           "sun": "24 hours"
         },
-        "photo": "https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=900&q=80"
+        "photo": "https://www.esmadrid.com/sites/default/files/styles/content_type_full/public/recursosturisticos/alojamientos/Hotelsieteislas2_1396466553.194.png?itok=4YqGukxN"
       }
     ],
     "sources": [
@@ -4563,7 +4563,7 @@ export const madridCitywideGuides = [
           "sat": "24 hours",
           "sun": "24 hours"
         },
-        "photo": "https://images.unsplash.com/photo-1555854877-bab0e564b8d5?auto=format&fit=crop&w=900&q=80"
+        "photo": "https://www.esmadrid.com/sites/default/files/styles/content_type_full/public/recursosturisticos/alojamientos/hat1_1416304717.033.jpg?itok=Xb5nkS9E"
       },
       {
         "id": "stay-onefam-madrid",
@@ -4584,7 +4584,7 @@ export const madridCitywideGuides = [
           "sat": "24 hours",
           "sun": "24 hours"
         },
-        "photo": "https://images.unsplash.com/photo-1555854877-bab0e564b8d5?auto=format&fit=crop&w=900&q=80"
+        "photo": "https://a.hwstatic.com/image/upload/f_auto,q_auto,h_720,c_limit,e_sharpen,e_improve,e_vibrance:60/propertyimages/2/286369/exa4nsdjxhbyf1gdfk9l.jpg"
       },
       {
         "id": "stay-2060-newton",
@@ -4605,7 +4605,7 @@ export const madridCitywideGuides = [
           "sat": "24 hours",
           "sun": "24 hours"
         },
-        "photo": "https://images.unsplash.com/photo-1555854877-bab0e564b8d5?auto=format&fit=crop&w=900&q=80"
+        "photo": "https://a.hwstatic.com/image/upload/f_auto,q_auto,h_720,c_limit,e_sharpen,e_improve,e_vibrance:60/propertyimages/2/282289/89.jpg"
       },
       {
         "id": "stay-latroupe-prado",
@@ -4626,7 +4626,7 @@ export const madridCitywideGuides = [
           "sat": "24 hours",
           "sun": "24 hours"
         },
-        "photo": "https://images.unsplash.com/photo-1555854877-bab0e564b8d5?auto=format&fit=crop&w=900&q=80"
+        "photo": "https://a.hwstatic.com/image/upload/f_auto,q_auto,h_720,c_limit,e_sharpen,e_improve,e_vibrance:60/propertyimages/3/316771/nrxc9mgcinzkjcoy2d57.jpg"
       },
       {
         "id": "stay-ok-hostel",
@@ -4647,7 +4647,7 @@ export const madridCitywideGuides = [
           "sat": "24 hours",
           "sun": "24 hours"
         },
-        "photo": "https://images.unsplash.com/photo-1555854877-bab0e564b8d5?auto=format&fit=crop&w=900&q=80"
+        "photo": "https://a.hwstatic.com/image/upload/f_auto,q_auto,h_720,c_limit,e_sharpen,e_improve,e_vibrance:60/propertyimages/9/94332/nibn7kmmmvkunz0dsq6i.jpg"
       },
       {
         "id": "stay-bastardo",
@@ -4668,7 +4668,7 @@ export const madridCitywideGuides = [
           "sat": "24 hours",
           "sun": "24 hours"
         },
-        "photo": "https://images.unsplash.com/photo-1555854877-bab0e564b8d5?auto=format&fit=crop&w=900&q=80"
+        "photo": "https://a.hwstatic.com/image/upload/f_auto,q_auto,h_720,c_limit,e_sharpen,e_improve,e_vibrance:60/propertyimages/2/295483/mvaxq6golqqla0fyh3jw.jpg"
       },
       {
         "id": "stay-room00-chueca",
@@ -4689,7 +4689,7 @@ export const madridCitywideGuides = [
           "sat": "24 hours",
           "sun": "24 hours"
         },
-        "photo": "https://images.unsplash.com/photo-1555854877-bab0e564b8d5?auto=format&fit=crop&w=900&q=80"
+        "photo": "https://a.hwstatic.com/image/upload/f_auto,q_auto,h_720,c_limit,e_sharpen,e_improve,e_vibrance:60/propertyimages/8/83795/ohbhqjhitvwpqc14oim1.jpg"
       }
     ],
     "sources": [
