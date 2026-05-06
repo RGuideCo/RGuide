@@ -370,7 +370,7 @@ Required stop-level fields:
 - `id`: stable, readable place ID, usually `{neighborhood}-{place-name}`.
 - `name`: current public name from official site or Google Maps.
 - `coordinates`: `[latitude, longitude]`. This app uses latitude first.
-- `description`: 1-3 sentences explaining why the place belongs in this exact guide.
+- `description`: usually 2-4 substantial sentences explaining why the place belongs in this exact guide, what the visitor experiences, and the practical caveat or best-use context.
 - `hours`: verified from Google Maps, official site, or venue platform. Use structured day keys when possible.
 
 Conditional stop-level fields:
@@ -712,7 +712,10 @@ Stop descriptions:
 - Lead with why this stop is included.
 - Add the concrete thing a visitor will experience.
 - Add a useful caveat, timing note, or audience fit when relevant.
-- Keep most stops to 1-3 sentences.
+- Keep most stops to 2-4 fleshed-out sentences. One sentence is acceptable only for simple official landmarks, tiny nested stops, or placeholder-free personal lists where the surrounding guide already carries the context.
+- The first sentence should define the stop's role in this exact guide, not merely describe what the place is.
+- The middle sentence or sentences should name the source-backed draw: dish, room style, collection, route fit, social energy, sleep tradeoff, view, booking posture, or neighborhood logic.
+- The final sentence should add practical use: when to go, who it suits, what to book, what to avoid, or how it fits nearby stops.
 
 Good Food pattern:
 
