@@ -67,6 +67,7 @@ export interface ListSource {
 
 export interface GuideStop {
   id: string;
+  poiId?: string;
   name: string;
   coordinates: [number, number];
   description: string;

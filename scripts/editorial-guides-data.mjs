@@ -8,6 +8,119 @@ const LISTS_PATH = path.join(ROOT, "src/data/lists.ts");
 const moduleCache = new Map();
 const VALID_CATEGORIES = new Set(["Food", "Nightlife", "Nature", "Culture", "Stay", "Activities"]);
 
+function slugify(value) {
+  return String(value ?? "")
+    .normalize("NFKD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .toLowerCase()
+    .replace(/&/g, " and ")
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "");
+}
+
+function normalizeCoordinates(coordinates) {
+  if (!Array.isArray(coordinates) || coordinates.length < 2) {
+    return null;
+  }
+
+  const lat = Number(coordinates[0]);
+  const lng = Number(coordinates[1]);
+
+  if (!Number.isFinite(lat) || !Number.isFinite(lng)) {
+    return null;
+  }
+
+  return [Number(lat.toFixed(6)), Number(lng.toFixed(6))];
+}
+
+function buildPoiId(list, stop) {
+  const location = list.location ?? {};
+  const parts = [
+    "poi",
+    location.country,
+    location.city,
+    stop.name,
+  ]
+    .map(slugify)
+    .filter(Boolean);
+
+  return parts.join("-");
+}
+
+function visitStops(list, callback, stops = list.stops ?? []) {
+  for (const stop of stops) {
+    callback(stop, list);
+    if (Array.isArray(stop.places)) {
+      visitStops(list, callback, stop.places);
+    }
+  }
+}
+
+function cloneStopWithPoi(stop, list, poiById) {
+  const poiId = stop.poiId || buildPoiId(list, stop);
+  const poi = poiById.get(poiId);
+  const nextStop = {
+    ...stop,
+    poiId,
+    photo: poi?.photo || stop.photo,
+  };
+
+  if (Array.isArray(stop.places)) {
+    nextStop.places = stop.places.map((place) => cloneStopWithPoi(place, list, poiById));
+  }
+
+  return nextStop;
+}
+
+export function collectEditorialPois(lists) {
+  const poiById = new Map();
+
+  for (const list of lists) {
+    visitStops(list, (stop) => {
+      const poiId = stop.poiId || buildPoiId(list, stop);
+      const existing = poiById.get(poiId);
+      const coordinates = normalizeCoordinates(stop.coordinates);
+      const guideIds = new Set(existing?.guideIds ?? []);
+      guideIds.add(list.id);
+      const categories = new Set(existing?.categories ?? []);
+      categories.add(list.category);
+      const slugs = new Set(existing?.guideSlugs ?? []);
+      slugs.add(list.slug);
+
+      poiById.set(poiId, {
+        id: poiId,
+        name: existing?.name || stop.name,
+        country: existing?.country || list.location?.country || null,
+        city: existing?.city || list.location?.city || null,
+        neighborhood: existing?.neighborhood || list.location?.neighborhood || null,
+        coordinates: existing?.coordinates || coordinates,
+        photo: existing?.photo || stop.photo || null,
+        guideIds,
+        guideSlugs: slugs,
+        categories,
+      });
+    });
+  }
+
+  return [...poiById.values()]
+    .map((poi) => ({
+      ...poi,
+      guideIds: [...poi.guideIds].sort(),
+      guideSlugs: [...poi.guideSlugs].sort(),
+      categories: [...poi.categories].sort(),
+    }))
+    .sort((a, b) => a.id.localeCompare(b.id));
+}
+
+export function addPoiReferencesToGuides(lists, pois = collectEditorialPois(lists)) {
+  const poiById = new Map(pois.map((poi) => [poi.id, poi]));
+
+  return lists.map((list) => ({
+    ...list,
+    stops: (list.stops ?? []).map((stop) => cloneStopWithPoi(stop, list, poiById)),
+  }));
+}
+
 function transpileTs(filePath) {
   const source = fs.readFileSync(filePath, "utf8");
   const result = ts.transpileModule(source, {
@@ -328,14 +441,105 @@ create index if not exists editorial_guides_neighborhood_idx on public.editorial
 create index if not exists editorial_guides_list_gin_idx on public.editorial_guides using gin (list);`;
 }
 
-export function buildEditorialGuidesInsertSql(lists) {
-  assertValidEditorialGuides(lists);
+export function buildEditorialPoisSchemaSql() {
+  return `create table if not exists public.editorial_pois (
+  id text primary key,
+  name text not null,
+  country text,
+  city text,
+  neighborhood text,
+  coordinates jsonb,
+  photo text,
+  guide_ids text[] not null default '{}',
+  guide_slugs text[] not null default '{}',
+  categories text[] not null default '{}',
+  created_at timestamptz not null default now(),
+  updated_at timestamptz not null default now()
+);
 
-  if (!lists.length) {
+alter table public.editorial_pois enable row level security;
+
+do $$
+begin
+  create trigger editorial_pois_set_updated_at
+  before update on public.editorial_pois
+  for each row
+  execute function public.set_updated_at();
+exception
+  when duplicate_object then null;
+end;
+$$;
+
+do $$
+begin
+  create policy "Editorial POIs are readable"
+  on public.editorial_pois
+  for select
+  using (true);
+exception
+  when duplicate_object then null;
+end;
+$$;
+
+create index if not exists editorial_pois_country_city_idx on public.editorial_pois (country, city);
+create index if not exists editorial_pois_name_idx on public.editorial_pois (name);
+create index if not exists editorial_pois_categories_gin_idx on public.editorial_pois using gin (categories);`;
+}
+
+function sqlTextArray(values) {
+  const items = (values ?? []).map((value) => `"${String(value).replace(/\\/g, "\\\\").replace(/"/g, '\\"')}"`);
+  return `'{${items.join(",")}}'`;
+}
+
+export function buildEditorialPoisInsertSql(pois) {
+  if (!pois.length) {
+    return "-- No editorial POIs selected.";
+  }
+
+  const rows = pois
+    .map((poi) => {
+      const coordinates = poi.coordinates ? `'${JSON.stringify(poi.coordinates).replace(/'/g, "''")}'::jsonb` : "null";
+      return `  (${sqlString(poi.id)}, ${sqlString(poi.name)}, ${sqlString(poi.country)}, ${sqlString(poi.city)}, ${sqlString(poi.neighborhood)}, ${coordinates}, ${sqlString(poi.photo)}, ${sqlTextArray(poi.guideIds)}, ${sqlTextArray(poi.guideSlugs)}, ${sqlTextArray(poi.categories)})`;
+    })
+    .join(",\n");
+
+  return `insert into public.editorial_pois (
+  id,
+  name,
+  country,
+  city,
+  neighborhood,
+  coordinates,
+  photo,
+  guide_ids,
+  guide_slugs,
+  categories
+)
+values
+${rows}
+on conflict (id) do update set
+  name = excluded.name,
+  country = excluded.country,
+  city = excluded.city,
+  neighborhood = excluded.neighborhood,
+  coordinates = excluded.coordinates,
+  photo = coalesce(public.editorial_pois.photo, excluded.photo),
+  guide_ids = excluded.guide_ids,
+  guide_slugs = excluded.guide_slugs,
+  categories = excluded.categories;`;
+}
+
+export function buildEditorialGuidesInsertSql(lists) {
+  const pois = collectEditorialPois(lists);
+  const guidesWithPoiReferences = addPoiReferencesToGuides(lists, pois);
+
+  assertValidEditorialGuides(guidesWithPoiReferences);
+
+  if (!guidesWithPoiReferences.length) {
     return "-- No editorial guides selected.";
   }
 
-  const rows = lists
+  const rows = guidesWithPoiReferences
     .map((list) => {
       const json = JSON.stringify(list).replace(/'/g, "''");
       return `  (${sqlString(list.id)}, ${sqlString(list.slug)}, ${sqlString(list.category)}, ${sqlString(list.location.country)}, ${sqlString(list.location.city)}, ${sqlString(list.location.neighborhood)}, '${json}'::jsonb)`;
@@ -364,11 +568,14 @@ on conflict (id) do update set
 
 export function buildEditorialGuidesSql(lists, { includeSchema = true } = {}) {
   const sections = [];
+  const pois = collectEditorialPois(lists);
 
   if (includeSchema) {
     sections.push(buildEditorialGuidesSchemaSql());
+    sections.push(buildEditorialPoisSchemaSql());
   }
 
+  sections.push(buildEditorialPoisInsertSql(pois));
   sections.push(buildEditorialGuidesInsertSql(lists));
 
   return `-- Generated by scripts/export-editorial-guides-sql.mjs

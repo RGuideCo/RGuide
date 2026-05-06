@@ -1,13 +1,37 @@
 import { NextResponse } from "next/server";
 import pg from "pg";
 
-import type { MapList } from "@/types";
+import type { GuideStop, MapList } from "@/types";
 
 export const dynamic = "force-dynamic";
 export const runtime = "nodejs";
 
 interface EditorialGuideRow {
   list: MapList;
+}
+
+interface EditorialPoiRow {
+  id: string;
+  photo: string | null;
+}
+
+function applyPoiPhotos(guides: MapList[], pois: EditorialPoiRow[]) {
+  const photoByPoiId = new Map(
+    pois
+      .filter((poi) => poi.photo)
+      .map((poi) => [poi.id, poi.photo as string]),
+  );
+
+  const applyStopPhoto = (stop: GuideStop): GuideStop => ({
+    ...stop,
+    photo: stop.poiId ? photoByPoiId.get(stop.poiId) ?? stop.photo : stop.photo,
+    places: stop.places?.map(applyStopPhoto),
+  });
+
+  return guides.map((guide) => ({
+    ...guide,
+    stops: guide.stops.map(applyStopPhoto),
+  }));
 }
 
 function getDatabaseUrl() {
@@ -43,9 +67,18 @@ export async function GET() {
         "order by category asc, country asc nulls last, city asc nulls last, neighborhood asc nulls last, list->>'title' asc",
       ].join(" "),
     );
+    let poiRows: EditorialPoiRow[] = [];
+    try {
+      const result = await client.query<EditorialPoiRow>(
+        "select id, photo from public.editorial_pois",
+      );
+      poiRows = result.rows;
+    } catch {
+      poiRows = [];
+    }
 
     return NextResponse.json(
-      { guides: rows.map((row) => row.list) },
+      { guides: applyPoiPhotos(rows.map((row) => row.list), poiRows) },
       {
         headers: {
           "Cache-Control": "no-store",

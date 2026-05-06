@@ -4,8 +4,11 @@ import process from "process";
 import pg from "pg";
 
 import {
+  buildEditorialPoisInsertSql,
+  buildEditorialPoisSchemaSql,
   buildEditorialGuidesInsertSql,
   buildEditorialGuidesSchemaSql,
+  collectEditorialPois,
   describeEditorialGuideFilters,
   filterEditorialGuides,
   hasEditorialGuideFilters,
@@ -121,6 +124,7 @@ const client = new pg.Client({
 try {
   await client.connect();
   await client.query(buildEditorialGuidesSchemaSql());
+  await client.query(buildEditorialPoisSchemaSql());
 
   await client.query("begin");
 
@@ -135,6 +139,7 @@ try {
     );
   }
 
+  await client.query(buildEditorialPoisInsertSql(collectEditorialPois(selectedGuides)));
   await client.query(buildEditorialGuidesInsertSql(selectedGuides));
   await client.query("commit");
 

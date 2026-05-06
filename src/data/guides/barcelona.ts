@@ -4458,7 +4458,8 @@ export const barcelonaCoreGuides = [
           "fri": "5:00 PM-3:00 AM",
           "sat": "4:00 PM-3:00 AM",
           "sun": "4:00 PM-12:00 AM"
-        }
+        },
+        "photo": "https://garagebeer.co/wp-content/uploads/2025/04/SOUP_DIPA_RENDER_2025.jpg"
       },
       {
         "id": "eixample-bodega-joan",
