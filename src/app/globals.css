@@ -146,6 +146,143 @@ textarea:focus-visible {
   opacity: 0.78;
 }
 
+.guide-chrome-wipe {
+  clip-path: inset(0 0 0 0);
+  transform: translateZ(0);
+  transform-origin: left center;
+  backface-visibility: hidden;
+}
+
+.guide-chrome-wipe--retract {
+  animation: guide-chrome-wipe-retract 560ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  will-change: clip-path;
+}
+
+.guide-chrome-wipe--expand {
+  clip-path: none;
+  animation: guide-chrome-wipe-expand 560ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  will-change: transform;
+}
+
+.guide-chrome-title--retract {
+  animation: guide-chrome-title-retract 560ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+.guide-chrome-title--expand {
+  animation: guide-chrome-title-expand 560ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+.guide-chrome-meta--retract {
+  animation: guide-chrome-meta-retract 560ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+.guide-chrome-meta--expand {
+  animation: guide-chrome-meta-expand 560ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+.guide-chrome-chevron--retract {
+  animation: guide-chrome-chevron-retract 560ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+.guide-chrome-chevron--expand {
+  animation: guide-chrome-chevron-expand 560ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+@keyframes guide-chrome-wipe-retract {
+  from {
+    clip-path: inset(0 0 0 0);
+  }
+
+  to {
+    clip-path: inset(0 calc(100% - 4px) 0 0);
+  }
+}
+
+@keyframes guide-chrome-wipe-expand {
+  from {
+    transform: translateZ(0) scaleX(0.012);
+  }
+
+  to {
+    transform: translateZ(0) scaleX(1);
+  }
+}
+
+@keyframes guide-chrome-title-retract {
+  0%,
+  72% {
+    color: rgb(255, 255, 255);
+  }
+
+  100% {
+    color: rgb(15, 23, 42);
+  }
+}
+
+@keyframes guide-chrome-title-expand {
+  0%,
+  16% {
+    color: rgb(15, 23, 42);
+  }
+
+  100% {
+    color: rgb(255, 255, 255);
+  }
+}
+
+@keyframes guide-chrome-meta-retract {
+  0%,
+  72% {
+    color: rgba(255, 255, 255, 0.75);
+  }
+
+  100% {
+    color: rgb(100, 116, 139);
+  }
+}
+
+@keyframes guide-chrome-meta-expand {
+  0%,
+  18% {
+    color: rgb(100, 116, 139);
+  }
+
+  100% {
+    color: rgba(255, 255, 255, 0.75);
+  }
+}
+
+@keyframes guide-chrome-chevron-retract {
+  0%,
+  72% {
+    color: rgba(255, 255, 255, 0.8);
+  }
+
+  100% {
+    color: rgb(148, 163, 184);
+  }
+}
+
+@keyframes guide-chrome-chevron-expand {
+  0%,
+  78% {
+    color: rgb(148, 163, 184);
+  }
+
+  100% {
+    color: rgba(255, 255, 255, 0.8);
+  }
+}
+
+.guide-expand-panel {
+  contain: layout style;
+}
+
+.guide-expand-panel-content {
+  backface-visibility: hidden;
+  transform: translateZ(0);
+}
+
 .expanded-guide-stop-card {
   position: relative;
   isolation: isolate;

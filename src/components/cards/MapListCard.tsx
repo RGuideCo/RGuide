@@ -1,6 +1,6 @@
 "use client";
 
-import { Fragment, useEffect, useState } from "react";
+import { Fragment, useEffect, useLayoutEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -24,6 +24,11 @@ interface MapListCardProps {
   forceExpandStopId?: string | null;
   forceExpandStopNonce?: number;
   expanded?: boolean;
+  preserveExpandedChrome?: boolean;
+  retractExpandedChrome?: boolean;
+  expandExpandedChrome?: boolean;
+  deferExpandedContent?: boolean;
+  onExpandChromeComplete?: (list: MapList) => void;
   expandable?: boolean;
   fillPane?: boolean;
   onToggleExpand?: (list: MapList) => void;
@@ -178,6 +183,11 @@ export function MapListCard({
   forceExpandStopId,
   forceExpandStopNonce = 0,
   expanded = false,
+  preserveExpandedChrome = false,
+  retractExpandedChrome = false,
+  expandExpandedChrome = false,
+  deferExpandedContent = false,
+  onExpandChromeComplete,
   expandable = false,
   fillPane = false,
   onToggleExpand,
@@ -213,6 +223,11 @@ export function MapListCard({
   const locationSubtitle = buildLocationSubtitle(list);
   const guideMeta = buildGuideMeta(list);
   const visibleUpvotes = list.upvotes + (hasVoted ? 1 : 0);
+  const expandedChrome = expanded || preserveExpandedChrome;
+  const preservingListChrome = preserveExpandedChrome && !fillPane;
+  const retractingListChrome = preservingListChrome && retractExpandedChrome;
+  const expandingListChrome = expandExpandedChrome && expandedChrome;
+  const deferHeavyExpandedContent = expanded && deferExpandedContent;
   const [expandedStopIds, setExpandedStopIds] = useState<string[]>([]);
   const [expandedPlaceIds, setExpandedPlaceIds] = useState<string[]>([]);
   const [itineraryPickerTarget, setItineraryPickerTarget] = useState<null | { kind: "list" | "stop"; key: string }>(null);
@@ -236,7 +251,7 @@ export function MapListCard({
   const sourceSummary = allSources.length ? buildSourceSummary(allSources) : null;
   const [sourcesPinnedOpen, setSourcesPinnedOpen] = useState(false);
   const sourcesOpen = Boolean(allSources.length) && sourcesPinnedOpen;
-  const itineraryStopGroups = isItineraryGuide
+  const itineraryStopGroups = isItineraryGuide && !deferHeavyExpandedContent
     ? list.stops.reduce<Array<{ dateKey: string; stops: Array<{ stop: MapList["stops"][number]; index: number }> }>>(
         (groups, stop, index) => {
           const dateKey = getItineraryStopDate(list, stop, index);
@@ -373,8 +388,8 @@ export function MapListCard({
     setMounted(true);
   }, []);
 
-  useEffect(() => {
-    if (!expanded || !fillPane || !list.stops.length) {
+  useLayoutEffect(() => {
+    if (!expanded || !fillPane || !list.stops.length || deferHeavyExpandedContent) {
       setStopListEndPadding(0);
       setStopListMaxScrollTop(null);
       return;
@@ -404,21 +419,24 @@ export function MapListCard({
       setStopListMaxScrollTop(Math.max(0, Math.ceil(sentinelTop - STOP_SCROLL_TOP_INSET)));
     };
 
-    const scheduleUpdate = () => {
-      requestAnimationFrame(updateEndPadding);
-    };
-
-    scheduleUpdate();
-    const updateTimeouts = [180, 360].map((delay) => window.setTimeout(updateEndPadding, delay));
+    updateEndPadding();
+    const updateFrame = window.requestAnimationFrame(updateEndPadding);
+    const updateTimeouts = [360, 560].map((delay) => window.setTimeout(updateEndPadding, delay));
     window.addEventListener("resize", updateEndPadding);
     return () => {
+      window.cancelAnimationFrame(updateFrame);
       updateTimeouts.forEach((timeoutId) => window.clearTimeout(timeoutId));
       window.removeEventListener("resize", updateEndPadding);
     };
-  }, [expanded, expandedStopIds, fillPane, list.id, list.stops]);
+  }, [deferHeavyExpandedContent, expanded, expandedStopIds, fillPane, list.id, list.stops]);
 
   useEffect(() => {
-    if (!expanded || !pendingScrollStopId || !expandedStopIds.includes(pendingScrollStopId)) {
+    if (
+      !expanded ||
+      deferHeavyExpandedContent ||
+      !pendingScrollStopId ||
+      !expandedStopIds.includes(pendingScrollStopId)
+    ) {
       return;
     }
 
@@ -432,7 +450,7 @@ export function MapListCard({
       scrollTimeouts.forEach((timeoutId) => window.clearTimeout(timeoutId));
       window.clearTimeout(clearPendingTimeout);
     };
-  }, [expanded, expandedStopIds, pendingScrollStopId]);
+  }, [deferHeavyExpandedContent, expanded, expandedStopIds, pendingScrollStopId]);
 
   const getSourceIconUrl = (url: string) => {
     try {
@@ -687,11 +705,13 @@ export function MapListCard({
       className={`group surface relative overflow-hidden transition-[background-color,border-color,box-shadow,transform] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] ${
         fillPane && expanded ? "flex h-full max-h-full min-h-0 flex-col !rounded-tr-lg !rounded-l-none !rounded-b-none !border-0 !shadow-none lg:!rounded-l-none lg:!rounded-r-lg" : ""
       } ${
-        expanded
-          ? "border border-slate-300 !bg-slate-50 px-3 pb-3 pt-0"
+        expandedChrome
+          ? preservingListChrome
+            ? "border border-slate-300 !bg-slate-50 p-3"
+            : "border border-slate-300 !bg-slate-50 px-3 pb-3 pt-0"
           : "collapsed-guide-card p-3 hover:border-slate-950/30 hover:shadow-[0_18px_34px_rgba(23,23,23,0.13)] focus-within:border-slate-950/30 focus-within:shadow-[0_18px_34px_rgba(23,23,23,0.13)]"
       }`}
-      style={!expanded ? ({ "--guide-accent": categoryStyle.mapColor, borderColor: categoryStyle.mapColor } as React.CSSProperties) : undefined}
+      style={!expandedChrome ? ({ "--guide-accent": categoryStyle.mapColor, borderColor: categoryStyle.mapColor } as React.CSSProperties) : undefined}
       onMouseEnter={() => onHoverStart?.(list)}
       onMouseLeave={() => {
         onStopHoverChange?.(null);
@@ -703,7 +723,7 @@ export function MapListCard({
         onHoverEnd?.();
       }}
     >
-      {!expanded ? (
+      {!expandedChrome ? (
         <>
           <div
             className="pointer-events-none absolute left-0 top-3 z-20 h-[calc(100%-1.5rem)] w-1 origin-left rounded-r-full opacity-75 transition-[width,opacity] duration-300 group-hover:w-1.5 group-hover:opacity-100 group-focus-within:w-1.5 group-focus-within:opacity-100"
@@ -716,22 +736,48 @@ export function MapListCard({
         </>
       ) : null}
       <div
-        className={`relative z-10 flex items-center justify-between gap-3 overflow-hidden ${
-          expanded
-            ? `sticky top-0 z-10 -mx-3 min-h-14 border-b px-3 py-2 text-white backdrop-blur ${
+        className={`relative z-10 flex items-center justify-between gap-3 ${preservingListChrome ? "overflow-visible" : "overflow-hidden"} ${
+          expandedChrome && !preservingListChrome
+            ? `${expanded ? "sticky top-0" : ""} z-10 -mx-3 min-h-14 border-b px-3 py-2 text-white backdrop-blur ${
                 fillPane ? "" : "-mt-3"
               }`
             : ""
         }`}
         style={
-          expanded
+          expandedChrome && !preservingListChrome
             ? {
-                backgroundColor: categoryStyle.mapColor,
+                backgroundColor: expandingListChrome ? "rgb(248, 250, 252)" : categoryStyle.mapColor,
                 borderColor: categoryStyle.mapColor,
               }
             : undefined
         }
       >
+        {expandingListChrome && !preservingListChrome ? (
+          <span
+            className="guide-chrome-wipe guide-chrome-wipe--expand pointer-events-none absolute inset-0 z-0"
+            style={{ backgroundColor: categoryStyle.mapColor }}
+            onAnimationEnd={(event) => {
+              if (event.animationName === "guide-chrome-wipe-expand") {
+                onExpandChromeComplete?.(list);
+              }
+            }}
+            aria-hidden="true"
+          />
+        ) : null}
+        {preservingListChrome ? (
+          <span
+            className={`guide-chrome-wipe pointer-events-none absolute -inset-x-3 -bottom-3 -top-3 z-0 ${
+              retractingListChrome ? "guide-chrome-wipe--retract" : expandingListChrome ? "guide-chrome-wipe--expand" : ""
+            }`}
+            style={{ backgroundColor: categoryStyle.mapColor }}
+            onAnimationEnd={(event) => {
+              if (event.animationName === "guide-chrome-wipe-expand") {
+                onExpandChromeComplete?.(list);
+              }
+            }}
+            aria-hidden="true"
+          />
+        ) : null}
         <div className="relative z-10 min-w-0 flex-1">
           {expandable ? (
             <div className="flex w-full items-center justify-between gap-2 text-left">
@@ -749,8 +795,8 @@ export function MapListCard({
                 aria-controls={`guide-panel-${list.id}`}
                 className="min-w-0 flex-1 cursor-pointer select-text"
               >
-                <h3 className={`min-w-0 text-base font-semibold leading-5 transition-colors ${expanded ? "text-white" : "text-slate-900 group-hover:text-slate-950"}`}>{list.title}</h3>
-                <span className={`mt-0.5 block truncate font-mono text-[10px] font-medium uppercase tracking-[0.1em] ${expanded ? "text-white/75" : "text-slate-500"}`}>
+                <h3 className={`min-w-0 text-base font-semibold leading-5 transition-colors ${expandedChrome ? "text-white" : "text-slate-900 group-hover:text-slate-950"} ${retractingListChrome ? "guide-chrome-title--retract" : ""} ${expandingListChrome ? "guide-chrome-title--expand" : ""}`}>{list.title}</h3>
+                <span className={`mt-0.5 block truncate font-mono text-[10px] font-medium uppercase tracking-[0.1em] ${expandedChrome ? "text-white/75" : "text-slate-500"} ${retractingListChrome ? "guide-chrome-meta--retract" : ""} ${expandingListChrome ? "guide-chrome-meta--expand" : ""}`}>
                   {guideMeta}
                 </span>
               </div>
@@ -764,7 +810,13 @@ export function MapListCard({
                 title={`${expanded ? "Collapse" : "Expand"} ${list.title}`}
               >
                 <ChevronDown
-                  className={`h-4 w-4 shrink-0 transition-transform duration-300 ${expanded ? "rotate-180 text-white" : "text-slate-400 group-hover:translate-y-0.5 group-hover:text-slate-900 group-focus-within:translate-y-0.5 group-focus-within:text-slate-900"}`}
+                  className={`h-4 w-4 shrink-0 transition-transform duration-300 ${
+                    expanded
+                      ? `rotate-180 text-white ${expandingListChrome ? "guide-chrome-chevron--expand" : ""}`
+                      : expandedChrome
+                        ? `text-white/80 ${retractingListChrome ? "guide-chrome-chevron--retract" : expandingListChrome ? "guide-chrome-chevron--expand" : ""}`
+                        : "text-slate-400 group-hover:translate-y-0.5 group-hover:text-slate-900 group-focus-within:translate-y-0.5 group-focus-within:text-slate-900"
+                  }`}
                 />
               </button>
             </div>
@@ -870,6 +922,8 @@ export function MapListCard({
                 <img
                   src={getSourceIconUrl(source.url)}
                   alt=""
+                  loading="lazy"
+                  decoding="async"
                   className="h-3 w-3"
                 />
               </span>
@@ -887,24 +941,17 @@ export function MapListCard({
         </div>
       ) : null}
 
-      {expandable && !expanded ? (
-        <p className="mt-0 max-h-0 overflow-hidden px-3 text-xs leading-5 text-slate-500 opacity-0 transition-[max-height,margin,opacity] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:mt-2 group-hover:max-h-10 group-hover:opacity-100 group-focus-within:mt-2 group-focus-within:max-h-10 group-focus-within:opacity-100">
-          {list.description}
-        </p>
-      ) : null}
-
       {expandable ? (
         <div
           id={`guide-panel-${list.id}`}
-          className={`grid transition-[grid-template-rows,opacity,margin,background-color] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] ${
+          className={`guide-expand-panel grid transition-[grid-template-rows,opacity,margin,background-color] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] ${
             expanded ? "mt-2 grid-rows-[1fr] opacity-100" : "mt-0 grid-rows-[0fr] opacity-0"
           } ${fillPane && expanded ? "min-h-0 flex-1 basis-0" : ""} ${
             expanded ? "relative -mx-3 bg-slate-50 px-3" : ""
           }`}
         >
           <div
-            key={`${list.id}-${expanded ? "expanded" : "collapsed"}`}
-            className={`${fillPane && expanded ? "flex min-h-0 flex-1 flex-col overflow-hidden pb-3" : "overflow-hidden"}`}
+            className={`guide-expand-panel-content ${fillPane && expanded ? "flex min-h-0 flex-1 flex-col overflow-hidden pb-3" : "overflow-hidden"}`}
           >
             <div className={`${fillPane && expanded ? "flex min-h-0 flex-1 flex-col" : ""} relative pt-2`}>
               <p className="guide-content-cascade-item relative z-10 text-[11px] font-medium uppercase tracking-[0.2em] text-slate-500">
@@ -916,7 +963,7 @@ export function MapListCard({
               >
                 {list.description}
               </p>
-              {list.stops.length ? (
+              {list.stops.length && !deferHeavyExpandedContent ? (
                 <div
                   className="guide-content-cascade-item relative z-10 mt-3"
                   style={{ animationDelay: "65ms" }}
@@ -938,7 +985,13 @@ export function MapListCard({
                           aria-label={`Open ${stop.name}`}
                           title={stop.name}
                         >
-                          <img src={stopPhoto} alt="" className="h-full w-full object-cover" />
+                          <img
+                            src={stopPhoto}
+                            alt=""
+                            loading="lazy"
+                            decoding="async"
+                            className="h-full w-full object-cover"
+                          />
                           <span className="ordered-poi-photo-index">{index + 1}</span>
                         </button>
                       );
@@ -972,6 +1025,8 @@ export function MapListCard({
                         <img
                           src={getSourceIconUrl(source.url)}
                           alt=""
+                          loading="lazy"
+                          decoding="async"
                           className="h-3 w-3"
                         />
                       </span>
@@ -987,7 +1042,7 @@ export function MapListCard({
                   />
                 </button>
               ) : null}
-              {list.stops.length ? (
+              {list.stops.length && !deferHeavyExpandedContent ? (
                 <>
                   <p
                     className="guide-content-cascade-item relative z-10 mt-4 text-[11px] font-medium uppercase tracking-[0.2em] text-slate-500"
@@ -1157,7 +1212,7 @@ export function MapListCard({
                         </div>
                         <div
                           id={`guide-stop-panel-${list.id}-${stop.id}`}
-                          className={`grid transition-[grid-template-rows,opacity] duration-150 ease-out ${
+                          className={`guide-stop-panel grid transition-[grid-template-rows,opacity] duration-150 ease-out ${
                             isStopExpanded ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0"
                           }`}
                         >
@@ -1174,7 +1229,13 @@ export function MapListCard({
                                   aria-label={`Open photo of ${stop.name}`}
                                   title={`Open photo of ${stop.name}`}
                                 >
-                                  <img src={stopPhoto} alt="" className="h-full w-full object-cover" />
+                                  <img
+                                    src={stopPhoto}
+                                    alt=""
+                                    loading="lazy"
+                                    decoding="async"
+                                    className="h-full w-full object-cover"
+                                  />
                                 </button>
                                 <p className="min-w-0 text-sm leading-5 text-slate-600">{stopContent.summary}</p>
                               </div>
@@ -1248,7 +1309,7 @@ export function MapListCard({
                                           </button>
                                         </div>
                                         <div
-                                          className={`grid transition-[grid-template-rows,opacity,margin] duration-150 ease-out ${
+                                          className={`guide-stop-panel grid transition-[grid-template-rows,opacity,margin] duration-150 ease-out ${
                                             isPlaceExpanded
                                               ? "mt-1 grid-rows-[1fr] opacity-100"
                                               : "mt-0 grid-rows-[0fr] opacity-0"
@@ -1266,7 +1327,13 @@ export function MapListCard({
                                                 aria-label={`Open photo of ${place.name}`}
                                                 title={`Open photo of ${place.name}`}
                                               >
-                                                <img src={placePhoto} alt="" className="h-full w-full object-cover" />
+                                                <img
+                                                  src={placePhoto}
+                                                  alt=""
+                                                  loading="lazy"
+                                                  decoding="async"
+                                                  className="h-full w-full object-cover"
+                                                />
                                               </button>
                                               <p className="min-w-0 text-xs leading-4 text-slate-600">{place.description}</p>
                                             </div>
@@ -1380,10 +1447,14 @@ export function MapListCard({
       ) : null}
 
       <div
-        className={`mt-0 max-h-0 overflow-hidden opacity-0 translate-y-1 pointer-events-none transition-[max-height,opacity,transform,margin-top] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] ${
-          expanded
-            ? "mt-2.5 max-h-none overflow-visible opacity-100 translate-y-0 pointer-events-auto"
-            : ""
+        className={`${
+          expanded && fillPane
+            ? "mt-2.5 max-h-20 overflow-visible opacity-100 translate-y-0 pointer-events-auto transition-[opacity,transform] duration-200 ease-out"
+            : `mt-0 max-h-0 overflow-hidden opacity-0 translate-y-1 pointer-events-none transition-[max-height,opacity,transform,margin-top] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] ${
+                expanded
+                  ? "mt-2.5 max-h-20 overflow-visible opacity-100 translate-y-0 pointer-events-auto"
+                  : ""
+              }`
         } ${expanded ? "bg-slate-50" : ""}`}
       >
         <div>
@@ -1424,6 +1495,8 @@ export function MapListCard({
                         <img
                           src={getSourceIconUrl(source.url)}
                           alt={source.name}
+                          loading="lazy"
+                          decoding="async"
                           className="h-4 w-4 rounded-full"
                         />
                       </span>
@@ -1495,6 +1568,8 @@ export function MapListCard({
                 <img
                   src={getSourceIconUrl(source.url)}
                   alt={source.name}
+                  loading="lazy"
+                  decoding="async"
                   className="h-4 w-4 rounded-full"
                 />
                 <span className="min-w-0 flex-1 truncate">{source.name}</span>
@@ -1526,6 +1601,7 @@ export function MapListCard({
                     <img
                       src={photoPreview.src}
                       alt={photoPreview.title}
+                      decoding="async"
                       className="max-h-[78vh] w-full object-contain"
                     />
                     <div className="border-t border-white/10 bg-slate-950 px-4 py-3">

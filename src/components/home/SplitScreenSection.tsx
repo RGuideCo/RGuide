@@ -18,7 +18,7 @@ import {
   X,
 } from "lucide-react";
 import Link from "next/link";
-import { useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
+import { startTransition, useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 import type { PointerEvent as ReactPointerEvent, ReactNode } from "react";
 
 import { MapListCard } from "@/components/cards/MapListCard";
@@ -117,6 +117,17 @@ type MapViewportInsets = {
   bottom: number;
   left: number;
 };
+
+const GUIDE_CHROME_WIPE_MS = 560;
+const GUIDE_OPEN_EXPAND_START_MS = GUIDE_CHROME_WIPE_MS - 48;
+const GUIDE_LAYOUT_MOTION_MS = 520;
+const GUIDE_LAYOUT_OPEN_SIDEWAYS_MS = 560;
+const GUIDE_LAYOUT_OPEN_UP_MS = 500;
+const GUIDE_LAYOUT_OPEN_UP_START_MS = GUIDE_LAYOUT_OPEN_SIDEWAYS_MS - 72;
+const GUIDE_LAYOUT_OPEN_TOTAL_MS = GUIDE_LAYOUT_OPEN_UP_START_MS + GUIDE_LAYOUT_OPEN_UP_MS;
+const GUIDE_LAYOUT_CLOSE_SIDEWAYS_START_MS = 260;
+const GUIDE_LAYOUT_CLOSE_TOTAL_MS = GUIDE_LAYOUT_CLOSE_SIDEWAYS_START_MS + GUIDE_LAYOUT_OPEN_SIDEWAYS_MS;
+const GUIDE_CONTENT_REVEAL_DELAY_MS = GUIDE_LAYOUT_OPEN_TOTAL_MS + 80;
 
 type MobileBrowseSelectOption = {
   value: string;
@@ -1069,6 +1080,9 @@ export function SplitScreenSection({ continents, initialRouteState, seoContent, 
   const [expandedGuideId, setExpandedGuideId] = useState<string | null>(initialRouteState?.expandedGuideId ?? null);
   const [pendingSourcesOpenGuideId, setPendingSourcesOpenGuideId] = useState<string | null>(null);
   const [closingGuide, setClosingGuide] = useState<MapList | null>(null);
+  const [closingGuidePhase, setClosingGuidePhase] = useState<"returning" | "collapsing" | null>(null);
+  const [openingGuideId, setOpeningGuideId] = useState<string | null>(null);
+  const [settlingGuideContentId, setSettlingGuideContentId] = useState<string | null>(null);
   const [isMobileListSheetExpanded, setIsMobileListSheetExpanded] = useState(false);
   const [isMobileListSheetDragging, setIsMobileListSheetDragging] = useState(false);
   const [mobileListSheetDragHeight, setMobileListSheetDragHeight] = useState<number | null>(null);
@@ -1159,8 +1173,14 @@ export function SplitScreenSection({ continents, initialRouteState, seoContent, 
   const guideRefs = useRef<Record<string, HTMLDivElement | null>>({});
   const guideLayoutPositionsRef = useRef<Record<string, DOMRect>>({});
   const shouldAnimateGuideLayoutRef = useRef(false);
+  const guideLayoutMotionRef = useRef<"default" | "open" | "close">("default");
   const guideLayoutAnimationFramesRef = useRef<ReturnType<typeof requestAnimationFrame>[]>([]);
+  const guideLayoutCleanupTimeoutsRef = useRef<number[]>([]);
   const closingGuideTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const openingGuideTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const openingGuideIdRef = useRef<string | null>(null);
+  const guideContentRevealTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const guideContentRevealFrameRef = useRef<ReturnType<typeof requestAnimationFrame> | null>(null);
   const morphCommitTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const morphCleanupTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const morphFrameRef = useRef<ReturnType<typeof requestAnimationFrame> | null>(null);
@@ -1171,6 +1191,29 @@ export function SplitScreenSection({ continents, initialRouteState, seoContent, 
   const profileAvatarInputRef = useRef<HTMLInputElement | null>(null);
   const previousProfileLeftRailRef = useRef<(typeof profileLeftRailOptions)[number]["id"] | null>(null);
   const globeRailVideoRef = useRef<HTMLVideoElement | null>(null);
+  const clearGuideContentRevealSchedule = () => {
+    if (guideContentRevealTimeoutRef.current) {
+      clearTimeout(guideContentRevealTimeoutRef.current);
+      guideContentRevealTimeoutRef.current = null;
+    }
+    if (guideContentRevealFrameRef.current) {
+      cancelAnimationFrame(guideContentRevealFrameRef.current);
+      guideContentRevealFrameRef.current = null;
+    }
+  };
+  const deferGuideContentUntilMotionSettles = (guideId: string) => {
+    clearGuideContentRevealSchedule();
+    setSettlingGuideContentId(guideId);
+    guideContentRevealTimeoutRef.current = setTimeout(() => {
+      guideContentRevealTimeoutRef.current = null;
+      guideContentRevealFrameRef.current = requestAnimationFrame(() => {
+        guideContentRevealFrameRef.current = null;
+        startTransition(() => {
+          setSettlingGuideContentId((current) => (current === guideId ? null : current));
+        });
+      });
+    }, GUIDE_CONTENT_REVEAL_DELAY_MS);
+  };
   const isPublicProfileMode = Boolean(publicProfile);
   const [isPublicProfileEntering, setIsPublicProfileEntering] = useState(isPublicProfileMode);
   const previousRailIconsRef = useRef<Record<ExitingRailIcon["kind"], ExitingRailIcon | null>>({
@@ -2960,10 +3003,19 @@ export function SplitScreenSection({ continents, initialRouteState, seoContent, 
     setSelectedGuideStopId(null);
     setExpandedGuideId(null);
     setClosingGuide(null);
+    setClosingGuidePhase(null);
+    openingGuideIdRef.current = null;
+    setOpeningGuideId(null);
+    clearGuideContentRevealSchedule();
+    setSettlingGuideContentId(null);
 
     if (closingGuideTimeoutRef.current) {
       clearTimeout(closingGuideTimeoutRef.current);
       closingGuideTimeoutRef.current = null;
+    }
+    if (openingGuideTimeoutRef.current) {
+      clearTimeout(openingGuideTimeoutRef.current);
+      openingGuideTimeoutRef.current = null;
     }
   }, [selection]);
 
@@ -3024,6 +3076,15 @@ export function SplitScreenSection({ continents, initialRouteState, seoContent, 
       if (closingGuideTimeoutRef.current) {
         clearTimeout(closingGuideTimeoutRef.current);
       }
+      if (openingGuideTimeoutRef.current) {
+        clearTimeout(openingGuideTimeoutRef.current);
+      }
+      if (guideContentRevealTimeoutRef.current) {
+        clearTimeout(guideContentRevealTimeoutRef.current);
+      }
+      if (guideContentRevealFrameRef.current) {
+        cancelAnimationFrame(guideContentRevealFrameRef.current);
+      }
       if (morphCommitTimeoutRef.current) {
         clearTimeout(morphCommitTimeoutRef.current);
       }
@@ -3034,6 +3095,7 @@ export function SplitScreenSection({ continents, initialRouteState, seoContent, 
         cancelAnimationFrame(morphFrameRef.current);
       }
       guideLayoutAnimationFramesRef.current.forEach((frame) => cancelAnimationFrame(frame));
+      guideLayoutCleanupTimeoutsRef.current.forEach((timeoutId) => window.clearTimeout(timeoutId));
     };
   }, []);
 
@@ -3066,14 +3128,16 @@ export function SplitScreenSection({ continents, initialRouteState, seoContent, 
     railFilteredLists.find((list) => list.id === expandedGuideId) ??
     globalMergedLists.find((list) => list.id === expandedGuideId) ??
     null;
-  const displayedGuide = expandedGuide ?? closingGuide;
+  const displayedGuide = expandedGuide;
   const activeMapGuide = isProfileSubmitLayout
     ? profileSubmissionPreviewList
     : isProfileMode
       ? profileExpandedGuide
       : expandedGuide;
   const isGuideTakingFullListPane = Boolean(expandedGuide && activeGuideRail !== "itinerary" && !isPublicProfileMode);
-  const isLeftPaneCollapsed = isProfileSubmitLayout || isGuideTakingFullListPane || isProfileGuideTakingFullListPane;
+  const isGuideReturningToListPane = Boolean(closingGuide && closingGuidePhase === "returning" && activeGuideRail !== "itinerary" && !isPublicProfileMode);
+  const isGuidePaneTakingFullListPane = isGuideTakingFullListPane || isGuideReturningToListPane;
+  const isLeftPaneCollapsed = isProfileSubmitLayout || isGuidePaneTakingFullListPane || isProfileGuideTakingFullListPane;
   const isSubcategoryMenuOpen =
     isFoodOpenTimeMenuOpen || isFoodCuisineMenuOpen || isNightlifeBarMenuOpen;
   const isFavoritesRailActive = activeGuideRail === "favorites" && !expandedGuide;
@@ -3087,7 +3151,12 @@ export function SplitScreenSection({ continents, initialRouteState, seoContent, 
 
     const worldwideGuideIds = new Set(railFilteredLists.map((list) => list.id));
     return globalMergedLists
-      .filter((list) => list.creator.name.startsWith("R ") && !worldwideGuideIds.has(list.id))
+      .filter(
+        (list) =>
+          list.creator.name.startsWith("R ") &&
+          list.location.city?.toLowerCase() === "barcelona" &&
+          !worldwideGuideIds.has(list.id),
+      )
       .slice()
       .sort((left, right) => {
         const rightDate = Date.parse(right.createdAt);
@@ -3096,7 +3165,7 @@ export function SplitScreenSection({ continents, initialRouteState, seoContent, 
         const leftTime = Number.isFinite(leftDate) ? leftDate : 0;
         return rightTime - leftTime || right.upvotes - left.upvotes || left.title.localeCompare(right.title);
       })
-      .slice(0, 10);
+      .slice(0, 20);
   }, [activeGuideRail, globalMergedLists, isGlobalSelection, railFilteredLists]);
   const activeSeoPlaceLabel = activeLocation.city
     ? activeLocation.nestedSubarea?.name ?? activeLocation.subarea?.name ?? activeLocation.city.name
@@ -3200,7 +3269,7 @@ export function SplitScreenSection({ continents, initialRouteState, seoContent, 
     });
   }, [activeLocation.city, activeNeighborhoodKey, allActiveLists]);
   useEffect(() => {
-    if (!isGuideTakingFullListPane) {
+    if (!isGuidePaneTakingFullListPane) {
       return;
     }
     setIsFoodOpenTimeMenuOpen(false);
@@ -3209,7 +3278,7 @@ export function SplitScreenSection({ continents, initialRouteState, seoContent, 
     setHoveredCategoryLabel(null);
     setIsMobileListSheetExpanded(true);
     closeMobileCategoryMenu();
-  }, [isGuideTakingFullListPane]);
+  }, [isGuidePaneTakingFullListPane]);
   const scrollGuideIntoView = (guideId: string) => {
     requestAnimationFrame(() => {
       const element = guideRefs.current[guideId];
@@ -3226,9 +3295,12 @@ export function SplitScreenSection({ continents, initialRouteState, seoContent, 
       });
     });
   };
-  const captureGuideLayoutPositions = () => {
+  const captureGuideLayoutPositions = (motion: "default" | "open" | "close" = "default") => {
     guideLayoutAnimationFramesRef.current.forEach((frame) => cancelAnimationFrame(frame));
     guideLayoutAnimationFramesRef.current = [];
+    guideLayoutCleanupTimeoutsRef.current.forEach((timeoutId) => window.clearTimeout(timeoutId));
+    guideLayoutCleanupTimeoutsRef.current = [];
+    guideLayoutMotionRef.current = motion;
     guideLayoutPositionsRef.current = Object.fromEntries(
       Object.entries(guideRefs.current)
         .filter((entry): entry is [string, HTMLDivElement] => entry[1] instanceof HTMLDivElement)
@@ -3243,6 +3315,8 @@ export function SplitScreenSection({ continents, initialRouteState, seoContent, 
     }
 
     shouldAnimateGuideLayoutRef.current = false;
+    const guideLayoutMotion = guideLayoutMotionRef.current;
+    guideLayoutMotionRef.current = "default";
 
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
       guideLayoutPositionsRef.current = {};
@@ -3259,16 +3333,30 @@ export function SplitScreenSection({ continents, initialRouteState, seoContent, 
       const nextRect = element.getBoundingClientRect();
       const deltaX = previousRect.left - nextRect.left;
       const deltaY = previousRect.top - nextRect.top;
+      const scaleX = previousRect.width > 0 && nextRect.width > 0 ? previousRect.width / nextRect.width : 1;
+      const stageSidewaysFirst = (guideLayoutMotion === "open" || guideLayoutMotion === "close") && Math.abs(deltaX) > 8 && Math.abs(deltaY) > 8;
 
       if (Math.abs(deltaX) < 1 && Math.abs(deltaY) < 1) {
         return [];
       }
 
       element.style.transition = "none";
-      element.style.transform = `translate(${deltaX}px, ${deltaY}px)`;
+      element.style.transformOrigin = stageSidewaysFirst && guideLayoutMotion === "open" ? "top left" : "";
+      element.style.transform = stageSidewaysFirst && guideLayoutMotion === "open"
+        ? `translate(${deltaX}px, ${deltaY}px) scaleX(${scaleX})`
+        : `translate(${deltaX}px, ${deltaY}px)`;
       element.style.willChange = "transform";
 
-      return [element];
+      return [
+        {
+          deltaX,
+          deltaY,
+          element,
+          reverseSidewaysFirst: guideLayoutMotion === "close",
+          scaleX,
+          stageSidewaysFirst,
+        },
+      ];
     });
 
     guideLayoutPositionsRef.current = {};
@@ -3278,19 +3366,56 @@ export function SplitScreenSection({ continents, initialRouteState, seoContent, 
     }
 
     const animationFrame = requestAnimationFrame(() => {
-      changedElements.forEach((element) => {
-        element.style.transition = "transform 520ms cubic-bezier(0.22, 1, 0.36, 1)";
+      changedElements.forEach(({ deltaX, deltaY, element, reverseSidewaysFirst, scaleX, stageSidewaysFirst }) => {
+        if (stageSidewaysFirst) {
+          if (reverseSidewaysFirst) {
+            element.style.transition = `transform ${GUIDE_LAYOUT_OPEN_UP_MS}ms cubic-bezier(0.22, 1, 0.36, 1)`;
+            element.style.transform = `translate(${deltaX}px, 0)`;
+            const sidewaysTimeout = window.setTimeout(() => {
+              element.style.transition = `transform ${GUIDE_LAYOUT_OPEN_SIDEWAYS_MS}ms cubic-bezier(0.33, 1, 0.68, 1)`;
+              element.style.transform = "translate(0, 0)";
+              guideLayoutCleanupTimeoutsRef.current = guideLayoutCleanupTimeoutsRef.current.filter(
+                (timeoutId) => timeoutId !== sidewaysTimeout,
+              );
+            }, GUIDE_LAYOUT_CLOSE_SIDEWAYS_START_MS);
+            guideLayoutCleanupTimeoutsRef.current.push(sidewaysTimeout);
+            return;
+          }
+
+          element.style.transition = `transform ${GUIDE_LAYOUT_OPEN_SIDEWAYS_MS}ms cubic-bezier(0.33, 1, 0.68, 1)`;
+          element.style.transform = `translate(0, ${deltaY}px) scaleX(1)`;
+          const verticalTimeout = window.setTimeout(() => {
+            element.style.transition = `transform ${GUIDE_LAYOUT_OPEN_UP_MS}ms cubic-bezier(0.22, 1, 0.36, 1)`;
+            element.style.transform = "translate(0, 0) scaleX(1)";
+            guideLayoutCleanupTimeoutsRef.current = guideLayoutCleanupTimeoutsRef.current.filter(
+              (timeoutId) => timeoutId !== verticalTimeout,
+            );
+          }, GUIDE_LAYOUT_OPEN_UP_START_MS);
+          guideLayoutCleanupTimeoutsRef.current.push(verticalTimeout);
+          return;
+        }
+
+        element.style.transition = `transform ${GUIDE_LAYOUT_MOTION_MS}ms cubic-bezier(0.22, 1, 0.36, 1)`;
         element.style.transform = "translate(0, 0)";
       });
 
       const cleanupFrame = requestAnimationFrame(() => {
-        window.setTimeout(() => {
-          changedElements.forEach((element) => {
+        const cleanupTimeout = window.setTimeout(() => {
+          changedElements.forEach(({ element }) => {
             element.style.transition = "";
             element.style.transform = "";
+            element.style.transformOrigin = "";
             element.style.willChange = "";
           });
-        }, 560);
+          guideLayoutCleanupTimeoutsRef.current = guideLayoutCleanupTimeoutsRef.current.filter(
+            (timeoutId) => timeoutId !== cleanupTimeout,
+          );
+        }, changedElements.some((item) => item.reverseSidewaysFirst)
+          ? GUIDE_LAYOUT_CLOSE_TOTAL_MS + 80
+          : changedElements.some((item) => item.stageSidewaysFirst)
+            ? GUIDE_LAYOUT_OPEN_TOTAL_MS + 80
+            : GUIDE_LAYOUT_MOTION_MS + 40);
+        guideLayoutCleanupTimeoutsRef.current.push(cleanupTimeout);
       });
 
       guideLayoutAnimationFramesRef.current.push(cleanupFrame);
@@ -3539,15 +3664,45 @@ export function SplitScreenSection({ continents, initialRouteState, seoContent, 
     setSelectedGuideStopId(stopId);
     setSelectedGuideStopNonce((current) => current + 1);
   };
+  const completeGuideOpening = (nextList: MapList) => {
+    if (openingGuideIdRef.current !== nextList.id) {
+      return;
+    }
+    openingGuideIdRef.current = null;
+    if (openingGuideTimeoutRef.current) {
+      clearTimeout(openingGuideTimeoutRef.current);
+      openingGuideTimeoutRef.current = null;
+    }
+    captureGuideLayoutPositions("open");
+    deferGuideContentUntilMotionSettles(nextList.id);
+    setOpeningGuideId(null);
+    setExpandedGuideId(nextList.id);
+    setActiveCategory(nextList.category);
+    setActiveGuideFitNonce((current) => current + 1);
+    const context = getCityRouteContext(selection);
+    if (context) {
+      pushExplorerPath(getCanonicalGuidePath(context.city, nextList, context.neighborhood));
+    }
+  };
   const handleGuideToggle = (nextList: MapList) => {
     if (closingGuideTimeoutRef.current) {
       clearTimeout(closingGuideTimeoutRef.current);
       closingGuideTimeoutRef.current = null;
     }
+    if (openingGuideTimeoutRef.current) {
+      clearTimeout(openingGuideTimeoutRef.current);
+      openingGuideTimeoutRef.current = null;
+    }
+    openingGuideIdRef.current = null;
+    clearGuideContentRevealSchedule();
+    setSettlingGuideContentId(null);
 
     if (expandedGuideId === nextList.id && expandedGuide) {
+      captureGuideLayoutPositions("close");
       const restoredCategory = restoreCategoryAfterGuideCollapse();
       setClosingGuide(expandedGuide);
+      setClosingGuidePhase("returning");
+      setOpeningGuideId(null);
       setExpandedGuideId(null);
       setVisibleNestedStopParentIds([]);
       const nextPath = getCurrentCityRoutePath(restoredCategory);
@@ -3555,9 +3710,13 @@ export function SplitScreenSection({ continents, initialRouteState, seoContent, 
         pushExplorerPath(nextPath);
       }
       closingGuideTimeoutRef.current = setTimeout(() => {
-        setClosingGuide(null);
-        closingGuideTimeoutRef.current = null;
-      }, 720);
+        setClosingGuidePhase("collapsing");
+        closingGuideTimeoutRef.current = setTimeout(() => {
+          setClosingGuide(null);
+          setClosingGuidePhase(null);
+          closingGuideTimeoutRef.current = null;
+        }, GUIDE_CHROME_WIPE_MS);
+      }, GUIDE_LAYOUT_CLOSE_SIDEWAYS_START_MS);
       return;
     }
 
@@ -3566,14 +3725,11 @@ export function SplitScreenSection({ continents, initialRouteState, seoContent, 
       categoryBeforeGuideExpandRef.current = activeCategory;
     }
     setClosingGuide(null);
+    setClosingGuidePhase(null);
+    openingGuideIdRef.current = nextList.id;
+    setOpeningGuideId(nextList.id);
     setVisibleNestedStopParentIds([]);
-    setExpandedGuideId(nextList.id);
-    setActiveCategory(nextList.category);
-    setActiveGuideFitNonce((current) => current + 1);
-    const context = getCityRouteContext(selection);
-    if (context) {
-      pushExplorerPath(getCanonicalGuidePath(context.city, nextList, context.neighborhood));
-    }
+    openingGuideTimeoutRef.current = setTimeout(() => completeGuideOpening(nextList), GUIDE_OPEN_EXPAND_START_MS);
     scrollGuideIntoView(nextList.id);
   };
   const handleCityHighlightGuideSelect = (nextList: MapList) => {
@@ -3581,6 +3737,14 @@ export function SplitScreenSection({ continents, initialRouteState, seoContent, 
       clearTimeout(closingGuideTimeoutRef.current);
       closingGuideTimeoutRef.current = null;
     }
+    if (openingGuideTimeoutRef.current) {
+      clearTimeout(openingGuideTimeoutRef.current);
+      openingGuideTimeoutRef.current = null;
+    }
+    openingGuideIdRef.current = null;
+    setOpeningGuideId(null);
+    clearGuideContentRevealSchedule();
+    setSettlingGuideContentId(null);
 
     setActiveGuideRail(nextList.creator.name.startsWith("R ") ? "r-guides" : "user-guides");
     setActiveSubcategory(null);
@@ -3603,7 +3767,9 @@ export function SplitScreenSection({ continents, initialRouteState, seoContent, 
       categoryBeforeGuideExpandRef.current = activeCategory;
     }
     setClosingGuide(null);
+    setClosingGuidePhase(null);
     setVisibleNestedStopParentIds([]);
+    deferGuideContentUntilMotionSettles(nextList.id);
     setExpandedGuideId(nextList.id);
     setActiveCategory(nextList.category);
     setActiveGuideFitNonce((current) => current + 1);
@@ -3906,7 +4072,7 @@ export function SplitScreenSection({ continents, initialRouteState, seoContent, 
       window.removeEventListener("resize", updateViewportInsets);
       observer?.disconnect();
     };
-  }, [displayShellMode, isGuideTakingFullListPane, isMobileListSheetExpanded, isProfileMode, isProfileSubmitLayout]);
+  }, [displayShellMode, isGuidePaneTakingFullListPane, isMobileListSheetExpanded, isProfileMode, isProfileSubmitLayout]);
 
   return (
     <section id="map-explorer" className="w-full py-0 lg:pb-0 lg:pt-2">
@@ -4130,7 +4296,7 @@ export function SplitScreenSection({ continents, initialRouteState, seoContent, 
           <div
             ref={shellViewportRef}
             className={`relative h-[100svh] min-h-[38rem] w-full bg-[#fafaf7] lg:min-h-0 lg:rounded-lg lg:border lg:border-slate-950/15 lg:shadow-[0_18px_40px_rgba(23,23,23,0.10)] ${
-              isSubcategoryMenuOpen && !isGuideTakingFullListPane ? "overflow-visible" : "overflow-hidden"
+              isSubcategoryMenuOpen && !isGuidePaneTakingFullListPane ? "overflow-visible" : "overflow-hidden"
             } ${explorerPaneHeight}`}
           >
           <div className="absolute inset-0 z-0">
@@ -6292,13 +6458,13 @@ export function SplitScreenSection({ continents, initialRouteState, seoContent, 
             <div
               ref={rightPaneRef}
               className={`frosted-pane-right pointer-events-auto absolute inset-x-0 bottom-0 z-40 rounded-t-lg rounded-tl-none border-t border-slate-950/15 ${
-                isMobileListSheetDragging ? "transition-none" : "transition-[height,padding] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)]"
+                isMobileListSheetDragging ? "transition-none" : "transition-[height] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)]"
               } lg:relative lg:inset-auto lg:z-20 lg:rounded-none lg:border-t-0 lg:shadow-none ${
                 isMobileListSheetExpanded ? "h-[60svh]" : "h-36"
               } ${
-                isGuideTakingFullListPane ? "p-0" : "p-3 lg:p-5"
+                isGuidePaneTakingFullListPane ? "p-0" : "p-3 lg:p-5"
               } overflow-visible ${
-                isSubcategoryMenuOpen && !isGuideTakingFullListPane ? "lg:overflow-visible" : "lg:overflow-hidden"
+                isSubcategoryMenuOpen && !isGuidePaneTakingFullListPane ? "lg:overflow-visible" : "lg:overflow-hidden"
               } lg:ml-0 lg:w-full lg:h-auto ${explorerPaneHeight}`}
               style={mobileListSheetDragHeight === null ? undefined : { height: `${mobileListSheetDragHeight}px` }}
               onPointerMove={handleMobileListSheetDragMove}
@@ -6317,7 +6483,7 @@ export function SplitScreenSection({ continents, initialRouteState, seoContent, 
               </div>
               <div
                 className={`absolute right-4 -top-8 z-[90] flex h-7 items-center justify-end gap-2.5 transition-[opacity,transform] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] lg:hidden ${
-                  isMobileCategoryMenuExpanded || isGuideTakingFullListPane
+                  isMobileCategoryMenuExpanded || isGuidePaneTakingFullListPane
                     ? "pointer-events-none -translate-y-1 opacity-0"
                     : "translate-y-0 opacity-100"
                 }`}
@@ -6359,11 +6525,11 @@ export function SplitScreenSection({ continents, initialRouteState, seoContent, 
               <div className={`relative z-[85] flex h-full flex-col ${paneTransitionClass} ${publicProfilePaneTransitionClass}`}>
                 <div
                   className={`relative flex shrink-0 items-center transition-[height,margin-bottom] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] lg:hidden ${
-                    isGuideTakingFullListPane ? "mb-0 h-0" : "mb-2 h-8"
+                    isGuidePaneTakingFullListPane ? "mb-0 h-0" : "mb-2 h-8"
                   }`}
                   onPointerDown={handleMobileListSheetDragStart}
                 >
-                  <div className={`min-w-0 pr-12 transition-opacity duration-200 ${isMobileCategoryMenuExpanded || isGuideTakingFullListPane ? "opacity-0" : "opacity-100"}`}>
+                  <div className={`min-w-0 pr-12 transition-opacity duration-200 ${isMobileCategoryMenuExpanded || isGuidePaneTakingFullListPane ? "opacity-0" : "opacity-100"}`}>
                     <p className="truncate text-xs font-semibold uppercase tracking-[0.14em] text-slate-500">
                       {categoryTitleLabel}
                     </p>
@@ -6372,7 +6538,7 @@ export function SplitScreenSection({ continents, initialRouteState, seoContent, 
                     className={`absolute right-0 top-0 z-[95] flex h-8 items-center justify-end overflow-hidden rounded-full bg-white transition-[width,opacity,transform] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] ${
                       isMobileCategoryMenuExpanded ? "w-full" : "w-8"
                     } ${
-                      isGuideTakingFullListPane ? "pointer-events-none -translate-y-2 opacity-0" : "translate-y-0 opacity-100"
+                      isGuidePaneTakingFullListPane ? "pointer-events-none -translate-y-2 opacity-0" : "translate-y-0 opacity-100"
                     }`}
                   >
                     <div
@@ -6435,12 +6601,12 @@ export function SplitScreenSection({ continents, initialRouteState, seoContent, 
                   </div>
                 </div>
                 <div
-                  className={`relative mx-auto hidden w-full max-w-[36rem] space-y-3 transition-[max-height,opacity,transform,padding-bottom] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] lg:block ${
+                  className={`relative mx-auto hidden w-full max-w-[36rem] space-y-3 lg:block ${
                     activeGuideRail === "itinerary" || isPublicProfileMode
                       ? "hidden"
-                      : isGuideTakingFullListPane
-                        ? "pointer-events-none max-h-0 -translate-y-6 pb-0 opacity-0"
-                        : "max-h-56 translate-y-0 pb-2 opacity-100"
+                      : isGuidePaneTakingFullListPane
+                        ? "pointer-events-none max-h-0 -translate-y-3 pb-0 opacity-0 transition-[opacity,transform] duration-200 ease-out"
+                        : "max-h-56 translate-y-0 pb-2 opacity-100 transition-[opacity,transform] duration-200 ease-out"
                   } ${isSubcategoryMenuOpen ? "z-[140] overflow-visible" : "z-10 overflow-hidden"}`}
                 >
                   <div className="grid grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] items-center gap-2">
@@ -6794,9 +6960,11 @@ export function SplitScreenSection({ continents, initialRouteState, seoContent, 
 
                 <div
                   data-guides-scroll
-                  className={`relative z-0 flex min-h-0 flex-1 flex-col gap-4 transition-[margin-top,padding-bottom,padding-right] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] ${
-                    isGuideTakingFullListPane ? "mt-0" : "mt-2"
-                  } ${isGuideTakingFullListPane ? "h-full max-h-full overflow-hidden pb-0 pr-0 overscroll-contain" : `${explorerBodyMaxHeight} overflow-y-auto pb-0 pr-1`}`}
+                  className={`relative z-0 flex min-h-0 flex-1 flex-col gap-4 ${
+                    isGuidePaneTakingFullListPane
+                      ? "mt-0 h-full max-h-full overflow-hidden pb-0 pr-0 overscroll-contain"
+                      : `mt-2 ${explorerBodyMaxHeight} overflow-y-auto pb-0 pr-1`
+                  }`}
                 >
                   {activeGuideRail === "itinerary" && (isItineraryEditing || (!displayedGuide && !activeItineraryPlaylist?.completedListId)) ? (
                     activeItineraryPlaylist ? (
@@ -6963,6 +7131,7 @@ export function SplitScreenSection({ continents, initialRouteState, seoContent, 
                           expandable
                           expanded={Boolean(expandedGuide)}
                           fillPane={isGuideTakingFullListPane}
+                          deferExpandedContent={settlingGuideContentId === displayedGuide.id}
                           onToggleExpand={handleGuideToggle}
                           onEditItinerary={activeGuideRail === "itinerary" ? handleEditItineraryFromGuide : undefined}
                           shouldAutoOpenSources={pendingSourcesOpenGuideId === displayedGuide.id}
@@ -6996,7 +7165,11 @@ export function SplitScreenSection({ continents, initialRouteState, seoContent, 
                             <MapListCard
                               list={list}
                               expandable
-                              expanded={false}
+                              expanded={closingGuide?.id === list.id && closingGuidePhase === "returning"}
+                              preserveExpandedChrome={closingGuide?.id === list.id || openingGuideId === list.id}
+                              retractExpandedChrome={closingGuide?.id === list.id && closingGuidePhase === "collapsing"}
+                              expandExpandedChrome={openingGuideId === list.id}
+                              onExpandChromeComplete={completeGuideOpening}
                               onToggleExpand={handleGuideToggle}
                               onEditItinerary={activeGuideRail === "itinerary" ? handleEditItineraryFromGuide : undefined}
                               shouldAutoOpenSources={pendingSourcesOpenGuideId === list.id}
@@ -7028,7 +7201,11 @@ export function SplitScreenSection({ continents, initialRouteState, seoContent, 
                           <MapListCard
                             list={list}
                             expandable
-                            expanded={false}
+                            expanded={closingGuide?.id === list.id && closingGuidePhase === "returning"}
+                            preserveExpandedChrome={closingGuide?.id === list.id || openingGuideId === list.id}
+                            retractExpandedChrome={closingGuide?.id === list.id && closingGuidePhase === "collapsing"}
+                            expandExpandedChrome={openingGuideId === list.id}
+                            onExpandChromeComplete={completeGuideOpening}
                             onToggleExpand={handleGuideToggle}
                             onEditItinerary={activeGuideRail === "itinerary" ? handleEditItineraryFromGuide : undefined}
                             shouldAutoOpenSources={pendingSourcesOpenGuideId === list.id}
@@ -7047,7 +7224,7 @@ export function SplitScreenSection({ continents, initialRouteState, seoContent, 
                       {recentRGuideLists.length ? (
                         <div className="space-y-4 border-t border-slate-200 pt-4">
                           <p className="px-1 text-[11px] font-medium uppercase tracking-[0.2em] text-slate-500">
-                            Recent RGuides
+                            Recent Barcelona RGuides
                           </p>
                           {recentRGuideLists.map((list) => (
                             <div
@@ -7060,7 +7237,11 @@ export function SplitScreenSection({ continents, initialRouteState, seoContent, 
                               <MapListCard
                                 list={list}
                                 expandable
-                                expanded={false}
+                                expanded={closingGuide?.id === list.id && closingGuidePhase === "returning"}
+                                preserveExpandedChrome={closingGuide?.id === list.id || openingGuideId === list.id}
+                                retractExpandedChrome={closingGuide?.id === list.id && closingGuidePhase === "collapsing"}
+                                expandExpandedChrome={openingGuideId === list.id}
+                                onExpandChromeComplete={completeGuideOpening}
                                 onToggleExpand={handleGuideToggle}
                                 onHoverStart={setHoveredGuide}
                                 onHoverEnd={() => setHoveredGuide(null)}
