@@ -266,11 +266,11 @@ export const madridNeighborhoodGuides = [
   {
     "id": "list-madrid-sol-centro-stays",
     "slug": "madrid-sol-centro-hotels",
-    "seoSlug": "best-places-to-stay",
-    "seoTitle": "Best Places to Stay in Sol and Centro, Madrid",
-    "seoDescription": "Best places to stay in Sol and Centro, Madrid, for Puerta del Sol access, Plaza Mayor walks, luxury hotels, rooftops, and social hostels.",
-    "title": "Sleep at the Center Without Guessing",
-    "description": "Sol and Centro are best for first-time convenience if the hotel is chosen carefully. This guide balances major luxury, design hotels, plaza access, and social hostel bases.",
+    "seoSlug": "best-hotels",
+    "seoTitle": "Best Hotels in Sol and Centro, Madrid",
+    "seoDescription": "Best hotels in Sol and Centro, Madrid, for Canalejas luxury, Plaza Mayor atmosphere, Gran Via access, rooftops, and old-city walks.",
+    "title": "Hotels at Kilometer Zero",
+    "description": "Sol and Centro hotel planning is about staying central without surrendering sleep quality. These picks separate luxury service, design-hotel energy, Plaza Mayor atmosphere, and Gran Via reach so the base supports the route instead of becoming the compromise.",
     "url": "https://www.google.com/maps/search/sol+centro+madrid+hotels",
     "category": "Stay",
     "location": {
@@ -289,13 +289,15 @@ export const madridNeighborhoodGuides = [
     "createdAt": "2026-05-06T00:00:00.000Z",
     "stops": [
       {
-        "id": "sol-stay-four-seasons",
+        "id": "stay-four-seasons",
         "name": "Four Seasons Hotel Madrid",
         "coordinates": [
           40.4172,
           -3.7015
         ],
-        "description": "Four Seasons Hotel Madrid belongs in the Sol & Centro stay guide because it solves a specific base tradeoff. The high-budget Canalejas base for travelers who want Sol access with polished service, dining, spa, and a quieter room standard. Choose it when service, quiet, and room quality should carry as much weight as location.",
+        "description": "Four Seasons Hotel Madrid is the high-budget Canalejas hotel pick because it gives Sol access without asking travelers to accept old-center compromise. Use it when service, dining, spa, and a quieter room standard matter as much as walking to Plaza Mayor, Gran Via, and the Art Walk.",
+        "price": "$$",
+        "priceSource": "Condé Nast Traveler / Google Maps",
         "hours": {
           "mon": "24 hours",
           "tue": "24 hours",
@@ -308,13 +310,15 @@ export const madridNeighborhoodGuides = [
         "photo": "https://cf.bstatic.com/xdata/images/hotel/max1024x768/253695581.jpg?k=91850f32b01adac51407a238343ec660f96cf6fc8b5f65cf53e2d468b8dcf8f6&o=&hp=1"
       },
       {
-        "id": "sol-stay-edition",
+        "id": "stay-edition",
         "name": "The Madrid EDITION",
         "coordinates": [
           40.4171,
           -3.7062
         ],
-        "description": "The Madrid EDITION belongs in the Sol & Centro stay guide because it solves a specific base tradeoff. A design-forward central hotel with rooftop energy, useful for travelers who want Plaza Mayor and Sol close without choosing a traditional grand hotel. Choose it when service, quiet, and room quality should carry as much weight as location.",
+        "description": "The Madrid EDITION earns a hotel slot for travelers who want central design, rooftop energy, and a polished reset within a few blocks of Plaza Mayor and Sol. It works best when the trip should feel contemporary and social without giving up a full-service hotel base.",
+        "price": "$$",
+        "priceSource": "Condé Nast Traveler / Google Maps",
         "hours": {
           "mon": "24 hours",
           "tue": "24 hours",
@@ -327,13 +331,15 @@ export const madridNeighborhoodGuides = [
         "photo": "https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=900&q=80"
       },
       {
-        "id": "sol-stay-pestana",
+        "id": "stay-pestana-plaza-mayor",
         "name": "Pestana Plaza Mayor Madrid",
         "coordinates": [
           40.415,
           -3.7074
         ],
-        "description": "Pestana Plaza Mayor Madrid belongs in the Sol & Centro stay guide because it solves a specific base tradeoff. A Plaza Mayor-facing stay for travelers who want historic-center atmosphere and the ability to walk almost everywhere. Choose it when location, sleep quality, and budget need to be balanced honestly instead of picked by map distance alone.",
+        "description": "Pestana Plaza Mayor is the historic-center hotel pick for travelers who want to sleep on Madrid de los Austrias rather than commute into it. Tourism Madrid and Pestana both frame the draw clearly: Plaza Mayor frontage, contemporary rooms, spa facilities, and rooftop-season usefulness.",
+        "price": "$$",
+        "priceSource": "Tourism Madrid / Pestana",
         "hours": {
           "mon": "24 hours",
           "tue": "24 hours",
@@ -346,13 +352,152 @@ export const madridNeighborhoodGuides = [
         "photo": "https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=900&q=80"
       },
       {
-        "id": "sol-stay-the-hat",
+        "id": "stay-seven-islas",
+        "name": "7 Islas Hotel",
+        "coordinates": [
+          40.4217,
+          -3.7012
+        ],
+        "description": "7 Islas Hotel is the Gran Via-to-Malasana design option, useful when the stay should feel independent, art-led, and close to nightlife without becoming a hostel. Its official materials emphasize the Valverde address, gallery feel, restaurant-bar, and slower boutique rhythm between Gran Via and Malasana.",
+        "price": "$",
+        "priceSource": "7 Islas official / Google Maps",
+        "hours": {
+          "mon": "24 hours",
+          "tue": "24 hours",
+          "wed": "24 hours",
+          "thu": "24 hours",
+          "fri": "24 hours",
+          "sat": "24 hours",
+          "sun": "24 hours"
+        },
+        "photo": "https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=900&q=80"
+      }
+    ],
+    "sources": [
+      {
+        "name": "Tourism Madrid - MICHELIN Key Hotels",
+        "url": "https://www.esmadrid.com/en/michelin-key-hotels"
+      },
+      {
+        "name": "Condé Nast Traveler - Madrid hotels",
+        "url": "https://www.cntraveler.com/hotels/madrid"
+      },
+      {
+        "name": "MICHELIN Guide - Only YOU Boutique Hotel Madrid",
+        "url": "https://guide.michelin.com/us/en/hotels-stays/madrid/only-you-boutique-hotel-madrid-8366"
+      },
+      {
+        "name": "Mandarin Oriental Ritz Madrid official",
+        "url": "https://www.mandarinoriental.com/en/madrid"
+      },
+      {
+        "name": "Tourism Madrid - Pestana Plaza Mayor",
+        "url": "https://www.esmadrid.com/en/accommodation/pestana-plaza-mayor"
+      },
+      {
+        "name": "Google Maps",
+        "url": "https://maps.google.com"
+      }
+    ]
+  },
+  {
+    "id": "list-madrid-sol-centro-hostels",
+    "slug": "madrid-sol-centro-hostels",
+    "seoSlug": "best-hostels",
+    "seoTitle": "Best Hostels in Sol and Centro, Madrid",
+    "seoDescription": "Best hostels in Sol and Centro, Madrid, for social dorms, private-room flexibility, Plaza Mayor access, Tirso de Molina, and first-trip logistics.",
+    "title": "Central Hostels With a Social Spine",
+    "description": "Sol and Centro hostels work when they make the old city easy without isolating travelers in a generic dorm. This guide favors social programming, rooftop or common-space utility, and walkability to Plaza Mayor, La Latina, Tirso de Molina, and Gran Via.",
+    "url": "https://www.google.com/maps/search/sol+centro+madrid+hostels",
+    "category": "Stay",
+    "location": {
+      "city": "Madrid",
+      "neighborhood": "Sol & Centro",
+      "country": "Spain",
+      "continent": "Europe",
+      "scope": "city"
+    },
+    "creator": {
+      "id": "user-rguide-stay",
+      "name": "R Stay",
+      "avatar": "data:image/svg+xml;utf8,%0A%20%20%20%20%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22160%22%20height%3D%22160%22%20viewBox%3D%220%200%20160%20160%22%3E%0A%20%20%20%20%20%20%3Crect%20width%3D%22160%22%20height%3D%22160%22%20rx%3D%2280%22%20fill%3D%22%230f766e%22%20%2F%3E%0A%20%20%20%20%20%20%3Ctext%20x%3D%2250%25%22%20y%3D%2254%25%22%20text-anchor%3D%22middle%22%20dominant-baseline%3D%22middle%22%0A%20%20%20%20%20%20%20%20font-family%3D%22Arial%2C%20sans-serif%22%20font-size%3D%2276%22%20font-weight%3D%22700%22%20fill%3D%22white%22%3ER%3C%2Ftext%3E%0A%20%20%20%20%3C%2Fsvg%3E%0A%20%20"
+    },
+    "upvotes": 0,
+    "createdAt": "2026-05-06T00:00:00.000Z",
+    "stops": [
+      {
+        "id": "stay-the-hat",
         "name": "The Hat Madrid",
         "coordinates": [
           40.4145,
           -3.7073
         ],
-        "description": "The Hat Madrid belongs in the Sol & Centro stay guide because it solves a specific base tradeoff. The social hostel/private-room option by Plaza Mayor and La Latina, with rooftop energy and strong central logistics. Choose it when budget, shared spaces, and meeting other travelers matter more than a quiet hotel reset.",
+        "description": "The Hat Madrid is the central hostel pick because Hostelworld and the official site both emphasize Plaza Mayor proximity, private-or-dorm flexibility, events, and rooftop social energy. Use it when budget and meeting people matter, but the route still needs Sol, La Latina, and old Madrid on foot.",
+        "price": "$",
+        "priceSource": "Hostelworld / The Hat official",
+        "hours": {
+          "mon": "24 hours",
+          "tue": "24 hours",
+          "wed": "24 hours",
+          "thu": "24 hours",
+          "fri": "24 hours",
+          "sat": "24 hours",
+          "sun": "24 hours"
+        },
+        "photo": "https://images.unsplash.com/photo-1555854877-bab0e564b8d5?auto=format&fit=crop&w=900&q=80"
+      },
+      {
+        "id": "stay-onefam-sungate",
+        "name": "Onefam Sungate",
+        "coordinates": [
+          40.4183,
+          -3.7044
+        ],
+        "description": "Onefam Sungate is the social Sol hostel for travelers who want nightly activities and immediate central logistics. It belongs in central hostel planning when the goal is meeting people quickly rather than finding the quietest possible room.",
+        "price": "$",
+        "priceSource": "Hostelworld / Google Maps",
+        "hours": {
+          "mon": "24 hours",
+          "tue": "24 hours",
+          "wed": "24 hours",
+          "thu": "24 hours",
+          "fri": "24 hours",
+          "sat": "24 hours",
+          "sun": "24 hours"
+        },
+        "photo": "https://images.unsplash.com/photo-1555854877-bab0e564b8d5?auto=format&fit=crop&w=900&q=80"
+      },
+      {
+        "id": "stay-2060-newton",
+        "name": "2060 The Newton Hostel",
+        "coordinates": [
+          40.412,
+          -3.7048
+        ],
+        "description": "2060 The Newton Hostel gives Madrid hostel planning a Tirso de Molina base with strong center access, rooftop-bar utility, and common areas. Hostelworld lists high review volume and location strength, but the best fit is still budget travelers who can tolerate a busier shared-room setting.",
+        "price": "$",
+        "priceSource": "Hostelworld / Google Maps",
+        "hours": {
+          "mon": "24 hours",
+          "tue": "24 hours",
+          "wed": "24 hours",
+          "thu": "24 hours",
+          "fri": "24 hours",
+          "sat": "24 hours",
+          "sun": "24 hours"
+        },
+        "photo": "https://images.unsplash.com/photo-1555854877-bab0e564b8d5?auto=format&fit=crop&w=900&q=80"
+      },
+      {
+        "id": "stay-ok-hostel",
+        "name": "Ok Hostel Madrid",
+        "coordinates": [
+          40.4113,
+          -3.708
+        ],
+        "description": "Ok Hostel Madrid is the La Latina and Tirso de Molina utility hostel, useful for travelers who want central walks, social energy, and a lower nightly rate. Choose it when the plan points toward Cava Baja, Lavapies, and Sol more than Retiro-side quiet.",
+        "price": "$",
+        "priceSource": "Hostelworld / Google Maps",
         "hours": {
           "mon": "24 hours",
           "tue": "24 hours",
@@ -367,16 +512,28 @@ export const madridNeighborhoodGuides = [
     ],
     "sources": [
       {
-        "name": "Tourism Madrid - MICHELIN Key Hotels",
-        "url": "https://www.esmadrid.com/en/michelin-key-hotels"
-      },
-      {
-        "name": "Condé Nast Traveler - Madrid hotels",
-        "url": "https://www.cntraveler.com/hotels/madrid"
-      },
-      {
         "name": "Hostelworld - Madrid Hostels",
         "url": "https://www.hostelworld.com/hostels/europe/spain/madrid/"
+      },
+      {
+        "name": "The Hat Madrid official",
+        "url": "https://www.thehatmadrid.com/en/"
+      },
+      {
+        "name": "Latroupe Prado official",
+        "url": "https://www.latroupe.com/en/latroupe-prado/hostel/"
+      },
+      {
+        "name": "Hostelworld - Onefam Madrid",
+        "url": "https://www.hostelworld.com/hostels/p/286369/onefam-madrid/"
+      },
+      {
+        "name": "Hostelworld - 2060 The Newton Hostel",
+        "url": "https://www.hostelworld.com/hostels/p/282289/2060-the-newton-hostel/"
+      },
+      {
+        "name": "Hostelworld - room00 Chueca Hostel",
+        "url": "https://www.hostelworld.com/st/hotels/p/83795/room007-chueca-hostel/"
       },
       {
         "name": "Google Maps",
@@ -584,7 +741,7 @@ export const madridNeighborhoodGuides = [
           -3.6994
         ],
         "description": "TriCiclo earns its spot in the Barrio de las Letras food guide because it fills a clear meal role for this route. A polished neighborhood restaurant for shared modern Spanish plates near the Art Walk and Plaza Santa Ana. Use it when the route needs a focused sweet stop or casual reset rather than another full meal.",
-        "price": "$$",
+        "price": "$",
         "priceSource": "MICHELIN Guide / Google Maps",
         "hours": {
           "mon": "Closed",
@@ -774,11 +931,11 @@ export const madridNeighborhoodGuides = [
   {
     "id": "list-madrid-letras-stays",
     "slug": "madrid-barrio-de-las-letras-hotels",
-    "seoSlug": "best-places-to-stay",
-    "seoTitle": "Best Places to Stay in Barrio de las Letras, Madrid",
-    "seoDescription": "Best places to stay in Barrio de las Letras, Madrid, for Art Walk access, theater nights, Plaza Santa Ana, and central boutique hotels.",
+    "seoSlug": "best-hotels",
+    "seoTitle": "Best Hotels in Barrio de las Letras, Madrid",
+    "seoDescription": "Best hotels in Barrio de las Letras, Madrid, for Art Walk access, Plaza Santa Ana, theater nights, Huertas dinners, and classic central hotels.",
     "title": "Art Walk Hotels With Nightlife Nearby",
-    "description": "Las Letras is a strong base when museums, theater, and central bars matter equally. The best stays sit close to the Art Walk while keeping Sol, Chueca, and Retiro walkable.",
+    "description": "Las Letras hotels should keep museum days, theater starts, and late dinners close without making every night feel loud. These picks cover boutique Huertas bases, Plaza Santa Ana energy, grand Art Walk formality, and Cibeles/Gran Via practicality.",
     "url": "https://www.google.com/maps/search/barrio+de+las+letras+madrid+hotels",
     "category": "Stay",
     "location": {
@@ -797,13 +954,15 @@ export const madridNeighborhoodGuides = [
     "createdAt": "2026-05-06T00:00:00.000Z",
     "stops": [
       {
-        "id": "letras-stay-room-mate-alba",
+        "id": "stay-room-mate-alba",
         "name": "Room Mate Alba",
         "coordinates": [
           40.4135,
           -3.7002
         ],
-        "description": "Room Mate Alba belongs in the Barrio de las Letras stay guide because it solves a specific base tradeoff. A neighborhood-fit boutique stay for travelers who want Huertas, Plaza Santa Ana, and the Art Walk close without choosing a luxury palace hotel. Choose it when service, quiet, and room quality should carry as much weight as location.",
+        "description": "Room Mate Alba belongs in Las Letras hotel planning because it keeps Huertas, Plaza Santa Ana, and the Art Walk close without moving into palace-hotel pricing. Choose it when the trip needs a boutique central base that can handle museum mornings and late neighborhood dinners.",
+        "price": "$",
+        "priceSource": "Google Maps / hotel site",
         "hours": {
           "mon": "24 hours",
           "tue": "24 hours",
@@ -816,13 +975,15 @@ export const madridNeighborhoodGuides = [
         "photo": "https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=900&q=80"
       },
       {
-        "id": "letras-stay-me-madrid",
+        "id": "stay-me-madrid-reina-victoria",
         "name": "ME Madrid Reina Victoria",
         "coordinates": [
           40.4142,
           -3.701
         ],
-        "description": "ME Madrid Reina Victoria belongs in the Barrio de las Letras stay guide because it solves a specific base tradeoff. A Plaza Santa Ana base with nightlife and theater at the door, best for travelers who value location and energy over maximum quiet. Choose it when location, sleep quality, and budget need to be balanced honestly instead of picked by map distance alone.",
+        "description": "ME Madrid Reina Victoria is the Plaza Santa Ana hotel for travelers who want theater, bars, and Las Letras foot traffic at the door. It is best for guests who value address and energy over maximum quiet, especially when evenings are likely to stay around Huertas.",
+        "price": "$$",
+        "priceSource": "Google Maps / hotel site",
         "hours": {
           "mon": "24 hours",
           "tue": "24 hours",
@@ -835,13 +996,15 @@ export const madridNeighborhoodGuides = [
         "photo": "https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=900&q=80"
       },
       {
-        "id": "letras-stay-westin-palace",
+        "id": "stay-westin-palace",
         "name": "The Westin Palace Madrid",
         "coordinates": [
           40.4153,
           -3.695
         ],
-        "description": "The Westin Palace Madrid belongs in the Barrio de las Letras stay guide because it solves a specific base tradeoff. A grand Art Walk hotel for Prado/Thyssen access and a more formal stay on the edge of Las Letras. Choose it when service, quiet, and room quality should carry as much weight as location.",
+        "description": "The Westin Palace is the formal Art Walk hotel on the Las Letras edge, giving Prado and Thyssen access with a grand-hotel rhythm. Use it when the stay should feel classic, museum-led, and calmer than the tighter Huertas nightlife blocks.",
+        "price": "$$",
+        "priceSource": "Google Maps / hotel site",
         "hours": {
           "mon": "24 hours",
           "tue": "24 hours",
@@ -854,13 +1017,15 @@ export const madridNeighborhoodGuides = [
         "photo": "https://upload.wikimedia.org/wikipedia/commons/9/9e/Hotel_Palace_%28Madrid%29_01.jpg"
       },
       {
-        "id": "letras-stay-nh-suecia",
+        "id": "stay-nh-collection-suecia",
         "name": "NH Collection Madrid Suecia",
         "coordinates": [
           40.417,
           -3.6969
         ],
-        "description": "NH Collection Madrid Suecia belongs in the Barrio de las Letras stay guide because it solves a specific base tradeoff. A central hotel between Las Letras, Gran Via, and Cibeles, useful when the plan mixes museums, shopping, and bars. Choose it when location, sleep quality, and budget need to be balanced honestly instead of picked by map distance alone.",
+        "description": "NH Collection Madrid Suecia is useful when Las Letras, Gran Via, Cibeles, and museum days all need to stay walkable. It fits travelers who want a central hotel with more business-polish and rooftop reach than a small neighborhood inn.",
+        "price": "$",
+        "priceSource": "NH Collection / Google Maps",
         "hours": {
           "mon": "24 hours",
           "tue": "24 hours",
@@ -883,8 +1048,157 @@ export const madridNeighborhoodGuides = [
         "url": "https://www.cntraveler.com/hotels/madrid"
       },
       {
+        "name": "MICHELIN Guide - Only YOU Boutique Hotel Madrid",
+        "url": "https://guide.michelin.com/us/en/hotels-stays/madrid/only-you-boutique-hotel-madrid-8366"
+      },
+      {
+        "name": "Mandarin Oriental Ritz Madrid official",
+        "url": "https://www.mandarinoriental.com/en/madrid"
+      },
+      {
+        "name": "Tourism Madrid - Pestana Plaza Mayor",
+        "url": "https://www.esmadrid.com/en/accommodation/pestana-plaza-mayor"
+      },
+      {
+        "name": "Google Maps",
+        "url": "https://maps.google.com"
+      }
+    ]
+  },
+  {
+    "id": "list-madrid-letras-hostels",
+    "slug": "madrid-barrio-de-las-letras-hostels",
+    "seoSlug": "best-hostels",
+    "seoTitle": "Best Hostels near Barrio de las Letras, Madrid",
+    "seoDescription": "Best hostels near Barrio de las Letras, Madrid, for Art Walk days, Atocha access, Tirso de Molina, social dorms, and budget central rooms.",
+    "title": "Hostels for the Art Walk Edge",
+    "description": "Las Letras has fewer true hostel addresses than hotel addresses, so the useful hostel set sits on its Atocha, Tirso, and old-center edges. These picks keep the Prado, Reina Sofia, Huertas, and Plaza Mayor reachable while still offering dorm value or social common spaces.",
+    "url": "https://www.google.com/maps/search/barrio+de+las+letras+madrid+hostels",
+    "category": "Stay",
+    "location": {
+      "city": "Madrid",
+      "neighborhood": "Barrio de las Letras",
+      "country": "Spain",
+      "continent": "Europe",
+      "scope": "city"
+    },
+    "creator": {
+      "id": "user-rguide-stay",
+      "name": "R Stay",
+      "avatar": "data:image/svg+xml;utf8,%0A%20%20%20%20%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22160%22%20height%3D%22160%22%20viewBox%3D%220%200%20160%20160%22%3E%0A%20%20%20%20%20%20%3Crect%20width%3D%22160%22%20height%3D%22160%22%20rx%3D%2280%22%20fill%3D%22%230f766e%22%20%2F%3E%0A%20%20%20%20%20%20%3Ctext%20x%3D%2250%25%22%20y%3D%2254%25%22%20text-anchor%3D%22middle%22%20dominant-baseline%3D%22middle%22%0A%20%20%20%20%20%20%20%20font-family%3D%22Arial%2C%20sans-serif%22%20font-size%3D%2276%22%20font-weight%3D%22700%22%20fill%3D%22white%22%3ER%3C%2Ftext%3E%0A%20%20%20%20%3C%2Fsvg%3E%0A%20%20"
+    },
+    "upvotes": 0,
+    "createdAt": "2026-05-06T00:00:00.000Z",
+    "stops": [
+      {
+        "id": "stay-latroupe-prado",
+        "name": "Latroupe Prado",
+        "coordinates": [
+          40.4119,
+          -3.6943
+        ],
+        "description": "Latroupe Prado is the Art Walk hostel because its official site puts it beside Atocha and the Reina Sofia, with coworking, bar, restaurant, and common-space infrastructure. Use it when museums and rail access matter more than sleeping inside the nightlife core.",
+        "price": "$",
+        "priceSource": "Latroupe official / Hostelworld",
+        "hours": {
+          "mon": "24 hours",
+          "tue": "24 hours",
+          "wed": "24 hours",
+          "thu": "24 hours",
+          "fri": "24 hours",
+          "sat": "24 hours",
+          "sun": "24 hours"
+        },
+        "photo": "https://images.unsplash.com/photo-1555854877-bab0e564b8d5?auto=format&fit=crop&w=900&q=80"
+      },
+      {
+        "id": "stay-2060-newton",
+        "name": "2060 The Newton Hostel",
+        "coordinates": [
+          40.412,
+          -3.7048
+        ],
+        "description": "2060 The Newton Hostel gives Madrid hostel planning a Tirso de Molina base with strong center access, rooftop-bar utility, and common areas. Hostelworld lists high review volume and location strength, but the best fit is still budget travelers who can tolerate a busier shared-room setting.",
+        "price": "$",
+        "priceSource": "Hostelworld / Google Maps",
+        "hours": {
+          "mon": "24 hours",
+          "tue": "24 hours",
+          "wed": "24 hours",
+          "thu": "24 hours",
+          "fri": "24 hours",
+          "sat": "24 hours",
+          "sun": "24 hours"
+        },
+        "photo": "https://images.unsplash.com/photo-1555854877-bab0e564b8d5?auto=format&fit=crop&w=900&q=80"
+      },
+      {
+        "id": "stay-the-hat",
+        "name": "The Hat Madrid",
+        "coordinates": [
+          40.4145,
+          -3.7073
+        ],
+        "description": "The Hat Madrid is the central hostel pick because Hostelworld and the official site both emphasize Plaza Mayor proximity, private-or-dorm flexibility, events, and rooftop social energy. Use it when budget and meeting people matter, but the route still needs Sol, La Latina, and old Madrid on foot.",
+        "price": "$",
+        "priceSource": "Hostelworld / The Hat official",
+        "hours": {
+          "mon": "24 hours",
+          "tue": "24 hours",
+          "wed": "24 hours",
+          "thu": "24 hours",
+          "fri": "24 hours",
+          "sat": "24 hours",
+          "sun": "24 hours"
+        },
+        "photo": "https://images.unsplash.com/photo-1555854877-bab0e564b8d5?auto=format&fit=crop&w=900&q=80"
+      },
+      {
+        "id": "stay-ok-hostel",
+        "name": "Ok Hostel Madrid",
+        "coordinates": [
+          40.4113,
+          -3.708
+        ],
+        "description": "Ok Hostel Madrid is the La Latina and Tirso de Molina utility hostel, useful for travelers who want central walks, social energy, and a lower nightly rate. Choose it when the plan points toward Cava Baja, Lavapies, and Sol more than Retiro-side quiet.",
+        "price": "$",
+        "priceSource": "Hostelworld / Google Maps",
+        "hours": {
+          "mon": "24 hours",
+          "tue": "24 hours",
+          "wed": "24 hours",
+          "thu": "24 hours",
+          "fri": "24 hours",
+          "sat": "24 hours",
+          "sun": "24 hours"
+        },
+        "photo": "https://images.unsplash.com/photo-1555854877-bab0e564b8d5?auto=format&fit=crop&w=900&q=80"
+      }
+    ],
+    "sources": [
+      {
         "name": "Hostelworld - Madrid Hostels",
         "url": "https://www.hostelworld.com/hostels/europe/spain/madrid/"
+      },
+      {
+        "name": "The Hat Madrid official",
+        "url": "https://www.thehatmadrid.com/en/"
+      },
+      {
+        "name": "Latroupe Prado official",
+        "url": "https://www.latroupe.com/en/latroupe-prado/hostel/"
+      },
+      {
+        "name": "Hostelworld - Onefam Madrid",
+        "url": "https://www.hostelworld.com/hostels/p/286369/onefam-madrid/"
+      },
+      {
+        "name": "Hostelworld - 2060 The Newton Hostel",
+        "url": "https://www.hostelworld.com/hostels/p/282289/2060-the-newton-hostel/"
+      },
+      {
+        "name": "Hostelworld - room00 Chueca Hostel",
+        "url": "https://www.hostelworld.com/st/hotels/p/83795/room007-chueca-hostel/"
       },
       {
         "name": "Google Maps",
@@ -1092,7 +1406,7 @@ export const madridNeighborhoodGuides = [
           -3.6882
         ],
         "description": "Florida Retiro earns its spot in the Retiro food guide because it fills a clear meal role for this route. The in-park dining and drinks complex, useful when the day should stay inside Retiro rather than moving back toward Sol. Use it when the route needs a focused sweet stop or casual reset rather than another full meal.",
-        "price": "$$",
+        "price": "$",
         "priceSource": "Time Out / Google Maps",
         "hours": {
           "mon": "12:00 PM-12:00 AM",
@@ -1282,11 +1596,11 @@ export const madridNeighborhoodGuides = [
   {
     "id": "list-madrid-retiro-stays",
     "slug": "madrid-retiro-hotels",
-    "seoSlug": "best-places-to-stay",
-    "seoTitle": "Best Places to Stay in Retiro, Madrid",
-    "seoDescription": "Best places to stay in Retiro, Madrid, for Art Walk access, park mornings, luxury hotels, Atocha transit, and quieter central sleep.",
+    "seoSlug": "best-hotels",
+    "seoTitle": "Best Hotels in Retiro, Madrid",
+    "seoDescription": "Best hotels in Retiro, Madrid, for Prado access, park mornings, Atocha rail links, museum days, and quieter central sleep.",
     "title": "Museum Hotels and Park Mornings",
-    "description": "Retiro is the stay choice for travelers who want green space, the Prado triangle, and quieter nights close to the center. The strongest hotels sit around Jerónimos, Alfonso XII, and Atocha.",
+    "description": "Retiro hotels are strongest when they turn the park and Art Walk into the rhythm of the stay. This guide balances grand luxury, practical Alfonso XII access, Atocha design utility, and formal museum-corridor hotels.",
     "url": "https://www.google.com/maps/search/retiro+madrid+hotels",
     "category": "Stay",
     "location": {
@@ -1305,13 +1619,15 @@ export const madridNeighborhoodGuides = [
     "createdAt": "2026-05-06T00:00:00.000Z",
     "stops": [
       {
-        "id": "retiro-stay-mandarin",
+        "id": "stay-mandarin-oriental-ritz",
         "name": "Mandarin Oriental Ritz, Madrid",
         "coordinates": [
           40.4156,
           -3.6926
         ],
-        "description": "Mandarin Oriental Ritz, Madrid belongs in the Retiro stay guide because it solves a specific base tradeoff. The grand luxury choice beside the Prado and Retiro, with the strongest museum-and-park positioning in the city. Choose it when service, quiet, and room quality should carry as much weight as location.",
+        "description": "Mandarin Oriental Ritz is the museum-corridor luxury anchor because it sits beside the Prado and Retiro in Madrid's Golden Triangle of Art. Choose it when Belle Epoque atmosphere, service, dining, and park-museum proximity matter more than nightlife at the door.",
+        "price": "$$",
+        "priceSource": "Mandarin Oriental / MICHELIN Guide",
         "hours": {
           "mon": "24 hours",
           "tue": "24 hours",
@@ -1324,13 +1640,15 @@ export const madridNeighborhoodGuides = [
         "photo": "https://upload.wikimedia.org/wikipedia/commons/6/62/Hotel_Ritz_%28Madrid%29_01.jpg"
       },
       {
-        "id": "retiro-stay-petit-palace-savoy",
+        "id": "stay-petit-palace-savoy",
         "name": "Petit Palace Savoy Alfonso XII",
         "coordinates": [
           40.4166,
           -3.6891
         ],
-        "description": "Petit Palace Savoy Alfonso XII belongs in the Retiro stay guide because it solves a specific base tradeoff. A practical Alfonso XII stay facing Retiro, good for park mornings and museum walks without luxury pricing. Choose it when service, quiet, and room quality should carry as much weight as location.",
+        "description": "Petit Palace Savoy Alfonso XII gives the Retiro hotel set a practical park-facing option without the grand-luxury jump. It works when morning walks, museum access, and a quieter central sleep matter more than rooftop scene or destination dining.",
+        "price": "$",
+        "priceSource": "Google Maps / hotel site",
         "hours": {
           "mon": "24 hours",
           "tue": "24 hours",
@@ -1343,13 +1661,15 @@ export const madridNeighborhoodGuides = [
         "photo": "https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=900&q=80"
       },
       {
-        "id": "retiro-stay-only-you-atocha",
+        "id": "stay-only-you-atocha",
         "name": "Only YOU Hotel Atocha",
         "coordinates": [
           40.4076,
           -3.6909
         ],
-        "description": "Only YOU Hotel Atocha belongs in the Retiro stay guide because it solves a specific base tradeoff. A design hotel by Atocha for travelers using rail connections while staying close to Reina Sofia, Prado, and Retiro. Choose it when you want the neighborhood on foot without choosing a large corporate-feeling base.",
+        "description": "Only YOU Hotel Atocha belongs in Retiro hotel planning for travelers using rail connections while staying near Reina Sofia, Prado, and the park. Choose it when transit and museum pacing are doing more work than bar access.",
+        "price": "$",
+        "priceSource": "Google Maps / hotel site",
         "hours": {
           "mon": "24 hours",
           "tue": "24 hours",
@@ -1362,13 +1682,131 @@ export const madridNeighborhoodGuides = [
         "photo": "https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=900&q=80"
       },
       {
-        "id": "retiro-stay-latroupe-prado",
+        "id": "stay-westin-palace",
+        "name": "The Westin Palace Madrid",
+        "coordinates": [
+          40.4153,
+          -3.695
+        ],
+        "description": "The Westin Palace is the formal Art Walk hotel on the Las Letras edge, giving Prado and Thyssen access with a grand-hotel rhythm. Use it when the stay should feel classic, museum-led, and calmer than the tighter Huertas nightlife blocks.",
+        "price": "$$",
+        "priceSource": "Google Maps / hotel site",
+        "hours": {
+          "mon": "24 hours",
+          "tue": "24 hours",
+          "wed": "24 hours",
+          "thu": "24 hours",
+          "fri": "24 hours",
+          "sat": "24 hours",
+          "sun": "24 hours"
+        },
+        "photo": "https://upload.wikimedia.org/wikipedia/commons/9/9e/Hotel_Palace_%28Madrid%29_01.jpg"
+      }
+    ],
+    "sources": [
+      {
+        "name": "Tourism Madrid - MICHELIN Key Hotels",
+        "url": "https://www.esmadrid.com/en/michelin-key-hotels"
+      },
+      {
+        "name": "Condé Nast Traveler - Madrid hotels",
+        "url": "https://www.cntraveler.com/hotels/madrid"
+      },
+      {
+        "name": "MICHELIN Guide - Only YOU Boutique Hotel Madrid",
+        "url": "https://guide.michelin.com/us/en/hotels-stays/madrid/only-you-boutique-hotel-madrid-8366"
+      },
+      {
+        "name": "Mandarin Oriental Ritz Madrid official",
+        "url": "https://www.mandarinoriental.com/en/madrid"
+      },
+      {
+        "name": "Tourism Madrid - Pestana Plaza Mayor",
+        "url": "https://www.esmadrid.com/en/accommodation/pestana-plaza-mayor"
+      },
+      {
+        "name": "Google Maps",
+        "url": "https://maps.google.com"
+      }
+    ]
+  },
+  {
+    "id": "list-madrid-retiro-hostels",
+    "slug": "madrid-retiro-hostels",
+    "seoSlug": "best-hostels",
+    "seoTitle": "Best Hostels near Retiro, Madrid",
+    "seoDescription": "Best hostels near Retiro, Madrid, for Atocha access, Prado and Reina Sofia days, budget rooms, and central transit without nightlife-first pressure.",
+    "title": "Budget Bases for Museum Days",
+    "description": "Retiro does not have a deep hostel bench inside the park-side blocks, so the honest hostel route uses Atocha, Lavapies, and Tirso edges. These picks keep museums and rail practical while avoiding a stay plan that pretends every budget bed is in Jeronimos.",
+    "url": "https://www.google.com/maps/search/retiro+madrid+hostels",
+    "category": "Stay",
+    "location": {
+      "city": "Madrid",
+      "neighborhood": "Retiro",
+      "country": "Spain",
+      "continent": "Europe",
+      "scope": "city"
+    },
+    "creator": {
+      "id": "user-rguide-stay",
+      "name": "R Stay",
+      "avatar": "data:image/svg+xml;utf8,%0A%20%20%20%20%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22160%22%20height%3D%22160%22%20viewBox%3D%220%200%20160%20160%22%3E%0A%20%20%20%20%20%20%3Crect%20width%3D%22160%22%20height%3D%22160%22%20rx%3D%2280%22%20fill%3D%22%230f766e%22%20%2F%3E%0A%20%20%20%20%20%20%3Ctext%20x%3D%2250%25%22%20y%3D%2254%25%22%20text-anchor%3D%22middle%22%20dominant-baseline%3D%22middle%22%0A%20%20%20%20%20%20%20%20font-family%3D%22Arial%2C%20sans-serif%22%20font-size%3D%2276%22%20font-weight%3D%22700%22%20fill%3D%22white%22%3ER%3C%2Ftext%3E%0A%20%20%20%20%3C%2Fsvg%3E%0A%20%20"
+    },
+    "upvotes": 0,
+    "createdAt": "2026-05-06T00:00:00.000Z",
+    "stops": [
+      {
+        "id": "stay-latroupe-prado",
         "name": "Latroupe Prado",
         "coordinates": [
           40.4119,
           -3.6943
         ],
-        "description": "Latroupe Prado belongs in the Retiro stay guide because it solves a specific base tradeoff. A budget-to-midrange base for museum days and Atocha access, useful when the trip should spend money on meals and culture instead of rooms. Choose it when museum days or onward rail connections are doing more work than nightlife access.",
+        "description": "Latroupe Prado is the Art Walk hostel because its official site puts it beside Atocha and the Reina Sofia, with coworking, bar, restaurant, and common-space infrastructure. Use it when museums and rail access matter more than sleeping inside the nightlife core.",
+        "price": "$",
+        "priceSource": "Latroupe official / Hostelworld",
+        "hours": {
+          "mon": "24 hours",
+          "tue": "24 hours",
+          "wed": "24 hours",
+          "thu": "24 hours",
+          "fri": "24 hours",
+          "sat": "24 hours",
+          "sun": "24 hours"
+        },
+        "photo": "https://images.unsplash.com/photo-1555854877-bab0e564b8d5?auto=format&fit=crop&w=900&q=80"
+      },
+      {
+        "id": "stay-2060-newton",
+        "name": "2060 The Newton Hostel",
+        "coordinates": [
+          40.412,
+          -3.7048
+        ],
+        "description": "2060 The Newton Hostel gives Madrid hostel planning a Tirso de Molina base with strong center access, rooftop-bar utility, and common areas. Hostelworld lists high review volume and location strength, but the best fit is still budget travelers who can tolerate a busier shared-room setting.",
+        "price": "$",
+        "priceSource": "Hostelworld / Google Maps",
+        "hours": {
+          "mon": "24 hours",
+          "tue": "24 hours",
+          "wed": "24 hours",
+          "thu": "24 hours",
+          "fri": "24 hours",
+          "sat": "24 hours",
+          "sun": "24 hours"
+        },
+        "photo": "https://images.unsplash.com/photo-1555854877-bab0e564b8d5?auto=format&fit=crop&w=900&q=80"
+      },
+      {
+        "id": "stay-ok-hostel",
+        "name": "Ok Hostel Madrid",
+        "coordinates": [
+          40.4113,
+          -3.708
+        ],
+        "description": "Ok Hostel Madrid is the La Latina and Tirso de Molina utility hostel, useful for travelers who want central walks, social energy, and a lower nightly rate. Choose it when the plan points toward Cava Baja, Lavapies, and Sol more than Retiro-side quiet.",
+        "price": "$",
+        "priceSource": "Hostelworld / Google Maps",
         "hours": {
           "mon": "24 hours",
           "tue": "24 hours",
@@ -1383,16 +1821,28 @@ export const madridNeighborhoodGuides = [
     ],
     "sources": [
       {
-        "name": "Tourism Madrid - MICHELIN Key Hotels",
-        "url": "https://www.esmadrid.com/en/michelin-key-hotels"
-      },
-      {
-        "name": "Condé Nast Traveler - Madrid hotels",
-        "url": "https://www.cntraveler.com/hotels/madrid"
-      },
-      {
         "name": "Hostelworld - Madrid Hostels",
         "url": "https://www.hostelworld.com/hostels/europe/spain/madrid/"
+      },
+      {
+        "name": "The Hat Madrid official",
+        "url": "https://www.thehatmadrid.com/en/"
+      },
+      {
+        "name": "Latroupe Prado official",
+        "url": "https://www.latroupe.com/en/latroupe-prado/hostel/"
+      },
+      {
+        "name": "Hostelworld - Onefam Madrid",
+        "url": "https://www.hostelworld.com/hostels/p/286369/onefam-madrid/"
+      },
+      {
+        "name": "Hostelworld - 2060 The Newton Hostel",
+        "url": "https://www.hostelworld.com/hostels/p/282289/2060-the-newton-hostel/"
+      },
+      {
+        "name": "Hostelworld - room00 Chueca Hostel",
+        "url": "https://www.hostelworld.com/st/hotels/p/83795/room007-chueca-hostel/"
       },
       {
         "name": "Google Maps",
@@ -1558,7 +2008,7 @@ export const madridNeighborhoodGuides = [
           -3.7041
         ],
         "description": "Playing Solo earns its spot in the Malasana food guide because it fills a clear meal role for this route. A tiny kitchen-facing tasting-menu room that gives Malasana a modern destination dinner without leaving the neighborhood's small-scale feel. Use it when the meal should be a reservation anchor rather than a casual crawl stop.",
-        "price": "$$",
+        "price": "$",
         "priceSource": "The Infatuation",
         "hours": {
           "mon": "Closed",
@@ -1790,11 +2240,11 @@ export const madridNeighborhoodGuides = [
   {
     "id": "list-madrid-malasana-stays",
     "slug": "madrid-malasana-hotels",
-    "seoSlug": "best-places-to-stay",
-    "seoTitle": "Best Places to Stay in Malasana, Madrid",
-    "seoDescription": "Best places to stay in Malasana, Madrid, for indie nightlife, Chueca access, social hostels, boutique hotels, and quieter Tribunal edges.",
-    "title": "Nightlife Reach With a Reset",
-    "description": "Malasana works as a base when you want cafes, bars, and vintage streets close. The best choices sit on the quieter edges or lean into social-hostel energy deliberately.",
+    "seoSlug": "best-hotels",
+    "seoTitle": "Best Hotels in Malasana, Madrid",
+    "seoDescription": "Best hotels in Malasana, Madrid, for Tribunal access, Gran Via edges, boutique design, value hotels, and quieter resets near nightlife.",
+    "title": "Hotels Near the Noise, Not Inside It",
+    "description": "Malasana hotels should give travelers the neighborhood without forcing every night to end above a bar. These picks cover spa-level calm, independent design, and straightforward value rooms around Tribunal, Gran Via, and the Movida streets.",
     "url": "https://www.google.com/maps/search/malasana+madrid+hotels",
     "category": "Stay",
     "location": {
@@ -1813,13 +2263,15 @@ export const madridNeighborhoodGuides = [
     "createdAt": "2026-05-06T00:00:00.000Z",
     "stops": [
       {
-        "id": "malasana-stay-urso",
+        "id": "stay-urso",
         "name": "URSO Hotel & Spa Madrid",
         "coordinates": [
           40.4252,
           -3.6999
         ],
-        "description": "URSO Hotel & Spa Madrid belongs in the Malasana stay guide because it solves a specific base tradeoff. A polished edge-of-Malasana hotel that keeps the neighborhood close while giving the stay more calm and spa-level reset. Choose it when service, quiet, and room quality should carry as much weight as location.",
+        "description": "URSO is the calmer luxury edge between Malasana, Chamberi, and Chueca, backed by MICHELIN Key attention for a restored-palace stay with spa-level reset. Use it when you want nightlife nearby but do not want to sleep directly inside the loudest blocks.",
+        "price": "$$",
+        "priceSource": "MICHELIN Key Hotels / Google Maps",
         "hours": {
           "mon": "24 hours",
           "tue": "24 hours",
@@ -1832,13 +2284,15 @@ export const madridNeighborhoodGuides = [
         "photo": "https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=900&q=80"
       },
       {
-        "id": "malasana-stay-onefam",
-        "name": "Onefam Madrid",
+        "id": "stay-seven-islas",
+        "name": "7 Islas Hotel",
         "coordinates": [
-          40.4287,
-          -3.7039
+          40.4217,
+          -3.7012
         ],
-        "description": "Onefam Madrid belongs in the Malasana stay guide because it solves a specific base tradeoff. A social hostel option for travelers who want activities, dorm value, and immediate Malasana nightlife access. Choose it when budget, shared spaces, and meeting other travelers matter more than a quiet hotel reset.",
+        "description": "7 Islas Hotel is the Gran Via-to-Malasana design option, useful when the stay should feel independent, art-led, and close to nightlife without becoming a hostel. Its official materials emphasize the Valverde address, gallery feel, restaurant-bar, and slower boutique rhythm between Gran Via and Malasana.",
+        "price": "$",
+        "priceSource": "7 Islas official / Google Maps",
         "hours": {
           "mon": "24 hours",
           "tue": "24 hours",
@@ -1848,35 +2302,39 @@ export const madridNeighborhoodGuides = [
           "sat": "24 hours",
           "sun": "24 hours"
         },
-        "photo": "https://images.unsplash.com/photo-1555854877-bab0e564b8d5?auto=format&fit=crop&w=900&q=80"
+        "photo": "https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=900&q=80"
       },
       {
-        "id": "malasana-stay-bastardo",
-        "name": "Bastardo Hostel",
-        "coordinates": [
-          40.4248,
-          -3.7009
-        ],
-        "description": "Bastardo Hostel belongs in the Malasana stay guide because it solves a specific base tradeoff. A design hostel/hotel hybrid near Tribunal that works for social travelers who still want a more styled room than a basic dorm. Choose it when budget, shared spaces, and meeting other travelers matter more than a quiet hotel reset.",
-        "hours": {
-          "mon": "24 hours",
-          "tue": "24 hours",
-          "wed": "24 hours",
-          "thu": "24 hours",
-          "fri": "24 hours",
-          "sat": "24 hours",
-          "sun": "24 hours"
-        },
-        "photo": "https://images.unsplash.com/photo-1555854877-bab0e564b8d5?auto=format&fit=crop&w=900&q=80"
-      },
-      {
-        "id": "malasana-stay-ibis-centro",
+        "id": "stay-ibis-centro",
         "name": "Ibis Madrid Centro",
         "coordinates": [
           40.4292,
           -3.7037
         ],
-        "description": "Ibis Madrid Centro belongs in the Malasana stay guide because it solves a specific base tradeoff. A straightforward value hotel for travelers who want Malasana location without hostel format or luxury cost. Choose it when budget, shared spaces, and meeting other travelers matter more than a quiet hotel reset.",
+        "description": "Ibis Madrid Centro is the value hotel pick inside Malasana, useful when location and predictable sleep matter more than boutique character. Tourism Madrid places it in the Movida-linked neighborhood, so it works for travelers who want the bars close but still prefer hotel basics over dorms.",
+        "price": "$",
+        "priceSource": "Tourism Madrid / Google Maps",
+        "hours": {
+          "mon": "24 hours",
+          "tue": "24 hours",
+          "wed": "24 hours",
+          "thu": "24 hours",
+          "fri": "24 hours",
+          "sat": "24 hours",
+          "sun": "24 hours"
+        },
+        "photo": "https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=900&q=80"
+      },
+      {
+        "id": "stay-brach",
+        "name": "Brach Madrid",
+        "coordinates": [
+          40.4198,
+          -3.6995
+        ],
+        "description": "Brach Madrid gives the Chueca and Gran Via edge a polished newer hotel option with a more fashion-forward mood. It fits travelers who want central nightlife reach, shopping, and design without choosing a hostel or old grand hotel.",
+        "price": "$$",
+        "priceSource": "Google Maps / hotel site",
         "hours": {
           "mon": "24 hours",
           "tue": "24 hours",
@@ -1899,8 +2357,136 @@ export const madridNeighborhoodGuides = [
         "url": "https://www.cntraveler.com/hotels/madrid"
       },
       {
+        "name": "MICHELIN Guide - Only YOU Boutique Hotel Madrid",
+        "url": "https://guide.michelin.com/us/en/hotels-stays/madrid/only-you-boutique-hotel-madrid-8366"
+      },
+      {
+        "name": "Mandarin Oriental Ritz Madrid official",
+        "url": "https://www.mandarinoriental.com/en/madrid"
+      },
+      {
+        "name": "Tourism Madrid - Pestana Plaza Mayor",
+        "url": "https://www.esmadrid.com/en/accommodation/pestana-plaza-mayor"
+      },
+      {
+        "name": "Google Maps",
+        "url": "https://maps.google.com"
+      }
+    ]
+  },
+  {
+    "id": "list-madrid-malasana-hostels",
+    "slug": "madrid-malasana-hostels",
+    "seoSlug": "best-hostels",
+    "seoTitle": "Best Hostels in Malasana, Madrid",
+    "seoDescription": "Best hostels in Malasana, Madrid, for social travelers, Tribunal access, dorm value, design-hostel rooms, and nightlife within walking distance.",
+    "title": "Social Beds Around Tribunal",
+    "description": "Malasana hostels are strongest when the stay leans into the neighborhood: common spaces, group dinners, late bars, and easy Tribunal movement. This guide separates true social hostels from design-hostel hybrids so budget travelers can choose the right level of noise and community.",
+    "url": "https://www.google.com/maps/search/malasana+madrid+hostels",
+    "category": "Stay",
+    "location": {
+      "city": "Madrid",
+      "neighborhood": "Malasana",
+      "country": "Spain",
+      "continent": "Europe",
+      "scope": "city"
+    },
+    "creator": {
+      "id": "user-rguide-stay",
+      "name": "R Stay",
+      "avatar": "data:image/svg+xml;utf8,%0A%20%20%20%20%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22160%22%20height%3D%22160%22%20viewBox%3D%220%200%20160%20160%22%3E%0A%20%20%20%20%20%20%3Crect%20width%3D%22160%22%20height%3D%22160%22%20rx%3D%2280%22%20fill%3D%22%230f766e%22%20%2F%3E%0A%20%20%20%20%20%20%3Ctext%20x%3D%2250%25%22%20y%3D%2254%25%22%20text-anchor%3D%22middle%22%20dominant-baseline%3D%22middle%22%0A%20%20%20%20%20%20%20%20font-family%3D%22Arial%2C%20sans-serif%22%20font-size%3D%2276%22%20font-weight%3D%22700%22%20fill%3D%22white%22%3ER%3C%2Ftext%3E%0A%20%20%20%20%3C%2Fsvg%3E%0A%20%20"
+    },
+    "upvotes": 0,
+    "createdAt": "2026-05-06T00:00:00.000Z",
+    "stops": [
+      {
+        "id": "stay-onefam-madrid",
+        "name": "Onefam Madrid",
+        "coordinates": [
+          40.4287,
+          -3.7039
+        ],
+        "description": "Onefam Madrid is the Malasana social-hostel pick because Hostelworld describes the chain around family-style dinners, daily activities, and nights out. Use it when the point of the stay is meeting people and using the neighborhood's bars, not retreating from them.",
+        "price": "$",
+        "priceSource": "Hostelworld / Google Maps",
+        "hours": {
+          "mon": "24 hours",
+          "tue": "24 hours",
+          "wed": "24 hours",
+          "thu": "24 hours",
+          "fri": "24 hours",
+          "sat": "24 hours",
+          "sun": "24 hours"
+        },
+        "photo": "https://images.unsplash.com/photo-1555854877-bab0e564b8d5?auto=format&fit=crop&w=900&q=80"
+      },
+      {
+        "id": "stay-bastardo",
+        "name": "Bastardo Hostel",
+        "coordinates": [
+          40.4248,
+          -3.7009
+        ],
+        "description": "Bastardo Hostel works as the Tribunal design-hostel hybrid, sitting between Malasana and Chueca with private and shared-room flexibility. It fits travelers who want social spaces and style but still need an easier reset than a pure party hostel.",
+        "price": "$",
+        "priceSource": "Bastardo official / Hostelworld",
+        "hours": {
+          "mon": "24 hours",
+          "tue": "24 hours",
+          "wed": "24 hours",
+          "thu": "24 hours",
+          "fri": "24 hours",
+          "sat": "24 hours",
+          "sun": "24 hours"
+        },
+        "photo": "https://images.unsplash.com/photo-1555854877-bab0e564b8d5?auto=format&fit=crop&w=900&q=80"
+      },
+      {
+        "id": "stay-room00-chueca",
+        "name": "room00 Chueca Hostel",
+        "coordinates": [
+          40.4245,
+          -3.6977
+        ],
+        "description": "room00 Chueca Hostel is the Chueca dorm-and-private-room option on Hortaleza, close to Chueca, Malasana, and Gran Via. Hostelworld and local listings make the tradeoff clear: strong location and low price, with simpler atmosphere than the city's more social hostels.",
+        "price": "$",
+        "priceSource": "Hostelworld / Visit Chueca",
+        "hours": {
+          "mon": "24 hours",
+          "tue": "24 hours",
+          "wed": "24 hours",
+          "thu": "24 hours",
+          "fri": "24 hours",
+          "sat": "24 hours",
+          "sun": "24 hours"
+        },
+        "photo": "https://images.unsplash.com/photo-1555854877-bab0e564b8d5?auto=format&fit=crop&w=900&q=80"
+      }
+    ],
+    "sources": [
+      {
         "name": "Hostelworld - Madrid Hostels",
         "url": "https://www.hostelworld.com/hostels/europe/spain/madrid/"
+      },
+      {
+        "name": "The Hat Madrid official",
+        "url": "https://www.thehatmadrid.com/en/"
+      },
+      {
+        "name": "Latroupe Prado official",
+        "url": "https://www.latroupe.com/en/latroupe-prado/hostel/"
+      },
+      {
+        "name": "Hostelworld - Onefam Madrid",
+        "url": "https://www.hostelworld.com/hostels/p/286369/onefam-madrid/"
+      },
+      {
+        "name": "Hostelworld - 2060 The Newton Hostel",
+        "url": "https://www.hostelworld.com/hostels/p/282289/2060-the-newton-hostel/"
+      },
+      {
+        "name": "Hostelworld - room00 Chueca Hostel",
+        "url": "https://www.hostelworld.com/st/hotels/p/83795/room007-chueca-hostel/"
       },
       {
         "name": "Google Maps",
@@ -2087,7 +2673,7 @@ export const madridNeighborhoodGuides = [
           -3.7106
         ],
         "description": "Casa Lucio earns its spot in the La Latina food guide because it fills a clear meal role for this route. The classic old-Madrid dining room for huevos rotos and a splurge-leaning La Latina lunch or dinner. Use it when the meal should be a reservation anchor rather than a casual crawl stop.",
-        "price": "$$",
+        "price": "$",
         "priceSource": "Time Out / Google Maps",
         "hours": {
           "mon": "12:30 PM-4:00 PM, 7:30 PM-11:00 PM",
@@ -2298,11 +2884,11 @@ export const madridNeighborhoodGuides = [
   {
     "id": "list-madrid-la-latina-stays",
     "slug": "madrid-la-latina-hotels",
-    "seoSlug": "best-places-to-stay",
-    "seoTitle": "Best Places to Stay in La Latina, Madrid",
-    "seoDescription": "Best places to stay in La Latina, Madrid, for tapas streets, Plaza Mayor access, social hostels, El Rastro, and old-city private rooms.",
-    "title": "Tapas-First Sleep Bases",
-    "description": "La Latina is a strong base for travelers who want old-city evenings and easy central walks. The best stays balance tapas access with enough quiet to recover.",
+    "seoSlug": "best-hotels",
+    "seoTitle": "Best Hotels in La Latina, Madrid",
+    "seoDescription": "Best hotels in La Latina, Madrid, for Cava Baja tapas, old-city walks, Plaza Mayor access, boutique inns, and central design hotels.",
+    "title": "Hotels for Tapas-First Nights",
+    "description": "La Latina hotels should make Cava Baja, Plaza Mayor, and old-city wandering feel immediate without sacrificing the morning after. These picks lean into boutique scale, Plaza Mayor proximity, and central design hotels that work after tapas nights.",
     "url": "https://www.google.com/maps/search/la+latina+madrid+hotels",
     "category": "Stay",
     "location": {
@@ -2321,32 +2907,15 @@ export const madridNeighborhoodGuides = [
     "createdAt": "2026-05-06T00:00:00.000Z",
     "stops": [
       {
-        "id": "latina-stay-the-hat",
-        "name": "The Hat Madrid",
-        "coordinates": [
-          40.4145,
-          -3.7073
-        ],
-        "description": "The Hat Madrid belongs in the La Latina stay guide because it solves a specific base tradeoff. The social hostel/private-room option that keeps Plaza Mayor, La Latina, and Cava Baja in easy reach. Choose it when budget, shared spaces, and meeting other travelers matter more than a quiet hotel reset.",
-        "hours": {
-          "mon": "24 hours",
-          "tue": "24 hours",
-          "wed": "24 hours",
-          "thu": "24 hours",
-          "fri": "24 hours",
-          "sat": "24 hours",
-          "sun": "24 hours"
-        },
-        "photo": "https://images.unsplash.com/photo-1555854877-bab0e564b8d5?auto=format&fit=crop&w=900&q=80"
-      },
-      {
-        "id": "latina-stay-posada-leon",
+        "id": "stay-posada-leon",
         "name": "Posada del León de Oro",
         "coordinates": [
           40.4124,
           -3.7105
         ],
-        "description": "Posada del León de Oro belongs in the La Latina stay guide because it solves a specific base tradeoff. A boutique old-city stay on Cava Baja for travelers who want the tapas street as the base, not just the evening plan. Choose it when you want the neighborhood on foot without choosing a large corporate-feeling base.",
+        "description": "Posada del León de Oro is the La Latina hotel for travelers who want Cava Baja as the base, not just an evening detour. Choose it when old-city atmosphere, tapas access, and a smaller boutique scale matter more than broad hotel facilities.",
+        "price": "$",
+        "priceSource": "Google Maps / hotel site",
         "hours": {
           "mon": "24 hours",
           "tue": "24 hours",
@@ -2359,13 +2928,131 @@ export const madridNeighborhoodGuides = [
         "photo": "https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=900&q=80"
       },
       {
-        "id": "latina-stay-ok-hostel",
-        "name": "Ok Hostel Madrid",
+        "id": "stay-pestana-plaza-mayor",
+        "name": "Pestana Plaza Mayor Madrid",
         "coordinates": [
-          40.4113,
-          -3.708
+          40.415,
+          -3.7074
         ],
-        "description": "Ok Hostel Madrid belongs in the La Latina stay guide because it solves a specific base tradeoff. A high-utility hostel near La Latina and Tirso de Molina, useful for budget travelers who want social energy and central walks. Choose it when budget, shared spaces, and meeting other travelers matter more than a quiet hotel reset.",
+        "description": "Pestana Plaza Mayor is the historic-center hotel pick for travelers who want to sleep on Madrid de los Austrias rather than commute into it. Tourism Madrid and Pestana both frame the draw clearly: Plaza Mayor frontage, contemporary rooms, spa facilities, and rooftop-season usefulness.",
+        "price": "$$",
+        "priceSource": "Tourism Madrid / Pestana",
+        "hours": {
+          "mon": "24 hours",
+          "tue": "24 hours",
+          "wed": "24 hours",
+          "thu": "24 hours",
+          "fri": "24 hours",
+          "sat": "24 hours",
+          "sun": "24 hours"
+        },
+        "photo": "https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=900&q=80"
+      },
+      {
+        "id": "stay-edition",
+        "name": "The Madrid EDITION",
+        "coordinates": [
+          40.4171,
+          -3.7062
+        ],
+        "description": "The Madrid EDITION earns a hotel slot for travelers who want central design, rooftop energy, and a polished reset within a few blocks of Plaza Mayor and Sol. It works best when the trip should feel contemporary and social without giving up a full-service hotel base.",
+        "price": "$$",
+        "priceSource": "Condé Nast Traveler / Google Maps",
+        "hours": {
+          "mon": "24 hours",
+          "tue": "24 hours",
+          "wed": "24 hours",
+          "thu": "24 hours",
+          "fri": "24 hours",
+          "sat": "24 hours",
+          "sun": "24 hours"
+        },
+        "photo": "https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=900&q=80"
+      },
+      {
+        "id": "stay-room-mate-alba",
+        "name": "Room Mate Alba",
+        "coordinates": [
+          40.4135,
+          -3.7002
+        ],
+        "description": "Room Mate Alba belongs in Las Letras hotel planning because it keeps Huertas, Plaza Santa Ana, and the Art Walk close without moving into palace-hotel pricing. Choose it when the trip needs a boutique central base that can handle museum mornings and late neighborhood dinners.",
+        "price": "$",
+        "priceSource": "Google Maps / hotel site",
+        "hours": {
+          "mon": "24 hours",
+          "tue": "24 hours",
+          "wed": "24 hours",
+          "thu": "24 hours",
+          "fri": "24 hours",
+          "sat": "24 hours",
+          "sun": "24 hours"
+        },
+        "photo": "https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=900&q=80"
+      }
+    ],
+    "sources": [
+      {
+        "name": "Tourism Madrid - MICHELIN Key Hotels",
+        "url": "https://www.esmadrid.com/en/michelin-key-hotels"
+      },
+      {
+        "name": "Condé Nast Traveler - Madrid hotels",
+        "url": "https://www.cntraveler.com/hotels/madrid"
+      },
+      {
+        "name": "MICHELIN Guide - Only YOU Boutique Hotel Madrid",
+        "url": "https://guide.michelin.com/us/en/hotels-stays/madrid/only-you-boutique-hotel-madrid-8366"
+      },
+      {
+        "name": "Mandarin Oriental Ritz Madrid official",
+        "url": "https://www.mandarinoriental.com/en/madrid"
+      },
+      {
+        "name": "Tourism Madrid - Pestana Plaza Mayor",
+        "url": "https://www.esmadrid.com/en/accommodation/pestana-plaza-mayor"
+      },
+      {
+        "name": "Google Maps",
+        "url": "https://maps.google.com"
+      }
+    ]
+  },
+  {
+    "id": "list-madrid-la-latina-hostels",
+    "slug": "madrid-la-latina-hostels",
+    "seoSlug": "best-hostels",
+    "seoTitle": "Best Hostels in La Latina, Madrid",
+    "seoDescription": "Best hostels in La Latina, Madrid, for Cava Baja access, Tirso de Molina, social dorms, private rooms, El Rastro, and budget central walks.",
+    "title": "Hostels for Cava Baja and Tirso",
+    "description": "La Latina hostel planning is about staying close to tapas streets, El Rastro, and Tirso de Molina without paying hotel rates. These picks favor social energy, private-room flexibility, and practical walks to Sol, Lavapies, and Cava Baja.",
+    "url": "https://www.google.com/maps/search/la+latina+madrid+hostels",
+    "category": "Stay",
+    "location": {
+      "city": "Madrid",
+      "neighborhood": "La Latina",
+      "country": "Spain",
+      "continent": "Europe",
+      "scope": "city"
+    },
+    "creator": {
+      "id": "user-rguide-stay",
+      "name": "R Stay",
+      "avatar": "data:image/svg+xml;utf8,%0A%20%20%20%20%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22160%22%20height%3D%22160%22%20viewBox%3D%220%200%20160%20160%22%3E%0A%20%20%20%20%20%20%3Crect%20width%3D%22160%22%20height%3D%22160%22%20rx%3D%2280%22%20fill%3D%22%230f766e%22%20%2F%3E%0A%20%20%20%20%20%20%3Ctext%20x%3D%2250%25%22%20y%3D%2254%25%22%20text-anchor%3D%22middle%22%20dominant-baseline%3D%22middle%22%0A%20%20%20%20%20%20%20%20font-family%3D%22Arial%2C%20sans-serif%22%20font-size%3D%2276%22%20font-weight%3D%22700%22%20fill%3D%22white%22%3ER%3C%2Ftext%3E%0A%20%20%20%20%3C%2Fsvg%3E%0A%20%20"
+    },
+    "upvotes": 0,
+    "createdAt": "2026-05-06T00:00:00.000Z",
+    "stops": [
+      {
+        "id": "stay-the-hat",
+        "name": "The Hat Madrid",
+        "coordinates": [
+          40.4145,
+          -3.7073
+        ],
+        "description": "The Hat Madrid is the central hostel pick because Hostelworld and the official site both emphasize Plaza Mayor proximity, private-or-dorm flexibility, events, and rooftop social energy. Use it when budget and meeting people matter, but the route still needs Sol, La Latina, and old Madrid on foot.",
+        "price": "$",
+        "priceSource": "Hostelworld / The Hat official",
         "hours": {
           "mon": "24 hours",
           "tue": "24 hours",
@@ -2378,13 +3065,57 @@ export const madridNeighborhoodGuides = [
         "photo": "https://images.unsplash.com/photo-1555854877-bab0e564b8d5?auto=format&fit=crop&w=900&q=80"
       },
       {
-        "id": "latina-stay-2060-newton",
+        "id": "stay-ok-hostel",
+        "name": "Ok Hostel Madrid",
+        "coordinates": [
+          40.4113,
+          -3.708
+        ],
+        "description": "Ok Hostel Madrid is the La Latina and Tirso de Molina utility hostel, useful for travelers who want central walks, social energy, and a lower nightly rate. Choose it when the plan points toward Cava Baja, Lavapies, and Sol more than Retiro-side quiet.",
+        "price": "$",
+        "priceSource": "Hostelworld / Google Maps",
+        "hours": {
+          "mon": "24 hours",
+          "tue": "24 hours",
+          "wed": "24 hours",
+          "thu": "24 hours",
+          "fri": "24 hours",
+          "sat": "24 hours",
+          "sun": "24 hours"
+        },
+        "photo": "https://images.unsplash.com/photo-1555854877-bab0e564b8d5?auto=format&fit=crop&w=900&q=80"
+      },
+      {
+        "id": "stay-2060-newton",
         "name": "2060 The Newton Hostel",
         "coordinates": [
           40.412,
           -3.7048
         ],
-        "description": "2060 The Newton Hostel belongs in the La Latina stay guide because it solves a specific base tradeoff. A modern Tirso de Molina hostel that keeps La Latina, Lavapies, and Sol all close. Choose it when budget, shared spaces, and meeting other travelers matter more than a quiet hotel reset.",
+        "description": "2060 The Newton Hostel gives Madrid hostel planning a Tirso de Molina base with strong center access, rooftop-bar utility, and common areas. Hostelworld lists high review volume and location strength, but the best fit is still budget travelers who can tolerate a busier shared-room setting.",
+        "price": "$",
+        "priceSource": "Hostelworld / Google Maps",
+        "hours": {
+          "mon": "24 hours",
+          "tue": "24 hours",
+          "wed": "24 hours",
+          "thu": "24 hours",
+          "fri": "24 hours",
+          "sat": "24 hours",
+          "sun": "24 hours"
+        },
+        "photo": "https://images.unsplash.com/photo-1555854877-bab0e564b8d5?auto=format&fit=crop&w=900&q=80"
+      },
+      {
+        "id": "stay-latroupe-prado",
+        "name": "Latroupe Prado",
+        "coordinates": [
+          40.4119,
+          -3.6943
+        ],
+        "description": "Latroupe Prado is the Art Walk hostel because its official site puts it beside Atocha and the Reina Sofia, with coworking, bar, restaurant, and common-space infrastructure. Use it when museums and rail access matter more than sleeping inside the nightlife core.",
+        "price": "$",
+        "priceSource": "Latroupe official / Hostelworld",
         "hours": {
           "mon": "24 hours",
           "tue": "24 hours",
@@ -2399,16 +3130,28 @@ export const madridNeighborhoodGuides = [
     ],
     "sources": [
       {
-        "name": "Tourism Madrid - MICHELIN Key Hotels",
-        "url": "https://www.esmadrid.com/en/michelin-key-hotels"
-      },
-      {
-        "name": "Condé Nast Traveler - Madrid hotels",
-        "url": "https://www.cntraveler.com/hotels/madrid"
-      },
-      {
         "name": "Hostelworld - Madrid Hostels",
         "url": "https://www.hostelworld.com/hostels/europe/spain/madrid/"
+      },
+      {
+        "name": "The Hat Madrid official",
+        "url": "https://www.thehatmadrid.com/en/"
+      },
+      {
+        "name": "Latroupe Prado official",
+        "url": "https://www.latroupe.com/en/latroupe-prado/hostel/"
+      },
+      {
+        "name": "Hostelworld - Onefam Madrid",
+        "url": "https://www.hostelworld.com/hostels/p/286369/onefam-madrid/"
+      },
+      {
+        "name": "Hostelworld - 2060 The Newton Hostel",
+        "url": "https://www.hostelworld.com/hostels/p/282289/2060-the-newton-hostel/"
+      },
+      {
+        "name": "Hostelworld - room00 Chueca Hostel",
+        "url": "https://www.hostelworld.com/st/hotels/p/83795/room007-chueca-hostel/"
       },
       {
         "name": "Google Maps",
@@ -2574,7 +3317,7 @@ export const madridNeighborhoodGuides = [
           -3.7005
         ],
         "description": "Angelita earns its spot in the Chueca food guide because it fills a clear meal role for this route. The neighborhood's wine-led dining room and cocktail-bar crossover, ideal for a Chueca dinner that keeps going downstairs. Use it when the route needs a focused sweet stop or casual reset rather than another full meal.",
-        "price": "$$",
+        "price": "$",
         "priceSource": "The Infatuation / World's 50 Best Bars",
         "hours": {
           "mon": "1:00 PM-4:00 PM, 8:00 PM-11:00 PM",
@@ -2616,7 +3359,7 @@ export const madridNeighborhoodGuides = [
           -3.6971
         ],
         "description": "DSTAgE earns its spot in the Chueca food guide because it fills a clear meal role for this route. A high-end Chueca/Salesas tasting-menu room for travelers who want a serious reservation close to the neighborhood's nightlife spine. Use it when the meal should be a reservation anchor rather than a casual crawl stop.",
-        "price": "$$",
+        "price": "$",
         "priceSource": "MICHELIN Guide / Google Maps",
         "hours": {
           "mon": "Closed",
@@ -2806,11 +3549,11 @@ export const madridNeighborhoodGuides = [
   {
     "id": "list-madrid-chueca-stays",
     "slug": "madrid-chueca-hotels",
-    "seoSlug": "best-places-to-stay",
-    "seoTitle": "Best Places to Stay in Chueca, Madrid",
-    "seoDescription": "Best places to stay in Chueca, Madrid, for LGBTQ+ nightlife, boutique hotels, Gran Via access, cocktail rooms, and stylish central sleep.",
+    "seoSlug": "best-hotels",
+    "seoTitle": "Best Hotels in Chueca, Madrid",
+    "seoDescription": "Best hotels in Chueca, Madrid, for boutique stays, rooftop access, Gran Via edges, LGBTQ+ nightlife, and polished central sleep.",
     "title": "Boutique Bases by the Nightlife",
-    "description": "Chueca is for travelers who want central Madrid with personality: design hotels, nightlife at the door, Gran Via close, and enough polish to make late nights easy.",
+    "description": "Chueca hotels work when they give travelers nightlife reach with a controlled room reset. These picks cover boutique palace design, Plaza de Pedro Zerolo energy, Gran Via polish, and grown-up luxury between Chueca, Sol, and Las Letras.",
     "url": "https://www.google.com/maps/search/chueca+madrid+hotels",
     "category": "Stay",
     "location": {
@@ -2829,13 +3572,15 @@ export const madridNeighborhoodGuides = [
     "createdAt": "2026-05-06T00:00:00.000Z",
     "stops": [
       {
-        "id": "chueca-stay-only-you",
+        "id": "stay-only-you-boutique",
         "name": "Only YOU Boutique Hotel Madrid",
         "coordinates": [
           40.4235,
           -3.6964
         ],
-        "description": "Only YOU Boutique Hotel Madrid belongs in the Chueca stay guide because it solves a specific base tradeoff. A strong Chueca boutique stay with nightlife, shopping, and cocktail bars close without feeling like a hostel base. Choose it when budget, shared spaces, and meeting other travelers matter more than a quiet hotel reset.",
+        "description": "Only YOU Boutique Hotel Madrid is the Chueca hotel anchor because MICHELIN highlights its palace-to-boutique conversion, lively design, and Barquillo address. It is best for travelers who want cocktail bars, shopping, and central movement close while still getting a real hotel reset.",
+        "price": "$$",
+        "priceSource": "MICHELIN Guide / Google Maps",
         "hours": {
           "mon": "24 hours",
           "tue": "24 hours",
@@ -2848,13 +3593,15 @@ export const madridNeighborhoodGuides = [
         "photo": "https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=900&q=80"
       },
       {
-        "id": "chueca-stay-room-mate-oscar",
+        "id": "stay-room-mate-oscar",
         "name": "Room Mate Óscar",
         "coordinates": [
           40.4206,
           -3.6981
         ],
-        "description": "Room Mate Óscar belongs in the Chueca stay guide because it solves a specific base tradeoff. A Plaza de Pedro Zerolo hotel for travelers who want Chueca energy and rooftop/social access right outside. Choose it when budget, shared spaces, and meeting other travelers matter more than a quiet hotel reset.",
+        "description": "Room Mate Óscar is the Plaza de Pedro Zerolo hotel for travelers who want Chueca energy immediately outside the door. Use it when rooftop/social access and LGBTQ+ nightlife proximity are a feature, not a drawback.",
+        "price": "$",
+        "priceSource": "Google Maps / hotel site",
         "hours": {
           "mon": "24 hours",
           "tue": "24 hours",
@@ -2867,13 +3614,15 @@ export const madridNeighborhoodGuides = [
         "photo": "https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=900&q=80"
       },
       {
-        "id": "chueca-stay-brach",
+        "id": "stay-brach",
         "name": "Brach Madrid",
         "coordinates": [
           40.4198,
           -3.6995
         ],
-        "description": "Brach Madrid belongs in the Chueca stay guide because it solves a specific base tradeoff. A polished newer central hotel for travelers who want Gran Via and Chueca within a few blocks. Choose it when location, sleep quality, and budget need to be balanced honestly instead of picked by map distance alone.",
+        "description": "Brach Madrid gives the Chueca and Gran Via edge a polished newer hotel option with a more fashion-forward mood. It fits travelers who want central nightlife reach, shopping, and design without choosing a hostel or old grand hotel.",
+        "price": "$$",
+        "priceSource": "Google Maps / hotel site",
         "hours": {
           "mon": "24 hours",
           "tue": "24 hours",
@@ -2886,13 +3635,36 @@ export const madridNeighborhoodGuides = [
         "photo": "https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=900&q=80"
       },
       {
-        "id": "chueca-stay-urban",
+        "id": "stay-hotel-urban",
         "name": "Hotel Urban",
         "coordinates": [
           40.4166,
           -3.699
         ],
-        "description": "Hotel Urban belongs in the Chueca stay guide because it solves a specific base tradeoff. A design-led luxury option between Chueca, Sol, and Las Letras for travelers who want central nightlife reach with a grown-up hotel feel. Choose it when service, quiet, and room quality should carry as much weight as location.",
+        "description": "Hotel Urban is the grown-up design-luxury option between Chueca, Sol, and Las Letras. Use it when the plan needs central nightlife reach, museum access, and a more controlled hotel feel than the surrounding late streets.",
+        "price": "$$",
+        "priceSource": "Google Maps / hotel site",
+        "hours": {
+          "mon": "24 hours",
+          "tue": "24 hours",
+          "wed": "24 hours",
+          "thu": "24 hours",
+          "fri": "24 hours",
+          "sat": "24 hours",
+          "sun": "24 hours"
+        },
+        "photo": "https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=900&q=80"
+      },
+      {
+        "id": "stay-urso",
+        "name": "URSO Hotel & Spa Madrid",
+        "coordinates": [
+          40.4252,
+          -3.6999
+        ],
+        "description": "URSO is the calmer luxury edge between Malasana, Chamberi, and Chueca, backed by MICHELIN Key attention for a restored-palace stay with spa-level reset. Use it when you want nightlife nearby but do not want to sleep directly inside the loudest blocks.",
+        "price": "$$",
+        "priceSource": "MICHELIN Key Hotels / Google Maps",
         "hours": {
           "mon": "24 hours",
           "tue": "24 hours",
@@ -2915,8 +3687,136 @@ export const madridNeighborhoodGuides = [
         "url": "https://www.cntraveler.com/hotels/madrid"
       },
       {
+        "name": "MICHELIN Guide - Only YOU Boutique Hotel Madrid",
+        "url": "https://guide.michelin.com/us/en/hotels-stays/madrid/only-you-boutique-hotel-madrid-8366"
+      },
+      {
+        "name": "Mandarin Oriental Ritz Madrid official",
+        "url": "https://www.mandarinoriental.com/en/madrid"
+      },
+      {
+        "name": "Tourism Madrid - Pestana Plaza Mayor",
+        "url": "https://www.esmadrid.com/en/accommodation/pestana-plaza-mayor"
+      },
+      {
+        "name": "Google Maps",
+        "url": "https://maps.google.com"
+      }
+    ]
+  },
+  {
+    "id": "list-madrid-chueca-hostels",
+    "slug": "madrid-chueca-hostels",
+    "seoSlug": "best-hostels",
+    "seoTitle": "Best Hostels in Chueca, Madrid",
+    "seoDescription": "Best hostels in Chueca, Madrid, for Hortaleza dorms, Chueca-Malasana access, Gran Via walks, social stays, and budget rooms near nightlife.",
+    "title": "Budget Beds on the Chueca Edge",
+    "description": "Chueca hostel planning is really about the Hortaleza, Tribunal, and Malasana edges, where budget beds can still reach the neighborhood fast. This guide favors hostels with central location, private-or-dorm flexibility, and enough social energy for travelers who want the night close.",
+    "url": "https://www.google.com/maps/search/chueca+madrid+hostels",
+    "category": "Stay",
+    "location": {
+      "city": "Madrid",
+      "neighborhood": "Chueca",
+      "country": "Spain",
+      "continent": "Europe",
+      "scope": "city"
+    },
+    "creator": {
+      "id": "user-rguide-stay",
+      "name": "R Stay",
+      "avatar": "data:image/svg+xml;utf8,%0A%20%20%20%20%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22160%22%20height%3D%22160%22%20viewBox%3D%220%200%20160%20160%22%3E%0A%20%20%20%20%20%20%3Crect%20width%3D%22160%22%20height%3D%22160%22%20rx%3D%2280%22%20fill%3D%22%230f766e%22%20%2F%3E%0A%20%20%20%20%20%20%3Ctext%20x%3D%2250%25%22%20y%3D%2254%25%22%20text-anchor%3D%22middle%22%20dominant-baseline%3D%22middle%22%0A%20%20%20%20%20%20%20%20font-family%3D%22Arial%2C%20sans-serif%22%20font-size%3D%2276%22%20font-weight%3D%22700%22%20fill%3D%22white%22%3ER%3C%2Ftext%3E%0A%20%20%20%20%3C%2Fsvg%3E%0A%20%20"
+    },
+    "upvotes": 0,
+    "createdAt": "2026-05-06T00:00:00.000Z",
+    "stops": [
+      {
+        "id": "stay-room00-chueca",
+        "name": "room00 Chueca Hostel",
+        "coordinates": [
+          40.4245,
+          -3.6977
+        ],
+        "description": "room00 Chueca Hostel is the Chueca dorm-and-private-room option on Hortaleza, close to Chueca, Malasana, and Gran Via. Hostelworld and local listings make the tradeoff clear: strong location and low price, with simpler atmosphere than the city's more social hostels.",
+        "price": "$",
+        "priceSource": "Hostelworld / Visit Chueca",
+        "hours": {
+          "mon": "24 hours",
+          "tue": "24 hours",
+          "wed": "24 hours",
+          "thu": "24 hours",
+          "fri": "24 hours",
+          "sat": "24 hours",
+          "sun": "24 hours"
+        },
+        "photo": "https://images.unsplash.com/photo-1555854877-bab0e564b8d5?auto=format&fit=crop&w=900&q=80"
+      },
+      {
+        "id": "stay-bastardo",
+        "name": "Bastardo Hostel",
+        "coordinates": [
+          40.4248,
+          -3.7009
+        ],
+        "description": "Bastardo Hostel works as the Tribunal design-hostel hybrid, sitting between Malasana and Chueca with private and shared-room flexibility. It fits travelers who want social spaces and style but still need an easier reset than a pure party hostel.",
+        "price": "$",
+        "priceSource": "Bastardo official / Hostelworld",
+        "hours": {
+          "mon": "24 hours",
+          "tue": "24 hours",
+          "wed": "24 hours",
+          "thu": "24 hours",
+          "fri": "24 hours",
+          "sat": "24 hours",
+          "sun": "24 hours"
+        },
+        "photo": "https://images.unsplash.com/photo-1555854877-bab0e564b8d5?auto=format&fit=crop&w=900&q=80"
+      },
+      {
+        "id": "stay-onefam-madrid",
+        "name": "Onefam Madrid",
+        "coordinates": [
+          40.4287,
+          -3.7039
+        ],
+        "description": "Onefam Madrid is the Malasana social-hostel pick because Hostelworld describes the chain around family-style dinners, daily activities, and nights out. Use it when the point of the stay is meeting people and using the neighborhood's bars, not retreating from them.",
+        "price": "$",
+        "priceSource": "Hostelworld / Google Maps",
+        "hours": {
+          "mon": "24 hours",
+          "tue": "24 hours",
+          "wed": "24 hours",
+          "thu": "24 hours",
+          "fri": "24 hours",
+          "sat": "24 hours",
+          "sun": "24 hours"
+        },
+        "photo": "https://images.unsplash.com/photo-1555854877-bab0e564b8d5?auto=format&fit=crop&w=900&q=80"
+      }
+    ],
+    "sources": [
+      {
         "name": "Hostelworld - Madrid Hostels",
         "url": "https://www.hostelworld.com/hostels/europe/spain/madrid/"
+      },
+      {
+        "name": "The Hat Madrid official",
+        "url": "https://www.thehatmadrid.com/en/"
+      },
+      {
+        "name": "Latroupe Prado official",
+        "url": "https://www.latroupe.com/en/latroupe-prado/hostel/"
+      },
+      {
+        "name": "Hostelworld - Onefam Madrid",
+        "url": "https://www.hostelworld.com/hostels/p/286369/onefam-madrid/"
+      },
+      {
+        "name": "Hostelworld - 2060 The Newton Hostel",
+        "url": "https://www.hostelworld.com/hostels/p/282289/2060-the-newton-hostel/"
+      },
+      {
+        "name": "Hostelworld - room00 Chueca Hostel",
+        "url": "https://www.hostelworld.com/st/hotels/p/83795/room007-chueca-hostel/"
       },
       {
         "name": "Google Maps",
@@ -3105,7 +4005,7 @@ export const madridCitywideGuides = [
           -3.6981
         ],
         "description": "La Malontina gives Barrio de las Letras a compact, food-first dinner that is more useful than a generic Huertas tapas crawl. The Infatuation points to the Cortes room for casual Spanish cooking, and the size of the restaurant keeps it in the date-night, pre-theater, and neighborhood-dinner lane rather than the big occasion lane.",
-        "price": "$$",
+        "price": "$",
         "priceSource": "The Infatuation / Google Maps",
         "hours": {
           "mon": "Closed",
@@ -3126,7 +4026,7 @@ export const madridCitywideGuides = [
           -3.7005
         ],
         "description": "Angelita works in both Food and Nightlife, but the restaurant earns a food slot because Chueca needs a wine-led dining room with serious produce behind it. The Infatuation and World's 50 Best Bars both support the address: upstairs for farm-driven plates and a huge wine program, downstairs for the cocktail bar after dinner.",
-        "price": "$$$",
+        "price": "$$",
         "priceSource": "The Infatuation / World's 50 Best Bars",
         "hours": {
           "mon": "1:00 PM-4:00 PM, 8:00 PM-11:00 PM",
@@ -3147,7 +4047,7 @@ export const madridCitywideGuides = [
           -3.7041
         ],
         "description": "Playing Solo gives Malasana a destination reservation without losing neighborhood scale. The Infatuation frames it as an eight-seat, kitchen-facing tasting-menu experience, so it belongs here for travelers who want Madrid's modern restaurant energy in a small room instead of a grand-hotel fine-dining setting.",
-        "price": "$$$",
+        "price": "$$",
         "priceSource": "The Infatuation",
         "hours": {
           "mon": "Closed",
@@ -3168,7 +4068,7 @@ export const madridCitywideGuides = [
           -3.7003
         ],
         "description": "Lhardy is the central classic: old Madrid dining room, croquetas and consomme history, and a useful bridge between Puerta del Sol sightseeing and a proper sit-down meal. It keeps the guide from becoming only contemporary restaurants and helps explain the formal, old-capital side of Madrid eating.",
-        "price": "$$$",
+        "price": "$$",
         "priceSource": "The Infatuation / Google Maps",
         "hours": {
           "mon": "12:30 PM-4:00 PM, 7:30 PM-11:00 PM",
@@ -3189,7 +4089,7 @@ export const madridCitywideGuides = [
           -3.6856
         ],
         "description": "DiverXO is the trip-defining fine-dining entry, backed by MICHELIN's three-star rating and World's 50 Best's No. 4 placement in 2025. It is expensive, theatrical, and north of the usual central route, so use it as a protected reservation rather than a casual Madrid dinner.",
-        "price": "$$$",
+        "price": "$$",
         "priceSource": "MICHELIN Guide / World's 50 Best",
         "hours": {
           "mon": "Closed",
@@ -3210,7 +4110,7 @@ export const madridCitywideGuides = [
           -3.6918
         ],
         "description": "Smoked Room is the intimate high-end counterpoint to DiverXO: MICHELIN gives it two stars and describes a highly exclusive, smoke-and-charcoal-focused dining room inside Hyatt Regency Hesperia Madrid. It belongs in the guide for travelers who want a luxury tasting menu with fewer seats, more kitchen contact, and a quieter mood.",
-        "price": "$$$",
+        "price": "$$",
         "priceSource": "MICHELIN Guide",
         "hours": {
           "mon": "Closed",
@@ -3423,13 +4323,13 @@ export const madridCitywideGuides = [
   },
   {
     "id": "list-madrid-citywide-stays",
-    "slug": "madrid-best-places-to-stay-citywide",
-    "seoSlug": "best-places-to-stay",
-    "seoTitle": "Best Places to Stay in Madrid",
-    "seoDescription": "Best places to stay in Madrid, comparing Sol convenience, Art Walk luxury, Chueca boutique hotels, Lavapies hostels, and quieter sleep quality around Retiro.",
-    "title": "Central Bases Without Losing Sleep",
-    "description": "Madrid stay planning is a tradeoff between walking access, late-night noise, museum days, and transit. This citywide guide compares big luxury anchors, boutique Chueca and Art Walk hotels, and social hostel bases for travelers who want Sol, La Latina, Lavapies, or Retiro within reach.",
-    "url": "https://www.google.com/maps/search/best+places+to+stay+madrid",
+    "slug": "madrid-best-hotels-citywide",
+    "seoSlug": "best-hotels",
+    "seoTitle": "Best Hotels in Madrid",
+    "seoDescription": "Best hotels in Madrid, comparing Sol luxury, Retiro museum hotels, Chueca boutique stays, Malasana design bases, and La Latina old-city access.",
+    "title": "Hotels That Match the Madrid Route",
+    "description": "Madrid hotel planning should start with the trip shape: museum mornings, late-night neighborhoods, old-city walks, or a quieter reset after dinner. This citywide hotel guide keeps luxury, boutique design, value, and neighborhood fit in separate roles instead of mixing them with hostels.",
+    "url": "https://www.google.com/maps/search/best+hotels+madrid",
     "category": "Stay",
     "location": {
       "city": "Madrid",
@@ -3446,13 +4346,15 @@ export const madridCitywideGuides = [
     "createdAt": "2026-05-06T00:00:00.000Z",
     "stops": [
       {
-        "id": "madrid-stay-four-seasons",
+        "id": "stay-four-seasons",
         "name": "Four Seasons Hotel Madrid",
         "coordinates": [
           40.4172,
           -3.7015
         ],
-        "description": "Four Seasons is the Sol/Canalejas luxury base for travelers who want maximum central access without accepting scruffy old-town lodging. Condé Nast Traveler calls out the hotel's blend of opulence and discretion, and Madrid tourism lists it among the city's MICHELIN Key hotels, so it fits the high-budget first-trip lane.",
+        "description": "Four Seasons Hotel Madrid is the high-budget Canalejas hotel pick because it gives Sol access without asking travelers to accept old-center compromise. Use it when service, dining, spa, and a quieter room standard matter as much as walking to Plaza Mayor, Gran Via, and the Art Walk.",
+        "price": "$$",
+        "priceSource": "Condé Nast Traveler / Google Maps",
         "hours": {
           "mon": "24 hours",
           "tue": "24 hours",
@@ -3465,13 +4367,15 @@ export const madridCitywideGuides = [
         "photo": "https://cf.bstatic.com/xdata/images/hotel/max1024x768/253695581.jpg?k=91850f32b01adac51407a238343ec660f96cf6fc8b5f65cf53e2d468b8dcf8f6&o=&hp=1"
       },
       {
-        "id": "madrid-stay-mandarin-oriental-ritz",
+        "id": "stay-mandarin-oriental-ritz",
         "name": "Mandarin Oriental Ritz, Madrid",
         "coordinates": [
           40.4156,
           -3.6926
         ],
-        "description": "Mandarin Oriental Ritz is the museum-corridor luxury classic beside the Prado and Retiro. Madrid tourism lists it with three MICHELIN Keys in 2025, making it the stay pick when Art Walk access, service, and old-grand-hotel atmosphere matter more than nightlife at the door.",
+        "description": "Mandarin Oriental Ritz is the museum-corridor luxury anchor because it sits beside the Prado and Retiro in Madrid's Golden Triangle of Art. Choose it when Belle Epoque atmosphere, service, dining, and park-museum proximity matter more than nightlife at the door.",
+        "price": "$$",
+        "priceSource": "Mandarin Oriental / MICHELIN Guide",
         "hours": {
           "mon": "24 hours",
           "tue": "24 hours",
@@ -3484,13 +4388,15 @@ export const madridCitywideGuides = [
         "photo": "https://upload.wikimedia.org/wikipedia/commons/6/62/Hotel_Ritz_%28Madrid%29_01.jpg"
       },
       {
-        "id": "madrid-stay-only-you-boutique",
+        "id": "stay-only-you-boutique",
         "name": "Only YOU Boutique Hotel Madrid",
         "coordinates": [
           40.4235,
           -3.6964
         ],
-        "description": "Only YOU Boutique Hotel is the Chueca design base: close to cocktail bars, Gran Via, and central shopping, but more polished than a party hostel. Its MICHELIN Key listing supports it as a strong option for travelers who want nightlife reach with a real hotel reset.",
+        "description": "Only YOU Boutique Hotel Madrid is the Chueca hotel anchor because MICHELIN highlights its palace-to-boutique conversion, lively design, and Barquillo address. It is best for travelers who want cocktail bars, shopping, and central movement close while still getting a real hotel reset.",
+        "price": "$$",
+        "priceSource": "MICHELIN Guide / Google Maps",
         "hours": {
           "mon": "24 hours",
           "tue": "24 hours",
@@ -3503,13 +4409,15 @@ export const madridCitywideGuides = [
         "photo": "https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=900&q=80"
       },
       {
-        "id": "madrid-stay-urso",
+        "id": "stay-urso",
         "name": "URSO Hotel & Spa Madrid",
         "coordinates": [
           40.4252,
           -3.6999
         ],
-        "description": "URSO is the quieter Chamberi/Tribunal-edge base for travelers who want Malasana and Chueca nearby without sleeping directly above the busiest streets. Madrid tourism's MICHELIN Key list backs it as a design-led hotel with enough calm for longer stays.",
+        "description": "URSO is the calmer luxury edge between Malasana, Chamberi, and Chueca, backed by MICHELIN Key attention for a restored-palace stay with spa-level reset. Use it when you want nightlife nearby but do not want to sleep directly inside the loudest blocks.",
+        "price": "$$",
+        "priceSource": "MICHELIN Key Hotels / Google Maps",
         "hours": {
           "mon": "24 hours",
           "tue": "24 hours",
@@ -3522,13 +4430,130 @@ export const madridCitywideGuides = [
         "photo": "https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=900&q=80"
       },
       {
-        "id": "madrid-stay-the-hat",
+        "id": "stay-edition",
+        "name": "The Madrid EDITION",
+        "coordinates": [
+          40.4171,
+          -3.7062
+        ],
+        "description": "The Madrid EDITION earns a hotel slot for travelers who want central design, rooftop energy, and a polished reset within a few blocks of Plaza Mayor and Sol. It works best when the trip should feel contemporary and social without giving up a full-service hotel base.",
+        "price": "$$",
+        "priceSource": "Condé Nast Traveler / Google Maps",
+        "hours": {
+          "mon": "24 hours",
+          "tue": "24 hours",
+          "wed": "24 hours",
+          "thu": "24 hours",
+          "fri": "24 hours",
+          "sat": "24 hours",
+          "sun": "24 hours"
+        },
+        "photo": "https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=900&q=80"
+      },
+      {
+        "id": "stay-pestana-plaza-mayor",
+        "name": "Pestana Plaza Mayor Madrid",
+        "coordinates": [
+          40.415,
+          -3.7074
+        ],
+        "description": "Pestana Plaza Mayor is the historic-center hotel pick for travelers who want to sleep on Madrid de los Austrias rather than commute into it. Tourism Madrid and Pestana both frame the draw clearly: Plaza Mayor frontage, contemporary rooms, spa facilities, and rooftop-season usefulness.",
+        "price": "$$",
+        "priceSource": "Tourism Madrid / Pestana",
+        "hours": {
+          "mon": "24 hours",
+          "tue": "24 hours",
+          "wed": "24 hours",
+          "thu": "24 hours",
+          "fri": "24 hours",
+          "sat": "24 hours",
+          "sun": "24 hours"
+        },
+        "photo": "https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=900&q=80"
+      },
+      {
+        "id": "stay-seven-islas",
+        "name": "7 Islas Hotel",
+        "coordinates": [
+          40.4217,
+          -3.7012
+        ],
+        "description": "7 Islas Hotel is the Gran Via-to-Malasana design option, useful when the stay should feel independent, art-led, and close to nightlife without becoming a hostel. Its official materials emphasize the Valverde address, gallery feel, restaurant-bar, and slower boutique rhythm between Gran Via and Malasana.",
+        "price": "$",
+        "priceSource": "7 Islas official / Google Maps",
+        "hours": {
+          "mon": "24 hours",
+          "tue": "24 hours",
+          "wed": "24 hours",
+          "thu": "24 hours",
+          "fri": "24 hours",
+          "sat": "24 hours",
+          "sun": "24 hours"
+        },
+        "photo": "https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=900&q=80"
+      }
+    ],
+    "sources": [
+      {
+        "name": "Tourism Madrid - MICHELIN Key Hotels",
+        "url": "https://www.esmadrid.com/en/michelin-key-hotels"
+      },
+      {
+        "name": "Condé Nast Traveler - Madrid hotels",
+        "url": "https://www.cntraveler.com/hotels/madrid"
+      },
+      {
+        "name": "MICHELIN Guide - Only YOU Boutique Hotel Madrid",
+        "url": "https://guide.michelin.com/us/en/hotels-stays/madrid/only-you-boutique-hotel-madrid-8366"
+      },
+      {
+        "name": "Mandarin Oriental Ritz Madrid official",
+        "url": "https://www.mandarinoriental.com/en/madrid"
+      },
+      {
+        "name": "Tourism Madrid - Pestana Plaza Mayor",
+        "url": "https://www.esmadrid.com/en/accommodation/pestana-plaza-mayor"
+      },
+      {
+        "name": "Google Maps",
+        "url": "https://maps.google.com"
+      }
+    ]
+  },
+  {
+    "id": "list-madrid-citywide-hostels",
+    "slug": "madrid-best-hostels-citywide",
+    "seoSlug": "best-hostels",
+    "seoTitle": "Best Hostels in Madrid",
+    "seoDescription": "Best hostels in Madrid, comparing Sol, La Latina, Malasana, Chueca, Tirso de Molina, Atocha, social dorms, private rooms, and budget bases.",
+    "title": "Social Beds Across the Center",
+    "description": "Madrid hostel planning is about choosing the right kind of social base: rooftop central, party-forward, design-hostel, museum-edge, or Tirso/La Latina practical. This citywide hostel guide separates budget beds from hotels and names the tradeoff each hostel asks travelers to make.",
+    "url": "https://www.google.com/maps/search/best+hostels+madrid",
+    "category": "Stay",
+    "location": {
+      "city": "Madrid",
+      "country": "Spain",
+      "continent": "Europe",
+      "scope": "city"
+    },
+    "creator": {
+      "id": "user-rguide-stay",
+      "name": "R Stay",
+      "avatar": "data:image/svg+xml;utf8,%0A%20%20%20%20%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22160%22%20height%3D%22160%22%20viewBox%3D%220%200%20160%20160%22%3E%0A%20%20%20%20%20%20%3Crect%20width%3D%22160%22%20height%3D%22160%22%20rx%3D%2280%22%20fill%3D%22%230f766e%22%20%2F%3E%0A%20%20%20%20%20%20%3Ctext%20x%3D%2250%25%22%20y%3D%2254%25%22%20text-anchor%3D%22middle%22%20dominant-baseline%3D%22middle%22%0A%20%20%20%20%20%20%20%20font-family%3D%22Arial%2C%20sans-serif%22%20font-size%3D%2276%22%20font-weight%3D%22700%22%20fill%3D%22white%22%3ER%3C%2Ftext%3E%0A%20%20%20%20%3C%2Fsvg%3E%0A%20%20"
+    },
+    "upvotes": 0,
+    "createdAt": "2026-05-06T00:00:00.000Z",
+    "stops": [
+      {
+        "id": "stay-the-hat",
         "name": "The Hat Madrid",
         "coordinates": [
           40.4145,
           -3.7073
         ],
-        "description": "The Hat Madrid is the central social-hostel pick near Plaza Mayor and La Latina. Hostelworld's 2026 listings show strong review volume and location scores, so it belongs here for travelers who want private-room or dorm flexibility, rooftop energy, and easy tapas access.",
+        "description": "The Hat Madrid is the central hostel pick because Hostelworld and the official site both emphasize Plaza Mayor proximity, private-or-dorm flexibility, events, and rooftop social energy. Use it when budget and meeting people matter, but the route still needs Sol, La Latina, and old Madrid on foot.",
+        "price": "$",
+        "priceSource": "Hostelworld / The Hat official",
         "hours": {
           "mon": "24 hours",
           "tue": "24 hours",
@@ -3541,13 +4566,36 @@ export const madridCitywideGuides = [
         "photo": "https://images.unsplash.com/photo-1555854877-bab0e564b8d5?auto=format&fit=crop&w=900&q=80"
       },
       {
-        "id": "madrid-stay-2060-newton",
+        "id": "stay-onefam-madrid",
+        "name": "Onefam Madrid",
+        "coordinates": [
+          40.4287,
+          -3.7039
+        ],
+        "description": "Onefam Madrid is the Malasana social-hostel pick because Hostelworld describes the chain around family-style dinners, daily activities, and nights out. Use it when the point of the stay is meeting people and using the neighborhood's bars, not retreating from them.",
+        "price": "$",
+        "priceSource": "Hostelworld / Google Maps",
+        "hours": {
+          "mon": "24 hours",
+          "tue": "24 hours",
+          "wed": "24 hours",
+          "thu": "24 hours",
+          "fri": "24 hours",
+          "sat": "24 hours",
+          "sun": "24 hours"
+        },
+        "photo": "https://images.unsplash.com/photo-1555854877-bab0e564b8d5?auto=format&fit=crop&w=900&q=80"
+      },
+      {
+        "id": "stay-2060-newton",
         "name": "2060 The Newton Hostel",
         "coordinates": [
           40.412,
           -3.7048
         ],
-        "description": "2060 The Newton Hostel gives Tirso de Molina and Lavapies a modern hostel base with rooftop-bar and common-space utility. Hostelworld lists it as a high-rated solo-traveler option with strong location and security scores, making it useful when budget and social energy matter.",
+        "description": "2060 The Newton Hostel gives Madrid hostel planning a Tirso de Molina base with strong center access, rooftop-bar utility, and common areas. Hostelworld lists high review volume and location strength, but the best fit is still budget travelers who can tolerate a busier shared-room setting.",
+        "price": "$",
+        "priceSource": "Hostelworld / Google Maps",
         "hours": {
           "mon": "24 hours",
           "tue": "24 hours",
@@ -3560,13 +4608,78 @@ export const madridCitywideGuides = [
         "photo": "https://images.unsplash.com/photo-1555854877-bab0e564b8d5?auto=format&fit=crop&w=900&q=80"
       },
       {
-        "id": "madrid-stay-latroupe-prado",
+        "id": "stay-latroupe-prado",
         "name": "Latroupe Prado",
         "coordinates": [
           40.4119,
           -3.6943
         ],
-        "description": "Latroupe Prado is the budget-to-midrange Art Walk option: closer to Atocha, Reina Sofia, Prado, and Retiro than the Sol hostels. It works when museum pacing and transit are more important than sleeping inside the nightlife core.",
+        "description": "Latroupe Prado is the Art Walk hostel because its official site puts it beside Atocha and the Reina Sofia, with coworking, bar, restaurant, and common-space infrastructure. Use it when museums and rail access matter more than sleeping inside the nightlife core.",
+        "price": "$",
+        "priceSource": "Latroupe official / Hostelworld",
+        "hours": {
+          "mon": "24 hours",
+          "tue": "24 hours",
+          "wed": "24 hours",
+          "thu": "24 hours",
+          "fri": "24 hours",
+          "sat": "24 hours",
+          "sun": "24 hours"
+        },
+        "photo": "https://images.unsplash.com/photo-1555854877-bab0e564b8d5?auto=format&fit=crop&w=900&q=80"
+      },
+      {
+        "id": "stay-ok-hostel",
+        "name": "Ok Hostel Madrid",
+        "coordinates": [
+          40.4113,
+          -3.708
+        ],
+        "description": "Ok Hostel Madrid is the La Latina and Tirso de Molina utility hostel, useful for travelers who want central walks, social energy, and a lower nightly rate. Choose it when the plan points toward Cava Baja, Lavapies, and Sol more than Retiro-side quiet.",
+        "price": "$",
+        "priceSource": "Hostelworld / Google Maps",
+        "hours": {
+          "mon": "24 hours",
+          "tue": "24 hours",
+          "wed": "24 hours",
+          "thu": "24 hours",
+          "fri": "24 hours",
+          "sat": "24 hours",
+          "sun": "24 hours"
+        },
+        "photo": "https://images.unsplash.com/photo-1555854877-bab0e564b8d5?auto=format&fit=crop&w=900&q=80"
+      },
+      {
+        "id": "stay-bastardo",
+        "name": "Bastardo Hostel",
+        "coordinates": [
+          40.4248,
+          -3.7009
+        ],
+        "description": "Bastardo Hostel works as the Tribunal design-hostel hybrid, sitting between Malasana and Chueca with private and shared-room flexibility. It fits travelers who want social spaces and style but still need an easier reset than a pure party hostel.",
+        "price": "$",
+        "priceSource": "Bastardo official / Hostelworld",
+        "hours": {
+          "mon": "24 hours",
+          "tue": "24 hours",
+          "wed": "24 hours",
+          "thu": "24 hours",
+          "fri": "24 hours",
+          "sat": "24 hours",
+          "sun": "24 hours"
+        },
+        "photo": "https://images.unsplash.com/photo-1555854877-bab0e564b8d5?auto=format&fit=crop&w=900&q=80"
+      },
+      {
+        "id": "stay-room00-chueca",
+        "name": "room00 Chueca Hostel",
+        "coordinates": [
+          40.4245,
+          -3.6977
+        ],
+        "description": "room00 Chueca Hostel is the Chueca dorm-and-private-room option on Hortaleza, close to Chueca, Malasana, and Gran Via. Hostelworld and local listings make the tradeoff clear: strong location and low price, with simpler atmosphere than the city's more social hostels.",
+        "price": "$",
+        "priceSource": "Hostelworld / Visit Chueca",
         "hours": {
           "mon": "24 hours",
           "tue": "24 hours",
@@ -3581,20 +4694,28 @@ export const madridCitywideGuides = [
     ],
     "sources": [
       {
-        "name": "Tourism Madrid - MICHELIN Key Hotels",
-        "url": "https://www.esmadrid.com/en/michelin-key-hotels"
-      },
-      {
-        "name": "Condé Nast Traveler - Four Seasons Hotel Madrid",
-        "url": "https://www.cntraveler.com/hotels/madrid/four-seasons-hotel-madrid"
-      },
-      {
         "name": "Hostelworld - Madrid Hostels",
         "url": "https://www.hostelworld.com/hostels/europe/spain/madrid/"
       },
       {
+        "name": "The Hat Madrid official",
+        "url": "https://www.thehatmadrid.com/en/"
+      },
+      {
+        "name": "Latroupe Prado official",
+        "url": "https://www.latroupe.com/en/latroupe-prado/hostel/"
+      },
+      {
+        "name": "Hostelworld - Onefam Madrid",
+        "url": "https://www.hostelworld.com/hostels/p/286369/onefam-madrid/"
+      },
+      {
         "name": "Hostelworld - 2060 The Newton Hostel",
         "url": "https://www.hostelworld.com/hostels/p/282289/2060-the-newton-hostel/"
+      },
+      {
+        "name": "Hostelworld - room00 Chueca Hostel",
+        "url": "https://www.hostelworld.com/st/hotels/p/83795/room007-chueca-hostel/"
       },
       {
         "name": "Google Maps",
