@@ -464,7 +464,7 @@ export const madridNeighborhoodGuides = [
           "sat": "9:00 AM-8:00 PM",
           "sun": "9:00 AM-8:00 PM"
         },
-        "photo": "https://upload.wikimedia.org/wikipedia/commons/5/5f/Palacio_Real_de_Madrid_2016_%282%29.jpg"
+        "photo": "https://upload.wikimedia.org/wikipedia/commons/9/9b/Palacio_Real_de_Madrid_Julio_2016_%28cropped%29.jpg"
       },
       {
         "id": "sol-culture-almudena",
@@ -3700,7 +3700,7 @@ export const madridCitywideGuides = [
           "sat": "9:00 AM-8:00 PM",
           "sun": "9:00 AM-8:00 PM"
         },
-        "photo": "https://upload.wikimedia.org/wikipedia/commons/5/5f/Palacio_Real_de_Madrid_2016_%282%29.jpg"
+        "photo": "https://upload.wikimedia.org/wikipedia/commons/9/9b/Palacio_Real_de_Madrid_Julio_2016_%28cropped%29.jpg"
       },
       {
         "id": "madrid-culture-barrio-letras",
