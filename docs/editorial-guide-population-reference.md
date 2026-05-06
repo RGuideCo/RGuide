@@ -7,6 +7,20 @@ Related source notes:
 - [Restaurant research sources](restaurant-research-sources.md)
 - [Stay research sources](stay-research-sources.md)
 
+## Parallel Population Workflow
+
+City guide content should live in the matching `src/data/guides/<city-id>.ts` file so separate city batches do not touch the same large data file. Add the city export to `src/data/guides/index.ts` once the city file is ready.
+
+Use scoped database pushes when multiple city or neighborhood batches are being populated at the same time:
+
+```bash
+npm run push:editorial-guides -- --city Madrid
+npm run push:editorial-guides -- --city Madrid --neighborhood Retiro
+npm run push:editorial-guides -- --city Madrid --city Barcelona
+```
+
+The push command validates local duplicate `id` and `slug` values, checks the remote table for slug ownership conflicts, and only upserts the selected guides. Keep `npm run export:editorial-guides` for regenerating the full canonical SQL seed before a release or migration review.
+
 ## Top 40 City Population Queue
 
 When a prompt mentions `top 40`, use this as the working city queue for editorial guide population. Treat the spelling below as canonical for data entry, route naming, source searches, and progress tracking.

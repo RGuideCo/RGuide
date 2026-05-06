@@ -25,19 +25,27 @@ begin
 end;
 $$;
 
-drop trigger if exists editorial_guides_set_updated_at on public.editorial_guides;
+do $$
+begin
+  create trigger editorial_guides_set_updated_at
+  before update on public.editorial_guides
+  for each row
+  execute function public.set_updated_at();
+exception
+  when duplicate_object then null;
+end;
+$$;
 
-create trigger editorial_guides_set_updated_at
-before update on public.editorial_guides
-for each row
-execute function public.set_updated_at();
-
-drop policy if exists "Editorial guides are readable" on public.editorial_guides;
-
-create policy "Editorial guides are readable"
-on public.editorial_guides
-for select
-using (true);
+do $$
+begin
+  create policy "Editorial guides are readable"
+  on public.editorial_guides
+  for select
+  using (true);
+exception
+  when duplicate_object then null;
+end;
+$$;
 
 create index if not exists editorial_guides_category_idx on public.editorial_guides (category);
 create index if not exists editorial_guides_country_city_idx on public.editorial_guides (country, city);
