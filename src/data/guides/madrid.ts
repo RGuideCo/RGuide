@@ -45,7 +45,7 @@ export const madridNeighborhoodGuides = [
           "sat": "12:30 PM-4:00 PM, 7:30 PM-11:30 PM",
           "sun": "12:30 PM-4:00 PM, 7:30 PM-11:00 PM"
         },
-        "photo": "https://images.unsplash.com/photo-1551218808-94e220e084d2?auto=format&fit=crop&w=900&q=80"
+        "photo": "https://lhardy.com/wp-content/uploads/Lhardy-Primera-20"
       },
       {
         "id": "sol-food-casa-labra",
@@ -214,7 +214,7 @@ export const madridNeighborhoodGuides = [
           "sat": "10:00 PM-5:00 AM",
           "sun": "10:00 PM-2:30 AM"
         },
-        "photo": "https://images.unsplash.com/photo-1520523839897-bd0b52f945a0?auto=format&fit=crop&w=900&q=80"
+        "photo": "https://toni2.es/wp-content/uploads/2021/09/Barra-Toni-2-madrid-scaled-e1636977700852-2048x1295"
       },
       {
         "id": "sol-nightlife-josealfredo",
@@ -307,7 +307,7 @@ export const madridNeighborhoodGuides = [
           "sat": "24 hours",
           "sun": "24 hours"
         },
-        "photo": "https://www.esmadrid.com/sites/default/files/styles/content_type_full/public/recursosturisticos/alojamientos/canalejas.jpg?itok=CiqEovlB"
+        "photo": "https://upload.wikimedia.org/wikipedia/commons/4/42/Edificio_del_Banco_Espa%C3%B1ol_de_Cr%C3%A9dito_de_Madrid"
       },
       {
         "id": "stay-edition",
@@ -328,7 +328,7 @@ export const madridNeighborhoodGuides = [
           "sat": "24 hours",
           "sun": "24 hours"
         },
-        "photo": "https://www.editionhotels.com/wp-content/uploads/2022/06/220503_EDT_Madrid2_16-1-scaled.jpg"
+        "photo": "https://www.editionhotels.com/wp-content/uploads/2026/03/EDT_Madrid2_23-_RGB_V1-2-scaled.jpg"
       },
       {
         "id": "stay-pestana-plaza-mayor",
@@ -349,7 +349,7 @@ export const madridNeighborhoodGuides = [
           "sat": "24 hours",
           "sun": "24 hours"
         },
-        "photo": "https://www.esmadrid.com/sites/default/files/styles/content_type_full/public/recursosturisticos/alojamientos/pmayor-rooftop-6.png?itok=NDid8Rwi"
+        "photo": "https://www.pestana.com/content/dam/pestana/en_us/destinations/spain/madrid/pestana-plaza-mayor/gallery/overview/pestana-plaza-mayor-gallery-surroundings-view-outside-night"
       },
       {
         "id": "stay-seven-islas",
@@ -370,7 +370,7 @@ export const madridNeighborhoodGuides = [
           "sat": "24 hours",
           "sun": "24 hours"
         },
-        "photo": "https://www.esmadrid.com/sites/default/files/styles/content_type_full/public/recursosturisticos/alojamientos/Hotelsieteislas2_1396466553.194.png?itok=4YqGukxN"
+        "photo": "https://www.7islashotel.com/wp-content/themes/sieteislas/img/new/LOGO-new.svg"
       }
     ],
     "sources": [
@@ -444,7 +444,7 @@ export const madridNeighborhoodGuides = [
           "sat": "24 hours",
           "sun": "24 hours"
         },
-        "photo": "https://www.esmadrid.com/sites/default/files/styles/content_type_full/public/recursosturisticos/alojamientos/hat1_1416304717.033.jpg?itok=Xb5nkS9E"
+        "photo": "https://thehatmadrid.com/wp-content/uploads/slider/cache/cb3097b9f7bb39d19fd625c1017d58d6/1.the_hat-88-1.webp"
       },
       {
         "id": "stay-onefam-sungate",
@@ -486,7 +486,7 @@ export const madridNeighborhoodGuides = [
           "sat": "24 hours",
           "sun": "24 hours"
         },
-        "photo": "https://a.hwstatic.com/image/upload/f_auto,q_auto,h_720,c_limit,e_sharpen,e_improve,e_vibrance:60/propertyimages/2/282289/89.jpg"
+        "photo": "https://2060hostelandmarket.com/wp-content/uploads/2023/09/las-mejores-vistas-madrid-hostel-4.jpg.webp"
       },
       {
         "id": "stay-ok-hostel",
@@ -710,7 +710,7 @@ export const madridNeighborhoodGuides = [
           "sat": "7:00 PM-10:30 PM",
           "sun": "Closed"
         },
-        "photo": "https://images.unsplash.com/photo-1551218808-94e220e084d2?auto=format&fit=crop&w=900&q=80"
+        "photo": "https://images.squarespace-cdn.com/content/v1/5f8c4ebce7e6c83bd00bdac4/1738692480370-VCSG7Q1DPJ0X4VOI7X1F/Almeja+rubia+gallega+a+la+marinera+2.jpg?format=1000w"
       },
       {
         "id": "letras-food-casa-alberto",
@@ -841,7 +841,7 @@ export const madridNeighborhoodGuides = [
           "sat": "6:00 PM-2:30 AM",
           "sun": "6:00 PM-12:00 AM"
         },
-        "photo": "https://images.unsplash.com/photo-1551024709-8f23befc6f87?auto=format&fit=crop&w=900&q=80"
+        "photo": "https://salmonguru.es/wp-content/uploads/2024/07/mad-bunny"
       },
       {
         "id": "letras-nightlife-la-venencia",
@@ -1109,7 +1109,7 @@ export const madridNeighborhoodGuides = [
           "sat": "24 hours",
           "sun": "24 hours"
         },
-        "photo": "https://a.hwstatic.com/image/upload/f_auto,q_auto,h_720,c_limit,e_sharpen,e_improve,e_vibrance:60/propertyimages/3/316771/nrxc9mgcinzkjcoy2d57.jpg"
+        "photo": "https://www.latroupe.com/data/webp/hotel1125742-fa85b6f4b8a42e52a10641a84db3f801.webp"
       },
       {
         "id": "stay-2060-newton",
@@ -1130,7 +1130,7 @@ export const madridNeighborhoodGuides = [
           "sat": "24 hours",
           "sun": "24 hours"
         },
-        "photo": "https://a.hwstatic.com/image/upload/f_auto,q_auto,h_720,c_limit,e_sharpen,e_improve,e_vibrance:60/propertyimages/2/282289/89.jpg"
+        "photo": "https://2060hostelandmarket.com/wp-content/uploads/2023/09/las-mejores-vistas-madrid-hostel-4.jpg.webp"
       },
       {
         "id": "stay-the-hat",
@@ -1151,7 +1151,7 @@ export const madridNeighborhoodGuides = [
           "sat": "24 hours",
           "sun": "24 hours"
         },
-        "photo": "https://www.esmadrid.com/sites/default/files/styles/content_type_full/public/recursosturisticos/alojamientos/hat1_1416304717.033.jpg?itok=Xb5nkS9E"
+        "photo": "https://thehatmadrid.com/wp-content/uploads/slider/cache/cb3097b9f7bb39d19fd625c1017d58d6/1.the_hat-88-1.webp"
       },
       {
         "id": "stay-ok-hostel",
@@ -1305,7 +1305,7 @@ export const madridNeighborhoodGuides = [
           "sat": "10:00 AM-7:00 PM",
           "sun": "10:00 AM-7:00 PM"
         },
-        "photo": "https://www.esmadrid.com/sites/default/files/styles/content_type_full/public/recursosturisticos/infoturistica/caisaforum3_1403031677.923.jpg?itok=mD360Nrf"
+        "photo": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRHfgXoQIbluuwowl5GV6fobIFpbrbzX6Pqtw&s"
       }
     ],
     "sources": [
@@ -1637,7 +1637,7 @@ export const madridNeighborhoodGuides = [
           "sat": "24 hours",
           "sun": "24 hours"
         },
-        "photo": "https://www.esmadrid.com/sites/default/files/styles/content_type_full/public/recursosturisticos/alojamientos/palm_court_02.jpg?itok=ZKcgkcTr"
+        "photo": "https://cdn-assets-eu.frontify.com/s3/frontify-enterprise-files-eu/eyJvYXV0aCI6eyJjbGllbnRfaWQiOiJzaXRlY29yZSJ9LCJwYXRoIjoibWFuZGFyaW4tb3JpZW50YWwtaG90ZWwtZ3JvdXBcL2ZpbGVcL1Jyc1NpbzZTSzZOTnA5bUdiZTdNLmpwZyJ9:mandarin-oriental-hotel-group:rvzw8tiI3oli4sezJ4kuQj0g-YGtBl87X7AZLmzA-cQ?width=1280&height=560&fp=0.5,0.5&crop=fp&quality=75"
       },
       {
         "id": "stay-petit-palace-savoy",
@@ -1774,7 +1774,7 @@ export const madridNeighborhoodGuides = [
           "sat": "24 hours",
           "sun": "24 hours"
         },
-        "photo": "https://a.hwstatic.com/image/upload/f_auto,q_auto,h_720,c_limit,e_sharpen,e_improve,e_vibrance:60/propertyimages/3/316771/nrxc9mgcinzkjcoy2d57.jpg"
+        "photo": "https://www.latroupe.com/data/webp/hotel1125742-fa85b6f4b8a42e52a10641a84db3f801.webp"
       },
       {
         "id": "stay-2060-newton",
@@ -1795,7 +1795,7 @@ export const madridNeighborhoodGuides = [
           "sat": "24 hours",
           "sun": "24 hours"
         },
-        "photo": "https://a.hwstatic.com/image/upload/f_auto,q_auto,h_720,c_limit,e_sharpen,e_improve,e_vibrance:60/propertyimages/2/282289/89.jpg"
+        "photo": "https://2060hostelandmarket.com/wp-content/uploads/2023/09/las-mejores-vistas-madrid-hostel-4.jpg.webp"
       },
       {
         "id": "stay-ok-hostel",
@@ -2169,7 +2169,7 @@ export const madridNeighborhoodGuides = [
           "sat": "Event schedule (check venue)",
           "sun": "Event schedule (check venue)"
         },
-        "photo": "https://images.unsplash.com/photo-1501386761578-eac5c94b800a?auto=format&fit=crop&w=900&q=80"
+        "photo": "https://www.mondodisko.es/assets/images/mondo-disko-2"
       },
       {
         "id": "malasana-nightlife-via-lactea",
@@ -2281,7 +2281,7 @@ export const madridNeighborhoodGuides = [
           "sat": "24 hours",
           "sun": "24 hours"
         },
-        "photo": "https://www.esmadrid.com/sites/default/files/styles/content_type_full/public/recursosturisticos/alojamientos/hotel_urso_6.png?itok=Xn5BALuE"
+        "photo": "https://b4411764.smushcdn.com/4411764/wp-content/uploads/2018/10/water-zone-urso-hotel-spa-madrid.jpg?lossy=2&strip=1&webp=1"
       },
       {
         "id": "stay-seven-islas",
@@ -2302,7 +2302,7 @@ export const madridNeighborhoodGuides = [
           "sat": "24 hours",
           "sun": "24 hours"
         },
-        "photo": "https://www.esmadrid.com/sites/default/files/styles/content_type_full/public/recursosturisticos/alojamientos/Hotelsieteislas2_1396466553.194.png?itok=4YqGukxN"
+        "photo": "https://www.7islashotel.com/wp-content/themes/sieteislas/img/new/LOGO-new.svg"
       },
       {
         "id": "stay-ibis-centro",
@@ -2418,7 +2418,7 @@ export const madridNeighborhoodGuides = [
           "sat": "24 hours",
           "sun": "24 hours"
         },
-        "photo": "https://a.hwstatic.com/image/upload/f_auto,q_auto,h_720,c_limit,e_sharpen,e_improve,e_vibrance:60/propertyimages/2/286369/exa4nsdjxhbyf1gdfk9l.jpg"
+        "photo": "https://onefamhostels.com/wp-content/uploads/2024/09/02Onefam-Madrid-terrace2.webp"
       },
       {
         "id": "stay-bastardo",
@@ -2946,7 +2946,7 @@ export const madridNeighborhoodGuides = [
           "sat": "24 hours",
           "sun": "24 hours"
         },
-        "photo": "https://www.esmadrid.com/sites/default/files/styles/content_type_full/public/recursosturisticos/alojamientos/pmayor-rooftop-6.png?itok=NDid8Rwi"
+        "photo": "https://www.pestana.com/content/dam/pestana/en_us/destinations/spain/madrid/pestana-plaza-mayor/gallery/overview/pestana-plaza-mayor-gallery-surroundings-view-outside-night"
       },
       {
         "id": "stay-edition",
@@ -2967,7 +2967,7 @@ export const madridNeighborhoodGuides = [
           "sat": "24 hours",
           "sun": "24 hours"
         },
-        "photo": "https://www.editionhotels.com/wp-content/uploads/2022/06/220503_EDT_Madrid2_16-1-scaled.jpg"
+        "photo": "https://www.editionhotels.com/wp-content/uploads/2026/03/EDT_Madrid2_23-_RGB_V1-2-scaled.jpg"
       },
       {
         "id": "stay-room-mate-alba",
@@ -3062,7 +3062,7 @@ export const madridNeighborhoodGuides = [
           "sat": "24 hours",
           "sun": "24 hours"
         },
-        "photo": "https://www.esmadrid.com/sites/default/files/styles/content_type_full/public/recursosturisticos/alojamientos/hat1_1416304717.033.jpg?itok=Xb5nkS9E"
+        "photo": "https://thehatmadrid.com/wp-content/uploads/slider/cache/cb3097b9f7bb39d19fd625c1017d58d6/1.the_hat-88-1.webp"
       },
       {
         "id": "stay-ok-hostel",
@@ -3104,7 +3104,7 @@ export const madridNeighborhoodGuides = [
           "sat": "24 hours",
           "sun": "24 hours"
         },
-        "photo": "https://a.hwstatic.com/image/upload/f_auto,q_auto,h_720,c_limit,e_sharpen,e_improve,e_vibrance:60/propertyimages/2/282289/89.jpg"
+        "photo": "https://2060hostelandmarket.com/wp-content/uploads/2023/09/las-mejores-vistas-madrid-hostel-4.jpg.webp"
       },
       {
         "id": "stay-latroupe-prado",
@@ -3125,7 +3125,7 @@ export const madridNeighborhoodGuides = [
           "sat": "24 hours",
           "sun": "24 hours"
         },
-        "photo": "https://a.hwstatic.com/image/upload/f_auto,q_auto,h_720,c_limit,e_sharpen,e_improve,e_vibrance:60/propertyimages/3/316771/nrxc9mgcinzkjcoy2d57.jpg"
+        "photo": "https://www.latroupe.com/data/webp/hotel1125742-fa85b6f4b8a42e52a10641a84db3f801.webp"
       }
     ],
     "sources": [
@@ -3328,7 +3328,7 @@ export const madridNeighborhoodGuides = [
           "sat": "1:00 PM-4:00 PM, 8:00 PM-11:30 PM",
           "sun": "1:00 PM-4:00 PM, 8:00 PM-11:00 PM"
         },
-        "photo": "https://images.unsplash.com/photo-1551024709-8f23befc6f87?auto=format&fit=crop&w=900&q=80"
+        "photo": "https://www.theworlds50best.com/discovery/filestore/jpg/BARRA%20DE%20VINOS_ANGELITA%20(1)"
       },
       {
         "id": "chueca-food-mercado-san-anton",
@@ -3459,7 +3459,7 @@ export const madridNeighborhoodGuides = [
           "sat": "6:00 PM-2:30 AM",
           "sun": "6:00 PM-12:00 AM"
         },
-        "photo": "https://images.unsplash.com/photo-1551024709-8f23befc6f87?auto=format&fit=crop&w=900&q=80"
+        "photo": "https://www.theworlds50best.com/discovery/filestore/jpg/BARRA%20DE%20VINOS_ANGELITA%20(1)"
       },
       {
         "id": "chueca-nightlife-ficus",
@@ -3478,7 +3478,7 @@ export const madridNeighborhoodGuides = [
           "sat": "6:00 PM-2:30 AM",
           "sun": "6:00 PM-12:00 AM"
         },
-        "photo": "https://images.unsplash.com/photo-1551024709-8f23befc6f87?auto=format&fit=crop&w=900&q=80"
+        "photo": "https://static.wixstatic.com/media/504b29_8a2a776ee62b41fcb512d06189491966~mv2.jpg/v1/fill/w_3360,h_1392,al_c,q_90,usm_0.66_1.00_0.01,enc_avif,quality_auto/504b29_8a2a776ee62b41fcb512d06189491966~mv2"
       },
       {
         "id": "chueca-nightlife-museo-chicote",
@@ -3516,7 +3516,7 @@ export const madridNeighborhoodGuides = [
           "sat": "10:00 PM-5:00 AM",
           "sun": "10:00 PM-2:30 AM"
         },
-        "photo": "https://images.unsplash.com/photo-1520523839897-bd0b52f945a0?auto=format&fit=crop&w=900&q=80"
+        "photo": "https://toni2.es/wp-content/uploads/2021/09/Barra-Toni-2-madrid-scaled-e1636977700852-2048x1295"
       }
     ],
     "sources": [
@@ -3590,7 +3590,7 @@ export const madridNeighborhoodGuides = [
           "sat": "24 hours",
           "sun": "24 hours"
         },
-        "photo": "https://www.onlyyouhotels.com/content/imgsxml/galerias/panel_fullheader/1/cabecera-web-oyb1439.jpg"
+        "photo": "https://www.onlyyouhotels.com/data/webp/galeria-fotos-oyb5872.jpg-577afb9e3b5f0876d20535f0f7b9a1cd.webp"
       },
       {
         "id": "stay-room-mate-oscar",
@@ -3674,7 +3674,7 @@ export const madridNeighborhoodGuides = [
           "sat": "24 hours",
           "sun": "24 hours"
         },
-        "photo": "https://www.esmadrid.com/sites/default/files/styles/content_type_full/public/recursosturisticos/alojamientos/hotel_urso_6.png?itok=Xn5BALuE"
+        "photo": "https://b4411764.smushcdn.com/4411764/wp-content/uploads/2018/10/water-zone-urso-hotel-spa-madrid.jpg?lossy=2&strip=1&webp=1"
       }
     ],
     "sources": [
@@ -3790,7 +3790,7 @@ export const madridNeighborhoodGuides = [
           "sat": "24 hours",
           "sun": "24 hours"
         },
-        "photo": "https://a.hwstatic.com/image/upload/f_auto,q_auto,h_720,c_limit,e_sharpen,e_improve,e_vibrance:60/propertyimages/2/286369/exa4nsdjxhbyf1gdfk9l.jpg"
+        "photo": "https://onefamhostels.com/wp-content/uploads/2024/09/02Onefam-Madrid-terrace2.webp"
       }
     ],
     "sources": [
@@ -3995,7 +3995,7 @@ export const madridCitywideGuides = [
           "sat": "12:30 PM-4:00 PM, 7:30 PM-11:30 PM",
           "sun": "12:30 PM-4:00 PM, 7:30 PM-11:00 PM"
         },
-        "photo": "https://static.wixstatic.com/media/06eb95_8150892a0c8e475faa7ac767c480455e%7Emv2.jpg/v1/fit/w_2500,h_1330,al_c/06eb95_8150892a0c8e475faa7ac767c480455e%7Emv2.jpg"
+        "photo": "https://static.wixstatic.com/media/ffa181_13e0b9bd9cb043488dabb7ecf16a0370~mv2.jpg/v1/fill/w_1405,h_667,al_c,q_85,enc_avif,quality_auto/ffa181_13e0b9bd9cb043488dabb7ecf16a0370~mv2"
       },
       {
         "id": "madrid-food-la-malontina",
@@ -4016,7 +4016,7 @@ export const madridCitywideGuides = [
           "sat": "7:00 PM-10:30 PM",
           "sun": "Closed"
         },
-        "photo": "https://images.unsplash.com/photo-1551218808-94e220e084d2?auto=format&fit=crop&w=900&q=80"
+        "photo": "https://images.squarespace-cdn.com/content/v1/5f8c4ebce7e6c83bd00bdac4/1738692480370-VCSG7Q1DPJ0X4VOI7X1F/Almeja+rubia+gallega+a+la+marinera+2.jpg?format=1000w"
       },
       {
         "id": "madrid-food-angelita",
@@ -4037,7 +4037,7 @@ export const madridCitywideGuides = [
           "sat": "1:00 PM-4:00 PM, 8:00 PM-11:30 PM",
           "sun": "1:00 PM-4:00 PM, 8:00 PM-11:00 PM"
         },
-        "photo": "https://images.unsplash.com/photo-1551024709-8f23befc6f87?auto=format&fit=crop&w=900&q=80"
+        "photo": "https://www.theworlds50best.com/discovery/filestore/jpg/BARRA%20DE%20VINOS_ANGELITA%20(1)"
       },
       {
         "id": "madrid-food-playing-solo",
@@ -4079,7 +4079,7 @@ export const madridCitywideGuides = [
           "sat": "12:30 PM-4:00 PM, 7:30 PM-11:30 PM",
           "sun": "12:30 PM-4:00 PM, 7:30 PM-11:00 PM"
         },
-        "photo": "https://images.unsplash.com/photo-1551218808-94e220e084d2?auto=format&fit=crop&w=900&q=80"
+        "photo": "https://lhardy.com/wp-content/uploads/Lhardy-Primera-20"
       },
       {
         "id": "madrid-food-diverxo",
@@ -4100,7 +4100,7 @@ export const madridCitywideGuides = [
           "sat": "Closed",
           "sun": "Closed"
         },
-        "photo": "https://diverxo.com/wp-content/uploads/2021/12/xo-obra-opt.webp"
+        "photo": "https://diverso.it.com/assets/img/DSC_6171"
       },
       {
         "id": "madrid-food-smoked-room",
@@ -4121,7 +4121,7 @@ export const madridCitywideGuides = [
           "sat": "1:00 PM-4:00 PM, 8:30 PM-1:00 AM",
           "sun": "Closed"
         },
-        "photo": "https://smokedroomrestaurants.com/wp-content/uploads/2025/07/SR_home_carrusel-1.jpg"
+        "photo": "https://smokedroomrestaurants.com/wp-content/uploads/2025/07/SR_home_carrusel-2"
       }
     ],
     "sources": [
@@ -4192,7 +4192,7 @@ export const madridCitywideGuides = [
           "sat": "6:00 PM-2:30 AM",
           "sun": "6:00 PM-12:00 AM"
         },
-        "photo": "https://images.unsplash.com/photo-1551024709-8f23befc6f87?auto=format&fit=crop&w=900&q=80"
+        "photo": "https://salmonguru.es/wp-content/uploads/2024/07/mad-bunny"
       },
       {
         "id": "madrid-nightlife-angelita",
@@ -4211,7 +4211,7 @@ export const madridCitywideGuides = [
           "sat": "6:00 PM-2:30 AM",
           "sun": "6:00 PM-12:00 AM"
         },
-        "photo": "https://images.unsplash.com/photo-1551024709-8f23befc6f87?auto=format&fit=crop&w=900&q=80"
+        "photo": "https://www.theworlds50best.com/discovery/filestore/jpg/BARRA%20DE%20VINOS_ANGELITA%20(1)"
       },
       {
         "id": "madrid-nightlife-ficus",
@@ -4230,7 +4230,7 @@ export const madridCitywideGuides = [
           "sat": "6:00 PM-2:30 AM",
           "sun": "6:00 PM-12:00 AM"
         },
-        "photo": "https://images.unsplash.com/photo-1551024709-8f23befc6f87?auto=format&fit=crop&w=900&q=80"
+        "photo": "https://static.wixstatic.com/media/504b29_8a2a776ee62b41fcb512d06189491966~mv2.jpg/v1/fill/w_3360,h_1392,al_c,q_90,usm_0.66_1.00_0.01,enc_avif,quality_auto/504b29_8a2a776ee62b41fcb512d06189491966~mv2"
       },
       {
         "id": "madrid-nightlife-1862",
@@ -4268,7 +4268,7 @@ export const madridCitywideGuides = [
           "sat": "Event schedule (check venue)",
           "sun": "Event schedule (check venue)"
         },
-        "photo": "https://images.unsplash.com/photo-1501386761578-eac5c94b800a?auto=format&fit=crop&w=900&q=80"
+        "photo": "https://www.mondodisko.es/assets/images/mondo-disko-2"
       },
       {
         "id": "madrid-nightlife-toni2",
@@ -4287,7 +4287,7 @@ export const madridCitywideGuides = [
           "sat": "10:00 PM-5:00 AM",
           "sun": "10:00 PM-2:30 AM"
         },
-        "photo": "https://images.unsplash.com/photo-1520523839897-bd0b52f945a0?auto=format&fit=crop&w=900&q=80"
+        "photo": "https://toni2.es/wp-content/uploads/2021/09/Barra-Toni-2-madrid-scaled-e1636977700852-2048x1295"
       }
     ],
     "sources": [
@@ -4364,7 +4364,7 @@ export const madridCitywideGuides = [
           "sat": "24 hours",
           "sun": "24 hours"
         },
-        "photo": "https://www.esmadrid.com/sites/default/files/styles/content_type_full/public/recursosturisticos/alojamientos/canalejas.jpg?itok=CiqEovlB"
+        "photo": "https://upload.wikimedia.org/wikipedia/commons/4/42/Edificio_del_Banco_Espa%C3%B1ol_de_Cr%C3%A9dito_de_Madrid"
       },
       {
         "id": "stay-mandarin-oriental-ritz",
@@ -4385,7 +4385,7 @@ export const madridCitywideGuides = [
           "sat": "24 hours",
           "sun": "24 hours"
         },
-        "photo": "https://www.esmadrid.com/sites/default/files/styles/content_type_full/public/recursosturisticos/alojamientos/palm_court_02.jpg?itok=ZKcgkcTr"
+        "photo": "https://cdn-assets-eu.frontify.com/s3/frontify-enterprise-files-eu/eyJvYXV0aCI6eyJjbGllbnRfaWQiOiJzaXRlY29yZSJ9LCJwYXRoIjoibWFuZGFyaW4tb3JpZW50YWwtaG90ZWwtZ3JvdXBcL2ZpbGVcL1Jyc1NpbzZTSzZOTnA5bUdiZTdNLmpwZyJ9:mandarin-oriental-hotel-group:rvzw8tiI3oli4sezJ4kuQj0g-YGtBl87X7AZLmzA-cQ?width=1280&height=560&fp=0.5,0.5&crop=fp&quality=75"
       },
       {
         "id": "stay-only-you-boutique",
@@ -4406,7 +4406,7 @@ export const madridCitywideGuides = [
           "sat": "24 hours",
           "sun": "24 hours"
         },
-        "photo": "https://www.onlyyouhotels.com/content/imgsxml/galerias/panel_fullheader/1/cabecera-web-oyb1439.jpg"
+        "photo": "https://www.onlyyouhotels.com/data/webp/galeria-fotos-oyb5872.jpg-577afb9e3b5f0876d20535f0f7b9a1cd.webp"
       },
       {
         "id": "stay-urso",
@@ -4427,7 +4427,7 @@ export const madridCitywideGuides = [
           "sat": "24 hours",
           "sun": "24 hours"
         },
-        "photo": "https://www.esmadrid.com/sites/default/files/styles/content_type_full/public/recursosturisticos/alojamientos/hotel_urso_6.png?itok=Xn5BALuE"
+        "photo": "https://b4411764.smushcdn.com/4411764/wp-content/uploads/2018/10/water-zone-urso-hotel-spa-madrid.jpg?lossy=2&strip=1&webp=1"
       },
       {
         "id": "stay-edition",
@@ -4448,7 +4448,7 @@ export const madridCitywideGuides = [
           "sat": "24 hours",
           "sun": "24 hours"
         },
-        "photo": "https://www.editionhotels.com/wp-content/uploads/2022/06/220503_EDT_Madrid2_16-1-scaled.jpg"
+        "photo": "https://www.editionhotels.com/wp-content/uploads/2026/03/EDT_Madrid2_23-_RGB_V1-2-scaled.jpg"
       },
       {
         "id": "stay-pestana-plaza-mayor",
@@ -4469,7 +4469,7 @@ export const madridCitywideGuides = [
           "sat": "24 hours",
           "sun": "24 hours"
         },
-        "photo": "https://www.esmadrid.com/sites/default/files/styles/content_type_full/public/recursosturisticos/alojamientos/pmayor-rooftop-6.png?itok=NDid8Rwi"
+        "photo": "https://www.pestana.com/content/dam/pestana/en_us/destinations/spain/madrid/pestana-plaza-mayor/gallery/overview/pestana-plaza-mayor-gallery-surroundings-view-outside-night"
       },
       {
         "id": "stay-seven-islas",
@@ -4490,7 +4490,7 @@ export const madridCitywideGuides = [
           "sat": "24 hours",
           "sun": "24 hours"
         },
-        "photo": "https://www.esmadrid.com/sites/default/files/styles/content_type_full/public/recursosturisticos/alojamientos/Hotelsieteislas2_1396466553.194.png?itok=4YqGukxN"
+        "photo": "https://www.7islashotel.com/wp-content/themes/sieteislas/img/new/LOGO-new.svg"
       }
     ],
     "sources": [
@@ -4563,7 +4563,7 @@ export const madridCitywideGuides = [
           "sat": "24 hours",
           "sun": "24 hours"
         },
-        "photo": "https://www.esmadrid.com/sites/default/files/styles/content_type_full/public/recursosturisticos/alojamientos/hat1_1416304717.033.jpg?itok=Xb5nkS9E"
+        "photo": "https://thehatmadrid.com/wp-content/uploads/slider/cache/cb3097b9f7bb39d19fd625c1017d58d6/1.the_hat-88-1.webp"
       },
       {
         "id": "stay-onefam-madrid",
@@ -4584,7 +4584,7 @@ export const madridCitywideGuides = [
           "sat": "24 hours",
           "sun": "24 hours"
         },
-        "photo": "https://a.hwstatic.com/image/upload/f_auto,q_auto,h_720,c_limit,e_sharpen,e_improve,e_vibrance:60/propertyimages/2/286369/exa4nsdjxhbyf1gdfk9l.jpg"
+        "photo": "https://onefamhostels.com/wp-content/uploads/2024/09/02Onefam-Madrid-terrace2.webp"
       },
       {
         "id": "stay-2060-newton",
@@ -4605,7 +4605,7 @@ export const madridCitywideGuides = [
           "sat": "24 hours",
           "sun": "24 hours"
         },
-        "photo": "https://a.hwstatic.com/image/upload/f_auto,q_auto,h_720,c_limit,e_sharpen,e_improve,e_vibrance:60/propertyimages/2/282289/89.jpg"
+        "photo": "https://2060hostelandmarket.com/wp-content/uploads/2023/09/las-mejores-vistas-madrid-hostel-4.jpg.webp"
       },
       {
         "id": "stay-latroupe-prado",
@@ -4626,7 +4626,7 @@ export const madridCitywideGuides = [
           "sat": "24 hours",
           "sun": "24 hours"
         },
-        "photo": "https://a.hwstatic.com/image/upload/f_auto,q_auto,h_720,c_limit,e_sharpen,e_improve,e_vibrance:60/propertyimages/3/316771/nrxc9mgcinzkjcoy2d57.jpg"
+        "photo": "https://www.latroupe.com/data/webp/hotel1125742-fa85b6f4b8a42e52a10641a84db3f801.webp"
       },
       {
         "id": "stay-ok-hostel",
@@ -4783,7 +4783,7 @@ export const madridCitywideGuides = [
           "sat": "10:00 AM-7:00 PM",
           "sun": "10:00 AM-7:00 PM"
         },
-        "photo": "https://www.esmadrid.com/sites/default/files/styles/content_type_full/public/recursosturisticos/infoturistica/F_E_EA_1210_GD_reina_sofia_40_alta.jpg?itok=uJ0FjMIo"
+        "photo": "https://upload.wikimedia.org/wikipedia/commons/b/b1/Museo_Reina_Sofia%2C_Madrid_%286394654203%29"
       },
       {
         "id": "madrid-culture-thyssen",
@@ -4859,7 +4859,7 @@ export const madridCitywideGuides = [
           "sat": "10:00 AM-7:00 PM",
           "sun": "10:00 AM-7:00 PM"
         },
-        "photo": "https://upload.wikimedia.org/wikipedia/commons/7/77/CaixaForum_Madrid_%28Spain%29.jpg"
+        "photo": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRHfgXoQIbluuwowl5GV6fobIFpbrbzX6Pqtw&s"
       },
       {
         "id": "madrid-culture-matadero",
@@ -4878,7 +4878,7 @@ export const madridCitywideGuides = [
           "sat": "10:00 AM-7:00 PM",
           "sun": "10:00 AM-7:00 PM"
         },
-        "photo": "https://www.esmadrid.com/sites/default/files/styles/content_type_full/public/recursosturisticos/infoturistica/matadero_francescopinton.jpg?itok=oVqXhyOi"
+        "photo": "https://live.staticflickr.com/4301/36176921785_f5163eecec_b"
       }
     ],
     "sources": [
