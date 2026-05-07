@@ -33,7 +33,7 @@ export const madridNeighborhoodGuides = [
           40.4172,
           -3.7003
         ],
-        "description": "Historic old-Madrid dining room for a formal central meal, croquetas, consomme, and a sense of Sol before it became only a pass-through zone. Use Lhardy when the meal should be a reservation anchor rather than a casual crawl stop.",
+        "description": "Lhardy is the historic Sol dining room for cocido, croquetas, consomme, and polished old-Madrid ceremony. Use Lhardy when the center needs a formal classic with bakery-counter history rather than another quick tapas stop.",
         "price": "$$",
         "priceSource": "The Infatuation / Google Maps",
         "hours": {
@@ -66,7 +66,7 @@ export const madridNeighborhoodGuides = [
           "sat": "12:00 PM-12:00 AM",
           "sun": "12:00 PM-10:30 PM"
         },
-        "photo": "https://images.unsplash.com/photo-1515443961218-a51367888e4b?auto=format&fit=crop&w=900&q=80"
+        "photo": "http://www.casalabra.es/wp-content/uploads/2013/06/el-bar"
       },
       {
         "id": "sol-food-mercado-san-miguel",
@@ -75,7 +75,7 @@ export const madridNeighborhoodGuides = [
           40.4154,
           -3.7091
         ],
-        "description": "The polished market-hall choice near Plaza Mayor, best for groups and snack-led grazing rather than a quiet local meal. Use Mercado de San Miguel when the group needs flexible grazing, uneven appetites, or a quick reset between sights.",
+        "description": "Mercado de San Miguel has moved from a century-old wholesale market into one of Madrid's flagship gastronomic halls. Use it for a quick, polished survey of Spanish flavors when the group needs flexible grazing near Plaza Mayor rather than a quiet sit-down meal.",
         "price": "$",
         "priceSource": "Time Out / Google Maps",
         "hours": {
@@ -87,7 +87,7 @@ export const madridNeighborhoodGuides = [
           "sat": "12:00 PM-1:00 AM",
           "sun": "12:00 PM-12:00 AM"
         },
-        "photo": "https://upload.wikimedia.org/wikipedia/commons/8/83/Mercado_de_San_Miguel_%28Madrid%29_01.jpg"
+        "photo": "https://live.staticflickr.com/3542/3668195177_a0390718b5_b"
       },
       {
         "id": "sol-food-san-gines",
@@ -96,7 +96,7 @@ export const madridNeighborhoodGuides = [
           40.4168,
           -3.7068
         ],
-        "description": "The central churros-and-chocolate classic, useful late, early, or as a sweet reset between Plaza Mayor and Sol. Use Chocolatería San Ginés when the route needs a focused sweet stop or casual reset rather than another full meal.",
+        "description": "Chocolatería San Ginés is the central churros-and-chocolate classic tucked off the passage near Plaza Mayor and Sol. It works best as a focused sweet stop: late after bars, early before sightseeing, or whenever the route needs a Madrid ritual instead of another full meal.",
         "price": "$",
         "priceSource": "Google Maps / Tripadvisor",
         "hours": {
@@ -108,7 +108,7 @@ export const madridNeighborhoodGuides = [
           "sat": "12:00 PM-1:00 AM",
           "sun": "12:00 PM-12:00 AM"
         },
-        "photo": "https://images.unsplash.com/photo-1613396874083-2d5fbe59ae79?auto=format&fit=crop&w=900&q=80"
+        "photo": "https://estaticos.esmadrid.com/cdn/farfuture/sGn19FpiOybb7I5KRcKLKJ9pIvO7LT-EfrDeShGkX8E/mtime:1646729406/sites/default/files/styles/content_type_full/public/editorial/dondeir/noche/entradaplazuela_y_arco_san_gines.jpg?itok=cHqpFYyq"
       }
     ],
     "sources": [
@@ -176,7 +176,7 @@ export const madridNeighborhoodGuides = [
           "sat": "12:00 PM-12:00 AM",
           "sun": "12:00 PM-10:30 PM"
         },
-        "photo": "https://images.unsplash.com/photo-1515443961218-a51367888e4b?auto=format&fit=crop&w=900&q=80"
+        "photo": "http://www.casalabra.es/wp-content/uploads/2013/06/el-bar"
       },
       {
         "id": "sol-nightlife-edition-roof",
@@ -731,7 +731,7 @@ export const madridNeighborhoodGuides = [
           "sat": "12:30 PM-4:00 PM, 7:30 PM-11:30 PM",
           "sun": "12:30 PM-4:00 PM, 7:30 PM-11:00 PM"
         },
-        "photo": "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=900&q=80"
+        "photo": "https://www.casaalberto.es/data/ficheros/N000001/2025/07/3_4gj3qlxcw7_LIBRILLO"
       },
       {
         "id": "letras-food-triciclo",
@@ -752,7 +752,7 @@ export const madridNeighborhoodGuides = [
           "sat": "1:00 PM-3:30 PM, 8:00 PM-11:30 PM",
           "sun": "Closed"
         },
-        "photo": "https://images.unsplash.com/photo-1551218808-94e220e084d2?auto=format&fit=crop&w=900&q=80"
+        "photo": "https://static.wixstatic.com/media/ff3b54_3f1fb814f34f44708baafe64f6a6a58d~mv2.jpg/v1/fill/w_676,h_1646,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/ff3b54_3f1fb814f34f44708baafe64f6a6a58d~mv2"
       },
       {
         "id": "letras-food-viva-madrid",
@@ -773,7 +773,7 @@ export const madridNeighborhoodGuides = [
           "sat": "12:00 PM-2:00 AM",
           "sun": "12:00 PM-12:00 AM"
         },
-        "photo": "https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?auto=format&fit=crop&w=900&q=80"
+        "photo": "https://www.vivamadrid.com/uploads/1/3/6/3/136359884/img-3343_orig"
       }
     ],
     "sources": [
@@ -879,7 +879,7 @@ export const madridNeighborhoodGuides = [
           "sat": "12:00 PM-2:00 AM",
           "sun": "12:00 PM-12:00 AM"
         },
-        "photo": "https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?auto=format&fit=crop&w=900&q=80"
+        "photo": "https://www.vivamadrid.com/uploads/1/3/6/3/136359884/img-3343_orig"
       },
       {
         "id": "letras-nightlife-cafe-central",
@@ -1375,7 +1375,7 @@ export const madridNeighborhoodGuides = [
           "sat": "12:30 PM-4:00 PM, 7:30 PM-11:30 PM",
           "sun": "12:30 PM-4:00 PM, 7:30 PM-11:00 PM"
         },
-        "photo": "https://images.unsplash.com/photo-1515443961218-a51367888e4b?auto=format&fit=crop&w=900&q=80"
+        "photo": "https://tabernalacatapa.com/wp-content/uploads/2025/07/Salpicebiche_La_Catapa_03-2048x1366"
       },
       {
         "id": "retiro-food-kulto",
@@ -1384,7 +1384,7 @@ export const madridNeighborhoodGuides = [
           40.4216,
           -3.6764
         ],
-        "description": "A polished small-plates room near Ibiza for seafood, rice, and a more deliberate neighborhood dinner. Use KultO when the route needs a focused sweet stop or casual reset rather than another full meal.",
+        "description": "KultO reinterprets southern Spanish flavors through a traveler's lens, letting Mediterranean dishes cross paths with Asian influence. Use it near Ibiza when the Retiro food plan needs seafood, rice, and a more curious dinner than a standard tavern stop.",
         "price": "$",
         "priceSource": "MICHELIN Guide / Google Maps",
         "hours": {
@@ -1396,7 +1396,7 @@ export const madridNeighborhoodGuides = [
           "sat": "1:00 PM-3:30 PM, 8:00 PM-11:30 PM",
           "sun": "Closed"
         },
-        "photo": "https://images.unsplash.com/photo-1551218808-94e220e084d2?auto=format&fit=crop&w=900&q=80"
+        "photo": "https://kulto.es/wp-content/uploads/carta-kulto-restaurante-platos-restaurante-madrid-kulto"
       },
       {
         "id": "retiro-food-florida",
@@ -1405,7 +1405,7 @@ export const madridNeighborhoodGuides = [
           40.4193,
           -3.6882
         ],
-        "description": "The in-park dining and drinks complex, useful when the day should stay inside Retiro rather than moving back toward Sol. Use Florida Retiro when the route needs a focused sweet stop or casual reset rather than another full meal.",
+        "description": "Florida Retiro is the park's day-to-night food and leisure complex, with multiple spaces built around gastronomy, music, and social plans. Its comfort-food menu leans on local produce, seasonality, tradition, and Madrid recipes, so it works when the route should stay inside Retiro instead of moving back toward Sol.",
         "price": "$",
         "priceSource": "Time Out / Google Maps",
         "hours": {
@@ -1417,7 +1417,7 @@ export const madridNeighborhoodGuides = [
           "sat": "12:00 PM-1:00 AM",
           "sun": "12:00 PM-12:00 AM"
         },
-        "photo": "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=900&q=80"
+        "photo": "https://www.floridapark.es/assets/media/florida-park/locales-fotos/el-pabellon/3-05112025093404501"
       },
       {
         "id": "retiro-food-perro-galleta",
@@ -1426,7 +1426,7 @@ export const madridNeighborhoodGuides = [
           40.4196,
           -3.6815
         ],
-        "description": "A friendly Retiro room for groups, casual dinners, and park-adjacent meals that do not need to be formal. Use El Perro y la Galleta when the meal should be a reservation anchor rather than a casual crawl stop.",
+        "description": "El Perro y la Galleta works for a casual Retiro meal at the park-side Ibiza location, part of a small Madrid group rather than a single one-off restaurant. Choose this branch when the plan needs a friendly room for groups, familiar plates, and a relaxed dinner close to the park.",
         "price": "$",
         "priceSource": "Google Maps / Tripadvisor",
         "hours": {
@@ -1496,7 +1496,7 @@ export const madridNeighborhoodGuides = [
           40.4193,
           -3.6882
         ],
-        "description": "The park's most obvious dinner-to-drinks complex, useful when staying inside Retiro is the point. Use Florida Retiro when the group needs a clear mood, crowd, and second-stop direction before moving on.",
+        "description": "Florida Retiro turns the park into a night plan rather than only a daytime walk, with dining, drinks, leisure, and several spaces under the Florida Park umbrella. Use it when the evening should stay in Retiro and move from food into music or cocktails without changing neighborhoods.",
         "hours": {
           "mon": "6:00 PM-12:30 AM",
           "tue": "6:00 PM-12:30 AM",
@@ -1506,7 +1506,7 @@ export const madridNeighborhoodGuides = [
           "sat": "6:00 PM-2:30 AM",
           "sun": "6:00 PM-12:00 AM"
         },
-        "photo": "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=900&q=80"
+        "photo": "https://www.floridapark.es/assets/media/florida-park/locales-fotos/el-pabellon/3-05112025093404501"
       },
       {
         "id": "retiro-nightlife-mandarin-bar",
@@ -1544,7 +1544,7 @@ export const madridNeighborhoodGuides = [
           "sat": "12:00 PM-12:00 AM",
           "sun": "12:00 PM-10:30 PM"
         },
-        "photo": "https://images.unsplash.com/photo-1515443961218-a51367888e4b?auto=format&fit=crop&w=900&q=80"
+        "photo": "https://tabernalacatapa.com/wp-content/uploads/2025/07/Salpicebiche_La_Catapa_03-2048x1366"
       },
       {
         "id": "retiro-nightlife-ramses",
@@ -2019,7 +2019,7 @@ export const madridNeighborhoodGuides = [
           "sat": "7:00 PM-10:30 PM",
           "sun": "Closed"
         },
-        "photo": "https://images.unsplash.com/photo-1414235077428-338989a2e8c0?auto=format&fit=crop&w=900&q=80"
+        "photo": "https://playingsolorestaurant.com/wp-content/uploads/2023/01/5-playingSolo-min.webp"
       },
       {
         "id": "malasana-food-aredna",
@@ -2040,7 +2040,7 @@ export const madridNeighborhoodGuides = [
           "sat": "12:30 PM-4:00 PM, 7:30 PM-11:30 PM",
           "sun": "12:30 PM-4:00 PM, 7:30 PM-11:00 PM"
         },
-        "photo": "https://images.unsplash.com/photo-1542528180-a1208c5169a5?auto=format&fit=crop&w=900&q=80"
+        "photo": "https://arednarestaurante.com/wp-content/uploads/2025/12/Diseno-sin-titulo-2025-12-04T115020.668"
       },
       {
         "id": "malasana-food-ojala",
@@ -2061,7 +2061,7 @@ export const madridNeighborhoodGuides = [
           "sat": "12:00 PM-1:00 AM",
           "sun": "12:00 PM-12:00 AM"
         },
-        "photo": "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=900&q=80"
+        "photo": "https://grupolamusa.com/wp-content/uploads/2025/11/Musa-Latina"
       },
       {
         "id": "malasana-food-la-musa",
@@ -2082,7 +2082,7 @@ export const madridNeighborhoodGuides = [
           "sat": "12:30 PM-4:00 PM, 7:30 PM-11:30 PM",
           "sun": "12:30 PM-4:00 PM, 7:30 PM-11:00 PM"
         },
-        "photo": "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=900&q=80"
+        "photo": "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/0f/07/bf/13/la-carta-de-la-musa-es.jpg?w=900&h=500&s=1"
       }
     ],
     "sources": [
@@ -2663,7 +2663,7 @@ export const madridNeighborhoodGuides = [
           "sat": "12:30 PM-4:00 PM, 7:30 PM-11:30 PM",
           "sun": "12:30 PM-4:00 PM, 7:30 PM-11:00 PM"
         },
-        "photo": "https://images.unsplash.com/photo-1515443961218-a51367888e4b?auto=format&fit=crop&w=900&q=80"
+        "photo": "https://static.wixstatic.com/media/1aa0f7_0b697c156a8f469aaa022ac129c18011~mv2.jpeg/v1/fit/w_1279,h_852,q_90,enc_avif,quality_auto/1aa0f7_0b697c156a8f469aaa022ac129c18011~mv2"
       },
       {
         "id": "latina-food-casa-lucio",
@@ -2684,7 +2684,7 @@ export const madridNeighborhoodGuides = [
           "sat": "12:30 PM-4:00 PM, 7:30 PM-11:30 PM",
           "sun": "12:30 PM-4:00 PM, 7:30 PM-11:00 PM"
         },
-        "photo": "https://images.unsplash.com/photo-1551218808-94e220e084d2?auto=format&fit=crop&w=900&q=80"
+        "photo": "https://casalucio.es/wp-content/uploads/2015/09/local_01"
       },
       {
         "id": "latina-food-taberna-concha",
@@ -2705,7 +2705,7 @@ export const madridNeighborhoodGuides = [
           "sat": "12:00 PM-2:00 AM",
           "sun": "12:00 PM-12:00 AM"
         },
-        "photo": "https://images.unsplash.com/photo-1515443961218-a51367888e4b?auto=format&fit=crop&w=900&q=80"
+        "photo": "http://www.laconchataberna.com/wp-content/uploads/2018/10/fondopag2"
       },
       {
         "id": "latina-food-mercado-cebada",
@@ -2726,7 +2726,7 @@ export const madridNeighborhoodGuides = [
           "sat": "12:00 PM-1:00 AM",
           "sun": "12:00 PM-12:00 AM"
         },
-        "photo": "https://upload.wikimedia.org/wikipedia/commons/7/72/Mercado_de_la_Cebada_%28Madrid%29_01.jpg"
+        "photo": "https://www.mercadodelacebada.com/wp-content/uploads/2022/06/Planta-baja_Bier-pause"
       }
     ],
     "sources": [
@@ -2813,7 +2813,7 @@ export const madridNeighborhoodGuides = [
           "sat": "12:00 PM-2:00 AM",
           "sun": "12:00 PM-12:00 AM"
         },
-        "photo": "https://images.unsplash.com/photo-1515443961218-a51367888e4b?auto=format&fit=crop&w=900&q=80"
+        "photo": "http://www.laconchataberna.com/wp-content/uploads/2018/10/fondopag2"
       },
       {
         "id": "latina-nightlife-marula",
@@ -3328,7 +3328,7 @@ export const madridNeighborhoodGuides = [
           "sat": "1:00 PM-4:00 PM, 8:00 PM-11:30 PM",
           "sun": "1:00 PM-4:00 PM, 8:00 PM-11:00 PM"
         },
-        "photo": "https://www.theworlds50best.com/discovery/filestore/jpg/BARRA%20DE%20VINOS_ANGELITA%20(1)"
+        "photo": "https://madrid-angelita.es/wp-content/uploads/elementor/thumbs/img5-food-qzwl3ptwk9tg7q6stw4dct91z09bj6nylbgfgsnknm"
       },
       {
         "id": "chueca-food-mercado-san-anton",
@@ -3349,7 +3349,7 @@ export const madridNeighborhoodGuides = [
           "sat": "12:00 PM-1:00 AM",
           "sun": "12:00 PM-12:00 AM"
         },
-        "photo": "https://upload.wikimedia.org/wikipedia/commons/f/f4/Mercado_de_San_Ant%C3%B3n_%28Madrid%29_01.jpg"
+        "photo": "https://www.mercadosananton.com/wp-content/uploads/2022/06/1-Maru_MSA_21Mayo_Generales_04"
       },
       {
         "id": "chueca-food-dstage",
@@ -3370,7 +3370,7 @@ export const madridNeighborhoodGuides = [
           "sat": "7:00 PM-10:30 PM",
           "sun": "Closed"
         },
-        "photo": "https://images.unsplash.com/photo-1414235077428-338989a2e8c0?auto=format&fit=crop&w=900&q=80"
+        "photo": "https://images.bonkdo.com/JCnSVo5IHeafivFkkV9qhbDRqQY=/0x500/https://mybb-storage-prod.s3.fr-par.scw.cloud/media_manager/b417b949-95ea-4255-848e-44fc6dcd41fa/160415_DSTAgE_0Z6A0767"
       },
       {
         "id": "chueca-food-kuoco",
@@ -3391,7 +3391,7 @@ export const madridNeighborhoodGuides = [
           "sat": "12:30 PM-4:00 PM, 7:30 PM-11:30 PM",
           "sun": "12:30 PM-4:00 PM, 7:30 PM-11:00 PM"
         },
-        "photo": "https://images.unsplash.com/photo-1542528180-a1208c5169a5?auto=format&fit=crop&w=900&q=80"
+        "photo": "https://www.gastroactitud.com/wp-content/uploads/2023/02/kuoco-360-madrid-0103"
       }
     ],
     "sources": [
@@ -3459,7 +3459,7 @@ export const madridNeighborhoodGuides = [
           "sat": "6:00 PM-2:30 AM",
           "sun": "6:00 PM-12:00 AM"
         },
-        "photo": "https://www.theworlds50best.com/discovery/filestore/jpg/BARRA%20DE%20VINOS_ANGELITA%20(1)"
+        "photo": "https://madrid-angelita.es/wp-content/uploads/elementor/thumbs/img5-food-qzwl3ptwk9tg7q6stw4dct91z09bj6nylbgfgsnknm"
       },
       {
         "id": "chueca-nightlife-ficus",
@@ -4037,7 +4037,7 @@ export const madridCitywideGuides = [
           "sat": "1:00 PM-4:00 PM, 8:00 PM-11:30 PM",
           "sun": "1:00 PM-4:00 PM, 8:00 PM-11:00 PM"
         },
-        "photo": "https://www.theworlds50best.com/discovery/filestore/jpg/BARRA%20DE%20VINOS_ANGELITA%20(1)"
+        "photo": "https://madrid-angelita.es/wp-content/uploads/elementor/thumbs/img5-food-qzwl3ptwk9tg7q6stw4dct91z09bj6nylbgfgsnknm"
       },
       {
         "id": "madrid-food-playing-solo",
@@ -4058,7 +4058,7 @@ export const madridCitywideGuides = [
           "sat": "7:00 PM-10:30 PM",
           "sun": "Closed"
         },
-        "photo": "https://images.unsplash.com/photo-1414235077428-338989a2e8c0?auto=format&fit=crop&w=900&q=80"
+        "photo": "https://playingsolorestaurant.com/wp-content/uploads/2023/01/5-playingSolo-min.webp"
       },
       {
         "id": "madrid-food-lhardy",
@@ -4067,7 +4067,7 @@ export const madridCitywideGuides = [
           40.4172,
           -3.7003
         ],
-        "description": "Lhardy is the central classic: old Madrid dining room, croquetas and consomme history, and a useful bridge between Puerta del Sol sightseeing and a proper sit-down meal. It keeps the guide from becoming only contemporary restaurants and helps explain the formal, old-capital side of Madrid eating.",
+        "description": "Lhardy gives the citywide food guide its old-capital dining room: croquetas, consomme, formal service, and a Puerta del Sol address with real Madrid history. It is the classic to choose when the route needs ceremony and continuity, not just contemporary cooking.",
         "price": "$$",
         "priceSource": "The Infatuation / Google Maps",
         "hours": {
@@ -4211,7 +4211,7 @@ export const madridCitywideGuides = [
           "sat": "6:00 PM-2:30 AM",
           "sun": "6:00 PM-12:00 AM"
         },
-        "photo": "https://www.theworlds50best.com/discovery/filestore/jpg/BARRA%20DE%20VINOS_ANGELITA%20(1)"
+        "photo": "https://madrid-angelita.es/wp-content/uploads/elementor/thumbs/img5-food-qzwl3ptwk9tg7q6stw4dct91z09bj6nylbgfgsnknm"
       },
       {
         "id": "madrid-nightlife-ficus",
