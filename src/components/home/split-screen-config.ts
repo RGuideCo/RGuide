@@ -1,4 +1,5 @@
 import {
+  BadgeInfo,
   BedDouble,
   BookOpen,
   CalendarDays,
@@ -10,6 +11,7 @@ import {
   MapPin,
   MoonStar,
   Pencil,
+  Road,
   Route,
   Settings,
   Sparkles,
@@ -39,6 +41,8 @@ export const categoryOptions: { label: string; category: ListCategory; icon: Luc
   { label: "Stay", category: "Stay", icon: BedDouble },
   { label: "Scenic", category: "Nature", icon: Trees },
   { label: "Activities", category: "Activities", icon: Sparkles },
+  { label: "Routes", category: "Routes", icon: Road },
+  { label: "Essentials", category: "Essentials", icon: BadgeInfo },
 ];
 
 export const COUNTRY_INPUT_ALIASES: Record<string, string> = {
@@ -205,6 +209,8 @@ export const categorySubcategoriesByScope: Record<SubcategoryScope, Record<ListC
     Stay: ["Hostels", "Hotels", "Resorts", "Vacation Rentals"],
     Nature: ["Hikes", "Coastal Walks", "National Parks", "Scenic Drives"],
     Activities: ["Rail Journeys", "Road Trips", "Adventure Sports", "Wellness"],
+    Routes: ["Road Trips", "Rail Routes", "Walking Routes", "Scenic Drives"],
+    Essentials: ["Entry Basics", "Getting Around", "Money", "Safety"],
   },
   region: {
     Food: [],
@@ -213,6 +219,8 @@ export const categorySubcategoriesByScope: Record<SubcategoryScope, Record<ListC
     Stay: ["Hostels", "Hotels", "Resorts", "Vacation Rentals"],
     Nature: ["Hikes", "Coastal Walks", "Waterfalls", "Viewpoints"],
     Activities: ["Day Trips", "Boat Tours", "Outdoor Adventure", "Wildlife"],
+    Routes: ["Walking Routes", "Major Streets", "Transit Hops", "Scenic Drives"],
+    Essentials: ["Transit Hubs", "Base Towns", "Seasonal Notes", "Road Conditions"],
   },
   city: {
     Food: [],
@@ -221,6 +229,8 @@ export const categorySubcategoriesByScope: Record<SubcategoryScope, Record<ListC
     Stay: ["Hostels", "Hotels", "Resorts", "Vacation Rentals"],
     Nature: ["Views", "Urban Parks", "Waterfront", "Gardens"],
     Activities: ["Walking Tours", "Shopping", "Family Spots", "Wellness"],
+    Routes: ["Walking Routes", "Major Streets", "Transit Hops", "Scenic Loops"],
+    Essentials: ["Transit", "Arrival", "Neighborhood Basics", "Safety"],
   },
 };
 

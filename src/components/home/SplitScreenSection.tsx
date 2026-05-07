@@ -1,7 +1,9 @@
 "use client";
 
 import {
+  Bookmark,
   Building2,
+  CalendarDays,
   Camera,
   ChevronDown,
   ChevronRight,
@@ -9,10 +11,10 @@ import {
   Flag,
   Globe2,
   Heart,
-  ListFilter,
   Footprints,
   Map as MapIcon,
   MapPin,
+  MapPinned,
   Plus,
   Route,
   Search,
@@ -154,6 +156,8 @@ const cityHighlightCategoryOrder: Array<{ label: string; category: ListCategory 
   { label: "Nightlife", category: "Nightlife" },
   { label: "Culture", category: "Culture" },
   { label: "Stay", category: "Stay" },
+  { label: "Routes", category: "Routes" },
+  { label: "Essentials", category: "Essentials" },
   { label: "Vibe", category: "Activities" },
 ];
 
@@ -164,6 +168,8 @@ const cityHighlightThemes: Record<ListCategory, string[]> = {
   Stay: ["Boutique", "Hostels", "Walkable"],
   Nature: ["Views", "Urban parks", "Waterfront"],
   Activities: ["Social", "Walkable", "Energy"],
+  Routes: ["Walks", "Streets", "Loops"],
+  Essentials: ["Transit", "Arrival", "Basics"],
 };
 
 type CategoryDescriptionProfile = {
@@ -174,9 +180,11 @@ type CategoryDescriptionProfile = {
   stay: string;
   nature: string;
   activities: string;
+  routes?: string;
+  essentials?: string;
 };
 
-function buildCategoryDescriptionOverride(profile: CategoryDescriptionProfile): Record<ListCategory, string> {
+function buildCategoryDescriptionOverride(profile: CategoryDescriptionProfile): Partial<Record<ListCategory, string>> {
   return {
     Food: `${profile.city} food works best when it is mapped by neighborhood and meal rhythm: ${profile.food}. Use it to choose a meal that fits the route instead of chasing a generic best-of list across town.`,
     Nightlife: `${profile.city} nightlife needs the right room for the night: ${profile.nightlife}. Use it to pick the energy level, crowd, and timing before the plan turns into a long transfer or queue.`,
@@ -184,6 +192,8 @@ function buildCategoryDescriptionOverride(profile: CategoryDescriptionProfile): 
     Stay: `${profile.city} stays should match the trip shape: ${profile.stay}. Use it to choose a base by transit, sleep style, nightlife reach, and the neighborhoods you will actually revisit.`,
     Nature: `${profile.city} open-air time should give the trip room to breathe: ${profile.nature}. Use it for parks, waterfronts, viewpoints, beaches, gardens, or day edges that reset dense city routes.`,
     Activities: `${profile.city} activities work best as paced routes, not checklist piles: ${profile.activities}. Use it to connect food, culture, open-air breaks, stays, and nights without fighting the city geography.`,
+    Routes: `${profile.city} routes should explain movement, not just dots on a map: ${profile.routes ?? profile.activities}. Use it for walking routes, major streets, transit hops, scenic loops, and route logic that makes the day feel coherent.`,
+    Essentials: `${profile.city} essentials should make the trip easier before the day gets busy: ${profile.essentials ?? profile.routes ?? profile.stay}. Use it for arrival, transit, safety, money, connectivity, weather, and other practical decisions that shape the plan.`,
   };
 }
 
@@ -574,6 +584,8 @@ function buildScopedCategoryDescription(
     Stay: profile.stay,
     Nature: profile.nature,
     Activities: profile.activities,
+    Routes: profile.routes ?? profile.activities,
+    Essentials: profile.essentials ?? profile.routes ?? profile.stay,
   };
 
   return `${category} in ${placeLabel} should still feel specific to ${cityName}, not like a generic category filter. Use this view for ${categoryAngles[category]}, with stops close enough to work as a real neighborhood route.`;
@@ -646,9 +658,11 @@ function capExplorerDescription(description: string, limit = explorerDescription
 
 function FavoriteLocationRow({
   location,
+  active,
   onSelect,
 }: {
   location: FavoriteLocation;
+  active?: boolean;
   onSelect: (location: FavoriteLocation) => void;
 }) {
   const Icon =
@@ -663,11 +677,20 @@ function FavoriteLocationRow({
       type="button"
       onClick={() => onSelect(location)}
       title={`${location.name}, ${location.detail}`}
-      className="flex w-full items-center gap-2 rounded-2xl px-3 py-2 text-left text-sm text-slate-700 transition hover:bg-stone-100"
+      className={`flex w-full items-center gap-2 rounded-2xl px-3 py-2 text-left text-sm transition ${
+        active
+          ? "bg-teal-50 text-teal-800"
+          : "text-slate-700 hover:bg-stone-100"
+      }`}
     >
-      <Icon className="h-4 w-4 shrink-0 text-slate-500" />
+      <Icon className={`h-4 w-4 shrink-0 ${active ? "text-teal-700" : "text-slate-500"}`} />
       <span className="min-w-0 flex-1">
-        <span className="block truncate font-medium text-slate-800">{location.name}</span>
+        <span className={`block truncate font-medium ${active ? "text-teal-900" : "text-slate-800"}`}>
+          {location.name}
+        </span>
+        <span className={`block truncate text-xs ${active ? "text-teal-700" : "text-slate-500"}`}>
+          {location.detail}
+        </span>
       </span>
     </button>
   );
@@ -1074,7 +1097,6 @@ export function SplitScreenSection({ continents, initialRouteState, seoContent, 
   const [activeNightlifeBarType, setActiveNightlifeBarType] = useState<string>(NIGHTLIFE_BAR_TYPE_ANY);
   const [isNightlifeBarMenuOpen, setIsNightlifeBarMenuOpen] = useState(false);
   const [isDesktopSearchOpen, setIsDesktopSearchOpen] = useState(false);
-  const [isDesktopCategoryMenuOpen, setIsDesktopCategoryMenuOpen] = useState(false);
   const [isMobileExplorerSearchOpen, setIsMobileExplorerSearchOpen] = useState(false);
   const [hoveredGuide, setHoveredGuide] = useState<MapList | null>(null);
   const [hoveredStopId, setHoveredStopId] = useState<string | null>(null);
@@ -1083,6 +1105,7 @@ export function SplitScreenSection({ continents, initialRouteState, seoContent, 
   const [selectedGuideStopNonce, setSelectedGuideStopNonce] = useState(0);
   const [activeGuideFitNonce, setActiveGuideFitNonce] = useState(0);
   const [activeGuideRail, setActiveGuideRail] = useState<(typeof guideRailOptions)[number]["id"]>("all-guides");
+  const [isLocationFavoritesRailActive, setIsLocationFavoritesRailActive] = useState(false);
   const [expandedGuideId, setExpandedGuideId] = useState<string | null>(initialRouteState?.expandedGuideId ?? null);
   const [pendingSourcesOpenGuideId, setPendingSourcesOpenGuideId] = useState<string | null>(null);
   const [closingGuide, setClosingGuide] = useState<MapList | null>(null);
@@ -1092,12 +1115,9 @@ export function SplitScreenSection({ continents, initialRouteState, seoContent, 
   const [isMobileListSheetExpanded, setIsMobileListSheetExpanded] = useState(false);
   const [isMobileListSheetDragging, setIsMobileListSheetDragging] = useState(false);
   const [mobileListSheetDragHeight, setMobileListSheetDragHeight] = useState<number | null>(null);
-  const [isMobileCategoryMenuOpen, setIsMobileCategoryMenuOpen] = useState(false);
-  const [isMobileCategoryMenuClosing, setIsMobileCategoryMenuClosing] = useState(false);
   const mobileListSheetDraggingRef = useRef(false);
   const mobileListSheetDragStartRef = useRef({ y: 0, height: 0 });
   const mobileListSheetTapCandidateRef = useRef(false);
-  const mobileCategoryCloseTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const [mobileAllSelection, setMobileAllSelection] = useState({
     country: false,
     region: false,
@@ -1281,6 +1301,7 @@ export function SplitScreenSection({ continents, initialRouteState, seoContent, 
     }
 
     if (!isSameSelection) {
+      setIsLocationFavoritesRailActive(false);
       setSelection(initialRouteState.selection);
     }
     if (currentCategory !== nextCategory) {
@@ -1309,6 +1330,7 @@ export function SplitScreenSection({ continents, initialRouteState, seoContent, 
       }
 
       const currentGuideId = expandedGuideIdRef.current;
+      setIsLocationFavoritesRailActive(false);
       setSelection(route.selection);
       setActiveCategory(route.activeCategory ?? null);
       setActiveSubcategory(null);
@@ -1534,14 +1556,17 @@ export function SplitScreenSection({ continents, initialRouteState, seoContent, 
   };
   const handleSelectContinent = (continentId: string) => {
     setFocusedCountrySignal(null);
+    setIsLocationFavoritesRailActive(false);
     setSelection(() => ({ continentId }));
   };
   const handleResetToGlobalView = () => {
     setFocusedCountrySignal(null);
+    setIsLocationFavoritesRailActive(false);
     setSelection({});
   };
   const handleSelectContinentSubarea = (continentId: string, continentSubareaId: string) => {
     setFocusedCountrySignal(null);
+    setIsLocationFavoritesRailActive(false);
     setSelection((current) =>
       current.continentId === continentId &&
       current.continentSubareaId === continentSubareaId &&
@@ -1575,6 +1600,7 @@ export function SplitScreenSection({ continents, initialRouteState, seoContent, 
       activePlacesBeenFilter === "countries" &&
       isAddingPlacesBeenCountry
     ) {
+      setIsLocationFavoritesRailActive(false);
       setFocusedCountrySignal(null);
       const countryName =
         continents
@@ -1596,6 +1622,7 @@ export function SplitScreenSection({ continents, initialRouteState, seoContent, 
       return;
     }
     setFocusedCountrySignal({ countryId, nonce: Date.now() });
+    setIsLocationFavoritesRailActive(false);
     setSelection(() => ({ continentId, countryId }));
   };
   const handleSelectContinentFromGlobal = (
@@ -1725,6 +1752,7 @@ export function SplitScreenSection({ continents, initialRouteState, seoContent, 
   };
   const handleSelectCity = (continentId: string, countryId: string, cityId: string) => {
     setFocusedCountrySignal(null);
+    setIsLocationFavoritesRailActive(false);
     const continent = continents.find((item) => item.id === continentId);
     const country = continent?.countries.find((item) => item.id === countryId);
     const city = country?.cities.find((item) => item.id === cityId);
@@ -1844,6 +1872,7 @@ export function SplitScreenSection({ continents, initialRouteState, seoContent, 
     subareaId: string,
   ) => {
     setFocusedCountrySignal(null);
+    setIsLocationFavoritesRailActive(false);
     const isSameSubarea =
       selection.continentId === continentId &&
       selection.countryId === countryId &&
@@ -1888,6 +1917,7 @@ export function SplitScreenSection({ continents, initialRouteState, seoContent, 
     nestedSubareaId: string,
   ) => {
     setFocusedCountrySignal(null);
+    setIsLocationFavoritesRailActive(false);
     const isSameNestedSubarea =
       selection.continentId === continentId &&
       selection.countryId === countryId &&
@@ -1932,6 +1962,7 @@ export function SplitScreenSection({ continents, initialRouteState, seoContent, 
     countrySubareaId: string,
   ) => {
     setFocusedCountrySignal(null);
+    setIsLocationFavoritesRailActive(false);
     setSelection((current) =>
       current.continentId === continentId &&
       current.countryId === countryId &&
@@ -1949,6 +1980,7 @@ export function SplitScreenSection({ continents, initialRouteState, seoContent, 
     stateId: string,
   ) => {
     setFocusedCountrySignal(null);
+    setIsLocationFavoritesRailActive(false);
     setSelection((current) =>
       current.continentId === continentId &&
       current.countryId === countryId &&
@@ -2304,6 +2336,7 @@ export function SplitScreenSection({ continents, initialRouteState, seoContent, 
   const handleFavoriteLocationSelect = (location: FavoriteLocation) => {
     setFocusedCountrySignal(null);
     setSelection(location.selection);
+    setActiveGuideRail("all-guides");
     setActiveCategory(null);
     setActiveSubcategory(null);
     setExpandedGuideId(null);
@@ -2866,6 +2899,7 @@ export function SplitScreenSection({ continents, initialRouteState, seoContent, 
     ? categorySubcategoriesByScope[subcategoryScope][visibleSubcategoryCategory]
     : [];
   const categoryTitleLabel = activeCategoryOption?.label ?? hoveredCategoryLabel ?? "Categories";
+  const categoryOptionMidpoint = Math.ceil(categoryOptions.length / 2);
   const guideSourceSelectors = [
     { id: "all-guides" as const, label: "All guides", shortLabel: "All", icon: null },
     { id: "r-guides" as const, label: "R guides", shortLabel: "R", icon: null },
@@ -2874,6 +2908,7 @@ export function SplitScreenSection({ continents, initialRouteState, seoContent, 
   const guideActionSelectors = [
     { id: "itinerary" as const, label: "Itineraries", shortLabel: "Trip", icon: Route },
     { id: "favorites" as const, label: "Favorites", shortLabel: "Fav", icon: Heart },
+    { id: "week-events" as const, label: "This Week", shortLabel: "Week", icon: CalendarDays },
   ];
   const menuBarSelectors = [...guideSourceSelectors, ...guideActionSelectors];
   const activeGuideSourceSelector =
@@ -2885,60 +2920,44 @@ export function SplitScreenSection({ continents, initialRouteState, seoContent, 
   );
   const activeMobileGuideSelector =
     menuBarSelectors.find((selector) => selector.id === activeGuideRail) ?? menuBarSelectors[0];
-  const isMobileCategoryMenuExpanded = isMobileCategoryMenuOpen || isMobileCategoryMenuClosing;
-  const openMobileCategoryMenu = () => {
-    if (mobileCategoryCloseTimeoutRef.current) {
-      clearTimeout(mobileCategoryCloseTimeoutRef.current);
-      mobileCategoryCloseTimeoutRef.current = null;
-    }
-    setIsMobileCategoryMenuClosing(false);
-    setIsMobileCategoryMenuOpen(true);
+  const resetCategoryFilters = () => {
+    setActiveCategory(null);
+    setActiveSubcategory(null);
+    setActiveFoodPrice(null);
+    setActiveFoodOpenTime("Now");
+    setIsFoodOpenTimeMenuOpen(false);
+    setActiveFoodCuisine(FOOD_CUISINE_ANY);
+    setIsFoodCuisineMenuOpen(false);
+    setActiveNightlifeBarType(NIGHTLIFE_BAR_TYPE_ANY);
+    setIsNightlifeBarMenuOpen(false);
   };
-  const closeMobileCategoryMenu = () => {
-    if (!isMobileCategoryMenuOpen && !isMobileCategoryMenuClosing) {
-      return;
+  const handleLocationFavoritesRailToggle = () => {
+    const nextActive = !isLocationFavoritesRailActive;
+    setIsLocationFavoritesRailActive(nextActive);
+    setExpandedGuideId(null);
+    setClosingGuide(null);
+    setVisibleNestedStopParentIds([]);
+
+    if (nextActive) {
+      resetCategoryFilters();
+      setActiveGuideRail("all-guides");
     }
-    if (mobileCategoryCloseTimeoutRef.current) {
-      clearTimeout(mobileCategoryCloseTimeoutRef.current);
-    }
-    setIsMobileCategoryMenuOpen(false);
-    setIsMobileCategoryMenuClosing(true);
-    mobileCategoryCloseTimeoutRef.current = setTimeout(() => {
-      setIsMobileCategoryMenuClosing(false);
-      mobileCategoryCloseTimeoutRef.current = null;
-    }, 260);
   };
   const handleGuideRailSelect = (railId: (typeof guideRailOptions)[number]["id"]) => {
     setActiveGuideRail(railId);
-    setIsDesktopCategoryMenuOpen(false);
+    setIsLocationFavoritesRailActive(false);
     setExpandedGuideId(null);
     setClosingGuide(null);
     setVisibleNestedStopParentIds([]);
 
     if (railId === "favorites") {
-      setActiveCategory(null);
-      setActiveSubcategory(null);
-      setActiveFoodPrice(null);
-      setActiveFoodOpenTime("Now");
-      setIsFoodOpenTimeMenuOpen(false);
-      setActiveFoodCuisine(FOOD_CUISINE_ANY);
-      setIsFoodCuisineMenuOpen(false);
-      setActiveNightlifeBarType(NIGHTLIFE_BAR_TYPE_ANY);
-      setIsNightlifeBarMenuOpen(false);
-      closeMobileCategoryMenu();
+      resetCategoryFilters();
 
       const neutralPath = getCurrentCityRoutePath(null);
       if (neutralPath) {
         pushExplorerPath(neutralPath);
       }
     }
-  };
-  const toggleMobileCategoryMenu = () => {
-    if (isMobileCategoryMenuOpen) {
-      closeMobileCategoryMenu();
-      return;
-    }
-    openMobileCategoryMenu();
   };
   const getMobileListSheetBounds = () => {
     if (typeof window === "undefined") {
@@ -3009,6 +3028,7 @@ export function SplitScreenSection({ continents, initialRouteState, seoContent, 
   };
   const handleCategoryToggle = (category: ListCategory) => {
     const nextCategory = activeCategory === category ? null : category;
+    setIsLocationFavoritesRailActive(false);
     setActiveSubcategory(null);
     setActiveFoodPrice(null);
     setActiveFoodOpenTime("Now");
@@ -3017,7 +3037,6 @@ export function SplitScreenSection({ continents, initialRouteState, seoContent, 
     setIsFoodCuisineMenuOpen(false);
     setActiveNightlifeBarType(NIGHTLIFE_BAR_TYPE_ANY);
     setIsNightlifeBarMenuOpen(false);
-    closeMobileCategoryMenu();
     setExpandedGuideId(null);
     categoryBeforeGuideExpandRef.current = null;
     setClosingGuide(null);
@@ -3060,14 +3079,6 @@ export function SplitScreenSection({ continents, initialRouteState, seoContent, 
       clearTimeout(cleanupTimeoutId);
     };
   }, [activeCategory, visibleSubcategoryCategory]);
-
-  useEffect(() => {
-    return () => {
-      if (mobileCategoryCloseTimeoutRef.current) {
-        clearTimeout(mobileCategoryCloseTimeoutRef.current);
-      }
-    };
-  }, []);
 
   useEffect(() => {
     setHoveredCategoryLabel(null);
@@ -3222,7 +3233,7 @@ export function SplitScreenSection({ continents, initialRouteState, seoContent, 
   const isLeftPaneCollapsed = isProfileSubmitLayout || isGuidePaneTakingFullListPane || isProfileGuideTakingFullListPane;
   const isSubcategoryMenuOpen =
     isFoodOpenTimeMenuOpen || isFoodCuisineMenuOpen || isNightlifeBarMenuOpen;
-  const isFavoritesRailActive = activeGuideRail === "favorites" && !expandedGuide;
+  const isSavedPlacesRailActive = isLocationFavoritesRailActive && !expandedGuide;
   const remainingGuides = displayedGuide
     ? railFilteredLists.filter((list) => list.id !== displayedGuide.id)
     : railFilteredLists;
@@ -3254,15 +3265,15 @@ export function SplitScreenSection({ continents, initialRouteState, seoContent, 
     : activeDirectoryMeta.title;
   const visibleSeoHeading = expandedGuide
     ? `${expandedGuide.title} in ${activeSeoPlaceLabel}`
-    : isFavoritesRailActive
-      ? "Favorites"
+    : isSavedPlacesRailActive
+      ? "Saved Places"
     : activeCategory && activeLocation.city
       ? activeSeoPlaceLabel
       : activeDirectoryMeta.title;
   const visibleSeoContextLabel =
     !expandedGuide
-      ? isFavoritesRailActive
-        ? "Explore"
+      ? isSavedPlacesRailActive
+        ? null
         : activeCategory && activeLocation.city
         ? `${activeCategory} in`
         : "Explore"
@@ -3280,6 +3291,8 @@ export function SplitScreenSection({ continents, initialRouteState, seoContent, 
     Stay: `${activeSeoPlaceLabel} has a wide stay scene, from design hotels and boutique guesthouses to social hostels and practical bases near transit, nightlife, and the old city.`,
     Nature: `${activeSeoPlaceLabel} balances dense urban neighborhoods with parks, viewpoints, waterfront walks, gardens, and easy open-air breaks between city routes.`,
     Activities: `${activeSeoPlaceLabel} is social, walkable, and high energy, with compact routes that can move from architecture and food to beach time, bars, and late-night neighborhoods.`,
+    Routes: `${activeSeoPlaceLabel} rewards route-first planning: walking loops, major streets, transit hops, waterfront edges, scenic drives, and practical ways to connect stops without losing the day to movement.`,
+    Essentials: `${activeSeoPlaceLabel} is easier to plan when arrival, transit, safety, money, connectivity, weather, booking rhythm, and neighborhood basics are clear before the day fills up.`,
   };
   const visibleSeoIntroCopy = activeLocation.city
     ? activeLocation.nestedSubarea || activeLocation.subarea
@@ -3300,7 +3313,7 @@ export function SplitScreenSection({ continents, initialRouteState, seoContent, 
     : null;
   const visibleIntroCopy = expandedGuide
     ? expandedGuide.description
-    : isFavoritesRailActive
+    : isSavedPlacesRailActive
       ? null
     : activeCategory && activeLocation.city
       ? visibleSeoIntroCopy
@@ -3359,7 +3372,6 @@ export function SplitScreenSection({ continents, initialRouteState, seoContent, 
     setIsNightlifeBarMenuOpen(false);
     setHoveredCategoryLabel(null);
     setIsMobileListSheetExpanded(true);
-    closeMobileCategoryMenu();
   }, [isGuidePaneTakingFullListPane]);
   const scrollGuideIntoView = (guideId: string) => {
     requestAnimationFrame(() => {
@@ -3837,7 +3849,6 @@ export function SplitScreenSection({ continents, initialRouteState, seoContent, 
     setIsFoodCuisineMenuOpen(false);
     setActiveNightlifeBarType(NIGHTLIFE_BAR_TYPE_ANY);
     setIsNightlifeBarMenuOpen(false);
-    closeMobileCategoryMenu();
 
     if (expandedGuideId === nextList.id) {
       scrollGuideIntoView(nextList.id);
@@ -4307,7 +4318,7 @@ export function SplitScreenSection({ continents, initialRouteState, seoContent, 
                     globeRailVideoRef.current?.pause();
                   }}
                   className={`guide-rail-button rail-switch-item margin-shell-pop-in flex h-10 w-10 items-center justify-center rounded-full transition hover:scale-105 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-400/70 ${
-                    activeRailLevel === "global" ? "guide-rail-button-active" : ""
+                    activeRailLevel === "global" && !isLocationFavoritesRailActive ? "guide-rail-button-active" : ""
                   }`}
                   aria-label={isGlobalViewActive ? "Global view active" : "Return to global view"}
                   title={isGlobalViewActive ? "Global view" : "Back to global view"}
@@ -4326,27 +4337,45 @@ export function SplitScreenSection({ continents, initialRouteState, seoContent, 
 	                    </video>
 	                  </button>
 	                )}
-                {!publicProfile && activeGuideRail === "favorites" && activeFavoriteLocation ? (
-                  <button
-                    type="button"
-                    onClick={() => toggleFavoriteLocation(activeFavoriteLocation)}
-                    className={`guide-rail-button rail-switch-item margin-shell-pop-in flex h-10 w-10 items-center justify-center rounded-full border shadow-sm transition hover:scale-105 hover:border-orange-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-400/70 ${
-                      isActiveLocationFavorited
-                        ? "guide-rail-button-active border-orange-500 bg-orange-500 text-white"
-                        : "border-slate-200/90 bg-white/95 text-orange-600"
-                    }`}
-                    aria-label={`${isActiveLocationFavorited ? "Remove" : "Add"} ${activeSeoPlaceLabel} ${isActiveLocationFavorited ? "from" : "to"} favorites`}
-                    title={isActiveLocationFavorited ? "Remove from favorites" : "Add to favorites"}
-                  >
-                    <Heart className={`h-4 w-4 ${isActiveLocationFavorited ? "fill-current" : ""}`} />
-                  </button>
+                {!publicProfile ? (
+                  <>
+                    <button
+                      type="button"
+                      onClick={handleLocationFavoritesRailToggle}
+                      className={`guide-rail-button rail-switch-item margin-shell-pop-in flex h-10 w-10 items-center justify-center rounded-full border shadow-sm transition hover:scale-105 hover:border-teal-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-400/70 ${
+                        isLocationFavoritesRailActive
+                          ? "guide-rail-button-active border-teal-600 bg-teal-600 text-white"
+                          : "border-slate-200/90 bg-white/95 text-teal-700"
+                      }`}
+                      aria-label={isLocationFavoritesRailActive ? "Close saved places" : "Open saved places"}
+                      aria-pressed={isLocationFavoritesRailActive}
+                      title="Saved places"
+                    >
+                      <MapPinned className="h-4 w-4" />
+                    </button>
+                    {activeFavoriteLocation ? (
+                      <button
+                        type="button"
+                        onClick={() => toggleFavoriteLocation(activeFavoriteLocation)}
+                        className={`guide-rail-button rail-switch-item margin-shell-pop-in flex h-10 w-10 items-center justify-center rounded-full border shadow-sm transition hover:scale-105 hover:border-teal-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-400/70 ${
+                          isActiveLocationFavorited
+                            ? "border-teal-500 bg-white/95 text-teal-700"
+                            : "border-slate-200/90 bg-white/95 text-teal-700"
+                        }`}
+                        aria-label={`${isActiveLocationFavorited ? "Remove" : "Save"} ${activeSeoPlaceLabel} ${isActiveLocationFavorited ? "from" : "to"} saved places`}
+                        title={isActiveLocationFavorited ? "Remove saved place" : "Save place"}
+                      >
+                        <Bookmark className={`h-4 w-4 ${isActiveLocationFavorited ? "fill-current" : ""}`} />
+                      </button>
+                    ) : null}
+                  </>
                 ) : null}
 	            {displayedContinentRailIcon?.kind === "continent" ? (
 	              <button
                 type="button"
                 onClick={() => (activeMarginContinent ? handleSelectContinent(activeMarginContinent.id) : undefined)}
                 className={`guide-rail-button rail-switch-item ${currentRailIcons.continent ? "margin-shell-pop-in margin-shell-pop-in-delayed" : "margin-shell-pop-out pointer-events-none"} flex h-10 w-10 items-center justify-center rounded-full border border-slate-200/90 bg-white/95 shadow-sm transition hover:scale-105 hover:border-slate-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-400/70 ${
-                  activeRailLevel === "continent" ? "guide-rail-button-active" : ""
+                  activeRailLevel === "continent" && !isLocationFavoritesRailActive ? "guide-rail-button-active" : ""
                 }`}
                 aria-label={`Back to ${displayedContinentRailIcon.name}`}
                 title={`Back to ${displayedContinentRailIcon.name}`}
@@ -4369,7 +4398,7 @@ export function SplitScreenSection({ continents, initialRouteState, seoContent, 
                     : undefined
                 }
                 className={`guide-rail-button rail-switch-item ${currentRailIcons.country ? "margin-shell-pop-in" : "margin-shell-pop-out pointer-events-none"} flex h-10 w-10 items-center justify-center rounded-full border border-slate-200/90 bg-white/95 shadow-sm transition hover:scale-105 hover:border-slate-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-400/70 ${
-                  activeRailLevel === "country" ? "guide-rail-button-active" : ""
+                  activeRailLevel === "country" && !isLocationFavoritesRailActive ? "guide-rail-button-active" : ""
                 }`}
                 aria-label={`Back to ${displayedCountryRailIcon.name}`}
                 title={`Back to ${displayedCountryRailIcon.name}`}
@@ -4404,7 +4433,7 @@ export function SplitScreenSection({ continents, initialRouteState, seoContent, 
                     : undefined
                 }
                 className={`guide-rail-button rail-switch-item ${currentRailIcons.state ? "margin-shell-pop-in" : "margin-shell-pop-out pointer-events-none"} flex h-10 w-10 items-center justify-center rounded-full border border-slate-200/90 bg-white/95 shadow-sm transition hover:scale-105 hover:border-slate-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-400/70 ${
-                  activeRailLevel === "state" ? "guide-rail-button-active" : ""
+                  activeRailLevel === "state" && !isLocationFavoritesRailActive ? "guide-rail-button-active" : ""
                 }`}
                 aria-label={`Back to ${displayedStateRailIcon.name}`}
                 title={`Back to ${displayedStateRailIcon.name}`}
@@ -4427,7 +4456,7 @@ export function SplitScreenSection({ continents, initialRouteState, seoContent, 
                     : undefined
                 }
                 className={`guide-rail-button rail-switch-item ${currentRailIcons.city ? "margin-shell-pop-in" : "margin-shell-pop-out pointer-events-none"} flex h-10 w-10 items-center justify-center rounded-full border border-slate-200/90 bg-white/95 text-slate-700 shadow-sm transition hover:scale-105 hover:border-slate-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-400/70 ${
-                  activeRailLevel === "city" ? "guide-rail-button-active" : ""
+                  activeRailLevel === "city" && !isLocationFavoritesRailActive ? "guide-rail-button-active" : ""
                 }`}
                 aria-label={`Back to ${displayedCityRailIcon.name}`}
                 title={`Back to ${displayedCityRailIcon.name}`}
@@ -4441,7 +4470,10 @@ export function SplitScreenSection({ continents, initialRouteState, seoContent, 
 	                    {currentUser ? (
                       <button
                         type="button"
-                        onClick={() => setProfileShellActive(!isProfileShellActive)}
+                        onClick={() => {
+                          setIsLocationFavoritesRailActive(false);
+                          setProfileShellActive(!isProfileShellActive);
+                        }}
                         className={`guide-rail-button rail-switch-item flex h-10 w-10 items-center justify-center overflow-hidden rounded-full border border-slate-200/90 bg-white/95 shadow-sm transition hover:scale-105 hover:border-slate-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-400/70 ${
                           isProfileShellActive ? "guide-rail-button-active border-slate-900" : ""
                         }`}
@@ -4457,7 +4489,10 @@ export function SplitScreenSection({ continents, initialRouteState, seoContent, 
                     ) : (
                       <button
                         type="button"
-                        onClick={() => openAuthModal("login")}
+                        onClick={() => {
+                          setIsLocationFavoritesRailActive(false);
+                          openAuthModal("login");
+                        }}
                         className="guide-rail-button rail-switch-item flex h-10 w-10 items-center justify-center rounded-full border border-slate-200/90 bg-white/95 text-slate-700 shadow-sm transition hover:scale-105 hover:border-slate-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-400/70"
                         aria-label="Log in"
                         title="Log in"
@@ -5057,7 +5092,7 @@ export function SplitScreenSection({ continents, initialRouteState, seoContent, 
                         {visibleSeoHeading}
                       </span>
                     </h1>
-                    {!isFavoritesRailActive ? (
+                    {!isSavedPlacesRailActive ? (
                       <div
                         ref={detailRef}
                         className="mt-1 max-w-[calc(100%-8rem)] text-sm text-slate-600 transition-all duration-300"
@@ -5320,7 +5355,7 @@ export function SplitScreenSection({ continents, initialRouteState, seoContent, 
                         )}
                       </div>
                     ) : null}
-                    {isFavoritesRailActive ? (
+                    {isSavedPlacesRailActive ? (
                       <div
                         className="mt-4 transition-all duration-300"
                         style={{
@@ -5343,6 +5378,7 @@ export function SplitScreenSection({ continents, initialRouteState, seoContent, 
                                     <FavoriteLocationRow
                                       key={location.id}
                                       location={location}
+                                      active={activeFavoriteLocation?.id === location.id}
                                       onSelect={handleFavoriteLocationSelect}
                                     />
                                   ))}
@@ -5352,7 +5388,7 @@ export function SplitScreenSection({ continents, initialRouteState, seoContent, 
                           </div>
                         ) : (
                           <p className="rounded-2xl border border-dashed border-slate-300 px-3 py-3 text-sm text-slate-500">
-                            No favorite places yet.
+                            No saved places yet.
                           </p>
                         )}
                       </div>
@@ -5380,13 +5416,13 @@ export function SplitScreenSection({ continents, initialRouteState, seoContent, 
                                 onClick={() => toggleFavoriteLocation(activeFavoriteLocation)}
                                 className={`inline-flex h-9 w-9 items-center justify-center rounded-full border bg-white shadow-sm transition ${
                                   isActiveLocationFavorited
-                                    ? "border-orange-500 text-orange-600"
+                                    ? "border-teal-600 text-teal-700"
                                     : "border-slate-200 text-slate-600 hover:border-slate-300 hover:text-slate-900"
                                 }`}
-                                aria-label={`${isActiveLocationFavorited ? "Remove" : "Add"} ${activeSeoPlaceLabel} ${isActiveLocationFavorited ? "from" : "to"} favorites`}
-                                title={isActiveLocationFavorited ? "Remove from favorites" : "Add to favorites"}
+                                aria-label={`${isActiveLocationFavorited ? "Remove" : "Save"} ${activeSeoPlaceLabel} ${isActiveLocationFavorited ? "from" : "to"} saved places`}
+                                title={isActiveLocationFavorited ? "Remove saved place" : "Save place"}
                               >
-                                <Heart className={`h-3.5 w-3.5 ${isActiveLocationFavorited ? "fill-current" : ""}`} />
+                                <Bookmark className={`h-3.5 w-3.5 ${isActiveLocationFavorited ? "fill-current" : ""}`} />
                               </button>
                             ) : null}
                             {activeLocation.city ? (
@@ -5449,7 +5485,7 @@ export function SplitScreenSection({ continents, initialRouteState, seoContent, 
                     ) : null}
                   </div>
                 </div>
-                {!isFavoritesRailActive &&
+                {!isSavedPlacesRailActive &&
                 activeLocation.country &&
                 hasDirectoryChips &&
                 !isCountryRootSelection &&
@@ -5678,7 +5714,7 @@ export function SplitScreenSection({ continents, initialRouteState, seoContent, 
                     </div>
                   </div>
                 ) : null}
-                {!isFavoritesRailActive ? (
+                {!isSavedPlacesRailActive ? (
                   <div
                     className="mt-3 space-y-1.5 lg:hidden"
                     style={{
@@ -5864,7 +5900,7 @@ export function SplitScreenSection({ continents, initialRouteState, seoContent, 
                   </div>
                 ) : null}
               </div>
-              {!isFavoritesRailActive ? (
+              {!isSavedPlacesRailActive ? (
                 <div
                   data-directory-scroll
                   className={`mt-2 hidden min-h-0 flex-1 overflow-y-auto overscroll-contain pr-1 transition-opacity duration-150 lg:block ${
@@ -6783,22 +6819,18 @@ export function SplitScreenSection({ continents, initialRouteState, seoContent, 
                   }`}
                   onPointerDown={handleMobileListSheetDragStart}
                 >
-                  <div className={`min-w-0 pr-12 transition-opacity duration-200 ${isMobileCategoryMenuExpanded || isGuidePaneTakingFullListPane ? "opacity-0" : "opacity-100"}`}>
+                  <div className={`min-w-0 pr-2 transition-opacity duration-200 ${isGuidePaneTakingFullListPane ? "opacity-0" : "opacity-100"}`}>
                     <p className="truncate text-xs font-semibold uppercase tracking-[0.14em] text-slate-500">
                       {categoryTitleLabel}
                     </p>
                   </div>
                   <div
-                    className={`absolute right-0 top-0 z-[95] flex h-8 items-center justify-end overflow-hidden rounded-full bg-white transition-[width,opacity,transform] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] ${
-                      isMobileCategoryMenuExpanded ? "w-full" : "w-8"
-                    } ${
+                    className={`ml-auto flex h-8 min-w-0 items-center justify-end overflow-x-auto rounded-full transition-[opacity,transform] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] ${
                       isGuidePaneTakingFullListPane ? "pointer-events-none -translate-y-2 opacity-0" : "translate-y-0 opacity-100"
                     }`}
                   >
                     <div
-                      className={`grid min-w-0 flex-1 items-center transition-[padding,grid-template-columns] duration-300 ${
-                        isMobileCategoryMenuExpanded ? "grid-cols-6 gap-2 pl-1 pr-2" : "grid-cols-1 justify-items-end pl-1"
-                      }`}
+                      className="flex min-w-max items-center gap-1.5"
                     >
                         {categoryOptions.map((option, index) => {
                           const isActive = activeCategory === option.category;
@@ -6807,13 +6839,13 @@ export function SplitScreenSection({ continents, initialRouteState, seoContent, 
                               key={option.label}
                               type="button"
                               onClick={() => handleCategoryToggle(option.category)}
-                              className={`flex h-6 w-6 shrink-0 items-center justify-center rounded-full border shadow-sm transition-[opacity,transform,background-color,color,border-color] duration-300 ${
-                                isMobileCategoryMenuOpen ? "translate-x-0 scale-100 opacity-100" : "pointer-events-none translate-x-8 scale-75 opacity-0"
-                              } ${isActive ? "text-white" : "bg-white text-slate-600"}`}
+                              className={`flex h-7 w-7 shrink-0 items-center justify-center rounded-full border shadow-sm transition-[background-color,color,border-color,transform] duration-200 hover:scale-105 ${
+                                isActive ? "text-white" : "bg-white text-slate-600"
+                              }`}
                               style={{
                                 backgroundColor: isActive ? CATEGORY_STYLES[option.category].mapColor : undefined,
                                 borderColor: CATEGORY_STYLES[option.category].mapColor,
-                                transitionDelay: isMobileCategoryMenuOpen ? `${120 + index * 35}ms` : "0ms",
+                                transitionDelay: `${index * 18}ms`,
                               }}
                               aria-label={isActive ? `Clear ${option.label}` : option.label}
                               aria-pressed={isActive}
@@ -6823,35 +6855,6 @@ export function SplitScreenSection({ continents, initialRouteState, seoContent, 
                           );
                         })}
                     </div>
-                    <button
-                      type="button"
-                      onClick={toggleMobileCategoryMenu}
-                      className={`flex h-7 w-7 shrink-0 items-center justify-center rounded-full border shadow-sm transition-[background-color,color,border-color] ${
-                        isMobileCategoryMenuExpanded
-                          ? "border-slate-200 bg-white text-slate-700"
-                          : activeCategoryOption
-                            ? "text-white"
-                            : "border-slate-200 bg-white text-slate-700"
-                      }`}
-                      style={
-                        activeCategoryOption && !isMobileCategoryMenuExpanded
-                          ? {
-                              backgroundColor: CATEGORY_STYLES[activeCategoryOption.category].mapColor,
-                              borderColor: CATEGORY_STYLES[activeCategoryOption.category].mapColor,
-                            }
-                          : undefined
-                      }
-                      aria-label="Open categories"
-                      aria-expanded={isMobileCategoryMenuOpen}
-                    >
-                      {isMobileCategoryMenuExpanded ? (
-                        <X className="h-3 w-3" />
-                      ) : activeCategoryOption ? (
-                        <activeCategoryOption.icon className="h-3 w-3" />
-                      ) : (
-                        <ListFilter className="h-3 w-3" />
-                      )}
-                    </button>
                   </div>
                 </div>
 	                <div
@@ -6940,39 +6943,6 @@ export function SplitScreenSection({ continents, initialRouteState, seoContent, 
                             </button>
                           );
                         })}
-                        {activeGuideRail !== "itinerary" ? (
-                          <button
-                            type="button"
-                            onClick={() => {
-                              setIsDesktopSearchOpen(false);
-                              setIsFoodOpenTimeMenuOpen(false);
-                              setIsFoodCuisineMenuOpen(false);
-                              setIsNightlifeBarMenuOpen(false);
-                              setIsDesktopCategoryMenuOpen((current) => !current);
-                            }}
-                            className={`flex h-10 w-10 items-center justify-center rounded-lg border bg-white text-slate-700 shadow-sm transition hover:scale-[1.03] hover:border-slate-300 hover:text-slate-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-400/70 ${
-                              isDesktopCategoryMenuOpen ? "shadow-md" : ""
-                            }`}
-                            style={
-                              activeCategoryOption
-                                ? {
-                                    color: CATEGORY_STYLES[activeCategoryOption.category].mapColor,
-                                    borderColor: CATEGORY_STYLES[activeCategoryOption.category].mapColor,
-                                  }
-                                : { borderColor: "rgb(226 232 240)" }
-                            }
-                            aria-label="Categories"
-                            aria-expanded={isDesktopCategoryMenuOpen}
-                            aria-controls="desktop-category-menu"
-                            title={categoryTitleLabel}
-                          >
-                            {activeCategoryOption ? (
-                              <activeCategoryOption.icon className="h-4 w-4" />
-                            ) : (
-                              <ListFilter className="h-4 w-4" />
-                            )}
-                          </button>
-                        ) : null}
                       </div>
 	                      <div
 	                        className={`absolute right-0 top-0 flex h-10 items-center justify-end overflow-visible rounded-lg transition-[width,background-color,border-color,box-shadow] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] ${
@@ -6995,7 +6965,6 @@ export function SplitScreenSection({ continents, initialRouteState, seoContent, 
                         <button
                           type="button"
                           onClick={() => {
-                            setIsDesktopCategoryMenuOpen(false);
                             setIsFoodOpenTimeMenuOpen(false);
                             setIsFoodCuisineMenuOpen(false);
                             setIsNightlifeBarMenuOpen(false);
@@ -7016,24 +6985,18 @@ export function SplitScreenSection({ continents, initialRouteState, seoContent, 
                     </div>
                     {activeGuideRail !== "itinerary" ? (
                       <div
-                        className={`mx-auto w-full max-w-[36rem] space-y-3 transition-[margin,max-height,opacity,transform,padding] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] ${
-                          isDesktopCategoryMenuOpen || visibleSubcategoryCategory
-                            ? "mt-2 max-h-40 translate-y-0 pb-2 opacity-100"
-                            : "pointer-events-none mt-0 max-h-0 -translate-y-3 pb-0 opacity-0"
-                        } ${isSubcategoryMenuOpen ? "overflow-visible" : "overflow-hidden"}`}
+                        className={`mt-2 w-full translate-y-0 space-y-3 pb-2 opacity-100 transition-[margin,max-height,opacity,transform,padding] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] ${
+                          isSubcategoryMenuOpen ? "max-h-44 overflow-visible" : "max-h-40 overflow-hidden"
+                        }`}
                       >
                         <div
                           id="desktop-category-menu"
-                          className={`grid transition-[grid-template-rows,opacity,transform] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] ${
-                            isDesktopCategoryMenuOpen
-                              ? "grid-rows-[1fr] translate-y-0 opacity-100"
-                              : "grid-rows-[0fr] -translate-y-3 opacity-0"
-                          }`}
+                          className="grid grid-rows-[1fr] translate-y-0 opacity-100 transition-[grid-template-rows,opacity,transform] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)]"
                         >
                           <div className="min-h-0 overflow-hidden">
-                            <div className="grid grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] items-center gap-2 pt-1">
-                            <div className="grid w-full grid-cols-3 justify-items-start gap-2">
-                              {categoryOptions.slice(0, 3).map((option) => (
+                            <div className="grid grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] items-center gap-4 pt-1">
+                            <div className="grid w-full grid-cols-4 justify-items-start gap-2">
+                              {categoryOptions.slice(0, categoryOptionMidpoint).map((option) => (
                                 <button
                                   key={option.label}
                                   type="button"
@@ -7064,8 +7027,8 @@ export function SplitScreenSection({ continents, initialRouteState, seoContent, 
                             <span className="inline-flex w-[8.5rem] justify-center text-center text-[11px] font-medium uppercase tracking-[0.18em] text-slate-500">
                               {categoryTitleLabel}
                             </span>
-                            <div className="grid w-full grid-cols-3 justify-items-end gap-2">
-                              {categoryOptions.slice(3).map((option) => (
+                            <div className="grid w-full grid-cols-4 justify-items-end gap-2">
+                              {categoryOptions.slice(categoryOptionMidpoint).map((option) => (
                                 <button
                                   key={option.label}
                                   type="button"

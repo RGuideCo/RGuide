@@ -4,7 +4,9 @@ export type ListCategory =
   | "Nature"
   | "Culture"
   | "Stay"
-  | "Activities";
+  | "Activities"
+  | "Routes"
+  | "Essentials";
 
 export type SubmissionType = "guide" | "journal" | "itinerary";
 

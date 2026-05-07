@@ -147,6 +147,10 @@ const GUIDE_STOP_COLOR_MATCH = [
   CATEGORY_STYLES.Nature.mapColor,
   "Activities",
   CATEGORY_STYLES.Activities.mapColor,
+  "Routes",
+  CATEGORY_STYLES.Routes.mapColor,
+  "Essentials",
+  CATEGORY_STYLES.Essentials.mapColor,
   CATEGORY_STYLES.Activities.mapColor,
 ] as ExpressionSpecification;
 const GUIDE_STOP_NESTED_COLOR_MATCH = [
@@ -164,6 +168,10 @@ const GUIDE_STOP_NESTED_COLOR_MATCH = [
   CATEGORY_STYLES.Nature.poiColor,
   "Activities",
   CATEGORY_STYLES.Activities.poiColor,
+  "Routes",
+  CATEGORY_STYLES.Routes.poiColor,
+  "Essentials",
+  CATEGORY_STYLES.Essentials.poiColor,
   CATEGORY_STYLES.Activities.poiColor,
 ] as ExpressionSpecification;
 const GUIDE_STOP_GLOW_COLOR_MATCH = [
@@ -181,6 +189,10 @@ const GUIDE_STOP_GLOW_COLOR_MATCH = [
   CATEGORY_STYLES.Nature.mapGlowColor,
   "Activities",
   CATEGORY_STYLES.Activities.mapGlowColor,
+  "Routes",
+  CATEGORY_STYLES.Routes.mapGlowColor,
+  "Essentials",
+  CATEGORY_STYLES.Essentials.mapGlowColor,
   CATEGORY_STYLES.Activities.mapGlowColor,
 ] as ExpressionSpecification;
 const GUIDE_STOP_GLOW_BASE_RADIUS = { lowZoom: 15, highZoom: 21 } as const;

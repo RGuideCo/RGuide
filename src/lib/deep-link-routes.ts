@@ -91,6 +91,8 @@ function getGuideIntentLabel(guide: GuideSeoSeed) {
   if (guide.category === "Culture") return "best museums and cultural stops";
   if (guide.category === "Stay") return "best places to stay";
   if (guide.category === "Nature") return "best parks and nature spots";
+  if (guide.category === "Routes") return "best routes and walking paths";
+  if (guide.category === "Essentials") return "travel essentials and practical tips";
   return "best things to do";
 }
 

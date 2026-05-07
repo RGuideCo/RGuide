@@ -12,6 +12,8 @@ export const CATEGORIES: ListCategory[] = [
   "Culture",
   "Stay",
   "Activities",
+  "Routes",
+  "Essentials",
 ];
 
 export const CATEGORY_STYLES: Record<
@@ -79,6 +81,24 @@ export const CATEGORY_STYLES: Record<
     mapColor: "#f97316",
     mapGlowColor: "#fb923c",
     poiColor: "#c2410c",
+  },
+  Routes: {
+    badge: "bg-blue-100 text-blue-800",
+    filterActive: "border-blue-600 bg-blue-600 text-white",
+    stopNumber: "bg-blue-600 text-white",
+    stopDot: "bg-blue-600",
+    mapColor: "#2563eb",
+    mapGlowColor: "#60a5fa",
+    poiColor: "#1d4ed8",
+  },
+  Essentials: {
+    badge: "bg-violet-100 text-violet-800",
+    filterActive: "border-violet-600 bg-violet-600 text-white",
+    stopNumber: "bg-violet-600 text-white",
+    stopDot: "bg-violet-600",
+    mapColor: "#7c3aed",
+    mapGlowColor: "#a78bfa",
+    poiColor: "#6d28d9",
   },
 };
 

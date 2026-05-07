@@ -54,6 +54,20 @@ export const users: User[] = [
     bio: "R Guide editorial desk for top activities, landmarks, and must-do experiences.",
   },
   {
+    id: "user-rguide-routes",
+    name: "R Routes",
+    joinedAt: "2021-01-01T00:00:00.000Z",
+    avatar: rGuideAvatar,
+    bio: "R Guide editorial desk for walking routes, major streets, scenic loops, and practical movement plans.",
+  },
+  {
+    id: "user-rguide-essentials",
+    name: "R Essentials",
+    joinedAt: "2021-01-01T00:00:00.000Z",
+    avatar: rGuideAvatar,
+    bio: "R Guide editorial desk for transit, arrival basics, safety, connectivity, money, and practical trip setup.",
+  },
+  {
     id: "user-rguide-history",
     name: "R History",
     joinedAt: "2021-01-01T00:00:00.000Z",
