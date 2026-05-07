@@ -7,10 +7,11 @@ import maplibregl, { GeoJSONSource, LngLatBounds } from "maplibre-gl";
 
 import { mapLists } from "@/data/lists";
 import { countryBoundaryFeatures } from "@/data/map-boundaries";
-import neighborhoodBoundaryFeatures from "@/data/boundaries";
-import laNeighborhoodBoundaryFeatures from "@/data/la-neighborhood-boundaries.json";
-import nycBoroughBoundaryFeatures from "@/data/nyc-borough-boundaries.json";
-import nycNeighborhoodBoundaryFeatures from "@/data/nyc-neighborhood-boundaries.json";
+import {
+  loadNeighborhoodBoundaryMap,
+  type NeighborhoodBoundaryMap,
+  type NeighborhoodBoundaryProperties,
+} from "@/data/boundary-loaders";
 import worldCountries from "@/data/world-countries.json";
 import { CATEGORY_STYLES } from "@/lib/constants";
 import { Continent, MapList, SelectionState } from "@/types";
@@ -100,11 +101,6 @@ type GuideRouteFeatureProperties = {
   category: MapList["category"];
 };
 
-type NeighborhoodBoundaryProperties = {
-  id: string;
-  name: string;
-};
-
 type MapViewportInsets = {
   top: number;
   right: number;
@@ -119,6 +115,7 @@ const worldCountryIso3 = new Map(
     .filter((country) => typeof country.feature?.id === "string")
     .map((country) => [country.id, country.feature.id as string]),
 );
+const EMPTY_NEIGHBORHOOD_BOUNDARY_LOOKUP: NeighborhoodBoundaryMap = {};
 
 const MAP_STYLE = "https://tiles.openfreemap.org/styles/liberty";
 const COUNTRY_SOURCE_ID = "countries";
@@ -277,23 +274,6 @@ const usStateLabels = [
   { id: "wi", name: "Wisconsin", coordinates: [44.268543, -89.616508] },
   { id: "wy", name: "Wyoming", coordinates: [42.755966, -107.30249] },
 ] as const;
-const neighborhoodBoundaryLookup = neighborhoodBoundaryFeatures as Record<
-  string,
-  Feature<Geometry, NeighborhoodBoundaryProperties>
->;
-const laNeighborhoodBoundaryLookup = laNeighborhoodBoundaryFeatures as Record<
-  string,
-  Feature<Geometry, NeighborhoodBoundaryProperties>
->;
-const nycNeighborhoodBoundaryLookup = nycNeighborhoodBoundaryFeatures as Record<
-  string,
-  Feature<Geometry, NeighborhoodBoundaryProperties>
->;
-const nycBoroughBoundaryLookup = nycBoroughBoundaryFeatures as Record<
-  string,
-  Feature<Geometry, NeighborhoodBoundaryProperties>
->;
-
 function extendBoundsFromCoordinates(
   bounds: LngLatBounds,
   coordinates: number[] | number[][] | number[][][] | number[][][][],
@@ -1849,6 +1829,8 @@ export function MapClient({
   const mapRef = useRef<maplibregl.Map | null>(null);
   const isStyleReadyRef = useRef(false);
   const [styleReadyTick, setStyleReadyTick] = useState(0);
+  const [neighborhoodBoundaryLookup, setNeighborhoodBoundaryLookup] =
+    useState<NeighborhoodBoundaryMap>(EMPTY_NEIGHBORHOOD_BOUNDARY_LOOKUP);
   const hoverAnimationFrameRef = useRef<number | null>(null);
   const hoverVisualStateRef = useRef<{
     activeId: string | null;
@@ -1883,6 +1865,34 @@ export function MapClient({
   const viewportInsetsRef = useRef<MapViewportInsets | undefined>(viewportInsets);
   const activeGuideCameraKeyRef = useRef<string | null>(null);
   const selectionCameraKeyRef = useRef<string | null>(null);
+
+  useEffect(() => {
+    const cityId = selection.cityId;
+    if (!cityId) {
+      setNeighborhoodBoundaryLookup(EMPTY_NEIGHBORHOOD_BOUNDARY_LOOKUP);
+      return;
+    }
+
+    let isCurrentSelection = true;
+    setNeighborhoodBoundaryLookup(EMPTY_NEIGHBORHOOD_BOUNDARY_LOOKUP);
+
+    loadNeighborhoodBoundaryMap(cityId)
+      .then((boundaryMap) => {
+        if (isCurrentSelection) {
+          setNeighborhoodBoundaryLookup(boundaryMap);
+        }
+      })
+      .catch((error) => {
+        if (isCurrentSelection) {
+          setNeighborhoodBoundaryLookup(EMPTY_NEIGHBORHOOD_BOUNDARY_LOOKUP);
+        }
+        console.error(`Failed to load neighborhood boundaries for ${cityId}`, error);
+      });
+
+    return () => {
+      isCurrentSelection = false;
+    };
+  }, [selection.cityId]);
 
   const countryData = useMemo(
     () => createCountryData(continents, selection, highlightedCountryIds, guideFocus),
@@ -1920,28 +1930,17 @@ export function MapClient({
   );
   const activeNeighborhoodBoundary = useMemo(() => {
     if (selection.cityId && selection.subareaId && selection.nestedSubareaId) {
-      return (
-        nycNeighborhoodBoundaryLookup[
-          `${selection.cityId}::${selection.subareaId}::${selection.nestedSubareaId}`
-        ] ??
-        neighborhoodBoundaryLookup[
-          `${selection.cityId}::${selection.subareaId}::${selection.nestedSubareaId}`
-        ] ?? null
-      );
+      return neighborhoodBoundaryLookup[
+        `${selection.cityId}::${selection.subareaId}::${selection.nestedSubareaId}`
+      ] ?? null;
     }
 
     if (selection.cityId && selection.subareaId) {
-      return (
-        laNeighborhoodBoundaryLookup[`${selection.cityId}::${selection.subareaId}`] ??
-        nycBoroughBoundaryLookup[`${selection.cityId}::${selection.subareaId}`] ??
-        nycNeighborhoodBoundaryLookup[`${selection.cityId}::${selection.subareaId}`] ??
-        neighborhoodBoundaryLookup[`${selection.cityId}::${selection.subareaId}`] ??
-        null
-      );
+      return neighborhoodBoundaryLookup[`${selection.cityId}::${selection.subareaId}`] ?? null;
     }
 
     return null;
-  }, [selection.cityId, selection.nestedSubareaId, selection.subareaId]);
+  }, [neighborhoodBoundaryLookup, selection.cityId, selection.nestedSubareaId, selection.subareaId]);
   const neighborhoodBoundaryData = useMemo(
     () => createNeighborhoodBoundaryData(activeNeighborhoodBoundary),
     [activeNeighborhoodBoundary],
