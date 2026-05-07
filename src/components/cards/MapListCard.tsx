@@ -38,6 +38,7 @@ interface MapListCardProps {
   onEditItinerary?: (list: MapList) => void;
   onEditGuide?: (list: MapList) => void;
   onExpandedStopIdsChange?: (stopIds: string[]) => void;
+  collapsedLocationSubtitleHiddenParts?: string[];
 }
 
 function usesRankedStops(title: string) {
@@ -75,7 +76,17 @@ function isItineraryLikeGuide(list: MapList) {
   return hasGeneratedItineraryStops || (hasItineraryTitle && hasCompiledItineraryDescription);
 }
 
-function buildLocationSubtitle(list: MapList) {
+function normalizeLocationSubtitlePart(value?: string | null) {
+  return (value ?? "")
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .trim()
+    .toLowerCase();
+}
+
+function buildLocationSubtitle(list: MapList, hiddenParts: string[] = []) {
+  const hiddenLocationParts = new Set(hiddenParts.map(normalizeLocationSubtitlePart).filter(Boolean));
+
   return [
     list.location.neighborhood,
     list.location.city,
@@ -83,16 +94,17 @@ function buildLocationSubtitle(list: MapList) {
     list.location.continent,
   ]
     .filter((part): part is string => Boolean(part?.trim()))
+    .filter((part) => !hiddenLocationParts.has(normalizeLocationSubtitlePart(part)))
     .filter((part, index, all) => all.findIndex((item) => item.toLowerCase() === part.toLowerCase()) === index)
     .join(" • ");
 }
 
 type GuideSource = NonNullable<MapList["sources"]>[number];
 
-function buildGuideMeta(list: MapList) {
+function buildGuideMeta(list: MapList, hiddenLocationParts?: string[]) {
   const placeCount = list.stops.length;
   const placeLabel = `${placeCount} ${placeCount === 1 ? "place" : "places"}`;
-  const locationLabel = buildLocationSubtitle(list);
+  const locationLabel = buildLocationSubtitle(list, hiddenLocationParts);
   const typeLabel = list.submissionType === "itinerary" ? "Itinerary" : list.category;
   return [typeLabel, placeLabel, locationLabel].filter(Boolean).join(" • ");
 }
@@ -197,6 +209,7 @@ export function MapListCard({
   onEditItinerary,
   onEditGuide,
   onExpandedStopIdsChange,
+  collapsedLocationSubtitleHiddenParts = [],
 }: MapListCardProps) {
   const router = useRouter();
   const weekdayLabel = new Intl.DateTimeFormat(undefined, { weekday: "short" }).format(new Date());
@@ -220,10 +233,11 @@ export function MapListCard({
   const canEditOwnItinerary = isOwnGuide && isItineraryGuide && Boolean(onEditItinerary);
   const isHistoricalGuide = list.creator.id === "user-rguide-history";
   const categoryStyle = CATEGORY_STYLES[list.category];
-  const locationSubtitle = buildLocationSubtitle(list);
-  const guideMeta = buildGuideMeta(list);
   const visibleUpvotes = list.upvotes + (hasVoted ? 1 : 0);
   const expandedChrome = expanded || preserveExpandedChrome;
+  const hiddenLocationParts = expandedChrome ? [] : collapsedLocationSubtitleHiddenParts;
+  const locationSubtitle = buildLocationSubtitle(list, hiddenLocationParts);
+  const guideMeta = buildGuideMeta(list, hiddenLocationParts);
   const preservingListChrome = preserveExpandedChrome && !fillPane;
   const retractingListChrome = preservingListChrome && retractExpandedChrome;
   const expandingListChrome = expandExpandedChrome && expandedChrome;

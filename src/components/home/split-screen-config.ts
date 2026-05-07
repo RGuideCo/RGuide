@@ -390,15 +390,17 @@ export const REVEAL_DESCRIPTION_MS = 70;
 export const REVEAL_BODY_MS = 140;
 
 export const guideRailOptions = [
+  { id: "all-guides", label: "All Guides", shortLabel: "All", icon: MapIcon },
   { id: "r-guides", label: "R Guides", shortLabel: "R", icon: null },
   { id: "user-guides", label: "User Guides", shortLabel: "User", icon: Users },
+  { id: "itinerary", label: "Itineraries", shortLabel: "Trip", icon: Route },
   { id: "favorites", label: "Favorites", shortLabel: "Fav", icon: Heart },
-  { id: "itinerary", label: "Itinerary", shortLabel: "Trip", icon: Route },
   { id: "trending", label: "Trending", shortLabel: "Trend", icon: Flame },
   { id: "week-events", label: "This Week", shortLabel: "Week", icon: CalendarDays },
 ] as const satisfies { id: string; label: string; shortLabel: string; icon: LucideIcon | null }[];
 
 export const guideRailActiveColorById: Record<(typeof guideRailOptions)[number]["id"], string> = {
+  "all-guides": "#0f172a",
   "r-guides": "#14b8a6",
   "user-guides": "#0ea5e9",
   favorites: "#f97316",

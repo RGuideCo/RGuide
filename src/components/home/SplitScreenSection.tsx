@@ -14,7 +14,9 @@ import {
   Map as MapIcon,
   MapPin,
   Plus,
-  Users,
+  Route,
+  Search,
+  UserRound,
   X,
 } from "lucide-react";
 import Link from "next/link";
@@ -26,6 +28,7 @@ import { SubmitListForm } from "@/components/list/SubmitListForm";
 import { ContinentList } from "@/components/map/ContinentList";
 import { InteractiveMap } from "@/components/map/InteractiveMap";
 import { StateShapeIcon } from "@/components/map/StateShapeIcon";
+import { SearchBar } from "@/components/shared/SearchBar";
 import {
   BRIAN_PROFILE_FAVORITES,
   DEFAULT_PROFILE_FAVORITES,
@@ -1031,7 +1034,7 @@ export function SplitScreenSection({ continents, initialRouteState, seoContent, 
   const currentUser = useAppStore((state) => state.currentUser);
   const setCurrentUser = useAppStore((state) => state.setCurrentUser);
   const isProfileShellActive = useAppStore((state) => state.isProfileShellActive);
-  const isMobileSearchOpen = useAppStore((state) => state.isMobileSearchOpen);
+  const openAuthModal = useAppStore((state) => state.openAuthModal);
   const setProfileShellActive = useAppStore((state) => state.setProfileShellActive);
   const favoriteIds = useAppStore((state) => state.favoriteIds);
   const favoriteLocations = useAppStore((state) => state.favoriteLocations);
@@ -1070,13 +1073,16 @@ export function SplitScreenSection({ continents, initialRouteState, seoContent, 
   const [isFoodCuisineMenuOpen, setIsFoodCuisineMenuOpen] = useState(false);
   const [activeNightlifeBarType, setActiveNightlifeBarType] = useState<string>(NIGHTLIFE_BAR_TYPE_ANY);
   const [isNightlifeBarMenuOpen, setIsNightlifeBarMenuOpen] = useState(false);
+  const [isDesktopSearchOpen, setIsDesktopSearchOpen] = useState(false);
+  const [isDesktopCategoryMenuOpen, setIsDesktopCategoryMenuOpen] = useState(false);
+  const [isMobileExplorerSearchOpen, setIsMobileExplorerSearchOpen] = useState(false);
   const [hoveredGuide, setHoveredGuide] = useState<MapList | null>(null);
   const [hoveredStopId, setHoveredStopId] = useState<string | null>(null);
   const [visibleNestedStopParentIds, setVisibleNestedStopParentIds] = useState<string[]>([]);
   const [selectedGuideStopId, setSelectedGuideStopId] = useState<string | null>(null);
   const [selectedGuideStopNonce, setSelectedGuideStopNonce] = useState(0);
   const [activeGuideFitNonce, setActiveGuideFitNonce] = useState(0);
-  const [activeGuideRail, setActiveGuideRail] = useState<(typeof guideRailOptions)[number]["id"]>("r-guides");
+  const [activeGuideRail, setActiveGuideRail] = useState<(typeof guideRailOptions)[number]["id"]>("all-guides");
   const [expandedGuideId, setExpandedGuideId] = useState<string | null>(initialRouteState?.expandedGuideId ?? null);
   const [pendingSourcesOpenGuideId, setPendingSourcesOpenGuideId] = useState<string | null>(null);
   const [closingGuide, setClosingGuide] = useState<MapList | null>(null);
@@ -2050,6 +2056,66 @@ export function SplitScreenSection({ continents, initialRouteState, seoContent, 
       .normalize("NFD")
       .replace(/[\u0300-\u036f]/g, "")
       .toLowerCase();
+  const normalizeLocationName = (value?: string | null) =>
+    formatBreadcrumbName(value)
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "")
+      .toLowerCase();
+  const locationsMatch = (left?: string | null, right?: string | null) => {
+    const normalizedLeft = normalizeLocationName(left);
+    const normalizedRight = normalizeLocationName(right);
+    return Boolean(normalizedLeft && normalizedRight && normalizedLeft === normalizedRight);
+  };
+  const getCollapsedLocationSubtitleHiddenParts = (list: MapList) => {
+    const hiddenParts: string[] = [];
+    const addHiddenPart = (value?: string | null) => {
+      const trimmedValue = value?.trim();
+      if (trimmedValue) {
+        hiddenParts.push(trimmedValue);
+      }
+    };
+
+    if (isGlobalSelection) {
+      if (locationsMatch(list.location.continent, "Global")) {
+        addHiddenPart("Global");
+      }
+      return hiddenParts;
+    }
+
+    const sameContinent = locationsMatch(list.location.continent, activeLocation.continent?.name);
+    const sameCountry =
+      sameContinent && locationsMatch(list.location.country, activeLocation.country?.name ?? activeLocation.city?.country);
+    const sameCity = sameCountry && locationsMatch(list.location.city, activeLocation.city?.name);
+
+    if (activeLocation.city) {
+      if (sameCity) {
+        const activeNeighborhood = activeLocation.nestedSubarea ?? activeLocation.subarea;
+        if (activeNeighborhood && locationsMatch(list.location.neighborhood, activeNeighborhood.name)) {
+          addHiddenPart(activeNeighborhood.name);
+        }
+        addHiddenPart(activeLocation.city.name);
+        addHiddenPart(activeLocation.country?.name ?? activeLocation.city.country);
+        addHiddenPart(activeLocation.continent?.name ?? activeLocation.country?.continent);
+      }
+      return hiddenParts;
+    }
+
+    if (activeLocation.state || activeCountrySubarea || activeContinentSubarea) {
+      return hiddenParts;
+    }
+
+    if (activeLocation.country && sameCountry) {
+      addHiddenPart(activeLocation.country.name);
+      addHiddenPart(activeLocation.continent?.name ?? activeLocation.country.continent);
+      return hiddenParts;
+    }
+
+    if (activeLocation.continent && sameContinent) {
+      addHiddenPart(activeLocation.continent.name);
+    }
+
+    return hiddenParts;
+  };
   const activeDirectoryMeta = useMemo(() => {
     if (activeLocation.nestedSubarea && activeLocation.city) {
       return {
@@ -2727,17 +2793,20 @@ export function SplitScreenSection({ continents, initialRouteState, seoContent, 
     const allKnownItineraryListIds = new Set([...completedItineraryListIds, ...playlistLinkedListIds]);
     const eventPattern =
       /\b(event|festival|concert|show|market|fair|parade|match|game|exhibit|exhibition|live music|night market|weekend)\b/i;
+    const isRGuideList = (list: MapList) => list.creator.name.startsWith("R ");
+    const isUserGuideList = (list: MapList) =>
+      !isRGuideList(list) &&
+      list.submissionType !== "journal" &&
+      !isItineraryList(list, allKnownItineraryListIds);
 
+    if (activeGuideRail === "all-guides") {
+      return filteredLists.filter((list) => isRGuideList(list) || isUserGuideList(list));
+    }
     if (activeGuideRail === "r-guides") {
-      return filteredLists.filter((list) => list.creator.name.startsWith("R "));
+      return filteredLists.filter(isRGuideList);
     }
     if (activeGuideRail === "user-guides") {
-      return filteredLists.filter(
-        (list) =>
-          !list.creator.name.startsWith("R ") &&
-          list.submissionType !== "journal" &&
-          !isItineraryList(list, allKnownItineraryListIds),
-      );
+      return filteredLists.filter(isUserGuideList);
     }
     if (activeGuideRail === "favorites") {
       return globalMergedLists.filter((list) => favoriteIds.includes(list.id));
@@ -2797,13 +2866,25 @@ export function SplitScreenSection({ continents, initialRouteState, seoContent, 
     ? categorySubcategoriesByScope[subcategoryScope][visibleSubcategoryCategory]
     : [];
   const categoryTitleLabel = activeCategoryOption?.label ?? hoveredCategoryLabel ?? "Categories";
-  const mobileGuideSelectors = [
-    { id: "r-guides" as const, label: "R Guides", shortLabel: "R", icon: null },
-    { id: "user-guides" as const, label: "User Guides", shortLabel: "User", icon: Users },
+  const guideSourceSelectors = [
+    { id: "all-guides" as const, label: "All guides", shortLabel: "All", icon: null },
+    { id: "r-guides" as const, label: "R guides", shortLabel: "R", icon: null },
+    { id: "user-guides" as const, label: "User guides", shortLabel: "User", icon: UserRound },
+  ];
+  const guideActionSelectors = [
+    { id: "itinerary" as const, label: "Itineraries", shortLabel: "Trip", icon: Route },
     { id: "favorites" as const, label: "Favorites", shortLabel: "Fav", icon: Heart },
   ];
+  const menuBarSelectors = [...guideSourceSelectors, ...guideActionSelectors];
+  const activeGuideSourceSelector =
+    guideSourceSelectors.find((selector) => selector.id === activeGuideRail) ?? guideSourceSelectors[0];
+  const isGuideSourceRailActive = guideSourceSelectors.some((selector) => selector.id === activeGuideRail);
+  const activeGuideSourceIndex = Math.max(
+    0,
+    guideSourceSelectors.findIndex((selector) => selector.id === activeGuideSourceSelector.id),
+  );
   const activeMobileGuideSelector =
-    mobileGuideSelectors.find((selector) => selector.id === activeGuideRail) ?? mobileGuideSelectors[0];
+    menuBarSelectors.find((selector) => selector.id === activeGuideRail) ?? menuBarSelectors[0];
   const isMobileCategoryMenuExpanded = isMobileCategoryMenuOpen || isMobileCategoryMenuClosing;
   const openMobileCategoryMenu = () => {
     if (mobileCategoryCloseTimeoutRef.current) {
@@ -2829,6 +2910,7 @@ export function SplitScreenSection({ continents, initialRouteState, seoContent, 
   };
   const handleGuideRailSelect = (railId: (typeof guideRailOptions)[number]["id"]) => {
     setActiveGuideRail(railId);
+    setIsDesktopCategoryMenuOpen(false);
     setExpandedGuideId(null);
     setClosingGuide(null);
     setVisibleNestedStopParentIds([]);
@@ -2945,8 +3027,8 @@ export function SplitScreenSection({ continents, initialRouteState, seoContent, 
       pushExplorerPath(nextPath);
     }
   };
-  const explorerPaneHeight = "lg:h-[calc(100svh-7.75rem)]";
-  const explorerBodyMaxHeight = "max-h-full lg:max-h-[calc(100svh-13.75rem)]";
+  const explorerPaneHeight = "lg:h-[calc(100svh-1rem)]";
+  const explorerBodyMaxHeight = "max-h-full lg:max-h-[calc(100svh-7.5rem)]";
 
   useEffect(() => {
     if (activeCategory) {
@@ -3145,7 +3227,7 @@ export function SplitScreenSection({ continents, initialRouteState, seoContent, 
     ? railFilteredLists.filter((list) => list.id !== displayedGuide.id)
     : railFilteredLists;
   const recentRGuideLists = useMemo(() => {
-    if (!isGlobalSelection || activeGuideRail !== "r-guides") {
+    if (!isGlobalSelection || (activeGuideRail !== "all-guides" && activeGuideRail !== "r-guides")) {
       return [];
     }
 
@@ -3888,13 +3970,6 @@ export function SplitScreenSection({ continents, initialRouteState, seoContent, 
           animationDelay: `${index * 220}ms`,
         }
       : undefined;
-  const explorerRightRailItemStyle = (index: number) =>
-    railEnteringMode === "explorer"
-      ? {
-          animation: "rail-switch-pop 700ms cubic-bezier(0.22, 1, 0.36, 1) both",
-          animationDelay: `${index * 140}ms`,
-        }
-      : undefined;
   const isEnteringProfileShell =
     shellTransitionPhase === "entering" && displayShellMode === "profile";
   useEffect(() => {
@@ -4077,10 +4152,62 @@ export function SplitScreenSection({ continents, initialRouteState, seoContent, 
   return (
     <section id="map-explorer" className="w-full py-0 lg:pb-0 lg:pt-2">
       <div className="flex w-full flex-col items-stretch gap-2 lg:flex-row lg:items-start lg:gap-0">
-        <div className={`z-20 hidden w-full shrink-0 flex-row items-center justify-center gap-3 overflow-x-auto px-3 py-1 sm:px-4 lg:flex lg:w-14 lg:flex-col lg:overflow-visible lg:px-0 lg:py-0 lg:pt-7 ${railTransitionClass} ${publicProfileRailTransitionClass}`}>
-            {isProfileMode ? (
-              <>
-                {activeProfileLeftRail === "places-been" && currentUser ? (
+	        <div className={`z-20 hidden w-full shrink-0 flex-row items-center justify-center gap-3 overflow-x-auto px-3 py-1 sm:px-4 lg:flex lg:w-14 lg:flex-col lg:overflow-visible lg:px-0 lg:py-0 lg:pt-3 ${railTransitionClass} ${publicProfileRailTransitionClass}`}>
+              <Link
+                href="/"
+                onClick={() => {
+                  setProfileShellActive(false);
+                  handleResetToGlobalView();
+                  setActiveCategory(null);
+                  setActiveSubcategory(null);
+                }}
+                className="rail-switch-item flex h-10 w-10 items-center justify-center rounded-full border border-slate-950 bg-slate-950 font-mono text-sm font-semibold uppercase tracking-tight text-white shadow-sm transition hover:scale-105 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-400/70"
+                aria-label="RGuide home"
+                title="RGuide"
+              >
+                R
+              </Link>
+	            {isProfileMode ? (
+	              <>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setProfileShellActive(false);
+                      handleResetToGlobalView();
+                    }}
+                    onPointerEnter={() => {
+                      const video = globeRailVideoRef.current;
+                      if (video) {
+                        try {
+                          video.currentTime = 0;
+                        } catch {}
+                        void video.play().catch(() => undefined);
+                      }
+                    }}
+                    onPointerLeave={() => {
+                      globeRailVideoRef.current?.pause();
+                    }}
+                    onBlur={() => {
+                      globeRailVideoRef.current?.pause();
+                    }}
+                    className="guide-rail-button rail-switch-item margin-shell-pop-in flex h-10 w-10 items-center justify-center rounded-full transition hover:scale-105 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-400/70"
+                    aria-label="Return to explorer"
+                    title="Back to explorer"
+                  >
+                    <video
+                      ref={globeRailVideoRef}
+                      muted
+                      loop
+                      playsInline
+                      preload="auto"
+                      poster="/assets/rotating-earth-still.png"
+                      className="h-10 w-10 drop-shadow-[0_2px_4px_rgba(15,23,42,0.35)]"
+                    >
+                      <source src="/assets/rotating-earth.webm" type="video/webm" />
+                      <source src="/assets/rotating-earth.mp4" type="video/mp4" />
+                    </video>
+                  </button>
+	                {activeProfileLeftRail === "places-been" && currentUser ? (
                   <div
                     className="rail-switch-item profile-rail-item relative h-10 w-10 animate-[rail-switch-pop_520ms_cubic-bezier(0.22,1,0.36,1)]"
                     style={profileRailItemStyle(0)}
@@ -4105,7 +4232,7 @@ export function SplitScreenSection({ continents, initialRouteState, seoContent, 
                     </button>
                   </div>
                 ) : null}
-                {profileLeftRailOptions.map((option, index) => (
+	                {profileLeftRailOptions.map((option, index) => (
                   <div
                     key={option.id}
                     className="rail-switch-item profile-rail-item relative h-10 w-10"
@@ -4122,9 +4249,29 @@ export function SplitScreenSection({ continents, initialRouteState, seoContent, 
                     >
                       <option.icon className="h-4 w-4" />
                     </button>
-                  </div>
-                ))}
-              </>
+	                  </div>
+	                ))}
+                  <div className="rail-switch-item h-px w-7 bg-slate-300/70" aria-hidden="true" />
+                  {profileRightRailOptions.map((option, index) => (
+                    <div
+                      key={option.id}
+                      className="rail-switch-item profile-rail-item relative h-10 w-10"
+                      style={profileRailItemStyle(index + profileLeftRailOptions.length + 1)}
+                    >
+                      <button
+                        type="button"
+                        onClick={() => setActiveProfileRightRail(option.id)}
+                        className={`guide-rail-button relative z-10 flex h-10 w-10 items-center justify-center rounded-full border border-slate-200/90 bg-white/95 text-slate-700 shadow-sm transition hover:scale-105 hover:border-slate-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-400/70 ${
+                          activeProfileRightRail === option.id ? "guide-rail-button-active border-slate-900 text-slate-900" : ""
+                        }`}
+                        aria-label={option.label}
+                        title={option.label}
+                      >
+                        <option.icon className="h-4 w-4" />
+                      </button>
+                    </div>
+                  ))}
+	              </>
             ) : (
               <>
               {publicProfile ? (
@@ -4284,12 +4431,44 @@ export function SplitScreenSection({ continents, initialRouteState, seoContent, 
                 }`}
                 aria-label={`Back to ${displayedCityRailIcon.name}`}
                 title={`Back to ${displayedCityRailIcon.name}`}
-              >
-                <Building2 className="h-3.5 w-3.5" />
-              </button>
-            ) : null}
-              </>
-            )}
+	              >
+	                <Building2 className="h-3.5 w-3.5" />
+	              </button>
+	            ) : null}
+	                {!publicProfile ? (
+	                  <>
+	                    <div className="rail-switch-item h-px w-7 bg-slate-300/70" aria-hidden="true" />
+	                    {currentUser ? (
+                      <button
+                        type="button"
+                        onClick={() => setProfileShellActive(!isProfileShellActive)}
+                        className={`guide-rail-button rail-switch-item flex h-10 w-10 items-center justify-center overflow-hidden rounded-full border border-slate-200/90 bg-white/95 shadow-sm transition hover:scale-105 hover:border-slate-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-400/70 ${
+                          isProfileShellActive ? "guide-rail-button-active border-slate-900" : ""
+                        }`}
+                        aria-label={isProfileShellActive ? "Return to explorer mode" : "Open profile mode"}
+                        title={isProfileShellActive ? "Return to explorer" : "Open profile"}
+                      >
+                        <img
+                          src={currentUser.avatar}
+                          alt={currentUser.name}
+                          className="h-full w-full rounded-full object-cover"
+                        />
+                      </button>
+                    ) : (
+                      <button
+                        type="button"
+                        onClick={() => openAuthModal("login")}
+                        className="guide-rail-button rail-switch-item flex h-10 w-10 items-center justify-center rounded-full border border-slate-200/90 bg-white/95 text-slate-700 shadow-sm transition hover:scale-105 hover:border-slate-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-400/70"
+                        aria-label="Log in"
+                        title="Log in"
+                      >
+                        <UserRound className="h-4 w-4" />
+                      </button>
+                    )}
+                  </>
+                ) : null}
+	              </>
+	            )}
           </div>
         <div className="min-w-0 flex-1">
           <div className="w-full lg:px-2">
@@ -4342,10 +4521,113 @@ export function SplitScreenSection({ continents, initialRouteState, seoContent, 
               onSelectSubarea={handleSelectSubarea}
               onSelectState={handleSelectState}
 	            />
-	          </div>
-			          <div className={`pointer-events-auto absolute left-1/2 top-3 z-[60] w-[min(22rem,calc(100%-7.25rem))] -translate-x-1/2 space-y-2 transition-opacity duration-200 lg:hidden ${
-			            isMobileSearchOpen ? "pointer-events-none opacity-0" : "opacity-100"
-			          }`}>
+		          </div>
+	              <div
+                  className="pointer-events-auto absolute right-3 top-3 z-[80] flex items-center justify-end gap-1.5 lg:hidden"
+                  role="toolbar"
+                  aria-label="Menu bar"
+                >
+                  {!isMobileExplorerSearchOpen ? (
+                    <div className="flex items-center gap-1.5">
+                      <div
+                        className="relative flex h-8 items-center gap-0.5 rounded-lg border border-slate-200 bg-white p-0.5 shadow-sm"
+                        role="group"
+                        aria-label="Guide source"
+                      >
+                        <span
+                          className={`pointer-events-none absolute left-0.5 top-0.5 h-7 w-7 rounded-md bg-slate-950 shadow-sm transition-[opacity,transform] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] ${
+                            isGuideSourceRailActive ? "opacity-100" : "opacity-0"
+                          }`}
+                          style={{ transform: `translateX(${activeGuideSourceIndex * 30}px)` }}
+                          aria-hidden="true"
+                        />
+                        {guideSourceSelectors.map((selector) => {
+                          const isActive = activeGuideRail === selector.id;
+                          const SelectorIcon = selector.icon;
+                          return (
+                            <button
+                              key={selector.id}
+                              type="button"
+                              onClick={() => handleGuideRailSelect(selector.id)}
+                              className={`relative z-10 flex h-7 w-7 items-center justify-center rounded-md text-[8px] font-semibold transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-400/70 ${
+                                isActive ? "text-white" : "text-slate-700 hover:text-slate-950"
+                              }`}
+                              aria-label={selector.label}
+                              title={selector.label}
+                            >
+                              {SelectorIcon ? <SelectorIcon className="h-3.5 w-3.5" /> : selector.shortLabel}
+                            </button>
+                          );
+                        })}
+                      </div>
+                      {guideActionSelectors.map((selector) => {
+                        const isActive = activeGuideRail === selector.id;
+                        const SelectorIcon = selector.icon;
+                        return (
+                          <button
+                            key={selector.id}
+                            type="button"
+                            onClick={() => handleGuideRailSelect(selector.id)}
+                            style={
+                              isActive
+                                ? {
+                                    color: guideRailActiveColorById[selector.id],
+                                    borderColor: guideRailActiveColorById[selector.id],
+                                  }
+                                : undefined
+                            }
+                            className={`flex h-8 w-8 items-center justify-center rounded-lg border border-slate-200 bg-white text-slate-700 shadow-sm transition hover:border-slate-300 hover:text-slate-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-400/70 ${
+                              isActive ? "bg-white" : ""
+                            }`}
+                            aria-label={selector.label}
+                            title={selector.label}
+                          >
+                            <SelectorIcon
+                              className={`h-3.5 w-3.5 ${
+                                isActive && guideRailFillOnActiveIds.has(selector.id) ? "fill-current" : ""
+                              }`}
+                            />
+                          </button>
+                        );
+                      })}
+                    </div>
+                  ) : null}
+	                <div
+                  className={`flex h-8 items-center justify-end overflow-visible rounded-lg transition-[width,background-color,border-color,box-shadow] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] ${
+                    isMobileExplorerSearchOpen
+                      ? "w-[min(22rem,calc(100vw-1.5rem))] border border-slate-200 bg-white shadow-sm"
+                      : "w-8 border border-transparent bg-transparent"
+                  }`}
+                >
+                  {isMobileExplorerSearchOpen ? (
+                    <SearchBar
+                      autoFocus
+                      compact
+                      embedded
+                      variant="square"
+                      size="sm"
+                      onResultSelect={() => setIsMobileExplorerSearchOpen(false)}
+                      className="max-w-none flex-1"
+                    />
+                  ) : null}
+                  <button
+                    type="button"
+                    onClick={() => setIsMobileExplorerSearchOpen((current) => !current)}
+                    className={`inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-lg text-slate-700 transition hover:text-slate-900 ${
+                      isMobileExplorerSearchOpen
+                        ? "border border-transparent bg-transparent shadow-none"
+                        : "border border-slate-200 bg-white shadow-sm hover:border-slate-300"
+                    }`}
+                    aria-label={isMobileExplorerSearchOpen ? "Close search" : "Open search"}
+                    title={isMobileExplorerSearchOpen ? "Close search" : "Search"}
+                  >
+                    {isMobileExplorerSearchOpen ? <X className="h-3.5 w-3.5" /> : <Search className="h-3.5 w-3.5" />}
+                  </button>
+                </div>
+              </div>
+				          <div className={`pointer-events-auto absolute left-1/2 top-3 z-[60] w-[min(22rem,calc(100%-7.25rem))] -translate-x-1/2 space-y-2 transition-opacity duration-200 lg:hidden ${
+				            isMobileExplorerSearchOpen ? "pointer-events-none opacity-0" : "opacity-100"
+				          }`}>
 		            <div className="grid items-start gap-2">
 		              <div className="flex min-w-0 flex-wrap items-start justify-center gap-1.5">
 		                <MobileBrowseSelect
@@ -6013,9 +6295,9 @@ export function SplitScreenSection({ continents, initialRouteState, seoContent, 
                             </button>
                           );
                         })}
-                      </div>
-                    </div>
-                  </div>
+	                    </div>
+		                  </div>
+		                </div>
                 ) : (
                   <ContinentList
                     continents={continents}
@@ -6481,34 +6763,6 @@ export function SplitScreenSection({ continents, initialRouteState, seoContent, 
               >
                 {activeMobileGuideSelector.label}
               </div>
-              <div
-                className={`absolute right-4 -top-8 z-[90] flex h-7 items-center justify-end gap-2.5 transition-[opacity,transform] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] lg:hidden ${
-                  isMobileCategoryMenuExpanded || isGuidePaneTakingFullListPane
-                    ? "pointer-events-none -translate-y-1 opacity-0"
-                    : "translate-y-0 opacity-100"
-                }`}
-              >
-                {mobileGuideSelectors.map((selector) => {
-                  const isActive = activeGuideRail === selector.id;
-                  const SelectorIcon = selector.icon;
-                  return (
-                    <button
-                      key={selector.id}
-                      type="button"
-                      onClick={() => handleGuideRailSelect(selector.id)}
-                      className={`flex h-5 w-5 items-center justify-center rounded-full border text-[9px] font-semibold transition ${
-                        isActive
-                          ? "border-slate-900 bg-slate-900 text-white shadow-sm"
-                          : "border-slate-200 bg-white text-slate-700 shadow-sm"
-                      }`}
-                      aria-label={selector.label}
-                      title={selector.label}
-                    >
-                      {SelectorIcon ? <SelectorIcon className="h-2.5 w-2.5" /> : selector.shortLabel}
-                    </button>
-                  );
-                })}
-              </div>
               <button
                 type="button"
                 className="absolute left-1/2 -top-7 z-[85] flex h-7 -translate-x-1/2 touch-none items-center justify-center transition-opacity duration-300 lg:hidden"
@@ -6600,78 +6854,248 @@ export function SplitScreenSection({ continents, initialRouteState, seoContent, 
                     </button>
                   </div>
                 </div>
-                <div
-                  className={`relative mx-auto hidden w-full max-w-[36rem] space-y-3 lg:block ${
-                    activeGuideRail === "itinerary" || isPublicProfileMode
-                      ? "hidden"
-                      : isGuidePaneTakingFullListPane
-                        ? "pointer-events-none max-h-0 -translate-y-3 pb-0 opacity-0 transition-[opacity,transform] duration-200 ease-out"
-                        : "max-h-56 translate-y-0 pb-2 opacity-100 transition-[opacity,transform] duration-200 ease-out"
-                  } ${isSubcategoryMenuOpen ? "z-[140] overflow-visible" : "z-10 overflow-hidden"}`}
-                >
-                  <div className="grid grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] items-center gap-2">
-                    <div className="grid w-full grid-cols-3 justify-items-start gap-2">
-                      {categoryOptions.slice(0, 3).map((option) => (
+	                <div
+	                  className={`relative hidden w-full shrink-0 lg:block ${
+	                    isPublicProfileMode
+	                      ? "hidden"
+	                      : isGuidePaneTakingFullListPane
+	                        ? "pointer-events-none max-h-0 -translate-y-3 pb-0 opacity-0 transition-[opacity,transform] duration-200 ease-out"
+	                        : "max-h-56 translate-y-0 pb-0 opacity-100 transition-[opacity,transform] duration-200 ease-out"
+		                  } ${isSubcategoryMenuOpen || isDesktopSearchOpen ? "z-[140]" : "z-10"} overflow-visible`}
+		                >
+                    <div
+                      className="relative left-1/2 -mt-5 w-[calc(100%+2.5rem)] -translate-x-1/2 border-b border-slate-400/60 bg-slate-300/85 px-5 pb-3 pt-5 shadow-[inset_0_1px_0_rgba(255,255,255,0.45)]"
+                      role="toolbar"
+                      aria-label="Menu bar"
+                    >
+                      <div className="relative h-10">
+                      <div
+                        className={`absolute left-0 top-0 flex h-10 items-center gap-2 transition-[opacity,transform] duration-200 ${
+                          isDesktopSearchOpen ? "pointer-events-none -translate-x-2 opacity-0" : "translate-x-0 opacity-100"
+                        }`}
+                      >
+                        <div className="flex h-10 items-center gap-2 rounded-lg border border-slate-200 bg-white px-1 shadow-sm">
+                          <div
+                            className="relative flex h-8 items-center gap-1"
+                            role="group"
+                            aria-label="Guide source"
+                          >
+                            <span
+                              className={`pointer-events-none absolute left-0 top-0 h-8 w-8 rounded-md bg-slate-950 shadow-sm transition-[opacity,transform] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] ${
+                                isGuideSourceRailActive ? "opacity-100" : "opacity-0"
+                              }`}
+                              style={{ transform: `translateX(${activeGuideSourceIndex * 36}px)` }}
+                              aria-hidden="true"
+                            />
+                            {guideSourceSelectors.map((selector) => {
+                              const isActive = activeGuideRail === selector.id;
+                              const SelectorIcon = selector.icon;
+                              return (
+                                <button
+                                  key={selector.id}
+                                  type="button"
+                                  onClick={() => handleGuideRailSelect(selector.id)}
+                                  className={`relative z-10 flex h-8 w-8 items-center justify-center rounded-md text-[10px] font-semibold transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-400/70 ${
+                                    isActive ? "text-white" : "text-slate-700 hover:text-slate-950"
+                                  }`}
+                                  aria-label={selector.label}
+                                  title={selector.label}
+                                >
+                                  {SelectorIcon ? <SelectorIcon className="h-4 w-4" /> : selector.shortLabel}
+                                </button>
+                              );
+                            })}
+                          </div>
+                          <span className="min-w-[5.6rem] pr-1 text-left text-[10px] font-semibold uppercase tracking-[0.16em] text-slate-500">
+                            {activeMobileGuideSelector.label}
+                          </span>
+                        </div>
+                        {guideActionSelectors.map((selector) => {
+                          const isActive = activeGuideRail === selector.id;
+                          const SelectorIcon = selector.icon;
+                          return (
+                            <button
+                              key={selector.id}
+                              type="button"
+                              onClick={() => handleGuideRailSelect(selector.id)}
+                              style={
+                                isActive
+                                  ? {
+                                      color: guideRailActiveColorById[selector.id],
+                                      borderColor: guideRailActiveColorById[selector.id],
+                                    }
+                                  : undefined
+                              }
+                              className={`flex h-10 w-10 items-center justify-center rounded-lg border border-slate-200 bg-white text-slate-700 shadow-sm transition hover:scale-[1.03] hover:border-slate-300 hover:text-slate-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-400/70 ${
+                                isActive ? "shadow-md" : ""
+                              }`}
+                              aria-label={selector.label}
+                              title={selector.label}
+                            >
+                              <SelectorIcon
+                                className={`h-4 w-4 ${
+                                  isActive && guideRailFillOnActiveIds.has(selector.id) ? "fill-current" : ""
+                                }`}
+                              />
+                            </button>
+                          );
+                        })}
+                        {activeGuideRail !== "itinerary" ? (
+                          <button
+                            type="button"
+                            onClick={() => {
+                              setIsDesktopSearchOpen(false);
+                              setIsFoodOpenTimeMenuOpen(false);
+                              setIsFoodCuisineMenuOpen(false);
+                              setIsNightlifeBarMenuOpen(false);
+                              setIsDesktopCategoryMenuOpen((current) => !current);
+                            }}
+                            className={`flex h-10 w-10 items-center justify-center rounded-lg border bg-white text-slate-700 shadow-sm transition hover:scale-[1.03] hover:border-slate-300 hover:text-slate-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-400/70 ${
+                              isDesktopCategoryMenuOpen ? "shadow-md" : ""
+                            }`}
+                            style={
+                              activeCategoryOption
+                                ? {
+                                    color: CATEGORY_STYLES[activeCategoryOption.category].mapColor,
+                                    borderColor: CATEGORY_STYLES[activeCategoryOption.category].mapColor,
+                                  }
+                                : { borderColor: "rgb(226 232 240)" }
+                            }
+                            aria-label="Categories"
+                            aria-expanded={isDesktopCategoryMenuOpen}
+                            aria-controls="desktop-category-menu"
+                            title={categoryTitleLabel}
+                          >
+                            {activeCategoryOption ? (
+                              <activeCategoryOption.icon className="h-4 w-4" />
+                            ) : (
+                              <ListFilter className="h-4 w-4" />
+                            )}
+                          </button>
+                        ) : null}
+                      </div>
+	                      <div
+	                        className={`absolute right-0 top-0 flex h-10 items-center justify-end overflow-visible rounded-lg transition-[width,background-color,border-color,box-shadow] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] ${
+	                          isDesktopSearchOpen
+                              ? "w-full border border-slate-200 bg-white shadow-sm"
+                              : "w-10 border border-transparent bg-transparent"
+	                        }`}
+	                      >
+                        {isDesktopSearchOpen ? (
+                          <SearchBar
+                            autoFocus
+                            compact
+                            embedded
+                            variant="square"
+                            size="md"
+                            onResultSelect={() => setIsDesktopSearchOpen(false)}
+                            className="max-w-none flex-1"
+                          />
+                        ) : null}
                         <button
-                          key={option.label}
                           type="button"
-                          onClick={() => handleCategoryToggle(option.category)}
-                          onMouseEnter={() => setHoveredCategoryLabel(option.label)}
-                          onMouseLeave={() => setHoveredCategoryLabel(null)}
-                          className={`flex h-9 w-9 items-center justify-center rounded-full outline-none focus:outline-none focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-offset-0 transition ${
-                            activeCategory === option.category
-                              ? "border text-white"
-                              : "border bg-white text-slate-600 hover:text-slate-900"
+                          onClick={() => {
+                            setIsDesktopCategoryMenuOpen(false);
+                            setIsFoodOpenTimeMenuOpen(false);
+                            setIsFoodCuisineMenuOpen(false);
+                            setIsNightlifeBarMenuOpen(false);
+                            setIsDesktopSearchOpen((current) => !current);
+                          }}
+                          className={`inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-lg text-slate-700 transition hover:text-slate-900 ${
+                            isDesktopSearchOpen
+                              ? "border border-transparent bg-transparent shadow-none"
+                              : "border border-slate-200 bg-white shadow-sm hover:border-slate-300"
                           }`}
-                          style={
-                            activeCategory === option.category
-                              ? {
-                                  backgroundColor: CATEGORY_STYLES[option.category].mapColor,
-                                  borderColor: CATEGORY_STYLES[option.category].mapColor,
-                                }
-                              : {
-                                  borderColor: CATEGORY_STYLES[option.category].mapColor,
-                                }
-                          }
-                          aria-label={option.label}
+                          aria-label={isDesktopSearchOpen ? "Close search" : "Open search"}
+                          title={isDesktopSearchOpen ? "Close search" : "Search"}
                         >
-                          <option.icon className="h-4 w-4" />
-                        </button>
-                      ))}
+                          {isDesktopSearchOpen ? <X className="h-4 w-4" /> : <Search className="h-4 w-4" />}
+	                        </button>
+	                      </div>
+	                    </div>
                     </div>
-                    <span className="inline-flex w-[8.5rem] justify-center text-center text-[11px] font-medium uppercase tracking-[0.24em] text-slate-500">
-                      {categoryTitleLabel}
-                    </span>
-                    <div className="grid w-full grid-cols-3 justify-items-end gap-2">
-                      {categoryOptions.slice(3).map((option) => (
-                        <button
-                          key={option.label}
-                          type="button"
-                          onClick={() => handleCategoryToggle(option.category)}
-                          onMouseEnter={() => setHoveredCategoryLabel(option.label)}
-                          onMouseLeave={() => setHoveredCategoryLabel(null)}
-                          className={`flex h-9 w-9 items-center justify-center rounded-full outline-none focus:outline-none focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-offset-0 transition ${
-                            activeCategory === option.category
-                              ? "border text-white"
-                              : "border bg-white text-slate-600 hover:text-slate-900"
+                    {activeGuideRail !== "itinerary" ? (
+                      <div
+                        className={`mx-auto w-full max-w-[36rem] space-y-3 transition-[margin,max-height,opacity,transform,padding] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] ${
+                          isDesktopCategoryMenuOpen || visibleSubcategoryCategory
+                            ? "mt-2 max-h-40 translate-y-0 pb-2 opacity-100"
+                            : "pointer-events-none mt-0 max-h-0 -translate-y-3 pb-0 opacity-0"
+                        } ${isSubcategoryMenuOpen ? "overflow-visible" : "overflow-hidden"}`}
+                      >
+                        <div
+                          id="desktop-category-menu"
+                          className={`grid transition-[grid-template-rows,opacity,transform] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] ${
+                            isDesktopCategoryMenuOpen
+                              ? "grid-rows-[1fr] translate-y-0 opacity-100"
+                              : "grid-rows-[0fr] -translate-y-3 opacity-0"
                           }`}
-                          style={
-                            activeCategory === option.category
-                              ? {
-                                  backgroundColor: CATEGORY_STYLES[option.category].mapColor,
-                                  borderColor: CATEGORY_STYLES[option.category].mapColor,
-                                }
-                              : {
-                                  borderColor: CATEGORY_STYLES[option.category].mapColor,
-                                }
-                          }
-                          aria-label={option.label}
                         >
-                          <option.icon className="h-4 w-4" />
-                        </button>
-                      ))}
-                    </div>
-                  </div>
+                          <div className="min-h-0 overflow-hidden">
+                            <div className="grid grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] items-center gap-2 pt-1">
+                            <div className="grid w-full grid-cols-3 justify-items-start gap-2">
+                              {categoryOptions.slice(0, 3).map((option) => (
+                                <button
+                                  key={option.label}
+                                  type="button"
+                                  onClick={() => handleCategoryToggle(option.category)}
+                                  onMouseEnter={() => setHoveredCategoryLabel(option.label)}
+                                  onMouseLeave={() => setHoveredCategoryLabel(null)}
+                                  className={`flex h-9 w-9 items-center justify-center rounded-lg outline-none transition focus:outline-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-400/70 ${
+                                    activeCategory === option.category
+                                      ? "border text-white"
+                                      : "border bg-white text-slate-600 hover:text-slate-900"
+                                  }`}
+                                  style={
+                                    activeCategory === option.category
+                                      ? {
+                                          backgroundColor: CATEGORY_STYLES[option.category].mapColor,
+                                          borderColor: CATEGORY_STYLES[option.category].mapColor,
+                                        }
+                                      : {
+                                          borderColor: CATEGORY_STYLES[option.category].mapColor,
+                                        }
+                                  }
+                                  aria-label={option.label}
+                                >
+                                  <option.icon className="h-4 w-4" />
+                                </button>
+                              ))}
+                            </div>
+                            <span className="inline-flex w-[8.5rem] justify-center text-center text-[11px] font-medium uppercase tracking-[0.18em] text-slate-500">
+                              {categoryTitleLabel}
+                            </span>
+                            <div className="grid w-full grid-cols-3 justify-items-end gap-2">
+                              {categoryOptions.slice(3).map((option) => (
+                                <button
+                                  key={option.label}
+                                  type="button"
+                                  onClick={() => handleCategoryToggle(option.category)}
+                                  onMouseEnter={() => setHoveredCategoryLabel(option.label)}
+                                  onMouseLeave={() => setHoveredCategoryLabel(null)}
+                                  className={`flex h-9 w-9 items-center justify-center rounded-lg outline-none transition focus:outline-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-400/70 ${
+                                    activeCategory === option.category
+                                      ? "border text-white"
+                                      : "border bg-white text-slate-600 hover:text-slate-900"
+                                  }`}
+                                  style={
+                                    activeCategory === option.category
+                                      ? {
+                                          backgroundColor: CATEGORY_STYLES[option.category].mapColor,
+                                          borderColor: CATEGORY_STYLES[option.category].mapColor,
+                                        }
+                                      : {
+                                          borderColor: CATEGORY_STYLES[option.category].mapColor,
+                                        }
+                                  }
+                                  aria-label={option.label}
+                                >
+                                  <option.icon className="h-4 w-4" />
+                                </button>
+                              ))}
+                            </div>
+                            </div>
+                          </div>
+                        </div>
                   <div
                     className={`transition-[max-height,opacity] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] ${
                       visibleSubcategoryCategory && !isSubcategoryCollapsing ? "max-h-24 opacity-100" : "max-h-0 opacity-0"
@@ -6954,11 +7378,13 @@ export function SplitScreenSection({ continents, initialRouteState, seoContent, 
                       </div>
                         )
                       ) : null}
-                    </div>
-                  </div>
-                </div>
+	                    </div>
+	                  </div>
+                      </div>
+                    ) : null}
+	                </div>
 
-                <div
+	                <div
                   data-guides-scroll
                   className={`relative z-0 flex min-h-0 flex-1 flex-col gap-4 ${
                     isGuidePaneTakingFullListPane
@@ -7145,6 +7571,7 @@ export function SplitScreenSection({ continents, initialRouteState, seoContent, 
                           onExpandedStopIdsChange={setVisibleNestedStopParentIds}
                           forceExpandStopId={selectedGuideStopId}
                           forceExpandStopNonce={selectedGuideStopNonce}
+                          collapsedLocationSubtitleHiddenParts={getCollapsedLocationSubtitleHiddenParts(displayedGuide)}
                         />
                       </div>
                       {!isGuideTakingFullListPane && remainingGuides.length ? (
@@ -7182,6 +7609,7 @@ export function SplitScreenSection({ continents, initialRouteState, seoContent, 
                               hoveredStopId={hoveredStopId}
                               forceExpandStopId={selectedGuideStopId}
                               forceExpandStopNonce={selectedGuideStopNonce}
+                              collapsedLocationSubtitleHiddenParts={getCollapsedLocationSubtitleHiddenParts(list)}
                             />
                           </div>
                         ))}
@@ -7218,13 +7646,14 @@ export function SplitScreenSection({ continents, initialRouteState, seoContent, 
                             hoveredStopId={hoveredStopId}
                             forceExpandStopId={selectedGuideStopId}
                             forceExpandStopNonce={selectedGuideStopNonce}
+                            collapsedLocationSubtitleHiddenParts={getCollapsedLocationSubtitleHiddenParts(list)}
                           />
                         </div>
                       ))}
                       {recentRGuideLists.length ? (
                         <div className="space-y-4 border-t border-slate-200 pt-4">
                           <p className="px-1 text-[11px] font-medium uppercase tracking-[0.2em] text-slate-500">
-                            Recent Barcelona RGuides
+                            Recent Guides
                           </p>
                           {recentRGuideLists.map((list) => (
                             <div
@@ -7250,6 +7679,7 @@ export function SplitScreenSection({ continents, initialRouteState, seoContent, 
                                 hoveredStopId={hoveredStopId}
                                 forceExpandStopId={selectedGuideStopId}
                                 forceExpandStopNonce={selectedGuideStopNonce}
+                                collapsedLocationSubtitleHiddenParts={getCollapsedLocationSubtitleHiddenParts(list)}
                               />
                             </div>
                           ))}
@@ -7450,82 +7880,6 @@ export function SplitScreenSection({ continents, initialRouteState, seoContent, 
           </div>
         </div>
         </div>
-        <div className={`z-20 hidden w-full shrink-0 flex-row items-center justify-center gap-3 overflow-x-auto px-3 py-1 sm:px-4 lg:flex lg:w-14 lg:-translate-x-1 lg:flex-col lg:overflow-visible lg:px-0 lg:py-0 lg:pt-7 ${railTransitionClass} ${publicProfileRailTransitionClass}`}>
-            {isPublicProfileMode ? (
-              <div className="rail-switch-item relative h-10 w-10">
-                <button
-                  type="button"
-                  className="guide-rail-button guide-rail-button-active relative z-10 flex h-10 w-10 items-center justify-center rounded-full border border-slate-900 bg-white/95 text-slate-900 shadow-sm"
-                  aria-label="Guides"
-                  title="Guides"
-                >
-                  <MapIcon className="h-4 w-4" />
-                </button>
-              </div>
-            ) : isProfileMode ? (
-              profileRightRailOptions.map((option, index) => (
-                <div
-                  key={option.id}
-                  className="rail-switch-item profile-rail-item relative h-10 w-10"
-                  style={profileRailItemStyle(index)}
-                >
-                  <button
-                    type="button"
-                    onClick={() => setActiveProfileRightRail(option.id)}
-                    className={`guide-rail-button relative z-10 flex h-10 w-10 items-center justify-center rounded-full border border-slate-200/90 bg-white/95 text-slate-700 shadow-sm transition hover:scale-105 hover:border-slate-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-400/70 ${
-                      activeProfileRightRail === option.id ? "guide-rail-button-active border-slate-900 text-slate-900" : ""
-                    }`}
-                    aria-label={option.label}
-                    title={option.label}
-                  >
-                    <option.icon className="h-4 w-4" />
-                  </button>
-                </div>
-              ))
-            ) : (
-              <>
-            {guideRailOptions.map((option, index) => (
-              <div
-                key={option.id}
-                className="rail-switch-item relative h-10 w-10"
-                style={explorerRightRailItemStyle(index)}
-                >
-                  <button
-                    type="button"
-                    onClick={() => handleGuideRailSelect(option.id)}
-                    style={
-                      activeGuideRail === option.id
-                        ? {
-                          color: guideRailActiveColorById[option.id],
-                          borderColor: guideRailActiveColorById[option.id],
-                        }
-                      : undefined
-                  }
-                  className={`guide-rail-button margin-shell-pop-in relative z-10 flex h-10 w-10 items-center justify-center rounded-full border border-slate-200/90 bg-white/95 text-slate-700 shadow-sm transition hover:scale-105 hover:border-slate-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-400/70 ${
-                    activeGuideRail === option.id
-                      ? "guide-rail-button-active"
-                      : ""
-                  }`}
-                  aria-label={option.label}
-                  title={option.label}
-                >
-                  {option.id === "r-guides" ? (
-                    <span className="text-sm font-semibold tracking-tight">R</span>
-                  ) : option.icon ? (
-                    <option.icon
-                      className={`h-4 w-4 ${
-                        activeGuideRail === option.id && guideRailFillOnActiveIds.has(option.id)
-                          ? "fill-current"
-                          : ""
-                      }`}
-                    />
-                  ) : null}
-                </button>
-              </div>
-            ))}
-              </>
-            )}
-          </div>
       </div>
     </section>
   );

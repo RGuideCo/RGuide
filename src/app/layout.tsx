@@ -7,7 +7,6 @@ import { AuthModal } from "@/components/auth/AuthModal";
 import { AuthSync } from "@/components/auth/AuthSync";
 import { SubmittedGuidesSync } from "@/components/auth/SubmittedGuidesSync";
 import { Footer } from "@/components/layout/Footer";
-import { Header } from "@/components/layout/Header";
 import { SITE_DESCRIPTION, SITE_NAME, SITE_URL } from "@/lib/constants";
 
 import "@/app/globals.css";
@@ -47,7 +46,6 @@ export default function RootLayout({
       <body className={hostGrotesk.variable}>
         <AuthSync />
         <SubmittedGuidesSync />
-        <Header />
         <main>{children}</main>
         <Footer />
         <AuthModal />

@@ -14,13 +14,25 @@ interface SearchBarProps {
   autoFocus?: boolean;
   onResultSelect?: () => void;
   compact?: boolean;
+  variant?: "pill" | "square";
+  size?: "sm" | "md" | "lg";
+  embedded?: boolean;
 }
 
-export function SearchBar({ className, autoFocus = false, onResultSelect, compact = false }: SearchBarProps) {
+export function SearchBar({
+  className,
+  autoFocus = false,
+  onResultSelect,
+  compact = false,
+  variant = "pill",
+  size,
+  embedded = false,
+}: SearchBarProps) {
   const editorialLists = useAppStore((state) => state.editorialLists);
   const [query, setQuery] = useState("");
   const searchId = useId();
   const searchableLists = useMemo(() => getEditorialLists(editorialLists), [editorialLists]);
+  const resolvedSize = size ?? (compact ? "sm" : "lg");
 
   const results = useMemo(() => {
     if (!query.trim()) {
@@ -58,11 +70,20 @@ export function SearchBar({ className, autoFocus = false, onResultSelect, compac
       </label>
       <div
         className={clsx(
-          "flex items-center rounded-full border border-white/70 bg-white/90 shadow-soft",
-          compact ? "h-8 gap-2 px-3" : "gap-3 px-4 py-3",
+          "flex items-center border",
+          embedded
+            ? "rounded-lg border-transparent bg-transparent shadow-none"
+            : variant === "square"
+            ? "rounded-lg border-slate-200 bg-white shadow-sm"
+            : "rounded-full border-white/70 bg-white/90 shadow-soft",
+          resolvedSize === "sm"
+            ? "h-8 gap-2 px-2.5"
+            : resolvedSize === "md"
+              ? "h-10 gap-2.5 px-3"
+              : "gap-3 px-4 py-3",
         )}
       >
-        <Search className={clsx("text-slate-400", compact ? "h-3.5 w-3.5" : "h-4 w-4")} />
+        <Search className={clsx("text-slate-400", resolvedSize === "sm" ? "h-3.5 w-3.5" : "h-4 w-4")} />
         <input
           id={searchId}
           type="search"
@@ -72,18 +93,23 @@ export function SearchBar({ className, autoFocus = false, onResultSelect, compac
           autoFocus={autoFocus}
           className={clsx(
             "w-full appearance-none border-0 bg-transparent p-0 text-slate-900 outline-none ring-0 shadow-none placeholder:text-slate-400 focus:border-0 focus:bg-transparent focus:outline-none focus:ring-0",
-            compact ? "text-xs" : "text-sm",
+            resolvedSize === "sm" ? "text-xs" : "text-sm",
           )}
         />
       </div>
 
       {results.length ? (
-        <div className="surface absolute left-0 right-0 top-[calc(100%+0.75rem)] z-30 p-2">
+        <div
+          className={clsx(
+            "surface absolute left-0 right-0 z-30 p-2",
+            variant === "square" ? "top-[calc(100%+0.5rem)] rounded-lg" : "top-[calc(100%+0.75rem)]",
+          )}
+        >
           {results.map((result) => (
             <Link
               key={result.id}
               href={result.href}
-              className="block rounded-2xl px-4 py-3 hover:bg-stone-100"
+              className={clsx("block px-4 py-3 hover:bg-stone-100", variant === "square" ? "rounded-md" : "rounded-2xl")}
               onClick={() => {
                 setQuery("");
                 onResultSelect?.();
