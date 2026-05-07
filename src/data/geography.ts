@@ -1020,49 +1020,49 @@ const citySubareaSeeds = new Map<string, SubArea[]>([
         name: "1st Arrondissement",
         coordinates: [48.8624, 2.3368],
         description:
-          "Royal Paris around the Louvre, Palais Royal, and Tuileries, with monument-density and classic central walks.",
+          "Royal Paris around the Louvre, Palais Royal, Tuileries, Sainte-Chapelle, covered passages, and Seine edges. It deserves its own route because museum weight, gardens, shopping arcades, and river walks can stay tightly linked.",
       },
       {
         id: "le-marais",
         name: "Le Marais",
         coordinates: [48.8576, 2.3622],
         description:
-          "A historic district of elegant streets, boutiques, museums, and lively cafe culture across the 3rd and 4th arrondissements.",
+          "Historic central Paris across the 3rd and 4th arrondissements, where mansion museums, Place des Vosges, Jewish food streets, boutiques, queer nightlife, and bistros sit close enough to make a full saved-map route without leaving the old quarter.",
       },
       {
         id: "saint-germain-des-pres",
         name: "Saint-Germain-des-Pres",
         coordinates: [48.8546, 2.3339],
         description:
-          "Classic Left Bank Paris with literary history, polished cafes, galleries, and easy walks to major riverfront landmarks.",
-      },
-      {
-        id: "montmartre",
-        name: "Montmartre",
-        coordinates: [48.8867, 2.3431],
-        description:
-          "A hilltop neighborhood known for Sacré-Cœur, artist heritage, and village-like streets with strong views over the city.",
-      },
-      {
-        id: "canal-saint-martin",
-        name: "Canal Saint-Martin",
-        coordinates: [48.8721, 2.3648],
-        description:
-          "A creative, younger-feeling area around the canal with waterside paths, independent shops, and strong casual dining and nightlife.",
+          "Classic Left Bank Paris with literary cafes, galleries, brasseries, polished shops, Luxembourg Garden access, and easy walks to Orsay or the river. It works best when cafe ritual, food, and culture are paced together.",
       },
       {
         id: "latin-quarter",
         name: "Latin Quarter",
         coordinates: [48.8494, 2.347],
         description:
-          "A busy academic and historic zone near the Sorbonne, with bookstores, classic bistros, and landmarks around the Panthéon.",
+          "An academic and historic Left Bank pocket around the Sorbonne, Pantheon, Cluny, bookshops, gardens, and older lanes. It deserves its own route because culture, cafes, and river walks can stay tightly clustered.",
+      },
+      {
+        id: "montmartre",
+        name: "Montmartre",
+        coordinates: [48.8867, 2.3431],
+        description:
+          "A hilltop neighborhood where Sacre-Coeur views, artist mythology, old mills, Abbesses cafes, and village-like lanes need careful timing. It works best as a morning or golden-hour walk before Pigalle or a calmer dinner.",
+      },
+      {
+        id: "canal-saint-martin",
+        name: "Canal Saint-Martin",
+        coordinates: [48.8721, 2.3648],
+        description:
+          "A younger-feeling canal district where bakery mornings, waterside paths, independent shops, casual restaurants, cocktail bars, and music rooms make compact routes. It is strongest when the plan stays near the locks.",
       },
       {
         id: "seventh-arrondissement",
         name: "7th Arrondissement",
         coordinates: [48.8563, 2.3126],
         description:
-          "A prestigious riverside district anchored by the Eiffel Tower, broad avenues, embassies, and landmark museums like Musée d'Orsay.",
+          "A prestigious riverside district where the Eiffel Tower, Orsay, Rodin, Invalides, Quai Branly, embassies, and broad avenues need context. It works best when monuments, museums, gardens, and river walks are linked.",
       },
     ],
   ],
