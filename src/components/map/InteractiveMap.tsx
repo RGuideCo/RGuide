@@ -1,14 +1,27 @@
 "use client";
 
 import dynamic from "next/dynamic";
+import { useEffect, useState } from "react";
 
 import { Continent, MapList, SelectionState } from "@/types";
+
+type SavedMapLocation = {
+  id: string;
+  kind: "continent" | "country" | "city" | "neighborhood";
+  selection: SelectionState;
+};
+
+type WindowWithIdleCallback = Window &
+  typeof globalThis & {
+    requestIdleCallback?: (callback: () => void, options?: { timeout?: number }) => number;
+    cancelIdleCallback?: (handle: number) => void;
+  };
 
 const DynamicMapClient = dynamic(
   () => import("@/components/map/MapClient").then((module) => module.MapClient),
   {
     ssr: false,
-    loading: () => <div className="min-h-[60vh] animate-pulse bg-slate-200/70 lg:min-h-[calc(100vh-15rem)]" />,
+    loading: () => <MapLoadBackdrop />,
   },
 );
 
@@ -24,6 +37,7 @@ interface InteractiveMapProps {
   guideFocus?: MapList | null;
   activeGuide?: MapList | null;
   activeGuideFitNonce?: number;
+  savedLocations?: SavedMapLocation[];
   visibleNestedStopParentIds?: string[];
   hoveredStopId?: string | null;
   selectedStopId?: string | null;
@@ -47,6 +61,42 @@ interface InteractiveMapProps {
   ) => void;
 }
 
+function MapLoadBackdrop() {
+  return (
+    <div
+      className="h-full min-h-[60vh] w-full overflow-hidden bg-[#d8e1dc] lg:min-h-[calc(100vh-15rem)]"
+      style={{
+        backgroundImage:
+          "radial-gradient(circle at 28% 22%, rgba(255,255,255,0.8), transparent 18%), radial-gradient(circle at 72% 58%, rgba(148,163,184,0.32), transparent 24%), linear-gradient(135deg, rgba(226,232,240,0.9), rgba(203,213,225,0.86))",
+      }}
+      aria-hidden="true"
+    />
+  );
+}
+
 export function InteractiveMap(props: InteractiveMapProps) {
+  const [shouldLoadMap, setShouldLoadMap] = useState(false);
+
+  useEffect(() => {
+    if (typeof window === "undefined") {
+      return;
+    }
+
+    const scheduleMapLoad = () => setShouldLoadMap(true);
+    const browserWindow = window as WindowWithIdleCallback;
+
+    if (typeof browserWindow.requestIdleCallback === "function") {
+      const idleId = browserWindow.requestIdleCallback(scheduleMapLoad, { timeout: 900 });
+      return () => browserWindow.cancelIdleCallback?.(idleId);
+    }
+
+    const timeoutId = browserWindow.setTimeout(scheduleMapLoad, 120);
+    return () => browserWindow.clearTimeout(timeoutId);
+  }, []);
+
+  if (!shouldLoadMap) {
+    return <MapLoadBackdrop />;
+  }
+
   return <DynamicMapClient {...props} />;
 }

@@ -666,7 +666,9 @@ function FavoriteLocationRow({
   onSelect: (location: FavoriteLocation) => void;
 }) {
   const Icon =
-    location.kind === "country"
+    location.kind === "continent"
+      ? Globe2
+      : location.kind === "country"
       ? Flag
       : location.kind === "city"
         ? Building2
@@ -2243,8 +2245,21 @@ export function SplitScreenSection({ continents, initialRouteState, seoContent, 
     activeLocation.country?.description;
   const activeLocationDescription = formatLocationDescription(activeLocationDescriptionRaw) || null;
   const activeFavoriteLocation = useMemo<FavoriteLocation | null>(() => {
-    if (!activeLocation.continent || !activeLocation.country) {
+    if (!activeLocation.continent) {
       return null;
+    }
+
+    if (!activeLocation.country) {
+      return {
+        id: `continent:${activeLocation.continent.id}`,
+        kind: "continent",
+        name: activeLocation.continent.name,
+        detail: "Continent",
+        selection: {
+          continentId: activeLocation.continent.id,
+        },
+        createdAt: new Date().toISOString(),
+      };
     }
 
     if (activeLocation.city && (activeLocation.nestedSubarea || activeLocation.subarea)) {
@@ -2316,6 +2331,11 @@ export function SplitScreenSection({ continents, initialRouteState, seoContent, 
     () =>
       [
         {
+          key: "continent",
+          label: "Continents",
+          locations: favoriteLocations.filter((location) => location.kind === "continent"),
+        },
+        {
           key: "country",
           label: "Countries",
           locations: favoriteLocations.filter((location) => location.kind === "country"),
@@ -2333,9 +2353,30 @@ export function SplitScreenSection({ continents, initialRouteState, seoContent, 
       ].filter((section) => section.locations.length),
     [favoriteLocations],
   );
+  const savedMapLocations = useMemo(
+    () =>
+      isLocationFavoritesRailActive
+        ? favoriteLocations.map((location) => ({
+            id: location.id,
+            kind: location.kind,
+            selection: location.selection,
+          }))
+        : [],
+    [favoriteLocations, isLocationFavoritesRailActive],
+  );
+  const savedHighlightedCountryIds = useMemo(
+    () =>
+      isLocationFavoritesRailActive
+        ? favoriteLocations
+            .map((location) => location.selection.countryId)
+            .filter((countryId): countryId is string => Boolean(countryId))
+        : [],
+    [favoriteLocations, isLocationFavoritesRailActive],
+  );
   const handleFavoriteLocationSelect = (location: FavoriteLocation) => {
     setFocusedCountrySignal(null);
     setSelection(location.selection);
+    setIsLocationFavoritesRailActive(false);
     setActiveGuideRail("all-guides");
     setActiveCategory(null);
     setActiveSubcategory(null);
@@ -2663,6 +2704,20 @@ export function SplitScreenSection({ continents, initialRouteState, seoContent, 
     activeProfileLeftRail,
     currentUser,
   });
+  const mapHighlightedCountryIds = useMemo(() => {
+    const profileCountryIds =
+      isProfileMode && activeProfileLeftRail === "places-been" && activePlacesBeenFilter === "countries"
+        ? profilePlacesBeenCountryIds
+        : [];
+    const countryIds = [...new Set([...profileCountryIds, ...savedHighlightedCountryIds])];
+    return countryIds.length ? countryIds : undefined;
+  }, [
+    activePlacesBeenFilter,
+    activeProfileLeftRail,
+    isProfileMode,
+    profilePlacesBeenCountryIds,
+    savedHighlightedCountryIds,
+  ]);
   const isProfileSubmitLayout = isProfileMode && isProfileSubmitting;
   const {
     activeItineraryPlaylist,
@@ -4299,60 +4354,67 @@ export function SplitScreenSection({ continents, initialRouteState, seoContent, 
                   />
                 </button>
               ) : (
-                <button
-                  type="button"
-                  onClick={handleResetToGlobalView}
-                  onPointerEnter={() => {
-                    const video = globeRailVideoRef.current;
-                    if (video) {
-                      try {
-                        video.currentTime = 0;
-                      } catch {}
-                      void video.play().catch(() => undefined);
-                    }
-                  }}
-                  onPointerLeave={() => {
-                    globeRailVideoRef.current?.pause();
-                  }}
-                  onBlur={() => {
-                    globeRailVideoRef.current?.pause();
-                  }}
-                  className={`guide-rail-button rail-switch-item margin-shell-pop-in flex h-10 w-10 items-center justify-center rounded-full transition hover:scale-105 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-400/70 ${
-                    activeRailLevel === "global" && !isLocationFavoritesRailActive ? "guide-rail-button-active" : ""
-                  }`}
-                  aria-label={isGlobalViewActive ? "Global view active" : "Return to global view"}
-                  title={isGlobalViewActive ? "Global view" : "Back to global view"}
-	                  >
-	                    <video
-	                      ref={globeRailVideoRef}
-                    muted
-                    loop
-                    playsInline
-                    preload="auto"
-                    poster="/assets/rotating-earth-still.png"
-                    className="h-10 w-10 drop-shadow-[0_2px_4px_rgba(15,23,42,0.35)]"
+                <div className="rail-switch-item margin-shell-pop-in relative h-10 w-10">
+                  <button
+                    type="button"
+                    onClick={handleResetToGlobalView}
+                    onPointerEnter={() => {
+                      const video = globeRailVideoRef.current;
+                      if (video) {
+                        try {
+                          video.currentTime = 0;
+                        } catch {}
+                        void video.play().catch(() => undefined);
+                      }
+                    }}
+                    onPointerLeave={() => {
+                      globeRailVideoRef.current?.pause();
+                    }}
+                    onBlur={() => {
+                      globeRailVideoRef.current?.pause();
+                    }}
+                    className={`guide-rail-button flex h-10 w-10 items-center justify-center rounded-full transition hover:scale-105 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-400/70 ${
+                      activeRailLevel === "global" && !isLocationFavoritesRailActive ? "guide-rail-button-active" : ""
+                    }`}
+                    aria-label={isGlobalViewActive ? "Global view active" : "Return to global view"}
+                    title={isGlobalViewActive ? "Global view" : "Back to global view"}
                   >
-                    <source src="/assets/rotating-earth.webm" type="video/webm" />
-                    <source src="/assets/rotating-earth.mp4" type="video/mp4" />
-	                    </video>
-	                  </button>
-	                )}
-                {!publicProfile ? (
-                  <>
+                    <video
+                      ref={globeRailVideoRef}
+                      muted
+                      loop
+                      playsInline
+                      preload="auto"
+                      poster="/assets/rotating-earth-still.png"
+                      className="h-10 w-10 drop-shadow-[0_2px_4px_rgba(15,23,42,0.35)]"
+                    >
+                      <source src="/assets/rotating-earth.webm" type="video/webm" />
+                      <source src="/assets/rotating-earth.mp4" type="video/mp4" />
+                    </video>
+                  </button>
+                  {!publicProfile && favoriteLocations.length ? (
                     <button
                       type="button"
-                      onClick={handleLocationFavoritesRailToggle}
-                      className={`guide-rail-button rail-switch-item margin-shell-pop-in flex h-10 w-10 items-center justify-center rounded-full border shadow-sm transition hover:scale-105 hover:border-teal-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-400/70 ${
+                      onClick={(event) => {
+                        event.stopPropagation();
+                        handleLocationFavoritesRailToggle();
+                      }}
+                      className={`absolute -right-1 -top-1 z-20 flex h-5 w-5 items-center justify-center rounded-full border shadow-sm transition hover:scale-110 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-400/70 ${
                         isLocationFavoritesRailActive
-                          ? "guide-rail-button-active border-teal-600 bg-teal-600 text-white"
-                          : "border-slate-200/90 bg-white/95 text-teal-700"
+                          ? "border-teal-700 bg-teal-600 text-white"
+                          : "border-white bg-white text-teal-700"
                       }`}
                       aria-label={isLocationFavoritesRailActive ? "Close saved places" : "Open saved places"}
                       aria-pressed={isLocationFavoritesRailActive}
                       title="Saved places"
                     >
-                      <MapPinned className="h-4 w-4" />
+                      <MapPinned className="h-3 w-3" />
                     </button>
+                  ) : null}
+                </div>
+              )}
+                {!publicProfile ? (
+                  <>
                     {activeFavoriteLocation ? (
                       <button
                         type="button"
@@ -4519,19 +4581,14 @@ export function SplitScreenSection({ continents, initialRouteState, seoContent, 
               selection={mapSelection}
               focusedCountryId={focusedCountrySignal?.countryId ?? null}
               focusedCountryNonce={focusedCountrySignal?.nonce ?? 0}
-              highlightedCountryIds={
-                isProfileMode &&
-                activeProfileLeftRail === "places-been" &&
-                activePlacesBeenFilter === "countries"
-                  ? profilePlacesBeenCountryIds
-                  : undefined
-              }
+              highlightedCountryIds={mapHighlightedCountryIds}
               viewportMode={isProfileSubmitLayout ? "submit" : "center"}
               viewportInsets={mapViewportInsets}
               resizeSignal={mapResizeSignal}
               guideFocus={null}
               activeGuide={activeMapGuide}
               activeGuideFitNonce={activeGuideFitNonce}
+              savedLocations={savedMapLocations}
               visibleNestedStopParentIds={visibleNestedStopParentIds}
               hoveredStopId={hoveredStopId}
               selectedStopId={selectedGuideStopId}

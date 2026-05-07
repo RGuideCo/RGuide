@@ -16,6 +16,12 @@ import worldCountries from "@/data/world-countries.json";
 import { CATEGORY_STYLES } from "@/lib/constants";
 import { Continent, MapList, SelectionState } from "@/types";
 
+type SavedMapLocation = {
+  id: string;
+  kind: "continent" | "country" | "city" | "neighborhood";
+  selection: SelectionState;
+};
+
 interface MapClientProps {
   continents: Continent[];
   selection: SelectionState;
@@ -28,6 +34,7 @@ interface MapClientProps {
   guideFocus?: MapList | null;
   activeGuide?: MapList | null;
   activeGuideFitNonce?: number;
+  savedLocations?: SavedMapLocation[];
   visibleNestedStopParentIds?: string[];
   hoveredStopId?: string | null;
   selectedStopId?: string | null;
@@ -101,6 +108,11 @@ type GuideRouteFeatureProperties = {
   category: MapList["category"];
 };
 
+type SavedLocationFeatureProperties = {
+  id: string;
+  kind: SavedMapLocation["kind"];
+};
+
 type MapViewportInsets = {
   top: number;
   right: number;
@@ -121,6 +133,7 @@ const MAP_STYLE = "https://tiles.openfreemap.org/styles/liberty";
 const COUNTRY_SOURCE_ID = "countries";
 const CONTINENT_LABEL_SOURCE_ID = "continent-labels";
 const CITY_SOURCE_ID = "cities";
+const SAVED_LOCATION_SOURCE_ID = "saved-locations";
 const GUIDE_ROUTE_SOURCE_ID = "guide-route";
 const GUIDE_STOP_SOURCE_ID = "guide-stops";
 const STATE_LABEL_SOURCE_ID = "state-labels";
@@ -1163,6 +1176,67 @@ function createNeighborhoodBoundaryData(
   };
 }
 
+function getSubareaCoordinates(subareas: Array<{ id: string; coordinates: [number, number]; subareas?: Array<{ id: string; coordinates: [number, number] }> }> | undefined, subareaId?: string, nestedSubareaId?: string) {
+  if (!subareas || !subareaId) {
+    return null;
+  }
+  const subarea = subareas.find((item) => item.id === subareaId);
+  if (!subarea) {
+    return null;
+  }
+  if (nestedSubareaId) {
+    return subarea.subareas?.find((item) => item.id === nestedSubareaId)?.coordinates ?? subarea.coordinates;
+  }
+  return subarea.coordinates;
+}
+
+function createSavedLocationData(
+  continents: Continent[],
+  savedLocations: SavedMapLocation[],
+): FeatureCollection<Point, SavedLocationFeatureProperties> {
+  const features = savedLocations.flatMap((location) => {
+    const continent = continents.find((item) => item.id === location.selection.continentId);
+    const country = continent?.countries.find((item) => item.id === location.selection.countryId);
+    const city = country?.cities.find((item) => item.id === location.selection.cityId);
+    const coordinates =
+      location.kind === "continent"
+        ? continent?.coordinates
+        : location.kind === "country"
+          ? country
+            ? worldCountryCenters.get(country.id) ?? [
+                (country.bounds[0][0] + country.bounds[1][0]) / 2,
+                (country.bounds[0][1] + country.bounds[1][1]) / 2,
+              ]
+            : null
+          : location.kind === "city"
+            ? city?.coordinates
+            : city
+              ? getSubareaCoordinates(city.subareas, location.selection.subareaId, location.selection.nestedSubareaId)
+              : null;
+
+    if (!coordinates) {
+      return [];
+    }
+
+    return [{
+      type: "Feature" as const,
+      properties: {
+        id: location.id,
+        kind: location.kind,
+      },
+      geometry: {
+        type: "Point" as const,
+        coordinates: [coordinates[1], coordinates[0]],
+      },
+    }];
+  });
+
+  return {
+    type: "FeatureCollection",
+    features,
+  };
+}
+
 function getGeometryCoordinates(
   geometry: Geometry,
 ): number[] | number[][] | number[][][] | number[][][][] | null {
@@ -1589,6 +1663,48 @@ function addMapLayers(map: maplibregl.Map) {
   }, cityDotBeforeLayerId);
 
   map.addLayer({
+    id: "saved-location-glow",
+    type: "circle",
+    source: SAVED_LOCATION_SOURCE_ID,
+    paint: {
+      "circle-radius": [
+        "interpolate",
+        ["linear"],
+        ["zoom"],
+        2,
+        8,
+        8,
+        15,
+      ],
+      "circle-color": "#14b8a6",
+      "circle-opacity": 0.18,
+      "circle-blur": 0.75,
+      "circle-stroke-width": 0,
+    },
+  }, cityDotBeforeLayerId);
+
+  map.addLayer({
+    id: "saved-location-points",
+    type: "circle",
+    source: SAVED_LOCATION_SOURCE_ID,
+    paint: {
+      "circle-radius": [
+        "interpolate",
+        ["linear"],
+        ["zoom"],
+        2,
+        3.6,
+        8,
+        6.2,
+      ],
+      "circle-color": "#0f766e",
+      "circle-stroke-color": "#ffffff",
+      "circle-stroke-width": 1.6,
+      "circle-opacity": 0.96,
+    },
+  }, cityDotBeforeLayerId);
+
+  map.addLayer({
     id: "guide-route-casing",
     type: "line",
     source: GUIDE_ROUTE_SOURCE_ID,
@@ -1813,6 +1929,7 @@ export function MapClient({
   guideFocus,
   activeGuide,
   activeGuideFitNonce = 0,
+  savedLocations = [],
   visibleNestedStopParentIds = [],
   hoveredStopId,
   selectedStopId,
@@ -1914,6 +2031,10 @@ export function MapClient({
   const guideRouteData = useMemo(
     () => createGuideRouteData(activeGuide),
     [activeGuide],
+  );
+  const savedLocationData = useMemo(
+    () => createSavedLocationData(continents, savedLocations),
+    [continents, savedLocations],
   );
   const guideStopDataRef = useRef(guideStopData);
   const activeGuideStopSignature = useMemo(
@@ -2067,6 +2188,11 @@ export function MapClient({
       map.addSource(CITY_SOURCE_ID, {
         type: "geojson",
         data: cityData,
+      });
+
+      map.addSource(SAVED_LOCATION_SOURCE_ID, {
+        type: "geojson",
+        data: savedLocationData,
       });
 
       map.addSource(STATE_LABEL_SOURCE_ID, {
@@ -2521,12 +2647,13 @@ export function MapClient({
     (map.getSource(COUNTRY_SOURCE_ID) as GeoJSONSource).setData(countryData);
     (map.getSource(CONTINENT_LABEL_SOURCE_ID) as GeoJSONSource).setData(continentLabelData);
     (map.getSource(CITY_SOURCE_ID) as GeoJSONSource).setData(cityData);
+    (map.getSource(SAVED_LOCATION_SOURCE_ID) as GeoJSONSource).setData(savedLocationData);
     (map.getSource(STATE_LABEL_SOURCE_ID) as GeoJSONSource).setData(stateLabelData);
     (map.getSource(GUIDE_ROUTE_SOURCE_ID) as GeoJSONSource).setData(guideRouteData);
     ensureGuideStopMarkerImages(map, guideStopData);
     (map.getSource(GUIDE_STOP_SOURCE_ID) as GeoJSONSource).setData(guideStopData);
     (map.getSource(NEIGHBORHOOD_BOUNDARY_SOURCE_ID) as GeoJSONSource).setData(neighborhoodBoundaryData);
-  }, [cityData, continentLabelData, countryData, guideRouteData, guideStopData, neighborhoodBoundaryData, stateLabelData]);
+  }, [cityData, continentLabelData, countryData, guideRouteData, guideStopData, neighborhoodBoundaryData, savedLocationData, stateLabelData]);
 
   const activeGuidePulseStopId = useMemo(() => {
     const renderedStopIds = new Set(guideStopData.features.map((feature) => feature.properties.id));

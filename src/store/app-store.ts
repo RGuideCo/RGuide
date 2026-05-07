@@ -48,7 +48,7 @@ interface PlacesBeenEntries {
 
 export interface FavoriteLocation {
   id: string;
-  kind: "country" | "city" | "neighborhood";
+  kind: "continent" | "country" | "city" | "neighborhood";
   name: string;
   detail: string;
   selection: SelectionState;
