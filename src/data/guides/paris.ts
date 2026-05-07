@@ -32,6 +32,396 @@ const photos = {
   canal: "https://images.unsplash.com/photo-1511739001486-6bfe10ce785f?auto=format&fit=crop&w=900&q=80",
 };
 
+type PoiPhotoSource = {
+  photo: string;
+  source: string;
+};
+
+const poiPhotoSources: Record<string, PoiPhotoSource> = {
+  Angelina: {
+    photo:
+      "https://cdn.prod.website-files.com/6393398914410c453e1df00f/69f391d9f6605f6780643f62_MADEMOISELLE_ANGELINA_CARTE_PE_2026_PACKSHOT_%C2%A9_MARY_DEVINAT_16-compressed.jpg",
+    source: "https://www.angelina-paris.fr/",
+  },
+  Arpege: {
+    photo: "https://www.alain-passard.com/wp-content/uploads/2022/02/Arpegesalle4-1000x800.jpg",
+    source: "https://www.alain-passard.com/",
+  },
+  "Au Lapin Agile": {
+    photo: "https://i0.wp.com/au-lapin-agile.com/wp-content/uploads/2022/11/cabaret_accueil_nuit_01.jpeg?w=1914&ssl=1",
+    source: "https://au-lapin-agile.com/",
+  },
+  "Bar 228": {
+    photo: "https://upload.wikimedia.org/wikipedia/commons/9/9f/Le_Meurice14.jpg",
+    source: "https://commons.wikimedia.org/wiki/File:Le_Meurice14.jpg",
+  },
+  "Bar Josephine": {
+    photo: "https://media.ffycdn.net/eu/mandarin-oriental-hotel-group/nsZ8J29W3zvRCSVUKdTY.jpg",
+    source: "https://www.mandarinoriental.com/en/paris/lutetia",
+  },
+  "Bar Nouveau": {
+    photo: "https://barnouveau.fr/wp-content/uploads/2026/04/IMG_2109-2.png",
+    source: "https://barnouveau.fr/",
+  },
+  "Bistrot des Tournelles": {
+    photo:
+      "https://www.bistrotdestournelles.com/i/bistrot-des-tournelles-554913/3/5/8/3/0/5/1/5/1/3/6/9/2/1659108926_161/322ce864025eb6fe3b82efab6e96034b.website.jpg",
+    source: "https://www.bistrotdestournelles.com/en/photos/",
+  },
+  "Bouillon Racine": {
+    photo: "https://ugc.zenchef.com/1/3/2/1/5/1/9/7/7/2/1749814348_332/c5e75c355c4e9d46c7f10148ed39967f.website.jpg",
+    source: "https://www.bouillonracine.fr/",
+  },
+  "Brasserie Lipp": {
+    photo: "https://ugc.zenchef.com/3/4/5/9/5/3/1/5/1/3/7/1/9/1714144479_381/27da576e9c340bdf3ca689ae48b78286.website.jpg",
+    source: "https://www.brasserielipp.fr/",
+  },
+  Candelaria: {
+    photo:
+      "https://images.squarespace-cdn.com/content/v1/601823bdac5fb55d1bfc8913/459898a4-3052-4e7d-995f-8029a76bfa0f/010-CANDELARIA-2022-LOWDEF.jpg?format=1500w",
+    source: "https://www.candelaria-paris.com/bar",
+  },
+  "Cafe Varenne": {
+    photo: "https://www.urbansider.com/wp-content/uploads/Categories/Bars-amp-Cafes/cafe-varenne-interior-1-2.jpg",
+    source: "https://www.urbansider.com/restaurant/cafe-varenne/",
+  },
+  "Cafe de Flore": {
+    photo: "https://cafedeflore.fr/wp-content/uploads/2022/07/cdf_hero1.jpeg",
+    source: "https://cafedeflore.fr/",
+  },
+  "Castor Club": {
+    photo: "https://res.cloudinary.com/the-infatuation/image/upload/f_auto/q_auto/v1714688747/TTownsend_photo3_ucrfbj.jpg",
+    source: "https://www.theinfatuation.com/paris/reviews/castor-club",
+  },
+  "Cheval Blanc Paris": {
+    photo:
+      "https://images.prismic.io/lvmh-chevalblanc/Z9AApRsAHJWomUFu_WebRGB-ChevalBlancParis_SuiteSeine_Jardind%27Hiver_511_VincentLeroux.jpg?auto=format,compress",
+    source: "https://www.chevalblanc.com/en/maison/paris/",
+  },
+  "Chez Prune": {
+    photo: "https://upload.wikimedia.org/wikipedia/commons/8/8d/Chez_Prune_1%2C_Paris_29_May_2014.jpg",
+    source: "https://commons.wikimedia.org/wiki/File:Chez_Prune_1,_Paris_29_May_2014.jpg",
+  },
+  Clamato: {
+    photo: "https://res.cloudinary.com/the-infatuation/image/upload/f_auto/q_auto/v1724964967/Clamato_interior_ksenxx.jpg",
+    source: "https://www.theinfatuation.com/paris/reviews/clamato",
+  },
+  Danico: {
+    photo: "https://www.daroco.com/wp-content/uploads/2024/02/AM2A5871-2100x1400.jpg",
+    source: "https://www.daroco.com/en/danico/",
+  },
+  "David Toutain": {
+    photo:
+      "https://images.getbento.com/accounts/ff03f9e731b42b40fa602140d58b60a7/media/images/8088DT-09-2025_1302.jpg?w=1200&fit=crop&auto=compress,format&cs=origin&crop=focalpoint&fp-x=0.5&fp-y=0.5",
+    source: "https://www.davidtoutain.com/",
+  },
+  "Du Pain et des Idees": {
+    photo: "https://cdn.prod.website-files.com/68d3ac079a10da70917c11f6/68f4b97e470178262d819ef5_opengraph_dpdi.png",
+    source: "https://www.dupainetdesidees.com/",
+  },
+  "Early June": {
+    photo: "https://early-june.fr/wp-content/uploads/2020/09/Background.jpg",
+    source: "https://early-june.fr/",
+  },
+  Fitzgerald: {
+    photo: "https://cdn.prod.website-files.com/657ebf942cf08a351e21c1b1/658337e9bf17d5c7272c21ed_FITZ_HERO_DT.jpg",
+    source: "https://www.fitzgerald.paris/",
+  },
+  "Generator Paris": {
+    photo:
+      "https://staygenerator.com/web/media/widget-spaces-rooms/paris/rooms-photos-2025/generator-paris-hostel-deluxe-king-room-1.jpg?mode=max&quality=100&v=202508261351",
+    source: "https://staygenerator.com/hostels/paris",
+  },
+  "Gravity Bar": {
+    photo: "https://media.cntraveler.com/photos/5a80a85d52e7b4436ff64db7/16:9/w_1000,c_limit/Gravity_JB-Lemal_2018_4---copie.jpg",
+    source: "https://www.cntraveler.com/bars/paris/gravity-bar",
+  },
+  "Hardware Societe": {
+    photo:
+      "https://images.squarespace-cdn.com/content/v1/6202a63f39310b632ffdebe9/58763b99-2662-4126-9676-6b78139ba27c/HardwareSociety_July19Menu_LowRes_5544.jpg",
+    source: "https://www.hardwaresociete.com/",
+  },
+  "Holybelly 5": {
+    photo: "https://holybellycafe.com/OpenGraph.jpg",
+    source: "https://holybellycafe.com/",
+  },
+  "Hotel d'Aubusson": {
+    photo:
+      "https://api.pulse-cdn.com/api/v1/resize/uploads/175585-hotel-daubusson/7ad7838c-9bb5-48e6-9d34-fb729882af50.jpg-crop-1200-627-90-webp",
+    source: "https://www.hoteldaubusson.com/",
+  },
+  "Hotel des Arts Montmartre": {
+    photo: "https://d1txkfjbeeh9pc.cloudfront.net/cache/img/8af589222e4bd0bca6a45a7d26470d3c4bcf0db0-8af589-1200-627-crop.jpg?q=1713865147",
+    source: "https://www.arts-hotel-paris.com/",
+  },
+  "Hotel des Grandes Ecoles": {
+    photo:
+      "https://afar.brightspotcdn.com/dims4/default/71a678c/2147483647/strip/true/crop/1150x575+0+72/resize/1440x720!/quality/90/?url=https%3A%2F%2Fk3-prod-afar-media.s3.us-west-2.amazonaws.com%2Fbrightspot%2F92%2F49%2F3f50821ecdb57159ea09957abf9a%2Foriginal-a7ea05ff22395157eed13e6709f449ae.jpg",
+    source: "https://www.afar.com/places/hotel-des-grandes-ecoles",
+  },
+  "Hotel Jules and Jim": {
+    photo: "https://d32rszyoapv4qs.cloudfront.net/cache/img/2590db940b8abcc39ba5ea238be9c982d5d95b65-2590db-1200-627-crop.jpg?q=1731669479",
+    source: "https://www.hoteljulesetjim.com/",
+  },
+  "Hotel La Comtesse": {
+    photo: "https://comtesse-hotel.com/_novaimg/4317200-1346800_0_303_4800_2615_2200_1200.rc.jpg",
+    source: "https://www.comtesse-hotel.com/",
+  },
+  "Hotel Le Walt": {
+    photo: "https://d13rhhrxazfw7c.cloudfront.net/cache/img/dbe9def1157870691d427b027851ce61c5154ca9-dbe9de-1200-627-crop.jpg?q=1718102689",
+    source: "https://www.lewaltparis.com/",
+  },
+  "Hotel Les Dames du Pantheon": {
+    photo: "https://moonback-hotelbeds.b-cdn.net/21/213073/213073a_hb_ro_003.jpg?aspect_ratio=1200:628&width=1200&height=628",
+    source: "https://www.timetomomo.com/en/visit/paris/accommodation/les-dames-du-pantheon/",
+  },
+  "Hotel Lutetia": {
+    photo: "https://media.ffycdn.net/eu/mandarin-oriental-hotel-group/nsZ8J29W3zvRCSVUKdTY.jpg",
+    source: "https://www.mandarinoriental.com/en/paris/lutetia",
+  },
+  "Hotel Madame Reve": {
+    photo: "https://madamereve.com/wp-content/uploads/2021/10/Balise_og_madame-reve.jpg",
+    source: "https://madamereve.com/",
+  },
+  "Hotel Montalembert": {
+    photo: "https://d1uj7wsed4nlat.cloudfront.net/cache/img/ff862722b3c71ea1db76ea2c288926f09b962f8e-ff8627-1200-627-crop.jpg?q=1724323756",
+    source: "https://www.hotelmontalembert-paris.com/",
+  },
+  "Hotel Monte Cristo": {
+    photo: "https://www.hotelmontecristoparis.com/cache/img/6066525bbb917692f4a819383d3dca1b68e553e6-606652-1200-627-crop.jpg?q=1714492043&q=1777540737",
+    source: "https://www.hotelmontecristoparis.com/",
+  },
+  "Hotel Providence": {
+    photo: "https://hotelprovidenceparis.com/wp-content/uploads/2015/09/1w2a2225-5.jpg",
+    source: "https://hotelprovidenceparis.com/",
+  },
+  "Hotel Regina Louvre": {
+    photo: "https://hapi.mmcreation.com/hapidam/4d367904-2f7f-496a-9dcd-f7ef8e2734d0/2020_PH_V2.png.png",
+    source: "https://www.regina-hotel.com/",
+  },
+  "Hotel Rochechouart": {
+    photo: "https://cdn.prod.website-files.com/6543b2c91ab677016dcd0684/67b4ac82da9fb02ce391077d_opengraph%20rochechouart.png",
+    source: "https://www.orsohotels.com/hotel-rochechouart",
+  },
+  "Hotel Sookie": {
+    photo: "https://cdn.prod.website-files.com/6862bbb7e9136bfb00b4600f/68b98acb3823d6d605a76af6_SOOKIE%20MADEO%20BD%20%C2%A9%20Nicolas%20Anetson-7.jpg",
+    source: "https://hotelsuzieblue.com/en",
+  },
+  "Huitrerie Regis": {
+    photo: "https://huitrerie-regis.com/wp-content/uploads/2020/07/capture-decran-2020-07-07-a-17-03-52.png",
+    source: "https://huitrerie-regis.com/",
+  },
+  "J.K. Place Paris": {
+    photo:
+      "https://www.jkplaces.com/jkparis/wp-content/themes/startup_pro/inc/php-global/s-image/index.php?img=/var/www/vhosts/jkplaces.com/httpdocs/jkparis/wp-content/uploads//2025/04/jkparis_5stars-hotel.jpg&mod=3&w=1456",
+    source: "https://www.jkplaces.com/jkparis/",
+  },
+  Juveniles: {
+    photo: "https://images.squarespace-cdn.com/content/v1/56c59d0327d4bd568aa24071/1724845110981-KYTZ5BXJL4EZ0RASJQ4O/IMG_0302.jpeg",
+    source: "https://www.juvenileswinebar.com/",
+  },
+  "L'As du Fallafel": {
+    photo: "https://upload.wikimedia.org/wikipedia/commons/3/31/L%27As_du_Fallafel%2C_Jewish_Quarter%2C_Paris_2015.jpg",
+    source: "https://commons.wikimedia.org/wiki/File:L%27As_du_Fallafel,_Jewish_Quarter,_Paris_2015.jpg",
+  },
+  "La Boite aux Lettres": {
+    photo: "https://laboiteauxlettres.com/img/salle.jpg",
+    source: "https://laboiteauxlettres.com/",
+  },
+  "La Fontaine de Mars": {
+    photo: "https://www.fontaine-de-mars.com/wp-content/uploads/2025/12/DConstantini_Exterieur_6-69.jpg",
+    source: "https://www.fontaine-de-mars.com/",
+  },
+  "La Gare / Le Gore": {
+    photo: "https://res.cloudinary.com/du5jifpgg/image/upload/t_opengraph_image/Surcharge-APIDAE/La_Gare_le_Gore.jpg",
+    source: "https://www.visitparisregion.com/en/la-gare-le-gore",
+  },
+  "La Maison d'Isabelle": {
+    photo: "https://assets.gaultmillau.com/assets/05bbfae9-77c0-4219-b263-e978db260669?width=666&height=444&fit=cover&format=webp",
+    source: "https://fr.gaultmillau.com/en/artisans/la-maison-d-isabelle",
+  },
+  "La Meduse": {
+    photo: "https://media.timeout.com/images/105202137/750/562/image.jpg",
+    source: "https://www.timeout.com/paris/en/bars-and-pubs/la-meduse",
+  },
+  "La Perle": {
+    photo: "https://www.barsparis.com/wp-content/uploads/2012/08/bar-la-perle.jpg",
+    source: "https://www.barsparis.com/la-perle/",
+  },
+  "La Tour d'Argent": {
+    photo: "https://tourdargent.com/wp-content/uploads/2023/10/HomePage_Transition-1920x1146.jpg",
+    source: "https://tourdargent.com/",
+  },
+  "Le Bar du Marche": {
+    photo: "https://upload.wikimedia.org/wikipedia/commons/9/96/Rue_de_Seine%2C_75006_Paris_2012.jpg",
+    source: "https://commons.wikimedia.org/wiki/File:Rue_de_Seine,_75006_Paris_2012.jpg",
+  },
+  "Le Baratin": {
+    photo: "https://img.restaurantguru.com/w550/h367/rc91-Le-Baratin-interior-2024-12-2.jpg",
+    source: "https://restaurantguru.com/Le-Baratin-Paris",
+  },
+  "Le Caveau de la Huchette": {
+    photo: "https://www.caveaudelahuchette.fr/1/images/12084_0_3348528_100831.jpg",
+    source: "https://www.caveaudelahuchette.fr/",
+  },
+  "Le Citizen Hotel": {
+    photo: "https://cdn.prod.website-files.com/688e265d139102e1191b2a7e/68de7e48c27d5de0af98986d_ILO%20OPEN%20GRAPH.png",
+    source: "https://lecitizenhotel.com/",
+  },
+  "Le Comptoir General": {
+    photo: "https://lecomptoirgeneral.com/wp-content/uploads/2021/02/COMPTOIR-01-2.png",
+    source: "https://lecomptoirgeneral.com/",
+  },
+  "Le Coq and Fils": {
+    photo: "https://lecoq-fils.com/wp-content/uploads/2022/12/actualitepreco.png",
+    source: "https://lecoq-fils.com/",
+  },
+  "Le Coupe-Chou": {
+    photo: "https://cdn.prod.website-files.com/5e6a2ea265f9f1264938a720/602417fb3fcbd5628e841ad3_lecoupechou45-1000-520.jpg",
+    source: "https://www.lecoupechou.com/",
+  },
+  "Le Duc des Lombards": {
+    photo: "https://ducdeslombards.com/sites/default/files/ducdeslombards/styles/16x9_1280/public/ged/import/1807-1771947235.jpg?itok=y86lFejr",
+    source: "https://ducdeslombards.com/",
+  },
+  "Le Fumoir": {
+    photo: "https://www.lefumoir.com/wp-content/uploads/2021/08/bg_0-300x199.jpg",
+    source: "https://www.lefumoir.com/",
+  },
+  "Le Grand Mazarin": {
+    photo: "https://www.legrandmazarin.com/wp-content/uploads/2024/07/hotel-le-grand-mazarin-piscine-hotel.jpg",
+    source: "https://www.legrandmazarin.com/",
+  },
+  "Le Meurice": {
+    photo: "https://upload.wikimedia.org/wikipedia/commons/b/ba/H%C3%B4tel_Le_Meurice.jpg",
+    source: "https://commons.wikimedia.org/wiki/File:H%C3%B4tel_Le_Meurice.jpg",
+  },
+  "Le Nemours": {
+    photo: "https://www.lenemours.paris/themes/le-nemours2/img/bg-restaurant.jpg",
+    source: "https://www.lenemours.paris/",
+  },
+  "Le Piano Vache": {
+    photo: "https://www.lepianovache.fr/wp-content/uploads/2019/02/cropped-wolfgang-hasselmann-1266795-unsplash-1.jpg",
+    source: "https://www.lepianovache.fr/",
+  },
+  "Le Poulbot": {
+    photo: "https://cty.hju.mybluehost.me/wp-content/uploads/2017/11/GaminPauvrede-Paris_Francisque_Poulbot8plus.jpg",
+    source: "https://lepoulbot.com/",
+  },
+  "Le Recrutement Cafe": {
+    photo: "https://upload.wikimedia.org/wikipedia/commons/3/34/Le_Recrutement_Cafe_in_Paris.jpg",
+    source: "https://commons.wikimedia.org/wiki/File:Le_Recrutement_Cafe_in_Paris.jpg",
+  },
+  "Le Requin Chagrin": {
+    photo: "https://upload.wikimedia.org/wikipedia/commons/5/53/CF1505_Paris_5e_place_Contrescarpe_Requin_Chagrin_rwk.jpg",
+    source: "https://commons.wikimedia.org/wiki/File:CF1505_Paris_5e_place_Contrescarpe_Requin_Chagrin_rwk.jpg",
+  },
+  "Le Tres Particulier": {
+    photo: "https://1e64.net/lw-hpm-48dbc2/uploads/logo-facade-hotel-particulier-montmarte-yeZp.webp",
+    source: "https://www.hotelparticulier.com/tresparticulier.html",
+  },
+  "Le Village Montmartre": {
+    photo: "https://www.villagehostel.fr/wp-content/uploads/2017/10/DBL-Large-1024x683.jpg",
+    source: "https://www.villagehostel.fr/",
+  },
+  "Les Ombres": {
+    photo: "https://www.lesombres-restaurant.com/wp-content/uploads/2022/11/Les_Ombres_20-10-20-Julien-Mouffron-Gardner_7990-600x600.jpg",
+    source: "https://www.lesombres-restaurant.com/",
+  },
+  "Madison Hotel": {
+    photo: "https://cdn.prod.website-files.com/698a0b7e7e2005d6daeaa106/69a9877d0825f4a1ef17b909_1b7a495f330d533899299a529fcae740_hotel-madison.avif",
+    source: "https://www.hotel-madison.com/",
+  },
+  "Marlusse et Lapin": {
+    photo: "https://www.barsparis.com/wp-content/uploads/2012/02/bar-marlusse-et-lapin-2.png",
+    source: "https://www.barsparis.com/marlusse-et-lapin/",
+  },
+  "Marche des Enfants Rouges": {
+    photo: "https://res.cloudinary.com/du5jifpgg/image/upload/t_opengraph_image/Surcharge-APIDAE/marche-des-enfants-rouges-tablee.jpg",
+    source: "https://www.visitparisregion.com/en/marche-des-enfants-rouges",
+  },
+  "MIJE Marais": {
+    photo: "https://www.mije.com/wp-content/uploads/2025/10/MIJE_Home-Page-header_Desktop_Imges-header_1920x526px_2025_1028.jpg",
+    source: "https://www.mije.com/",
+  },
+  "Mom'Art Hotel": {
+    photo: "https://www.hotelmomart.com/wp-content/uploads/sites/544/2023/05/FR-Paris-Hotel-Mom-Art-Patio-3728-1-2200x1200.jpg",
+    source: "https://www.hotelmomart.com/en/",
+  },
+  Parcelles: {
+    photo: "https://www.parcelles-paris.fr/i/parcelles/3/5/4/8/8/6/1/5/1/1/2/5/3/1616675932_336/a6fafd739cd7f9e24bc0afe3dc6f42e2.small_original.jpg",
+    source: "https://www.parcelles-paris.fr/en/",
+  },
+  "Point Ephemere": {
+    photo: "https://images.prismic.io/pointf/adfVVJ1ZCF7ETC06_PInata.jpg?auto=format&q=25&fm=webp&width=640",
+    source: "https://pointephemere.org/",
+  },
+  "Prescription Cocktail Club": {
+    photo: "https://cdn.prod.website-files.com/625f3ce29cfd1cc533cebdf6/62609641f22bd813a6eeb801_og-image.jpg",
+    source: "https://www.prescriptioncocktailclub.com/",
+  },
+  "Relais Christine": {
+    photo: "https://www.relais-christine.com/_novaimg/4915897-1568694_0_0_4800_3023_2000_1260-1600.webp",
+    source: "https://www.relais-christine.com/",
+  },
+  "Rosa Bonheur sur Seine": {
+    photo: "https://rosabonheur.fr/wp-content/uploads/2024/06/Seine-RosaB-0822-LevietPhoto-8955-uai-2133x1600.jpg",
+    source: "https://www.rosabonheur.fr/lieu/rosa-sur-seine/",
+  },
+  Sanukiya: {
+    photo: "https://img.restaurantguru.com/w550/h367/rb53-design-Sanukiya-2022-09-4.jpg",
+    source: "https://restaurantguru.com/Sanukiya-Paris",
+  },
+  Semilla: {
+    photo: "https://cdn.prod.website-files.com/624f207df2b57804135dc63e/667d5c11c3c0c1420724f703_5f61295f-2b15-402f-8cec-a6f017112b97.jpeg",
+    source: "https://www.semillaparis.com/",
+  },
+  Septime: {
+    photo: "https://assets.bonappetit.com/photos/58e295d165366d7ba908130a/16:9/w_1000,c_limit/Septime%20-%20Table.jpg",
+    source: "https://www.bonappetit.com/city-guides/paris/venue/septime",
+  },
+  "Septime La Cave": {
+    photo: "https://parisbymouth.com/wp-content/uploads/2014/09/septime-cave-for-pbm.jpg",
+    source: "https://parisbymouth.com/septime-cave/",
+  },
+  "St Christopher's Inn Canal": {
+    photo: "https://images.ctfassets.net/wqkd101r9z5s/7JuethZ3p5V7zQHyubsMIM/d25dad4126547d595f20cea943636537/iStock-1133449890_copy.jpg?w=720&q=85",
+    source: "https://www.st-christophers.co.uk/paris/canal-hostel/",
+  },
+  "Teddy's Bar": {
+    photo: "https://storage.googleapis.com/schlouk-map/cache/gallery/uploads/images/places/teddys-bar-620cf617b686b5.56325506.jpeg",
+    source: "https://www.schlouk-map.com/en/places/teddys-bar",
+  },
+  "Terrass Hotel": {
+    photo: "https://cdn.prod.website-files.com/62693a7ecfa12581d78e342f/62d81e5754d58251dcd6e467_Opengraph%20Terrass%20Hotel%20Montmartre%20Paris.png",
+    source: "https://www.terrass-hotel.com/",
+  },
+  "Terrass Hotel Rooftop": {
+    photo: "https://cdn.prod.website-files.com/62693a7ecfa12581d78e342f/62d81e5754d58251dcd6e467_Opengraph%20Terrass%20Hotel%20Montmartre%20Paris.png",
+    source: "https://www.terrass-hotel.com/",
+  },
+  "The Cambridge Public House": {
+    photo: "https://ugc.zenchef.com/3/6/0/6/8/5/1/5/6/7/6/9/4/1760366013_207/a4b7ed07993593cf70eac7ad287d9bbf.website.jpg",
+    source: "https://www.thecambridge.paris/en/",
+  },
+  "The Hoxton Paris": {
+    photo: "https://thehoxton.com/wp-content/uploads/sites/5/2020/05/Paris_Hero.jpg",
+    source: "https://thehoxton.com/paris/",
+  },
+  "The People Paris Belleville": {
+    photo: "https://www.thepeoplehostel.com/wp-content/uploads/2025/06/hostel-belleville-LesPiaules-shared_room_new-768x402.jpg",
+    source: "https://www.thepeoplehostel.com/en/destinations/paris-belleville/",
+  },
+  Verjus: {
+    photo: "https://images.squarespace-cdn.com/content/v1/59d4c7672278e78c2beb5c7b/1768840986895-PJ5F08GTQAKW9VDIBP48/08-AmuseBouches.jpg",
+    source: "https://www.verjusparis.com/",
+  },
+  "Young and Happy Latin Quarter": {
+    photo: "https://www.youngandhappy.fr/wp-content/uploads/2024/01/dortoir-sdb-6-1024x682.jpg",
+    source: "https://www.youngandhappy.fr/",
+  },
+};
+
 const googleMaps: ListSource = { name: "Google Maps", url: "https://maps.google.com" };
 
 const parisFoodSources: ListSource[] = [
@@ -134,10 +524,14 @@ function defaultPhoto(category: EditorialCategory) {
   return photos.culture;
 }
 
+function poiPhotoFor(name: string) {
+  return poiPhotoSources[name]?.photo;
+}
+
 function stop(seed: StopSeed, category: EditorialCategory): GuideStop {
   return {
     ...seed,
-    photo: seed.photo ?? defaultPhoto(category),
+    photo: seed.photo ?? poiPhotoFor(seed.name) ?? defaultPhoto(category),
     hours: seed.hours ?? defaultHours(category),
   };
 }
@@ -268,7 +662,7 @@ const citywideFood: StopSeed[] = [
     name: "David Toutain",
     coordinates: [48.8617, 2.3048],
     description:
-      "David Toutain gives the 7th a destination-dining reason beyond monuments, with plant-led menus and a serious reservation posture near Invalides and the Eiffel Tower. It belongs here for travelers planning one high-budget meal around the Left Bank museum day.",
+      "David Toutain gives the citywide food guide a Left Bank tasting-menu anchor, with plant-led cooking and a serious reservation posture near Invalides and the Eiffel Tower. It belongs here for travelers planning one high-budget meal around the museum day.",
     price: "$$$",
     priceSource: "MICHELIN Guide / David Toutain official",
   },
@@ -361,7 +755,7 @@ const citywideCulture: StopSeed[] = [
     name: "Musee Picasso Paris",
     coordinates: [48.8599, 2.3623],
     description:
-      "Musee Picasso Paris keeps Le Marais from becoming only shopping and falafel. The Hotel Sale setting, collection depth, and easy Place des Vosges approach make it a strong museum block for a neighborhood day with food and gallery detours close by.",
+      "Musee Picasso Paris gives the citywide culture list a Marais museum that is focused enough to pair with food and gallery detours. The Hotel Sale setting, collection depth, and easy Place des Vosges approach keep the stop substantial without becoming an all-day block.",
     photo: photos.culture,
   },
   {
@@ -405,7 +799,7 @@ const citywideStay: StopSeed[] = [
     name: "Hotel Lutetia",
     coordinates: [48.8517, 2.327],
     description:
-      "Hotel Lutetia is the grand Left Bank pick, useful for Saint-Germain, Orsay, Luxembourg, and polished cafe routes. Choose it when the trip wants heritage and walkable Left Bank calm more than immediate Marais nightlife.",
+      "Hotel Lutetia gives the citywide stay guide its grand Left Bank reference point, useful for Orsay, Luxembourg, Saint-Germain cafes, and polished cross-river days. Choose it when heritage and walkable calm matter more than immediate Marais nightlife.",
     price: "$$$",
     priceSource: "Conde Nast Traveler / Google Travel",
   },
@@ -414,7 +808,7 @@ const citywideStay: StopSeed[] = [
     name: "Le Grand Mazarin",
     coordinates: [48.858, 2.3546],
     description:
-      "Le Grand Mazarin gives Le Marais a maximalist boutique stay close to Hotel de Ville, galleries, restaurants, and late bars. It suits travelers who want old-center access with a design-forward mood rather than palace formality.",
+      "Le Grand Mazarin is the citywide boutique-stay argument for sleeping in Le Marais, close to Hotel de Ville, galleries, restaurants, and late bars. It suits travelers who want old-center access with a design-forward mood rather than palace formality.",
     price: "$$$",
     priceSource: "Conde Nast Traveler / Vogue",
   },
@@ -462,7 +856,7 @@ const citywideNature: StopSeed[] = [
     name: "Jardin du Luxembourg",
     coordinates: [48.8462, 2.3372],
     description:
-      "Jardin du Luxembourg is the Left Bank reset that works between Saint-Germain, the Latin Quarter, and museum days. Chairs, lawns, fountains, and palace views make it a practical pause rather than a nature detour.",
+      "Jardin du Luxembourg gives the citywide nature guide its most useful Left Bank pause, linking Saint-Germain, the Latin Quarter, and museum days. Chairs, lawns, fountains, and palace views make it a practical reset rather than a nature detour.",
     photo: photos.nature,
   },
   {
@@ -816,7 +1210,7 @@ const parisNeighborhoodGuideSeeds: Record<ParisNeighborhood, Record<EditorialCat
       description:
         "Le Marais culture is built from historic houses, civic memory, courtyards, and squares rather than one blockbuster. This guide keeps Picasso, Carnavalet, Victor Hugo, and Hotel de Sully tied to a walkable old-quarter day.",
       stops: [
-        nStop("marais-culture-picasso", "Musee Picasso Paris", [48.8599, 2.3623], "Musee Picasso Paris keeps Le Marais from becoming only shopping and falafel. The Hotel Sale setting and collection depth make it a strong museum block for a neighborhood day.", { photo: photos.culture }),
+        nStop("marais-culture-picasso", "Musee Picasso Paris", [48.8599, 2.3623], "Inside Le Marais, Musee Picasso Paris adds a real museum block to a route that can otherwise lean too hard on shopping and falafel. The Hotel Sale setting and collection depth make it strong enough to anchor the neighborhood day.", { photo: photos.culture }),
         nStop("marais-culture-carnavalet", "Musee Carnavalet", [48.8575, 2.3629], "Musee Carnavalet is the Paris-history anchor for Le Marais, with free permanent collections and a mansion setting that rewards a slower visit. Use it to add civic context before Place des Vosges or Rue des Rosiers.", { photo: photos.culture }),
         nStop("marais-culture-victor-hugo", "Maison de Victor Hugo", [48.8549, 2.3661], "Maison de Victor Hugo turns Place des Vosges into more than a pretty square, giving the route literary rooms and domestic scale. It is best as a compact cultural add-on rather than a full museum day.", { photo: photos.culture }),
         nStop("marais-culture-hotel-sully", "Hotel de Sully", [48.8547, 2.3642], "Hotel de Sully gives the Marais one of its best courtyard passages and a clean hinge toward Place des Vosges. Use it when the walk needs architecture and a quieter transition.", { photo: photos.culture }),
@@ -827,7 +1221,7 @@ const parisNeighborhoodGuideSeeds: Record<ParisNeighborhood, Record<EditorialCat
       description:
         "Staying in Le Marais means prioritizing restaurants, bars, galleries, and walkable old-center streets over large-room calm. This guide mixes design hotels and practical budget bases that honestly serve the neighborhood.",
       stops: [
-        nStop("marais-stay-grand-mazarin", "Le Grand Mazarin", [48.858, 2.3546], "Le Grand Mazarin gives Le Marais a maximalist boutique stay close to Hotel de Ville, galleries, restaurants, and late bars. It suits travelers who want old-center access with design-forward energy.", { price: "$$$", priceSource: "Conde Nast Traveler / Vogue" }),
+        nStop("marais-stay-grand-mazarin", "Le Grand Mazarin", [48.858, 2.3546], "For Le Marais stays, Le Grand Mazarin puts maximalist boutique energy close to Hotel de Ville, galleries, restaurants, and late bars. It suits travelers who want old-center access with design-forward energy.", { price: "$$$", priceSource: "Conde Nast Traveler / Vogue" }),
         nStop("marais-stay-sookie", "Hotel Sookie", [48.8628, 2.3606], "Hotel Sookie is the smaller north Marais base for travelers who want Rue de Bretagne, Enfants Rouges, and gallery streets nearby. It fits a boutique-stay trip better than a palace-service trip.", { price: "$$", priceSource: "Google Travel / Tripadvisor" }),
         nStop("marais-stay-jules-jim", "Hotel Jules and Jim", [48.8632, 2.3567], "Hotel Jules and Jim gives the upper Marais a design-hotel option with a courtyard bar and quick access to Arts et Metiers. Use it when nightlife and central movement matter.", { price: "$$", priceSource: "Google Travel / Tripadvisor" }),
         nStop("marais-stay-mije", "MIJE Marais", [48.8564, 2.3615], "MIJE Marais is the budget-friendly historic-house option for travelers who want the old quarter without hotel pricing. It works best for simple rooms, school-group energy, and maximum location value.", { price: "$", priceSource: "Hostelworld / Google Maps" }),
@@ -873,7 +1267,7 @@ const parisNeighborhoodGuideSeeds: Record<ParisNeighborhood, Record<EditorialCat
       description:
         "Saint-Germain nature is mostly elegant pause space: Luxembourg chairs, small squares, and Seine edges. This guide keeps the Left Bank route breathable between galleries, cafes, Orsay, and dinner.",
       stops: [
-        nStop("saint-germain-nature-luxembourg", "Jardin du Luxembourg", [48.8462, 2.3372], "Jardin du Luxembourg is the Left Bank reset that works between Saint-Germain, the Latin Quarter, and museum days. Chairs, fountains, and palace views make it a practical pause rather than a detour.", { photo: photos.nature }),
+        nStop("saint-germain-nature-luxembourg", "Jardin du Luxembourg", [48.8462, 2.3372], "From Saint-Germain, Jardin du Luxembourg is the natural reset before the route drifts toward the Latin Quarter or another museum block. Chairs, fountains, and palace views make it a practical pause rather than a detour.", { photo: photos.nature }),
         nStop("saint-germain-nature-laurent-prache", "Square Laurent-Prache", [48.8543, 2.3342], "Square Laurent-Prache is the small garden beside the church, useful when the boulevard needs a quiet minute. It works as a compact pause between cafes, shops, and the Delacroix museum.", { photo: photos.nature }),
         nStop("saint-germain-nature-gabriel-pierne", "Square Gabriel-Pierne", [48.8548, 2.3375], "Square Gabriel-Pierne gives Rue de Seine and the galleries a leafy pocket with benches and a quieter rhythm. Use it when the Left Bank walk needs shade without turning into a park visit.", { photo: photos.nature }),
         nStop("saint-germain-nature-quai-malaquais", "Quai Malaquais Seine Walk", [48.858, 2.335], "Quai Malaquais pulls Saint-Germain to the river, with views toward the Louvre and easy movement to Pont des Arts. It is the best reset between galleries, Orsay, and a central dinner.", { photo: photos.seine }),
@@ -895,7 +1289,7 @@ const parisNeighborhoodGuideSeeds: Record<ParisNeighborhood, Record<EditorialCat
       description:
         "Saint-Germain stays are for travelers who want cafe mornings, galleries, Luxembourg access, and calm returns after museum days. This guide balances palace heritage with smaller hotels close to the Left Bank route.",
       stops: [
-        nStop("saint-germain-stay-lutetia", "Hotel Lutetia", [48.8517, 2.327], "Hotel Lutetia is the grand Left Bank pick, useful for Saint-Germain, Orsay, Luxembourg, and polished cafe routes. Choose it when heritage and walkable calm matter more than immediate Marais nightlife.", { price: "$$$", priceSource: "Conde Nast Traveler / The Times" }),
+        nStop("saint-germain-stay-lutetia", "Hotel Lutetia", [48.8517, 2.327], "In Saint-Germain, Hotel Lutetia is the grand hotel choice for Orsay, Luxembourg, polished cafe routes, and Left Bank calm. Choose it when heritage matters more than immediate Marais nightlife.", { price: "$$$", priceSource: "Conde Nast Traveler / The Times" }),
         nStop("saint-germain-stay-relais-christine", "Relais Christine", [48.8541, 2.3403], "Relais Christine gives Saint-Germain a tucked-away luxury base near the river and Odeon. It fits travelers who want quiet, romance, and historic-street access rather than lobby scene.", { price: "$$$", priceSource: "Conde Nast Traveler / Google Travel" }),
         nStop("saint-germain-stay-aubusson", "Hotel d'Aubusson", [48.8545, 2.3396], "Hotel d'Aubusson is a polished Left Bank hotel with jazz-bar energy and easy access to Rue de Buci, the Seine, and galleries. It works when the stay should support both culture and evenings.", { price: "$$$", priceSource: "Google Travel / Tripadvisor" }),
         nStop("saint-germain-stay-madison", "Madison Hotel", [48.8534, 2.3338], "Madison Hotel gives the boulevard a practical boutique base beside the church and classic cafes. Use it when location, metro access, and Saint-Germain identity matter more than resort amenities.", { price: "$$", priceSource: "Google Travel / Tripadvisor" }),
@@ -1123,7 +1517,7 @@ const parisNeighborhoodGuideSeeds: Record<ParisNeighborhood, Record<EditorialCat
       description:
         "The 7th needs food stops that can stand up to Eiffel, Invalides, Rodin, and Orsay days. This guide balances destination dining, classic bistros, and practical cafes so the district is more than monument logistics.",
       stops: [
-        nStop("seventh-food-david-toutain", "David Toutain", [48.8617, 2.3048], "David Toutain gives the 7th a destination-dining reason beyond monuments, with plant-led menus and a serious reservation posture near Invalides and the Eiffel Tower. Plan it as the day's main meal.", { price: "$$$", priceSource: "MICHELIN Guide / David Toutain official" }),
+        nStop("seventh-food-david-toutain", "David Toutain", [48.8617, 2.3048], "In the 7th, David Toutain is the destination-dining counterweight to monument routes, with plant-led menus and a serious reservation posture near Invalides and the Eiffel Tower. Plan it as the day's main meal.", { price: "$$$", priceSource: "MICHELIN Guide / David Toutain official" }),
         nStop("seventh-food-arpege", "Arpege", [48.8555, 2.3162], "Arpege is the vegetable-driven fine-dining landmark that makes the 7th a serious food destination. Use it only when the trip has room for a high-budget, high-commitment reservation.", { price: "$$$", priceSource: "MICHELIN Guide / Google Maps" }),
         nStop("seventh-food-fontaine-mars", "La Fontaine de Mars", [48.8587, 2.3044], "La Fontaine de Mars is the classic bistro choice near Rue Saint-Dominique and the Eiffel side. It works when the group wants a traditional meal with a strong neighborhood address.", { price: "$$$", priceSource: "Google Maps / Paris dining guides" }),
         nStop("seventh-food-cafe-varenne", "Cafe Varenne", [48.855, 2.3194], "Cafe Varenne is the practical brasserie near Rodin, Invalides, and government-quarter walks. Use it when the museum day needs a reliable lunch or dinner without a destination-dining commitment.", { price: "$$", priceSource: "Google Maps / local dining guides" }),

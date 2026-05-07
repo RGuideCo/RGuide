@@ -712,8 +712,9 @@ Stop descriptions:
 - Lead with why this stop is included.
 - Add the concrete thing a visitor will experience.
 - Add a useful caveat, timing note, or audience fit when relevant.
-- Mandatory check: scan all stop descriptions for repeated boilerplate before committing or pushing. No sentence frame should appear across multiple unrelated POIs, especially generic lines like "fills a clear meal role for this route" or "gives the night a defined role rather than another loose bar pin."
-- Repeated wording is acceptable only when the same POI is intentionally reused across multiple guides with the same description. If different POIs share the same sentence, rewrite each one with place-specific detail.
+- Mandatory check: every single stop description must be unique and hand-crafted for its exact guide context. Do not reuse a full description when the same POI appears in a citywide guide, neighborhood guide, weekend guide, or category crossover.
+- Scan all stop descriptions for repeated boilerplate before committing or pushing. No sentence frame should appear across multiple POIs or repeated POI placements, especially generic lines like "fills a clear meal role for this route" or "gives the night a defined role rather than another loose bar pin."
+- If two descriptions share the same sentence, rewrite both with place-specific and guide-specific detail. Reused POIs still need unique descriptions that explain why the stop belongs in that exact list.
 - Keep most stops to 2-4 fleshed-out sentences. One sentence is acceptable only for simple official landmarks, tiny nested stops, or placeholder-free personal lists where the surrounding guide already carries the context.
 - The first sentence should define the stop's role in this exact guide, not merely describe what the place is.
 - The middle sentence or sentences should name the source-backed draw: dish, room style, collection, route fit, social energy, sleep tradeoff, view, booking posture, or neighborhood logic.
