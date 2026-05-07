@@ -18,15 +18,24 @@ import { MapList } from "@/types";
 
 type CityRouteSeoIndexProps = {
   route: CityDeepLinkResolution;
+  guides: MapList[];
 };
 
 function pluralize(count: number, singular: string, plural = `${singular}s`) {
   return `${count} ${count === 1 ? singular : plural}`;
 }
 
-function GuidePreviewCard({ guide, priority = false }: { guide: MapList; priority?: boolean }) {
+function GuidePreviewCard({
+  guide,
+  guides,
+  priority = false,
+}: {
+  guide: MapList;
+  guides: MapList[];
+  priority?: boolean;
+}) {
   const neighborhood = guide.location.neighborhood ? { name: guide.location.neighborhood } : undefined;
-  const href = getCanonicalGuidePath({ name: guide.location.city ?? "" }, guide, neighborhood);
+  const href = getCanonicalGuidePath({ name: guide.location.city ?? "" }, guide, neighborhood, guides);
   const seoTitle = getGuideSeoTitle({ ...guide }, { name: guide.location.city ?? "" }, neighborhood);
   const stops = guide.stops.slice(0, priority ? 6 : 3);
 
@@ -78,17 +87,17 @@ function GuidePreviewCard({ guide, priority = false }: { guide: MapList; priorit
   );
 }
 
-export function CityRouteSeoIndex({ route }: CityRouteSeoIndexProps) {
-  const indexableGuides = getIndexableListsForCityRoute(route.city, route.neighborhood, route.category, route.guide)
+export function CityRouteSeoIndex({ route, guides }: CityRouteSeoIndexProps) {
+  const indexableGuides = getIndexableListsForCityRoute(route.city, route.neighborhood, route.category, route.guide, guides)
     .sort((left, right) => right.upvotes - left.upvotes || left.title.localeCompare(right.title));
   const visibleGuides = indexableGuides.slice(0, route.guide ? 1 : 12);
-  const relatedGuides = getRelatedCityRouteGuides(route).slice(0, 6);
+  const relatedGuides = getRelatedCityRouteGuides(route, guides).slice(0, 6);
   const neighborhoods = getNeighborhoodsForCityRoute(route.city)
-    .filter(({ neighborhood }) => getListsForCityRoute(route.city, neighborhood).length > 0)
+    .filter(({ neighborhood }) => getListsForCityRoute(route.city, neighborhood, undefined, guides).length > 0)
     .slice(0, 18);
   const categories = route.neighborhood
-    ? getCategoriesForCityRoute(route.city, route.neighborhood)
-    : CATEGORIES.filter((category) => getIndexableListsForCityRoute(route.city, undefined, category).length > 0);
+    ? getCategoriesForCityRoute(route.city, route.neighborhood, guides)
+    : CATEGORIES.filter((category) => getIndexableListsForCityRoute(route.city, undefined, category, undefined, guides).length > 0);
   const placeName = route.neighborhood ? `${route.neighborhood.name}, ${route.city.name}` : route.city.name;
   const matchingGuideCount = indexableGuides.length;
   const matchingStopCount = indexableGuides.reduce((total, guide) => total + guide.stops.length, 0);
@@ -142,7 +151,7 @@ export function CityRouteSeoIndex({ route }: CityRouteSeoIndexProps) {
         {visibleGuides.length ? (
           <div className="mt-7 grid gap-4">
             {visibleGuides.map((guide) => (
-              <GuidePreviewCard key={guide.id} guide={guide} priority={Boolean(route.guide)} />
+              <GuidePreviewCard key={guide.id} guide={guide} guides={guides} priority={Boolean(route.guide)} />
             ))}
           </div>
         ) : (
@@ -181,6 +190,7 @@ export function CityRouteSeoIndex({ route }: CityRouteSeoIndexProps) {
                     { name: guide.location.city ?? route.city.name },
                     guide,
                     guide.location.neighborhood ? { name: guide.location.neighborhood } : undefined,
+                    guides,
                   )}
                   className="rounded-lg border border-slate-200 bg-white p-3 hover:border-orange-200"
                 >

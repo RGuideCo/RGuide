@@ -89,6 +89,22 @@ textarea:focus-visible {
   @apply text-xl font-semibold text-slate-900 sm:text-2xl;
 }
 
+.rguide-progressive-fallback {
+  display: block;
+}
+
+.rguide-progressive-interactive {
+  display: none;
+}
+
+.rguide-split-screen-ready .rguide-progressive-fallback {
+  display: none;
+}
+
+.rguide-split-screen-ready .rguide-progressive-interactive {
+  display: block;
+}
+
 .surface {
   @apply rounded-lg border border-slate-950/15 bg-white shadow-sm backdrop-blur;
   background-color: var(--rguide-panel);

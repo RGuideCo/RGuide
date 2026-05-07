@@ -4,8 +4,8 @@ import { notFound } from "next/navigation";
 import { CategoryCard } from "@/components/cards/CategoryCard";
 import { MapListCard } from "@/components/cards/MapListCard";
 import { CATEGORIES } from "@/lib/constants";
-import { getCategoryLabel, getListsForCategory } from "@/lib/mock-data";
-import { mapLists } from "@/data";
+import { getCategoryLabel } from "@/lib/mock-data";
+import { getServerEditorialGuides } from "@/lib/server-editorial-guides";
 
 interface CategoryPageProps {
   params: Promise<{
@@ -37,7 +37,8 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
     notFound();
   }
 
-  const lists = getListsForCategory(category);
+  const editorialGuides = await getServerEditorialGuides();
+  const lists = editorialGuides.filter((list) => list.category === label);
 
   return (
     <div className="page-shell py-10">
@@ -54,7 +55,7 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
           <CategoryCard
             key={item}
             category={item}
-            count={mapLists.filter((list) => list.category === item).length}
+            count={editorialGuides.filter((list) => list.category === item).length}
           />
         ))}
       </div>

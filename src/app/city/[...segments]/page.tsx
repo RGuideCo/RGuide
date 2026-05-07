@@ -1,10 +1,13 @@
 import type { Metadata } from "next";
 import { notFound, permanentRedirect } from "next/navigation";
 
+import { CityRouteSeoIndex } from "@/components/seo/CityRouteSeoIndex";
 import { SplitScreenSection } from "@/components/home/SplitScreenSection";
+import { ProgressiveEnhancementShell } from "@/components/shared/ProgressiveEnhancementShell";
 import { getContinentsWithDestinationDescriptions } from "@/lib/destination-descriptions";
 import { getCityDeepLinkStaticParams, resolveCityDeepLink } from "@/lib/deep-link-routes";
 import { getCitiesFromContinents } from "@/lib/geography-tree";
+import { getServerEditorialGuides } from "@/lib/server-editorial-guides";
 
 interface CityDeepLinkPageProps {
   params: Promise<{
@@ -20,10 +23,14 @@ export function generateStaticParams() {
 
 export async function generateMetadata({ params }: CityDeepLinkPageProps): Promise<Metadata> {
   const { segments } = await params;
-  const continents = await getContinentsWithDestinationDescriptions();
+  const [continents, editorialGuides] = await Promise.all([
+    getContinentsWithDestinationDescriptions(),
+    getServerEditorialGuides(),
+  ]);
   const route = resolveCityDeepLink(segments, {
     continents,
     cities: getCitiesFromContinents(continents),
+    guides: editorialGuides,
   });
 
   if (!route) {
@@ -58,10 +65,14 @@ export async function generateMetadata({ params }: CityDeepLinkPageProps): Promi
 
 export default async function CityDeepLinkPage({ params }: CityDeepLinkPageProps) {
   const { segments } = await params;
-  const continents = await getContinentsWithDestinationDescriptions();
+  const [continents, editorialGuides] = await Promise.all([
+    getContinentsWithDestinationDescriptions(),
+    getServerEditorialGuides(),
+  ]);
   const route = resolveCityDeepLink(segments, {
     continents,
     cities: getCitiesFromContinents(continents),
+    guides: editorialGuides,
   });
 
   if (!route) {
@@ -82,18 +93,21 @@ export default async function CityDeepLinkPage({ params }: CityDeepLinkPageProps
           dangerouslySetInnerHTML={{ __html: JSON.stringify(item) }}
         />
       ))}
-      <SplitScreenSection
-        continents={continents}
-        initialRouteState={{
-          selection: route.selection,
-          activeCategory: route.activeCategory,
-          expandedGuideId: route.expandedGuideId,
-        }}
-        seoContent={{
-          h1: route.h1,
-          intro: route.intro,
-        }}
-      />
+      <ProgressiveEnhancementShell fallback={<CityRouteSeoIndex route={route} guides={editorialGuides} />}>
+        <SplitScreenSection
+          continents={continents}
+          initialEditorialGuides={editorialGuides}
+          initialRouteState={{
+            selection: route.selection,
+            activeCategory: route.activeCategory,
+            expandedGuideId: route.expandedGuideId,
+          }}
+          seoContent={{
+            h1: route.h1,
+            intro: route.intro,
+          }}
+        />
+      </ProgressiveEnhancementShell>
     </>
   );
 }

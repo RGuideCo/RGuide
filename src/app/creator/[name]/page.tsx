@@ -2,8 +2,11 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 
 import { SplitScreenSection } from "@/components/home/SplitScreenSection";
-import { continents } from "@/data";
-import { getListsByCreator } from "@/lib/mock-data";
+import { users } from "@/data";
+import { getContinentsWithDestinationDescriptions } from "@/lib/destination-descriptions";
+import { getServerEditorialGuides } from "@/lib/server-editorial-guides";
+import { slugify } from "@/lib/utils";
+import type { MapList, User } from "@/types";
 
 interface CreatorPageProps {
   params: Promise<{
@@ -11,9 +14,33 @@ interface CreatorPageProps {
   }>;
 }
 
+function getCreatorProfile(nameSlug: string, guides: MapList[]): { creator?: User; lists: MapList[] } {
+  const localCreator = users.find((user) => slugify(user.name) === nameSlug || slugify(user.id) === nameSlug);
+  const lists = guides.filter(
+    (list) =>
+      slugify(list.creator.name) === nameSlug ||
+      slugify(list.creator.id) === nameSlug ||
+      list.creator.id === localCreator?.id,
+  );
+  const guideCreator = lists[0]?.creator;
+
+  return {
+    creator: localCreator ?? (
+      guideCreator
+        ? {
+            ...guideCreator,
+            bio: `Curated travel guides published by ${guideCreator.name}.`,
+          }
+        : undefined
+    ),
+    lists,
+  };
+}
+
 export async function generateMetadata({ params }: CreatorPageProps): Promise<Metadata> {
   const { name } = await params;
-  const { creator } = getListsByCreator(name);
+  const editorialGuides = await getServerEditorialGuides();
+  const { creator } = getCreatorProfile(name, editorialGuides);
 
   if (!creator) {
     return { title: "Creator not found" };
@@ -27,7 +54,11 @@ export async function generateMetadata({ params }: CreatorPageProps): Promise<Me
 
 export default async function CreatorPage({ params }: CreatorPageProps) {
   const { name } = await params;
-  const { creator, lists } = getListsByCreator(name);
+  const [continents, editorialGuides] = await Promise.all([
+    getContinentsWithDestinationDescriptions(),
+    getServerEditorialGuides(),
+  ]);
+  const { creator, lists } = getCreatorProfile(name, editorialGuides);
 
   if (!creator) {
     notFound();
@@ -56,6 +87,7 @@ export default async function CreatorPage({ params }: CreatorPageProps) {
   return (
     <SplitScreenSection
       continents={continents}
+      initialEditorialGuides={editorialGuides}
       publicProfile={{
         creator,
         lists,

@@ -93,6 +93,7 @@ import { Continent, ListCategory, MapList, SelectionState, SubmissionType } from
 
 interface SplitScreenSectionProps {
   continents: Continent[];
+  initialEditorialGuides?: MapList[];
   initialRouteState?: CityDeepLinkState;
   seoContent?: {
     h1: string;
@@ -138,6 +139,40 @@ type MobileBrowseSelectOption = {
   value: string;
   label: string;
 };
+
+function areGuideCollectionsEquivalent(left: MapList[], right: MapList[]) {
+  if (left === right) {
+    return true;
+  }
+
+  if (left.length !== right.length) {
+    return false;
+  }
+
+  return left.every((guide, index) => {
+    const candidate = right[index];
+
+    return (
+      candidate?.id === guide.id &&
+      candidate.title === guide.title &&
+      candidate.description === guide.description &&
+      candidate.upvotes === guide.upvotes &&
+      candidate.stops.length === guide.stops.length
+    );
+  });
+}
+
+function seedInitialEditorialGuides(initialEditorialGuides: MapList[]) {
+  if (typeof window === "undefined" || !initialEditorialGuides.length) {
+    return;
+  }
+
+  const currentEditorialGuides = useAppStore.getState().editorialLists;
+
+  if (!areGuideCollectionsEquivalent(currentEditorialGuides, initialEditorialGuides)) {
+    useAppStore.setState({ editorialLists: initialEditorialGuides });
+  }
+}
 
 const MOBILE_ALL_COUNTRIES_VALUE = "__all-countries";
 const MOBILE_ALL_REGIONS_VALUE = "__all-regions";
@@ -1055,12 +1090,29 @@ function MobileBrowseSelect({
   );
 }
 
-export function SplitScreenSection({ continents, initialRouteState, seoContent, publicProfile }: SplitScreenSectionProps) {
+export function SplitScreenSection({
+  continents,
+  initialEditorialGuides = [],
+  initialRouteState,
+  seoContent,
+  publicProfile,
+}: SplitScreenSectionProps) {
+  seedInitialEditorialGuides(initialEditorialGuides);
+
+  useEffect(() => {
+    document.documentElement.classList.add("rguide-split-screen-ready");
+
+    return () => {
+      document.documentElement.classList.remove("rguide-split-screen-ready");
+    };
+  }, []);
+
   const currentUser = useAppStore((state) => state.currentUser);
   const setCurrentUser = useAppStore((state) => state.setCurrentUser);
   const isProfileShellActive = useAppStore((state) => state.isProfileShellActive);
   const openAuthModal = useAppStore((state) => state.openAuthModal);
   const setProfileShellActive = useAppStore((state) => state.setProfileShellActive);
+  const setEditorialLists = useAppStore((state) => state.setEditorialLists);
   const favoriteIds = useAppStore((state) => state.favoriteIds);
   const favoriteLocations = useAppStore((state) => state.favoriteLocations);
   const toggleFavoriteLocation = useAppStore((state) => state.toggleFavoriteLocation);
@@ -1076,6 +1128,11 @@ export function SplitScreenSection({ continents, initialRouteState, seoContent, 
   const removeStopFromItineraryPlaylist = useAppStore((state) => state.removeStopFromItineraryPlaylist);
   const editorialLists = useAppStore((state) => state.editorialLists);
   const submittedLists = useAppStore((state) => state.submittedLists);
+  const hydratedEditorialLists = editorialLists.length ? editorialLists : initialEditorialGuides;
+  const activeEditorialLists = useMemo(
+    () => getEditorialLists(hydratedEditorialLists),
+    [hydratedEditorialLists],
+  );
   const [selection, setSelection] = useState<SelectionState>(() => initialRouteState?.selection ?? getDefaultSelection(continents));
   const [focusedCountrySignal, setFocusedCountrySignal] = useState<{
     countryId: string;
@@ -1115,6 +1172,16 @@ export function SplitScreenSection({ continents, initialRouteState, seoContent, 
   const [openingGuideId, setOpeningGuideId] = useState<string | null>(null);
   const [settlingGuideContentId, setSettlingGuideContentId] = useState<string | null>(null);
   const [isMobileListSheetExpanded, setIsMobileListSheetExpanded] = useState(false);
+
+  useEffect(() => {
+    if (!initialEditorialGuides.length) {
+      return;
+    }
+
+    if (!areGuideCollectionsEquivalent(useAppStore.getState().editorialLists, initialEditorialGuides)) {
+      setEditorialLists(initialEditorialGuides);
+    }
+  }, [initialEditorialGuides, setEditorialLists]);
   const [isMobileListSheetDragging, setIsMobileListSheetDragging] = useState(false);
   const [mobileListSheetDragHeight, setMobileListSheetDragHeight] = useState<number | null>(null);
   const mobileListSheetDraggingRef = useRef(false);
@@ -1326,7 +1393,10 @@ export function SplitScreenSection({ continents, initialRouteState, seoContent, 
       if (citySegments[0] !== "city") {
         return;
       }
-      const route = resolveCityDeepLink(citySegments.slice(1));
+      const route = resolveCityDeepLink(citySegments.slice(1), {
+        continents,
+        guides: activeEditorialLists,
+      });
       if (!route) {
         return;
       }
@@ -1346,7 +1416,7 @@ export function SplitScreenSection({ continents, initialRouteState, seoContent, 
 
     window.addEventListener("popstate", handlePopState);
     return () => window.removeEventListener("popstate", handlePopState);
-  }, []);
+  }, [activeEditorialLists, continents]);
 
   useEffect(() => {
     setProfileNameDraft(currentUser?.name ?? "");
@@ -2489,7 +2559,6 @@ export function SplitScreenSection({ continents, initialRouteState, seoContent, 
     cityUsesNestedDistricts,
   ]);
 
-  const activeEditorialLists = useMemo(() => getEditorialLists(editorialLists), [editorialLists]);
   const selectedCityLists = useMemo(
     () =>
       activeLocation.city
@@ -3830,7 +3899,7 @@ export function SplitScreenSection({ continents, initialRouteState, seoContent, 
     setActiveGuideFitNonce((current) => current + 1);
     const context = getCityRouteContext(selection);
     if (context) {
-      pushExplorerPath(getCanonicalGuidePath(context.city, nextList, context.neighborhood));
+      pushExplorerPath(getCanonicalGuidePath(context.city, nextList, context.neighborhood, activeEditorialLists));
     }
   };
   const handleGuideToggle = (nextList: MapList) => {
@@ -3924,7 +3993,7 @@ export function SplitScreenSection({ continents, initialRouteState, seoContent, 
 
     const context = getCityRouteContext(selection);
     if (context) {
-      pushExplorerPath(getCanonicalGuidePath(context.city, nextList, context.neighborhood));
+      pushExplorerPath(getCanonicalGuidePath(context.city, nextList, context.neighborhood, activeEditorialLists));
     }
     scrollGuideIntoView(nextList.id);
   };
@@ -4588,6 +4657,7 @@ export function SplitScreenSection({ continents, initialRouteState, seoContent, 
               guideFocus={null}
               activeGuide={activeMapGuide}
               activeGuideFitNonce={activeGuideFitNonce}
+              guideLists={activeEditorialLists}
               savedLocations={savedMapLocations}
               visibleNestedStopParentIds={visibleNestedStopParentIds}
               hoveredStopId={hoveredStopId}

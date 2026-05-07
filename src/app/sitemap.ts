@@ -4,14 +4,18 @@ import { getCityDeepLinkStaticParams } from "@/lib/deep-link-routes";
 import { getCategoryHref, getCreatorHref, getListHref } from "@/lib/routes";
 import { SITE_URL } from "@/lib/constants";
 import { CATEGORIES } from "@/lib/constants";
-import { mapLists, users } from "@/data";
+import { users } from "@/data";
+import { getServerEditorialGuides } from "@/lib/server-editorial-guides";
+
+export const dynamic = "force-dynamic";
 
 function absoluteUrl(path: string) {
   return new URL(path, SITE_URL).toString();
 }
 
-export default function sitemap(): MetadataRoute.Sitemap {
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const now = new Date();
+  const editorialGuides = await getServerEditorialGuides();
   const staticRoutes: MetadataRoute.Sitemap = [
     {
       url: absoluteUrl("/"),
@@ -27,7 +31,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     },
   ];
 
-  const cityRoutes = getCityDeepLinkStaticParams().map(({ segments }) => ({
+  const cityRoutes = getCityDeepLinkStaticParams(editorialGuides).map(({ segments }) => ({
     url: absoluteUrl(`/city/${segments.join("/")}`),
     lastModified: now,
     changeFrequency: "weekly" as const,
@@ -41,7 +45,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.7,
   }));
 
-  const guideRoutes = mapLists.map((list) => ({
+  const guideRoutes = editorialGuides.map((list) => ({
     url: absoluteUrl(getListHref(list)),
     lastModified: new Date(list.createdAt),
     changeFrequency: "monthly" as const,

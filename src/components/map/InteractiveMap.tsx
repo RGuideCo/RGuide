@@ -3,7 +3,7 @@
 import dynamic from "next/dynamic";
 import { useEffect, useState } from "react";
 
-import { Continent, MapList, SelectionState } from "@/types";
+import type { Continent, MapList, SelectionState } from "@/types";
 
 type SavedMapLocation = {
   id: string;
@@ -37,6 +37,7 @@ interface InteractiveMapProps {
   guideFocus?: MapList | null;
   activeGuide?: MapList | null;
   activeGuideFitNonce?: number;
+  guideLists?: MapList[];
   savedLocations?: SavedMapLocation[];
   visibleNestedStopParentIds?: string[];
   hoveredStopId?: string | null;

@@ -4,9 +4,9 @@ import { notFound } from "next/navigation";
 
 import { MapListCard } from "@/components/cards/MapListCard";
 import { ListGuideWorkspace } from "@/components/list/ListGuideWorkspace";
-import { continents } from "@/data";
+import { getContinentsWithDestinationDescriptions } from "@/lib/destination-descriptions";
 import { getCategoryHref, getCityHref, getListHref } from "@/lib/routes";
-import { getAllLists, getListBySlug } from "@/lib/mock-data";
+import { getServerEditorialGuides } from "@/lib/server-editorial-guides";
 
 interface ListDetailPageProps {
   params: Promise<{
@@ -16,7 +16,8 @@ interface ListDetailPageProps {
 
 export async function generateMetadata({ params }: ListDetailPageProps): Promise<Metadata> {
   const { slug } = await params;
-  const list = getListBySlug(slug);
+  const editorialGuides = await getServerEditorialGuides();
+  const list = editorialGuides.find((guide) => guide.slug === slug);
 
   if (!list) {
     return { title: "List not found" };
@@ -48,13 +49,17 @@ export async function generateMetadata({ params }: ListDetailPageProps): Promise
 
 export default async function ListDetailPage({ params }: ListDetailPageProps) {
   const { slug } = await params;
-  const list = getListBySlug(slug);
+  const [continents, editorialGuides] = await Promise.all([
+    getContinentsWithDestinationDescriptions(),
+    getServerEditorialGuides(),
+  ]);
+  const list = editorialGuides.find((guide) => guide.slug === slug);
 
   if (!list) {
     notFound();
   }
 
-  const relatedLists = getAllLists()
+  const relatedLists = editorialGuides
     .filter((item) => {
       if (item.id === list.id) {
         return false;

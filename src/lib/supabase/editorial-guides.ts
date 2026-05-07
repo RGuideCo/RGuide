@@ -1,35 +1,14 @@
 "use client";
 
 import { getSupabaseBrowserClient } from "@/lib/supabase/client";
-import type { GuideStop, MapList } from "@/types";
+import { applyEditorialPoiPhotos } from "@/lib/editorial-guides-shared";
+import type { EditorialPoiPhotoRecord } from "@/lib/editorial-guides-shared";
+import type { MapList } from "@/types";
 
 interface EditorialGuideRecord {
   id: string;
   list: MapList;
   updated_at: string;
-}
-
-interface EditorialPoiRecord {
-  id: string;
-  photo: string | null;
-}
-
-function applyPoiPhotos(guides: MapList[], pois: EditorialPoiRecord[]) {
-  const photoByPoiId = new Map(
-    pois
-      .filter((poi) => poi.photo)
-      .map((poi) => [poi.id, poi.photo as string]),
-  );
-  const applyStopPhoto = (stop: GuideStop): GuideStop => ({
-    ...stop,
-    photo: stop.poiId ? photoByPoiId.get(stop.poiId) ?? stop.photo : stop.photo,
-    places: stop.places?.map(applyStopPhoto),
-  });
-
-  return guides.map((guide) => ({
-    ...guide,
-    stops: guide.stops.map(applyStopPhoto),
-  }));
 }
 
 async function loadEditorialGuidesFromApi() {
@@ -75,11 +54,11 @@ export async function loadEditorialGuides() {
   const { data: pois } = await supabase
     .from("editorial_pois")
     .select("id,photo")
-    .returns<EditorialPoiRecord[]>();
+    .returns<EditorialPoiPhotoRecord[]>();
   const guides = (data ?? []).map((record) => record.list);
 
   return {
-    guides: applyPoiPhotos(guides, pois ?? []),
+    guides: applyEditorialPoiPhotos(guides, pois ?? []),
     error: null,
   };
 }

@@ -34,6 +34,7 @@ interface MapClientProps {
   guideFocus?: MapList | null;
   activeGuide?: MapList | null;
   activeGuideFitNonce?: number;
+  guideLists?: MapList[];
   savedLocations?: SavedMapLocation[];
   visibleNestedStopParentIds?: string[];
   hoveredStopId?: string | null;
@@ -228,13 +229,15 @@ const continentFocusPresets: Record<
 const countryFocusPresets: Record<string, { center: [number, number]; zoom: number }> = {
   usa: { center: [-96, 38.5], zoom: 4.2 },
 };
-const trendingCityIds = new Set(
-  [...mapLists]
-    .filter((list) => list.location.scope === "city" && list.location.city)
-    .sort((left, right) => right.upvotes - left.upvotes)
-    .slice(0, 16)
-    .map((list) => list.location.city as string),
-);
+function getTrendingCityIds(guideLists: MapList[]) {
+  return new Set(
+    [...guideLists]
+      .filter((list) => list.location.scope === "city" && list.location.city)
+      .sort((left, right) => right.upvotes - left.upvotes)
+      .slice(0, 16)
+      .map((list) => list.location.city as string),
+  );
+}
 const usStateLabels = [
   { id: "al", name: "Alabama", coordinates: [32.806671, -86.79113] },
   { id: "ak", name: "Alaska", coordinates: [61.370716, -152.404419] },
@@ -1270,13 +1273,15 @@ function createStateLabelData(selection: SelectionState): FeatureCollection<Poin
 function createCityData(
   continents: Continent[],
   selection: SelectionState,
+  guideLists: MapList[],
   guideFocus?: MapList | null,
 ): FeatureCollection<Point, CityFeatureProperties> {
+  const trendingCityIds = getTrendingCityIds(guideLists);
   const cityScoreLookup = new Map(
     continents.flatMap((continent) =>
       continent.countries.flatMap((country) =>
         country.cities.map((city) => {
-          const cityLists = mapLists.filter(
+          const cityLists = guideLists.filter(
             (list) =>
               list.location.scope === "city" &&
               list.location.city === city.name &&
@@ -1929,6 +1934,7 @@ export function MapClient({
   guideFocus,
   activeGuide,
   activeGuideFitNonce = 0,
+  guideLists = mapLists,
   savedLocations = [],
   visibleNestedStopParentIds = [],
   hoveredStopId,
@@ -2020,8 +2026,8 @@ export function MapClient({
     [continents, selection],
   );
   const cityData = useMemo(
-    () => createCityData(continents, selection, guideFocus),
-    [continents, guideFocus, selection],
+    () => createCityData(continents, selection, guideLists, guideFocus),
+    [continents, guideFocus, guideLists, selection],
   );
   const stateLabelData = useMemo(() => createStateLabelData(selection), [selection]);
   const guideStopData = useMemo(
