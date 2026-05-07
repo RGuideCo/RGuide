@@ -66,7 +66,7 @@ export const madridNeighborhoodGuides = [
           "sat": "12:00 PM-12:00 AM",
           "sun": "12:00 PM-10:30 PM"
         },
-        "photo": "http://www.casalabra.es/wp-content/uploads/2013/06/el-bar"
+        "photo": "http://www.casalabra.es/wp-content/uploads/2013/06/el-bar.jpg"
       },
       {
         "id": "sol-food-mercado-san-miguel",
@@ -166,7 +166,7 @@ export const madridNeighborhoodGuides = [
           40.4172,
           -3.7044
         ],
-        "description": "A classic central beer-and-croquette counter that works as a first drink before the night gets more complicated. Use Casa Labra when the group needs a clear mood, crowd, and second-stop direction before moving on.",
+        "description": "Casa Labra is a centenary tavern near Puerta del Sol, famous for cod and cod croquettes served in a room that still feels close to its 19th-century bar roots. It belongs in a night plan as a Madrid-specific aperitif stop: beer, bacalao, and a quick standing-room ritual before the evening changes shape.",
         "hours": {
           "mon": "12:00 PM-11:00 PM",
           "tue": "12:00 PM-11:00 PM",
@@ -176,7 +176,7 @@ export const madridNeighborhoodGuides = [
           "sat": "12:00 PM-12:00 AM",
           "sun": "12:00 PM-10:30 PM"
         },
-        "photo": "http://www.casalabra.es/wp-content/uploads/2013/06/el-bar"
+        "photo": "http://www.casalabra.es/wp-content/uploads/2013/06/el-bar.jpg"
       },
       {
         "id": "sol-nightlife-edition-roof",
@@ -185,7 +185,7 @@ export const madridNeighborhoodGuides = [
           40.4171,
           -3.7062
         ],
-        "description": "A polished rooftop above the central churn, useful when the plan needs skyline and hotel-bar control rather than tavern noise. Use The Madrid EDITION Roof when the first drink should come with a view and an easy group meet-up point.",
+        "description": "The Madrid EDITION Roof means Oroya's terrace above Plaza de Celenque, with Peruvian-leaning drinks, greenery, and rooftop views over the old center. Use it when the Sol plan needs a polished hotel terrace rather than another tavern or crowded street bar.",
         "hours": {
           "mon": "6:00 PM-12:30 AM",
           "tue": "6:00 PM-12:30 AM",
@@ -195,7 +195,7 @@ export const madridNeighborhoodGuides = [
           "sat": "6:00 PM-2:30 AM",
           "sun": "6:00 PM-12:00 AM"
         },
-        "photo": "https://images.unsplash.com/photo-1519671482749-fd09be7ccebf?auto=format&fit=crop&w=900&q=80"
+        "photo": "https://www.oroyamadrid.com/en/resourcefiles/homeimages/oroya-terrace.jpg"
       },
       {
         "id": "sol-nightlife-toni2",
@@ -204,7 +204,7 @@ export const madridNeighborhoodGuides = [
           40.421,
           -3.6976
         ],
-        "description": "A late piano-bar institution near Gran Via where singing, crowd energy, and old Madrid showmanship are the point. Use Toni 2 Piano Bar when the night is meant to continue past dinner into music, tickets, or a louder final room.",
+        "description": "Toni 2 Piano Bar is the Gran Via singalong institution where the room, piano, and crowd participation matter more than cocktail seriousness. It works for a theatrical late stop when the night should turn communal and a little chaotic.",
         "hours": {
           "mon": "10:00 PM-2:30 AM",
           "tue": "10:00 PM-2:30 AM",
@@ -223,7 +223,7 @@ export const madridNeighborhoodGuides = [
           40.4214,
           -3.7028
         ],
-        "description": "A central cocktail room that gives the Sol/Gran Via area a quieter, more deliberate drink before moving into Chueca or Malasana. Use Josealfredo when one well-made drink is the event, not just a stop between bars.",
+        "description": "Josealfredo is the central cocktail room for a quieter, more deliberate drink around Gran Via and Malasana. The appeal is classic-bar intimacy, low light, and a proper glass before the night moves into louder neighborhoods.",
         "hours": {
           "mon": "6:00 PM-12:30 AM",
           "tue": "6:00 PM-12:30 AM",
@@ -233,7 +233,7 @@ export const madridNeighborhoodGuides = [
           "sat": "6:00 PM-2:30 AM",
           "sun": "6:00 PM-12:00 AM"
         },
-        "photo": "https://images.unsplash.com/photo-1470337458703-46ad1756a187?auto=format&fit=crop&w=900&q=80"
+        "photo": "https://www.josealfredobar.com/img/copa011.jpg"
       }
     ],
     "sources": [
@@ -773,7 +773,7 @@ export const madridNeighborhoodGuides = [
           "sat": "12:00 PM-2:00 AM",
           "sun": "12:00 PM-12:00 AM"
         },
-        "photo": "https://www.vivamadrid.com/uploads/1/3/6/3/136359884/img-3343_orig"
+        "photo": "https://www.vivamadrid.com/uploads/1/3/6/3/136359884/img-3343_orig.jpg"
       }
     ],
     "sources": [
@@ -831,7 +831,7 @@ export const madridNeighborhoodGuides = [
           40.4159,
           -3.6997
         ],
-        "description": "The world-ranked cocktail room that gives Las Letras its destination-drink gravity. Use Salmon Guru when one well-made drink is the event, not just a stop between bars.",
+        "description": "Salmon Guru gives Las Letras its high-voltage cocktail destination, with Diego Cabrera's comic-book rooms, playful glassware, and world-ranked bar reputation. It is the stop for inventive drinks and spectacle rather than a quiet vermouth.",
         "hours": {
           "mon": "6:00 PM-12:30 AM",
           "tue": "6:00 PM-12:30 AM",
@@ -850,7 +850,7 @@ export const madridNeighborhoodGuides = [
           40.415,
           -3.6992
         ],
-        "description": "A classic sherry bar with old-room rules and a strong sense of Madrid before cocktail spectacle took over. Use La Venencia when one well-made drink is the event, not just a stop between bars.",
+        "description": "La Venencia is the old sherry bar that keeps Las Letras tied to a drier, stricter Madrid drinking tradition. Go for fino, manzanilla, dusty bottles, and a room where the rules and patina are part of the experience.",
         "hours": {
           "mon": "6:00 PM-12:00 AM",
           "tue": "6:00 PM-12:00 AM",
@@ -860,7 +860,7 @@ export const madridNeighborhoodGuides = [
           "sat": "6:00 PM-1:00 AM",
           "sun": "6:00 PM-11:00 PM"
         },
-        "photo": "https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?auto=format&fit=crop&w=900&q=80"
+        "photo": "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/29/bf/3d/58/caption.jpg?w=1200&h=1200&s=1"
       },
       {
         "id": "letras-nightlife-viva-madrid",
@@ -869,7 +869,7 @@ export const madridNeighborhoodGuides = [
           40.4148,
           -3.7003
         ],
-        "description": "Restored tilework, vermouth, cocktails, and a tavern-to-nightlife bridge in the literary quarter. Use Viva Madrid when one well-made drink is the event, not just a stop between bars.",
+        "description": "Viva Madrid is a restored literary-quarter tavern where tilework, vermouth, cocktails, and old-room detail carry the night. It works as a bridge between dinner and later bars because the setting feels distinctly Madrid without needing a full club plan.",
         "hours": {
           "mon": "12:00 PM-12:30 AM",
           "tue": "12:00 PM-12:30 AM",
@@ -879,7 +879,7 @@ export const madridNeighborhoodGuides = [
           "sat": "12:00 PM-2:00 AM",
           "sun": "12:00 PM-12:00 AM"
         },
-        "photo": "https://www.vivamadrid.com/uploads/1/3/6/3/136359884/img-3343_orig"
+        "photo": "https://www.vivamadrid.com/uploads/1/3/6/3/136359884/img-3343_orig.jpg"
       },
       {
         "id": "letras-nightlife-cafe-central",
@@ -888,7 +888,7 @@ export const madridNeighborhoodGuides = [
           40.4142,
           -3.7009
         ],
-        "description": "A Plaza Santa Ana jazz institution for a seated, music-led night instead of a bar crawl. Use Café Central when the night should have a seated performance or communal room instead of another standing bar.",
+        "description": "Café Central is the Plaza Santa Ana jazz institution for a seated, music-led night. Choose it when the evening should be built around a performance, a table, and a shared room rather than a bar crawl.",
         "hours": {
           "mon": "Event schedule (check venue)",
           "tue": "Event schedule (check venue)",
@@ -898,7 +898,7 @@ export const madridNeighborhoodGuides = [
           "sat": "Event schedule (check venue)",
           "sun": "Event schedule (check venue)"
         },
-        "photo": "https://images.unsplash.com/photo-1514525253161-7a46d19cd819?auto=format&fit=crop&w=900&q=80"
+        "photo": "https://cafecentralmadrid.com/uploads/events/00-evento-20260329-173600_hu_94ba4bdc15a3c8f.webp"
       }
     ],
     "sources": [
@@ -1375,7 +1375,7 @@ export const madridNeighborhoodGuides = [
           "sat": "12:30 PM-4:00 PM, 7:30 PM-11:30 PM",
           "sun": "12:30 PM-4:00 PM, 7:30 PM-11:00 PM"
         },
-        "photo": "https://tabernalacatapa.com/wp-content/uploads/2025/07/Salpicebiche_La_Catapa_03-2048x1366"
+        "photo": "https://tabernalacatapa.com/wp-content/uploads/2025/07/Salpicebiche_La_Catapa_03-2048x1366.webp"
       },
       {
         "id": "retiro-food-kulto",
@@ -1417,7 +1417,7 @@ export const madridNeighborhoodGuides = [
           "sat": "12:00 PM-1:00 AM",
           "sun": "12:00 PM-12:00 AM"
         },
-        "photo": "https://www.floridapark.es/assets/media/florida-park/locales-fotos/el-pabellon/3-05112025093404501"
+        "photo": "https://www.floridapark.es/assets/media/florida-park/locales-fotos/la-galeria/2025.08.02_Fotos%20La%20Galeri%CC%81a%20de%20Florida%20Park%20Sergio%20Almarcha89-12122025103016268.jpg"
       },
       {
         "id": "retiro-food-perro-galleta",
@@ -1496,7 +1496,7 @@ export const madridNeighborhoodGuides = [
           40.4193,
           -3.6882
         ],
-        "description": "Florida Retiro turns the park into a night plan rather than only a daytime walk, with dining, drinks, leisure, and several spaces under the Florida Park umbrella. Use it when the evening should stay in Retiro and move from food into music or cocktails without changing neighborhoods.",
+        "description": "Florida Retiro turns the park into a night plan through Florida Park's dining, cocktails, music, and multi-space setup. La Galería and the broader complex make sense when the evening should stay inside Retiro while still feeling social and dressed for later hours.",
         "hours": {
           "mon": "6:00 PM-12:30 AM",
           "tue": "6:00 PM-12:30 AM",
@@ -1506,7 +1506,7 @@ export const madridNeighborhoodGuides = [
           "sat": "6:00 PM-2:30 AM",
           "sun": "6:00 PM-12:00 AM"
         },
-        "photo": "https://www.floridapark.es/assets/media/florida-park/locales-fotos/el-pabellon/3-05112025093404501"
+        "photo": "https://www.floridapark.es/assets/media/florida-park/locales-fotos/la-galeria/2025.08.02_Fotos%20La%20Galeri%CC%81a%20de%20Florida%20Park%20Sergio%20Almarcha89-12122025103016268.jpg"
       },
       {
         "id": "retiro-nightlife-mandarin-bar",
@@ -1515,7 +1515,7 @@ export const madridNeighborhoodGuides = [
           40.4156,
           -3.6926
         ],
-        "description": "A refined hotel-bar choice near the Prado and Retiro for a quiet cocktail after museum time. Use Pictura at Mandarin Oriental Ritz when one well-made drink is the event, not just a stop between bars.",
+        "description": "Pictura at Mandarin Oriental Ritz is the refined hotel-bar option beside the Prado and Retiro, built for a composed cocktail after museum time. The draw is palace-hotel polish, careful service, and a quieter room than the surrounding late-night neighborhoods.",
         "hours": {
           "mon": "6:00 PM-12:30 AM",
           "tue": "6:00 PM-12:30 AM",
@@ -1525,7 +1525,7 @@ export const madridNeighborhoodGuides = [
           "sat": "6:00 PM-2:30 AM",
           "sun": "6:00 PM-12:00 AM"
         },
-        "photo": "https://images.unsplash.com/photo-1470337458703-46ad1756a187?auto=format&fit=crop&w=900&q=80"
+        "photo": "https://cdn-assets-eu.frontify.com/s3/frontify-enterprise-files-eu/eyJvYXV0aCI6eyJjbGllbnRfaWQiOiJzaXRlY29yZSJ9LCJwYXRoIjoibWFuZGFyaW4tb3JpZW50YWwtaG90ZWwtZ3JvdXBcL2ZpbGVcLzZMd05RWWZoQnM0YVlDempzMTJxLmpwZyJ9:mandarin-oriental-hotel-group:O39D5V82VXKlHWiQx3UZCeJRD96bv2et1FNJExRxEJ0?width=1920&height=617&fp=0.5,0.5&crop=fp&quality=75"
       },
       {
         "id": "retiro-nightlife-la-catapa",
@@ -1534,7 +1534,7 @@ export const madridNeighborhoodGuides = [
           40.421,
           -3.6757
         ],
-        "description": "Wine and tapas make La Catapa a practical Retiro aperitif stop rather than a late-night destination. Use La Catapa when the night is meant to continue past dinner into music, tickets, or a louder final room.",
+        "description": "La Catapa gives Retiro a wine-and-tapas night rather than a club plan, with the same tavern focus that makes it useful for Ibiza-area dinners. It fits an evening of bottles, seafood-leaning plates, and conversation after the park or museums.",
         "hours": {
           "mon": "12:00 PM-11:00 PM",
           "tue": "12:00 PM-11:00 PM",
@@ -1544,7 +1544,7 @@ export const madridNeighborhoodGuides = [
           "sat": "12:00 PM-12:00 AM",
           "sun": "12:00 PM-10:30 PM"
         },
-        "photo": "https://tabernalacatapa.com/wp-content/uploads/2025/07/Salpicebiche_La_Catapa_03-2048x1366"
+        "photo": "https://tabernalacatapa.com/wp-content/uploads/2025/07/Salpicebiche_La_Catapa_03-2048x1366.webp"
       },
       {
         "id": "retiro-nightlife-ramses",
@@ -1553,7 +1553,7 @@ export const madridNeighborhoodGuides = [
           40.4202,
           -3.6887
         ],
-        "description": "A Puerta de Alcalá-adjacent cocktail and restaurant room for a polished Retiro-edge night. Use Ramses when the night is meant to continue past dinner into music, tickets, or a louder final room.",
+        "description": "Ramses is the Puerta de Alcalá terrace-and-restaurant complex for a polished Retiro-edge night. Use it for design-forward drinks, dinner energy, and a landmark-facing setting rather than a low-key neighborhood bar.",
         "hours": {
           "mon": "6:00 PM-12:30 AM",
           "tue": "6:00 PM-12:30 AM",
@@ -1563,7 +1563,7 @@ export const madridNeighborhoodGuides = [
           "sat": "6:00 PM-2:30 AM",
           "sun": "6:00 PM-12:00 AM"
         },
-        "photo": "https://images.unsplash.com/photo-1470337458703-46ad1756a187?auto=format&fit=crop&w=900&q=80"
+        "photo": "https://ramseslife.com/img/terrace.jpg"
       }
     ],
     "sources": [
@@ -2140,7 +2140,7 @@ export const madridNeighborhoodGuides = [
           40.4234,
           -3.7036
         ],
-        "description": "A classic-cocktail room for starting a Malasana night with structure before moving into louder bars. Use 1862 Dry Bar when one well-made drink is the event, not just a stop between bars.",
+        "description": "1862 Dry Bar is the Malasana classic-cocktail room for drinkers who want technique, a historic bar feel, and a calmer start than the neighborhood's louder late rooms. It anchors the night with structure before the plan gets looser.",
         "hours": {
           "mon": "6:00 PM-12:30 AM",
           "tue": "6:00 PM-12:30 AM",
@@ -2150,7 +2150,7 @@ export const madridNeighborhoodGuides = [
           "sat": "6:00 PM-2:30 AM",
           "sun": "6:00 PM-12:00 AM"
         },
-        "photo": "https://images.unsplash.com/photo-1470337458703-46ad1756a187?auto=format&fit=crop&w=900&q=80"
+        "photo": "https://cdn.corner.inc/place-photo/AZose0n_3OpO_i5zeyI2xMI-wwp0xNVWhKbajc4GfaV-jJ0zo4WhKN7Kp9EPWq0s_NKsPGsAwGLNj_u9NU_IwxVkQ1ntJJs5XvO2atajqXSXkMF4rl26Py4XubUVQG1uBtgarIYNf-RVFHl3oV32qy5rx8w-y53OijCQM4bxAgQHG6PHspKO"
       },
       {
         "id": "malasana-nightlife-mondo",
@@ -2159,7 +2159,7 @@ export const madridNeighborhoodGuides = [
           40.4264,
           -3.7004
         ],
-        "description": "The electronic-club anchor near Barceló, with programming that makes it a planned late stop rather than a random dance floor. Use Mondo Disko when the night is meant to continue past dinner into music, tickets, or a louder final room.",
+        "description": "Mondo Disko is the electronic-club anchor near Barceló, built around programmed nights rather than casual drop-in drinks. Save it for the point in the evening when the plan is dancing, tickets, and a proper late finish.",
         "hours": {
           "mon": "Event schedule (check venue)",
           "tue": "Event schedule (check venue)",
@@ -2178,7 +2178,7 @@ export const madridNeighborhoodGuides = [
           40.4267,
           -3.7044
         ],
-        "description": "A Movida-linked Malasana classic for rock-and-roll nostalgia, affordable drinks, and late neighborhood energy. Use La Vía Láctea when the night is meant to continue past dinner into music, tickets, or a louder final room.",
+        "description": "La Vía Láctea is the Malasana classic tied to Movida memory, rock-and-roll posters, affordable drinks, and late neighborhood energy. It keeps the guide connected to the area's scruffier nightlife history.",
         "hours": {
           "mon": "6:00 PM-12:30 AM",
           "tue": "6:00 PM-12:30 AM",
@@ -2188,7 +2188,7 @@ export const madridNeighborhoodGuides = [
           "sat": "6:00 PM-2:30 AM",
           "sun": "6:00 PM-12:00 AM"
         },
-        "photo": "https://images.unsplash.com/photo-1501386761578-eac5c94b800a?auto=format&fit=crop&w=900&q=80"
+        "photo": "https://upload.wikimedia.org/wikipedia/commons/8/86/Malasa%C3%B1a_Via_lactea.jpg"
       },
       {
         "id": "malasana-nightlife-tupperware",
@@ -2197,7 +2197,7 @@ export const madridNeighborhoodGuides = [
           40.4271,
           -3.7042
         ],
-        "description": "A pop-culture dive with kitsch, music, and the kind of unpolished room that makes Malasana feel like itself. Use TupperWare when the night should have a seated performance or communal room instead of another standing bar.",
+        "description": "TupperWare is the pop-culture dive where kitsch, music, and unpolished Malasana character are the draw. It belongs in the night when the group wants personality and noise more than a perfectly made cocktail.",
         "hours": {
           "mon": "6:00 PM-12:30 AM",
           "tue": "6:00 PM-12:30 AM",
@@ -2207,7 +2207,7 @@ export const madridNeighborhoodGuides = [
           "sat": "6:00 PM-2:30 AM",
           "sun": "6:00 PM-12:00 AM"
         },
-        "photo": "https://images.unsplash.com/photo-1501386761578-eac5c94b800a?auto=format&fit=crop&w=900&q=80"
+        "photo": "https://live.staticflickr.com/65535/52806715131_61477c7969_b.jpg"
       }
     ],
     "sources": [
@@ -2784,7 +2784,7 @@ export const madridNeighborhoodGuides = [
           40.4113,
           -3.711
         ],
-        "description": "A La Latina rooftop classic for views, groups, and a first drink above the Cava Baja flow. Use El Viajero when the first drink should come with a view and an easy group meet-up point.",
+        "description": "El Viajero spreads La Latina nightlife across multiple floors, with street-level energy, indoor dining, and the rooftop terrace as the main prize. It works when the evening needs Cava Baja proximity, views, and a casual climb from tapas into drinks.",
         "hours": {
           "mon": "12:00 PM-12:30 AM",
           "tue": "12:00 PM-12:30 AM",
@@ -2794,7 +2794,7 @@ export const madridNeighborhoodGuides = [
           "sat": "12:00 PM-2:00 AM",
           "sun": "12:00 PM-12:00 AM"
         },
-        "photo": "https://images.unsplash.com/photo-1533174072545-7a4b6ad7a6c3?auto=format&fit=crop&w=900&q=80"
+        "photo": "https://www.elviajeromadrid.com/images/nosotros4.jpg"
       },
       {
         "id": "latina-nightlife-taberna-concha",
@@ -2803,7 +2803,7 @@ export const madridNeighborhoodGuides = [
           40.4115,
           -3.7114
         ],
-        "description": "Vermouth, tapas, and compact Cava Baja energy for a low-friction La Latina night. Use Taberna La Concha when you want a lower-friction start with food, vermouth, or wine still in the mix.",
+        "description": "Taberna La Concha keeps a La Latina night anchored in vermouth, wine, tapas, and compact Cava Baja energy. It is better as a flavorful neighborhood start than as a late-room destination.",
         "hours": {
           "mon": "12:00 PM-12:30 AM",
           "tue": "12:00 PM-12:30 AM",
@@ -2819,10 +2819,10 @@ export const madridNeighborhoodGuides = [
         "id": "latina-nightlife-marula",
         "name": "Marula Café",
         "coordinates": [
-          40.4112,
-          -3.7086
+          40.4134,
+          -3.71327
         ],
-        "description": "A late music room near La Latina for DJs, funk, soul, and a louder finish after tapas. Use Marula Café when the night is meant to continue past dinner into music, tickets, or a louder final room.",
+        "description": "Marula Café sits by Caños Viejos as a La Latina music-and-dance room known for funk, soul, jazz, Afrobeat, and DJ-led nights. Use it when tapas should turn into a dance floor without leaving the old-city edge.",
         "hours": {
           "mon": "10:00 PM-2:30 AM",
           "tue": "10:00 PM-2:30 AM",
@@ -2832,7 +2832,7 @@ export const madridNeighborhoodGuides = [
           "sat": "10:00 PM-5:00 AM",
           "sun": "10:00 PM-2:30 AM"
         },
-        "photo": "https://images.unsplash.com/photo-1501386761578-eac5c94b800a?auto=format&fit=crop&w=900&q=80"
+        "photo": "https://marulacafe.com/wp-content/uploads/2025/03/vlcsnap-2025-03-14-10h48m24s722.jpg"
       },
       {
         "id": "latina-nightlife-contra",
@@ -2841,7 +2841,7 @@ export const madridNeighborhoodGuides = [
           40.4102,
           -3.7093
         ],
-        "description": "A small club and live-room option when the night moves beyond taverns and rooftops. Use ContraClub when the first drink should come with a view and an easy group meet-up point.",
+        "description": "ContraClub is the small live-room and club option for when La Latina moves beyond taverns and rooftops. It belongs in the guide as a later, music-led stop with a more compact feel than the city's big electronic rooms.",
         "hours": {
           "mon": "Event schedule (check venue)",
           "tue": "Event schedule (check venue)",
@@ -2851,7 +2851,7 @@ export const madridNeighborhoodGuides = [
           "sat": "Event schedule (check venue)",
           "sun": "Event schedule (check venue)"
         },
-        "photo": "https://images.unsplash.com/photo-1501386761578-eac5c94b800a?auto=format&fit=crop&w=900&q=80"
+        "photo": "https://live.staticflickr.com/21/27496477_31da0c243d_b.jpg"
       }
     ],
     "sources": [
@@ -3328,7 +3328,7 @@ export const madridNeighborhoodGuides = [
           "sat": "1:00 PM-4:00 PM, 8:00 PM-11:30 PM",
           "sun": "1:00 PM-4:00 PM, 8:00 PM-11:00 PM"
         },
-        "photo": "https://madrid-angelita.es/wp-content/uploads/elementor/thumbs/img5-food-qzwl3ptwk9tg7q6stw4dct91z09bj6nylbgfgsnknm"
+        "photo": "https://madrid-angelita.es/wp-content/uploads/elementor/thumbs/img5-food-qzwl3ptwk9tg7q6stw4dct91z09bj6nylbgfgsnknm.jpg"
       },
       {
         "id": "chueca-food-mercado-san-anton",
@@ -3449,7 +3449,7 @@ export const madridNeighborhoodGuides = [
           40.4208,
           -3.7005
         ],
-        "description": "A world-ranked basement cocktail bar beneath a wine-led restaurant, best for a serious Chueca drink. Use Angelita when one well-made drink is the event, not just a stop between bars.",
+        "description": "Angelita's downstairs bar gives Chueca a serious cocktail stop beneath a wine-led restaurant. It works when the night should move from dinner into a basement bar with produce-driven drinks and a more intimate mood.",
         "hours": {
           "mon": "6:00 PM-12:30 AM",
           "tue": "6:00 PM-12:30 AM",
@@ -3459,7 +3459,7 @@ export const madridNeighborhoodGuides = [
           "sat": "6:00 PM-2:30 AM",
           "sun": "6:00 PM-12:00 AM"
         },
-        "photo": "https://madrid-angelita.es/wp-content/uploads/elementor/thumbs/img5-food-qzwl3ptwk9tg7q6stw4dct91z09bj6nylbgfgsnknm"
+        "photo": "https://madrid-angelita.es/wp-content/uploads/elementor/thumbs/img5-food-qzwl3ptwk9tg7q6stw4dct91z09bj6nylbgfgsnknm.jpg"
       },
       {
         "id": "chueca-nightlife-ficus",
@@ -3468,7 +3468,7 @@ export const madridNeighborhoodGuides = [
           40.4221,
           -3.6984
         ],
-        "description": "A current Chueca cocktail room with plant-filled styling and a more neighborhood-scaled mood. Use Ficus Bar when one well-made drink is the event, not just a stop between bars.",
+        "description": "Ficus Bar is a current Chueca cocktail room with plant-filled styling, neighborhood scale, and a more relaxed pace than the Gran Via classics. It is useful for a stylish drink without turning the night into a destination-bar pilgrimage.",
         "hours": {
           "mon": "6:00 PM-12:30 AM",
           "tue": "6:00 PM-12:30 AM",
@@ -3487,7 +3487,7 @@ export const madridNeighborhoodGuides = [
           40.4204,
           -3.6999
         ],
-        "description": "A Gran Via-adjacent cocktail classic for old Madrid glamour and a more polished start to the night. Use Museo Chicote when the night is meant to continue past dinner into music, tickets, or a louder final room.",
+        "description": "Museo Chicote matters because it opened as Spain's first cocktail bar and still gives Gran Via a dose of old Madrid glamour. Use it for history, mirrored-room polish, and classic cocktail atmosphere on the Chueca edge.",
         "hours": {
           "mon": "6:00 PM-12:30 AM",
           "tue": "6:00 PM-12:30 AM",
@@ -3497,7 +3497,7 @@ export const madridNeighborhoodGuides = [
           "sat": "6:00 PM-2:30 AM",
           "sun": "6:00 PM-12:00 AM"
         },
-        "photo": "https://images.unsplash.com/photo-1470337458703-46ad1756a187?auto=format&fit=crop&w=900&q=80"
+        "photo": "https://www.museochicote.com/wp-content/uploads/sites/126/2025/08/MUSEO-CHICOTE-10-BAJA-1920x1294.jpg"
       },
       {
         "id": "chueca-nightlife-toni2",
@@ -3506,7 +3506,7 @@ export const madridNeighborhoodGuides = [
           40.421,
           -3.6976
         ],
-        "description": "A late piano-bar institution for singalong energy when Chueca should end theatrically. Use Toni 2 Piano Bar here when the neighborhood night needs music, participation, and a louder final room.",
+        "description": "Toni 2 Piano Bar is the Chueca-adjacent singalong finish, close enough for the neighborhood's late rhythm but theatrical in its own old-school way. Go when the night needs piano, crowd energy, and a room that wants everyone involved.",
         "hours": {
           "mon": "10:00 PM-2:30 AM",
           "tue": "10:00 PM-2:30 AM",
@@ -4037,7 +4037,7 @@ export const madridCitywideGuides = [
           "sat": "1:00 PM-4:00 PM, 8:00 PM-11:30 PM",
           "sun": "1:00 PM-4:00 PM, 8:00 PM-11:00 PM"
         },
-        "photo": "https://madrid-angelita.es/wp-content/uploads/elementor/thumbs/img5-food-qzwl3ptwk9tg7q6stw4dct91z09bj6nylbgfgsnknm"
+        "photo": "https://madrid-angelita.es/wp-content/uploads/elementor/thumbs/img5-food-qzwl3ptwk9tg7q6stw4dct91z09bj6nylbgfgsnknm.jpg"
       },
       {
         "id": "madrid-food-playing-solo",
@@ -4182,7 +4182,7 @@ export const madridCitywideGuides = [
           40.4159,
           -3.6997
         ],
-        "description": "Salmon Guru is the Las Letras destination cocktail bar: World's 50 Best Bars ranks the Madrid flagship in the 2025 list, while Condé Nast Traveler and Time Out both underline the high-energy rooms and Diego Cabrera's inventive drinks. Use Salmon Guru when the cocktail is the event, not a casual post-dinner afterthought.",
+        "description": "Salmon Guru is Madrid's citywide cocktail showpiece, known for Diego Cabrera's inventive drinks, graphic rooms, and international bar-list attention. It belongs here as the high-energy destination drink, not as a quiet nightcap.",
         "hours": {
           "mon": "6:00 PM-12:30 AM",
           "tue": "6:00 PM-12:30 AM",
@@ -4201,7 +4201,7 @@ export const madridCitywideGuides = [
           40.4208,
           -3.7005
         ],
-        "description": "Angelita is the Chueca wine-bar-to-cocktail progression. World's 50 Best Discovery describes the split between street-level wine bar and basement cocktail lounge, with a strong local-produce and sustainability identity, so it is ideal after dinner when the group wants a serious drink without changing neighborhoods.",
+        "description": "Angelita gives the citywide nightlife guide a Chueca crossover: wine-led restaurant upstairs, cocktail seriousness downstairs. The value is being able to build a whole night around one address without it feeling like a generic bar stop.",
         "hours": {
           "mon": "6:00 PM-12:30 AM",
           "tue": "6:00 PM-12:30 AM",
@@ -4211,7 +4211,7 @@ export const madridCitywideGuides = [
           "sat": "6:00 PM-2:30 AM",
           "sun": "6:00 PM-12:00 AM"
         },
-        "photo": "https://madrid-angelita.es/wp-content/uploads/elementor/thumbs/img5-food-qzwl3ptwk9tg7q6stw4dct91z09bj6nylbgfgsnknm"
+        "photo": "https://madrid-angelita.es/wp-content/uploads/elementor/thumbs/img5-food-qzwl3ptwk9tg7q6stw4dct91z09bj6nylbgfgsnknm.jpg"
       },
       {
         "id": "madrid-nightlife-ficus",
@@ -4220,7 +4220,7 @@ export const madridCitywideGuides = [
           40.4221,
           -3.6984
         ],
-        "description": "Ficus Bar adds a current Chueca cocktail stop with a more neighborhood-scaled feel than the international trophy bars. Time Out's 2025 review frames it around author cocktails and an exotic, plant-filled room, making it a good fit for a Chueca night that should stay social and stylish.",
+        "description": "Ficus Bar gives the citywide set a newer Chueca cocktail mood: lush room, neighborhood intimacy, and drinks that feel current without the scale of the big destination bars. It is a strong choice when the night should stay stylish but not overproduced.",
         "hours": {
           "mon": "6:00 PM-12:30 AM",
           "tue": "6:00 PM-12:30 AM",
@@ -4239,7 +4239,7 @@ export const madridCitywideGuides = [
           40.4234,
           -3.7036
         ],
-        "description": "1862 Dry Bar is the classic-cocktail Malasana/Tribunal choice, useful when the night needs a quieter, bartender-led drink instead of neon spectacle. It balances Madrid's newer cocktail reputation with a more restrained room and belongs between dinner and a later Malasana move.",
+        "description": "1862 Dry Bar is the citywide classic-cocktail pick for a measured drink around Malasana. It is best for technique, atmosphere, and a slower start before Madrid's louder late-night rooms take over.",
         "hours": {
           "mon": "6:00 PM-12:30 AM",
           "tue": "6:00 PM-12:30 AM",
@@ -4249,7 +4249,7 @@ export const madridCitywideGuides = [
           "sat": "6:00 PM-2:30 AM",
           "sun": "6:00 PM-12:00 AM"
         },
-        "photo": "https://images.unsplash.com/photo-1470337458703-46ad1756a187?auto=format&fit=crop&w=900&q=80"
+        "photo": "https://cdn.corner.inc/place-photo/AZose0n_3OpO_i5zeyI2xMI-wwp0xNVWhKbajc4GfaV-jJ0zo4WhKN7Kp9EPWq0s_NKsPGsAwGLNj_u9NU_IwxVkQ1ntJJs5XvO2atajqXSXkMF4rl26Py4XubUVQG1uBtgarIYNf-RVFHl3oV32qy5rx8w-y53OijCQM4bxAgQHG6PHspKO"
       },
       {
         "id": "madrid-nightlife-mondo-disko",
@@ -4258,7 +4258,7 @@ export const madridCitywideGuides = [
           40.4264,
           -3.7004
         ],
-        "description": "Mondo Disko is the electronic-music anchor near Barceló: the venue traces its club history back to 1999 and still programs Thursday, Saturday, and holiday-eve nights. Use Mondo Disko when the plan has moved beyond cocktails into tickets, DJs, and a proper late finish.",
+        "description": "Mondo Disko is the citywide electronic-club entry, useful when the night is planned around DJs and late hours instead of another round of cocktails. Check the programming first, then treat it as the dedicated dance-floor stop.",
         "hours": {
           "mon": "Event schedule (check venue)",
           "tue": "Event schedule (check venue)",
@@ -4277,7 +4277,7 @@ export const madridCitywideGuides = [
           40.421,
           -3.6976
         ],
-        "description": "Toni 2 gives the guide an old Madrid singalong finish near Chueca and Gran Via. It is not the polished cocktail lane; it is a late, theatrical piano-bar institution that works when the night should feel communal, slightly chaotic, and very Madrid.",
+        "description": "Toni 2 Piano Bar gives the citywide nightlife guide a Madrid singalong institution rather than a standard cocktail stop. It is the pick for a theatrical late room where piano, regulars, and audience participation define the night.",
         "hours": {
           "mon": "10:00 PM-2:30 AM",
           "tue": "10:00 PM-2:30 AM",
