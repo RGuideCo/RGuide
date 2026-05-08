@@ -3589,368 +3589,368 @@ function assignCityToNearestSubarea(city: Omit<City, "listCount">, subareas?: Su
 
 const europeanCountryDescriptions: Record<string, string> = {
   albania:
-    "A compact Adriatic country with mountain roads, Ottoman-era towns, and increasingly popular Riviera coast routes.",
+    "Albania asks for a route that lets the coast and mountains stay in conversation. Tirana can start the trip with city energy before Berat or Gjirokaster add old-town depth. The Riviera and northern valleys need honest road time, not a rushed loop.",
   austria:
-    "Alpine scenery, imperial cities, and efficient rail links make Austria ideal for balanced city-and-nature itineraries.",
+    "Austria is easiest to plan when rail logic leads. Vienna gives the cultural frame, while Salzburg or Graz can shift the pace without making the route feel scattered. Alpine lakes and ski valleys need season-aware days rather than scenic detours.",
   belarus:
-    "A broad Eastern European landscape of forested regions, Soviet-era urban cores, and slower-paced overland routes.",
+    "Belarus needs access checks before the route becomes practical. Minsk sets the urban scale with broad avenues and Soviet-era layers. Castles, forests, and regional towns can add context only when border rules and overland timing are clear.",
   belgium:
-    "A dense, rail-friendly country where medieval cores, design-forward cities, and food culture sit close together.",
+    "Belgium rewards short train hops instead of a single-city stay. Brussels and Antwerp give different versions of urban culture, while Ghent and Bruges carry the medieval scale. Food, beer, and museums should shape the sequence more than distance.",
   "bosnia-and-herzegovina":
-    "A mountainous Balkan destination with Ottoman-Austro layers, river valleys, and resilient city culture.",
+    "Bosnia and Herzegovina carries its history through streets, bridges, and mountain roads. Sarajevo and Mostar anchor the emotional core. River canyons, coffee culture, and smaller towns need enough time for context rather than scenery alone.",
   bulgaria:
-    "A Black Sea-to-mountain country with historic old towns, ski terrain, and strong value city breaks.",
+    "Bulgaria can move from Sofia's urban layers to monastery roads without turning expensive or complicated. The Black Sea, ski terrain, and old towns each ask for a different season. Choose coast, city culture, or highland time before adding more.",
   croatia:
-    "Adriatic coastlines, island ferries, and Roman-to-medieval urban cores define Croatia's highest-demand routes.",
+    "Croatia is shaped by ferries as much as by old stone towns. Dubrovnik and Split can anchor the coast, but island days need a different clock. National parks and Zagreb belong when peak-season pressure and transfer timing still leave room.",
   cyprus:
-    "A Mediterranean island destination blending beach routes, archaeological sites, and mountain village escapes.",
+    "Cyprus is more layered than a beach base suggests. Coastal resort days and divided-city history sit near archaeological sites and Troodos village roads. The trip feels cleaner when car logistics and crossing rules are settled early.",
   "czech-republic":
-    "A highly walkable Central European destination with Gothic-Baroque cityscapes, beer culture, and regional spa towns.",
+    "Czech Republic should not stop at Prague's busiest squares. The capital gives the first architectural hit, then spa towns or castle routes can widen the trip. Moravian wine and beer-hall culture make better use of the rail map.",
   denmark:
-    "Design-led cities, bike-first urbanism, and coastal micro-trips make Denmark easy to navigate and plan.",
+    "Denmark turns good infrastructure into an easy trip, but the best days still need focus. Copenhagen can lead with design, harbor swimming, and food. Jutland dunes or island ferries shift the mood toward coast, light, and slower movement.",
   estonia:
-    "A compact Baltic country pairing medieval old-town character with modern digital-city culture and forested coastlines.",
+    "Estonia pairs Tallinn's medieval core with a sharper modern edge. Bog walks and Baltic islands are close enough for compact plans, but they change the trip's texture. Let nature interrupt the old-town rhythm instead of staying only in the capital.",
   finland:
-    "Nordic city life, lake-country routes, and seasonal light cycles shape Finland's urban and nature itineraries.",
+    "Finland changes character with the light. Helsinki gives design and waterfront calm before the route turns toward lakes, saunas, or forest. Lapland should be chosen by season and daylight rather than squeezed into a northern checklist.",
   france:
-    "A destination-scale country where major cities, wine regions, mountain ranges, and Atlantic-Mediterranean coasts all coexist.",
+    "France becomes easier once the trip has a center of gravity. Paris can anchor the first pass before wine regions or Alpine towns pull the route elsewhere. Atlantic and Mediterranean coasts need different seasons, with rail timing and food deciding what comes next.",
   germany:
-    "A regionally diverse country with transit-efficient cities, industrial heritage, and strong culture-and-nightlife corridors.",
+    "Germany is strongest when the route follows regions instead of a greatest-hits line. Berlin and Munich ask for different social rhythms, while Hamburg or the Ruhr shifts the cultural frame. The Rhine adds another pace, so rail timing should decide how wide the trip gets.",
   greece:
-    "Island-hopping coastlines, ancient landmarks, and lively urban districts make Greece a multi-style trip destination.",
+    "Greece asks travelers to decide between island motion and mainland depth. Athens gives ancient context and modern nights before the route splits. Cycladic ferries and Crete need their own tempo, while northern towns or Peloponnese roads reward slower planning.",
   hungary:
-    "A Danube-centered country with thermal-bath culture, grand historic architecture, and growing regional city scenes.",
+    "Hungary is more than a Budapest weekend, though the capital carries the strongest first route. Thermal baths and Danube views can anchor the city days. Wine towns, ruin-bar nights, and Lake Balaton land better when slow meals and rail time are protected.",
   iceland:
-    "An outdoors-first island destination of volcanic landscapes, ring-road travel, and compact city stopovers.",
+    "Iceland is an outdoor route with a capital reset, not a casual drive-by landscape. Reykjavik handles food, gear, and planning before the road takes over. South-coast or ring-road days need weather buffers and honest daylight.",
   ireland:
-    "A coastal-green destination with pub-and-music city culture, dramatic Atlantic drives, and approachable small towns.",
+    "Ireland rewards a route that leaves room for weather and conversation. Dublin can open the trip, then the west coast and small towns should slow the mileage. Music pubs, cliff drives, and island days suffer when every night moves base.",
   italy:
-    "A high-density cultural destination spanning art cities, food regions, mountain routes, and Mediterranean coasts.",
+    "Italy punishes the instinct to see everything at once. Rome, Florence, and Venice all need different rhythms before Milan or the south enter the plan. Food regions and train time should shape the route before landmarks do.",
   kosovo:
-    "A young Balkan destination with energetic city centers, mountain access, and fast-changing local hospitality scenes.",
+    "Kosovo is compact, young, and better understood through its cities first. Pristina gives the contemporary pulse, while Prizren carries the old-town layer. Mountain access and cafe culture make short routes feel fuller than the map suggests.",
   latvia:
-    "A Baltic country where Art Nouveau city streets, forested coastlines, and slower regional routes intersect.",
+    "Latvia starts naturally in Riga, where Art Nouveau streets and market halls give the trip its urban weight. Jurmala adds a coastal reset without much friction. Forest routes and quieter towns help the plan move beyond the capital.",
   lithuania:
-    "A compact Baltic destination with historic cores, modern city culture, and lake-and-forest weekend routes.",
+    "Lithuania works through contrast rather than scale. Vilnius lanes and Kaunas modernism can frame the city side, while lake country or Baltic coast time adds a slower reset. Keep the route compact enough for meals and old-town walks.",
   luxembourg:
-    "A small but well-connected country of fortified old towns, EU-capital infrastructure, and valley hiking routes.",
+    "Luxembourg is small, but the terrain gives it more texture than a quick map glance. Fortified heights and valley walks make the capital feel layered. EU districts and rail links turn it into a focused short stay rather than filler.",
   macedonia:
-    "A lake-and-mountain Balkan destination with Ottoman-era city texture and strong overland travel potential.",
+    "Macedonia is best approached through lakes, mountains, and layered city streets. Skopje gives the modern reset before Ohrid slows the trip near the water. Overland routes need room for villages, meals, and border timing.",
   malta:
-    "A compact island destination of fortified historic cities, clear-water coves, and year-round shoulder-season appeal.",
+    "Malta compresses a lot into a small island map. Valletta and the Three Cities can carry the historic core, while limestone towns and swimming coves change the pace. Gozo days need heat and ferry timing planned rather than assumed.",
   moldova:
-    "An emerging Eastern European destination with vineyard regions, Soviet-modern layers, and low-friction city breaks.",
+    "Moldova is a quiet wine-and-city trip rather than a broad sightseeing circuit. Chisinau sets the practical base before cellar visits or countryside roads enter the plan. Soviet-modern layers need local context and unhurried days.",
   montenegro:
-    "A small Adriatic-mountain destination where bay towns, rugged peaks, and scenic road loops are tightly connected.",
+    "Montenegro turns short distances into sharp contrasts. Kotor Bay and Adriatic towns can feel close to mountain roads, yet the terrain changes the day quickly. Summer traffic should decide how much the route can actually hold.",
   netherlands:
-    "A bike-and-rail-friendly country with canal cities, coastal dunes, and strong neighborhood-level urban culture.",
+    "Netherlands travel gets better when Amsterdam is only one chapter. Rail and bike routes make Rotterdam or Utrecht easy additions without forcing the pace. Dune walks and canal towns can sit beside museum days, while food markets set the daily rhythm.",
   "northern-cyprus":
-    "A Mediterranean region with beach towns, mountain backdrops, and layered Turkish-Cypriot historic routes.",
+    "Northern Cyprus needs a route that understands crossings and local context. Kyrenia and Famagusta can form the historic spine, with beaches or mountain roads added around transport. Political geography should be clear before the map fills in.",
   norway:
-    "A fjord-and-mountain destination with efficient urban hubs, scenic rail lines, and high-contrast seasonal travel.",
+    "Norway is ruled by terrain, season, and cost. Oslo and Bergen can frame the city side before fjords or scenic rail take over. Northern lights and midnight-sun routes need fewer stops, stronger buffers, and realistic budgets.",
   poland:
-    "A large Central European destination with rebuilt historic cores, dynamic cities, and growing regional food scenes.",
+    "Poland is broad enough to need a regional choice. Warsaw and Krakow offer different histories, while Gdansk or Wroclaw shift the trip toward ports and western cities. Mountain towns and food neighborhoods make rail planning the spine.",
   portugal:
-    "A compact Atlantic destination of tiled cities, wine-country interiors, and coast-driven road-trip routes.",
+    "Portugal invites slow movement between tiled hills and Atlantic edges. Lisbon and Porto can anchor a first route before the Douro or Algarve pulls the trip outward. Island plans need their own season and flight logic, with meals left unhurried.",
   "republic-of-serbia":
-    "A Balkan crossroads with high-energy nightlife cities, riverfront routes, and layered imperial histories.",
+    "Republic of Serbia comes through strongest in its cities and river corridors. Belgrade sets the nightlife and history frame before Novi Sad slows the route. Monasteries and countryside roads need relaxed overland pacing.",
   romania:
-    "A Carpathian-to-Black-Sea destination with medieval towns, dynamic capitals, and strong regional contrasts.",
+    "Romania has enough distance and mountain terrain to reward patience. Bucharest can handle the urban opening before Transylvanian towns or Carpathian roads shift the mood. The Black Sea coast needs a separate reason to add mileage.",
   russia:
-    "A transcontinental destination where major cultural capitals, vast overland distances, and deep regional variation define planning.",
+    "Russia's scale makes access, politics, and distance central to any plan. Moscow and St. Petersburg frame the classic cultural route, but even that pairing needs current checks. Rail corridors beyond them require serious time.",
   slovakia:
-    "A compact Central European country with mountain access, castle towns, and easy cross-border itineraries.",
+    "Slovakia is compact enough for a clean city-and-mountain trip. Bratislava gives an easy entry point, then castle towns and the Tatras can take over. Hiking season and rail or car timing should be clear before adding more.",
   slovenia:
-    "A small Alpine-Adriatic destination combining lake routes, cave systems, and highly efficient city-to-nature trips.",
+    "Slovenia is built for a tight route, but not a rushed one. Ljubljana and Lake Bled can anchor the first pass before caves or wine hills add depth. The short Adriatic coast competes for time, so protect at least one slow nature day.",
   spain:
-    "A high-variety destination of late-night cities, island routes, mountain interiors, and Atlantic-Mediterranean coasts.",
+    "Spain asks you to choose a rhythm before you choose a route. Madrid runs late and social, while Barcelona ties city days to the sea. Andalusia needs room beyond an add-on. The islands or green north should follow meal timing, heat, and season.",
   sweden:
-    "A Nordic destination of archipelago cities, design-forward urban life, and easy rail-and-ferry regional travel.",
+    "Sweden gives the trip a different mood by season. Stockholm's islands and Gothenburg's coast frame the urban side without feeling alike. Northern nature routes need rail, ferry, or daylight planning before the map expands.",
   switzerland:
-    "An Alpine transit-perfect destination where lakeside cities, mountain villages, and scenic rail routes interlock.",
+    "Switzerland is easy to move through and expensive to improvise. Zurich and Geneva link cleanly to lakeside towns or mountain villages, but scenic days still need weather windows. A clear budget helps the route stay calm.",
   ukraine:
-    "A broad Eastern European destination with major river cities, Black Sea routes, and strong regional identity.",
+    "Ukraine carries deep regional identity, but travel planning must begin with current safety and access. Kyiv and Lviv can frame very different histories, while Odesa or river-city routes belong in careful context rather than a casual hop.",
   "united-kingdom":
-    "A multi-nation destination with global cities, coastal rail routes, and deep regional contrast across England, Scotland, Wales, and Northern Ireland.",
+    "United Kingdom routes should be built by nation, rail line, or coast rather than by a single London orbit. England and Scotland change the scale quickly. Wales and Northern Ireland add their own lodging logic, landscape texture, and food routes.",
 };
 
 const countryDescriptionOverrides: Record<string, string> = {
   afghanistan:
-    "Afghanistan is not a place to improvise. Build any route around trusted local guidance and current security checks, with Kabul or Herat used for context only when conditions support it. Mountain or heritage travel should stay narrow and deliberate.",
+    "Afghanistan belongs in a cautious specialist plan, not a casual circuit. Kabul or Herat can provide cultural context only when conditions allow. Mountain travel and heritage sites need trusted local guidance, narrow routing, and current security checks.",
   algeria:
-    "Algeria opens best from Algiers, then quickly becomes a question of distance. Decide early whether the trip belongs on the coast or in the Sahara because heat and road time will shape the experience more than a long highlight list.",
+    "Algeria opens through Algiers, then becomes a question of distance. The coast and Roman sites can sit in one northern route, while oasis towns or Sahara travel require heat-aware planning. Road time should shape the trip before the highlight list does.",
   angola:
-    "Angola asks travelers to slow down before they leave Luanda. The Atlantic city gives the trip its first texture, but the landscapes beyond it need honest road planning and a clear reason to move.",
+    "Angola starts with Luanda's Atlantic city life, then changes once the road leaves the capital. Music and food give the urban opening its texture. Highland scenery or desert-coast routes need honest transfer days and a clear reason to move.",
   argentina:
-    "Argentina is too large to treat as one mood. Let Buenos Aires set the social rhythm, then choose a second act such as wine country or Patagonia. The trip improves when one landscape is given time instead of being collected.",
+    "Argentina should not be planned as one mood. Buenos Aires can set the social rhythm before the trip chooses a second act. Wine country or Patagonia can lead that act; the northwest and Iguazu ask for separate timing rather than flight-connection thinking.",
   armenia:
-    "Armenia rewards a Yerevan base and unhurried days in the hills. Monasteries, canyon roads, and long meals carry more feeling when the route has room to pause instead of turning short distances into a checklist.",
+    "Armenia feels close on the map but dense on the ground. Yerevan works as the table-setting city, then monastery roads and canyon landscapes carry the deeper route. Wine villages and mountain views deserve pauses between short drives.",
   australia:
-    "Australia gets better when its scale is accepted from the start. Anchor the trip in Sydney or Melbourne, then choose one big pull such as reef time or the outback. Flights and season should do more work than ambition.",
+    "Australia becomes manageable once the route admits how far apart everything is. Sydney or Melbourne can anchor the city side before the trip chooses reef or outback, then decides whether wine regions or surf towns fit. Season and flight logic should do more work than ambition.",
   azerbaijan:
-    "Azerbaijan makes the most sense when Baku comes first. Its Caspian edge explains the country's modern energy before mountain villages or Silk Road towns enter the plan. Let terrain decide the second half.",
+    "Azerbaijan makes sense when Baku comes first. The Caspian capital explains the country's modern energy before the route turns outward. Mud volcanoes, mountain villages, or Silk Road towns should follow terrain and drive time.",
   bangladesh:
-    "Bangladesh is shaped by water and density more than by easy sightseeing. Start with Dhaka only if you can handle its pace, then move slowly toward a river route or tea country with local guidance.",
+    "Bangladesh is shaped by water, traffic, and density more than easy sightseeing. Dhaka is the intense starting point, not a city to rush through. Old capitals and tea country ask for one pace; river travel or mangrove edges need slow movement and local guidance.",
   belize:
-    "Belize works best when the reef and the inland jungle are treated as equal possibilities. Choose the mood first, then let boat schedules and lodge access shape the route rather than hopping between beach towns at random.",
+    "Belize is small enough to link reef and jungle, but the trip still needs a first choice. Start with the cayes or an inland lodge, then let boat schedules and Maya-site access decide the rest. Garifuna coast time belongs as its own slower leg.",
   benin:
-    "Benin carries a lot of history in a compact route. Let the coast establish the context before the journey turns inland, and keep enough space for markets and local guidance to shape the day.",
+    "Benin carries heavy history inside a compact route. Cotonou and Ouidah can frame the coast before the trip turns toward Porto-Novo or Ganvie. Markets and northern roads need local context rather than a quick cultural sampler.",
   bermuda:
-    "Bermuda is small enough to feel easy, but weather still deserves a vote. Build short loops around the beaches, Hamilton, and St. George's so a ferry ride or clear swimming window can steer the day.",
+    "Bermuda is polished and compact, yet it still rewards loose days. Hamilton and St. George's give the heritage frame. Ferries and rail trails make short loops easy, while sheltered coves let weather decide when swimming or sailing takes the lead.",
   bhutan:
-    "Bhutan is intentionally slow travel. Permits, etiquette, and mountain roads are part of the experience rather than friction to remove. Paro and Thimphu make useful anchors while valley days set the tempo.",
+    "Bhutan is deliberately slow travel. Permits and etiquette matter as much as altitude and mountain roads, so the logistics are part of the experience rather than friction to remove. Paro and Thimphu act as anchors before valley days and monastery hikes set the tempo.",
   bolivia:
-    "Bolivia should be planned around altitude before ambition. La Paz and Uyuni can make a powerful route, but acclimatization days and flexible transfers matter more than covering a wide map.",
+    "Bolivia asks for altitude planning before ambition. La Paz can start the drama, while Sucre or Uyuni changes the pace completely. Lake Titicaca and Amazon edges need recovery days and flexible transfers more than extra pins.",
   botswana:
-    "Botswana is a safari trip shaped by water and season. Choose the Okavango or Chobe first, then be honest about transfer style and lodge budget. Adding more only helps when the timing still feels calm.",
+    "Botswana's safari logic begins with water and season. Decide between the Okavango and Chobe before filling the map; Kalahari or salt-pan routes need a different season. Transfer style and lodge budget will shape the trip as much as wildlife timing.",
   brazil:
-    "Brazil is several trips hidden inside one border. Pick the pulse first: Rio for city energy, Bahia for coast, or the Amazon for nature. Flights and season should decide what belongs after that.",
+    "Brazil contains too many trips for a single sweep. Rio and Sao Paulo create one urban frame, while Bahia or the Amazon changes the story entirely. Flights and season should choose the second chapter before the route expands.",
   brunei:
-    "Brunei suits a short Borneo stay with a quiet pace. Bandar Seri Begawan can anchor the trip, while rainforest access and water-village time work best when transport is planned in advance.",
+    "Brunei suits a short Borneo stay with a quiet pace. Bandar Seri Begawan gives the cultural base, then mosque visits and water-village time can fill the city rhythm. Rainforest or river access depends on planned transport.",
   "burkina-faso":
-    "Burkina Faso needs current safety context before any itinerary makes sense. If travel is viable, keep the route narrow and locally supported. Ouagadougou and Bobo-Dioulasso can give the journey its cultural frame.",
+    "Burkina Faso needs current safety context before the itinerary becomes responsible. If travel is viable, keep the route narrow and locally supported. Ouagadougou and Bobo-Dioulasso can frame music, craft, and Sahelian architecture.",
   burundi:
-    "Burundi is compact, but that does not make it automatic. Bujumbura and Lake Tanganyika can carry a focused trip, with highland drives added only after current access and transport are clear.",
+    "Burundi is compact without being automatic. Bujumbura and Lake Tanganyika can carry a focused trip before highland drives enter the plan. Tea landscapes and drum traditions need current access checks and careful transport.",
   cambodia:
-    "Cambodia loses depth when Angkor becomes the whole story. Give the temple days room, then let Phnom Penh or the coast change the pace. Khmer food and river life help the trip feel lived in.",
+    "Cambodia loses depth when Angkor becomes the whole story. Temple days need room before Phnom Penh or river towns shift the mood. Khmer food and island time can turn the route from archaeology into lived-in culture.",
   cameroon:
-    "Cameroon has enough range to punish loose planning. Start from Douala or Yaounde, then choose one direction with local guidance. Mountain and coast routes need realistic road time.",
+    "Cameroon has enough climate and cultural range to punish loose planning. Douala or Yaounde can start the route, then one direction should lead. Volcanic mountains, beaches, and highland towns need local guidance and realistic road time.",
   canada:
-    "Canada works best when one region leads. Toronto and Vancouver ask for different trips than Montreal or the Rockies. Weather and transport should define the plan before the map gets crowded.",
+    "Canada needs one region to lead, not a coast-to-coast wish list. Toronto, Montreal, and Vancouver each ask for different city pacing. The Rockies, Atlantic towns, or northern lights routes need weather and transport to set the frame.",
   "central-african-republic":
-    "Central African Republic is not a conventional sightseeing destination. Any route should start with specialist support and current safety checks. Bangui or a forest reserve belongs only inside a narrow, responsible purpose.",
+    "Central African Republic is not a conventional sightseeing surface. Bangui can sit inside a specialist plan with river corridors or forest reserves. Current safety checks, local contacts, and a narrow purpose should guide every move.",
   chad:
-    "Chad is a specialist overland trip, not a broad travel menu. N'Djamena and Ennedi can anchor the plan, but permits and heat should set the pace before scenery does.",
+    "Chad is a specialist overland journey before it is a scenic one. N'Djamena can orient the trip, while Ennedi formations and desert lakes require permits. Heat planning and enough time for distance matter before rock art or remote landscapes.",
   chile:
-    "Chile reads as a long corridor between the Pacific and the Andes. Start in Santiago, then choose one second region by season. Desert and Patagonia need very different calendars.",
+    "Chile reads like a long corridor between the Pacific and the Andes. Santiago can open the route before Atacama or Valparaiso changes the pace. The lakes and Patagonia need a bigger time commitment, so season and flight time should decide what belongs.",
   china:
-    "China rewards corridor planning instead of countrywide collecting. Choose a city pair or rail line first, then leave room for food streets and neighborhood scale. The strongest routes feel focused.",
+    "China rewards corridor planning, not countrywide collecting. Beijing and Shanghai can form one urban contrast, while Xi'an or Chengdu shifts the cultural frame. Leave space for food streets and neighborhood time beside the major sites.",
   colombia:
-    "Colombia is strongest when altitude shapes the route. Bogota and Medellin work differently from Cartagena or coffee country. Flight hops and safety context should guide the order.",
+    "Colombia changes with altitude and neighborhood choice. Bogota and Medellin set different urban rhythms before Cartagena or coffee country enters the plan. Flight hops and safety context should guide the order rather than a neat map line.",
   "costa-rica":
-    "Costa Rica works best when nature days are designed before hotel hopping begins. Choose the main mood first, whether that means forest wildlife or a surf coast. Road time and rainy-season patterns should lead the rest.",
+    "Costa Rica should start with the kind of nature day you want. Cloud forest and wildlife lodges create a different trip from surf towns or hot springs. Road time, trail conditions, and rainy-season patterns should decide the rest before extra stops appear.",
   cuba:
-    "Cuba should feel slower than the map suggests. Let Havana set the social rhythm before the trip turns toward tobacco country or the coast. Plan cash, transport, and lodging early because flexibility matters more than a packed route.",
+    "Cuba should feel slower than the map suggests. Havana sets the social rhythm before tobacco country or colonial towns enter the route. Cash, transport, and lodging need early planning so beach time can stay flexible instead of frantic.",
   "democratic-republic-of-the-congo":
-    "Democratic Republic of the Congo requires a narrow specialist plan. Kinshasa and the Congo River can frame the journey, but access and safety logistics should decide whether park or volcano travel is realistic.",
+    "Democratic Republic of the Congo demands a narrow specialist plan. Kinshasa and the Congo River can frame the journey, but park or volcano travel depends on access. Safety logistics and expert support should decide what is realistic.",
   djibouti:
-    "Djibouti is a stark Red Sea route built around heat and volcanic terrain. Use the city as a reset between desert drives and lake or coast days. Casual wandering is less useful than a tight 4x4 plan.",
+    "Djibouti turns heat, salt, and volcanic terrain into a tight Red Sea route. The city works as a reset between desert drives and lake stops. Whale-shark water or coast time needs season checks rather than casual wandering.",
   "dominican-republic":
-    "Dominican Republic works best when resort ease and capital culture are not blurred together. Give Santo Domingo its own time, then choose beach recovery or an inland route. Transfers should not become the whole trip.",
+    "Dominican Republic changes depending on whether resort ease or capital culture leads. Santo Domingo deserves its own time before beach recovery takes over. Music routes and mountain roads should not dissolve into transfer days.",
   "east-timor":
-    "East Timor rewards patience. Dili gives the trip its historical frame, while reef days or mountain roads work only when flexible transport is treated as part of the journey.",
+    "East Timor rewards travelers who treat flexible transport as part of the trip. Dili gives the historical frame before reef days or coffee districts shift the pace. Mountain roads need local guidance and patient timing.",
   ecuador:
-    "Ecuador packs a lot into short distances, which makes pacing more important. Quito and Cuenca ask for altitude awareness before the trip turns toward the Amazon, coast, or Galapagos.",
+    "Ecuador packs altitude and Amazon gateways into deceptively short distances. Colonial cities, coast towns, and the Galapagos can pull the route in several directions. Quito and Cuenca need acclimatized pacing first, with weather deciding how far the trip turns outward.",
   egypt:
-    "Egypt works best when the Nile becomes the spine and Cairo is more than a staging point. Give the monuments and museum days their own space before adding Red Sea or desert time.",
+    "Egypt is strongest when the Nile becomes the spine and Cairo is more than a staging point. Monument days and museum time need their own space. Red Sea recovery or desert routes should be added only when heat and transfers still make sense.",
   "el-salvador":
-    "El Salvador is compact enough for short drives, but it still needs a clear rhythm. Decide whether the trip is about surf, volcano country, or San Salvador first. Safety context and weather should guide each day.",
+    "El Salvador is compact enough to tempt daily movement. Surf towns and volcano routes can sit close together, but the day still needs a rhythm. Coffee hills and San Salvador culture should follow weather and safety context.",
   "equatorial-guinea":
-    "Equatorial Guinea feels split between island and mainland travel. Malabo and Bioko need a different plan from the mainland, so visas and local contacts should be checked before the route gets ambitious.",
+    "Equatorial Guinea splits quickly between Bioko and the mainland. Malabo and Bata travel like different bases, so visas and local contacts matter early. Rainforest routes or island landscapes should be planned with that divide in mind.",
   eritrea:
-    "Eritrea is strongest as a heritage route with careful permissions. Asmara and Massawa create the core contrast between highland modernism and Red Sea port history. Permits decide how far the journey extends.",
+    "Eritrea's appeal sits in the contrast between Asmara and Massawa. Highland modernism and Red Sea port history can form a focused heritage route. Permissions, current access, and local guidance decide how far it can extend.",
   ethiopia:
-    "Ethiopia needs sequencing as much as curiosity. Addis Ababa can open the route, but church towns or mountain treks require altitude planning. Current security context should decide how wide the journey becomes.",
+    "Ethiopia needs sequencing as much as curiosity. Addis Ababa can open the route before rock-hewn churches or ancient capitals deepen it. Coffee culture and mountain treks require altitude planning plus current security context.",
   "falkland-islands":
-    "Falkland Islands travel is shaped by weather and wildlife rather than speed. Stanley can orient the trip before walking days or farm stays. Inter-island flights need patient buffers.",
+    "Falkland Islands travel follows wildlife and weather rather than speed. Stanley can orient the trip before walking days or farm stays. Birding and inter-island flights need buffers because the best days cannot be forced.",
   fiji:
-    "Fiji works best when arrival logistics are separated from island time. Let Nadi or a marina handle movement, then slow down for reef days and village visits. Boats and flights should set the pace.",
+    "Fiji needs arrival logistics separated from island time. Nadi and marina routes handle movement before reef days or village visits take over. Boats and flights should set the pace so beach recovery does not feel scheduled to death.",
   "french-guiana":
-    "French Guiana is an Amazonian Atlantic route with limited road logic. Cayenne and the space center can frame the trip. River settlements or rainforest reserves need guided access planned honestly.",
+    "French Guiana is an Amazonian Atlantic trip with limited road logic. Cayenne and the space center can frame the visit before the route turns harder. River settlements and rainforest reserves need guided access planned honestly.",
   gabon:
-    "Gabon is a nature-led trip that needs logistics before romance. Libreville can reset the route, but rainforest parks and river travel work best after guides and transfers are arranged.",
+    "Gabon is a nature-led trip that needs logistics before romance. Libreville can reset the route before rainforest parks or river travel begin. Wildlife coastlines depend on guides, season, and transfers more than a loose itinerary.",
   gambia:
-    "Gambia is narrow and river-shaped, which makes it easy to overpack. Keep the trip in short hops between the coast and river lodges, with community-led stops carrying the slower days.",
+    "Gambia is narrow and river-shaped, which makes it easy to overpack. Beach time and Banjul can form the opening rhythm. Birding routes and river lodges land better as short hops with community-led stops, especially when the river day is allowed to stay slow.",
   georgia:
-    "Georgia is compact but layered, so it rewards a city-and-region rhythm. Let Tbilisi set the first mood, then choose wine country or highland roads. Weather and border timing should stay visible.",
+    "Georgia is compact but layered enough to need a city-and-region rhythm. Tbilisi can set the first mood before wine villages or monastery roads take over. Highland routes should follow weather and border timing.",
   ghana:
-    "Ghana is a culture-forward route that should move from Accra with purpose. Cape Coast history and Kumasi market life deserve more than quick detours. Inland travel time needs to be respected.",
+    "Ghana should move from Accra with purpose rather than drift across the map. Cape Coast history and Kumasi market life deserve more than quick detours. Beach time or park days gain depth when inland travel time is respected.",
   greenland:
-    "Greenland demands one region at a time. Weather-dependent flights shape every plan, so buffers and daylight matter more than a long wish list. Let ice, fjords, and small towns set a slower scale.",
+    "Greenland demands one region at a time. Weather-dependent flights and daylight set the scale before any wish list does. Icebergs and fjords need buffers, while small towns and hiking routes remind travelers that movement is part of the trip.",
   guatemala:
-    "Guatemala is dense in a way that rewards slow routing. Antigua and Lake Atitlan should have room to breathe before Maya sites or coffee country enter the plan. Altitude and road time matter.",
+    "Guatemala is dense in a way that rewards slow routing. Antigua and Lake Atitlan should have room to breathe before Maya sites enter the plan. Coffee country and road days need altitude-aware pacing, especially when Tikal or highland markets enter the route.",
   guinea:
-    "Guinea needs conservative routing around road time and local support. Conakry can orient the trip, then the Fouta Djallon or Atlantic islands make sense only when transfers are realistic.",
+    "Guinea needs conservative routing around road time and local support. Conakry can orient the trip before the Fouta Djallon or Atlantic islands enter the plan. Transfers should be realistic before the route widens, with market time and mountain scenery paced separately.",
   "guinea-bissau":
-    "Guinea Bissau is a slow travel country built around boats and patience. Bissau can carry the opening stretch, while the Bijagos islands need weather windows and local guidance to lead the plan.",
+    "Guinea Bissau is slow travel built around boats, cash, and patience. Bissau can carry the opening stretch before the Bijagos islands take over. Weather windows and local guidance should lead the plan, especially when island stays depend on tides and transfers.",
   guyana:
-    "Guyana works best when the rainforest plan comes before the city plan. Georgetown is the cultural base, but Kaieteur Falls or a lodge route will depend on flights and boats.",
+    "Guyana should be planned from the rainforest outward. Georgetown gives the cultural base, but Kaieteur Falls or savannah lodges change the logistics. Small flights and boats decide how wide the route can go, with guides shaping the days between them.",
   haiti:
-    "Haiti requires trusted local support and current safety checks before any route feels responsible. Keep the trip focused, with cultural context guiding any time in Port-au-Prince or Jacmel. The north needs the same care.",
+    "Haiti requires trusted local support before any route feels responsible. Port-au-Prince and Jacmel need current safety context, not casual browsing. Citadelle heritage or beach towns should stay inside a focused cultural plan.",
   honduras:
-    "Honduras works best when the islands and inland routes are treated separately. Copan and the Bay Islands ask for different logistics, so safety-aware transport should set the order.",
+    "Honduras changes sharply between islands and inland routes. Copan and the Bay Islands ask for different logistics. Cloud forest or mountain roads can fit only when safety-aware transport sets the order, leaving the island downtime separate from inland ruins.",
   "hong-kong":
-    "Hong Kong is best understood vertically and by transport, not just by neighborhood names. Let MTR lines, ferries, and elevation changes shape the day so food stops and harbor views feel connected.",
+    "Hong Kong is easiest to understand through movement: up hills, across the harbor, and along MTR lines. Dense food streets and shopping districts need elevation-aware days. Ferries and ridge hikes keep the city from feeling only vertical.",
   india:
-    "India resists one grand itinerary. Choose a region, season, and transport style first. City days and rail journeys land better when food traditions and temple towns fit a realistic pace.",
+    "India resists one grand itinerary. Choose a region, season, and transport style first, then let the route gather depth. City days and temple towns land better when rail journeys and food traditions have realistic daily pacing.",
   indonesia:
-    "Indonesia works when one island cluster leads. Bali, Java, and reef regions each ask for different weather and transport choices. Ferries or flights should shape the plan before the wish list grows.",
+    "Indonesia needs one island cluster to lead. Bali and Java ask for different weather and transport choices before reef regions or volcano routes enter the plan. Ferries or flights should shape the trip early.",
   iran:
-    "Iran is rich enough to reward a focused corridor rather than a sweeping survey. Tehran, Isfahan, and Shiraz can anchor a deep route. Current access checks and distance planning should come first.",
+    "Iran rewards a focused corridor more than a sweeping survey. Tehran, Isfahan, and Shiraz can anchor a deep cultural route. Bazaars, garden cities, and desert towns need current access checks plus careful distance planning.",
   iraq:
-    "Iraq requires current safety checks and local expertise before any route is sensible. Baghdad and the holy cities need a different plan from Erbil or mountain travel.",
+    "Iraq requires current safety checks and local expertise before any route is sensible. Baghdad and the holy cities need a different plan from Erbil or mountain travel. Treat each region as its own access context.",
   israel:
-    "Israel is compact, intense, and better paced by theme than by distance. Jerusalem and Tel Aviv ask for different energy, while desert or coast time works best with security context and rest days planned in.",
+    "Israel is compact, intense, and better paced by theme than by distance. Jerusalem and Tel Aviv pull the trip in different directions. Desert time, holy-site routes, and coast days need security context plus rest built in.",
   "ivory-coast":
-    "Ivory Coast works as a city-to-coast route when Abidjan is allowed to lead. Food and music give the trip its pulse, while beach towns need local guidance and time for longer transfers.",
+    "Ivory Coast carries its strongest first impression through Abidjan. Food and music give the city its pulse before markets or beach towns widen the route. Local guidance and longer transfers should set the pace, especially when the route leaves the coast.",
   jamaica:
-    "Jamaica should not be planned as only resort recovery. Kingston music changes the trip's center of gravity, while mountain or river days work best when kept distinct from beach time.",
+    "Jamaica loses texture when it is treated only as resort recovery. Kingston music changes the center of gravity before beach time takes over. Jerk routes, waterfalls, and Blue Mountain drives deserve distinct days, with meals and beach time kept from blurring together.",
   japan:
-    "Japan rewards precision without needing to feel rushed. Let rail logic and luggage flow shape each leg, then protect time for meals and seasonal rituals. The route should feel intentional, not crammed.",
+    "Japan rewards precision without needing to feel rushed. Tokyo and Kyoto can anchor a first route, but hot springs or mountain towns should not become filler. Rail logic and luggage flow should shape each leg, with meal timing protected instead of squeezed in.",
   jordan:
-    "Jordan has a clear road-trip spine, but it still needs space between major moments. Amman can lead into Petra, while Wadi Rum and the Dead Sea work best with heat and drive buffers protected.",
+    "Jordan has a clear road-trip spine, but the major moments need air between them. Amman can lead into Petra before Wadi Rum changes the scale. The Dead Sea works better when heat and drive buffers are protected, especially on shorter trips.",
   kazakhstan:
-    "Kazakhstan is a big-distance country with a few strong anchors. Let flights or rail define the route before adding canyon drives or Silk Road towns. Nature days need room on either side.",
+    "Kazakhstan is a big-distance country with a few strong anchors. Almaty and Astana should be linked by flights or rail before canyon drives enter the plan. Silk Road towns and nature days need room on either side, so the country does not become transit math.",
   kenya:
-    "Kenya works best as separate safari, city, and coast legs. Nairobi can anchor the practical side, while Maasai Mara timing and Indian Ocean recovery need their own transfer rhythm.",
+    "Kenya is easier to plan as separate city, safari, and coast chapters. Nairobi handles the practical side before wildlife timing takes over. Maasai Mara routes and Indian Ocean recovery need their own transfer rhythm, with downtime protected between long moves.",
   kuwait:
-    "Kuwait is a short-stay Gulf route shaped by heat and private-car movement. Kuwait City can carry the urban days, while any desert camp or seafront plan should be timed around opening hours.",
+    "Kuwait is a short-stay Gulf route shaped by heat and private-car movement. Kuwait City carries souks, towers, and museum time before seafront evenings. Desert camps need opening hours and city-to-desert timing checked early.",
   kyrgyzstan:
-    "Kyrgyzstan is a mountain trip first and a city trip second. Bishkek can orient the route, but lake days and high passes need season checks and local guiding.",
+    "Kyrgyzstan is a mountain trip before it is a city trip. Bishkek can orient the route before lake days and high passes take over. Yurt stays or horse routes need season checks and local guiding, with flexible road days kept open for weather.",
   laos:
-    "Laos works when the itinerary slows down to the river and the heat. Luang Prabang can set the tone, then Mekong movement and karst landscapes land better when transport is unhurried.",
+    "Laos asks the itinerary to slow down to river speed. Luang Prabang sets the tone before Mekong movement or temple days widen the route. Karst landscapes feel better when transport is unhurried and heat is respected, especially on overland days.",
   lebanon:
-    "Lebanon is compact, layered, and highly context dependent. Beirut may sit close to mountains and ruins, but traffic and current safety advice should set the pace before distance does.",
+    "Lebanon is compact on the map and complicated in motion. Beirut may sit close to mountains and ruins, but traffic changes the day quickly. Coast towns and village routes should follow current safety advice, with day trips planned more carefully than distance suggests.",
   lesotho:
-    "Lesotho is a highland route rather than a quick add-on. Mountain passes and pony trekking work best when altitude, weather, and South Africa-linked drive times are treated as central.",
+    "Lesotho should be treated as a highland route rather than a quick add-on. Mountain passes and pony trekking need altitude at the center of the plan. Stone villages and regional road links should follow weather, with border timing checked before the drive begins.",
   liberia:
-    "Liberia asks for patience with transport and a clear local support plan. Monrovia can frame the trip, while surf beaches or rainforest parks need flexible road days.",
+    "Liberia asks for patience with transport and a clear local support plan. Monrovia can frame the trip before surf beaches or rainforest parks enter the route. Coastal roads need flexibility rather than tight scheduling, especially when rain changes the day.",
   libya:
-    "Libya remains a powerful but complicated heritage route. Tripoli, Roman sites, and Sahara oases should only enter the plan with current safety checks and expert logistics.",
+    "Libya remains a powerful but complicated heritage route. Tripoli and Roman sites should only enter planning with current safety checks. Sahara oases and Mediterranean coast towns require expert logistics, with access rules treated as the first itinerary layer.",
   macau:
-    "Macau works best when heritage walks and resort plans are kept in conversation. Portuguese-Chinese streets and casino hotels sit close together, but they serve very different trip moods.",
+    "Macau is a compact contrast between old streets and resort scale. Portuguese-Chinese lanes and casino hotels sit close together, but they serve different moods. Bakeries, temples, and ferry links make the route feel layered.",
   madagascar:
-    "Madagascar is too slow-moving for a casual full-island loop. Choose one wildlife or landscape route first, then let Antananarivo and the coast fit around real transfer buffers.",
+    "Madagascar is too slow-moving for a casual full-island loop. Choose one wildlife or landscape route first, then let Antananarivo handle the reset. Baobab roads and lemur parks need real transfer buffers, as do reef coasts that look close on a map.",
   malawi:
-    "Malawi has a gentle rhythm when Lake Malawi is treated as more than a backdrop. Lilongwe can handle arrivals, while tea estates or safari parks work best when road distances allow slow stays.",
+    "Malawi has a gentle rhythm when the lake becomes part of the route rather than a backdrop. Lilongwe can handle arrivals before tea estates or plateau hikes shift the mood. Safari parks need road distances balanced against slow stays.",
   malaysia:
-    "Malaysia works best when city eating, beach time, and rainforest logistics are planned as separate acts. Kuala Lumpur and Penang suit food-led days, while Borneo needs its own pace.",
+    "Malaysia is clearest when city eating, beach time, and rainforest logistics are planned as separate acts. Kuala Lumpur and Penang suit food-led days. Borneo wildlife or island stays need their own pace, with weather and flight timing decided early.",
   mali:
-    "Mali carries deep cultural weight, but travel depends on current safety and specialist support. Bamako and the Niger River should stay within a realistic access plan before any desert route is considered.",
+    "Mali carries deep cultural weight, but access and safety define the trip before curiosity does. Bamako and the Niger River should stay inside a realistic plan. Desert music and mud architecture need specialist support, with the route kept narrow enough to be responsible.",
   mauritania:
-    "Mauritania is a Sahara-and-Atlantic journey built around distance. Decide whether the coast or desert leads, then plan Nouakchott and ancient ksour around specialist logistics.",
+    "Mauritania is a Sahara-and-Atlantic journey built around distance. Nouakchott can orient the plan before desert caravans or ancient ksour take over. Banc d'Arguin belongs in a clear coast-or-desert priority, with specialist logistics shaping the route.",
   mexico:
-    "Mexico works best when a region leads the story. Mexico City asks for a different pace than the Pacific coast. Maya routes and colonial towns should not be stacked by default.",
+    "Mexico needs a region to lead the story. Mexico City asks for different pacing than the Pacific coast, while Maya routes change the trip again. Colonial towns and food logic should guide the map before distance does, leaving room for neighborhood days rather than constant transfers.",
   mongolia:
-    "Mongolia is a distance-and-weather trip before it is a checklist. Ulaanbaatar can start the route, but ger camps and the Gobi work best when guides and drive days are planned first.",
+    "Mongolia is a distance-and-weather trip before it is a checklist. Ulaanbaatar can start the route before ger camps or the Gobi take over. Steppe horizons and lake country need guides and drive days planned first.",
   morocco:
-    "Morocco should be paced around city intensity and the reset that follows it. Marrakesh or Fes can lead, but Atlas roads and desert nights work best when courtyard time stays protected.",
+    "Morocco should be paced around city intensity and the reset that follows it. Marrakesh and Fes can lead with very different pressure. Atlas roads and desert nights feel better when souks and courtyard pauses stay balanced.",
   mozambique:
-    "Mozambique is a long coastal route that rewards planning before beach dreaming. Maputo can open the trip, while island or reef days work best when flights and transfer buffers are clear.",
+    "Mozambique is a long coastal route that rewards planning before beach dreaming. Maputo can open the trip before island archipelagos or reef days take over. Flights and roads need clarity early, with transfer buffers protected before the coast starts to feel relaxed.",
   myanmar:
-    "Myanmar needs current safety checks and an ethics-aware route before any sightseeing plan. Yangon and Bagan should only be considered through access conditions, with local guidance shaping any wider route.",
+    "Myanmar needs current safety checks and an ethics-aware route before any sightseeing plan. Yangon and Bagan should only be considered through access conditions. Mandalay or Inle Lake needs local guidance shaping any wider route.",
   namibia:
-    "Namibia is a driving itinerary shaped by gravel, fuel, and sky. Windhoek can handle the reset. Sossusvlei, Etosha, and the Skeleton Coast need rental style and scenic drive time built in.",
+    "Namibia is a driving itinerary shaped by gravel, fuel, and sky. Windhoek handles the reset before Sossusvlei or Etosha take over. Skeleton Coast days need rental style and scenic drive time built into the route, with fuel planning treated seriously.",
   nepal:
-    "Nepal is strongest when altitude sets the tempo. Kathmandu can open the route. Trekking days need permits, acclimatization, and recovery time protected from the start.",
+    "Nepal belongs to altitude before ambition. Kathmandu can open the route, while trekking days need permits and recovery time protected from the start. Temple squares and mountain lodges feel better when acclimatization sets the tempo.",
   "new-caledonia":
-    "New Caledonia blends French Pacific infrastructure with Kanak cultural context. Noumea can anchor the trip, while lagoon days and outer-island time work best when car logistics are considered early.",
+    "New Caledonia blends French Pacific infrastructure with Kanak cultural context. Noumea can anchor the trip before lagoon days shift the pace. Reef beaches and outer-island time need car logistics considered early.",
   "new-zealand":
-    "New Zealand works best as one island or corridor at a time. Auckland and Queenstown serve very different routes, while fjords or beaches should be paced around weather and driving time.",
+    "New Zealand is easier as one island or corridor at a time. Auckland and Queenstown serve different routes, while fjords or beaches change the weather logic. Driving time should shape the plan before ambition does.",
   nicaragua:
-    "Nicaragua is compact enough to tempt overplanning. Granada and Leon can lead the cultural side. Volcano or surf days should follow heat and transport, with current safety context checked early.",
+    "Nicaragua is compact enough to tempt overplanning. Granada and Leon can carry the cultural side before volcano or surf days take over. Heat and transport should decide the order, with current safety context checked before the route widens.",
   niger:
-    "Niger is a specialist Sahel-and-Sahara route. Niamey can orient the trip, but desert or river travel requires permits and serious heat planning. Current safety checks need to lead.",
+    "Niger is a specialist Sahel-and-Sahara route. Niamey can orient the trip before desert or river travel enters the plan. Current safety checks and permits need to lead, with heat planning and local logistics shaping every longer move.",
   nigeria:
-    "Nigeria works best as a city-led plan with strong local support. Lagos gives the trip its force, while Abuja or regional food routes need traffic and distance kept firmly in view.",
+    "Nigeria should be planned through city energy and strong local support. Lagos gives the trip its force before Abuja or regional food routes widen the frame. Traffic and distance should keep the route realistic, with social plans built around local timing.",
   "north-korea":
-    "North Korea can only be understood as a restricted organized itinerary. Pyongyang and official site visits belong inside access rules, controlled transport, and the limits of guided travel.",
+    "North Korea can only be approached as a restricted organized itinerary. Pyongyang and official site visits belong inside access rules. Controlled transport and guided limits define the trip more than independent route planning.",
   oman:
-    "Oman is a calm road-trip country when the driving plan is honest. Muscat can open the journey, then wadis and mountain villages work best when heat and overnight stops are coordinated.",
+    "Oman gives road trips a calmer Gulf rhythm when the driving plan is honest. Muscat can open the journey before wadis and forts take over. Mountain villages need heat, swim stops, and overnight settings coordinated.",
   pakistan:
-    "Pakistan needs a route shaped by season and altitude as much as interest. Lahore or Karachi can anchor the city side, while mountain valleys require local support and realistic road timing.",
+    "Pakistan needs a route shaped by season and altitude as much as interest. Lahore or Karachi can anchor the city side before mountain valleys pull the trip north. Local support and realistic road timing matter early.",
   panama:
-    "Panama works when the canal-city base is balanced with one clear escape. Casco Viejo can anchor the city days. Rainforest, island, or coffee-country time needs clean separation.",
+    "Panama is strongest when canal-city days are balanced with one clear escape. Casco Viejo can anchor the urban side before rainforest or island time takes over. Coffee highlands need clean separation from the city plan, especially when Boquete becomes the slower second act.",
   "papua-new-guinea":
-    "Papua New Guinea is highly specialized travel, not a casual island hop. Port Moresby may frame the route, but highland or reef travel needs expert local planning and buffered flights.",
+    "Papua New Guinea is highly specialized travel, not a casual island hop. Port Moresby may frame the route before highland or reef travel begins. Expert local planning, buffered flights, and cultural respect are essential.",
   paraguay:
-    "Paraguay rewards a slower inland rhythm. Asuncion can set the tone, while mission ruins or Chaco landscapes work best when heat and drive time stay practical.",
+    "Paraguay rewards a slower inland rhythm. Asuncion can set the tone before mission ruins or river towns enter the plan. Chaco landscapes need heat and drive time kept practical, while river context gives the route more shape than distance alone.",
   peru:
-    "Peru works best when altitude and food timing shape the route before landmarks do. Lima and Cusco need different pacing, while Machu Picchu plans should protect recovery days and train timing.",
+    "Peru should be planned around altitude and food timing before landmarks. Lima and Cusco need different pacing before the Sacred Valley takes over. Machu Picchu plans should protect train timing and recovery days, with markets and acclimatization left unhurried.",
   philippines:
-    "Philippines travel depends on choosing the right island cluster. Manila can handle the gateway role. Palawan, Cebu, or surf towns need weather and transfers planned early.",
+    "Philippines travel depends on choosing the right island cluster. Manila can handle the gateway role before Palawan or Cebu takes over. Surf towns and reef routes need weather and transfers planned before beach style, not after.",
   "puerto-rico":
-    "Puerto Rico works when San Juan nights and island drives are paced separately. Beaches and rainforest trails need room around rental-car days, while the old city deserves its own evening rhythm.",
+    "Puerto Rico gains depth when San Juan nights and island drives are paced separately. The old city deserves its own evening rhythm before beach days take over. Rainforest trails and lechon routes need room around rental-car timing.",
   qatar:
-    "Qatar is a focused Gulf stop shaped by heat and bookings. Doha can carry a short city stay, while desert dunes need tight timing so the plan does not become a hot transfer day.",
+    "Qatar is a focused Gulf stop shaped by heat, bookings, and short distances. Doha can carry a compact city stay through museums and souqs. Desert dunes need tight timing so the day does not become a hot transfer, especially on a short layover-style route.",
   "republic-of-the-congo":
-    "Republic of the Congo works best when Brazzaville is treated as the reset point for harder nature logistics. Rainforest parks or Atlantic routes need guides and permits arranged first.",
+    "Republic of the Congo needs Brazzaville treated as the reset point for harder nature logistics. Rainforest parks or river routes require guides and permits first. Atlantic-side travel should follow transport reality, with long transfers kept visible from the start.",
   rwanda:
-    "Rwanda is compact, orderly, and permit driven. Kigali can ground the trip before gorilla trekking or lake time begins. Conservation rules and road timing should be planned together.",
+    "Rwanda is compact, orderly, and permit driven. Kigali grounds the trip before gorilla trekking or lake time begins. Memorial sites and conservation rules should be planned with road timing rather than added casually, especially on short stays.",
   "saudi-arabia":
-    "Saudi Arabia needs purpose-led planning because each route asks for a different pace. Riyadh and Jeddah feel like separate trips, while AlUla or the Red Sea need heat and booking windows planned early.",
+    "Saudi Arabia needs purpose-led planning because each route asks for a different pace. Riyadh and Jeddah feel like separate trips, while AlUla changes the scale again. Heat, bookings, and travel context should shape the plan.",
   senegal:
-    "Senegal works when Dakar's energy is balanced with a slower coast or delta leg. Goree Island and Saint-Louis deserve context, while north-south transfer time should stay realistic.",
+    "Senegal comes alive when Dakar's energy is balanced with a slower coast or delta leg. Goree Island and Saint-Louis deserve context, not quick detours. Surf beaches and food routes need realistic north-south transfer time.",
   "sierra-leone":
-    "Sierra Leone is a slow Atlantic route with serious road logistics. Freetown can anchor the trip, while peninsula beaches or island time need weather and flexible transfers built in.",
+    "Sierra Leone is a slow Atlantic route with serious road logistics. Freetown can anchor the trip before peninsula beaches or island time takes over. Rainforest hills need weather and local guidance, with flexible transfers kept in the plan.",
   singapore:
-    "Singapore works because compact planning can still feel layered. Let MRT movement and heat shape the day, then use hawker meals and heritage districts as anchors instead of rushing between icons.",
+    "Singapore proves that compact travel can still feel layered. MRT movement and heat should shape the day before the icon list does. Hawker meals and heritage districts work better as anchors than errands, with gardens giving the route a cooler pause.",
   "solomon-islands":
-    "Solomon Islands travel is built around boats, flights, and quiet island time. Honiara can orient the trip, but reef days and village stays need weather buffers and cultural etiquette.",
+    "Solomon Islands travel is built around boats, flights, and quiet island time. Honiara can orient the trip before reef days or village stays take over. WWII sites and lagoons need weather buffers and cultural etiquette, with flight gaps treated as part of the plan.",
   somalia:
-    "Somalia is not a normal tourism planning surface. Mogadishu or the Indian Ocean coast should only be considered with current safety checks, specialist local support, and a narrow purpose.",
+    "Somalia is not a normal tourism planning surface. Mogadishu and the Indian Ocean coast should only be considered with current safety checks. Port history or markets belong inside specialist support and a narrow purpose, not a casual sightseeing route.",
   somaliland:
-    "Somaliland is a rare overland route that depends on local structure. Hargeisa can anchor the plan, while Laas Geel or the Berbera coast need permits and modest daily distances.",
+    "Somaliland is a rare overland route that depends on local structure. Hargeisa can anchor the plan before Laas Geel or the Berbera coast enter the route. Permits and security checks matter, as do modest daily distances and trusted local drivers.",
   "south-africa":
-    "South Africa works best when city, safari, and coast are planned as separate chapters. Cape Town and Johannesburg ask for different choices, while wine routes or the Garden Route need car-time realism.",
+    "South Africa needs city, safari, and coast treated as separate chapters. Cape Town and Johannesburg ask for different choices before wine routes or parks enter the plan. Safety awareness and car time should stay realistic.",
   "south-korea":
-    "South Korea rewards transit-cluster planning. Seoul and Busan can carry very different trips, while food timing and day hikes work best when subway or rail lines shape the route.",
+    "South Korea rewards transit-cluster planning. Seoul and Busan carry different moods, while palace grounds and markets shape the urban days. Cafe districts, food timing, and day hikes fit best around subway or rail lines.",
   "south-sudan":
-    "South Sudan requires a narrow purpose and trusted local support. Juba or river-country travel should only be planned with current safety checks and river-season timing.",
+    "South Sudan requires a narrow purpose and trusted local support. Juba or river-country travel should only be planned with current safety checks. Nile wetlands and cattle-camp culture depend on river-season timing, with access decisions made before any route expands.",
   "sri-lanka":
-    "Sri Lanka is compact, but monsoon patterns decide everything. Colombo can start the route, while tea hills and surf coasts work best when the chosen coast matches the season.",
+    "Sri Lanka is compact, but monsoon patterns decide everything. Colombo can start the route before temple towns or tea hills take over. Surf coasts and rail journeys work only when the chosen coast matches the season, with recovery days kept between long moves.",
   sudan:
-    "Sudan remains a Nile-and-desert route for specialist planning. Khartoum and archaeological landscapes should only be approached with current safety checks, permits, and trusted local support.",
+    "Sudan remains a Nile-and-desert route for specialist planning. Khartoum and archaeological landscapes should only be approached with current safety checks. Pyramids or Red Sea access need permits and trusted local support.",
   suriname:
-    "Suriname works best when Paramaribo's heritage sets up a guided river or rainforest leg. Boat routes and jungle lodges need logistics planned together rather than added as casual detours.",
+    "Suriname should let Paramaribo's heritage set up the river or rainforest leg. Dutch-Creole architecture gives the city its frame. Maroon communities and jungle lodges need logistics planned with boat routes, so the inland portion feels intentional.",
   swaziland:
-    "Swaziland is a compact mountain-and-valley route that pairs naturally with regional road travel. Craft markets and wildlife reserves work best when paced slowly rather than treated as quick stops.",
+    "Swaziland is a compact mountain-and-valley route that pairs naturally with regional road travel. Craft markets and wildlife reserves can fill a slower stay. Scenic drives and lodge time should not be treated as quick stops.",
   syria:
-    "Syria carries extraordinary heritage, but travel planning must begin with current safety and access. Damascus, Aleppo, and desert routes should only be considered through expert local guidance.",
+    "Syria carries extraordinary heritage, but travel planning must begin with current safety and access. Damascus and Aleppo should only be considered through expert local guidance. Palmyra or desert routes need even narrower planning.",
   taiwan:
-    "Taiwan is easy to move through, which makes food and weather planning more important. Taipei can anchor the trip, while hot springs or a nature corridor should lead each day.",
+    "Taiwan is easy to move through, which makes food and weather planning more important. Taipei can anchor the trip before night markets or temple streets set the rhythm. Hot springs and nature corridors should lead whole days.",
   tajikistan:
-    "Tajikistan is a Pamir-and-valley route shaped by altitude and permits. Dushanbe can orient the trip, but high mountain roads need 4x4 logistics and weather buffers.",
+    "Tajikistan is a Pamir-and-valley route shaped by altitude and permits. Dushanbe can orient the trip before high mountain roads take over. Homestays and lakes need 4x4 logistics plus weather buffers, with spare days reserved for passes.",
   thailand:
-    "Thailand works best when heat and meal timing set the pace. Bangkok can open the trip, then the north or islands should be chosen by monsoon patterns and transport.",
+    "Thailand needs heat, meal timing, and monsoon patterns to set the pace. Bangkok can open the trip before northern temple towns or islands take over. Night markets and beach routes should follow transport logic, with monsoon patterns deciding which coast belongs.",
   "the-bahamas":
-    "The Bahamas works best when the island choice is made before the hotel choice. Nassau and the family islands have different rhythms, so ferry or flight logistics matter early.",
+    "The Bahamas should start with the island choice, not the hotel choice. Nassau and the family islands have different rhythms before reefs or blue holes enter the plan. Ferry and flight logistics matter early.",
   togo:
-    "Togo is narrow enough for compact contrasts. Lome can frame the coast, while mountain villages and heritage routes work best when border logistics and local guidance are planned together.",
+    "Togo is narrow enough for compact contrasts. Lome can frame the coast before mountain villages or heritage routes pull the trip inland. Border logistics and local guidance should be planned together.",
   "trinidad-and-tobago":
-    "Trinidad and Tobago works as two island rhythms rather than one generic beach trip. Carnival energy belongs to a different pace than Tobago reef time, so the route should keep them distinct.",
+    "Trinidad and Tobago should be treated as two island rhythms. Carnival energy and doubles stalls belong to one pace, while Tobago reef time belongs to another. Keep the route distinct rather than generic.",
   tunisia:
-    "Tunisia is strongest when coast, city, and desert time are not collapsed into one rush. Tunis and Carthage can anchor the north, while oasis routes need heat-aware timing.",
+    "Tunisia carries coast, city, and desert time close enough to tempt a rush. Tunis and Carthage can anchor the north before medinas or Roman sites widen the route. Oasis days need heat-aware timing.",
   turkey:
-    "Turkey should be planned by region, season, and transport rather than by a giant landmark list. Istanbul can anchor the route, while Cappadocia or the Aegean need separate pacing.",
+    "Turkey should be planned by region, season, and transport rather than by a giant landmark list. Istanbul can anchor the route before Cappadocia changes the pace. The Aegean or Black Sea towns need separate timing.",
   turkmenistan:
-    "Turkmenistan is a controlled desert route shaped by access rules. Ashgabat can anchor the plan. Silk Road sites and gas-crater landscapes need visas, guides, and fixed schedules arranged first.",
+    "Turkmenistan is a controlled desert route where access rules shape the experience. Ashgabat can anchor the plan before Silk Road sites or gas-crater landscapes enter. Visas and guides come first, along with permits and fixed schedules.",
   uae:
-    "United Arab Emirates works best when purpose comes before polish. Dubai and Abu Dhabi can serve very different trips, so heat and drive time should separate city days from desert or beach time.",
+    "United Arab Emirates needs purpose before polish. Dubai and Abu Dhabi serve different trips, while desert resorts or beaches change the day completely. Heat and drive time should separate museums, skyline dining, and coast time.",
   uganda:
-    "Uganda is a nature-heavy route with city recovery built in. Kampala can reset the trip. Gorilla trekking and Nile time need permits, wildlife timing, and road transfers planned early.",
+    "Uganda is a nature-heavy route with city recovery built in. Kampala can reset the trip before gorilla trekking or Nile adventures take over. Crater lakes need permits, wildlife timing, and road transfers planned early.",
   "united-republic-of-tanzania":
-    "United Republic of Tanzania works as a split between safari, mountain, and coast. Arusha can start the wildlife plan, while Kilimanjaro or Zanzibar need season and recovery time sequenced clearly.",
+    "United Republic of Tanzania is a split between safari, mountain, and coast. Arusha can start the wildlife plan before Serengeti routes or Kilimanjaro change the effort level. Zanzibar needs beach recovery sequenced clearly.",
   uruguay:
-    "Uruguay rewards a relaxed Atlantic pace. Montevideo and Colonia can carry a compact route, while beach towns or wine roads work best when ferry logistics leave room for downtime.",
+    "Uruguay rewards a relaxed Atlantic pace. Montevideo and Colonia can carry a compact route before beach towns or wine roads take over. Ferry logistics should leave room for seaside downtime.",
   uzbekistan:
-    "Uzbekistan has a clear Silk Road spine, which keeps planning elegant if the train order is right. Tashkent can start the route. Samarkand, Bukhara, and Khiva need heat-aware timing and slow market pauses.",
+    "Uzbekistan has a clear Silk Road spine, which keeps planning elegant if the train order is right. Tashkent can start the route before Samarkand, Bukhara, or Khiva slows the pace. Heat-aware timing and market pauses matter.",
   vanuatu:
-    "Vanuatu is an adventure-led Pacific route that depends on island choice. Port Vila can open the trip. Volcano visits or reef lagoons need weather, etiquette, and transfer buffers first.",
+    "Vanuatu is an adventure-led Pacific route that depends on island choice. Port Vila can open the trip before volcano visits or reef lagoons take over. Village culture needs weather, etiquette, and transfer buffers first.",
   venezuela:
-    "Venezuela has extraordinary landscapes, but current safety and access must set the route. Caracas and Angel Falls should not be planned the same way as the islands or Andean towns.",
+    "Venezuela has extraordinary landscapes, but current safety and access must set the route. Caracas and Angel Falls should not be planned the same way as the islands or Andean towns. Local expertise and focused transport matter.",
   vietnam:
-    "Vietnam works best as a north-south rhythm with deliberate regional pauses. Hanoi and Ho Chi Minh City need different tempos, while deltas or mountain towns should follow weather and transport.",
+    "Vietnam reads best as a north-south rhythm with deliberate regional pauses. Hanoi and Ho Chi Minh City need different tempos before deltas or mountain towns enter the route. Weather and street-food neighborhoods should shape the order.",
   "west-bank":
-    "West Bank travel needs local guidance and respectful pacing before any route is useful. Bethlehem and Ramallah need access rules visible, while Jericho or Nablus should be planned with heritage context in mind.",
+    "West Bank travel needs local guidance and respectful pacing before any route is useful. Bethlehem and Ramallah need access rules kept visible, while Jericho or Nablus asks for heritage context. Daily movement should stay flexible.",
   "western-sahara":
-    "Western Sahara is a desert Atlantic route shaped by distance and political context. Dakhla can anchor a focused plan, while longer coastal roads need access and permits checked first.",
+    "Western Sahara is a desert Atlantic route shaped by distance and political context. Dakhla can anchor a focused plan before longer coastal roads enter the route. Access and permits should be checked before the map widens.",
   yemen:
-    "Yemen holds extraordinary heritage, but severe access challenges define any responsible plan. Sana'a, Socotra, and Hadhramaut towns require current safety checks and specialist support.",
+    "Yemen holds extraordinary heritage, but severe access challenges define any responsible plan. Sana'a and Socotra should only be considered with current safety checks. Hadhramaut towns and mountain villages need specialist support.",
   zambia:
-    "Zambia is a river-and-safari country where timing matters more than variety. Lusaka can handle the reset, while Victoria Falls or South Luangwa should be chosen around park season and transfers.",
+    "Zambia is a river-and-safari country where timing matters more than variety. Lusaka can handle the reset before Victoria Falls or Lower Zambezi enters the route. South Luangwa should be chosen around park season and transfers.",
   zimbabwe:
-    "Zimbabwe works best when heritage, safari, and waterfall time are balanced rather than stacked. Harare can frame the trip, while Victoria Falls or Hwange need local guidance and realistic travel days.",
+    "Zimbabwe needs heritage, safari, and waterfall time balanced rather than stacked. Harare can frame the trip before Victoria Falls or Hwange takes over. Great Zimbabwe and longer travel days need local guidance.",
 };
 
 const countryDescriptionLimit = 320;
@@ -4018,10 +4018,7 @@ function buildCountryDescription(country: WorldCountrySeed): string {
   const coverage = cityCoverageClause(country, capitalName, curatedCities);
 
   if (europeBase) {
-    return appendIfFits(
-      `${europeBase} Use ${country.name} for ${context.route}, anchored by ${coverage}.`,
-      "Regional routes keep browsing useful as fuller guides are added.",
-    );
+    return europeBase;
   }
 
   const descriptionOverride = countryDescriptionOverrides[country.id];
@@ -4032,14 +4029,14 @@ function buildCountryDescription(country: WorldCountrySeed): string {
 
   if (curatedCities.length) {
     return appendIfFits(
-      `${country.name} is a destination in ${country.continentName} shaped by ${context.base}. Use it for ${context.route}, anchored by ${coverage}.`,
-      "Regional routes extend the trip beyond the anchor city.",
+      `${country.name} should start with ${coverage}, then widen only when the route has room. ${context.base} can shape the next leg without turning the country into a checklist.`,
+      "Regional routes can expand coverage as fuller guides are added.",
     );
   }
 
   return appendIfFits(
-    `${country.name} is a destination in ${country.continentName} shaped by ${context.base}. Guide coverage starts with ${coverage}, then expands into seed regions for food, culture, nature, stays, nightlife, and activities.`,
-    "Those seeds keep browsing useful while fuller guides are added.",
+    `${country.name} currently starts with ${coverage} and seed regions rather than full guide depth. The description should help travelers read the map while fuller city and regional coverage is added.`,
+    "Use current local context before treating those seeds as a fixed itinerary.",
   );
 }
 
@@ -4050,7 +4047,7 @@ function createCountry(country: WorldCountrySeed): Country {
       name: country.name,
       continent: country.continentName,
       description:
-        "The United States is a continent-scale destination where states, regions, and cities feel distinct, from dense East Coast corridors and Great Lakes culture to Pacific, desert, mountain, Gulf, and island routes for food, nightlife, nature, stays, culture, and activities.",
+        "United States travel needs a region-first plan because the country behaves like many trips at once. New York and Chicago set one kind of city rhythm, while Miami and Los Angeles pull the trip toward coast and sprawl. National parks and desert roads need a different plan from Gulf coast or island routes.",
       subareas: usaRegionSeeds,
       states: usaStateSeeds.map((state) => ({
         ...state,

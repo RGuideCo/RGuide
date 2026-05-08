@@ -523,7 +523,7 @@ on conflict (id) do update set
   city = excluded.city,
   neighborhood = excluded.neighborhood,
   coordinates = excluded.coordinates,
-  photo = coalesce(public.editorial_pois.photo, excluded.photo),
+  photo = coalesce(excluded.photo, public.editorial_pois.photo),
   guide_ids = excluded.guide_ids,
   guide_slugs = excluded.guide_slugs,
   categories = excluded.categories;`;

@@ -782,6 +782,33 @@ Populate {Category} guides for {City}, {Country}.
 Use docs/editorial-guide-population-reference.md and the Barcelona {Category} examples as the model. Research current official, editorial, platform, and map sources. For each guide, include sources, accurate coordinates, hours, and category-specific context. Update src/data/lists.ts, regenerate supabase/editorial-guides.sql, and run validation/build.
 ```
 
+### Populate POI Photos
+
+```text
+Populate POI photos for the existing {City}, {Country} editorial guides.
+
+Use docs/editorial-guide-population-reference.md as the standard. Do not create new guides, neighborhoods, or POIs; only populate photos for the stops already present in the city guide module.
+
+Source image rules:
+- For restaurants, cafes, bars, clubs, hotels, and hostels, go to the venue/property's official homepage or official venue page first. Prefer `og:image`, `twitter:image`, prominent homepage hero images, gallery images, or other stable image URLs from that official site.
+- For culture, nature, landmarks, markets, and activity stops, prefer official museum/park/landmark/tourism pages, municipal pages, or Wikimedia Commons when an official page has no usable image.
+- If the official site is blocked, dead, hijacked, image-free, or obviously unrelated, use a reputable fallback such as an official tourism board, Wikimedia Commons, MICHELIN, Time Out, Eater, The Infatuation, Condé Nast Traveler, Bon Appétit, Hostelworld, or a comparable high-confidence source.
+- Do not use random search thumbnails, parked domains, unrelated social previews, logos, favicons, or decorative placeholder images.
+- Keep the source URL beside each image URL when the city file has a photo-source map pattern.
+
+Place the data in the correct location:
+- Edit the matching `src/data/guides/{city-id}.ts` file.
+- If the city file has a stop factory or repeated POIs, add a `poiPhotoSources` / `PoiPhotoSource` map keyed by exact stop name, add a `poiPhotoFor(name)` helper, and have the stop builder resolve `seed.photo ?? poiPhotoFor(seed.name) ?? defaultPhoto(category)`. This keeps duplicate POIs consistent across citywide and neighborhood guides.
+- If the city file does not use that pattern, follow the existing local structure and add/update `photo` on each stop without refactoring unrelated data.
+- Make sure the chosen approach feeds photos into `collectEditorialPois`, so the `editorial_pois.photo` rows are populated too. Do not leave POI rows with category placeholder photos.
+
+Verification:
+- Run a script against local guide data to count Food, Nightlife, and Stay stops that still use generic category placeholder photos; target zero for the requested scope unless a stop truly has no credible image source.
+- Spot-check image URLs with `HEAD` or small-range `GET` requests and replace broken links.
+- Run `npm run lint` or the narrowest available validation command.
+- If pushing live, use a scoped push such as `npm run push:editorial-guides -- --city {City}`, then verify `/api/editorial-guides` returns non-placeholder photos for the same scope.
+```
+
 ### Rewrite Descriptions Only
 
 ```text
