@@ -76,6 +76,7 @@ export interface GuideStop {
   photo?: string;
   price?: "$" | "$$" | "$$$";
   priceSource?: string;
+  bookingUrl?: string;
   places?: GuideStop[];
   itineraryDate?: string;
   itineraryDay?: number;

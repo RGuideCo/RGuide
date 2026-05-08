@@ -377,6 +377,7 @@ Conditional stop-level fields:
 
 - `price`: use for restaurants, bars, hotels, hostels, and paid experiences when useful. Allowed values are `$`, `$$`, `$$$`.
 - `priceSource`: cite the source behind the price tier, such as `MICHELIN Guide / Google Maps`.
+- `bookingUrl`: for Stay stops, add the direct property booking page when available. Use Booking.com for hotel stops and Hostelworld for hostel stops. If this is omitted, the app falls back to a platform search based on the stop name and city.
 - `places`: nested places only when a stop represents a larger area or itinerary cluster.
 
 Stay guide requirement:
@@ -385,6 +386,7 @@ Stay guide requirement:
 - Do not combine hotels, hostels, guesthouses, and social dorm bases into a single generic stay guide unless the user explicitly asks for a rollup.
 - Use hotel-focused SEO for hotel guides, such as `best-hotels`, `Best Hotels in {Neighborhood}, {City}`, and slugs ending in `hotels`.
 - Use hostel-focused SEO for hostel guides, such as `best-hostels`, `Best Hostels in {Neighborhood}, {City}`, and slugs ending in `hostels`.
+- Add `bookingUrl` on each hotel or hostel stop when populating Stay guides: Booking.com property pages for hotels, Hostelworld property pages for hostels.
 - If a neighborhood has few or no credible hostels, still create a hostel guide only when there are enough source-backed nearby options that honestly serve that neighborhood; otherwise note the gap and use the closest suitable hostel area in the description.
 
 Data entry workflow:
@@ -767,7 +769,7 @@ Please:
 - Research current sources for Food, Nightlife, Nature, Culture, Stay, and Activities.
 - Build neighborhood-level guides where the city has strong neighborhoods, plus citywide rollups where useful.
 - Include list-level sources for every guide.
-- Include stop IDs, names, coordinates in [latitude, longitude], descriptions, hours, price, and priceSource where relevant.
+- Include stop IDs, names, coordinates in [latitude, longitude], descriptions, hours, price, priceSource where relevant, and bookingUrl for Stay stops.
 - Use the existing R Guide writing style: practical, source-backed, specific, and not generic.
 - Keep SEO fields stable and keyword-forward.
 - Update src/data/lists.ts and regenerate supabase/editorial-guides.sql.
@@ -849,6 +851,7 @@ While populating:
 - Confirm coordinates and neighborhood.
 - Confirm hours or mark schedule caveats.
 - Add price and `priceSource` for paid categories.
+- Add `bookingUrl` for hotels and hostels when a stable Booking.com or Hostelworld property page is available.
 - Keep descriptions specific to the list, not generic to the place.
 - Add list-level `sources`.
 

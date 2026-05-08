@@ -5,7 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { createPortal } from "react-dom";
-import { ChevronDown, Navigation, Plus, ThumbsUp, X } from "lucide-react";
+import { CalendarCheck, ChevronDown, Navigation, Plus, ThumbsUp, X } from "lucide-react";
 
 import { getCreatorHref, getListHref } from "@/lib/routes";
 import { resolveStopHours } from "@/lib/seasonal-hours";
@@ -183,6 +183,81 @@ function getAlphaMarker(index: number) {
 
 function getSamplePoiPhoto(index: number) {
   return SAMPLE_POI_PHOTOS[index % SAMPLE_POI_PHOTOS.length];
+}
+
+type StayBookingPlatform = "booking" | "hostelworld";
+
+function isHostelGuide(list: MapList) {
+  const slug = list.slug.toLowerCase();
+  const isMixedStayGuide = slug.includes("hotels-and-hostels");
+  return (
+    !isMixedStayGuide &&
+    (list.seoSlug === "best-hostels" ||
+      slug === "hostels" ||
+      slug.endsWith("-hostels") ||
+      slug.includes("best-hostels"))
+  );
+}
+
+function isHostelStop(list: MapList, stop: MapList["stops"][number]) {
+  const stopText = [stop.name, stop.priceSource].filter(Boolean).join(" ").toLowerCase();
+
+  return (
+    isHostelGuide(list) ||
+    /\bhostelworld\b/.test(stopText) ||
+    /\bhostels?\b/.test(stopText) ||
+    /\bhostal\b/.test(stopText) ||
+    /\bostello\b/.test(stopText) ||
+    /\bguesthouse\b/.test(stopText)
+  );
+}
+
+function getStayBookingPlatformFromUrl(url?: string): StayBookingPlatform | null {
+  if (!url) {
+    return null;
+  }
+
+  try {
+    const hostname = new URL(url).hostname.toLowerCase();
+    if (hostname.includes("hostelworld.")) {
+      return "hostelworld";
+    }
+    if (hostname.includes("booking.")) {
+      return "booking";
+    }
+  } catch {
+    return null;
+  }
+
+  return null;
+}
+
+function getStayBookingDetails(list: MapList, stop: MapList["stops"][number]) {
+  if (list.category !== "Stay") {
+    return null;
+  }
+
+  const platform: StayBookingPlatform =
+    getStayBookingPlatformFromUrl(stop.bookingUrl) ?? (isHostelStop(list, stop) ? "hostelworld" : "booking");
+  const platformLabel = platform === "hostelworld" ? "Hostelworld" : "Booking.com";
+
+  if (stop.bookingUrl) {
+    return {
+      href: stop.bookingUrl,
+      platformLabel,
+    };
+  }
+
+  const searchQuery = [stop.name, list.location.city, list.location.country].filter(Boolean).join(", ");
+  const encodedQuery = encodeURIComponent(searchQuery);
+
+  return {
+    href:
+      platform === "hostelworld"
+        ? `https://www.hostelworld.com/find/keywordsuggestions?internalsearch=yes&search_keywords=${encodedQuery}`
+        : `https://www.booking.com/searchresults.html?ss=${encodedQuery}`,
+    platformLabel,
+  };
 }
 
 export function MapListCard({
@@ -573,6 +648,7 @@ export function MapListCard({
     description: stop.description,
     price: stop.price,
     priceSource: stop.priceSource,
+    bookingUrl: stop.bookingUrl,
     hours: stop.hours,
   });
   const buildNestedStopFromList = (): MapList["stops"][number] => {
@@ -601,6 +677,7 @@ export function MapListCard({
           description: stop.description,
           price: stop.price,
           priceSource: stop.priceSource,
+          bookingUrl: stop.bookingUrl,
           hours: stop.hours,
           places: stop.places?.map((place, index) => cloneStopForGuideAddition(place, idPrefix, index)),
         };
@@ -1092,6 +1169,7 @@ export function MapListCard({
                         const resolvedStopHours = resolveStopHours(stop) ?? stopContent.hours;
                         const stopItineraryId = `${list.id}:${stop.id}`;
                         const stopPhoto = stop.photo ?? getSamplePoiPhoto(index);
+                        const stayBookingDetails = getStayBookingDetails(list, stop);
                         const isStopInItinerary =
                           itineraryStopIds.includes(stopItineraryId) ||
                           itineraryPlaylists.some((playlist) => playlist.stopKeys.includes(stopItineraryId));
@@ -1441,6 +1519,20 @@ export function MapListCard({
                                       </div>
                                     ) : null}
                                   </div>
+                                  {stayBookingDetails ? (
+                                    <Link
+                                      href={stayBookingDetails.href}
+                                      target="_blank"
+                                      rel="noreferrer"
+                                      onClick={(event) => event.stopPropagation()}
+                                      className="inline-flex items-center gap-1.5 rounded-md border border-cyan-800 bg-cyan-800 px-2.5 py-1.5 text-[11px] font-semibold text-white transition hover:border-cyan-900 hover:bg-cyan-900"
+                                      aria-label={`Book ${stop.name} on ${stayBookingDetails.platformLabel}`}
+                                      title={`Book ${stop.name} on ${stayBookingDetails.platformLabel}`}
+                                    >
+                                      <CalendarCheck className="h-3.5 w-3.5" />
+                                      <span>Book</span>
+                                    </Link>
+                                  ) : null}
                                 </div>
                               </div>
                             </div>
