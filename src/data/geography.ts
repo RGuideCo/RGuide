@@ -2103,7 +2103,7 @@ const ukStateSeeds: CountryState[] = [
     coordinates: [52.3555, -1.1743],
     countrySubareaId: "london-southeast",
     description:
-      "England combines global cities, heritage towns, countryside routes, and high-density rail-connected travel corridors.",
+      "England is a cluttered museum held together by red brick and commuter patience. Beyond the Midlands, the landscape dissolves into sodden fields and limestone ridges. Crowded horizons meet ancient silence, with the past tucked into every mossy wall.",
   },
   {
     id: "scotland",
@@ -3589,49 +3589,49 @@ function assignCityToNearestSubarea(city: Omit<City, "listCount">, subareas?: Su
 
 const europeanCountryDescriptions: Record<string, string> = {
   albania:
-    "Albania asks for a route that lets the coast and mountains stay in conversation. Tirana can start the trip with city energy before Berat or Gjirokaster add old-town depth. The Riviera and northern valleys need honest road time, not a rushed loop.",
+    "Albania mixes high limestone with clear water, where old ways still have a pulse. Concrete bunkers hide in hill grass and the air smells of grilled meat and mountain herbs. Fortified highland houses meet strong coffee and the salty rhythm of the coast.",
   austria:
-    "Austria is easiest to plan when rail logic leads. Vienna gives the cultural frame, while Salzburg or Graz can shift the pace without making the route feel scattered. Alpine lakes and ski valleys need season-aware days rather than scenic detours.",
+    "Austria is a landscape of pine forests and limestone massifs where summer air still feels sharp. Beyond Vienna's coffee-scented streets, emerald valleys open into steep alpine meadows. Dark timber balconies and mountain lakes bind imperial history to rugged peaks.",
   belarus:
     "Belarus needs access checks before the route becomes practical. Minsk sets the urban scale with broad avenues and Soviet-era layers. Castles, forests, and regional towns can add context only when border rules and overland timing are clear.",
   belgium:
-    "Belgium rewards short train hops instead of a single-city stay. Brussels and Antwerp give different versions of urban culture, while Ghent and Bruges carry the medieval scale. Food, beer, and museums should shape the sequence more than distance.",
+    "Belgium is a dense grid of medieval belfries and red-brick squares under an iron-gray sky. Beyond Brussels's glass, the rain-slick plains of Flanders rise toward Ardennes limestone. North Sea fog, fortified towns, and canals keep trade history quietly surreal.",
   "bosnia-and-herzegovina":
     "Bosnia and Herzegovina carries its history through streets, bridges, and mountain roads. Sarajevo and Mostar anchor the emotional core. River canyons, coffee culture, and smaller towns need enough time for context rather than scenery alone.",
   bulgaria:
-    "Bulgaria can move from Sofia's urban layers to monastery roads without turning expensive or complicated. The Black Sea, ski terrain, and old towns each ask for a different season. Choose coast, city culture, or highland time before adding more.",
+    "Golden Orthodox domes and crushed rose petals rise from Bulgaria's gray-granite heights. Between Thracian tombs and Black Sea inlets, the terrain feels raw and layered. Sheep's milk and rakia meet Cyrillic script, brutalist blocks, and ancient vines.",
   croatia:
-    "Croatia is shaped by ferries as much as by old stone towns. Dubrovnik and Split can anchor the coast, but island days need a different clock. National parks and Zagreb belong when peak-season pressure and transfer timing still leave room.",
+    "White limestone and pine resin define a coast where gray cliffs drop into a transparent, salt-heavy sea. From northern olive groves to bone-white pebble beaches, Croatia feels chiseled and dry. Sharp shadows and stone squares hold the slow heat of ancient coastal walls.",
   cyprus:
     "Cyprus is more layered than a beach base suggests. Coastal resort days and divided-city history sit near archaeological sites and Troodos village roads. The trip feels cleaner when car logistics and crossing rules are settled early.",
   "czech-republic":
-    "Czech Republic should not stop at Prague's busiest squares. The capital gives the first architectural hit, then spa towns or castle routes can widen the trip. Moravian wine and beer-hall culture make better use of the rail map.",
+    "Czechia is a landscape of sandstone towers and red-tiled spires cutting through morning haze. In Prague, the Charles Bridge anchors dark Gothic stone and narrow alleys. Bohemian forests and Moravian hills tie old coal-town grit to glasswork and bitter brewing.",
   denmark:
     "Denmark turns good infrastructure into an easy trip, but the best days still need focus. Copenhagen can lead with design, harbor swimming, and food. Jutland dunes or island ferries shift the mood toward coast, light, and slower movement.",
   estonia:
-    "Estonia pairs Tallinn's medieval core with a sharper modern edge. Bog walks and Baltic islands are close enough for compact plans, but they change the trip's texture. Let nature interrupt the old-town rhythm instead of staying only in the capital.",
+    "Estonia pairs medieval Tallinn with peat bogs, limestone cliffs, and world-leading digital infrastructure. Its startup pulse and e-residency fame sit beside ancient forests and island traditions, balancing high-tech Nordic resilience with maritime quiet.",
   finland:
-    "Finland changes character with the light. Helsinki gives design and waterfront calm before the route turns toward lakes, saunas, or forest. Lapland should be chosen by season and daylight rather than squeezed into a northern checklist.",
+    "Finland is a wild spread of damp moss and crushed-pine cold. From Helsinki's glass streets to the empty peat bogs of the north, the land feels raw and scoured by ice. Sauna heat and salty licorice sharpen a quiet grit forged in long winter blue.",
   france:
-    "France becomes easier once the trip has a center of gravity. Paris can anchor the first pass before wine regions or Alpine towns pull the route elsewhere. Atlantic and Mediterranean coasts need different seasons, with rail timing and food deciding what comes next.",
+    "Beneath Paris's slate-gray avenues and the mist-shrouded Pyrenees, France asks for a slow, visceral lens. Ancient stone villages and saline marshes reveal local craft beside avant-garde grit. Wild topography, artisanal soul, and centuries of heritage keep the balance heavy-hitting.",
   germany:
-    "Germany is strongest when the route follows regions instead of a greatest-hits line. Berlin and Munich ask for different social rhythms, while Hamburg or the Ruhr shifts the cultural frame. The Rhine adds another pace, so rail timing should decide how wide the trip gets.",
+    "Modern Berlin's industrial pulse meets the shadowed Black Forest, where folklore still feels tangible. Baltic coastlines and baroque riverside cities blend historic gravitas with contemporary art, while alpine power gives Germany its refined, artisanal soul.",
   greece:
-    "Greece asks travelers to decide between island motion and mainland depth. Athens gives ancient context and modern nights before the route splits. Cycladic ferries and Crete need their own tempo, while northern towns or Peloponnese roads reward slower planning.",
+    "Whitewashed villages spill down marble slopes toward a sea of ink and sapphire. Between Athens's chaos and the thyme-scented silence of the islands, Greece feels carved from light. Olive groves, weathered ruins, and the salty Meltemi cut the afternoon heat.",
   hungary:
-    "Hungary is more than a Budapest weekend, though the capital carries the strongest first route. Thermal baths and Danube views can anchor the city days. Wine towns, ruin-bar nights, and Lake Balaton land better when slow meals and rail time are protected.",
+    "Hungary is a landlocked basin of healing steam and paprika-stained kitchens. From Budapest's peeling spas to the dust-blown Puszta, it becomes a solitary island of Magyar logic. Cherry soup, Unicum, and tobacco-scented ruin bars keep empire echoing in the corners.",
   iceland:
-    "Iceland is an outdoor route with a capital reset, not a casual drive-by landscape. Reykjavik handles food, gear, and planning before the road takes over. South-coast or ring-road days need weather buffers and honest daylight.",
+    "Iceland is a cathedral of black sand and volcanic glass, where soil is still being born from fire. Glaciers push through clouds and steam rises from the ground in white plumes. Endless summer light and bitter winter storms make the landscape feel planetary.",
   ireland:
-    "Ireland rewards a route that leaves room for weather and conversation. Dublin can open the trip, then the west coast and small towns should slow the mileage. Music pubs, cliff drives, and island days suffer when every night moves base.",
+    "Sharp cliffs drop into a foaming Atlantic before the land gives way to hills of deep, sodden clover. Between Dublin's rowdy pubs and the gray silence of the Burren, Ireland feels ancient and alive. Rain polishes the emerald grit instead of dampening it.",
   italy:
-    "Italy punishes the instinct to see everything at once. Rome, Florence, and Venice all need different rhythms before Milan or the south enter the plan. Food regions and train time should shape the route before landmarks do.",
+    "Forget the tourist traps; Italy is a sun-baked mess of golden patina and ancient ego. From the Dolomites to Sicily's salt-sprayed coast, it becomes a heavy-hitting collision of baroque shadow and modern grit. Bitter espresso, old stone, and soul-deep heritage carry the feast.",
   kosovo:
     "Kosovo is compact, young, and better understood through its cities first. Pristina gives the contemporary pulse, while Prizren carries the old-town layer. Mountain access and cafe culture make short routes feel fuller than the map suggests.",
   latvia:
     "Latvia starts naturally in Riga, where Art Nouveau streets and market halls give the trip its urban weight. Jurmala adds a coastal reset without much friction. Forest routes and quieter towns help the plan move beyond the capital.",
   lithuania:
-    "Lithuania works through contrast rather than scale. Vilnius lanes and Kaunas modernism can frame the city side, while lake country or Baltic coast time adds a slower reset. Keep the route compact enough for meals and old-town walks.",
+    "Ancient oak groves and black-water lakes spread under Lithuania's Baltic sky. Along the coast, the Curonian Spit protects the lagoon with shifting dunes and wind-bent trees. Amber shores, wood carving, and pagan-rooted folklore keep the seasons close.",
   luxembourg:
     "Luxembourg is small, but the terrain gives it more texture than a quick map glance. Fortified heights and valley walks make the capital feel layered. EU districts and rail links turn it into a focused short stay rather than filler.",
   macedonia:
@@ -3641,35 +3641,35 @@ const europeanCountryDescriptions: Record<string, string> = {
   moldova:
     "Moldova is a quiet wine-and-city trip rather than a broad sightseeing circuit. Chisinau sets the practical base before cellar visits or countryside roads enter the plan. Soviet-modern layers need local context and unhurried days.",
   montenegro:
-    "Montenegro turns short distances into sharp contrasts. Kotor Bay and Adriatic towns can feel close to mountain roads, yet the terrain changes the day quickly. Summer traffic should decide how much the route can actually hold.",
+    "Montenegro is a vertical world where black mountains drop into Adriatic salt water. Along the Bay of Kotor, medieval walls cling to limestone cliffs above deep-blue inlets. Karst plateaus and glacial lakes make tiny coastal villages feel both enclosed and immense.",
   netherlands:
-    "Netherlands travel gets better when Amsterdam is only one chapter. Rail and bike routes make Rotterdam or Utrecht easy additions without forcing the pace. Dune walks and canal towns can sit beside museum days, while food markets set the daily rhythm.",
+    "The Netherlands offers a flat, engineered landscape of slate-gray water and brick. Past Amsterdam's neon hum, the country stretches into a disciplined sweep of polders and sky, where wind is constant and the soil feels hard-won from the sea.",
   "northern-cyprus":
     "Northern Cyprus needs a route that understands crossings and local context. Kyrenia and Famagusta can form the historic spine, with beaches or mountain roads added around transport. Political geography should be clear before the map fills in.",
   norway:
-    "Norway is ruled by terrain, season, and cost. Oslo and Bergen can frame the city side before fjords or scenic rail take over. Northern lights and midnight-sun routes need fewer stops, stronger buffers, and realistic budgets.",
+    "Norway is a brutal, vertical world of granite walls and cold fjords. From Oslo's steel-and-glass hum to the Arctic reaches, the landscape feels less like a country than a tectonic event. Thundering water and pine air meet a land that refuses to be tamed.",
   poland:
-    "Poland is broad enough to need a regional choice. Warsaw and Krakow offer different histories, while Gdansk or Wroclaw shift the trip toward ports and western cities. Mountain towns and food neighborhoods make rail planning the spine.",
+    "Poland is a raw, brick-heavy expanse where medieval spires pierce a sky heavy with industrial history. From Baltic sands to the Tatra summits, the land feels dense with memory. Woodsmoke and hidden courtyards power a new, steel-edged future.",
   portugal:
-    "Portugal invites slow movement between tiled hills and Atlantic edges. Lisbon and Porto can anchor a first route before the Douro or Algarve pulls the trip outward. Island plans need their own season and flight logic, with meals left unhurried.",
+    "Portugal is a bright, honey-colored sanctuary where Atlantic air meets grilled sardines and citrus. From the Algarve's golden beaches to Porto's riverfront, vivid tiles and amber plazas turn meals toward the sea and give the country its generous pulse.",
   "republic-of-serbia":
-    "Republic of Serbia comes through strongest in its cities and river corridors. Belgrade sets the nightlife and history frame before Novi Sad slows the route. Monasteries and countryside roads need relaxed overland pacing.",
+    "Plum orchards roll across Serbia while grilled meat hangs over charcoal fires. In Belgrade, concrete grit meets the Danube as barges drift past the old fortress. Strong fruit brandy and loud coffee houses carry stubborn hospitality beneath rugged Balkan mountains.",
   romania:
-    "Romania has enough distance and mountain terrain to reward patience. Bucharest can handle the urban opening before Transylvanian towns or Carpathian roads shift the mood. The Black Sea coast needs a separate reason to add mileage.",
+    "Romania is a land of dark forests and beech smoke curling from clay stoves. In the Carpathians, horse carts still rattle over passes and the air carries fermented plums. Hand-carved gates and steep hillsides keep the farm rhythm close to another century.",
   russia:
     "Russia's scale makes access, politics, and distance central to any plan. Moscow and St. Petersburg frame the classic cultural route, but even that pairing needs current checks. Rail corridors beyond them require serious time.",
   slovakia:
-    "Slovakia is compact enough for a clean city-and-mountain trip. Bratislava gives an easy entry point, then castle towns and the Tatras can take over. Hiking season and rail or car timing should be clear before adding more.",
+    "Slovakia rises through timber forests and limestone gorges in the Carpathians. Beyond the Danube plains, high meadows and wooden churches sit beneath the Tatras. Stone fortresses and cold rivers keep mountain culture tied to weather-beaten interior terrain.",
   slovenia:
-    "Slovenia is built for a tight route, but not a rushed one. Ljubljana and Lake Bled can anchor the first pass before caves or wine hills add depth. The short Adriatic coast competes for time, so protect at least one slow nature day.",
+    "Slovenia is a collision of limestone Alps and the emerald Soca River. Subterranean caves under karst plateaus give way to beech forests, glacial lakes, and steep vineyards. Mount Triglav anchors a Central European efficiency softened by Mediterranean ease.",
   spain:
-    "Spain asks you to choose a rhythm before you choose a route. Madrid runs late and social, while Barcelona ties city days to the sea. Andalusia needs room beyond an add-on. The islands or green north should follow meal timing, heat, and season.",
+    "Experience Spain's soul from Catalonia's avant-garde architecture to wild Atlantic shores. Madrid's golden galleries and Andalusia's olive groves carry history and zest, while bold Riojas and ancient traditions make every sunset feel like a celebration.",
   sweden:
-    "Sweden gives the trip a different mood by season. Stockholm's islands and Gothenburg's coast frame the urban side without feeling alike. Northern nature routes need rail, ferry, or daylight planning before the map expands.",
+    "Deep timber forests and iron-colored lakes stretch across Sweden's northern wilderness. From Stockholm's island streets to the reindeer moss of the high north, the land studies minimalist beauty. Red cabins and birch-scented air give way to relentless golden summer.",
   switzerland:
-    "Switzerland is easy to move through and expensive to improvise. Zurich and Geneva link cleanly to lakeside towns or mountain villages, but scenic days still need weather windows. A clear budget helps the route stay calm.",
+    "High granite peaks cut thin Alpine air, broken by the metallic clank of cowbells. Below the glaciers, timber chalets huddle in valleys of damp pine and woodsmoke. Cold emerald lakes and punctual mountain passes make every train and clock feel like law.",
   ukraine:
-    "Ukraine carries deep regional identity, but travel planning must begin with current safety and access. Kyiv and Lviv can frame very different histories, while Odesa or river-city routes belong in careful context rather than a casual hop.",
+    "Ukraine's black-soil plains and wheat fields stretch beneath an immense sky. Kyiv's tech hubs and golden domes meet the heavy industrial east, while the Carpathians and Black Sea ports shape a resilient crossroads culture of folk art and modern sovereignty.",
   "united-kingdom":
     "United Kingdom routes should be built by nation, rail line, or coast rather than by a single London orbit. England and Scotland change the scale quickly. Wales and Northern Ireland add their own lodging logic, landscape texture, and food routes.",
 };
@@ -3686,7 +3686,7 @@ const countryDescriptionOverrides: Record<string, string> = {
   armenia:
     "Armenia feels close on the map but dense on the ground. Yerevan works as the table-setting city, then monastery roads and canyon landscapes carry the deeper route. Wine villages and mountain views deserve pauses between short drives.",
   australia:
-    "Australia becomes manageable once the route admits how far apart everything is. Sydney or Melbourne can anchor the city side before the trip chooses reef or outback, then decides whether wine regions or surf towns fit. Season and flight logic should do more work than ambition.",
+    "Australia joins rust-red deserts and ancient rock monoliths to sun-bleached coasts of white sand and surf. Northern rainforests, southern vineyards, unique wildlife, open horizons, coastal ease, and Indigenous heritage define the expansive island continent.",
   azerbaijan:
     "Azerbaijan makes sense when Baku comes first. The Caspian capital explains the country's modern energy before the route turns outward. Mud volcanoes, mountain villages, or Silk Road towns should follow terrain and drive time.",
   bangladesh:
@@ -3712,7 +3712,7 @@ const countryDescriptionOverrides: Record<string, string> = {
   burundi:
     "Burundi is compact without being automatic. Bujumbura and Lake Tanganyika can carry a focused trip before highland drives enter the plan. Tea landscapes and drum traditions need current access checks and careful transport.",
   cambodia:
-    "Cambodia loses depth when Angkor becomes the whole story. Temple days need room before Phnom Penh or river towns shift the mood. Khmer food and island time can turn the route from archaeology into lived-in culture.",
+    "Massive stone faces at Angkor peer through jungle canopies, anchoring Cambodia's flood-prone plains and Tonle Sap. Mekong riverbanks and remote forests hold silk weaving, resilient faith, and a youthful population balancing haunting history with forward motion.",
   cameroon:
     "Cameroon has enough climate and cultural range to punish loose planning. Douala or Yaounde can start the route, then one direction should lead. Volcanic mountains, beaches, and highland towns need local guidance and realistic road time.",
   canada:
@@ -3724,7 +3724,7 @@ const countryDescriptionOverrides: Record<string, string> = {
   chile:
     "Chile reads like a long corridor between the Pacific and the Andes. Santiago can open the route before Atacama or Valparaiso changes the pace. The lakes and Patagonia need a bigger time commitment, so season and flight time should decide what belongs.",
   china:
-    "China rewards corridor planning, not countrywide collecting. Beijing and Shanghai can form one urban contrast, while Xi'an or Chengdu shifts the cultural frame. Leave space for food streets and neighborhood time beside the major sites.",
+    "China is a global titan of industrial zones, ancient trade routes, and massive infrastructure. From the Great Wall to high-speed rail, dynastic history meets urban density. Collective resilience, family legacy, and relentless modern drive shape the culture.",
   colombia:
     "Colombia changes with altitude and neighborhood choice. Bogota and Medellin set different urban rhythms before Cartagena or coffee country enters the plan. Flight hops and safety context should guide the order rather than a neat map line.",
   "costa-rica":
@@ -3782,9 +3782,9 @@ const countryDescriptionOverrides: Record<string, string> = {
   "hong-kong":
     "Hong Kong is easiest to understand through movement: up hills, across the harbor, and along MTR lines. Dense food streets and shopping districts need elevation-aware days. Ferries and ridge hikes keep the city from feeling only vertical.",
   india:
-    "India resists one grand itinerary. Choose a region, season, and transport style first, then let the route gather depth. City days and temple towns land better when rail journeys and food traditions have realistic daily pacing.",
+    "India spans Himalayan foothills, desert forts, river cities, and tropical coasts in a vast cultural mosaic. From Mumbai's finance towers to Varanasi's ghats and Bengaluru's tech corridors, it fuses ancient ritual, family legacy, and relentless modern drive.",
   indonesia:
-    "Indonesia needs one island cluster to lead. Bali and Java ask for different weather and transport choices before reef regions or volcano routes enter the plan. Ferries or flights should shape the trip early.",
+    "Volcanic peaks tower over rainforest and coral-fringed shores across Indonesia's vast archipelago. From Bali's terraced slopes to Jakarta's urban heat, ethnic traditions and maritime trade roots meet a modern, resource-driven economic rise.",
   iran:
     "Iran rewards a focused corridor more than a sweeping survey. Tehran, Isfahan, and Shiraz can anchor a deep cultural route. Bazaars, garden cities, and desert towns need current access checks plus careful distance planning.",
   iraq:
@@ -3796,7 +3796,7 @@ const countryDescriptionOverrides: Record<string, string> = {
   jamaica:
     "Jamaica loses texture when it is treated only as resort recovery. Kingston music changes the center of gravity before beach time takes over. Jerk routes, waterfalls, and Blue Mountain drives deserve distinct days, with meals and beach time kept from blurring together.",
   japan:
-    "Japan rewards precision without needing to feel rushed. Tokyo and Kyoto can anchor a first route, but hot springs or mountain towns should not become filler. Rail logic and luggage flow should shape each leg, with meal timing protected instead of squeezed in.",
+    "Japan is a high-tech archipelago where Tokyo neon contrasts with Kyoto's wooden temples. Robotics, automotive exports, and omotenashi hospitality sit beside volcanic peaks, bullet trains, and a culture of precision that defines modern East Asian influence.",
   jordan:
     "Jordan has a clear road-trip spine, but the major moments need air between them. Amman can lead into Petra before Wadi Rum changes the scale. The Dead Sea works better when heat and drive buffers are protected, especially on shorter trips.",
   kazakhstan:
@@ -3808,7 +3808,7 @@ const countryDescriptionOverrides: Record<string, string> = {
   kyrgyzstan:
     "Kyrgyzstan is a mountain trip before it is a city trip. Bishkek can orient the route before lake days and high passes take over. Yurt stays or horse routes need season checks and local guiding, with flexible road days kept open for weather.",
   laos:
-    "Laos asks the itinerary to slow down to river speed. Luang Prabang sets the tone before Mekong movement or temple days widen the route. Karst landscapes feel better when transport is unhurried and heat is respected, especially on overland days.",
+    "Saffron-robed monks and French colonial shutters line Luang Prabang, where the Mekong cuts through jungle-clad mountains. Tiered waterfalls, limestone caves, silk weaving, sticky rice rituals, and slow Buddhist culture give Laos its quiet gravity.",
   lebanon:
     "Lebanon is compact on the map and complicated in motion. Beirut may sit close to mountains and ruins, but traffic changes the day quickly. Coast towns and village routes should follow current safety advice, with day trips planned more carefully than distance suggests.",
   lesotho:
@@ -3824,7 +3824,7 @@ const countryDescriptionOverrides: Record<string, string> = {
   malawi:
     "Malawi has a gentle rhythm when the lake becomes part of the route rather than a backdrop. Lilongwe can handle arrivals before tea estates or plateau hikes shift the mood. Safari parks need road distances balanced against slow stays.",
   malaysia:
-    "Malaysia is clearest when city eating, beach time, and rainforest logistics are planned as separate acts. Kuala Lumpur and Penang suit food-led days. Borneo wildlife or island stays need their own pace, with weather and flight timing decided early.",
+    "Colonial shophouses and food-stall alleys sit beneath the Petronas Towers. Malaysia moves from Borneo jungle treks to tea-rich Cameron Highlands, Langkawi sands, and Penang's street kitchens, turning humid contrast into a sensory route.",
   mali:
     "Mali carries deep cultural weight, but access and safety define the trip before curiosity does. Bamako and the Niger River should stay inside a realistic plan. Desert music and mud architecture need specialist support, with the route kept narrow enough to be responsible.",
   mauritania:
@@ -3842,11 +3842,11 @@ const countryDescriptionOverrides: Record<string, string> = {
   namibia:
     "Namibia is a driving itinerary shaped by gravel, fuel, and sky. Windhoek handles the reset before Sossusvlei or Etosha take over. Skeleton Coast days need rental style and scenic drive time built into the route, with fuel planning treated seriously.",
   nepal:
-    "Nepal belongs to altitude before ambition. Kathmandu can open the route, while trekking days need permits and recovery time protected from the start. Temple squares and mountain lodges feel better when acclimatization sets the tempo.",
+    "Prayer flags flutter over high-altitude trails and ancient brick courtyards in the Kathmandu Valley. Nepal stretches from Terai plains to the world's tallest peaks, where Lumbini's meditation halls and Namche Bazaar's gear shops blend spiritual depth with mountain grit.",
   "new-caledonia":
     "New Caledonia blends French Pacific infrastructure with Kanak cultural context. Noumea can anchor the trip before lagoon days shift the pace. Reef beaches and outer-island time need car logistics considered early.",
   "new-zealand":
-    "New Zealand is easier as one island or corridor at a time. Auckland and Queenstown serve different routes, while fjords or beaches change the weather logic. Driving time should shape the plan before ambition does.",
+    "Glacial fjords and geothermal springs cut through New Zealand's alpine ridges and green pastures. North Island volcanic plateaus and South Island sounds frame forests, turquoise lakes, Maori tradition, and an outdoor culture shaped by distance and weather.",
   nicaragua:
     "Nicaragua is compact enough to tempt overplanning. Granada and Leon can carry the cultural side before volcano or surf days take over. Heat and transport should decide the order, with current safety context checked before the route widens.",
   niger:
@@ -3868,7 +3868,7 @@ const countryDescriptionOverrides: Record<string, string> = {
   peru:
     "Peru should be planned around altitude and food timing before landmarks. Lima and Cusco need different pacing before the Sacred Valley takes over. Machu Picchu plans should protect train timing and recovery days, with markets and acclimatization left unhurried.",
   philippines:
-    "Philippines travel depends on choosing the right island cluster. Manila can handle the gateway role before Palawan or Cebu takes over. Surf towns and reef routes need weather and transfers planned before beach style, not after.",
+    "The Philippines is a chain of more than 7,000 islands shaped by volcanic terrain, coral shores, and Manila's urban density. Colonial history, family-centered culture, a global service economy, and a vast diaspora fuse island life with modern democratic drive.",
   "puerto-rico":
     "Puerto Rico gains depth when San Juan nights and island drives are paced separately. The old city deserves its own evening rhythm before beach days take over. Rainforest trails and lechon routes need room around rental-car timing.",
   qatar:
@@ -3884,7 +3884,7 @@ const countryDescriptionOverrides: Record<string, string> = {
   "sierra-leone":
     "Sierra Leone is a slow Atlantic route with serious road logistics. Freetown can anchor the trip before peninsula beaches or island time takes over. Rainforest hills need weather and local guidance, with flexible transfers kept in the plan.",
   singapore:
-    "Singapore proves that compact travel can still feel layered. MRT movement and heat should shape the day before the icon list does. Hawker meals and heritage districts work better as anchors than errands, with gardens giving the route a cooler pause.",
+    "Man-made supertrees and colonial shophouses sit inside Singapore's dense, humid garden city. The island is a hyper-efficient crossroads where malls meet hawker centers, and Malay, Chinese, and Indian influences create a global food and finance hub.",
   "solomon-islands":
     "Solomon Islands travel is built around boats, flights, and quiet island time. Honiara can orient the trip before reef days or village stays take over. WWII sites and lagoons need weather buffers and cultural etiquette, with flight gaps treated as part of the plan.",
   somalia:
@@ -3894,11 +3894,11 @@ const countryDescriptionOverrides: Record<string, string> = {
   "south-africa":
     "South Africa needs city, safari, and coast treated as separate chapters. Cape Town and Johannesburg ask for different choices before wine routes or parks enter the plan. Safety awareness and car time should stay realistic.",
   "south-korea":
-    "South Korea rewards transit-cluster planning. Seoul and Busan carry different moods, while palace grounds and markets shape the urban days. Cafe districts, food timing, and day hikes fit best around subway or rail lines.",
+    "Neon-lit Seoul skyscrapers rise over ancient palaces in a country known for electronics, cars, and K-culture. South Korea balances high-pressure urban innovation with Buddhist mountain retreats, fusing rapid growth with a digital-first lifestyle.",
   "south-sudan":
     "South Sudan requires a narrow purpose and trusted local support. Juba or river-country travel should only be planned with current safety checks. Nile wetlands and cattle-camp culture depend on river-season timing, with access decisions made before any route expands.",
   "sri-lanka":
-    "Sri Lanka is compact, but monsoon patterns decide everything. Colombo can start the route before temple towns or tea hills take over. Surf coasts and rail journeys work only when the chosen coast matches the season, with recovery days kept between long moves.",
+    "Mist-shrouded tea plantations and colonial forts dot Sri Lanka, where wild elephants roam near ancient Buddhist ruins. Southern surf beaches, Sigiriya's rock fortress, jungle roads, spicy curries, and warm hospitality create a compact island journey.",
   sudan:
     "Sudan remains a Nile-and-desert route for specialist planning. Khartoum and archaeological landscapes should only be approached with current safety checks. Pyramids or Red Sea access need permits and trusted local support.",
   suriname:
@@ -3912,7 +3912,7 @@ const countryDescriptionOverrides: Record<string, string> = {
   tajikistan:
     "Tajikistan is a Pamir-and-valley route shaped by altitude and permits. Dushanbe can orient the trip before high mountain roads take over. Homestays and lakes need 4x4 logistics plus weather buffers, with spare days reserved for passes.",
   thailand:
-    "Thailand needs heat, meal timing, and monsoon patterns to set the pace. Bangkok can open the trip before northern temple towns or islands take over. Night markets and beach routes should follow transport logic, with monsoon patterns deciding which coast belongs.",
+    "Gilded temple spires and tangled night markets define Thailand, where rainforests meet emerald coasts. Misty northern mountains and southern limestone karsts frame a world-famous culinary scene, deep Buddhist traditions, and a warm, hospitable culture.",
   "the-bahamas":
     "The Bahamas should start with the island choice, not the hotel choice. Nassau and the family islands have different rhythms before reefs or blue holes enter the plan. Ferry and flight logistics matter early.",
   togo:
@@ -3940,7 +3940,7 @@ const countryDescriptionOverrides: Record<string, string> = {
   venezuela:
     "Venezuela has extraordinary landscapes, but current safety and access must set the route. Caracas and Angel Falls should not be planned the same way as the islands or Andean towns. Local expertise and focused transport matter.",
   vietnam:
-    "Vietnam reads best as a north-south rhythm with deliberate regional pauses. Hanoi and Ho Chi Minh City need different tempos before deltas or mountain towns enter the route. Weather and street-food neighborhoods should shape the order.",
+    "Vietnam's limestone peaks overlook turquoise waters while tiered rice paddies climb the northern highlands. From Hanoi's motorbike flow to Mekong canals, the terrain carries a history of grit. Coffee culture and industrial growth define its modern trajectory.",
   "west-bank":
     "West Bank travel needs local guidance and respectful pacing before any route is useful. Bethlehem and Ramallah need access rules kept visible, while Jericho or Nablus asks for heritage context. Daily movement should stay flexible.",
   "western-sahara":
