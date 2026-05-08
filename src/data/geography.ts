@@ -76,8 +76,44 @@ const countryCapitalLookup = new Map(
     ]),
 );
 
-const cityImage = (query: string) =>
-  `https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1200&q=80&${query}`;
+const cityImageSlugAliases: Record<string, string> = {
+  littlerock: "little-rock",
+  losangeles: "los-angeles",
+  sanfrancisco: "san-francisco",
+  newhaven: "new-haven",
+  desmoines: "des-moines",
+  neworleans: "new-orleans",
+  portlandmaine: "portland-maine",
+  washingtondc: "washington-dc",
+  jacksonms: "jackson-mississippi",
+  stlouis: "st-louis",
+  lasvegas: "las-vegas",
+  manchesternh: "manchester-new-hampshire",
+  oklahomacity: "oklahoma-city",
+  portlandoregon: "portland-oregon",
+  charlestonsc: "charleston-south-carolina",
+  siouxfalls: "sioux-falls",
+  saltlakecity: "salt-lake-city",
+  charlestonwv: "charleston-west-virginia",
+  sanantonio: "san-antonio",
+  sandiego: "san-diego",
+  mexicocity: "mexico-city",
+  saopaulo: "sao-paulo",
+  buenosaires: "buenos-aires",
+  capetown: "cape-town",
+  chiangmai: "chiang-mai",
+  kualalumpur: "kuala-lumpur",
+  hongkong: "hong-kong",
+  nyc: "new-york-city",
+  rio: "rio-de-janeiro",
+};
+
+const cityImage = (query: string) => {
+  const normalizedQuery = slugify(query);
+  const slug = cityImageSlugAliases[normalizedQuery] ?? normalizedQuery;
+
+  return `/api/destination-image/${slug}-v2`;
+};
 
 const topCityDescriptionOverrides = new Map<string, string>([
   [

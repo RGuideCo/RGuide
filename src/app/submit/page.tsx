@@ -1,8 +1,7 @@
 import type { Metadata } from "next";
 import { Suspense } from "react";
 
-import { continents } from "@/data";
-import { SubmitWorkspace } from "@/components/list/SubmitWorkspace";
+import { SubmitWorkspaceLoader } from "@/components/list/SubmitWorkspaceLoader";
 
 export const metadata: Metadata = {
   title: "Submit a List",
@@ -19,7 +18,7 @@ export default function SubmitPage() {
           </div>
         }
       >
-        <SubmitWorkspace continents={continents} />
+        <SubmitWorkspaceLoader />
       </Suspense>
     </div>
   );

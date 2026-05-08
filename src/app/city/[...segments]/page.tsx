@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 import { notFound, permanentRedirect } from "next/navigation";
 
+import { SplitScreenClientLoader } from "@/components/home/SplitScreenClientLoader";
 import { CityRouteSeoIndex } from "@/components/seo/CityRouteSeoIndex";
-import { SplitScreenSection } from "@/components/home/SplitScreenSection";
 import { ProgressiveEnhancementShell } from "@/components/shared/ProgressiveEnhancementShell";
 import { getContinentsWithDestinationDescriptions } from "@/lib/destination-descriptions";
 import { getCityDeepLinkStaticParams, resolveCityDeepLink } from "@/lib/deep-link-routes";
@@ -15,7 +15,7 @@ interface CityDeepLinkPageProps {
   }>;
 }
 
-export const dynamic = "force-dynamic";
+export const revalidate = 900;
 
 export function generateStaticParams() {
   return getCityDeepLinkStaticParams();
@@ -37,6 +37,8 @@ export async function generateMetadata({ params }: CityDeepLinkPageProps): Promi
     return { title: "City not found" };
   }
 
+  const cityImageUrl = `${route.city.image}${route.city.image.includes("?") ? "&" : "?"}title=1`;
+
   return {
     title: route.title,
     description: route.description,
@@ -50,7 +52,7 @@ export async function generateMetadata({ params }: CityDeepLinkPageProps): Promi
       type: "website",
       images: [
         {
-          url: route.city.image,
+          url: cityImageUrl,
           alt: route.title,
         },
       ],
@@ -94,9 +96,7 @@ export default async function CityDeepLinkPage({ params }: CityDeepLinkPageProps
         />
       ))}
       <ProgressiveEnhancementShell fallback={<CityRouteSeoIndex route={route} guides={editorialGuides} />}>
-        <SplitScreenSection
-          continents={continents}
-          initialEditorialGuides={editorialGuides}
+        <SplitScreenClientLoader
           initialRouteState={{
             selection: route.selection,
             activeCategory: route.activeCategory,

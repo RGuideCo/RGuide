@@ -91,7 +91,7 @@ import { getEditorialLists, useAppStore } from "@/store/app-store";
 import type { FavoriteLocation } from "@/store/app-store";
 import { Continent, ListCategory, MapList, SelectionState, SubmissionType } from "@/types";
 
-interface SplitScreenSectionProps {
+export interface SplitScreenSectionProps {
   continents: Continent[];
   initialEditorialGuides?: MapList[];
   initialRouteState?: CityDeepLinkState;
@@ -3367,7 +3367,11 @@ export function SplitScreenSection({
     }
 
     const worldwideGuideIds = new Set(railFilteredLists.map((list) => list.id));
-    return globalMergedLists
+    const baseRecentLists = activeCategory
+      ? globalMergedLists.filter((list) => list.category === activeCategory)
+      : globalMergedLists;
+
+    return baseRecentLists
       .filter(
         (list) =>
           list.creator.name.startsWith("R ") &&
@@ -3383,7 +3387,7 @@ export function SplitScreenSection({
         return rightTime - leftTime || right.upvotes - left.upvotes || left.title.localeCompare(right.title);
       })
       .slice(0, 20);
-  }, [activeGuideRail, globalMergedLists, isGlobalSelection, railFilteredLists]);
+  }, [activeGuideRail, activeCategory, globalMergedLists, isGlobalSelection, railFilteredLists]);
   const activeSeoPlaceLabel = activeLocation.city
     ? activeLocation.nestedSubarea?.name ?? activeLocation.subarea?.name ?? activeLocation.city.name
     : activeDirectoryMeta.title;

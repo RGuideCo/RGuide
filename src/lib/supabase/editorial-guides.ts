@@ -12,9 +12,7 @@ interface EditorialGuideRecord {
 }
 
 async function loadEditorialGuidesFromApi() {
-  const response = await fetch("/api/editorial-guides", {
-    cache: "no-store",
-  });
+  const response = await fetch("/api/editorial-guides");
 
   if (!response.ok) {
     throw new Error(`Editorial guide API returned ${response.status}`);

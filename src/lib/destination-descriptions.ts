@@ -140,7 +140,28 @@ function getDatabaseUrl() {
   );
 }
 
+function shouldSkipDatabaseConnection() {
+  if (process.env.RGUIDE_ALLOW_BUILD_DB === "1") {
+    return false;
+  }
+
+  if (process.env.RGUIDE_SKIP_DATABASE === "1") {
+    return true;
+  }
+
+  const isLocalProductionBuild =
+    process.env.VERCEL !== "1" &&
+    (process.env.NEXT_PHASE === "phase-production-build" ||
+      process.env.npm_lifecycle_event === "build");
+
+  return isLocalProductionBuild;
+}
+
 async function loadDestinationDescriptionRows(): Promise<DestinationDescriptionRow[]> {
+  if (shouldSkipDatabaseConnection()) {
+    return [];
+  }
+
   const databaseUrl = getDatabaseUrl();
 
   if (!databaseUrl) {

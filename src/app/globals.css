@@ -447,6 +447,10 @@ textarea:focus-visible {
   gap: 0.65rem;
 }
 
+.expanded-poi-bio-no-photo {
+  grid-template-columns: minmax(0, 1fr);
+}
+
 .expanded-poi-bio-photo {
   position: relative;
   display: block;
@@ -513,6 +517,21 @@ textarea:focus-visible {
   transition:
     transform 240ms ease,
     filter 240ms ease;
+}
+
+.ordered-poi-photo-fallback {
+  display: flex;
+  height: 100%;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.78), rgba(248, 250, 252, 0.92)),
+    radial-gradient(circle at 70% 25%, color-mix(in srgb, var(--guide-accent, #64748b) 24%, transparent), transparent 42%);
+  color: color-mix(in srgb, var(--guide-accent, #64748b) 82%, #0f172a);
+  font-family: var(--font-mono), ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.95rem;
+  font-weight: 800;
 }
 
 .ordered-poi-photo:hover,

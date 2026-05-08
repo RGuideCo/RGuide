@@ -148,11 +148,6 @@ function formatItineraryDayLabel(dateKey: string, index: number) {
   return `${dayLabel} - ${formatted}`;
 }
 
-const SAMPLE_POI_PHOTOS = [
-  "https://images.unsplash.com/photo-1583422409516-2895a77efded?auto=format&fit=crop&w=900&q=80",
-  "https://images.unsplash.com/photo-1514933651103-005eec06c04b?auto=format&fit=crop&w=900&q=80",
-  "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=900&q=80",
-];
 const STOP_SCROLL_TOP_INSET = 4;
 
 function getSourceDisplayName(source: GuideSource) {
@@ -181,8 +176,8 @@ function getAlphaMarker(index: number) {
   return String.fromCharCode(65 + (index % 26));
 }
 
-function getSamplePoiPhoto(index: number) {
-  return SAMPLE_POI_PHOTOS[index % SAMPLE_POI_PHOTOS.length];
+function getPoiPhoto(photo?: string) {
+  return photo?.trim() || null;
 }
 
 type StayBookingPlatform = "booking" | "hostelworld";
@@ -1062,7 +1057,7 @@ export function MapListCard({
                 >
                   <div className="ordered-poi-photo-strip">
                     {list.stops.map((stop, index) => {
-                      const stopPhoto = stop.photo ?? getSamplePoiPhoto(index);
+                      const stopPhoto = getPoiPhoto(stop.photo);
                       const isStopExpanded = expandedStopIds.includes(stop.id);
                       return (
                         <button
@@ -1076,13 +1071,19 @@ export function MapListCard({
                           aria-label={`Open ${stop.name}`}
                           title={stop.name}
                         >
-                          <img
-                            src={stopPhoto}
-                            alt=""
-                            loading="lazy"
-                            decoding="async"
-                            className="h-full w-full object-cover"
-                          />
+                          {stopPhoto ? (
+                            <img
+                              src={stopPhoto}
+                              alt=""
+                              loading="lazy"
+                              decoding="async"
+                              className="h-full w-full object-cover"
+                            />
+                          ) : (
+                            <span className="ordered-poi-photo-fallback" aria-hidden="true">
+                              {getAlphaMarker(index)}
+                            </span>
+                          )}
                           <span className="ordered-poi-photo-index">{index + 1}</span>
                         </button>
                       );
@@ -1168,7 +1169,7 @@ export function MapListCard({
                         const stopContent = splitStopDescriptionAndHours(stop.description);
                         const resolvedStopHours = resolveStopHours(stop) ?? stopContent.hours;
                         const stopItineraryId = `${list.id}:${stop.id}`;
-                        const stopPhoto = stop.photo ?? getSamplePoiPhoto(index);
+                        const stopPhoto = getPoiPhoto(stop.photo);
                         const stayBookingDetails = getStayBookingDetails(list, stop);
                         const isStopInItinerary =
                           itineraryStopIds.includes(stopItineraryId) ||
@@ -1310,25 +1311,27 @@ export function MapListCard({
                         >
                           <div className="overflow-hidden">
                             <div className="border-t border-slate-950/10 px-4 py-3">
-                              <div className="expanded-poi-bio">
-                                <button
-                                  type="button"
-                                  onClick={(event) => {
-                                    event.stopPropagation();
-                                    openPhotoPreview({ src: stopPhoto, title: stop.name });
-                                  }}
-                                  className="expanded-poi-bio-photo"
-                                  aria-label={`Open photo of ${stop.name}`}
-                                  title={`Open photo of ${stop.name}`}
-                                >
-                                  <img
-                                    src={stopPhoto}
-                                    alt=""
-                                    loading="lazy"
-                                    decoding="async"
-                                    className="h-full w-full object-cover"
-                                  />
-                                </button>
+                              <div className={`expanded-poi-bio ${stopPhoto ? "" : "expanded-poi-bio-no-photo"}`}>
+                                {stopPhoto ? (
+                                  <button
+                                    type="button"
+                                    onClick={(event) => {
+                                      event.stopPropagation();
+                                      openPhotoPreview({ src: stopPhoto, title: stop.name });
+                                    }}
+                                    className="expanded-poi-bio-photo"
+                                    aria-label={`Open photo of ${stop.name}`}
+                                    title={`Open photo of ${stop.name}`}
+                                  >
+                                    <img
+                                      src={stopPhoto}
+                                      alt=""
+                                      loading="lazy"
+                                      decoding="async"
+                                      className="h-full w-full object-cover"
+                                    />
+                                  </button>
+                                ) : null}
                                 <p className="min-w-0 text-sm leading-5 text-slate-600">{stopContent.summary}</p>
                               </div>
                               {stop.places?.length ? (
@@ -1340,7 +1343,7 @@ export function MapListCard({
                                   <div className="space-y-2">
                                   {stop.places.map((place, placeIndex) => (
                                     (() => {
-                                      const placePhoto = place.photo ?? getSamplePoiPhoto(index + placeIndex + 1);
+                                      const placePhoto = getPoiPhoto(place.photo);
                                       const isPlaceExpanded = expandedPlaceIds.includes(place.id);
                                       const isPlaceMapSelected = forceExpandStopId === place.id;
                                       return (
@@ -1408,25 +1411,31 @@ export function MapListCard({
                                           }`}
                                         >
                                           <div className="overflow-hidden">
-                                            <div className="expanded-poi-bio expanded-poi-bio-place pb-1">
-                                              <button
-                                                type="button"
-                                                onClick={(event) => {
-                                                  event.stopPropagation();
-                                                  openPhotoPreview({ src: placePhoto, title: place.name });
-                                                }}
-                                                className="expanded-poi-bio-photo expanded-poi-bio-photo-place"
-                                                aria-label={`Open photo of ${place.name}`}
-                                                title={`Open photo of ${place.name}`}
-                                              >
-                                                <img
-                                                  src={placePhoto}
-                                                  alt=""
-                                                  loading="lazy"
-                                                  decoding="async"
-                                                  className="h-full w-full object-cover"
-                                                />
-                                              </button>
+                                            <div
+                                              className={`expanded-poi-bio expanded-poi-bio-place pb-1 ${
+                                                placePhoto ? "" : "expanded-poi-bio-no-photo"
+                                              }`}
+                                            >
+                                              {placePhoto ? (
+                                                <button
+                                                  type="button"
+                                                  onClick={(event) => {
+                                                    event.stopPropagation();
+                                                    openPhotoPreview({ src: placePhoto, title: place.name });
+                                                  }}
+                                                  className="expanded-poi-bio-photo expanded-poi-bio-photo-place"
+                                                  aria-label={`Open photo of ${place.name}`}
+                                                  title={`Open photo of ${place.name}`}
+                                                >
+                                                  <img
+                                                    src={placePhoto}
+                                                    alt=""
+                                                    loading="lazy"
+                                                    decoding="async"
+                                                    className="h-full w-full object-cover"
+                                                  />
+                                                </button>
+                                              ) : null}
                                               <p className="min-w-0 text-xs leading-4 text-slate-600">{place.description}</p>
                                             </div>
                                           </div>

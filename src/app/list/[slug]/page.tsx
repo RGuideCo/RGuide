@@ -3,8 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 
 import { MapListCard } from "@/components/cards/MapListCard";
-import { ListGuideWorkspace } from "@/components/list/ListGuideWorkspace";
-import { getContinentsWithDestinationDescriptions } from "@/lib/destination-descriptions";
+import { ListGuideWorkspaceLoader } from "@/components/list/ListGuideWorkspaceLoader";
 import { getCategoryHref, getCityHref, getListHref } from "@/lib/routes";
 import { getServerEditorialGuides } from "@/lib/server-editorial-guides";
 
@@ -49,10 +48,7 @@ export async function generateMetadata({ params }: ListDetailPageProps): Promise
 
 export default async function ListDetailPage({ params }: ListDetailPageProps) {
   const { slug } = await params;
-  const [continents, editorialGuides] = await Promise.all([
-    getContinentsWithDestinationDescriptions(),
-    getServerEditorialGuides(),
-  ]);
+  const editorialGuides = await getServerEditorialGuides();
   const list = editorialGuides.find((guide) => guide.slug === slug);
 
   if (!list) {
@@ -205,7 +201,7 @@ export default async function ListDetailPage({ params }: ListDetailPageProps) {
             )}
           </section>
 
-          <ListGuideWorkspace list={list} continents={continents} />
+          <ListGuideWorkspaceLoader list={list} />
 
           <section className="space-y-4" aria-labelledby="related-guides-heading">
             <div>

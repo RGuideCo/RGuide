@@ -2,7 +2,15 @@ import { NextResponse } from "next/server";
 
 import { getServerEditorialGuides } from "@/lib/server-editorial-guides";
 
-export const dynamic = "force-dynamic";
+const EDITORIAL_GUIDES_CACHE_SECONDS = Number.parseInt(
+  process.env.EDITORIAL_GUIDES_CACHE_SECONDS ?? "900",
+  10,
+);
+const cacheSeconds = Number.isFinite(EDITORIAL_GUIDES_CACHE_SECONDS)
+  ? EDITORIAL_GUIDES_CACHE_SECONDS
+  : 900;
+
+export const revalidate = 900;
 export const runtime = "nodejs";
 
 export async function GET() {
@@ -11,7 +19,7 @@ export async function GET() {
       { guides: await getServerEditorialGuides() },
       {
         headers: {
-          "Cache-Control": "no-store",
+          "Cache-Control": `public, s-maxage=${cacheSeconds}, stale-while-revalidate=${cacheSeconds * 4}`,
         },
       },
     );
