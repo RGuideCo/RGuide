@@ -1,6 +1,5 @@
 import type { Feature, Geometry } from "geojson";
 
-import worldCountriesHighRes from "@/data/world-countries-highres-collection.json";
 import worldCountries from "@/data/world-countries.json";
 
 type WorldCountrySeed = {
@@ -15,6 +14,12 @@ type HighResFeatureCollection = {
   features?: Array<Feature<Geometry> & { properties?: Record<string, unknown> }>;
 };
 
+type BoundaryModule = {
+  default: unknown;
+};
+
+type HighResLoader = () => Promise<BoundaryModule>;
+
 function normalizeCountryName(value: string) {
   return value
     .normalize("NFD")
@@ -25,7 +30,8 @@ function normalizeCountryName(value: string) {
 }
 
 const worldCountrySeeds = worldCountries as unknown as WorldCountrySeed[];
-const highResFeatures = (worldCountriesHighRes as HighResFeatureCollection).features ?? [];
+
+const worldCountryHighResLoader: HighResLoader = () => import("@/data/world-countries-highres-collection.json");
 
 const countryIdByIso3 = new Map<string, string>();
 const countryIdByName = new Map<string, string>();
@@ -38,8 +44,9 @@ for (const country of worldCountrySeeds) {
 }
 
 export const countryBoundaryFeatures: Record<string, Feature<Geometry>> = {};
+let highResLoadPromise: Promise<void> | null = null;
 
-for (const feature of highResFeatures) {
+function addFeatureBoundary(feature: Feature<Geometry>, overwrite = false) {
   const properties = feature.properties ?? {};
   const iso3Raw =
     typeof properties["ISO3166-1-Alpha-3"] === "string"
@@ -49,9 +56,8 @@ for (const feature of highResFeatures) {
         : typeof properties.ISO_A3 === "string"
           ? properties.ISO_A3
           : null;
-  const iso3Candidate = iso3Raw ? iso3Raw.toUpperCase() : null;
-  const iso3 =
-    iso3Candidate && /^[A-Z]{3}$/.test(iso3Candidate) ? iso3Candidate : null;
+  const iso3Candidate = iso3Raw ? String(iso3Raw).toUpperCase() : null;
+  const iso3 = iso3Candidate && /^[A-Z]{3}$/.test(iso3Candidate) ? iso3Candidate : null;
   const nameRaw =
     typeof properties.name === "string"
       ? properties.name
@@ -62,16 +68,44 @@ for (const feature of highResFeatures) {
     (iso3 ? countryIdByIso3.get(iso3) : undefined) ??
     (nameRaw ? countryIdByName.get(normalizeCountryName(nameRaw)) : undefined);
 
-  if (countryId && !countryBoundaryFeatures[countryId]) {
+  if (!countryId) {
+    return;
+  }
+
+  if (overwrite || !countryBoundaryFeatures[countryId]) {
     countryBoundaryFeatures[countryId] = feature;
   }
 }
 
-for (const country of worldCountrySeeds) {
-  if (countryBoundaryFeatures[country.id]) {
-    continue;
-  }
-  if (country.feature) {
+function addSeedBoundaries() {
+  for (const country of worldCountrySeeds) {
+    if (countryBoundaryFeatures[country.id] || !country.feature) {
+      continue;
+    }
     countryBoundaryFeatures[country.id] = country.feature;
   }
 }
+
+export function ensureCountryBoundaryHighResLoaded() {
+  if (highResLoadPromise) {
+    return highResLoadPromise;
+  }
+
+  highResLoadPromise = worldCountryHighResLoader()
+    .then((module) => {
+      const moduleData = module.default as HighResFeatureCollection;
+      const features = moduleData?.features ?? [];
+
+      for (const feature of features) {
+        addFeatureBoundary(feature, true);
+      }
+    })
+    .catch((error) => {
+      highResLoadPromise = null;
+      throw error;
+    });
+
+  return highResLoadPromise;
+}
+
+addSeedBoundaries();

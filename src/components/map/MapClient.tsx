@@ -7,6 +7,7 @@ import maplibregl, { GeoJSONSource, LngLatBounds } from "maplibre-gl";
 
 import { mapLists } from "@/data/lists";
 import { countryBoundaryFeatures } from "@/data/map-boundaries";
+import { ensureCountryBoundaryHighResLoaded } from "@/data/map-boundaries";
 import {
   loadNeighborhoodBoundaryMap,
   type NeighborhoodBoundaryMap,
@@ -229,15 +230,6 @@ const continentFocusPresets: Record<
 const countryFocusPresets: Record<string, { center: [number, number]; zoom: number }> = {
   usa: { center: [-96, 38.5], zoom: 4.2 },
 };
-function getTrendingCityIds(guideLists: MapList[]) {
-  return new Set(
-    [...guideLists]
-      .filter((list) => list.location.scope === "city" && list.location.city)
-      .sort((left, right) => right.upvotes - left.upvotes)
-      .slice(0, 16)
-      .map((list) => list.location.city as string),
-  );
-}
 const usStateLabels = [
   { id: "al", name: "Alabama", coordinates: [32.806671, -86.79113] },
   { id: "ak", name: "Alaska", coordinates: [61.370716, -152.404419] },
@@ -1276,63 +1268,139 @@ function createCityData(
   guideLists: MapList[],
   guideFocus?: MapList | null,
 ): FeatureCollection<Point, CityFeatureProperties> {
-  const trendingCityIds = getTrendingCityIds(guideLists);
-  const cityScoreLookup = new Map(
-    continents.flatMap((continent) =>
-      continent.countries.flatMap((country) =>
-        country.cities.map((city) => {
-          const cityLists = guideLists.filter(
-            (list) =>
-              list.location.scope === "city" &&
-              list.location.city === city.name &&
-              list.location.country === country.name,
-          );
-          const guideCount = cityLists.length;
-          const totalUpvotes = cityLists.reduce((total, list) => total + list.upvotes, 0);
-          const interestScore = guideCount * 22 + totalUpvotes * 0.18;
-          const trendingBoost = trendingCityIds.has(city.name) ? 14 : 0;
+  const shouldRenderCityLayer =
+    selection.countryId ||
+    selection.cityId ||
+    selection.continentId ||
+    selection.countrySubareaId ||
+    selection.stateId ||
+    guideFocus?.location.scope === "city";
 
-          return [city.id, Math.max(8, interestScore + trendingBoost)] as const;
-        }),
-      ),
-    ),
+  if (!shouldRenderCityLayer) {
+    return {
+      type: "FeatureCollection",
+      features: [],
+    };
+  }
+
+  const visibleCityKeys = new Set<string>();
+  const visibleCities: Array<{
+    continentId: string;
+    countryId: string;
+    countryName: string;
+    city: Continent["countries"][number]["cities"][number];
+    key: string;
+  }> = [];
+
+  for (const continent of continents) {
+    for (const country of continent.countries) {
+      for (const city of country.cities) {
+        if (
+          city.isPlaceholderRegion ||
+          !(
+            selection.countryId === country.id ||
+            selection.cityId === city.id ||
+            (selection.continentId === continent.id && !selection.countryId)
+          ) ||
+          (selection.countrySubareaId && city.countrySubareaId !== selection.countrySubareaId) ||
+          (selection.stateId && city.stateId !== selection.stateId)
+        ) {
+          continue;
+        }
+
+        const key = `${normalizeLabelName(country.name)}::${normalizeLabelName(city.name)}`;
+        visibleCityKeys.add(key);
+        visibleCities.push({
+          continentId: continent.id,
+          countryId: country.id,
+          countryName: country.name,
+          city,
+          key,
+        });
+      }
+    }
+  }
+
+  if (!visibleCities.length) {
+    return {
+      type: "FeatureCollection",
+      features: [],
+    };
+  }
+
+  const cityStats = new Map<
+    string,
+    {
+      guideCount: number;
+      totalUpvotes: number;
+    }
+  >();
+
+  for (const list of guideLists) {
+    if (list.location.scope !== "city" || !list.location.city || !list.location.country) {
+      continue;
+    }
+
+    const cityKey = `${normalizeLabelName(list.location.country)}::${normalizeLabelName(list.location.city)}`;
+    if (!visibleCityKeys.has(cityKey)) {
+      continue;
+    }
+
+    const existing = cityStats.get(cityKey);
+    if (existing) {
+      existing.guideCount += 1;
+      existing.totalUpvotes += list.upvotes;
+      continue;
+    }
+
+    cityStats.set(cityKey, {
+      guideCount: 1,
+      totalUpvotes: list.upvotes,
+    });
+  }
+
+  const trendingCityIds = new Set(
+    [...cityStats.entries()]
+      .sort((left, right) => right[1].totalUpvotes * 0.18 - left[1].totalUpvotes * 0.18)
+      .slice(0, 16)
+      .map(([key]) => key.split("::")[1]),
+  );
+  const cityScoreLookup = new Map<string, number>(
+    visibleCities.map((entry) => {
+      const stats = cityStats.get(entry.key);
+      const guideCount = stats?.guideCount ?? 0;
+      const totalUpvotes = stats?.totalUpvotes ?? 0;
+      const interestScore = guideCount * 22 + totalUpvotes * 0.18;
+      const trendingBoost = trendingCityIds.has(normalizeLabelName(entry.city.name)) ? 14 : 0;
+
+      return [entry.city.id, Math.max(8, interestScore + trendingBoost)] as const;
+    }),
   );
 
   return {
     type: "FeatureCollection",
-    features: continents.flatMap((continent) =>
-      continent.countries.flatMap((country) =>
-        country.cities
-          .filter(
-            (city) =>
-              !city.isPlaceholderRegion &&
-              (selection.countryId === country.id ||
-                selection.cityId === city.id ||
-                (selection.continentId === continent.id && !selection.countryId)) &&
-              (!selection.countrySubareaId || city.countrySubareaId === selection.countrySubareaId) &&
-              (!selection.stateId || city.stateId === selection.stateId),
-          )
-          .map((city) => ({
-            type: "Feature" as const,
-            properties: {
-              id: city.id,
-              name: city.name,
-              continentId: continent.id,
-              countryId: country.id,
-              score: cityScoreLookup.get(city.id) ?? 8,
-              isPlaceholderRegion: Boolean(city.isPlaceholderRegion),
-              guideHighlighted:
-                guideFocus?.location.scope === "city" &&
-                guideFocus.location.city === city.name &&
-                guideFocus.location.country === country.name,
-            },
-            geometry: {
-              type: "Point" as const,
-              coordinates: [city.coordinates[1], city.coordinates[0]],
-            },
-          })),
-      ),
-    ),
+    features: visibleCities.flatMap((entry) => {
+      const city = entry.city;
+      return {
+        type: "Feature" as const,
+        properties: {
+          id: city.id,
+          name: city.name,
+          continentId: entry.continentId,
+          countryId: entry.countryId,
+          score: cityScoreLookup.get(city.id) ?? 8,
+          isPlaceholderRegion: Boolean(city.isPlaceholderRegion),
+          guideHighlighted:
+            guideFocus?.location.scope === "city" &&
+            normalizeLabelName(guideFocus.location.city ?? "") === normalizeLabelName(city.name) &&
+            normalizeLabelName(guideFocus.location.country ?? "") === normalizeLabelName(entry.countryName),
+        },
+        geometry: {
+          type: "Point" as const,
+          coordinates: [city.coordinates[1], city.coordinates[0]],
+        },
+      };
+    }),
   };
 }
 
@@ -1952,6 +2020,7 @@ export function MapClient({
   const mapRef = useRef<maplibregl.Map | null>(null);
   const isStyleReadyRef = useRef(false);
   const [styleReadyTick, setStyleReadyTick] = useState(0);
+  const [countryBoundaryDataVersion, setCountryBoundaryDataVersion] = useState(0);
   const [neighborhoodBoundaryLookup, setNeighborhoodBoundaryLookup] =
     useState<NeighborhoodBoundaryMap>(EMPTY_NEIGHBORHOOD_BOUNDARY_LOOKUP);
   const hoverAnimationFrameRef = useRef<number | null>(null);
@@ -2019,7 +2088,7 @@ export function MapClient({
 
   const countryData = useMemo(
     () => createCountryData(continents, selection, highlightedCountryIds, guideFocus),
-    [continents, guideFocus, highlightedCountryIds, selection],
+    [continents, countryBoundaryDataVersion, guideFocus, highlightedCountryIds, selection],
   );
   const continentLabelData = useMemo(
     () => createContinentLabelData(continents, selection),
@@ -2158,6 +2227,34 @@ export function MapClient({
   useEffect(() => {
     viewportInsetsRef.current = viewportInsets;
   }, [viewportInsets]);
+
+  useEffect(() => {
+    let isDisposed = false;
+
+    const shouldLoadHighRes = Boolean(
+      selectedBoundaryIso3.length > 0 || focusedCountryId || selection.cityId || selection.countryId,
+    );
+
+    if (!shouldLoadHighRes) {
+      return;
+    }
+
+    ensureCountryBoundaryHighResLoaded()
+      .then(() => {
+        if (!isDisposed) {
+          setCountryBoundaryDataVersion((current) => current + 1);
+        }
+      })
+      .catch((error) => {
+        if (!isDisposed) {
+          console.error("Failed to load high-resolution country boundary data", error);
+        }
+      });
+
+    return () => {
+      isDisposed = true;
+    };
+  }, [focusedCountryId, selectedBoundaryIso3, selection.cityId, selection.countryId]);
 
   useEffect(() => {
     if (!containerRef.current || mapRef.current) {

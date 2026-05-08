@@ -3,6 +3,7 @@
 import dynamic from "next/dynamic";
 
 import { useAppData } from "@/components/shared/useAppData";
+import type { Continent } from "@/types";
 import type { MapList } from "@/types";
 
 const ListGuideWorkspace = dynamic(
@@ -17,7 +18,12 @@ const ListGuideWorkspace = dynamic(
   },
 );
 
-export function ListGuideWorkspaceLoader({ list }: { list: MapList }) {
+type ListGuideWorkspaceLoaderProps = {
+  list: MapList;
+  continents?: Continent[];
+};
+
+function ListGuideWorkspaceLoaderClient({ list }: { list: MapList }) {
   const { data } = useAppData();
 
   if (!data) {
@@ -29,4 +35,12 @@ export function ListGuideWorkspaceLoader({ list }: { list: MapList }) {
   }
 
   return <ListGuideWorkspace list={list} continents={data.continents} />;
+}
+
+export function ListGuideWorkspaceLoader({ list, continents }: ListGuideWorkspaceLoaderProps) {
+  if (continents) {
+    return <ListGuideWorkspace list={list} continents={continents} />;
+  }
+
+  return <ListGuideWorkspaceLoaderClient list={list} />;
 }

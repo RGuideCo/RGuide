@@ -43,6 +43,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <head>
+        <link rel="preconnect" href="https://tiles.openfreemap.org" crossOrigin="anonymous" />
+        <link rel="dns-prefetch" href="https://tiles.openfreemap.org" />
+      </head>
       <body className={hostGrotesk.variable}>
         <AuthSync />
         <SubmittedGuidesSync />

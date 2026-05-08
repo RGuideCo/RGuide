@@ -5,6 +5,7 @@ import { notFound } from "next/navigation";
 import { MapListCard } from "@/components/cards/MapListCard";
 import { ListGuideWorkspaceLoader } from "@/components/list/ListGuideWorkspaceLoader";
 import { getCategoryHref, getCityHref, getListHref } from "@/lib/routes";
+import { getContinentsWithDestinationDescriptions } from "@/lib/destination-descriptions";
 import { getServerEditorialGuides } from "@/lib/server-editorial-guides";
 
 interface ListDetailPageProps {
@@ -15,7 +16,10 @@ interface ListDetailPageProps {
 
 export async function generateMetadata({ params }: ListDetailPageProps): Promise<Metadata> {
   const { slug } = await params;
-  const editorialGuides = await getServerEditorialGuides();
+  const [editorialGuides, continents] = await Promise.all([
+    getServerEditorialGuides(),
+    getContinentsWithDestinationDescriptions(),
+  ]);
   const list = editorialGuides.find((guide) => guide.slug === slug);
 
   if (!list) {
@@ -48,7 +52,10 @@ export async function generateMetadata({ params }: ListDetailPageProps): Promise
 
 export default async function ListDetailPage({ params }: ListDetailPageProps) {
   const { slug } = await params;
-  const editorialGuides = await getServerEditorialGuides();
+  const [editorialGuides, continents] = await Promise.all([
+    getServerEditorialGuides(),
+    getContinentsWithDestinationDescriptions(),
+  ]);
   const list = editorialGuides.find((guide) => guide.slug === slug);
 
   if (!list) {
@@ -201,7 +208,7 @@ export default async function ListDetailPage({ params }: ListDetailPageProps) {
             )}
           </section>
 
-          <ListGuideWorkspaceLoader list={list} />
+          <ListGuideWorkspaceLoader continents={continents} list={list} />
 
           <section className="space-y-4" aria-labelledby="related-guides-heading">
             <div>

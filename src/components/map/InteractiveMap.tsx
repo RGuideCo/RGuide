@@ -11,12 +11,6 @@ type SavedMapLocation = {
   selection: SelectionState;
 };
 
-type WindowWithIdleCallback = Window &
-  typeof globalThis & {
-    requestIdleCallback?: (callback: () => void, options?: { timeout?: number }) => number;
-    cancelIdleCallback?: (handle: number) => void;
-  };
-
 const DynamicMapClient = dynamic(
   () => import("@/components/map/MapClient").then((module) => module.MapClient),
   {
@@ -79,20 +73,12 @@ export function InteractiveMap(props: InteractiveMapProps) {
   const [shouldLoadMap, setShouldLoadMap] = useState(false);
 
   useEffect(() => {
-    if (typeof window === "undefined") {
-      return;
-    }
-
     const scheduleMapLoad = () => setShouldLoadMap(true);
-    const browserWindow = window as WindowWithIdleCallback;
+    const scheduleId = window.requestAnimationFrame(scheduleMapLoad);
 
-    if (typeof browserWindow.requestIdleCallback === "function") {
-      const idleId = browserWindow.requestIdleCallback(scheduleMapLoad, { timeout: 900 });
-      return () => browserWindow.cancelIdleCallback?.(idleId);
-    }
-
-    const timeoutId = browserWindow.setTimeout(scheduleMapLoad, 120);
-    return () => browserWindow.clearTimeout(timeoutId);
+    return () => {
+      window.cancelAnimationFrame(scheduleId);
+    };
   }, []);
 
   if (!shouldLoadMap) {
