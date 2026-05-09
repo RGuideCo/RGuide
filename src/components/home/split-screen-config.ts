@@ -41,6 +41,7 @@ export const categoryOptions: { label: string; category: ListCategory; icon: Luc
   { label: "Stay", category: "Stay", icon: BedDouble },
   { label: "Scenic", category: "Nature", icon: Trees },
   { label: "Activities", category: "Activities", icon: Sparkles },
+  { label: "Itineraries", category: "Itineraries", icon: Route },
   { label: "Routes", category: "Routes", icon: Road },
   { label: "Essentials", category: "Essentials", icon: BadgeInfo },
 ];

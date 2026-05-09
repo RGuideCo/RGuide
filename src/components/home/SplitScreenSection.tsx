@@ -3053,7 +3053,7 @@ export function SplitScreenSection({
     ? categorySubcategoriesByScope[subcategoryScope][visibleSubcategoryCategory]
     : [];
   const categoryTitleLabel = activeCategoryOption?.label ?? hoveredCategoryLabel ?? "Categories";
-  const categoryOptionMidpoint = Math.ceil(categoryOptions.length / 2);
+  const categoryOptionMidpoint = Math.floor(categoryOptions.length / 2);
   const guideSourceSelectors = [
     { id: "all-guides" as const, label: "All guides", shortLabel: "All", icon: null },
     { id: "r-guides" as const, label: "R guides", shortLabel: "R", icon: null },
@@ -7180,7 +7180,7 @@ export function SplitScreenSection({
                         >
                           <div className="min-h-0 overflow-hidden">
                             <div className="grid grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] items-center gap-4 pt-1">
-                            <div className="grid w-full grid-cols-4 items-center justify-items-start gap-2">
+                            <div className="grid w-full grid-cols-5 items-center justify-items-start gap-2">
                               {categoryOptions.slice(0, categoryOptionMidpoint).map((option) => (
                                 <button
                                   key={option.label}
@@ -7212,7 +7212,7 @@ export function SplitScreenSection({
                             <span className="inline-flex w-[8.5rem] justify-center text-center text-[11px] font-medium uppercase tracking-[0.18em] text-slate-500">
                               {categoryTitleLabel}
                             </span>
-                            <div className="grid w-full grid-cols-4 items-center justify-items-end gap-2">
+                            <div className="grid w-full grid-cols-5 items-center justify-items-end gap-2">
                               {categoryOptions.slice(categoryOptionMidpoint).map((option) => (
                                 <button
                                   key={option.label}
