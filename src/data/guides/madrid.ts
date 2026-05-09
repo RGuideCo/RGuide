@@ -307,7 +307,7 @@ export const madridNeighborhoodGuides = [
           "sat": "24 hours",
           "sun": "24 hours"
         },
-        "photo": "https://upload.wikimedia.org/wikipedia/commons/4/42/Edificio_del_Banco_Espa%C3%B1ol_de_Cr%C3%A9dito_de_Madrid"
+        "photo": "https://www.fourseasons.com/alt/img-opt/~80.1860.0,4983-553,1924-2999,5017-1687,2197/publish/content/dam/fourseasons/images/web/MMD/MMD_306_original.jpg"
       },
       {
         "id": "stay-edition",
@@ -349,7 +349,7 @@ export const madridNeighborhoodGuides = [
           "sat": "24 hours",
           "sun": "24 hours"
         },
-        "photo": "https://www.pestana.com/content/dam/pestana/en_us/destinations/spain/madrid/pestana-plaza-mayor/gallery/overview/pestana-plaza-mayor-gallery-surroundings-view-outside-night"
+        "photo": "https://www.pestana.com/content/dam/pestana/en_us/destinations/spain/madrid/pestana-plaza-mayor/gallery/overview/pestana-plaza-mayor-gallery-surroundings-cafe-terrace.jpg"
       },
       {
         "id": "stay-seven-islas",
@@ -370,7 +370,7 @@ export const madridNeighborhoodGuides = [
           "sat": "24 hours",
           "sun": "24 hours"
         },
-        "photo": "https://www.7islashotel.com/wp-content/themes/sieteislas/img/new/LOGO-new.svg"
+        "photo": "https://www.7islashotel.com/wp-content/uploads/2026/01/7-islas-hotel-verano-2025-c-mariana-borau-87-copia-scaled.jpg"
       }
     ],
     "sources": [
@@ -465,7 +465,7 @@ export const madridNeighborhoodGuides = [
           "sat": "24 hours",
           "sun": "24 hours"
         },
-        "photo": "https://a.hwstatic.com/image/upload/f_auto,q_auto,h_720,c_limit,e_sharpen,e_improve,e_vibrance:60/propertyimages/3/312767/bc8cojhqtnv9cawrxw1z.jpg"
+        "photo": "https://a.hwstatic.com/image/upload/f_auto,q_auto,w_1024,c_limit,e_sharpen,e_improve,e_vibrance:60/propertyimages/9/90911/izvgkywwbwo424w3hvc5.jpg"
       },
       {
         "id": "stay-2060-newton",
@@ -495,7 +495,7 @@ export const madridNeighborhoodGuides = [
           40.4113,
           -3.708
         ],
-        "description": "Ok Hostel Madrid gives Sol and Centro travelers a lower-cost base just south of Plaza Mayor, close enough for first-night walks and old-city logistics. Pick it when the priority is price, central movement, and a social room rather than polished design.",
+        "description": "Ok Hostel Madrid gives Sol and Centro travelers a practical base just below Plaza Mayor, with both dorms and private rooms available. It works for budget travelers who want social hostel energy, quick old-city walks, and a closed-door option when a shared bunk is not the right fit.",
         "price": "$",
         "priceSource": "Hostelworld / Google Maps",
         "hours": {
@@ -972,7 +972,7 @@ export const madridNeighborhoodGuides = [
           "sat": "24 hours",
           "sun": "24 hours"
         },
-        "photo": "https://room-matehotels.com/content/thumbs/800_450/content/imgsxml/panel_herohotel/meetalba2173.jpg"
+        "photo": "https://room-matehotels.com/data/webp/alba-roommatealba-suiteroom9669-c813f8fb45bdac0f5af1d049c81e64ee.webp"
       },
       {
         "id": "stay-me-madrid-reina-victoria",
@@ -993,7 +993,7 @@ export const madridNeighborhoodGuides = [
           "sat": "24 hours",
           "sun": "24 hours"
         },
-        "photo": "https://dam.melia.com/melia/accounts/f8/4000018/projects/127/assets/de/66524/5f48e5011a0440c7be13092894b942bc-1634821397.jpg?im=RegionOfInterestCrop=(1200,600),regionOfInterest=(1900,1357)"
+        "photo": "https://mereinavictoria.madridhotels360.net/data/Photos/1080x700w/17057/1705707/1705707742.JPEG"
       },
       {
         "id": "stay-westin-palace",
@@ -1002,7 +1002,7 @@ export const madridNeighborhoodGuides = [
           40.4153,
           -3.695
         ],
-        "description": "The Westin Palace is the formal Las Letras-edge hotel for travelers who want Prado and Thyssen access with a grand-hotel rhythm. It suits stays where museum timing, service, and classic atmosphere matter more than being inside Huertas nightlife.",
+        "description": "The Westin Palace Madrid is the grand Las Letras-edge hotel under the landmark stained-glass La Cupula dome. It suits stays built around Prado and Thyssen access, classic service, wellness and fitness facilities, and a polished evening at the 27 Club bar.",
         "price": "$$",
         "priceSource": "Google Maps / hotel site",
         "hours": {
@@ -1014,7 +1014,7 @@ export const madridNeighborhoodGuides = [
           "sat": "24 hours",
           "sun": "24 hours"
         },
-        "photo": "https://www.esmadrid.com/sites/default/files/styles/content_type_full/public/recursosturisticos/alojamientos/palace_hotel_1_0.jpg?itok=UHAjN4EK"
+        "photo": "https://cache.marriott.com/is/image/marriotts7prod/lc-madcl-la-cupula-32193:Classic-Ver?wid=377&fit=constrain"
       },
       {
         "id": "stay-nh-collection-suecia",
@@ -1035,7 +1035,7 @@ export const madridNeighborhoodGuides = [
           "sat": "24 hours",
           "sun": "24 hours"
         },
-        "photo": "https://www.esmadrid.com/sites/default/files/styles/content_type_full/public/recursosturisticos/alojamientos/nh_collection_madrid_suecia_2.jpg?itok=EM3rGblz"
+        "photo": "https://img.nh-hotels.net/8zMwb/VDjD4/original/V_NH_collection_suecia_101.jpg?output-quality=80&resize=1110:*&composite-to=center,center|1110:380&background-color=white"
       }
     ],
     "sources": [
@@ -1160,7 +1160,7 @@ export const madridNeighborhoodGuides = [
           40.4113,
           -3.708
         ],
-        "description": "Ok Hostel Madrid can work for Las Letras when the trip needs Huertas, Plaza Santa Ana, and Tirso de Molina nearby without paying Art Walk hotel rates. The appeal is practical: simple hostel energy, central walks, and an easy bridge toward La Latina after dinner.",
+        "description": "Ok Hostel Madrid can work for Las Letras when the trip needs Huertas, Plaza Santa Ana, and Tirso de Molina nearby without Art Walk hotel rates. Dorms and private rooms make it flexible for solo travelers, friends, or couples who want hostel pricing while staying close to museum days and late central streets.",
         "price": "$",
         "priceSource": "Hostelworld / Google Maps",
         "hours": {
@@ -1637,7 +1637,7 @@ export const madridNeighborhoodGuides = [
           "sat": "24 hours",
           "sun": "24 hours"
         },
-        "photo": "https://cdn-assets-eu.frontify.com/s3/frontify-enterprise-files-eu/eyJvYXV0aCI6eyJjbGllbnRfaWQiOiJzaXRlY29yZSJ9LCJwYXRoIjoibWFuZGFyaW4tb3JpZW50YWwtaG90ZWwtZ3JvdXBcL2ZpbGVcL1Jyc1NpbzZTSzZOTnA5bUdiZTdNLmpwZyJ9:mandarin-oriental-hotel-group:rvzw8tiI3oli4sezJ4kuQj0g-YGtBl87X7AZLmzA-cQ?width=1280&height=560&fp=0.5,0.5&crop=fp&quality=75"
+        "photo": "https://media.ffycdn.net/eu/mandarin-oriental-hotel-group/H8U5enphbFo3zGj8XfaK.jpg?mod=v1/contain=-x1000&quality=75"
       },
       {
         "id": "stay-petit-palace-savoy",
@@ -1658,7 +1658,7 @@ export const madridNeighborhoodGuides = [
           "sat": "24 hours",
           "sun": "24 hours"
         },
-        "photo": "https://www.esmadrid.com/sites/default/files/styles/content_type_full/public/recursosturisticos/alojamientos/savoy.png?itok=F6Aan7uU"
+        "photo": "https://petitpalacesavoyalfonsoxii.com/backoffice/images/365-surrounding-petit-palace-savoy-alfonso-xii-retiro1.webp"
       },
       {
         "id": "stay-only-you-atocha",
@@ -1667,7 +1667,7 @@ export const madridNeighborhoodGuides = [
           40.4076,
           -3.6909
         ],
-        "description": "Only YOU Hotel Atocha belongs in Retiro hotel planning for travelers using rail connections while staying near Reina Sofia, Prado, and the park. Choose Only YOU Hotel Atocha when transit and museum pacing are doing more work than bar access.",
+        "description": "Only YOU Hotel Atocha is the Retiro and Art Walk hotel for travelers who want rail access without losing Madrid style. Its lobby, dining, and social spaces make it more than a transit base, while Atocha, Reina Sofia, the Prado, and the park stay easy to reach.",
         "price": "$",
         "priceSource": "Google Maps / hotel site",
         "hours": {
@@ -1679,7 +1679,7 @@ export const madridNeighborhoodGuides = [
           "sat": "24 hours",
           "sun": "24 hours"
         },
-        "photo": "https://www.esmadrid.com/sites/default/files/styles/content_type_full/public/recursosturisticos/alojamientos/img-05-oy-atocha-lobby539.jpg?itok=c4YDChBZ"
+        "photo": "https://www.onlyyouhotels.com/data/webp/copiadecabeceradesktopcolectivodecantado2620.jpg-f4c144c55eddcb65d4839780ffba4bee.webp"
       },
       {
         "id": "stay-westin-palace",
@@ -1688,7 +1688,7 @@ export const madridNeighborhoodGuides = [
           40.4153,
           -3.695
         ],
-        "description": "The Westin Palace belongs in Retiro planning because the park, Prado, and Thyssen all sit close enough for culture-first days. Use it when the stay should feel historic and museum-led rather than neighborhood-casual.",
+        "description": "The Westin Palace Madrid belongs in Retiro planning because the park, Prado, and Thyssen all sit close enough for culture-first days. Its historic dome, wellness and fitness facilities, and 27 Club bar make the stay feel formal and museum-led rather than neighborhood-casual.",
         "price": "$$",
         "priceSource": "Google Maps / hotel site",
         "hours": {
@@ -1700,7 +1700,7 @@ export const madridNeighborhoodGuides = [
           "sat": "24 hours",
           "sun": "24 hours"
         },
-        "photo": "https://www.esmadrid.com/sites/default/files/styles/content_type_full/public/recursosturisticos/alojamientos/palace_hotel_1_0.jpg?itok=UHAjN4EK"
+        "photo": "https://cache.marriott.com/is/image/marriotts7prod/lc-madcl-la-cupula-32193:Classic-Ver?wid=377&fit=constrain"
       }
     ],
     "sources": [
@@ -1804,7 +1804,7 @@ export const madridNeighborhoodGuides = [
           40.4113,
           -3.708
         ],
-        "description": "Ok Hostel Madrid is a Retiro-list budget option for travelers who accept a short hop or longer walk to the museums in exchange for old-city hostel pricing. Use it when the day starts with culture but the evening is more likely to end around La Latina or Lavapies.",
+        "description": "Ok Hostel Madrid is a Retiro-list budget option for travelers who accept a short hop or longer walk to the museums in exchange for old-city hostel pricing. Its dorms and private rooms help it cover different comfort levels, especially when the day starts with culture but the evening ends around La Latina or Lavapies.",
         "price": "$",
         "priceSource": "Hostelworld / Google Maps",
         "hours": {
@@ -2281,7 +2281,7 @@ export const madridNeighborhoodGuides = [
           "sat": "24 hours",
           "sun": "24 hours"
         },
-        "photo": "https://b4411764.smushcdn.com/4411764/wp-content/uploads/2018/10/water-zone-urso-hotel-spa-madrid.jpg?lossy=2&strip=1&webp=1"
+        "photo": "https://b4411764.smushcdn.com/4411764/wp-content/uploads/2018/10/Lobby_urso_2023-scaled.jpg?lossy=2&strip=1&webp=1"
       },
       {
         "id": "stay-seven-islas",
@@ -2302,7 +2302,7 @@ export const madridNeighborhoodGuides = [
           "sat": "24 hours",
           "sun": "24 hours"
         },
-        "photo": "https://www.7islashotel.com/wp-content/themes/sieteislas/img/new/LOGO-new.svg"
+        "photo": "https://www.7islashotel.com/wp-content/uploads/2026/01/7-islas-hotel-verano-2025-c-mariana-borau-87-copia-scaled.jpg"
       },
       {
         "id": "stay-ibis-centro",
@@ -2323,7 +2323,7 @@ export const madridNeighborhoodGuides = [
           "sat": "24 hours",
           "sun": "24 hours"
         },
-        "photo": "https://www.esmadrid.com/sites/default/files/styles/content_type_full/public/recursosturisticos/alojamientos/ibiscentro.jpg?itok=EL8xBR9o"
+        "photo": "https://www.ahstatic.com/photos/3318_ho_00_p_1024x768.jpg"
       },
       {
         "id": "stay-brach",
@@ -2344,7 +2344,7 @@ export const madridNeighborhoodGuides = [
           "sat": "24 hours",
           "sun": "24 hours"
         },
-        "photo": "https://www.esmadrid.com/sites/default/files/styles/content_type_full/public/recursosturisticos/alojamientos/brach_madrid.png?itok=5ISq44-B"
+        "photo": "https://brachmadrid.com/wp-content/uploads/sites/3/2024/11/suite-Antonio-Brach-Madrid-gdelaubier-septembre-1-1-548x796.jpg"
       }
     ],
     "sources": [
@@ -2439,7 +2439,7 @@ export const madridNeighborhoodGuides = [
           "sat": "24 hours",
           "sun": "24 hours"
         },
-        "photo": "https://a.hwstatic.com/image/upload/f_auto,q_auto,h_720,c_limit,e_sharpen,e_improve,e_vibrance:60/propertyimages/2/295483/mvaxq6golqqla0fyh3jw.jpg"
+        "photo": "https://images.getaroom-cdn.com/image/upload/s--0BmdvxGV--/c_limit,e_improve,fl_lossy.immutable_cache,h_940,q_auto:good,w_940/v1770188687/7e17436d28e4641d7b45a45a79dcd38e43ee6d18?_a=BACAEuEv&atc=e7cd1cfa"
       },
       {
         "id": "stay-room00-chueca",
@@ -2448,7 +2448,7 @@ export const madridNeighborhoodGuides = [
           40.4245,
           -3.6977
         ],
-        "description": "room00 Chueca Hostel works from Malasana as a budget sleep option near Hortaleza, Gran Via, and the Chueca border. It is useful when price and central nightlife access matter more than a deep social-hostel program.",
+        "description": "room00 Chueca Hostel works from Malasana as a budget sleep option near Hortaleza, Gran Via, and the Chueca border. Dorms, private rooms, and family rooms make it useful for travelers who want nightlife access without committing to a full party-hostel program.",
         "price": "$",
         "priceSource": "Hostelworld / Visit Chueca",
         "hours": {
@@ -2460,7 +2460,7 @@ export const madridNeighborhoodGuides = [
           "sat": "24 hours",
           "sun": "24 hours"
         },
-        "photo": "https://a.hwstatic.com/image/upload/f_auto,q_auto,h_720,c_limit,e_sharpen,e_improve,e_vibrance:60/propertyimages/8/83795/ohbhqjhitvwpqc14oim1.jpg"
+        "photo": "https://room00hostel.com/wp-content/uploads/2026/04/1-Doble-Superior-min.webp"
       }
     ],
     "sources": [
@@ -2946,7 +2946,7 @@ export const madridNeighborhoodGuides = [
           "sat": "24 hours",
           "sun": "24 hours"
         },
-        "photo": "https://www.pestana.com/content/dam/pestana/en_us/destinations/spain/madrid/pestana-plaza-mayor/gallery/overview/pestana-plaza-mayor-gallery-surroundings-view-outside-night"
+        "photo": "https://www.pestana.com/content/dam/pestana/en_us/destinations/spain/madrid/pestana-plaza-mayor/gallery/overview/pestana-plaza-mayor-gallery-surroundings-cafe-terrace.jpg"
       },
       {
         "id": "stay-edition",
@@ -2988,7 +2988,7 @@ export const madridNeighborhoodGuides = [
           "sat": "24 hours",
           "sun": "24 hours"
         },
-        "photo": "https://room-matehotels.com/content/thumbs/800_450/content/imgsxml/panel_herohotel/meetalba2173.jpg"
+        "photo": "https://room-matehotels.com/data/webp/alba-roommatealba-suiteroom9669-c813f8fb45bdac0f5af1d049c81e64ee.webp"
       }
     ],
     "sources": [
@@ -3071,7 +3071,7 @@ export const madridNeighborhoodGuides = [
           40.4113,
           -3.708
         ],
-        "description": "Ok Hostel Madrid belongs naturally in La Latina planning because Cava Baja, Tirso de Molina, and the Rastro side of the neighborhood are all close. It is the useful pick when tapas routes and low nightly cost matter more than quiet.",
+        "description": "Ok Hostel Madrid belongs naturally in La Latina planning because Cava Baja, Tirso de Molina, and the Rastro side of the neighborhood are all close. It offers dorms and private rooms, so the stay can lean social and low-cost without forcing every traveler into a shared bunk.",
         "price": "$",
         "priceSource": "Hostelworld / Google Maps",
         "hours": {
@@ -3552,7 +3552,7 @@ export const madridNeighborhoodGuides = [
     "seoSlug": "best-hotels",
     "seoTitle": "Best Hotels in Chueca, Madrid",
     "seoDescription": "Best hotels in Chueca, Madrid, for boutique stays, rooftop access, Gran Via edges, LGBTQ+ nightlife, and polished central sleep.",
-    "title": "Boutique Bases by the Nightlife",
+    "title": "Boutique Stays Around Chueca",
     "description": "Chueca hotels work when they give travelers nightlife reach with a controlled room reset. These picks cover boutique palace design, Plaza de Pedro Zerolo energy, Gran Via polish, and grown-up luxury between Chueca, Sol, and Las Letras.",
     "url": "https://www.google.com/maps/search/chueca+madrid+hotels",
     "category": "Stay",
@@ -3599,7 +3599,7 @@ export const madridNeighborhoodGuides = [
           40.4206,
           -3.6981
         ],
-        "description": "Room Mate Óscar is the Plaza de Pedro Zerolo hotel for travelers who want Chueca energy immediately outside the door. Use Room Mate Óscar when rooftop/social access and LGBTQ+ nightlife proximity are a feature, not a drawback.",
+        "description": "Room Mate Oscar sits in the heart of Chueca on Plaza de Pedro Zerolo, making it especially convenient for exploring central Madrid on foot. Its rooftop terrace and pool add a social, open-air reset above the neighborhood's dining, shopping, and nightlife streets.",
         "price": "$",
         "priceSource": "Google Maps / hotel site",
         "hours": {
@@ -3611,7 +3611,7 @@ export const madridNeighborhoodGuides = [
           "sat": "24 hours",
           "sun": "24 hours"
         },
-        "photo": "https://room-matehotels.com/content/thumbs/779_438/content/imgsxml/panel_hotelinfo/meetoscarfirst244.jpg"
+        "photo": "https://room-matehotels.com/data/webp/27754-524a64bed079429d8d1bc1877d4bdbac.webp"
       },
       {
         "id": "stay-brach",
@@ -3632,7 +3632,7 @@ export const madridNeighborhoodGuides = [
           "sat": "24 hours",
           "sun": "24 hours"
         },
-        "photo": "https://www.esmadrid.com/sites/default/files/styles/content_type_full/public/recursosturisticos/alojamientos/brach_madrid.png?itok=5ISq44-B"
+        "photo": "https://brachmadrid.com/wp-content/uploads/sites/3/2024/11/suite-Antonio-Brach-Madrid-gdelaubier-septembre-1-1-548x796.jpg"
       },
       {
         "id": "stay-hotel-urban",
@@ -3641,7 +3641,7 @@ export const madridNeighborhoodGuides = [
           40.4166,
           -3.699
         ],
-        "description": "Hotel Urban is the grown-up design-luxury option between Chueca, Sol, and Las Letras. Use Hotel Urban when the plan needs central nightlife reach, museum access, and a more controlled hotel feel than the surrounding late streets.",
+        "description": "Hotel Urban is a unique, art-driven luxury hotel between Chueca, Sol, and Las Letras, with a strong design identity and museum-like character. It fits travelers who want central access, polished service, and a stay that feels more distinctive than a standard business hotel.",
         "price": "$$",
         "priceSource": "Google Maps / hotel site",
         "hours": {
@@ -3653,7 +3653,7 @@ export const madridNeighborhoodGuides = [
           "sat": "24 hours",
           "sun": "24 hours"
         },
-        "photo": "https://estaticos.esmadrid.com/cdn/farfuture/cM2k86GK-36mHxQlNgr81uGvG4p_z6EISlKk1Jvncd0/mtime:1725608929/sites/default/files/styles/content_type_full/public/recursosturisticos/alojamientos/hotel_urban_5_gl_1.png?itok=gfHW7zGs"
+        "photo": "https://api.fishhotels.com/api/sites/f08d948c-e22b-44f8-91bb-2c70c5acf572/media-images/ur-suite-loft-2.jpg?cw=2000&ch=1125&cx=0&cy=104&s=xxl&w=2000&h=1125"
       },
       {
         "id": "stay-urso",
@@ -3674,7 +3674,7 @@ export const madridNeighborhoodGuides = [
           "sat": "24 hours",
           "sun": "24 hours"
         },
-        "photo": "https://b4411764.smushcdn.com/4411764/wp-content/uploads/2018/10/water-zone-urso-hotel-spa-madrid.jpg?lossy=2&strip=1&webp=1"
+        "photo": "https://b4411764.smushcdn.com/4411764/wp-content/uploads/2018/10/Lobby_urso_2023-scaled.jpg?lossy=2&strip=1&webp=1"
       }
     ],
     "sources": [
@@ -3736,7 +3736,7 @@ export const madridNeighborhoodGuides = [
           40.4245,
           -3.6977
         ],
-        "description": "room00 Chueca Hostel is the direct Chueca budget base, with dorm and private-room flexibility close to Hortaleza and Gran Via. Choose it when location is the point and the room can stay simple.",
+        "description": "room00 Chueca Hostel is the direct Chueca budget base, close to Hortaleza, Gran Via, shopping, and nightlife. It offers dorms, private rooms, and family rooms, so it can handle solo travelers, groups, and families who care most about location.",
         "price": "$",
         "priceSource": "Hostelworld / Visit Chueca",
         "hours": {
@@ -3748,7 +3748,7 @@ export const madridNeighborhoodGuides = [
           "sat": "24 hours",
           "sun": "24 hours"
         },
-        "photo": "https://a.hwstatic.com/image/upload/f_auto,q_auto,h_720,c_limit,e_sharpen,e_improve,e_vibrance:60/propertyimages/8/83795/ohbhqjhitvwpqc14oim1.jpg"
+        "photo": "https://room00hostel.com/wp-content/uploads/2026/04/1-Doble-Superior-min.webp"
       },
       {
         "id": "stay-bastardo",
@@ -3769,7 +3769,7 @@ export const madridNeighborhoodGuides = [
           "sat": "24 hours",
           "sun": "24 hours"
         },
-        "photo": "https://a.hwstatic.com/image/upload/f_auto,q_auto,h_720,c_limit,e_sharpen,e_improve,e_vibrance:60/propertyimages/2/295483/mvaxq6golqqla0fyh3jw.jpg"
+        "photo": "https://images.getaroom-cdn.com/image/upload/s--0BmdvxGV--/c_limit,e_improve,fl_lossy.immutable_cache,h_940,q_auto:good,w_940/v1770188687/7e17436d28e4641d7b45a45a79dcd38e43ee6d18?_a=BACAEuEv&atc=e7cd1cfa"
       },
       {
         "id": "stay-onefam-madrid",
@@ -4364,7 +4364,7 @@ export const madridCitywideGuides = [
           "sat": "24 hours",
           "sun": "24 hours"
         },
-        "photo": "https://upload.wikimedia.org/wikipedia/commons/4/42/Edificio_del_Banco_Espa%C3%B1ol_de_Cr%C3%A9dito_de_Madrid"
+        "photo": "https://www.fourseasons.com/alt/img-opt/~80.1860.0,4983-553,1924-2999,5017-1687,2197/publish/content/dam/fourseasons/images/web/MMD/MMD_306_original.jpg"
       },
       {
         "id": "stay-mandarin-oriental-ritz",
@@ -4385,7 +4385,7 @@ export const madridCitywideGuides = [
           "sat": "24 hours",
           "sun": "24 hours"
         },
-        "photo": "https://cdn-assets-eu.frontify.com/s3/frontify-enterprise-files-eu/eyJvYXV0aCI6eyJjbGllbnRfaWQiOiJzaXRlY29yZSJ9LCJwYXRoIjoibWFuZGFyaW4tb3JpZW50YWwtaG90ZWwtZ3JvdXBcL2ZpbGVcL1Jyc1NpbzZTSzZOTnA5bUdiZTdNLmpwZyJ9:mandarin-oriental-hotel-group:rvzw8tiI3oli4sezJ4kuQj0g-YGtBl87X7AZLmzA-cQ?width=1280&height=560&fp=0.5,0.5&crop=fp&quality=75"
+        "photo": "https://media.ffycdn.net/eu/mandarin-oriental-hotel-group/H8U5enphbFo3zGj8XfaK.jpg?mod=v1/contain=-x1000&quality=75"
       },
       {
         "id": "stay-only-you-boutique",
@@ -4427,7 +4427,7 @@ export const madridCitywideGuides = [
           "sat": "24 hours",
           "sun": "24 hours"
         },
-        "photo": "https://b4411764.smushcdn.com/4411764/wp-content/uploads/2018/10/water-zone-urso-hotel-spa-madrid.jpg?lossy=2&strip=1&webp=1"
+        "photo": "https://b4411764.smushcdn.com/4411764/wp-content/uploads/2018/10/Lobby_urso_2023-scaled.jpg?lossy=2&strip=1&webp=1"
       },
       {
         "id": "stay-edition",
@@ -4469,7 +4469,7 @@ export const madridCitywideGuides = [
           "sat": "24 hours",
           "sun": "24 hours"
         },
-        "photo": "https://www.pestana.com/content/dam/pestana/en_us/destinations/spain/madrid/pestana-plaza-mayor/gallery/overview/pestana-plaza-mayor-gallery-surroundings-view-outside-night"
+        "photo": "https://www.pestana.com/content/dam/pestana/en_us/destinations/spain/madrid/pestana-plaza-mayor/gallery/overview/pestana-plaza-mayor-gallery-surroundings-cafe-terrace.jpg"
       },
       {
         "id": "stay-seven-islas",
@@ -4490,7 +4490,7 @@ export const madridCitywideGuides = [
           "sat": "24 hours",
           "sun": "24 hours"
         },
-        "photo": "https://www.7islashotel.com/wp-content/themes/sieteislas/img/new/LOGO-new.svg"
+        "photo": "https://www.7islashotel.com/wp-content/uploads/2026/01/7-islas-hotel-verano-2025-c-mariana-borau-87-copia-scaled.jpg"
       }
     ],
     "sources": [
@@ -4527,7 +4527,7 @@ export const madridCitywideGuides = [
     "seoTitle": "Best Hostels in Madrid",
     "seoDescription": "Best hostels in Madrid, comparing Sol, La Latina, Malasana, Chueca, Tirso de Molina, Atocha, social dorms, private rooms, and budget bases.",
     "title": "Social Beds Across the Center",
-    "description": "Madrid hostel planning is about choosing the right kind of social base: rooftop central, party-forward, design-hostel, museum-edge, or Tirso/La Latina practical. This citywide hostel guide separates budget beds from hotels and names the tradeoff each hostel asks travelers to make.",
+    "description": "Madrid hostel planning is about choosing the right kind of social base: rooftop central, party-forward, design-hostel, museum-edge, or Tirso/La Latina practical. This guide separates budget beds from hotels and names the tradeoff each hostel asks travelers to make.",
     "url": "https://www.google.com/maps/search/best+hostels+madrid",
     "category": "Stay",
     "location": {
@@ -4551,7 +4551,7 @@ export const madridCitywideGuides = [
           40.4145,
           -3.7073
         ],
-        "description": "The Hat Madrid is the citywide hostel choice when the trip needs a recognizably central, social, first-visit base. The value is not quiet; it is rooftop momentum, dorm/private flexibility, and quick access to Sol, Plaza Mayor, and La Latina.",
+        "description": "The Hat Madrid is the central hostel choice when the trip needs a recognizably social, first-visit base. The value is not quiet; it is rooftop momentum, dorm/private flexibility, and quick access to Sol, Plaza Mayor, and La Latina.",
         "price": "$",
         "priceSource": "Hostelworld / The Hat official",
         "hours": {
@@ -4572,7 +4572,7 @@ export const madridCitywideGuides = [
           40.4287,
           -3.7039
         ],
-        "description": "Onefam Madrid is the citywide hostel pick for travelers who care most about built-in community, activities, and nights out. It is less about quiet lodging and more about using Malasana as a launchpad for meeting people quickly.",
+        "description": "Onefam Madrid is the hostel pick for travelers who care most about built-in community, activities, and nights out. It is less about quiet lodging and more about using Malasana as a launchpad for meeting people quickly.",
         "price": "$",
         "priceSource": "Hostelworld / Google Maps",
         "hours": {
@@ -4593,7 +4593,7 @@ export const madridCitywideGuides = [
           40.412,
           -3.7048
         ],
-        "description": "2060 The Newton Hostel earns its citywide hostel slot as the practical central all-rounder: strong walkability, rooftop energy, and easy movement between Sol, La Latina, Lavapies, and the Art Walk. It is best for budget travelers who want a busy shared-room setting with real route flexibility.",
+        "description": "2060 The Newton Hostel is the practical central all-rounder: strong walkability, rooftop energy, and easy movement between Sol, La Latina, Lavapies, and the Art Walk. It is best for budget travelers who want a busy shared-room setting with real route flexibility.",
         "price": "$",
         "priceSource": "Hostelworld / Google Maps",
         "hours": {
@@ -4614,7 +4614,7 @@ export const madridCitywideGuides = [
           40.4119,
           -3.6943
         ],
-        "description": "Latroupe Prado gives the citywide hostel set its museum-and-rail base, with Atocha and Reina Sofia doing more work than nightlife proximity. It is the pick for travelers who want shared lodging without building the whole trip around party streets.",
+        "description": "Latroupe Prado gives the hostel set its museum-and-rail base, with Atocha and Reina Sofia doing more work than nightlife proximity. It is the pick for travelers who want shared lodging without building the whole trip around party streets.",
         "price": "$",
         "priceSource": "Latroupe official / Hostelworld",
         "hours": {
@@ -4635,7 +4635,7 @@ export const madridCitywideGuides = [
           40.4113,
           -3.708
         ],
-        "description": "Ok Hostel Madrid is the citywide utility hostel for travelers who want Madrid's old center, La Latina, and Lavapies in one simple base. It is not the most design-led option here, but it solves budget, location, and social access cleanly.",
+        "description": "Ok Hostel Madrid is the utility hostel for travelers who want Madrid's old center, La Latina, and Lavapies in one simple base. Dorms and private rooms keep it flexible, and the appeal is budget, location, and social access rather than design-hotel polish.",
         "price": "$",
         "priceSource": "Hostelworld / Google Maps",
         "hours": {
@@ -4656,7 +4656,7 @@ export const madridCitywideGuides = [
           40.4248,
           -3.7009
         ],
-        "description": "Bastardo Hostel is the citywide design-hostel option, useful for travelers comparing dorms, privates, and a more polished social atmosphere. Its value is the Tribunal position between Malasana and Chueca, not total quiet.",
+        "description": "Bastardo Hostel is the design-hostel option for travelers comparing dorms, privates, and a more polished social atmosphere. Its value is the Tribunal position between Malasana and Chueca, not total quiet.",
         "price": "$",
         "priceSource": "Bastardo official / Hostelworld",
         "hours": {
@@ -4668,7 +4668,7 @@ export const madridCitywideGuides = [
           "sat": "24 hours",
           "sun": "24 hours"
         },
-        "photo": "https://a.hwstatic.com/image/upload/f_auto,q_auto,h_720,c_limit,e_sharpen,e_improve,e_vibrance:60/propertyimages/2/295483/mvaxq6golqqla0fyh3jw.jpg"
+        "photo": "https://images.getaroom-cdn.com/image/upload/s--0BmdvxGV--/c_limit,e_improve,fl_lossy.immutable_cache,h_940,q_auto:good,w_940/v1770188687/7e17436d28e4641d7b45a45a79dcd38e43ee6d18?_a=BACAEuEv&atc=e7cd1cfa"
       },
       {
         "id": "stay-room00-chueca",
@@ -4677,7 +4677,7 @@ export const madridCitywideGuides = [
           40.4245,
           -3.6977
         ],
-        "description": "room00 Chueca Hostel is the citywide low-cost Chueca option for travelers who want central nightlife, shopping, and metro access without hotel pricing. It is simpler than the more social hostels, but the address does a lot of work.",
+        "description": "room00 Chueca Hostel is the low-cost Chueca option for travelers who want central nightlife, shopping, and metro access without hotel pricing. Dorms, private rooms, and family rooms give it more range than a simple shared-bed hostel.",
         "price": "$",
         "priceSource": "Hostelworld / Visit Chueca",
         "hours": {
@@ -4689,7 +4689,7 @@ export const madridCitywideGuides = [
           "sat": "24 hours",
           "sun": "24 hours"
         },
-        "photo": "https://a.hwstatic.com/image/upload/f_auto,q_auto,h_720,c_limit,e_sharpen,e_improve,e_vibrance:60/propertyimages/8/83795/ohbhqjhitvwpqc14oim1.jpg"
+        "photo": "https://room00hostel.com/wp-content/uploads/2026/04/1-Doble-Superior-min.webp"
       }
     ],
     "sources": [
