@@ -6,7 +6,7 @@ import ts from "typescript";
 const ROOT = process.cwd();
 const LISTS_PATH = path.join(ROOT, "src/data/lists.ts");
 const moduleCache = new Map();
-const VALID_CATEGORIES = new Set(["Food", "Nightlife", "Nature", "Culture", "Stay", "Activities"]);
+const VALID_CATEGORIES = new Set(["Food", "Nightlife", "Nature", "Culture", "Stay", "Activities", "Itineraries"]);
 
 function slugify(value) {
   return String(value ?? "")
