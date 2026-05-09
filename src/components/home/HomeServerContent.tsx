@@ -19,14 +19,20 @@ interface HomeServerContentProps {
   editorialGuides: MapList[];
 }
 
+function isGuideList(list: MapList) {
+  return !list.id.startsWith("event-");
+}
+
 function getCitiesFromContinents(continents: Continent[], editorialGuides: MapList[]) {
+  const guideLists = editorialGuides.filter(isGuideList);
+
   return continents.flatMap((continent) =>
     continent.countries.flatMap((country) =>
       country.cities
         .filter((city) => !city.isPlaceholderRegion)
         .map((city) => ({
           ...city,
-          guideCount: editorialGuides.filter((list) => list.location.scope === "city" && list.location.city === city.name).length,
+          guideCount: guideLists.filter((list) => list.location.scope === "city" && list.location.city === city.name).length,
         })),
     ),
   );
@@ -41,7 +47,7 @@ function getFeaturedCities(continents: Continent[], editorialGuides: MapList[]) 
 
 function getFeaturedGuides(editorialGuides: MapList[]) {
   return editorialGuides
-    .filter((list) => list.location.scope === "city" && Boolean(list.location.city))
+    .filter((list) => isGuideList(list) && list.location.scope === "city" && Boolean(list.location.city))
     .slice()
     .sort((left, right) => right.upvotes - left.upvotes || left.title.localeCompare(right.title))
     .slice(0, 8);

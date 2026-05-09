@@ -3430,6 +3430,7 @@ export function SplitScreenSection({
     return baseRecentLists
       .filter(
         (list) =>
+          !list.id.startsWith("event-") &&
           list.creator.name.startsWith("R ") &&
           list.location.city?.toLowerCase() === "barcelona" &&
           !worldwideGuideIds.has(list.id),
