@@ -68,7 +68,7 @@ const policyCopy: Record<"privacy" | "terms" | "affiliate-disclosure", string[]>
     "For terms questions, email hello@rguide.co.",
   ],
   "affiliate-disclosure": [
-    "RGuide may earn a commission when visitors use partner or affiliate links to book hotels, hostels, activities, or other travel services. This does not change the price you pay.",
+    "RGuide may earn a commission when visitors use partner or affiliate links to book hotels, hostels, activities, or other travel services. This does not change the price you pay. As a Booking.com Affiliate, I earn from qualifying transactions.",
     "Recommendations are selected for location fit, planning usefulness, and editorial relevance. Affiliate relationships do not guarantee placement, ranking, or positive coverage.",
     "When a page includes affiliate links, travelers should still review current prices, policies, availability, cancellation terms, and venue details directly with the booking provider before making a reservation.",
     "Questions about partnerships or disclosures can be sent to hello@rguide.co.",
