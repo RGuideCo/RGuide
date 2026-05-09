@@ -200,6 +200,7 @@ const cityHighlightThemes: Record<ListCategory, string[]> = {
   Stay: ["Boutique", "Hostels", "Walkable"],
   Nature: ["Views", "Urban parks", "Waterfront"],
   Activities: ["Social", "Walkable", "Energy"],
+  Itineraries: ["One day", "Weekend", "Week"],
   Routes: ["Walks", "Streets", "Loops"],
   Essentials: ["Transit", "Arrival", "Basics"],
 };
@@ -224,6 +225,7 @@ function buildCategoryDescriptionOverride(profile: CategoryDescriptionProfile): 
     Stay: `${profile.city} stays should match the trip shape: ${profile.stay}. Use it to choose a base by transit, sleep style, nightlife reach, and the neighborhoods you will actually revisit.`,
     Nature: `${profile.city} open-air time should give the trip room to breathe: ${profile.nature}. Use it for parks, waterfronts, viewpoints, beaches, gardens, or day edges that reset dense city routes.`,
     Activities: `${profile.city} activities work best as paced routes, not checklist piles: ${profile.activities}. Use it to connect food, culture, open-air breaks, stays, and nights without fighting the city geography.`,
+    Itineraries: `${profile.city} itineraries should turn good picks into a day-by-day plan: ${profile.activities}. Use it when the trip needs pacing, sequence, and neighborhood logic instead of another flat list.`,
     Routes: `${profile.city} routes should explain movement, not just dots on a map: ${profile.routes ?? profile.activities}. Use it for walking routes, major streets, transit hops, scenic loops, and route logic that makes the day feel coherent.`,
     Essentials: `${profile.city} essentials should make the trip easier before the day gets busy: ${profile.essentials ?? profile.routes ?? profile.stay}. Use it for arrival, transit, safety, money, connectivity, weather, and other practical decisions that shape the plan.`,
   };
@@ -616,6 +618,7 @@ function buildScopedCategoryDescription(
     Stay: profile.stay,
     Nature: profile.nature,
     Activities: profile.activities,
+    Itineraries: profile.activities,
     Routes: profile.routes ?? profile.activities,
     Essentials: profile.essentials ?? profile.routes ?? profile.stay,
   };

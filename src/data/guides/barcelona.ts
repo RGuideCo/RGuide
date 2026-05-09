@@ -6714,7 +6714,9 @@ export const barcelonaItineraryGuides = [
     "title": "One Strong Day, No Filler",
     "description": "A focused first-day route that chooses one great architecture stop, a counter lunch, old-city wandering, a salty cava pause, and a final cocktail spectacle. It is built to feel complete without pretending you can see everything in one day.",
     "url": "https://www.google.com/maps/search/best+things+to+do+barcelona+one+day",
-    "category": "Activities",
+    "category": "Itineraries",
+    "itinerary": {},
+    "submissionType": "itinerary",
     "location": {
       "city": "Barcelona",
       "country": "Spain",
@@ -6722,8 +6724,8 @@ export const barcelonaItineraryGuides = [
       "scope": "city"
     },
     "creator": {
-      "id": "user-rguide-activities",
-      "name": "R Activities",
+      "id": "user-rguide-itineraries",
+      "name": "R Itineraries",
       "avatar": "data:image/svg+xml;utf8,%0A%20%20%20%20%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22160%22%20height%3D%22160%22%20viewBox%3D%220%200%20160%20160%22%3E%0A%20%20%20%20%20%20%3Crect%20width%3D%22160%22%20height%3D%22160%22%20rx%3D%2280%22%20fill%3D%22%230f766e%22%20%2F%3E%0A%20%20%20%20%20%20%3Ctext%20x%3D%2250%25%22%20y%3D%2254%25%22%20text-anchor%3D%22middle%22%20dominant-baseline%3D%22middle%22%0A%20%20%20%20%20%20%20%20font-family%3D%22Arial%2C%20sans-serif%22%20font-size%3D%2276%22%20font-weight%3D%22700%22%20fill%3D%22white%22%3ER%3C%2Ftext%3E%0A%20%20%20%20%3C%2Fsvg%3E%0A%20%20"
     },
     "upvotes": 0,
@@ -6736,6 +6738,7 @@ export const barcelonaItineraryGuides = [
           41.3917,
           2.1649
         ],
+        "itineraryDay": 1,
         "description": "Start with the culture category at Casa Batlló because one day in Barcelona needs a high-impact Modernista anchor. It gives first-time visitors architecture, craft, rooftop drama, and Passeig de Gràcia context without sending them across the city before lunch.",
         "hours": {
           "mon": "9:00 AM-8:00 PM",
@@ -6755,6 +6758,7 @@ export const barcelonaItineraryGuides = [
           41.3835,
           2.1839
         ],
+        "itineraryDay": 1,
         "description": "Use Cal Pep as the one-day food stop because the counter turns lunch into an event without sending the route far from El Born. Seafood tapas and quick pacing make it easy to move from architecture into the old-city afternoon.",
         "price": "$$$",
         "priceSource": "The Infatuation / Google Maps",
@@ -6776,6 +6780,7 @@ export const barcelonaItineraryGuides = [
           41.3839,
           2.1822
         ],
+        "itineraryDay": 1,
         "description": "Make Santa Maria del Mar the afternoon culture stop because it is close to lunch, short enough for a one-day route, and central to the Born's merchant history. It gives the itinerary a clear architectural pause before the evening shifts into cava counters and cocktail rooms.",
         "hours": {
           "mon": "9:00 AM-8:00 PM",
@@ -6795,6 +6800,7 @@ export const barcelonaItineraryGuides = [
           41.3847,
           2.1836
         ],
+        "itineraryDay": 1,
         "description": "El Xampanyet works late in the one-day route as a fast cava-and-anchovy bridge between sightseeing and nightlife. Keep it short, salty, and crowded; that is exactly why it fits the day.",
         "hours": {
           "mon": "7:00 PM-11:00 PM",
@@ -6814,6 +6820,7 @@ export const barcelonaItineraryGuides = [
           41.3859,
           2.1822
         ],
+        "itineraryDay": 1,
         "description": "Paradiso is the Born's headline cocktail stop: a hidden-door room with theatrical drinks, global recognition, and enough demand that the visit should be treated as the night's main event rather than a quick drink between stops.",
         "hours": {
           "mon": "6:00 PM-12:30 AM",
@@ -6855,7 +6862,9 @@ export const barcelonaItineraryGuides = [
     "title": "Two Nights, Five Neighborhood Moods",
     "description": "A weekend route with room to breathe: Gracia base energy, Eixample architecture, old-city nights, Montjuic art, Poble-sec bites, and one proper late finish. Use it when two days should feel paced, not stuffed.",
     "url": "https://www.google.com/maps/search/barcelona+weekend+itinerary",
-    "category": "Activities",
+    "category": "Itineraries",
+    "itinerary": {},
+    "submissionType": "itinerary",
     "location": {
       "city": "Barcelona",
       "country": "Spain",
@@ -6863,8 +6872,8 @@ export const barcelonaItineraryGuides = [
       "scope": "city"
     },
     "creator": {
-      "id": "user-rguide-activities",
-      "name": "R Activities",
+      "id": "user-rguide-itineraries",
+      "name": "R Itineraries",
       "avatar": "data:image/svg+xml;utf8,%0A%20%20%20%20%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22160%22%20height%3D%22160%22%20viewBox%3D%220%200%20160%20160%22%3E%0A%20%20%20%20%20%20%3Crect%20width%3D%22160%22%20height%3D%22160%22%20rx%3D%2280%22%20fill%3D%22%230f766e%22%20%2F%3E%0A%20%20%20%20%20%20%3Ctext%20x%3D%2250%25%22%20y%3D%2254%25%22%20text-anchor%3D%22middle%22%20dominant-baseline%3D%22middle%22%0A%20%20%20%20%20%20%20%20font-family%3D%22Arial%2C%20sans-serif%22%20font-size%3D%2276%22%20font-weight%3D%22700%22%20fill%3D%22white%22%3ER%3C%2Ftext%3E%0A%20%20%20%20%3C%2Fsvg%3E%0A%20%20"
     },
     "upvotes": 0,
@@ -6877,6 +6886,7 @@ export const barcelonaItineraryGuides = [
           41.3978,
           2.1578
         ],
+        "itineraryDay": 1,
         "description": "Use Casa Gracia as the stay-category anchor for the weekend because it splits the difference between hostel social energy, private-room flexibility, and easy transit. Starting from Gràcia keeps the route from becoming only an old-city weekend.",
         "hours": {
           "mon": "24 hours",
@@ -6896,6 +6906,7 @@ export const barcelonaItineraryGuides = [
           41.3917,
           2.1649
         ],
+        "itineraryDay": 1,
         "description": "Casa Batlló handles the headline culture slot on day one because it is central, visually immediate, and easy to pair with an Eixample lunch or Passeig de Gràcia walk. Book it as the major architecture moment, then let the rest of the day loosen up.",
         "hours": {
           "mon": "9:00 AM-8:00 PM",
@@ -6915,6 +6926,7 @@ export const barcelonaItineraryGuides = [
           41.3918,
           2.1746
         ],
+        "itineraryDay": 1,
         "description": "Bodega Bonay is the weekend food stop when the plan needs a stylish but manageable meal rather than a tasting-menu commitment. It keeps the route in Eixample while adding natural wine, anchovies, pastas, and a design-hotel setting.",
         "price": "$$",
         "priceSource": "The Infatuation / Resy",
@@ -6936,6 +6948,7 @@ export const barcelonaItineraryGuides = [
           41.3852,
           2.1619
         ],
+        "itineraryDay": 1,
         "description": "Bar Marsella gives the weekend a dive-bar texture after the polished daytime stops. Its worn-in absinthe history and late-night feel work especially well before moving toward Gothic/Born nightlife.",
         "hours": {
           "mon": "6:00 PM-12:30 AM",
@@ -6955,6 +6968,7 @@ export const barcelonaItineraryGuides = [
           41.3686,
           2.1592
         ],
+        "itineraryDay": 2,
         "description": "Fundació Joan Miró anchors day two with Montjuïc culture, a focused museum visit, and a hillside setting that slows the pace after a late night. It gives the weekend route a calm art stop without making the day feel underbuilt.",
         "hours": {
           "mon": "Closed",
@@ -6974,6 +6988,7 @@ export const barcelonaItineraryGuides = [
           41.3738,
           2.1635
         ],
+        "itineraryDay": 2,
         "description": "Quimet & Quimet is the Poble-sec food-and-bar hybrid for the weekend route. Standing montaditos and bottles make it practical before Carrer de Blai or a club night while still feeling like a real Barcelona institution.",
         "hours": {
           "mon": "12:00 PM-11:00 PM",
@@ -6993,6 +7008,7 @@ export const barcelonaItineraryGuides = [
           41.3752,
           2.1696
         ],
+        "itineraryDay": 2,
         "description": "Sala Apolo is the popular-nightlife finish because weekends need at least one venue with citywide pull. Check the programming, then treat it as the big final stop rather than a casual bar-hop stop.",
         "hours": {
           "mon": "10:00 PM-2:30 AM",
@@ -7038,7 +7054,9 @@ export const barcelonaItineraryGuides = [
     "title": "A Week From Gràcia to the Hill",
     "description": "A longer route that lets the categories spread out instead of competing for one day: hostel base, Gaudi starts, old-city history, tasting-menu splurge, Born nightlife, Montjuic reset, and Poble-sec finish.",
     "url": "https://www.google.com/maps/search/barcelona+one+week+itinerary",
-    "category": "Activities",
+    "category": "Itineraries",
+    "itinerary": {},
+    "submissionType": "itinerary",
     "location": {
       "city": "Barcelona",
       "country": "Spain",
@@ -7046,8 +7064,8 @@ export const barcelonaItineraryGuides = [
       "scope": "city"
     },
     "creator": {
-      "id": "user-rguide-activities",
-      "name": "R Activities",
+      "id": "user-rguide-itineraries",
+      "name": "R Itineraries",
       "avatar": "data:image/svg+xml;utf8,%0A%20%20%20%20%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22160%22%20height%3D%22160%22%20viewBox%3D%220%200%20160%20160%22%3E%0A%20%20%20%20%20%20%3Crect%20width%3D%22160%22%20height%3D%22160%22%20rx%3D%2280%22%20fill%3D%22%230f766e%22%20%2F%3E%0A%20%20%20%20%20%20%3Ctext%20x%3D%2250%25%22%20y%3D%2254%25%22%20text-anchor%3D%22middle%22%20dominant-baseline%3D%22middle%22%0A%20%20%20%20%20%20%20%20font-family%3D%22Arial%2C%20sans-serif%22%20font-size%3D%2276%22%20font-weight%3D%22700%22%20fill%3D%22white%22%3ER%3C%2Ftext%3E%0A%20%20%20%20%3C%2Fsvg%3E%0A%20%20"
     },
     "upvotes": 0,
@@ -7060,6 +7078,7 @@ export const barcelonaItineraryGuides = [
           41.3983,
           2.1654
         ],
+        "itineraryDay": 1,
         "description": "Use Yeah Barcelona as the hostel-category base for a week because the location works for Eixample, Gràcia, and Sagrada Família while the social programming helps longer-stay travelers find plans. It is especially useful when the itinerary needs an affordable base that can create community without relying on random bar crawls.",
         "hours": {
           "mon": "24 hours",
@@ -7079,6 +7098,7 @@ export const barcelonaItineraryGuides = [
           41.4035,
           2.1507
         ],
+        "itineraryDay": 1,
         "description": "Start the week in Gràcia with Casa Vicens so the architecture story begins before the giant Gaudí icons. It is smaller, more domestic, and gives the neighborhood's village rhythm a cultural anchor.",
         "hours": {
           "mon": "9:00 AM-8:00 PM",
@@ -7098,6 +7118,7 @@ export const barcelonaItineraryGuides = [
           41.407,
           2.1583
         ],
+        "itineraryDay": 1,
         "description": "Bemba is useful on a weeklong itinerary because not every good meal should be a reservation. It gives the Gràcia day something quick, affordable, and current before the route returns to museums, bars, and bigger dinners.",
         "price": "$",
         "priceSource": "Eater / Instagram",
@@ -7119,6 +7140,7 @@ export const barcelonaItineraryGuides = [
           41.3917,
           2.1649
         ],
+        "itineraryDay": 2,
         "description": "Casa Batlló carries the major Eixample culture day with the strongest high-impact architecture stop in the central grid. Give it time rather than squeezing it into a rushed old-city morning.",
         "hours": {
           "mon": "9:00 AM-8:00 PM",
@@ -7138,6 +7160,7 @@ export const barcelonaItineraryGuides = [
           41.3878,
           2.1533
         ],
+        "itineraryDay": 2,
         "description": "Disfrutar belongs in the week plan because a longer trip can protect a full evening for one global fine-dining reservation. Build the day around the booking and let it be the special meal, not a flexible add-on.",
         "price": "$$$",
         "priceSource": "MICHELIN Guide / World's 50 Best",
@@ -7159,6 +7182,7 @@ export const barcelonaItineraryGuides = [
           41.3845,
           2.1777
         ],
+        "itineraryDay": 3,
         "description": "MUHBA Plaça del Rei gives the old-city portion historical depth instead of letting the Gothic Quarter become only atmosphere. The underground Roman route and palace context make Barcelona's layers easier to read for the rest of the week.",
         "hours": {
           "mon": "Closed",
@@ -7178,6 +7202,7 @@ export const barcelonaItineraryGuides = [
           41.3818,
           2.1799
         ],
+        "itineraryDay": 3,
         "description": "Bar La Plata is the low-key Gothic bar stop for the week: simple, historic, fast, and food-adjacent. It is best used as a compact vermouth-and-bites pause before moving into the Born or waterfront.",
         "hours": {
           "mon": "12:00 PM-12:30 AM",
@@ -7197,6 +7222,7 @@ export const barcelonaItineraryGuides = [
           41.3839,
           2.1822
         ],
+        "itineraryDay": 4,
         "description": "Santa Maria del Mar anchors the El Born day with architecture that explains the neighborhood's medieval merchant identity. Pair it with the Picasso Museum area, Ciutadella, or a cava stop nearby.",
         "hours": {
           "mon": "9:00 AM-8:00 PM",
@@ -7216,6 +7242,7 @@ export const barcelonaItineraryGuides = [
           41.3859,
           2.1822
         ],
+        "itineraryDay": 4,
         "description": "Paradiso is the Born's headline cocktail stop: a hidden-door room with theatrical drinks, global recognition, and enough demand that the visit should be treated as the night's main event rather than a quick drink between stops.",
         "hours": {
           "mon": "6:00 PM-12:30 AM",
@@ -7235,6 +7262,7 @@ export const barcelonaItineraryGuides = [
           41.3686,
           2.1592
         ],
+        "itineraryDay": 5,
         "description": "Fundació Joan Miró gives the Montjuïc day a focused art center before the route turns toward gardens, views, or Poble-sec. It is a smart midweek reset after denser old-city days.",
         "hours": {
           "mon": "Closed",
@@ -7254,6 +7282,7 @@ export const barcelonaItineraryGuides = [
           41.3738,
           2.1635
         ],
+        "itineraryDay": 6,
         "description": "Quimet & Quimet is the Poble-sec food-and-dive-bar bridge, with standing montaditos and bottles that fit a weeklong itinerary better than another formal dinner. Go early and let it launch a Carrer de Blai evening.",
         "hours": {
           "mon": "12:00 PM-11:00 PM",
@@ -7273,6 +7302,7 @@ export const barcelonaItineraryGuides = [
           41.3752,
           2.1696
         ],
+        "itineraryDay": 7,
         "description": "Sala Apolo closes the week with the city's bigger nightlife energy: concerts, club programming, and a real reason to stay out late. It is the final category contrast after museums, restaurants, hostels, and small bars.",
         "hours": {
           "mon": "10:00 PM-2:30 AM",
