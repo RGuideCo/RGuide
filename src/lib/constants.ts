@@ -12,7 +12,6 @@ export const CATEGORIES: ListCategory[] = [
   "Culture",
   "Stay",
   "Activities",
-  "Itineraries",
   "Routes",
   "Essentials",
 ];
@@ -82,15 +81,6 @@ export const CATEGORY_STYLES: Record<
     mapColor: "#f97316",
     mapGlowColor: "#fb923c",
     poiColor: "#c2410c",
-  },
-  Itineraries: {
-    badge: "bg-teal-100 text-teal-800",
-    filterActive: "border-teal-600 bg-teal-600 text-white",
-    stopNumber: "bg-teal-600 text-white",
-    stopDot: "bg-teal-600",
-    mapColor: "#0d9488",
-    mapGlowColor: "#2dd4bf",
-    poiColor: "#0f766e",
   },
   Routes: {
     badge: "bg-blue-100 text-blue-800",

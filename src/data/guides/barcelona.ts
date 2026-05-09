@@ -6714,7 +6714,7 @@ export const barcelonaItineraryGuides = [
     "title": "One Strong Day, No Filler",
     "description": "A focused first-day route that chooses one great architecture stop, a counter lunch, old-city wandering, a salty cava pause, and a final cocktail spectacle. It is built to feel complete without pretending you can see everything in one day.",
     "url": "https://www.google.com/maps/search/best+things+to+do+barcelona+one+day",
-    "category": "Itineraries",
+    "category": "Activities",
     "itinerary": {},
     "submissionType": "itinerary",
     "location": {
@@ -6862,7 +6862,7 @@ export const barcelonaItineraryGuides = [
     "title": "Two Nights, Five Neighborhood Moods",
     "description": "A weekend route with room to breathe: Gracia base energy, Eixample architecture, old-city nights, Montjuic art, Poble-sec bites, and one proper late finish. Use it when two days should feel paced, not stuffed.",
     "url": "https://www.google.com/maps/search/barcelona+weekend+itinerary",
-    "category": "Itineraries",
+    "category": "Activities",
     "itinerary": {},
     "submissionType": "itinerary",
     "location": {
@@ -7054,7 +7054,7 @@ export const barcelonaItineraryGuides = [
     "title": "A Week From Gràcia to the Hill",
     "description": "A longer route that lets the categories spread out instead of competing for one day: hostel base, Gaudi starts, old-city history, tasting-menu splurge, Born nightlife, Montjuic reset, and Poble-sec finish.",
     "url": "https://www.google.com/maps/search/barcelona+one+week+itinerary",
-    "category": "Itineraries",
+    "category": "Activities",
     "itinerary": {},
     "submissionType": "itinerary",
     "location": {

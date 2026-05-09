@@ -5,7 +5,6 @@ export type ListCategory =
   | "Culture"
   | "Stay"
   | "Activities"
-  | "Itineraries"
   | "Routes"
   | "Essentials";
 

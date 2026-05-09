@@ -12,7 +12,6 @@ const creators: Record<ListCategory, MapList["creator"]> = {
   Culture: { id: "user-rguide-culture", name: "R Culture", avatar: avatar("R") },
   Stay: { id: "user-rguide-stay", name: "R Stay", avatar: avatar("R") },
   Activities: { id: "user-rguide-activities", name: "R Activities", avatar: avatar("R") },
-  Itineraries: { id: "user-rguide-itineraries", name: "R Itineraries", avatar: avatar("R") },
   Routes: { id: "user-rguide-routes", name: "R Routes", avatar: avatar("R") },
   Essentials: { id: "user-rguide-essentials", name: "R Essentials", avatar: avatar("R") },
 };
