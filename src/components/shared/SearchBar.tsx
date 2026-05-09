@@ -6,7 +6,7 @@ import { Search } from "lucide-react";
 import { useId, useMemo, useState } from "react";
 
 import { cities } from "@/data";
-import { getCityHref, getListHref } from "@/lib/routes";
+import { getCityHref, getGuideHref } from "@/lib/routes";
 import { getEditorialLists, useAppStore } from "@/store/app-store";
 
 interface SearchBarProps {
@@ -57,7 +57,7 @@ export function SearchBar({
         id: list.id,
         title: list.title,
         subtitle: [list.location.city, list.location.country, list.category].filter(Boolean).join(" • "),
-        href: getListHref(list),
+        href: getGuideHref(list),
       }));
 
     return [...cityMatches, ...listMatches].slice(0, 6);

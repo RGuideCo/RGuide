@@ -1,7 +1,7 @@
 import type { MetadataRoute } from "next";
 
 import { getCityDeepLinkStaticParams } from "@/lib/deep-link-routes";
-import { getCategoryHref, getCreatorHref, getListHref } from "@/lib/routes";
+import { getCategoryHref, getCreatorHref, getGuideHref } from "@/lib/routes";
 import { SITE_URL } from "@/lib/constants";
 import { CATEGORIES } from "@/lib/constants";
 import { users } from "@/data";
@@ -76,7 +76,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   }));
 
   const guideRoutes = editorialGuides.map((list) => ({
-    url: absoluteUrl(getListHref(list)),
+    url: absoluteUrl(getGuideHref(list)),
     lastModified: new Date(list.createdAt),
     changeFrequency: "monthly" as const,
     priority: 0.55,

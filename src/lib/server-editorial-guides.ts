@@ -4,12 +4,23 @@ import { unstable_cache } from "next/cache";
 import pg from "pg";
 
 import { mapLists } from "@/data/lists";
+import { weeklyCityEventRuns, weeklyEventToGuideList } from "@/data/weekly-events";
 import { applyEditorialPoiPhotos } from "@/lib/editorial-guides-shared";
 import type { EditorialPoiPhotoRecord } from "@/lib/editorial-guides-shared";
 import type { MapList } from "@/types";
 
 interface EditorialGuideRow {
   list: MapList;
+}
+
+interface WeeklyEventGuideRow {
+  guide: MapList;
+}
+
+function getLocalWeeklyEventGuides() {
+  return weeklyCityEventRuns.flatMap((run) =>
+    run.events.map((event) => weeklyEventToGuideList(event, run)),
+  );
 }
 
 const EDITORIAL_GUIDES_CACHE_SECONDS = Number.parseInt(
@@ -85,7 +96,26 @@ async function loadEditorialGuidesFromSupabase(): Promise<MapList[] | null> {
       poiRows = [];
     }
 
-    return applyEditorialPoiPhotos(rows.map((row) => row.list), poiRows);
+    let weeklyEventRows: WeeklyEventGuideRow[] = [];
+    try {
+      const result = await client.query<WeeklyEventGuideRow>(
+        [
+          "select guide",
+          "from public.weekly_event_guides",
+          "where sourced_at >= current_date - interval '14 days'",
+          "order by city_name asc, starts_at asc, event_title asc",
+        ].join(" "),
+      );
+      weeklyEventRows = result.rows;
+    } catch {
+      weeklyEventRows = [];
+    }
+
+    const weeklyEventGuides = weeklyEventRows.length
+      ? weeklyEventRows.map((row) => row.guide)
+      : getLocalWeeklyEventGuides();
+
+    return applyEditorialPoiPhotos([...rows.map((row) => row.list), ...weeklyEventGuides], poiRows);
   } catch (error) {
     console.error("Failed to load server editorial guides", error);
     return null;
@@ -112,5 +142,5 @@ export async function getServerEditorialGuides() {
     return supabaseGuides;
   }
 
-  return mapLists;
+  return [...mapLists, ...getLocalWeeklyEventGuides()];
 }

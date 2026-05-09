@@ -37,6 +37,7 @@ export interface MapList {
   seoDescription?: string;
   title: string;
   description: string;
+  highlights?: string[];
   photo?: string;
   url: string;
   category: ListCategory;
@@ -77,6 +78,9 @@ export interface GuideStop {
   price?: "$" | "$$" | "$$$";
   priceSource?: string;
   bookingUrl?: string;
+  officialUrl?: string;
+  eventTime?: string;
+  eventVenue?: string;
   places?: GuideStop[];
   itineraryDate?: string;
   itineraryDay?: number;

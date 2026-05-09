@@ -62,8 +62,6 @@ import {
   filterListStopsByFoodPrice,
   generalFoodCuisines,
   getDefaultSelection,
-  guideRailActiveColorById,
-  guideRailFillOnActiveIds,
   guideRailOptions,
   inferFoodCuisine,
   inferNightlifeBarType,
@@ -2866,8 +2864,7 @@ export function SplitScreenSection({
       return allActiveLists.filter(
         (list) =>
           list.location.scope === "city" &&
-          list.location.city === activeLocation.city!.name &&
-          !normalizeNeighborhoodName(list.location.neighborhood),
+          list.location.city === activeLocation.city!.name,
       );
     }
     return allActiveLists.filter(
@@ -2929,7 +2926,22 @@ export function SplitScreenSection({
           )
   )
     .slice()
-    .sort((left, right) => right.upvotes - left.upvotes || left.title.localeCompare(right.title));
+    .sort((left, right) => {
+      const leftNeighborhoodRank =
+        activeLocation.city && !activeNeighborhoodKey && normalizeNeighborhoodName(left.location.neighborhood)
+          ? 1
+          : 0;
+      const rightNeighborhoodRank =
+        activeLocation.city && !activeNeighborhoodKey && normalizeNeighborhoodName(right.location.neighborhood)
+          ? 1
+          : 0;
+
+      return (
+        leftNeighborhoodRank - rightNeighborhoodRank ||
+        right.upvotes - left.upvotes ||
+        left.title.localeCompare(right.title)
+      );
+    });
   const railFilteredLists = useMemo(() => {
     if (isPublicProfileMode) {
       return publicProfileGuideLists
@@ -2938,8 +2950,6 @@ export function SplitScreenSection({
     }
 
     const now = new Date();
-    const sevenDaysAgo = new Date(now);
-    sevenDaysAgo.setDate(now.getDate() - 7);
     const completedItineraryListIds = new Set(
       itineraryPlaylists
         .map((playlist) => playlist.completedListId)
@@ -2947,8 +2957,8 @@ export function SplitScreenSection({
     );
     const playlistLinkedListIds = new Set(itineraryPlaylists.flatMap((playlist) => playlist.listIds));
     const allKnownItineraryListIds = new Set([...completedItineraryListIds, ...playlistLinkedListIds]);
-    const eventPattern =
-      /\b(event|festival|concert|show|market|fair|parade|match|game|exhibit|exhibition|live music|night market|weekend)\b/i;
+    const isEventList = (list: MapList) => list.id.startsWith("event-");
+    const guideListsOnly = filteredLists.filter((list) => !isEventList(list));
     const isRGuideList = (list: MapList) => list.creator.name.startsWith("R ");
     const isUserGuideList = (list: MapList) =>
       !isRGuideList(list) &&
@@ -2956,13 +2966,13 @@ export function SplitScreenSection({
       !isItineraryList(list, allKnownItineraryListIds);
 
     if (activeGuideRail === "all-guides") {
-      return filteredLists.filter((list) => isRGuideList(list) || isUserGuideList(list));
+      return guideListsOnly.filter((list) => isRGuideList(list) || isUserGuideList(list));
     }
     if (activeGuideRail === "r-guides") {
-      return filteredLists.filter(isRGuideList);
+      return guideListsOnly.filter(isRGuideList);
     }
     if (activeGuideRail === "user-guides") {
-      return filteredLists.filter(isUserGuideList);
+      return guideListsOnly.filter(isUserGuideList);
     }
     if (activeGuideRail === "favorites") {
       return globalMergedLists.filter((list) => favoriteIds.includes(list.id));
@@ -2979,7 +2989,7 @@ export function SplitScreenSection({
       );
     }
     if (activeGuideRail === "trending") {
-      return [...filteredLists]
+      return [...guideListsOnly]
         .map((list) => {
           const boostedUpvotes = list.upvotes + (votedIds.includes(list.id) ? 1 : 0);
           const createdAt = Date.parse(list.createdAt);
@@ -2993,11 +3003,27 @@ export function SplitScreenSection({
         .map((entry) => entry.list);
     }
     if (activeGuideRail === "week-events") {
-      return filteredLists.filter((list) => {
-        const text = `${list.title} ${list.description} ${list.stops.map((stop) => stop.description).join(" ")}`;
-        const createdAt = Date.parse(list.createdAt);
-        const isRecent = Number.isFinite(createdAt) && createdAt >= sevenDaysAgo.getTime();
-        return eventPattern.test(text) || isRecent;
+      const cityEventLists = globalMergedLists.filter((list) => {
+        if (!list.id.startsWith("event-")) {
+          return false;
+        }
+        if (!activeLocation.city) {
+          return true;
+        }
+        return (
+          list.location.scope === "city" &&
+          list.location.city === activeLocation.city.name
+        );
+      });
+
+      return cityEventLists.filter((list) => {
+        if (!activeCategory) {
+          return true;
+        }
+        if (activeCategory === "Activities") {
+          return list.category === "Activities" || list.category === "Culture" || list.category === "Nightlife";
+        }
+        return list.category === activeCategory;
       });
     }
     return filteredLists;
@@ -3011,6 +3037,8 @@ export function SplitScreenSection({
     itineraryPlaylists,
     publicProfileGuideLists,
     votedIds,
+    activeCategory,
+    activeLocation.city,
   ]);
   const activeCategoryOption = activeCategory
     ? categoryOptions.find((option) => option.category === activeCategory) ?? null
@@ -3027,12 +3055,35 @@ export function SplitScreenSection({
     { id: "all-guides" as const, label: "All guides", shortLabel: "All", icon: null },
     { id: "r-guides" as const, label: "R guides", shortLabel: "R", icon: null },
     { id: "user-guides" as const, label: "User guides", shortLabel: "User", icon: UserRound },
+    { id: "favorites" as const, label: "Favorites", shortLabel: "Fav", icon: Heart },
   ];
   const guideActionSelectors = [
+    { id: "all-guides" as const, label: "Guides", shortLabel: "Guide", icon: MapIcon },
+    { id: "week-events" as const, label: "Events", shortLabel: "Events", icon: CalendarDays },
     { id: "itinerary" as const, label: "Itineraries", shortLabel: "Trip", icon: Route },
-    { id: "favorites" as const, label: "Favorites", shortLabel: "Fav", icon: Heart },
-    { id: "week-events" as const, label: "This Week", shortLabel: "Week", icon: CalendarDays },
   ];
+  const guideActionActiveStyles = {
+    "all-guides": {
+      backgroundColor: "#0f172a",
+      borderColor: "#38bdf8",
+      color: "#38bdf8",
+    },
+    itinerary: {
+      backgroundColor: "#064e3b",
+      borderColor: "#10b981",
+      color: "#6ee7b7",
+    },
+    favorites: {
+      backgroundColor: "#7f1d1d",
+      borderColor: "#ef4444",
+      color: "#ef4444",
+    },
+    "week-events": {
+      backgroundColor: "#3b0764",
+      borderColor: "#a855f7",
+      color: "#c084fc",
+    },
+  } as const;
   const menuBarSelectors = [...guideSourceSelectors, ...guideActionSelectors];
   const activeGuideSourceSelector =
     guideSourceSelectors.find((selector) => selector.id === activeGuideRail) ?? guideSourceSelectors[0];
@@ -3043,6 +3094,9 @@ export function SplitScreenSection({
   );
   const activeMobileGuideSelector =
     menuBarSelectors.find((selector) => selector.id === activeGuideRail) ?? menuBarSelectors[0];
+  const menuBarTitleLabel = isGuideSourceRailActive
+    ? activeGuideSourceSelector.label
+    : activeMobileGuideSelector.label;
   const resetCategoryFilters = () => {
     setActiveCategory(null);
     setActiveSubcategory(null);
@@ -3073,7 +3127,7 @@ export function SplitScreenSection({
     setClosingGuide(null);
     setVisibleNestedStopParentIds([]);
 
-    if (railId === "favorites") {
+    if (railId === "favorites" || railId === "week-events") {
       resetCategoryFilters();
 
       const neutralPath = getCurrentCityRoutePath(null);
@@ -4742,25 +4796,20 @@ export function SplitScreenSection({
                             key={selector.id}
                             type="button"
                             onClick={() => handleGuideRailSelect(selector.id)}
-                            style={
-                              isActive
-                                ? {
-                                    color: guideRailActiveColorById[selector.id],
-                                    borderColor: guideRailActiveColorById[selector.id],
-                                  }
-                                : undefined
-                            }
-                            className={`flex h-8 w-8 items-center justify-center rounded-lg border border-slate-200 bg-white text-slate-700 shadow-sm transition hover:border-slate-300 hover:text-slate-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-400/70 ${
-                              isActive ? "bg-white" : ""
+                            style={isActive ? guideActionActiveStyles[selector.id] : undefined}
+                            className={`relative flex h-8 w-8 items-center justify-center overflow-hidden rounded-lg border border-slate-200 bg-white text-slate-700 shadow-sm transition hover:border-slate-300 hover:text-slate-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-400/70 ${
+                              isActive ? "shadow-md hover:text-current" : ""
                             }`}
                             aria-label={selector.label}
                             title={selector.label}
                           >
-                            <SelectorIcon
-                              className={`h-3.5 w-3.5 ${
-                                isActive && guideRailFillOnActiveIds.has(selector.id) ? "fill-current" : ""
-                              }`}
-                            />
+                              <SelectorIcon
+                                className={`relative z-10 h-3.5 w-3.5 ${
+                                  isActive && selector.id === "all-guides"
+                                    ? "fill-sky-400 text-slate-950"
+                                    : ""
+                                }`}
+                              />
                           </button>
                         );
                       })}
@@ -7011,22 +7060,18 @@ export function SplitScreenSection({
                       aria-label="Menu bar"
                     >
                       <div className="relative h-10">
-                      <div
-                        className={`absolute left-0 top-0 flex h-10 items-center gap-2 transition-[opacity,transform] duration-200 ${
-                          isDesktopSearchOpen ? "pointer-events-none -translate-x-2 opacity-0" : "translate-x-0 opacity-100"
-                        }`}
-                      >
-                        <div className="flex h-10 items-center gap-2 rounded-lg border border-slate-200 bg-white px-1 shadow-sm">
+                        <div
+                          className={`grid h-10 grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] items-center gap-4 transition-[opacity,transform] duration-200 ${
+                            isDesktopSearchOpen ? "pointer-events-none -translate-y-1 opacity-0" : "translate-y-0 opacity-100"
+                          }`}
+                        >
                           <div
-                            className="relative flex h-8 items-center gap-1"
+                            className="relative grid h-10 w-full grid-cols-4 items-center justify-items-start gap-2"
                             role="group"
                             aria-label="Guide source"
                           >
                             <span
-                              className={`pointer-events-none absolute left-0 top-0 h-8 w-8 rounded-md bg-slate-950 shadow-sm transition-[opacity,transform] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] ${
-                                isGuideSourceRailActive ? "opacity-100" : "opacity-0"
-                              }`}
-                              style={{ transform: `translateX(${activeGuideSourceIndex * 36}px)` }}
+                              className="pointer-events-none absolute -left-0.5 top-0 h-10 w-[calc(75%+2.875rem)] rounded-[0.625rem] bg-white"
                               aria-hidden="true"
                             />
                             {guideSourceSelectors.map((selector) => {
@@ -7037,8 +7082,10 @@ export function SplitScreenSection({
                                   key={selector.id}
                                   type="button"
                                   onClick={() => handleGuideRailSelect(selector.id)}
-                                  className={`relative z-10 flex h-8 w-8 items-center justify-center rounded-md text-[10px] font-semibold transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-400/70 ${
-                                    isActive ? "text-white" : "text-slate-700 hover:text-slate-950"
+                                  className={`relative z-10 flex h-9 w-9 items-center justify-center rounded-lg border shadow-sm transition-[background-color,color,border-color,transform] duration-200 hover:scale-105 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-400/70 ${
+                                    isActive
+                                      ? "border-slate-950 bg-slate-950 text-white hover:border-slate-950 hover:text-white"
+                                      : "border-transparent bg-transparent text-slate-700 shadow-none hover:border-slate-300 hover:text-slate-900"
                                   }`}
                                   aria-label={selector.label}
                                   title={selector.label}
@@ -7048,46 +7095,42 @@ export function SplitScreenSection({
                               );
                             })}
                           </div>
-                          <span className="min-w-[5.6rem] pr-1 text-left text-[10px] font-semibold uppercase tracking-[0.16em] text-slate-500">
-                            {activeMobileGuideSelector.label}
+                          <span className="inline-flex w-[8.5rem] justify-center text-center text-sm font-bold uppercase tracking-[0.18em] text-slate-950">
+                            {menuBarTitleLabel}
                           </span>
+                          <div className="grid h-9 w-full grid-cols-4 items-center justify-items-end gap-2">
+                            {guideActionSelectors.map((selector) => {
+                              const isActive = activeGuideRail === selector.id;
+                              const SelectorIcon = selector.icon;
+                              return (
+                                <button
+                                  key={selector.id}
+                                  type="button"
+                                  onClick={() => handleGuideRailSelect(selector.id)}
+                                  style={isActive ? guideActionActiveStyles[selector.id] : undefined}
+                                  className={`relative flex h-9 w-9 items-center justify-center overflow-hidden rounded-lg border border-slate-200 bg-white text-slate-600 shadow-sm transition-[background-color,color,border-color,transform] duration-200 hover:scale-105 hover:border-slate-300 hover:text-slate-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-400/70 ${
+                                    isActive ? "shadow-md hover:text-current" : ""
+                                  }`}
+                                  aria-label={selector.label}
+                                  title={selector.label}
+                                >
+                                  <SelectorIcon
+                                    className={`relative z-10 h-4 w-4 ${
+                                      isActive && selector.id === "all-guides"
+                                        ? "fill-sky-400 text-slate-950"
+                                        : ""
+                                    }`}
+                                  />
+                                </button>
+                              );
+                            })}
+                          </div>
                         </div>
-                        {guideActionSelectors.map((selector) => {
-                          const isActive = activeGuideRail === selector.id;
-                          const SelectorIcon = selector.icon;
-                          return (
-                            <button
-                              key={selector.id}
-                              type="button"
-                              onClick={() => handleGuideRailSelect(selector.id)}
-                              style={
-                                isActive
-                                  ? {
-                                      color: guideRailActiveColorById[selector.id],
-                                      borderColor: guideRailActiveColorById[selector.id],
-                                    }
-                                  : undefined
-                              }
-                              className={`flex h-10 w-10 items-center justify-center rounded-lg border border-slate-200 bg-white text-slate-700 shadow-sm transition hover:scale-[1.03] hover:border-slate-300 hover:text-slate-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-400/70 ${
-                                isActive ? "shadow-md" : ""
-                              }`}
-                              aria-label={selector.label}
-                              title={selector.label}
-                            >
-                              <SelectorIcon
-                                className={`h-4 w-4 ${
-                                  isActive && guideRailFillOnActiveIds.has(selector.id) ? "fill-current" : ""
-                                }`}
-                              />
-                            </button>
-                          );
-                        })}
-                      </div>
 	                      <div
-	                        className={`absolute right-0 top-0 flex h-10 items-center justify-end overflow-visible rounded-lg transition-[width,background-color,border-color,box-shadow] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] ${
+	                        className={`absolute right-0 flex items-center justify-end overflow-visible rounded-lg transition-[width,background-color,border-color,box-shadow] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] ${
 	                          isDesktopSearchOpen
-                              ? "w-full border border-slate-200 bg-white shadow-sm"
-                              : "w-10 border border-transparent bg-transparent"
+                              ? "top-0 h-10 w-full border border-slate-200 bg-white shadow-sm"
+                              : "top-0.5 h-9 w-9 border border-transparent bg-transparent"
 	                        }`}
 	                      >
                         {isDesktopSearchOpen ? (
@@ -7109,10 +7152,10 @@ export function SplitScreenSection({
                             setIsNightlifeBarMenuOpen(false);
                             setIsDesktopSearchOpen((current) => !current);
                           }}
-                          className={`inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-lg text-slate-700 transition hover:text-slate-900 ${
+                          className={`inline-flex shrink-0 items-center justify-center rounded-lg text-slate-700 transition hover:text-slate-900 ${
                             isDesktopSearchOpen
-                              ? "border border-transparent bg-transparent shadow-none"
-                              : "border border-slate-200 bg-white shadow-sm hover:border-slate-300"
+                              ? "h-10 w-10 border border-transparent bg-transparent shadow-none"
+                              : "h-9 w-9 border border-slate-200 bg-white shadow-sm hover:border-slate-300"
                           }`}
                           aria-label={isDesktopSearchOpen ? "Close search" : "Open search"}
                           title={isDesktopSearchOpen ? "Close search" : "Search"}
@@ -7134,7 +7177,7 @@ export function SplitScreenSection({
                         >
                           <div className="min-h-0 overflow-hidden">
                             <div className="grid grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] items-center gap-4 pt-1">
-                            <div className="grid w-full grid-cols-4 justify-items-start gap-2">
+                            <div className="grid w-full grid-cols-4 items-center justify-items-start gap-2">
                               {categoryOptions.slice(0, categoryOptionMidpoint).map((option) => (
                                 <button
                                   key={option.label}
@@ -7166,7 +7209,7 @@ export function SplitScreenSection({
                             <span className="inline-flex w-[8.5rem] justify-center text-center text-[11px] font-medium uppercase tracking-[0.18em] text-slate-500">
                               {categoryTitleLabel}
                             </span>
-                            <div className="grid w-full grid-cols-4 justify-items-end gap-2">
+                            <div className="grid w-full grid-cols-4 items-center justify-items-end gap-2">
                               {categoryOptions.slice(categoryOptionMidpoint).map((option) => (
                                 <button
                                   key={option.label}

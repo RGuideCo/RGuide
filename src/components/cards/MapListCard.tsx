@@ -5,9 +5,9 @@ import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { createPortal } from "react-dom";
-import { CalendarCheck, ChevronDown, Navigation, Plus, ThumbsUp, X } from "lucide-react";
+import { CalendarCheck, ChevronDown, ExternalLink, Navigation, Plus, ThumbsUp, X } from "lucide-react";
 
-import { getCreatorHref, getListHref } from "@/lib/routes";
+import { getCreatorHref, getGuideHref } from "@/lib/routes";
 import { resolveStopHours } from "@/lib/seasonal-hours";
 import { formatNumber } from "@/lib/utils";
 import { CATEGORY_STYLES } from "@/lib/constants";
@@ -141,6 +141,7 @@ function formatItineraryDayLabel(dateKey: string, index: number) {
     return dayLabel;
   }
   const formatted = new Intl.DateTimeFormat(undefined, {
+    timeZone: "UTC",
     month: "short",
     day: "numeric",
     year: "numeric",
@@ -795,7 +796,7 @@ export function MapListCard({
           ? preservingListChrome
             ? "border border-slate-300 !bg-slate-50 p-3"
             : "border border-slate-300 !bg-slate-50 px-3 pb-3 pt-0"
-          : "collapsed-guide-card p-3 hover:border-slate-950/30 hover:shadow-[0_18px_34px_rgba(23,23,23,0.13)] focus-within:border-slate-950/30 focus-within:shadow-[0_18px_34px_rgba(23,23,23,0.13)]"
+          : "collapsed-guide-card p-3 hover:border-slate-950/30 focus-within:border-slate-950/30"
       }`}
       style={!expandedChrome ? ({ "--guide-accent": categoryStyle.mapColor, borderColor: categoryStyle.mapColor } as React.CSSProperties) : undefined}
       onMouseEnter={() => onHoverStart?.(list)}
@@ -816,9 +817,6 @@ export function MapListCard({
             style={{ backgroundColor: categoryStyle.mapColor }}
             aria-hidden="true"
           />
-          <span className="pointer-events-none absolute bottom-2 right-3 z-20 translate-y-1 font-mono text-[9px] font-semibold uppercase tracking-[0.16em] text-slate-400 opacity-0 transition-[opacity,transform] duration-300 group-hover:translate-y-0 group-hover:opacity-100 group-focus-within:translate-y-0 group-focus-within:opacity-100">
-            Open
-          </span>
         </>
       ) : null}
       <div
@@ -909,7 +907,7 @@ export function MapListCard({
           ) : (
             <>
               <h3 className="min-w-0 text-base font-semibold leading-5 text-slate-900">
-                <Link href={getListHref(list)}>{list.title}</Link>
+                <Link href={getGuideHref(list)}>{list.title}</Link>
               </h3>
               {locationSubtitle ? (
                 <p className="mt-0.5 truncate text-xs font-medium text-slate-500">{locationSubtitle}</p>
@@ -1020,6 +1018,11 @@ export function MapListCard({
           </span>
         </div>
       ) : null}
+      {expandable && !expanded ? (
+        <p className="collapsed-guide-hover-description relative z-10 px-3 text-xs leading-4 text-slate-600">
+          {list.description}
+        </p>
+      ) : null}
       {!expandable ? (
         <div className="mt-3">
           <p className="te-kicker text-[11px] font-medium text-slate-500">Description</p>
@@ -1043,12 +1046,38 @@ export function MapListCard({
               <p className="guide-content-cascade-item relative z-10 text-[11px] font-medium uppercase tracking-[0.2em] text-slate-500">
                 Description
               </p>
+              {list.itinerary?.startDate || list.itinerary?.endDate ? (
+                <p
+                  className="guide-content-cascade-item relative z-10 mt-2 px-3 text-[11px] font-semibold uppercase tracking-[0.12em] text-slate-500"
+                  style={{ animationDelay: "35ms" }}
+                >
+                  {[list.itinerary?.startDate, list.itinerary?.endDate].filter(Boolean).join(" to ")}
+                </p>
+              ) : null}
               <p
                 className="guide-content-cascade-item relative z-10 mt-2 px-3 text-sm leading-5 text-slate-600"
                 style={{ animationDelay: "45ms" }}
               >
                 {list.description}
               </p>
+              {list.highlights?.length ? (
+                <div
+                  className="guide-content-cascade-item relative z-10 mt-3 rounded-2xl border border-slate-200 bg-white px-3 py-3"
+                  style={{ animationDelay: "55ms" }}
+                >
+                  <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-slate-500">
+                    Highlights
+                  </p>
+                  <ul className="mt-2 space-y-1.5">
+                    {list.highlights.map((highlight) => (
+                      <li key={highlight} className="flex gap-2 text-sm leading-5 text-slate-600">
+                        <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-slate-400" aria-hidden="true" />
+                        <span>{highlight}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              ) : null}
               {list.stops.length && !deferHeavyExpandedContent ? (
                 <div
                   className="guide-content-cascade-item relative z-10 mt-3"
@@ -1171,6 +1200,7 @@ export function MapListCard({
                         const stopItineraryId = `${list.id}:${stop.id}`;
                         const stopPhoto = getPoiPhoto(stop.photo);
                         const stayBookingDetails = getStayBookingDetails(list, stop);
+                        const officialStopUrl = list.id.startsWith("event-") ? stop.officialUrl ?? stop.bookingUrl : stop.officialUrl;
                         const isStopInItinerary =
                           itineraryStopIds.includes(stopItineraryId) ||
                           itineraryPlaylists.some((playlist) => playlist.stopKeys.includes(stopItineraryId));
@@ -1268,9 +1298,16 @@ export function MapListCard({
                             }}
                             onFocus={() => onStopHoverChange?.(stop.id)}
                             onBlur={() => onStopHoverChange?.(null)}
-                            className="flex min-w-0 flex-1 cursor-pointer select-text items-center gap-2 text-left"
+                            className="flex min-w-0 flex-1 cursor-pointer select-text items-start gap-2 text-left"
                           >
-                            <span className="min-w-0 flex-1 text-sm font-semibold text-slate-900">{stop.name}</span>
+                            <span className="min-w-0 flex-1">
+                              <span className="block text-sm font-semibold text-slate-900">{stop.name}</span>
+                              {stop.eventTime ? (
+                                <span className="mt-0.5 block text-[11px] font-medium uppercase tracking-[0.08em] text-slate-500">
+                                  {stop.eventTime}
+                                </span>
+                              ) : null}
+                            </span>
                             {stop.price ? (
                               <span
                                 title={stop.priceSource ? `Price source: ${stop.priceSource}` : "Restaurant price tier"}
@@ -1460,6 +1497,11 @@ export function MapListCard({
                                   ) : null}
                                 </div>
                                 <div className="flex shrink-0 items-center gap-2">
+                                  {stop.eventVenue ? (
+                                    <span className="max-w-[11rem] truncate rounded-md border border-slate-950/10 bg-white/80 px-2 py-1.5 text-[11px] font-medium text-slate-600">
+                                      {stop.eventVenue}
+                                    </span>
+                                  ) : null}
                                   {!isItineraryGuide ? (
                                     <button
                                       type="button"
@@ -1474,6 +1516,20 @@ export function MapListCard({
                                     >
                                       <Plus className="h-3.5 w-3.5" />
                                     </button>
+                                  ) : null}
+                                  {officialStopUrl ? (
+                                    <Link
+                                      href={officialStopUrl}
+                                      target="_blank"
+                                      rel="noreferrer"
+                                      onClick={(event) => event.stopPropagation()}
+                                      className="inline-flex items-center gap-1.5 rounded-md border border-slate-950/10 bg-white/80 px-2.5 py-1.5 text-[11px] font-medium text-slate-700 hover:border-slate-950/20 hover:text-slate-900"
+                                      aria-label={`Official site for ${stop.name}`}
+                                      title={`Official site for ${stop.name}`}
+                                    >
+                                      <ExternalLink className="h-3.5 w-3.5" />
+                                      <span>Official</span>
+                                    </Link>
                                   ) : null}
                                   <div className="relative">
                                     {stop.places?.length ? (

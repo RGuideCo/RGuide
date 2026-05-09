@@ -13,6 +13,14 @@ export function getListHref(list: Pick<MapList, "slug">) {
   return `/list/${list.slug}`;
 }
 
+export function getEventHref(list: Pick<MapList, "slug">) {
+  return `/events/${list.slug}`;
+}
+
+export function getGuideHref(list: Pick<MapList, "id" | "slug">) {
+  return list.id.startsWith("event-") ? getEventHref(list) : getListHref(list);
+}
+
 export function getCreatorHref(user: Pick<User, "name">) {
   return `/creator/${slugify(user.name)}`;
 }
