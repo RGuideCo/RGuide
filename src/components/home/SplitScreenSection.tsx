@@ -14,7 +14,6 @@ import {
   Footprints,
   Map as MapIcon,
   MapPin,
-  MapPinned,
   Plus,
   Route,
   Search,
@@ -4490,7 +4489,7 @@ export function SplitScreenSection({
                       aria-pressed={isLocationFavoritesRailActive}
                       title="Saved places"
                     >
-                      <MapPinned className="h-3 w-3" />
+                      <Bookmark className={`h-3 w-3 ${isLocationFavoritesRailActive ? "fill-current" : ""}`} />
                     </button>
                   ) : null}
                 </div>
