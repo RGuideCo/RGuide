@@ -2981,7 +2981,7 @@ export function SplitScreenSection({
       const playlistListIds = new Set(
         itineraryPlaylists.flatMap((playlist) => playlist.listIds),
       );
-      return globalMergedLists.filter(
+      return guideListsOnly.filter(
         (list) =>
           itineraryIds.includes(list.id) ||
           playlistListIds.has(list.id) ||
@@ -3122,6 +3122,7 @@ export function SplitScreenSection({
   };
   const handleGuideRailSelect = (railId: (typeof guideRailOptions)[number]["id"]) => {
     setActiveGuideRail(railId);
+    setIsItineraryEditing(false);
     setIsLocationFavoritesRailActive(false);
     setExpandedGuideId(null);
     setClosingGuide(null);
@@ -7538,7 +7539,7 @@ export function SplitScreenSection({
                       : `mt-2 ${explorerBodyMaxHeight} overflow-y-auto pb-0 pr-1`
                   }`}
                 >
-                  {activeGuideRail === "itinerary" && (isItineraryEditing || (!displayedGuide && !activeItineraryPlaylist?.completedListId)) ? (
+                  {activeGuideRail === "itinerary" && isItineraryEditing ? (
                     activeItineraryPlaylist ? (
                       <div className="space-y-3">
                         <div className="rounded-2xl border border-slate-200 bg-white p-3">
