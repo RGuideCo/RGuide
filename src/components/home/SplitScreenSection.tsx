@@ -4211,7 +4211,9 @@ export function SplitScreenSection({
   }, [activePlacesBeenFilter, activeProfileLeftRail, profilePlacesBeenByCountry]);
   useEffect(() => {
     const clamp = (value: number, min: number, max: number) => Math.min(max, Math.max(min, value));
+    let viewportInsetsFrame: number | null = null;
     const updateViewportInsets = () => {
+      viewportInsetsFrame = null;
       const shell = shellViewportRef.current;
       if (!shell) {
         return;
@@ -4257,15 +4259,20 @@ export function SplitScreenSection({
           : nextInsets,
       );
     };
+    const scheduleViewportInsetsUpdate = () => {
+      if (viewportInsetsFrame !== null) {
+        return;
+      }
+      viewportInsetsFrame = window.requestAnimationFrame(updateViewportInsets);
+    };
 
-    updateViewportInsets();
-    const rafId = window.requestAnimationFrame(updateViewportInsets);
-    const timeoutId = window.setTimeout(updateViewportInsets, 420);
-    window.addEventListener("resize", updateViewportInsets, { passive: true });
+    scheduleViewportInsetsUpdate();
+    const timeoutId = window.setTimeout(scheduleViewportInsetsUpdate, 420);
+    window.addEventListener("resize", scheduleViewportInsetsUpdate, { passive: true });
 
     let observer: ResizeObserver | null = null;
     if (typeof ResizeObserver !== "undefined") {
-      observer = new ResizeObserver(() => updateViewportInsets());
+      observer = new ResizeObserver(scheduleViewportInsetsUpdate);
       if (shellViewportRef.current) {
         observer.observe(shellViewportRef.current);
       }
@@ -4281,9 +4288,11 @@ export function SplitScreenSection({
     }
 
     return () => {
-      window.cancelAnimationFrame(rafId);
+      if (viewportInsetsFrame !== null) {
+        window.cancelAnimationFrame(viewportInsetsFrame);
+      }
       window.clearTimeout(timeoutId);
-      window.removeEventListener("resize", updateViewportInsets);
+      window.removeEventListener("resize", scheduleViewportInsetsUpdate);
       observer?.disconnect();
     };
   }, [displayShellMode, isGuidePaneTakingFullListPane, isMobileListSheetExpanded, isProfileMode, isProfileSubmitLayout]);
