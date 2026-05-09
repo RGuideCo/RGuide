@@ -573,7 +573,7 @@ export const madridNeighborhoodGuides = [
           40.4169,
           -3.7036
         ],
-        "description": "Madrid's kilometer-zero square and the easiest place to understand the city's radial, crowded, ceremonial center. Use Puerta del Sol to give the Sol & Centro route a concrete cultural anchor instead of only atmosphere.",
+        "description": "Puerta del Sol is one of Madrid's iconic and busiest public squares, marked by Kilometer Zero, the clock tower of the Real Casa de Correos, and constant movement between shopping streets, metro entrances, and civic rituals. It gives the old center its public pulse.",
         "hours": {
           "mon": "Open public space",
           "tue": "Open public space",
@@ -583,7 +583,7 @@ export const madridNeighborhoodGuides = [
           "sat": "Open public space",
           "sun": "Open public space"
         },
-        "photo": "https://upload.wikimedia.org/wikipedia/commons/f/f6/Puerta_del_Sol_%28Madrid%29_01.jpg"
+        "photo": "https://satguruexperiences.com/wp-content/uploads/2024/09/Curiosidades-de-la-Puerta-del-Sol.webp"
       },
       {
         "id": "sol-culture-plaza-mayor",
@@ -592,7 +592,7 @@ export const madridNeighborhoodGuides = [
           40.4155,
           -3.7074
         ],
-        "description": "The old central plaza for Habsburg Madrid, arcades, ceremonies, and the historic geometry around the market streets. Use Plaza Mayor slowly, as a place to read the neighborhood rhythm rather than a quick photo pin.",
+        "description": "Plaza Mayor is the grand arcaded square of Habsburg Madrid, built for ceremonies, markets, bullfights, and public gatherings. Today its uniform facades, frescoed Casa de la Panaderia, and stone portals make it one of the clearest architectural statements in the historic center.",
         "hours": {
           "mon": "Open public space",
           "tue": "Open public space",
@@ -602,7 +602,7 @@ export const madridNeighborhoodGuides = [
           "sat": "Open public space",
           "sun": "Open public space"
         },
-        "photo": "https://upload.wikimedia.org/wikipedia/commons/4/44/Plaza_Mayor_de_Madrid_06.jpg"
+        "photo": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/bb/Plaza_Mayor_de_Madrid_02.jpg/1920px-Plaza_Mayor_de_Madrid_02.jpg?utm_source=commons.wikimedia.org&utm_campaign=index&utm_content=thumbnail&_=20101226073741"
       },
       {
         "id": "sol-culture-royal-palace",
@@ -611,7 +611,7 @@ export const madridNeighborhoodGuides = [
           40.4179,
           -3.7143
         ],
-        "description": "The royal-history anchor west of Sol, best paired with Plaza de Oriente, Almudena, and a La Latina evening. Use Royal Palace of Madrid slowly, as a place to read the neighborhood rhythm rather than a quick photo pin.",
+        "description": "The Royal Palace of Madrid is the largest palace in Western Europe, with more than 135,000 square meters and 3,418 rooms tied to centuries of Spanish monarchy. The visit is about ceremonial scale: grand staircases, throne rooms, royal collections, armory displays, and the formal plaza setting beside Almudena.",
         "hours": {
           "mon": "9:00 AM-8:00 PM",
           "tue": "9:00 AM-8:00 PM",
@@ -630,7 +630,7 @@ export const madridNeighborhoodGuides = [
           40.4156,
           -3.7146
         ],
-        "description": "The palace-side cathedral gives the Royal Madrid route a religious and architectural counterpoint. Pair Almudena Cathedral with nearby lanes and food stops so the history stays connected to the walk.",
+        "description": "Almudena Cathedral stands opposite the Royal Palace with a mix of neoclassical exterior, Neo-Gothic interior, and a brightly painted contemporary ceiling. The best cultural visits include the cathedral museum, dome views, and the crypt below, which turns the palace area into a fuller religious and royal-history stop.",
         "hours": {
           "mon": "9:00 AM-8:00 PM",
           "tue": "9:00 AM-8:00 PM",
@@ -640,7 +640,7 @@ export const madridNeighborhoodGuides = [
           "sat": "9:00 AM-8:00 PM",
           "sun": "9:00 AM-8:00 PM"
         },
-        "photo": "https://upload.wikimedia.org/wikipedia/commons/0/0f/Catedral_de_la_Almudena_%28Madrid%29_01.jpg"
+        "photo": "https://cdn.getyourguide.com/image/format=auto,fit=crop,gravity=auto,quality=60,width=400,height=265,dpr=2/tour_img/59a772c4d649cac3.jpeg"
       }
     ],
     "sources": [
@@ -1238,7 +1238,7 @@ export const madridNeighborhoodGuides = [
           40.4142,
           -3.6978
         ],
-        "description": "The most direct literary-house stop in the neighborhood, grounding the Golden Age story in a real domestic setting. Use Casa Museo Lope de Vega to give the Barrio de las Letras route a concrete cultural anchor instead of only atmosphere.",
+        "description": "Casa Museo Lope de Vega preserves the 17th-century home where the Golden Age playwright lived for the last decades of his life. The rooms, garden, study, and domestic objects turn Barrio de las Letras' literary history into an intimate house visit rather than only street names and plaques.",
         "hours": {
           "mon": "Closed",
           "tue": "10:00 AM-7:00 PM",
@@ -1248,7 +1248,7 @@ export const madridNeighborhoodGuides = [
           "sat": "10:00 AM-7:00 PM",
           "sun": "10:00 AM-7:00 PM"
         },
-        "photo": "https://www.esmadrid.com/sites/default/files/styles/content_type_full/public/recursosturisticos/infoturistica/lopedevega_1404306650.973.jpg?itok=-KLt48Xj"
+        "photo": "https://upload.wikimedia.org/wikipedia/commons/a/af/Casa-Museo_de_Lope_de_Vega_%28Madrid%29_01.jpg"
       },
       {
         "id": "letras-culture-teatro-espanol",
@@ -1257,7 +1257,7 @@ export const madridNeighborhoodGuides = [
           40.4144,
           -3.7007
         ],
-        "description": "A Plaza Santa Ana theater anchor that keeps Las Letras connected to live performance, not only plaques and streets. Use Teatro Español when the cultural stop should be live and time-specific rather than another daytime landmark.",
+        "description": "Teatro Espanol traces its roots to the 16th-century Corral del Principe, making Plaza Santa Ana one of Madrid's oldest stages for live performance. The building connects Golden Age theater history with current drama, classics, and contemporary productions in the middle of Las Letras.",
         "hours": {
           "mon": "Event schedule (check venue)",
           "tue": "Event schedule (check venue)",
@@ -1267,7 +1267,7 @@ export const madridNeighborhoodGuides = [
           "sat": "Event schedule (check venue)",
           "sun": "Event schedule (check venue)"
         },
-        "photo": "https://www.esmadrid.com/sites/default/files/styles/content_type_full/public/recursosturisticos/infoturistica/teatroedespanol_1412607578.39.jpg?itok=lRsgry7e"
+        "photo": "https://www.teatroespanol.es/sites/default/files/monograficos/img-historia-espanol.jpg"
       },
       {
         "id": "letras-culture-prado",
@@ -1276,7 +1276,7 @@ export const madridNeighborhoodGuides = [
           40.4138,
           -3.6921
         ],
-        "description": "The eastern cultural heavyweight for the neighborhood, close enough to pair with Huertas before or after the museum. Use Museo Nacional del Prado as the route's indoor anchor before letting Barrio de las Letras open back into streets, meals, or evening stops.",
+        "description": "Museo Nacional del Prado is Madrid's great classical painting museum, with Spanish, Italian, and Flemish masterpieces at its core. The experience centers on Velazquez, Goya, El Greco, Bosch, Rubens, and Titian, making it the essential stop for royal collections, religious painting, portraiture, and European art history.",
         "hours": {
           "mon": "10:00 AM-8:00 PM",
           "tue": "10:00 AM-8:00 PM",
@@ -1295,7 +1295,7 @@ export const madridNeighborhoodGuides = [
           40.411,
           -3.6932
         ],
-        "description": "A compact exhibition and architecture stop at the Atocha edge of the neighborhood. Use CaixaForum Madrid as the route's indoor anchor before letting Barrio de las Letras open back into streets, meals, or evening stops.",
+        "description": "CaixaForum Madrid is a Herzog & de Meuron conversion of a former power station, recognizable for its floating brick volume and vertical garden. Its programming shifts across contemporary art, photography, design, architecture, science, and social-history exhibitions, so the visit feels more flexible than a single-collection museum.",
         "hours": {
           "mon": "10:00 AM-7:00 PM",
           "tue": "10:00 AM-7:00 PM",
@@ -1305,7 +1305,7 @@ export const madridNeighborhoodGuides = [
           "sat": "10:00 AM-7:00 PM",
           "sun": "10:00 AM-7:00 PM"
         },
-        "photo": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRHfgXoQIbluuwowl5GV6fobIFpbrbzX6Pqtw&s"
+        "photo": "https://live.staticflickr.com/2900/14047205258_8544c9ca6c_b.jpg"
       }
     ],
     "sources": [
@@ -1882,7 +1882,7 @@ export const madridNeighborhoodGuides = [
           40.4153,
           -3.6844
         ],
-        "description": "Madrid's central green reset, with lake walks, monuments, gardens, and enough scale to balance museum-heavy days. Use El Retiro Park as the route's indoor anchor before letting Retiro open back into streets, meals, or evening stops.",
+        "description": "El Retiro Park is Madrid's historic royal garden turned public park, with formal paths, the boating lake, the Alfonso XII monument, rose gardens, fountains, and the Crystal Palace. It offers a cultural landscape rather than a single sight, mixing sculpture, architecture, leisure, and garden design.",
         "hours": {
           "mon": "Open public space",
           "tue": "Open public space",
@@ -1892,7 +1892,7 @@ export const madridNeighborhoodGuides = [
           "sat": "Open public space",
           "sun": "Open public space"
         },
-        "photo": "https://upload.wikimedia.org/wikipedia/commons/a/a5/Parque_del_Retiro_Madrid_2009.jpg"
+        "photo": "https://cdn1.yumping.com/emp/fotos/28/P/032080/960/el-retiro-madrid.jpg"
       },
       {
         "id": "retiro-culture-puerta-alcala",
@@ -1901,7 +1901,7 @@ export const madridNeighborhoodGuides = [
           40.4199,
           -3.6887
         ],
-        "description": "The monumental gate that marks the Retiro edge and gives the neighborhood one of Madrid's clearest civic landmarks. Use Puerta de Alcalá as an outdoor reset that still explains the neighborhood geography.",
+        "description": "Puerta de Alcala is the monumental 18th-century gate that frames the northwest edge of Retiro and the start of Calle de Alcala's grand civic axis. Its neoclassical arches make it one of Madrid's most recognizable public monuments.",
         "hours": {
           "mon": "Open public space",
           "tue": "Open public space",
@@ -1911,7 +1911,7 @@ export const madridNeighborhoodGuides = [
           "sat": "Open public space",
           "sun": "Open public space"
         },
-        "photo": "https://upload.wikimedia.org/wikipedia/commons/5/5c/Puerta_de_Alcal%C3%A1%2C_Madrid%2C_Espa%C3%B1a%2C_2017.jpg"
+        "photo": "https://mldvwwasb8tu.i.optimole.com/w:894/h:671/q:90/f:best/ig:avif/https://veebrant.com/wp-content/uploads/2013/02/alcala-gate.jpg"
       },
       {
         "id": "retiro-culture-prado",
@@ -1920,7 +1920,7 @@ export const madridNeighborhoodGuides = [
           40.4138,
           -3.6921
         ],
-        "description": "The Prado sits on Retiro's cultural edge and makes the neighborhood one of Madrid's best museum bases. Use Museo Nacional del Prado as the route's indoor anchor before letting Retiro open back into streets, meals, or evening stops.",
+        "description": "Museo Nacional del Prado gives Retiro immediate access to Madrid's deepest classical art collection. Its galleries are strongest for Spanish court painting, religious canvases, European portraiture, and major works by Velazquez, Goya, El Greco, Bosch, Rubens, and Titian.",
         "hours": {
           "mon": "10:00 AM-8:00 PM",
           "tue": "10:00 AM-8:00 PM",
@@ -1939,7 +1939,7 @@ export const madridNeighborhoodGuides = [
           40.4141,
           -3.6896
         ],
-        "description": "A Prado-linked historic building that hints at the former Buen Retiro palace landscape around the park. Pair Casón del Buen Retiro with nearby lanes and food stops so the history stays connected to the walk.",
+        "description": "Cason del Buen Retiro is one of the surviving buildings from the old Buen Retiro palace complex, now tied to the Prado's institutional history. Its neoclassical facade and painted interior ceiling make it a useful architectural reminder that the park area was once a royal landscape.",
         "hours": {
           "mon": "Closed",
           "tue": "10:00 AM-7:00 PM",
@@ -1949,7 +1949,7 @@ export const madridNeighborhoodGuides = [
           "sat": "10:00 AM-7:00 PM",
           "sun": "10:00 AM-7:00 PM"
         },
-        "photo": "https://upload.wikimedia.org/wikipedia/commons/1/13/Cas%C3%B3n_del_Buen_Retiro_%28Madrid%29.jpg"
+        "photo": "https://upload.wikimedia.org/wikipedia/commons/6/66/Cas%C3%B3n_del_Buen_Retiro_-_Este.jpg"
       }
     ],
     "sources": [
@@ -2526,7 +2526,7 @@ export const madridNeighborhoodGuides = [
           40.4259,
           -3.7009
         ],
-        "description": "The neighborhood's clearest museum anchor, useful for reading Madrid's urban history before walking Malasana itself. Use Museo de Historia de Madrid as the route's indoor anchor before letting Malasana open back into streets, meals, or evening stops.",
+        "description": "Museo de Historia de Madrid tells the city's story from its 16th-century court-capital rise through maps, paintings, models, prints, and everyday objects. The Baroque facade on Fuencarral also makes the museum feel connected to the street history of Malasana itself.",
         "hours": {
           "mon": "Closed",
           "tue": "10:00 AM-7:00 PM",
@@ -2536,7 +2536,7 @@ export const madridNeighborhoodGuides = [
           "sat": "10:00 AM-7:00 PM",
           "sun": "10:00 AM-7:00 PM"
         },
-        "photo": "https://upload.wikimedia.org/wikipedia/commons/9/9b/Museo_de_Historia_de_Madrid_%28Madrid%29_01.jpg"
+        "photo": "https://estaticos.esmadrid.com/cdn/farfuture/s4kycL0wqQbfwpdoMYZ5v46zOq0dibShr8ZdRiwAun8/mtime:1524832499/sites/default/files/recursosturisticos/infoturistica/Museodehistoria663x335_1409746743.637.jpg"
       },
       {
         "id": "malasana-culture-dos-mayo",
@@ -2545,7 +2545,7 @@ export const madridNeighborhoodGuides = [
           40.4266,
           -3.7045
         ],
-        "description": "The social and symbolic heart of Malasana, tied to the 1808 uprising and still central to neighborhood life. Use Plaza del Dos de Mayo slowly, as a place to read the neighborhood rhythm rather than a quick photo pin.",
+        "description": "Plaza del Dos de Mayo is Malasana's symbolic square, named for the 1808 uprising against Napoleonic troops and marked by the monument to Daoiz and Velarde. It is also a lived neighborhood space, with cafe terraces, families, nightlife spillover, and the area's independent character in plain view.",
         "hours": {
           "mon": "Open public space",
           "tue": "Open public space",
@@ -2555,7 +2555,7 @@ export const madridNeighborhoodGuides = [
           "sat": "Open public space",
           "sun": "Open public space"
         },
-        "photo": "https://upload.wikimedia.org/wikipedia/commons/1/15/Plaza_del_Dos_de_Mayo_%28Madrid%29_01.jpg"
+        "photo": "https://upload.wikimedia.org/wikipedia/commons/a/a8/Plaza_del_Dos_de_Mayo%2C_Madrid.jpg"
       },
       {
         "id": "malasana-culture-conde-duque",
@@ -2564,7 +2564,7 @@ export const madridNeighborhoodGuides = [
           40.4273,
           -3.7103
         ],
-        "description": "A major cultural center for exhibitions, concerts, talks, and contemporary programming on Malasana's western edge. Use Centro de Cultura Contemporánea Condeduque as the route's indoor anchor before letting Malasana open back into streets, meals, or evening stops.",
+        "description": "Centro de Cultura Contemporanea Condeduque fills a former royal guards barracks with contemporary exhibitions, concerts, theater, dance, film, talks, and festival programming. Its large courtyards and brick military architecture give Malasana a cultural center with real institutional scale.",
         "hours": {
           "mon": "Closed",
           "tue": "10:00 AM-7:00 PM",
@@ -2574,7 +2574,7 @@ export const madridNeighborhoodGuides = [
           "sat": "10:00 AM-7:00 PM",
           "sun": "10:00 AM-7:00 PM"
         },
-        "photo": "https://upload.wikimedia.org/wikipedia/commons/3/39/Centro_Cultural_Conde_Duque_%28Madrid%29_01.jpg"
+        "photo": "https://estaticos.esmadrid.com/cdn/farfuture/RHdtpU4v_49sNbLIEjWLrJSxgCAaS9DTNlfGzUsrLy4/mtime:1646729507/sites/default/files/styles/content_type_full/public/recursosturisticos/infoturistica/417051595_1072012135931_adj.jpg?itok=YDRDdC_X"
       },
       {
         "id": "malasana-culture-teatro-lara",
@@ -2583,7 +2583,7 @@ export const madridNeighborhoodGuides = [
           40.4219,
           -3.7042
         ],
-        "description": "A historic theater that gives the neighborhood a live-performance anchor between Gran Via and the bar streets. Use Teatro Lara when the cultural stop should be live and time-specific rather than another daytime landmark.",
+        "description": "Teatro Lara has been operating since 1879, with a red-and-gold historic auditorium that keeps Malasana connected to Madrid's small-theater tradition. Its program leans toward plays, comedy, music, and intimate stage work rather than monumental opera-house scale.",
         "hours": {
           "mon": "Event schedule (check venue)",
           "tue": "Event schedule (check venue)",
@@ -2593,7 +2593,7 @@ export const madridNeighborhoodGuides = [
           "sat": "Event schedule (check venue)",
           "sun": "Event schedule (check venue)"
         },
-        "photo": "https://upload.wikimedia.org/wikipedia/commons/8/85/Teatro_Lara_%28Madrid%29_01.jpg"
+        "photo": "https://teatrolara.com/images/parallax.jpg"
       }
     ],
     "sources": [
@@ -3191,7 +3191,7 @@ export const madridNeighborhoodGuides = [
           40.4086,
           -3.7071
         ],
-        "description": "Madrid's famous Sunday flea market and the clearest cultural ritual around La Latina and Lavapies. Use El Rastro slowly, as a place to read the neighborhood rhythm rather than a quick photo pin.",
+        "description": "El Rastro is Madrid's famous Sunday flea market, spreading through Ribera de Curtidores and the surrounding La Latina streets. The cultural experience is the ritual itself: antiques, secondhand stalls, prints, clothes, bargaining, crowds, and the neighborhood's morning-to-vermouth rhythm.",
         "hours": {
           "mon": "Closed",
           "tue": "Closed",
@@ -3201,7 +3201,7 @@ export const madridNeighborhoodGuides = [
           "sat": "Closed",
           "sun": "9:00 AM-3:00 PM"
         },
-        "photo": "https://upload.wikimedia.org/wikipedia/commons/0/06/El_Rastro_Madrid.jpg"
+        "photo": "https://upload.wikimedia.org/wikipedia/commons/d/df/Madrid_-_El_Rastro%2C_25_de_marzo_de_2018_%2818%29.jpg"
       },
       {
         "id": "latina-culture-san-francisco",
@@ -3210,7 +3210,7 @@ export const madridNeighborhoodGuides = [
           40.4109,
           -3.7148
         ],
-        "description": "A monumental church stop that adds architecture and religious history to a La Latina walk. Pair Basílica de San Francisco el Grande with nearby lanes and food stops so the history stays connected to the walk.",
+        "description": "Basilica de San Francisco el Grande is a monumental neoclassical church known for its huge dome, circular plan, chapels, and religious artworks. It adds scale and solemnity to La Latina's older streets, especially for visitors interested in sacred architecture.",
         "hours": {
           "mon": "9:00 AM-8:00 PM",
           "tue": "9:00 AM-8:00 PM",
@@ -3220,7 +3220,7 @@ export const madridNeighborhoodGuides = [
           "sat": "9:00 AM-8:00 PM",
           "sun": "9:00 AM-8:00 PM"
         },
-        "photo": "https://upload.wikimedia.org/wikipedia/commons/4/4e/Bas%C3%ADlica_de_San_Francisco_el_Grande_%28Madrid%29_01.jpg"
+        "photo": "https://upload.wikimedia.org/wikipedia/commons/0/0e/Madrid_Real_Bas%C3%ADlica_de_San_Francisco_el_Grande_16-03-2010_16-35-14.JPG"
       },
       {
         "id": "latina-culture-plaza-paja",
@@ -3229,7 +3229,7 @@ export const madridNeighborhoodGuides = [
           40.4123,
           -3.7118
         ],
-        "description": "One of the neighborhood's most atmospheric old plazas, best read slowly between churches, lanes, and tapas stops. Use Plaza de la Paja slowly, as a place to read the neighborhood rhythm rather than a quick photo pin.",
+        "description": "Plaza de la Paja is one of La Latina's most atmospheric medieval-feeling squares, bordered by old walls, church history, and sloping lanes. It shows the quieter side of Madrid de los Austrias before the neighborhood opens into busier tapas streets.",
         "hours": {
           "mon": "Open public space",
           "tue": "Open public space",
@@ -3239,7 +3239,7 @@ export const madridNeighborhoodGuides = [
           "sat": "Open public space",
           "sun": "Open public space"
         },
-        "photo": "https://upload.wikimedia.org/wikipedia/commons/3/37/Plaza_de_la_Paja_%28Madrid%29_01.jpg"
+        "photo": "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/17/f0/d7/7b/dalla-costanilla-de-san.jpg?w=900&h=500&s=1"
       },
       {
         "id": "latina-culture-cava-baja",
@@ -3248,7 +3248,7 @@ export const madridNeighborhoodGuides = [
           40.412,
           -3.7108
         ],
-        "description": "The tavern street that turns La Latina's food and nightlife into a cultural route rather than just a meal plan. Use Cava Baja slowly, as a place to read the neighborhood rhythm rather than a quick photo pin.",
+        "description": "Cava Baja is La Latina's classic tavern street, famous for packing more than 50 traditional tapas bars and restaurants into roughly 300 meters. Its cultural value is the concentration: old inns, wine bars, tiled facades, and the ritual of moving from one small room to the next.",
         "hours": {
           "mon": "Open public space",
           "tue": "Open public space",
@@ -3258,7 +3258,7 @@ export const madridNeighborhoodGuides = [
           "sat": "Open public space",
           "sun": "Open public space"
         },
-        "photo": "https://images.unsplash.com/photo-1539037116277-4db20889f2d4?auto=format&fit=crop&w=900&q=80"
+        "photo": "https://live.staticflickr.com/2939/32534583963_d39a8e5042_b.jpg"
       }
     ],
     "sources": [
@@ -3830,7 +3830,7 @@ export const madridNeighborhoodGuides = [
     "seoSlug": "best-culture",
     "seoTitle": "Best Culture in Chueca, Madrid",
     "seoDescription": "Best culture in Chueca, Madrid, from Museo del Romanticismo and Plaza de Chueca to Gran Via architecture, galleries, and LGBTQ+ urban history.",
-    "title": "Romantic Rooms and Queer Madrid Streets",
+    "title": "Romantic Rooms and Chueca Streets",
     "description": "Chueca culture is both formal and lived-in: museum interiors, Gran Via architecture, public plazas, LGBTQ+ nightlife history, and gallery streets toward Salesas.",
     "url": "https://www.google.com/maps/search/chueca+madrid+culture",
     "category": "Culture",
@@ -3856,7 +3856,7 @@ export const madridNeighborhoodGuides = [
           40.425,
           -3.6986
         ],
-        "description": "A house-museum that gives Chueca/Salesas a quieter cultural stop away from the big Prado-triangle crowds. Use Museo del Romanticismo as the route's indoor anchor before letting Chueca open back into streets, meals, or evening stops.",
+        "description": "Museo del Romanticismo is a 19th-century mansion museum that recreates the daily life, taste, and social customs of Madrid's upper bourgeoisie. Period rooms, paintings, furniture, decorative arts, and the garden cafe make the visit feel domestic, intimate, and historically specific.",
         "hours": {
           "mon": "Closed",
           "tue": "10:00 AM-7:00 PM",
@@ -3866,7 +3866,7 @@ export const madridNeighborhoodGuides = [
           "sat": "10:00 AM-7:00 PM",
           "sun": "10:00 AM-7:00 PM"
         },
-        "photo": "https://upload.wikimedia.org/wikipedia/commons/7/76/Museo_del_Romanticismo_%28Madrid%29_01.jpg"
+        "photo": "https://www.cultura.gob.es/.imaging/mte/micrositios-theme/contenido-cim-gr/dam/micrositios/mromanticismo/actividades/programa/mediacion-cultural/salon-baile/jcr:content/salon-baile.png"
       },
       {
         "id": "chueca-culture-plaza",
@@ -3875,7 +3875,7 @@ export const madridNeighborhoodGuides = [
           40.4227,
           -3.6976
         ],
-        "description": "The neighborhood's social center and a compact way to understand Chueca's identity as a public, queer, central Madrid space. Use Plaza de Chueca slowly, as a place to read the neighborhood rhythm rather than a quick photo pin.",
+        "description": "Plaza de Chueca is the lively center of Madrid's LGBTQ+ district, known for outdoor dining, inclusive nightlife, boutique streets, and neighborhood celebrations. Named after composer Federico Chueca, the square works as a compact public stage for the area's social identity.",
         "hours": {
           "mon": "Open public space",
           "tue": "Open public space",
@@ -3885,7 +3885,7 @@ export const madridNeighborhoodGuides = [
           "sat": "Open public space",
           "sun": "Open public space"
         },
-        "photo": "https://images.unsplash.com/photo-1539037116277-4db20889f2d4?auto=format&fit=crop&w=900&q=80"
+        "photo": "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/11/69/9e/67/plaza-de-chueca.jpg?w=900&h=500&s=1"
       },
       {
         "id": "chueca-culture-gran-via",
@@ -3894,7 +3894,7 @@ export const madridNeighborhoodGuides = [
           40.42,
           -3.7016
         ],
-        "description": "The architectural and theatrical boulevard that frames Chueca's southern edge and links the neighborhood to central Madrid spectacle. Use Gran Vía to give the Chueca route a concrete cultural anchor instead of only atmosphere.",
+        "description": "Gran Via is Madrid's most iconic avenue, running 1.36 kilometers from Calle de Alcala to Plaza de Espana. Known as the Spanish Broadway, it combines early 20th-century architecture, theaters, cinemas, shops, hotel rooftops, and the constant energy of central Madrid.",
         "hours": {
           "mon": "Open public space",
           "tue": "Open public space",
@@ -3904,7 +3904,7 @@ export const madridNeighborhoodGuides = [
           "sat": "Open public space",
           "sun": "Open public space"
         },
-        "photo": "https://upload.wikimedia.org/wikipedia/commons/5/5b/Gran_V%C3%ADa_%28Madrid%29_1.jpg"
+        "photo": "https://live.staticflickr.com/8141/7584292430_d24ee67b35_b.jpg"
       },
       {
         "id": "chueca-culture-longoria",
@@ -3913,7 +3913,7 @@ export const madridNeighborhoodGuides = [
           40.4247,
           -3.6968
         ],
-        "description": "A modernista landmark on the Salesas edge, useful for reading the neighborhood's architecture beyond bars and shops. Use Palacio de Longoria to give the Chueca route a concrete cultural anchor instead of only atmosphere.",
+        "description": "Palacio de Longoria is Madrid's standout Art Nouveau palace, with flowing stonework, floral ornament, curved balconies, and an unusually sculptural facade for the city. It adds a distinct modernista layer to the Salesas and Chueca architectural walk.",
         "hours": {
           "mon": "Open public space",
           "tue": "Open public space",
@@ -3923,7 +3923,7 @@ export const madridNeighborhoodGuides = [
           "sat": "Open public space",
           "sun": "Open public space"
         },
-        "photo": "https://upload.wikimedia.org/wikipedia/commons/0/07/Palacio_de_Longoria_%28Madrid%29_01.jpg"
+        "photo": "https://upload.wikimedia.org/wikipedia/commons/1/17/Palacio_Longoria_%2827001564923%29.jpg"
       }
     ],
     "sources": [
@@ -4754,7 +4754,7 @@ export const madridCitywideGuides = [
           40.4138,
           -3.6921
         ],
-        "description": "The Prado is the Art Walk anchor because it holds the city's deepest Spanish, Italian, and Flemish painting context, from Velazquez and Goya to Bosch. Madrid tourism calls it the crown jewel of Paseo del Arte, and the museum's own hours make it practical as a morning or late-afternoon plan.",
+        "description": "Museo Nacional del Prado holds Madrid's deepest classical art collection, with Spanish, Italian, and Flemish painting from Velazquez and Goya to Bosch, Rubens, Titian, and El Greco. The visit is best understood as royal collections, religious painting, portraiture, mythology, and European art history at museum scale.",
         "hours": {
           "mon": "10:00 AM-8:00 PM",
           "tue": "10:00 AM-8:00 PM",
@@ -4773,7 +4773,7 @@ export const madridCitywideGuides = [
           40.408,
           -3.694
         ],
-        "description": "Reina Sofia is the modern and contemporary counterweight to the Prado, with Picasso's Guernica as the central reason many travelers come. Madrid tourism notes the Atocha building's modern Spanish collection and current renovation caveats around its Retiro park spaces, so it works best as an indoor Art Walk anchor.",
+        "description": "Museo Reina Sofia is Madrid's major modern and contemporary art museum, centered on 20th-century Spanish art and Picasso's Guernica. Its Sabatini and Nouvel buildings move from Civil War memory into Surrealism, abstraction, conceptual work, and changing contemporary exhibitions.",
         "hours": {
           "mon": "Closed",
           "tue": "10:00 AM-7:00 PM",
@@ -4783,7 +4783,7 @@ export const madridCitywideGuides = [
           "sat": "10:00 AM-7:00 PM",
           "sun": "10:00 AM-7:00 PM"
         },
-        "photo": "https://upload.wikimedia.org/wikipedia/commons/b/b1/Museo_Reina_Sofia%2C_Madrid_%286394654203%29"
+        "photo": "https://recursos.museoreinasofia.es/styles/large_landscape/public/Visita/sabatini.jpg.webp"
       },
       {
         "id": "madrid-culture-thyssen",
@@ -4792,7 +4792,7 @@ export const madridCitywideGuides = [
           40.416,
           -3.6947
         ],
-        "description": "Thyssen fills the bridge between Prado and Reina Sofia: a collection route through European painting that helps the Art Walk feel like one coherent day rather than two isolated blockbuster museums. It is especially useful when the group wants breadth and a manageable visit length.",
+        "description": "Museo Nacional Thyssen-Bornemisza bridges the Prado and Reina Sofia with a broad private collection that moves through European painting, from medieval and Renaissance works to Impressionism, Expressionism, Pop Art, and 20th-century modernism.",
         "hours": {
           "mon": "10:00 AM-7:00 PM",
           "tue": "10:00 AM-7:00 PM",
@@ -4811,7 +4811,7 @@ export const madridCitywideGuides = [
           40.4179,
           -3.7143
         ],
-        "description": "The Royal Palace pulls the culture route west from Sol into monarchy, ceremony, and plaza-scale Madrid. It pairs naturally with Almudena, Plaza de Oriente, and a La Latina evening, making it the royal-history anchor rather than another museum in the Prado cluster.",
+        "description": "The Royal Palace of Madrid is the largest palace in Western Europe and one of the largest in the world, with more than 135,000 square meters and 3,418 rooms. Its ceremonial halls, royal collections, armory, staircases, and plaza setting show centuries of Spanish dynastic history.",
         "hours": {
           "mon": "9:00 AM-8:00 PM",
           "tue": "9:00 AM-8:00 PM",
@@ -4830,7 +4830,7 @@ export const madridCitywideGuides = [
           40.4143,
           -3.6986
         ],
-        "description": "Barrio de las Letras turns culture into a walk: Huertas, Plaza de Santa Ana, Teatro Espanol, Lope de Vega context, and the Cervantes/Golden Age literary layer. It is the best bridge between daytime museums and the bars and restaurants that make Madrid feel alive after dark.",
+        "description": "Barrio de las Letras is Madrid's literary quarter, where Cervantes, Lope de Vega, Quevedo, and other Golden Age writers shaped the city's cultural memory. The experience is a street-level one: engraved pavement texts, Plaza de Santa Ana, theaters, house museums, galleries, and taverns layered into a compact walk.",
         "hours": {
           "mon": "Open public space",
           "tue": "Open public space",
@@ -4840,7 +4840,7 @@ export const madridCitywideGuides = [
           "sat": "Open public space",
           "sun": "Open public space"
         },
-        "photo": "https://commons.wikimedia.org/wiki/Special:FilePath/Barrio_de_las_Letras_%28Madrid%29_01.jpg"
+        "photo": "https://www.entredosamores.es/insolito%20madrid/imagenes/insolito221.jpg"
       },
       {
         "id": "madrid-culture-caixaforum",
@@ -4849,7 +4849,7 @@ export const madridCitywideGuides = [
           40.411,
           -3.6932
         ],
-        "description": "CaixaForum adds a flexible exhibition stop to the Art Walk, useful when the Prado/Reina Sofia plan needs a shorter contemporary counterpoint. The vertical garden and Herzog & de Meuron building also make it a strong architecture pause between Atocha and Paseo del Prado.",
+        "description": "CaixaForum Madrid combines a dramatic Herzog & de Meuron power-station conversion with a vertical garden and rotating exhibitions. Its program ranges across contemporary art, photography, design, architecture, science, and cultural history, making it one of the Art Walk's most flexible exhibition spaces.",
         "hours": {
           "mon": "10:00 AM-7:00 PM",
           "tue": "10:00 AM-7:00 PM",
@@ -4859,7 +4859,7 @@ export const madridCitywideGuides = [
           "sat": "10:00 AM-7:00 PM",
           "sun": "10:00 AM-7:00 PM"
         },
-        "photo": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRHfgXoQIbluuwowl5GV6fobIFpbrbzX6Pqtw&s"
+        "photo": "https://live.staticflickr.com/2900/14047205258_8544c9ca6c_b.jpg"
       },
       {
         "id": "madrid-culture-matadero",
@@ -4868,7 +4868,7 @@ export const madridCitywideGuides = [
           40.3913,
           -3.6972
         ],
-        "description": "Matadero pushes the guide into Arganzuela and Madrid Rio, which keeps culture from being only the museum triangle. The former slaughterhouse complex is useful for exhibitions, design, performance, and a more industrial contemporary Madrid layer.",
+        "description": "Matadero Madrid is a vast contemporary arts center in the former municipal slaughterhouse by Madrid Rio. Its brick pavilions now hold exhibitions, theater, cinema, design events, workshops, festivals, and experimental cultural programming on a scale that feels different from the museum triangle.",
         "hours": {
           "mon": "Closed",
           "tue": "10:00 AM-7:00 PM",
@@ -4878,7 +4878,7 @@ export const madridCitywideGuides = [
           "sat": "10:00 AM-7:00 PM",
           "sun": "10:00 AM-7:00 PM"
         },
-        "photo": "https://live.staticflickr.com/4301/36176921785_f5163eecec_b"
+        "photo": "https://live.staticflickr.com/4301/36176921785_f5163eecec_b.jpg"
       }
     ],
     "sources": [
