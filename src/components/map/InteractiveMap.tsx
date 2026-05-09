@@ -19,6 +19,9 @@ const DynamicMapClient = dynamic(
   },
 );
 
+const MAPLIBRE_STYLESHEET_ID = "rguide-maplibre-css";
+const MAPLIBRE_STYLESHEET_HREF = "/vendor/maplibre-gl.css";
+
 interface InteractiveMapProps {
   continents: Continent[];
   selection: SelectionState;
@@ -69,15 +72,44 @@ function MapLoadBackdrop() {
   );
 }
 
+function loadMapLibreStyles() {
+  if (document.getElementById(MAPLIBRE_STYLESHEET_ID)) {
+    return;
+  }
+
+  const stylesheet = document.createElement("link");
+  stylesheet.id = MAPLIBRE_STYLESHEET_ID;
+  stylesheet.rel = "stylesheet";
+  stylesheet.href = MAPLIBRE_STYLESHEET_HREF;
+  stylesheet.media = "print";
+  stylesheet.onload = () => {
+    stylesheet.media = "all";
+  };
+  document.head.appendChild(stylesheet);
+}
+
 export function InteractiveMap(props: InteractiveMapProps) {
   const [shouldLoadMap, setShouldLoadMap] = useState(false);
 
   useEffect(() => {
-    const scheduleMapLoad = () => setShouldLoadMap(true);
-    const scheduleId = window.requestAnimationFrame(scheduleMapLoad);
+    let idleId: number | null = null;
+    const scheduleMapLoad = () => {
+      loadMapLibreStyles();
+      setShouldLoadMap(true);
+    };
+    const scheduleId = window.requestAnimationFrame(() => {
+      if ("requestIdleCallback" in window) {
+        idleId = window.requestIdleCallback(scheduleMapLoad, { timeout: 450 });
+        return;
+      }
+      scheduleMapLoad();
+    });
 
     return () => {
       window.cancelAnimationFrame(scheduleId);
+      if (idleId !== null && "cancelIdleCallback" in window) {
+        window.cancelIdleCallback(idleId);
+      }
     };
   }, []);
 

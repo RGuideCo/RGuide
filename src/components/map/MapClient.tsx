@@ -2692,19 +2692,30 @@ export function MapClient({
     if (!map) {
       return;
     }
+    let resizeFrame: number | null = null;
     const syncViewportChrome = () => {
       const insets = getViewportInsets(map, viewportModeRef.current, viewportInsetsRef.current);
       const controlRight = Math.max(12, insets.right + 14);
       map.getContainer().style.setProperty("--rguide-map-controls-right", `${controlRight}px`);
     };
-    const onWindowResize = () => {
+    const resizeAndSyncViewportChrome = () => {
+      resizeFrame = null;
       map.resize();
       syncViewportChrome();
     };
-    syncViewportChrome();
-    window.addEventListener("resize", onWindowResize, { passive: true });
+    const scheduleResizeAndSyncViewportChrome = () => {
+      if (resizeFrame !== null) {
+        return;
+      }
+      resizeFrame = window.requestAnimationFrame(resizeAndSyncViewportChrome);
+    };
+    scheduleResizeAndSyncViewportChrome();
+    window.addEventListener("resize", scheduleResizeAndSyncViewportChrome, { passive: true });
     return () => {
-      window.removeEventListener("resize", onWindowResize);
+      if (resizeFrame !== null) {
+        window.cancelAnimationFrame(resizeFrame);
+      }
+      window.removeEventListener("resize", scheduleResizeAndSyncViewportChrome);
     };
   }, []);
 
@@ -2713,10 +2724,15 @@ export function MapClient({
     if (!map) {
       return;
     }
-    const insets = getViewportInsets(map, viewportMode, viewportInsets);
-    const controlRight = Math.max(12, insets.right + 14);
-    map.getContainer().style.setProperty("--rguide-map-controls-right", `${controlRight}px`);
-    map.resize();
+    const frameId = window.requestAnimationFrame(() => {
+      const insets = getViewportInsets(map, viewportMode, viewportInsets);
+      const controlRight = Math.max(12, insets.right + 14);
+      map.getContainer().style.setProperty("--rguide-map-controls-right", `${controlRight}px`);
+      map.resize();
+    });
+    return () => {
+      window.cancelAnimationFrame(frameId);
+    };
   }, [viewportMode, viewportInsets]);
 
   useEffect(() => {
