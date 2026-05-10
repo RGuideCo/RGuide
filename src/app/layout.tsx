@@ -41,6 +41,9 @@ export const metadata: Metadata = {
     title: SITE_NAME,
     description: SITE_DESCRIPTION,
   },
+  other: {
+    "agd-partner-manual-verification": "",
+  },
 };
 
 const websiteJsonLd = {
