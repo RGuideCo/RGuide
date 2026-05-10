@@ -1,4 +1,4 @@
-import type { GuideStop, ListCategory, ListSource, MapList } from "@/types";
+import type { GuideStop, ListCategory, ListSource, MapList, SubmissionType } from "@/types";
 
 const createdAt = "2026-05-10T00:00:00.000Z";
 
@@ -345,12 +345,17 @@ type GuideSpec = {
   title: string;
   description: string;
   category: ListCategory;
+  submissionType?: SubmissionType;
+  itinerary?: MapList["itinerary"];
   neighborhood?: string;
   sourceKey: keyof typeof sources;
   stopIds: string[];
+  stopDays?: number[];
 };
 
 function guide(spec: GuideSpec): MapList {
+  const isItinerary = spec.submissionType === "itinerary";
+
   return {
     id: `list-london-${spec.id}`,
     slug: `london-${spec.slug}`,
@@ -361,17 +366,22 @@ function guide(spec: GuideSpec): MapList {
     description: spec.description,
     url: `https://www.google.com/maps/search/${encodeURIComponent(spec.seoTitle.toLowerCase())}`,
     category: spec.category,
+    ...(spec.itinerary ? { itinerary: spec.itinerary } : {}),
+    ...(spec.submissionType ? { submissionType: spec.submissionType } : {}),
     location: spec.neighborhood
       ? { ...londonLocation, neighborhood: spec.neighborhood }
       : londonLocation,
     creator: {
-      id: `user-rguide-${spec.category.toLowerCase()}`,
-      name: `R ${spec.category}`,
+      id: isItinerary ? "user-rguide-itineraries" : `user-rguide-${spec.category.toLowerCase()}`,
+      name: isItinerary ? "R Itineraries" : `R ${spec.category}`,
       avatar: avatar(spec.category),
     },
     upvotes: 0,
     createdAt,
-    stops: spec.stopIds.map((id) => stops[id]),
+    stops: spec.stopIds.map((id, index) => ({
+      ...stops[id],
+      ...(isItinerary ? { itineraryDay: spec.stopDays?.[index] ?? 1 } : {}),
+    })),
     sources: sources[spec.sourceKey],
   };
 }
@@ -436,9 +446,9 @@ const citywideGuides: GuideSpec[] = [
   cultureGuide("citywide-culture", "best-culture-citywide", "Best Culture in London", "Best culture in London, linking museums, galleries, theatre, markets, modern art, and riverfront performance into a citywide route.", undefined, ["britishMuseum", "nationalGallery", "tateModern", "royalOpera", "barbican", "globe"], "Museums, Stages, and River Rooms"),
   stayGuide("citywide-hotels", "best-hotels-citywide", "Best Hotels in London", "Best hotels in London, comparing central nightlife, theatre access, east London design, west London calm, and South Bank river bases.", undefined, ["hamYard", "nomad", "boundary", "laslett", "seaContainers"], "Bases That Match the Itinerary"),
   hostelGuide("citywide-hostels", "best-hostels-citywide", "Best Hostels in London", "Best hostels in London for social central stays, east-side nights, west London calm, and South Bank access.", undefined, ["generator", "wombats", "astorMuseum", "onefamNotting", "stChristopherBorough"]),
-  activityGuide("one-day-activities", "one-day-itinerary", "Best Things to Do in London in One Day", "Best one-day London itinerary, combining a major museum, market meal, riverside walk, theatre or gallery time, and a strong evening drink.", ["britishMuseum", "boroughMarket", "tateModern", "globe", "swift"], "One Strong Day, Kept Central"),
-  activityGuide("weekend-activities", "weekend-itinerary", "Best Things to Do in London for a Weekend", "Best London weekend itinerary, balancing West End shows, Soho meals, Shoreditch nightlife, South Bank culture, parks, and market browsing.", ["nomad", "nationalGallery", "rules", "ronnieScotts", "brat", "hampsteadHeath", "twelveKnot"], "Two Nights Across the Tube Map"),
-  activityGuide("week-activities", "week-itinerary", "Best Things to Do in London for a Week", "Best one-week London itinerary, using museums, restaurants, pubs, parks, markets, hostels, hotels, theatre, and neighborhood pacing.", ["generator", "hydePark", "britishMuseum", "kiln", "royalOpera", "brat", "brickLane", "portobello", "core", "tateModern", "boroughMarket", "hampsteadHeath"], "A Week of Villages, Parks, and Stages"),
+  activityGuide("one-day-activities", "one-day-itinerary", "Best Things to Do in London in One Day", "Best one-day London itinerary, combining a major museum, market meal, riverside walk, theatre or gallery time, and a strong evening drink.", ["britishMuseum", "boroughMarket", "tateModern", "globe", "swift"], "One Strong Day, Kept Central", [1, 1, 1, 1, 1]),
+  activityGuide("weekend-activities", "weekend-itinerary", "Best Things to Do in London for a Weekend", "Best London weekend itinerary, balancing West End shows, Soho meals, Shoreditch nightlife, South Bank culture, parks, and market browsing.", ["nomad", "nationalGallery", "rules", "ronnieScotts", "brat", "hampsteadHeath", "twelveKnot"], "Two Nights Across the Tube Map", [1, 1, 1, 1, 2, 2, 2]),
+  activityGuide("week-activities", "week-itinerary", "Best Things to Do in London for a Week", "Best one-week London itinerary, using museums, restaurants, pubs, parks, markets, hostels, hotels, theatre, and neighborhood pacing.", ["generator", "hydePark", "britishMuseum", "kiln", "royalOpera", "brat", "brickLane", "portobello", "core", "tateModern", "boroughMarket", "hampsteadHeath"], "A Week of Villages, Parks, and Stages", [1, 1, 2, 2, 3, 3, 4, 5, 5, 6, 6, 7]),
 ];
 
 function foodGuide(id: string, slug: string, seoTitle: string, seoDescription: string, neighborhood: string | undefined, stopIds: string[], title: string): GuideSpec {
@@ -465,8 +475,13 @@ function popularBarGuide(id: string, slug: string, seoTitle: string, seoDescript
   return baseGuide(id, slug, "best-bars", seoTitle, seoDescription, title, "Use this when the night needs stronger pull: cocktail rooms, hotel bars, live venues, theatre-adjacent drinks, and late rooms with a reason to cross town.", "Nightlife", "nightlife", neighborhood, stopIds);
 }
 
-function activityGuide(id: string, slug: string, seoTitle: string, seoDescription: string, stopIds: string[], title: string): GuideSpec {
-  return baseGuide(id, slug, "best-things-to-do", seoTitle, seoDescription, title, "London itineraries should be built by area and transit line, mixing museums, food, parks, pubs, theatre, and markets without wasting the day underground.", "Activities", "culture", undefined, stopIds);
+function activityGuide(id: string, slug: string, seoTitle: string, seoDescription: string, stopIds: string[], title: string, stopDays: number[]): GuideSpec {
+  return {
+    ...baseGuide(id, slug, "best-things-to-do", seoTitle, seoDescription, title, "London itineraries should be built by area and transit line, mixing museums, food, parks, pubs, theatre, and markets without wasting the day underground.", "Activities", "culture", undefined, stopIds),
+    itinerary: {},
+    submissionType: "itinerary",
+    stopDays,
+  };
 }
 
 function baseGuide(

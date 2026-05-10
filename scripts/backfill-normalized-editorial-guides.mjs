@@ -285,9 +285,9 @@ async function replaceEntryStops(client, entryId, list, context, stats) {
       `insert into public.entry_stops (
          entry_id, legacy_id, stop_order, poi_legacy_id, name, description, category,
          destination_id, venue_id, coordinates, photo_url, price_label, price_source,
-         booking_url, official_url, hours, places, metadata
+         booking_url, official_url, itinerary_date, itinerary_day, hours, places, metadata
        )
-       values ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18)`,
+       values ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20)`,
       [
         entryId,
         stop.id,
@@ -304,6 +304,8 @@ async function replaceEntryStops(client, entryId, list, context, stats) {
         stop.priceSource ?? null,
         stop.bookingUrl ?? null,
         stop.officialUrl ?? null,
+        stop.itineraryDate ?? null,
+        stop.itineraryDay ?? null,
         toJson(stop.hours),
         toJsonArray(stop.places),
         toJsonObject({ source: "editorial_guides" }),
