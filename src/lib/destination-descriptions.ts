@@ -35,6 +35,8 @@ const DESTINATION_DESCRIPTIONS_CACHE_SECONDS = Number.parseInt(
   10,
 );
 
+let destinationDescriptionRowsPromise: Promise<DestinationDescriptionRow[]> | null = null;
+
 function descriptionId(...parts: string[]) {
   return parts.filter(Boolean).join(":");
 }
@@ -150,12 +152,10 @@ function shouldSkipDatabaseConnection() {
     return true;
   }
 
-  const isLocalProductionBuild =
-    process.env.VERCEL !== "1" &&
-    (process.env.NEXT_PHASE === "phase-production-build" ||
-      process.env.npm_lifecycle_event === "build");
+  const isProductionBuild =
+    process.env.NEXT_PHASE === "phase-production-build" || process.env.npm_lifecycle_event === "build";
 
-  return isLocalProductionBuild;
+  return isProductionBuild;
 }
 
 async function loadDestinationDescriptionRows(): Promise<DestinationDescriptionRow[]> {
@@ -181,11 +181,7 @@ async function loadDestinationDescriptionRows(): Promise<DestinationDescriptionR
     await client.connect();
     const normalizedRows = await loadNormalizedDestinationDescriptionRows(client);
 
-    if (normalizedRows.length) {
-      return normalizedRows;
-    }
-
-    return loadLegacyDestinationDescriptionRows(client);
+    return normalizedRows;
   } catch (error) {
     console.error("Failed to load destination descriptions", error);
     return [];
@@ -213,15 +209,11 @@ async function loadNormalizedDestinationDescriptionRows(client: Client) {
   }
 }
 
-async function loadLegacyDestinationDescriptionRows(client: Client) {
-  const { rows } = await client.query<DestinationDescriptionRow>(
-    "select id, description from public.destination_descriptions where description <> ''",
-  );
-  return rows;
-}
-
 const getCachedDestinationDescriptionRows = unstable_cache(
-  loadDestinationDescriptionRows,
+  async () => {
+    destinationDescriptionRowsPromise ??= loadDestinationDescriptionRows();
+    return destinationDescriptionRowsPromise;
+  },
   ["destination-description-rows"],
   {
     revalidate: Number.isFinite(DESTINATION_DESCRIPTIONS_CACHE_SECONDS)
@@ -307,6 +299,9 @@ export function applyDestinationDescriptions(continents: Continent[], rows: Dest
 
 export async function getContinentsWithDestinationDescriptions() {
   const continents = getContinents();
-  const rows = await getCachedDestinationDescriptionRows();
+  const rows = await getCachedDestinationDescriptionRows().catch((error) => {
+    console.error("Failed to load cached destination descriptions", error);
+    return [];
+  });
   return applyDestinationDescriptions(continents, rows);
 }

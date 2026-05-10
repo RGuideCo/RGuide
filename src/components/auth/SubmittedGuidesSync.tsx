@@ -49,11 +49,25 @@ export function SubmittedGuidesSync() {
     } = supabase.auth.onAuthStateChange(() => {
       void refreshSubmittedGuides();
     });
-    const editorialChannel = supabase
-      .channel("editorial-guides-sync")
+    const normalizedContentChannel = supabase
+      .channel("normalized-content-sync")
       .on(
         "postgres_changes",
-        { event: "*", schema: "public", table: "editorial_guides" },
+        { event: "*", schema: "public", table: "entries" },
+        () => {
+          void refreshEditorialGuides();
+        },
+      )
+      .on(
+        "postgres_changes",
+        { event: "*", schema: "public", table: "entry_render_cache" },
+        () => {
+          void refreshEditorialGuides();
+        },
+      )
+      .on(
+        "postgres_changes",
+        { event: "*", schema: "public", table: "weekly_event_publications" },
         () => {
           void refreshEditorialGuides();
         },
@@ -63,7 +77,7 @@ export function SubmittedGuidesSync() {
     return () => {
       isMounted = false;
       subscription.unsubscribe();
-      void supabase.removeChannel(editorialChannel);
+      void supabase.removeChannel(normalizedContentChannel);
     };
   }, [setEditorialLists, setSubmittedLists]);
 

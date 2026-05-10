@@ -10,16 +10,16 @@ import { applyEditorialPoiPhotos } from "@/lib/editorial-guides-shared";
 import type { EditorialPoiPhotoRecord } from "@/lib/editorial-guides-shared";
 import type { MapList } from "@/types";
 
-interface EditorialGuideRow {
-  list: MapList;
-}
-
 interface WeeklyEventGuideRow {
   guide: MapList;
 }
 
 interface NormalizedGuideRow {
   list: MapList;
+}
+
+interface RenderCacheRow {
+  rendered_payload: MapList;
 }
 
 function getLocalWeeklyEventGuides() {
@@ -44,6 +44,8 @@ const EDITORIAL_GUIDES_CACHE_SECONDS = Number.parseInt(
   10,
 );
 
+let editorialGuidesLoadPromise: Promise<MapList[] | null> | null = null;
+
 function getDatabaseUrl() {
   return (
     process.env.SUPABASE_DB_URL ??
@@ -62,12 +64,10 @@ function shouldSkipDatabaseConnection() {
     return true;
   }
 
-  const isLocalProductionBuild =
-    process.env.VERCEL !== "1" &&
-    (process.env.NEXT_PHASE === "phase-production-build" ||
-      process.env.npm_lifecycle_event === "build");
+  const isProductionBuild =
+    process.env.NEXT_PHASE === "phase-production-build" || process.env.npm_lifecycle_event === "build";
 
-  return isLocalProductionBuild;
+  return isProductionBuild;
 }
 
 function getPgSslConfig(databaseUrl: string) {
@@ -94,13 +94,17 @@ async function loadEditorialGuidesFromSupabase(): Promise<MapList[] | null> {
 
   try {
     await client.connect();
+    if (process.env.RGUIDE_FORCE_RENDER_CACHE === "1") {
+      return loadRenderCacheGuides(client);
+    }
+
     const normalizedGuides = await loadNormalizedGuides(client);
 
     if (normalizedGuides) {
       return normalizedGuides;
     }
 
-    return loadLegacyGuides(client);
+    return loadRenderCacheGuides(client);
   } catch (error) {
     console.error("Failed to load server editorial guides", error);
     return null;
@@ -124,25 +128,11 @@ async function loadNormalizedGuides(client: Client): Promise<MapList[] | null> {
       ].join(" "),
     );
 
-    let weeklyEventRows: WeeklyEventGuideRow[] = [];
-    try {
-      const result = await client.query<WeeklyEventGuideRow>(
-        [
-          "select guide",
-          "from public.weekly_events_maplist",
-          "where sourced_at >= current_date - interval '14 days'",
-          "order by guide->'location'->>'city' asc, starts_at asc, guide->>'title' asc",
-        ].join(" "),
-      );
-      weeklyEventRows = result.rows;
-    } catch {
-      weeklyEventRows = [];
-    }
-
     if (!rows.length) {
       return null;
     }
 
+    const weeklyEventRows = await loadNormalizedWeeklyEvents(client);
     const weeklyEventGuides = weeklyEventRows.length
       ? weeklyEventRows.map((row) => normalizeWeeklyEventGuide(row.guide))
       : getLocalWeeklyEventGuides();
@@ -158,40 +148,62 @@ async function loadNormalizedGuides(client: Client): Promise<MapList[] | null> {
   }
 }
 
-async function loadLegacyGuides(client: Client): Promise<MapList[]> {
-  const { rows } = await client.query<EditorialGuideRow>(
+async function loadRenderCacheGuides(client: Client): Promise<MapList[]> {
+  const { rows } = await client.query<RenderCacheRow>(
     [
-      "select list",
-      "from public.editorial_guides",
-      "order by category asc, country asc nulls last, city asc nulls last, neighborhood asc nulls last, list->>'title' asc",
+      "select cache.rendered_payload",
+      "from public.entry_render_cache cache",
+      "join public.entries entry on entry.id = cache.entry_id",
+      "where cache.render_format = 'maplist'",
+      "  and cache.render_version = 1",
+      "  and cache.is_current = true",
+      "  and entry.source_table = 'editorial_guides'",
+      "  and entry.status = 'published'",
+      "order by entry.category asc, entry.country_name asc nulls last,",
+      "  cache.rendered_payload->'location'->>'city' asc nulls last,",
+      "  cache.rendered_payload->'location'->>'neighborhood' asc nulls last,",
+      "  cache.rendered_payload->>'title' asc",
     ].join(" "),
   );
 
   const poiRows = await loadEditorialPoiRows(client);
-
-  let weeklyEventRows: WeeklyEventGuideRow[] = [];
-  try {
-    const result = await client.query<WeeklyEventGuideRow>(
-      [
-        "select guide",
-        "from public.weekly_event_guides",
-        "where sourced_at >= current_date - interval '14 days'",
-        "order by city_name asc, starts_at asc, event_title asc",
-      ].join(" "),
-    );
-    weeklyEventRows = result.rows;
-  } catch {
-    weeklyEventRows = [];
-  }
-
+  const weeklyEventRows = await loadWeeklyEventPublicationCache(client);
   const weeklyEventGuides = weeklyEventRows.length
     ? weeklyEventRows.map((row) => normalizeWeeklyEventGuide(row.guide))
     : getLocalWeeklyEventGuides();
 
   return applyEditorialPoiPhotos(
-    [...rows.map((row) => normalizeWeeklyEventGuide(row.list)), ...weeklyEventGuides],
+    [...rows.map((row) => normalizeWeeklyEventGuide(row.rendered_payload)), ...weeklyEventGuides],
     poiRows,
   );
+}
+
+async function loadNormalizedWeeklyEvents(client: Client) {
+  try {
+    const result = await client.query<WeeklyEventGuideRow>(
+      [
+        "select guide",
+        "from public.weekly_events_maplist",
+        "where sourced_at >= current_date - interval '14 days'",
+        "order by guide->'location'->>'city' asc, starts_at asc, guide->>'title' asc",
+      ].join(" "),
+    );
+    return result.rows;
+  } catch {
+    return loadWeeklyEventPublicationCache(client);
+  }
+}
+
+async function loadWeeklyEventPublicationCache(client: Client) {
+  const { rows } = await client.query<WeeklyEventGuideRow>(
+    [
+      "select rendered_map_list as guide",
+      "from public.weekly_event_publications",
+      "where sourced_at >= current_date - interval '14 days'",
+      "order by rendered_map_list->'location'->>'city' asc, starts_at asc, rendered_map_list->>'title' asc",
+    ].join(" "),
+  );
+  return rows;
 }
 
 async function loadEditorialPoiRows(client: Client) {
@@ -206,7 +218,10 @@ async function loadEditorialPoiRows(client: Client) {
 }
 
 const getCachedEditorialGuidesFromSupabase = unstable_cache(
-  loadEditorialGuidesFromSupabase,
+  async () => {
+    editorialGuidesLoadPromise ??= loadEditorialGuidesFromSupabase();
+    return editorialGuidesLoadPromise;
+  },
   ["server-editorial-guides"],
   {
     revalidate: Number.isFinite(EDITORIAL_GUIDES_CACHE_SECONDS)
@@ -217,7 +232,10 @@ const getCachedEditorialGuidesFromSupabase = unstable_cache(
 );
 
 export async function getServerEditorialGuides() {
-  const supabaseGuides = await getCachedEditorialGuidesFromSupabase();
+  const supabaseGuides = await getCachedEditorialGuidesFromSupabase().catch((error) => {
+    console.error("Failed to load cached server editorial guides", error);
+    return null;
+  });
 
   if (supabaseGuides) {
     return supabaseGuides;

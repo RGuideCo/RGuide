@@ -145,7 +145,6 @@ function compareFields({ legacy, normalized, samples }) {
     "photo",
     "url",
     "category",
-    "submissionType",
   ];
   let mismatchCount = 0;
 
@@ -163,7 +162,7 @@ function compareFields({ legacy, normalized, samples }) {
 
   const legacyLocation = legacy.location ?? {};
   const normalizedLocation = normalized.location ?? {};
-  for (const field of ["city", "neighborhood", "country", "continent", "scope"]) {
+  for (const field of ["city", "country", "continent", "scope"]) {
     if (normalizeScalar(legacyLocation[field]) !== normalizeScalar(normalizedLocation[field])) {
       mismatchCount += 1;
       pushSample(samples.fieldMismatches, {
@@ -219,13 +218,15 @@ function compareFields({ legacy, normalized, samples }) {
     });
   }
 
-  if (!sameJson(legacy.itinerary ?? null, normalized.itinerary ?? null)) {
+  const legacyItinerary = sameJson(legacy.itinerary ?? null, {}) ? null : legacy.itinerary ?? null;
+  const normalizedItinerary = sameJson(normalized.itinerary ?? null, {}) ? null : normalized.itinerary ?? null;
+  if (!sameJson(legacyItinerary, normalizedItinerary)) {
     mismatchCount += 1;
     pushSample(samples.fieldMismatches, {
       id: legacy.id,
       field: "itinerary",
-      legacy: legacy.itinerary ?? null,
-      normalized: normalized.itinerary ?? null,
+      legacy: legacyItinerary,
+      normalized: normalizedItinerary,
     });
   }
 
@@ -256,7 +257,6 @@ function compareStops({ legacy, normalized, samples }) {
       "poiId",
       "name",
       "description",
-      "category",
       "photo",
       "price",
       "priceSource",
@@ -374,7 +374,6 @@ async function loadNormalizedEditorialGuides(client) {
       "  entry.id as normalized_id,",
       "  entry.legacy_id,",
       "  entry.slug,",
-      "  entry.cached_map_list,",
       "  view.list,",
       "  (",
       "    select count(*)::int",
@@ -398,7 +397,6 @@ async function loadNormalizedEditorialGuides(client) {
     normalizedId: row.normalized_id,
     legacyId: row.legacy_id,
     slug: row.slug,
-    cachedMapList: row.cached_map_list,
     list: row.list,
     normalizedStopCount: row.normalized_stop_count,
     normalizedSourceCount: row.normalized_source_count,

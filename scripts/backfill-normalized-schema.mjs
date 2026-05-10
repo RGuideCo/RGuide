@@ -856,9 +856,9 @@ async function upsertEntry(client, list, context, stats) {
        destination_id, city_id, neighborhood_id, country_name, continent_name,
        creator_id, creator_name, creator_avatar, user_id, upvotes, created_on,
        itinerary_start_date, itinerary_end_date, journal_visited_at, journal_note,
-       journal_visibility, source_table, cached_map_list, metadata
+       journal_visibility, source_table, metadata
      )
-     values ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,'published',$13,$14,$15,$16,$17,$18,$19,$20,$21,$22,$23,$24,$25,$26,$27,$28,$29,$30,$31)
+     values ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,'published',$13,$14,$15,$16,$17,$18,$19,$20,$21,$22,$23,$24,$25,$26,$27,$28,$29,$30)
      on conflict (legacy_id) do update set
        slug = excluded.slug,
        seo_slug = excluded.seo_slug,
@@ -889,7 +889,6 @@ async function upsertEntry(client, list, context, stats) {
        journal_note = excluded.journal_note,
        journal_visibility = excluded.journal_visibility,
        source_table = excluded.source_table,
-       cached_map_list = excluded.cached_map_list,
        metadata = public.entries.metadata || excluded.metadata
      returning id`,
     [
@@ -922,7 +921,6 @@ async function upsertEntry(client, list, context, stats) {
       list.journal?.note ?? null,
       list.journal?.visibility ?? null,
       context.sourceTable,
-      toJson(list),
       toJsonObject(context.metadata),
     ],
   );
@@ -985,6 +983,38 @@ async function insertEntryStops(client, entryId, list, context, stats) {
   }
 }
 
+async function refreshEntryRenderCache(client, entryId) {
+  await client.query(
+    [
+      "insert into public.entry_render_cache (",
+      "  entry_id, render_format, render_version, rendered_payload, source_hash,",
+      "  rendered_at, stale_at, is_current, metadata",
+      ")",
+      "select",
+      "  entry.id,",
+      "  'maplist',",
+      "  1,",
+      "  view.list,",
+      "  encode(digest(view.list::text, 'sha256'), 'hex'),",
+      "  now(),",
+      "  null,",
+      "  true,",
+      "  jsonb_build_object('refreshed_from', 'backfill-normalized-schema')",
+      "from public.entries entry",
+      "join public.entries_maplist view on view.id = entry.id",
+      "where entry.id = $1",
+      "on conflict (entry_id, render_format, render_version) do update set",
+      "  rendered_payload = excluded.rendered_payload,",
+      "  source_hash = excluded.source_hash,",
+      "  rendered_at = excluded.rendered_at,",
+      "  stale_at = null,",
+      "  is_current = true,",
+      "  metadata = public.entry_render_cache.metadata || excluded.metadata",
+    ].join(" "),
+    [entryId],
+  );
+}
+
 async function backfillList(client, maps, list, options, stats) {
   const cityId = await resolveCityId(maps, list.location?.city, list.location?.country);
   const countryId = list.location?.country ? maps.countryByName.get(normalizeName(list.location.country)) ?? null : null;
@@ -1010,6 +1040,7 @@ async function backfillList(client, maps, list, options, stats) {
     const sourceId = await upsertSource(client, source, stats);
     await linkSource(client, "entry", entryId, sourceId);
   }
+  await refreshEntryRenderCache(client, entryId);
   return entryId;
 }
 
@@ -1113,10 +1144,10 @@ async function upsertEvent(client, maps, rawEvent, guide, run, cityId, sourceRun
        legacy_id, slug, title, description, highlights, event_category, guide_category,
        status, destination_id, city_id, neighborhood_id, venue_id, timezone, starts_at,
        ends_at, starts_on, ends_on, price_label, official_url, photo_url, is_festival,
-       is_guide_worthy, guide_reason, cached_map_list, raw_metadata,
+       is_guide_worthy, guide_reason, raw_metadata,
        discovery_source_run_id, latest_refresh_source_run_id
      )
-     values ($1,$2,$3,$4,$5,$6,$7,'published',$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20,$21,$22,$23,$24,$25,$25)
+     values ($1,$2,$3,$4,$5,$6,$7,'published',$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20,$21,$22,$23,$24,$24)
      on conflict (legacy_id) do update set
        slug = excluded.slug,
        title = excluded.title,
@@ -1139,7 +1170,6 @@ async function upsertEvent(client, maps, rawEvent, guide, run, cityId, sourceRun
        is_festival = excluded.is_festival,
        is_guide_worthy = excluded.is_guide_worthy,
        guide_reason = excluded.guide_reason,
-       cached_map_list = excluded.cached_map_list,
        raw_metadata = excluded.raw_metadata,
        latest_refresh_source_run_id = excluded.latest_refresh_source_run_id
      returning id`,
@@ -1166,7 +1196,6 @@ async function upsertEvent(client, maps, rawEvent, guide, run, cityId, sourceRun
       Boolean(rawEvent.activations?.length) || rawEvent.category === "Festivals",
       Boolean(rawEvent.isGuideWorthy),
       rawEvent.guideReason ?? null,
-      toJson(guide),
       toJson(rawEvent),
       sourceRunId,
     ],

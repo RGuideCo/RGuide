@@ -205,9 +205,9 @@ async function upsertEntry(client, list, context, stats) {
        highlights, photo_url, canonical_url, category, submission_type, status,
        destination_id, city_id, neighborhood_id, country_name, continent_name,
        creator_id, creator_name, creator_avatar, upvotes, created_on,
-       source_table, cached_map_list, metadata
+       source_table, metadata
      )
-     values ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,'published',$13,$14,$15,$16,$17,$18,$19,$20,$21,$22,$23,$24,$25)
+     values ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,'published',$13,$14,$15,$16,$17,$18,$19,$20,$21,$22,$23,$24)
      on conflict (legacy_id) do update set
        slug = excluded.slug,
        seo_slug = excluded.seo_slug,
@@ -232,7 +232,6 @@ async function upsertEntry(client, list, context, stats) {
        upvotes = excluded.upvotes,
        created_on = excluded.created_on,
        source_table = excluded.source_table,
-       cached_map_list = excluded.cached_map_list,
        metadata = public.entries.metadata || excluded.metadata
      returning id`,
     [
@@ -259,7 +258,6 @@ async function upsertEntry(client, list, context, stats) {
       list.upvotes ?? 0,
       list.createdAt ?? new Date().toISOString().slice(0, 10),
       "editorial_guides",
-      toJson(list),
       toJsonObject({ editorialGuideId: list.id }),
     ],
   );
@@ -315,6 +313,38 @@ async function replaceEntryStops(client, entryId, list, context, stats) {
   }
 }
 
+async function refreshEntryRenderCache(client, entryId) {
+  await client.query(
+    [
+      "insert into public.entry_render_cache (",
+      "  entry_id, render_format, render_version, rendered_payload, source_hash,",
+      "  rendered_at, stale_at, is_current, metadata",
+      ")",
+      "select",
+      "  entry.id,",
+      "  'maplist',",
+      "  1,",
+      "  view.list,",
+      "  encode(digest(view.list::text, 'sha256'), 'hex'),",
+      "  now(),",
+      "  null,",
+      "  true,",
+      "  jsonb_build_object('refreshed_from', 'backfill-normalized-editorial-guides')",
+      "from public.entries entry",
+      "join public.entries_maplist view on view.id = entry.id",
+      "where entry.id = $1",
+      "on conflict (entry_id, render_format, render_version) do update set",
+      "  rendered_payload = excluded.rendered_payload,",
+      "  source_hash = excluded.source_hash,",
+      "  rendered_at = excluded.rendered_at,",
+      "  stale_at = null,",
+      "  is_current = true,",
+      "  metadata = public.entry_render_cache.metadata || excluded.metadata",
+    ].join(" "),
+    [entryId],
+  );
+}
+
 async function backfillGuide(client, maps, list, stats) {
   const cityId = resolveCityId(maps, list.location?.city, list.location?.country);
   const countryId = list.location?.country ? maps.countryByName.get(normalizeName(list.location.country)) ?? null : null;
@@ -329,6 +359,7 @@ async function backfillGuide(client, maps, list, stats) {
     const sourceId = await upsertSource(client, source, stats);
     await linkSource(client, "entry", entryId, sourceId);
   }
+  await refreshEntryRenderCache(client, entryId);
 }
 
 async function main() {

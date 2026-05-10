@@ -5,14 +5,13 @@ import { applyEditorialPoiPhotos } from "@/lib/editorial-guides-shared";
 import type { EditorialPoiPhotoRecord } from "@/lib/editorial-guides-shared";
 import type { MapList } from "@/types";
 
-interface EditorialGuideRecord {
-  id: string;
+interface NormalizedGuideRecord {
   list: MapList;
   updated_at: string;
 }
 
-interface NormalizedGuideRecord {
-  list: MapList;
+interface RenderCacheRecord {
+  rendered_payload: MapList;
   updated_at: string;
 }
 
@@ -63,10 +62,13 @@ export async function loadEditorialGuides() {
   }
 
   const { data, error } = await supabase
-    .from("editorial_guides")
-    .select("id,list,updated_at")
+    .from("entry_render_cache")
+    .select("rendered_payload,updated_at")
+    .eq("render_format", "maplist")
+    .eq("render_version", 1)
+    .eq("is_current", true)
     .order("updated_at", { ascending: false })
-    .returns<EditorialGuideRecord[]>();
+    .returns<RenderCacheRecord[]>();
 
   if (error) {
     return { guides: [] as MapList[], error: normalizedError ?? error };
@@ -76,7 +78,7 @@ export async function loadEditorialGuides() {
     .from("editorial_pois")
     .select("id,photo")
     .returns<EditorialPoiPhotoRecord[]>();
-  const guides = (data ?? []).map((record) => record.list);
+  const guides = (data ?? []).map((record) => record.rendered_payload);
 
   return {
     guides: applyEditorialPoiPhotos(guides, pois ?? []),

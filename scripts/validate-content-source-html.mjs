@@ -105,6 +105,12 @@ function validateSourceArchitecture() {
     "Server guide loader must prefer normalized MapList views.",
   );
   assert(
+    read("src/lib/server-editorial-guides.ts").includes("entry_render_cache") &&
+      !read("src/lib/server-editorial-guides.ts").includes("public.editorial_guides") &&
+      !read("src/lib/server-editorial-guides.ts").includes("public.weekly_event_guides"),
+    "Server guide loader must fall back to normalized render caches, not legacy blob tables.",
+  );
+  assert(
     destinationDescriptions.includes("destination_descriptions_v2"),
     "Destination description loader must prefer normalized destination descriptions.",
   );
@@ -192,7 +198,7 @@ async function loadSupabaseContent() {
 
 async function validateRenderedHtml(origin) {
   const { guides, cityDescriptions, countryDescriptions } = await loadSupabaseContent();
-  assert(guides.length > 0, "Supabase editorial_guides has no rows to validate against.");
+  assert(guides.length > 0, "Supabase normalized entries have no rows to validate against.");
   assert(cityDescriptions.length > 0, "Supabase destination_descriptions has no city rows to validate against.");
   assert(countryDescriptions.length > 0, "Supabase destination_descriptions has no country rows to validate against.");
 
