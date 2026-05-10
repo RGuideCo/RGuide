@@ -6403,7 +6403,7 @@ export const barcelonaCoreGuides = [
     "seoTitle": "Best Bars in Barcelona",
     "seoDescription": "Best bars in Barcelona, aggregating the biggest destination cocktail rooms, live-music spots, and high-demand nightlife picks from each neighborhood guide.",
     "title": "Cocktails, Clubs, and Rooms With Gravity",
-    "description": "Destination nightlife runs from world-ranked cocktail rooms to Placa Reial music clubs, Gracia venues, and the Apolo orbit in Poble-sec. Use this when the night deserves planning, queues, tickets, or a room people cross town to reach.",
+    "description": "Barcelona destination nightlife is for nights built around one room: award-winning cocktail bars, Placa Reial live music, Gracia hangouts, and the Apolo/Poble-sec circuit. Use it for reservations, tickets, late finishes, and places worth crossing town for.",
     "url": "https://www.google.com/maps/search/best+bars+barcelona",
     "category": "Nightlife",
     "location": {
