@@ -1,89 +1,90 @@
 import type { MetadataRoute } from "next";
 
 import { getCityDeepLinkStaticParams } from "@/lib/deep-link-routes";
-import { getCategoryHref, getCreatorHref, getGuideHref } from "@/lib/routes";
-import { SITE_URL } from "@/lib/constants";
+import { getAbsoluteHref, getCategoryHref, getCreatorHref, getGuideHref } from "@/lib/routes";
 import { CATEGORIES } from "@/lib/constants";
 import { users } from "@/data";
+import { getContinentsWithDestinationDescriptions } from "@/lib/destination-descriptions";
+import { getCitiesFromContinents } from "@/lib/geography-tree";
 import { getServerEditorialGuides } from "@/lib/server-editorial-guides";
 
 export const revalidate = 900;
 
-function absoluteUrl(path: string) {
-  return new URL(path, SITE_URL).toString();
-}
-
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const now = new Date();
-  const editorialGuides = await getServerEditorialGuides();
+  const [continents, editorialGuides] = await Promise.all([
+    getContinentsWithDestinationDescriptions(),
+    getServerEditorialGuides(),
+  ]);
+  const cities = getCitiesFromContinents(continents);
   const staticRoutes: MetadataRoute.Sitemap = [
     {
-      url: absoluteUrl("/"),
+      url: getAbsoluteHref("/"),
       lastModified: now,
       changeFrequency: "weekly",
       priority: 1,
     },
     {
-      url: absoluteUrl("/submit"),
+      url: getAbsoluteHref("/submit"),
       lastModified: now,
       changeFrequency: "monthly",
       priority: 0.4,
     },
     {
-      url: absoluteUrl("/about"),
+      url: getAbsoluteHref("/about"),
       lastModified: now,
       changeFrequency: "monthly",
       priority: 0.5,
     },
     {
-      url: absoluteUrl("/contact"),
+      url: getAbsoluteHref("/contact"),
       lastModified: now,
       changeFrequency: "monthly",
       priority: 0.5,
     },
     {
-      url: absoluteUrl("/privacy"),
+      url: getAbsoluteHref("/privacy"),
       lastModified: now,
       changeFrequency: "yearly",
       priority: 0.3,
     },
     {
-      url: absoluteUrl("/terms"),
+      url: getAbsoluteHref("/terms"),
       lastModified: now,
       changeFrequency: "yearly",
       priority: 0.3,
     },
     {
-      url: absoluteUrl("/affiliate-disclosure"),
+      url: getAbsoluteHref("/affiliate-disclosure"),
       lastModified: now,
       changeFrequency: "yearly",
       priority: 0.3,
     },
   ];
 
-  const cityRoutes = getCityDeepLinkStaticParams(editorialGuides).map(({ segments }) => ({
-    url: absoluteUrl(`/city/${segments.join("/")}`),
+  const cityRoutes = getCityDeepLinkStaticParams(editorialGuides, cities).map(({ segments }) => ({
+    url: getAbsoluteHref(`/city/${segments.join("/")}`),
     lastModified: now,
     changeFrequency: "weekly" as const,
     priority: segments.length >= 4 ? 0.75 : segments.length >= 3 ? 0.8 : 0.85,
   }));
 
   const categoryRoutes = CATEGORIES.map((category) => ({
-    url: absoluteUrl(getCategoryHref(category)),
+    url: getAbsoluteHref(getCategoryHref(category)),
     lastModified: now,
     changeFrequency: "weekly" as const,
     priority: 0.7,
   }));
 
   const guideRoutes = editorialGuides.map((list) => ({
-    url: absoluteUrl(getGuideHref(list)),
+    url: getAbsoluteHref(getGuideHref(list)),
     lastModified: new Date(list.createdAt),
     changeFrequency: "monthly" as const,
     priority: 0.55,
   }));
 
   const creatorRoutes = users.map((user) => ({
-    url: absoluteUrl(getCreatorHref(user)),
+    url: getAbsoluteHref(getCreatorHref(user)),
     lastModified: now,
     changeFrequency: "monthly" as const,
     priority: 0.45,

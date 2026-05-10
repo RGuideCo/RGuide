@@ -5,6 +5,7 @@ import { CategoryCard } from "@/components/cards/CategoryCard";
 import { MapListCard } from "@/components/cards/MapListCard";
 import { CATEGORIES } from "@/lib/constants";
 import { getCategoryLabel } from "@/lib/mock-data";
+import { getCategoryHref } from "@/lib/routes";
 import { getServerEditorialGuides } from "@/lib/server-editorial-guides";
 
 interface CategoryPageProps {
@@ -26,6 +27,15 @@ export async function generateMetadata({ params }: CategoryPageProps): Promise<M
   return {
     title: `${label} Guides`,
     description: `Browse curated ${label.toLowerCase()} travel guides across RGuide destinations.`,
+    alternates: {
+      canonical: getCategoryHref(label),
+    },
+    openGraph: {
+      title: `${label} Guides`,
+      description: `Browse curated ${label.toLowerCase()} travel guides across RGuide destinations.`,
+      url: getCategoryHref(label),
+      type: "website",
+    },
   };
 }
 

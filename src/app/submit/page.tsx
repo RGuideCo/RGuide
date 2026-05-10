@@ -6,6 +6,9 @@ import { SubmitWorkspaceLoader } from "@/components/list/SubmitWorkspaceLoader";
 export const metadata: Metadata = {
   title: "Submit a List",
   description: "Front-end submission flow for curated travel guides on RGuide.",
+  alternates: {
+    canonical: "/submit",
+  },
 };
 
 export default function SubmitPage() {

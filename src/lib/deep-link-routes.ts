@@ -1,6 +1,7 @@
 import { cities, continents, mapLists } from "@/data";
 import { CATEGORIES } from "@/lib/constants";
 import { getCitiesFromContinents } from "@/lib/geography-tree";
+import { getAbsoluteHref } from "@/lib/routes";
 import { slugify } from "@/lib/utils";
 import { City, Continent, ListCategory, MapList, SelectionState, SubArea } from "@/types";
 
@@ -325,7 +326,7 @@ function buildBreadcrumbData(city: City, canonicalPath: string, neighborhood?: S
       "@type": "ListItem",
       position: index + 1,
       name: item.name,
-      item: item.item,
+      item: getAbsoluteHref(item.item),
     })),
   };
 }
@@ -340,7 +341,7 @@ function buildItemListData(
     "@context": "https://schema.org",
     "@type": "ItemList",
     name,
-    url: canonicalPath,
+    url: getAbsoluteHref(canonicalPath),
     numberOfItems: lists.length,
     itemListElement: lists.slice(0, 20).map((list, index) => ({
       "@type": "ListItem",
@@ -350,11 +351,13 @@ function buildItemListData(
         { name: list.location.city ?? "" },
         list.location.neighborhood ? { name: list.location.neighborhood } : undefined,
       ),
-      url: getCanonicalGuidePath(
-        { name: list.location.city ?? "" },
-        list,
-        list.location.neighborhood ? { name: list.location.neighborhood } : undefined,
-        guideSource,
+      url: getAbsoluteHref(
+        getCanonicalGuidePath(
+          { name: list.location.city ?? "" },
+          list,
+          list.location.neighborhood ? { name: list.location.neighborhood } : undefined,
+          guideSource,
+        ),
       ),
     })),
   };
@@ -371,7 +374,8 @@ function buildGuideData(guide: MapList, canonicalPath: string) {
     name: getGuideSeoTitle(guide, city, neighborhood),
     alternateName: guide.title,
     description: seoDescription,
-    url: canonicalPath,
+    url: getAbsoluteHref(canonicalPath),
+    image: guide.photo,
     about: guide.category,
     author: {
       "@type": "Person",
@@ -382,6 +386,7 @@ function buildGuideData(guide: MapList, canonicalPath: string) {
       position: index + 1,
       name: stop.name,
       description: stop.description,
+      image: stop.photo,
     })),
   };
 }
@@ -509,7 +514,10 @@ export function resolveCityDeepLink(
   };
 }
 
-export function getCityDeepLinkStaticParams(guideSource: MapList[] = mapLists) {
+export function getCityDeepLinkStaticParams(
+  guideSource: MapList[] = mapLists,
+  citySource: City[] = cities,
+) {
   const params: Array<{ segments: string[] }> = [];
   const addPath = (path: string) => {
     const segments = path.split("/").filter(Boolean).slice(1);
@@ -528,7 +536,7 @@ export function getCityDeepLinkStaticParams(guideSource: MapList[] = mapLists) {
     addPath(path);
   };
 
-  for (const city of cities) {
+  for (const city of citySource) {
     const cityLists = getListsForCityRoute(city, undefined, undefined, guideSource);
     const cityNeighborhoods = getNeighborhoodsForCityRoute(city);
     if (cityLists.length || cityNeighborhoods.length) {

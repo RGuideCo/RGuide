@@ -1,6 +1,6 @@
 import type { MetadataRoute } from "next";
 
-import { SITE_URL } from "@/lib/constants";
+import { getAbsoluteHref } from "@/lib/routes";
 
 export default function robots(): MetadataRoute.Robots {
   return {
@@ -8,6 +8,6 @@ export default function robots(): MetadataRoute.Robots {
       userAgent: "*",
       allow: "/",
     },
-    sitemap: new URL("/sitemap.xml", SITE_URL).toString(),
+    sitemap: getAbsoluteHref("/sitemap.xml"),
   };
 }

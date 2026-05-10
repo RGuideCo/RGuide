@@ -4,6 +4,9 @@ import Link from "next/link";
 export const metadata: Metadata = {
   title: "About RGuide",
   description: "Learn how RGuide organizes curated travel guides by city, neighborhood, and trip context.",
+  alternates: {
+    canonical: "/about",
+  },
 };
 
 export default function AboutPage() {

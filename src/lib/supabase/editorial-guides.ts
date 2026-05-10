@@ -11,6 +11,11 @@ interface EditorialGuideRecord {
   updated_at: string;
 }
 
+interface NormalizedGuideRecord {
+  list: MapList;
+  updated_at: string;
+}
+
 async function loadEditorialGuidesFromApi() {
   const response = await fetch("/api/editorial-guides");
 
@@ -39,6 +44,24 @@ export async function loadEditorialGuides() {
     return { guides: [] as MapList[], error: null };
   }
 
+  const { data: normalizedData, error: normalizedError } = await supabase
+    .from("entries_maplist")
+    .select("list,updated_at")
+    .order("updated_at", { ascending: false })
+    .returns<NormalizedGuideRecord[]>();
+
+  if (!normalizedError && normalizedData?.length) {
+    const { data: pois } = await supabase
+      .from("editorial_pois")
+      .select("id,photo")
+      .returns<EditorialPoiPhotoRecord[]>();
+
+    return {
+      guides: applyEditorialPoiPhotos(normalizedData.map((record) => record.list), pois ?? []),
+      error: null,
+    };
+  }
+
   const { data, error } = await supabase
     .from("editorial_guides")
     .select("id,list,updated_at")
@@ -46,7 +69,7 @@ export async function loadEditorialGuides() {
     .returns<EditorialGuideRecord[]>();
 
   if (error) {
-    return { guides: [] as MapList[], error };
+    return { guides: [] as MapList[], error: normalizedError ?? error };
   }
 
   const { data: pois } = await supabase

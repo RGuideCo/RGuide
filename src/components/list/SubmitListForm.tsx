@@ -185,6 +185,7 @@ interface ManualGuideLocation {
   name: string;
   context: string;
   description: string;
+  category?: MapList["category"];
   itineraryDate?: string;
   country?: string;
   continent?: string;
@@ -195,6 +196,7 @@ interface ManualGuideLocation {
 interface DraftManualLocation {
   name: string;
   context: string;
+  category?: MapList["category"];
   itineraryDate?: string;
   country?: string;
   continent?: string;
@@ -208,6 +210,7 @@ type PreviewGuideStop = {
   name: string;
   coordinates: [number, number];
   description: string;
+  category: MapList["category"] | undefined;
   places: ManualGuideLocation[] | undefined;
   rank: number;
 };
@@ -451,6 +454,7 @@ export function SubmitListForm({
           name: location.name,
           coordinates,
           description: location.description.trim() || `${location.name} stop`,
+          category: location.category,
           places: location.places,
           rank: index + 1,
         };
@@ -466,6 +470,7 @@ export function SubmitListForm({
         name: draftManualLocation.name,
         coordinates: draftCoordinates,
         description: draftManualDescription.trim() || `${draftManualLocation.name} stop`,
+        category: draftManualLocation.category,
         places: draftManualLocation.places,
         rank: committedStops.length + 1,
       });
@@ -653,6 +658,7 @@ export function SubmitListForm({
         name: stop.name,
         coordinates: stop.coordinates,
         description: stop.description,
+        category: stop.category ?? category,
         itineraryDate: isItinerarySubmission ? manualGuideLocations[stop.rank - 1]?.itineraryDate : undefined,
         itineraryDay: isItinerarySubmission
           ? getItineraryDayForDate(manualGuideLocations[stop.rank - 1]?.itineraryDate, itineraryStartDate)
@@ -662,6 +668,7 @@ export function SubmitListForm({
           name: place.name.trim() || `Place ${placeIndex + 1}`,
           coordinates: place.coordinates ?? stop.coordinates,
           description: place.description.trim() || `${place.name || `Place ${placeIndex + 1}`} stop`,
+          category: place.category ?? stop.category ?? category,
         })),
       })),
     };
@@ -1388,6 +1395,7 @@ export function SubmitListForm({
           name: stop.name,
           context: [list.location.country, list.location.continent].filter(Boolean).join(" • "),
           description: stop.description,
+          category: stop.category ?? list.category,
           itineraryDate: stop.itineraryDate,
           coordinates: stop.coordinates,
           places: stop.places?.map((place, placeIndex) => ({
@@ -1395,6 +1403,7 @@ export function SubmitListForm({
             name: place.name,
             context: stop.name,
             description: place.description,
+            category: place.category ?? stop.category ?? list.category,
             coordinates: place.coordinates,
           })),
         })),
@@ -1550,6 +1559,7 @@ export function SubmitListForm({
             name: location.name,
             coordinates: location.coordinates ?? selectedCity?.coordinates ?? [0, 0],
             description: location.description.trim() || `${location.name} stop`,
+            category: location.category ?? category,
             itineraryDate: isItinerarySubmission ? location.itineraryDate : undefined,
             itineraryDay: isItinerarySubmission
               ? getItineraryDayForDate(location.itineraryDate, itineraryStartDate)
@@ -1559,6 +1569,7 @@ export function SubmitListForm({
               name: place.name.trim() || `Place ${placeIndex + 1}`,
               coordinates: place.coordinates ?? location.coordinates ?? selectedCity?.coordinates ?? [0, 0],
               description: place.description.trim() || `${place.name || `Place ${placeIndex + 1}`} stop`,
+              category: place.category ?? location.category ?? category,
             })),
           }))
         : [];

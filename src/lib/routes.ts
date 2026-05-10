@@ -1,5 +1,10 @@
 import { City, ListCategory, MapList, User } from "@/types";
+import { SITE_URL } from "@/lib/constants";
 import { slugify } from "@/lib/utils";
+
+export function getAbsoluteHref(pathOrUrl: string) {
+  return new URL(pathOrUrl, SITE_URL).toString();
+}
 
 export function getCityHref(city: Pick<City, "continent" | "country" | "name">) {
   return `/city/${slugify(city.name)}`;

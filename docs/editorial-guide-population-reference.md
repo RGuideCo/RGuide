@@ -347,6 +347,8 @@ For each city:
 
 Each editorial guide should follow the `MapList` shape in `src/types/index.ts`.
 
+Submission types are separate from categories. R Guide can contain several top-level submission types: `Guides`, `Itineraries`, `Events`, and `Experiences`. Categories such as `Food`, `Nightlife`, `Nature`, `Culture`, `Stay`, and `Activities` can be attached to those submission types when the submission needs category filtering, color, iconography, or map/list grouping. Do not treat `Events` or `Experiences` as guide categories; they are submission types that may also carry a category.
+
 Required list-level fields:
 
 - `id`: stable ID, usually `list-{city}-{neighborhood-or-scope}-{topic}`.

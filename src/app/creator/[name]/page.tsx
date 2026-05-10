@@ -5,6 +5,7 @@ import { notFound } from "next/navigation";
 import { SplitScreenClientLoader } from "@/components/home/SplitScreenClientLoader";
 import { ProgressiveEnhancementShell } from "@/components/shared/ProgressiveEnhancementShell";
 import { users } from "@/data";
+import { getCreatorHref } from "@/lib/routes";
 import { getServerEditorialGuides } from "@/lib/server-editorial-guides";
 import { slugify } from "@/lib/utils";
 import type { MapList, User } from "@/types";
@@ -121,6 +122,21 @@ export async function generateMetadata({ params }: CreatorPageProps): Promise<Me
   return {
     title: creator.name,
     description: `Browse curated travel guides published by ${creator.name}.`,
+    alternates: {
+      canonical: getCreatorHref(creator),
+    },
+    openGraph: {
+      title: creator.name,
+      description: `Browse curated travel guides published by ${creator.name}.`,
+      url: getCreatorHref(creator),
+      images: [
+        {
+          url: creator.avatar,
+          alt: creator.name,
+        },
+      ],
+      type: "profile",
+    },
   };
 }
 

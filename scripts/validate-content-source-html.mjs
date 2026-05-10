@@ -68,6 +68,15 @@ function normalizeHtmlText(value) {
     .trim();
 }
 
+function isStayGuide(guide) {
+  const text = [guide.category, guide.title, guide.slug, guide.seoSlug, guide.description]
+    .filter(Boolean)
+    .join(" ")
+    .toLowerCase();
+
+  return /\bstay\b|\bstays\b|\bhotel\b|\bhotels\b|\bhostel\b|\bhostels\b|where to stay/.test(text);
+}
+
 function validateSourceArchitecture() {
   const homeServerContent = read("src/components/home/HomeServerContent.tsx");
   const homePage = read("src/app/page.tsx");
@@ -80,13 +89,25 @@ function validateSourceArchitecture() {
   assert(!homeServerContent.includes("mapLists"), "HomeServerContent must not import or read hardcoded mapLists.");
   assert(homePage.includes("getServerEditorialGuides"), "Homepage must load editorial guides on the server.");
   assert(homePage.includes("HomeServerContent continents={continents} editorialGuides={editorialGuides}"), "Homepage fallback must receive server editorial guides.");
-  assert(homePage.includes("initialEditorialGuides={editorialGuides}"), "SplitScreenSection must receive server editorial guides for hydration.");
+  assert(
+    read("src/components/home/SplitScreenClientLoader.tsx").includes("initialEditorialGuides={data.guides}"),
+    "SplitScreenSection must hydrate from server app-data guides.",
+  );
   assert(cityPage.includes("guides: editorialGuides"), "City route resolution must use server editorial guides.");
   assert(cityPage.includes("CityRouteSeoIndex route={route} guides={editorialGuides}"), "City no-JS fallback must receive server editorial guides.");
   assert(splitScreen.includes("initialEditorialGuides") && splitScreen.includes("getEditorialLists(hydratedEditorialLists)"), "SplitScreenSection must seed and render from initial editorial guides.");
   assert(appStore.includes("return editorialLists;") && !appStore.includes("localOnlyLists"), "Client guide merge must not append local mapLists when remote guides exist.");
   assert(!proxy.includes("resolveCityDeepLink"), "Proxy must not redirect city guide paths using local guide data.");
   assert(destinationDescriptions.includes("cloneCountryWithDescription") && destinationDescriptions.includes("cloneCityWithDescription"), "Destination description loader must apply Supabase rows to both countries and cities.");
+  assert(
+    read("src/lib/server-editorial-guides.ts").includes("entries_maplist") &&
+      read("src/lib/server-editorial-guides.ts").includes("weekly_events_maplist"),
+    "Server guide loader must prefer normalized MapList views.",
+  );
+  assert(
+    destinationDescriptions.includes("destination_descriptions_v2"),
+    "Destination description loader must prefer normalized destination descriptions.",
+  );
 }
 
 async function loadSupabaseContent() {
@@ -108,37 +129,53 @@ async function loadSupabaseContent() {
     await client.connect();
     const guideResult = await client.query(
       [
-        "select list",
-        "from public.editorial_guides",
-        "order by category asc, country asc nulls last, city asc nulls last, neighborhood asc nulls last, list->>'title' asc",
+        "select view.list",
+        "from public.entries entry",
+        "join public.entries_maplist view on view.id = entry.id",
+        "where entry.source_table = 'editorial_guides'",
+        "order by entry.category asc, entry.country_name asc nulls last,",
+        "  view.list->'location'->>'city' asc nulls last,",
+        "  view.list->'location'->>'neighborhood' asc nulls last,",
+        "  view.list->>'title' asc",
       ].join(" "),
     );
     const cityDescriptionResult = await client.query(
       [
-        "select d.city, d.country, d.description",
-        "from public.destination_descriptions d",
+        "select destination.city_name as city, destination.country_name as country, description.description",
+        "from public.destination_descriptions_v2 description",
+        "join public.destinations destination on destination.id = description.destination_id",
         "join (",
-        "  select city, country, count(*) as guide_count",
-        "  from public.editorial_guides",
-        "  where city is not null",
-        "  group by city, country",
-        ") g on g.city = d.city and g.country = d.country",
-        "where d.entity_type = 'city' and d.description <> ''",
-        "order by g.guide_count desc, d.city asc",
+        "  select city_id, count(*) as guide_count",
+        "  from public.entries",
+        "  where source_table = 'editorial_guides'",
+        "    and city_id is not null",
+        "  group by city_id",
+        ") g on g.city_id = destination.id",
+        "where destination.scope = 'city'",
+        "  and description.locale = 'en'",
+        "  and description.description_kind = 'overview'",
+        "  and description.description <> ''",
+        "order by g.guide_count desc, destination.city_name asc",
         "limit 9",
       ].join(" "),
     );
     const countryDescriptionResult = await client.query(
       [
-        "select d.country, d.description",
-        "from public.destination_descriptions d",
+        "select destination.country_name as country, description.description",
+        "from public.destination_descriptions_v2 description",
+        "join public.destinations destination on destination.id = description.destination_id",
         "join (",
-        "  select country, count(*) as guide_count",
-        "  from public.editorial_guides",
-        "  group by country",
-        ") g on g.country = d.country",
-        "where d.entity_type = 'country' and d.description <> ''",
-        "order by g.guide_count desc, d.country asc",
+        "  select country_name, count(*) as guide_count",
+        "  from public.entries",
+        "  where source_table = 'editorial_guides'",
+        "    and country_name is not null",
+        "  group by country_name",
+        ") g on g.country_name = destination.country_name",
+        "where destination.scope = 'country'",
+        "  and description.locale = 'en'",
+        "  and description.description_kind = 'overview'",
+        "  and description.description <> ''",
+        "order by g.guide_count desc, destination.country_name asc",
         "limit 9",
       ].join(" "),
     );
@@ -176,6 +213,30 @@ async function validateRenderedHtml(origin) {
     cityDescriptions.some((row) => pageText.includes(normalizeHtmlText(row.description))),
     "Homepage server HTML did not include a featured city description from destination_descriptions.",
   );
+
+  if (!process.argv.includes("--homepage-only")) {
+    const stayGuides = guides.filter(isStayGuide);
+    assert(stayGuides.length > 0, "No Stay/hotel/hostel guides found to validate.");
+
+    for (const guide of stayGuides) {
+      const guideResponse = await fetch(new URL(`/list/${guide.slug}`, origin), { cache: "no-store" });
+      assert(guideResponse.ok, `Stay guide ${guide.slug} returned HTTP ${guideResponse.status}.`);
+
+      const guideText = normalizeHtmlText(await guideResponse.text());
+      assert(guideText.includes(normalizeHtmlText(guide.title)), `Stay guide ${guide.slug} HTML is missing its title.`);
+      assert(
+        guideText.includes(normalizeHtmlText(guide.description)),
+        `Stay guide ${guide.slug} HTML is missing its description.`,
+      );
+
+      for (const stop of (guide.stops ?? []).slice(0, 3)) {
+        assert(
+          guideText.includes(normalizeHtmlText(stop.name)),
+          `Stay guide ${guide.slug} HTML is missing stop ${stop.name}.`,
+        );
+      }
+    }
+  }
 
   console.log(`Validated source architecture and rendered HTML against ${origin}.`);
 }

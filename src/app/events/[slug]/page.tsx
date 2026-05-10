@@ -4,7 +4,7 @@ import { notFound } from "next/navigation";
 
 import { MapListCard } from "@/components/cards/MapListCard";
 import { getWeeklyEventGuideListsForCity } from "@/data/weekly-events";
-import { getCityHref, getEventHref } from "@/lib/routes";
+import { getAbsoluteHref, getCityHref, getEventHref } from "@/lib/routes";
 import { getServerEditorialGuides } from "@/lib/server-editorial-guides";
 
 export const dynamic = "force-dynamic";
@@ -85,7 +85,7 @@ export default async function EventDetailPage({ params }: EventDetailPageProps) 
     "@type": eventGuide.itinerary ? "ItemList" : "Event",
     name: eventGuide.title,
     description: eventGuide.description,
-    url: getEventHref(eventGuide),
+    url: getAbsoluteHref(getEventHref(eventGuide)),
     image: eventGuide.photo,
     location: eventGuide.location.city
       ? {
@@ -100,6 +100,7 @@ export default async function EventDetailPage({ params }: EventDetailPageProps) 
           position: index + 1,
           name: stop.name,
           description: stop.description,
+          image: stop.photo,
         }))
       : undefined,
   };

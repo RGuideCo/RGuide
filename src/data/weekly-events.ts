@@ -148,7 +148,7 @@ export function weeklyEventToGuideList(event: WeeklyCityEvent, run: WeeklyCityEv
     highlights: event.highlights,
     url: event.url,
     category: weeklyEventCategoryToGuideCategory[event.category],
-    submissionType: event.activations?.length ? "itinerary" : "guide",
+    submissionType: "event",
     itinerary: event.activations?.length
       ? {
           startDate: cityEvent.startsAt.slice(0, 10),

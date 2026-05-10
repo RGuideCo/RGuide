@@ -3,6 +3,9 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Terms of Use",
   description: "RGuide terms of use for travel guide content and site features.",
+  alternates: {
+    canonical: "/terms",
+  },
 };
 
 export default function TermsPage() {

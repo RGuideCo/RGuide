@@ -66,6 +66,7 @@ export function useItineraryWorkspace({
         id: `itinerary-stop-${index + 1}-${entry.stop.id}`,
         name: entry.stop.name,
         coordinates: entry.stop.coordinates,
+        category: entry.stop.category ?? entry.list.category,
         itineraryDate: entry.schedule?.date,
         itineraryDay: undefined,
         description: scheduleBits

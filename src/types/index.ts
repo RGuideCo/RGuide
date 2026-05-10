@@ -8,7 +8,7 @@ export type ListCategory =
   | "Routes"
   | "Essentials";
 
-export type SubmissionType = "guide" | "journal" | "itinerary";
+export type SubmissionType = "guide" | "journal" | "itinerary" | "event";
 
 export type RegionKind = "north" | "south" | "east" | "west" | "central";
 
@@ -74,6 +74,7 @@ export interface GuideStop {
   name: string;
   coordinates: [number, number];
   description: string;
+  category?: ListCategory;
   photo?: string;
   price?: "$" | "$$" | "$$$";
   priceSource?: string;

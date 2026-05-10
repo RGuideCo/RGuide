@@ -8,6 +8,7 @@ import { AuthSync } from "@/components/auth/AuthSync";
 import { SubmittedGuidesSync } from "@/components/auth/SubmittedGuidesSync";
 import { Footer } from "@/components/layout/Footer";
 import { SITE_DESCRIPTION, SITE_NAME, SITE_URL } from "@/lib/constants";
+import { getAbsoluteHref } from "@/lib/routes";
 
 import "@/app/globals.css";
 
@@ -19,14 +20,20 @@ const hostGrotesk = Host_Grotesk({
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
+  applicationName: SITE_NAME,
   title: {
     default: `${SITE_NAME} | Curated Travel Guides`,
     template: `%s | ${SITE_NAME}`,
   },
   description: SITE_DESCRIPTION,
+  alternates: {
+    canonical: "/",
+  },
   openGraph: {
     title: SITE_NAME,
     description: SITE_DESCRIPTION,
+    url: "/",
+    siteName: SITE_NAME,
     type: "website",
   },
   twitter: {
@@ -34,6 +41,14 @@ export const metadata: Metadata = {
     title: SITE_NAME,
     description: SITE_DESCRIPTION,
   },
+};
+
+const websiteJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  name: SITE_NAME,
+  url: getAbsoluteHref("/"),
+  description: SITE_DESCRIPTION,
 };
 
 export default function RootLayout({
@@ -44,6 +59,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
+        <meta name="agd-partner-manual-verification" />
         <link rel="preconnect" href="https://tiles.openfreemap.org" crossOrigin="anonymous" />
       </head>
       <body className={hostGrotesk.variable}>
@@ -53,6 +69,10 @@ export default function RootLayout({
         <Footer />
         <AuthModal />
         <Analytics />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteJsonLd) }}
+        />
       </body>
     </html>
   );

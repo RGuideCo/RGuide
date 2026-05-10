@@ -1,4 +1,5 @@
 import pg from "pg";
+import type { Client } from "pg";
 import { unstable_cache } from "next/cache";
 
 import { getContinents } from "@/lib/mock-data";
@@ -178,16 +179,45 @@ async function loadDestinationDescriptionRows(): Promise<DestinationDescriptionR
 
   try {
     await client.connect();
-    const { rows } = await client.query<DestinationDescriptionRow>(
-      "select id, description from public.destination_descriptions where description <> ''",
-    );
-    return rows;
+    const normalizedRows = await loadNormalizedDestinationDescriptionRows(client);
+
+    if (normalizedRows.length) {
+      return normalizedRows;
+    }
+
+    return loadLegacyDestinationDescriptionRows(client);
   } catch (error) {
     console.error("Failed to load destination descriptions", error);
     return [];
   } finally {
     await client.end().catch(() => {});
   }
+}
+
+async function loadNormalizedDestinationDescriptionRows(client: Client) {
+  try {
+    const { rows } = await client.query<DestinationDescriptionRow>(
+      [
+        "select destination.legacy_id as id, description.description",
+        "from public.destination_descriptions_v2 description",
+        "join public.destinations destination on destination.id = description.destination_id",
+        "where description.description <> ''",
+        "  and destination.legacy_id is not null",
+        "  and description.locale = 'en'",
+        "  and description.description_kind = 'overview'",
+      ].join(" "),
+    );
+    return rows;
+  } catch {
+    return [];
+  }
+}
+
+async function loadLegacyDestinationDescriptionRows(client: Client) {
+  const { rows } = await client.query<DestinationDescriptionRow>(
+    "select id, description from public.destination_descriptions where description <> ''",
+  );
+  return rows;
 }
 
 const getCachedDestinationDescriptionRows = unstable_cache(

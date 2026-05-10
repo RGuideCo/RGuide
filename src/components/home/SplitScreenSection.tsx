@@ -72,7 +72,6 @@ import {
 } from "@/components/home/split-screen-config";
 import { usePlacesBeenDirectory } from "@/components/home/use-places-been-directory";
 import { usePersistedPlacesBeen } from "@/components/home/use-persisted-places-been";
-import { useItineraryWorkspace } from "@/components/home/use-itinerary-workspace";
 import { getCountryFlagEmoji } from "@/lib/country-flag";
 import { CATEGORY_STYLES } from "@/lib/constants";
 import {
@@ -1115,14 +1114,7 @@ export function SplitScreenSection({
   const toggleFavoriteLocation = useAppStore((state) => state.toggleFavoriteLocation);
   const votedIds = useAppStore((state) => state.votedIds);
   const itineraryIds = useAppStore((state) => state.itineraryIds);
-  const itineraryStopScheduleById = useAppStore((state) => state.itineraryStopScheduleById);
-  const setItineraryStopSchedule = useAppStore((state) => state.setItineraryStopSchedule);
-  const addListToItineraryPlaylist = useAppStore((state) => state.addListToItineraryPlaylist);
-  const setItineraryPlaylistCompleted = useAppStore((state) => state.setItineraryPlaylistCompleted);
-  const submitList = useAppStore((state) => state.submitList);
-  const updateSubmittedList = useAppStore((state) => state.updateSubmittedList);
   const itineraryPlaylists = useAppStore((state) => state.itineraryPlaylists);
-  const removeStopFromItineraryPlaylist = useAppStore((state) => state.removeStopFromItineraryPlaylist);
   const editorialLists = useAppStore((state) => state.editorialLists);
   const submittedLists = useAppStore((state) => state.submittedLists);
   const hydratedEditorialLists = editorialLists.length ? editorialLists : initialEditorialGuides;
@@ -2785,74 +2777,6 @@ export function SplitScreenSection({
     savedHighlightedCountryIds,
   ]);
   const isProfileSubmitLayout = isProfileMode && isProfileSubmitting;
-  const {
-    activeItineraryPlaylist,
-    activeItineraryPlaylistId,
-    setActiveItineraryPlaylistId,
-    isItineraryEditing,
-    setIsItineraryEditing,
-    itineraryStopEntries,
-    buildItineraryStops,
-  } = useItineraryWorkspace({
-    activeGuideRail,
-    itineraryPlaylists,
-    globalMergedLists,
-    itineraryStopScheduleById,
-  });
-  const handleCompleteItineraryPlaylist = () => {
-    if (!activeItineraryPlaylist || !itineraryStopEntries.length) {
-      return;
-    }
-
-    const firstLocation = itineraryStopEntries[0].list.location;
-    const response = submitList({
-      submissionType: "itinerary",
-      url: "https://www.google.com/maps",
-      title: `${activeItineraryPlaylist.name} Itinerary`,
-      description: `Compiled itinerary with ${itineraryStopEntries.length} saved locations.`,
-      category: "Activities",
-      continent: firstLocation.continent,
-      country: firstLocation.country,
-      city: firstLocation.city,
-      stops: buildItineraryStops(),
-    });
-
-    if (!response.ok || !response.list) {
-      return;
-    }
-
-    addListToItineraryPlaylist(activeItineraryPlaylist.id, response.list.id);
-    setItineraryPlaylistCompleted(activeItineraryPlaylist.id, response.list.id);
-    setIsItineraryEditing(false);
-    handleOpenItineraryGuide(response.list);
-  };
-  const handleSaveItineraryEdits = () => {
-    if (!activeItineraryPlaylist?.completedListId) {
-      return;
-    }
-    const compiledList = globalMergedLists.find((list) => list.id === activeItineraryPlaylist.completedListId);
-    if (!compiledList || !itineraryStopEntries.length) {
-      return;
-    }
-    const firstLocation = itineraryStopEntries[0].list.location;
-    const response = updateSubmittedList(activeItineraryPlaylist.completedListId, {
-      submissionType: "itinerary",
-      url: compiledList.url,
-      title: compiledList.title,
-      description: `Compiled itinerary with ${itineraryStopEntries.length} saved locations.`,
-      category: compiledList.category,
-      continent: firstLocation.continent,
-      country: firstLocation.country,
-      city: firstLocation.city,
-      neighborhood: firstLocation.neighborhood,
-      stops: buildItineraryStops(),
-    });
-    if (!response.ok || !response.list) {
-      return;
-    }
-    setIsItineraryEditing(false);
-    handleOpenItineraryGuide(response.list);
-  };
   const activeNeighborhoodKey = activeLocation.subarea
     ? normalizeNeighborhoodName(activeLocation.subarea.name)
     : null;
@@ -2981,11 +2905,20 @@ export function SplitScreenSection({
       const playlistListIds = new Set(
         itineraryPlaylists.flatMap((playlist) => playlist.listIds),
       );
-      return guideListsOnly.filter(
+      const filteredListIds = new Set(filteredLists.map((list) => list.id));
+      const itineraryMatchesActiveCategory = (list: MapList) => {
+        if (!activeCategory) {
+          return true;
+        }
+        return list.category === activeCategory || list.stops.some((stop) => stop.category === activeCategory);
+      };
+      const itineraryCandidateLists = (activeCategory ? activeLists : filteredLists).filter((list) => !isEventList(list));
+      return itineraryCandidateLists.filter(
         (list) =>
-          itineraryIds.includes(list.id) ||
-          playlistListIds.has(list.id) ||
-          isItineraryList(list, allKnownItineraryListIds),
+          (itineraryIds.includes(list.id) ||
+            playlistListIds.has(list.id) ||
+            isItineraryList(list, allKnownItineraryListIds)) &&
+          (filteredListIds.has(list.id) || itineraryMatchesActiveCategory(list)),
       );
     }
     if (activeGuideRail === "trending") {
@@ -3038,6 +2971,7 @@ export function SplitScreenSection({
     publicProfileGuideLists,
     votedIds,
     activeCategory,
+    activeLists,
     activeLocation.city,
   ]);
   const activeCategoryOption = activeCategory
@@ -3122,7 +3056,6 @@ export function SplitScreenSection({
   };
   const handleGuideRailSelect = (railId: (typeof guideRailOptions)[number]["id"]) => {
     setActiveGuideRail(railId);
-    setIsItineraryEditing(false);
     setIsLocationFavoritesRailActive(false);
     setExpandedGuideId(null);
     setClosingGuide(null);
@@ -3379,10 +3312,10 @@ export function SplitScreenSection({
       railFilteredLists.find((list) => list.id === expandedGuideId) ??
       globalMergedLists.find((list) => list.id === expandedGuideId);
 
-    if (expandedList) {
+    if (expandedList && activeGuideRail !== "itinerary") {
       setActiveCategory(expandedList.category);
     }
-  }, [expandedGuideId, globalMergedLists, railFilteredLists]);
+  }, [activeGuideRail, expandedGuideId, globalMergedLists, railFilteredLists]);
 
   useEffect(() => {
     setExpandedGuideId(null);
@@ -3405,8 +3338,8 @@ export function SplitScreenSection({
     : isProfileMode
       ? profileExpandedGuide
       : expandedGuide;
-  const isGuideTakingFullListPane = Boolean(expandedGuide && activeGuideRail !== "itinerary" && !isPublicProfileMode);
-  const isGuideReturningToListPane = Boolean(closingGuide && closingGuidePhase === "returning" && activeGuideRail !== "itinerary" && !isPublicProfileMode);
+  const isGuideTakingFullListPane = Boolean(expandedGuide && !isPublicProfileMode);
+  const isGuideReturningToListPane = Boolean(closingGuide && closingGuidePhase === "returning" && !isPublicProfileMode);
   const isGuidePaneTakingFullListPane = isGuideTakingFullListPane || isGuideReturningToListPane;
   const isLeftPaneCollapsed = isProfileSubmitLayout || isGuidePaneTakingFullListPane || isProfileGuideTakingFullListPane;
   const isSubcategoryMenuOpen =
@@ -3954,7 +3887,9 @@ export function SplitScreenSection({
     deferGuideContentUntilMotionSettles(nextList.id);
     setOpeningGuideId(null);
     setExpandedGuideId(nextList.id);
-    setActiveCategory(nextList.category);
+    if (activeGuideRail !== "itinerary") {
+      setActiveCategory(nextList.category);
+    }
     setActiveGuideFitNonce((current) => current + 1);
     const context = getCityRouteContext(selection);
     if (context) {
@@ -4088,32 +4023,6 @@ export function SplitScreenSection({
       return;
     }
     scrollGuideIntoView(list.id);
-  };
-  const handleEditItineraryFromGuide = (list: MapList) => {
-    if (isProfileMode) {
-      if (!currentUser || list.creator.id !== currentUser.id) {
-        return;
-      }
-      setActiveProfileRightRail("itineraries");
-      setProfileSubmissionType("itinerary");
-      setProfileGuideSubmissionVariant("itinerary");
-      setProfileEditingListId(list.id);
-      setIsProfileSubmitting(true);
-      return;
-    }
-
-    const matchingPlaylist =
-      itineraryPlaylists.find((playlist) => playlist.completedListId === list.id) ??
-      itineraryPlaylists.find((playlist) => playlist.listIds.includes(list.id)) ??
-      null;
-    if (matchingPlaylist) {
-      setActiveItineraryPlaylistId(matchingPlaylist.id);
-    }
-    setActiveCategory(null);
-    setActiveSubcategory(null);
-    setExpandedGuideId(null);
-    setClosingGuide(null);
-    setIsItineraryEditing(true);
   };
   const handleEditGuideFromProfile = (list: MapList) => {
     if (!currentUser || list.creator.id !== currentUser.id) {
@@ -7167,7 +7076,7 @@ export function SplitScreenSection({
 	                      </div>
 	                    </div>
                     </div>
-                    {activeGuideRail !== "itinerary" ? (
+                    {!isPublicProfileMode ? (
                       <div
                         className={`mt-2 w-full translate-y-0 space-y-3 pb-2 opacity-100 transition-[margin,max-height,opacity,transform,padding] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] ${
                           isSubcategoryMenuOpen ? "max-h-44 overflow-visible" : "max-h-40 overflow-hidden"
@@ -7539,159 +7448,8 @@ export function SplitScreenSection({
                       : `mt-2 ${explorerBodyMaxHeight} overflow-y-auto pb-0 pr-1`
                   }`}
                 >
-                  {activeGuideRail === "itinerary" && isItineraryEditing ? (
-                    activeItineraryPlaylist ? (
-                      <div className="space-y-3">
-                        <div className="rounded-2xl border border-slate-200 bg-white p-3">
-                          <p className="text-[11px] font-medium uppercase tracking-[0.12em] text-slate-500">
-                            Itineraries
-                          </p>
-                          <div className="mt-2 flex flex-wrap gap-2">
-                            {itineraryPlaylists.map((playlist) => (
-                              <button
-                                key={playlist.id}
-                                type="button"
-                                onClick={() => setActiveItineraryPlaylistId(playlist.id)}
-                                className={`rounded-full border px-3 py-1 text-xs font-medium transition ${
-                                  activeItineraryPlaylist.id === playlist.id
-                                    ? "border-slate-900 bg-slate-900 text-white"
-                                    : "border-slate-200 bg-white text-slate-600 hover:border-slate-300 hover:text-slate-900"
-                                }`}
-                              >
-                                {playlist.name}
-                              </button>
-                            ))}
-                          </div>
-                          <div className="mt-3 flex flex-wrap items-center gap-2">
-                            {!activeItineraryPlaylist.completedListId ? (
-                              <button
-                                type="button"
-                                onClick={handleCompleteItineraryPlaylist}
-                                disabled={!itineraryStopEntries.length}
-                                className="rounded-full bg-slate-900 px-3 py-1.5 text-xs font-medium text-white disabled:cursor-not-allowed disabled:opacity-40"
-                              >
-                                Complete
-                              </button>
-                            ) : (
-                              <>
-                                <button
-                                  type="button"
-                                  onClick={handleSaveItineraryEdits}
-                                  disabled={!itineraryStopEntries.length}
-                                  className="rounded-full bg-slate-900 px-3 py-1.5 text-xs font-medium text-white disabled:cursor-not-allowed disabled:opacity-40"
-                                >
-                                  Save itinerary edits
-                                </button>
-                                <button
-                                  type="button"
-                                  onClick={() => setIsItineraryEditing(false)}
-                                  className="rounded-full border border-slate-200 bg-white px-3 py-1.5 text-xs font-medium text-slate-700 hover:border-slate-300 hover:text-slate-900"
-                                >
-                                  Done
-                                </button>
-                              </>
-                            )}
-                          </div>
-                        </div>
-
-                        {activeItineraryPlaylist.listIds.length ? (
-                          <div className="rounded-2xl border border-slate-200 bg-white p-3">
-                            <p className="text-[11px] font-medium uppercase tracking-[0.12em] text-slate-500">
-                              Guides in this itinerary
-                            </p>
-                            <div className="mt-2 space-y-2">
-                              {activeItineraryPlaylist.listIds
-                                .map((listId) => railFilteredLists.find((list) => list.id === listId))
-                                .filter((list): list is MapList => Boolean(list))
-                                .map((list) => (
-                                  <button
-                                    key={list.id}
-                                    type="button"
-                                    onClick={() => handleOpenItineraryGuide(list)}
-                                    className="flex w-full items-center justify-between rounded-xl border border-slate-200 bg-stone-50 px-3 py-2 text-left text-sm text-slate-700 hover:border-slate-300 hover:text-slate-900"
-                                  >
-                                    <span className="truncate">{list.title}</span>
-                                    <span className="ml-3 shrink-0 text-xs text-slate-500">Open</span>
-                                  </button>
-                                ))}
-                            </div>
-                          </div>
-                        ) : null}
-
-                        {itineraryStopEntries.length ? (
-                          itineraryStopEntries.map((entry, index) => (
-                            <article key={entry.key} className="rounded-2xl border border-slate-200 bg-white p-3">
-                              <div className="flex items-center justify-between gap-3">
-                                <div className="min-w-0">
-                                  <p className="text-[11px] font-medium uppercase tracking-[0.12em] text-slate-500">
-                                    Stop {index + 1}
-                                  </p>
-                                  <p className="text-sm font-semibold text-slate-900">{entry.stop.name}</p>
-                                </div>
-                                <div className="flex shrink-0 items-center gap-2">
-                                  <input
-                                    type="date"
-                                    value={entry.schedule?.date ?? ""}
-                                    onChange={(event) =>
-                                      setItineraryStopSchedule(entry.scheduleKey, {
-                                        date: event.target.value || undefined,
-                                      })
-                                    }
-                                    className="rounded-full border border-slate-200 px-2 py-1 text-[11px] text-slate-700"
-                                  />
-                                  <input
-                                    type="time"
-                                    value={entry.schedule?.time ?? ""}
-                                    onChange={(event) =>
-                                      setItineraryStopSchedule(entry.scheduleKey, {
-                                        time: event.target.value || undefined,
-                                      })
-                                    }
-                                    className="rounded-full border border-slate-200 px-2 py-1 text-[11px] text-slate-700"
-                                  />
-                                  <button
-                                    type="button"
-                                    onClick={() =>
-                                      removeStopFromItineraryPlaylist(activeItineraryPlaylist.id, entry.key)
-                                    }
-                                    className="rounded-full border border-slate-200 bg-white px-2 py-1 text-[11px] font-medium text-slate-600 hover:border-slate-300 hover:text-slate-900"
-                                  >
-                                    Remove
-                                  </button>
-                                </div>
-                              </div>
-                              <p className="mt-1 text-xs text-slate-500">
-                                {entry.list.title} • {[entry.list.location.city, entry.list.location.country].filter(Boolean).join(", ")}
-                              </p>
-                            </article>
-                          ))
-                        ) : (
-                          <div className="rounded-2xl border border-dashed border-slate-300 bg-white p-5 text-center">
-                            <p className="text-sm font-medium text-slate-900">No locations in this itinerary yet</p>
-                          </div>
-                        )}
-                      </div>
-                    ) : (
-                      <div className="rounded-2xl border border-dashed border-slate-300 bg-white p-5 text-center">
-                        <p className="text-sm font-medium text-slate-900">No itinerary locations yet</p>
-                        <p className="mt-1 text-xs text-slate-600">
-                          Add locations from any expanded guide item and they will compile here with date/time controls.
-                        </p>
-                      </div>
-                    )
-                  ) : displayedGuide ? (
+                  {displayedGuide ? (
                     <div className={isGuideTakingFullListPane ? "flex h-full min-h-0 flex-col" : "space-y-4"}>
-                      {activeGuideRail === "itinerary" && activeItineraryPlaylist ? (
-                        <div className="flex justify-end">
-                          <button
-                            type="button"
-                            onClick={() => setIsItineraryEditing(true)}
-                            className="rounded-full border border-slate-200 bg-white px-3 py-1.5 text-xs font-medium text-slate-700 hover:border-slate-300 hover:text-slate-900"
-                          >
-                            Edit itinerary
-                          </button>
-                        </div>
-                      ) : null}
                       <div
                         key={displayedGuide.id}
                         ref={(node) => {
@@ -7706,7 +7464,6 @@ export function SplitScreenSection({
                           fillPane={isGuideTakingFullListPane}
                           deferExpandedContent={settlingGuideContentId === displayedGuide.id}
                           onToggleExpand={handleGuideToggle}
-                          onEditItinerary={activeGuideRail === "itinerary" ? handleEditItineraryFromGuide : undefined}
                           shouldAutoOpenSources={pendingSourcesOpenGuideId === displayedGuide.id}
                           onAutoOpenSourcesHandled={handleAutoOpenSourcesHandled}
                           onRequestOpenSourcesWhenCollapsed={handleExpandAndOpenSources}
@@ -7745,7 +7502,6 @@ export function SplitScreenSection({
                               expandExpandedChrome={openingGuideId === list.id}
                               onExpandChromeComplete={completeGuideOpening}
                               onToggleExpand={handleGuideToggle}
-                              onEditItinerary={activeGuideRail === "itinerary" ? handleEditItineraryFromGuide : undefined}
                               shouldAutoOpenSources={pendingSourcesOpenGuideId === list.id}
                               onAutoOpenSourcesHandled={handleAutoOpenSourcesHandled}
                               onRequestOpenSourcesWhenCollapsed={handleExpandAndOpenSources}
@@ -7782,7 +7538,6 @@ export function SplitScreenSection({
                             expandExpandedChrome={openingGuideId === list.id}
                             onExpandChromeComplete={completeGuideOpening}
                             onToggleExpand={handleGuideToggle}
-                            onEditItinerary={activeGuideRail === "itinerary" ? handleEditItineraryFromGuide : undefined}
                             shouldAutoOpenSources={pendingSourcesOpenGuideId === list.id}
                             onAutoOpenSourcesHandled={handleAutoOpenSourcesHandled}
                             onRequestOpenSourcesWhenCollapsed={handleExpandAndOpenSources}
@@ -7959,7 +7714,6 @@ export function SplitScreenSection({
                             forceExpandStopId={selectedGuideStopId}
                             forceExpandStopNonce={selectedGuideStopNonce}
                             onEditGuide={handleEditGuideFromProfile}
-                            onEditItinerary={handleEditItineraryFromGuide}
                           />
                         ) : profileRailLists.length ? (
                           profileRailLists.map((list) => (
@@ -7977,7 +7731,6 @@ export function SplitScreenSection({
                               forceExpandStopId={selectedGuideStopId}
                               forceExpandStopNonce={selectedGuideStopNonce}
                               onEditGuide={handleEditGuideFromProfile}
-                              onEditItinerary={handleEditItineraryFromGuide}
                             />
                           ))
                         ) : (

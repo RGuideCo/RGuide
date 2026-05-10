@@ -35,7 +35,6 @@ interface MapListCardProps {
   shouldAutoOpenSources?: boolean;
   onAutoOpenSourcesHandled?: (listId: string) => void;
   onRequestOpenSourcesWhenCollapsed?: (list: MapList) => void;
-  onEditItinerary?: (list: MapList) => void;
   onEditGuide?: (list: MapList) => void;
   onExpandedStopIdsChange?: (stopIds: string[]) => void;
   collapsedLocationSubtitleHiddenParts?: string[];
@@ -65,7 +64,13 @@ function splitStopDescriptionAndHours(description: string) {
   };
 }
 function isItineraryLikeGuide(list: MapList) {
+  if (list.id.startsWith("event-")) {
+    return Boolean(list.itinerary);
+  }
   if (list.submissionType === "itinerary") {
+    return true;
+  }
+  if (list.submissionType === "event" && Boolean(list.itinerary)) {
     return true;
   }
   const hasGeneratedItineraryStops = list.stops.some((stop) => stop.id.startsWith("itinerary-stop-"));
@@ -103,9 +108,18 @@ type GuideSource = NonNullable<MapList["sources"]>[number];
 
 function buildGuideMeta(list: MapList, hiddenLocationParts?: string[]) {
   const placeCount = list.stops.length;
-  const placeLabel = `${placeCount} ${placeCount === 1 ? "place" : "places"}`;
+  const isEventGuide = list.submissionType === "event" || list.id.startsWith("event-");
+  const placeLabel =
+    isEventGuide
+      ? `${placeCount} ${placeCount === 1 ? "event" : "events"}`
+      : `${placeCount} ${placeCount === 1 ? "place" : "places"}`;
   const locationLabel = buildLocationSubtitle(list, hiddenLocationParts);
-  const typeLabel = list.submissionType === "itinerary" ? "Itinerary" : list.category;
+  const typeLabel =
+    isEventGuide
+      ? "Event"
+      : list.submissionType === "itinerary"
+        ? "Itinerary"
+        : list.category;
   return [typeLabel, placeLabel, locationLabel].filter(Boolean).join(" • ");
 }
 
@@ -277,7 +291,6 @@ export function MapListCard({
   shouldAutoOpenSources = false,
   onAutoOpenSourcesHandled,
   onRequestOpenSourcesWhenCollapsed,
-  onEditItinerary,
   onEditGuide,
   onExpandedStopIdsChange,
   collapsedLocationSubtitleHiddenParts = [],
@@ -301,7 +314,6 @@ export function MapListCard({
   const isItineraryGuide = isInItinerary || isItineraryLikeGuide(list);
   const isOwnGuide = Boolean(currentUser && currentUser.id === list.creator.id);
   const isOwnEditableGuide = isOwnGuide && !isItineraryGuide;
-  const canEditOwnItinerary = isOwnGuide && isItineraryGuide && Boolean(onEditItinerary);
   const isHistoricalGuide = list.creator.id === "user-rguide-history";
   const categoryStyle = CATEGORY_STYLES[list.category];
   const visibleUpvotes = list.upvotes + (hasVoted ? 1 : 0);
@@ -642,6 +654,7 @@ export function MapListCard({
     name: stop.name,
     coordinates: stop.coordinates,
     description: stop.description,
+    category: stop.category ?? list.category,
     price: stop.price,
     priceSource: stop.priceSource,
     bookingUrl: stop.bookingUrl,
@@ -671,6 +684,7 @@ export function MapListCard({
           name: stop.name,
           coordinates: stop.coordinates,
           description: stop.description,
+          category: stop.category ?? list.category,
           price: stop.price,
           priceSource: stop.priceSource,
           bookingUrl: stop.bookingUrl,
@@ -942,20 +956,6 @@ export function MapListCard({
               </Link>
             )
           ) : null}
-          {canEditOwnItinerary ? (
-            <button
-              type="button"
-              onClick={(event) => {
-                event.stopPropagation();
-                onEditItinerary?.(list);
-              }}
-              className="inline-flex items-center rounded-full border border-slate-200 bg-white px-2 py-1 text-[11px] font-medium text-slate-700 hover:border-slate-300 hover:text-slate-900"
-              aria-label="Edit itinerary"
-              title="Edit itinerary"
-            >
-              Edit itinerary
-            </button>
-          ) : null}
           {!isItineraryGuide ? (
             <button
               type="button"
@@ -1088,6 +1088,7 @@ export function MapListCard({
                     {list.stops.map((stop, index) => {
                       const stopPhoto = getPoiPhoto(stop.photo);
                       const isStopExpanded = expandedStopIds.includes(stop.id);
+                      const stopCategoryStyle = CATEGORY_STYLES[stop.category ?? list.category];
                       return (
                         <button
                           key={`${list.id}-photo-nav-${stop.id}`}
@@ -1096,7 +1097,7 @@ export function MapListCard({
                           onMouseEnter={() => onStopHoverChange?.(stop.id)}
                           onMouseLeave={() => onStopHoverChange?.(null)}
                           className={`ordered-poi-photo ${isStopExpanded ? "ordered-poi-photo-active" : ""}`}
-                          style={{ "--guide-accent": categoryStyle.mapColor } as React.CSSProperties}
+                          style={{ "--guide-accent": stopCategoryStyle.mapColor } as React.CSSProperties}
                           aria-label={`Open ${stop.name}`}
                           title={stop.name}
                         >
@@ -1169,7 +1170,7 @@ export function MapListCard({
                     className="guide-content-cascade-item relative z-10 mt-4 text-[11px] font-medium uppercase tracking-[0.2em] text-slate-500"
                     style={{ animationDelay: sourceSummary ? "115ms" : "90ms" }}
                   >
-                    Places of Interest
+                    {list.submissionType === "event" || list.id.startsWith("event-") ? "Schedule" : "Places of Interest"}
                   </p>
                   <ol
                     id={`guide-stop-list-${list.id}`}
@@ -1201,6 +1202,7 @@ export function MapListCard({
                         const stopPhoto = getPoiPhoto(stop.photo);
                         const stayBookingDetails = getStayBookingDetails(list, stop);
                         const officialStopUrl = list.id.startsWith("event-") ? stop.officialUrl ?? stop.bookingUrl : stop.officialUrl;
+                        const stopCategoryStyle = CATEGORY_STYLES[stop.category ?? list.category];
                         const isStopInItinerary =
                           itineraryStopIds.includes(stopItineraryId) ||
                           itineraryPlaylists.some((playlist) => playlist.stopKeys.includes(stopItineraryId));
@@ -1250,7 +1252,7 @@ export function MapListCard({
                           data-active={isStopMapSelected}
                           data-expanded={isStopExpanded}
                           className="expanded-guide-stop-card transition-[border-color,box-shadow,background-color] duration-150"
-                          style={{ "--guide-accent": categoryStyle.mapColor } as React.CSSProperties}
+                          style={{ "--guide-accent": stopCategoryStyle.mapColor } as React.CSSProperties}
                         >
                         <div
                           className="flex w-full items-center gap-2 px-3 py-2.5 pl-4 text-left text-sm text-slate-700"
@@ -1265,7 +1267,7 @@ export function MapListCard({
                               onFocus={() => onStopHoverChange?.(stop.id)}
                               onBlur={() => onStopHoverChange?.(null)}
                               className="inline-flex h-6 w-6 shrink-0 items-center justify-center rounded-md font-mono text-[10px] font-semibold text-white shadow-sm transition hover:brightness-95 focus-visible:ring-2 focus-visible:ring-slate-400/50"
-                              style={{ backgroundColor: categoryStyle.mapColor }}
+                              style={{ backgroundColor: stopCategoryStyle.mapColor }}
                               aria-label={`Select ${stop.name} on map`}
                               title={`Select ${stop.name} on map`}
                             >
@@ -1281,7 +1283,7 @@ export function MapListCard({
                               onFocus={() => onStopHoverChange?.(stop.id)}
                               onBlur={() => onStopHoverChange?.(null)}
                               className="inline-flex h-2.5 w-2.5 shrink-0 rounded-full"
-                              style={{ backgroundColor: categoryStyle.mapColor }}
+                              style={{ backgroundColor: stopCategoryStyle.mapColor }}
                               aria-label={`Select ${stop.name} on map`}
                               title={`Select ${stop.name} on map`}
                             />
@@ -1383,6 +1385,7 @@ export function MapListCard({
                                       const placePhoto = getPoiPhoto(place.photo);
                                       const isPlaceExpanded = expandedPlaceIds.includes(place.id);
                                       const isPlaceMapSelected = forceExpandStopId === place.id;
+                                      const placeCategoryStyle = CATEGORY_STYLES[place.category ?? stop.category ?? list.category];
                                       return (
                                     <div
                                       key={place.id}
@@ -1391,7 +1394,7 @@ export function MapListCard({
                                       data-active={isPlaceMapSelected}
                                       data-expanded={isPlaceExpanded}
                                       className="expanded-guide-place-card flex items-start gap-2 px-3 py-2 pl-3.5 transition-[border-color,background-color] duration-150"
-                                      style={{ "--guide-poi-accent": categoryStyle.poiColor } as React.CSSProperties}
+                                      style={{ "--guide-poi-accent": placeCategoryStyle.poiColor } as React.CSSProperties}
                                     >
                                       <button
                                         type="button"
@@ -1402,7 +1405,7 @@ export function MapListCard({
                                         onFocus={() => onStopHoverChange?.(place.id)}
                                         onBlur={() => onStopHoverChange?.(null)}
                                         className="mt-0.5 inline-flex h-5 w-5 shrink-0 rotate-45 items-center justify-center rounded-[5px] font-mono text-[10px] font-semibold text-white shadow-sm"
-                                        style={{ backgroundColor: categoryStyle.poiColor }}
+                                        style={{ backgroundColor: placeCategoryStyle.poiColor }}
                                         aria-label={`Select ${place.name} on map`}
                                         title={`Select ${place.name} on map`}
                                       >

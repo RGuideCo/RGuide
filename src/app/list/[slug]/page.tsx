@@ -4,7 +4,7 @@ import { notFound } from "next/navigation";
 
 import { MapListCard } from "@/components/cards/MapListCard";
 import { ListGuideWorkspaceLoader } from "@/components/list/ListGuideWorkspaceLoader";
-import { getCategoryHref, getCityHref, getListHref } from "@/lib/routes";
+import { getAbsoluteHref, getCategoryHref, getCityHref, getListHref } from "@/lib/routes";
 import { getContinentsWithDestinationDescriptions } from "@/lib/destination-descriptions";
 import { getServerEditorialGuides } from "@/lib/server-editorial-guides";
 
@@ -34,12 +34,12 @@ export async function generateMetadata({ params }: ListDetailPageProps): Promise
     title: `${list.title} (${locationLabel})`,
     description: list.description,
     alternates: {
-      canonical: `/list/${list.slug}`,
+      canonical: getListHref(list),
     },
     openGraph: {
       title: `${list.title} | ${locationLabel}`,
       description: list.description,
-      url: `/list/${list.slug}`,
+      url: getListHref(list),
       images: [
         {
           url: list.creator.avatar,
@@ -83,26 +83,30 @@ export default async function ListDetailPage({ params }: ListDetailPageProps) {
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
     itemListElement: [
-      { "@type": "ListItem", position: 1, name: "Home", item: "/" },
+      { "@type": "ListItem", position: 1, name: "Home", item: getAbsoluteHref("/") },
       {
         "@type": "ListItem",
         position: 2,
         name: list.location.city ? `${list.location.city}, ${list.location.country}` : list.location.country,
-        item: list.location.city
-          ? getCityHref({
-              continent: list.location.continent,
-              country: list.location.country,
-              name: list.location.city,
-            })
-          : "/",
+        item: getAbsoluteHref(
+          list.location.city
+            ? getCityHref({
+                continent: list.location.continent,
+                country: list.location.country,
+                name: list.location.city,
+              })
+            : "/",
+        ),
       },
-      { "@type": "ListItem", position: 3, name: list.title, item: getListHref(list) },
+      { "@type": "ListItem", position: 3, name: list.title, item: getAbsoluteHref(getListHref(list)) },
     ],
   };
   const itemListJsonLd = {
     "@context": "https://schema.org",
     "@type": "ItemList",
     name: list.title,
+    description: list.description,
+    url: getAbsoluteHref(getListHref(list)),
     itemListOrder: "https://schema.org/ItemListOrderAscending",
     numberOfItems: list.stops.length,
     itemListElement: list.stops.map((stop, index) => ({
@@ -110,6 +114,7 @@ export default async function ListDetailPage({ params }: ListDetailPageProps) {
       position: index + 1,
       name: stop.name,
       description: stop.description,
+      image: stop.photo,
     })),
   };
 

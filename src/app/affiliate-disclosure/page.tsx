@@ -3,6 +3,9 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Affiliate Disclosure",
   description: "RGuide affiliate disclosure for booking and travel partner links.",
+  alternates: {
+    canonical: "/affiliate-disclosure",
+  },
 };
 
 export default function AffiliateDisclosurePage() {

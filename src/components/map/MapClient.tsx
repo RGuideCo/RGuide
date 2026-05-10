@@ -838,6 +838,7 @@ function createGuideStopData(
 ): FeatureCollection<Point, GuideStopFeatureProperties> {
   const visibleNestedParentSet = new Set(visibleNestedStopParentIds);
   const features = (activeGuide?.stops ?? []).flatMap((stop, index) => {
+    const stopCategory = stop.category ?? activeGuide?.category ?? "Activities";
     const placesBeenKind: GuideStopFeatureProperties["placesBeenKind"] = stop.id.startsWith("places-been-cities-")
       ? "cities"
       : stop.id.startsWith("places-been-countries-")
@@ -852,8 +853,8 @@ function createGuideStopData(
         name: stop.name,
         rank: index + 1,
         rankLabel: String(index + 1),
-        markerImage: getGuideStopMarkerImageName(activeGuide?.category ?? "Activities", String(index + 1)),
-        category: activeGuide?.category ?? "Activities",
+        markerImage: getGuideStopMarkerImageName(stopCategory, String(index + 1)),
+        category: stopCategory,
         isNested: false,
         placesBeenKind,
       },
@@ -870,7 +871,7 @@ function createGuideStopData(
         rank: index + 1 + (placeIndex + 1) / 100,
         rankLabel: String.fromCharCode(65 + (placeIndex % 26)),
         markerImage: "",
-        category: activeGuide?.category ?? "Activities",
+        category: place.category ?? stopCategory,
         isNested: true,
         placesBeenKind: "default" as const,
       },

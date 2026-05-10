@@ -3,6 +3,9 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Contact RGuide",
   description: "Contact RGuide for editorial corrections, partnerships, and general questions.",
+  alternates: {
+    canonical: "/contact",
+  },
 };
 
 export default function ContactPage() {
