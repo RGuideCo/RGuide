@@ -57,6 +57,35 @@ export type NightlifeType =
 
 export type PriceTier = "$" | "$$" | "$$$" | "$$$$";
 
+export type VenueOperatingStatus = "open" | "temporarily_closed" | "permanently_closed" | "seasonal" | "unknown";
+
+export interface VenueHoursInterval {
+  dayOfWeek: 0 | 1 | 2 | 3 | 4 | 5 | 6;
+  intervalOrder?: number;
+  isClosed?: boolean;
+  is24Hours?: boolean;
+  opensAt?: string;
+  closesAt?: string;
+  opensNextDay?: boolean;
+  validFrom?: string;
+  validTo?: string;
+  rawText?: string;
+  lastVerifiedAt?: string;
+}
+
+export interface VenueSpecialHoursInterval {
+  date: string;
+  intervalOrder?: number;
+  isClosed?: boolean;
+  is24Hours?: boolean;
+  opensAt?: string;
+  closesAt?: string;
+  opensNextDay?: boolean;
+  reason?: string;
+  rawText?: string;
+  lastVerifiedAt?: string;
+}
+
 export type VenueAttributeTag =
   | "relaxing"
   | "quiet"

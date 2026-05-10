@@ -12,6 +12,8 @@ Primary migrations:
 - [supabase/20260516_backfill-food-venue-classification.sql](/Users/brodriguez/Projects/rGuide/supabase/20260516_backfill-food-venue-classification.sql)
 - [supabase/20260517_nightlife-venue-classification.sql](/Users/brodriguez/Projects/rGuide/supabase/20260517_nightlife-venue-classification.sql)
 - [supabase/20260518_backfill-nightlife-venue-classification.sql](/Users/brodriguez/Projects/rGuide/supabase/20260518_backfill-nightlife-venue-classification.sql)
+- [supabase/20260519_venue-hours.sql](/Users/brodriguez/Projects/rGuide/supabase/20260519_venue-hours.sql)
+- [supabase/20260520_backfill-venue-hours.sql](/Users/brodriguez/Projects/rGuide/supabase/20260520_backfill-venue-hours.sql)
 
 ## Schema Overview
 
@@ -22,6 +24,7 @@ Source-of-truth tables:
 - `destinations`: canonical continent, continent-region, country, country-region/state, city, and neighborhood entities.
 - `destination_descriptions_v2`: destination copy keyed by `destination_id`.
 - `venues`: reusable places where events happen and entry stops can point.
+- `venue_hours`, `venue_special_hours`: canonical weekly and date-specific venue hours.
 - `venue_tags`, `venue_taggings`: normalized, filterable venue attributes.
 - `entries`: normalized editorial guides, journals, journeys, and event cards.
 - `entry_stops`: ordered normalized stops.
@@ -40,6 +43,7 @@ Rendered/cache compatibility surfaces:
 - `stay_venues`: city-scoped lodging search view for hotels, hostels, resorts, rentals, apartment hotels, guesthouses, camping, and holiday parks.
 - `food_venues`: city-scoped food search view for restaurants, cafes, fast food, stalls, food trucks, food carts, cuisine, price, and attributes.
 - `nightlife_venues`: city-scoped nightlife search view for bars, clubs, music venues, theatres, concert halls, comedy clubs, genres, price, and attributes.
+- `venue_hours_current`: current weekly and upcoming special hours for venue detail/search surfaces.
 
 The legacy blob tables `editorial_guides`, `destination_descriptions`, `weekly_event_guides`, and `submitted_guides` are archived in the locked `legacy_archive` schema. They are no longer in the public runtime schema.
 
@@ -63,6 +67,10 @@ Food places are also classified on the venue itself. `venue_kind = 'food_drink'`
 
 Nightlife places use `venue_kind = 'nightlife'`. `nightlife_type` supports `dive_bar`, `cocktail_bar`, `pub`, `sports_bar`, `gaming_bar`, `wine_bar`, `beer_bar`, `rooftop_bar`, `lounge`, `club`, `live_music_venue`, `theatre`, `concert_hall`, `comedy_club`, `karaoke_bar`, `casino`, `brewery`, and `other`. `music_genres` is a searchable array for club/music filters such as `house`, `techno`, `electronic`, `hip_hop`, `latin`, `jazz`, `rock`, `classical`, `flamenco`, and `fado`. Nightlife uses the shared `price_tier` column and nightlife-specific `attribute_tags` such as `cheap_drinks`, `premium_drinks`, `dance_floor`, `late_late`, `low_key_nightlife`, `party_nightlife`, `scenic_nightlife`, `speakeasy`, `craft_cocktails`, `craft_beer`, `natural_wine`, `live_music`, `dj_sets`, `comedy`, `theatre_show`, `games`, `sports_screening`, `queer_friendly`, and `reservation_recommended_nightlife`.
 
+`venue_hours` and `venue_special_hours`
+
+Canonical operating hours for real venues. `venue_hours` stores reusable weekly hours by day of week and interval order, supporting split service windows, closed days, 24-hour venues, seasonal validity, source links, raw source text, and last verification timestamps. `venue_special_hours` stores holiday closures, one-off hours, seasonal exceptions, and temporary changes by date. `entry_stops.hours` remains available as a guide-specific display override, but the venue tables are the source of truth for search and filtering.
+
 `venue_tags` and `venue_taggings`
 
 Canonical filter vocabulary and sourceable tag assignments for venues. Use these for scalable filters once there are thousands of places. The `venues.attribute_tags` array is the fast query cache for common filters; `venue_taggings` is the normalized table for attribution, confidence, and future editorial review.
@@ -78,6 +86,10 @@ Read view for Food search and filtering. It exposes food venues with city, neigh
 `nightlife_venues`
 
 Read view for Nightlife search and filtering. It exposes nightlife venues with city, neighborhood, `nightlife_type`, `music_genres`, `price_tier`, `attribute_tags`, coordinates, official URL, and source metadata, so bar, club, theatre, comedy, and music filters stay city-scoped.
+
+`venue_hours_current`
+
+Read view for current venue hours. It emits active weekly hours and upcoming 90-day special hours as JSON arrays, scoped per venue with city, timezone, operating status, and `hours_last_verified_at`.
 
 `entries`
 
@@ -125,6 +137,7 @@ Common query paths are indexed:
 - Stay search: `venues(city_id, lodging_type)` for lodging venues, `venues(city_id, venue_kind)`, and GIN on `venues.attribute_tags`.
 - Food search: `venues(city_id, food_service_type)`, `venues(city_id, price_tier)`, and GIN on `venues.cuisine_types` plus `venues.attribute_tags`.
 - Nightlife search: `venues(city_id, nightlife_type)`, `venues(city_id, price_tier)`, and GIN on `venues.music_genres` plus `venues.attribute_tags`.
+- Venue hours: `venue_hours(venue_id, day_of_week, interval_order)`, `venue_hours(day_of_week, is_closed, opens_at)`, `venue_special_hours(venue_id, special_date, interval_order)`, and `venues(operating_status)`.
 - Venue tag filters: `venue_tags(tag_group, is_active, is_filterable)` and `venue_taggings(tag_id, venue_id)`.
 - Render cache fallback: `entry_render_cache(entry_id, render_format, render_version)` and current rendered payload lookups.
 - City event feeds: `events(city_id, starts_at, status)`, `events(city_id, event_category, starts_at)`.
@@ -139,6 +152,7 @@ Constraints keep important shape guarantees:
 - `lodging_type` can only be set when `venue_kind = 'lodging'`.
 - `food_service_type` can only be set when `venue_kind = 'food_drink'`.
 - `nightlife_type` can only be set when `venue_kind = 'nightlife'`.
+- Venue hours and special hours must be closed, 24-hour, raw sourced text, or have both open and close times.
 - Event and occurrence `ends_at` cannot be before `starts_at`.
 - Events must have `submission_type = 'event'`.
 - Entry submission type is constrained by enum, not by category text.
@@ -149,7 +163,7 @@ The migration enables RLS on new tables and adds public read policies because rG
 
 Recommended write model:
 
-- Service role only for `destinations`, `destination_descriptions_v2`, `venues`, `venue_tags`, `venue_taggings`, `events`, `event_occurrences`, `sources`, source joins, event city publishing settings, source runs, render caches, and weekly publications.
+- Service role only for `destinations`, `destination_descriptions_v2`, `venues`, `venue_hours`, `venue_special_hours`, `venue_tags`, `venue_taggings`, `events`, `event_occurrences`, `sources`, source joins, event city publishing settings, source runs, render caches, and weekly publications.
 - Authenticated users may insert/update/delete only their own rows in `entries`.
 - Authenticated users may insert/update/delete `entry_stops` only when the parent `entries.user_id = auth.uid()`.
 - Browser/user submission writes should go directly to normalized `entries` and `entry_stops`; `submitted_guides` should not remain the active write path.
@@ -162,7 +176,7 @@ Backfill order:
 1. Populate `destinations` from local geography.
 2. Link and copy descriptions into `destination_descriptions_v2`.
 3. Insert editorial content into `entries` and `entry_stops`.
-4. Link venues, lodging classifications, tags, and sources.
+4. Link venues, classifications, hours, tags, and sources.
 5. Generate `entry_render_cache` from `entries_maplist`.
 6. Insert event city settings, source runs, canonical events, venues, occurrences, sources, and weekly publications.
 

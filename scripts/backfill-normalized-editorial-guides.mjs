@@ -525,6 +525,97 @@ async function upsertVenue(client, input, stats) {
   return rows[0].id;
 }
 
+const HOURS_DAY_MAP = new Map([
+  ["sun", 0],
+  ["sunday", 0],
+  ["mon", 1],
+  ["monday", 1],
+  ["tue", 2],
+  ["tues", 2],
+  ["tuesday", 2],
+  ["wed", 3],
+  ["wednesday", 3],
+  ["thu", 4],
+  ["thur", 4],
+  ["thurs", 4],
+  ["thursday", 4],
+  ["fri", 5],
+  ["friday", 5],
+  ["sat", 6],
+  ["saturday", 6],
+]);
+
+function normalizeHoursText(value) {
+  if (value === undefined || value === null) {
+    return null;
+  }
+  if (typeof value === "string") {
+    return value.trim() || null;
+  }
+  return String(value).trim() || null;
+}
+
+async function upsertVenueHoursFromStop(client, venueId, stop) {
+  if (!venueId || !stop?.hours) {
+    return;
+  }
+
+  if (typeof stop.hours === "string") {
+    const rawText = normalizeHoursText(stop.hours);
+    if (!rawText) {
+      return;
+    }
+    await client.query(
+      `update public.venues
+       set hours_note = coalesce(hours_note, $2),
+           hours_last_verified_at = coalesce(hours_last_verified_at, now())
+       where id = $1`,
+      [venueId, rawText],
+    );
+    return;
+  }
+
+  if (typeof stop.hours !== "object" || Array.isArray(stop.hours)) {
+    return;
+  }
+
+  for (const [dayKey, value] of Object.entries(stop.hours)) {
+    const dayOfWeek = HOURS_DAY_MAP.get(String(dayKey).toLowerCase());
+    const rawText = normalizeHoursText(value);
+    if (dayOfWeek === undefined || !rawText) {
+      continue;
+    }
+    const normalized = rawText.toLowerCase();
+    await client.query(
+      `insert into public.venue_hours (
+         venue_id, day_of_week, interval_order, is_closed, is_24_hours,
+         raw_text, raw_metadata, last_verified_at
+       )
+       values ($1,$2,0,$3,$4,$5,$6,now())
+       on conflict (venue_id, day_of_week, interval_order, valid_from) do update set
+         is_closed = excluded.is_closed,
+         is_24_hours = excluded.is_24_hours,
+         raw_text = excluded.raw_text,
+         raw_metadata = public.venue_hours.raw_metadata || excluded.raw_metadata,
+         last_verified_at = excluded.last_verified_at,
+         updated_at = now()`,
+      [
+        venueId,
+        dayOfWeek,
+        ["closed", "closed today"].includes(normalized),
+        ["24 hours", "open 24 hours", "24/7"].includes(normalized),
+        rawText,
+        toJsonObject({ source: "entry_stops.hours" }),
+      ],
+    );
+  }
+
+  await client.query(
+    "update public.venues set hours_last_verified_at = coalesce(hours_last_verified_at, now()) where id = $1",
+    [venueId],
+  );
+}
+
 async function upsertEntry(client, list, context, stats) {
   const { rows } = await client.query(
     `insert into public.entries (
@@ -617,6 +708,7 @@ async function replaceEntryStops(client, entryId, list, context, stats) {
       attributeTags: classification.attributeTags,
       sourceMetadata: { source: "editorial_guides", entryId: list.id, stopId: stop.id },
     }, stats);
+    await upsertVenueHoursFromStop(client, venueId, stop);
     await client.query(
       `insert into public.entry_stops (
          entry_id, legacy_id, stop_order, poi_legacy_id, name, description, category,
