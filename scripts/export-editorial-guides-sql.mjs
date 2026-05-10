@@ -1,22 +1,13 @@
-import fs from "fs";
-import path from "path";
+import process from "node:process";
 
-import {
-  buildEditorialGuidesSql,
-  loadEditorialGuideLists,
-} from "./editorial-guides-data.mjs";
-
-const ROOT = process.cwd();
-const OUTPUT_PATH = path.join(ROOT, "supabase/editorial-guides.sql");
-
-if (process.argv.length > 2) {
-  throw new Error("export-editorial-guides-sql.mjs always writes the full canonical seed. Use push-editorial-guides.mjs for scoped pushes.");
-}
-
-const allGuides = loadEditorialGuideLists();
-const sql = buildEditorialGuidesSql(allGuides);
-
-fs.writeFileSync(OUTPUT_PATH, sql);
-console.log(
-  `Exported ${allGuides.length} editorial guides to ${path.relative(ROOT, OUTPUT_PATH)}`,
+console.error(
+  [
+    "Legacy editorial guide SQL export is disabled.",
+    "Do not regenerate supabase/editorial-guides.sql or write public.editorial_guides.",
+    "Use normalized publishing instead:",
+    "  npm run push:editorial-guides -- --city <city-name>",
+    "  npm run push:editorial-guides -- --id <guide-id>",
+  ].join("\n"),
 );
+
+process.exit(1);

@@ -5,6 +5,10 @@ import { fileURLToPath } from "node:url";
 
 import pg from "pg";
 
+import {
+  addPoiReferencesToGuides,
+  loadEditorialGuideLists,
+} from "./editorial-guides-data.mjs";
 import { loadWeeklyEventGuideRecords } from "./weekly-events-data.mjs";
 
 const repoRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
@@ -351,19 +355,11 @@ async function tableExists(client, tableName) {
   return Boolean(rows[0]?.table_name);
 }
 
-async function loadEditorialGuides(client) {
-  const { rows } = await client.query(
-    [
-      "select id, slug, list",
-      "from public.editorial_guides",
-      "order by id asc",
-    ].join(" "),
-  );
-
-  return rows.map((row) => ({
-    legacyId: row.id,
-    slug: row.slug,
-    list: row.list,
+function loadEditorialGuides() {
+  return addPoiReferencesToGuides(loadEditorialGuideLists()).map((list) => ({
+    legacyId: list.id,
+    slug: list.slug,
+    list,
   }));
 }
 
@@ -404,42 +400,13 @@ async function loadNormalizedEditorialGuides(client) {
 }
 
 async function loadSubmittedCounts(client) {
-  if (!(await tableExists(client, "public.submitted_guides"))) {
-    return { legacySubmittedGuides: 0, normalizedSubmittedEntries: 0 };
-  }
-
-  const [legacyResult, normalizedResult] = await Promise.all([
-    client.query("select count(*)::int as count from public.submitted_guides"),
-    client.query("select count(*)::int as count from public.entries where source_table = 'submitted_guides'"),
-  ]);
-
-  return {
-    legacySubmittedGuides: legacyResult.rows[0]?.count ?? 0,
-    normalizedSubmittedEntries: normalizedResult.rows[0]?.count ?? 0,
-  };
-}
-
-async function loadWeeklyEventGuides(client) {
-  if (!(await tableExists(client, "public.weekly_event_guides"))) {
-    return loadLocalWeeklyEventGuides();
-  }
-
-  const { rows } = await client.query(
-    [
-      "select id, guide",
-      "from public.weekly_event_guides",
-      "order by id asc",
-    ].join(" "),
+  const normalizedResult = await client.query(
+    "select count(*)::int as count from public.entries where source_table = 'submitted_guides'",
   );
 
-  if (rows.length === 0) {
-    return loadLocalWeeklyEventGuides();
-  }
-
-  return rows.map((row) => ({
-    legacyId: row.id,
-    list: normalizeWeeklyEventGuide(row.guide),
-  }));
+  return {
+    normalizedSubmittedEntries: normalizedResult.rows[0]?.count ?? 0,
+  };
 }
 
 function normalizeWeeklyEventGuide(guide) {
@@ -639,12 +606,6 @@ function summarizeCriticalFailures(report) {
     }
   }
 
-  if (report.submittedGuides.legacySubmittedGuides !== report.submittedGuides.normalizedSubmittedEntries) {
-    failures.push(
-      `submitted guides: count mismatch (${report.submittedGuides.legacySubmittedGuides} legacy vs ${report.submittedGuides.normalizedSubmittedEntries} normalized)`,
-    );
-  }
-
   return failures;
 }
 
@@ -667,9 +628,9 @@ async function main() {
   try {
     await client.query("begin read only");
 
-    const legacyEditorialRows = await loadEditorialGuides(client);
+    const legacyEditorialRows = loadEditorialGuides();
     const normalizedEditorialRows = await loadNormalizedEditorialGuides(client);
-    const legacyWeeklyRows = await loadWeeklyEventGuides(client);
+    const legacyWeeklyRows = loadLocalWeeklyEventGuides();
     const normalizedWeeklyRows = await loadNormalizedWeeklyEvents(client);
     const submittedGuides = await loadSubmittedCounts(client);
 

@@ -395,7 +395,7 @@ Data entry workflow:
 
 - Add or edit editorial guide data in the matching city module under `src/data/guides/`, such as `src/data/guides/barcelona.ts` or `src/data/guides/madrid.ts`.
 - Add a new city module and register it in `src/data/guides/index.ts` when starting coverage for a new city.
-- Treat `supabase/editorial-guides.sql` as generated output. Regenerate it from latest `main` after city branches are merged, not while multiple cities are being populated in parallel.
+- Do not regenerate legacy blob SQL. Publish changed guides through the normalized writer after city branches are merged.
 
 Neighborhood polygon requirement:
 
@@ -774,7 +774,7 @@ Please:
 - Include stop IDs, names, coordinates in [latitude, longitude], descriptions, hours, price, priceSource where relevant, and bookingUrl for Stay stops.
 - Use the existing R Guide writing style: practical, source-backed, specific, and not generic.
 - Keep SEO fields stable and keyword-forward.
-- Update src/data/lists.ts and regenerate supabase/editorial-guides.sql.
+- Update the matching city guide module and publish through the normalized guide writer.
 - Run the relevant validation/build command.
 ```
 
@@ -783,7 +783,7 @@ Please:
 ```text
 Populate {Category} guides for {City}, {Country}.
 
-Use docs/editorial-guide-population-reference.md and the Barcelona {Category} examples as the model. Research current official, editorial, platform, and map sources. For each guide, include sources, accurate coordinates, hours, and category-specific context. Update src/data/lists.ts, regenerate supabase/editorial-guides.sql, and run validation/build.
+Use docs/editorial-guide-population-reference.md and the Barcelona {Category} examples as the model. Research current official, editorial, platform, and map sources. For each guide, include sources, accurate coordinates, hours, and category-specific context. Update the matching city guide module, publish through the normalized guide writer, and run validation/build.
 ```
 
 ### Populate POI Photos
@@ -826,7 +826,7 @@ Keep the existing stops, slugs, IDs, coordinates, sources, prices, and hours unl
 ```text
 Audit the existing {City} editorial guides against docs/editorial-guide-population-reference.md.
 
-Check for stale places, weak sources, missing coordinates/hours/prices, generic descriptions, neighborhood mismatches, and source gaps. Tell me the issues first, then patch the guides if the fixes are straightforward. Regenerate supabase/editorial-guides.sql after changes.
+Check for stale places, weak sources, missing coordinates/hours/prices, generic descriptions, neighborhood mismatches, and source gaps. Tell me the issues first, then patch the guides if the fixes are straightforward. Publish changed guides through the normalized guide writer after changes.
 ```
 
 ### Add A Personal Or Submitted Guide
@@ -859,6 +859,6 @@ While populating:
 
 After editing:
 
-- Regenerate `supabase/editorial-guides.sql` with `npm run` or the existing export script if needed.
+- Publish changed guides with a scoped normalized command such as `npm run push:editorial-guides -- --city {City}`.
 - Run build or the narrowest available validation command.
 - Summarize what changed and any sources that were weak, blocked, or need future review.

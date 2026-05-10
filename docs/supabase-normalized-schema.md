@@ -31,7 +31,7 @@ Rendered/cache compatibility surfaces:
 - `weekly_events_maplist`: view that emits weekly event `MapList` cards.
 - `weekly_event_publications`: rendered weekly event publishing cache with explicit query columns.
 
-The legacy blob tables `editorial_guides`, `destination_descriptions`, and `weekly_event_guides` are no longer runtime fallbacks. They may remain temporarily as archival/backfill inputs until destructive cleanup is approved.
+The legacy blob tables `editorial_guides`, `destination_descriptions`, `weekly_event_guides`, and `submitted_guides` are archived in the locked `legacy_archive` schema. They are no longer in the public runtime schema.
 
 ## Table Notes
 
@@ -148,8 +148,7 @@ Important scale rule:
 
 ## Cleanup Plan
 
-1. Keep the old blob tables as archival inputs until production has run on normalized reads and render caches.
-2. Move content publishing scripts to normalized-first writes.
-3. Export a final backup of `editorial_guides`, `destination_descriptions`, and `weekly_event_guides`.
-4. Apply a destructive cleanup migration only after approval.
-5. Remove old SQL seed files and legacy push scripts once the normalized publishing path is the only path.
+1. Keep archived copies only in `legacy_archive`.
+2. Keep public runtime reads and writes on normalized tables.
+3. Do not regenerate legacy blob SQL seed files.
+4. Remove the `legacy_archive` copies only after an explicit final deletion request.

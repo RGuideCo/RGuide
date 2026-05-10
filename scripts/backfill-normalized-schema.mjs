@@ -369,14 +369,6 @@ async function upsertDescription(client, destinationId, destination, stats) {
       toJsonObject({ legacyId: destination.legacyId }),
     ],
   );
-  if (await tableExists(client, "public.destination_descriptions")) {
-    await client.query(
-      `update public.destination_descriptions
-       set destination_id = $1
-       where id = $2`,
-      [destinationId, destination.legacyId],
-    );
-  }
   stats.destinationDescriptions += 1;
 }
 
@@ -718,21 +710,6 @@ async function backfillDestinations(client, geography, editorialLists, stats) {
        metadata = public.destination_descriptions_v2.metadata || excluded.metadata`,
     [JSON.stringify(destinationPayload)],
   );
-
-  if (await tableExists(client, "public.destination_descriptions")) {
-    await client.query(
-      `with incoming as (
-         select legacy_id
-         from jsonb_to_recordset($1::jsonb) as row(legacy_id text)
-       )
-       update public.destination_descriptions description
-       set destination_id = destination.id
-       from incoming
-       join public.destinations destination on destination.legacy_id = incoming.legacy_id
-       where description.id = incoming.legacy_id`,
-      [JSON.stringify(destinationPayload)],
-    );
-  }
 
   const { rows: idRows } = await client.query(
     `select legacy_id, id from public.destinations where legacy_id = any($1::text[])`,
@@ -1314,28 +1291,6 @@ async function upsertWeeklyPublication(client, rawEvent, guide, run, cityId, eve
       toJson(rawEvent),
     ],
   );
-  if (await tableExists(client, "public.weekly_event_guides")) {
-    await client.query(
-      `update public.weekly_event_guides
-       set submission_type = $1,
-           event_category = $2,
-           has_schedule = $3,
-           is_festival = $4,
-           city_destination_id = $5,
-           destination_id = $5,
-           source_run_id = $6
-       where id = $7`,
-      [
-        "event",
-        rawEvent.category,
-        Boolean(rawEvent.activations?.length),
-        Boolean(rawEvent.activations?.length) || rawEvent.category === "Festivals",
-        cityId,
-        sourceRunId,
-        guide.id,
-      ],
-    );
-  }
   stats.weeklyEventPublications += 1;
 }
 
@@ -1387,24 +1342,6 @@ async function backfillWeeklyEvents(client, maps, stats) {
   }
 }
 
-async function backfillSubmittedGuides(client, maps, stats) {
-  const result = await client.query(
-    `select to_regclass('public.submitted_guides') as table_name`,
-  );
-  if (!result.rows[0]?.table_name) {
-    return;
-  }
-  const { rows } = await client.query("select id, user_id, list from public.submitted_guides");
-  for (const row of rows) {
-    await backfillList(client, maps, row.list, {
-      sourceTable: "submitted_guides",
-      userId: row.user_id,
-      metadata: { submittedGuideId: row.id },
-    }, stats);
-    stats.submittedGuides += 1;
-  }
-}
-
 async function main() {
   loadEnvFile(path.join(ROOT, ".env.local"));
   const databaseUrl = process.env.SUPABASE_DB_URL ?? process.env.SUPABASE_DATABASE_URL ?? process.env.DATABASE_URL;
@@ -1426,7 +1363,6 @@ async function main() {
     eventCitySettings: 0,
     eventSourceRuns: 0,
     weeklyEventPublications: 0,
-    submittedGuides: 0,
     skippedTopEventCities: [],
     skippedWeeklyRuns: [],
   };
@@ -1449,7 +1385,6 @@ async function main() {
         metadata: { editorialGuideId: list.id },
       }, stats);
     }
-    await backfillSubmittedGuides(client, maps, stats);
     await backfillWeeklyEvents(client, maps, stats);
     await client.query("commit");
     const counts = await client.query(`
