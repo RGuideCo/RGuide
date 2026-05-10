@@ -880,7 +880,7 @@ const citywideNightlife: StopSeed[] = [
     name: "Danico",
     coordinates: [48.8666, 2.3399],
     description:
-      "Danico is the polished Galerie Vivienne cocktail room, backed by World 50 Best and useful when the night needs a destination bar near Palais Royal, Bourse, or the covered passages. It is more special-occasion cocktail stop than loose neighborhood bar.",
+      "Danico is the polished Galerie Vivienne destination backed by World 50 Best, useful when the night wants a hidden-room feel near Palais Royal, Bourse, or the covered passages. It is more special-occasion glam than loose neighborhood hang.",
     price: "$$$",
     priceSource: "World's 50 Best Bars",
   },
@@ -1749,14 +1749,14 @@ const parisNeighborhoodGuideSeeds: Record<ParisNeighborhood, Record<EditorialCat
       ],
     },
     Nightlife: {
-      title: "Hilltop Nightcaps and Old Cabaret Energy",
+      title: "Hilltop Views and Low-Key Montmartre Nights",
       description:
-        "Montmartre nights work when they lean into the hill: rooftop views, old cabaret rooms, intimate hotel bars, and lower-hill dives. This guide keeps after-dark plans tied to the neighborhood's slope and mood.",
+        "Montmartre nights work when they lean into the hill: rooftop views, old cabaret rooms, hidden hotel bars, and lower-hill spots with a looser Marlusse-et-Lapin kind of energy. This guide keeps after-dark plans tied to slope, mood, and how dressed-up the group wants to feel.",
       stops: [
-        nStop("montmartre-nightlife-terrass", "Terrass Hotel Rooftop", [48.8852, 2.3326], "Terrass Hotel Rooftop gives Montmartre a view-led drink without climbing back to the basilica steps. Use it for sunset, an early aperitif, or a calmer nightcap on the west side of the hill.", { price: "$$$", priceSource: "Official hotel site / Google Maps" }),
+        nStop("montmartre-nightlife-terrass", "Terrass Hotel Rooftop", [48.8852, 2.3326], "Terrass Hotel Rooftop gives Montmartre a view-led drink without climbing back to the basilica steps. Use it for sunset, an early aperitif, or a polished rooftop start before the lower hill gets louder.", { price: "$$$", priceSource: "Official hotel site / Google Maps" }),
         nStop("montmartre-nightlife-lapin-agile", "Au Lapin Agile", [48.8888, 2.3401], "Au Lapin Agile is the historic cabaret stop that keeps Montmartre connected to song, performance, and artist lore. Check the schedule and treat it as a planned show, not a drop-in bar.", { price: "$$", priceSource: "Official venue site / Google Maps" }),
-        nStop("montmartre-nightlife-tres-particulier", "Le Tres Particulier", [48.8882, 2.3339], "Le Tres Particulier is the hidden cocktail bar inside Hotel Particulier Montmartre, useful when the night wants garden secrecy and a more refined hilltop mood. Book or confirm access before relying on it.", { price: "$$$", priceSource: "Official hotel site / Google Maps" }),
-        nStop("montmartre-nightlife-marlusse", "Marlusse et Lapin", [48.8842, 2.3364], "Marlusse et Lapin is the lower-hill bar for a looser, playful drink near Abbesses. It works when Montmartre should end social and casual rather than polished.", { price: "$$", priceSource: "Google Maps / local nightlife guides" }),
+        nStop("montmartre-nightlife-tres-particulier", "Le Tres Particulier", [48.8882, 2.3339], "Le Tres Particulier is the hidden bar inside Hotel Particulier Montmartre, with garden secrecy, piano-bar intimacy, and a more chic hilltop mood. Book or confirm access before relying on it.", { price: "$$$", priceSource: "Official hotel site / Google Maps" }),
+        nStop("montmartre-nightlife-marlusse", "Marlusse et Lapin", [48.8842, 2.3364], "Marlusse et Lapin is the lower-hill bar for creative cocktails, a funky nook, live-performance nights, and happy-hour momentum near Abbesses. It works when Montmartre should end playful and social rather than polished.", { price: "$$", priceSource: "Google Maps / local nightlife guides" }),
       ],
     },
     Nature: {
@@ -1819,12 +1819,12 @@ const parisNeighborhoodGuideSeeds: Record<ParisNeighborhood, Record<EditorialCat
     Nightlife: {
       title: "Canal Drinks With a Route",
       description:
-        "Canal Saint-Martin nights are strongest when they stay walkable: one proper cocktail, a music terrace, an atmospheric indoor bar, and a casual meeting-point cafe. The guide keeps the canal from becoming only bank-side wandering.",
+        "Canal Saint-Martin nights are strongest when they stay walkable: a designed room, a music terrace, an atmospheric indoor spot, and a casual meeting-point cafe. The guide keeps the canal from becoming only bank-side wandering.",
       stops: [
-        nStop("canal-nightlife-gravity", "Gravity Bar", [48.8728, 2.3622], "Gravity Bar is the cocktail stop for a canal night that wants design and sharper drinks before the route loosens up. It is best for a focused first drink near Rue des Vinaigriers.", { price: "$$", priceSource: "Time Out / Google Maps" }),
+        nStop("canal-nightlife-gravity", "Gravity Bar", [48.8728, 2.3622], "Gravity Bar gives the canal sophisticated craft cocktails, creative tapas, natural wines, and a hip room with a wavy-ceiling look. It works for a stylish but still relaxed start near Rue des Vinaigriers.", { price: "$$", priceSource: "Time Out / Google Maps" }),
         nStop("canal-nightlife-la-meduse", "La Meduse", [48.8791, 2.3671], "La Meduse gives the canal a cocktail-and-natural-wine option right by the water, with enough food to keep the evening flexible. Use it when the night should stay canal-side but still feel deliberate.", { price: "$$", priceSource: "Time Out / Google Maps" }),
-        nStop("canal-nightlife-point-ephemere", "Point Ephemere", [48.8819, 2.3686], "Point Ephemere gives the canal a music, terrace, and art-space anchor farther north. It works when the night needs programming or a looser crowd instead of another polished cocktail room.", { price: "$$", priceSource: "Time Out / Google Maps" }),
-        nStop("canal-nightlife-comptoir-general", "Le Comptoir General", [48.8727, 2.3638], "Le Comptoir General is the eclectic canal room for groups that want decor, drinks, and a moodier indoor option after the banks get crowded. It is best saved for atmosphere-forward evenings.", { price: "$$", priceSource: "Time Out / Google Maps" }),
+        nStop("canal-nightlife-point-ephemere", "Point Ephemere", [48.8819, 2.3686], "Point Ephemere gives the canal a music, terrace, and art-space anchor farther north. It works when the night needs programming, a looser crowd, and something more event-led than a standard bar stop.", { price: "$$", priceSource: "Time Out / Google Maps" }),
+        nStop("canal-nightlife-comptoir-general", "Le Comptoir General", [48.8727, 2.3638], "Le Comptoir General gives the canal a rustic-chic room and leafy terrace, with classic fish dishes, cocktails, and a decor-heavy mood that can carry dinner into drinks. It is best saved for atmosphere-forward evenings.", { price: "$$", priceSource: "Time Out / Google Maps" }),
       ],
     },
     Nature: {
@@ -1882,6 +1882,7 @@ const parisNeighborhoodGuideSeeds: Record<ParisNeighborhood, Record<EditorialCat
         nStop("seventh-food-arpege", "Arpege", [48.8555, 2.3162], "Arpege is Alain Passard's garden-first fine-dining landmark, where the 7th becomes a serious food destination as much as a monument district. Use it only when the trip has room for a high-budget, high-commitment reservation built around craft and produce.", { price: "$$$", priceSource: "MICHELIN Guide / Google Maps" }),
         nStop("seventh-food-fontaine-mars", "La Fontaine de Mars", [48.8587, 2.3044], "La Fontaine de Mars is the Rue Saint-Dominique classic for cassoulet, duck, steak, and a room that feels properly neighborhood despite the Eiffel-side address. It works when the group wants traditional Paris cooking before or after a monument day.", { price: "$$$", priceSource: "Google Maps / Paris dining guides" }),
         nStop("seventh-food-cafe-varenne", "Cafe Varenne", [48.855, 2.3194], "Cafe Varenne is the practical brasserie near Rodin, Invalides, and government-quarter walks. Use it when the museum day needs a reliable lunch or dinner without a destination-dining commitment.", { price: "$$", priceSource: "Google Maps / local dining guides" }),
+        nStop("seventh-food-fitzgerald", "Fitzgerald", [48.8572, 2.3078], "Fitzgerald works as more than a hidden bar: it has lunch, dinner, drinks, terrace hours, and a Sunday brunch format that can soften an Eiffel-side day. Add it when the 7th needs something relaxed but still stylish.", { price: "$$$", priceSource: "Official restaurant site / Google Maps" }),
       ],
     },
     Nightlife: {
@@ -1889,9 +1890,9 @@ const parisNeighborhoodGuideSeeds: Record<ParisNeighborhood, Record<EditorialCat
       description:
         "The 7th is not a late-night district, so the best after-dark stops are intentional: river barges, hotel-adjacent bars, rooftops, and polished cafes. This guide keeps evenings close to Eiffel-side routes.",
       stops: [
-        nStop("seventh-nightlife-fitzgerald", "Fitzgerald", [48.8572, 2.3078], "Fitzgerald gives the 7th a discreet cocktail-bar format behind a restaurant setting near Rue Saint-Dominique. Use it when the night wants a hidden-room feel without leaving the Eiffel side.", { price: "$$$", priceSource: "Time Out / Google Maps" }),
+        nStop("seventh-nightlife-fitzgerald", "Fitzgerald", [48.8572, 2.3078], "Fitzgerald gives the 7th a restaurant, terrace, and speakeasy-style bar behind Rue Saint-Dominique. It can start as brunch or dinner and turn into a more dressed-up late drink without leaving the Eiffel side.", { price: "$$$", priceSource: "Time Out / Google Maps" }),
         nStop("seventh-nightlife-rosa-bonheur", "Rosa Bonheur sur Seine", [48.862, 2.3069], "Rosa Bonheur sur Seine brings the 7th to the river with a barge-party format that works better for groups and warm evenings than quiet cocktails. Check the night and crowd before relying on it.", { price: "$$", priceSource: "Google Maps / local nightlife guides" }),
-        nStop("seventh-nightlife-les-ombres", "Les Ombres", [48.861, 2.2978], "Les Ombres is the Eiffel-view rooftop drink and dinner setting above Quai Branly, useful when the night is about scenery and occasion. Book ahead if the view is the point.", { price: "$$$", priceSource: "Google Maps / official venue site" }),
+        nStop("seventh-nightlife-les-ombres", "Les Ombres", [48.861, 2.2978], "Les Ombres is the Eiffel-view rooftop restaurant and bar above Quai Branly, serving lunch and dinner with contemporary French cooking touched by Mediterranean influence. Use it when the night is about view, food, and occasion together.", { price: "$$$", priceSource: "Google Maps / official venue site" }),
         nStop("seventh-nightlife-recrutement", "Le Recrutement Cafe", [48.8568, 2.304], "Le Recrutement Cafe is the casual Rue Saint-Dominique terrace for a simple drink after Eiffel or Invalides walking. Its value is location, people-watching, and low planning pressure.", { price: "$$", priceSource: "Google Maps / local nightlife guides" }),
       ],
     },
