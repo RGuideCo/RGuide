@@ -3,6 +3,10 @@ import {
   madridNeighborhoodGuides,
 } from "@/data/guides/madrid";
 import {
+  londonCitywideGuides,
+  londonNeighborhoodGuides,
+} from "@/data/guides/london";
+import {
   parisCitywideGuides,
   parisNeighborhoodGuides,
 } from "@/data/guides/paris";
@@ -18,6 +22,8 @@ import type { MapList } from "@/types";
 export const editorialGuideLists: MapList[] = [
   ...parisNeighborhoodGuides,
   ...parisCitywideGuides,
+  ...londonNeighborhoodGuides,
+  ...londonCitywideGuides,
   ...madridNeighborhoodGuides,
   ...globalGuides,
   ...barcelonaCoreGuides,
