@@ -35,6 +35,26 @@ export type LodgingType =
 
 export type FoodServiceType = "restaurant" | "cafe" | "fast_food" | "stall" | "food_truck" | "food_cart";
 
+export type NightlifeType =
+  | "dive_bar"
+  | "cocktail_bar"
+  | "pub"
+  | "sports_bar"
+  | "gaming_bar"
+  | "wine_bar"
+  | "beer_bar"
+  | "rooftop_bar"
+  | "lounge"
+  | "club"
+  | "live_music_venue"
+  | "theatre"
+  | "concert_hall"
+  | "comedy_club"
+  | "karaoke_bar"
+  | "casino"
+  | "brewery"
+  | "other";
+
 export type PriceTier = "$" | "$$" | "$$$" | "$$$$";
 
 export type VenueAttributeTag =
@@ -84,7 +104,34 @@ export type VenueAttributeTag =
   | "lively_food"
   | "quiet_food"
   | "budget_food"
-  | "splurge_food";
+  | "splurge_food"
+  | "cheap_drinks"
+  | "premium_drinks"
+  | "dance_floor"
+  | "late_late"
+  | "low_key_nightlife"
+  | "lively_nightlife"
+  | "party_nightlife"
+  | "romantic_nightlife"
+  | "scenic_nightlife"
+  | "local_bar"
+  | "speakeasy"
+  | "craft_cocktails"
+  | "craft_beer"
+  | "natural_wine"
+  | "live_music"
+  | "dj_sets"
+  | "comedy"
+  | "theatre_show"
+  | "karaoke"
+  | "games"
+  | "sports_screening"
+  | "queer_friendly"
+  | "tourist_friendly"
+  | "dressy"
+  | "casual_nightlife"
+  | "reservation_recommended_nightlife"
+  | "walk_in_friendly_nightlife";
 
 export type RegionKind = "north" | "south" | "east" | "west" | "central";
 

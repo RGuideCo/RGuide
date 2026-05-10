@@ -131,6 +131,105 @@ function uniqueValues(values) {
 }
 
 function inferVenueClassification(stop, list) {
+  const isNightlife = list?.category === "Nightlife" || stop?.category === "Nightlife";
+  if (isNightlife) {
+    const text = [
+      stop?.name,
+      stop?.description,
+      stop?.category,
+      stop?.price,
+      stop?.bookingUrl,
+      stop?.officialUrl,
+    ]
+      .filter(Boolean)
+      .join(" ")
+      .toLowerCase();
+
+    let nightlifeType = "other";
+    if (/\bdive\s+bars?\b/.test(text)) nightlifeType = "dive_bar";
+    else if (/\bsports?\s+bars?\b|watch\s+the\s+game|screen(s|ing)?\b/.test(text)) nightlifeType = "sports_bar";
+    else if (/\bgaming\s+bars?\b|arcade|board\s+game|pool\s+table|darts?\b/.test(text)) nightlifeType = "gaming_bar";
+    else if (/\bcocktail|mixology|speakeasy\b/.test(text)) nightlifeType = "cocktail_bar";
+    else if (/\bpubs?\b|public\s+house\b/.test(text)) nightlifeType = "pub";
+    else if (/\bwine\s+bars?\b|natural\s+wine\b/.test(text)) nightlifeType = "wine_bar";
+    else if (/\bbeer\s+bars?\b|brewery|taproom|craft\s+beer\b/.test(text)) nightlifeType = "beer_bar";
+    else if (/\brooftop\b/.test(text)) nightlifeType = "rooftop_bar";
+    else if (/\bcomedy\s+clubs?\b|stand[-\s]?up\b/.test(text)) nightlifeType = "comedy_club";
+    else if (/\bconcert\s+halls?\b/.test(text)) nightlifeType = "concert_hall";
+    else if (/\btheatres?\b|theaters?\b|stage|show\b/.test(text)) nightlifeType = "theatre";
+    else if (/\blive\s+music|jazz\s+club|music\s+venue\b/.test(text)) nightlifeType = "live_music_venue";
+    else if (/\bclubs?\b|nightclubs?\b|dance\s+floor|dj\b/.test(text)) nightlifeType = "club";
+    else if (/\bkaraoke\b/.test(text)) nightlifeType = "karaoke_bar";
+    else if (/\bcasino\b/.test(text)) nightlifeType = "casino";
+    else if (/\blounge\b/.test(text)) nightlifeType = "lounge";
+    else if (/\bbars?\b/.test(text)) nightlifeType = "cocktail_bar";
+
+    const genrePatterns = [
+      ["house", /\bhouse\b/],
+      ["techno", /\btechno\b/],
+      ["electronic", /\belectronic|edm|dance\s+music\b/],
+      ["hip_hop", /\bhip[-\s]?hop|rap\b/],
+      ["r_and_b", /\br&b|rnb\b/],
+      ["latin", /\blatin|reggaeton|salsa|bachata|cumbia\b/],
+      ["jazz", /\bjazz\b/],
+      ["blues", /\bblues\b/],
+      ["rock", /\brock|indie\b/],
+      ["pop", /\bpop\b/],
+      ["disco", /\bdisco\b/],
+      ["funk", /\bfunk\b/],
+      ["soul", /\bsoul\b/],
+      ["reggae", /\breggae|dancehall\b/],
+      ["metal", /\bmetal\b/],
+      ["punk", /\bpunk\b/],
+      ["classical", /\bclassical|orchestra|symphony\b/],
+      ["flamenco", /\bflamenco\b/],
+      ["fado", /\bfado\b/],
+      ["samba", /\bsamba\b/],
+      ["tango", /\btango\b/],
+    ];
+    const musicGenres = uniqueValues(genrePatterns.filter(([, pattern]) => pattern.test(text)).map(([genre]) => genre));
+
+    const attributeTags = [];
+    if (/\bcheap|budget|affordable|dive\b/.test(text) || stop?.price === "$") attributeTags.push("cheap_drinks");
+    if (/\bpremium|luxury|expensive|champagne|high[-\s]?end\b/.test(text) || stop?.price === "$$$" || stop?.price === "$$$$") attributeTags.push("premium_drinks");
+    if (/\bdance\s+floor|dancing|club|dj\b/.test(text)) attributeTags.push("dance_floor");
+    if (/\blate[-\s]?late|after[-\s]?hours|all[-\s]?night|late\s+night\b/.test(text)) attributeTags.push("late_late");
+    if (/\blow[-\s]?key|quiet|chill|conversation|calm\b/.test(text)) attributeTags.push("low_key_nightlife");
+    if (/\blively|buzz|busy|scene|energetic|packed\b/.test(text)) attributeTags.push("lively_nightlife");
+    if (/\bparty|wild|club|nightclub\b/.test(text)) attributeTags.push("party_nightlife");
+    if (/\bromantic|date|couples?|intimate\b/.test(text)) attributeTags.push("romantic_nightlife");
+    if (/\bscenic|view|views|rooftop|waterfront|terrace|patio|skyline\b/.test(text)) attributeTags.push("scenic_nightlife");
+    if (/\blocal|neighborhood|regulars?|dive\b/.test(text)) attributeTags.push("local_bar");
+    if (/\bspeakeasy|hidden|reservation[-\s]?only\b/.test(text)) attributeTags.push("speakeasy");
+    if (/\bcraft\s+cocktail|cocktail|mixology\b/.test(text)) attributeTags.push("craft_cocktails");
+    if (/\bcraft\s+beer|brewery|taproom\b/.test(text)) attributeTags.push("craft_beer");
+    if (/\bnatural\s+wine|wine\s+bar\b/.test(text)) attributeTags.push("natural_wine");
+    if (/\blive\s+music|jazz|band|concert\b/.test(text)) attributeTags.push("live_music");
+    if (/\bdj|club\s+night|sets?\b/.test(text)) attributeTags.push("dj_sets");
+    if (/\bcomedy|stand[-\s]?up\b/.test(text)) attributeTags.push("comedy");
+    if (/\btheatre|theater|stage|show|performance\b/.test(text)) attributeTags.push("theatre_show");
+    if (/\bkaraoke\b/.test(text)) attributeTags.push("karaoke");
+    if (/\barcade|games?|pool\s+table|darts?|gaming\b/.test(text)) attributeTags.push("games");
+    if (/\bsports?|watch\s+the\s+game|screen(s|ing)?\b/.test(text)) attributeTags.push("sports_screening");
+    if (/\bqueer|lgbtq|gay\s+bar\b/.test(text)) attributeTags.push("queer_friendly");
+    if (/\btourist|visitor|traveler|traveller\b/.test(text)) attributeTags.push("tourist_friendly");
+    if (/\bdressy|upscale|polished|smart\s+casual\b/.test(text)) attributeTags.push("dressy");
+    if (/\bcasual|no[-\s]?fuss|pub|dive\b/.test(text)) attributeTags.push("casual_nightlife");
+    if (/\breservation|guestlist|tickets?|book\b/.test(text)) attributeTags.push("reservation_recommended_nightlife");
+    if (/\bwalk[-\s]?in|drop[-\s]?in|no\s+reservation\b/.test(text)) attributeTags.push("walk_in_friendly_nightlife");
+
+    return {
+      venueKind: "nightlife",
+      lodgingType: null,
+      foodServiceType: null,
+      cuisineTypes: [],
+      priceTier: stop?.price ?? null,
+      nightlifeType,
+      musicGenres,
+      attributeTags: uniqueValues(attributeTags),
+    };
+  }
+
   const isFood = list?.category === "Food" || stop?.category === "Food";
   if (isFood) {
     const text = [
@@ -245,6 +344,8 @@ function inferVenueClassification(stop, list) {
       foodServiceType,
       cuisineTypes,
       priceTier: stop?.price ?? null,
+      nightlifeType: null,
+      musicGenres: [],
       attributeTags: uniqueValues(attributeTags),
     };
   }
@@ -257,6 +358,8 @@ function inferVenueClassification(stop, list) {
       foodServiceType: null,
       cuisineTypes: [],
       priceTier: null,
+      nightlifeType: null,
+      musicGenres: [],
       attributeTags: [],
     };
   }
@@ -317,6 +420,8 @@ function inferVenueClassification(stop, list) {
     foodServiceType: null,
     cuisineTypes: [],
     priceTier: null,
+    nightlifeType: null,
+    musicGenres: [],
     attributeTags: uniqueValues(attributeTags),
   };
 }
@@ -989,10 +1094,10 @@ async function upsertVenue(client, input, stats) {
     `insert into public.venues (
        legacy_id, slug, name, normalized_name, aliases, destination_id, city_id,
        neighborhood_id, address_line1, locality, region, country, coordinates,
-       official_url, venue_kind, lodging_type, food_service_type, cuisine_types,
-       price_tier, attribute_tags, source_metadata
+       official_url, venue_kind, venue_kinds, lodging_type, food_service_type, cuisine_types,
+       price_tier, nightlife_type, music_genres, attribute_tags, source_metadata
      )
-     values ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20,$21)
+     values ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20,$21,$22,$23,$24)
      on conflict (city_id, slug) do update set
        name = excluded.name,
        normalized_name = excluded.normalized_name,
@@ -1005,10 +1110,13 @@ async function upsertVenue(client, input, stats) {
          when excluded.venue_kind = 'other' then public.venues.venue_kind
          else excluded.venue_kind
        end,
+       venue_kinds = array(select distinct unnest(public.venues.venue_kinds || excluded.venue_kinds)),
        lodging_type = coalesce(excluded.lodging_type, public.venues.lodging_type),
        food_service_type = coalesce(excluded.food_service_type, public.venues.food_service_type),
        cuisine_types = array(select distinct unnest(public.venues.cuisine_types || excluded.cuisine_types)),
        price_tier = coalesce(excluded.price_tier, public.venues.price_tier),
+       nightlife_type = coalesce(excluded.nightlife_type, public.venues.nightlife_type),
+       music_genres = array(select distinct unnest(public.venues.music_genres || excluded.music_genres)),
        attribute_tags = array(select distinct unnest(public.venues.attribute_tags || excluded.attribute_tags)),
        source_metadata = public.venues.source_metadata || excluded.source_metadata
      returning id`,
@@ -1028,10 +1136,13 @@ async function upsertVenue(client, input, stats) {
       toJson(normalizeCoordinates(input.coordinates)),
       input.officialUrl ?? null,
       input.venueKind ?? "other",
+      input.venueKind ? [input.venueKind] : [],
       input.lodgingType ?? null,
       input.foodServiceType ?? null,
       input.cuisineTypes ?? [],
       input.priceTier ?? null,
+      input.nightlifeType ?? null,
+      input.musicGenres ?? [],
       input.attributeTags ?? [],
       toJsonObject(input.sourceMetadata),
     ],
@@ -1140,6 +1251,8 @@ async function insertEntryStops(client, entryId, list, context, stats) {
       foodServiceType: classification.foodServiceType,
       cuisineTypes: classification.cuisineTypes,
       priceTier: classification.priceTier,
+      nightlifeType: classification.nightlifeType,
+      musicGenres: classification.musicGenres,
       attributeTags: classification.attributeTags,
       sourceMetadata: { source: context.sourceTable, entryId: list.id, stopId: stop.id },
     }, stats);
