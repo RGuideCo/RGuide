@@ -3718,7 +3718,7 @@ const countryDescriptionOverrides: Record<string, string> = {
   angola:
     "Angola starts with Luanda's Atlantic city life, then changes once the road leaves the capital. Music and food give the urban opening its texture. Highland scenery or desert-coast routes need honest transfer days and a clear reason to move.",
   argentina:
-    "Argentina should not be planned as one mood. Buenos Aires can set the social rhythm before the trip chooses a second act. Wine country or Patagonia can lead that act; the northwest and Iguazu ask for separate timing rather than flight-connection thinking.",
+    "Argentina runs from Iguazu's subtropical heat to Patagonia's blue glaciers. Between them sit endless pampas and the European-style chaos of Buenos Aires, a land of dramatic contrasts fueled by late steaks, red wine, and near-religious football.",
   armenia:
     "Armenia feels close on the map but dense on the ground. Yerevan works as the table-setting city, then monastery roads and canyon landscapes carry the deeper route. Wine villages and mountain views deserve pauses between short drives.",
   australia:
@@ -3736,11 +3736,11 @@ const countryDescriptionOverrides: Record<string, string> = {
   bhutan:
     "Bhutan is deliberately slow travel. Permits and etiquette matter as much as altitude and mountain roads, so the logistics are part of the experience rather than friction to remove. Paro and Thimphu act as anchors before valley days and monastery hikes set the tempo.",
   bolivia:
-    "Bolivia asks for altitude planning before ambition. La Paz can start the drama, while Sucre or Uyuni changes the pace completely. Lake Titicaca and Amazon edges need recovery days and flexible transfers more than extra pins.",
+    "Bolivia is a dizzying high-altitude landscape where salt flats meet thin Andean air. From La Paz's cable-car basins to humid Amazon lowlands, raw beauty and fierce Indigenous identity shape a land of bowler hats and mountain-hardened independence.",
   botswana:
     "Botswana's safari logic begins with water and season. Decide between the Okavango and Chobe before filling the map; Kalahari or salt-pan routes need a different season. Transfer style and lodge budget will shape the trip as much as wildlife timing.",
   brazil:
-    "Brazil contains too many trips for a single sweep. Rio and Sao Paulo create one urban frame, while Bahia or the Amazon changes the story entirely. Flights and season should choose the second chapter before the route expands.",
+    "The Amazon canopy and Iguazu's thunder meet Sao Paulo concrete and Rio's beach curves. From the marshy Pantanal to the red dust of the Northeast, Brazil moves at massive scale, driven by carnival energy, football obsession, and a deep rhythmic soul.",
   brunei:
     "Brunei suits a short Borneo stay with a quiet pace. Bandar Seri Begawan gives the cultural base, then mosque visits and water-village time can fill the city rhythm. Rainforest or river access depends on planned transport.",
   "burkina-faso":
@@ -3752,31 +3752,31 @@ const countryDescriptionOverrides: Record<string, string> = {
   cameroon:
     "Cameroon has enough climate and cultural range to punish loose planning. Douala or Yaounde can start the route, then one direction should lead. Volcanic mountains, beaches, and highland towns need local guidance and realistic road time.",
   canada:
-    "Canada needs one region to lead, not a coast-to-coast wish list. Toronto, Montreal, and Vancouver each ask for different city pacing. The Rockies, Atlantic towns, or northern lights routes need weather and transport to set the frame.",
+    "Canada's boreal forests and deep blue lakes stretch from Atlantic cliffs to Pacific rainforests. Between Toronto's cosmopolitan streets and Quebec City's French-speaking charm lie prairies, tundra, winter outdoors culture, and a northern habit of polite hospitality.",
   "central-african-republic":
     "Central African Republic is not a conventional sightseeing surface. Bangui can sit inside a specialist plan with river corridors or forest reserves. Current safety checks, local contacts, and a narrow purpose should guide every move.",
   chad:
     "Chad is a specialist overland journey before it is a scenic one. N'Djamena can orient the trip, while Ennedi formations and desert lakes require permits. Heat planning and enough time for distance matter before rock art or remote landscapes.",
   chile:
-    "Chile reads like a long corridor between the Pacific and the Andes. Santiago can open the route before Atacama or Valparaiso changes the pace. The lakes and Patagonia need a bigger time commitment, so season and flight time should decide what belongs.",
+    "Chile is a thin ribbon squeezed between Andes and Pacific, running from the world's driest desert to southern fjords. Fertile valleys and smog-framed Santiago sit between those extremes, shaped by poetry, crisp wine, and survivalist grit.",
   china:
     "China is a global titan of industrial zones, ancient trade routes, and massive infrastructure. From the Great Wall to high-speed rail, dynastic history meets urban density. Collective resilience, family legacy, and relentless modern drive shape the culture.",
   colombia:
-    "Colombia changes with altitude and neighborhood choice. Bogota and Medellin set different urban rhythms before Cartagena or coffee country enters the plan. Flight hops and safety context should guide the order rather than a neat map line.",
+    "Colombia carries emerald hills, roasting coffee, and cities that rarely sleep. Caribbean heat and chilly Andean peaks sit inside a complex, colorful history, while a work-hard, dance-harder energy makes the whole country feel alive.",
   "costa-rica":
-    "Costa Rica should start with the kind of nature day you want. Cloud forest and wildlife lodges create a different trip from surf towns or hot springs. Road time, trail conditions, and rainy-season patterns should decide the rest before extra stops appear.",
+    "Lush rainforests and smoking volcanoes frame sloths, toucans, and bright tree frogs. From Pacific surf to Caribbean mangroves, Costa Rica concentrates extraordinary biodiversity in a green sanctuary shaped by environmental stewardship and Pura Vida ease.",
   cuba:
-    "Cuba should feel slower than the map suggests. Havana sets the social rhythm before tobacco country or colonial towns enter the route. Cash, transport, and lodging need early planning so beach time can stay flexible instead of frantic.",
+    "Cuba feels like a mid-century fever dream of crumbling pastel facades, tail-finned Chevrolets, sea salt, and tobacco smoke. Beyond Havana, the limestone mogotes of Vinales and a slow Caribbean pulse reveal defiant resilience, rum, and constant percussion.",
   "democratic-republic-of-the-congo":
     "Democratic Republic of the Congo demands a narrow specialist plan. Kinshasa and the Congo River can frame the journey, but park or volcano travel depends on access. Safety logistics and expert support should decide what is realistic.",
   djibouti:
     "Djibouti turns heat, salt, and volcanic terrain into a tight Red Sea route. The city works as a reset between desert drives and lake stops. Whale-shark water or coast time needs season checks rather than casual wandering.",
   "dominican-republic":
-    "Dominican Republic changes depending on whether resort ease or capital culture leads. Santo Domingo deserves its own time before beach recovery takes over. Music routes and mountain roads should not dissolve into transfer days.",
+    "Dominican Republic pairs tall mountain ranges with palm-fringed shores and some of the Caribbean's strongest sand. Santo Domingo's cobblestone heart and Samana's green peninsula mix old-world echoes with resort energy, merengue, baseball, and warm hospitality.",
   "east-timor":
     "East Timor rewards travelers who treat flexible transport as part of the trip. Dili gives the historical frame before reef days or coffee districts shift the pace. Mountain roads need local guidance and patient timing.",
   ecuador:
-    "Ecuador packs altitude and Amazon gateways into deceptively short distances. Colonial cities, coast towns, and the Galapagos can pull the route in several directions. Quito and Cuenca need acclimatized pacing first, with weather deciding how far the trip turns outward.",
+    "Andean markets and colonial plazas sit beneath snow-capped volcanoes. Ecuador can move from the equator to the Amazon in a day, then out to Galapagos wildlife, packing huge geography into a small country fueled by mountain soups and steady resilience.",
   egypt:
     "Egypt is strongest when the Nile becomes the spine and Cairo is more than a staging point. Monument days and museum time need their own space. Red Sea recovery or desert routes should be added only when heat and transfers still make sense.",
   "el-salvador":
@@ -3804,7 +3804,7 @@ const countryDescriptionOverrides: Record<string, string> = {
   greenland:
     "Greenland demands one region at a time. Weather-dependent flights and daylight set the scale before any wish list does. Icebergs and fjords need buffers, while small towns and hiking routes remind travelers that movement is part of the trip.",
   guatemala:
-    "Guatemala is dense in a way that rewards slow routing. Antigua and Lake Atitlan should have room to breathe before Maya sites enter the plan. Coffee country and road days need altitude-aware pacing, especially when Tikal or highland markets enter the route.",
+    "Mist-covered highlands and volcanic peaks overlook Mayan ruins hidden in rainforest. Chichicastenango markets and Antigua's cobblestones sit in a landscape rich with jade and volcanic soil, shaped by vibrant textiles, Indigenous traditions, and coffee-scented air.",
   guinea:
     "Guinea needs conservative routing around road time and local support. Conakry can orient the trip before the Fouta Djallon or Atlantic islands enter the plan. Transfers should be realistic before the route widens, with market time and mountain scenery paced separately.",
   "guinea-bissau":
@@ -3812,7 +3812,7 @@ const countryDescriptionOverrides: Record<string, string> = {
   guyana:
     "Guyana should be planned from the rainforest outward. Georgetown gives the cultural base, but Kaieteur Falls or savannah lodges change the logistics. Small flights and boats decide how wide the route can go, with guides shaping the days between them.",
   haiti:
-    "Haiti requires trusted local support before any route feels responsible. Port-au-Prince and Jacmel need current safety context, not casual browsing. Citadelle heritage or beach towns should stay inside a focused cultural plan.",
+    "Haiti's steep sun-scorched mountains and hidden azure coves vibrate with raw artistic energy. From the Citadelle to Port-au-Prince markets, the landscape matches a dramatic history shaped by revolutionary pride, Vodou traditions, and brilliant color.",
   honduras:
     "Honduras changes sharply between islands and inland routes. Copan and the Bay Islands ask for different logistics. Cloud forest or mountain roads can fit only when safety-aware transport sets the order, leaving the island downtime separate from inland ruins.",
   "hong-kong":
@@ -3830,7 +3830,7 @@ const countryDescriptionOverrides: Record<string, string> = {
   "ivory-coast":
     "Ivory Coast carries its strongest first impression through Abidjan. Food and music give the city its pulse before markets or beach towns widen the route. Local guidance and longer transfers should set the pace, especially when the route leaves the coast.",
   jamaica:
-    "Jamaica loses texture when it is treated only as resort recovery. Kingston music changes the center of gravity before beach time takes over. Jerk routes, waterfalls, and Blue Mountain drives deserve distinct days, with meals and beach time kept from blurring together.",
+    "Jamaica is a lush emerald rock where jerk spice mingles with Blue Mountain mist. From Cockpit Country limestone to the north shore's turquoise shallows, the island moves to a bass-heavy rhythm shaped by music, sharp wit, and an out-of-many-one-people spirit.",
   japan:
     "Japan is a high-tech archipelago where Tokyo neon contrasts with Kyoto's wooden temples. Robotics, automotive exports, and omotenashi hospitality sit beside volcanic peaks, bullet trains, and a culture of precision that defines modern East Asian influence.",
   jordan:
@@ -3866,7 +3866,7 @@ const countryDescriptionOverrides: Record<string, string> = {
   mauritania:
     "Mauritania is a Sahara-and-Atlantic journey built around distance. Nouakchott can orient the plan before desert caravans or ancient ksour take over. Banc d'Arguin belongs in a clear coast-or-desert priority, with specialist logistics shaping the route.",
   mexico:
-    "Mexico needs a region to lead the story. Mexico City asks for different pacing than the Pacific coast, while Maya routes change the trip again. Colonial towns and food logic should guide the map before distance does, leaving room for neighborhood days rather than constant transfers.",
+    "Mexico pairs turquoise coastlines with ancient stone pyramids tucked in tropical jungle. From high-altitude Mexico City to Oaxaca's colonial plazas, volcanic peaks and arid deserts frame vibrant festivals, world-famous cuisine, and deep Mesoamerican history.",
   mongolia:
     "Mongolia is a distance-and-weather trip before it is a checklist. Ulaanbaatar can start the route before ger camps or the Gobi take over. Steppe horizons and lake country need guides and drive days planned first.",
   morocco:
@@ -3884,7 +3884,7 @@ const countryDescriptionOverrides: Record<string, string> = {
   "new-zealand":
     "Glacial fjords and geothermal springs cut through New Zealand's alpine ridges and green pastures. North Island volcanic plateaus and South Island sounds frame forests, turquoise lakes, Maori tradition, and an outdoor culture shaped by distance and weather.",
   nicaragua:
-    "Nicaragua is compact enough to tempt overplanning. Granada and Leon can carry the cultural side before volcano or surf days take over. Heat and transport should decide the order, with current safety context checked before the route widens.",
+    "Deep blue lakes and smoldering volcanoes dominate Nicaragua's colonial cathedrals and cloud forests. Pacific surf breaks and the Afro-Caribbean Corn Islands reveal raw terrain, revolutionary poetry, street-side fritangas, and an unpolished Central American charm.",
   niger:
     "Niger is a specialist Sahel-and-Sahara route. Niamey can orient the trip before desert or river travel enters the plan. Current safety checks and permits need to lead, with heat planning and local logistics shaping every longer move.",
   nigeria:
@@ -3896,13 +3896,13 @@ const countryDescriptionOverrides: Record<string, string> = {
   pakistan:
     "Pakistan needs a route shaped by season and altitude as much as interest. Lahore or Karachi can anchor the city side before mountain valleys pull the trip north. Local support and realistic road timing matter early.",
   panama:
-    "Panama is strongest when canal-city days are balanced with one clear escape. Casco Viejo can anchor the urban side before rainforest or island time takes over. Coffee highlands need clean separation from the city plan, especially when Boquete becomes the slower second act.",
+    "Tropical islands and cloud forests meet glass towers above the world's most famous shipping canal. From Bocas del Toro reefs to Boquete coffee farms, Panama bridges oceans and continents through maritime trade, salsa rhythms, and a diverse crossroads culture.",
   "papua-new-guinea":
     "Papua New Guinea is highly specialized travel, not a casual island hop. Port Moresby may frame the route before highland or reef travel begins. Expert local planning, buffered flights, and cultural respect are essential.",
   paraguay:
     "Paraguay rewards a slower inland rhythm. Asuncion can set the tone before mission ruins or river towns enter the plan. Chaco landscapes need heat and drive time kept practical, while river context gives the route more shape than distance alone.",
   peru:
-    "Peru should be planned around altitude and food timing before landmarks. Lima and Cusco need different pacing before the Sacred Valley takes over. Machu Picchu plans should protect train timing and recovery days, with markets and acclimatization left unhurried.",
+    "Peru is a vertical assault on the senses, where Pacific desert crashes into the Andes before diving toward the Amazon. Beyond Machu Picchu, Lima's flavor-heavy grit and the sacred valleys reveal Incan scars, high-altitude silence, and world-beating culinary ambition.",
   philippines:
     "The Philippines is a chain of more than 7,000 islands shaped by volcanic terrain, coral shores, and Manila's urban density. Colonial history, family-centered culture, a global service economy, and a vast diaspora fuse island life with modern democratic drive.",
   "puerto-rico":
@@ -3950,7 +3950,7 @@ const countryDescriptionOverrides: Record<string, string> = {
   thailand:
     "Gilded temple spires and tangled night markets define Thailand, where rainforests meet emerald coasts. Misty northern mountains and southern limestone karsts frame a world-famous culinary scene, deep Buddhist traditions, and a warm, hospitable culture.",
   "the-bahamas":
-    "The Bahamas should start with the island choice, not the hotel choice. Nassau and the family islands have different rhythms before reefs or blue holes enter the plan. Ferry and flight logistics matter early.",
+    "The Bahamas spreads across more than seven hundred islands where clear water glows over white sand. Nassau's casinos and the Out Islands' pink-sand quiet show geography that is more ocean than earth, shaped by Junkanoo, conch salad, and maritime ease.",
   togo:
     "Togo is narrow enough for compact contrasts. Lome can frame the coast before mountain villages or heritage routes pull the trip inland. Border logistics and local guidance should be planned together.",
   "trinidad-and-tobago":
@@ -4083,7 +4083,7 @@ function createCountry(country: WorldCountrySeed): Country {
       name: country.name,
       continent: country.continentName,
       description:
-        "United States travel needs a region-first plan because the country behaves like many trips at once. New York and Chicago set one kind of city rhythm, while Miami and Los Angeles pull the trip toward coast and sprawl. National parks and desert roads need a different plan from Gulf coast or island routes.",
+        "Steel-glass skyscrapers and suburban sprawl give way to carved canyons, golden wheat fields, Rockies peaks, and swampy Southern bayous. The United States offers endless regional variety, defined by cinematic ambition, local pride, and a constant drive for innovation.",
       subareas: usaRegionSeeds,
       states: usaStateSeeds.map((state) => ({
         ...state,
