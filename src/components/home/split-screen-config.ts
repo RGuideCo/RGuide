@@ -274,6 +274,104 @@ export function filterListStopsByFoodPrice(list: MapList, priceTier: FoodPriceTi
   };
 }
 
+function normalizeFilterValue(value: string) {
+  return value
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/&/g, " and ")
+    .replace(/[_-]/g, " ")
+    .replace(/[^a-z0-9\s]/gi, " ")
+    .replace(/\s+/g, " ")
+    .trim()
+    .toLowerCase();
+}
+
+function singularizeFilterValue(value: string) {
+  return value
+    .split(" ")
+    .map((token) => {
+      if (token.endsWith("ies")) {
+        return `${token.slice(0, -3)}y`;
+      }
+      if (token.endsWith("s") && token.length > 3) {
+        return token.slice(0, -1);
+      }
+      return token;
+    })
+    .join(" ");
+}
+
+function filterValuesMatch(left: string, right: string) {
+  const normalizedLeft = normalizeFilterValue(left);
+  const normalizedRight = normalizeFilterValue(right);
+
+  if (!normalizedLeft || !normalizedRight) {
+    return false;
+  }
+
+  return (
+    normalizedLeft === normalizedRight ||
+    singularizeFilterValue(normalizedLeft) === singularizeFilterValue(normalizedRight)
+  );
+}
+
+function valuesFromMaybeArray(value: string | string[] | null | undefined) {
+  if (Array.isArray(value)) {
+    return value.filter(Boolean);
+  }
+  return value ? [value] : [];
+}
+
+function getPoiSubcategories(stop: MapList["stops"][number]) {
+  return [
+    ...valuesFromMaybeArray(stop.subcategory),
+    ...valuesFromMaybeArray(stop.subcategories),
+    ...valuesFromMaybeArray(stop.lodgingType),
+    ...valuesFromMaybeArray(stop.foodServiceType),
+    ...valuesFromMaybeArray(stop.nightlifeType),
+    ...valuesFromMaybeArray(stop.venueKind),
+  ];
+}
+
+function getListPoiStops(list: MapList) {
+  return list.stops.flatMap((stop) => [stop, ...(stop.places ?? [])]);
+}
+
+export function doesListMatchCategory(list: MapList, category: ListCategory): boolean {
+  if (list.category === category) {
+    return true;
+  }
+
+  return getListPoiStops(list).some((stop) => stop.category === category);
+}
+
+function getStructuredSubcategories(list: MapList) {
+  return getListPoiStops(list).flatMap(getPoiSubcategories);
+}
+
+function getSubcategoryFilterAliases(subcategory: string) {
+  switch (subcategory) {
+    case "Hotels":
+      return ["Hotels", "Hotel", "hotel", "guesthouse", "apartment_hotel"];
+    case "Hostels":
+      return ["Hostels", "Hostel", "hostel"];
+    case "Resorts":
+      return ["Resorts", "Resort", "resort"];
+    case "Vacation Rentals":
+      return ["Vacation Rentals", "Vacation Rental", "airbnb", "short term rental"];
+    case "Dive Bar":
+      return ["Dive Bar", "dive_bar"];
+    case "Live Music":
+      return ["Live Music", "live_music_venue", "concert_hall"];
+    case "Late Night":
+      return ["Late Night", "club", "lounge"];
+    case "Rooftops":
+      return ["Rooftops", "Rooftop", "rooftop_bar"];
+    default:
+      return [subcategory];
+  }
+}
+
 export function inferFoodCuisine(list: MapList, cuisineOptions: string[]): string {
   const text = `${list.title} ${list.description}`.toLowerCase();
   const has = (pattern: RegExp) => pattern.test(text);
@@ -339,10 +437,33 @@ export function inferNightlifeBarType(list: MapList): (typeof NIGHTLIFE_BAR_TYPE
 }
 
 export function doesListMatchSubcategory(list: MapList, subcategory: string): boolean {
+  const structuredSubcategories = getStructuredSubcategories(list);
+
+  if (structuredSubcategories.length) {
+    const subcategoryAliases = getSubcategoryFilterAliases(subcategory);
+    return structuredSubcategories.some((value) =>
+      subcategoryAliases.some((alias) => filterValuesMatch(value, alias)),
+    );
+  }
+
   const text = `${list.title} ${list.description} ${list.stops
     .map((stop) => `${stop.name} ${stop.description}`)
     .join(" ")}`.toLowerCase();
   switch (subcategory) {
+    case "Hotels": {
+      const hasHostelLanguage = /\b(hostels?|dorms?|backpackers?|hostelworld|social-hostel)\b/.test(text);
+      const hasResortLanguage = /\b(resorts?|all-inclusive|beach resort)\b/.test(text);
+      const hasRentalLanguage = /\b(vacation rentals?|apartments?|airbnb|short-term rental)\b/.test(text);
+      const hasHotelLanguage = /\b(hotels?|boutique stays?|boutique bases?|palace|guesthouses?|rooms?|sleep|sleeping|stay|stays|base|bases|lodging)\b/.test(text);
+
+      return hasHotelLanguage && !hasHostelLanguage && !hasResortLanguage && !hasRentalLanguage;
+    }
+    case "Hostels":
+      return /\b(hostels?|dorms?|backpackers?|hostelworld|social-hostel|social hostels?)\b/.test(text);
+    case "Resorts":
+      return /\b(resorts?|all-inclusive|beach resort|resort zone)\b/.test(text);
+    case "Vacation Rentals":
+      return /\b(vacation rentals?|apartments?|airbnb|short-term rental|self-catering)\b/.test(text);
     case "Dive Bar":
       return /(dive bar|dive|no-frills|grunge|cheap pours|neighborhood bar)/.test(text);
     case "Live Music":
@@ -372,8 +493,8 @@ export function isItineraryList(list: MapList, itineraryListIds: Set<string>): b
   if (hasGeneratedItineraryStops) {
     return true;
   }
-  const hasItineraryTitle = /\bitinerary\b/i.test(list.title);
-  const hasCompiledItineraryDescription = /^compiled itinerary with \d+ saved locations\.?$/i.test(
+  const hasItineraryTitle = /\b(itinerary|journey)\b/i.test(list.title);
+  const hasCompiledItineraryDescription = /^compiled (itinerary|journey) with \d+ saved locations\.?$/i.test(
     list.description.trim(),
   );
   return hasItineraryTitle && hasCompiledItineraryDescription;
@@ -403,7 +524,7 @@ export const guideRailOptions = [
   { id: "all-guides", label: "All Guides", shortLabel: "All", icon: MapIcon },
   { id: "r-guides", label: "R Guides", shortLabel: "R", icon: null },
   { id: "user-guides", label: "User Guides", shortLabel: "User", icon: Users },
-  { id: "itinerary", label: "Itineraries", shortLabel: "Trip", icon: Route },
+  { id: "itinerary", label: "Journeys", shortLabel: "Journey", icon: Route },
   { id: "favorites", label: "Favorites", shortLabel: "Fav", icon: Heart },
   { id: "trending", label: "Trending", shortLabel: "Trend", icon: Flame },
   { id: "week-events", label: "This Week", shortLabel: "Week", icon: CalendarDays },
@@ -434,7 +555,7 @@ export const profileLeftRailOptions = [
 export const profileRightRailOptions = [
   { id: "guides", label: "Guides", icon: MapIcon },
   { id: "experiences", label: "Experiences", icon: BookOpen },
-  { id: "itineraries", label: "Itineraries", icon: Route },
+  { id: "itineraries", label: "Journeys", icon: Route },
   { id: "favorites", label: "Favorites", icon: Heart },
 ] as const;
 

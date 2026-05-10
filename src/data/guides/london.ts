@@ -467,6 +467,190 @@ type GuideSpec = {
   stopDays?: number[];
 };
 
+const guideDescriptions: Record<string, string> = {
+  "soho-restaurants": [
+    "Soho does not reward timid eating. Start with the wine-room hush of Noble Rot, take the counter heat at Kiln or Barrafina Dean Street, then let Mildreds and BAO Soho keep the route loose enough for theatre, records, or one more drink.",
+    "This is central London food at street level: quick decisions, close tables, good bottles, and rooms that know how to feed people before the night changes shape.",
+  ].join(" "),
+  "covent-garden-restaurants": [
+    "Covent Garden can feel polished to a shine, but the right table gives it some bite. Rules brings the old dining-room theatre, Clos Maggiore gives you the soft-focus booking, while The Barbary, Dishoom, and Frenchie keep the neighborhood from becoming only curtain calls and shopping bags.",
+    "Use this when dinner needs to work with the West End instead of fighting it.",
+  ].join(" "),
+  "shoreditch-restaurants": [
+    "Shoreditch eats best when the room has smoke, noise, and a little swagger. BRAT puts the grill at the center, Smoking Goat pushes heat into the night, St. John Bread and Wine keeps Spitalfields honest, and Manteca and E. Pellicci bring the route back to pasta, fry-ups, and old East End daylight.",
+    "It is a food crawl with enough substance to survive the bars after.",
+  ].join(" "),
+  "notting-hill-restaurants": [
+    "Notting Hill is slower than central London, and the meals should respect that. Core and The Ledbury are the big reservations, Gold gives Portobello a lively middle gear, Farm Girl handles the softer morning, and Falafel King is there when the market has done its work and you just need something good in your hand.",
+    "This guide is for a west London day that knows when to linger.",
+  ].join(" "),
+  "south-bank-restaurants": [
+    "The South Bank is at its best when eating stays close to the river. Borough Market gives you the crowd and the appetite, Padella turns a queue into a reward, Wright Brothers handles oysters, BRAT x Climpson's Arch adds fire, and Flat Iron Square keeps groups from overplanning themselves into misery.",
+    "Use it for a day that moves by foot, hunger, and the Thames.",
+  ].join(" "),
+
+  "soho-culture": [
+    "Soho is never just one thing, which is the point. The British Museum sits just north with empire-scale weight, The Photographers' Gallery brings the eye back to the present, Soho Theatre keeps the room unpredictable, and Carnaby Street and Liberty carry the ghosts of fashion, music, and retail ceremony.",
+    "This is a compact route for reading the neighborhood between meals and late rooms.",
+  ].join(" "),
+  "covent-garden-culture": [
+    "Covent Garden is built on performance, but the stage is not only inside the theatre. The Royal Opera House and Theatre Royal Drury Lane give it ceremony, the National Gallery pulls the route toward Trafalgar Square, while the London Transport Museum and Somerset House add machinery, design, and Strand-side discipline.",
+    "It is a culture day that still leaves room for dinner.",
+  ].join(" "),
+  "shoreditch-culture": [
+    "Shoreditch is where London lets the edges show. The Barbican supplies concrete ambition, Whitechapel Gallery gives the art some teeth, Old Spitalfields Market and Brick Lane keep commerce and migration in the frame, and Museum of the Home slows everything down just enough to notice domestic history.",
+    "This is east London beyond the shorthand.",
+  ].join(" "),
+  "notting-hill-culture": [
+    "Notting Hill's culture lives in shopfronts, screens, basements, and market weather. Portobello Road is the spine, Electric Cinema turns a film into a room worth remembering, Museum of Brands catches the strange poetry of packaging, while The Tabernacle and Graffik Gallery keep the neighborhood connected to carnival, community, and paint.",
+    "Go slowly; the good parts are in the browse.",
+  ].join(" "),
+  "south-bank-culture": [
+    "The South Bank is London's easiest argument for walking. Tate Modern, Shakespeare's Globe, the Southbank Centre, the National Theatre, and BFI Southbank line up like a civic dare: art, theatre, film, river air, repeat.",
+    "It can be high culture without being precious, especially when you let the bridges and bookstalls do some of the work.",
+  ].join(" "),
+
+  "soho-stays": [
+    "Staying in Soho means accepting that the city will not politely go to bed. The Z Hotel and The Resident keep things practical, Hazlitt's gives you townhouse atmosphere, Ham Yard brings design polish, and Broadwick Soho adds a bit of velvet mischief near the bars and theatres.",
+    "Choose this guide when the point is to step outside and already be in the night.",
+  ].join(" "),
+  "covent-garden-stays": [
+    "Covent Garden is for travelers who want their London measured in short walks: theatre, museums, dinner, bed. NoMad and The Savoy bring the occasion, Henrietta and One Aldwych add boutique polish, and The Fielding keeps the theatre-district base more grounded.",
+    "It is not the quietest choice, but it is brutally useful.",
+  ].join(" "),
+  "shoreditch-stays": [
+    "A Shoreditch hotel should feel like more than a place to drop luggage. Boundary and The Hoxton understand the neighborhood's social rhythm, Mondrian and citizenM keep the base contemporary, and Batty Langley's gives Spitalfields a moodier, older counterpoint.",
+    "Stay here when east London is part of the trip, not an afterthought.",
+  ].join(" "),
+  "notting-hill-stays": [
+    "Notting Hill is the softer landing: pastel streets, Portobello mornings, and a little distance from central London's elbows. The Laslett and The Portobello Hotel carry the townhouse romance, Ruby Zoe keeps it modern, while Ravna Gora and Kensington Court make the west side more reachable.",
+    "This is where you sleep when you want London to start gently.",
+  ].join(" "),
+  "south-bank-stays": [
+    "South Bank hotels work because the river solves half the itinerary. Sea Containers gives the view, The Hoxton Southwark and citizenM Bankside keep Tate and Borough close, London Bridge Hotel is all station logic, and Park Plaza Westminster Bridge handles scale without losing the landmarks.",
+    "Pick this base when walking matters as much as the room.",
+  ].join(" "),
+
+  "soho-hostels": [
+    "A budget bed near Soho is about staying close to the action without spending the whole trip on trains. Astor Museum and Generator put Bloomsbury and the West End within reach, while The Z Hotel and The Resident are compact upgrades when privacy matters more than the dorm-room story.",
+    "It is central, imperfect, and extremely useful.",
+  ].join(" "),
+  "covent-garden-hostels": [
+    "For Covent Garden on a budget, the trick is to stay close enough that the last show, pint, or night bus does not become a second itinerary. Astor Museum and Generator cover the hostel end, while The Fielding and The Z Hotel offer small-room practicality near the West End.",
+    "This is about location doing the heavy lifting.",
+  ].join(" "),
+  "shoreditch-hostels": [
+    "Shoreditch budget stays should make it easy to say yes to one more bar, market, or late train home. Wombat's and Generator bring the social base, citizenM keeps things efficient, and Batty Langley's gives the area a characterful splurge when the dorm years are behind you.",
+    "Use this when east London is the version of the city you came for.",
+  ].join(" "),
+  "notting-hill-hostels": [
+    "Notting Hill is a gentler budget play: Portobello by day, parks nearby, and enough distance from the loudest parts of town to actually sleep. Onefam Notting Hill handles the social hostel lane, while Ravna Gora, Ruby Zoe, and Kensington Court give the route a mix of value and private-room calm.",
+    "It is west London without pretending money is no object.",
+  ].join(" "),
+  "south-bank-hostels": [
+    "A South Bank budget base lets the river do the navigation. St Christopher's at the Village keeps Borough Market close, Wombat's gives you an eastward option, and citizenM Bankside or London Bridge Hotel make sense when a small room beats another dorm but the plan still revolves around Tate, trains, and the Thames.",
+    "It is practical first, which in London is its own kind of luxury.",
+  ].join(" "),
+
+  "soho-dive-bars": [
+    "Soho's best low-key drinking is not about novelty; it is about rooms that have already seen everything. The French House and Bradley's still feel like old central London, The Ship keeps the pub energy direct, Swift gives the night a cocktail gear, and Ronnie Scott's turns the crawl toward jazz when standing around is no longer enough.",
+    "This is for half-pints, narrow staircases, and nights that refuse to become tidy.",
+  ].join(" "),
+  "soho-popular-bars": [
+    "When Soho wants a proper night out, start with Swift for polished cocktails, let Ronnie Scott's put music in the room, then keep The French House, Noble Rot, and Bradley's nearby for the kind of drinking that feels less planned and more earned.",
+    "It is popular because the neighborhood still knows how to hold a crowd.",
+  ].join(" "),
+  "covent-garden-dive-bars": [
+    "The trick in Covent Garden is escaping the obvious pint. Lamb & Flag and The Porterhouse keep the pub route sturdy, Mr Fogg's adds theatreland absurdity, Eve brings the basement cocktail turn, and the American Bar is there when the night wants polish instead of another round.",
+    "Use this when you want the West End without surrendering to the piazza.",
+  ].join(" "),
+  "covent-garden-popular-bars": [
+    "Covent Garden drinks can go grand, strange, or happily excessive. The American Bar supplies hotel legend, Eve handles the low-lit cocktail hour, The Porterhouse works for groups, Mr Fogg's leans into the costume, and Lamb & Flag keeps the whole thing from floating away.",
+    "It is a pre- or post-theatre night with several escape routes.",
+  ].join(" "),
+  "shoreditch-dive-bars": [
+    "Shoreditch does not need much encouragement after dark. The Old Blue Last and Queen Adelaide keep the pub bones intact, The Book Club gives groups somewhere to sprawl, Happiness Forgets goes underground for better cocktails, and Village Underground turns the route into a gig when the night asks for volume.",
+    "Loose, loud, and better when you do not over-schedule it.",
+  ].join(" "),
+  "shoreditch-popular-bars": [
+    "For a bigger Shoreditch night, let Happiness Forgets set the cocktail standard, Village Underground supply the event energy, and The Book Club, Old Blue Last, and Queen Adelaide carry the messy middle. It is not a single strip so much as a set of rooms that reward wandering.",
+    "This guide gives the night a spine without taking away its bad ideas.",
+  ].join(" "),
+  "notting-hill-dive-bars": [
+    "Notting Hill drinks best when the polish cracks a little. The Churchill Arms is all flowers and pints, The Cow brings seafood and old-school confidence, Sun in Splendour keeps Portobello casual, Trailer Happiness goes basement rum, and The Walmer Castle rounds it out with west London pub warmth.",
+    "This is neighborhood drinking with better scenery than it admits.",
+  ].join(" "),
+  "notting-hill-popular-bars": [
+    "A Notting Hill night is softer than Soho but not sleepy. Trailer Happiness gives it rum and neon, The Walmer Castle and The Cow bring the polished pub current, while The Churchill Arms and Sun in Splendour keep the route tied to Portobello rather than some generic cocktail map.",
+    "Go for character, not velocity.",
+  ].join(" "),
+  "south-bank-dive-bars": [
+    "South Bank drinking is best when it keeps moving with the river. The Anchor and Founders Arms give you the Thames in the glass, The Understudy catches the theatre crowd, Flat Iron Square handles groups, and OMEARA is the late-room option when Borough refuses to call it.",
+    "It is a pub crawl disguised as a walk.",
+  ].join(" "),
+  "south-bank-popular-bars": [
+    "For a South Bank night with more lift, start high at 12th Knot, drop to The Anchor or Founders Arms for the river, then let The Understudy and OMEARA pull the route toward theatre bars and live music. The area works because nothing feels too far if you keep the water beside you.",
+    "Good for dates, groups, and nights that want views before volume.",
+  ].join(" "),
+
+  "top-parks": [
+    "London's parks are not pauses from the city; they are part of its operating system. Hyde Park and Regent's Park give the royal scale, Hampstead Heath gives the lungs and the view, Richmond Park adds deer and distance, Greenwich Park drops toward the river, and Regent's Canal turns the whole thing into a walkable thread.",
+    "Use this when the city starts to feel too hard-edged and you need air without leaving London behind.",
+  ].join(" "),
+  "citywide-restaurants": [
+    "This is the London eating list for people willing to cross town for the right room. Noble Rot and Rules hold central London history in different registers, BRAT brings the fire, Core and The Ledbury cover the serious west-side reservations, and Borough Market keeps the whole thing democratic.",
+    "It is not comprehensive; it is a set of meals worth planning a day around.",
+  ].join(" "),
+  "citywide-markets": [
+    "London markets are where the city stops pretending to be orderly. Borough gives the appetite, Spitalfields gives the old trading floor new energy, Portobello keeps the hunt alive, Flat Iron Square feeds groups, and Brick Lane adds the mess, memory, and weekend crush.",
+    "Come hungry, leave with something you did not mean to buy.",
+  ].join(" "),
+  "citywide-pub-dining": [
+    "Some London meals are better when they start as a pint. The French House, Lamb & Flag, The Cow, The Anchor, and E. Pellicci all sit on that line between food, room, and ritual, where the point is not just what lands on the table but who has been sitting there for years.",
+    "This is casual dining with history in the wallpaper.",
+  ].join(" "),
+  "citywide-fine-dining": [
+    "London fine dining is not one mood. Core and The Ledbury bring the west-side precision, Clos Maggiore does romance, Noble Rot gives wine-soaked intelligence, BRAT keeps smoke in the room, and Rules reminds you that ceremony can still be fun when it has a pulse.",
+    "Book carefully, then let the city dress up a little.",
+  ].join(" "),
+  "citywide-south-asian": [
+    "London's South Asian food story is too big for one list, so treat this as a starting route rather than a verdict. Dishoom gives central London its Bombay-cafe theatre, Brick Lane brings the old curry-house corridor, Borough Market adds grazing, while Kiln and Smoking Goat bend the spice map through Thai heat and London appetite.",
+    "It is a cross-city reminder that the best meals here rarely stay in one category.",
+  ].join(" "),
+  "citywide-popular-bars": [
+    "For a London night with range, move from Swift's Soho cocktails to the American Bar's hotel polish, then east to Happiness Forgets, west to Trailer Happiness, or up to 12th Knot for a skyline finish. The city does not have one nightlife center; it has moods connected by trains.",
+    "This guide is the good version of chasing them.",
+  ].join(" "),
+  "citywide-dive-bars": [
+    "The best low-key London bars feel less designed than inherited. The French House and Bradley's keep Soho close and strange, Lamb & Flag does the theatreland pint, Old Blue Last adds east-side noise, and The Anchor puts the river in the background.",
+    "It is a list for drinking somewhere with a little damage and a lot of memory.",
+  ].join(" "),
+  "citywide-culture": [
+    "London culture works because the heavyweights are not all alike. The British Museum and National Gallery carry the old institutional gravity, Tate Modern and the Barbican push the city forward, while the Royal Opera House and Shakespeare's Globe remind you that London has always understood the value of a stage.",
+    "Do not try to conquer it; build a day with rhythm.",
+  ].join(" "),
+  "citywide-hotels": [
+    "Choosing a London hotel is really choosing your version of the city. Ham Yard puts you in Soho's current, NoMad works the theatre district, Boundary gives Shoreditch a roof and a lobby, The Laslett softens the west, and Sea Containers keeps the river at your window.",
+    "The right base saves more time than any clever itinerary.",
+  ].join(" "),
+  "citywide-hostels": [
+    "A good London hostel is not just cheap; it keeps the city usable after midnight and bearable in the morning. Generator and Wombat's bring social momentum, Astor Museum keeps the center close, Onefam Notting Hill softens the west-side landing, and St Christopher's Borough puts markets and trains within reach.",
+    "Spend less on the bed, not on the city.",
+  ].join(" "),
+  "one-day-activities": [
+    "One day in London has to be ruthless without feeling joyless. Start with the British Museum, eat your way through Borough Market, cross into Tate Modern, leave room for Shakespeare's Globe, and finish with a proper drink at Swift instead of collapsing into the nearest chain pub.",
+    "It is not all of London; it is one strong line through it.",
+  ].join(" "),
+  "weekend-activities": [
+    "A London weekend should have both polish and a little dirt under the nails. NoMad and the National Gallery set up the West End, Rules and Ronnie Scott's handle the old central night, then BRAT, Hampstead Heath, and 12th Knot push the second day from fire to open air to river views.",
+    "Two nights is enough to feel the city change accents if you let it.",
+  ].join(" "),
+  "week-activities": [
+    "A week in London should feel like several cities stitched together by buses, parks, and appetite. Generator, Hyde Park, the British Museum, Kiln, and the Royal Opera House cover the central opening; BRAT and Brick Lane turn it east; Portobello, Core, Tate Modern, Borough Market, and Hampstead Heath give the back half room to breathe.",
+    "The goal is not to finish London. The goal is to leave with a few neighborhoods still calling you back.",
+  ].join(" "),
+};
+
 function guide(spec: GuideSpec): MapList {
   const isItinerary = spec.submissionType === "itinerary";
 
@@ -477,7 +661,7 @@ function guide(spec: GuideSpec): MapList {
     seoTitle: spec.seoTitle,
     seoDescription: spec.seoDescription,
     title: spec.title,
-    description: spec.description,
+    description: guideDescriptions[spec.id] ?? spec.description,
     url: `https://www.google.com/maps/search/${encodeURIComponent(spec.seoTitle.toLowerCase())}`,
     category: spec.category,
     ...(spec.itinerary ? { itinerary: spec.itinerary } : {}),
@@ -487,7 +671,7 @@ function guide(spec: GuideSpec): MapList {
       : londonLocation,
     creator: {
       id: isItinerary ? "user-rguide-itineraries" : `user-rguide-${spec.category.toLowerCase()}`,
-      name: isItinerary ? "R Itineraries" : `R ${spec.category}`,
+      name: isItinerary ? "R Journeys" : `R ${spec.category}`,
       avatar: avatar(spec.category),
     },
     upvotes: 0,

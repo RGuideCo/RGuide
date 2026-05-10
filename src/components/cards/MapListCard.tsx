@@ -12,7 +12,7 @@ import { resolveStopHours } from "@/lib/seasonal-hours";
 import { formatNumber } from "@/lib/utils";
 import { CATEGORY_STYLES } from "@/lib/constants";
 import { useAppStore } from "@/store/app-store";
-import { MapList } from "@/types";
+import { ListCategory, MapList } from "@/types";
 
 interface MapListCardProps {
   list: MapList;
@@ -74,11 +74,35 @@ function isItineraryLikeGuide(list: MapList) {
     return true;
   }
   const hasGeneratedItineraryStops = list.stops.some((stop) => stop.id.startsWith("itinerary-stop-"));
-  const hasItineraryTitle = /\bitinerary\b/i.test(list.title);
-  const hasCompiledItineraryDescription = /^compiled itinerary with \d+ saved locations\.?$/i.test(
+  const hasItineraryTitle = /\b(itinerary|journey)\b/i.test(list.title);
+  const hasCompiledItineraryDescription = /^compiled (itinerary|journey) with \d+ saved locations\.?$/i.test(
     list.description.trim(),
   );
   return hasGeneratedItineraryStops || (hasItineraryTitle && hasCompiledItineraryDescription);
+}
+
+function inferJourneyStopCategory(stop: MapList["stops"][number], fallback: ListCategory): ListCategory {
+  if (stop.category && stop.category !== fallback) {
+    return stop.category;
+  }
+
+  const text = `${stop.name} ${stop.description}`.toLowerCase();
+  if (/\b(hostel|hotel|stay|guesthouse|rooms?|check[- ]?in|sleep|base)\b/.test(text)) {
+    return "Stay";
+  }
+  if (/\b(restaurant|burger|lunch|dinner|breakfast|brunch|tapas|seafood|counter|cafe|coffee|market|food|meal|bakery|wine)\b/.test(text)) {
+    return "Food";
+  }
+  if (/\b(bar|cocktail|club|nightlife|vermouth|cava|drinks?|music|late|dance)\b/.test(text)) {
+    return "Nightlife";
+  }
+  if (/\b(park|beach|garden|hill|viewpoint|waterfront|walk|hike|trail|nature|mountain)\b/.test(text)) {
+    return "Nature";
+  }
+  if (/\b(museum|architecture|modernista|cathedral|gallery|palace|monument|historic|culture|casa|church)\b/.test(text)) {
+    return "Culture";
+  }
+  return fallback;
 }
 
 function normalizeLocationSubtitlePart(value?: string | null) {
@@ -118,7 +142,7 @@ function buildGuideMeta(list: MapList, hiddenLocationParts?: string[]) {
     isEventGuide
       ? "Event"
       : list.submissionType === "itinerary"
-        ? "Itinerary"
+        ? "Journey"
         : list.category;
   return [typeLabel, placeLabel, locationLabel].filter(Boolean).join(" • ");
 }
@@ -242,8 +266,8 @@ function getStayBookingPlatformFromUrl(url?: string): StayBookingPlatform | null
   return null;
 }
 
-function getStayBookingDetails(list: MapList, stop: MapList["stops"][number]) {
-  if (list.category !== "Stay") {
+function getStayBookingDetails(list: MapList, stop: MapList["stops"][number], resolvedCategory: ListCategory = stop.category ?? list.category) {
+  if (resolvedCategory !== "Stay") {
     return null;
   }
 
@@ -316,6 +340,8 @@ export function MapListCard({
   const isOwnEditableGuide = isOwnGuide && !isItineraryGuide;
   const isHistoricalGuide = list.creator.id === "user-rguide-history";
   const categoryStyle = CATEGORY_STYLES[list.category];
+  const guideAccentColor = isItineraryGuide ? "#020617" : categoryStyle.mapColor;
+  const guideExpandedColor = isItineraryGuide ? "#111827" : categoryStyle.mapColor;
   const visibleUpvotes = list.upvotes + (hasVoted ? 1 : 0);
   const expandedChrome = expanded || preserveExpandedChrome;
   const hiddenLocationParts = expandedChrome ? [] : collapsedLocationSubtitleHiddenParts;
@@ -812,7 +838,7 @@ export function MapListCard({
             : "border border-slate-300 !bg-slate-50 px-3 pb-3 pt-0"
           : "collapsed-guide-card p-3 hover:border-slate-950/30 focus-within:border-slate-950/30"
       }`}
-      style={!expandedChrome ? ({ "--guide-accent": categoryStyle.mapColor, borderColor: categoryStyle.mapColor } as React.CSSProperties) : undefined}
+      style={!expandedChrome ? ({ "--guide-accent": guideAccentColor, borderColor: guideAccentColor } as React.CSSProperties) : undefined}
       onMouseEnter={() => onHoverStart?.(list)}
       onMouseLeave={() => {
         onStopHoverChange?.(null);
@@ -828,7 +854,7 @@ export function MapListCard({
         <>
           <div
             className="pointer-events-none absolute left-0 top-3 z-20 h-[calc(100%-1.5rem)] w-1 origin-left rounded-r-full opacity-75 transition-[width,opacity] duration-300 group-hover:w-1.5 group-hover:opacity-100 group-focus-within:w-1.5 group-focus-within:opacity-100"
-            style={{ backgroundColor: categoryStyle.mapColor }}
+            style={{ backgroundColor: guideAccentColor }}
             aria-hidden="true"
           />
         </>
@@ -844,8 +870,8 @@ export function MapListCard({
         style={
           expandedChrome && !preservingListChrome
             ? {
-                backgroundColor: expandingListChrome ? "rgb(248, 250, 252)" : categoryStyle.mapColor,
-                borderColor: categoryStyle.mapColor,
+                backgroundColor: expandingListChrome ? "rgb(248, 250, 252)" : guideExpandedColor,
+                borderColor: guideExpandedColor,
               }
             : undefined
         }
@@ -853,7 +879,7 @@ export function MapListCard({
         {expandingListChrome && !preservingListChrome ? (
           <span
             className="guide-chrome-wipe guide-chrome-wipe--expand pointer-events-none absolute inset-0 z-0"
-            style={{ backgroundColor: categoryStyle.mapColor }}
+            style={{ backgroundColor: guideExpandedColor }}
             onAnimationEnd={(event) => {
               if (event.animationName === "guide-chrome-wipe-expand") {
                 onExpandChromeComplete?.(list);
@@ -867,7 +893,7 @@ export function MapListCard({
             className={`guide-chrome-wipe pointer-events-none absolute -inset-x-3 -bottom-3 -top-3 z-0 ${
               retractingListChrome ? "guide-chrome-wipe--retract" : expandingListChrome ? "guide-chrome-wipe--expand" : ""
             }`}
-            style={{ backgroundColor: categoryStyle.mapColor }}
+            style={{ backgroundColor: guideExpandedColor }}
             onAnimationEnd={(event) => {
               if (event.animationName === "guide-chrome-wipe-expand") {
                 onExpandChromeComplete?.(list);
@@ -1090,7 +1116,8 @@ export function MapListCard({
                       const isStopSelected =
                         forceExpandStopId === stop.id ||
                         Boolean(stop.places?.some((place) => place.id === forceExpandStopId));
-                      const stopCategoryStyle = CATEGORY_STYLES[stop.category ?? list.category];
+                      const stopCategory = isItineraryGuide ? inferJourneyStopCategory(stop, list.category) : stop.category ?? list.category;
+                      const stopCategoryStyle = CATEGORY_STYLES[stopCategory];
                       return (
                         <button
                           key={`${list.id}-photo-nav-${stop.id}`}
@@ -1201,10 +1228,11 @@ export function MapListCard({
                         const stopContent = splitStopDescriptionAndHours(stop.description);
                         const resolvedStopHours = resolveStopHours(stop) ?? stopContent.hours;
                         const stopItineraryId = `${list.id}:${stop.id}`;
+                        const stopCategory = isItineraryGuide ? inferJourneyStopCategory(stop, list.category) : stop.category ?? list.category;
+                        const stopCategoryStyle = CATEGORY_STYLES[stopCategory];
                         const stopPhoto = getPoiPhoto(stop.photo);
-                        const stayBookingDetails = getStayBookingDetails(list, stop);
+                        const stayBookingDetails = getStayBookingDetails(list, stop, stopCategory);
                         const officialStopUrl = list.id.startsWith("event-") ? stop.officialUrl ?? stop.bookingUrl : stop.officialUrl;
-                        const stopCategoryStyle = CATEGORY_STYLES[stop.category ?? list.category];
                         const isStopInItinerary =
                           itineraryStopIds.includes(stopItineraryId) ||
                           itineraryPlaylists.some((playlist) => playlist.stopKeys.includes(stopItineraryId));
@@ -1231,7 +1259,7 @@ export function MapListCard({
                           <div className="flex items-center gap-2">
                             <span
                               className="rounded-full px-2 py-1 text-[10px] font-semibold uppercase tracking-[0.12em] text-white"
-                              style={{ backgroundColor: categoryStyle.mapColor }}
+                              style={{ backgroundColor: guideAccentColor }}
                             >
                               {formatItineraryDayLabel(itineraryDateKey, itineraryGroupIndex)}
                             </span>
@@ -1387,7 +1415,7 @@ export function MapListCard({
                                       const placePhoto = getPoiPhoto(place.photo);
                                       const isPlaceExpanded = expandedPlaceIds.includes(place.id);
                                       const isPlaceMapSelected = forceExpandStopId === place.id;
-                                      const placeCategoryStyle = CATEGORY_STYLES[place.category ?? stop.category ?? list.category];
+                                      const placeCategoryStyle = CATEGORY_STYLES[place.category ?? stopCategory];
                                       return (
                                     <div
                                       key={place.id}
@@ -1795,8 +1823,8 @@ export function MapListCard({
                     className="w-full max-w-md rounded-2xl border border-slate-200 bg-white p-4 shadow-xl"
                     onClick={(event) => event.stopPropagation()}
                   >
-                    <p className="text-xs font-medium uppercase tracking-[0.12em] text-slate-500">Add to itinerary</p>
-                    <p className="mt-1 text-sm text-slate-700">Choose an itinerary or create a new one.</p>
+                    <p className="text-xs font-medium uppercase tracking-[0.12em] text-slate-500">Add to journey</p>
+                    <p className="mt-1 text-sm text-slate-700">Choose a journey or create a new one.</p>
                     <div className="mt-3 space-y-2">
                       {itineraryPlaylists.map((playlist) => (
                         <button
@@ -1814,7 +1842,7 @@ export function MapListCard({
                         type="text"
                         value={newItineraryName}
                         onChange={(event) => setNewItineraryName(event.target.value)}
-                        placeholder="New itinerary name"
+                        placeholder="New journey name"
                         className="w-full rounded-xl border border-slate-200 px-3 py-2 text-sm"
                       />
                       <button
@@ -1883,7 +1911,7 @@ export function MapListCard({
                         }}
                         className="block w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-left text-sm text-slate-700 hover:border-slate-300 hover:text-slate-900"
                       >
-                        Add to itinerary
+                        Add to journey
                       </button>
                     </div>
                     <div className="mt-3 flex justify-end">

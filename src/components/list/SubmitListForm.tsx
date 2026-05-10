@@ -606,7 +606,7 @@ export function SubmitListForm({
     [itineraryEndDate, itineraryStartDate],
   );
   const submissionNoun = isItinerarySubmission
-    ? "itinerary"
+    ? "journey"
     : isExperienceSubmission
       ? "experience"
       : "guide";
@@ -838,13 +838,13 @@ export function SubmitListForm({
       if (!title.trim()) {
         setTitle(
           `${addName} ${
-            modeFromQuery === "itinerary" ? "Itinerary" : modeFromQuery === "journal" ? "Experience" : "Guide"
+            modeFromQuery === "itinerary" ? "Journey" : modeFromQuery === "journal" ? "Experience" : "Guide"
           }`,
         );
       }
       setMessage(
         `${addName} added to this ${
-          modeFromQuery === "itinerary" ? "itinerary" : modeFromQuery === "journal" ? "experience" : "guide"
+          modeFromQuery === "itinerary" ? "journey" : modeFromQuery === "journal" ? "experience" : "guide"
         }.`,
       );
     }
@@ -1005,7 +1005,7 @@ export function SubmitListForm({
         setDescription(
           isExperienceSubmission
             ? `Experience inspired by ${extracted.title}.`
-            : `${isItinerarySubmission ? "Itinerary" : "Guide"} inspired by ${extracted.title}.`,
+            : `${isItinerarySubmission ? "Journey" : "Guide"} inspired by ${extracted.title}.`,
         );
       }
     }
@@ -1353,7 +1353,7 @@ export function SubmitListForm({
     const isItineraryList =
       list.submissionType === "itinerary" ||
       list.stops.some((stop) => stop.id.startsWith("itinerary-stop-")) ||
-      /\bitinerary\b/i.test(list.title);
+      /\b(itinerary|journey)\b/i.test(list.title);
     setSubmissionMode(
       isItineraryList ? "itinerary" : list.submissionType ?? "guide",
       isItineraryList ? "itinerary" : "guide",
@@ -1535,15 +1535,15 @@ export function SubmitListForm({
 
     if (isItinerarySubmission) {
       if (!itineraryStartDate || !itineraryEndDate) {
-        setMessage("Add start and end dates for this itinerary.");
+        setMessage("Add start and end dates for this journey.");
         return;
       }
       if (itineraryDayOptions.length === 0) {
-        setMessage("The itinerary end date must be on or after the start date.");
+        setMessage("The journey end date must be on or after the start date.");
         return;
       }
       if (manualGuideLocations.some((location) => !location.itineraryDate)) {
-        setMessage("Choose a day for every POI in this itinerary.");
+        setMessage("Choose a day for every POI in this journey.");
         return;
       }
     }
@@ -1726,7 +1726,7 @@ export function SubmitListForm({
                     : "text-slate-600 hover:text-slate-900"
                 }`}
               >
-                Itinerary
+                Journey
               </button>
             </div>
           ) : (

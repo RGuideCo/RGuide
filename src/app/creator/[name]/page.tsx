@@ -153,7 +153,7 @@ export default async function CreatorPage({ params }: CreatorPageProps) {
     (list) =>
       list.submissionType === "itinerary" ||
       list.stops.length >= 3 ||
-      /\bitinerary|route|day\s*\d+\b/i.test(`${list.title} ${list.description}`),
+      /\b(itinerary|journey|route|day\s*\d+)\b/i.test(`${list.title} ${list.description}`),
   ).length;
   const placesBeenCount = new Set(
     lists

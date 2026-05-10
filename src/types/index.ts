@@ -231,6 +231,12 @@ export interface GuideStop {
   coordinates: [number, number];
   description: string;
   category?: ListCategory;
+  subcategory?: string;
+  subcategories?: string[];
+  venueKind?: VenueKind;
+  lodgingType?: LodgingType;
+  foodServiceType?: FoodServiceType;
+  nightlifeType?: NightlifeType;
   photo?: string;
   price?: "$" | "$$" | "$$$";
   priceSource?: string;

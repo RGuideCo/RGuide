@@ -1,6 +1,7 @@
 "use client";
 
 import {
+  BedDouble,
   Bookmark,
   Building2,
   CalendarDays,
@@ -17,6 +18,7 @@ import {
   Plus,
   Route,
   Search,
+  SquareArrowOutUpRight,
   UserRound,
   X,
 } from "lucide-react";
@@ -58,6 +60,7 @@ import {
   contextualFoodCuisinesByCountry,
   contextualFoodCuisinesByScope,
   doesListMatchFoodPrice,
+  doesListMatchCategory,
   doesListMatchSubcategory,
   filterListStopsByFoodPrice,
   generalFoodCuisines,
@@ -243,7 +246,7 @@ const categoryCityDescriptionProfiles: Record<string, CategoryDescriptionProfile
     food: "markets, pub dining, South Asian routes, modern British rooms, bakeries, Sunday roasts, and destination restaurants by transit line",
     nightlife: "pubs, cocktail rooms, clubs, live music, late Soho streets, theater-adjacent bars, and neighborhood nights south and east",
     culture: "national museums, royal sites, galleries, theaters, historic streets, music history, and village-like neighborhoods",
-    stay: "West End access, museum-side calm, East London nightlife, South Bank views, or rail-friendly bases for a sprawling itinerary",
+    stay: "West End access, museum-side calm, East London nightlife, South Bank views, or rail-friendly bases for a sprawling journey",
     nature: "royal parks, commons, canals, heaths, river walks, garden squares, and day trips that start from the right station",
     activities: "area-by-area days that combine museums, markets, pubs, theater, parks, and one realistic cross-town move at a time",
   },
@@ -1152,7 +1155,8 @@ export function SplitScreenSection({
   const [selectedGuideStopId, setSelectedGuideStopId] = useState<string | null>(null);
   const [selectedGuideStopNonce, setSelectedGuideStopNonce] = useState(0);
   const [activeGuideFitNonce, setActiveGuideFitNonce] = useState(0);
-  const [activeGuideRail, setActiveGuideRail] = useState<(typeof guideRailOptions)[number]["id"]>("all-guides");
+  const [activeGuideRail, setActiveGuideRail] = useState<"all-guides" | "week-events" | "itinerary" | null>("all-guides");
+  const [activeGuideSource, setActiveGuideSource] = useState<"all-guides" | "r-guides" | "user-guides" | "favorites">("all-guides");
   const [isLocationFavoritesRailActive, setIsLocationFavoritesRailActive] = useState(false);
   const [expandedGuideId, setExpandedGuideId] = useState<string | null>(initialRouteState?.expandedGuideId ?? null);
   const [pendingSourcesOpenGuideId, setPendingSourcesOpenGuideId] = useState<string | null>(null);
@@ -2823,7 +2827,7 @@ export function SplitScreenSection({
     [contextualFoodCuisineOptions, generalFoodCuisineOptions],
   );
   const categoryFilteredLists = activeCategory
-    ? activeLists.filter((list) => list.category === activeCategory)
+    ? activeLists.filter((list) => doesListMatchCategory(list, activeCategory))
     : activeLists;
   const filteredLists = (
     activeCategory === "Food"
@@ -2882,58 +2886,65 @@ export function SplitScreenSection({
     const playlistLinkedListIds = new Set(itineraryPlaylists.flatMap((playlist) => playlist.listIds));
     const allKnownItineraryListIds = new Set([...completedItineraryListIds, ...playlistLinkedListIds]);
     const isEventList = (list: MapList) => list.id.startsWith("event-");
-    const guideListsOnly = filteredLists.filter((list) => !isEventList(list));
     const isRGuideList = (list: MapList) => list.creator.name.startsWith("R ");
+    const matchesActiveGuideSource = (list: MapList) => {
+      if (activeGuideSource === "favorites") {
+        return favoriteIds.includes(list.id);
+      }
+      if (activeGuideSource === "r-guides") {
+        return isRGuideList(list);
+      }
+      if (activeGuideSource === "user-guides") {
+        return !isRGuideList(list);
+      }
+      return true;
+    };
+    const isGuideSubmission = (list: MapList) =>
+      !isEventList(list) &&
+      list.submissionType !== "journal" &&
+      !isItineraryList(list, allKnownItineraryListIds);
     const isUserGuideList = (list: MapList) =>
       !isRGuideList(list) &&
       list.submissionType !== "journal" &&
       !isItineraryList(list, allKnownItineraryListIds);
 
+    if (activeGuideRail === null) {
+      return filteredLists
+        .filter((list) => list.submissionType !== "journal")
+        .filter(matchesActiveGuideSource);
+    }
     if (activeGuideRail === "all-guides") {
-      return guideListsOnly.filter((list) => isRGuideList(list) || isUserGuideList(list));
-    }
-    if (activeGuideRail === "r-guides") {
-      return guideListsOnly.filter(isRGuideList);
-    }
-    if (activeGuideRail === "user-guides") {
-      return guideListsOnly.filter(isUserGuideList);
-    }
-    if (activeGuideRail === "favorites") {
-      return globalMergedLists.filter((list) => favoriteIds.includes(list.id));
+      return filteredLists
+        .filter((list) => isGuideSubmission(list) && (isRGuideList(list) || isUserGuideList(list)))
+        .filter(matchesActiveGuideSource);
     }
     if (activeGuideRail === "itinerary") {
       const playlistListIds = new Set(
         itineraryPlaylists.flatMap((playlist) => playlist.listIds),
       );
-      const filteredListIds = new Set(filteredLists.map((list) => list.id));
+      const itineraryBaseLists = isGlobalSelection
+        ? activeCategory
+          ? globalMergedLists.filter((list) => doesListMatchCategory(list, activeCategory))
+          : globalMergedLists
+        : activeCategory
+          ? categoryFilteredLists
+          : filteredLists;
+      const filteredListIds = new Set(itineraryBaseLists.map((list) => list.id));
       const itineraryMatchesActiveCategory = (list: MapList) => {
         if (!activeCategory) {
           return true;
         }
-        return list.category === activeCategory || list.stops.some((stop) => stop.category === activeCategory);
+        return doesListMatchCategory(list, activeCategory);
       };
-      const itineraryCandidateLists = (activeCategory ? activeLists : filteredLists).filter((list) => !isEventList(list));
+      const itineraryCandidateLists = itineraryBaseLists.filter((list) => !isEventList(list));
       return itineraryCandidateLists.filter(
         (list) =>
           (itineraryIds.includes(list.id) ||
             playlistListIds.has(list.id) ||
             isItineraryList(list, allKnownItineraryListIds)) &&
-          (filteredListIds.has(list.id) || itineraryMatchesActiveCategory(list)),
+          (filteredListIds.has(list.id) || itineraryMatchesActiveCategory(list)) &&
+          matchesActiveGuideSource(list),
       );
-    }
-    if (activeGuideRail === "trending") {
-      return [...guideListsOnly]
-        .map((list) => {
-          const boostedUpvotes = list.upvotes + (votedIds.includes(list.id) ? 1 : 0);
-          const createdAt = Date.parse(list.createdAt);
-          const ageDays = Number.isFinite(createdAt)
-            ? Math.max(0, (now.getTime() - createdAt) / 86400000)
-            : 30;
-          const freshness = Math.max(0, 10 - Math.min(10, ageDays));
-          return { list, score: boostedUpvotes * 2 + freshness };
-        })
-        .sort((a, b) => b.score - a.score || b.list.upvotes - a.list.upvotes)
-        .map((entry) => entry.list);
     }
     if (activeGuideRail === "week-events") {
       const cityEventLists = globalMergedLists.filter((list) => {
@@ -2949,22 +2960,26 @@ export function SplitScreenSection({
         );
       });
 
-      return cityEventLists.filter((list) => {
-        if (!activeCategory) {
-          return true;
-        }
-        if (activeCategory === "Activities") {
-          return list.category === "Activities" || list.category === "Culture" || list.category === "Nightlife";
-        }
-        return list.category === activeCategory;
-      });
+      return cityEventLists
+        .filter(matchesActiveGuideSource)
+        .filter((list) => {
+          if (!activeCategory) {
+            return true;
+          }
+          if (activeCategory === "Activities") {
+            return list.category === "Activities" || list.category === "Culture" || list.category === "Nightlife";
+          }
+          return list.category === activeCategory;
+        });
     }
     return filteredLists;
   }, [
     activeGuideRail,
+    activeGuideSource,
     favoriteIds,
     filteredLists,
     globalMergedLists,
+    isGlobalSelection,
     isPublicProfileMode,
     itineraryIds,
     itineraryPlaylists,
@@ -2994,7 +3009,7 @@ export function SplitScreenSection({
   const guideActionSelectors = [
     { id: "all-guides" as const, label: "Guides", shortLabel: "Guide", icon: MapIcon },
     { id: "week-events" as const, label: "Events", shortLabel: "Events", icon: CalendarDays },
-    { id: "itinerary" as const, label: "Itineraries", shortLabel: "Trip", icon: Route },
+    { id: "itinerary" as const, label: "Journeys", shortLabel: "Journey", icon: Route },
   ];
   const guideActionActiveStyles = {
     "all-guides": {
@@ -3003,9 +3018,9 @@ export function SplitScreenSection({
       color: "#38bdf8",
     },
     itinerary: {
-      backgroundColor: "#064e3b",
-      borderColor: "#10b981",
-      color: "#6ee7b7",
+      backgroundColor: "#020617",
+      borderColor: "#f8fafc",
+      color: "#f8fafc",
     },
     favorites: {
       backgroundColor: "#7f1d1d",
@@ -3018,19 +3033,21 @@ export function SplitScreenSection({
       color: "#c084fc",
     },
   } as const;
-  const menuBarSelectors = [...guideSourceSelectors, ...guideActionSelectors];
   const activeGuideSourceSelector =
-    guideSourceSelectors.find((selector) => selector.id === activeGuideRail) ?? guideSourceSelectors[0];
-  const isGuideSourceRailActive = guideSourceSelectors.some((selector) => selector.id === activeGuideRail);
+    guideSourceSelectors.find((selector) => selector.id === activeGuideSource) ?? guideSourceSelectors[0];
   const activeGuideSourceIndex = Math.max(
     0,
     guideSourceSelectors.findIndex((selector) => selector.id === activeGuideSourceSelector.id),
   );
-  const activeMobileGuideSelector =
-    menuBarSelectors.find((selector) => selector.id === activeGuideRail) ?? menuBarSelectors[0];
-  const menuBarTitleLabel = isGuideSourceRailActive
-    ? activeGuideSourceSelector.label
-    : activeMobileGuideSelector.label;
+  const activeGuideActionSelector =
+    guideActionSelectors.find((selector) => selector.id === activeGuideRail) ?? null;
+  const sourceTitlePrefixById = {
+    "all-guides": "All",
+    "r-guides": "R",
+    "user-guides": "User",
+    favorites: "Favorite",
+  } as const;
+  const menuBarTitleLabel = `${sourceTitlePrefixById[activeGuideSourceSelector.id]} ${activeGuideActionSelector?.label ?? "Entries"}`;
   const resetCategoryFilters = () => {
     setActiveCategory(null);
     setActiveSubcategory(null);
@@ -3052,16 +3069,25 @@ export function SplitScreenSection({
     if (nextActive) {
       resetCategoryFilters();
       setActiveGuideRail("all-guides");
+      setActiveGuideSource("all-guides");
     }
   };
-  const handleGuideRailSelect = (railId: (typeof guideRailOptions)[number]["id"]) => {
-    setActiveGuideRail(railId);
+  const handleGuideSourceSelect = (sourceId: typeof activeGuideSource) => {
+    setActiveGuideSource(sourceId);
+    setIsLocationFavoritesRailActive(false);
+    setExpandedGuideId(null);
+    setClosingGuide(null);
+    setVisibleNestedStopParentIds([]);
+  };
+  const handleGuideRailSelect = (railId: "all-guides" | "week-events" | "itinerary") => {
+    const nextRail = activeGuideRail === railId ? null : railId;
+    setActiveGuideRail(nextRail);
     setIsLocationFavoritesRailActive(false);
     setExpandedGuideId(null);
     setClosingGuide(null);
     setVisibleNestedStopParentIds([]);
 
-    if (railId === "favorites" || railId === "week-events") {
+    if (railId === "week-events" || nextRail === null) {
       resetCategoryFilters();
 
       const neutralPath = getCurrentCityRoutePath(null);
@@ -3155,6 +3181,11 @@ export function SplitScreenSection({
     const nextPath = getCurrentCityRoutePath(nextCategory);
     if (nextPath) {
       pushExplorerPath(nextPath);
+    }
+  };
+  const handleStayCategoryFilter = () => {
+    if (activeCategory !== "Stay") {
+      handleCategoryToggle("Stay");
     }
   };
   const explorerPaneHeight = "lg:h-[calc(100svh-1rem)]";
@@ -3320,7 +3351,7 @@ export function SplitScreenSection({
   useEffect(() => {
     setExpandedGuideId(null);
     setClosingGuide(null);
-  }, [activeGuideRail]);
+  }, [activeGuideRail, activeGuideSource]);
   useEffect(() => {
     if (!isProfileSubmitLayout) {
       setProfileSubmissionPreviewList(null);
@@ -3349,7 +3380,7 @@ export function SplitScreenSection({
     ? railFilteredLists.filter((list) => list.id !== displayedGuide.id)
     : railFilteredLists;
   const recentRGuideLists = useMemo(() => {
-    if (!isGlobalSelection || (activeGuideRail !== "all-guides" && activeGuideRail !== "r-guides")) {
+    if (!isGlobalSelection || activeGuideRail !== "all-guides" || activeGuideSource === "user-guides" || activeGuideSource === "favorites") {
       return [];
     }
 
@@ -3375,10 +3406,22 @@ export function SplitScreenSection({
         return rightTime - leftTime || right.upvotes - left.upvotes || left.title.localeCompare(right.title);
       })
       .slice(0, 20);
-  }, [activeGuideRail, activeCategory, globalMergedLists, isGlobalSelection, railFilteredLists]);
+  }, [activeGuideRail, activeGuideSource, activeCategory, globalMergedLists, isGlobalSelection, railFilteredLists]);
   const activeSeoPlaceLabel = activeLocation.city
     ? activeLocation.nestedSubarea?.name ?? activeLocation.subarea?.name ?? activeLocation.city.name
     : activeDirectoryMeta.title;
+  const activeStayBookingQuery = activeLocation.city
+    ? [
+        activeLocation.nestedSubarea?.name ?? activeLocation.subarea?.name,
+        activeLocation.city.name,
+        activeLocation.country?.name ?? activeLocation.city.country,
+      ]
+        .filter(Boolean)
+        .join(", ")
+    : null;
+  const activeStayBookingHref = activeStayBookingQuery
+    ? `https://www.booking.com/searchresults.html?ss=${encodeURIComponent(activeStayBookingQuery)}`
+    : null;
   const visibleSeoHeading = expandedGuide
     ? `${expandedGuide.title} in ${activeSeoPlaceLabel}`
     : isSavedPlacesRailActive
@@ -3958,7 +4001,8 @@ export function SplitScreenSection({
     clearGuideContentRevealSchedule();
     setSettlingGuideContentId(null);
 
-    setActiveGuideRail(nextList.creator.name.startsWith("R ") ? "r-guides" : "user-guides");
+    setActiveGuideRail("all-guides");
+    setActiveGuideSource(nextList.creator.name.startsWith("R ") ? "r-guides" : "user-guides");
     setActiveSubcategory(null);
     setActiveFoodPrice(null);
     setActiveFoodOpenTime("Now");
@@ -4674,20 +4718,18 @@ export function SplitScreenSection({
                         aria-label="Guide source"
                       >
                         <span
-                          className={`pointer-events-none absolute left-0.5 top-0.5 h-7 w-7 rounded-md bg-slate-950 shadow-sm transition-[opacity,transform] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] ${
-                            isGuideSourceRailActive ? "opacity-100" : "opacity-0"
-                          }`}
+                          className="pointer-events-none absolute left-0.5 top-0.5 h-7 w-7 rounded-md bg-slate-950 shadow-sm transition-transform duration-300 ease-[cubic-bezier(0.22,1,0.36,1)]"
                           style={{ transform: `translateX(${activeGuideSourceIndex * 30}px)` }}
                           aria-hidden="true"
                         />
                         {guideSourceSelectors.map((selector) => {
-                          const isActive = activeGuideRail === selector.id;
+                          const isActive = activeGuideSource === selector.id;
                           const SelectorIcon = selector.icon;
                           return (
                             <button
                               key={selector.id}
                               type="button"
-                              onClick={() => handleGuideRailSelect(selector.id)}
+                              onClick={() => handleGuideSourceSelect(selector.id)}
                               className={`relative z-10 flex h-7 w-7 items-center justify-center rounded-md text-[8px] font-semibold transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-400/70 ${
                                 isActive ? "text-white" : "text-slate-700 hover:text-slate-950"
                               }`}
@@ -5194,7 +5236,7 @@ export function SplitScreenSection({
                     {!isSavedPlacesRailActive ? (
                       <div
                         ref={detailRef}
-                        className="mt-1 max-w-[calc(100%-8rem)] text-sm text-slate-600 transition-all duration-300"
+                        className="mt-1 max-w-[calc(100%-3rem)] text-sm text-slate-600 transition-all duration-300"
                         style={{
                           opacity: postMorphRevealPhase >= 1 ? 1 : 0,
                           transform:
@@ -5508,32 +5550,63 @@ export function SplitScreenSection({
                           </p>
                         ) : null}
                         {!expandedGuide ? (
-                          <div className="mt-3 flex justify-end gap-2">
-                            {activeFavoriteLocation ? (
-                              <button
-                                type="button"
-                                onClick={() => toggleFavoriteLocation(activeFavoriteLocation)}
-                                className={`inline-flex h-9 w-9 items-center justify-center rounded-full border bg-white shadow-sm transition ${
-                                  isActiveLocationFavorited
-                                    ? "border-teal-600 text-teal-700"
-                                    : "border-slate-200 text-slate-600 hover:border-slate-300 hover:text-slate-900"
-                                }`}
-                                aria-label={`${isActiveLocationFavorited ? "Remove" : "Save"} ${activeSeoPlaceLabel} ${isActiveLocationFavorited ? "from" : "to"} saved places`}
-                                title={isActiveLocationFavorited ? "Remove saved place" : "Save place"}
-                              >
-                                <Bookmark className={`h-3.5 w-3.5 ${isActiveLocationFavorited ? "fill-current" : ""}`} />
-                              </button>
+                          <div className="mt-3 flex items-center gap-2">
+                            {activeStayBookingHref ? (
+                              <div className="inline-flex h-9 overflow-hidden rounded-full border border-cyan-600/45 bg-white shadow-sm">
+                                <button
+                                  type="button"
+                                  onClick={handleStayCategoryFilter}
+                                  className={`inline-flex h-9 w-9 items-center justify-center transition ${
+                                    activeCategory === "Stay"
+                                      ? "bg-cyan-700 text-white"
+                                      : "text-cyan-700 hover:bg-cyan-50"
+                                  }`}
+                                  aria-label={`Show stays in ${activeSeoPlaceLabel}`}
+                                  aria-pressed={activeCategory === "Stay"}
+                                  title="Show stays"
+                                >
+                                  <BedDouble className="h-3.5 w-3.5" />
+                                </button>
+                                <a
+                                  href={activeStayBookingHref}
+                                  target="_blank"
+                                  rel="noreferrer sponsored"
+                                  className="inline-flex h-9 items-center gap-1 border-l border-cyan-600/25 px-2.5 text-[11px] font-semibold uppercase tracking-[0.12em] text-cyan-800 transition hover:bg-cyan-50 hover:text-cyan-950"
+                                  aria-label={`Search Booking.com stays in ${activeStayBookingQuery}`}
+                                  title={`Book stays in ${activeStayBookingQuery}`}
+                                >
+                                  <span>Book</span>
+                                  <SquareArrowOutUpRight className="h-3 w-3" aria-hidden="true" />
+                                </a>
+                              </div>
                             ) : null}
-                            {activeLocation.city ? (
-                              <button
-                                type="button"
-                                className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-slate-200 bg-white text-slate-600 shadow-sm transition hover:border-slate-300 hover:text-slate-900"
-                                aria-label={`Tour ${activeSeoPlaceLabel}`}
-                                title="Neighborhood tour coming soon"
-                              >
-                                <Footprints className="h-3.5 w-3.5" />
-                              </button>
-                            ) : null}
+                            <div className="ml-auto flex items-center gap-2">
+                              {activeFavoriteLocation ? (
+                                <button
+                                  type="button"
+                                  onClick={() => toggleFavoriteLocation(activeFavoriteLocation)}
+                                  className={`inline-flex h-9 w-9 items-center justify-center rounded-full border bg-white shadow-sm transition ${
+                                    isActiveLocationFavorited
+                                      ? "border-teal-600 text-teal-700"
+                                      : "border-slate-200 text-slate-600 hover:border-slate-300 hover:text-slate-900"
+                                  }`}
+                                  aria-label={`${isActiveLocationFavorited ? "Remove" : "Save"} ${activeSeoPlaceLabel} ${isActiveLocationFavorited ? "from" : "to"} saved places`}
+                                  title={isActiveLocationFavorited ? "Remove saved place" : "Save place"}
+                                >
+                                  <Bookmark className={`h-3.5 w-3.5 ${isActiveLocationFavorited ? "fill-current" : ""}`} />
+                                </button>
+                              ) : null}
+                              {activeLocation.city ? (
+                                <button
+                                  type="button"
+                                  className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-slate-200 bg-white text-slate-600 shadow-sm transition hover:border-slate-300 hover:text-slate-900"
+                                  aria-label={`Tour ${activeSeoPlaceLabel}`}
+                                  title="Neighborhood tour coming soon"
+                                >
+                                  <Footprints className="h-3.5 w-3.5" />
+                                </button>
+                              ) : null}
+                            </div>
                           </div>
                         ) : null}
                         {!expandedGuide && cityHighlightRows.length ? (
@@ -6896,7 +6969,7 @@ export function SplitScreenSection({
                 onPointerUp={handleMobileListSheetDragEnd}
                 onPointerCancel={handleMobileListSheetDragEnd}
               >
-                {activeMobileGuideSelector.label}
+                {menuBarTitleLabel}
               </div>
               <button
                 type="button"
@@ -6986,13 +7059,13 @@ export function SplitScreenSection({
                               aria-hidden="true"
                             />
                             {guideSourceSelectors.map((selector) => {
-                              const isActive = activeGuideRail === selector.id;
+                              const isActive = activeGuideSource === selector.id;
                               const SelectorIcon = selector.icon;
                               return (
                                 <button
                                   key={selector.id}
                                   type="button"
-                                  onClick={() => handleGuideRailSelect(selector.id)}
+                                  onClick={() => handleGuideSourceSelect(selector.id)}
                                   className={`relative z-10 flex h-9 w-9 items-center justify-center rounded-lg border shadow-sm transition-[background-color,color,border-color,transform] duration-200 hover:scale-105 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-400/70 ${
                                     isActive
                                       ? "border-slate-950 bg-slate-950 text-white hover:border-slate-950 hover:text-white"
@@ -7647,7 +7720,7 @@ export function SplitScreenSection({
                                 : "text-slate-600 hover:text-slate-900"
                             }`}
                           >
-                            Itinerary
+                            Journey
                           </button>
                         </div>
                       ) : (
@@ -7735,7 +7808,9 @@ export function SplitScreenSection({
                           ))
                         ) : (
                           <div className="rounded-2xl border border-dashed border-slate-300 bg-white p-5 text-center">
-                            <p className="text-sm font-medium text-slate-900">No {activeProfileRightRail} yet</p>
+                            <p className="text-sm font-medium text-slate-900">
+                              No {(profileRightRailOptions.find((option) => option.id === activeProfileRightRail)?.label ?? activeProfileRightRail).toLowerCase()} yet
+                            </p>
                           </div>
                         )}
                       </div>

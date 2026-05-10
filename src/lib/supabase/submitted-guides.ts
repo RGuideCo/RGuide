@@ -172,6 +172,8 @@ export async function saveSubmittedGuide(list: MapList) {
     name: stop.name,
     description: stop.description,
     category: stop.category ?? null,
+    subcategory: stop.subcategory ?? null,
+    subcategories: stop.subcategories ?? [],
     coordinates: stop.coordinates,
     photo_url: stop.photo ?? null,
     price_label: stop.price ?? null,

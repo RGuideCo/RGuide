@@ -36,8 +36,8 @@ function isItineraryGuide(list: MapList) {
     return true;
   }
   const hasGeneratedItineraryStops = list.stops.some((stop) => stop.id.startsWith("itinerary-stop-"));
-  const hasItineraryTitle = /\bitinerary\b/i.test(list.title);
-  const hasCompiledItineraryDescription = /^compiled itinerary with \d+ saved locations\.?$/i.test(
+  const hasItineraryTitle = /\b(itinerary|journey)\b/i.test(list.title);
+  const hasCompiledItineraryDescription = /^compiled (itinerary|journey) with \d+ saved locations\.?$/i.test(
     list.description.trim(),
   );
   return hasGeneratedItineraryStops || (hasItineraryTitle && hasCompiledItineraryDescription);
@@ -52,7 +52,7 @@ const creatorRailOptions: Array<{
 }> = [
   { id: "guides", label: "Guides", icon: User, addHref: "/submit?type=guide", addLabel: "Add guide" },
   { id: "experiences", label: "Experiences", icon: BookOpen, addHref: "/submit?type=journal", addLabel: "Add experience" },
-  { id: "itineraries", label: "Itineraries", icon: Route, addHref: "/submit?type=itinerary", addLabel: "Add itinerary" },
+  { id: "itineraries", label: "Journeys", icon: Route, addHref: "/submit?type=itinerary", addLabel: "Add journey" },
 ];
 
 const creatorLeftRailOptions: Array<{
@@ -207,7 +207,7 @@ export function CreatorHubContent({
                   <p className="mt-1 text-base font-semibold text-slate-900">{stats.favoritesCount}</p>
                 </div>
                 <div className="rounded-xl border border-slate-200 bg-stone-50 px-3 py-2 text-center">
-                  <p className="text-[10px] uppercase tracking-[0.12em] text-slate-500">Itineraries</p>
+                  <p className="text-[10px] uppercase tracking-[0.12em] text-slate-500">Journeys</p>
                   <p className="mt-1 text-base font-semibold text-slate-900">{stats.itineraryCount}</p>
                 </div>
                 <div className="rounded-xl border border-slate-200 bg-stone-50 px-3 py-2 text-center">

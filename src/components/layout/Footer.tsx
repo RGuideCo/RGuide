@@ -19,7 +19,7 @@ const aboutFaqs = [
   {
     question: "Who makes the guides?",
     answer:
-      "RGuides are editorial guides made by RGuide. User guides can also appear when travelers submit lists, itineraries, or saved recommendations.",
+      "RGuides are editorial guides made by RGuide. User guides can also appear when travelers submit lists, journeys, or saved recommendations.",
   },
   {
     question: "How are places chosen?",
@@ -29,7 +29,7 @@ const aboutFaqs = [
   {
     question: "Can I save places for a trip?",
     answer:
-      "Yes. You can favorite guides and build itineraries from places inside expanded guides.",
+      "Yes. You can favorite guides and build journeys from places inside expanded guides.",
   },
   {
     question: "How do I suggest a correction?",

@@ -116,7 +116,7 @@ export const useAppStore = create<AppState>()(
       itineraryPlaylists: [
         {
           id: DEFAULT_ITINERARY_PLAYLIST_ID,
-          name: "My Itinerary",
+          name: "My Journey",
           listIds: [],
           stopKeys: [],
           completedListId: undefined,
@@ -225,7 +225,7 @@ export const useAppStore = create<AppState>()(
       createItineraryPlaylist: (name) => {
         const trimmed = name.trim();
         if (!trimmed) {
-          return { ok: false, message: "Enter an itinerary name." };
+          return { ok: false, message: "Enter a journey name." };
         }
 
         const nextPlaylist: ItineraryPlaylist = {
@@ -240,7 +240,7 @@ export const useAppStore = create<AppState>()(
           itineraryPlaylists: [nextPlaylist, ...state.itineraryPlaylists],
         }));
 
-        return { ok: true, message: "Itinerary created.", playlist: nextPlaylist };
+        return { ok: true, message: "Journey created.", playlist: nextPlaylist };
       },
       addListToItineraryPlaylist: (playlistId, listId) =>
         get().requireAuth(() =>
@@ -414,7 +414,7 @@ export const useAppStore = create<AppState>()(
             input.submissionType === "journal"
               ? "Experience saved."
               : input.submissionType === "itinerary"
-                ? "Itinerary saved."
+                ? "Journey saved."
               : "Guide saved.",
           list: nextList,
         };
@@ -569,7 +569,7 @@ export const useAppStore = create<AppState>()(
     }),
     {
       name: "rguide-app-store",
-      version: 5,
+      version: 6,
       partialize: (state) => ({
         currentUser: state.currentUser,
         favoriteIds: state.favoriteIds,
@@ -601,7 +601,7 @@ export const useAppStore = create<AppState>()(
             itineraryPlaylists: [
               {
                 id: DEFAULT_ITINERARY_PLAYLIST_ID,
-                name: "My Itinerary",
+                name: "My Journey",
                 listIds: [],
                 stopKeys: [],
                 completedListId: undefined,
@@ -626,11 +626,14 @@ export const useAppStore = create<AppState>()(
           itineraryStopScheduleById: state.itineraryStopScheduleById ?? {},
           itineraryPlaylists:
             state.itineraryPlaylists?.length
-              ? state.itineraryPlaylists
+              ? state.itineraryPlaylists.map((playlist) => ({
+                  ...playlist,
+                  name: playlist.name === "My Itinerary" ? "My Journey" : playlist.name,
+                }))
               : [
                   {
                     id: DEFAULT_ITINERARY_PLAYLIST_ID,
-                    name: "My Itinerary",
+                    name: "My Journey",
                     listIds: [],
                     stopKeys: [],
                     completedListId: undefined,

@@ -40,11 +40,11 @@ type PoiPhotoSource = {
 const poiPhotoSources: Record<string, PoiPhotoSource> = {
   Angelina: {
     photo:
-      "https://cdn.prod.website-files.com/6393398914410c453e1df00f/69f391d9f6605f6780643f62_MADEMOISELLE_ANGELINA_CARTE_PE_2026_PACKSHOT_%C2%A9_MARY_DEVINAT_16-compressed.jpg",
+      "https://cdn.prod.website-files.com/63934002307dbde359e3565a/63f3b2c5c03bb8dc2fd26b0a_AnyConv.com__63d29426b1abcd3ee319a0fc_ANGELINA%20PARIS_%20RIVOLI%20(9)-min-p-2000.webp",
     source: "https://www.angelina-paris.fr/",
   },
   Arpege: {
-    photo: "https://www.alain-passard.com/wp-content/uploads/2022/02/Arpegesalle4-1000x800.jpg",
+    photo: "https://www.alain-passard.com/wp-content/uploads/2022/02/Arpege_salon2-1520x1900.jpg",
     source: "https://www.alain-passard.com/",
   },
   "Au Lapin Agile": {
@@ -52,29 +52,40 @@ const poiPhotoSources: Record<string, PoiPhotoSource> = {
     source: "https://au-lapin-agile.com/",
   },
   "Bar 228": {
-    photo: "https://upload.wikimedia.org/wikipedia/commons/9/9f/Le_Meurice14.jpg",
-    source: "https://commons.wikimedia.org/wiki/File:Le_Meurice14.jpg",
+    photo:
+      "https://www.dorchestercollection.com/media/zpuna4hh/le-meurice-bar-228-hr-mark-read-full-size.jpg?rxy=0.5012531328320802%2C0.6286549707602339&width=1600&height=540&format=webp&rmode=crop",
+    source: "https://www.dorchestercollection.com/paris/le-meurice/restaurants-bars/bar-228/",
   },
   "Bar Josephine": {
-    photo: "https://media.ffycdn.net/eu/mandarin-oriental-hotel-group/nsZ8J29W3zvRCSVUKdTY.jpg",
+    photo: "https://media.ffycdn.net/eu/mandarin-oriental-hotel-group/s6ihZdXeAHUgigbsZdxS.jpg?mod=v1/cover=1920x617&quality=75",
     source: "https://www.mandarinoriental.com/en/paris/lutetia",
   },
   "Bar Nouveau": {
-    photo: "https://barnouveau.fr/wp-content/uploads/2026/04/IMG_2109-2.png",
+    photo: "https://barnouveau.fr/wp-content/uploads/2026/04/IMG_6999-2.jpg",
     source: "https://barnouveau.fr/",
   },
   "Bistrot des Tournelles": {
     photo:
-      "https://www.bistrotdestournelles.com/i/bistrot-des-tournelles-554913/3/5/8/3/0/5/1/5/1/3/6/9/2/1659108926_161/322ce864025eb6fe3b82efab6e96034b.website.jpg",
+      "https://www.bistrotdestournelles.com/i/bistrot-des-tournelles-588065/3/5/8/3/0/5/1/5/1/6/8/2/7/1687945738_201/d4465fc6d383438aed4fb15c7fcc4716.jpg",
     source: "https://www.bistrotdestournelles.com/en/photos/",
   },
   "Bouillon Racine": {
-    photo: "https://ugc.zenchef.com/1/3/2/1/5/1/9/7/7/2/1749814348_332/c5e75c355c4e9d46c7f10148ed39967f.website.jpg",
+    photo:
+      "https://www.bouillonracine.fr/i/bouillon-racine-bar-du-bouillon-699051/1/3/2/1/5/1/9/7/7/2/1736436971_447/275ce644a7ab192176f5c796493e2a59.website.jpg",
     source: "https://www.bouillonracine.fr/",
+  },
+  "Bouillon Chartier Grands Boulevards": {
+    photo: "https://www.bouillon-chartier.com/chartier_medias/2023/11/bouillon-chartier-home-grandsboulevards.jpg",
+    source: "https://www.bouillon-chartier.com/en/",
   },
   "Brasserie Lipp": {
     photo: "https://ugc.zenchef.com/3/4/5/9/5/3/1/5/1/3/7/1/9/1714144479_381/27da576e9c340bdf3ca689ae48b78286.website.jpg",
     source: "https://www.brasserielipp.fr/",
+  },
+  "Breizh Cafe Abbesses": {
+    photo:
+      "https://images.squarespace-cdn.com/content/v1/619f05c41ec5d21532f581fb/238318af-60d2-4b6d-9f0a-58399f6b6215/DSCF7774+copie_2500.jpg",
+    source: "https://en.breizhcafe.com/abbesses",
   },
   Candelaria: {
     photo:
@@ -82,11 +93,11 @@ const poiPhotoSources: Record<string, PoiPhotoSource> = {
     source: "https://www.candelaria-paris.com/bar",
   },
   "Cafe Varenne": {
-    photo: "https://www.urbansider.com/wp-content/uploads/Categories/Bars-amp-Cafes/cafe-varenne-interior-1-2.jpg",
-    source: "https://www.urbansider.com/restaurant/cafe-varenne/",
+    photo: "https://menuonline.fr/cafevarenne/images/restaurant_YINIaC.webp",
+    source: "https://menuonline.fr/cafevarenne/",
   },
   "Cafe de Flore": {
-    photo: "https://cafedeflore.fr/wp-content/uploads/2022/07/cdf_hero1.jpeg",
+    photo: "https://cafedeflore.fr/wp-content/uploads/sb-instagram-feed-images/579118853_1317925440376401_4607922785340561355_nlow.webp",
     source: "https://cafedeflore.fr/",
   },
   "Castor Club": {
@@ -99,12 +110,12 @@ const poiPhotoSources: Record<string, PoiPhotoSource> = {
     source: "https://www.chevalblanc.com/en/maison/paris/",
   },
   "Chez Prune": {
-    photo: "https://upload.wikimedia.org/wikipedia/commons/8/8d/Chez_Prune_1%2C_Paris_29_May_2014.jpg",
-    source: "https://commons.wikimedia.org/wiki/File:Chez_Prune_1,_Paris_29_May_2014.jpg",
+    photo: "https://cdn.res-menu.net/chez-prune/albums-1.jpg",
+    source: "https://chez-prune.res-menu.net/",
   },
   Clamato: {
-    photo: "https://res.cloudinary.com/the-infatuation/image/upload/f_auto/q_auto/v1724964967/Clamato_interior_ksenxx.jpg",
-    source: "https://www.theinfatuation.com/paris/reviews/clamato",
+    photo: "https://www.theworlds50best.com/discovery/filestore/jpg/Clamato-Paris-France-03.jpg",
+    source: "https://www.theworlds50best.com/discovery/Establishments/France/Paris/Clamato.html",
   },
   Danico: {
     photo: "https://www.daroco.com/wp-content/uploads/2024/02/AM2A5871-2100x1400.jpg",
@@ -112,11 +123,11 @@ const poiPhotoSources: Record<string, PoiPhotoSource> = {
   },
   "David Toutain": {
     photo:
-      "https://images.getbento.com/accounts/ff03f9e731b42b40fa602140d58b60a7/media/images/8088DT-09-2025_1302.jpg?w=1200&fit=crop&auto=compress,format&cs=origin&crop=focalpoint&fp-x=0.5&fp-y=0.5",
+      "https://images.getbento.com/accounts/ff03f9e731b42b40fa602140d58b60a7/media/images/536811062024-DTV1-43.jpg?w=1200&fit=crop&auto=compress,format&cs=origin&crop=focalpoint&fp-x=0.47&fp-y=0.4",
     source: "https://www.davidtoutain.com/",
   },
   "Du Pain et des Idees": {
-    photo: "https://cdn.prod.website-files.com/68d3ac079a10da70917c11f6/68f4b97e470178262d819ef5_opengraph_dpdi.png",
+    photo: "https://cdn.prod.website-files.com/68d3ac079a10da70917c11f6/68e5135e14cb5c374a8efb3d_dpdi_image_9.webp",
     source: "https://www.dupainetdesidees.com/",
   },
   "Early June": {
@@ -124,7 +135,7 @@ const poiPhotoSources: Record<string, PoiPhotoSource> = {
     source: "https://early-june.fr/",
   },
   Fitzgerald: {
-    photo: "https://cdn.prod.website-files.com/657ebf942cf08a351e21c1b1/658337e9bf17d5c7272c21ed_FITZ_HERO_DT.jpg",
+    photo: "https://cdn.prod.website-files.com/657ebf942cf08a351e21c1b1/69f9aac1ec8806fc5db98ecc_ChatGPT%20Image%205%20mai%202026%2C%2010_30_27.png",
     source: "https://www.fitzgerald.paris/",
   },
   "Generator Paris": {
@@ -138,11 +149,12 @@ const poiPhotoSources: Record<string, PoiPhotoSource> = {
   },
   "Hardware Societe": {
     photo:
-      "https://images.squarespace-cdn.com/content/v1/6202a63f39310b632ffdebe9/58763b99-2662-4126-9676-6b78139ba27c/HardwareSociety_July19Menu_LowRes_5544.jpg",
+      "https://assets.zyrosite.com/cdn-cgi/image/format=auto,w=768,h=1155,fit=crop/A0xlVlXoQ0Fee1kM/dscf6837-YNq2nl68Mnfl28ap.jpg",
     source: "https://www.hardwaresociete.com/",
   },
   "Holybelly 5": {
-    photo: "https://holybellycafe.com/OpenGraph.jpg",
+    photo:
+      "https://www.holybellycafe.com/media/uploads/20260505_161901_albindurand--_albin_----holybelly---avril-25---ID-00558---_DSC0672.jpg",
     source: "https://holybellycafe.com/",
   },
   "Hotel d'Aubusson": {
@@ -221,8 +233,8 @@ const poiPhotoSources: Record<string, PoiPhotoSource> = {
     source: "https://www.juvenileswinebar.com/",
   },
   "L'As du Fallafel": {
-    photo: "https://upload.wikimedia.org/wikipedia/commons/3/31/L%27As_du_Fallafel%2C_Jewish_Quarter%2C_Paris_2015.jpg",
-    source: "https://commons.wikimedia.org/wiki/File:L%27As_du_Fallafel,_Jewish_Quarter,_Paris_2015.jpg",
+    photo: "https://upload.wikimedia.org/wikipedia/commons/6/62/L%27As_du_Fallafel%2C_Paris_30_January_2017.jpg",
+    source: "https://commons.wikimedia.org/wiki/File:L%27As_du_Fallafel,_Paris_30_January_2017.jpg",
   },
   "La Boite aux Lettres": {
     photo: "https://laboiteauxlettres.com/img/salle.jpg",
@@ -237,8 +249,8 @@ const poiPhotoSources: Record<string, PoiPhotoSource> = {
     source: "https://www.visitparisregion.com/en/la-gare-le-gore",
   },
   "La Maison d'Isabelle": {
-    photo: "https://assets.gaultmillau.com/assets/05bbfae9-77c0-4219-b263-e978db260669?width=666&height=444&fit=cover&format=webp",
-    source: "https://fr.gaultmillau.com/en/artisans/la-maison-d-isabelle",
+    photo: "https://live.staticflickr.com/65535/54467619158_fef7498b48_b.jpg",
+    source: "https://www.flickr.com/",
   },
   "La Meduse": {
     photo: "https://media.timeout.com/images/105202137/750/562/image.jpg",
@@ -249,43 +261,47 @@ const poiPhotoSources: Record<string, PoiPhotoSource> = {
     source: "https://www.barsparis.com/la-perle/",
   },
   "La Tour d'Argent": {
-    photo: "https://tourdargent.com/wp-content/uploads/2023/10/HomePage_Transition-1920x1146.jpg",
+    photo: "https://tourdargent.com/wp-content/uploads/2023/11/HomePage_Cover_UpdateOctober2-Shade.jpg.webp",
     source: "https://tourdargent.com/",
   },
+  "Laduree Champs-Elysees": {
+    photo: "https://laduree.com/cdn/shop/files/yext-M3cQOx2E2GueTz8QYL46gf_PtFQu-hKdDC2T5Dzl0-4-4000x2670.jpg?v=1750779854&width=1200",
+    source: "https://laduree.com/en/pages/store/laduree-paris-champs-elysees",
+  },
   "Le Bar du Marche": {
-    photo: "https://upload.wikimedia.org/wikipedia/commons/9/96/Rue_de_Seine%2C_75006_Paris_2012.jpg",
-    source: "https://commons.wikimedia.org/wiki/File:Rue_de_Seine,_75006_Paris_2012.jpg",
+    photo: "https://cdn.menu-world.com/bar-du-marche/1.jpg",
+    source: "https://cdn.menu-world.com/bar-du-marche/1.jpg",
   },
   "Le Baratin": {
-    photo: "https://img.restaurantguru.com/w550/h367/rc91-Le-Baratin-interior-2024-12-2.jpg",
-    source: "https://restaurantguru.com/Le-Baratin-Paris",
+    photo: "https://axwwgrkdco.cloudimg.io/v7/__gmpics3__/c6696ac82c3b4f2782f69f9c7e8048aa.jpg?w=1200&h=1200&org_if_sml=1",
+    source: "https://guide.michelin.com/us/en/ile-de-france/paris/restaurant/le-baratin",
   },
   "Le Caveau de la Huchette": {
-    photo: "https://www.caveaudelahuchette.fr/1/images/12084_0_3348528_100831.jpg",
-    source: "https://www.caveaudelahuchette.fr/",
+    photo: "https://live.staticflickr.com/3477/3189736294_aa0bc76b82_b.jpg",
+    source: "https://www.flickr.com/",
   },
   "Le Citizen Hotel": {
     photo: "https://cdn.prod.website-files.com/688e265d139102e1191b2a7e/68de7e48c27d5de0af98986d_ILO%20OPEN%20GRAPH.png",
     source: "https://lecitizenhotel.com/",
   },
   "Le Comptoir General": {
-    photo: "https://lecomptoirgeneral.com/wp-content/uploads/2021/02/COMPTOIR-01-2.png",
+    photo: "https://lecomptoirgeneral.com/wp-content/uploads/2021/09/@desprezmarie-lcg-shoot1-2-scaled.jpg",
     source: "https://lecomptoirgeneral.com/",
   },
   "Le Coq and Fils": {
-    photo: "https://lecoq-fils.com/wp-content/uploads/2022/12/actualitepreco.png",
+    photo: "https://lecoq-fils.com/wp-content/uploads/2022/09/restaurant-excellence-lecoqetfils-e1663758233252.jpg",
     source: "https://lecoq-fils.com/",
   },
   "Le Coupe-Chou": {
-    photo: "https://cdn.prod.website-files.com/5e6a2ea265f9f1264938a720/602417fb3fcbd5628e841ad3_lecoupechou45-1000-520.jpg",
+    photo: "https://cdn.prod.website-files.com/5e6a2ea289b7cec0e283a0fa/60230d376a2c7a6af7d3177d_lecoupechou63-1500.jpg",
     source: "https://www.lecoupechou.com/",
   },
   "Le Duc des Lombards": {
-    photo: "https://ducdeslombards.com/sites/default/files/ducdeslombards/styles/16x9_1280/public/ged/import/1807-1771947235.jpg?itok=y86lFejr",
+    photo: "https://ducdeslombards.com/sites/default/files/ducdeslombards/styles/auto_1920/public/ged/img_2005.jpg?itok=ipUunJnW",
     source: "https://ducdeslombards.com/",
   },
   "Le Fumoir": {
-    photo: "https://www.lefumoir.com/wp-content/uploads/2021/08/bg_0-300x199.jpg",
+    photo: "https://www.lefumoir.com/wp-content/uploads/2021/08/bg_06.jpg",
     source: "https://www.lefumoir.com/",
   },
   "Le Grand Mazarin": {
@@ -297,15 +313,16 @@ const poiPhotoSources: Record<string, PoiPhotoSource> = {
     source: "https://commons.wikimedia.org/wiki/File:H%C3%B4tel_Le_Meurice.jpg",
   },
   "Le Nemours": {
-    photo: "https://www.lenemours.paris/themes/le-nemours2/img/bg-restaurant.jpg",
-    source: "https://www.lenemours.paris/",
+    photo: "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/26/c1/20/74/terrasse.jpg?w=900&h=-1&s=1",
+    source: "https://www.tripadvisor.com/",
   },
   "Le Piano Vache": {
-    photo: "https://www.lepianovache.fr/wp-content/uploads/2019/02/cropped-wolfgang-hasselmann-1266795-unsplash-1.jpg",
-    source: "https://www.lepianovache.fr/",
+    photo:
+      "https://scontent-akl1-1.xx.fbcdn.net/v/t39.30808-6/487767264_1202613125203676_3118745092519676828_n.jpg?_nc_cat=108&ccb=1-7&_nc_sid=2a1932&_nc_ohc=ooPpM4hnkBoQ7kNvwGQAc4K&_nc_oc=Ado1Raxbg9UnWWnzF2pYADk7Qx9-knWtdDFkVTYETA5zrnGpMS5wwrCqzRTOFIa_QPSsPkiUESfGFDLsYVMsJ_uL&_nc_zt=23&_nc_ht=scontent-akl1-1.xx&_nc_gid=BlViuotPZMm-qvDqHN3mFg&_nc_ss=7b289&oh=00_Af4IOgg6il_lP2LlHSYW5E7ZRSzT9L22k2zAzurDyfvnHg&oe=6A06E690",
+    source: "https://www.facebook.com/lepianovache/",
   },
   "Le Poulbot": {
-    photo: "https://cty.hju.mybluehost.me/wp-content/uploads/2017/11/GaminPauvrede-Paris_Francisque_Poulbot8plus.jpg",
+    photo: "https://lepoulbot.com/wp-content/uploads/2017/11/Post_1_Deux_Poulbot.jpg",
     source: "https://lepoulbot.com/",
   },
   "Le Recrutement Cafe": {
@@ -317,7 +334,7 @@ const poiPhotoSources: Record<string, PoiPhotoSource> = {
     source: "https://commons.wikimedia.org/wiki/File:CF1505_Paris_5e_place_Contrescarpe_Requin_Chagrin_rwk.jpg",
   },
   "Le Tres Particulier": {
-    photo: "https://1e64.net/lw-hpm-48dbc2/uploads/logo-facade-hotel-particulier-montmarte-yeZp.webp",
+    photo: "https://1e64.net/lw-hpm-48dbc2/uploads/bar-piano-tres-particulier-hotel-particulier-montmartre-NVo5.webp",
     source: "https://www.hotelparticulier.com/tresparticulier.html",
   },
   "Le Village Montmartre": {
@@ -325,7 +342,7 @@ const poiPhotoSources: Record<string, PoiPhotoSource> = {
     source: "https://www.villagehostel.fr/",
   },
   "Les Ombres": {
-    photo: "https://www.lesombres-restaurant.com/wp-content/uploads/2022/11/Les_Ombres_20-10-20-Julien-Mouffron-Gardner_7990-600x600.jpg",
+    photo: "https://www.lesombres-restaurant.com/wp-content/uploads/2022/11/Les_Ombres_20-10-20-@-Julien-Mouffron-Gardner_7616-1-1200x730.jpg",
     source: "https://www.lesombres-restaurant.com/",
   },
   "Madison Hotel": {
@@ -333,8 +350,8 @@ const poiPhotoSources: Record<string, PoiPhotoSource> = {
     source: "https://www.hotel-madison.com/",
   },
   "Marlusse et Lapin": {
-    photo: "https://www.barsparis.com/wp-content/uploads/2012/02/bar-marlusse-et-lapin-2.png",
-    source: "https://www.barsparis.com/marlusse-et-lapin/",
+    photo: "https://privateaser-media.s3.eu-west-1.amazonaws.com/etab_photos/3188/1500x750/316436.jpg",
+    source: "https://www.privateaser.com/lieu/3188-marlusse-et-lapin",
   },
   "Marche des Enfants Rouges": {
     photo: "https://res.cloudinary.com/du5jifpgg/image/upload/t_opengraph_image/Surcharge-APIDAE/marche-des-enfants-rouges-tablee.jpg",
@@ -352,12 +369,21 @@ const poiPhotoSources: Record<string, PoiPhotoSource> = {
     photo: "https://www.parcelles-paris.fr/i/parcelles/3/5/4/8/8/6/1/5/1/1/2/5/3/1616675932_336/a6fafd739cd7f9e24bc0afe3dc6f42e2.small_original.jpg",
     source: "https://www.parcelles-paris.fr/en/",
   },
+  "Pierre Herme Bonaparte": {
+    photo: "https://www.pierreherme.com/media/amasty/ammegamenu/Food/macarons-signatures.jpg",
+    source: "https://www.pierreherme.com/en/",
+  },
   "Point Ephemere": {
     photo: "https://images.prismic.io/pointf/adfVVJ1ZCF7ETC06_PInata.jpg?auto=format&q=25&fm=webp&width=640",
     source: "https://pointephemere.org/",
   },
+  Poilane: {
+    photo: "https://a.storyblok.com/f/141505/1200x800/1f1eb46f4b/miche-poilane-jf-aime-b-verlomme.jpg",
+    source: "https://www.poilane.com/",
+  },
   "Prescription Cocktail Club": {
-    photo: "https://cdn.prod.website-files.com/625f3ce29cfd1cc533cebdf6/62609641f22bd813a6eeb801_og-image.jpg",
+    photo:
+      "https://cdn.prod.website-files.com/67b6fce677eb54f5aa34dce0/67b6fce677eb54f5aa34dd0d_prescription%20coctail%20club%20%C2%A9%20patrick%20locqueneux-%20mrtripper-1%201.jpg",
     source: "https://www.prescriptioncocktailclub.com/",
   },
   "Relais Christine": {
@@ -369,16 +395,18 @@ const poiPhotoSources: Record<string, PoiPhotoSource> = {
     source: "https://www.rosabonheur.fr/lieu/rosa-sur-seine/",
   },
   Sanukiya: {
-    photo: "https://img.restaurantguru.com/w550/h367/rb53-design-Sanukiya-2022-09-4.jpg",
-    source: "https://restaurantguru.com/Sanukiya-Paris",
+    photo:
+      "https://scontent-akl1-1.xx.fbcdn.net/v/t39.30808-6/578416728_1269891911607016_4411219456707818124_n.jpg?_nc_cat=111&ccb=1-7&_nc_sid=2a1932&_nc_ohc=PjInFABFQKoQ7kNvwGT9MHm&_nc_oc=AdqDfLrX0u-HdWSLz0RTjbUR8nTbugfLx1AOCyv22Jx5bzHasulwvW0F4PpyMprJzYiPi_bMq61llE0tWcCbSVOb&_nc_zt=23&_nc_ht=scontent-akl1-1.xx&_nc_gid=YFFYhhnvEeYD2Bz_2mQgZw&_nc_ss=7b289&oh=00_Af49brobZ5nPCg8lL7rNx1UIC8KnhgNk3sHe28tITdo21A&oe=6A058A68",
+    source: "https://www.facebook.com/sanukiyaparis/",
   },
   Semilla: {
-    photo: "https://cdn.prod.website-files.com/624f207df2b57804135dc63e/667d5c11c3c0c1420724f703_5f61295f-2b15-402f-8cec-a6f017112b97.jpeg",
+    photo: "https://cdn.prod.website-files.com/624f207df2b57804135dc63e/6713ef61488d938173013eef_DSC07439.jpg",
     source: "https://www.semillaparis.com/",
   },
   Septime: {
-    photo: "https://assets.bonappetit.com/photos/58e295d165366d7ba908130a/16:9/w_1000,c_limit/Septime%20-%20Table.jpg",
-    source: "https://www.bonappetit.com/city-guides/paris/venue/septime",
+    photo:
+      "https://media.cntraveler.com/photos/5a81fbb48ea5f04e2cf773a0/16:9/w_2240,c_limit/Septime__2018_colvert,-echalotte-roti,-condiment-figue-et-jus-a%CC%80-la-genievre-.jpg",
+    source: "https://www.cntraveler.com/",
   },
   "Septime La Cave": {
     photo: "https://parisbymouth.com/wp-content/uploads/2014/09/septime-cave-for-pbm.jpg",
@@ -397,11 +425,12 @@ const poiPhotoSources: Record<string, PoiPhotoSource> = {
     source: "https://www.terrass-hotel.com/",
   },
   "Terrass Hotel Rooftop": {
-    photo: "https://cdn.prod.website-files.com/62693a7ecfa12581d78e342f/62d81e5754d58251dcd6e467_Opengraph%20Terrass%20Hotel%20Montmartre%20Paris.png",
+    photo: "https://cdn.prod.website-files.com/67c6b692ecd52285b2aee65e/6924760508778a8ff8ffe1d7_5.png",
     source: "https://www.terrass-hotel.com/",
   },
   "The Cambridge Public House": {
-    photo: "https://ugc.zenchef.com/3/6/0/6/8/5/1/5/6/7/6/9/4/1760366013_207/a4b7ed07993593cf70eac7ad287d9bbf.website.jpg",
+    photo:
+      "https://www.thecambridge.paris/i/the-cambridge-650415/3/6/0/6/8/5/1/5/2/0/2/2/3/1715590703_242/01c090c020bf664e4a7078f36173b693.website.jpg",
     source: "https://www.thecambridge.paris/en/",
   },
   "The Hoxton Paris": {
@@ -413,7 +442,8 @@ const poiPhotoSources: Record<string, PoiPhotoSource> = {
     source: "https://www.thepeoplehostel.com/en/destinations/paris-belleville/",
   },
   Verjus: {
-    photo: "https://images.squarespace-cdn.com/content/v1/59d4c7672278e78c2beb5c7b/1768840986895-PJ5F08GTQAKW9VDIBP48/08-AmuseBouches.jpg",
+    photo:
+      "https://images.squarespace-cdn.com/content/v1/59d4c7672278e78c2beb5c7b/1768840776711-IQCEW7IJOROP4YTNPQOL/05-LClavisyFarmPlate.jpg?format=2500w",
     source: "https://www.verjusparis.com/",
   },
   "Young and Happy Latin Quarter": {
@@ -434,6 +464,30 @@ const parisFoodSources: ListSource[] = [
   googleMaps,
 ];
 
+const parisBoulangerieSources: ListSource[] = [
+  { name: "Du Pain et des Idees official", url: "https://www.dupainetdesidees.com/" },
+  { name: "Poilane official", url: "https://www.poilane.com/" },
+  { name: "Holybelly official", url: "https://holybellycafe.com/" },
+  { name: "Eater - Best Restaurants in Paris", url: "https://www.eater.com/maps/best-restaurants-paris-france" },
+  googleMaps,
+];
+
+const parisBrasserieSources: ListSource[] = [
+  { name: "Bouillon Chartier official", url: "https://www.bouillon-chartier.com/en/" },
+  { name: "Brasserie Lipp official", url: "https://www.brasserielipp.fr/" },
+  { name: "Bouillon Racine official", url: "https://www.bouillonracine.fr/" },
+  { name: "The Infatuation - Paris", url: "https://www.theinfatuation.com/paris" },
+  googleMaps,
+];
+
+const parisPatisserieSources: ListSource[] = [
+  { name: "Angelina official", url: "https://www.angelina-paris.fr/" },
+  { name: "Pierre Herme official", url: "https://www.pierreherme.com/en/" },
+  { name: "Laduree Champs-Elysees official", url: "https://laduree.com/en/pages/store/laduree-paris-champs-elysees" },
+  { name: "Eater - Best Restaurants in Paris", url: "https://www.eater.com/maps/best-restaurants-paris-france" },
+  googleMaps,
+];
+
 const parisNightlifeSources: ListSource[] = [
   { name: "The World's 50 Best Bars - Bar Nouveau", url: "https://www.theworlds50best.com/bars/the-list/bar-nouveau.html" },
   { name: "The World's 50 Best Bars - The Cambridge Public House", url: "https://www.theworlds50best.com/bars/the-list/the-cambridge-public-house.html" },
@@ -441,6 +495,23 @@ const parisNightlifeSources: ListSource[] = [
   { name: "Time Out - Best cocktail bars in Paris", url: "https://www.timeout.com/paris/en/bars-pubs/best-cocktail-bars-in-paris" },
   { name: "Time Out - Canal Saint-Martin bars", url: "https://www.timeout.com/paris/en/bars-pubs/bars-in-canal-saint-martin-ourcq-villette" },
   { name: "Visit Paris Region - La Gare / Le Gore", url: "https://www.visitparisregion.com/en/la-gare-le-gore" },
+  googleMaps,
+];
+
+const parisLiveNightlifeSources: ListSource[] = [
+  { name: "Le Duc des Lombards official", url: "https://ducdeslombards.com/" },
+  { name: "Visit Paris Region - La Gare / Le Gore", url: "https://www.visitparisregion.com/en/la-gare-le-gore" },
+  { name: "Le Caveau de la Huchette official", url: "https://www.caveaudelahuchette.fr/" },
+  { name: "Au Lapin Agile official", url: "https://au-lapin-agile.com/" },
+  { name: "Point Ephemere official", url: "https://pointephemere.org/" },
+  googleMaps,
+];
+
+const parisLowKeyNightlifeSources: ListSource[] = [
+  { name: "BarsParis - Marlusse et Lapin", url: "https://www.barsparis.com/bar-paris/marlusse-et-lapin/" },
+  { name: "Le Piano Vache official", url: "https://www.lepianovache.fr/" },
+  { name: "MisterGoodBeer - Marlusse et Lapin", url: "https://www.mistergoodbeer.com/en/bars/marlusse-et-lapin-paris" },
+  { name: "Time Out - Paris bars", url: "https://www.timeout.com/paris/en/bars-pubs" },
   googleMaps,
 ];
 
@@ -608,7 +679,7 @@ const citywideFood: StopSeed[] = [
     name: "Bistrot des Tournelles",
     coordinates: [48.8555, 2.366],
     description:
-      "Bistrot des Tournelles is the Marais classic-bistro anchor: old-room energy, steak frites and terrines, and enough current editorial support to avoid feeling like a nostalgia trap. It is best when the route needs a proper French dinner near Place des Vosges instead of another snack crawl.",
+      "Bistrot des Tournelles anchors the Marais with a classic Paris bistro room, steak frites, terrines, and the kind of reservation that still fits a neighborhood walk. Save it for a proper dinner near Place des Vosges when the day needs old-school comfort and a room with momentum.",
     price: "$$",
     priceSource: "The Infatuation / Google Maps",
   },
@@ -626,7 +697,7 @@ const citywideFood: StopSeed[] = [
     name: "Le Baratin",
     coordinates: [48.8731, 2.3857],
     description:
-      "Le Baratin is the Belleville bistro that still pulls chefs across town for Raquel Carena's blackboard cooking and natural-wine soul. It earns its place because it shows Paris food moving east: personal, seasonal, a little unruly, and better as a planned dinner than a casual drop-in.",
+      "Le Baratin is the Belleville bistro the MICHELIN Guide still flags for Raquel Carena's personal blackboard cooking, restrained prices, and appealing wines. It belongs because it shows a less-polished, deeply personal side of Paris dining: seasonal plates, natural wine, and a dinner worth planning across town.",
     price: "$$",
     priceSource: "Eater / Time Out / MICHELIN Guide",
   },
@@ -635,7 +706,7 @@ const citywideFood: StopSeed[] = [
     name: "Septime",
     coordinates: [48.8535, 2.3829],
     description:
-      "Septime is the modern-reservation benchmark in the 11th: precise, seasonal, and still a reference point for Paris bistronomy. Its value is not convenience; it is a protected meal that explains why the Charonne corridor matters to contemporary Paris dining.",
+      "Septime gives the citywide guide a one-star fine-dining benchmark in the 11th, with Bertrand Grebaut's seasonal cooking and a calm industrial room near Charonne. Treat it as a priority reservation for travelers who want contemporary Paris at its most exacting.",
     price: "$$$",
     priceSource: "MICHELIN Guide / Eater",
   },
@@ -644,7 +715,7 @@ const citywideFood: StopSeed[] = [
     name: "Clamato",
     coordinates: [48.8536, 2.3828],
     description:
-      "Clamato is the more flexible seafood sibling to Septime, useful when the trip needs oysters, small plates, and high-quality produce without a formal tasting-menu commitment. The no-reservation rhythm means it works best with timing discipline and a backup nearby.",
+      "Clamato is Septime's seafood-focused sibling, the MICHELIN-noted room for oysters, crudo, shellfish, vegetables, and share plates without a formal tasting menu. Its first-come rhythm makes timing part of the plan, but the payoff is a lighter, sharper Paris meal.",
     price: "$$",
     priceSource: "MICHELIN Guide / Paris by Mouth",
   },
@@ -653,7 +724,7 @@ const citywideFood: StopSeed[] = [
     name: "Du Pain et des Idees",
     coordinates: [48.8719, 2.3622],
     description:
-      "Du Pain et des Idees is the bakery stop that makes Canal Saint-Martin mornings feel intentional. Use it for escargot pastries, bread, and a compact breakfast route before the canal, Republique, or north Marais; it is a meal-format pick, not just a photo of a facade.",
+      "Du Pain et des Idees is the Canal Saint-Martin boulangerie stop for pain des amis, escargot pastries, and a morning that starts with craft rather than convenience. It belongs because the bread and viennoiserie can anchor a whole east-side route.",
     price: "$",
     priceSource: "Eater / Google Maps",
   },
@@ -662,9 +733,126 @@ const citywideFood: StopSeed[] = [
     name: "David Toutain",
     coordinates: [48.8617, 2.3048],
     description:
-      "David Toutain gives the citywide food guide a Left Bank tasting-menu anchor, with plant-led cooking and a serious reservation posture near Invalides and the Eiffel Tower. It belongs here for travelers planning one high-budget meal around the museum day.",
+      "David Toutain gives Paris a serious fine-dining anchor near Invalides, with highly composed seasonal menus and a nature-driven point of view. Use it for one high-budget meal where the reservation, pacing, and room are the plan rather than a pause between sights.",
     price: "$$$",
     priceSource: "MICHELIN Guide / David Toutain official",
+  },
+];
+
+const citywideBoulangerieFood: StopSeed[] = [
+  {
+    id: "paris-food-boulangerie-du-pain-idees",
+    name: "Du Pain et des Idees",
+    coordinates: [48.8719, 2.3622],
+    description:
+      "Du Pain et des Idees is the citywide boulangerie anchor for pain des amis, buttery escargot pastries, and a Canal Saint-Martin morning with purpose. Start here when the day should feel Parisian before the first museum or long walk.",
+    price: "$",
+    priceSource: "Eater / official bakery site / Google Maps",
+  },
+  {
+    id: "paris-food-boulangerie-poilane",
+    name: "Poilane",
+    coordinates: [48.8499, 2.3261],
+    description:
+      "Poilane gives the Left Bank its legendary sourdough, apple tarts, and serious bread counter on Rue du Cherche-Midi. It is a morning stop for travelers who want a baguette or loaf with pedigree before Saint-Germain or Luxembourg.",
+    price: "$",
+    priceSource: "Official bakery site / Google Maps",
+  },
+  {
+    id: "paris-food-boulangerie-maison-isabelle",
+    name: "La Maison d'Isabelle",
+    coordinates: [48.8498, 2.3486],
+    description:
+      "La Maison d'Isabelle is the Latin Quarter croissant stop for a quick, high-quality breakfast before Pantheon, Cluny, or Mouffetard. It keeps the morning simple: pastry first, then streets and museums.",
+    price: "$",
+    priceSource: "Google Maps / Paris bakery guides",
+  },
+  {
+    id: "paris-food-boulangerie-holybelly",
+    name: "Holybelly 5",
+    coordinates: [48.8723, 2.3606],
+    description:
+      "Holybelly 5 adds the coffee-and-seated-breakfast version of a Paris morning near the canal. Use it when the group wants pancakes, eggs, and proper coffee before shifting into locks, shops, and east-side wandering.",
+    price: "$$",
+    priceSource: "Official cafe site / Google Maps",
+  },
+];
+
+const citywideBrasserieFood: StopSeed[] = [
+  {
+    id: "paris-food-brasserie-chartier",
+    name: "Bouillon Chartier Grands Boulevards",
+    coordinates: [48.8738, 2.3439],
+    description:
+      "Bouillon Chartier Grands Boulevards is the historic bouillon for French onion soup, steak frites, and a room that turns efficiency into theatre. It is useful when a traditional Paris meal should be affordable, central, and lively.",
+    price: "$",
+    priceSource: "Official restaurant site / Google Maps",
+  },
+  {
+    id: "paris-food-brasserie-lipp-guide",
+    name: "Brasserie Lipp",
+    coordinates: [48.8535, 2.3332],
+    description:
+      "Brasserie Lipp gives the brasserie guide its polished Saint-Germain institution: Alsatian-leaning classics, literary boulevard energy, and a room that still feels like part of the city's dining memory.",
+    price: "$$$",
+    priceSource: "The Infatuation / Google Maps",
+  },
+  {
+    id: "paris-food-brasserie-bouillon-racine",
+    name: "Bouillon Racine",
+    coordinates: [48.849, 2.341],
+    description:
+      "Bouillon Racine brings Art Nouveau detail and classic comfort to the Latin Quarter, making it a good brasserie-style stop near Odeon, Cluny, and the Sorbonne. It is strongest for groups that want setting without a luxury price point.",
+    price: "$$",
+    priceSource: "Official restaurant site / Google Maps",
+  },
+  {
+    id: "paris-food-brasserie-fontaine-mars",
+    name: "La Fontaine de Mars",
+    coordinates: [48.8587, 2.3044],
+    description:
+      "La Fontaine de Mars is the Rue Saint-Dominique classic for duck, cassoulet, steak, and a room that still works as neighborhood dining despite its Eiffel-side address. Use it when monuments need a proper traditional table nearby.",
+    price: "$$$",
+    priceSource: "Official restaurant site / Google Maps",
+  },
+];
+
+const citywidePatisserieFood: StopSeed[] = [
+  {
+    id: "paris-food-patisserie-angelina",
+    name: "Angelina",
+    coordinates: [48.8651, 2.3286],
+    description:
+      "Angelina gives the patisserie guide the grand tea-room ritual: hot chocolate, Mont-Blanc, pastries, and a Rue de Rivoli room that pairs naturally with the Louvre and Tuileries.",
+    price: "$$",
+    priceSource: "Official tea-room site / Google Maps",
+  },
+  {
+    id: "paris-food-patisserie-pierre-herme",
+    name: "Pierre Herme Bonaparte",
+    coordinates: [48.8516, 2.3333],
+    description:
+      "Pierre Herme Bonaparte is the Left Bank stop for polished macarons and high-end sweet creations. Use it when Saint-Germain needs a precise dessert destination rather than a casual bakery counter.",
+    price: "$$",
+    priceSource: "Official patisserie site / Google Maps",
+  },
+  {
+    id: "paris-food-patisserie-laduree",
+    name: "Laduree Champs-Elysees",
+    coordinates: [48.8704, 2.3069],
+    description:
+      "Laduree Champs-Elysees brings the famous macaron house into a classic Paris itinerary, especially when the route already runs through the avenue or Arc de Triomphe side. It is the polished, gift-box version of the sweet stop.",
+    price: "$$",
+    priceSource: "Official patisserie site / Google Maps",
+  },
+  {
+    id: "paris-food-patisserie-du-pain-idees",
+    name: "Du Pain et des Idees",
+    coordinates: [48.8719, 2.3622],
+    description:
+      "Du Pain et des Idees belongs here for viennoiserie as much as bread, especially the escargot pastries that can turn a canal walk into a pastry route. It gives the guide a craft-bakery counterpoint to the grand maisons.",
+    price: "$",
+    priceSource: "Official bakery site / Google Maps",
   },
 ];
 
@@ -674,7 +862,7 @@ const citywideNightlife: StopSeed[] = [
     name: "Bar Nouveau",
     coordinates: [48.8623, 2.3579],
     description:
-      "Bar Nouveau is the Marais cocktail trophy with a real reason to queue: World 50 Best recognition, Art Nouveau design, and a small-room format that rewards early timing. Use it for one focused drink before the night spreads into dinner, galleries, or another bar.",
+      "Bar Nouveau is the stylish Marais pick for Art Nouveau design, producer-led cocktails upstairs, and a six-cocktail set-menu experience downstairs on weekends. Use it when the night wants a polished, main-character start before dinner or galleries.",
     price: "$$$",
     priceSource: "World's 50 Best Bars",
   },
@@ -683,7 +871,7 @@ const citywideNightlife: StopSeed[] = [
     name: "The Cambridge Public House",
     coordinates: [48.8618, 2.3632],
     description:
-      "The Cambridge Public House makes the guide because it bridges pub ease and Paris cocktail precision. It is useful for groups that want serious drinks without whispery formality, plus a Marais location that can start or end a wider Right Bank night.",
+      "The Cambridge Public House calls itself a cocktail pub, which is exactly the lane: pub ease, rotating cocktail creations, craft beers, natural wines, snacks, and Guinness in the Marais. It suits groups that want quality without turning the night precious.",
     price: "$$",
     priceSource: "World's 50 Best Bars",
   },
@@ -710,7 +898,7 @@ const citywideNightlife: StopSeed[] = [
     name: "Le Duc des Lombards",
     coordinates: [48.8593, 2.3476],
     description:
-      "Le Duc des Lombards is the central jazz anchor, useful when nightlife should be tickets and musicianship rather than only bars. Its Chatelet position makes it easy to add after dinner, but the best version of the night starts with the show calendar.",
+      "Le Duc des Lombards is the central live-music anchor, built for a ticketed set rather than a loose bar crawl. Its Chatelet position makes it easy after dinner, but the best version of the night starts with the calendar.",
     price: "$$",
     priceSource: "Paris venue listings / Google Maps",
   },
@@ -719,9 +907,105 @@ const citywideNightlife: StopSeed[] = [
     name: "La Gare / Le Gore",
     coordinates: [48.8927, 2.3839],
     description:
-      "La Gare / Le Gore pushes the guide toward La Villette: jazz upstairs, late electronic nights below, and a looser edge than central cocktail rooms. Use it when the evening can commit to the northeast instead of trying to fold it into a museum day.",
+      "La Gare / Le Gore is the northeast night out: live music in a former station, garden-and-terrace breathing room, then a basement club that can run into the early hours. Go when the plan can commit to La Villette and wants grit, dancing, and a less polished edge.",
     price: "$",
     priceSource: "Visit Paris Region",
+  },
+];
+
+const citywideLiveNightlife: StopSeed[] = [
+  {
+    id: "paris-nightlife-live-duc-lombards",
+    name: "Le Duc des Lombards",
+    coordinates: [48.8593, 2.3476],
+    description:
+      "Le Duc des Lombards is the easy central live-room choice: book a set, arrive on time, and let the night be about musicianship rather than another round of bar hopping.",
+    price: "$$",
+    priceSource: "Official venue site / Google Maps",
+  },
+  {
+    id: "paris-nightlife-live-caveau-huchette",
+    name: "Le Caveau de la Huchette",
+    coordinates: [48.8525, 2.3468],
+    description:
+      "Le Caveau de la Huchette gives Paris a dancing-cellar night in the Latin Quarter, with live music, old-stone atmosphere, and a clear reason to stay after dinner.",
+    price: "$$",
+    priceSource: "Official venue site / Google Maps",
+  },
+  {
+    id: "paris-nightlife-live-lapin-agile",
+    name: "Au Lapin Agile",
+    coordinates: [48.8888, 2.3401],
+    description:
+      "Au Lapin Agile is the Montmartre cabaret stop for song, performance, and artist-history atmosphere. Treat it as a planned show night, especially when the group wants nightlife without centering drinks.",
+    price: "$$",
+    priceSource: "Official venue site / Google Maps",
+  },
+  {
+    id: "paris-nightlife-live-la-gare-gore",
+    name: "La Gare / Le Gore",
+    coordinates: [48.8927, 2.3839],
+    description:
+      "La Gare / Le Gore stretches the night from live sets in a former station into a basement dance floor. It is the guide's scrappier, later counterweight to seated central venues.",
+    price: "$",
+    priceSource: "Visit Paris Region / Google Maps",
+  },
+  {
+    id: "paris-nightlife-live-point-ephemere",
+    name: "Point Ephemere",
+    coordinates: [48.8819, 2.3686],
+    description:
+      "Point Ephemere brings concerts, exhibitions, terrace energy, and canal-side programming into one address. Use it when the night should be built around what's on, not just where to drink.",
+    price: "$$",
+    priceSource: "Official venue site / Google Maps",
+  },
+];
+
+const citywideLowKeyNightlife: StopSeed[] = [
+  {
+    id: "paris-nightlife-low-key-marlusse",
+    name: "Marlusse et Lapin",
+    coordinates: [48.8842, 2.3364],
+    description:
+      "Marlusse et Lapin is the funky Montmartre nook for creative cocktails, happy hour, small-room chaos, and occasional live performances. It is low-key without being sleepy.",
+    price: "$$",
+    priceSource: "BarsParis / MisterGoodBeer / Google Maps",
+  },
+  {
+    id: "paris-nightlife-low-key-piano-vache",
+    name: "Le Piano Vache",
+    coordinates: [48.8503, 2.3488],
+    description:
+      "Le Piano Vache is the Latin Quarter dive-bar institution: posters, student energy, cheap-drink usefulness, and a night that does not ask anyone to dress up.",
+    price: "$",
+    priceSource: "Official venue site / Google Maps",
+  },
+  {
+    id: "paris-nightlife-low-key-requin",
+    name: "Le Requin Chagrin",
+    coordinates: [48.8465, 2.3478],
+    description:
+      "Le Requin Chagrin keeps the Pantheon side casual with pub energy, group tables, and an easy second-stop role after Mouffetard or Latin Quarter dinner.",
+    price: "$",
+    priceSource: "Google Maps / local nightlife guides",
+  },
+  {
+    id: "paris-nightlife-low-key-la-perle",
+    name: "La Perle",
+    coordinates: [48.8608, 2.3614],
+    description:
+      "La Perle is the Marais sidewalk-crowd standby, useful when the night wants people-watching, spillover energy, and minimal planning between galleries and late wandering.",
+    price: "$$",
+    priceSource: "Time Out / Google Maps",
+  },
+  {
+    id: "paris-nightlife-low-key-teddys",
+    name: "Teddy's Bar",
+    coordinates: [48.8473, 2.3443],
+    description:
+      "Teddy's Bar gives Rue Mouffetard a compact, low-pressure stop for beer, cocktails, and a casual group reset before the night decides where it is going.",
+    price: "$$",
+    priceSource: "Google Maps / local nightlife guides",
   },
 ];
 
@@ -969,19 +1253,94 @@ export const parisCitywideGuides = [
     sources: parisFoodSources,
   }),
   guide({
+    id: "list-paris-citywide-boulangeries-coffee-mornings",
+    slug: "paris-best-boulangeries-coffee-mornings",
+    seoSlug: "best-boulangeries",
+    seoTitle: "Best Boulangeries and Coffee Mornings in Paris",
+    seoDescription:
+      "Best boulangeries and coffee mornings in Paris for croissants, baguettes, Canal Saint-Martin bakeries, Left Bank bread counters, and seated breakfast stops.",
+    title: "Boulangeries and Coffee Mornings",
+    description:
+      "Paris is a cuisine capital before lunch starts: boulangeries, croissants, baguettes, coffee counters, and seated breakfasts can shape a whole morning. Use this guide when Food is clicked first and the day needs bread, pastry, and coffee without choosing a neighborhood yet.",
+    url: "https://www.google.com/maps/search/best+boulangeries+coffee+paris",
+    category: "Food",
+    stops: citywideBoulangerieFood,
+    sources: parisBoulangerieSources,
+  }),
+  guide({
+    id: "list-paris-citywide-brasseries-bouillons",
+    slug: "paris-best-brasseries-bouillons",
+    seoSlug: "best-brasseries",
+    seoTitle: "Best Brasseries and Bouillons in Paris",
+    seoDescription:
+      "Best brasseries and bouillons in Paris for steak frites, French onion soup, Art Nouveau rooms, boulevard classics, and traditional dining.",
+    title: "Brasseries and Bouillon Classics",
+    description:
+      "Brasseries and bouillons are the Paris meal format for steak frites, French onion soup, duck, cassoulet, and rooms with real civic memory. This guide keeps the traditional dining experience central, useful, and easy to fold into sightseeing days.",
+    url: "https://www.google.com/maps/search/best+brasseries+bouillons+paris",
+    category: "Food",
+    stops: citywideBrasserieFood,
+    sources: parisBrasserieSources,
+  }),
+  guide({
+    id: "list-paris-citywide-patisseries-macarons",
+    slug: "paris-best-patisseries-macarons",
+    seoSlug: "best-patisseries",
+    seoTitle: "Best Patisseries and Macarons in Paris",
+    seoDescription:
+      "Best patisseries and macarons in Paris for Angelina, Pierre Herme, Laduree, grand tea rooms, sweet counters, and pastry-led routes.",
+    title: "Patisseries and Macarons",
+    description:
+      "Patisseries give Paris its sweeter form of ceremony: macarons, tea rooms, viennoiserie, boxed gifts, and polished counters that can become a whole route. Use this guide for dessert-led planning across the city instead of treating sweets as an afterthought.",
+    url: "https://www.google.com/maps/search/best+patisseries+macarons+paris",
+    category: "Food",
+    stops: citywidePatisserieFood,
+    sources: parisPatisserieSources,
+  }),
+  guide({
     id: "list-paris-citywide-nightlife",
     slug: "paris-best-bars-nightlife",
     seoSlug: "best-bars",
     seoTitle: "Best Bars and Nightlife in Paris",
     seoDescription:
-      "Best bars and nightlife in Paris for cocktail rooms, wine bars, jazz, Canal Saint-Martin evenings, Marais drinks, and late Pigalle energy.",
-    title: "Wine Bars, Cocktails, Jazz, and Pigalle",
+      "Best bars and nightlife in Paris for stylish cocktail bars, wine bars, live rooms, Canal Saint-Martin evenings, Marais drinks, and late Pigalle energy.",
+    title: "Stylish Bars, Wine, Live Rooms, and Pigalle",
     description:
-      "Paris nights work best when the format is clear: natural wine before dinner, trophy cocktails in the Marais or Bourse, jazz with tickets, canal terraces, or later Pigalle rooms. This guide keeps after-dark planning tied to geography instead of sending every night across town.",
+      "Paris nights work best when the format is clear: natural wine before dinner, design-forward bars in the Marais or Bourse, ticketed live rooms, canal terraces, or later Pigalle energy. This guide keeps after-dark planning tied to geography instead of sending every night across town.",
     url: "https://www.google.com/maps/search/best+bars+nightlife+paris",
     category: "Nightlife",
     stops: citywideNightlife,
     sources: parisNightlifeSources,
+  }),
+  guide({
+    id: "list-paris-citywide-nightlife-beyond-drinks",
+    slug: "paris-nightlife-beyond-drinks",
+    seoSlug: "nightlife-beyond-drinks",
+    seoTitle: "Best Paris Nightlife Beyond Drinks",
+    seoDescription:
+      "Best Paris nightlife beyond drinks for live music, cabaret, dance floors, canal art spaces, Latin Quarter cellars, and late northeast venues.",
+    title: "Nightlife Beyond Drinks",
+    description:
+      "Not every Paris night needs to be a bar crawl. This guide is for ticketed sets, cabaret rooms, dancing cellars, canal programming, and live venues where the plan is the show, the room, or the dance floor first.",
+    url: "https://www.google.com/maps/search/live+music+shows+nightlife+paris",
+    category: "Nightlife",
+    stops: citywideLiveNightlife,
+    sources: parisLiveNightlifeSources,
+  }),
+  guide({
+    id: "list-paris-citywide-low-key-late-night-bars",
+    slug: "paris-low-key-late-night-dive-bars",
+    seoSlug: "low-key-bars",
+    seoTitle: "Best Low-Key Late Night Bars in Paris",
+    seoDescription:
+      "Best low-key late night bars in Paris for dive bars, student pubs, Montmartre happy hour, Marais sidewalk crowds, and casual Latin Quarter drinks.",
+    title: "Low-Key Late Nights and Dive Bars",
+    description:
+      "For nights that should feel loose, cheap-ish, and social, this guide skips the bougie reservation mood and leans into dive bars, low-key terraces, student pubs, happy hours, and neighborhood rooms with a bit of personality.",
+    url: "https://www.google.com/maps/search/low+key+dive+bars+paris",
+    category: "Nightlife",
+    stops: citywideLowKeyNightlife,
+    sources: parisLowKeyNightlifeSources,
   }),
   guide({
     id: "list-paris-citywide-culture",
@@ -1110,19 +1469,20 @@ const parisNeighborhoodGuideSeeds: Record<ParisNeighborhood, Record<EditorialCat
         "The 1st needs meals that can survive Louvre timing, Tuileries walks, and central crowds. This guide mixes tea-room ritual, udon, polished dining, and a classic cafe so the day has food options without leaving the royal core.",
       stops: [
         nStop("first-food-angelina", "Angelina", [48.8651, 2.3286], "Angelina is the Tuileries-side tea-room ritual for hot chocolate, pastries, and a seated pause between the Louvre, Rue de Rivoli, and Concorde. Use it when the stop is about classic Paris room tone as much as sugar.", { price: "$$", priceSource: "Google Maps / Paris dining guides" }),
-        nStop("first-food-sanukiya", "Sanukiya", [48.8648, 2.3339], "Sanukiya gives the 1st a practical Japanese noodle stop near Pyramides, useful when the day needs speed, warmth, and value instead of another long French meal. It is best for lunch windows around Palais Royal or the Louvre.", { price: "$", priceSource: "Google Maps / Paris dining guides" }),
+        nStop("first-food-sanukiya", "Sanukiya", [48.8648, 2.3339], "Sanukiya gives the 1st a warm, efficient udon stop near Pyramides, useful when the day wants comfort, speed, and a clear lunch plan around Palais Royal or the Louvre. It adds a different Paris food rhythm without pulling the route out of the royal core.", { price: "$", priceSource: "Google Maps / Paris dining guides" }),
         nStop("first-food-verjus", "Verjus", [48.8634, 2.3381], "Verjus is the small reservation dinner for travelers who want the Louvre area to end with a proper modern meal rather than a tourist-corridor compromise. Save it for a more deliberate evening near Palais Royal.", { price: "$$$", priceSource: "MICHELIN Guide / Google Maps" }),
         nStop("first-food-le-nemours", "Le Nemours", [48.8639, 2.3359], "Le Nemours is the cafe-brasserie hinge between the Louvre, Palais Royal, and Comedie-Francaise. It works for breakfast, coffee, or a simple lunch when location and terrace rhythm matter more than discovery.", { price: "$$", priceSource: "Google Maps / local dining guides" }),
+        nStop("first-food-le-fumoir", "Le Fumoir", [48.8606, 2.3407], "Le Fumoir works in Food as well as Nightlife because it is a Louvre-facing restaurant, bar, and tea room open from morning into evening. Use it for Scandinavian-influenced lunch or dinner, Sunday brunch, tea, or a polished museum-edge drink.", { price: "$$$", priceSource: "Official restaurant site / Google Maps" }),
       ],
     },
     Nightlife: {
-      title: "Central Cocktails and Museum-Edge Bars",
+      title: "Museum-Edge Drinks and Hotel Bars",
       description:
-        "Nights in the 1st work best as a polished first or final drink near galleries, passages, and palace hotels. This guide keeps the route central with cocktail rooms, hotel bars, and cafe-bars that do not pull the night across town.",
+        "Nights in the 1st work best as polished starts or final stops near galleries, passages, and palace hotels. This guide keeps the route central with hotel bars, hidden rooms, wine-led addresses, and hybrid restaurant-bars that do not pull the night across town.",
       stops: [
-        nStop("first-nightlife-danico", "Danico", [48.8666, 2.3399], "Danico is the Galerie Vivienne cocktail destination with World 50 Best support and a hidden-room feel that fits a polished Right Bank night. Use it when the evening needs one serious drink near Palais Royal or Bourse.", { price: "$$$", priceSource: "World's 50 Best Bars / Google Maps" }),
+        nStop("first-nightlife-danico", "Danico", [48.8666, 2.3399], "Danico is the Galerie Vivienne destination with World 50 Best support and a hidden-room feel that fits a polished Right Bank night. Use it when the evening wants style near Palais Royal or Bourse.", { price: "$$$", priceSource: "World's 50 Best Bars / Google Maps" }),
         nStop("first-nightlife-bar-228", "Bar 228", [48.865, 2.3286], "Bar 228 at Le Meurice gives the Tuileries edge a grand-hotel drink with dark wood, deep seats, and classic service. It is strongest for a special-occasion nightcap after museums, dinner, or a river walk.", { price: "$$$", priceSource: "Official hotel site / Google Maps" }),
-        nStop("first-nightlife-le-fumoir", "Le Fumoir", [48.8606, 2.3407], "Le Fumoir is the Louvre-adjacent cocktail and wine-room fallback that still feels composed enough for a central night. Save it for a drink that can follow the museum without turning into a full bar crawl.", { price: "$$", priceSource: "Google Maps / local nightlife guides" }),
+        nStop("first-nightlife-le-fumoir", "Le Fumoir", [48.8606, 2.3407], "Le Fumoir is a Louvre-adjacent restaurant, bar, and tea room, so it works when the museum day needs a composed drink or a real meal without changing neighborhoods. It is more all-day address than pure bar.", { price: "$$", priceSource: "Official restaurant site / Google Maps" }),
         nStop("first-nightlife-juveniles", "Juveniles", [48.8669, 2.3373], "Juveniles is the wine-bar and small-plates option that keeps the covered-passage area relaxed. It works when the plan wants bottles, food, and conversation instead of a formal hotel bar.", { price: "$$", priceSource: "Google Maps / local wine guides" }),
       ],
     },
@@ -1179,17 +1539,17 @@ const parisNeighborhoodGuideSeeds: Record<ParisNeighborhood, Record<EditorialCat
       stops: [
         nStop("marais-food-bistrot-tournelles", "Bistrot des Tournelles", [48.8555, 2.366], "Bistrot des Tournelles is the Marais bistro pick for travelers who want a real sit-down meal near Place des Vosges. The throwback room and classic plates make it useful when the neighborhood needs dinner, not just snacks.", { price: "$$", priceSource: "The Infatuation / Google Maps" }),
         nStop("marais-food-las-fallafel", "L'As du Fallafel", [48.8574, 2.3591], "L'As du Fallafel is the Rue des Rosiers counter stop that still deserves a save because it solves a different Marais meal: fast, iconic, and better treated as a focused lunch or snack than a full restaurant plan.", { price: "$", priceSource: "The Infatuation / Google Maps" }),
-        nStop("marais-food-parcelles", "Parcelles", [48.8612, 2.3568], "Parcelles is the polished bistro choice for a Marais meal that should feel current but still French. It fits travelers who want a reservation, wine, and careful cooking without leaving the gallery-and-boutique route.", { price: "$$$", priceSource: "The Infatuation / Google Maps" }),
-        nStop("marais-food-enfants-rouges", "Marche des Enfants Rouges", [48.8627, 2.3612], "Marche des Enfants Rouges gives the guide a flexible market format for casual lunches and uneven appetites. Treat it as a grazing stop with neighborhood texture rather than a quiet meal.", { price: "$", priceSource: "Eater / Google Maps" }),
+        nStop("marais-food-parcelles", "Parcelles", [48.8612, 2.3568], "Parcelles is the Marais reservation for a polished bistro meal without leaving the old-quarter route: market cooking, careful sauces, and a wine list that makes dinner feel chosen. Use it when galleries and boutiques should end with a real table rather than another counter stop.", { price: "$$$", priceSource: "The Infatuation / Google Maps" }),
+        nStop("marais-food-enfants-rouges", "Marche des Enfants Rouges", [48.8627, 2.3612], "Marche des Enfants Rouges gives the guide a flexible covered-market lunch: Moroccan tagines and couscous, Japanese bentos, Lebanese plates, sandwiches, produce stalls, and casual counters for mixed appetites. Treat it as lively grazing with neighborhood texture rather than a quiet sit-down meal.", { price: "$", priceSource: "Eater / Google Maps" }),
       ],
     },
     Nightlife: {
-      title: "Cocktails, Pubs, and Old-Quarter Rooms",
+      title: "Marais High-Key Bars and Low-Key Terraces",
       description:
-        "Le Marais nightlife works because serious cocktail rooms, pub ease, queer-friendly terraces, and late cafes sit close together. This guide keeps the night walkable around the old quarter instead of scattering drinks across Paris.",
+        "Le Marais nightlife works because polished bars, cocktail-pub ease, queer-friendly terraces, taco-counter energy, and late sidewalk crowds sit close together. This guide keeps the night walkable around the old quarter and gives the group a choice between bougie, playful, and low-key.",
       stops: [
-        nStop("marais-nightlife-bar-nouveau", "Bar Nouveau", [48.8623, 2.3579], "Bar Nouveau is the Art Nouveau cocktail trophy with World 50 Best recognition and a small-room format that rewards early timing. Use it for one focused drink before the night spreads into dinner or another bar.", { price: "$$$", priceSource: "World's 50 Best Bars / Google Maps" }),
-        nStop("marais-nightlife-cambridge", "The Cambridge Public House", [48.8618, 2.3632], "The Cambridge Public House bridges pub ease and Paris cocktail precision, making it useful for groups that want serious drinks without whispery formality. It can start or end a wider Marais night.", { price: "$$", priceSource: "World's 50 Best Bars / Time Out" }),
+        nStop("marais-nightlife-bar-nouveau", "Bar Nouveau", [48.8623, 2.3579], "Bar Nouveau brings Art Nouveau detail, a design-forward room, and a weekend six-cocktail set-menu experience downstairs. Use it for a stylish Marais start when the group wants the night to feel intentional.", { price: "$$$", priceSource: "World's 50 Best Bars / Google Maps" }),
+        nStop("marais-nightlife-cambridge", "The Cambridge Public House", [48.8618, 2.3632], "The Cambridge Public House is a cocktail pub: relaxed service, rotating creations, craft beers, natural wines, and pub food in the Marais. It can start a night without making everyone commit to a hushed bar mood.", { price: "$$", priceSource: "World's 50 Best Bars / Time Out" }),
         nStop("marais-nightlife-candelaria", "Candelaria", [48.8631, 2.3615], "Candelaria keeps the Marais bar route playful with a taqueria-front, cocktail-back format that still feels useful near Rue de Saintonge. Save it when the night needs food-adjacent energy and a hidden-room mood.", { price: "$$", priceSource: "Time Out / Google Maps" }),
         nStop("marais-nightlife-la-perle", "La Perle", [48.8608, 2.3614], "La Perle is the sidewalk-crowd Marais standby for a looser drink between galleries, dinner, and late wandering. Its value is social texture and location, not a perfectly quiet cocktail.", { price: "$$", priceSource: "Time Out / Google Maps" }),
       ],
@@ -1252,14 +1612,14 @@ const parisNeighborhoodGuideSeeds: Record<ParisNeighborhood, Record<EditorialCat
       ],
     },
     Nightlife: {
-      title: "Left Bank Cocktails, Jazz, and Hotel Bars",
+      title: "Left Bank Chic, Hotel Bars, and Speakeasies",
       description:
-        "Saint-Germain nightlife is best when it stays elegant but not sleepy: cocktail rooms, hotel bars, market-street terraces, and cellar energy. This guide keeps the Left Bank evening close to dinner and river walks.",
+        "Saint-Germain nightlife is best when it stays elegant but not sleepy: 1930s-style speakeasy rooms, grand hotel bars, market-street terraces, and snug late-night addresses. This guide keeps the Left Bank evening close to dinner and river walks without making every stop feel formal.",
       stops: [
-        nStop("saint-germain-nightlife-prescription", "Prescription Cocktail Club", [48.8538, 2.3372], "Prescription Cocktail Club gives Saint-Germain a proper cocktail-room option near Odeon and Rue Mazarine. It is best when the night wants low light, careful drinks, and a short walk from dinner.", { price: "$$", priceSource: "Time Out / Google Maps" }),
-        nStop("saint-germain-nightlife-josephine", "Bar Josephine", [48.8517, 2.327], "Bar Josephine at Hotel Lutetia brings grand Left Bank hotel energy with live-music polish and a room that can carry the whole evening. Use it for a composed nightcap or a more dressed-up start.", { price: "$$$", priceSource: "Official hotel site / Google Maps" }),
-        nStop("saint-germain-nightlife-bar-marche", "Le Bar du Marche", [48.8532, 2.3362], "Le Bar du Marche is the casual terrace choice near Rue de Buci, useful when the group wants a simple drink in the middle of the Saint-Germain evening flow. It is more social hinge than destination cocktail bar.", { price: "$$", priceSource: "Google Maps / local nightlife guides" }),
-        nStop("saint-germain-nightlife-castor-club", "Castor Club", [48.8539, 2.3392], "Castor Club gives the Left Bank a small, polished cocktail stop close to the river and Odeon. Save it for a focused drink when the night should stay intimate and walkable.", { price: "$$", priceSource: "Time Out / Google Maps" }),
+        nStop("saint-germain-nightlife-prescription", "Prescription Cocktail Club", [48.8538, 2.3372], "Prescription Cocktail Club gives Saint-Germain a 1930s-inspired, theatrical speakeasy mood near Odeon and Rue Mazarine. It is best when the night wants low light, style, and a short walk from dinner.", { price: "$$", priceSource: "Time Out / Google Maps" }),
+        nStop("saint-germain-nightlife-josephine", "Bar Josephine", [48.8517, 2.327], "Bar Josephine at Hotel Lutetia brings grand Left Bank hotel energy, live music on select nights, and enough dining-and-stay context to make the room feel like an evening plan rather than a quick stop.", { price: "$$$", priceSource: "Official hotel site / Google Maps" }),
+        nStop("saint-germain-nightlife-bar-marche", "Le Bar du Marche", [48.8532, 2.3362], "Le Bar du Marche is the buzzing Rue de Buci terrace for classic bistro fare from breakfast onward, plus cocktails when the Left Bank evening loosens up. Use it as a social hinge in the middle of Saint-Germain.", { price: "$$", priceSource: "Google Maps / local nightlife guides" }),
+        nStop("saint-germain-nightlife-castor-club", "Castor Club", [48.8539, 2.3392], "Castor Club is a snug Left Bank speakeasy with a hidden-door feel, a compact room, and an extensive cocktail list. Save it for a late, intimate stop when the group wants atmosphere over scale.", { price: "$$", priceSource: "Time Out / Google Maps" }),
       ],
     },
     Nature: {
@@ -1309,9 +1669,9 @@ const parisNeighborhoodGuideSeeds: Record<ParisNeighborhood, Record<EditorialCat
   },
   "Latin Quarter": {
     Food: {
-      title: "Student Streets and Serious Tables",
+      title: "Historic Rooms and River-Edge Tables",
       description:
-        "Latin Quarter food should cover more than tourist menus: bakeries, historic dining rooms, student-value plates, and one serious river-edge meal. This guide keeps meals tied to the Pantheon, Mouffetard, Cluny, and the Seine.",
+        "Latin Quarter food is strongest when it moves between bakeries, Art Nouveau dining rooms, candlelit old houses, and a formal Seine-side classic. This guide keeps meals tied to the Pantheon, Mouffetard, Cluny, and the river without forcing a casual campus frame onto serious restaurants.",
       stops: [
         nStop("latin-food-coupe-chou", "Le Coupe-Chou", [48.8485, 2.3483], "Le Coupe-Chou gives the Latin Quarter a candlelit old-house meal near the Sorbonne and Pantheon. Use it when the route wants atmosphere and a slower dinner without leaving the university streets.", { price: "$$", priceSource: "Google Maps / local dining guides" }),
         nStop("latin-food-bouillon-racine", "Bouillon Racine", [48.849, 2.341], "Bouillon Racine is the Art Nouveau dining-room choice near Odeon and Cluny, useful when the day needs a historic room at a more accessible format. It is best for groups that want setting and classic comfort.", { price: "$$", priceSource: "Google Maps / local dining guides" }),
@@ -1320,11 +1680,11 @@ const parisNeighborhoodGuideSeeds: Record<ParisNeighborhood, Record<EditorialCat
       ],
     },
     Nightlife: {
-      title: "Cellars, Student Bars, and Late Jazz",
+      title: "Live Cellars and Low-Key Latin Bars",
       description:
-        "Latin Quarter nights work when the student energy and old-cellar culture are used deliberately. This guide gives the neighborhood jazz, pubs, and casual bars that fit after bookshops, dinner, or a Pantheon day.",
+        "Latin Quarter nights work when old cellars, live music, pub energy, and casual Mouffetard bars are used deliberately. This guide focuses on music, dancing, and low-key late stops after bookshops, dinner, or a Pantheon day.",
       stops: [
-        nStop("latin-nightlife-huchette", "Le Caveau de la Huchette", [48.8525, 2.3468], "Le Caveau de la Huchette is the Latin Quarter jazz-cellar anchor, useful when nightlife should be music and dancing rather than another cocktail list. Check the program before building the night around it.", { price: "$$", priceSource: "Official venue site / Google Maps" }),
+        nStop("latin-nightlife-huchette", "Le Caveau de la Huchette", [48.8525, 2.3468], "Le Caveau de la Huchette is the Latin Quarter live-cellar anchor, useful when nightlife should be music, dancing, and old-stone atmosphere. Check the program before building the night around it.", { price: "$$", priceSource: "Official venue site / Google Maps" }),
         nStop("latin-nightlife-piano-vache", "Le Piano Vache", [48.8503, 2.3488], "Le Piano Vache gives the area a student-bar institution with posters, inexpensive drinks, and a looser mood near the Sorbonne. Use it when the night should stay casual and local-feeling.", { price: "$", priceSource: "Google Maps / local nightlife guides" }),
         nStop("latin-nightlife-teddys", "Teddy's Bar", [48.8473, 2.3443], "Teddy's Bar is a compact cocktail and beer stop near Mouffetard, useful for a low-pressure drink after dinner. It works best as part of a small Latin Quarter bar sequence.", { price: "$$", priceSource: "Google Maps / local nightlife guides" }),
         nStop("latin-nightlife-requin", "Le Requin Chagrin", [48.8465, 2.3478], "Le Requin Chagrin is the pub-style stop near the Pantheon and student streets, good for groups that want easy drinks without a reservation ritual. Save it for a casual second stop.", { price: "$", priceSource: "Google Maps / local nightlife guides" }),
@@ -1379,12 +1739,13 @@ const parisNeighborhoodGuideSeeds: Record<ParisNeighborhood, Record<EditorialCat
     Food: {
       title: "Hill Meals Beyond the View",
       description:
-        "Montmartre food is strongest when the meal has a purpose: a poultry room, a tiny bistro, a brunch stop, or a village-street dinner. This guide keeps the hill from becoming only crepes, views, and souvenir lanes.",
+        "Montmartre food is strongest when the meal has a purpose: a poultry room, a tiny bistro, a brunch stop, a Breton crepe table, or a village-street dinner. This guide keeps the hill's food useful before and after the view.",
       stops: [
         nStop("montmartre-food-coq-fils", "Le Coq and Fils", [48.887, 2.3383], "Le Coq and Fils gives Montmartre a poultry-focused destination meal near the upper hill without leaning on postcard atmosphere alone. Use it for a planned lunch or dinner after the museum lanes.", { price: "$$$", priceSource: "MICHELIN Guide / Google Maps" }),
         nStop("montmartre-food-boite-lettres", "La Boite aux Lettres", [48.8878, 2.3356], "La Boite aux Lettres is the small bistro pick for travelers who want a neighborhood dinner near Lamarck-Caulaincourt. It works when the hill needs warmth, wine, and a room that feels local.", { price: "$$", priceSource: "Google Maps / Paris dining guides" }),
-        nStop("montmartre-food-hardware", "Hardware Societe", [48.886, 2.3438], "Hardware Societe is the brunch and coffee stop that makes a Sacre-Coeur morning more useful. It is best before the crowds thicken or after an early hill walk.", { price: "$$", priceSource: "Google Maps / local dining guides" }),
-        nStop("montmartre-food-poulbot", "Le Poulbot", [48.8866, 2.3404], "Le Poulbot gives the central hill a compact French meal close to Place du Tertre without fully surrendering to the tourist strip. Use it when staying on the summit matters.", { price: "$$", priceSource: "Google Maps / local dining guides" }),
+        nStop("montmartre-food-hardware", "Hardware Societe", [48.886, 2.3438], "Hardware Societe is the brunch-and-coffee stop for a Sacre-Coeur morning, with Australian cafe energy, plated breakfasts, and a location just below the basilica. Go early or treat the wait as part of a slower hill start.", { price: "$$", priceSource: "Google Maps / local dining guides" }),
+        nStop("montmartre-food-breizh-cafe", "Breizh Cafe Abbesses", [48.8846, 2.3377], "Breizh Cafe Abbesses adds the crepe piece Montmartre should have, with Breton galettes, cider, and a useful Abbesses base below the summit. It is the casual, lighter meal that can sit between a hill walk and Pigalle or Lamarck-Caulaincourt.", { price: "$$", priceSource: "Official restaurant site / Google Maps" }),
+        nStop("montmartre-food-poulbot", "Le Poulbot", [48.8866, 2.3404], "Le Poulbot gives the central hill a compact French meal close to Place du Tertre while still feeling more deliberate than the busiest tourist-strip terraces. It works for a warm bistro dinner after artist lanes, the basilica, or a Montmartre museum stop.", { price: "$$", priceSource: "Google Maps / local dining guides" }),
       ],
     },
     Nightlife: {
@@ -1451,8 +1812,8 @@ const parisNeighborhoodGuideSeeds: Record<ParisNeighborhood, Record<EditorialCat
       stops: [
         nStop("canal-food-du-pain", "Du Pain et des Idees", [48.8719, 2.3622], "Du Pain et des Idees is the bakery stop that makes canal mornings feel intentional. Use it for pastries and bread before the locks, Republique, or a north Marais route.", { price: "$", priceSource: "Eater / Google Maps" }),
         nStop("canal-food-holybelly", "Holybelly 5", [48.8723, 2.3606], "Holybelly 5 is the brunch-and-coffee anchor near the canal, useful when the morning needs a proper seated meal before walking. Expect demand and build timing around it.", { price: "$$", priceSource: "Google Maps / Paris dining guides" }),
-        nStop("canal-food-early-june", "Early June", [48.8739, 2.3621], "Early June gives the canal a wine-led, rotating-kitchen meal that feels current and neighborhood-specific. Save it for travelers who like seasonal plates and a less formal dinner rhythm.", { price: "$$", priceSource: "Eater / Google Maps" }),
-        nStop("canal-food-chez-prune", "Chez Prune", [48.8726, 2.3634], "Chez Prune is the canal-side cafe standby for lunch, aperitif, or a simple meal with the water close by. Its value is meeting-point energy and location rather than culinary surprise.", { price: "$$", priceSource: "Time Out / Google Maps" }),
+        nStop("canal-food-early-june", "Early June", [48.8739, 2.3621], "Early June gives the canal a rotating-chef, natural-wine dinner that changes more often than a standard bistro menu. Save it for travelers who like a current, low-formality meal where the kitchen, bottles, and room feel tied to the neighborhood.", { price: "$$", priceSource: "Eater / Google Maps" }),
+        nStop("canal-food-chez-prune", "Chez Prune", [48.8726, 2.3634], "Chez Prune is the canal-side cafe standby for lunch, aperitif, or an easy meal with the water close by. Use it as the social hinge of the route: a terrace, a meeting point, and a relaxed pause before the canal keeps moving north.", { price: "$$", priceSource: "Time Out / Google Maps" }),
       ],
     },
     Nightlife: {
@@ -1517,9 +1878,9 @@ const parisNeighborhoodGuideSeeds: Record<ParisNeighborhood, Record<EditorialCat
       description:
         "The 7th needs food stops that can stand up to Eiffel, Invalides, Rodin, and Orsay days. This guide balances destination dining, classic bistros, and practical cafes so the district is more than monument logistics.",
       stops: [
-        nStop("seventh-food-david-toutain", "David Toutain", [48.8617, 2.3048], "In the 7th, David Toutain is the destination-dining counterweight to monument routes, with plant-led menus and a serious reservation posture near Invalides and the Eiffel Tower. Plan it as the day's main meal.", { price: "$$$", priceSource: "MICHELIN Guide / David Toutain official" }),
-        nStop("seventh-food-arpege", "Arpege", [48.8555, 2.3162], "Arpege is the vegetable-driven fine-dining landmark that makes the 7th a serious food destination. Use it only when the trip has room for a high-budget, high-commitment reservation.", { price: "$$$", priceSource: "MICHELIN Guide / Google Maps" }),
-        nStop("seventh-food-fontaine-mars", "La Fontaine de Mars", [48.8587, 2.3044], "La Fontaine de Mars is the classic bistro choice near Rue Saint-Dominique and the Eiffel side. It works when the group wants a traditional meal with a strong neighborhood address.", { price: "$$$", priceSource: "Google Maps / Paris dining guides" }),
+        nStop("seventh-food-david-toutain", "David Toutain", [48.8617, 2.3048], "In the 7th, David Toutain is the destination-dining counterweight to monument routes, with highly composed seasonal menus and a serious reservation posture near Invalides and the Eiffel Tower. Plan it as the day's main meal.", { price: "$$$", priceSource: "MICHELIN Guide / David Toutain official" }),
+        nStop("seventh-food-arpege", "Arpege", [48.8555, 2.3162], "Arpege is Alain Passard's garden-first fine-dining landmark, where the 7th becomes a serious food destination as much as a monument district. Use it only when the trip has room for a high-budget, high-commitment reservation built around craft and produce.", { price: "$$$", priceSource: "MICHELIN Guide / Google Maps" }),
+        nStop("seventh-food-fontaine-mars", "La Fontaine de Mars", [48.8587, 2.3044], "La Fontaine de Mars is the Rue Saint-Dominique classic for cassoulet, duck, steak, and a room that feels properly neighborhood despite the Eiffel-side address. It works when the group wants traditional Paris cooking before or after a monument day.", { price: "$$$", priceSource: "Google Maps / Paris dining guides" }),
         nStop("seventh-food-cafe-varenne", "Cafe Varenne", [48.855, 2.3194], "Cafe Varenne is the practical brasserie near Rodin, Invalides, and government-quarter walks. Use it when the museum day needs a reliable lunch or dinner without a destination-dining commitment.", { price: "$$", priceSource: "Google Maps / local dining guides" }),
       ],
     },

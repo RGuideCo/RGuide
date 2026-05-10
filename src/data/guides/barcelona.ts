@@ -2843,7 +2843,7 @@ export const barcelonaCoreGuides = [
           41.3915,
           2.165
         ],
-        "description": "Casa Amatller is a useful corrective to Gaudí-only Eixample itineraries. Official and tourism sources position Puig i Cadafalch's house as a key part of the Block of Discord, with stepped gables, decorative craft, and chocolate-family history that help explain the competitive Modernista energy of Passeig de Gràcia.",
+        "description": "Casa Amatller is a useful corrective to Gaudí-only Eixample journeys. Official and tourism sources position Puig i Cadafalch's house as a key part of the Block of Discord, with stepped gables, decorative craft, and chocolate-family history that help explain the competitive Modernista energy of Passeig de Gràcia.",
         "hours": {
           "mon": "10:00 AM-7:00 PM",
           "tue": "10:00 AM-7:00 PM",
@@ -6853,7 +6853,7 @@ export const barcelonaItineraryGuides = [
     "slug": "barcelona-one-day-itinerary",
     "seoSlug": "best-things-to-do",
     "seoTitle": "Best Things to Do in Barcelona in One Day",
-    "seoDescription": "Best one-day Barcelona itinerary, combining one essential culture stop, one restaurant, one neighborhood walk, one low-key bar, and one destination nightlife option.",
+    "seoDescription": "Best one-day Barcelona journey, combining one essential culture stop, one restaurant, one neighborhood walk, one low-key bar, and one destination nightlife option.",
     "title": "One Strong Day, No Filler",
     "description": "A focused first-day route that chooses one great architecture stop, a counter lunch, old-city wandering, a salty cava pause, and a final cocktail spectacle. It is built to feel complete without pretending you can see everything in one day.",
     "url": "https://www.google.com/maps/search/best+things+to+do+barcelona+one+day",
@@ -6868,7 +6868,7 @@ export const barcelonaItineraryGuides = [
     },
     "creator": {
       "id": "user-rguide-itineraries",
-      "name": "R Itineraries",
+      "name": "R Journeys",
       "avatar": "data:image/svg+xml;utf8,%0A%20%20%20%20%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22160%22%20height%3D%22160%22%20viewBox%3D%220%200%20160%20160%22%3E%0A%20%20%20%20%20%20%3Crect%20width%3D%22160%22%20height%3D%22160%22%20rx%3D%2280%22%20fill%3D%22%230f766e%22%20%2F%3E%0A%20%20%20%20%20%20%3Ctext%20x%3D%2250%25%22%20y%3D%2254%25%22%20text-anchor%3D%22middle%22%20dominant-baseline%3D%22middle%22%0A%20%20%20%20%20%20%20%20font-family%3D%22Arial%2C%20sans-serif%22%20font-size%3D%2276%22%20font-weight%3D%22700%22%20fill%3D%22white%22%3ER%3C%2Ftext%3E%0A%20%20%20%20%3C%2Fsvg%3E%0A%20%20"
     },
     "upvotes": 0,
@@ -6924,7 +6924,7 @@ export const barcelonaItineraryGuides = [
           2.1822
         ],
         "itineraryDay": 1,
-        "description": "Make Santa Maria del Mar the afternoon culture stop because it is close to lunch, short enough for a one-day route, and central to the Born's merchant history. It gives the itinerary a clear architectural pause before the evening shifts into cava counters and cocktail rooms.",
+        "description": "Make Santa Maria del Mar the afternoon culture stop because it is close to lunch, short enough for a one-day route, and central to the Born's merchant history. It gives the journey a clear architectural pause before the evening shifts into cava counters and cocktail rooms.",
         "hours": {
           "mon": "9:00 AM-8:00 PM",
           "tue": "9:00 AM-8:00 PM",
@@ -7001,7 +7001,7 @@ export const barcelonaItineraryGuides = [
     "slug": "barcelona-weekend-itinerary",
     "seoSlug": "best-things-to-do",
     "seoTitle": "Best Things to Do in Barcelona for a Weekend",
-    "seoDescription": "Best Barcelona weekend itinerary, mixing culture, restaurants, dive bars, popular nightlife, hostel/stay context, and neighborhood pacing across two days.",
+    "seoDescription": "Best Barcelona weekend journey, mixing culture, restaurants, dive bars, popular nightlife, hostel/stay context, and neighborhood pacing across two days.",
     "title": "Two Nights, Five Neighborhood Moods",
     "description": "A weekend route with room to breathe: Gracia base energy, Eixample architecture, old-city nights, Montjuic art, Poble-sec bites, and one proper late finish. Use it when two days should feel paced, not stuffed.",
     "url": "https://www.google.com/maps/search/barcelona+weekend+itinerary",
@@ -7016,7 +7016,7 @@ export const barcelonaItineraryGuides = [
     },
     "creator": {
       "id": "user-rguide-itineraries",
-      "name": "R Itineraries",
+      "name": "R Journeys",
       "avatar": "data:image/svg+xml;utf8,%0A%20%20%20%20%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22160%22%20height%3D%22160%22%20viewBox%3D%220%200%20160%20160%22%3E%0A%20%20%20%20%20%20%3Crect%20width%3D%22160%22%20height%3D%22160%22%20rx%3D%2280%22%20fill%3D%22%230f766e%22%20%2F%3E%0A%20%20%20%20%20%20%3Ctext%20x%3D%2250%25%22%20y%3D%2254%25%22%20text-anchor%3D%22middle%22%20dominant-baseline%3D%22middle%22%0A%20%20%20%20%20%20%20%20font-family%3D%22Arial%2C%20sans-serif%22%20font-size%3D%2276%22%20font-weight%3D%22700%22%20fill%3D%22white%22%3ER%3C%2Ftext%3E%0A%20%20%20%20%3C%2Fsvg%3E%0A%20%20"
     },
     "upvotes": 0,
@@ -7193,7 +7193,7 @@ export const barcelonaItineraryGuides = [
     "slug": "barcelona-week-itinerary",
     "seoSlug": "best-things-to-do",
     "seoTitle": "Best Things to Do in Barcelona for a Week",
-    "seoDescription": "Best one-week Barcelona itinerary, using the strongest citywide picks across restaurants, culture, dive bars, popular bars, hostels, stays, neighborhoods, and Montjuïc.",
+    "seoDescription": "Best one-week Barcelona journey, using the strongest citywide picks across restaurants, culture, dive bars, popular bars, hostels, stays, neighborhoods, and Montjuïc.",
     "title": "A Week From Gràcia to the Hill",
     "description": "A longer route that lets the categories spread out instead of competing for one day: hostel base, Gaudi starts, old-city history, tasting-menu splurge, Born nightlife, Montjuic reset, and Poble-sec finish.",
     "url": "https://www.google.com/maps/search/barcelona+one+week+itinerary",
@@ -7208,7 +7208,7 @@ export const barcelonaItineraryGuides = [
     },
     "creator": {
       "id": "user-rguide-itineraries",
-      "name": "R Itineraries",
+      "name": "R Journeys",
       "avatar": "data:image/svg+xml;utf8,%0A%20%20%20%20%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22160%22%20height%3D%22160%22%20viewBox%3D%220%200%20160%20160%22%3E%0A%20%20%20%20%20%20%3Crect%20width%3D%22160%22%20height%3D%22160%22%20rx%3D%2280%22%20fill%3D%22%230f766e%22%20%2F%3E%0A%20%20%20%20%20%20%3Ctext%20x%3D%2250%25%22%20y%3D%2254%25%22%20text-anchor%3D%22middle%22%20dominant-baseline%3D%22middle%22%0A%20%20%20%20%20%20%20%20font-family%3D%22Arial%2C%20sans-serif%22%20font-size%3D%2276%22%20font-weight%3D%22700%22%20fill%3D%22white%22%3ER%3C%2Ftext%3E%0A%20%20%20%20%3C%2Fsvg%3E%0A%20%20"
     },
     "upvotes": 0,
@@ -7222,7 +7222,7 @@ export const barcelonaItineraryGuides = [
           2.1654
         ],
         "itineraryDay": 1,
-        "description": "Use Yeah Barcelona as the hostel-category base for a week because the location works for Eixample, Gràcia, and Sagrada Família while the social programming helps longer-stay travelers find plans. It is especially useful when the itinerary needs an affordable base that can create community without relying on random bar crawls.",
+        "description": "Use Yeah Barcelona as the hostel-category base for a week because the location works for Eixample, Gràcia, and Sagrada Família while the social programming helps longer-stay travelers find plans. It is especially useful when the journey needs an affordable base that can create community without relying on random bar crawls.",
         "hours": {
           "mon": "24 hours",
           "tue": "24 hours",
@@ -7262,7 +7262,7 @@ export const barcelonaItineraryGuides = [
           2.1583
         ],
         "itineraryDay": 1,
-        "description": "Bemba is useful on a weeklong itinerary because not every good meal should be a reservation. It gives the Gràcia day something quick, affordable, and current before the route returns to museums, bars, and bigger dinners.",
+        "description": "Bemba is useful on a weeklong journey because not every good meal should be a reservation. It gives the Gràcia day something quick, affordable, and current before the route returns to museums, bars, and bigger dinners.",
         "price": "$",
         "priceSource": "Eater / Instagram",
         "hours": {
@@ -7426,7 +7426,7 @@ export const barcelonaItineraryGuides = [
           2.1635
         ],
         "itineraryDay": 6,
-        "description": "Quimet & Quimet is the Poble-sec food-and-dive-bar bridge, with standing montaditos and bottles that fit a weeklong itinerary better than another formal dinner. Go early and let it launch a Carrer de Blai evening.",
+        "description": "Quimet & Quimet is the Poble-sec food-and-dive-bar bridge, with standing montaditos and bottles that fit a weeklong journey better than another formal dinner. Go early and let it launch a Carrer de Blai evening.",
         "hours": {
           "mon": "12:00 PM-11:00 PM",
           "tue": "12:00 PM-11:00 PM",

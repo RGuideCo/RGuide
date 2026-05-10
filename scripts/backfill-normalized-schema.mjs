@@ -1205,6 +1205,47 @@ async function upsertVenueHoursFromStop(client, venueId, stop) {
     return;
   }
 
+  const defaultRawText = normalizeHoursText(stop.hours.default);
+  if (defaultRawText) {
+    const normalizedDefault = defaultRawText.toLowerCase().replace(/\.$/, "");
+    await client.query(
+      `update public.venues
+       set hours_note = coalesce(hours_note, $2),
+           hours_last_verified_at = coalesce(hours_last_verified_at, now())
+       where id = $1`,
+      [venueId, defaultRawText],
+    );
+
+    if (
+      ["24 hours", "open 24 hours", "24/7"].includes(normalizedDefault) ||
+      normalizedDefault.startsWith("daily ")
+    ) {
+      for (let dayOfWeek = 0; dayOfWeek <= 6; dayOfWeek += 1) {
+        await client.query(
+          `insert into public.venue_hours (
+             venue_id, day_of_week, interval_order, is_closed, is_24_hours,
+             raw_text, raw_metadata, last_verified_at
+           )
+           values ($1,$2,0,false,$3,$4,$5,now())
+           on conflict (venue_id, day_of_week, interval_order, valid_from) do update set
+             is_closed = excluded.is_closed,
+             is_24_hours = excluded.is_24_hours,
+             raw_text = excluded.raw_text,
+             raw_metadata = public.venue_hours.raw_metadata || excluded.raw_metadata,
+             last_verified_at = excluded.last_verified_at,
+             updated_at = now()`,
+          [
+            venueId,
+            dayOfWeek,
+            ["24 hours", "open 24 hours", "24/7"].includes(normalizedDefault),
+            defaultRawText,
+            toJsonObject({ source: "entry_stops.hours.default" }),
+          ],
+        );
+      }
+    }
+  }
+
   for (const [dayKey, value] of Object.entries(stop.hours)) {
     const dayOfWeek = HOURS_DAY_MAP.get(String(dayKey).toLowerCase());
     const rawText = normalizeHoursText(value);
@@ -1351,11 +1392,12 @@ async function insertEntryStops(client, entryId, list, context, stats) {
     await client.query(
       `insert into public.entry_stops (
          entry_id, legacy_id, stop_order, poi_legacy_id, name, description, category,
+         subcategory, subcategories,
          destination_id, venue_id, event_id, event_occurrence_id, coordinates, photo_url,
          price_label, price_source, booking_url, official_url, event_time_label,
          event_venue_label, journey_date, journey_day, hours, places, metadata
        )
-       values ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20,$21,$22,$23,$24)`,
+       values ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20,$21,$22,$23,$24,$25,$26)`,
       [
         entryId,
         stop.id,
@@ -1364,6 +1406,8 @@ async function insertEntryStops(client, entryId, list, context, stats) {
         stop.name,
         stop.description,
         stop.category ?? list.category,
+        stop.subcategory ?? null,
+        toJsonArray(stop.subcategories),
         context.neighborhoodId ?? context.cityId ?? null,
         venueId,
         context.eventId ?? null,
