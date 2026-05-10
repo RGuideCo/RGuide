@@ -10,6 +10,50 @@ export type ListCategory =
 
 export type SubmissionType = "guide" | "journal" | "journey" | "itinerary" | "event";
 
+export type VenueKind =
+  | "lodging"
+  | "food_drink"
+  | "nightlife"
+  | "culture"
+  | "outdoors"
+  | "event_venue"
+  | "transport"
+  | "retail"
+  | "service"
+  | "landmark"
+  | "other";
+
+export type LodgingType =
+  | "hotel"
+  | "hostel"
+  | "resort"
+  | "airbnb"
+  | "apartment_hotel"
+  | "guesthouse"
+  | "camping"
+  | "holiday_park";
+
+export type VenueAttributeTag =
+  | "relaxing"
+  | "quiet"
+  | "lively"
+  | "party"
+  | "social"
+  | "scenic"
+  | "beach"
+  | "nature"
+  | "central"
+  | "budget"
+  | "midrange"
+  | "luxury"
+  | "family_friendly"
+  | "romantic"
+  | "work_friendly"
+  | "wellness"
+  | "design"
+  | "accessible"
+  | "pet_friendly";
+
 export type RegionKind = "north" | "south" | "east" | "west" | "central";
 
 export interface User {

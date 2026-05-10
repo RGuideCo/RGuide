@@ -126,6 +126,77 @@ function toSchemaSubmissionType(value) {
   return value === "itinerary" ? "journey" : value ?? "guide";
 }
 
+function uniqueValues(values) {
+  return [...new Set(values.filter(Boolean))];
+}
+
+function inferVenueClassification(stop, list) {
+  const isStay = list?.category === "Stay" || stop?.category === "Stay";
+  if (!isStay) {
+    return {
+      venueKind: null,
+      lodgingType: null,
+      attributeTags: [],
+    };
+  }
+
+  const text = [
+    stop?.name,
+    stop?.description,
+    stop?.category,
+    stop?.price,
+    stop?.bookingUrl,
+    stop?.officialUrl,
+  ]
+    .filter(Boolean)
+    .join(" ")
+    .toLowerCase();
+
+  let lodgingType = null;
+  if (/\bholiday\s+parks?\b/.test(text)) {
+    lodgingType = "holiday_park";
+  } else if (/\bcamp(ing|ground|site)?\b|\bglamp(ing)?\b/.test(text)) {
+    lodgingType = "camping";
+  } else if (/\bresorts?\b/.test(text)) {
+    lodgingType = "resort";
+  } else if (/\bhostels?\b|\bhostelworld\b/.test(text)) {
+    lodgingType = "hostel";
+  } else if (/\b(aparthotel|apartment[-\s]?hotel|serviced apartments?)\b/.test(text)) {
+    lodgingType = "apartment_hotel";
+  } else if (/\bguest\s*houses?\b|\bguesthouses?\b|\bhostals?\b|\bbed\s+and\s+breakfast\b|\bb&b\b/.test(text)) {
+    lodgingType = "guesthouse";
+  } else if (/\bairbnb\b|\bvacation rentals?\b|\bshort[-\s]?term rentals?\b/.test(text)) {
+    lodgingType = "airbnb";
+  } else if (/\bhotels?\b|\binn\b|\bsuites?\b/.test(text)) {
+    lodgingType = "hotel";
+  }
+
+  const attributeTags = [];
+  if (/\b(relax|relaxing|calm|restful|retreat|spa|wellness)\b/.test(text)) attributeTags.push("relaxing");
+  if (/\bquiet|peaceful|low[-\s]?key\b/.test(text)) attributeTags.push("quiet");
+  if (/\blively|buzz|busy|energetic\b/.test(text)) attributeTags.push("lively");
+  if (/\bparty|club|nightlife|bar\s+crawl\b/.test(text)) attributeTags.push("party");
+  if (/\bsocial|meet\s+people|communal|backpacker\b/.test(text) || lodgingType === "hostel") attributeTags.push("social");
+  if (/\bscenic|views?|rooftop|panoramic|lookout\b/.test(text)) attributeTags.push("scenic");
+  if (/\bbeach|waterfront|seaside|coast|ocean\b/.test(text)) attributeTags.push("beach");
+  if (/\bnature|forest|mountain|park|lake|countryside\b/.test(text) || lodgingType === "camping") attributeTags.push("nature");
+  if (/\bcentral|downtown|city\s+center|city\s+centre\b/.test(text)) attributeTags.push("central");
+  if (/\bbudget|cheap|affordable|value\b/.test(text) || lodgingType === "hostel") attributeTags.push("budget");
+  if (/\bluxury|five[-\s]?star|5[-\s]?star|premium\b/.test(text) || lodgingType === "resort") attributeTags.push("luxury");
+  if (/\bfamily|kids|children\b/.test(text) || lodgingType === "holiday_park") attributeTags.push("family_friendly");
+  if (/\bromantic|couples?|honeymoon\b/.test(text)) attributeTags.push("romantic");
+  if (/\bwork|cowork|business|desk|remote\b/.test(text)) attributeTags.push("work_friendly");
+  if (/\bdesign|boutique|stylish|architecture|minimalist\b/.test(text)) attributeTags.push("design");
+  if (/\baccessible|wheelchair|step[-\s]?free\b/.test(text)) attributeTags.push("accessible");
+  if (/\bpet[-\s]?friendly|dogs?\s+welcome\b/.test(text)) attributeTags.push("pet_friendly");
+
+  return {
+    venueKind: "lodging",
+    lodgingType,
+    attributeTags: uniqueValues(attributeTags),
+  };
+}
+
 function transpileTs(filePath) {
   const source = fs.readFileSync(filePath, "utf8");
   return ts.transpileModule(source, {
@@ -794,9 +865,9 @@ async function upsertVenue(client, input, stats) {
     `insert into public.venues (
        legacy_id, slug, name, normalized_name, aliases, destination_id, city_id,
        neighborhood_id, address_line1, locality, region, country, coordinates,
-       official_url, source_metadata
+       official_url, venue_kind, lodging_type, attribute_tags, source_metadata
      )
-     values ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15)
+     values ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18)
      on conflict (city_id, slug) do update set
        name = excluded.name,
        normalized_name = excluded.normalized_name,
@@ -805,6 +876,12 @@ async function upsertVenue(client, input, stats) {
        neighborhood_id = coalesce(excluded.neighborhood_id, public.venues.neighborhood_id),
        coordinates = coalesce(excluded.coordinates, public.venues.coordinates),
        official_url = coalesce(excluded.official_url, public.venues.official_url),
+       venue_kind = case
+         when excluded.venue_kind = 'other' then public.venues.venue_kind
+         else excluded.venue_kind
+       end,
+       lodging_type = coalesce(excluded.lodging_type, public.venues.lodging_type),
+       attribute_tags = array(select distinct unnest(public.venues.attribute_tags || excluded.attribute_tags)),
        source_metadata = public.venues.source_metadata || excluded.source_metadata
      returning id`,
     [
@@ -822,6 +899,9 @@ async function upsertVenue(client, input, stats) {
       input.country ?? null,
       toJson(normalizeCoordinates(input.coordinates)),
       input.officialUrl ?? null,
+      input.venueKind ?? "other",
+      input.lodgingType ?? null,
+      input.attributeTags ?? [],
       toJsonObject(input.sourceMetadata),
     ],
   );
@@ -896,8 +976,8 @@ async function upsertEntry(client, list, context, stats) {
       context.userId ?? null,
       list.upvotes ?? 0,
       list.createdAt ?? new Date().toISOString().slice(0, 10),
-      list.itinerary?.startDate ?? null,
-      list.itinerary?.endDate ?? null,
+      list.journey?.startDate ?? list.itinerary?.startDate ?? null,
+      list.journey?.endDate ?? list.itinerary?.endDate ?? null,
       list.journal?.visitedAt ?? null,
       list.journal?.note ?? null,
       list.journal?.visibility ?? null,
@@ -914,6 +994,7 @@ async function insertEntryStops(client, entryId, list, context, stats) {
   let order = 0;
   for (const stop of list.stops ?? []) {
     order += 1;
+    const classification = inferVenueClassification(stop, list);
     const venueId = await upsertVenue(client, {
       legacyId: stop.poiId ?? `${list.id}:${stop.id}`,
       slug: stop.poiId ? slugify(stop.poiId) : slugify(stop.name),
@@ -923,6 +1004,9 @@ async function insertEntryStops(client, entryId, list, context, stats) {
       country: list.location?.country,
       coordinates: stop.coordinates,
       officialUrl: stop.officialUrl ?? stop.bookingUrl,
+      venueKind: classification.venueKind,
+      lodgingType: classification.lodgingType,
+      attributeTags: classification.attributeTags,
       sourceMetadata: { source: context.sourceTable, entryId: list.id, stopId: stop.id },
     }, stats);
     await client.query(
@@ -953,8 +1037,8 @@ async function insertEntryStops(client, entryId, list, context, stats) {
         stop.officialUrl ?? null,
         stop.eventTime ?? null,
         stop.eventVenue ?? null,
-        stop.itineraryDate ?? null,
-        stop.itineraryDay ?? null,
+        stop.journeyDate ?? stop.itineraryDate ?? null,
+        stop.journeyDay ?? stop.itineraryDay ?? null,
         toJson(stop.hours),
         toJsonArray(stop.places),
         toJsonObject({ source: context.sourceTable }),

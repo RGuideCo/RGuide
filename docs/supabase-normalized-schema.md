@@ -6,6 +6,8 @@ Primary migrations:
 
 - [supabase/20260510_normalized-content-schema.sql](/Users/brodriguez/Projects/rGuide/supabase/20260510_normalized-content-schema.sql)
 - [supabase/20260511_normalized-render-cache.sql](/Users/brodriguez/Projects/rGuide/supabase/20260511_normalized-render-cache.sql)
+- [supabase/20260513_venue-lodging-classification.sql](/Users/brodriguez/Projects/rGuide/supabase/20260513_venue-lodging-classification.sql)
+- [supabase/20260514_backfill-stay-venue-classification.sql](/Users/brodriguez/Projects/rGuide/supabase/20260514_backfill-stay-venue-classification.sql)
 
 ## Schema Overview
 
@@ -16,7 +18,8 @@ Source-of-truth tables:
 - `destinations`: canonical continent, continent-region, country, country-region/state, city, and neighborhood entities.
 - `destination_descriptions_v2`: destination copy keyed by `destination_id`.
 - `venues`: reusable places where events happen and entry stops can point.
-- `entries`: normalized editorial guides, journals, itineraries, and event cards.
+- `venue_tags`, `venue_taggings`: normalized, filterable venue attributes.
+- `entries`: normalized editorial guides, journals, journeys, and event cards.
 - `entry_stops`: ordered normalized stops.
 - `events`: canonical event records.
 - `event_occurrences`: dated schedule items, screenings, activations, and festival items.
@@ -30,6 +33,7 @@ Rendered/cache compatibility surfaces:
 - `entry_render_cache`: schema-owned cached `MapList` payloads for stable fallback and static HTML protection.
 - `weekly_events_maplist`: view that emits weekly event `MapList` cards.
 - `weekly_event_publications`: rendered weekly event publishing cache with explicit query columns.
+- `stay_venues`: city-scoped lodging search view for hotels, hostels, resorts, rentals, apartment hotels, guesthouses, camping, and holiday parks.
 
 The legacy blob tables `editorial_guides`, `destination_descriptions`, `weekly_event_guides`, and `submitted_guides` are archived in the locked `legacy_archive` schema. They are no longer in the public runtime schema.
 
@@ -46,6 +50,16 @@ Normalized descriptions keyed by `destination_id`. Runtime reads prefer this tab
 `venues`
 
 Reusable venue/place entities with city and neighborhood links, address, coordinates, official URL, and source metadata. `events`, `event_occurrences`, and `entry_stops` can reference venues. Venue dedupe uses `city_id + normalized_name` for active venues, with `aliases` and `merged_into_venue_id` available for manual merges.
+
+Stay places are classified on the venue itself, not just on a guide stop. `venue_kind = 'lodging'` marks a Stay venue, while `lodging_type` supports `hotel`, `hostel`, `resort`, `airbnb`, `apartment_hotel`, `guesthouse`, `camping`, and `holiday_park`. `attribute_tags` stores fast filter tags such as `relaxing`, `lively`, `party`, `scenic`, `budget`, `luxury`, `family_friendly`, `romantic`, `central`, `beach`, `nature`, and `work_friendly`.
+
+`venue_tags` and `venue_taggings`
+
+Canonical filter vocabulary and sourceable tag assignments for venues. Use these for scalable filters once there are thousands of places. The `venues.attribute_tags` array is the fast query cache for common filters; `venue_taggings` is the normalized table for attribution, confidence, and future editorial review.
+
+`stay_venues`
+
+Read view for Stay search and filtering. It exposes lodging venues with city, neighborhood, `lodging_type`, `attribute_tags`, coordinates, official URL, and source metadata, so the app can filter by selected city without scanning unrelated cities.
 
 `entries`
 
@@ -90,6 +104,8 @@ Common query paths are indexed:
 - Destination lookup: `(scope, slug)`, `(parent_id, scope)`, `(country_name, city_name)`.
 - City entry pages: `entries(city_id, category, status)`, `entries(submission_type, status)`.
 - Entry rendering: `entry_stops(entry_id, stop_order)`.
+- Stay search: `venues(city_id, lodging_type)` for lodging venues, `venues(city_id, venue_kind)`, and GIN on `venues.attribute_tags`.
+- Venue tag filters: `venue_tags(tag_group, is_active, is_filterable)` and `venue_taggings(tag_id, venue_id)`.
 - Render cache fallback: `entry_render_cache(entry_id, render_format, render_version)` and current rendered payload lookups.
 - City event feeds: `events(city_id, starts_at, status)`, `events(city_id, event_category, starts_at)`.
 - Festival and guide-worthy filters: partial indexes on `events(city_id, is_festival)` and `events(city_id, is_guide_worthy)`.
@@ -100,6 +116,7 @@ Common query paths are indexed:
 Constraints keep important shape guarantees:
 
 - Destination, venue, entry stop, and occurrence coordinates must be two-item JSON arrays.
+- `lodging_type` can only be set when `venue_kind = 'lodging'`.
 - Event and occurrence `ends_at` cannot be before `starts_at`.
 - Events must have `submission_type = 'event'`.
 - Entry submission type is constrained by enum, not by category text.
@@ -110,7 +127,7 @@ The migration enables RLS on new tables and adds public read policies because rG
 
 Recommended write model:
 
-- Service role only for `destinations`, `destination_descriptions_v2`, `venues`, `events`, `event_occurrences`, `sources`, source joins, event city publishing settings, source runs, render caches, and weekly publications.
+- Service role only for `destinations`, `destination_descriptions_v2`, `venues`, `venue_tags`, `venue_taggings`, `events`, `event_occurrences`, `sources`, source joins, event city publishing settings, source runs, render caches, and weekly publications.
 - Authenticated users may insert/update/delete only their own rows in `entries`.
 - Authenticated users may insert/update/delete `entry_stops` only when the parent `entries.user_id = auth.uid()`.
 - Browser/user submission writes should go directly to normalized `entries` and `entry_stops`; `submitted_guides` should not remain the active write path.
@@ -123,7 +140,7 @@ Backfill order:
 1. Populate `destinations` from local geography.
 2. Link and copy descriptions into `destination_descriptions_v2`.
 3. Insert editorial content into `entries` and `entry_stops`.
-4. Link venues and sources.
+4. Link venues, lodging classifications, tags, and sources.
 5. Generate `entry_render_cache` from `entries_maplist`.
 6. Insert event city settings, source runs, canonical events, venues, occurrences, sources, and weekly publications.
 
