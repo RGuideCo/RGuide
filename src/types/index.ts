@@ -33,6 +33,10 @@ export type LodgingType =
   | "camping"
   | "holiday_park";
 
+export type FoodServiceType = "restaurant" | "cafe" | "fast_food" | "stall" | "food_truck" | "food_cart";
+
+export type PriceTier = "$" | "$$" | "$$$" | "$$$$";
+
 export type VenueAttributeTag =
   | "relaxing"
   | "quiet"
@@ -52,7 +56,35 @@ export type VenueAttributeTag =
   | "wellness"
   | "design"
   | "accessible"
-  | "pet_friendly";
+  | "pet_friendly"
+  | "casual"
+  | "date_night"
+  | "group_friendly"
+  | "solo_friendly"
+  | "family_friendly_food"
+  | "local_favorite"
+  | "destination_dining"
+  | "fine_dining"
+  | "tasting_menu"
+  | "street_food"
+  | "market"
+  | "late_night"
+  | "breakfast"
+  | "brunch"
+  | "coffee"
+  | "bakery"
+  | "seafood"
+  | "vegetarian_friendly"
+  | "vegan_friendly"
+  | "gluten_free_friendly"
+  | "reservation_recommended"
+  | "walk_in_friendly"
+  | "scenic_food"
+  | "romantic_food"
+  | "lively_food"
+  | "quiet_food"
+  | "budget_food"
+  | "splurge_food";
 
 export type RegionKind = "north" | "south" | "east" | "west" | "central";
 

@@ -8,6 +8,8 @@ Primary migrations:
 - [supabase/20260511_normalized-render-cache.sql](/Users/brodriguez/Projects/rGuide/supabase/20260511_normalized-render-cache.sql)
 - [supabase/20260513_venue-lodging-classification.sql](/Users/brodriguez/Projects/rGuide/supabase/20260513_venue-lodging-classification.sql)
 - [supabase/20260514_backfill-stay-venue-classification.sql](/Users/brodriguez/Projects/rGuide/supabase/20260514_backfill-stay-venue-classification.sql)
+- [supabase/20260515_food-venue-classification.sql](/Users/brodriguez/Projects/rGuide/supabase/20260515_food-venue-classification.sql)
+- [supabase/20260516_backfill-food-venue-classification.sql](/Users/brodriguez/Projects/rGuide/supabase/20260516_backfill-food-venue-classification.sql)
 
 ## Schema Overview
 
@@ -34,6 +36,7 @@ Rendered/cache compatibility surfaces:
 - `weekly_events_maplist`: view that emits weekly event `MapList` cards.
 - `weekly_event_publications`: rendered weekly event publishing cache with explicit query columns.
 - `stay_venues`: city-scoped lodging search view for hotels, hostels, resorts, rentals, apartment hotels, guesthouses, camping, and holiday parks.
+- `food_venues`: city-scoped food search view for restaurants, cafes, fast food, stalls, food trucks, food carts, cuisine, price, and attributes.
 
 The legacy blob tables `editorial_guides`, `destination_descriptions`, `weekly_event_guides`, and `submitted_guides` are archived in the locked `legacy_archive` schema. They are no longer in the public runtime schema.
 
@@ -53,6 +56,8 @@ Reusable venue/place entities with city and neighborhood links, address, coordin
 
 Stay places are classified on the venue itself, not just on a guide stop. `venue_kind = 'lodging'` marks a Stay venue, while `lodging_type` supports `hotel`, `hostel`, `resort`, `airbnb`, `apartment_hotel`, `guesthouse`, `camping`, and `holiday_park`. `attribute_tags` stores fast filter tags such as `relaxing`, `lively`, `party`, `scenic`, `budget`, `luxury`, `family_friendly`, `romantic`, `central`, `beach`, `nature`, and `work_friendly`.
 
+Food places are also classified on the venue itself. `venue_kind = 'food_drink'` marks a Food venue, while `food_service_type` supports `restaurant`, `cafe`, `fast_food`, `stall`, `food_truck`, and `food_cart`. `cuisine_types` is a searchable array for cuisine filters such as `mexican`, `japanese`, `italian`, `seafood`, `bakery`, `street_food`, `vegetarian`, and `vegan`. `price_tier` stores `$`, `$$`, `$$$`, or `$$$$`. Food-specific `attribute_tags` cover filters such as `casual`, `date_night`, `group_friendly`, `solo_friendly`, `local_favorite`, `destination_dining`, `fine_dining`, `tasting_menu`, `street_food`, `market`, `late_night`, `breakfast`, `brunch`, `coffee`, `bakery`, `reservation_recommended`, `walk_in_friendly`, and `scenic_food`.
+
 `venue_tags` and `venue_taggings`
 
 Canonical filter vocabulary and sourceable tag assignments for venues. Use these for scalable filters once there are thousands of places. The `venues.attribute_tags` array is the fast query cache for common filters; `venue_taggings` is the normalized table for attribution, confidence, and future editorial review.
@@ -60,6 +65,10 @@ Canonical filter vocabulary and sourceable tag assignments for venues. Use these
 `stay_venues`
 
 Read view for Stay search and filtering. It exposes lodging venues with city, neighborhood, `lodging_type`, `attribute_tags`, coordinates, official URL, and source metadata, so the app can filter by selected city without scanning unrelated cities.
+
+`food_venues`
+
+Read view for Food search and filtering. It exposes food venues with city, neighborhood, `food_service_type`, `cuisine_types`, `price_tier`, `attribute_tags`, coordinates, official URL, and source metadata, so the app can query one selected city instead of scanning all food guide stops.
 
 `entries`
 
@@ -105,6 +114,7 @@ Common query paths are indexed:
 - City entry pages: `entries(city_id, category, status)`, `entries(submission_type, status)`.
 - Entry rendering: `entry_stops(entry_id, stop_order)`.
 - Stay search: `venues(city_id, lodging_type)` for lodging venues, `venues(city_id, venue_kind)`, and GIN on `venues.attribute_tags`.
+- Food search: `venues(city_id, food_service_type)`, `venues(city_id, price_tier)`, and GIN on `venues.cuisine_types` plus `venues.attribute_tags`.
 - Venue tag filters: `venue_tags(tag_group, is_active, is_filterable)` and `venue_taggings(tag_id, venue_id)`.
 - Render cache fallback: `entry_render_cache(entry_id, render_format, render_version)` and current rendered payload lookups.
 - City event feeds: `events(city_id, starts_at, status)`, `events(city_id, event_category, starts_at)`.
@@ -117,6 +127,7 @@ Constraints keep important shape guarantees:
 
 - Destination, venue, entry stop, and occurrence coordinates must be two-item JSON arrays.
 - `lodging_type` can only be set when `venue_kind = 'lodging'`.
+- `food_service_type` can only be set when `venue_kind = 'food_drink'`.
 - Event and occurrence `ends_at` cannot be before `starts_at`.
 - Events must have `submission_type = 'event'`.
 - Entry submission type is constrained by enum, not by category text.

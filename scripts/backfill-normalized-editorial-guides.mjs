@@ -83,11 +83,132 @@ function uniqueValues(values) {
 }
 
 function inferVenueClassification(stop, list) {
+  const isFood = list?.category === "Food" || stop?.category === "Food";
+  if (isFood) {
+    const text = [
+      stop?.name,
+      stop?.description,
+      stop?.category,
+      stop?.price,
+      stop?.bookingUrl,
+      stop?.officialUrl,
+    ]
+      .filter(Boolean)
+      .join(" ")
+      .toLowerCase();
+
+    let foodServiceType = "restaurant";
+    if (/\bfood\s+trucks?\b/.test(text)) {
+      foodServiceType = "food_truck";
+    } else if (/\bfood\s+carts?\b/.test(text)) {
+      foodServiceType = "food_cart";
+    } else if (/\b(stall|stand|kiosk|market\s+counter)\b/.test(text)) {
+      foodServiceType = "stall";
+    } else if (/\b(fast\s+food|quick\s+service|counter[-\s]?service)\b/.test(text)) {
+      foodServiceType = "fast_food";
+    } else if (/\b(cafe|café|coffee|espresso|bakery|patisserie|pastry)\b/.test(text)) {
+      foodServiceType = "cafe";
+    }
+
+    const cuisinePatterns = [
+      ["american", /\bamerican\b/],
+      ["argentine", /\bargentine|argentinian|parrilla|asado\b/],
+      ["asian", /\basian\b/],
+      ["bakery", /\bbakery|bakeries|pastry|patisserie|bread\b/],
+      ["barbecue", /\bbarbecue|bbq|smoked\s+meat\b/],
+      ["bistro", /\bbistro\b/],
+      ["brazilian", /\bbrazilian|churrasco|boteco\b/],
+      ["british", /\bbritish|english|pub\s+food\b/],
+      ["cafe", /\bcafe|café|coffee|espresso\b/],
+      ["caribbean", /\bcaribbean|jamaican|haitian\b/],
+      ["catalan", /\bcatalan\b/],
+      ["chinese", /\bchinese|cantonese|sichuan|szechuan|dim\s+sum\b/],
+      ["colombian", /\bcolombian|arepa\b/],
+      ["contemporary", /\bcontemporary|modern\b/],
+      ["cuban", /\bcuban\b/],
+      ["dessert", /\bdessert|ice\s+cream|gelato|chocolate\b/],
+      ["ecuadorian", /\becuadorian\b/],
+      ["emirati", /\bemirati\b/],
+      ["filipino", /\bfilipino\b/],
+      ["french", /\bfrench|brasserie|boulangerie\b/],
+      ["german", /\bgerman|biergarten|beer\s+hall\b/],
+      ["greek", /\bgreek\b/],
+      ["guatemalan", /\bguatemalan\b/],
+      ["hawaiian", /\bhawaiian|poke|plate\s+lunch\b/],
+      ["indian", /\bindian|south\s+asian|curry|dosa\b/],
+      ["indonesian", /\bindonesian\b/],
+      ["italian", /\bitalian|pizza|pizzeria|pasta|trattoria|osteria\b/],
+      ["japanese", /\bjapanese|sushi|ramen|izakaya|yakitori|omakase\b/],
+      ["korean", /\bkorean|bbq|barbecue\b/],
+      ["latin_american", /\blatin\s+american\b/],
+      ["malaysian", /\bmalaysian\b/],
+      ["mediterranean", /\bmediterranean\b/],
+      ["mexican", /\bmexican|taco|taqueria|mezcal\b/],
+      ["middle_eastern", /\bmiddle\s+eastern|levantine|falafel|shawarma\b/],
+      ["nikkei", /\bnikkei\b/],
+      ["peranakan", /\bperanakan|nyonya\b/],
+      ["peruvian", /\bperuvian|ceviche|pisco\b/],
+      ["portuguese", /\bportuguese|tasca|pastel\s+de\s+nata\b/],
+      ["seafood", /\bseafood|fish|oyster|ceviche\b/],
+      ["singaporean", /\bsingaporean|hawker\b/],
+      ["spanish", /\bspanish|tapas|pintxos\b/],
+      ["steakhouse", /\bsteakhouse|steak\b/],
+      ["street_food", /\bstreet\s+food|hawker|stall|cart|food\s+truck\b/],
+      ["thai", /\bthai\b/],
+      ["turkish", /\bturkish|kebab|meyhane\b/],
+      ["vegan", /\bvegan\b/],
+      ["vegetarian", /\bvegetarian\b/],
+      ["vietnamese", /\bvietnamese|pho|banh\s+mi\b/],
+    ];
+    const cuisineTypes = uniqueValues(cuisinePatterns.filter(([, pattern]) => pattern.test(text)).map(([cuisine]) => cuisine));
+
+    const attributeTags = [];
+    if (/\bcasual|easygoing|low[-\s]?key\b/.test(text) || ["stall", "food_truck", "food_cart", "fast_food"].includes(foodServiceType)) attributeTags.push("casual");
+    if (/\bdate\s+night|date|romantic|couples?\b/.test(text)) attributeTags.push("date_night", "romantic_food");
+    if (/\bgroup|shared|family[-\s]?style|large\s+tables?\b/.test(text)) attributeTags.push("group_friendly");
+    if (/\bsolo|counter|bar\s+seat|counter\s+seat\b/.test(text)) attributeTags.push("solo_friendly");
+    if (/\bfamily|kids|children\b/.test(text)) attributeTags.push("family_friendly_food");
+    if (/\blocal\s+favorite|neighborhood|regulars?\b/.test(text)) attributeTags.push("local_favorite");
+    if (/\bdestination|worth\s+planning|michelin|world'?s\s+50|la\s+liste\b/.test(text)) attributeTags.push("destination_dining");
+    if (/\bfine\s+dining|michelin|tasting\s+menu|chef[-\s]?led|omakase\b/.test(text)) attributeTags.push("fine_dining");
+    if (/\btasting\s+menu|omakase\b/.test(text)) attributeTags.push("tasting_menu");
+    if (/\bstreet\s+food|hawker|stall|cart|food\s+truck\b/.test(text) || ["stall", "food_truck", "food_cart"].includes(foodServiceType)) attributeTags.push("street_food");
+    if (/\bmarket|food\s+hall\b/.test(text)) attributeTags.push("market");
+    if (/\blate[-\s]?night|after[-\s]?hours|all[-\s]?night\b/.test(text)) attributeTags.push("late_night");
+    if (/\bbreakfast|morning\b/.test(text)) attributeTags.push("breakfast");
+    if (/\bbrunch\b/.test(text)) attributeTags.push("brunch");
+    if (/\bcoffee|espresso|cafe|café\b/.test(text)) attributeTags.push("coffee");
+    if (/\bbakery|patisserie|pastry|bread|dessert\b/.test(text)) attributeTags.push("bakery");
+    if (/\bseafood|fish|oyster|ceviche\b/.test(text)) attributeTags.push("seafood");
+    if (/\bvegetarian\b/.test(text)) attributeTags.push("vegetarian_friendly");
+    if (/\bvegan\b/.test(text)) attributeTags.push("vegan_friendly");
+    if (/\bgluten[-\s]?free\b/.test(text)) attributeTags.push("gluten_free_friendly");
+    if (/\breservation|book|booking|hard\s+to\s+get\b/.test(text)) attributeTags.push("reservation_recommended");
+    if (/\bwalk[-\s]?in|no\s+reservation|counter\b/.test(text)) attributeTags.push("walk_in_friendly");
+    if (/\bscenic|view|views|rooftop|waterfront|terrace|patio\b/.test(text)) attributeTags.push("scenic_food");
+    if (/\blively|buzz|busy|scene|energetic\b/.test(text)) attributeTags.push("lively_food");
+    if (/\bquiet|calm|peaceful\b/.test(text)) attributeTags.push("quiet_food");
+    if (/\bbudget|cheap|affordable|value\b/.test(text) || stop?.price === "$") attributeTags.push("budget_food");
+    if (/\bsplurge|expensive|luxury|premium\b/.test(text) || stop?.price === "$$$" || stop?.price === "$$$$") attributeTags.push("splurge_food");
+
+    return {
+      venueKind: "food_drink",
+      lodgingType: null,
+      foodServiceType,
+      cuisineTypes,
+      priceTier: stop?.price ?? null,
+      attributeTags: uniqueValues(attributeTags),
+    };
+  }
+
   const isStay = list?.category === "Stay" || stop?.category === "Stay";
   if (!isStay) {
     return {
       venueKind: null,
       lodgingType: null,
+      foodServiceType: null,
+      cuisineTypes: [],
+      priceTier: null,
       attributeTags: [],
     };
   }
@@ -145,6 +266,9 @@ function inferVenueClassification(stop, list) {
   return {
     venueKind: "lodging",
     lodgingType,
+    foodServiceType: null,
+    cuisineTypes: [],
+    priceTier: null,
     attributeTags: uniqueValues(attributeTags),
   };
 }
@@ -241,9 +365,10 @@ async function upsertVenue(client, input, stats) {
     `insert into public.venues (
        legacy_id, slug, name, normalized_name, aliases, destination_id, city_id,
        neighborhood_id, country, coordinates, official_url, venue_kind,
-       lodging_type, attribute_tags, source_metadata
+       lodging_type, food_service_type, cuisine_types, price_tier,
+       attribute_tags, source_metadata
      )
-     values ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15)
+     values ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18)
      on conflict (city_id, slug) do update set
        legacy_id = coalesce(public.venues.legacy_id, excluded.legacy_id),
        slug = excluded.slug,
@@ -258,6 +383,9 @@ async function upsertVenue(client, input, stats) {
          else excluded.venue_kind
        end,
        lodging_type = coalesce(excluded.lodging_type, public.venues.lodging_type),
+       food_service_type = coalesce(excluded.food_service_type, public.venues.food_service_type),
+       cuisine_types = array(select distinct unnest(public.venues.cuisine_types || excluded.cuisine_types)),
+       price_tier = coalesce(excluded.price_tier, public.venues.price_tier),
        attribute_tags = array(select distinct unnest(public.venues.attribute_tags || excluded.attribute_tags)),
        source_metadata = public.venues.source_metadata || excluded.source_metadata
      returning id`,
@@ -275,6 +403,9 @@ async function upsertVenue(client, input, stats) {
       input.officialUrl ?? null,
       input.venueKind ?? "other",
       input.lodgingType ?? null,
+      input.foodServiceType ?? null,
+      input.cuisineTypes ?? [],
+      input.priceTier ?? null,
       input.attributeTags ?? [],
       toJsonObject(input.sourceMetadata),
     ],
@@ -367,6 +498,9 @@ async function replaceEntryStops(client, entryId, list, context, stats) {
       officialUrl: stop.officialUrl ?? stop.bookingUrl,
       venueKind: classification.venueKind,
       lodgingType: classification.lodgingType,
+      foodServiceType: classification.foodServiceType,
+      cuisineTypes: classification.cuisineTypes,
+      priceTier: classification.priceTier,
       attributeTags: classification.attributeTags,
       sourceMetadata: { source: "editorial_guides", entryId: list.id, stopId: stop.id },
     }, stats);
