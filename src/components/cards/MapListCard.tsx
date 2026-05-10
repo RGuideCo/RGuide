@@ -1087,7 +1087,9 @@ export function MapListCard({
                   <div className="ordered-poi-photo-strip">
                     {list.stops.map((stop, index) => {
                       const stopPhoto = getPoiPhoto(stop.photo);
-                      const isStopExpanded = expandedStopIds.includes(stop.id);
+                      const isStopSelected =
+                        forceExpandStopId === stop.id ||
+                        Boolean(stop.places?.some((place) => place.id === forceExpandStopId));
                       const stopCategoryStyle = CATEGORY_STYLES[stop.category ?? list.category];
                       return (
                         <button
@@ -1096,7 +1098,7 @@ export function MapListCard({
                           onClick={() => activateGuideStop(stop.id)}
                           onMouseEnter={() => onStopHoverChange?.(stop.id)}
                           onMouseLeave={() => onStopHoverChange?.(null)}
-                          className={`ordered-poi-photo ${isStopExpanded ? "ordered-poi-photo-active" : ""}`}
+                          className={`ordered-poi-photo ${isStopSelected ? "ordered-poi-photo-active" : ""}`}
                           style={{ "--guide-accent": stopCategoryStyle.mapColor } as React.CSSProperties}
                           aria-label={`Open ${stop.name}`}
                           title={stop.name}
