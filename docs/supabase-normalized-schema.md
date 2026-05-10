@@ -49,11 +49,11 @@ Reusable venue/place entities with city and neighborhood links, address, coordin
 
 `entries`
 
-First-class records for editorial guides, journals, itineraries, and event cards. `submission_type` is an enum with `guide`, `journal`, `itinerary`, and `event`; events are a submission type, not just a category. Current card fields are preserved as normalized columns: title, slug, SEO fields, description, highlights, photo, URL, category, creator, upvotes, created date, itinerary dates, and journal fields.
+First-class records for editorial guides, journals, journeys, and event cards. `submission_type` is an enum with `guide`, `journal`, `journey`, and `event`; events are a submission type, not just a category. Current card fields are preserved as normalized columns: title, slug, SEO fields, description, highlights, photo, URL, category, creator, upvotes, created date, journey dates, and journal fields.
 
 `entry_stops`
 
-Ordered normalized stops. Stops can reference a destination, venue, event, or event occurrence. It preserves stop fields including coordinates, photo, price, booking URL, official URL, event time/venue labels, itinerary date/day, hours, and nested `places`.
+Ordered normalized stops. Stops can reference a destination, venue, event, or event occurrence. It preserves stop fields including coordinates, photo, price, booking URL, official URL, event time/venue labels, journey date/day, hours, and nested `places`.
 
 `entry_render_cache`
 
@@ -61,7 +61,7 @@ Schema-correct fallback cache for rendered app payloads. This replaces the old `
 
 `events`
 
-Canonical event records for weekly city publishing and future event pages. Events carry event category, guide category, timezone, date range, price, official URL, highlights, source metadata, `is_festival`, and `is_guide_worthy`. Events always use `submission_type = 'event'`; display grouping can still be itinerary-like through occurrences.
+Canonical event records for weekly city publishing and future event pages. Events carry event category, guide category, timezone, date range, price, official URL, highlights, source metadata, `is_festival`, and `is_guide_worthy`. Events always use `submission_type = 'event'`; display grouping can still be journey-like through occurrences.
 
 `event_occurrences`
 

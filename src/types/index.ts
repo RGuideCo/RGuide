@@ -8,7 +8,7 @@ export type ListCategory =
   | "Routes"
   | "Essentials";
 
-export type SubmissionType = "guide" | "journal" | "itinerary" | "event";
+export type SubmissionType = "guide" | "journal" | "journey" | "itinerary" | "event";
 
 export type RegionKind = "north" | "south" | "east" | "west" | "central";
 
@@ -43,6 +43,10 @@ export interface MapList {
   category: ListCategory;
   submissionType?: SubmissionType;
   itinerary?: {
+    startDate?: string;
+    endDate?: string;
+  };
+  journey?: {
     startDate?: string;
     endDate?: string;
   };
@@ -85,6 +89,8 @@ export interface GuideStop {
   places?: GuideStop[];
   itineraryDate?: string;
   itineraryDay?: number;
+  journeyDate?: string;
+  journeyDay?: number;
   hours?:
     | string
     | {

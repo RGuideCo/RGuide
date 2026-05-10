@@ -74,6 +74,10 @@ function toJsonArray(value) {
   return JSON.stringify(value ?? []);
 }
 
+function toSchemaSubmissionType(value) {
+  return value === "itinerary" ? "journey" : value ?? "guide";
+}
+
 function requireScopedFilters(filters) {
   if (!hasEditorialGuideFilters(filters)) {
     throw new Error("Refusing to backfill all normalized editorial guides. Pass --city, --neighborhood, --id, or --slug.");
@@ -246,7 +250,7 @@ async function upsertEntry(client, list, context, stats) {
       list.photo ?? null,
       list.url ?? null,
       list.category,
-      list.submissionType ?? "guide",
+      toSchemaSubmissionType(list.submissionType),
       context.destinationId ?? null,
       context.cityId ?? null,
       context.neighborhoodId ?? null,
@@ -285,7 +289,7 @@ async function replaceEntryStops(client, entryId, list, context, stats) {
       `insert into public.entry_stops (
          entry_id, legacy_id, stop_order, poi_legacy_id, name, description, category,
          destination_id, venue_id, coordinates, photo_url, price_label, price_source,
-         booking_url, official_url, itinerary_date, itinerary_day, hours, places, metadata
+         booking_url, official_url, journey_date, journey_day, hours, places, metadata
        )
        values ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20)`,
       [

@@ -122,6 +122,10 @@ function toJsonArray(value) {
   return JSON.stringify(value ?? []);
 }
 
+function toSchemaSubmissionType(value) {
+  return value === "itinerary" ? "journey" : value ?? "guide";
+}
+
 function transpileTs(filePath) {
   const source = fs.readFileSync(filePath, "utf8");
   return ts.transpileModule(source, {
@@ -832,7 +836,7 @@ async function upsertEntry(client, list, context, stats) {
        highlights, photo_url, canonical_url, category, submission_type, status,
        destination_id, city_id, neighborhood_id, country_name, continent_name,
        creator_id, creator_name, creator_avatar, user_id, upvotes, created_on,
-       itinerary_start_date, itinerary_end_date, journal_visited_at, journal_note,
+       journey_start_date, journey_end_date, journal_visited_at, journal_note,
        journal_visibility, source_table, metadata
      )
      values ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,'published',$13,$14,$15,$16,$17,$18,$19,$20,$21,$22,$23,$24,$25,$26,$27,$28,$29,$30)
@@ -860,8 +864,8 @@ async function upsertEntry(client, list, context, stats) {
        user_id = excluded.user_id,
        upvotes = excluded.upvotes,
        created_on = excluded.created_on,
-       itinerary_start_date = excluded.itinerary_start_date,
-       itinerary_end_date = excluded.itinerary_end_date,
+       journey_start_date = excluded.journey_start_date,
+       journey_end_date = excluded.journey_end_date,
        journal_visited_at = excluded.journal_visited_at,
        journal_note = excluded.journal_note,
        journal_visibility = excluded.journal_visibility,
@@ -880,7 +884,7 @@ async function upsertEntry(client, list, context, stats) {
       list.photo ?? null,
       list.url ?? null,
       list.category,
-      list.submissionType ?? "guide",
+      toSchemaSubmissionType(list.submissionType),
       context.destinationId ?? context.cityId ?? context.countryId ?? null,
       context.cityId ?? null,
       context.neighborhoodId ?? null,
@@ -926,7 +930,7 @@ async function insertEntryStops(client, entryId, list, context, stats) {
          entry_id, legacy_id, stop_order, poi_legacy_id, name, description, category,
          destination_id, venue_id, event_id, event_occurrence_id, coordinates, photo_url,
          price_label, price_source, booking_url, official_url, event_time_label,
-         event_venue_label, itinerary_date, itinerary_day, hours, places, metadata
+         event_venue_label, journey_date, journey_day, hours, places, metadata
        )
        values ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20,$21,$22,$23,$24)`,
       [

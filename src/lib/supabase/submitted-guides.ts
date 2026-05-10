@@ -20,6 +20,10 @@ function dateOnly(value: string | undefined) {
   return value ? value.slice(0, 10) : null;
 }
 
+function toSchemaSubmissionType(value: MapList["submissionType"]) {
+  return value === "itinerary" ? "journey" : value ?? "guide";
+}
+
 async function resolveSubmittedDestinationIds(list: MapList) {
   const supabase = getSupabaseBrowserClient();
 
@@ -123,7 +127,7 @@ export async function saveSubmittedGuide(list: MapList) {
         photo_url: list.photo ?? null,
         canonical_url: list.url,
         category: list.category,
-        submission_type: list.submissionType ?? "guide",
+        submission_type: toSchemaSubmissionType(list.submissionType),
         status: list.journal?.visibility === "private" ? "draft" : "published",
         destination_id: destinationId,
         city_id: cityId,
@@ -136,8 +140,8 @@ export async function saveSubmittedGuide(list: MapList) {
         user_id: user.id,
         upvotes: list.upvotes,
         created_on: dateOnly(list.createdAt),
-        itinerary_start_date: dateOnly(list.itinerary?.startDate),
-        itinerary_end_date: dateOnly(list.itinerary?.endDate),
+        journey_start_date: dateOnly(list.journey?.startDate ?? list.itinerary?.startDate),
+        journey_end_date: dateOnly(list.journey?.endDate ?? list.itinerary?.endDate),
         journal_visited_at: dateOnly(list.journal?.visitedAt),
         journal_note: list.journal?.note ?? null,
         journal_visibility: list.journal?.visibility ?? null,
@@ -176,8 +180,8 @@ export async function saveSubmittedGuide(list: MapList) {
     official_url: stop.officialUrl ?? null,
     event_time_label: stop.eventTime ?? null,
     event_venue_label: stop.eventVenue ?? null,
-    itinerary_date: dateOnly(stop.itineraryDate),
-    itinerary_day: stop.itineraryDay ?? null,
+    journey_date: dateOnly(stop.journeyDate ?? stop.itineraryDate),
+    journey_day: stop.journeyDay ?? stop.itineraryDay ?? null,
     hours: stop.hours ?? null,
     places: stop.places ?? [],
     metadata: {},
