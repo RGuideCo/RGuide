@@ -3855,6 +3855,149 @@ export const barcelonaCoreGuides = [
     ]
   },
   {
+    "id": "list-barcelona-citywide-hotels",
+    "slug": "barcelona-best-hotels",
+    "seoSlug": "best-hotels",
+    "seoTitle": "Best Hotels in Barcelona",
+    "seoDescription": "Best hotels in Barcelona, comparing Gothic Quarter heritage stays, El Born boutique rooms, Eixample design hotels, Gracia village bases, and Poble-sec practical stays.",
+    "title": "Hotels by Neighborhood Fit",
+    "description": "Barcelona hotel planning works best by neighborhood first: old-city texture, Eixample polish, Born nightlife, Gracia village calm, or Poble-sec access to Montjuic and the port. This citywide shortlist pulls together hotels that make those tradeoffs clearer.",
+    "url": "https://www.google.com/maps/search/best+hotels+barcelona",
+    "category": "Stay",
+    "location": {
+      "city": "Barcelona",
+      "country": "Spain",
+      "continent": "Europe",
+      "scope": "city"
+    },
+    "creator": {
+      "id": "user-rguide-stay",
+      "name": "R Stay",
+      "avatar": "data:image/svg+xml;utf8,%0A%20%20%20%20%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22160%22%20height%3D%22160%22%20viewBox%3D%220%200%20160%20160%22%3E%0A%20%20%20%20%20%20%3Crect%20width%3D%22160%22%20height%3D%22160%22%20rx%3D%2280%22%20fill%3D%22%230f766e%22%20%2F%3E%0A%20%20%20%20%20%20%3Ctext%20x%3D%2250%25%22%20y%3D%2254%25%22%20text-anchor%3D%22middle%22%20dominant-baseline%3D%22middle%22%0A%20%20%20%20%20%20%20%20font-family%3D%22Arial%2C%20sans-serif%22%20font-size%3D%2276%22%20font-weight%3D%22700%22%20fill%3D%22white%22%3ER%3C%2Ftext%3E%0A%20%20%20%20%3C%2Fsvg%3E%0A%20%20"
+    },
+    "upvotes": 0,
+    "createdAt": "2026-04-29T00:00:00.000Z",
+    "stops": [
+      {
+        "id": "barcelona-hotel-shortlist-hotel-neri",
+        "name": "Hotel Neri",
+        "coordinates": [
+          41.3833,
+          2.1754
+        ],
+        "description": "Hotel Neri is the citywide pick for travelers who want Gothic Quarter heritage without losing boutique comfort. Its restored palace setting, quieter Sant Felip Neri position, and intimate scale make it a stronger old-city base than a generic central hotel.",
+        "hours": {
+          "mon": "24 hours",
+          "tue": "24 hours",
+          "wed": "24 hours",
+          "thu": "24 hours",
+          "fri": "24 hours",
+          "sat": "24 hours",
+          "sun": "24 hours"
+        },
+        "photo": "https://www.hotelneri.com/img/Hotel%20Neri%20(2).jpg.jpg"
+      },
+      {
+        "id": "barcelona-hotel-shortlist-chic-and-basic-born",
+        "name": "Chic & Basic Born Boutique Hotel",
+        "coordinates": [
+          41.3877,
+          2.1832
+        ],
+        "description": "Chic & Basic Born Boutique Hotel is the El Born choice for travelers who want nightlife, museum streets, Ciutadella access, and boutique scale in one base. It fits visitors who plan to walk the old city at night but want a slightly softer edge than the Gothic core.",
+        "hours": {
+          "mon": "24 hours",
+          "tue": "24 hours",
+          "wed": "24 hours",
+          "thu": "24 hours",
+          "fri": "24 hours",
+          "sat": "24 hours",
+          "sun": "24 hours"
+        },
+        "photo": "https://media-cdn.tripadvisor.com/media/photo-s/2e/7c/8e/48/chic-basic-born-boutique.jpg"
+      },
+      {
+        "id": "barcelona-hotel-shortlist-almanac",
+        "name": "Almanac Barcelona",
+        "coordinates": [
+          41.3901,
+          2.1688
+        ],
+        "description": "Almanac Barcelona gives the shortlist an Eixample design-hotel anchor near Passeig de Gracia. Use it when architecture walks, shopping, rooftop time, and polished rooms matter more than sleeping inside the oldest lanes.",
+        "hours": {
+          "mon": "24 hours",
+          "tue": "24 hours",
+          "wed": "24 hours",
+          "thu": "24 hours",
+          "fri": "24 hours",
+          "sat": "24 hours",
+          "sun": "24 hours"
+        },
+        "photo": "https://almanac-barcelona.hotelbcn-barcelona.com/data/Pictures/700x500w/16517/1651761/1651761882/barcelona-almanac-barcelona-picture-2.JPEG"
+      },
+      {
+        "id": "barcelona-hotel-shortlist-casa-fuster",
+        "name": "Hotel Casa Fuster",
+        "coordinates": [
+          41.3983,
+          2.1589
+        ],
+        "description": "Hotel Casa Fuster is the Gracia-edge grand hotel for travelers who want modernista architecture, Passeig de Gracia access, and a calmer village-side return at night. It is best when the hotel building itself is part of the Barcelona experience.",
+        "hours": {
+          "mon": "24 hours",
+          "tue": "24 hours",
+          "wed": "24 hours",
+          "thu": "24 hours",
+          "fri": "24 hours",
+          "sat": "24 hours",
+          "sun": "24 hours"
+        },
+        "photo": "https://media-cdn.tripadvisor.com/media/photo-s/2e/2e/a9/a1/hotel-casa-fuster.jpg"
+      },
+      {
+        "id": "barcelona-hotel-shortlist-hotel-brummell",
+        "name": "Hotel Brummell",
+        "coordinates": [
+          41.3719,
+          2.1631
+        ],
+        "description": "Hotel Brummell is the Poble-sec stay for travelers who want a smaller design hotel with Montjuic, tapas streets, and the port side nearby. Choose it when you want neighborhood texture and easy hill access rather than a big central lobby.",
+        "hours": {
+          "mon": "24 hours",
+          "tue": "24 hours",
+          "wed": "24 hours",
+          "thu": "24 hours",
+          "fri": "24 hours",
+          "sat": "24 hours",
+          "sun": "24 hours"
+        },
+        "photo": "https://images.trvl-media.com/lodging/10000000/9370000/9365300/9365231/a502f0fb.jpg"
+      }
+    ],
+    "sources": [
+      {
+        "name": "Time Out - Best hotels in Barcelona",
+        "url": "https://www.timeout.com/barcelona/hotels/best-hotels-in-barcelona"
+      },
+      {
+        "name": "Conde Nast Traveler - Barcelona hotels",
+        "url": "https://www.cntraveler.com/gallery/best-hotels-in-barcelona"
+      },
+      {
+        "name": "The Infatuation - Barcelona hotels and restaurants",
+        "url": "https://www.theinfatuation.com/barcelona/guides/best-restaurants-hotels-barcelona"
+      },
+      {
+        "name": "Google Travel",
+        "url": "https://www.google.com/travel/hotels"
+      },
+      {
+        "name": "Barcelona Turisme accommodation directory",
+        "url": "https://www.barcelonaturisme.com"
+      }
+    ]
+  },
+  {
     "id": "list-barcelona-citywide-hostels",
     "slug": "barcelona-best-hostels-citywide",
     "seoSlug": "best-hostels",
