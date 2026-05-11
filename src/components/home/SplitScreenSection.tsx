@@ -1613,6 +1613,34 @@ export function SplitScreenSection({
     }
     return getCanonicalCityPath(context.city);
   };
+  const normalizeRoutePlaceName = (value?: string | null) =>
+    (value ?? "")
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "")
+      .trim()
+      .toLowerCase();
+  const getGuideRouteNeighborhood = (city: Continent["countries"][number]["cities"][number], guide: MapList) => {
+    const neighborhoodName = guide.location.neighborhood;
+    if (!neighborhoodName) {
+      return undefined;
+    }
+
+    const neighborhoodKey = normalizeRoutePlaceName(neighborhoodName);
+    for (const subarea of city.subareas ?? []) {
+      if (normalizeRoutePlaceName(subarea.name) === neighborhoodKey) {
+        return subarea;
+      }
+
+      const nestedSubarea = subarea.subareas?.find(
+        (item) => normalizeRoutePlaceName(item.name) === neighborhoodKey,
+      );
+      if (nestedSubarea) {
+        return nestedSubarea;
+      }
+    }
+
+    return { name: neighborhoodName };
+  };
   const restoreCategoryAfterGuideCollapse = () => {
     const restoredCategory = categoryBeforeGuideExpandRef.current;
     categoryBeforeGuideExpandRef.current = null;
@@ -3936,7 +3964,7 @@ export function SplitScreenSection({
     setActiveGuideFitNonce((current) => current + 1);
     const context = getCityRouteContext(selection);
     if (context) {
-      pushExplorerPath(getCanonicalGuidePath(context.city, nextList, context.neighborhood, activeEditorialLists));
+      pushExplorerPath(getCanonicalGuidePath(context.city, nextList, getGuideRouteNeighborhood(context.city, nextList), activeEditorialLists));
     }
   };
   const handleGuideToggle = (nextList: MapList) => {
@@ -4031,7 +4059,7 @@ export function SplitScreenSection({
 
     const context = getCityRouteContext(selection);
     if (context) {
-      pushExplorerPath(getCanonicalGuidePath(context.city, nextList, context.neighborhood, activeEditorialLists));
+      pushExplorerPath(getCanonicalGuidePath(context.city, nextList, getGuideRouteNeighborhood(context.city, nextList), activeEditorialLists));
     }
     scrollGuideIntoView(nextList.id);
   };
@@ -4705,107 +4733,183 @@ export function SplitScreenSection({
               onSelectState={handleSelectState}
 	            />
 		          </div>
+              <div
+                className="pointer-events-auto absolute left-3 top-3 z-[80] flex flex-col items-center gap-1.5 lg:hidden"
+                role="toolbar"
+                aria-label="RGuide and profile"
+              >
+                <Link
+                  href="/"
+                  onClick={() => {
+                    setProfileShellActive(false);
+                    handleResetToGlobalView();
+                    setActiveCategory(null);
+                    setActiveSubcategory(null);
+                  }}
+                  className="flex h-8 w-8 items-center justify-center rounded-full border border-slate-950 bg-slate-950 font-mono text-xs font-semibold uppercase tracking-tight text-white shadow-sm transition hover:scale-105 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-400/70"
+                  aria-label="RGuide home"
+                  title="RGuide"
+                >
+                  R
+                </Link>
+                {currentUser ? (
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setIsLocationFavoritesRailActive(false);
+                      setProfileShellActive(!isProfileShellActive);
+                    }}
+                    className={`flex h-8 w-8 items-center justify-center overflow-hidden rounded-full border border-slate-200 bg-white/95 shadow-sm transition hover:scale-105 hover:border-slate-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-400/70 ${
+                      isProfileShellActive ? "border-slate-900 ring-2 ring-slate-900/20" : ""
+                    }`}
+                    aria-label={isProfileShellActive ? "Return to explorer mode" : "Open profile mode"}
+                    title={isProfileShellActive ? "Return to explorer" : "Open profile"}
+                  >
+                    <img
+                      src={currentUser.avatar}
+                      alt={currentUser.name}
+                      className="h-full w-full rounded-full object-cover"
+                    />
+                  </button>
+                ) : (
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setIsLocationFavoritesRailActive(false);
+                      openAuthModal("login");
+                    }}
+                    className="flex h-8 w-8 items-center justify-center rounded-full border border-slate-200 bg-white/95 text-slate-700 shadow-sm transition hover:scale-105 hover:border-slate-300 hover:text-slate-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-400/70"
+                    aria-label="Log in"
+                    title="Log in"
+                  >
+                    <UserRound className="h-3.5 w-3.5" />
+                  </button>
+                )}
+              </div>
 	              <div
-                  className="pointer-events-auto absolute right-3 top-3 z-[80] flex items-center justify-end gap-1.5 lg:hidden"
+                  className="pointer-events-auto absolute right-3 top-3 z-[80] flex flex-col items-end gap-1.5 lg:hidden"
                   role="toolbar"
                   aria-label="Menu bar"
                 >
-                  {!isMobileExplorerSearchOpen ? (
-                    <div className="flex items-center gap-1.5">
-                      <div
-                        className="relative flex h-8 items-center gap-0.5 rounded-lg border border-slate-200 bg-white p-0.5 shadow-sm"
-                        role="group"
-                        aria-label="Guide source"
-                      >
-                        <span
-                          className="pointer-events-none absolute left-0.5 top-0.5 h-7 w-7 rounded-md bg-slate-950 shadow-sm transition-transform duration-300 ease-[cubic-bezier(0.22,1,0.36,1)]"
-                          style={{ transform: `translateX(${activeGuideSourceIndex * 30}px)` }}
-                          aria-hidden="true"
-                        />
-                        {guideSourceSelectors.map((selector) => {
-                          const isActive = activeGuideSource === selector.id;
-                          const SelectorIcon = selector.icon;
-                          return (
-                            <button
-                              key={selector.id}
-                              type="button"
-                              onClick={() => handleGuideSourceSelect(selector.id)}
-                              className={`relative z-10 flex h-7 w-7 items-center justify-center rounded-md text-[8px] font-semibold transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-400/70 ${
-                                isActive ? "text-white" : "text-slate-700 hover:text-slate-950"
-                              }`}
-                              aria-label={selector.label}
-                              title={selector.label}
-                            >
-                              {SelectorIcon ? <SelectorIcon className="h-3.5 w-3.5" /> : selector.shortLabel}
-                            </button>
-                          );
-                        })}
-                      </div>
-                      {guideActionSelectors.map((selector) => {
-                        const isActive = activeGuideRail === selector.id;
+	                <div
+                    className={`flex h-8 items-center justify-end overflow-visible rounded-lg transition-[width,background-color,border-color,box-shadow] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] ${
+                      isMobileExplorerSearchOpen
+                        ? "w-[min(22rem,calc(100vw-1.5rem))] border border-slate-200 bg-white shadow-sm"
+                        : "w-8 border border-transparent bg-transparent"
+                    }`}
+                  >
+                    {isMobileExplorerSearchOpen ? (
+                      <SearchBar
+                        autoFocus
+                        compact
+                        embedded
+                        variant="square"
+                        size="sm"
+                        onResultSelect={() => setIsMobileExplorerSearchOpen(false)}
+                        className="max-w-none flex-1"
+                      />
+                    ) : null}
+                    <button
+                      type="button"
+                      onClick={() => setIsMobileExplorerSearchOpen((current) => !current)}
+                      className={`inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-lg text-slate-700 transition hover:text-slate-900 ${
+                        isMobileExplorerSearchOpen
+                          ? "border border-transparent bg-transparent shadow-none"
+                          : "border border-slate-200 bg-white shadow-sm hover:border-slate-300"
+                      }`}
+                      aria-label={isMobileExplorerSearchOpen ? "Close search" : "Open search"}
+                      title={isMobileExplorerSearchOpen ? "Close search" : "Search"}
+                    >
+                      {isMobileExplorerSearchOpen ? <X className="h-3.5 w-3.5" /> : <Search className="h-3.5 w-3.5" />}
+                    </button>
+                  </div>
+                  <div className="flex flex-col items-end gap-1.5">
+                    <div
+                      className="relative flex w-8 flex-col items-center gap-0.5 rounded-lg border border-slate-200 bg-white p-0.5 shadow-sm"
+                      role="group"
+                      aria-label="Guide source"
+                    >
+                      <span
+                        className="pointer-events-none absolute left-0.5 top-0.5 h-7 w-7 rounded-md bg-slate-950 shadow-sm transition-transform duration-300 ease-[cubic-bezier(0.22,1,0.36,1)]"
+                        style={{ transform: `translateY(${activeGuideSourceIndex * 30}px)` }}
+                        aria-hidden="true"
+                      />
+                      {guideSourceSelectors.map((selector) => {
+                        const isActive = activeGuideSource === selector.id;
                         const SelectorIcon = selector.icon;
                         return (
                           <button
                             key={selector.id}
                             type="button"
-                            onClick={() => handleGuideRailSelect(selector.id)}
-                            style={isActive ? guideActionActiveStyles[selector.id] : undefined}
-                            className={`relative flex h-8 w-8 items-center justify-center overflow-hidden rounded-lg border border-slate-200 bg-white text-slate-700 shadow-sm transition hover:border-slate-300 hover:text-slate-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-400/70 ${
-                              isActive ? "shadow-md hover:text-current" : ""
+                            onClick={() => handleGuideSourceSelect(selector.id)}
+                            className={`relative z-10 flex h-7 w-7 items-center justify-center rounded-md text-[8px] font-semibold transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-400/70 ${
+                              isActive ? "text-white" : "text-slate-700 hover:text-slate-950"
                             }`}
                             aria-label={selector.label}
                             title={selector.label}
                           >
-                              <SelectorIcon
-                                className={`relative z-10 h-3.5 w-3.5 ${
-                                  isActive && selector.id === "all-guides"
-                                    ? "fill-sky-400 text-slate-950"
-                                    : ""
-                                }`}
-                              />
+                            {SelectorIcon ? <SelectorIcon className="h-3.5 w-3.5" /> : selector.shortLabel}
                           </button>
                         );
                       })}
                     </div>
-                  ) : null}
-	                <div
-                  className={`flex h-8 items-center justify-end overflow-visible rounded-lg transition-[width,background-color,border-color,box-shadow] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] ${
-                    isMobileExplorerSearchOpen
-                      ? "w-[min(22rem,calc(100vw-1.5rem))] border border-slate-200 bg-white shadow-sm"
-                      : "w-8 border border-transparent bg-transparent"
-                  }`}
-                >
-                  {isMobileExplorerSearchOpen ? (
-                    <SearchBar
-                      autoFocus
-                      compact
-                      embedded
-                      variant="square"
-                      size="sm"
-                      onResultSelect={() => setIsMobileExplorerSearchOpen(false)}
-                      className="max-w-none flex-1"
-                    />
-                  ) : null}
-                  <button
-                    type="button"
-                    onClick={() => setIsMobileExplorerSearchOpen((current) => !current)}
-                    className={`inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-lg text-slate-700 transition hover:text-slate-900 ${
-                      isMobileExplorerSearchOpen
-                        ? "border border-transparent bg-transparent shadow-none"
-                        : "border border-slate-200 bg-white shadow-sm hover:border-slate-300"
-                    }`}
-                    aria-label={isMobileExplorerSearchOpen ? "Close search" : "Open search"}
-                    title={isMobileExplorerSearchOpen ? "Close search" : "Search"}
-                  >
-                    {isMobileExplorerSearchOpen ? <X className="h-3.5 w-3.5" /> : <Search className="h-3.5 w-3.5" />}
-                  </button>
-                </div>
+                    {guideActionSelectors.map((selector) => {
+                      const isActive = activeGuideRail === selector.id;
+                      const SelectorIcon = selector.icon;
+                      return (
+                        <button
+                          key={selector.id}
+                          type="button"
+                          onClick={() => handleGuideRailSelect(selector.id)}
+                          style={isActive ? guideActionActiveStyles[selector.id] : undefined}
+                          className={`relative flex h-8 w-8 items-center justify-center overflow-hidden rounded-lg border border-slate-200 bg-white text-slate-700 shadow-sm transition hover:border-slate-300 hover:text-slate-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-400/70 ${
+                            isActive ? "shadow-md hover:text-current" : ""
+                          }`}
+                          aria-label={selector.label}
+                          title={selector.label}
+                        >
+                          <SelectorIcon
+                            className={`relative z-10 h-3.5 w-3.5 ${
+                              isActive && selector.id === "all-guides"
+                                ? "fill-sky-400 text-slate-950"
+                                : ""
+                            }`}
+                          />
+                        </button>
+                      );
+                    })}
+                  </div>
               </div>
 				          <div className={`pointer-events-auto absolute left-1/2 top-3 z-[60] w-[min(22rem,calc(100%-7.25rem))] -translate-x-1/2 space-y-2 transition-opacity duration-200 lg:hidden ${
 				            isMobileExplorerSearchOpen ? "pointer-events-none opacity-0" : "opacity-100"
-				          }`}>
+		          }`}>
 		            <div className="grid items-start gap-2">
 		              <div className="flex min-w-0 flex-wrap items-start justify-center gap-1.5">
+                    {activeLocation.continent ? (
+                      <button
+                        type="button"
+                        onClick={() => {
+                          setMobileAllSelection({ country: false, region: false, state: false, city: false, neighborhood: false });
+                          handleResetToGlobalView();
+                        }}
+                        className="flex h-8 w-8 shrink-0 items-center justify-center overflow-hidden rounded-full border border-slate-200 bg-white/95 text-slate-800 shadow-[0_8px_18px_rgba(15,23,42,0.08)] transition hover:border-slate-300 focus-visible:ring-2 focus-visible:ring-orange-500/50"
+                        aria-label="Return to global view"
+                        title="Global view"
+                      >
+                        <video
+                          muted
+                          loop
+                          autoPlay
+                          playsInline
+                          preload="auto"
+                          poster="/assets/rotating-earth-still.png"
+                          className="h-8 w-8 rounded-full object-cover"
+                        >
+                          <source src="/assets/rotating-earth.webm" type="video/webm" />
+                          <source src="/assets/rotating-earth.mp4" type="video/mp4" />
+                        </video>
+                      </button>
+                    ) : null}
 		                <MobileBrowseSelect
 		                  label="Select continent"
 		                  value={selection.continentId ?? ""}

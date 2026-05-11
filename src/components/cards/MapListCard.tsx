@@ -424,7 +424,11 @@ export function MapListCard({
   const scrollStopToTop = (stopId: string) => {
     const runScroll = () => {
       const stopElement = document.getElementById(`guide-stop-item-${list.id}-${stopId}`);
-      const listElement = document.getElementById(`guide-stop-list-${list.id}`);
+      const mobileScrollElement = document.getElementById(`guide-scroll-container-${list.id}`);
+      const desktopScrollElement = document.getElementById(`guide-stop-list-${list.id}`);
+      const shouldUseMobileScroller =
+        typeof window !== "undefined" && window.matchMedia("(max-width: 1023px)").matches;
+      const listElement = shouldUseMobileScroller ? mobileScrollElement : desktopScrollElement;
 
       if (!stopElement || !listElement) {
         return;
@@ -519,24 +523,28 @@ export function MapListCard({
     }
 
     const updateEndPadding = () => {
-      const listElement = document.getElementById(`guide-stop-list-${list.id}`);
+      const mobileScrollElement = document.getElementById(`guide-scroll-container-${list.id}`);
+      const stopListElement = document.getElementById(`guide-stop-list-${list.id}`);
+      const shouldUseMobileScroller =
+        typeof window !== "undefined" && window.matchMedia("(max-width: 1023px)").matches;
+      const scrollElement = shouldUseMobileScroller ? mobileScrollElement : stopListElement;
       const lastStop = list.stops[list.stops.length - 1];
       const lastStopSentinel = lastStop
         ? document.getElementById(`guide-stop-top-${list.id}-${lastStop.id}`)
         : null;
 
-      if (!listElement || !lastStopSentinel) {
+      if (!scrollElement || !stopListElement || !lastStopSentinel) {
         setStopListEndPadding(0);
         setStopListMaxScrollTop(null);
         return;
       }
 
-      const listRect = listElement.getBoundingClientRect();
+      const listRect = scrollElement.getBoundingClientRect();
       const sentinelRect = lastStopSentinel.getBoundingClientRect();
-      const previousPadding = Number.parseFloat(window.getComputedStyle(listElement).paddingBottom) || 0;
-      const sentinelTop = listElement.scrollTop + sentinelRect.top - listRect.top;
-      const naturalScrollHeight = listElement.scrollHeight - previousPadding;
-      const nextPadding = Math.max(0, Math.ceil(sentinelTop + listElement.clientHeight - naturalScrollHeight));
+      const previousPadding = Number.parseFloat(window.getComputedStyle(stopListElement).paddingBottom) || 0;
+      const sentinelTop = scrollElement.scrollTop + sentinelRect.top - listRect.top;
+      const naturalScrollHeight = scrollElement.scrollHeight - previousPadding;
+      const nextPadding = Math.max(0, Math.ceil(sentinelTop + scrollElement.clientHeight - naturalScrollHeight));
 
       setStopListEndPadding(nextPadding);
       setStopListMaxScrollTop(Math.max(0, Math.ceil(sentinelTop - STOP_SCROLL_TOP_INSET)));
@@ -827,6 +835,92 @@ export function MapListCard({
     router.push(`/submit?${params.toString()}`);
   };
 
+  const renderExpandedFooter = (className = "") => (
+    <div
+      className={`${
+        expanded && fillPane
+          ? "mt-2.5 max-h-20 overflow-visible opacity-100 translate-y-0 pointer-events-auto transition-[opacity,transform] duration-200 ease-out"
+          : `mt-0 max-h-0 overflow-hidden opacity-0 translate-y-1 pointer-events-none transition-[max-height,opacity,transform,margin-top] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] ${
+              expanded
+                ? "mt-2.5 max-h-20 overflow-visible opacity-100 translate-y-0 pointer-events-auto"
+                : ""
+            }`
+      } ${expanded ? "bg-slate-50" : ""} ${className}`}
+    >
+      <div>
+        <div className="grid grid-cols-[1fr_auto_1fr] items-center gap-2 border-t border-slate-200 pt-2.5">
+          <div className="flex min-w-0 items-center">
+            <span className={`rounded-full px-2 py-0.5 text-[10px] font-medium ${categoryStyle.badge}`}>
+              {list.category}
+            </span>
+          </div>
+          <div
+            className={`relative transition-opacity duration-300 ease-out ${
+              isRGuide && allSources.length
+                ? "opacity-100"
+                : "opacity-0"
+            }`}
+          >
+            {isRGuide && allSources.length ? (
+              <>
+                <button
+                  type="button"
+                  onClick={(event) => {
+                    event.stopPropagation();
+                    openSourcesFromCard();
+                  }}
+                  className="flex items-center justify-center gap-1 rounded-full px-1 py-0.5 hover:bg-stone-100"
+                  aria-label="Show sources"
+                  aria-expanded={sourcesOpen}
+                >
+                  {sourcePreview.map((source, index) => (
+                    <span
+                      key={`${list.id}-${source.name}-${index}`}
+                      className={`inline-flex h-5 w-5 items-center justify-center overflow-hidden rounded-full border border-white bg-white shadow-sm ${
+                        index === 0 ? "" : "-ml-1.5"
+                      }`}
+                      title={source.name}
+                      aria-label={source.name}
+                    >
+                      <img
+                        src={getSourceIconUrl(source.url)}
+                        alt={source.name}
+                        loading="lazy"
+                        decoding="async"
+                        className="h-4 w-4 rounded-full"
+                      />
+                    </span>
+                  ))}
+                  <ChevronDown
+                    className={`h-3.5 w-3.5 text-slate-500 transition-transform ${
+                      sourcesOpen ? "rotate-180" : ""
+                    }`}
+                  />
+                </button>
+              </>
+            ) : null}
+          </div>
+          <div className="flex items-center justify-end gap-1.5">
+            <div className="min-w-0 text-right">
+              <Link href={getCreatorHref({ name: list.creator.name })} className="text-[11px] font-medium text-slate-900">
+                {list.creator.name}
+              </Link>
+            </div>
+            <span className="inline-flex h-5 w-5 shrink-0 overflow-hidden rounded-full">
+              <Image
+                src={list.creator.avatar}
+                alt={list.creator.name}
+                width={20}
+                height={20}
+                className="h-full w-full object-cover"
+              />
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+
   return (
     <article
       className={`group surface relative overflow-hidden transition-[background-color,border-color,box-shadow,transform] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] ${
@@ -1068,7 +1162,24 @@ export function MapListCard({
           <div
             className={`guide-expand-panel-content ${fillPane && expanded ? "flex min-h-0 flex-1 flex-col overflow-hidden pb-3" : "overflow-hidden"}`}
           >
-            <div className={`${fillPane && expanded ? "flex min-h-0 flex-1 flex-col" : ""} relative pt-2`}>
+            <div
+              id={`guide-scroll-container-${list.id}`}
+              onScroll={(event) => {
+                if (stopListMaxScrollTop === null) {
+                  return;
+                }
+                const shouldClampMobileScroller =
+                  typeof window !== "undefined" && window.matchMedia("(max-width: 1023px)").matches;
+                if (!shouldClampMobileScroller) {
+                  return;
+                }
+                const element = event.currentTarget;
+                if (element.scrollTop > stopListMaxScrollTop) {
+                  element.scrollTop = stopListMaxScrollTop;
+                }
+              }}
+              className={`${fillPane && expanded ? "mobile-guide-scroll-container flex min-h-0 flex-1 flex-col overflow-y-auto overscroll-contain pb-3 pr-1 lg:overflow-hidden lg:pb-0 lg:pr-0" : ""} relative pt-2`}
+            >
               <p className="guide-content-cascade-item relative z-10 text-[11px] font-medium uppercase tracking-[0.2em] text-slate-500">
                 Description
               </p>
@@ -1207,6 +1318,11 @@ export function MapListCard({
                       if (stopListMaxScrollTop === null) {
                         return;
                       }
+                      const shouldClampDesktopScroller =
+                        typeof window !== "undefined" && window.matchMedia("(min-width: 1024px)").matches;
+                      if (!shouldClampDesktopScroller) {
+                        return;
+                      }
                       const element = event.currentTarget;
                       if (element.scrollTop > stopListMaxScrollTop) {
                         element.scrollTop = stopListMaxScrollTop;
@@ -1219,7 +1335,7 @@ export function MapListCard({
                     }
                     className={`relative z-10 mt-2 grid gap-2 ${
                       fillPane && expanded
-                        ? "guide-stop-list min-h-0 flex-1 touch-pan-y auto-rows-max overflow-y-auto overscroll-contain pt-0.5 pr-1"
+                        ? "guide-stop-list min-h-0 touch-pan-y auto-rows-max pt-0.5 pr-1 lg:flex-1 lg:overflow-y-auto lg:overscroll-contain"
                         : ""
                     }`}
                   >
@@ -1285,7 +1401,7 @@ export function MapListCard({
                           style={{ "--guide-accent": stopCategoryStyle.mapColor } as React.CSSProperties}
                         >
                         <div
-                          className="flex w-full items-center gap-2 px-3 py-2.5 pl-4 text-left text-sm text-slate-700"
+                          className="expanded-guide-stop-title-row flex w-full items-center gap-2 px-3 py-2.5 pl-4 text-left text-sm text-slate-700"
                         >
                           {showStopNumbers ? (
                             <button
@@ -1379,7 +1495,7 @@ export function MapListCard({
                           }`}
                         >
                           <div className="overflow-hidden">
-                            <div className="border-t border-slate-950/10 px-4 py-3">
+                            <div className="expanded-guide-stop-body border-t border-slate-950/10 px-4 py-3">
                               <div className={`expanded-poi-bio ${stopPhoto ? "" : "expanded-poi-bio-no-photo"}`}>
                                 {stopPhoto ? (
                                   <button
@@ -1518,7 +1634,7 @@ export function MapListCard({
                                   </div>
                                 </div>
                               ) : null}
-                              <div className="mt-3 flex items-end justify-between gap-3">
+                              <div className="expanded-guide-stop-actions mt-3 flex items-end justify-between gap-3">
                                 <div className="min-w-0">
                                   {resolvedStopHours ? (
                                     <p className="text-[11px] leading-4 text-slate-500">
@@ -1645,94 +1761,13 @@ export function MapListCard({
                   </ol>
                 </>
               ) : null}
+              {fillPane ? renderExpandedFooter("lg:hidden") : null}
             </div>
           </div>
         </div>
       ) : null}
 
-      <div
-        className={`${
-          expanded && fillPane
-            ? "mt-2.5 max-h-20 overflow-visible opacity-100 translate-y-0 pointer-events-auto transition-[opacity,transform] duration-200 ease-out"
-            : `mt-0 max-h-0 overflow-hidden opacity-0 translate-y-1 pointer-events-none transition-[max-height,opacity,transform,margin-top] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] ${
-                expanded
-                  ? "mt-2.5 max-h-20 overflow-visible opacity-100 translate-y-0 pointer-events-auto"
-                  : ""
-              }`
-        } ${expanded ? "bg-slate-50" : ""}`}
-      >
-        <div>
-          <div className="grid grid-cols-[1fr_auto_1fr] items-center gap-2 border-t border-slate-200 pt-2.5">
-            <div className="flex min-w-0 items-center">
-              <span className={`rounded-full px-2 py-0.5 text-[10px] font-medium ${categoryStyle.badge}`}>
-                {list.category}
-              </span>
-            </div>
-            <div
-              className={`relative transition-opacity duration-300 ease-out ${
-                isRGuide && allSources.length
-                  ? "opacity-100"
-                  : "opacity-0"
-              }`}
-            >
-              {isRGuide && allSources.length ? (
-                <>
-                  <button
-                    type="button"
-                    onClick={(event) => {
-                      event.stopPropagation();
-                      openSourcesFromCard();
-                    }}
-                    className="flex items-center justify-center gap-1 rounded-full px-1 py-0.5 hover:bg-stone-100"
-                    aria-label="Show sources"
-                    aria-expanded={sourcesOpen}
-                  >
-                    {sourcePreview.map((source, index) => (
-                      <span
-                        key={`${list.id}-${source.name}-${index}`}
-                        className={`inline-flex h-5 w-5 items-center justify-center overflow-hidden rounded-full border border-white bg-white shadow-sm ${
-                          index === 0 ? "" : "-ml-1.5"
-                        }`}
-                        title={source.name}
-                        aria-label={source.name}
-                      >
-                        <img
-                          src={getSourceIconUrl(source.url)}
-                          alt={source.name}
-                          loading="lazy"
-                          decoding="async"
-                          className="h-4 w-4 rounded-full"
-                        />
-                      </span>
-                    ))}
-                    <ChevronDown
-                      className={`h-3.5 w-3.5 text-slate-500 transition-transform ${
-                        sourcesOpen ? "rotate-180" : ""
-                      }`}
-                    />
-                  </button>
-                </>
-              ) : null}
-            </div>
-            <div className="flex items-center justify-end gap-1.5">
-              <div className="min-w-0 text-right">
-                <Link href={getCreatorHref({ name: list.creator.name })} className="text-[11px] font-medium text-slate-900">
-                  {list.creator.name}
-                </Link>
-              </div>
-              <span className="inline-flex h-5 w-5 shrink-0 overflow-hidden rounded-full">
-                <Image
-                  src={list.creator.avatar}
-                  alt={list.creator.name}
-                  width={20}
-                  height={20}
-                  className="h-full w-full object-cover"
-                />
-              </span>
-            </div>
-          </div>
-        </div>
-      </div>
+      {renderExpandedFooter(fillPane ? "hidden lg:block" : "")}
       <div
         className={`absolute inset-0 z-30 flex flex-col bg-white/95 p-3 backdrop-blur-sm transition-[transform,opacity] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] ${
           sourcesOpen
