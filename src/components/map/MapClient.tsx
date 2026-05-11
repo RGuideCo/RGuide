@@ -3257,7 +3257,6 @@ export function MapClient({
     });
   }, [
     activeNeighborhoodBoundary,
-    activeGuide,
     continents,
     selection,
     styleReadyTick,
