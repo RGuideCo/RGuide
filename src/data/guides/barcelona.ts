@@ -3964,7 +3964,7 @@ export const barcelonaCoreGuides = [
           "sat": "24 hours",
           "sun": "24 hours"
         },
-        "photo": "https://static-resources-elementor.mirai.com/wp-content/uploads/sites/343/casa-fuster_header-historia_section.jpg"
+        "photo": "https://static-resources-elementor.mirai.com/wp-content/uploads/sites/343/casa-fuster_gallery.jpg"
       },
       {
         "id": "barcelona-hotel-shortlist-hotel-brummell",
