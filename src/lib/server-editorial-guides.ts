@@ -42,8 +42,6 @@ const EDITORIAL_GUIDES_CACHE_SECONDS = Number.parseInt(
   10,
 );
 
-let editorialGuidesLoadPromise: Promise<MapList[] | null> | null = null;
-
 function getDatabaseUrl() {
   return (
     process.env.SUPABASE_DB_URL ??
@@ -197,8 +195,7 @@ async function loadWeeklyEventPublicationCache(client: Client) {
 
 const getCachedEditorialGuidesFromSupabase = unstable_cache(
   async () => {
-    editorialGuidesLoadPromise ??= loadEditorialGuidesFromSupabase();
-    return editorialGuidesLoadPromise;
+    return loadEditorialGuidesFromSupabase();
   },
   ["server-editorial-guides"],
   {

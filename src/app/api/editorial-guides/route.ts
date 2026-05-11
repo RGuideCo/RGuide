@@ -11,6 +11,7 @@ const cacheSeconds = Number.isFinite(EDITORIAL_GUIDES_CACHE_SECONDS)
   : 900;
 
 export const revalidate = 900;
+export const dynamic = "force-dynamic";
 export const runtime = "nodejs";
 
 export async function GET() {
