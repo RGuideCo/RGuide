@@ -350,6 +350,107 @@ function inferVenueClassification(stop, list) {
     };
   }
 
+  const isOtherClassified =
+    ["Culture", "Nature", "Activities", "Routes", "Essentials"].includes(list?.category) ||
+    ["Culture", "Nature", "Activities", "Routes", "Essentials"].includes(stop?.category);
+  if (isOtherClassified) {
+    const text = [
+      list?.category,
+      stop?.name,
+      stop?.description,
+      stop?.category,
+      stop?.price,
+      stop?.bookingUrl,
+      stop?.officialUrl,
+    ]
+      .filter(Boolean)
+      .join(" ")
+      .toLowerCase();
+
+    let venueKind = "other";
+    if (/\b(airport|station|terminal|ferry|train|metro|tram|bus|transit|transport)\b/.test(text) || list?.category === "Essentials" || stop?.category === "Essentials") {
+      venueKind = "transport";
+    } else if (/\b(shop|shopping|market|boutique|vintage|bookstore|store|retail|souvenir|makers?)\b/.test(text)) {
+      venueKind = "retail";
+    } else if (/\b(stadium|arena|theatre|theater|concert|performance|festival|show|tickets?|class|workshop|spa|bathhouse|tour)\b/.test(text) || list?.category === "Activities" || stop?.category === "Activities") {
+      venueKind = "event_venue";
+    } else if (/\b(landmark|monument|memorial|tower|bridge|palace|castle|cathedral|basilica|church|temple|mosque|synagogue|unesco|iconic)\b/.test(text)) {
+      venueKind = "landmark";
+    } else if (list?.category === "Nature" || stop?.category === "Nature" || /\b(park|garden|beach|waterfront|river|canal|lake|harbor|harbour|trail|hike|walk|viewpoint|lookout|forest|mountain|hill|outdoor|nature)\b/.test(text)) {
+      venueKind = "outdoors";
+    } else if (list?.category === "Culture" || stop?.category === "Culture" || /\b(museum|gallery|art|exhibition|historic|history|culture|library|architecture|public\s+art)\b/.test(text)) {
+      venueKind = "culture";
+    } else if (list?.category === "Routes" || stop?.category === "Routes") {
+      venueKind = "outdoors";
+    }
+
+    const attributeTags = [];
+    if (/\b(museum|collection|collections)\b/.test(text)) attributeTags.push("museum");
+    if (/\b(gallery|exhibition|contemporary\s+art)\b/.test(text)) attributeTags.push("gallery");
+    if (/\b(historic|history|heritage|old\s+town|ancient|archaeolog)\b/.test(text)) attributeTags.push("historic_site", "historic_landmark");
+    if (/\b(architecture|architectural|design|built\s+form)\b/.test(text)) attributeTags.push("architecture", "architectural_landmark");
+    if (/\b(public\s+art|mural|sculpture|street\s+art)\b/.test(text)) attributeTags.push("public_art");
+    if (/\b(church|cathedral|basilica|mosque|temple|synagogue|chapel|sacred|religious)\b/.test(text)) attributeTags.push("religious_site");
+    if (/\b(literary|library|book|writer|poet)\b/.test(text)) attributeTags.push("literary");
+    if (/\b(learn|learning|educational|interpretation|context)\b/.test(text)) attributeTags.push("educational");
+    if (/\b(family|kids|children)\b/.test(text)) attributeTags.push("family_culture", "family_outdoors", "family_activity");
+    if (/\b(indoor|rainy|weather)\b/.test(text)) attributeTags.push("rainy_day", "indoor_activity");
+    if (/\b(free|no\s+ticket|open\s+access)\b/.test(text)) attributeTags.push("free_entry");
+    if (/\b(ticket|timed\s+entry|admission|book|booking|reservation)\b/.test(text)) attributeTags.push("ticketed", "ticketed_activity");
+    if (/\b(tour|guided)\b/.test(text)) attributeTags.push("guided_tour");
+    if (/\b(quiet|calm|contemplative|slow)\b/.test(text)) attributeTags.push("quiet_culture");
+    if (/\b(immersive|interactive|experiential|hands[-\s]?on)\b/.test(text)) attributeTags.push("immersive", "hands_on");
+    if (/\b(park|square|green\s+space)\b/.test(text)) attributeTags.push("park");
+    if (/\b(garden|botanical|landscaped)\b/.test(text)) attributeTags.push("garden");
+    if (/\b(waterfront|river|canal|lake|harbor|harbour|beach|coast|seaside)\b/.test(text)) attributeTags.push("waterfront");
+    if (/\b(view|views|viewpoint|lookout|panorama|skyline|scenic)\b/.test(text)) attributeTags.push("scenic_view", "viewpoint");
+    if (/\b(walk|walking|route|stroll|promenade)\b/.test(text)) attributeTags.push("walking_route");
+    if (/\b(hike|hiking|trail|mountain|hill)\b/.test(text)) attributeTags.push("hiking");
+    if (/\b(easy|gentle|low[-\s]?effort)\b/.test(text)) attributeTags.push("easy_walk");
+    if (/\b(cycling|bike|bicycle)\b/.test(text)) attributeTags.push("cycling");
+    if (/\b(picnic|lawns?)\b/.test(text)) attributeTags.push("picnic");
+    if (/\b(wildlife|bird|deer|animals?)\b/.test(text)) attributeTags.push("wildlife");
+    if (/\b(sunset|golden[-\s]?hour)\b/.test(text)) attributeTags.push("sunset");
+    if (/\b(active|run|climb|sport|surf|swim|cycle)\b/.test(text)) attributeTags.push("active_outdoors");
+    if (/\b(nature|escape|forest|woods?|mountain|countryside)\b/.test(text)) attributeTags.push("nature_escape");
+    if (/\b(iconic|symbol|famous|must[-\s]?see)\b/.test(text)) attributeTags.push("iconic_landmark", "must_see");
+    if (/\b(monument|memorial|statue)\b/.test(text)) attributeTags.push("monument");
+    if (/\b(photo|photograph|visual|picturesque)\b/.test(text)) attributeTags.push("photo_spot");
+    if (/\bunesco\b/.test(text)) attributeTags.push("unesco");
+    if (/\b(quick|short|route\s+marker|orientation\s+point)\b/.test(text)) attributeTags.push("quick_stop");
+    if (/\b(market|bazaar|flea)\b/.test(text)) attributeTags.push("market_retail");
+    if (/\b(boutique|independent\s+shop)\b/.test(text)) attributeTags.push("boutique");
+    if (/\b(vintage|thrift|antique|secondhand)\b/.test(text)) attributeTags.push("vintage");
+    if (/\b(luxury|designer|premium)\b/.test(text)) attributeTags.push("luxury_shopping");
+    if (/\b(local\s+makers?|artisan|craft)\b/.test(text)) attributeTags.push("local_makers");
+    if (/\b(design\s+shop|homeware|design[-\s]?led)\b/.test(text)) attributeTags.push("design_shopping");
+    if (/\b(bookstore|books?|print)\b/.test(text)) attributeTags.push("bookstore");
+    if (/\b(shopping\s+street|retail\s+district)\b/.test(text)) attributeTags.push("shopping_street");
+    if (/\b(souvenir|gift)\b/.test(text)) attributeTags.push("souvenir");
+    if (/\b(performance|show|stage|theatre|theater|concert)\b/.test(text)) attributeTags.push("performance_venue");
+    if (/\b(stadium|arena|sports?|match[-\s]?day)\b/.test(text)) attributeTags.push("sports_venue");
+    if (/\b(festival|seasonal|activation)\b/.test(text)) attributeTags.push("festival_site");
+    if (/\b(adventure|adrenaline|thrill)\b/.test(text)) attributeTags.push("adventure");
+    if (/\b(wellness|spa|bathhouse|thermal|restorative)\b/.test(text)) attributeTags.push("wellness_activity");
+    if (/\b(outdoor|open[-\s]?air)\b/.test(text)) attributeTags.push("outdoor_activity");
+    if (/\b(station|terminal|transit|transport|airport)\b/.test(text)) attributeTags.push("transit_hub");
+    if (/\bferry\b/.test(text)) attributeTags.push("ferry");
+    if (/\b(train|rail|metro|tram)\b/.test(text)) attributeTags.push("train");
+    if (/\bairport\b/.test(text)) attributeTags.push("airport");
+    if (/\b(practical|logistics|orientation|essential)\b/.test(text)) attributeTags.push("practical");
+
+    return {
+      venueKind,
+      lodgingType: null,
+      foodServiceType: null,
+      cuisineTypes: [],
+      priceTier: null,
+      nightlifeType: null,
+      musicGenres: [],
+      attributeTags: uniqueValues(attributeTags),
+    };
+  }
+
   const isStay = list?.category === "Stay" || stop?.category === "Stay";
   if (!isStay) {
     return {
