@@ -3,6 +3,7 @@ import "server-only";
 import { unstable_cache } from "next/cache";
 import pg from "pg";
 import type { Client } from "pg";
+import { createClient, type SupabaseClient } from "@supabase/supabase-js";
 
 import { mapLists } from "@/data/lists";
 import { weeklyCityEventRuns, weeklyEventToGuideList } from "@/data/weekly-events";
@@ -17,6 +18,14 @@ interface NormalizedGuideRow {
 }
 
 interface RenderCacheRow {
+  rendered_payload: MapList;
+}
+
+interface DataApiGuideRow {
+  list: MapList;
+}
+
+interface DataApiRenderCacheRow {
   rendered_payload: MapList;
 }
 
@@ -51,6 +60,17 @@ function getDatabaseUrl() {
   );
 }
 
+function getSupabaseDataApiConfig() {
+  const url = process.env.SUPABASE_URL ?? process.env.NEXT_PUBLIC_SUPABASE_URL ?? null;
+  const key =
+    process.env.SUPABASE_SERVICE_ROLE_KEY ??
+    process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY ??
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ??
+    null;
+
+  return url && key ? { url, key } : null;
+}
+
 function shouldSkipDatabaseConnection() {
   if (process.env.RGUIDE_ALLOW_BUILD_DB === "1") {
     return false;
@@ -74,13 +94,13 @@ function getPgSslConfig(databaseUrl: string) {
 
 async function loadEditorialGuidesFromSupabase(): Promise<MapList[] | null> {
   if (shouldSkipDatabaseConnection()) {
-    return null;
+    return loadEditorialGuidesFromDataApi();
   }
 
   const databaseUrl = getDatabaseUrl();
 
   if (!databaseUrl) {
-    return null;
+    return loadEditorialGuidesFromDataApi();
   }
 
   const client = new pg.Client({
@@ -103,10 +123,58 @@ async function loadEditorialGuidesFromSupabase(): Promise<MapList[] | null> {
     return loadRenderCacheGuides(client);
   } catch (error) {
     console.error("Failed to load server editorial guides", error);
-    return null;
+    return loadEditorialGuidesFromDataApi();
   } finally {
     await client.end().catch(() => {});
   }
+}
+
+async function loadEditorialGuidesFromDataApi(): Promise<MapList[] | null> {
+  const config = getSupabaseDataApiConfig();
+
+  if (!config) {
+    return null;
+  }
+
+  const supabase = createClient(config.url, config.key, {
+    auth: {
+      autoRefreshToken: false,
+      persistSession: false,
+    },
+  });
+
+  if (process.env.RGUIDE_FORCE_RENDER_CACHE === "1") {
+    return loadRenderCacheGuidesFromDataApi(supabase);
+  }
+
+  const { data, error } = await supabase
+    .from("entries_maplist")
+    .select("list")
+    .returns<DataApiGuideRow[]>();
+
+  if (!error && data?.length) {
+    return [...data.map((row) => normalizeWeeklyEventGuide(row.list)), ...getLocalWeeklyEventGuides()];
+  }
+
+  return loadRenderCacheGuidesFromDataApi(supabase);
+}
+
+async function loadRenderCacheGuidesFromDataApi(
+  supabase: SupabaseClient,
+): Promise<MapList[] | null> {
+  const { data, error } = await supabase
+    .from("entry_render_cache")
+    .select("rendered_payload")
+    .eq("render_format", "maplist")
+    .eq("render_version", 1)
+    .eq("is_current", true)
+    .returns<DataApiRenderCacheRow[]>();
+
+  if (error || !data?.length) {
+    return null;
+  }
+
+  return [...data.map((row) => normalizeWeeklyEventGuide(row.rendered_payload)), ...getLocalWeeklyEventGuides()];
 }
 
 async function loadNormalizedGuides(client: Client): Promise<MapList[] | null> {
