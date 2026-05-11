@@ -707,7 +707,10 @@ export const barcelonaCoreGuides = [
           41.3918,
           2.1746
         ],
-        "description": "Bodega Bonay is included because The Infatuation and reservation signals position it as one of Eixample's better hotel-linked dining rooms. The draw is Casa Bonay's design ecosystem: natural wine, anchovies, cecina, pastas, and long lunches that feel stylish without requiring a tasting menu.",
+        "description": "Bodega Bonay is included because The Infatuation and reservation signals position it as one of Eixample's better modern restaurants. The draw is a stylish food-and-wine room built around Catalan natural wine, anchovies, cecina, pastas, and long lunches that feel social without requiring a tasting menu.",
+        "category": "Food",
+        "venueKind": "food_drink",
+        "foodServiceType": "restaurant",
         "price": "$$",
         "priceSource": "The Infatuation / Resy",
         "hours": {
@@ -1363,7 +1366,10 @@ export const barcelonaCoreGuides = [
           41.3918,
           2.1746
         ],
-        "description": "Bodega Bonay gives the citywide list a stylish Eixample lunch or dinner that does not require tasting-menu money. The Infatuation's 2026 review and reservation signals frame it around Casa Bonay's design-hotel ecosystem, Catalan natural wine, anchovies, cured meats, pastas, and a social long-lunch scene.",
+        "description": "Bodega Bonay gives the citywide list a stylish Eixample lunch or dinner that does not require tasting-menu money. The Infatuation's 2026 review and reservation signals frame it around Catalan natural wine, anchovies, cured meats, pastas, and a social long-lunch scene.",
+        "category": "Food",
+        "venueKind": "food_drink",
+        "foodServiceType": "restaurant",
         "price": "$$",
         "priceSource": "The Infatuation / TheFork",
         "hours": {
@@ -2223,7 +2229,10 @@ export const barcelonaCoreGuides = [
           41.3918,
           2.1746
         ],
-        "description": "Bodega Bonay represents current Catalan dining through the Casa Bonay lens: natural wine, anchovies, cured meats, pastas, and a design-hotel room that works for a stylish long lunch. The Infatuation and reservation signals make it a modern counterpoint to the old taverns.",
+        "description": "Bodega Bonay represents current Catalan dining through natural wine, anchovies, cured meats, pastas, and a stylish room that works for a long lunch. The Infatuation and reservation signals make it a modern food-and-wine counterpoint to the old taverns.",
+        "category": "Food",
+        "venueKind": "food_drink",
+        "foodServiceType": "restaurant",
         "price": "$$",
         "priceSource": "The Infatuation / TheFork",
         "hours": {
@@ -3555,6 +3564,9 @@ export const barcelonaCoreGuides = [
           2.1654
         ],
         "description": "Yeah Barcelona Hostel is included because it gives Eixample a social, budget-conscious option with dorms and private rooms. Its location works especially well for travelers splitting time between Gràcia, Sagrada Família, and Eixample dining, while still wanting hostel programming and shared spaces.",
+        "category": "Stay",
+        "venueKind": "lodging",
+        "lodgingType": "hostel",
         "hours": {
           "mon": "24 hours",
           "tue": "24 hours",
@@ -3564,7 +3576,7 @@ export const barcelonaCoreGuides = [
           "sat": "24 hours",
           "sun": "24 hours"
         },
-        "photo": "https://yeahostels.com/web/wp-content/uploads/2025/08/Location-Reception02.jpg"
+        "photo": "https://images.trvl-media.com/lodging/28000000/27090000/27084800/27084729/9f0a3253.jpg?impolicy=resizecrop&ra=fit&rw=1200"
       }
     ],
     "sources": [
@@ -4067,6 +4079,9 @@ export const barcelonaCoreGuides = [
           2.1654
         ],
         "description": "Yeah Barcelona is the Eixample pick because it combines polished dorms, private rooms, and structured social programming in a location that works for Sagrada Familia, lower Gracia, and Eixample dining. Multiple hostel and map sources make it one of the safest all-around recommendations when travelers want social energy without sleeping in the Gothic core.",
+        "category": "Stay",
+        "venueKind": "lodging",
+        "lodgingType": "hostel",
         "hours": {
           "mon": "24 hours",
           "tue": "24 hours",
@@ -4076,7 +4091,7 @@ export const barcelonaCoreGuides = [
           "sat": "24 hours",
           "sun": "24 hours"
         },
-        "photo": "https://yeahostels.com/web/wp-content/uploads/2025/08/Location-Reception02.jpg"
+        "photo": "https://images.trvl-media.com/lodging/28000000/27090000/27084800/27084729/9f0a3253.jpg?impolicy=resizecrop&ra=fit&rw=1200"
       },
       {
         "id": "barcelona-hostel-shortlist-casa-gracia",
@@ -4403,6 +4418,9 @@ export const barcelonaCoreGuides = [
           2.1654
         ],
         "description": "Yeah Barcelona is the Eixample hostel to beat for social energy without the old-city chaos. Hostelworld and traveler sources repeatedly support it for organized dinners and tours, modern dorms, private rooms, and a location that splits the difference between Sagrada Familia, Gracia, and Eixample restaurants.",
+        "category": "Stay",
+        "venueKind": "lodging",
+        "lodgingType": "hostel",
         "hours": {
           "mon": "24 hours",
           "tue": "24 hours",
@@ -4412,7 +4430,7 @@ export const barcelonaCoreGuides = [
           "sat": "24 hours",
           "sun": "24 hours"
         },
-        "photo": "https://yeahostels.com/web/wp-content/uploads/2025/08/Location-Reception02.jpg"
+        "photo": "https://images.trvl-media.com/lodging/28000000/27090000/27084800/27084729/9f0a3253.jpg?impolicy=resizecrop&ra=fit&rw=1200"
       },
       {
         "id": "eixample-hostel-rock-palace",
@@ -4600,6 +4618,9 @@ export const barcelonaCoreGuides = [
           2.1654
         ],
         "description": "Yeah Barcelona technically sits on the Eixample/Gracia edge, but it belongs in the Gracia hostel comparison because it is one of the strongest social hostels within easy walking distance of the neighborhood's lower plazas. Use it when social programming matters more than being deep inside Gracia.",
+        "category": "Stay",
+        "venueKind": "lodging",
+        "lodgingType": "hostel",
         "hours": {
           "mon": "24 hours",
           "tue": "24 hours",
@@ -4609,7 +4630,7 @@ export const barcelonaCoreGuides = [
           "sat": "24 hours",
           "sun": "24 hours"
         },
-        "photo": "https://yeahostels.com/web/wp-content/uploads/2025/08/Location-Reception02.jpg"
+        "photo": "https://images.trvl-media.com/lodging/28000000/27090000/27084800/27084729/9f0a3253.jpg?impolicy=resizecrop&ra=fit&rw=1200"
       }
     ],
     "sources": [
@@ -7070,7 +7091,10 @@ export const barcelonaItineraryGuides = [
           2.1746
         ],
         "itineraryDay": 1,
-        "description": "Bodega Bonay is the weekend food stop when the plan needs a stylish but manageable meal rather than a tasting-menu commitment. It keeps the route in Eixample while adding natural wine, anchovies, pastas, and a design-hotel setting.",
+        "description": "Bodega Bonay is the weekend food stop when the plan needs a stylish but manageable meal rather than a tasting-menu commitment. It keeps the route in Eixample while adding natural wine, anchovies, pastas, and a lively restaurant-room setting.",
+        "category": "Food",
+        "venueKind": "food_drink",
+        "foodServiceType": "restaurant",
         "price": "$$",
         "priceSource": "The Infatuation / Resy",
         "hours": {
@@ -7223,6 +7247,9 @@ export const barcelonaItineraryGuides = [
         ],
         "itineraryDay": 1,
         "description": "Use Yeah Barcelona as the hostel-category base for a week because the location works for Eixample, Gràcia, and Sagrada Família while the social programming helps longer-stay travelers find plans. It is especially useful when the journey needs an affordable base that can create community without relying on random bar crawls.",
+        "category": "Stay",
+        "venueKind": "lodging",
+        "lodgingType": "hostel",
         "hours": {
           "mon": "24 hours",
           "tue": "24 hours",
@@ -7232,7 +7259,7 @@ export const barcelonaItineraryGuides = [
           "sat": "24 hours",
           "sun": "24 hours"
         },
-        "photo": "https://yeahostels.com/web/wp-content/uploads/2025/08/Location-Reception02.jpg"
+        "photo": "https://images.trvl-media.com/lodging/28000000/27090000/27084800/27084729/9f0a3253.jpg?impolicy=resizecrop&ra=fit&rw=1200"
       },
       {
         "id": "barcelona-week-casa-vicens",
