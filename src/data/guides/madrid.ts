@@ -45,7 +45,7 @@ export const madridNeighborhoodGuides = [
           "sat": "12:30 PM-4:00 PM, 7:30 PM-11:30 PM",
           "sun": "12:30 PM-4:00 PM, 7:30 PM-11:00 PM"
         },
-        "photo": "https://lhardy.com/wp-content/uploads/Lhardy-Primera-20"
+        "photo": "https://lhardy.com/wp-content/uploads/Lhardy-Primera-20.jpg"
       },
       {
         "id": "sol-food-casa-labra",
@@ -87,7 +87,7 @@ export const madridNeighborhoodGuides = [
           "sat": "12:00 PM-1:00 AM",
           "sun": "12:00 PM-12:00 AM"
         },
-        "photo": "https://live.staticflickr.com/3542/3668195177_a0390718b5_b"
+        "photo": "https://live.staticflickr.com/3542/3668195177_a0390718b5_b.jpg"
       },
       {
         "id": "sol-food-san-gines",
@@ -214,7 +214,7 @@ export const madridNeighborhoodGuides = [
           "sat": "10:00 PM-5:00 AM",
           "sun": "10:00 PM-2:30 AM"
         },
-        "photo": "https://toni2.es/wp-content/uploads/2021/09/Barra-Toni-2-madrid-scaled-e1636977700852-2048x1295"
+        "photo": "https://toni2.es/wp-content/uploads/2021/09/Barra-Toni-2-madrid-scaled-e1636977700852-2048x1295.jpeg"
       },
       {
         "id": "sol-nightlife-josealfredo",
@@ -731,7 +731,7 @@ export const madridNeighborhoodGuides = [
           "sat": "12:30 PM-4:00 PM, 7:30 PM-11:30 PM",
           "sun": "12:30 PM-4:00 PM, 7:30 PM-11:00 PM"
         },
-        "photo": "https://www.casaalberto.es/data/ficheros/N000001/2025/07/3_4gj3qlxcw7_LIBRILLO"
+        "photo": "https://www.casaalberto.es/data/ficheros/N000001/2025/07/3_4gj3qlxcw7_LIBRILLO.jpg"
       },
       {
         "id": "letras-food-triciclo",
@@ -752,7 +752,7 @@ export const madridNeighborhoodGuides = [
           "sat": "1:00 PM-3:30 PM, 8:00 PM-11:30 PM",
           "sun": "Closed"
         },
-        "photo": "https://static.wixstatic.com/media/ff3b54_3f1fb814f34f44708baafe64f6a6a58d~mv2.jpg/v1/fill/w_676,h_1646,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/ff3b54_3f1fb814f34f44708baafe64f6a6a58d~mv2"
+        "photo": "https://static.wixstatic.com/media/ff3b54_3f1fb814f34f44708baafe64f6a6a58d~mv2.jpg/v1/fill/w_676,h_1646,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/ff3b54_3f1fb814f34f44708baafe64f6a6a58d~mv2.jpg"
       },
       {
         "id": "letras-food-viva-madrid",
@@ -841,7 +841,7 @@ export const madridNeighborhoodGuides = [
           "sat": "6:00 PM-2:30 AM",
           "sun": "6:00 PM-12:00 AM"
         },
-        "photo": "https://salmonguru.es/wp-content/uploads/2024/07/mad-bunny"
+        "photo": "https://salmonguru.es/wp-content/uploads/2024/07/mad-bunny.jpg"
       },
       {
         "id": "letras-nightlife-la-venencia",
@@ -1396,7 +1396,7 @@ export const madridNeighborhoodGuides = [
           "sat": "1:00 PM-3:30 PM, 8:00 PM-11:30 PM",
           "sun": "Closed"
         },
-        "photo": "https://kulto.es/wp-content/uploads/carta-kulto-restaurante-platos-restaurante-madrid-kulto"
+        "photo": "https://kulto.es/wp-content/uploads/carta-kulto-restaurante-platos-restaurante-madrid-kulto.jpg"
       },
       {
         "id": "retiro-food-florida",
@@ -2040,7 +2040,7 @@ export const madridNeighborhoodGuides = [
           "sat": "12:30 PM-4:00 PM, 7:30 PM-11:30 PM",
           "sun": "12:30 PM-4:00 PM, 7:30 PM-11:00 PM"
         },
-        "photo": "https://arednarestaurante.com/wp-content/uploads/2025/12/Diseno-sin-titulo-2025-12-04T115020.668"
+        "photo": "https://arednarestaurante.com/wp-content/uploads/2025/12/Diseno-sin-titulo-2025-12-04T115020.668.jpg"
       },
       {
         "id": "malasana-food-ojala",
@@ -2061,7 +2061,7 @@ export const madridNeighborhoodGuides = [
           "sat": "12:00 PM-1:00 AM",
           "sun": "12:00 PM-12:00 AM"
         },
-        "photo": "https://grupolamusa.com/wp-content/uploads/2025/11/Musa-Latina"
+        "photo": "https://grupolamusa.com/wp-content/uploads/2025/11/Musa-Latina.webp"
       },
       {
         "id": "malasana-food-la-musa",
@@ -2169,7 +2169,7 @@ export const madridNeighborhoodGuides = [
           "sat": "Event schedule (check venue)",
           "sun": "Event schedule (check venue)"
         },
-        "photo": "https://www.mondodisko.es/assets/images/mondo-disko-2"
+        "photo": "https://www.mondodisko.es/assets/images/mondo-disko-2.jpg"
       },
       {
         "id": "malasana-nightlife-via-lactea",
@@ -2663,7 +2663,7 @@ export const madridNeighborhoodGuides = [
           "sat": "12:30 PM-4:00 PM, 7:30 PM-11:30 PM",
           "sun": "12:30 PM-4:00 PM, 7:30 PM-11:00 PM"
         },
-        "photo": "https://static.wixstatic.com/media/1aa0f7_0b697c156a8f469aaa022ac129c18011~mv2.jpeg/v1/fit/w_1279,h_852,q_90,enc_avif,quality_auto/1aa0f7_0b697c156a8f469aaa022ac129c18011~mv2"
+        "photo": "https://static.wixstatic.com/media/1aa0f7_0b697c156a8f469aaa022ac129c18011~mv2.jpeg/v1/fit/w_1279,h_852,q_90,enc_avif,quality_auto/1aa0f7_0b697c156a8f469aaa022ac129c18011~mv2.jpeg"
       },
       {
         "id": "latina-food-casa-lucio",
@@ -2684,7 +2684,7 @@ export const madridNeighborhoodGuides = [
           "sat": "12:30 PM-4:00 PM, 7:30 PM-11:30 PM",
           "sun": "12:30 PM-4:00 PM, 7:30 PM-11:00 PM"
         },
-        "photo": "https://casalucio.es/wp-content/uploads/2015/09/local_01"
+        "photo": "https://casalucio.es/wp-content/uploads/2015/09/local_01.jpg"
       },
       {
         "id": "latina-food-taberna-concha",
@@ -2705,7 +2705,7 @@ export const madridNeighborhoodGuides = [
           "sat": "12:00 PM-2:00 AM",
           "sun": "12:00 PM-12:00 AM"
         },
-        "photo": "http://www.laconchataberna.com/wp-content/uploads/2018/10/fondopag2"
+        "photo": "http://www.laconchataberna.com/wp-content/uploads/2018/10/fondopag2.jpg"
       },
       {
         "id": "latina-food-mercado-cebada",
@@ -2726,7 +2726,7 @@ export const madridNeighborhoodGuides = [
           "sat": "12:00 PM-1:00 AM",
           "sun": "12:00 PM-12:00 AM"
         },
-        "photo": "https://www.mercadodelacebada.com/wp-content/uploads/2022/06/Planta-baja_Bier-pause"
+        "photo": "https://www.mercadodelacebada.com/wp-content/uploads/2022/06/Planta-baja_Bier-pause.jpg"
       }
     ],
     "sources": [
@@ -2813,7 +2813,7 @@ export const madridNeighborhoodGuides = [
           "sat": "12:00 PM-2:00 AM",
           "sun": "12:00 PM-12:00 AM"
         },
-        "photo": "http://www.laconchataberna.com/wp-content/uploads/2018/10/fondopag2"
+        "photo": "http://www.laconchataberna.com/wp-content/uploads/2018/10/fondopag2.jpg"
       },
       {
         "id": "latina-nightlife-marula",
@@ -3349,7 +3349,7 @@ export const madridNeighborhoodGuides = [
           "sat": "12:00 PM-1:00 AM",
           "sun": "12:00 PM-12:00 AM"
         },
-        "photo": "https://www.mercadosananton.com/wp-content/uploads/2022/06/1-Maru_MSA_21Mayo_Generales_04"
+        "photo": "https://www.mercadosananton.com/wp-content/uploads/2022/06/1-Maru_MSA_21Mayo_Generales_04.jpg"
       },
       {
         "id": "chueca-food-dstage",
@@ -3370,7 +3370,7 @@ export const madridNeighborhoodGuides = [
           "sat": "7:00 PM-10:30 PM",
           "sun": "Closed"
         },
-        "photo": "https://images.bonkdo.com/JCnSVo5IHeafivFkkV9qhbDRqQY=/0x500/https://mybb-storage-prod.s3.fr-par.scw.cloud/media_manager/b417b949-95ea-4255-848e-44fc6dcd41fa/160415_DSTAgE_0Z6A0767"
+        "photo": "https://mybb-storage-prod.s3.fr-par.scw.cloud/media_manager/b417b949-95ea-4255-848e-44fc6dcd41fa/160415_DSTAgE_0Z6A0767.jpg"
       },
       {
         "id": "chueca-food-kuoco",
@@ -3391,7 +3391,7 @@ export const madridNeighborhoodGuides = [
           "sat": "12:30 PM-4:00 PM, 7:30 PM-11:30 PM",
           "sun": "12:30 PM-4:00 PM, 7:30 PM-11:00 PM"
         },
-        "photo": "https://www.gastroactitud.com/wp-content/uploads/2023/02/kuoco-360-madrid-0103"
+        "photo": "https://www.gastroactitud.com/wp-content/uploads/2023/02/kuoco-360-madrid-0103.jpg"
       }
     ],
     "sources": [
@@ -3478,7 +3478,7 @@ export const madridNeighborhoodGuides = [
           "sat": "6:00 PM-2:30 AM",
           "sun": "6:00 PM-12:00 AM"
         },
-        "photo": "https://static.wixstatic.com/media/504b29_8a2a776ee62b41fcb512d06189491966~mv2.jpg/v1/fill/w_3360,h_1392,al_c,q_90,usm_0.66_1.00_0.01,enc_avif,quality_auto/504b29_8a2a776ee62b41fcb512d06189491966~mv2"
+        "photo": "https://static.wixstatic.com/media/504b29_8a2a776ee62b41fcb512d06189491966~mv2.jpg/v1/fill/w_3360,h_1392,al_c,q_90,usm_0.66_1.00_0.01,enc_avif,quality_auto/504b29_8a2a776ee62b41fcb512d06189491966~mv2.jpg"
       },
       {
         "id": "chueca-nightlife-museo-chicote",
@@ -3516,7 +3516,7 @@ export const madridNeighborhoodGuides = [
           "sat": "10:00 PM-5:00 AM",
           "sun": "10:00 PM-2:30 AM"
         },
-        "photo": "https://toni2.es/wp-content/uploads/2021/09/Barra-Toni-2-madrid-scaled-e1636977700852-2048x1295"
+        "photo": "https://toni2.es/wp-content/uploads/2021/09/Barra-Toni-2-madrid-scaled-e1636977700852-2048x1295.jpeg"
       }
     ],
     "sources": [
@@ -3995,7 +3995,7 @@ export const madridCitywideGuides = [
           "sat": "12:30 PM-4:00 PM, 7:30 PM-11:30 PM",
           "sun": "12:30 PM-4:00 PM, 7:30 PM-11:00 PM"
         },
-        "photo": "https://static.wixstatic.com/media/ffa181_13e0b9bd9cb043488dabb7ecf16a0370~mv2.jpg/v1/fill/w_1405,h_667,al_c,q_85,enc_avif,quality_auto/ffa181_13e0b9bd9cb043488dabb7ecf16a0370~mv2"
+        "photo": "https://static.wixstatic.com/media/ffa181_13e0b9bd9cb043488dabb7ecf16a0370~mv2.jpg/v1/fill/w_1405,h_667,al_c,q_85,enc_avif,quality_auto/ffa181_13e0b9bd9cb043488dabb7ecf16a0370~mv2.jpg"
       },
       {
         "id": "madrid-food-la-malontina",
@@ -4079,7 +4079,7 @@ export const madridCitywideGuides = [
           "sat": "12:30 PM-4:00 PM, 7:30 PM-11:30 PM",
           "sun": "12:30 PM-4:00 PM, 7:30 PM-11:00 PM"
         },
-        "photo": "https://lhardy.com/wp-content/uploads/Lhardy-Primera-20"
+        "photo": "https://lhardy.com/wp-content/uploads/Lhardy-Primera-20.jpg"
       },
       {
         "id": "madrid-food-diverxo",
@@ -4100,7 +4100,7 @@ export const madridCitywideGuides = [
           "sat": "Closed",
           "sun": "Closed"
         },
-        "photo": "https://diverso.it.com/assets/img/DSC_6171"
+        "photo": "https://diverso.it.com/assets/img/DSC_6171.jpg"
       },
       {
         "id": "madrid-food-smoked-room",
@@ -4121,7 +4121,7 @@ export const madridCitywideGuides = [
           "sat": "1:00 PM-4:00 PM, 8:30 PM-1:00 AM",
           "sun": "Closed"
         },
-        "photo": "https://smokedroomrestaurants.com/wp-content/uploads/2025/07/SR_home_carrusel-2"
+        "photo": "https://smokedroomrestaurants.com/wp-content/uploads/2025/07/SR_home_carrusel-2.jpg"
       }
     ],
     "sources": [
@@ -4192,7 +4192,7 @@ export const madridCitywideGuides = [
           "sat": "6:00 PM-2:30 AM",
           "sun": "6:00 PM-12:00 AM"
         },
-        "photo": "https://salmonguru.es/wp-content/uploads/2024/07/mad-bunny"
+        "photo": "https://salmonguru.es/wp-content/uploads/2024/07/mad-bunny.jpg"
       },
       {
         "id": "madrid-nightlife-angelita",
@@ -4230,7 +4230,7 @@ export const madridCitywideGuides = [
           "sat": "6:00 PM-2:30 AM",
           "sun": "6:00 PM-12:00 AM"
         },
-        "photo": "https://static.wixstatic.com/media/504b29_8a2a776ee62b41fcb512d06189491966~mv2.jpg/v1/fill/w_3360,h_1392,al_c,q_90,usm_0.66_1.00_0.01,enc_avif,quality_auto/504b29_8a2a776ee62b41fcb512d06189491966~mv2"
+        "photo": "https://static.wixstatic.com/media/504b29_8a2a776ee62b41fcb512d06189491966~mv2.jpg/v1/fill/w_3360,h_1392,al_c,q_90,usm_0.66_1.00_0.01,enc_avif,quality_auto/504b29_8a2a776ee62b41fcb512d06189491966~mv2.jpg"
       },
       {
         "id": "madrid-nightlife-1862",
@@ -4268,7 +4268,7 @@ export const madridCitywideGuides = [
           "sat": "Event schedule (check venue)",
           "sun": "Event schedule (check venue)"
         },
-        "photo": "https://www.mondodisko.es/assets/images/mondo-disko-2"
+        "photo": "https://www.mondodisko.es/assets/images/mondo-disko-2.jpg"
       },
       {
         "id": "madrid-nightlife-toni2",
@@ -4287,7 +4287,7 @@ export const madridCitywideGuides = [
           "sat": "10:00 PM-5:00 AM",
           "sun": "10:00 PM-2:30 AM"
         },
-        "photo": "https://toni2.es/wp-content/uploads/2021/09/Barra-Toni-2-madrid-scaled-e1636977700852-2048x1295"
+        "photo": "https://toni2.es/wp-content/uploads/2021/09/Barra-Toni-2-madrid-scaled-e1636977700852-2048x1295.jpeg"
       }
     ],
     "sources": [
