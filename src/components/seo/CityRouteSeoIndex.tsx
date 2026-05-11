@@ -25,6 +25,81 @@ function pluralize(count: number, singular: string, plural = `${singular}s`) {
   return `${count} ${count === 1 ? singular : plural}`;
 }
 
+type StayBookingPlatform = "booking" | "hostelworld";
+
+function isHostelGuide(guide: MapList) {
+  const slug = guide.slug.toLowerCase();
+  const isMixedStayGuide = slug.includes("hotels-and-hostels");
+  return (
+    !isMixedStayGuide &&
+    (guide.seoSlug === "best-hostels" ||
+      slug === "hostels" ||
+      slug.endsWith("-hostels") ||
+      slug.includes("best-hostels"))
+  );
+}
+
+function isHostelStop(guide: MapList, stop: MapList["stops"][number]) {
+  const stopText = [stop.name, stop.priceSource].filter(Boolean).join(" ").toLowerCase();
+
+  return (
+    isHostelGuide(guide) ||
+    /\bhostelworld\b/.test(stopText) ||
+    /\bhostels?\b/.test(stopText) ||
+    /\bhostal\b/.test(stopText) ||
+    /\bostello\b/.test(stopText) ||
+    /\bguesthouse\b/.test(stopText)
+  );
+}
+
+function getStayBookingPlatformFromUrl(url?: string): StayBookingPlatform | null {
+  if (!url) {
+    return null;
+  }
+
+  try {
+    const hostname = new URL(url).hostname.toLowerCase();
+    if (hostname.includes("hostelworld.")) {
+      return "hostelworld";
+    }
+    if (hostname.includes("booking.")) {
+      return "booking";
+    }
+  } catch {
+    return null;
+  }
+
+  return null;
+}
+
+function getStayBookingDetails(guide: MapList, stop: MapList["stops"][number]) {
+  if ((stop.category ?? guide.category) !== "Stay") {
+    return null;
+  }
+
+  const platform =
+    getStayBookingPlatformFromUrl(stop.bookingUrl) ?? (isHostelStop(guide, stop) ? "hostelworld" : "booking");
+  const platformLabel = platform === "hostelworld" ? "Hostelworld" : "Booking.com";
+
+  if (stop.bookingUrl) {
+    return {
+      href: stop.bookingUrl,
+      platformLabel,
+    };
+  }
+
+  const searchQuery = [stop.name, guide.location.city, guide.location.country].filter(Boolean).join(", ");
+  const encodedQuery = encodeURIComponent(searchQuery);
+
+  return {
+    href:
+      platform === "hostelworld"
+        ? `https://www.hostelworld.com/find/keywordsuggestions?internalsearch=yes&search_keywords=${encodedQuery}`
+        : `https://www.booking.com/searchresults.html?ss=${encodedQuery}`,
+    platformLabel,
+  };
+}
+
 function GuidePreviewCard({
   guide,
   guides,
@@ -61,12 +136,26 @@ function GuidePreviewCard({
       <p className="mt-2 text-sm leading-6 text-slate-600">{guide.description}</p>
       {stops.length ? (
         <ul className="mt-3 grid gap-2 text-sm text-slate-700 sm:grid-cols-2">
-          {stops.map((stop) => (
-            <li key={stop.id} className="rounded-md bg-stone-50 px-3 py-2">
-              <span className="font-medium text-slate-900">{stop.name}</span>
-              {priority ? <span className="mt-1 block text-xs leading-5 text-slate-600">{stop.description}</span> : null}
-            </li>
-          ))}
+          {stops.map((stop) => {
+            const stayBookingDetails = getStayBookingDetails(guide, stop);
+
+            return (
+              <li key={stop.id} className="rounded-md bg-stone-50 px-3 py-2">
+                <span className="font-medium text-slate-900">{stop.name}</span>
+                {priority ? <span className="mt-1 block text-xs leading-5 text-slate-600">{stop.description}</span> : null}
+                {stayBookingDetails ? (
+                  <a
+                    href={stayBookingDetails.href}
+                    className="mt-2 inline-flex rounded-md border border-cyan-800 bg-cyan-800 px-2.5 py-1 text-xs font-semibold text-white hover:border-cyan-900 hover:bg-cyan-900"
+                    rel="noreferrer"
+                    aria-label={`Book ${stop.name} on ${stayBookingDetails.platformLabel}`}
+                  >
+                    Book on {stayBookingDetails.platformLabel}
+                  </a>
+                ) : null}
+              </li>
+            );
+          })}
         </ul>
       ) : null}
       {guide.sources?.length ? (
