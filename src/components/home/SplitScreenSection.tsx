@@ -1318,6 +1318,8 @@ export function SplitScreenSection({
   const selectionRef = useRef(selection);
   const activeCategoryRef = useRef(activeCategory);
   const expandedGuideIdRef = useRef(expandedGuideId);
+  const skipInitialSelectionCleanupRef = useRef(Boolean(initialRouteState?.expandedGuideId));
+  const skipInitialGuideRailCleanupRef = useRef(Boolean(initialRouteState?.expandedGuideId));
   const categoryBeforeGuideExpandRef = useRef<ListCategory | null>(
     initialRouteState?.expandedGuideId ? initialRouteState.activeCategory ?? null : null,
   );
@@ -3251,6 +3253,11 @@ export function SplitScreenSection({
   }, [activeCategory, visibleSubcategoryCategory]);
 
   useEffect(() => {
+    if (skipInitialSelectionCleanupRef.current) {
+      skipInitialSelectionCleanupRef.current = false;
+      return;
+    }
+
     setHoveredCategoryLabel(null);
     setActiveSubcategory(null);
     setActiveFoodPrice(null);
@@ -3377,6 +3384,11 @@ export function SplitScreenSection({
   }, [activeGuideRail, expandedGuideId, globalMergedLists, railFilteredLists]);
 
   useEffect(() => {
+    if (skipInitialGuideRailCleanupRef.current) {
+      skipInitialGuideRailCleanupRef.current = false;
+      return;
+    }
+
     setExpandedGuideId(null);
     setClosingGuide(null);
   }, [activeGuideRail, activeGuideSource]);
