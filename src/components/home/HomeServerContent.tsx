@@ -53,6 +53,25 @@ function getFeaturedGuides(editorialGuides: MapList[]) {
     .slice(0, 8);
 }
 
+function getFeaturedStayGuides(editorialGuides: MapList[]) {
+  return editorialGuides
+    .filter(
+      (list) =>
+        isGuideList(list) &&
+        list.category === "Stay" &&
+        list.location.scope === "city" &&
+        Boolean(list.location.city) &&
+        !list.location.neighborhood,
+    )
+    .slice()
+    .sort((left, right) => {
+      const leftHotelIntent = left.seoSlug === "best-hotels" ? 1 : 0;
+      const rightHotelIntent = right.seoSlug === "best-hotels" ? 1 : 0;
+      return rightHotelIntent - leftHotelIntent || right.stops.length - left.stops.length || left.title.localeCompare(right.title);
+    })
+    .slice(0, 6);
+}
+
 function ServerCityCard({ city }: { city: ServerCityCard }) {
   return (
     <Link href={getCityHref(city)} className="group overflow-hidden rounded-lg border border-slate-950/15 bg-white shadow-sm">
@@ -120,8 +139,44 @@ function GuideSummaryCard({ guide, guides }: { guide: MapList; guides: MapList[]
   );
 }
 
+function StayGuideCard({ guide, guides }: { guide: MapList; guides: MapList[] }) {
+  const city = { name: guide.location.city ?? "" };
+  const href = getCanonicalGuidePath(city, guide, undefined, guides);
+  const title = getGuideSeoTitle(guide, city);
+
+  return (
+    <article className="rounded-lg border border-cyan-900/20 bg-cyan-50/50 p-4 shadow-sm">
+      <div className="flex flex-wrap items-center gap-2 text-[11px] font-semibold uppercase tracking-[0.14em] text-cyan-900/70">
+        <span>Where to stay</span>
+        <span className="text-cyan-900/30">/</span>
+        <span>{guide.location.city}</span>
+      </div>
+      <h3 className="mt-2 text-base font-semibold leading-6 text-slate-950">
+        <Link href={href} className="hover:text-cyan-800">
+          {title}
+        </Link>
+      </h3>
+      <p className="mt-2 line-clamp-3 text-sm leading-6 text-slate-600">{guide.description}</p>
+      {guide.stops.length ? (
+        <ul className="mt-3 grid gap-2 text-sm text-slate-700">
+          {guide.stops.slice(0, 3).map((stop) => (
+            <li key={stop.id} className="rounded-md bg-white px-3 py-2">
+              <span className="font-medium text-slate-900">{stop.name}</span>
+              <span className="mt-1 line-clamp-2 block text-xs leading-5 text-slate-600">{stop.description}</span>
+            </li>
+          ))}
+        </ul>
+      ) : null}
+      <Link href={href} className="mt-4 inline-flex rounded-md bg-cyan-800 px-3 py-1.5 text-xs font-semibold text-white hover:bg-cyan-900">
+        View hotels and booking links
+      </Link>
+    </article>
+  );
+}
+
 export function HomeServerContent({ continents, editorialGuides }: HomeServerContentProps) {
   const featuredCities = getFeaturedCities(continents, editorialGuides);
+  const featuredStayGuides = getFeaturedStayGuides(editorialGuides);
   const featuredGuides = getFeaturedGuides(editorialGuides);
 
   return (
@@ -130,12 +185,41 @@ export function HomeServerContent({ continents, editorialGuides }: HomeServerCon
         <div className="max-w-3xl">
           <p className="text-xs font-semibold uppercase tracking-[0.2em] text-orange-700">RGuide</p>
           <h1 id="home-server-content-heading" className="mt-2 text-3xl font-semibold tracking-tight text-slate-950 sm:text-4xl">
-            Curated travel guides by city
+            City travel guides with hotel and neighborhood stay advice
           </h1>
           <p className="mt-3 text-sm leading-6 text-slate-600">
-            Browse city guides, neighborhood picks, food routes, stays, cultural stops, nightlife, nature, and practical essentials.
+            RGuide publishes independent destination guides for travelers choosing where to stay, where to eat, what to do, and which neighborhoods fit the trip. Start with accommodation-led guides for hotels, hostels, and practical city bases, then build the rest of the route around food, culture, nightlife, nature, and essentials.
           </p>
+          <div className="mt-5 flex flex-wrap gap-3 text-sm font-semibold">
+            <Link href="/category/stay" className="rounded-md bg-cyan-800 px-3 py-2 text-white hover:bg-cyan-900">
+              Browse stay guides
+            </Link>
+            <Link href="/city/barcelona/stay/best-hotels" className="rounded-md border border-slate-200 bg-white px-3 py-2 text-slate-700 hover:border-cyan-200 hover:text-cyan-800">
+              Best hotels in Barcelona
+            </Link>
+          </div>
         </div>
+
+        {featuredStayGuides.length ? (
+          <div className="mt-8 border-t border-slate-200 pt-6">
+            <div className="flex items-end justify-between gap-4">
+              <div>
+                <h2 className="text-lg font-semibold text-slate-950">Where to stay</h2>
+                <p className="mt-1 text-sm leading-6 text-slate-600">
+                  Hotel and hostel guides organized by city, neighborhood fit, transit access, nightlife reach, and booking context.
+                </p>
+              </div>
+              <Link href="/category/stay" className="shrink-0 text-xs font-semibold uppercase tracking-[0.16em] text-cyan-800 hover:text-cyan-900">
+                All stay guides
+              </Link>
+            </div>
+            <div className="mt-4 grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+              {featuredStayGuides.map((guide) => (
+                <StayGuideCard key={guide.id} guide={guide} guides={editorialGuides} />
+              ))}
+            </div>
+          </div>
+        ) : null}
 
         {featuredCities.length ? (
           <div className="mt-8">
