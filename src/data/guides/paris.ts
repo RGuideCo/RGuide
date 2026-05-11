@@ -26,8 +26,8 @@ const photos = {
   culture: "https://images.unsplash.com/photo-1499856871958-5b9627545d1a?auto=format&fit=crop&w=900&q=80",
   nature: undefined,
   activities: "https://images.unsplash.com/photo-1502602898657-3e91760cbb34?auto=format&fit=crop&w=900&q=80",
-  eiffel: "https://images.unsplash.com/photo-1502602898657-3e91760cbb34?auto=format&fit=crop&w=900&q=80",
-  seine: "https://images.unsplash.com/photo-1508050919630-b135583b29ab?auto=format&fit=crop&w=900&q=80",
+  eiffel: "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b4/Paris%2C_Eiffelturm_--_2014_--_1249.jpg/1280px-Paris%2C_Eiffelturm_--_2014_--_1249.jpg",
+  seine: "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e8/Paris%2C_Seine_--_2014_--_1321.jpg/1280px-Paris%2C_Seine_--_2014_--_1321.jpg",
   montmartre: "https://images.unsplash.com/photo-1539650116574-75c0c6d73f6e?auto=format&fit=crop&w=900&q=80",
   canal: "https://images.unsplash.com/photo-1511739001486-6bfe10ce785f?auto=format&fit=crop&w=900&q=80",
 };
@@ -38,6 +38,10 @@ type PoiPhotoSource = {
 };
 
 const poiPhotoSources: Record<string, PoiPhotoSource> = {
+  "Basilique du Sacre-Coeur": {
+    photo: "https://www.sacre-coeur-montmartre.com/app/uploads/2023/07/3-bonnes-raisons-visite-dome-500x691.jpg",
+    source: "https://www.sacre-coeur-montmartre.com/",
+  },
   Angelina: {
     photo:
       "https://cdn.prod.website-files.com/63934002307dbde359e3565a/63f3b2c5c03bb8dc2fd26b0a_AnyConv.com__63d29426b1abcd3ee319a0fc_ANGELINA%20PARIS_%20RIVOLI%20(9)-min-p-2000.webp",
@@ -134,6 +138,11 @@ const poiPhotoSources: Record<string, PoiPhotoSource> = {
     photo: "https://early-june.fr/wp-content/uploads/2020/09/Background.jpg",
     source: "https://early-june.fr/",
   },
+  "Eglise Saint-Germain-des-Pres": {
+    photo:
+      "https://upload.wikimedia.org/wikipedia/commons/thumb/4/40/Choir_of_the_Abbey_of_Saint-Germain-des-Pr%C3%A9s%2C_Paris_July_2013.jpg/1280px-Choir_of_the_Abbey_of_Saint-Germain-des-Pr%C3%A9s%2C_Paris_July_2013.jpg",
+    source: "https://commons.wikimedia.org/wiki/File:Choir_of_the_Abbey_of_Saint-Germain-des-Pr%C3%A9s,_Paris_July_2013.jpg",
+  },
   Fitzgerald: {
     photo: "https://cdn.prod.website-files.com/657ebf942cf08a351e21c1b1/69f9aac1ec8806fc5db98ecc_ChatGPT%20Image%205%20mai%202026%2C%2010_30_27.png",
     source: "https://www.fitzgerald.paris/",
@@ -142,6 +151,10 @@ const poiPhotoSources: Record<string, PoiPhotoSource> = {
     photo:
       "https://staygenerator.com/web/media/widget-spaces-rooms/paris/rooms-photos-2025/generator-paris-hostel-deluxe-king-room-1.jpg?mode=max&quality=100&v=202508261351",
     source: "https://staygenerator.com/hostels/paris",
+  },
+  "Galerie Martel": {
+    photo: "https://www.galeriemartel.com/wp-content/uploads/2024/05/DC_7-1200x801.webp",
+    source: "https://www.galeriemartel.com/la-galerie/",
   },
   "Gravity Bar": {
     photo: "https://media.cntraveler.com/photos/5a80a85d52e7b4436ff64db7/16:9/w_1000,c_limit/Gravity_JB-Lemal_2018_4---copie.jpg",
@@ -187,6 +200,10 @@ const poiPhotoSources: Record<string, PoiPhotoSource> = {
     photo: "https://moonback-hotelbeds.b-cdn.net/21/213073/213073a_hb_ro_003.jpg?aspect_ratio=1200:628&width=1200&height=628",
     source: "https://www.timetomomo.com/en/visit/paris/accommodation/les-dames-du-pantheon/",
   },
+  "Hotel de Sully": {
+    photo: "https://upload.wikimedia.org/wikipedia/commons/1/12/Sully_Garten.JPG",
+    source: "https://commons.wikimedia.org/wiki/File:Sully_Garten.JPG",
+  },
   "Hotel Lutetia": {
     photo: "https://media.ffycdn.net/eu/mandarin-oriental-hotel-group/nsZ8J29W3zvRCSVUKdTY.jpg",
     source: "https://www.mandarinoriental.com/en/paris/lutetia",
@@ -222,6 +239,10 @@ const poiPhotoSources: Record<string, PoiPhotoSource> = {
   "Huitrerie Regis": {
     photo: "https://huitrerie-regis.com/wp-content/uploads/2020/07/capture-decran-2020-07-07-a-17-03-52.png",
     source: "https://huitrerie-regis.com/",
+  },
+  "Institut de France": {
+    photo: "https://upload.wikimedia.org/wikipedia/commons/thumb/6/68/Institut_France.jpg/960px-Institut_France.jpg",
+    source: "https://commons.wikimedia.org/wiki/File:Institut_France.jpg",
   },
   "J.K. Place Paris": {
     photo:
@@ -341,6 +362,11 @@ const poiPhotoSources: Record<string, PoiPhotoSource> = {
     photo: "https://www.villagehostel.fr/wp-content/uploads/2017/10/DBL-Large-1024x683.jpg",
     source: "https://www.villagehostel.fr/",
   },
+  "Les Invalides": {
+    photo:
+      "https://upload.wikimedia.org/wikipedia/commons/thumb/3/31/H%C3%B4tel_des_Invalides%2C_North_View%2C_Paris_7e_140402_1.jpg/1920px-H%C3%B4tel_des_Invalides%2C_North_View%2C_Paris_7e_140402_1.jpg",
+    source: "https://commons.wikimedia.org/wiki/File:H%C3%B4tel_des_Invalides,_North_View,_Paris_7e_140402_1.jpg",
+  },
   "Les Ombres": {
     photo: "https://www.lesombres-restaurant.com/wp-content/uploads/2022/11/Les_Ombres_20-10-20-@-Julien-Mouffron-Gardner_7616-1-1200x730.jpg",
     source: "https://www.lesombres-restaurant.com/",
@@ -357,6 +383,11 @@ const poiPhotoSources: Record<string, PoiPhotoSource> = {
     photo: "https://res.cloudinary.com/du5jifpgg/image/upload/t_opengraph_image/Surcharge-APIDAE/marche-des-enfants-rouges-tablee.jpg",
     source: "https://www.visitparisregion.com/en/marche-des-enfants-rouges",
   },
+  "Maison de Victor Hugo": {
+    photo:
+      "https://www.maisonsvictorhugo.paris.fr/sites/default/files/styles/1440x760/public/images/2022-11/hauteville_guide_salle_a_manger_14042019_8732.jpg?h=bc816b12&itok=_X-19vKJ",
+    source: "https://www.maisonsvictorhugo.paris.fr/",
+  },
   "MIJE Marais": {
     photo: "https://www.mije.com/wp-content/uploads/2025/10/MIJE_Home-Page-header_Desktop_Imges-header_1920x526px_2025_1028.jpg",
     source: "https://www.mije.com/",
@@ -364,6 +395,94 @@ const poiPhotoSources: Record<string, PoiPhotoSource> = {
   "Mom'Art Hotel": {
     photo: "https://www.hotelmomart.com/wp-content/uploads/sites/544/2023/05/FR-Paris-Hotel-Mom-Art-Patio-3728-1-2200x1200.jpg",
     source: "https://www.hotelmomart.com/en/",
+  },
+  "Monnaie de Paris": {
+    photo: "https://upload.wikimedia.org/wikipedia/commons/thumb/2/23/Monnaie_de_Paris.jpg/500px-Monnaie_de_Paris.jpg",
+    source: "https://commons.wikimedia.org/wiki/File:Monnaie_de_Paris.jpg",
+  },
+  "Moulin de la Galette": {
+    photo: "https://moulindelagaletteparis.com/wp-content/uploads/2025/06/moulin-06-scaled.jpg",
+    source: "https://moulindelagaletteparis.com/",
+  },
+  "Musee Carnavalet": {
+    photo: "https://upload.wikimedia.org/wikipedia/commons/thumb/4/44/Carnavalet_Par%C3%ADs_10.JPG/3840px-Carnavalet_Par%C3%ADs_10.JPG",
+    source: "https://commons.wikimedia.org/wiki/File:Carnavalet_Par%C3%ADs_10.JPG",
+  },
+  "Musee Picasso Paris": {
+    photo: "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2b/5_Rue_de_Thorigny%2C_Paris_%2812%29.jpg/1280px-5_Rue_de_Thorigny%2C_Paris_%2812%29.jpg",
+    source: "https://commons.wikimedia.org/wiki/File:5_Rue_de_Thorigny,_Paris_(12).jpg",
+  },
+  "Musee Rodin": {
+    photo: "https://upload.wikimedia.org/wikipedia/commons/thumb/e/ec/The_Kiss.JPG/1280px-The_Kiss.JPG",
+    source: "https://commons.wikimedia.org/wiki/File:The_Kiss.JPG",
+  },
+  "Musee Rodin Sculpture Garden": {
+    photo: "https://upload.wikimedia.org/wikipedia/commons/thumb/e/ec/The_Kiss.JPG/1280px-The_Kiss.JPG",
+    source: "https://commons.wikimedia.org/wiki/File:The_Kiss.JPG",
+  },
+  "Musee d'Orsay": {
+    photo: "https://upload.wikimedia.org/wikipedia/commons/thumb/b/bb/MuseeDOrsay.jpg/3840px-MuseeDOrsay.jpg",
+    source: "https://commons.wikimedia.org/wiki/File:MuseeDOrsay.jpg",
+  },
+  "Musee de Cluny": {
+    photo:
+      "https://upload.wikimedia.org/wikipedia/commons/thumb/1/18/The_Lady_and_the_Unicorn_Tapestries%2C_Paris_9_July_2015.jpg/3840px-The_Lady_and_the_Unicorn_Tapestries%2C_Paris_9_July_2015.jpg",
+    source: "https://commons.wikimedia.org/wiki/File:The_Lady_and_the_Unicorn_Tapestries,_Paris_9_July_2015.jpg",
+  },
+  "Musee de Montmartre": {
+    photo: "https://upload.wikimedia.org/wikipedia/commons/thumb/2/26/Swing-Renoir.jpeg/1280px-Swing-Renoir.jpeg",
+    source: "https://commons.wikimedia.org/wiki/File:Swing-Renoir.jpeg",
+  },
+  "Musee de l'Orangerie": {
+    photo: "https://cdn.mediatheque.epmoo.fr/link/jmn19ajgq2pe6u8.jpg",
+    source: "https://www.musee-orangerie.fr/",
+  },
+  "Musee du Louvre": {
+    photo:
+      "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5f/Louvre_Museum%2C_Paris_22_June_2014.jpg/1280px-Louvre_Museum%2C_Paris_22_June_2014.jpg?utm_source=commons.wikimedia.org&utm_campaign=index&utm_content=thumbnail",
+    source: "https://commons.wikimedia.org/wiki/File:Louvre_Museum,_Paris_22_June_2014.jpg",
+  },
+  "Musee national Eugene-Delacroix": {
+    photo: "https://www.musee-delacroix.fr/local/cache-responsive/cache-1920/3beb74c590519a4a9d1a7b223232c9eb.jpg.webp?1777884936",
+    source: "https://www.musee-delacroix.fr/",
+  },
+  "Notre-Dame Cathedral": {
+    photo: "https://upload.wikimedia.org/wikipedia/commons/thumb/a/af/Notre-Dame_de_Paris_2013-07-24.jpg/1280px-Notre-Dame_de_Paris_2013-07-24.jpg",
+    source: "https://commons.wikimedia.org/wiki/File:Notre-Dame_de_Paris_2013-07-24.jpg",
+  },
+  "Palace of Versailles": {
+    photo:
+      "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4f/Chateau_Versailles_Galerie_des_Glaces.jpg/1280px-Chateau_Versailles_Galerie_des_Glaces.jpg",
+    source: "https://commons.wikimedia.org/wiki/File:Chateau_Versailles_Galerie_des_Glaces.jpg",
+  },
+  "Palais Garnier": {
+    photo: "https://upload.wikimedia.org/wikipedia/commons/0/06/Palais_Garnier_auditorium_and_stage.jpg",
+    source: "https://commons.wikimedia.org/wiki/File:Palais_Garnier_auditorium_and_stage.jpg",
+  },
+  "Palais Royal": {
+    photo: "https://upload.wikimedia.org/wikipedia/commons/8/85/Conseil_d%27Etat_Paris_WA.jpg",
+    source: "https://commons.wikimedia.org/wiki/File:Conseil_d%27Etat_Paris_WA.jpg",
+  },
+  Pantheon: {
+    photo: "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6b/Panth%C3%A9on_de_Paris_2012-10-11_n1.jpg/3840px-Panth%C3%A9on_de_Paris_2012-10-11_n1.jpg",
+    source: "https://commons.wikimedia.org/wiki/File:Panth%C3%A9on_de_Paris_2012-10-11_n1.jpg",
+  },
+  "Paris Catacombs": {
+    photo:
+      "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6c/Catacumbas%2C_Par%C3%ADs%2C_Francia%2C_2022-11-01%2C_DD_105-107_HDR.jpg/3840px-Catacumbas%2C_Par%C3%ADs%2C_Francia%2C_2022-11-01%2C_DD_105-107_HDR.jpg",
+    source: "https://commons.wikimedia.org/wiki/File:Catacumbas,_Par%C3%ADs,_Francia,_2022-11-01,_DD_105-107_HDR.jpg",
+  },
+  "Place de la Republique": {
+    photo: "https://upload.wikimedia.org/wikipedia/commons/1/10/Place_de_la_Republique%2C_Monument_for_Gloire_de_la_Republique_Francaise_%282%29.JPG",
+    source: "https://commons.wikimedia.org/wiki/File:Place_de_la_Republique,_Monument_for_Gloire_de_la_Republique_Francaise_(2).JPG",
+  },
+  "Place de la Sorbonne": {
+    photo: "https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Place_de_la_Sorbonne%2C_Paris_5e.jpg/3840px-Place_de_la_Sorbonne%2C_Paris_5e.jpg",
+    source: "https://commons.wikimedia.org/wiki/File:Place_de_la_Sorbonne,_Paris_5e.jpg",
+  },
+  "Place du Tertre": {
+    photo: "https://upload.wikimedia.org/wikipedia/commons/thumb/0/07/Restaurants%2C_Place_du_Tertre%2C_Paris_30_September_2019.jpg/960px-Restaurants%2C_Place_du_Tertre%2C_Paris_30_September_2019.jpg",
+    source: "https://commons.wikimedia.org/wiki/File:Restaurants,_Place_du_Tertre,_Paris_30_September_2019.jpg",
   },
   Parcelles: {
     photo: "https://www.parcelles-paris.fr/i/parcelles/3/5/4/8/8/6/1/5/1/1/2/5/3/1616675932_336/a6fafd739cd7f9e24bc0afe3dc6f42e2.small_original.jpg",
@@ -374,8 +493,8 @@ const poiPhotoSources: Record<string, PoiPhotoSource> = {
     source: "https://www.pierreherme.com/en/",
   },
   "Point Ephemere": {
-    photo: "https://images.prismic.io/pointf/adfVVJ1ZCF7ETC06_PInata.jpg?auto=format&q=25&fm=webp&width=640",
-    source: "https://pointephemere.org/",
+    photo: "https://www.pointephemere.org/images/batiment.jpg",
+    source: "https://www.pointephemere.org/",
   },
   Poilane: {
     photo: "https://a.storyblok.com/f/141505/1200x800/1f1eb46f4b/miche-poilane-jf-aime-b-verlomme.jpg",
@@ -411,6 +530,24 @@ const poiPhotoSources: Record<string, PoiPhotoSource> = {
   "Septime La Cave": {
     photo: "https://parisbymouth.com/wp-content/uploads/2014/09/septime-cave-for-pbm.jpg",
     source: "https://parisbymouth.com/septime-cave/",
+  },
+  "Shakespeare and Company": {
+    photo: "https://www.shakespeareandcompany.com/media/general/_2680x1608_crop_center-center_none/178/b64bf78e-92ff-4d15-b8b0-e3f6e795cdf0.jpg",
+    source: "https://www.shakespeareandcompany.com/",
+  },
+  "Sainte-Chapelle": {
+    photo:
+      "https://www.sainte-chapelle.fr/var/cmn_inter/storage/images/_aliases/homepage_banner_webp/7/3/8/9/122049837-2-fre-FR/1790805e9cd3-page-accueil-sainte-chapelle.webp.webp",
+    source: "https://www.sainte-chapelle.fr/",
+  },
+  "Seine Bookstalls and Quays": {
+    photo:
+      "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c2/Paris_75005_Quai_de_Montebello_Bouquinistes_20071014.jpg/1280px-Paris_75005_Quai_de_Montebello_Bouquinistes_20071014.jpg",
+    source: "https://commons.wikimedia.org/wiki/File:Paris_75005_Quai_de_Montebello_Bouquinistes_20071014.jpg",
+  },
+  "Sorbonne Chapel and Place de la Sorbonne": {
+    photo: "https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Place_de_la_Sorbonne%2C_Paris_5e.jpg/3840px-Place_de_la_Sorbonne%2C_Paris_5e.jpg",
+    source: "https://commons.wikimedia.org/wiki/File:Place_de_la_Sorbonne,_Paris_5e.jpg",
   },
   "St Christopher's Inn Canal": {
     photo: "https://images.ctfassets.net/wqkd101r9z5s/7JuethZ3p5V7zQHyubsMIM/d25dad4126547d595f20cea943636537/iStock-1133449890_copy.jpg?w=720&q=85",
@@ -518,11 +655,16 @@ const parisLowKeyNightlifeSources: ListSource[] = [
 const parisCultureSources: ListSource[] = [
   { name: "Louvre - Hours and admission", url: "https://www.louvre.fr/en/visit/hours-admission" },
   { name: "Musee d'Orsay - Visit", url: "https://www.musee-orsay.fr/en/visit" },
+  { name: "Notre-Dame de Paris - Practical information", url: "https://www.notredamedeparis.fr/en/visit/practical-information/" },
+  { name: "Chateau de Versailles - Practical information", url: "https://en.chateauversailles.fr/plan-your-visit/practical-information" },
+  { name: "Eiffel Tower official visit guide", url: "https://www.toureiffel.paris/en/news/visit" },
   { name: "Paris je t'aime - Place des Vosges", url: "https://parisjetaime.com/eng/transport/place-des-vosges-p1907" },
   { name: "Sacre-Coeur Montmartre official", url: "https://www.sacre-coeur-montmartre.com/" },
   { name: "Paris Opera - Visit the Palais Garnier", url: "https://www.operadeparis.fr/en/visits/visit-and-explore/visit-the-palais-garnier" },
   { name: "Paris Catacombs official", url: "https://www.catacombes.paris.fr/en" },
   { name: "Musee Rodin - Plan your visit", url: "https://www.musee-rodin.fr/en/plan-your-visit/plan-your-visit-musee-rodin" },
+  { name: "Sorbonne guided visits", url: "https://www.sorbonne.fr/la-sorbonne/visiter-la-sorbonne/visite-sorbonne-palais-academique/" },
+  { name: "Galerie Martel official", url: "https://www.galeriemartel.com/la-galerie/" },
   googleMaps,
 ];
 
@@ -1015,56 +1157,176 @@ const citywideCulture: StopSeed[] = [
     name: "Musee du Louvre",
     coordinates: [48.8606, 2.3376],
     description:
-      "The Louvre is the cultural heavyweight, but it works only when treated as a route rather than a dare. Book a time slot, choose a wing or theme, and pair the museum with Tuileries, Palais Royal, or a nearby meal so the day has shape beyond crowd management.",
-    photo: photos.culture,
+      "The Louvre is a Paris cultural must-do: a former royal palace holding one of the world's great art collections. Its icons include the Mona Lisa, the Venus de Milo, the Winged Victory of Samothrace, Egyptian antiquities, French painting, and monumental galleries that make the building part of the experience.",
   },
   {
     id: "paris-culture-orsay",
     name: "Musee d'Orsay",
     coordinates: [48.8599, 2.3266],
     description:
-      "Musee d'Orsay gives Paris a more manageable blockbuster than the Louvre, with Impressionism, sculpture, and the converted railway-station setting all in one Left Bank stop. It pairs naturally with Saint-Germain, the Seine, Rodin, or a 7th-arrondissement day.",
-    photo: photos.seine,
+      "Musee d'Orsay fills a former Beaux-Arts railway station with the world's largest collection of Impressionist and Post-Impressionist masterpieces. Monet, Renoir, Degas, Manet, Cezanne, Van Gogh, sculpture, decorative arts, and the great clock views make it one of Paris's essential museums.",
+  },
+  {
+    id: "paris-culture-notre-dame",
+    name: "Notre-Dame Cathedral",
+    coordinates: [48.853, 2.3499],
+    description:
+      "Notre-Dame Cathedral is the Gothic heart of the Ile de la Cite, famous for its twin towers, rose windows, sculpted portals, flying buttresses, and restored spire. After the 2019 fire and reopening, it remains one of the defining monuments of Paris and a living place of worship.",
   },
   {
     id: "paris-culture-sainte-chapelle",
     name: "Sainte-Chapelle",
     coordinates: [48.8554, 2.345],
     description:
-      "Sainte-Chapelle is the short, high-impact Gothic stop for stained glass and Ile de la Cite context. It is best saved with timed entry and a nearby walk to Notre-Dame, the Conciergerie, or the river instead of being squeezed between unrelated cross-town stops.",
-    photo: photos.culture,
+      "Sainte-Chapelle is a 13th-century royal chapel built for Louis IX, famous for its towering stained-glass windows. The upper chapel surrounds visitors with biblical scenes in deep blue, red, and gold glass, making it one of the most intense Gothic interiors in Paris.",
   },
   {
     id: "paris-culture-picasso",
     name: "Musee Picasso Paris",
     coordinates: [48.8599, 2.3623],
     description:
-      "Musee Picasso Paris gives the citywide culture list a Marais museum that is focused enough to pair with food and gallery detours. The Hotel Sale setting, collection depth, and easy Place des Vosges approach keep the stop substantial without becoming an all-day block.",
-    photo: photos.culture,
+      "Musee Picasso Paris occupies the Hotel Sale, a grand Marais mansion filled with Picasso's paintings, sculptures, drawings, prints, ceramics, notebooks, and archives. The display shows both finished works and process, giving the museum a strong sense of the artist's range and working life.",
   },
   {
     id: "paris-culture-palais-garnier",
     name: "Palais Garnier",
     coordinates: [48.8719, 2.3316],
     description:
-      "Palais Garnier adds architecture and performance history to a Right Bank plan. Self-guided visits are strongest when the auditorium access is treated as a bonus, not a guarantee, and the stop is paired with passages, department stores, or a cocktail nearby.",
-    photo: photos.culture,
+      "Palais Garnier is Paris's 19th-century opera house, built for opera and ballet on a spectacular scale. The Grand Staircase, gilded foyers, auditorium, Chagall ceiling, stage machinery, and marble-heavy facade make it one of the city's great theatrical interiors.",
   },
   {
     id: "paris-culture-rodin",
     name: "Musee Rodin",
     coordinates: [48.8554, 2.3158],
     description:
-      "Musee Rodin is the 7th-arrondissement cultural pressure valve: sculpture, mansion rooms, and garden time in a calmer frame than the biggest museums. It works especially well between Invalides, Orsay, and an Eiffel-side walk.",
-    photo: photos.nature,
+      "Musee Rodin presents Auguste Rodin's sculpture inside the Hotel Biron and its gardens. The collection includes The Thinker, The Kiss, The Burghers of Calais, studies, plasters, drawings, and outdoor works that show how Rodin shaped modern sculpture.",
   },
   {
     id: "paris-culture-catacombs",
     name: "Paris Catacombs",
     coordinates: [48.8338, 2.3324],
     description:
-      "The Catacombs give Paris a darker, ticketed counterweight to palace and museum days. Because access is capacity-controlled and the visit is physically specific, build it as a deliberate south-side block rather than a spontaneous add-on.",
-    photo: photos.culture,
+      "The Paris Catacombs are an underground ossuary holding the remains of millions of Parisians, arranged in former limestone quarry tunnels beneath the city. The visit is eerie, historic, and physically memorable: narrow passages, carved signs, stacked bones, and a very different view of Paris below street level.",
+  },
+  {
+    id: "paris-culture-eiffel-tower",
+    name: "Eiffel Tower",
+    coordinates: [48.8584, 2.2945],
+    description:
+      "The Eiffel Tower is Paris's defining landmark, built for the 1889 Exposition Universelle and still the city's most recognizable silhouette. Its iron structure, observation levels, engineering history, and night illumination make it a major cultural stop, not only a viewpoint.",
+    photo: photos.eiffel,
+  },
+  {
+    id: "paris-culture-versailles",
+    name: "Palace of Versailles",
+    coordinates: [48.8049, 2.1204],
+    description:
+      "The Palace of Versailles is the great royal estate of Louis XIV, with state apartments, the Hall of Mirrors, formal gardens, fountains, the Grand Trianon, Petit Trianon, and Marie-Antoinette's Hamlet. It belongs in Paris culture planning as the major palace day trip.",
+  },
+];
+
+const citywideHistoricCoreCulture: StopSeed[] = [
+  {
+    id: "paris-culture-core-notre-dame",
+    name: "Notre-Dame Cathedral",
+    coordinates: [48.853, 2.3499],
+    description:
+      "Notre-Dame Cathedral gives the historic core its Gothic centerpiece: towers, portals, rose windows, flying buttresses, and a restored interior shaped by centuries of worship and civic memory.",
+  },
+  {
+    id: "paris-culture-core-sainte-chapelle",
+    name: "Sainte-Chapelle",
+    coordinates: [48.8554, 2.345],
+    description:
+      "Sainte-Chapelle is the stained-glass jewel of the Ile de la Cite, built as a royal chapel and still astonishing for the height, color, and density of its windows.",
+  },
+  {
+    id: "paris-culture-core-shakespeare",
+    name: "Shakespeare and Company",
+    coordinates: [48.8526, 2.3471],
+    description:
+      "Shakespeare and Company is the Latin Quarter's famous English-language bookshop, known for its crowded rooms, reading culture, and position facing Notre-Dame from the Left Bank.",
+  },
+  {
+    id: "paris-culture-core-seine-bookstalls",
+    name: "Seine Bookstalls and Quays",
+    coordinates: [48.8527, 2.347],
+    description:
+      "The Seine bookstalls and quays turn the river into a cultural object: old green boxes, secondhand books, prints, posters, and views across the islands.",
+  },
+];
+
+const citywideSmallArtCulture: StopSeed[] = [
+  {
+    id: "paris-culture-small-point-ephemere",
+    name: "Point Ephemere",
+    coordinates: [48.8819, 2.3686],
+    description:
+      "Point Ephemere is a canal-side art and music space with exhibitions, studios, concerts, and terrace energy. It gives Paris culture a low-key, current edge outside the museum circuit.",
+  },
+  {
+    id: "paris-culture-small-galerie-martel",
+    name: "Galerie Martel",
+    coordinates: [48.8752, 2.3528],
+    description:
+      "Galerie Martel is a small 10th-arrondissement gallery focused on illustration, comics, drawing, painting, and graphic arts. It is a good low-key stop for seeing contemporary work at a more intimate scale.",
+  },
+  {
+    id: "paris-culture-small-delacroix",
+    name: "Musee national Eugene-Delacroix",
+    coordinates: [48.8541, 2.3356],
+    description:
+      "Musee national Eugene-Delacroix is an artist-house museum in the painter's former apartment and studio, with works, objects, and a small garden that make the visit feel personal rather than institutional.",
+  },
+  {
+    id: "paris-culture-small-monnaie",
+    name: "Monnaie de Paris",
+    coordinates: [48.8567, 2.3391],
+    description:
+      "Monnaie de Paris combines a working mint, exhibition spaces, metalwork history, and a monumental Seine-side building. It is useful for culture that feels craft-led rather than only painting-led.",
+  },
+];
+
+const citywideEiffelViews: StopSeed[] = [
+  {
+    id: "paris-views-trocadero",
+    name: "Trocadero Gardens",
+    coordinates: [48.8629, 2.2884],
+    description:
+      "Trocadero Gardens are the classic full-frontal Eiffel Tower viewpoint, with broad terraces, fountains, and the tower centered across the Seine.",
+    photo: photos.eiffel,
+  },
+  {
+    id: "paris-views-champ-mars",
+    name: "Champ de Mars",
+    coordinates: [48.8556, 2.2986],
+    description:
+      "Champ de Mars gives the tower a long green foreground, making it one of the easiest places for relaxed Eiffel Tower views from the 7th.",
+    photo: photos.eiffel,
+  },
+  {
+    id: "paris-views-bir-hakeim",
+    name: "Pont de Bir-Hakeim",
+    coordinates: [48.8554, 2.2876],
+    description:
+      "Pont de Bir-Hakeim frames the Eiffel Tower with bridge arches, Seine water, and metro structure, giving the view a more cinematic edge.",
+    photo: photos.seine,
+  },
+  {
+    id: "paris-views-rue-universite",
+    name: "Rue de l'Universite",
+    coordinates: [48.858, 2.2991],
+    description:
+      "Rue de l'Universite gives a street-level tower view with Paris stone facades in the foreground, useful when the view should feel more neighborhood than panorama.",
+    photo: photos.eiffel,
+  },
+  {
+    id: "paris-views-arc-triomphe",
+    name: "Arc de Triomphe Terrace",
+    coordinates: [48.8738, 2.295],
+    description:
+      "The Arc de Triomphe terrace gives one of the best elevated Eiffel Tower views, with the avenues of western Paris spreading out below.",
+    photo: photos.eiffel,
   },
 ];
 
@@ -1348,13 +1610,58 @@ export const parisCitywideGuides = [
     seoSlug: "best-culture",
     seoTitle: "Best Culture in Paris",
     seoDescription:
-      "Best culture in Paris for major museums, Gothic interiors, Marais houses, opera architecture, sculpture gardens, and ticketed historic sites.",
-    title: "Museum Weight and Smaller Rooms",
+      "Best culture in Paris for iconic museums, Gothic landmarks, the Eiffel Tower, opera architecture, sculpture gardens, catacombs, and Versailles.",
+    title: "Paris Icons and Museum Masterpieces",
     description:
-      "Paris culture is strongest when the heavyweight museums have room around them: Louvre or Orsay as anchors, then chapels, house museums, opera architecture, sculpture gardens, and darker underground history. Use this to build days with one big ticket and one smaller counterweight.",
+      "Paris culture is built from world-famous art, Gothic architecture, opera spectacle, sculpture gardens, underground history, and royal scale. Use this guide for the city's essential cultural places, from the Louvre and Orsay to Notre-Dame, the Eiffel Tower, and Versailles.",
     url: "https://www.google.com/maps/search/best+culture+paris",
     category: "Culture",
     stops: citywideCulture,
+    sources: parisCultureSources,
+  }),
+  guide({
+    id: "list-paris-citywide-notre-dame-seine-history",
+    slug: "paris-notre-dame-seine-historic-core",
+    seoSlug: "notre-dame-seine",
+    seoTitle: "Notre-Dame, the Seine, and Historic Paris",
+    seoDescription:
+      "Notre-Dame, Sainte-Chapelle, Shakespeare and Company, and the Seine bookstalls for a historic Paris culture route around the islands and Left Bank.",
+    title: "Notre-Dame, the Seine, and Historic Paris",
+    description:
+      "This guide centers the old heart of Paris: Notre-Dame, stained glass, river quays, bookstalls, and the literary Left Bank edge. It gives the Seine and the islands their own cultural presence instead of treating them as background scenery.",
+    url: "https://www.google.com/maps/search/notre+dame+seine+historic+paris",
+    category: "Culture",
+    stops: citywideHistoricCoreCulture,
+    sources: parisCultureSources,
+  }),
+  guide({
+    id: "list-paris-citywide-small-art-galleries",
+    slug: "paris-small-art-galleries",
+    seoSlug: "small-art-galleries",
+    seoTitle: "Small Art Galleries and Low-Key Culture in Paris",
+    seoDescription:
+      "Small art galleries and low-key culture in Paris, from Point Ephemere and Galerie Martel to artist-house museums and craft institutions.",
+    title: "Small Galleries and Low-Key Art Spaces",
+    description:
+      "Paris culture also lives in smaller art spaces, artist-house museums, graphic-art galleries, and craft-led institutions where the experience feels current, intimate, and easy to fold into a neighborhood walk.",
+    url: "https://www.google.com/maps/search/small+art+galleries+paris",
+    category: "Culture",
+    stops: citywideSmallArtCulture,
+    sources: parisCultureSources,
+  }),
+  guide({
+    id: "list-paris-best-eiffel-tower-views",
+    slug: "paris-best-eiffel-tower-views",
+    seoSlug: "best-eiffel-tower-views",
+    seoTitle: "Best Eiffel Tower Views in Paris",
+    seoDescription:
+      "Best Eiffel Tower views in Paris from Trocadero, Champ de Mars, Pont de Bir-Hakeim, Rue de l'Universite, and the Arc de Triomphe terrace.",
+    title: "Best Eiffel Tower Views",
+    description:
+      "The Eiffel Tower deserves more than one quick mention. This guide collects the strongest view angles across the city, from the classic Trocadero panorama to street-level, river, lawn, and rooftop-feeling perspectives.",
+    url: "https://www.google.com/maps/search/best+eiffel+tower+views+paris",
+    category: "Activities",
+    stops: citywideEiffelViews,
     sources: parisCultureSources,
   }),
   guide({
@@ -1498,14 +1805,14 @@ const parisNeighborhoodGuideSeeds: Record<ParisNeighborhood, Record<EditorialCat
       ],
     },
     Culture: {
-      title: "Royal Core and Museum Weight",
+      title: "Louvre, Palais Royal, and Gothic Glass",
       description:
-        "The 1st can overload a day if the Louvre is treated as the only point. This guide links the museum with Palais Royal, Orangerie, Sainte-Chapelle, and the surrounding gardens so the central core feels routeable.",
+        "The 1st holds some of Paris's most recognizable culture: the Louvre's palace galleries, Palais Royal's arcades, Monet's Water Lilies, and Sainte-Chapelle's stained glass. This guide keeps the royal core focused on the places themselves.",
       stops: [
-        nStop("first-culture-louvre", "Musee du Louvre", [48.8606, 2.3376], "The Louvre is the 1st Arrondissement heavyweight, but it works best as a bounded museum plan rather than a full-day endurance test. Choose a wing, book a time slot, and leave room for the garden or Palais Royal.", { photo: photos.culture }),
-        nStop("first-culture-palais-royal", "Palais Royal", [48.8637, 2.3377], "Palais Royal gives the Louvre area a quieter architectural and garden pause, with arcades, columns, and a clean route toward covered passages. It is useful when the district needs a reset without leaving the core.", { photo: photos.culture }),
-        nStop("first-culture-orangerie", "Musee de l'Orangerie", [48.8638, 2.3227], "Musee de l'Orangerie is the compact art stop that can balance or replace a larger museum block. Monet's rooms and the Tuileries setting make it a powerful but manageable cultural anchor.", { photo: photos.culture }),
-        nStop("first-culture-sainte-chapelle", "Sainte-Chapelle", [48.8554, 2.345], "Sainte-Chapelle adds a short, high-impact Gothic stop on the Ile de la Cite edge of the 1st. Timed entry helps it pair cleanly with the Louvre, Conciergerie, river walks, or a Marais continuation.", { photo: photos.culture }),
+        nStop("first-culture-louvre", "Musee du Louvre", [48.8606, 2.3376], "The Louvre is Paris's essential art museum and a former royal palace, home to the Mona Lisa, Winged Victory, Venus de Milo, Egyptian antiquities, French painting, and monumental galleries that make the architecture part of the visit."),
+        nStop("first-culture-palais-royal", "Palais Royal", [48.8637, 2.3377], "Palais Royal is a 17th-century palace complex with arcades, formal gardens, the Conseil d'Etat facade, and Daniel Buren's black-and-white columns in the courtyard. It is one of the cleanest architectural contrasts in central Paris."),
+        nStop("first-culture-orangerie", "Musee de l'Orangerie", [48.8638, 2.3227], "Musee de l'Orangerie is an art gallery dedicated to Impressionist and Post-Impressionist painting, best known for Monet's Water Lilies rooms. The collection also includes works by Renoir, Cezanne, Matisse, Modigliani, Picasso, and Soutine."),
+        nStop("first-culture-sainte-chapelle", "Sainte-Chapelle", [48.8554, 2.345], "Sainte-Chapelle is a royal Gothic chapel with one of Europe's great stained-glass interiors. Its upper chapel rises into walls of color, with biblical scenes wrapping the room in blue, red, and gold glass."),
       ],
     },
     Stay: {
@@ -1566,14 +1873,14 @@ const parisNeighborhoodGuideSeeds: Record<ParisNeighborhood, Record<EditorialCat
       ],
     },
     Culture: {
-      title: "Mansion Museums and Old-Quarter Memory",
+      title: "Marais Houses, Picasso, and Paris Memory",
       description:
-        "Le Marais culture is built from historic houses, civic memory, courtyards, and squares rather than one blockbuster. This guide keeps Picasso, Carnavalet, Victor Hugo, and Hotel de Sully tied to a walkable old-quarter day.",
+        "Le Marais culture is built from mansion museums, writer homes, civic history, courtyards, and Picasso's Paris collection. This guide keeps the old quarter's history tangible rather than abstract.",
       stops: [
-        nStop("marais-culture-picasso", "Musee Picasso Paris", [48.8599, 2.3623], "Inside Le Marais, Musee Picasso Paris adds a real museum block to a route that can otherwise lean too hard on shopping and falafel. The Hotel Sale setting and collection depth make it strong enough to anchor the neighborhood day.", { photo: photos.culture }),
-        nStop("marais-culture-carnavalet", "Musee Carnavalet", [48.8575, 2.3629], "Musee Carnavalet is the Paris-history anchor for Le Marais, with free permanent collections and a mansion setting that rewards a slower visit. Use it to add civic context before Place des Vosges or Rue des Rosiers.", { photo: photos.culture }),
-        nStop("marais-culture-victor-hugo", "Maison de Victor Hugo", [48.8549, 2.3661], "Maison de Victor Hugo turns Place des Vosges into more than a pretty square, giving the route literary rooms and domestic scale. It is best as a compact cultural add-on rather than a full museum day.", { photo: photos.culture }),
-        nStop("marais-culture-hotel-sully", "Hotel de Sully", [48.8547, 2.3642], "Hotel de Sully gives the Marais one of its best courtyard passages and a clean hinge toward Place des Vosges. Use it when the walk needs architecture and a quieter transition.", { photo: photos.culture }),
+        nStop("marais-culture-picasso", "Musee Picasso Paris", [48.8599, 2.3623], "Musee Picasso Paris fills the Hotel Sale with paintings, sculpture, drawings, ceramics, prints, notebooks, and archival material from Picasso's life and studio. The mansion setting makes the display feel intimate despite the depth of the collection."),
+        nStop("marais-culture-carnavalet", "Musee Carnavalet", [48.8575, 2.3629], "Musee Carnavalet is the museum of Paris history, set across historic Marais mansions. Its rooms move through the city's archaeology, Revolution, street signs, interiors, paintings, objects, and everyday civic memory."),
+        nStop("marais-culture-victor-hugo", "Maison de Victor Hugo", [48.8549, 2.3661], "Maison de Victor Hugo is the actual Place des Vosges apartment where the writer lived from 1832 to 1848. The museum uses rooms, drawings, manuscripts, furniture, and family material to show Hugo as a writer, public figure, and designer of his own interiors."),
+        nStop("marais-culture-hotel-sully", "Hotel de Sully", [48.8547, 2.3642], "Hotel de Sully is a 17th-century private mansion with sculpted facades, courtyard passages, and a garden connection toward Place des Vosges. It is one of the clearest examples of aristocratic Marais architecture."),
       ],
     },
     Stay: {
@@ -1634,14 +1941,14 @@ const parisNeighborhoodGuideSeeds: Record<ParisNeighborhood, Record<EditorialCat
       ],
     },
     Culture: {
-      title: "Abbey, Galleries, and Left Bank Rooms",
+      title: "Saint-Germain Abbey, Delacroix, and the Seine",
       description:
-        "Saint-Germain culture works at a smaller scale than the Louvre: church history, artist rooms, institutions, galleries, and the river. This guide keeps the neighborhood intellectual without making it feel like homework.",
+        "Saint-Germain culture moves through an ancient abbey, an artist's former home, the French mint, and the domed Institut de France. This guide keeps the Left Bank intellectual without making it vague.",
       stops: [
-        nStop("saint-germain-culture-eglise", "Eglise Saint-Germain-des-Pres", [48.8539, 2.3346], "Eglise Saint-Germain-des-Pres anchors the neighborhood with early-medieval depth and a direct link to the Left Bank's name. Use it as the compact cultural start before cafes or galleries.", { photo: photos.culture }),
-        nStop("saint-germain-culture-delacroix", "Musee national Eugene-Delacroix", [48.8541, 2.3356], "Musee national Eugene-Delacroix is a small artist-house museum that rewards a slower Saint-Germain day. It pairs naturally with the church, Rue de Furstenberg, and a cafe stop.", { photo: photos.culture }),
-        nStop("saint-germain-culture-monnaie", "Monnaie de Paris", [48.8567, 2.3391], "Monnaie de Paris gives the Seine edge an institution with exhibitions, craft history, and a strong courtyard setting. Use it when the neighborhood needs a cultural stop beyond literary cafes.", { photo: photos.culture }),
-        nStop("saint-germain-culture-institut", "Institut de France", [48.8572, 2.3376], "Institut de France is a landmark exterior and riverfront orientation point across from the Louvre. It works as a cultural marker on a gallery-and-quay walk rather than a long visit.", { photo: photos.culture }),
+        nStop("saint-germain-culture-eglise", "Eglise Saint-Germain-des-Pres", [48.8539, 2.3346], "Eglise Saint-Germain-des-Pres is one of Paris's oldest churches, with Romanesque foundations and Gothic 12th-century architecture in its choir and early medieval layers. The painted interior, columns, and abbey history make the neighborhood's name visible."),
+        nStop("saint-germain-culture-delacroix", "Musee national Eugene-Delacroix", [48.8541, 2.3356], "Musee national Eugene-Delacroix occupies the painter's final apartment and studio, with works, objects, letters, and a quiet garden. The scale is personal, focused on Delacroix's late life and artistic circle."),
+        nStop("saint-germain-culture-monnaie", "Monnaie de Paris", [48.8567, 2.3391], "Monnaie de Paris is the historic Paris mint, with exhibitions, craft displays, metalwork history, and a monumental 18th-century building on the Seine. It gives the Left Bank a culture stop rooted in making, materials, and institutional history."),
+        nStop("saint-germain-culture-institut", "Institut de France", [48.8572, 2.3376], "Institut de France is the domed home of France's academies, including the Academie francaise, facing the Louvre across the Seine. Its facade, cupola, and riverside presence make it one of the Left Bank's major intellectual landmarks."),
       ],
     },
     Stay: {
@@ -1698,18 +2005,18 @@ const parisNeighborhoodGuideSeeds: Record<ParisNeighborhood, Record<EditorialCat
         nStop("latin-nature-luxembourg", "Jardin du Luxembourg", [48.8462, 2.3372], "Jardin du Luxembourg is the western green anchor for Latin Quarter days, especially before or after the Pantheon and Sorbonne. Chairs, fountains, and paths make it the easiest long pause.", { photo: photos.nature }),
         nStop("latin-nature-jardin-plantes", "Jardin des Plantes", [48.8439, 2.3599], "Jardin des Plantes stretches the Latin Quarter east toward natural history, garden paths, and family-friendly museum time. It is best when the day needs greenery and a quieter rhythm.", { photo: photos.nature }),
         nStop("latin-nature-arenes", "Arenes de Lutece", [48.8451, 2.3522], "Arenes de Lutece gives the neighborhood a Roman open-air pocket tucked behind ordinary streets. Use it as a short historical and green stop between Mouffetard and Jardin des Plantes.", { photo: photos.nature }),
-        nStop("latin-nature-seine-bookstalls", "Seine Bookstalls and Quays", [48.8527, 2.347], "The Seine bookstalls and quays are the Latin Quarter's river reset, linking Shakespeare and Company, Notre-Dame views, and slow browsing. It is the easiest way to add air to a bookish route.", { photo: photos.seine }),
+        nStop("latin-nature-seine-bookstalls", "Seine Bookstalls and Quays", [48.8527, 2.347], "The Seine bookstalls and quays are the Latin Quarter's river reset, linking Shakespeare and Company, Notre-Dame views, and slow browsing. It is the easiest way to add air to a bookish route."),
       ],
     },
     Culture: {
-      title: "Books, Domes, and Medieval Rooms",
+      title: "Pantheon, Cluny, Books, and the Sorbonne",
       description:
-        "The Latin Quarter deserves its own cultural map because university streets, bookshops, medieval rooms, civic monuments, and gardens sit close enough to walk. Use this for history without turning the day into lectures and plaques.",
+        "The Latin Quarter culture guide is about civic memory, medieval art, book culture, and the Sorbonne's academic presence. This route keeps the area from becoming only cafes and nightlife.",
       stops: [
-        nStop("latin-culture-pantheon", "Pantheon", [48.8462, 2.346], "The Pantheon is the Latin Quarter's civic-history anchor, connecting republican memory, architecture, and the Sorbonne-side street grid. It is best paired with Luxembourg or Cluny rather than rushed as a dome photo.", { photo: photos.culture }),
-        nStop("latin-culture-cluny", "Musee de Cluny", [48.8506, 2.3431], "Musee de Cluny is the medieval counterweight to the big art museums, with tapestries, Roman bath remains, and a scale that suits a slower Left Bank day. It is useful when the group needs culture without Louvre sprawl.", { photo: photos.culture }),
-        nStop("latin-culture-shakespeare", "Shakespeare and Company", [48.8526, 2.3471], "Shakespeare and Company is touristy for a reason, but it still gives the Latin Quarter its English-language literary stop near Notre-Dame and the Seine. Save it for a short browse and river walk.", { photo: photos.culture }),
-        nStop("latin-culture-sorbonne", "Place de la Sorbonne", [48.8487, 2.3437], "Place de la Sorbonne turns the area's academic identity into a simple walking anchor. It works as connective tissue between the Pantheon, cafes, bookshops, and Luxembourg.", { photo: photos.culture }),
+        nStop("latin-culture-pantheon", "Pantheon", [48.8462, 2.346], "The Pantheon is a neoclassical monument with a vast dome, frescoed interior, Foucault pendulum, and crypts for major French figures including Voltaire, Rousseau, Victor Hugo, Emile Zola, Marie Curie, and Josephine Baker."),
+        nStop("latin-culture-cluny", "Musee de Cluny", [48.8506, 2.3431], "Musee de Cluny is the museum of medieval art, known for the Lady and the Unicorn tapestries, medieval jewellery, sculptures, stained glass, carved ivories, manuscripts, and the remains of Roman baths beneath the building."),
+        nStop("latin-culture-shakespeare", "Shakespeare and Company", [48.8526, 2.3471], "Shakespeare and Company is an English-language bookshop and literary landmark facing Notre-Dame, with packed shelves, reading rooms, author events, and a long association with writers passing through Paris."),
+        nStop("latin-culture-sorbonne", "Sorbonne Chapel and Place de la Sorbonne", [48.8487, 2.3437], "Place de la Sorbonne opens toward the Sorbonne's historic academic complex and the Chapelle Sainte-Ursule de la Sorbonne, the domed 17th-century chapel associated with Cardinal Richelieu. The chapel is a landmark of the university quarter even when interior access is limited."),
       ],
     },
     Stay: {
@@ -1746,6 +2053,7 @@ const parisNeighborhoodGuideSeeds: Record<ParisNeighborhood, Record<EditorialCat
         nStop("montmartre-food-hardware", "Hardware Societe", [48.886, 2.3438], "Hardware Societe is the brunch-and-coffee stop for a Sacre-Coeur morning, with Australian cafe energy, plated breakfasts, and a location just below the basilica. Go early or treat the wait as part of a slower hill start.", { price: "$$", priceSource: "Google Maps / local dining guides" }),
         nStop("montmartre-food-breizh-cafe", "Breizh Cafe Abbesses", [48.8846, 2.3377], "Breizh Cafe Abbesses adds the crepe piece Montmartre should have, with Breton galettes, cider, and a useful Abbesses base below the summit. It is the casual, lighter meal that can sit between a hill walk and Pigalle or Lamarck-Caulaincourt.", { price: "$$", priceSource: "Official restaurant site / Google Maps" }),
         nStop("montmartre-food-poulbot", "Le Poulbot", [48.8866, 2.3404], "Le Poulbot gives the central hill a compact French meal close to Place du Tertre while still feeling more deliberate than the busiest tourist-strip terraces. It works for a warm bistro dinner after artist lanes, the basilica, or a Montmartre museum stop.", { price: "$$", priceSource: "Google Maps / local dining guides" }),
+        nStop("montmartre-food-moulin-galette", "Moulin de la Galette", [48.8873, 2.3367], "Moulin de la Galette works as both food and history: a restaurant beside one of Montmartre's surviving windmills, tied to the old dance-hall name painted by Renoir, Van Gogh, and other artists. It suits a meal where the hill's story should be part of the table.", { price: "$$$", priceSource: "Official restaurant site / Google Maps" }),
       ],
     },
     Nightlife: {
@@ -1771,14 +2079,14 @@ const parisNeighborhoodGuideSeeds: Record<ParisNeighborhood, Record<EditorialCat
       ],
     },
     Culture: {
-      title: "Hilltop Views Without the Rush",
+      title: "Montmartre Basilica, Artists, and Old Windmills",
       description:
-        "Montmartre needs a guide because the famous stops can overwhelm the village texture. This route keeps Sacre-Coeur, artist history, old mills, and quieter lanes together without turning the hill into a photo queue.",
+        "Montmartre culture is about the basilica, artist studios, village squares, old windmills, and the hill's role in Paris art history. This guide keeps the famous stops focused on what they are, not just how busy they get.",
       stops: [
-        nStop("montmartre-culture-sacre-coeur", "Basilique du Sacre-Coeur", [48.8867, 2.3431], "Sacre-Coeur is the hilltop anchor, but the best visit treats the basilica, dome, steps, and view as one timed block. Go early or late, then leave room for side streets.", { photo: photos.montmartre }),
-        nStop("montmartre-culture-musee-montmartre", "Musee de Montmartre", [48.8872, 2.3408], "Musee de Montmartre gives the hill context beyond the basilica, with artist history, gardens, and a calmer pace near the busiest lanes. It is useful when the route needs texture instead of another viewpoint.", { photo: photos.montmartre }),
-        nStop("montmartre-culture-place-tertre", "Place du Tertre", [48.8865, 2.3407], "Place du Tertre is crowded and commercial, but it still explains the neighborhood's artist-brand mythology. Pass through briefly, then use it as a hinge toward quieter lanes.", { photo: photos.montmartre }),
-        nStop("montmartre-culture-moulin-galette", "Moulin de la Galette", [48.8873, 2.3367], "Moulin de la Galette helps turn Montmartre from postcard into neighborhood history: mills, artists, and winding streets. Use it as a walking marker between Lamarck-Caulaincourt, Abbesses, and the summit.", { photo: photos.montmartre }),
+        nStop("montmartre-culture-sacre-coeur", "Basilique du Sacre-Coeur", [48.8867, 2.3431], "Basilique du Sacre-Coeur is Montmartre's white-domed hilltop church, with mosaics, crypt spaces, a dome climb, and one of the city's most recognizable silhouettes. Its position makes the basilica both a religious site and a Paris viewpoint."),
+        nStop("montmartre-culture-musee-montmartre", "Musee de Montmartre", [48.8872, 2.3408], "Musee de Montmartre occupies 17th-century houses and gardens where artists including Renoir once worked. The museum covers Montmartre's studios, cabarets, posters, village life, and bohemian art history."),
+        nStop("montmartre-culture-place-tertre", "Place du Tertre", [48.8865, 2.3407], "Place du Tertre is Montmartre's artist square, lined with portrait painters, cafes, and narrow streets that keep the neighborhood's open-air studio identity visible. It belongs because the square shows how art became part of the hill's public life."),
+        nStop("montmartre-culture-moulin-galette", "Moulin de la Galette", [48.8873, 2.3367], "Moulin de la Galette is the historic Montmartre windmill and restaurant site linked to the old dance hall painted by Renoir and other artists. It makes the hill's mill, restaurant, and art-history layers clear in one place."),
       ],
     },
     Stay: {
@@ -1839,14 +2147,14 @@ const parisNeighborhoodGuideSeeds: Record<ParisNeighborhood, Record<EditorialCat
       ],
     },
     Culture: {
-      title: "Art Spaces, Courtyards, and Republique Edges",
+      title: "Canal Art Spaces and Low-Key Galleries",
       description:
-        "Canal Saint-Martin culture is informal: music rooms, event spaces, old hospital courtyards, and civic squares. This guide keeps the neighborhood's creative stops tied to the water and evening route.",
+        "Canal Saint-Martin culture works best when it leans current and low-key: art spaces, graphic galleries, music venues, and civic squares close to the canal and Republique edge.",
       stops: [
-        nStop("canal-culture-point-ephemere", "Point Ephemere", [48.8819, 2.3686], "Point Ephemere is the canal's art-and-music anchor, with exhibitions, concerts, and terrace energy beside the water. Check the program before making it the center of the route.", { photo: photos.canal }),
-        nStop("canal-culture-comptoir-general", "Le Comptoir General", [48.8727, 2.3638], "Le Comptoir General works as a cultural room as much as a bar, with decor, events, and an atmospheric courtyard feel. Use it for a night that wants setting and social energy.", { photo: photos.nightlife }),
-        nStop("canal-culture-hopital-saint-louis", "Hopital Saint-Louis Courtyard", [48.8738, 2.3687], "The Hopital Saint-Louis courtyard is a historic architectural pause close to the canal, useful for travelers who want a quieter layer of the neighborhood. Respect access rules and keep the stop brief.", { photo: photos.culture }),
-        nStop("canal-culture-republique", "Place de la Republique", [48.8675, 2.363], "Place de la Republique gives the canal route civic scale and a clear southern meeting point. It works as orientation before moving north toward the locks and bars.", { photo: photos.culture }),
+        nStop("canal-culture-point-ephemere", "Point Ephemere", [48.8819, 2.3686], "Point Ephemere is the canal's art-and-music anchor, with exhibitions, studios, concerts, workshops, and terrace energy beside the water. It is the clearest cultural stop for a creative Canal Saint-Martin night or afternoon."),
+        nStop("canal-culture-comptoir-general", "Le Comptoir General", [48.8727, 2.3638], "Le Comptoir General works as a cultural venue as much as a bar, with layered decor, events, a leafy terrace, and a slightly theatrical canal-side atmosphere. It gives the neighborhood a social, design-heavy stop."),
+        nStop("canal-culture-galerie-martel", "Galerie Martel", [48.8752, 2.3528], "Galerie Martel is a small gallery devoted to illustration, comics, drawing, painting, and graphic arts. It is a good low-key art stop near the 10th, with exhibitions that feel more niche than institutional."),
+        nStop("canal-culture-republique", "Place de la Republique", [48.8675, 2.363], "Place de la Republique is the large civic square south of the canal, centered on the Monument a la Republique. It works culturally as a public gathering space, protest site, meeting point, and piece of republican symbolism."),
       ],
     },
     Stay: {
@@ -1903,19 +2211,19 @@ const parisNeighborhoodGuideSeeds: Record<ParisNeighborhood, Record<EditorialCat
       stops: [
         nStop("seventh-nature-champ-mars", "Champ de Mars", [48.8556, 2.2986], "Champ de Mars is the Eiffel-side lawn and view corridor, useful when the tower needs space around it. Use it early, late, or as a picnic pause rather than a midday crowd trap.", { photo: photos.eiffel }),
         nStop("seventh-nature-invalides", "Esplanade des Invalides", [48.8606, 2.313], "Esplanade des Invalides gives the 7th a broad green axis between the river and the dome. It works as a walking reset between Orsay, Rodin, and Invalides.", { photo: photos.nature }),
-        nStop("seventh-nature-rodin-garden", "Musee Rodin Sculpture Garden", [48.8554, 2.3158], "The Musee Rodin sculpture garden is the district's best art-and-air combination, with outdoor works and calmer pacing than larger museums. Use it when culture needs breathing room.", { photo: photos.nature }),
+        nStop("seventh-nature-rodin-garden", "Musee Rodin Sculpture Garden", [48.8554, 2.3158], "The Musee Rodin sculpture garden is the district's best art-and-air combination, with outdoor works and a slower pace than the larger museums. It keeps sculpture, garden time, and 7th-arrondissement calm in the same stop."),
         nStop("seventh-nature-solferino", "Port de Solferino Seine Walk", [48.861, 2.315], "Port de Solferino gives the 7th a river route between Orsay, Invalides, and Eiffel-side bridges. It is the easiest way to keep the day scenic without adding another ticket.", { photo: photos.seine }),
       ],
     },
     Culture: {
-      title: "Eiffel-Side Culture With Context",
+      title: "Eiffel Tower, Rodin, Orsay, and Invalides",
       description:
-        "The 7th needs a guide because its icons can become isolated errands. This route connects the Eiffel Tower with Orsay, Rodin, Quai Branly, Invalides, gardens, and river walks so the district works as a full cultural day.",
+        "The 7th holds some of Paris's clearest cultural landmarks: the Eiffel Tower, Orsay's railway-station museum, Rodin's sculpture rooms and garden, and the Invalides dome. This guide describes the places directly rather than treating them as logistics.",
       stops: [
-        nStop("seventh-culture-eiffel", "Eiffel Tower", [48.8584, 2.2945], "The Eiffel Tower is the unavoidable 7th-arrondissement anchor, but it works best when the ticket, view, and surrounding walk are planned together. Pair it with the river or Champ de Mars.", { photo: photos.eiffel }),
-        nStop("seventh-culture-orsay", "Musee d'Orsay", [48.8599, 2.3266], "Musee d'Orsay gives the 7th a museum anchor with enough scale for a half day but less sprawl than the Louvre. It pairs naturally with the Seine, Rodin, and Saint-Germain.", { photo: photos.seine }),
-        nStop("seventh-culture-rodin", "Musee Rodin", [48.8554, 2.3158], "Musee Rodin is the district's garden-and-sculpture pause, a calmer stop that can soften a monument-heavy day. Use it between Orsay, Invalides, and Eiffel-side walks.", { photo: photos.nature }),
-        nStop("seventh-culture-invalides", "Les Invalides", [48.8566, 2.3126], "Les Invalides anchors the 7th with military history, grand architecture, and Napoleon's tomb. It works well as the middle of a westward day between Rodin, the river, and the Eiffel Tower.", { photo: photos.culture }),
+        nStop("seventh-culture-eiffel", "Eiffel Tower", [48.8584, 2.2945], "The Eiffel Tower is Paris's defining landmark, built for the 1889 Exposition Universelle. Its iron lattice structure, observation levels, engineering history, restaurants, and night illumination make it a cultural monument as much as a viewpoint.", { photo: photos.eiffel }),
+        nStop("seventh-culture-orsay", "Musee d'Orsay", [48.8599, 2.3266], "Musee d'Orsay is a former railway station turned art museum, holding the world's largest collection of Impressionist and Post-Impressionist masterpieces. Monet, Renoir, Degas, Manet, Van Gogh, sculpture, and decorative arts fill the great hall and upper galleries."),
+        nStop("seventh-culture-rodin", "Musee Rodin", [48.8554, 2.3158], "Musee Rodin presents Rodin's sculpture inside the Hotel Biron and its garden, including The Thinker, The Kiss, The Gates of Hell, studies, plasters, and outdoor bronzes. The museum shows both finished icons and the making process behind them."),
+        nStop("seventh-culture-invalides", "Les Invalides", [48.8566, 2.3126], "Les Invalides is a vast 17th-century complex built for veterans, now housing military museums, courtyards, the gilded Dome Church, and Napoleon's tomb. Its scale makes it one of the major architectural anchors of the 7th."),
       ],
     },
     Stay: {
