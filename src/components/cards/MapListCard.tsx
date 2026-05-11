@@ -7,6 +7,7 @@ import { useRouter } from "next/navigation";
 import { createPortal } from "react-dom";
 import { CalendarCheck, ChevronDown, ExternalLink, Navigation, Plus, ThumbsUp, X } from "lucide-react";
 
+import { getPoiAttributeTags } from "@/lib/poi-tags";
 import { getCreatorHref, getGuideHref } from "@/lib/routes";
 import { resolveStopHours } from "@/lib/seasonal-hours";
 import { formatNumber } from "@/lib/utils";
@@ -217,21 +218,6 @@ function getAlphaMarker(index: number) {
 
 function getPoiPhoto(photo?: string) {
   return photo?.trim() || null;
-}
-
-function formatAttributeTagLabel(tag: string) {
-  return tag
-    .replace(/_(food|nightlife|drinks)$/g, "")
-    .replace(/_/g, " ")
-    .replace(/\b\w/g, (char) => char.toUpperCase());
-}
-
-function getPoiAttributeTags(stop: MapList["stops"][number]) {
-  return [...(stop.attributeTags ?? []), ...(stop.tags ?? [])]
-    .filter(Boolean)
-    .filter((tag, index, all) => all.findIndex((item) => item.toLowerCase() === tag.toLowerCase()) === index)
-    .slice(0, 4)
-    .map(formatAttributeTagLabel);
 }
 
 type StayBookingPlatform = "booking" | "hostelworld";

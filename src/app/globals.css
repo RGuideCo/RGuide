@@ -645,16 +645,29 @@ textarea:focus-visible {
   margin-top: 0.45rem;
   display: flex;
   flex-wrap: wrap;
-  gap: 0.35rem;
+  column-gap: 0.45rem;
+  row-gap: 0.28rem;
 }
 
 .expanded-poi-tags span {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
   color: #0f172a;
   font-size: 0.68rem;
   font-weight: 800;
   letter-spacing: 0.05em;
   line-height: 1;
   text-transform: uppercase;
+}
+
+.expanded-poi-tags span:not(:last-child)::after {
+  content: "";
+  display: inline-block;
+  width: 1px;
+  height: 0.72em;
+  background: currentColor;
+  opacity: 0.24;
 }
 
 @media (max-width: 1023px) {
