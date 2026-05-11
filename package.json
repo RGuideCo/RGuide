@@ -19,7 +19,8 @@
     "verify:normalized-backfill": "node scripts/verify-normalized-backfill.mjs",
     "export:weekly-events": "node scripts/export-weekly-events-sql.mjs",
     "push:weekly-events": "node scripts/push-weekly-events.mjs",
-    "push:destination-boundaries": "node scripts/backfill-destination-boundaries.mjs"
+    "push:destination-boundaries": "node scripts/backfill-destination-boundaries.mjs",
+    "sync:editorial-poi-photos": "node scripts/sync-editorial-poi-photos.mjs"
   },
   "dependencies": {
     "@ffmpeg-installer/ffmpeg": "^1.1.0",

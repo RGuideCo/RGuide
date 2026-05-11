@@ -7,6 +7,7 @@ import pg from "pg";
 
 import {
   addPoiReferencesToGuides,
+  collectEditorialPois,
   describeEditorialGuideFilters,
   filterEditorialGuides,
   hasEditorialGuideFilters,
@@ -819,6 +820,41 @@ async function refreshEntryRenderCache(client, entryId) {
   );
 }
 
+async function upsertEditorialPois(client, pois, stats) {
+  for (const poi of pois) {
+    await client.query(
+      `insert into public.editorial_pois (
+         id, name, country, city, neighborhood, coordinates, photo,
+         guide_ids, guide_slugs, categories
+       )
+       values ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10)
+       on conflict (id) do update set
+         name = excluded.name,
+         country = excluded.country,
+         city = excluded.city,
+         neighborhood = excluded.neighborhood,
+         coordinates = excluded.coordinates,
+         photo = coalesce(excluded.photo, public.editorial_pois.photo),
+         guide_ids = excluded.guide_ids,
+         guide_slugs = excluded.guide_slugs,
+         categories = excluded.categories`,
+      [
+        poi.id,
+        poi.name,
+        poi.country ?? null,
+        poi.city ?? null,
+        poi.neighborhood ?? null,
+        toJson(normalizeCoordinates(poi.coordinates)),
+        poi.photo ?? null,
+        poi.guideIds ?? [],
+        poi.guideSlugs ?? [],
+        poi.categories ?? [],
+      ],
+    );
+    stats.editorialPois += 1;
+  }
+}
+
 async function backfillGuide(client, maps, list, stats) {
   const cityId = resolveCityId(maps, list.location?.city, list.location?.country);
   const countryId = list.location?.country ? maps.countryByName.get(normalizeName(list.location.country)) ?? null : null;
@@ -858,12 +894,13 @@ async function main() {
     connectionString: databaseUrl,
     ssl: databaseUrl.includes("localhost") || databaseUrl.includes("127.0.0.1") ? false : { rejectUnauthorized: false },
   });
-  const stats = { entries: 0, entryStops: 0, venues: 0, sources: 0 };
+  const stats = { entries: 0, entryStops: 0, venues: 0, sources: 0, editorialPois: 0 };
 
   await client.connect();
   try {
     await client.query("begin");
     const maps = await loadDestinationMaps(client);
+    await upsertEditorialPois(client, collectEditorialPois(selectedGuides), stats);
     for (const list of selectedGuides) {
       await backfillGuide(client, maps, list, stats);
     }

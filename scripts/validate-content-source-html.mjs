@@ -85,6 +85,8 @@ function validateSourceArchitecture() {
   const appStore = read("src/store/app-store.ts");
   const proxy = read("src/proxy.ts");
   const destinationDescriptions = read("src/lib/destination-descriptions.ts");
+  const normalizedEditorialPush = read("scripts/backfill-normalized-editorial-guides.mjs");
+  const poiPhotoSync = read("scripts/sync-editorial-poi-photos.mjs");
 
   assert(!homeServerContent.includes("mapLists"), "HomeServerContent must not import or read hardcoded mapLists.");
   assert(homePage.includes("getServerEditorialGuides"), "Homepage must load editorial guides on the server.");
@@ -113,6 +115,17 @@ function validateSourceArchitecture() {
   assert(
     destinationDescriptions.includes("destination_descriptions_v2"),
     "Destination description loader must prefer normalized destination descriptions.",
+  );
+  assert(
+    normalizedEditorialPush.includes("collectEditorialPois") &&
+      normalizedEditorialPush.includes("upsertEditorialPois"),
+    "Normalized guide pushes must also sync canonical editorial_pois rows.",
+  );
+  assert(
+    poiPhotoSync.includes("drift") &&
+      poiPhotoSync.includes("entry_stops") &&
+      poiPhotoSync.includes("entry_render_cache"),
+    "Editorial POI photo sync must detect drift and refresh normalized stops/render cache.",
   );
 }
 
