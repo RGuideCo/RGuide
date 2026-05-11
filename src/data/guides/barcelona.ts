@@ -3418,7 +3418,7 @@ export const barcelonaCoreGuides = [
           "sat": "24 hours",
           "sun": "24 hours"
         },
-        "photo": "https://www.chicandbasic.com/content/thumbs/640_/content/imgsxml/galerias/panel_herohotel/1/big--mg-8656-born-2048x763174.jpg"
+        "photo": "https://www.chicandbasic.com/data/webp/cbborn-zonacomun-beyourself3-baja232.webp"
       },
       {
         "id": "born-hostal-orleans",
@@ -3926,7 +3926,7 @@ export const barcelonaCoreGuides = [
           "sat": "24 hours",
           "sun": "24 hours"
         },
-        "photo": "https://www.chicandbasic.com/content/thumbs/640_/content/imgsxml/galerias/panel_herohotel/1/big--mg-8656-born-2048x763174.jpg"
+        "photo": "https://www.chicandbasic.com/data/webp/cbborn-zonacomun-beyourself3-baja232.webp"
       },
       {
         "id": "barcelona-hotel-shortlist-almanac",
