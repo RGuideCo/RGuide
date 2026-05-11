@@ -2544,7 +2544,7 @@ export const barcelonaCoreGuides = [
           "sat": "10:00 AM-7:00 PM",
           "sun": "10:00 AM-7:00 PM"
         },
-        "photo": "https://upload.wikimedia.org/wikipedia/commons/c/ca/Temple_August_Barcelona_20130905_3.JPG"
+        "photo": "https://irbarcelona.org/wp-content/uploads/2013/06/columnas-temploaugusto.jpg"
       },
       {
         "id": "gothic-placa-sant-felip-neri",
@@ -2646,7 +2646,7 @@ export const barcelonaCoreGuides = [
           "sat": "9:00 AM-9:00 PM",
           "sun": "9:00 AM-8:00 PM"
         },
-        "photo": "https://commons.wikimedia.org/wiki/Special:FilePath/Palau%20Berenguer%20d%27Aguilar.jpg"
+        "photo": "https://www.barcelonaturisme.com/files/5531-4970-imagenCAT/museu_picasso_barcelona_c1.jpg"
       },
       {
         "id": "born-santa-maria-del-mar",
@@ -2665,7 +2665,7 @@ export const barcelonaCoreGuides = [
           "sat": "9:00 AM-8:00 PM",
           "sun": "9:00 AM-8:00 PM"
         },
-        "photo": "https://upload.wikimedia.org/wikipedia/commons/4/4c/Santa_Maria_del_Mar%2C_Barcelona_02.jpg"
+        "photo": "https://www.barcelonaturisme.com/files/5445-7517-Imagen/santa-maria-mar-barcelona-pf-c1.jpg"
       },
       {
         "id": "born-ccm",
@@ -2684,7 +2684,7 @@ export const barcelonaCoreGuides = [
           "sat": "10:00 AM-7:00 PM",
           "sun": "10:00 AM-7:00 PM"
         },
-        "photo": "https://upload.wikimedia.org/wikipedia/commons/7/71/El_Born_Centre_de_Cultura_i_Mem%C3%B2ria_%2832715417280%29.jpg"
+        "photo": "https://www.barcelona-metropolitan.com/downloads/37961/download/el-born-centre-de-cultura-i-memoria-photo-by-Vicente-Zambrano-Gonz%C3%A1lez-courtesy-of-Ajuntament-de-Barcelona-%28CC-BY-NC-ND-4.0%29.jpg?cb=0747d8202a148486c74fbadacb5ddad5&w=1200"
       },
       {
         "id": "born-palau-musica",
@@ -2703,7 +2703,7 @@ export const barcelonaCoreGuides = [
           "sat": "9:00 AM-9:00 PM",
           "sun": "9:00 AM-3:30 PM"
         },
-        "photo": "https://upload.wikimedia.org/wikipedia/commons/7/77/Palau_de_la_M%C3%BAsica_Catalana-Palace_of_Catalan_Music_%28Image_2%29.jpg"
+        "photo": "https://www.barcelonaturisme.com/files/5445-7519-Imagen/Palau_Musica_Catalana_Transparent_c1.jpg"
       },
       {
         "id": "born-moco-museum",
@@ -2786,7 +2786,7 @@ export const barcelonaCoreGuides = [
           "sat": "9:00 AM-8:00 PM",
           "sun": "9:00 AM-8:00 PM"
         },
-        "photo": "https://upload.wikimedia.org/wikipedia/commons/7/74/Sagrada_Familia_March_2015-10a.jpg"
+        "photo": "https://www.barcelonaturisme.com/files/5445-18893-Imagen/Sagrada_Familia_Unesco_Transparent_c1.jpg"
       },
       {
         "id": "eixample-casa-batllo",
@@ -2843,7 +2843,7 @@ export const barcelonaCoreGuides = [
           "sat": "10:00 AM-7:00 PM",
           "sun": "10:00 AM-7:00 PM"
         },
-        "photo": "https://upload.wikimedia.org/wikipedia/commons/d/d0/Fundaci%C3%B3_Antoni_T%C3%A0pies%2C_Barcelona_03.jpg"
+        "photo": "https://www.barcelonaturisme.com/files/5531-4957-imagenCAT/Fundacio_Tapies_2023_c2.jpg"
       },
       {
         "id": "eixample-casa-amatller",
@@ -2862,7 +2862,7 @@ export const barcelonaCoreGuides = [
           "sat": "10:00 AM-7:00 PM",
           "sun": "10:00 AM-7:00 PM"
         },
-        "photo": "https://upload.wikimedia.org/wikipedia/commons/3/3f/Barcelona_-_Casa_Amatller_1.jpg"
+        "photo": "https://www.barcelonaturisme.com/files/5445-7539-Imagen/casa-ametller-eixample-barcelona-pf-c1.jpg"
       }
     ],
     "sources": [
@@ -2926,7 +2926,7 @@ export const barcelonaCoreGuides = [
           "sat": "9:30 AM-7:30 PM",
           "sun": "9:30 AM-7:30 PM"
         },
-        "photo": "https://upload.wikimedia.org/wikipedia/commons/4/4d/Park_G%C3%BCell_01.jpg"
+        "photo": "https://parkguell.barcelona/sites/default/files/2023-02/01_Benvinguts_al_Parc_Guell_v2_2.jpg"
       },
       {
         "id": "gracia-casa-vicens",
@@ -2964,7 +2964,7 @@ export const barcelonaCoreGuides = [
           "sat": "Showtimes vary",
           "sun": "Showtimes vary"
         },
-        "photo": "https://barcelona.cines-verdi.com/img/cinema/logo.png"
+        "photo": "https://barcelona.cines-verdi.com/storage/app/media/salas/sala1.jpg"
       },
       {
         "id": "gracia-placa-del-sol",
@@ -3066,7 +3066,7 @@ export const barcelonaCoreGuides = [
           "sat": "10:00 AM-8:00 PM",
           "sun": "10:00 AM-3:00 PM"
         },
-        "photo": "https://upload.wikimedia.org/wikipedia/commons/a/a2/Museu_Nacional_d%27Art_de_Catalunya_%28MNAC%29_National_Art_Museum_of_Catalonia.jpg"
+        "photo": "https://www.barcelonaturisme.com/files/5531-4863-imagenCAT/Museu_Art_Nacional_Catalunya_Barcelona_c1.jpg"
       },
       {
         "id": "poblesec-fundacio-joan-miro",
@@ -3085,7 +3085,7 @@ export const barcelonaCoreGuides = [
           "sat": "10:00 AM-7:00 PM",
           "sun": "10:00 AM-7:00 PM"
         },
-        "photo": "https://upload.wikimedia.org/wikipedia/commons/9/9d/Fundaci%C3%B3_Mir%C3%B3.JPG"
+        "photo": "https://www.barcelonaturisme.com/files/5531-4959-imagenCAT/tickets-for-fundacio-miro-museum-barcelona-c.jpg"
       },
       {
         "id": "poblesec-caixaforum",
@@ -3104,7 +3104,7 @@ export const barcelonaCoreGuides = [
           "sat": "10:00 AM-7:00 PM",
           "sun": "10:00 AM-7:00 PM"
         },
-        "photo": "https://upload.wikimedia.org/wikipedia/commons/f/f2/CaixaForum_Art_Gallery%2C_Barcelona%2C_Catalonia%2C_Spain_%28Ank_Kumar%2C_Infosys_Limited%29_03.jpg"
+        "photo": "https://www.barcelonaturisme.com/files/5531-4951-imagenCAT/tickets-for-caixa-forum-barcelona-T24c.jpg"
       },
       {
         "id": "poblesec-montjuic-castle",
@@ -3123,7 +3123,7 @@ export const barcelonaCoreGuides = [
           "sat": "9:00 AM-8:00 PM",
           "sun": "9:00 AM-8:00 PM"
         },
-        "photo": "https://upload.wikimedia.org/wikipedia/commons/d/de/%CE%9A%CE%AC%CF%83%CF%84%CF%81%CE%BF_%CE%9C%CE%BF%CE%BD%CE%B6%CE%BF%CF%85%CE%AF%CE%BA_3231_-_3233.jpg"
+        "photo": "https://www.barcelonaturisme.com/files/5445-7616-Imagen/castillo-montjuic-barcelona-pf-c1.jpg"
       },
       {
         "id": "poblesec-poble-espanyol",
@@ -3282,7 +3282,7 @@ export const barcelonaCoreGuides = [
           "sat": "24 hours",
           "sun": "24 hours"
         },
-        "photo": "https://upload.wikimedia.org/wikipedia/commons/c/c2/084_Casa_Manuel_Bargu%C3%B1%C3%B3%2C_actual_hotel_H10_Madison%2C_c._Dr._Joaquim_Pou_2-4_%28Barcelona%29.jpg"
+        "photo": "https://pro-static.h10hotels.com/gallery/Cabecera_Fichahotel_HMD1.jpg"
       },
       {
         "id": "gothic-safestay-gothic",
@@ -3399,7 +3399,7 @@ export const barcelonaCoreGuides = [
           "sat": "24 hours",
           "sun": "24 hours"
         },
-        "photo": "https://upload.wikimedia.org/wikipedia/commons/d/d4/Hotel_Park_%28I%29.jpg"
+        "photo": "https://parkhotelbarcelona.com/wp-content/uploads/sites/4/2024/04/PARK_HOTEL_Habitacions-36-1-1024x683.jpg"
       },
       {
         "id": "born-chic-basic",
@@ -3418,7 +3418,7 @@ export const barcelonaCoreGuides = [
           "sat": "24 hours",
           "sun": "24 hours"
         },
-        "photo": "https://www.chicandbasic.com/data/webp/big-chic-and-basic-born-habitaciones-cabecera637.jpg"
+        "photo": "https://www.chicandbasic.com/content/thumbs/640_/content/imgsxml/galerias/panel_herohotel/1/big--mg-8656-born-2048x763174.jpg"
       },
       {
         "id": "born-hostal-orleans",
@@ -3516,7 +3516,7 @@ export const barcelonaCoreGuides = [
           "sat": "24 hours",
           "sun": "24 hours"
         },
-        "photo": "https://almanac-barcelona.hotelbcn-barcelona.com/data/Pictures/700x500w/16517/1651761/1651761882/barcelona-almanac-barcelona-picture-2.JPEG"
+        "photo": "https://www.almanachotels.com/wp-content/uploads/2025/07/almanac-barcelona-room-1024x683.jpg"
       },
       {
         "id": "eixample-praktik-bakery",
@@ -3636,7 +3636,7 @@ export const barcelonaCoreGuides = [
           "sat": "24 hours",
           "sun": "24 hours"
         },
-        "photo": "https://room00hostel.com/assets/images/barcelona/slider-hotel/1.webp"
+        "photo": "https://a.hwstatic.com/image/upload/f_auto,q_auto,h_320,c_limit,e_sharpen,e_improve,e_vibrance:60/propertyimages/4/45620/dcpnqaebwoizjbeaiopu.jpg"
       },
       {
         "id": "gracia-sonder-la-casa-del-sol",
@@ -3829,7 +3829,7 @@ export const barcelonaCoreGuides = [
           "sat": "24 hours",
           "sun": "24 hours"
         },
-        "photo": "https://coronado-barcelona.hotelbcn-barcelona.com/data/Imgs/700x500w/17149/1714994/1714994675/hotel-coronado-barcelona-img-2.JPEG"
+        "photo": "https://www.hotelcoronado.net/wp-content/uploads/2023/05/02-4.jpg"
       },
       {
         "id": "poblesec-hostal-bcn-port",
@@ -3926,7 +3926,7 @@ export const barcelonaCoreGuides = [
           "sat": "24 hours",
           "sun": "24 hours"
         },
-        "photo": "https://media-cdn.tripadvisor.com/media/photo-s/2e/7c/8e/48/chic-basic-born-boutique.jpg"
+        "photo": "https://www.chicandbasic.com/content/thumbs/640_/content/imgsxml/galerias/panel_herohotel/1/big--mg-8656-born-2048x763174.jpg"
       },
       {
         "id": "barcelona-hotel-shortlist-almanac",
@@ -3945,7 +3945,7 @@ export const barcelonaCoreGuides = [
           "sat": "24 hours",
           "sun": "24 hours"
         },
-        "photo": "https://almanac-barcelona.hotelbcn-barcelona.com/data/Pictures/700x500w/16517/1651761/1651761882/barcelona-almanac-barcelona-picture-2.JPEG"
+        "photo": "https://www.almanachotels.com/wp-content/uploads/2025/07/almanac-barcelona-room-1024x683.jpg"
       },
       {
         "id": "barcelona-hotel-shortlist-casa-fuster",
@@ -3964,7 +3964,7 @@ export const barcelonaCoreGuides = [
           "sat": "24 hours",
           "sun": "24 hours"
         },
-        "photo": "https://media-cdn.tripadvisor.com/media/photo-s/2e/2e/a9/a1/hotel-casa-fuster.jpg"
+        "photo": "https://static-resources-elementor.mirai.com/wp-content/uploads/sites/343/casa-fuster_header-historia_section.jpg"
       },
       {
         "id": "barcelona-hotel-shortlist-hotel-brummell",
@@ -3983,7 +3983,7 @@ export const barcelonaCoreGuides = [
           "sat": "24 hours",
           "sun": "24 hours"
         },
-        "photo": "https://images.trvl-media.com/lodging/10000000/9370000/9365300/9365231/a502f0fb.jpg"
+        "photo": "https://hotelbrummell.brummellprojects.com/wp-content/uploads/sites/2/2023/03/1440x1480px_0001_2880x1600px_0019_BRUMMELL_EXT_H-12.jpg"
       }
     ],
     "sources": [
@@ -4110,7 +4110,7 @@ export const barcelonaCoreGuides = [
           "sat": "24 hours",
           "sun": "24 hours"
         },
-        "photo": "https://room00hostel.com/assets/images/barcelona/slider-hotel/1.webp"
+        "photo": "https://a.hwstatic.com/image/upload/f_auto,q_auto,h_320,c_limit,e_sharpen,e_improve,e_vibrance:60/propertyimages/4/45620/dcpnqaebwoizjbeaiopu.jpg"
       },
       {
         "id": "barcelona-hostel-shortlist-onefam-paralelo",
@@ -4570,7 +4570,7 @@ export const barcelonaCoreGuides = [
           "sat": "24 hours",
           "sun": "24 hours"
         },
-        "photo": "https://room00hostel.com/assets/images/barcelona/slider-hotel/1.webp"
+        "photo": "https://a.hwstatic.com/image/upload/f_auto,q_auto,h_320,c_limit,e_sharpen,e_improve,e_vibrance:60/propertyimages/4/45620/dcpnqaebwoizjbeaiopu.jpg"
       },
       {
         "id": "gracia-hostel-rocket",
@@ -6783,7 +6783,7 @@ export const barcelonaCoreGuides = [
           "sat": "9:00 AM-8:00 PM",
           "sun": "9:00 AM-8:00 PM"
         },
-        "photo": "https://upload.wikimedia.org/wikipedia/commons/4/4c/Santa_Maria_del_Mar%2C_Barcelona_02.jpg"
+        "photo": "https://www.barcelonaturisme.com/files/5445-7517-Imagen/santa-maria-mar-barcelona-pf-c1.jpg"
       },
       {
         "id": "citywide-culture-casa-batllo",
@@ -6840,7 +6840,7 @@ export const barcelonaCoreGuides = [
           "sat": "10:00 AM-7:00 PM",
           "sun": "10:00 AM-7:00 PM"
         },
-        "photo": "https://upload.wikimedia.org/wikipedia/commons/9/9d/Fundaci%C3%B3_Mir%C3%B3.JPG"
+        "photo": "https://www.barcelonaturisme.com/files/5531-4959-imagenCAT/tickets-for-fundacio-miro-museum-barcelona-c.jpg"
       }
     ],
     "sources": [
@@ -6955,7 +6955,7 @@ export const barcelonaItineraryGuides = [
           "sat": "9:00 AM-8:00 PM",
           "sun": "9:00 AM-8:00 PM"
         },
-        "photo": "https://upload.wikimedia.org/wikipedia/commons/4/4c/Santa_Maria_del_Mar%2C_Barcelona_02.jpg"
+        "photo": "https://www.barcelonaturisme.com/files/5445-7517-Imagen/santa-maria-mar-barcelona-pf-c1.jpg"
       },
       {
         "id": "barcelona-day-xampanyet",
@@ -7061,7 +7061,7 @@ export const barcelonaItineraryGuides = [
           "sat": "24 hours",
           "sun": "24 hours"
         },
-        "photo": "https://room00hostel.com/assets/images/barcelona/slider-hotel/1.webp"
+        "photo": "https://a.hwstatic.com/image/upload/f_auto,q_auto,h_320,c_limit,e_sharpen,e_improve,e_vibrance:60/propertyimages/4/45620/dcpnqaebwoizjbeaiopu.jpg"
       },
       {
         "id": "barcelona-weekend-casa-batllo",
@@ -7146,7 +7146,7 @@ export const barcelonaItineraryGuides = [
           "sat": "10:00 AM-7:00 PM",
           "sun": "10:00 AM-7:00 PM"
         },
-        "photo": "https://upload.wikimedia.org/wikipedia/commons/9/9d/Fundaci%C3%B3_Mir%C3%B3.JPG"
+        "photo": "https://www.barcelonaturisme.com/files/5531-4959-imagenCAT/tickets-for-fundacio-miro-museum-barcelona-c.jpg"
       },
       {
         "id": "barcelona-weekend-quimet-quimet",
@@ -7403,7 +7403,7 @@ export const barcelonaItineraryGuides = [
           "sat": "9:00 AM-8:00 PM",
           "sun": "9:00 AM-8:00 PM"
         },
-        "photo": "https://upload.wikimedia.org/wikipedia/commons/4/4c/Santa_Maria_del_Mar%2C_Barcelona_02.jpg"
+        "photo": "https://www.barcelonaturisme.com/files/5445-7517-Imagen/santa-maria-mar-barcelona-pf-c1.jpg"
       },
       {
         "id": "barcelona-week-paradiso",
@@ -7443,7 +7443,7 @@ export const barcelonaItineraryGuides = [
           "sat": "10:00 AM-7:00 PM",
           "sun": "10:00 AM-7:00 PM"
         },
-        "photo": "https://upload.wikimedia.org/wikipedia/commons/9/9d/Fundaci%C3%B3_Mir%C3%B3.JPG"
+        "photo": "https://www.barcelonaturisme.com/files/5531-4959-imagenCAT/tickets-for-fundacio-miro-museum-barcelona-c.jpg"
       },
       {
         "id": "barcelona-week-quimet-quimet",
