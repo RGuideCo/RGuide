@@ -118,14 +118,14 @@ function validateSourceArchitecture() {
   );
   assert(
     normalizedEditorialPush.includes("collectEditorialPois") &&
-      normalizedEditorialPush.includes("upsertEditorialPois"),
-    "Normalized guide pushes must also sync canonical editorial_pois rows.",
+      normalizedEditorialPush.includes("upsertVenueMedia"),
+    "Normalized guide pushes must attach stop photos to canonical venue_media rows.",
   );
   assert(
     poiPhotoSync.includes("drift") &&
-      poiPhotoSync.includes("entry_stops") &&
+      poiPhotoSync.includes("venue_media") &&
       poiPhotoSync.includes("entry_render_cache"),
-    "Editorial POI photo sync must detect drift and refresh normalized stops/render cache.",
+    "Editorial POI photo sync must detect drift and refresh venue media/render cache.",
   );
 }
 

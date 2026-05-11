@@ -168,6 +168,53 @@ async function upsertEditorialPoi(client, poi, localPhoto) {
   );
 }
 
+async function upsertVenueMedia(client, venueId, candidate) {
+  if (!venueId || !candidate?.photo) {
+    return null;
+  }
+
+  const { rows } = await client.query(
+    `insert into public.venue_media (
+       venue_id, url, role, source_type, source_entity_type, source_legacy_id,
+       raw_metadata, sort_order
+     )
+     values ($1,$2,'primary','editorial_guides','entry_stop',$3,$4,0)
+     on conflict (venue_id, url) do update set
+       role = case
+         when public.venue_media.role = 'gallery' then excluded.role
+         else public.venue_media.role
+       end,
+       source_type = coalesce(public.venue_media.source_type, excluded.source_type),
+       source_entity_type = coalesce(public.venue_media.source_entity_type, excluded.source_entity_type),
+       source_legacy_id = coalesce(public.venue_media.source_legacy_id, excluded.source_legacy_id),
+       raw_metadata = public.venue_media.raw_metadata || excluded.raw_metadata,
+       is_active = true,
+       updated_at = now()
+     returning id`,
+    [
+      venueId,
+      candidate.photo,
+      candidate.stopId ?? null,
+      JSON.stringify({
+        source: "sync-editorial-poi-photos",
+        guideId: candidate.guideId,
+        stopId: candidate.stopId,
+        poiId: candidate.poiId,
+      }),
+    ],
+  );
+
+  await client.query(
+    `update public.venues
+     set primary_photo_id = $2
+     where id = $1
+       and primary_photo_id is distinct from $2`,
+    [venueId, rows[0].id],
+  );
+
+  return rows[0].id;
+}
+
 async function refreshRenderCachesForEntries(client, entryIds) {
   for (const entryId of entryIds) {
     await client.query(
@@ -243,7 +290,8 @@ async function main() {
     missingSupabasePois: 0,
     drift: 0,
     editorialPoisUpserted: 0,
-    entryStopsUpdated: 0,
+    venueMediaUpserted: 0,
+    venuePrimaryPhotosUpdated: 0,
     renderCachesRefreshed: 0,
   };
 
@@ -281,18 +329,24 @@ async function main() {
         await upsertEditorialPoi(client, poi, candidate.photo);
         stats.editorialPoisUpserted += 1;
 
-        const updatedStops = await client.query(
-          `update public.entry_stops
-           set photo_url = $2,
-               updated_at = now()
+        const affectedStops = await client.query(
+          `select id, entry_id, venue_id
+           from public.entry_stops
            where poi_legacy_id = $1
-             and photo_url is distinct from $2
-           returning entry_id`,
-          [poiId, candidate.photo],
+             and venue_id is not null`,
+          [poiId],
         );
 
-        stats.entryStopsUpdated += updatedStops.rowCount ?? 0;
-        for (const row of updatedStops.rows) {
+        const touchedVenues = new Set();
+        for (const row of affectedStops.rows) {
+          if (!touchedVenues.has(row.venue_id)) {
+            const mediaId = await upsertVenueMedia(client, row.venue_id, candidate);
+            if (mediaId) {
+              stats.venueMediaUpserted += 1;
+              stats.venuePrimaryPhotosUpdated += 1;
+              touchedVenues.add(row.venue_id);
+            }
+          }
           updatedEntryIds.add(row.entry_id);
         }
       }

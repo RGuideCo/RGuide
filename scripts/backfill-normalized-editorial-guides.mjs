@@ -627,6 +627,53 @@ async function upsertVenue(client, input, stats) {
   return rows[0].id;
 }
 
+async function upsertVenueMedia(client, input, stats) {
+  const url = input.url?.trim();
+  if (!input.venueId || !url) {
+    return null;
+  }
+
+  const { rows } = await client.query(
+    `insert into public.venue_media (
+       venue_id, url, role, source_type, source_entity_type, source_legacy_id,
+       raw_metadata, sort_order
+     )
+     values ($1,$2,$3,$4,$5,$6,$7,$8)
+     on conflict (venue_id, url) do update set
+       role = case
+         when public.venue_media.role = 'gallery' then excluded.role
+         else public.venue_media.role
+       end,
+       source_type = coalesce(public.venue_media.source_type, excluded.source_type),
+       source_entity_type = coalesce(public.venue_media.source_entity_type, excluded.source_entity_type),
+       source_legacy_id = coalesce(public.venue_media.source_legacy_id, excluded.source_legacy_id),
+       raw_metadata = public.venue_media.raw_metadata || excluded.raw_metadata,
+       is_active = true,
+       updated_at = now()
+     returning id`,
+    [
+      input.venueId,
+      url,
+      input.role ?? "primary",
+      input.sourceType ?? "editorial_guides",
+      input.sourceEntityType ?? "entry_stop",
+      input.sourceLegacyId ?? null,
+      toJsonObject(input.rawMetadata),
+      input.sortOrder ?? 0,
+    ],
+  );
+
+  await client.query(
+    `update public.venues
+     set primary_photo_id = $2
+     where id = $1
+       and primary_photo_id is distinct from $2`,
+    [input.venueId, rows[0].id],
+  );
+  stats.venueMedia += 1;
+  return rows[0].id;
+}
+
 const HOURS_DAY_MAP = new Map([
   ["sun", 0],
   ["sunday", 0],
@@ -851,6 +898,16 @@ async function replaceEntryStops(client, entryId, list, context, stats) {
       attributeTags: classification.attributeTags,
       sourceMetadata: { source: "editorial_guides", entryId: list.id, stopId: stop.id },
     }, stats);
+    await upsertVenueMedia(client, {
+      venueId,
+      url: stop.photo,
+      role: "primary",
+      sourceType: "editorial_guides",
+      sourceEntityType: "entry_stop",
+      sourceLegacyId: stop.id,
+      rawMetadata: { source: "guide_stop_photo", entryId: list.id, stopId: stop.id, poiId: stop.poiId ?? null },
+      sortOrder: 0,
+    }, stats);
     await upsertVenueHoursFromStop(client, venueId, stop);
     await client.query(
       `insert into public.entry_stops (
@@ -873,7 +930,7 @@ async function replaceEntryStops(client, entryId, list, context, stats) {
         context.neighborhoodId ?? context.cityId ?? null,
         venueId,
         toJson(normalizeCoordinates(stop.coordinates)),
-        stop.photo ?? null,
+        null,
         stop.price ?? null,
         stop.priceSource ?? null,
         stop.bookingUrl ?? null,
@@ -995,7 +1052,7 @@ async function main() {
     connectionString: databaseUrl,
     ssl: databaseUrl.includes("localhost") || databaseUrl.includes("127.0.0.1") ? false : { rejectUnauthorized: false },
   });
-  const stats = { entries: 0, entryStops: 0, venues: 0, sources: 0, editorialPois: 0 };
+  const stats = { entries: 0, entryStops: 0, venues: 0, venueMedia: 0, sources: 0, editorialPois: 0 };
 
   await client.connect();
   try {

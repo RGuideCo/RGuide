@@ -6,8 +6,6 @@ import type { Client } from "pg";
 
 import { mapLists } from "@/data/lists";
 import { weeklyCityEventRuns, weeklyEventToGuideList } from "@/data/weekly-events";
-import { applyEditorialPoiPhotos } from "@/lib/editorial-guides-shared";
-import type { EditorialPoiPhotoRecord } from "@/lib/editorial-guides-shared";
 import type { MapList } from "@/types";
 
 interface WeeklyEventGuideRow {
@@ -137,12 +135,7 @@ async function loadNormalizedGuides(client: Client): Promise<MapList[] | null> {
       ? weeklyEventRows.map((row) => normalizeWeeklyEventGuide(row.guide))
       : getLocalWeeklyEventGuides();
 
-    const poiRows = await loadEditorialPoiRows(client);
-
-    return applyEditorialPoiPhotos(
-      [...rows.map((row) => normalizeWeeklyEventGuide(row.list)), ...weeklyEventGuides],
-      poiRows,
-    );
+    return [...rows.map((row) => normalizeWeeklyEventGuide(row.list)), ...weeklyEventGuides];
   } catch {
     return null;
   }
@@ -166,16 +159,12 @@ async function loadRenderCacheGuides(client: Client): Promise<MapList[]> {
     ].join(" "),
   );
 
-  const poiRows = await loadEditorialPoiRows(client);
   const weeklyEventRows = await loadWeeklyEventPublicationCache(client);
   const weeklyEventGuides = weeklyEventRows.length
     ? weeklyEventRows.map((row) => normalizeWeeklyEventGuide(row.guide))
     : getLocalWeeklyEventGuides();
 
-  return applyEditorialPoiPhotos(
-    [...rows.map((row) => normalizeWeeklyEventGuide(row.rendered_payload)), ...weeklyEventGuides],
-    poiRows,
-  );
+  return [...rows.map((row) => normalizeWeeklyEventGuide(row.rendered_payload)), ...weeklyEventGuides];
 }
 
 async function loadNormalizedWeeklyEvents(client: Client) {
@@ -204,17 +193,6 @@ async function loadWeeklyEventPublicationCache(client: Client) {
     ].join(" "),
   );
   return rows;
-}
-
-async function loadEditorialPoiRows(client: Client) {
-  try {
-    const result = await client.query<EditorialPoiPhotoRecord>(
-      "select id, photo from public.editorial_pois",
-    );
-    return result.rows;
-  } catch {
-    return [];
-  }
 }
 
 const getCachedEditorialGuidesFromSupabase = unstable_cache(

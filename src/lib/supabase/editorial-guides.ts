@@ -1,8 +1,6 @@
 "use client";
 
 import { getSupabaseBrowserClient } from "@/lib/supabase/client";
-import { applyEditorialPoiPhotos } from "@/lib/editorial-guides-shared";
-import type { EditorialPoiPhotoRecord } from "@/lib/editorial-guides-shared";
 import type { MapList } from "@/types";
 
 interface NormalizedGuideRecord {
@@ -50,13 +48,8 @@ export async function loadEditorialGuides() {
     .returns<NormalizedGuideRecord[]>();
 
   if (!normalizedError && normalizedData?.length) {
-    const { data: pois } = await supabase
-      .from("editorial_pois")
-      .select("id,photo")
-      .returns<EditorialPoiPhotoRecord[]>();
-
     return {
-      guides: applyEditorialPoiPhotos(normalizedData.map((record) => record.list), pois ?? []),
+      guides: normalizedData.map((record) => record.list),
       error: null,
     };
   }
@@ -74,14 +67,10 @@ export async function loadEditorialGuides() {
     return { guides: [] as MapList[], error: normalizedError ?? error };
   }
 
-  const { data: pois } = await supabase
-    .from("editorial_pois")
-    .select("id,photo")
-    .returns<EditorialPoiPhotoRecord[]>();
   const guides = (data ?? []).map((record) => record.rendered_payload);
 
   return {
-    guides: applyEditorialPoiPhotos(guides, pois ?? []),
+    guides,
     error: null,
   };
 }
