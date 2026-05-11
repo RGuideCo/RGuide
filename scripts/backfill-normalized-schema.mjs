@@ -1551,11 +1551,11 @@ async function insertEntryStops(client, entryId, list, context, stats) {
       `insert into public.entry_stops (
          entry_id, legacy_id, stop_order, poi_legacy_id, name, description, category,
          subcategory, subcategories,
-         destination_id, venue_id, event_id, event_occurrence_id, coordinates, photo_url,
+         destination_id, venue_id, event_id, event_occurrence_id, coordinates,
          price_label, price_source, booking_url, official_url, event_time_label,
          event_venue_label, journey_date, journey_day, hours, places, metadata
        )
-       values ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20,$21,$22,$23,$24,$25,$26)`,
+       values ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20,$21,$22,$23,$24,$25)`,
       [
         entryId,
         stop.id,
@@ -1571,7 +1571,6 @@ async function insertEntryStops(client, entryId, list, context, stats) {
         context.eventId ?? null,
         null,
         toJson(normalizeCoordinates(stop.coordinates)),
-        null,
         stop.price ?? null,
         stop.priceSource ?? null,
         stop.bookingUrl ?? null,
