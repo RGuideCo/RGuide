@@ -597,6 +597,15 @@ textarea:focus-visible {
     scroll-padding-bottom: calc(5.5rem + env(safe-area-inset-bottom));
   }
 
+  .expanded-guide-stop-card,
+  .expanded-guide-stop-card:hover,
+  .expanded-guide-stop-card:focus-within,
+  .expanded-guide-stop-card[data-expanded="true"],
+  .expanded-guide-stop-card[data-active="true"],
+  .expanded-guide-stop-card[data-expanded="true"][data-active="true"] {
+    box-shadow: none;
+  }
+
   .expanded-guide-stop-body {
     padding: 0 0 0.75rem;
   }
