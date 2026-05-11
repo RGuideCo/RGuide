@@ -1,4 +1,4 @@
-import type { Feature, Geometry } from "geojson";
+import type { Feature, FeatureCollection, Geometry } from "geojson";
 
 export type NeighborhoodBoundaryProperties = {
   id: string;
@@ -73,8 +73,18 @@ const priorityBoundaryLoaders: Partial<Record<string, BoundaryLoader[]>> = {
 
 const boundaryCache = new Map<string, Promise<NeighborhoodBoundaryMap>>();
 
+function isPolygonBoundaryFeature(
+  feature: unknown,
+): feature is Feature<Geometry, NeighborhoodBoundaryProperties> {
+  const geometryType = (feature as Feature<Geometry, NeighborhoodBoundaryProperties> | null)?.geometry?.type;
+  return geometryType === "Polygon" || geometryType === "MultiPolygon";
+}
+
 function toBoundaryMap(module: BoundaryModule): NeighborhoodBoundaryMap {
-  return module.default as NeighborhoodBoundaryMap;
+  const boundaryMap = module.default as NeighborhoodBoundaryMap;
+  return Object.fromEntries(
+    Object.entries(boundaryMap).filter(([, feature]) => isPolygonBoundaryFeature(feature)),
+  );
 }
 
 function mergeBoundaryMaps(maps: NeighborhoodBoundaryMap[]) {
@@ -92,6 +102,11 @@ function mergeBoundaryMaps(maps: NeighborhoodBoundaryMap[]) {
 }
 
 async function loadNeighborhoodBoundaryMapUncached(cityId: string) {
+  const supabaseBoundaryMap = await loadSupabaseNeighborhoodBoundaryMap(cityId);
+  if (Object.keys(supabaseBoundaryMap).length) {
+    return supabaseBoundaryMap;
+  }
+
   const loaders = priorityBoundaryLoaders[cityId] ?? (
     boundaryLoaders[cityId] ? [boundaryLoaders[cityId]] : []
   );
@@ -102,6 +117,30 @@ async function loadNeighborhoodBoundaryMapUncached(cityId: string) {
 
   const maps = await Promise.all(loaders.map((loader) => loader().then(toBoundaryMap)));
   return mergeBoundaryMaps(maps);
+}
+
+async function loadSupabaseNeighborhoodBoundaryMap(cityId: string) {
+  if (typeof window === "undefined") {
+    return {};
+  }
+
+  try {
+    const response = await fetch(`/api/destination-boundaries/${encodeURIComponent(cityId)}`, {
+      headers: { Accept: "application/json" },
+    });
+    if (!response.ok) {
+      return {};
+    }
+
+    const collection = await response.json() as FeatureCollection<Geometry, NeighborhoodBoundaryProperties>;
+    return Object.fromEntries(
+      (collection.features ?? [])
+        .filter(isPolygonBoundaryFeature)
+        .map((feature) => [feature.properties.id, feature]),
+    );
+  } catch {
+    return {};
+  }
 }
 
 export function loadNeighborhoodBoundaryMap(cityId: string) {
