@@ -1,6 +1,6 @@
 "use client";
 
-import { Fragment, useEffect, useLayoutEffect, useState } from "react";
+import { Fragment, useEffect, useLayoutEffect, useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -219,6 +219,21 @@ function getPoiPhoto(photo?: string) {
   return photo?.trim() || null;
 }
 
+function formatAttributeTagLabel(tag: string) {
+  return tag
+    .replace(/_(food|nightlife|drinks)$/g, "")
+    .replace(/_/g, " ")
+    .replace(/\b\w/g, (char) => char.toUpperCase());
+}
+
+function getPoiAttributeTags(stop: MapList["stops"][number]) {
+  return [...(stop.attributeTags ?? []), ...(stop.tags ?? [])]
+    .filter(Boolean)
+    .filter((tag, index, all) => all.findIndex((item) => item.toLowerCase() === tag.toLowerCase()) === index)
+    .slice(0, 4)
+    .map(formatAttributeTagLabel);
+}
+
 type StayBookingPlatform = "booking" | "hostelworld";
 
 function isHostelGuide(list: MapList) {
@@ -366,6 +381,7 @@ export function MapListCard({
   const [stopListMaxScrollTop, setStopListMaxScrollTop] = useState<number | null>(null);
   const [pendingScrollStopId, setPendingScrollStopId] = useState<string | null>(null);
   const [mounted, setMounted] = useState(false);
+  const previousExpandedGuideRef = useRef<string | null>(null);
   const showStopNumbers = true;
   const isRGuide = list.creator.name.startsWith("R ");
   const allSources = isRGuide ? list.sources ?? [] : [];
@@ -481,6 +497,21 @@ export function MapListCard({
       setSourcesPinnedOpen(false);
     }
   }, [expandable, expanded]);
+
+  useEffect(() => {
+    if (!expanded) {
+      previousExpandedGuideRef.current = null;
+      return;
+    }
+
+    if (previousExpandedGuideRef.current === list.id) {
+      return;
+    }
+
+    previousExpandedGuideRef.current = list.id;
+    setExpandedStopIds(list.stops[0]?.id ? [list.stops[0].id] : []);
+    setExpandedPlaceIds([]);
+  }, [expanded, list.id, list.stops]);
 
   useEffect(() => {
     onExpandedStopIdsChange?.(expanded ? expandedStopIds : []);
@@ -1347,6 +1378,7 @@ export function MapListCard({
                         const stopCategory = isItineraryGuide ? inferJourneyStopCategory(stop, list.category) : stop.category ?? list.category;
                         const stopCategoryStyle = CATEGORY_STYLES[stopCategory];
                         const stopPhoto = getPoiPhoto(stop.photo);
+                        const stopAttributeTags = getPoiAttributeTags(stop);
                         const stayBookingDetails = getStayBookingDetails(list, stop, stopCategory);
                         const officialStopUrl = list.id.startsWith("event-") ? stop.officialUrl ?? stop.bookingUrl : stop.officialUrl;
                         const isStopInItinerary =
@@ -1517,7 +1549,16 @@ export function MapListCard({
                                     />
                                   </button>
                                 ) : null}
-                                <p className="min-w-0 text-sm leading-5 text-slate-600">{stopContent.summary}</p>
+                                <div className="expanded-poi-copy min-w-0">
+                                  <p>{stopContent.summary}</p>
+                                  {stopAttributeTags.length ? (
+                                    <div className="expanded-poi-tags" aria-label={`${stop.name} attributes`}>
+                                      {stopAttributeTags.map((tag) => (
+                                        <span key={`${stop.id}-tag-${tag}`}>{tag}</span>
+                                      ))}
+                                    </div>
+                                  ) : null}
+                                </div>
                               </div>
                               {stop.places?.length ? (
                                 <div className="mt-3">
@@ -1529,6 +1570,7 @@ export function MapListCard({
                                   {stop.places.map((place, placeIndex) => (
                                     (() => {
                                       const placePhoto = getPoiPhoto(place.photo);
+                                      const placeAttributeTags = getPoiAttributeTags(place);
                                       const isPlaceExpanded = expandedPlaceIds.includes(place.id);
                                       const isPlaceMapSelected = forceExpandStopId === place.id;
                                       const placeCategoryStyle = CATEGORY_STYLES[place.category ?? stopCategory];
@@ -1622,7 +1664,16 @@ export function MapListCard({
                                                   />
                                                 </button>
                                               ) : null}
-                                              <p className="min-w-0 text-xs leading-4 text-slate-600">{place.description}</p>
+                                              <div className="expanded-poi-copy expanded-poi-copy-place min-w-0">
+                                                <p>{place.description}</p>
+                                                {placeAttributeTags.length ? (
+                                                  <div className="expanded-poi-tags" aria-label={`${place.name} attributes`}>
+                                                    {placeAttributeTags.map((tag) => (
+                                                      <span key={`${place.id}-tag-${tag}`}>{tag}</span>
+                                                    ))}
+                                                  </div>
+                                                ) : null}
+                                              </div>
                                             </div>
                                           </div>
                                         </div>

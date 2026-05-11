@@ -625,7 +625,7 @@ textarea:focus-visible {
   }
 }
 
-.expanded-poi-bio > p {
+.expanded-poi-copy > p {
   max-width: 58ch;
   color: #475569;
   font-family: var(--font-inter), "Helvetica Neue", Arial, sans-serif;
@@ -635,10 +635,26 @@ textarea:focus-visible {
   line-height: 1.52;
 }
 
-.expanded-poi-bio-place > p {
+.expanded-poi-copy-place > p {
   max-width: 56ch;
   font-size: 0.8rem;
   line-height: 1.48;
+}
+
+.expanded-poi-tags {
+  margin-top: 0.45rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+}
+
+.expanded-poi-tags span {
+  color: #0f172a;
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  line-height: 1;
+  text-transform: uppercase;
 }
 
 @media (max-width: 1023px) {
@@ -671,7 +687,7 @@ textarea:focus-visible {
     box-shadow: none;
   }
 
-  .expanded-guide-stop-body .expanded-poi-bio > p {
+  .expanded-guide-stop-body .expanded-poi-copy {
     padding: 0.75rem 1rem 0;
   }
 

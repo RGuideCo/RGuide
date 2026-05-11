@@ -237,6 +237,8 @@ export interface GuideStop {
   lodgingType?: LodgingType;
   foodServiceType?: FoodServiceType;
   nightlifeType?: NightlifeType;
+  attributeTags?: VenueAttributeTag[] | string[];
+  tags?: string[];
   photo?: string;
   price?: "$" | "$$" | "$$$";
   priceSource?: string;
