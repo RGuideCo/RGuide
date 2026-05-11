@@ -1013,7 +1013,7 @@ export function MapListCard({
                 aria-controls={`guide-panel-${list.id}`}
                 className="min-w-0 flex-1 cursor-pointer select-text"
               >
-                <h3 className={`min-w-0 text-base font-semibold leading-5 transition-colors ${expandedChrome ? "text-white" : "text-slate-900 group-hover:text-slate-950"} ${retractingListChrome ? "guide-chrome-title--retract" : ""} ${expandingListChrome ? "guide-chrome-title--expand" : ""}`}>{list.title}</h3>
+                <h3 className={`min-w-0 text-lg font-semibold leading-6 transition-colors ${expandedChrome ? "text-white" : "text-slate-900 group-hover:text-slate-950"} ${retractingListChrome ? "guide-chrome-title--retract" : ""} ${expandingListChrome ? "guide-chrome-title--expand" : ""}`}>{list.title}</h3>
                 <span className={`mt-0.5 block truncate font-mono text-[10px] font-medium uppercase tracking-[0.1em] ${expandedChrome ? "text-white/75" : "text-slate-500"} ${retractingListChrome ? "guide-chrome-meta--retract" : ""} ${expandingListChrome ? "guide-chrome-meta--expand" : ""}`}>
                   {guideMeta}
                 </span>
@@ -1040,7 +1040,7 @@ export function MapListCard({
             </div>
           ) : (
             <>
-              <h3 className="min-w-0 text-base font-semibold leading-5 text-slate-900">
+              <h3 className="min-w-0 text-lg font-semibold leading-6 text-slate-900">
                 <Link href={getGuideHref(list)}>{list.title}</Link>
               </h3>
               {locationSubtitle ? (
@@ -1180,9 +1180,52 @@ export function MapListCard({
               }}
               className={`${fillPane && expanded ? "mobile-guide-scroll-container flex min-h-0 flex-1 flex-col overflow-y-auto overscroll-contain pb-3 pr-1 lg:overflow-hidden lg:pb-0 lg:pr-0" : ""} relative pt-2`}
             >
-              <p className="guide-content-cascade-item relative z-10 text-[11px] font-medium uppercase tracking-[0.2em] text-slate-500">
-                Description
-              </p>
+              <div className="guide-content-cascade-item relative z-10 flex items-center gap-3">
+                <p className="text-[11px] font-medium uppercase tracking-[0.2em] text-slate-500">
+                  Description
+                </p>
+                {sourceSummary ? (
+                  <button
+                    type="button"
+                    onClick={(event) => {
+                      event.stopPropagation();
+                      openSourcesFromCard();
+                    }}
+                    className="ml-auto flex max-w-[52%] items-center justify-end gap-2 text-right transition hover:text-slate-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-300"
+                    aria-label="Show guide sources"
+                    aria-expanded={sourcesOpen}
+                  >
+                    <span className="font-mono text-[9px] font-semibold uppercase tracking-[0.16em] text-slate-400">
+                      Sourced
+                    </span>
+                    <span className="flex shrink-0 items-center gap-1">
+                      {sourceStripPreview.map((source, index) => (
+                        <span
+                          key={`${list.id}-expanded-source-top-${source.name}-${index}`}
+                          className="inline-flex h-4 w-4 items-center justify-center overflow-hidden bg-white ring-1 ring-slate-200"
+                          title={source.name}
+                        >
+                          <img
+                            src={getSourceIconUrl(source.url)}
+                            alt=""
+                            loading="lazy"
+                            decoding="async"
+                            className="h-3 w-3"
+                          />
+                        </span>
+                      ))}
+                    </span>
+                    <span className="min-w-0 truncate text-[11px] font-medium leading-none text-slate-600">
+                      {sourceSummary}
+                    </span>
+                    <ChevronDown
+                      className={`h-3.5 w-3.5 shrink-0 text-slate-400 transition-transform ${
+                        sourcesOpen ? "rotate-180" : ""
+                      }`}
+                    />
+                  </button>
+                ) : null}
+              </div>
               {list.itinerary?.startDate || list.itinerary?.endDate ? (
                 <p
                   className="guide-content-cascade-item relative z-10 mt-2 px-3 text-[11px] font-semibold uppercase tracking-[0.12em] text-slate-500"
@@ -1192,7 +1235,7 @@ export function MapListCard({
                 </p>
               ) : null}
               <p
-                className="guide-content-cascade-item relative z-10 mt-2 px-3 text-sm leading-5 text-slate-600"
+                className="guide-content-cascade-item expanded-guide-description relative z-10 mt-2 px-4"
                 style={{ animationDelay: "45ms" }}
               >
                 {list.description}
@@ -1221,6 +1264,12 @@ export function MapListCard({
                   style={{ animationDelay: "65ms" }}
                   aria-label="POI photos"
                 >
+                  <div className="mb-2 flex items-center gap-3">
+                    <p className="text-[11px] font-medium uppercase tracking-[0.2em] text-slate-500">
+                      {list.submissionType === "event" || list.id.startsWith("event-") ? "Schedule" : "Places of Interest"}
+                    </p>
+                    <div className="h-px flex-1 bg-slate-200" aria-hidden="true" />
+                  </div>
                   <div className="ordered-poi-photo-strip">
                     {list.stops.map((stop, index) => {
                       const stopPhoto = getPoiPhoto(stop.photo);
@@ -1261,57 +1310,8 @@ export function MapListCard({
                   </div>
                 </div>
               ) : null}
-              {sourceSummary ? (
-                <button
-                  type="button"
-                  onClick={(event) => {
-                    event.stopPropagation();
-                    openSourcesFromCard();
-                  }}
-                  className="guide-content-cascade-item relative z-10 mt-3 flex w-full items-center gap-2 border-t border-slate-200/80 pt-2 pl-0.5 text-left transition hover:border-slate-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-300"
-                  style={{ animationDelay: "70ms" }}
-                  aria-label="Show guide sources"
-                  aria-expanded={sourcesOpen}
-                >
-                  <span className="font-mono text-[9px] font-semibold uppercase tracking-[0.16em] text-slate-400">
-                    Sourced
-                  </span>
-                  <span className="h-px w-4 shrink-0 bg-slate-300/80" aria-hidden="true" />
-                  <span className="flex shrink-0 items-center gap-1">
-                    {sourceStripPreview.map((source, index) => (
-                      <span
-                        key={`${list.id}-expanded-source-strip-${source.name}-${index}`}
-                        className="inline-flex h-4 w-4 items-center justify-center overflow-hidden bg-white ring-1 ring-slate-200"
-                        title={source.name}
-                      >
-                        <img
-                          src={getSourceIconUrl(source.url)}
-                          alt=""
-                          loading="lazy"
-                          decoding="async"
-                          className="h-3 w-3"
-                        />
-                      </span>
-                    ))}
-                  </span>
-                  <span className="min-w-0 flex-1 truncate text-[11px] font-medium leading-none text-slate-600">
-                    {sourceSummary}
-                  </span>
-                  <ChevronDown
-                    className={`h-3.5 w-3.5 shrink-0 text-slate-400 transition-transform ${
-                      sourcesOpen ? "rotate-180" : ""
-                    }`}
-                  />
-                </button>
-              ) : null}
               {list.stops.length && !deferHeavyExpandedContent ? (
                 <>
-                  <p
-                    className="guide-content-cascade-item relative z-10 mt-4 text-[11px] font-medium uppercase tracking-[0.2em] text-slate-500"
-                    style={{ animationDelay: sourceSummary ? "115ms" : "90ms" }}
-                  >
-                    {list.submissionType === "event" || list.id.startsWith("event-") ? "Schedule" : "Places of Interest"}
-                  </p>
                   <ol
                     id={`guide-stop-list-${list.id}`}
                     onScroll={(event) => {
@@ -1412,7 +1412,7 @@ export function MapListCard({
                               }}
                               onFocus={() => onStopHoverChange?.(stop.id)}
                               onBlur={() => onStopHoverChange?.(null)}
-                              className="inline-flex h-6 w-6 shrink-0 items-center justify-center rounded-md font-mono text-[10px] font-semibold text-white shadow-sm transition hover:brightness-95 focus-visible:ring-2 focus-visible:ring-slate-400/50"
+                              className="inline-flex h-6 w-6 shrink-0 items-center justify-center rounded-md font-mono text-xs font-semibold text-white shadow-sm transition hover:brightness-95 focus-visible:ring-2 focus-visible:ring-slate-400/50"
                               style={{ backgroundColor: stopCategoryStyle.mapColor }}
                               aria-label={`Select ${stop.name} on map`}
                               title={`Select ${stop.name} on map`}
@@ -1446,10 +1446,10 @@ export function MapListCard({
                             }}
                             onFocus={() => onStopHoverChange?.(stop.id)}
                             onBlur={() => onStopHoverChange?.(null)}
-                            className="flex min-w-0 flex-1 cursor-pointer select-text items-start gap-2 text-left"
+                            className="flex min-w-0 flex-1 cursor-pointer select-text items-center gap-2 text-left"
                           >
                             <span className="min-w-0 flex-1">
-                              <span className="block text-sm font-semibold text-slate-900">{stop.name}</span>
+                              <span className="block text-base font-semibold leading-5 text-slate-900">{stop.name}</span>
                               {stop.eventTime ? (
                                 <span className="mt-0.5 block text-[11px] font-medium uppercase tracking-[0.08em] text-slate-500">
                                   {stop.eventTime}
@@ -1572,7 +1572,7 @@ export function MapListCard({
                                             className="min-w-0 flex-1 cursor-pointer select-text"
                                             aria-expanded={isPlaceExpanded}
                                           >
-                                          <span className="min-w-0 flex-1 text-sm font-semibold text-slate-900">{place.name}</span>
+                                          <span className="min-w-0 flex-1 text-[0.95rem] font-semibold leading-5 text-slate-900">{place.name}</span>
                                           </div>
                                           <button
                                             type="button"
@@ -1634,10 +1634,10 @@ export function MapListCard({
                                   </div>
                                 </div>
                               ) : null}
-                              <div className="expanded-guide-stop-actions mt-3 flex items-end justify-between gap-3">
+                              <div className="expanded-guide-stop-actions poi-footer-row mt-3 flex items-center justify-between gap-3 border-t border-slate-950/10 bg-white/80 py-2">
                                 <div className="min-w-0">
                                   {resolvedStopHours ? (
-                                    <p className="text-[11px] leading-4 text-slate-500">
+                                    <p className="text-xs leading-4 text-slate-500">
                                       <span className="font-medium text-slate-600">
                                         {isHistoricalGuide ? "Date:" : `Hours (${weekdayLabel}):`}
                                       </span>{" "}
@@ -1655,7 +1655,7 @@ export function MapListCard({
                                     <button
                                       type="button"
                                       onClick={() => openAddPickerForStop(stopItineraryId)}
-                                      className={`inline-flex items-center gap-1.5 rounded-md border px-2.5 py-1.5 text-[11px] font-medium transition ${
+                                      className={`inline-flex h-7 w-7 items-center justify-center rounded-md border text-[11px] font-medium transition ${
                                         isStopInItinerary
                                           ? "border-emerald-600 bg-emerald-600 text-white"
                                           : "border-slate-950/10 bg-white/80 text-slate-700 hover:border-slate-950/20 hover:text-slate-900"
@@ -1689,7 +1689,7 @@ export function MapListCard({
                                             current === stop.id ? null : stop.id,
                                           )
                                         }
-                                        className="inline-flex items-center rounded-md border border-slate-950/10 bg-white/80 px-2 py-1.5 text-[11px] font-medium text-slate-700 hover:border-slate-950/20 hover:text-slate-900"
+                                        className="inline-flex h-7 w-7 items-center justify-center rounded-md border border-slate-950/10 bg-white/80 text-[11px] font-medium text-slate-700 hover:border-slate-950/20 hover:text-slate-900"
                                         aria-label="Directions"
                                         title="Directions"
                                       >
@@ -1700,7 +1700,7 @@ export function MapListCard({
                                         href={getDirectionsHref(stop)}
                                         target="_blank"
                                         rel="noreferrer"
-                                        className="inline-flex items-center rounded-md border border-slate-950/10 bg-white/80 px-2 py-1.5 text-[11px] font-medium text-slate-700 hover:border-slate-950/20 hover:text-slate-900"
+                                        className="inline-flex h-7 w-7 items-center justify-center rounded-md border border-slate-950/10 bg-white/80 text-[11px] font-medium text-slate-700 hover:border-slate-950/20 hover:text-slate-900"
                                         aria-label="Directions"
                                         title="Directions"
                                       >

@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Host_Grotesk } from "next/font/google";
+import { Host_Grotesk, Inter } from "next/font/google";
 import type { ReactNode } from "react";
 
 import { Analytics } from "@vercel/analytics/next";
@@ -15,6 +15,12 @@ import "@/app/globals.css";
 const hostGrotesk = Host_Grotesk({
   subsets: ["latin"],
   variable: "--font-host-grotesk",
+  display: "swap",
+});
+
+const inter = Inter({
+  subsets: ["latin"],
+  variable: "--font-inter",
   display: "swap",
 });
 
@@ -65,7 +71,7 @@ export default function RootLayout({
         <meta name="agd-partner-manual-verification" />
         <link rel="preconnect" href="https://tiles.openfreemap.org" crossOrigin="anonymous" />
       </head>
-      <body className={hostGrotesk.variable}>
+      <body className={`${hostGrotesk.variable} ${inter.variable}`}>
         <AuthSync />
         <SubmittedGuidesSync />
         <main>{children}</main>

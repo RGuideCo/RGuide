@@ -28,6 +28,7 @@ body {
     auto,
     auto;
   font-size: 15px;
+  font-weight: 430;
 }
 
 a,
@@ -543,16 +544,25 @@ textarea:focus-visible {
   background: color-mix(in srgb, var(--guide-poi-accent, #64748b) 70%, rgba(255, 255, 255, 0.5));
 }
 
+.expanded-guide-description {
+  color: #475569;
+  font-family: var(--font-inter), "Helvetica Neue", Arial, sans-serif;
+  font-size: 0.9rem;
+  font-weight: 450;
+  letter-spacing: 0.004em;
+  line-height: 1.55;
+}
+
 .expanded-poi-bio {
   display: grid;
-  grid-template-columns: 4.75rem minmax(0, 1fr);
-  gap: 0.75rem;
-  align-items: start;
+  grid-template-columns: clamp(9rem, 36%, 12rem) minmax(0, 1fr);
+  gap: 1rem;
+  align-items: center;
 }
 
 .expanded-poi-bio-place {
-  grid-template-columns: 3.5rem minmax(0, 1fr);
-  gap: 0.65rem;
+  grid-template-columns: clamp(7rem, 30%, 9rem) minmax(0, 1fr);
+  gap: 0.85rem;
 }
 
 .expanded-poi-bio-no-photo {
@@ -563,9 +573,9 @@ textarea:focus-visible {
   position: relative;
   display: block;
   width: 100%;
-  aspect-ratio: 1 / 1;
+  aspect-ratio: 4 / 3;
   overflow: hidden;
-  border-radius: 8px;
+  border-radius: 0 8px 8px 0;
   background: rgba(255, 255, 255, 0.74);
   box-shadow:
     0 0 0 1px rgba(15, 23, 42, 0.11),
@@ -588,7 +598,47 @@ textarea:focus-visible {
 }
 
 .expanded-poi-bio-photo-place {
-  border-radius: 8px;
+  border-radius: 0 8px 8px 0;
+}
+
+@media (min-width: 1024px) {
+  .expanded-guide-stop-body {
+    padding-left: 0;
+  }
+
+  .expanded-guide-stop-body .expanded-poi-bio {
+    padding-right: 1rem;
+  }
+
+  .expanded-guide-stop-body .expanded-guide-stop-actions {
+    padding-left: 1rem;
+  }
+
+  .expanded-guide-stop-body .poi-footer-row {
+    margin-right: -1rem;
+    margin-bottom: -0.75rem;
+    padding-right: 0.75rem;
+  }
+
+  .expanded-guide-stop-body .expanded-poi-bio-no-photo {
+    padding-left: 1rem;
+  }
+}
+
+.expanded-poi-bio > p {
+  max-width: 58ch;
+  color: #475569;
+  font-family: var(--font-inter), "Helvetica Neue", Arial, sans-serif;
+  font-size: 0.88rem;
+  font-weight: 450;
+  letter-spacing: 0.004em;
+  line-height: 1.52;
+}
+
+.expanded-poi-bio-place > p {
+  max-width: 56ch;
+  font-size: 0.8rem;
+  line-height: 1.48;
 }
 
 @media (max-width: 1023px) {
