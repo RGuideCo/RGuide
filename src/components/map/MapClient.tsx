@@ -2999,6 +2999,7 @@ export function MapClient({
       activeGuideFitNonce,
       activeGuideStopSignature,
       visibleNestedStopParentIds.join(","),
+      selectedStopId ?? "",
       viewportModeRef.current,
       viewportInsetsRef.current
         ? `${viewportInsetsRef.current.top},${viewportInsetsRef.current.right},${viewportInsetsRef.current.bottom},${viewportInsetsRef.current.left}`
@@ -3010,6 +3011,41 @@ export function MapClient({
     activeGuideCameraKeyRef.current = nextCameraKey;
     selectionCameraKeyRef.current = selectionCameraKey;
     const activeViewportInsets = getViewportInsets(map, viewportModeRef.current, viewportInsetsRef.current);
+    const selectedParentStop =
+      selectedStopId
+        ? activeGuide.stops.find((stop) => stop.id === selectedStopId)
+        : null;
+    const selectedNestedStop =
+      selectedStopId
+        ? activeGuide.stops
+            .flatMap((stop) =>
+              (stop.places ?? []).map((place) => ({
+                parent: stop,
+                place,
+              })),
+            )
+            .find(({ place }) => place.id === selectedStopId)
+        : null;
+
+    if (selectedParentStop || selectedNestedStop) {
+      const focusedPoint = selectedParentStop ?? selectedNestedStop!.place;
+      const [lat, lng] = focusedPoint.coordinates;
+      const focusPadding = clampPaddingToMap(
+        map,
+        mergePadding({ top: 48, right: 52, bottom: 56, left: 52 }, activeViewportInsets),
+      );
+
+      map.easeTo({
+        center: [lng, lat],
+        zoom: Math.max(map.getZoom(), 14.8),
+        padding: focusPadding,
+        duration: 950,
+        easing: smoothCameraEasing,
+        essential: true,
+      });
+      return;
+    }
+
     const focusedStopId = visibleNestedStopParentIds[visibleNestedStopParentIds.length - 1] ?? null;
     const focusedStop = focusedStopId
       ? activeGuide.stops.find((stop) => stop.id === focusedStopId)
@@ -3096,6 +3132,7 @@ export function MapClient({
     activeGuideStopSignature,
     selectionCameraKey,
     styleReadyTick,
+    selectedStopId,
     visibleNestedStopParentIds,
     viewportInsets,
   ]);
