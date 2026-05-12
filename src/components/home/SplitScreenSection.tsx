@@ -1547,7 +1547,7 @@ export function SplitScreenSection({
               ...current,
               toTop: titleRect.top - paneRect.top,
               toLeft: titleRect.left - paneRect.left - MORPH_LEFT_ALIGN_OFFSET_PX,
-              toWidth: titleRect.width,
+              toWidth: getMorphTextTargetWidth(current, getMorphHeaderTargetWidth(titleRect.width)),
               toHeight: titleRect.height,
               toFontSize: (() => {
                 if (!titleEl || typeof window === "undefined") {
@@ -1686,6 +1686,12 @@ export function SplitScreenSection({
     const parsed = Number.parseFloat(window.getComputedStyle(element).fontSize);
     return Number.isFinite(parsed) && parsed > 0 ? parsed : fallback;
   };
+  const getMorphHeaderTargetWidth = (fallbackWidth: number) =>
+    Math.max(fallbackWidth, titleRef.current?.getBoundingClientRect().width ?? 0);
+  const getMorphTextTargetWidth = (morph: NonNullable<typeof continentTitleMorph>, fallbackWidth: number) => {
+    const scaleRatio = morph.fromFontSize > 0 ? morph.toFontSize / morph.fromFontSize : 1;
+    return Math.max(fallbackWidth, morph.fromWidth * scaleRatio);
+  };
   const getMorphOriginMetrics = (triggerEl?: HTMLButtonElement | null) => {
     const fallbackRect = triggerEl?.getBoundingClientRect();
     if (!triggerEl || !fallbackRect) {
@@ -1773,7 +1779,10 @@ export function SplitScreenSection({
         fromFontSize,
         toTop: titleRect.top - paneRect.top,
         toLeft: titleRect.left - paneRect.left - MORPH_LEFT_ALIGN_OFFSET_PX,
-        toWidth: titleRect.width,
+        toWidth: Math.max(
+          getMorphHeaderTargetWidth(titleRect.width),
+          triggerRect.width * (toFontSize / fromFontSize),
+        ),
         toHeight: titleRect.height,
         toFontSize,
         animate: false,
@@ -1834,7 +1843,10 @@ export function SplitScreenSection({
         fromFontSize,
         toTop: titleRect.top - paneRect.top,
         toLeft: titleRect.left - paneRect.left - MORPH_LEFT_ALIGN_OFFSET_PX,
-        toWidth: titleRect.width,
+        toWidth: Math.max(
+          getMorphHeaderTargetWidth(titleRect.width),
+          triggerRect.width * (toFontSize / fromFontSize),
+        ),
         toHeight: titleRect.height,
         toFontSize,
         animate: false,
@@ -1949,7 +1961,10 @@ export function SplitScreenSection({
         fromFontSize,
         toTop: titleRect.top - paneRect.top,
         toLeft: titleRect.left - paneRect.left - MORPH_LEFT_ALIGN_OFFSET_PX,
-        toWidth: titleRect.width,
+        toWidth: Math.max(
+          getMorphHeaderTargetWidth(titleRect.width),
+          triggerRect.width * (toFontSize / fromFontSize),
+        ),
         toHeight: titleRect.height,
         toFontSize,
         animate: false,
@@ -2141,7 +2156,10 @@ export function SplitScreenSection({
         fromFontSize,
         toTop: titleRect.top - paneRect.top,
         toLeft: titleRect.left - paneRect.left - MORPH_LEFT_ALIGN_OFFSET_PX,
-        toWidth: titleRect.width,
+        toWidth: Math.max(
+          getMorphHeaderTargetWidth(titleRect.width),
+          triggerRect.width * (toFontSize / fromFontSize),
+        ),
         toHeight: titleRect.height,
         toFontSize,
         animate: false,
