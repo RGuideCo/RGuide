@@ -2228,6 +2228,12 @@ export function SplitScreenSection({
       }
     };
 
+    if (activeGuideRail === "week-events" && list.id.startsWith("event-")) {
+      addHiddenPart(list.location.city);
+      addHiddenPart(list.location.country);
+      addHiddenPart(list.location.continent);
+    }
+
     if (isGlobalSelection) {
       if (locationsMatch(list.location.continent, "Global")) {
         addHiddenPart("Global");

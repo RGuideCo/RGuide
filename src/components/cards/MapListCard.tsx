@@ -8,7 +8,7 @@ import { createPortal } from "react-dom";
 import { CalendarCheck, ChevronDown, ExternalLink, Heart, Navigation, Plus, X } from "lucide-react";
 
 import { getPoiAttributeTags } from "@/lib/poi-tags";
-import { getCreatorHref, getGuideHref } from "@/lib/routes";
+import { getCreatorHref, getGuideHref, getVenueHref } from "@/lib/routes";
 import { resolveStopHours } from "@/lib/seasonal-hours";
 import { formatNumber } from "@/lib/utils";
 import { CATEGORY_STYLES } from "@/lib/constants";
@@ -134,18 +134,60 @@ type GuideSource = NonNullable<MapList["sources"]>[number];
 function buildGuideMeta(list: MapList, hiddenLocationParts?: string[]) {
   const placeCount = list.stops.length;
   const isEventGuide = list.submissionType === "event" || list.id.startsWith("event-");
-  const placeLabel =
-    isEventGuide
-      ? `${placeCount} ${placeCount === 1 ? "event" : "events"}`
-      : `${placeCount} ${placeCount === 1 ? "place" : "places"}`;
+  const placeLabel = `${placeCount} ${placeCount === 1 ? "place" : "places"}`;
   const locationLabel = buildLocationSubtitle(list, hiddenLocationParts);
+  const eventVenueLabel =
+    list.stops.find((stop) => stop.eventVenue)?.eventVenue ??
+    locationLabel;
   const typeLabel =
     isEventGuide
       ? "Event"
       : list.submissionType === "itinerary"
         ? "Journey"
         : list.category;
-  return [typeLabel, placeLabel, locationLabel].filter(Boolean).join(" • ");
+  return isEventGuide
+    ? [eventVenueLabel].filter(Boolean).join(" • ")
+    : [typeLabel, placeLabel, locationLabel].filter(Boolean).join(" • ");
+}
+
+function getEventCardVenue(list: MapList, hiddenLocationParts?: string[]) {
+  const firstEventStop = list.stops.find((stop) => stop.eventVenue);
+  const label = firstEventStop?.eventVenue ?? buildLocationSubtitle(list, hiddenLocationParts);
+  const venueId = firstEventStop?.eventVenueId ?? list.eventVenueId;
+
+  return {
+    label,
+    venueId,
+  };
+}
+
+function formatEventCardDate(value?: string) {
+  if (!value || !/^\d{4}-\d{2}-\d{2}$/.test(value)) {
+    return null;
+  }
+
+  return new Intl.DateTimeFormat(undefined, {
+    timeZone: "UTC",
+    month: "short",
+    day: "numeric",
+  }).format(new Date(`${value}T00:00:00`));
+}
+
+function buildEventCardDateLabel(list: MapList) {
+  const startDate = list.itinerary?.startDate ?? list.stops.find((stop) => stop.itineraryDate)?.itineraryDate;
+  const endDate = list.itinerary?.endDate ?? [...list.stops].reverse().find((stop) => stop.itineraryDate)?.itineraryDate;
+  const formattedStart = formatEventCardDate(startDate);
+  const formattedEnd = endDate && endDate !== startDate ? formatEventCardDate(endDate) : null;
+
+  if (formattedStart && formattedEnd) {
+    return `${formattedStart} - ${formattedEnd}`;
+  }
+  if (formattedStart) {
+    return formattedStart;
+  }
+
+  const eventTime = list.stops.find((stop) => stop.eventTime)?.eventTime;
+  return eventTime?.split(" to ")[0] ?? null;
 }
 
 function getLocalDateKey(date: Date) {
@@ -336,18 +378,22 @@ export function MapListCard({
 
   const hasVoted = votedIds.includes(list.id);
   const isInItinerary = itineraryPlaylists.some((playlist) => playlist.listIds.includes(list.id));
+  const isEventGuide = list.submissionType === "event" || list.id.startsWith("event-");
   const isItineraryGuide = isInItinerary || isItineraryLikeGuide(list);
+  const usesGuideActions = !isItineraryGuide || isEventGuide;
   const isOwnGuide = Boolean(currentUser && currentUser.id === list.creator.id);
-  const isOwnEditableGuide = isOwnGuide && !isItineraryGuide;
+  const isOwnEditableGuide = isOwnGuide && usesGuideActions;
   const isHistoricalGuide = list.creator.id === "user-rguide-history";
   const categoryStyle = CATEGORY_STYLES[list.category];
-  const guideAccentColor = isItineraryGuide ? "#020617" : categoryStyle.mapColor;
-  const guideExpandedColor = isItineraryGuide ? "#111827" : categoryStyle.mapColor;
+  const guideAccentColor = isItineraryGuide && !isEventGuide ? "#020617" : categoryStyle.mapColor;
+  const guideExpandedColor = isItineraryGuide && !isEventGuide ? "#111827" : categoryStyle.mapColor;
   const visibleUpvotes = list.upvotes + (hasVoted ? 1 : 0);
   const expandedChrome = expanded || preserveExpandedChrome;
   const hiddenLocationParts = expandedChrome ? [] : collapsedLocationSubtitleHiddenParts;
   const locationSubtitle = buildLocationSubtitle(list, hiddenLocationParts);
   const guideMeta = buildGuideMeta(list, hiddenLocationParts);
+  const eventCardVenue = isEventGuide ? getEventCardVenue(list, hiddenLocationParts) : null;
+  const eventCardDateLabel = isEventGuide ? buildEventCardDateLabel(list) : null;
   const preservingListChrome = preserveExpandedChrome && !fillPane;
   const retractingListChrome = preservingListChrome && retractExpandedChrome;
   const expandingListChrome = expandExpandedChrome && expandedChrome;
@@ -1031,8 +1077,34 @@ export function MapListCard({
                 className="min-w-0 flex-1 cursor-pointer select-text"
               >
                 <h3 className={`min-w-0 text-lg font-semibold leading-6 transition-colors ${expandedChrome ? "text-white" : "text-slate-900 group-hover:text-slate-950"} ${retractingListChrome ? "guide-chrome-title--retract" : ""} ${expandingListChrome ? "guide-chrome-title--expand" : ""}`}>{list.title}</h3>
-                <span className={`mt-0.5 block truncate font-mono text-[10px] font-medium uppercase tracking-[0.1em] ${expandedChrome ? "text-white/75" : "text-slate-500"} ${retractingListChrome ? "guide-chrome-meta--retract" : ""} ${expandingListChrome ? "guide-chrome-meta--expand" : ""}`}>
-                  {guideMeta}
+                <span className="mt-0.5 flex min-w-0 items-center gap-2">
+                  {eventCardDateLabel ? (
+                    <span
+                      className={`shrink-0 rounded-full px-2 py-0.5 font-mono text-[9px] font-semibold uppercase tracking-[0.1em] ${
+                        expandedChrome
+                          ? "bg-white/15 text-white"
+                          : "bg-slate-500 text-white"
+                      }`}
+                    >
+                      {eventCardDateLabel}
+                    </span>
+                  ) : null}
+                  {eventCardVenue?.label && eventCardVenue.venueId ? (
+                    <Link
+                      href={getVenueHref(eventCardVenue.venueId)}
+                      onClick={(event) => event.stopPropagation()}
+                      className={`block min-w-0 truncate font-mono text-[10px] font-medium uppercase tracking-[0.1em] underline-offset-2 hover:underline ${
+                        expandedChrome ? "text-white/75 hover:text-white" : "text-slate-500 hover:text-slate-800"
+                      } ${retractingListChrome ? "guide-chrome-meta--retract" : ""} ${expandingListChrome ? "guide-chrome-meta--expand" : ""}`}
+                      title={`View events at ${eventCardVenue.label}`}
+                    >
+                      {eventCardVenue.label}
+                    </Link>
+                  ) : (
+                    <span className={`block min-w-0 truncate font-mono text-[10px] font-medium uppercase tracking-[0.1em] ${expandedChrome ? "text-white/75" : "text-slate-500"} ${retractingListChrome ? "guide-chrome-meta--retract" : ""} ${expandingListChrome ? "guide-chrome-meta--expand" : ""}`}>
+                      {guideMeta}
+                    </span>
+                  )}
                 </span>
               </div>
               {expandedChrome ? (
@@ -1095,7 +1167,7 @@ export function MapListCard({
               </Link>
             )
           ) : null}
-          {!isItineraryGuide ? (
+          {usesGuideActions ? (
             <button
               type="button"
               onClick={(event) => {
@@ -1111,7 +1183,7 @@ export function MapListCard({
               <Plus className="h-3.5 w-3.5" />
             </button>
           ) : null}
-          {!isItineraryGuide ? (
+          {usesGuideActions ? (
             <button
               type="button"
               onClick={(event) => {

@@ -194,6 +194,7 @@ export interface MapList {
   url: string;
   category: ListCategory;
   submissionType?: SubmissionType;
+  eventVenueId?: string;
   itinerary?: {
     startDate?: string;
     endDate?: string;
@@ -244,6 +245,7 @@ export interface GuideStop {
   priceSource?: string;
   bookingUrl?: string;
   officialUrl?: string;
+  eventVenueId?: string;
   eventTime?: string;
   eventVenue?: string;
   places?: GuideStop[];
@@ -267,6 +269,28 @@ export interface GuideStop {
         fall?: string;
         winter?: string;
       };
+}
+
+export interface VenueEvent {
+  venue_id: string;
+  city_id: string;
+  event_id: string;
+  event_slug: string;
+  event_title: string;
+  event_category: string;
+  guide_category: ListCategory;
+  starts_at: string | null;
+  ends_at: string | null;
+  starts_on: string | null;
+  ends_on: string | null;
+  timezone: string;
+  official_url: string | null;
+  photo_url: string | null;
+  is_festival: boolean;
+  is_guide_worthy: boolean;
+  occurrence_count_at_venue: number;
+  next_occurrence_at_venue: string | null;
+  latest_occurrence_at_venue: string | null;
 }
 
 export interface SubArea {

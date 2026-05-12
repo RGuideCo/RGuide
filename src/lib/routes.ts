@@ -22,6 +22,10 @@ export function getEventHref(list: Pick<MapList, "slug">) {
   return `/events/${list.slug}`;
 }
 
+export function getVenueHref(venueId: string) {
+  return `/venues/${encodeURIComponent(venueId)}`;
+}
+
 export function getGuideHref(list: Pick<MapList, "id" | "slug">) {
   return list.id.startsWith("event-") ? getEventHref(list) : getListHref(list);
 }
