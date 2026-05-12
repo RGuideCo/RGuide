@@ -5,7 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { createPortal } from "react-dom";
-import { CalendarCheck, ChevronDown, ExternalLink, Navigation, Plus, ThumbsUp, X } from "lucide-react";
+import { CalendarCheck, ChevronDown, ExternalLink, Heart, Navigation, Plus, X } from "lucide-react";
 
 import { getPoiAttributeTags } from "@/lib/poi-tags";
 import { getCreatorHref, getGuideHref } from "@/lib/routes";
@@ -1035,25 +1035,27 @@ export function MapListCard({
                   {guideMeta}
                 </span>
               </div>
-              <button
-                type="button"
-                onClick={() => onToggleExpand?.(list)}
-                aria-expanded={expanded}
-                aria-controls={`guide-panel-${list.id}`}
-                className="inline-flex h-7 w-7 shrink-0 items-center justify-center rounded-md"
-                aria-label={`${expanded ? "Collapse" : "Expand"} ${list.title}`}
-                title={`${expanded ? "Collapse" : "Expand"} ${list.title}`}
-              >
-                <ChevronDown
-                  className={`h-4 w-4 shrink-0 transition-transform duration-300 ${
-                    expanded
-                      ? `rotate-180 text-white ${expandingListChrome ? "guide-chrome-chevron--expand" : ""}`
-                      : expandedChrome
-                        ? `text-white/80 ${retractingListChrome ? "guide-chrome-chevron--retract" : expandingListChrome ? "guide-chrome-chevron--expand" : ""}`
-                        : "text-slate-400 group-hover:translate-y-0.5 group-hover:text-slate-900 group-focus-within:translate-y-0.5 group-focus-within:text-slate-900"
-                  }`}
-                />
-              </button>
+              {expandedChrome ? (
+                <button
+                  type="button"
+                  onClick={() => onToggleExpand?.(list)}
+                  aria-expanded={expanded}
+                  aria-controls={`guide-panel-${list.id}`}
+                  className="inline-flex h-7 w-7 shrink-0 items-center justify-center rounded-md"
+                  aria-label={`${expanded ? "Collapse" : "Expand"} ${list.title}`}
+                  title={`${expanded ? "Collapse" : "Expand"} ${list.title}`}
+                >
+                  <ChevronDown
+                    className={`h-4 w-4 shrink-0 transition-transform duration-300 ${
+                      expanded
+                        ? `rotate-180 text-white ${expandingListChrome ? "guide-chrome-chevron--expand" : ""}`
+                        : expandedChrome
+                          ? `text-white/80 ${retractingListChrome ? "guide-chrome-chevron--retract" : expandingListChrome ? "guide-chrome-chevron--expand" : ""}`
+                          : "text-slate-400 group-hover:translate-y-0.5 group-hover:text-slate-900 group-focus-within:translate-y-0.5 group-focus-within:text-slate-900"
+                    }`}
+                  />
+                </button>
+              ) : null}
             </div>
           ) : (
             <>
@@ -1100,7 +1102,7 @@ export function MapListCard({
                 event.stopPropagation();
                 openAddPickerForList();
               }}
-              className={`inline-flex items-center gap-1 rounded-full px-2 py-1 text-[11px] font-medium ${
+              className={`inline-flex h-7 w-7 items-center justify-center rounded-full text-[11px] font-medium ${
                 isInItinerary ? "bg-emerald-600 text-white" : "border border-slate-200 bg-white text-slate-700"
               }`}
               aria-label="Add"
@@ -1116,10 +1118,30 @@ export function MapListCard({
                 event.stopPropagation();
                 toggleUpvote(list.id);
               }}
-              className={`inline-flex items-center gap-1 rounded-full px-2 py-1 text-[11px] font-medium ${hasVoted ? "bg-slate-900 text-white" : "border border-slate-200 bg-white text-slate-700"}`}
+              className={`inline-flex h-7 min-w-7 items-center justify-center gap-1 rounded-full px-2 text-[11px] font-medium ${
+                hasVoted ? "bg-rose-950 text-rose-50" : "border border-slate-200 bg-white text-slate-700"
+              }`}
+              aria-label={hasVoted ? "Remove favorite" : "Favorite guide"}
+              title={hasVoted ? "Remove favorite" : "Favorite guide"}
             >
-              <ThumbsUp className="h-3.5 w-3.5" />
-              {formatNumber(visibleUpvotes)}
+              <Heart className={`h-3.5 w-3.5 ${hasVoted ? "fill-current" : ""}`} />
+              {visibleUpvotes > 0 ? <span>{formatNumber(visibleUpvotes)}</span> : null}
+            </button>
+          ) : null}
+          {expandable && !expandedChrome ? (
+            <button
+              type="button"
+              onClick={(event) => {
+                event.stopPropagation();
+                onToggleExpand?.(list);
+              }}
+              aria-expanded={expanded}
+              aria-controls={`guide-panel-${list.id}`}
+              className="inline-flex h-7 w-5 shrink-0 items-center justify-center text-slate-500 transition hover:text-slate-900"
+              aria-label={`Expand ${list.title}`}
+              title={`Expand ${list.title}`}
+            >
+              <ChevronDown className="h-4 w-4 shrink-0 transition-transform duration-300 group-hover:translate-y-0.5 group-focus-within:translate-y-0.5" />
             </button>
           ) : null}
         </div>

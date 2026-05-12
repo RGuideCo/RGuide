@@ -88,7 +88,7 @@ import {
 import { updateSupabaseProfile } from "@/lib/supabase/profile";
 import { getEditorialLists, useAppStore } from "@/store/app-store";
 import type { FavoriteLocation } from "@/store/app-store";
-import { Continent, ListCategory, MapList, SelectionState, SubmissionType } from "@/types";
+import { Continent, Country, ListCategory, MapList, SelectionState, SubmissionType } from "@/types";
 
 export interface SplitScreenSectionProps {
   continents: Continent[];
@@ -133,6 +133,14 @@ const GUIDE_LAYOUT_OPEN_TOTAL_MS = GUIDE_LAYOUT_OPEN_UP_START_MS + GUIDE_LAYOUT_
 const GUIDE_LAYOUT_CLOSE_SIDEWAYS_START_MS = 260;
 const GUIDE_LAYOUT_CLOSE_TOTAL_MS = GUIDE_LAYOUT_CLOSE_SIDEWAYS_START_MS + GUIDE_LAYOUT_OPEN_SIDEWAYS_MS;
 const GUIDE_CONTENT_REVEAL_DELAY_MS = GUIDE_LAYOUT_OPEN_TOTAL_MS + 80;
+
+const getDefaultCountryBrowseView = (country?: Country | null): "cities" | "regions" => {
+  if (country?.id === "united-kingdom") {
+    return "cities";
+  }
+
+  return country?.states?.length ? "regions" : "cities";
+};
 
 type MobileBrowseSelectOption = {
   value: string;
@@ -2592,16 +2600,22 @@ export function SplitScreenSection({
     [activeEditorialLists, activeLocation.city],
   );
   const selectedCountryLists = useMemo(
-    () =>
-      activeLocation.country
-        ? activeEditorialLists.filter(
-            (list) =>
-              list.location.scope === "country" &&
-              list.location.country === activeLocation.country?.name &&
-              list.location.continent === (activeLocation.continent?.name ?? activeLocation.country?.continent),
-          )
-        : [],
-    [activeEditorialLists, activeLocation.continent?.name, activeLocation.country],
+    () => {
+      if (!activeLocation.country) {
+        return [];
+      }
+
+      const countryName = activeLocation.country.name;
+      const continentName = activeLocation.continent?.name ?? activeLocation.country.continent;
+
+      return activeEditorialLists.filter(
+        (list) =>
+          list.location.country === countryName &&
+          list.location.continent === continentName &&
+          (list.location.scope === "country" || (isCountryRootSelection && list.location.scope === "city")),
+      );
+    },
+    [activeEditorialLists, activeLocation.continent?.name, activeLocation.country, isCountryRootSelection],
   );
   const selectedContinentLists = useMemo(
     () =>
@@ -2638,16 +2652,16 @@ export function SplitScreenSection({
               list.location.country === activeLocation.country?.name &&
               list.location.continent === (activeLocation.continent?.name ?? activeLocation.country?.continent))
           : activeLocation.country
-            ? list.location.scope === "country" &&
-              list.location.country === activeLocation.country.name &&
-              list.location.continent === (activeLocation.continent?.name ?? activeLocation.country.continent)
+            ? list.location.country === activeLocation.country.name &&
+              list.location.continent === (activeLocation.continent?.name ?? activeLocation.country.continent) &&
+              (list.location.scope === "country" || (isCountryRootSelection && list.location.scope === "city"))
             : activeLocation.continent
               ? list.location.scope === "continent" && list.location.continent === activeLocation.continent.name
               : isGlobalSelection
                 ? list.location.scope === "continent" && list.location.continent === "Global"
                 : false),
       ),
-    [activeLocation.city, activeLocation.continent, activeLocation.country, currentUser?.id, isGlobalSelection, submittedLists],
+    [activeLocation.city, activeLocation.continent, activeLocation.country, currentUser?.id, isCountryRootSelection, isGlobalSelection, submittedLists],
   );
   const allActiveLists = useMemo(
     () => [...coreActiveLists, ...submittedActiveLists],
@@ -2893,10 +2907,28 @@ export function SplitScreenSection({
         activeLocation.city && !activeNeighborhoodKey && normalizeNeighborhoodName(right.location.neighborhood)
           ? 1
           : 0;
+      const leftCountryRootRank =
+        isCountryRootSelection && left.location.scope === "country"
+          ? 0
+          : isCountryRootSelection && left.location.scope === "city"
+            ? 1
+            : 0;
+      const rightCountryRootRank =
+        isCountryRootSelection && right.location.scope === "country"
+          ? 0
+          : isCountryRootSelection && right.location.scope === "city"
+            ? 1
+            : 0;
+      const rightCreatedAt = Date.parse(right.createdAt);
+      const leftCreatedAt = Date.parse(left.createdAt);
+      const rightCreatedTime = Number.isFinite(rightCreatedAt) ? rightCreatedAt : 0;
+      const leftCreatedTime = Number.isFinite(leftCreatedAt) ? leftCreatedAt : 0;
 
       return (
+        leftCountryRootRank - rightCountryRootRank ||
         leftNeighborhoodRank - rightNeighborhoodRank ||
         right.upvotes - left.upvotes ||
+        rightCreatedTime - leftCreatedTime ||
         left.title.localeCompare(right.title)
       );
     });
@@ -3330,8 +3362,8 @@ export function SplitScreenSection({
   }, [selection.countryId]);
 
   useEffect(() => {
-    setCountryBrowseView(hasStateHierarchyCountry ? "regions" : "cities");
-  }, [hasStateHierarchyCountry, selection.countryId]);
+    setCountryBrowseView(getDefaultCountryBrowseView(activeLocation.country));
+  }, [activeLocation.country, selection.countryId]);
 
   useEffect(() => {
     setStateBrowseView("cities");
@@ -3572,8 +3604,12 @@ export function SplitScreenSection({
     setHoveredCategoryLabel(null);
     setIsMobileListSheetExpanded(true);
   }, [isGuidePaneTakingFullListPane]);
-  const scrollGuideIntoView = (guideId: string) => {
-    requestAnimationFrame(() => {
+  const scrollGuideIntoView = (
+    guideId: string,
+    options: { behavior?: ScrollBehavior; defer?: boolean } = {},
+  ) => {
+    const { behavior = "smooth", defer = true } = options;
+    const runScroll = () => {
       const element = guideRefs.current[guideId];
       const scroller = element?.closest("[data-guides-scroll]");
 
@@ -3581,12 +3617,21 @@ export function SplitScreenSection({
         return;
       }
 
-      const offsetTop = element.offsetTop - scroller.offsetTop;
+      const elementRect = element.getBoundingClientRect();
+      const scrollerRect = scroller.getBoundingClientRect();
+      const offsetTop = scroller.scrollTop + elementRect.top - scrollerRect.top;
       scroller.scrollTo({
         top: Math.max(0, offsetTop),
-        behavior: "smooth",
+        behavior,
       });
-    });
+    };
+
+    if (defer) {
+      requestAnimationFrame(runScroll);
+      return;
+    }
+
+    runScroll();
   };
   const captureGuideLayoutPositions = (motion: "default" | "open" | "close" = "default") => {
     guideLayoutAnimationFramesRef.current.forEach((frame) => cancelAnimationFrame(frame));
@@ -4015,6 +4060,7 @@ export function SplitScreenSection({
       return;
     }
 
+    scrollGuideIntoView(nextList.id, { behavior: "auto", defer: false });
     captureGuideLayoutPositions();
     if (!expandedGuideId) {
       categoryBeforeGuideExpandRef.current = activeCategory;
@@ -4025,7 +4071,6 @@ export function SplitScreenSection({
     setOpeningGuideId(nextList.id);
     setVisibleNestedStopParentIds([]);
     openingGuideTimeoutRef.current = setTimeout(() => completeGuideOpening(nextList), GUIDE_OPEN_EXPAND_START_MS);
-    scrollGuideIntoView(nextList.id);
   };
   const handleCityHighlightGuideSelect = (nextList: MapList) => {
     if (closingGuideTimeoutRef.current) {
@@ -4057,6 +4102,7 @@ export function SplitScreenSection({
       return;
     }
 
+    scrollGuideIntoView(nextList.id, { behavior: "auto", defer: false });
     captureGuideLayoutPositions();
     if (!expandedGuideId) {
       categoryBeforeGuideExpandRef.current = activeCategory;
@@ -4073,7 +4119,6 @@ export function SplitScreenSection({
     if (context) {
       pushExplorerPath(getCanonicalGuidePath(context.city, nextList, getGuideRouteNeighborhood(context.city, nextList), activeEditorialLists));
     }
-    scrollGuideIntoView(nextList.id);
   };
   const handleProfileGuideToggle = (nextList: MapList) => {
     setProfileExpandedGuideId((current) => {
@@ -4543,25 +4588,6 @@ export function SplitScreenSection({
                   ) : null}
                 </div>
               )}
-                {!publicProfile ? (
-                  <>
-                    {activeFavoriteLocation ? (
-                      <button
-                        type="button"
-                        onClick={() => toggleFavoriteLocation(activeFavoriteLocation)}
-                        className={`guide-rail-button rail-switch-item margin-shell-pop-in flex h-10 w-10 items-center justify-center rounded-full border shadow-sm transition hover:scale-105 hover:border-teal-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-400/70 ${
-                          isActiveLocationFavorited
-                            ? "border-teal-500 bg-white/95 text-teal-700"
-                            : "border-slate-200/90 bg-white/95 text-teal-700"
-                        }`}
-                        aria-label={`${isActiveLocationFavorited ? "Remove" : "Save"} ${activeSeoPlaceLabel} ${isActiveLocationFavorited ? "from" : "to"} saved places`}
-                        title={isActiveLocationFavorited ? "Remove saved place" : "Save place"}
-                      >
-                        <Bookmark className={`h-4 w-4 ${isActiveLocationFavorited ? "fill-current" : ""}`} />
-                      </button>
-                    ) : null}
-                  </>
-                ) : null}
 	            {displayedContinentRailIcon?.kind === "continent" ? (
 	              <button
                 type="button"
