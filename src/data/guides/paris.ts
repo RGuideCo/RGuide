@@ -110,7 +110,7 @@ const poiPhotoSources: Record<string, PoiPhotoSource> = {
   },
   "Cheval Blanc Paris": {
     photo:
-      "https://images.prismic.io/lvmh-chevalblanc/Z9AApRsAHJWomUFu_WebRGB-ChevalBlancParis_SuiteSeine_Jardind%27Hiver_511_VincentLeroux.jpg?auto=format,compress",
+      "https://images.prismic.io/lvmh-chevalblanc/Z-vdqXdAxsiBwLEY_WebRGB-ChevalBlancParis_SuiteEiffel_VincentLeroux.jpg?auto=format%2Ccompress&fit=max&w=3840",
     source: "https://www.chevalblanc.com/en/maison/paris/",
   },
   "Chez Prune": {
@@ -181,55 +181,55 @@ const poiPhotoSources: Record<string, PoiPhotoSource> = {
   },
   "Hotel des Grandes Ecoles": {
     photo:
-      "https://afar.brightspotcdn.com/dims4/default/71a678c/2147483647/strip/true/crop/1150x575+0+72/resize/1440x720!/quality/90/?url=https%3A%2F%2Fk3-prod-afar-media.s3.us-west-2.amazonaws.com%2Fbrightspot%2F92%2F49%2F3f50821ecdb57159ea09957abf9a%2Foriginal-a7ea05ff22395157eed13e6709f449ae.jpg",
-    source: "https://www.afar.com/places/hotel-des-grandes-ecoles",
+      "https://cdn.prod.website-files.com/67befba334a0e368cac3c30a/67befba334a0e368cac3c30c_hotel%20grandes%20ecoles%20paris%20elegancia.jpg",
+    source: "https://en.hoteldesgrandesecoles.com/",
   },
   "Hotel Jules and Jim": {
-    photo: "https://d32rszyoapv4qs.cloudfront.net/cache/img/2590db940b8abcc39ba5ea238be9c982d5d95b65-2590db-1200-627-crop.jpg?q=1731669479",
+    photo: "https://d32rszyoapv4qs.cloudfront.net/cache/img/76a193697235133f42f40d77d57283e7035f1fbf-266727-1940-1100-crop.jpg?q=1766140173",
     source: "https://www.hoteljulesetjim.com/",
   },
   "Hotel La Comtesse": {
-    photo: "https://comtesse-hotel.com/_novaimg/4317200-1346800_0_303_4800_2615_2200_1200.rc.jpg",
+    photo: "https://comtesse-hotel.com/_novaimg/4504177-1382971_0_95_2200_1199_2200_1200.rc.jpg",
     source: "https://www.comtesse-hotel.com/",
   },
   "Hotel Le Walt": {
-    photo: "https://d13rhhrxazfw7c.cloudfront.net/cache/img/dbe9def1157870691d427b027851ce61c5154ca9-dbe9de-1200-627-crop.jpg?q=1718102689",
+    photo: "https://d13rhhrxazfw7c.cloudfront.net/cache/img/hotel-le-walt-chambre-217527-1084-1020-crop.jpg?q=1714492253",
     source: "https://www.lewaltparis.com/",
   },
   "Hotel Les Dames du Pantheon": {
-    photo: "https://moonback-hotelbeds.b-cdn.net/21/213073/213073a_hb_ro_003.jpg?aspect_ratio=1200:628&width=1200&height=628",
-    source: "https://www.timetomomo.com/en/visit/paris/accommodation/les-dames-du-pantheon/",
+    photo: "https://www.hotellesdamesdupantheon.com/uploads/images/gallery/pantheon_Classique_02.jpg",
+    source: "https://www.hotellesdamesdupantheon.com/",
   },
   "Hotel de Sully": {
     photo: "https://upload.wikimedia.org/wikipedia/commons/1/12/Sully_Garten.JPG",
     source: "https://commons.wikimedia.org/wiki/File:Sully_Garten.JPG",
   },
   "Hotel Lutetia": {
-    photo: "https://media.ffycdn.net/eu/mandarin-oriental-hotel-group/nsZ8J29W3zvRCSVUKdTY.jpg",
+    photo: "https://media.ffycdn.net/eu/mandarin-oriental-hotel-group/Dp1L67ZGkQdRy3mcxbZo.jpg?mod=v1/contain=-x1000&quality=75",
     source: "https://www.mandarinoriental.com/en/paris/lutetia",
   },
   "Hotel Madame Reve": {
-    photo: "https://madamereve.com/wp-content/uploads/2021/10/Balise_og_madame-reve.jpg",
+    photo: "https://madamereve.com/wp-content/uploads/2021/10/deluxe-vue-exceptionnel-atelier-3-hotel-madame-reve-2.webp",
     source: "https://madamereve.com/",
   },
   "Hotel Montalembert": {
-    photo: "https://d1uj7wsed4nlat.cloudfront.net/cache/img/ff862722b3c71ea1db76ea2c288926f09b962f8e-ff8627-1200-627-crop.jpg?q=1724323756",
+    photo: "https://360.agencewebcom.com/web/uploads/api/site-887/0619196f06c640b1e1084ca64fcfcaf06b82797f.jpg",
     source: "https://www.hotelmontalembert-paris.com/",
   },
   "Hotel Monte Cristo": {
-    photo: "https://www.hotelmontecristoparis.com/cache/img/6066525bbb917692f4a819383d3dca1b68e553e6-606652-1200-627-crop.jpg?q=1714492043&q=1777540737",
+    photo: "https://www.hotelmontecristoparis.com/cache/img/e8b93377a5a0f233a42671a9297f92d6c68129b6-220038-1700-1138-auto.jpg?q=1716385244",
     source: "https://www.hotelmontecristoparis.com/",
   },
   "Hotel Providence": {
-    photo: "https://hotelprovidenceparis.com/wp-content/uploads/2015/09/1w2a2225-5.jpg",
+    photo: "https://hotelprovidenceparis.com/wp-content/uploads/2022/10/hotel-providence-paris-classic-room-0002.jpg",
     source: "https://hotelprovidenceparis.com/",
   },
   "Hotel Regina Louvre": {
-    photo: "https://hapi.mmcreation.com/hapidam/4d367904-2f7f-496a-9dcd-f7ef8e2734d0/2020_PH_V2.png.png",
+    photo: "https://hapi.mmcreation.com/hapidam/12eec0c2-0c6e-47a5-8999-bb871fab9fa6/hotel-regina-facilities-facade-012.jpg?w=1200&mode=cover&coi=50%2C50",
     source: "https://www.regina-hotel.com/",
   },
   "Hotel Rochechouart": {
-    photo: "https://cdn.prod.website-files.com/6543b2c91ab677016dcd0684/67b4ac82da9fb02ce391077d_opengraph%20rochechouart.png",
+    photo: "https://cdn.prod.website-files.com/654aaadae3591f971954c0a0/670fbb77632822b170bc0526_Capture%20d%E2%80%99e%CC%81cran%202024-10-16%20a%CC%80%2015.11.16.avif",
     source: "https://www.orsohotels.com/hotel-rochechouart",
   },
   "Hotel Sookie": {
@@ -246,7 +246,7 @@ const poiPhotoSources: Record<string, PoiPhotoSource> = {
   },
   "J.K. Place Paris": {
     photo:
-      "https://www.jkplaces.com/jkparis/wp-content/themes/startup_pro/inc/php-global/s-image/index.php?img=/var/www/vhosts/jkplaces.com/httpdocs/jkparis/wp-content/uploads//2025/04/jkparis_5stars-hotel.jpg&mod=3&w=1456",
+      "https://www.jkplaces.com/jkparis/wp-content/uploads/2025/03/JK-Palace-Parigi_0008-960x720.jpg",
     source: "https://www.jkplaces.com/jkparis/",
   },
   Juveniles: {
@@ -302,7 +302,7 @@ const poiPhotoSources: Record<string, PoiPhotoSource> = {
     source: "https://www.flickr.com/",
   },
   "Le Citizen Hotel": {
-    photo: "https://cdn.prod.website-files.com/688e265d139102e1191b2a7e/68de7e48c27d5de0af98986d_ILO%20OPEN%20GRAPH.png",
+    photo: "https://cdn.prod.website-files.com/6890326346b61808ab3700cc/68d55164d541d1a0ab36bc0b_Citizen%C2%A9RomainRicard-17.jpg",
     source: "https://lecitizenhotel.com/",
   },
   "Le Comptoir General": {
@@ -326,12 +326,12 @@ const poiPhotoSources: Record<string, PoiPhotoSource> = {
     source: "https://www.lefumoir.com/",
   },
   "Le Grand Mazarin": {
-    photo: "https://www.legrandmazarin.com/wp-content/uploads/2024/07/hotel-le-grand-mazarin-piscine-hotel.jpg",
+    photo: "https://www.legrandmazarin.com/wp-content/uploads/2024/06/onglets-bien-etre.jpg",
     source: "https://www.legrandmazarin.com/",
   },
   "Le Meurice": {
-    photo: "https://upload.wikimedia.org/wikipedia/commons/b/ba/H%C3%B4tel_Le_Meurice.jpg",
-    source: "https://commons.wikimedia.org/wiki/File:H%C3%B4tel_Le_Meurice.jpg",
+    photo: "https://www.dorchestercollection.com/media/4jvbro04/le-meurice-lobby-the-kiss-wide-hr-by-mark-read.jpg?format=webp&rmode=crop",
+    source: "https://www.dorchestercollection.com/paris/le-meurice/",
   },
   "Le Nemours": {
     photo: "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/26/c1/20/74/terrasse.jpg?w=900&h=-1&s=1",
@@ -359,7 +359,7 @@ const poiPhotoSources: Record<string, PoiPhotoSource> = {
     source: "https://www.hotelparticulier.com/tresparticulier.html",
   },
   "Le Village Montmartre": {
-    photo: "https://www.villagehostel.fr/wp-content/uploads/2017/10/DBL-Large-1024x683.jpg",
+    photo: "https://www.villagehostel.fr/wp-content/uploads/2019/11/Terrasse-4-Village-2019-Large-1024x683.jpg",
     source: "https://www.villagehostel.fr/",
   },
   "Les Invalides": {
@@ -372,7 +372,7 @@ const poiPhotoSources: Record<string, PoiPhotoSource> = {
     source: "https://www.lesombres-restaurant.com/",
   },
   "Madison Hotel": {
-    photo: "https://cdn.prod.website-files.com/698a0b7e7e2005d6daeaa106/69a9877d0825f4a1ef17b909_1b7a495f330d533899299a529fcae740_hotel-madison.avif",
+    photo: "https://cdn.prod.website-files.com/698a0b7e7e2005d6daeaa106/698b521d47a7208810e8d244_hotel-madison-chambre-2.avif",
     source: "https://www.hotel-madison.com/",
   },
   "Marlusse et Lapin": {
@@ -389,11 +389,11 @@ const poiPhotoSources: Record<string, PoiPhotoSource> = {
     source: "https://www.maisonsvictorhugo.paris.fr/",
   },
   "MIJE Marais": {
-    photo: "https://www.mije.com/wp-content/uploads/2025/10/MIJE_Home-Page-header_Desktop_Imges-header_1920x526px_2025_1028.jpg",
-    source: "https://www.mije.com/",
+    photo: "https://images.pexels.com/photos/10595335/pexels-photo-10595335.jpeg",
+    source: "https://www.pexels.com/photo/10595335/",
   },
   "Mom'Art Hotel": {
-    photo: "https://www.hotelmomart.com/wp-content/uploads/sites/544/2023/05/FR-Paris-Hotel-Mom-Art-Patio-3728-1-2200x1200.jpg",
+    photo: "https://www.hotelmomart.com/wp-content/uploads/sites/544/2023/05/FR-Paris-Hotel-Mom-Art-Patio-3728-scaled.jpg",
     source: "https://www.hotelmomart.com/en/",
   },
   "Monnaie de Paris": {
@@ -558,7 +558,7 @@ const poiPhotoSources: Record<string, PoiPhotoSource> = {
     source: "https://www.schlouk-map.com/en/places/teddys-bar",
   },
   "Terrass Hotel": {
-    photo: "https://cdn.prod.website-files.com/62693a7ecfa12581d78e342f/62d81e5754d58251dcd6e467_Opengraph%20Terrass%20Hotel%20Montmartre%20Paris.png",
+    photo: "https://cdn.prod.website-files.com/67c6b692ecd52285b2aee65e/67c6b692ecd52285b2aeebeb_62e017535f238d181d78c820_test_2_1_1_.webp",
     source: "https://www.terrass-hotel.com/",
   },
   "Terrass Hotel Rooftop": {
@@ -571,11 +571,11 @@ const poiPhotoSources: Record<string, PoiPhotoSource> = {
     source: "https://www.thecambridge.paris/en/",
   },
   "The Hoxton Paris": {
-    photo: "https://thehoxton.com/wp-content/uploads/sites/5/2020/05/Paris_Hero.jpg",
+    photo: "https://thehoxton.com/wp-content/uploads/sites/5/2025/04/New-Project-2.jpg?w=1300&quality=70",
     source: "https://thehoxton.com/paris/",
   },
   "The People Paris Belleville": {
-    photo: "https://www.thepeoplehostel.com/wp-content/uploads/2025/06/hostel-belleville-LesPiaules-shared_room_new-768x402.jpg",
+    photo: "https://www.thepeoplehostel.com/wp-content/uploads/2025/06/LivelyBackground-04_2_11zon.jpg",
     source: "https://www.thepeoplehostel.com/en/destinations/paris-belleville/",
   },
   Verjus: {
@@ -584,7 +584,7 @@ const poiPhotoSources: Record<string, PoiPhotoSource> = {
     source: "https://www.verjusparis.com/",
   },
   "Young and Happy Latin Quarter": {
-    photo: "https://www.youngandhappy.fr/wp-content/uploads/2024/01/dortoir-sdb-6-1024x682.jpg",
+    photo: "https://www.youngandhappy.fr/wp-content/uploads/2024/01/dortoir-femme-4-1024x682.jpg",
     source: "https://www.youngandhappy.fr/",
   },
 };
@@ -690,6 +690,9 @@ type StopSeed = Omit<GuideStop, "photo" | "hours"> & {
   hours?: GuideStop["hours"];
 };
 
+const hotelStay = { venueKind: "lodging", lodgingType: "hotel" } as const;
+const hostelStay = { venueKind: "lodging", lodgingType: "hostel" } as const;
+
 type GuideSeed = {
   id: string;
   slug: string;
@@ -703,6 +706,14 @@ type GuideSeed = {
   neighborhood?: string;
   stops: StopSeed[];
   sources: ListSource[];
+};
+
+type NeighborhoodGuideOptions = {
+  idTopic?: string;
+  slugTopic?: string;
+  seoSlug?: string;
+  seoTitle?: string;
+  seoDescription?: string;
 };
 
 function slugify(value: string) {
@@ -783,28 +794,37 @@ function neighborhoodGuide(
   title: string,
   description: string,
   sources: ListSource[],
+  options: NeighborhoodGuideOptions = {},
 ) {
   const neighborhoodSlug = slugify(neighborhood);
-  const topicSlug = slugify(topic);
+  const idTopic = options.idTopic ?? topic;
+  const slugTopic = options.slugTopic ?? topic;
+  const idTopicSlug = slugify(idTopic);
+  const slugTopicSlug = slugify(slugTopic);
   const seoSlug =
-    category === "Food"
+    options.seoSlug ??
+    (category === "Food"
       ? "best-restaurants"
       : category === "Nightlife"
         ? "best-bars"
         : category === "Stay"
-          ? "best-hotels"
+          ? topic.toLowerCase().includes("hostel")
+            ? "best-hostels"
+            : "best-hotels"
           : category === "Culture"
             ? "best-culture"
             : category === "Nature"
               ? "best-parks"
-              : "best-things-to-do";
+              : "best-things-to-do");
 
   return guide({
-    id: `list-paris-${neighborhoodSlug}-${topicSlug}`,
-    slug: `paris-${neighborhoodSlug}-${topicSlug}`,
+    id: `list-paris-${neighborhoodSlug}-${idTopicSlug}`,
+    slug: `paris-${neighborhoodSlug}-${slugTopicSlug}`,
     seoSlug,
-    seoTitle: `Best ${topic} in ${neighborhood}, Paris`,
-    seoDescription: `Best ${topic.toLowerCase()} in ${neighborhood}, Paris, selected for source support, neighborhood fit, and useful saved-map routing.`,
+    seoTitle: options.seoTitle ?? `Best ${topic} in ${neighborhood}, Paris`,
+    seoDescription:
+      options.seoDescription ??
+      `Best ${topic.toLowerCase()} in ${neighborhood}, Paris, selected for source support, neighborhood fit, and useful saved-map routing.`,
     title,
     description,
     url: `https://www.google.com/maps/search/${encodeURIComponent(`${neighborhood} ${topic} Paris`)}`,
@@ -1330,69 +1350,130 @@ const citywideEiffelViews: StopSeed[] = [
   },
 ];
 
-const citywideStay: StopSeed[] = [
+const citywideHotelStay: StopSeed[] = [
   {
     id: "paris-stay-cheval-blanc",
     name: "Cheval Blanc Paris",
     coordinates: [48.8588, 2.342],
     description:
-      "Cheval Blanc Paris is the Seine-facing luxury base for travelers who want palace-level service, Samaritaine access, and a central Right Bank position. It is best when the hotel is part of the trip, not just a bed between museum days.",
+      "Cheval Blanc Paris is the Seine-facing palace hotel above Samaritaine, with exclusive rooms and suites, some framing the Eiffel Tower. The stay is built around high-service luxury, river access, and Michelin-starred rooftop dining at Le Tout-Paris.",
     price: "$$$",
     priceSource: "Conde Nast Traveler / Google Travel",
+    officialUrl: "https://www.chevalblanc.com/en/maison/paris/",
+    ...hotelStay,
   },
   {
     id: "paris-stay-lutetia",
     name: "Hotel Lutetia",
     coordinates: [48.8517, 2.327],
     description:
-      "Hotel Lutetia gives the citywide stay guide its grand Left Bank reference point, useful for Orsay, Luxembourg, Saint-Germain cafes, and polished cross-river days. Choose it when heritage and walkable calm matter more than immediate Marais nightlife.",
+      "Hotel Lutetia is the grand Left Bank hotel reference: restored Art Deco scale, polished public rooms, spa facilities, and a wide range of rooms and suites for travelers who want Saint-Germain heritage with full-service luxury.",
     price: "$$$",
     priceSource: "Conde Nast Traveler / Google Travel",
+    officialUrl: "https://www.mandarinoriental.com/en/paris/lutetia",
+    ...hotelStay,
   },
   {
     id: "paris-stay-grand-mazarin",
     name: "Le Grand Mazarin",
     coordinates: [48.858, 2.3546],
     description:
-      "Le Grand Mazarin is the citywide boutique-stay argument for sleeping in Le Marais, close to Hotel de Ville, galleries, restaurants, and late bars. It suits travelers who want old-center access with a design-forward mood rather than palace formality.",
+      "Le Grand Mazarin is the stylish Marais hotel for travelers who want chic maximalist design, a central old-quarter address, a pool and wellness mood, and easy access to galleries, restaurants, Hotel de Ville, and late bars.",
     price: "$$$",
     priceSource: "Conde Nast Traveler / Vogue",
+    officialUrl: "https://www.legrandmazarin.com/",
+    ...hotelStay,
   },
   {
     id: "paris-stay-hoxton",
     name: "The Hoxton Paris",
     coordinates: [48.87, 2.3475],
     description:
-      "The Hoxton Paris is the Grands Boulevards base for travelers who want a lively lobby, covered-passage walks, and quick movement toward the 2nd, 9th, and Marais. It is less intimate than a small boutique hotel, but very practical.",
+      "The Hoxton Paris turns an 18th-century building near the Grands Boulevards into a lively hotel with restaurants, bars, a courtyard, work-friendly lobby spaces, and rooms that suit travelers who want central energy without palace formality.",
     price: "$$",
     priceSource: "Conde Nast Traveler / Google Travel",
+    officialUrl: "https://thehoxton.com/paris/",
+    ...hotelStay,
   },
   {
     id: "paris-stay-rochechouart",
     name: "Hotel Rochechouart",
     coordinates: [48.8822, 2.3425],
     description:
-      "Hotel Rochechouart is the South Pigalle/Montmartre-edge choice when nightlife, rooftop views, and north-side browsing matter. Use it when you want easy evenings near Pigalle and Abbesses without sleeping on the busiest hilltop lanes.",
+      "Hotel Rochechouart is the South Pigalle and Montmartre-edge hotel with Art Deco character, a rooftop, lively dining, and quick access to Pigalle, Abbesses, and north-side evenings without sleeping on the busiest summit streets.",
     price: "$$",
     priceSource: "Conde Nast Traveler / Google Travel",
+    officialUrl: "https://www.orsohotels.com/hotel-rochechouart",
+    ...hotelStay,
   },
+];
+
+const citywideHostelStay: StopSeed[] = [
   {
     id: "paris-stay-generator",
     name: "Generator Paris",
     coordinates: [48.8795, 2.3696],
     description:
-      "Generator Paris is the design-hostel option near Canal Saint-Martin, with dorms, private rooms, and a social setup that makes sense for budget travelers. It fits travelers who value common spaces and canal access over old-city charm.",
+      "Generator Paris is the design-hostel option near Canal Saint-Martin, with dorms, private rooms, social common areas, and a rooftop with city views. It keeps the budget lower while still giving travelers a polished base and easy east-side movement.",
     price: "$",
     priceSource: "Hostelworld / Google Maps",
+    officialUrl: "https://staygenerator.com/hostels/paris",
+    ...hostelStay,
   },
   {
     id: "paris-stay-people-belleville",
     name: "The People Paris Belleville",
     coordinates: [48.8709, 2.3773],
     description:
-      "The People Paris Belleville is the east-side hostel pick for travelers who want rooftop social energy, Belleville food, and fast metro access to the center. It is strongest for solo travelers and budget groups who actually plan to use the neighborhood.",
+      "The People Paris Belleville is part of The People's Paris hostel network, with dorms, private rooms, social spaces, and an east-side base close to Belleville food and metro links. Pick this location for a lower-cost stay with neighborhood energy.",
+    price: "$",
+    priceSource: "Hostelworld / Google Maps",
+    officialUrl: "https://www.thepeoplehostel.com/en/destinations/paris-belleville/",
+    ...hostelStay,
+  },
+  {
+    id: "paris-stay-young-happy",
+    name: "Young and Happy Latin Quarter",
+    coordinates: [48.8446, 2.3507],
+    description:
+      "Young and Happy Latin Quarter is the Mouffetard hostel for travelers who want dorms near the Pantheon area, including smaller dorm options and women-only rooms depending on availability. Cozy common spaces keep it social without feeling oversized.",
     price: "$",
     priceSource: "Hostelworld / Tripadvisor",
+    officialUrl: "https://www.youngandhappy.fr/",
+    ...hostelStay,
+  },
+  {
+    id: "paris-stay-mije-marais",
+    name: "MIJE Marais",
+    coordinates: [48.8564, 2.3615],
+    description:
+      "MIJE Marais keeps the old quarter affordable through simple hostel rooms inside historic Marais houses. It is a location-first option for travelers who want Place des Vosges, Hotel de Ville, and the Seine nearby without hotel pricing.",
+    price: "$",
+    priceSource: "Hostelworld / Google Maps",
+    officialUrl: "https://www.mije.com/",
+    ...hostelStay,
+  },
+  {
+    id: "paris-stay-village-montmartre",
+    name: "Le Village Montmartre",
+    coordinates: [48.8842, 2.3446],
+    description:
+      "Le Village Montmartre works as both hostel and simple hotel-style base, with dorms, superior rooms, and a terrace near Anvers and Sacre-Coeur. It is for travelers who want Montmartre access at a lower nightly spend.",
+    price: "$",
+    priceSource: "Hostelworld / HostelsClub",
+    officialUrl: "https://www.villagehostel.fr/",
+    ...hostelStay,
+  },
+  {
+    id: "paris-stay-st-christophers-canal",
+    name: "St Christopher's Inn Canal",
+    coordinates: [48.8868, 2.3756],
+    description:
+      "St Christopher's Inn Canal is the bigger social hostel north on the waterline, with dorms, private rooms, events, and easy movement toward Bassin de la Villette. It suits groups and solo travelers who want a budget base with built-in activity.",
+    price: "$",
+    priceSource: "Hostelworld / Google Maps",
+    officialUrl: "https://www.st-christophers.co.uk/paris/canal-hostel/",
+    ...hostelStay,
   },
 ];
 
@@ -1666,17 +1747,32 @@ export const parisCitywideGuides = [
   }),
   guide({
     id: "list-paris-citywide-stays",
-    slug: "paris-best-hotels-and-hostels",
+    slug: "paris-best-hotels",
     seoSlug: "best-hotels",
-    seoTitle: "Best Hotels and Hostels in Paris",
+    seoTitle: "Best Hotels in Paris",
     seoDescription:
-      "Best places to stay in Paris, comparing palace hotels, Left Bank classics, Marais boutiques, Pigalle stays, canal hostels, and Belleville budget bases.",
-    title: "Sleep by Arrondissement Fit",
+      "Best hotels in Paris, comparing palace hotels, Left Bank classics, Marais boutiques, Grands Boulevards stays, and Pigalle design hotels.",
+    title: "Paris Hotels by Area and Style",
     description:
-      "Paris stay planning is an arrondissement decision before it is a brand decision: palace Seine views, Left Bank calm, Marais nightlife, Grands Boulevards convenience, Pigalle energy, or hostel bases near the canal and Belleville. Use this to match sleep style to route shape.",
-    url: "https://www.google.com/maps/search/best+hotels+hostels+paris",
+      "Paris hotel planning is an arrondissement decision before it is a brand decision: Seine-facing palace service, Left Bank grandeur, Marais style, Grands Boulevards energy, or Pigalle rooftops. This guide keeps hotels separate from hostel and dorm-base searches.",
+    url: "https://www.google.com/maps/search/best+hotels+paris",
     category: "Stay",
-    stops: citywideStay,
+    stops: citywideHotelStay,
+    sources: parisStaySources,
+  }),
+  guide({
+    id: "list-paris-citywide-hostels",
+    slug: "paris-best-hostels",
+    seoSlug: "best-hostels",
+    seoTitle: "Best Hostels in Paris",
+    seoDescription:
+      "Best hostels in Paris for dorms, private rooms, social spaces, rooftop views, canal access, Belleville, Montmartre, Marais, and the Latin Quarter.",
+    title: "Paris Hostels and Social Budget Bases",
+    description:
+      "Paris hostel searches should not sit beside palace hotels. This guide focuses on dorms, private hostel rooms, social spaces, rooftop or terrace energy, and lower-cost bases around the canal, Belleville, Montmartre, Le Marais, and the Latin Quarter.",
+    url: "https://www.google.com/maps/search/best+hostels+paris",
+    category: "Stay",
+    stops: citywideHostelStay,
     sources: parisStaySources,
   }),
   guide({
@@ -1737,7 +1833,7 @@ const neighborhoodTopics: Record<EditorialCategory, string> = {
   Nightlife: "Bars",
   Nature: "Parks and Walks",
   Culture: "Culture",
-  Stay: "Hotels and Hostels",
+  Stay: "Hotels",
   Activities: "Things to Do",
 };
 
@@ -1755,20 +1851,27 @@ type NeighborhoodGuideSeed = {
   description: string;
   stops: StopSeed[];
   topic?: string;
+  idTopic?: string;
+  slugTopic?: string;
+  seoSlug?: string;
+  seoTitle?: string;
+  seoDescription?: string;
   sources?: ListSource[];
 };
+
+type NeighborhoodGuideSeedValue = NeighborhoodGuideSeed | NeighborhoodGuideSeed[];
 
 function nStop(
   id: string,
   name: string,
   coordinates: [number, number],
   description: string,
-  details: Partial<Pick<StopSeed, "price" | "priceSource" | "photo" | "hours">> = {},
+  details: Partial<Omit<StopSeed, "id" | "name" | "coordinates" | "description">> = {},
 ): StopSeed {
   return { id, name, coordinates, description, ...details };
 }
 
-const parisNeighborhoodGuideSeeds: Record<ParisNeighborhood, Record<EditorialCategory, NeighborhoodGuideSeed>> = {
+const parisNeighborhoodGuideSeeds: Record<ParisNeighborhood, Record<EditorialCategory, NeighborhoodGuideSeedValue>> = {
   "1st Arrondissement": {
     Food: {
       title: "Museum-Day Meals Around the Royal Core",
@@ -1820,10 +1923,10 @@ const parisNeighborhoodGuideSeeds: Record<ParisNeighborhood, Record<EditorialCat
       description:
         "Staying in the 1st is about paying for centrality: palace service, Louvre access, shopping arcades, and short walks to the Seine. This guide keeps the picks honest for travelers who want the hotel to be part of the trip.",
       stops: [
-        nStop("first-stay-cheval-blanc", "Cheval Blanc Paris", [48.8588, 2.342], "Cheval Blanc Paris is the Seine-facing luxury base for travelers who want palace-level service, Samaritaine access, and immediate Right Bank positioning. It is best when the hotel experience matters as much as the route.", { price: "$$$", priceSource: "Conde Nast Traveler / Google Travel" }),
-        nStop("first-stay-le-meurice", "Le Meurice", [48.865, 2.3286], "Le Meurice gives the 1st classic palace gravity on Rue de Rivoli, with Tuileries and the Louvre almost outside the door. Choose it for grand-service travel and museum-heavy days.", { price: "$$$", priceSource: "Official hotel site / Google Travel" }),
-        nStop("first-stay-regina-louvre", "Hotel Regina Louvre", [48.8638, 2.3322], "Hotel Regina Louvre is the heritage stay for travelers who want Tuileries, Palais Royal, and Louvre access without the newest design-hotel mood. It fits first-time Paris routes that prize address and view corridors.", { price: "$$$", priceSource: "Google Travel / Tripadvisor" }),
-        nStop("first-stay-madame-reve", "Hotel Madame Reve", [48.8626, 2.3428], "Hotel Madame Reve gives the 1st a newer design-led base in the former post-office building near Les Halles and the Louvre. It works when central access, rooftop energy, and contemporary rooms matter.", { price: "$$$", priceSource: "Conde Nast Traveler / Google Travel" }),
+        nStop("first-stay-cheval-blanc", "Cheval Blanc Paris", [48.8588, 2.342], "Cheval Blanc Paris is the Seine-facing palace hotel above Samaritaine, with exclusive rooms and suites, some framing the Eiffel Tower. The stay is built around high-service luxury, river access, and Michelin-starred rooftop dining at Le Tout-Paris.", { price: "$$$", priceSource: "Conde Nast Traveler / Google Travel", officialUrl: "https://www.chevalblanc.com/en/maison/paris/", ...hotelStay }),
+        nStop("first-stay-le-meurice", "Le Meurice", [48.865, 2.3286], "Le Meurice gives the 1st classic palace gravity on Rue de Rivoli, with Tuileries and the Louvre almost outside the door. It is a grand-service hotel for travelers who want old Paris formality, polished rooms, and a major hotel bar.", { price: "$$$", priceSource: "Official hotel site / Google Travel", officialUrl: "https://www.dorchestercollection.com/paris/le-meurice/", ...hotelStay }),
+        nStop("first-stay-regina-louvre", "Hotel Regina Louvre", [48.8638, 2.3322], "Hotel Regina Louvre is the heritage hotel opposite the Tuileries, with Belle Epoque character, Louvre-side views, and a location that keeps Palais Royal, Rue de Rivoli, and the river close.", { price: "$$$", priceSource: "Google Travel / Tripadvisor", officialUrl: "https://www.regina-hotel.com/", ...hotelStay }),
+        nStop("first-stay-madame-reve", "Hotel Madame Reve", [48.8626, 2.3428], "Hotel Madame Reve gives the 1st a contemporary hotel in the former Louvre post-office building, with warm rooms, restaurants, rooftop-facing energy, and central access to Les Halles, the Louvre, and the Seine.", { price: "$$$", priceSource: "Conde Nast Traveler / Google Travel", officialUrl: "https://madamereve.com/", ...hotelStay }),
       ],
     },
     Activities: {
@@ -1883,17 +1986,27 @@ const parisNeighborhoodGuideSeeds: Record<ParisNeighborhood, Record<EditorialCat
         nStop("marais-culture-hotel-sully", "Hotel de Sully", [48.8547, 2.3642], "Hotel de Sully is a 17th-century private mansion with sculpted facades, courtyard passages, and a garden connection toward Place des Vosges. It is one of the clearest examples of aristocratic Marais architecture."),
       ],
     },
-    Stay: {
-      title: "Boutique Bases in the Old Quarter",
-      description:
-        "Staying in Le Marais means prioritizing restaurants, bars, galleries, and walkable old-center streets over large-room calm. This guide mixes design hotels and practical budget bases that honestly serve the neighborhood.",
-      stops: [
-        nStop("marais-stay-grand-mazarin", "Le Grand Mazarin", [48.858, 2.3546], "For Le Marais stays, Le Grand Mazarin puts maximalist boutique energy close to Hotel de Ville, galleries, restaurants, and late bars. It suits travelers who want old-center access with design-forward energy.", { price: "$$$", priceSource: "Conde Nast Traveler / Vogue" }),
-        nStop("marais-stay-sookie", "Hotel Sookie", [48.8628, 2.3606], "Hotel Sookie is the smaller north Marais base for travelers who want Rue de Bretagne, Enfants Rouges, and gallery streets nearby. It fits a boutique-stay trip better than a palace-service trip.", { price: "$$", priceSource: "Google Travel / Tripadvisor" }),
-        nStop("marais-stay-jules-jim", "Hotel Jules and Jim", [48.8632, 2.3567], "Hotel Jules and Jim gives the upper Marais a design-hotel option with a courtyard bar and quick access to Arts et Metiers. Use it when nightlife and central movement matter.", { price: "$$", priceSource: "Google Travel / Tripadvisor" }),
-        nStop("marais-stay-mije", "MIJE Marais", [48.8564, 2.3615], "MIJE Marais is the budget-friendly historic-house option for travelers who want the old quarter without hotel pricing. It works best for simple rooms, school-group energy, and maximum location value.", { price: "$", priceSource: "Hostelworld / Google Maps" }),
-      ],
-    },
+    Stay: [
+      {
+        title: "Marais Boutique Hotels",
+        description:
+          "Marais hotel stays are for travelers who want restaurants, galleries, bars, and old-center streets within a short walk. This guide keeps the hotel picks separate from hostel-style budget bases.",
+        stops: [
+          nStop("marais-stay-grand-mazarin", "Le Grand Mazarin", [48.858, 2.3546], "Le Grand Mazarin gives Le Marais a stylish, chic hotel with maximalist rooms, wellness spaces, and a central address near Hotel de Ville, galleries, restaurants, and late bars.", { price: "$$$", priceSource: "Conde Nast Traveler / Vogue", officialUrl: "https://www.legrandmazarin.com/", ...hotelStay }),
+          nStop("marais-stay-sookie", "Hotel Sookie", [48.8628, 2.3606], "Hotel Sookie is the smaller north Marais hotel with modern, calming design, warm rooms, and quick access to Rue de Bretagne, Enfants Rouges, galleries, and cafe-heavy side streets.", { price: "$$", priceSource: "Google Travel / Tripadvisor", officialUrl: "https://hotelsuzieblue.com/en", ...hotelStay }),
+          nStop("marais-stay-jules-jim", "Hotel Jules and Jim", [48.8632, 2.3567], "Hotel Jules and Jim gives the upper Marais a compact design-hotel option with a courtyard bar, contemporary rooms, and quick access to Arts et Metiers, Rue de Bretagne, and central nightlife.", { price: "$$", priceSource: "Google Travel / Tripadvisor", officialUrl: "https://www.hoteljulesetjim.com/", ...hotelStay }),
+        ],
+      },
+      {
+        topic: "Hostels",
+        title: "Marais Hostels and Budget Beds",
+        description:
+          "The Marais has far fewer true hostel options than hotels, so this guide keeps the budget stay separate and focuses on the credible old-quarter hostel base rather than mixing it into boutique hotel lists.",
+        stops: [
+          nStop("marais-stay-mije", "MIJE Marais", [48.8564, 2.3615], "MIJE Marais is the budget-friendly historic-house hostel option for travelers who want the old quarter without hotel pricing. Expect simple rooms, shared spaces, and a location-first stay close to Place des Vosges and the Seine.", { price: "$", priceSource: "Hostelworld / Google Maps", officialUrl: "https://www.mije.com/", ...hostelStay }),
+        ],
+      },
+    ],
     Activities: {
       title: "Old Streets, Squares, and Late Stops",
       description:
@@ -1952,14 +2065,14 @@ const parisNeighborhoodGuideSeeds: Record<ParisNeighborhood, Record<EditorialCat
       ],
     },
     Stay: {
-      title: "Grand Left Bank and Quiet Boutique Bases",
+      title: "Grand Left Bank Hotels",
       description:
-        "Saint-Germain stays are for travelers who want cafe mornings, galleries, Luxembourg access, and calm returns after museum days. This guide balances palace heritage with smaller hotels close to the Left Bank route.",
+        "Saint-Germain hotel stays are for travelers who want cafe mornings, galleries, Luxembourg access, and calm Left Bank returns. This guide keeps the district focused on hotels rather than dorm-style budget bases.",
       stops: [
-        nStop("saint-germain-stay-lutetia", "Hotel Lutetia", [48.8517, 2.327], "In Saint-Germain, Hotel Lutetia is the grand hotel choice for Orsay, Luxembourg, polished cafe routes, and Left Bank calm. Choose it when heritage matters more than immediate Marais nightlife.", { price: "$$$", priceSource: "Conde Nast Traveler / The Times" }),
-        nStop("saint-germain-stay-relais-christine", "Relais Christine", [48.8541, 2.3403], "Relais Christine gives Saint-Germain a tucked-away luxury base near the river and Odeon. It fits travelers who want quiet, romance, and historic-street access rather than lobby scene.", { price: "$$$", priceSource: "Conde Nast Traveler / Google Travel" }),
-        nStop("saint-germain-stay-aubusson", "Hotel d'Aubusson", [48.8545, 2.3396], "Hotel d'Aubusson is a polished Left Bank hotel with jazz-bar energy and easy access to Rue de Buci, the Seine, and galleries. It works when the stay should support both culture and evenings.", { price: "$$$", priceSource: "Google Travel / Tripadvisor" }),
-        nStop("saint-germain-stay-madison", "Madison Hotel", [48.8534, 2.3338], "Madison Hotel gives the boulevard a practical boutique base beside the church and classic cafes. Use it when location, metro access, and Saint-Germain identity matter more than resort amenities.", { price: "$$", priceSource: "Google Travel / Tripadvisor" }),
+        nStop("saint-germain-stay-lutetia", "Hotel Lutetia", [48.8517, 2.327], "Hotel Lutetia is the grand Left Bank hotel choice, with Art Deco scale, polished public rooms, spa facilities, and a range of exclusive rooms and suites near Saint-Germain cafes, Orsay, and Luxembourg.", { price: "$$$", priceSource: "Conde Nast Traveler / The Times", officialUrl: "https://www.mandarinoriental.com/en/paris/lutetia", ...hotelStay }),
+        nStop("saint-germain-stay-relais-christine", "Relais Christine", [48.8541, 2.3403], "Relais Christine gives Saint-Germain a tucked-away luxury hotel near the river and Odeon, with historic-street access, intimate rooms, and a quieter mood than the larger Left Bank addresses.", { price: "$$$", priceSource: "Conde Nast Traveler / Google Travel", ...hotelStay }),
+        nStop("saint-germain-stay-aubusson", "Hotel d'Aubusson", [48.8545, 2.3396], "Hotel d'Aubusson sits in a 17th-century townhouse with elegant rooms, grand public spaces, a jazz bar, and easy access to Rue de Buci, the Seine, galleries, and Left Bank evenings.", { price: "$$$", priceSource: "Google Travel / Tripadvisor", officialUrl: "https://www.hoteldaubusson.com/", ...hotelStay }),
+        nStop("saint-germain-stay-madison", "Madison Hotel", [48.8534, 2.3338], "Madison Hotel is a polished boutique hotel beside Saint-Germain-des-Pres church, with rooms and suites that keep the boulevard, classic cafes, metro access, and gallery streets close.", { price: "$$", priceSource: "Google Travel / Tripadvisor", officialUrl: "https://www.hotel-madison.com/", ...hotelStay }),
       ],
     },
     Activities: {
@@ -2019,17 +2132,27 @@ const parisNeighborhoodGuideSeeds: Record<ParisNeighborhood, Record<EditorialCat
         nStop("latin-culture-sorbonne", "Sorbonne Chapel and Place de la Sorbonne", [48.8487, 2.3437], "Place de la Sorbonne opens toward the Sorbonne's historic academic complex and the Chapelle Sainte-Ursule de la Sorbonne, the domed 17th-century chapel associated with Cardinal Richelieu. The chapel is a landmark of the university quarter even when interior access is limited."),
       ],
     },
-    Stay: {
-      title: "Bookish Bases Near the Pantheon",
-      description:
-        "Latin Quarter stays work for travelers who want student streets, bookshops, gardens, and easy RER or metro access. This guide balances boutique hotels, older quiet rooms, and one budget base that honestly serves the area.",
-      stops: [
-        nStop("latin-stay-dames-pantheon", "Hotel Les Dames du Pantheon", [48.846, 2.3459], "Hotel Les Dames du Pantheon is the location-first boutique stay with Pantheon views and direct access to the Sorbonne side. It fits travelers who want literary Left Bank mood and short walks.", { price: "$$", priceSource: "Google Travel / Tripadvisor" }),
-        nStop("latin-stay-grandes-ecoles", "Hotel des Grandes Ecoles", [48.8434, 2.3509], "Hotel des Grandes Ecoles gives the Latin Quarter a courtyard-garden hotel near Mouffetard. Use it when calm, charm, and neighborhood feel matter more than large luxury services.", { price: "$$", priceSource: "Google Travel / Tripadvisor" }),
-        nStop("latin-stay-monte-cristo", "Hotel Monte Cristo", [48.8377, 2.3523], "Hotel Monte Cristo is the southern Latin Quarter boutique base with a more styled, tucked-away mood. It works for travelers who want access to Mouffetard, Jardin des Plantes, and quieter nights.", { price: "$$", priceSource: "Google Travel / Tripadvisor" }),
-        nStop("latin-stay-young-happy", "Young and Happy Latin Quarter", [48.8446, 2.3507], "Young and Happy Latin Quarter is the budget hostel pick for travelers who want Mouffetard, student bars, and simple access to the Pantheon area. It is strongest for social, low-cost stays.", { price: "$", priceSource: "Hostelworld / Google Maps" }),
-      ],
-    },
+    Stay: [
+      {
+        title: "Latin Quarter Hotels Near the Pantheon",
+        description:
+          "Latin Quarter hotel stays work for travelers who want the Pantheon, Mouffetard, Jardin des Plantes, bookshops, and useful RER or metro access. This guide keeps boutique hotels separate from hostel beds.",
+        stops: [
+          nStop("latin-stay-dames-pantheon", "Hotel Les Dames du Pantheon", [48.846, 2.3459], "Hotel Les Dames du Pantheon is the Pantheon-facing boutique hotel where each floor has a different theme. It suits travelers who want Left Bank atmosphere, Sorbonne access, and short walks to bookshops and gardens.", { price: "$$", priceSource: "Google Travel / Tripadvisor", officialUrl: "https://www.hotellesdamesdupantheon.com/", ...hotelStay }),
+          nStop("latin-stay-grandes-ecoles", "Hotel des Grandes Ecoles", [48.8434, 2.3509], "Hotel des Grandes Ecoles feels like a country home in the heart of Paris, with garden calm near Mouffetard and the Pantheon. It is for travelers who want quiet charm rather than large luxury services.", { price: "$$", priceSource: "Google Travel / Tripadvisor", officialUrl: "https://en.hoteldesgrandesecoles.com/", ...hotelStay }),
+          nStop("latin-stay-monte-cristo", "Hotel Monte Cristo", [48.8377, 2.3523], "Hotel Monte Cristo is a styled southern Latin Quarter hotel with a wellness area, pool, sauna, bar, restaurant, and a range of rooms and suites. It works well for Mouffetard, Jardin des Plantes, and quieter nights.", { price: "$$", priceSource: "Google Travel / Tripadvisor", officialUrl: "https://www.hotelmontecristoparis.com/", ...hotelStay }),
+        ],
+      },
+      {
+        topic: "Hostels",
+        title: "Latin Quarter Hostel Beds",
+        description:
+          "The Latin Quarter has a limited hostel field, so this guide keeps the true budget option separate from boutique hotels and focuses on the hostel that best serves Mouffetard and Pantheon-area routes.",
+        stops: [
+          nStop("latin-stay-young-happy", "Young and Happy Latin Quarter", [48.8446, 2.3507], "Young and Happy Latin Quarter is the Mouffetard hostel for travelers who want dorms near the Pantheon area, including smaller dorm options and women-only rooms depending on availability. Cozy common spaces keep it social without feeling oversized.", { price: "$", priceSource: "Hostelworld / Google Maps", officialUrl: "https://www.youngandhappy.fr/", ...hostelStay }),
+        ],
+      },
+    ],
     Activities: {
       title: "A Bookish Left Bank Day",
       description:
@@ -2089,17 +2212,27 @@ const parisNeighborhoodGuideSeeds: Record<ParisNeighborhood, Record<EditorialCat
         nStop("montmartre-culture-moulin-galette", "Moulin de la Galette", [48.8873, 2.3367], "Moulin de la Galette is the historic Montmartre windmill and restaurant site linked to the old dance hall painted by Renoir and other artists. It makes the hill's mill, restaurant, and art-history layers clear in one place."),
       ],
     },
-    Stay: {
-      title: "Hilltop Hotels and Social Budget Bases",
-      description:
-        "Montmartre stays are for travelers who want village streets, north-side evenings, and views more than central monument access. This guide balances rooftop hotels, small boutiques, and hostel bases near the hill.",
-      stops: [
-        nStop("montmartre-stay-terrass", "Terrass Hotel", [48.8852, 2.3326], "Terrass Hotel is the view-led Montmartre stay with rooftop drinks and easy access to Rue Caulaincourt and Abbesses. Use it when the hill should shape mornings and evenings.", { price: "$$$", priceSource: "Conde Nast Traveler / Google Travel" }),
-        nStop("montmartre-stay-arts", "Hotel des Arts Montmartre", [48.8853, 2.3348], "Hotel des Arts Montmartre is a smaller neighborhood hotel close to Abbesses, restaurants, and hill walks. It fits travelers who want Montmartre charm without a big hotel scene.", { price: "$$", priceSource: "Google Travel / Tripadvisor" }),
-        nStop("montmartre-stay-village", "Le Village Montmartre", [48.8842, 2.3446], "Le Village Montmartre is the hostel base near Anvers and Sacre-Coeur for budget travelers who want the hill within minutes. It works for simple dorms or privates with social energy.", { price: "$", priceSource: "Hostelworld / HostelsClub" }),
-        nStop("montmartre-stay-momart", "Mom'Art Hotel", [48.8846, 2.3432], "Mom'Art Hotel gives the lower hill a compact boutique option near Anvers and Sacre-Coeur. Use it when convenience to the climb matters more than a quiet residential pocket.", { price: "$$", priceSource: "Google Travel / Tripadvisor" }),
-      ],
-    },
+    Stay: [
+      {
+        title: "Montmartre Hilltop Hotels",
+        description:
+          "Montmartre hotel stays are for travelers who want village streets, rooftop views, north-side evenings, and hill access without folding hostel beds into the same list.",
+        stops: [
+          nStop("montmartre-stay-terrass", "Terrass Hotel", [48.8852, 2.3326], "Terrass Hotel is the view-led Montmartre hotel, with rooftop drinks, rooms near Rue Caulaincourt, and easy access to Abbesses, the cemetery, and lower-hill restaurants.", { price: "$$$", priceSource: "Conde Nast Traveler / Google Travel", officialUrl: "https://www.terrass-hotel.com/", ...hotelStay }),
+          nStop("montmartre-stay-arts", "Hotel des Arts Montmartre", [48.8853, 2.3348], "Hotel des Arts Montmartre is a smaller neighborhood hotel close to Abbesses, restaurants, and hill walks, with a warmer boutique mood than the bigger view-led properties.", { price: "$$", priceSource: "Google Travel / Tripadvisor", officialUrl: "https://www.arts-hotel-paris.com/", ...hotelStay }),
+          nStop("montmartre-stay-momart", "Mom'Art Hotel", [48.8846, 2.3432], "Mom'Art Hotel is a compact boutique hotel near Anvers, Abbesses, and Sacre-Coeur, with a patio and lower-hill access that keeps the Montmartre climb, cafes, and evening streets close.", { price: "$$", priceSource: "Google Travel / Tripadvisor", officialUrl: "https://www.hotelmomart.com/en/", ...hotelStay }),
+        ],
+      },
+      {
+        topic: "Hostels",
+        title: "Montmartre Hostel Beds and Budget Rooms",
+        description:
+          "Montmartre hostel stays should be searched separately from rooftop hotels. This guide keeps the lower-cost hill option clear for travelers choosing dorms, superior rooms, and simple social spaces.",
+        stops: [
+          nStop("montmartre-stay-village", "Le Village Montmartre", [48.8842, 2.3446], "Le Village Montmartre works as both hostel and simple hotel-style base, with dorms, superior rooms, and a terrace near Anvers and Sacre-Coeur. It is for travelers who want Montmartre access at a lower nightly spend.", { price: "$", priceSource: "Hostelworld / HostelsClub", officialUrl: "https://www.villagehostel.fr/", ...hostelStay }),
+        ],
+      },
+    ],
     Activities: {
       title: "A Hill Walk With Timing",
       description:
@@ -2157,17 +2290,27 @@ const parisNeighborhoodGuideSeeds: Record<ParisNeighborhood, Record<EditorialCat
         nStop("canal-culture-republique", "Place de la Republique", [48.8675, 2.363], "Place de la Republique is the large civic square south of the canal, centered on the Monument a la Republique. It works culturally as a public gathering space, protest site, meeting point, and piece of republican symbolism."),
       ],
     },
-    Stay: {
-      title: "Canal Hotels and Social Bases",
-      description:
-        "Staying around Canal Saint-Martin is about east-side food, bars, train access, and social energy. This guide mixes canal-facing hotels, design hostels, and practical bases that serve the waterline route.",
-      stops: [
-        nStop("canal-stay-citizen", "Le Citizen Hotel", [48.8726, 2.3643], "Le Citizen Hotel is the canal-facing boutique stay for travelers who want the water, cafes, and bars directly outside. It is best when the canal is the daily base, not just one evening plan.", { price: "$$", priceSource: "Google Travel / Tripadvisor" }),
-        nStop("canal-stay-generator", "Generator Paris", [48.8795, 2.3696], "Generator Paris is the design-hostel option near Canal Saint-Martin, with dorms, private rooms, and social common spaces. It fits budget travelers who value canal access over old-city charm.", { price: "$", priceSource: "Hostelworld / Google Maps" }),
-        nStop("canal-stay-providence", "Hotel Providence", [48.8701, 2.3568], "Hotel Providence gives the canal-Republique edge a design-led hotel with strong food and bar access nearby. Use it when the stay should bridge the canal, the 10th, and central Right Bank routes.", { price: "$$$", priceSource: "Conde Nast Traveler / Google Travel" }),
-        nStop("canal-stay-st-christophers", "St Christopher's Inn Canal", [48.8868, 2.3756], "St Christopher's Inn Canal is the larger social-hostel base north on the waterline, useful for budget travelers who want dorms, events, and Villette access. It is more canal extension than old-center stay.", { price: "$", priceSource: "Hostelworld / Google Maps" }),
-      ],
-    },
+    Stay: [
+      {
+        title: "Canal Saint-Martin Hotels",
+        description:
+          "Canal Saint-Martin hotel stays are about canal views, east-side food, bars, train access, and design-led rooms. This guide keeps hotels separate from the neighborhood's social hostel bases.",
+        stops: [
+          nStop("canal-stay-citizen", "Le Citizen Hotel", [48.8726, 2.3643], "Le Citizen Hotel is a small canal-facing hotel with refined simplicity, elegant rooms, and canal views from each room. It works for travelers who want the water, cafes, and bars directly outside.", { price: "$$", priceSource: "Google Travel / Tripadvisor", officialUrl: "https://lecitizenhotel.com/", ...hotelStay }),
+          nStop("canal-stay-providence", "Hotel Providence", [48.8701, 2.3568], "Hotel Providence is a design-led hotel in the heart of the eastern district, close to Canal Saint-Martin, Strasbourg-Saint-Denis, Republique, restaurants, and late bars.", { price: "$$$", priceSource: "Conde Nast Traveler / Google Travel", officialUrl: "https://hotelprovidenceparis.com/", ...hotelStay }),
+        ],
+      },
+      {
+        topic: "Hostels",
+        title: "Canal Hostels and Social Bases",
+        description:
+          "Canal Saint-Martin has real hostel demand, so this guide separates dorms, private hostel rooms, rooftop views, events, and larger social spaces from the canal hotel list.",
+        stops: [
+          nStop("canal-stay-generator", "Generator Paris", [48.8795, 2.3696], "Generator Paris is the design-hostel option near Canal Saint-Martin, with dorms, private rooms, social common areas, and a rooftop with city views. It keeps costs lower while still feeling polished.", { price: "$", priceSource: "Hostelworld / Google Maps", officialUrl: "https://staygenerator.com/hostels/paris", ...hostelStay }),
+          nStop("canal-stay-st-christophers", "St Christopher's Inn Canal", [48.8868, 2.3756], "St Christopher's Inn Canal is the larger social-hostel base north on the waterline, useful for budget travelers who want dorms, events, private rooms, and Villette access.", { price: "$", priceSource: "Hostelworld / Google Maps", officialUrl: "https://www.st-christophers.co.uk/paris/canal-hostel/", ...hostelStay }),
+        ],
+      },
+    ],
     Activities: {
       title: "A Waterline Day Into Night",
       description:
@@ -2227,14 +2370,14 @@ const parisNeighborhoodGuideSeeds: Record<ParisNeighborhood, Record<EditorialCat
       ],
     },
     Stay: {
-      title: "Eiffel-Side Hotels for Quiet Returns",
+      title: "Eiffel-Side Hotels",
       description:
         "Staying in the 7th is about calm, monuments, museums, and polished streets rather than late nightlife. This guide focuses on hotels that keep Eiffel, Rodin, Invalides, and Orsay days walkable.",
       stops: [
-        nStop("seventh-stay-la-comtesse", "Hotel La Comtesse", [48.8539, 2.3065], "Hotel La Comtesse is the Eiffel-view boutique stay for travelers who want Champ de Mars, Rue Cler, and Invalides close by. It works when view and location outweigh big-hotel amenities.", { price: "$$", priceSource: "Google Travel / Tripadvisor" }),
-        nStop("seventh-stay-le-walt", "Hotel Le Walt", [48.8548, 2.3089], "Hotel Le Walt gives the 7th a smaller hotel base near Ecole Militaire and the Eiffel route. Use it when the plan needs quiet returns after museum and monument days.", { price: "$$", priceSource: "Google Travel / Tripadvisor" }),
-        nStop("seventh-stay-jk-place", "J.K. Place Paris", [48.8604, 2.3183], "J.K. Place Paris is the design-luxury stay near the Seine, Orsay, and Invalides, with a more intimate mood than palace hotels. It fits travelers who want polish without Right Bank scale.", { price: "$$$", priceSource: "Conde Nast Traveler / Google Travel" }),
-        nStop("seventh-stay-montalembert", "Hotel Montalembert", [48.8565, 2.327], "Hotel Montalembert sits on the Saint-Germain edge of the 7th, useful for Orsay, galleries, and Left Bank meals. Choose it when the stay should bridge the 7th and Saint-Germain.", { price: "$$$", priceSource: "Google Travel / Tripadvisor" }),
+        nStop("seventh-stay-la-comtesse", "Hotel La Comtesse", [48.8539, 2.3065], "Hotel La Comtesse is the Eiffel-view boutique hotel for travelers who want Champ de Mars, Rue Cler, and Invalides close by, with location and view doing more work than big-resort amenities.", { price: "$$", priceSource: "Google Travel / Tripadvisor", officialUrl: "https://www.comtesse-hotel.com/", ...hotelStay }),
+        nStop("seventh-stay-le-walt", "Hotel Le Walt", [48.8548, 2.3089], "Hotel Le Walt is a smaller hotel near Ecole Militaire, the Eiffel route, Rue Cler, and Invalides, with a quieter room-focused stay that keeps the 7th's museum and monument days easy.", { price: "$$", priceSource: "Google Travel / Tripadvisor", officialUrl: "https://www.lewaltparis.com/", ...hotelStay }),
+        nStop("seventh-stay-jk-place", "J.K. Place Paris", [48.8604, 2.3183], "J.K. Place Paris is an intimate design-luxury hotel near the Seine, Orsay, and Invalides, with a wellness spa, marble-and-tile pool, and the polished profile of a global best-hotel-list regular.", { price: "$$$", priceSource: "Conde Nast Traveler / Google Travel", officialUrl: "https://www.jkplaces.com/jkparis/", ...hotelStay }),
+        nStop("seventh-stay-montalembert", "Hotel Montalembert", [48.8565, 2.327], "Hotel Montalembert sits on the Saint-Germain edge of the 7th, with elegant rooms, Left Bank dining nearby, and easy movement between Orsay, galleries, Rue du Bac, and Saint-Germain cafes.", { price: "$$$", priceSource: "Google Travel / Tripadvisor", officialUrl: "https://www.hotelmontalembert-paris.com/", ...hotelStay }),
       ],
     },
     Activities: {
@@ -2252,17 +2395,31 @@ const parisNeighborhoodGuideSeeds: Record<ParisNeighborhood, Record<EditorialCat
 };
 
 export const parisNeighborhoodGuides = parisNeighborhoods.flatMap((neighborhood) =>
-  neighborhoodCategories.map((category) => {
-    const seed = parisNeighborhoodGuideSeeds[neighborhood][category];
-    return neighborhoodGuide(
-      neighborhood,
-      category,
-      seed.topic ?? neighborhoodTopics[category],
-      seed.stops,
-      seed.title,
-      seed.description,
-      seed.sources ?? neighborhoodSources[category],
-    );
+  neighborhoodCategories.flatMap((category) => {
+    const seedValue = parisNeighborhoodGuideSeeds[neighborhood][category];
+    const seeds = Array.isArray(seedValue) ? seedValue : [seedValue];
+
+    return seeds.map((seed) => {
+      const topic = seed.topic ?? neighborhoodTopics[category];
+      const idTopic = seed.idTopic ?? (category === "Stay" && topic === "Hotels" ? "Hotels and Hostels" : undefined);
+
+      return neighborhoodGuide(
+        neighborhood,
+        category,
+        topic,
+        seed.stops,
+        seed.title,
+        seed.description,
+        seed.sources ?? neighborhoodSources[category],
+        {
+          idTopic,
+          slugTopic: seed.slugTopic,
+          seoSlug: seed.seoSlug,
+          seoTitle: seed.seoTitle,
+          seoDescription: seed.seoDescription,
+        },
+      );
+    });
   }),
 ) satisfies MapList[];
 
