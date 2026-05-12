@@ -83,7 +83,71 @@ function uniqueValues(values) {
   return [...new Set(values.filter(Boolean))];
 }
 
+const VALID_VENUE_KINDS = new Set([
+  "lodging",
+  "food_drink",
+  "nightlife",
+  "culture",
+  "outdoors",
+  "event_venue",
+  "transport",
+  "retail",
+  "service",
+  "landmark",
+  "other",
+]);
+const VALID_LODGING_TYPES = new Set(["hotel", "hostel", "resort", "airbnb", "apartment_hotel", "guesthouse", "camping", "holiday_park"]);
+const VALID_FOOD_SERVICE_TYPES = new Set(["restaurant", "cafe", "fast_food", "stall", "food_truck", "food_cart"]);
+const VALID_NIGHTLIFE_TYPES = new Set([
+  "dive_bar",
+  "cocktail_bar",
+  "pub",
+  "sports_bar",
+  "gaming_bar",
+  "wine_bar",
+  "beer_bar",
+  "rooftop_bar",
+  "lounge",
+  "club",
+  "live_music_venue",
+  "theatre",
+  "concert_hall",
+  "comedy_club",
+  "karaoke_bar",
+  "casino",
+  "brewery",
+  "other",
+]);
+const VALID_PRICE_TIERS = new Set(["$", "$$", "$$$", "$$$$"]);
+
+function cleanEnumValue(value, allowed) {
+  return typeof value === "string" && allowed.has(value) ? value : null;
+}
+
+function mergeUniqueValues(...groups) {
+  return uniqueValues(groups.flatMap((group) => group ?? []));
+}
+
 function inferVenueClassification(stop, list) {
+  const explicitVenueKind = cleanEnumValue(stop?.venueKind, VALID_VENUE_KINDS);
+  const explicitLodgingType = cleanEnumValue(stop?.lodgingType, VALID_LODGING_TYPES);
+  const explicitFoodServiceType = cleanEnumValue(stop?.foodServiceType, VALID_FOOD_SERVICE_TYPES);
+  const explicitNightlifeType = cleanEnumValue(stop?.nightlifeType, VALID_NIGHTLIFE_TYPES);
+  const explicitAttributeTags = Array.isArray(stop?.attributeTags) ? stop.attributeTags : [];
+  const explicitTags = Array.isArray(stop?.tags) ? stop.tags : [];
+  if (explicitVenueKind || explicitLodgingType || explicitFoodServiceType || explicitNightlifeType || explicitAttributeTags.length || explicitTags.length) {
+    return {
+      venueKind: explicitVenueKind ?? (explicitLodgingType ? "lodging" : explicitFoodServiceType ? "food_drink" : explicitNightlifeType ? "nightlife" : "other"),
+      lodgingType: explicitLodgingType,
+      foodServiceType: explicitFoodServiceType,
+      cuisineTypes: Array.isArray(stop?.cuisineTypes) ? uniqueValues(stop.cuisineTypes) : [],
+      priceTier: cleanEnumValue(stop?.price, VALID_PRICE_TIERS),
+      nightlifeType: explicitNightlifeType,
+      musicGenres: Array.isArray(stop?.musicGenres) ? uniqueValues(stop.musicGenres) : [],
+      attributeTags: mergeUniqueValues(explicitAttributeTags, explicitTags),
+    };
+  }
+
   const isNightlife = list?.category === "Nightlife" || stop?.category === "Nightlife";
   if (isNightlife) {
     const text = [
@@ -527,6 +591,879 @@ function resolveNeighborhoodId(maps, cityId, neighborhood) {
   }
   const neighborhoods = maps.neighborhoodsByCity.get(cityId);
   return neighborhoods?.get(normalizeName(neighborhood)) ?? null;
+}
+
+function parsePublishArgs(argv) {
+  const dryRun = argv.includes("--dry-run") || argv.includes("--check");
+  const filterArgs = argv.filter((arg) => arg !== "--dry-run" && arg !== "--check");
+  return { dryRun, filters: parseEditorialGuideArgs(filterArgs) };
+}
+
+function logPhase(message, metadata = undefined) {
+  const suffix = metadata ? ` ${JSON.stringify(metadata)}` : "";
+  console.log(`[editorial-push] ${message}${suffix}`);
+}
+
+function elapsedMs(startedAt) {
+  return Math.round(Number(process.hrtime.bigint() - startedAt) / 1_000_000);
+}
+
+function buildGuideContexts(maps, selectedGuides) {
+  const contexts = new Map();
+  for (const list of selectedGuides) {
+    const cityId = resolveCityId(maps, list.location?.city, list.location?.country);
+    const countryId = list.location?.country ? maps.countryByName.get(normalizeName(list.location.country)) ?? null : null;
+    const neighborhoodId = resolveNeighborhoodId(maps, cityId, list.location?.neighborhood);
+    const destinationId = neighborhoodId ?? cityId ?? countryId;
+    if (!destinationId) {
+      throw new Error(`Could not resolve destination for ${list.id}`);
+    }
+    contexts.set(list.id, { cityId, countryId, neighborhoodId, destinationId });
+  }
+  return contexts;
+}
+
+function buildEntryRows(selectedGuides, contexts) {
+  return selectedGuides.map((list) => {
+    const context = contexts.get(list.id);
+    return {
+      legacy_id: list.id,
+      slug: list.slug,
+      seo_slug: list.seoSlug ?? null,
+      seo_title: list.seoTitle ?? null,
+      seo_description: list.seoDescription ?? null,
+      title: list.title,
+      description: list.description,
+      highlights: list.highlights ?? [],
+      photo_url: list.photo ?? null,
+      canonical_url: list.url ?? null,
+      category: list.category,
+      submission_type: toSchemaSubmissionType(list.submissionType),
+      destination_id: context.destinationId,
+      city_id: context.cityId,
+      neighborhood_id: context.neighborhoodId,
+      country_name: list.location?.country ?? null,
+      continent_name: list.location?.continent ?? null,
+      creator_id: list.creator?.id ?? null,
+      creator_name: list.creator?.name ?? null,
+      creator_avatar: list.creator?.avatar ?? null,
+      upvotes: list.upvotes ?? 0,
+      created_on: list.createdAt ?? new Date().toISOString().slice(0, 10),
+      metadata: { editorialGuideId: list.id },
+    };
+  });
+}
+
+function mergeVenueRows(existing, incoming) {
+  if (!existing) {
+    return {
+      ...incoming,
+      aliases: incoming.aliases ?? [],
+      venue_kinds: incoming.venue_kinds ?? [],
+      cuisine_types: incoming.cuisine_types ?? [],
+      music_genres: incoming.music_genres ?? [],
+      attribute_tags: incoming.attribute_tags ?? [],
+      source_metadata: incoming.source_metadata ?? {},
+    };
+  }
+
+  return {
+    ...existing,
+    legacy_id: existing.legacy_id ?? incoming.legacy_id,
+    name: incoming.name || existing.name,
+    normalized_name: incoming.normalized_name || existing.normalized_name,
+    aliases: mergeUniqueValues(existing.aliases, incoming.aliases),
+    destination_id: incoming.destination_id ?? existing.destination_id,
+    city_id: incoming.city_id ?? existing.city_id,
+    neighborhood_id: incoming.neighborhood_id ?? existing.neighborhood_id,
+    country: incoming.country ?? existing.country,
+    coordinates: incoming.coordinates ?? existing.coordinates,
+    official_url: incoming.official_url ?? existing.official_url,
+    venue_kind: incoming.venue_kind !== "other" ? incoming.venue_kind : existing.venue_kind,
+    venue_kinds: mergeUniqueValues(existing.venue_kinds, incoming.venue_kinds),
+    lodging_type: incoming.lodging_type ?? existing.lodging_type,
+    food_service_type: incoming.food_service_type ?? existing.food_service_type,
+    cuisine_types: mergeUniqueValues(existing.cuisine_types, incoming.cuisine_types),
+    price_tier: incoming.price_tier ?? existing.price_tier,
+    nightlife_type: incoming.nightlife_type ?? existing.nightlife_type,
+    music_genres: mergeUniqueValues(existing.music_genres, incoming.music_genres),
+    attribute_tags: mergeUniqueValues(existing.attribute_tags, incoming.attribute_tags),
+    source_metadata: { ...existing.source_metadata, ...incoming.source_metadata },
+  };
+}
+
+function buildStopPayload(selectedGuides, contexts) {
+  const venueRowsByKey = new Map();
+  const stopRows = [];
+  const mediaRowsByKey = new Map();
+  const hoursRows = [];
+  let stopOrder = 0;
+
+  for (const list of selectedGuides) {
+    const context = contexts.get(list.id);
+    let order = 0;
+    for (const stop of list.stops ?? []) {
+      order += 1;
+      stopOrder += 1;
+      const classification = inferVenueClassification(stop, list);
+      const slug = stop.poiId ? slugify(stop.poiId) : slugify(stop.name);
+      const venueKey = `${context.cityId ?? "null"}|${slug}`;
+      const venueRow = {
+        row_key: venueKey,
+        legacy_id: stop.poiId ?? `${list.id}:${stop.id}`,
+        slug,
+        name: stop.name,
+        normalized_name: normalizeName(stop.name),
+        aliases: [],
+        destination_id: context.cityId,
+        city_id: context.cityId,
+        neighborhood_id: context.neighborhoodId,
+        country: list.location?.country ?? null,
+        coordinates: normalizeCoordinates(stop.coordinates),
+        official_url: stop.officialUrl ?? stop.bookingUrl ?? null,
+        venue_kind: classification.venueKind ?? "other",
+        venue_kinds: classification.venueKind ? [classification.venueKind] : [],
+        lodging_type: classification.lodgingType ?? null,
+        food_service_type: classification.foodServiceType ?? null,
+        cuisine_types: classification.cuisineTypes ?? [],
+        price_tier: classification.priceTier ?? null,
+        nightlife_type: classification.nightlifeType ?? null,
+        music_genres: classification.musicGenres ?? [],
+        attribute_tags: classification.attributeTags ?? [],
+        source_metadata: { source: "editorial_guides", entryId: list.id, stopId: stop.id },
+      };
+      venueRowsByKey.set(venueKey, mergeVenueRows(venueRowsByKey.get(venueKey), venueRow));
+
+      stopRows.push({
+        entry_legacy_id: list.id,
+        legacy_id: stop.id,
+        stop_order: order,
+        poi_legacy_id: stop.poiId ?? null,
+        name: stop.name,
+        description: stop.description,
+        category: stop.category ?? list.category,
+        subcategory: stop.subcategory ?? null,
+        subcategories: stop.subcategories ?? [],
+        destination_id: context.neighborhoodId ?? context.cityId ?? null,
+        venue_key: venueKey,
+        coordinates: normalizeCoordinates(stop.coordinates),
+        price_label: stop.price ?? null,
+        price_source: stop.priceSource ?? null,
+        booking_url: stop.bookingUrl ?? null,
+        official_url: stop.officialUrl ?? null,
+        journey_date: stop.journeyDate ?? stop.itineraryDate ?? null,
+        journey_day: stop.journeyDay ?? stop.itineraryDay ?? null,
+        hours: stop.hours ?? null,
+        places: stop.places ?? [],
+        metadata: { source: "editorial_guides" },
+      });
+
+      if (stop.photo?.trim()) {
+        mediaRowsByKey.set(`${venueKey}|${stop.photo.trim()}`, {
+          venue_key: venueKey,
+          url: stop.photo.trim(),
+          role: "primary",
+          source_type: "editorial_guides",
+          source_entity_type: "entry_stop",
+          source_legacy_id: stop.id,
+          raw_metadata: { source: "guide_stop_photo", entryId: list.id, stopId: stop.id, poiId: stop.poiId ?? null },
+          sort_order: 0,
+        });
+      }
+
+      if (stop.hours) {
+        hoursRows.push({ venue_key: venueKey, stop });
+      }
+    }
+  }
+
+  return {
+    venueRows: [...venueRowsByKey.values()],
+    stopRows,
+    mediaRows: [...mediaRowsByKey.values()],
+    hoursRows,
+    stopCount: stopOrder,
+  };
+}
+
+async function upsertEditorialPoisBatch(client, pois) {
+  if (!pois.length) {
+    return 0;
+  }
+  const result = await client.query(
+    `with incoming as (
+       select *
+       from jsonb_to_recordset($1::jsonb) as row(
+         id text,
+         name text,
+         country text,
+         city text,
+         neighborhood text,
+         coordinates jsonb,
+         photo text,
+         guide_ids text[],
+         guide_slugs text[],
+         categories text[]
+       )
+     )
+     insert into public.editorial_pois (
+       id, name, country, city, neighborhood, coordinates, photo,
+       guide_ids, guide_slugs, categories
+     )
+     select
+       id, name, country, city, neighborhood, coordinates, photo,
+       guide_ids, guide_slugs, categories
+     from incoming
+     on conflict (id) do update set
+       name = excluded.name,
+       country = excluded.country,
+       city = excluded.city,
+       neighborhood = excluded.neighborhood,
+       coordinates = excluded.coordinates,
+       photo = coalesce(excluded.photo, public.editorial_pois.photo),
+       guide_ids = excluded.guide_ids,
+       guide_slugs = excluded.guide_slugs,
+       categories = excluded.categories`,
+    [JSON.stringify(pois.map((poi) => ({
+      id: poi.id,
+      name: poi.name,
+      country: poi.country ?? null,
+      city: poi.city ?? null,
+      neighborhood: poi.neighborhood ?? null,
+      coordinates: normalizeCoordinates(poi.coordinates),
+      photo: poi.photo ?? null,
+      guide_ids: poi.guideIds ?? [],
+      guide_slugs: poi.guideSlugs ?? [],
+      categories: poi.categories ?? [],
+    })))],
+  );
+  return result.rowCount ?? 0;
+}
+
+async function upsertEntriesBatch(client, rows) {
+  const result = await client.query(
+    `with incoming as (
+       select *
+       from jsonb_to_recordset($1::jsonb) as row(
+         legacy_id text,
+         slug text,
+         seo_slug text,
+         seo_title text,
+         seo_description text,
+         title text,
+         description text,
+         highlights text[],
+         photo_url text,
+         canonical_url text,
+         category text,
+         submission_type public.rguide_submission_type,
+         destination_id uuid,
+         city_id uuid,
+         neighborhood_id uuid,
+         country_name text,
+         continent_name text,
+         creator_id text,
+         creator_name text,
+         creator_avatar text,
+         upvotes integer,
+         created_on date,
+         metadata jsonb
+       )
+     ),
+     upserted as (
+       insert into public.entries (
+         legacy_id, slug, seo_slug, seo_title, seo_description, title, description,
+         highlights, photo_url, canonical_url, category, submission_type, status,
+         destination_id, city_id, neighborhood_id, country_name, continent_name,
+         creator_id, creator_name, creator_avatar, upvotes, created_on,
+         source_table, metadata
+       )
+       select
+         legacy_id, slug, seo_slug, seo_title, seo_description, title, description,
+         highlights, photo_url, canonical_url, category, submission_type, 'published',
+         destination_id, city_id, neighborhood_id, country_name, continent_name,
+         creator_id, creator_name, creator_avatar, upvotes, created_on,
+         'editorial_guides', metadata
+       from incoming
+       on conflict (legacy_id) do update set
+         slug = excluded.slug,
+         seo_slug = excluded.seo_slug,
+         seo_title = excluded.seo_title,
+         seo_description = excluded.seo_description,
+         title = excluded.title,
+         description = excluded.description,
+         highlights = excluded.highlights,
+         photo_url = excluded.photo_url,
+         canonical_url = excluded.canonical_url,
+         category = excluded.category,
+         submission_type = excluded.submission_type,
+         status = excluded.status,
+         destination_id = excluded.destination_id,
+         city_id = excluded.city_id,
+         neighborhood_id = excluded.neighborhood_id,
+         country_name = excluded.country_name,
+         continent_name = excluded.continent_name,
+         creator_id = excluded.creator_id,
+         creator_name = excluded.creator_name,
+         creator_avatar = excluded.creator_avatar,
+         upvotes = excluded.upvotes,
+         created_on = excluded.created_on,
+         source_table = excluded.source_table,
+         metadata = public.entries.metadata || excluded.metadata
+       returning id, legacy_id
+     )
+     select id, legacy_id from upserted`,
+    [JSON.stringify(rows)],
+  );
+  return new Map(result.rows.map((row) => [row.legacy_id, row.id]));
+}
+
+async function upsertVenuesBatch(client, venueRows) {
+  if (!venueRows.length) {
+    return new Map();
+  }
+  const result = await client.query(
+    `with incoming as (
+       select *
+       from jsonb_to_recordset($1::jsonb) as row(
+         row_key text,
+         legacy_id text,
+         slug text,
+         name text,
+         normalized_name text,
+         aliases text[],
+         destination_id uuid,
+         city_id uuid,
+         neighborhood_id uuid,
+         country text,
+         coordinates jsonb,
+         official_url text,
+         venue_kind public.venue_kind,
+         venue_kinds public.venue_kind[],
+         lodging_type public.lodging_type,
+         food_service_type public.food_service_type,
+         cuisine_types text[],
+         price_tier public.price_tier,
+         nightlife_type public.nightlife_type,
+         music_genres text[],
+         attribute_tags text[],
+         source_metadata jsonb
+       )
+     ),
+     upserted as (
+       insert into public.venues (
+         legacy_id, slug, name, normalized_name, aliases, destination_id, city_id,
+         neighborhood_id, country, coordinates, official_url, venue_kind,
+         venue_kinds, lodging_type, food_service_type, cuisine_types, price_tier,
+         nightlife_type, music_genres, attribute_tags, source_metadata
+       )
+       select
+         legacy_id, slug, name, normalized_name, coalesce(aliases, '{}'), destination_id, city_id,
+         neighborhood_id, country, coordinates, official_url, coalesce(venue_kind, 'other'),
+         coalesce(venue_kinds, '{}'), lodging_type, food_service_type, coalesce(cuisine_types, '{}'), price_tier,
+         nightlife_type, coalesce(music_genres, '{}'), coalesce(attribute_tags, '{}'), coalesce(source_metadata, '{}'::jsonb)
+       from incoming
+       on conflict (city_id, slug) do update set
+         legacy_id = coalesce(public.venues.legacy_id, excluded.legacy_id),
+         slug = excluded.slug,
+         name = excluded.name,
+         normalized_name = excluded.normalized_name,
+         aliases = array(select distinct unnest(public.venues.aliases || excluded.aliases)),
+         destination_id = coalesce(excluded.destination_id, public.venues.destination_id),
+         neighborhood_id = coalesce(excluded.neighborhood_id, public.venues.neighborhood_id),
+         country = coalesce(excluded.country, public.venues.country),
+         coordinates = coalesce(excluded.coordinates, public.venues.coordinates),
+         official_url = coalesce(excluded.official_url, public.venues.official_url),
+         venue_kind = case
+           when excluded.venue_kind = 'other' then public.venues.venue_kind
+           else excluded.venue_kind
+         end,
+         venue_kinds = array(select distinct unnest(public.venues.venue_kinds || excluded.venue_kinds)),
+         lodging_type = coalesce(excluded.lodging_type, public.venues.lodging_type),
+         food_service_type = coalesce(excluded.food_service_type, public.venues.food_service_type),
+         cuisine_types = array(select distinct unnest(public.venues.cuisine_types || excluded.cuisine_types)),
+         price_tier = coalesce(excluded.price_tier, public.venues.price_tier),
+         nightlife_type = coalesce(excluded.nightlife_type, public.venues.nightlife_type),
+         music_genres = array(select distinct unnest(public.venues.music_genres || excluded.music_genres)),
+         attribute_tags = array(select distinct unnest(public.venues.attribute_tags || excluded.attribute_tags)),
+         source_metadata = public.venues.source_metadata || excluded.source_metadata
+       returning id, city_id, slug
+     )
+     select incoming.row_key, venue.id
+     from incoming
+     join public.venues venue
+       on venue.city_id is not distinct from incoming.city_id
+      and venue.slug = incoming.slug`,
+    [JSON.stringify(venueRows)],
+  );
+  return new Map(result.rows.map((row) => [row.row_key, row.id]));
+}
+
+async function replaceEntryStopsBatch(client, stopRows, entryIdByLegacyId, venueIdByKey) {
+  const entryIds = [...entryIdByLegacyId.values()];
+  if (!entryIds.length) {
+    return 0;
+  }
+  await client.query("delete from public.entry_stops where entry_id = any($1::uuid[])", [entryIds]);
+  if (!stopRows.length) {
+    return 0;
+  }
+  const rows = stopRows.map((row) => ({
+    ...row,
+    entry_id: entryIdByLegacyId.get(row.entry_legacy_id),
+    venue_id: venueIdByKey.get(row.venue_key) ?? null,
+  }));
+  const result = await client.query(
+    `with incoming as (
+       select *
+       from jsonb_to_recordset($1::jsonb) as row(
+         entry_id uuid,
+         legacy_id text,
+         stop_order integer,
+         poi_legacy_id text,
+         name text,
+         description text,
+         category text,
+         subcategory text,
+         subcategories jsonb,
+         destination_id uuid,
+         venue_id uuid,
+         coordinates jsonb,
+         price_label text,
+         price_source text,
+         booking_url text,
+         official_url text,
+         journey_date date,
+         journey_day integer,
+         hours jsonb,
+         places jsonb,
+         metadata jsonb
+       )
+     )
+     insert into public.entry_stops (
+       entry_id, legacy_id, stop_order, poi_legacy_id, name, description, category,
+       subcategory, subcategories, destination_id, venue_id, coordinates, price_label,
+       price_source, booking_url, official_url, journey_date, journey_day, hours,
+       places, metadata
+     )
+     select
+       entry_id, legacy_id, stop_order, poi_legacy_id, name, description, category,
+       subcategory, coalesce(subcategories, '[]'::jsonb), destination_id, venue_id, coordinates, price_label,
+       price_source, booking_url, official_url, journey_date, journey_day, hours,
+       coalesce(places, '[]'::jsonb), coalesce(metadata, '{}'::jsonb)
+     from incoming`,
+    [JSON.stringify(rows)],
+  );
+  return result.rowCount ?? 0;
+}
+
+async function upsertVenueMediaBatch(client, mediaRows, venueIdByKey) {
+  const rows = mediaRows
+    .map((row) => ({ ...row, venue_id: venueIdByKey.get(row.venue_key) ?? null }))
+    .filter((row) => row.venue_id && row.url);
+  if (!rows.length) {
+    return 0;
+  }
+  const result = await client.query(
+    `with incoming as (
+       select *
+       from jsonb_to_recordset($1::jsonb) as row(
+         venue_id uuid,
+         url text,
+         role text,
+         source_type text,
+         source_entity_type text,
+         source_legacy_id text,
+         raw_metadata jsonb,
+         sort_order integer
+       )
+     ),
+     upserted as (
+       insert into public.venue_media (
+         venue_id, url, role, source_type, source_entity_type, source_legacy_id,
+         raw_metadata, sort_order
+       )
+       select
+         venue_id, url, role, source_type, source_entity_type, source_legacy_id,
+         coalesce(raw_metadata, '{}'::jsonb), coalesce(sort_order, 0)
+       from incoming
+       on conflict (venue_id, url) do update set
+         role = case
+           when public.venue_media.role = 'gallery' then excluded.role
+           else public.venue_media.role
+         end,
+         source_type = coalesce(public.venue_media.source_type, excluded.source_type),
+         source_entity_type = coalesce(public.venue_media.source_entity_type, excluded.source_entity_type),
+         source_legacy_id = coalesce(public.venue_media.source_legacy_id, excluded.source_legacy_id),
+         raw_metadata = public.venue_media.raw_metadata || excluded.raw_metadata,
+         is_active = true,
+         updated_at = now()
+       returning id, venue_id
+     ),
+     ranked as (
+       select id, venue_id, row_number() over (partition by venue_id order by id) as rank
+       from upserted
+     ),
+     updated as (
+       update public.venues venue
+       set primary_photo_id = ranked.id
+       from ranked
+       where venue.id = ranked.venue_id
+         and ranked.rank = 1
+         and venue.primary_photo_id is distinct from ranked.id
+       returning venue.id
+     )
+     select count(*)::int as affected from upserted`,
+    [JSON.stringify(rows)],
+  );
+  return Number(result.rows[0]?.affected ?? 0);
+}
+
+function buildVenueHoursPayload(hoursRows, venueIdByKey) {
+  const noteRowsByVenue = new Map();
+  const intervalRowsByKey = new Map();
+
+  const addNote = (venueId, rawText) => {
+    const normalized = normalizeHoursText(rawText);
+    if (venueId && normalized && !noteRowsByVenue.has(venueId)) {
+      noteRowsByVenue.set(venueId, { venue_id: venueId, raw_text: normalized });
+    }
+    return normalized;
+  };
+
+  const addInterval = (venueId, dayOfWeek, rawText, source) => {
+    const normalized = normalizeHoursText(rawText);
+    if (!venueId || dayOfWeek === undefined || !normalized) {
+      return;
+    }
+    const lowered = normalized.toLowerCase();
+    const key = `${venueId}|${dayOfWeek}|0`;
+    intervalRowsByKey.set(key, {
+      venue_id: venueId,
+      day_of_week: dayOfWeek,
+      interval_order: 0,
+      is_closed: ["closed", "closed today"].includes(lowered),
+      is_24_hours: ["24 hours", "open 24 hours", "24/7"].includes(lowered),
+      raw_text: normalized,
+      raw_metadata: { source },
+    });
+  };
+
+  for (const row of hoursRows) {
+    const venueId = venueIdByKey.get(row.venue_key);
+    const hours = row.stop?.hours;
+    if (!venueId || !hours) {
+      continue;
+    }
+
+    if (typeof hours === "string") {
+      addNote(venueId, hours);
+      continue;
+    }
+
+    if (typeof hours !== "object" || Array.isArray(hours)) {
+      continue;
+    }
+
+    const defaultRawText = addNote(venueId, hours.default);
+    if (defaultRawText) {
+      const normalizedDefault = defaultRawText.toLowerCase().replace(/\.$/, "");
+      if (
+        ["24 hours", "open 24 hours", "24/7"].includes(normalizedDefault) ||
+        normalizedDefault.startsWith("daily ")
+      ) {
+        for (let dayOfWeek = 0; dayOfWeek <= 6; dayOfWeek += 1) {
+          addInterval(venueId, dayOfWeek, defaultRawText, "entry_stops.hours.default");
+        }
+      }
+    }
+
+    for (const [dayKey, value] of Object.entries(hours)) {
+      const dayOfWeek = HOURS_DAY_MAP.get(String(dayKey).toLowerCase());
+      addInterval(venueId, dayOfWeek, value, "entry_stops.hours");
+    }
+  }
+
+  return {
+    noteRows: [...noteRowsByVenue.values()],
+    intervalRows: [...intervalRowsByKey.values()],
+  };
+}
+
+async function upsertVenueHoursBatch(client, hoursRows, venueIdByKey) {
+  const { noteRows, intervalRows } = buildVenueHoursPayload(hoursRows, venueIdByKey);
+  let affected = 0;
+
+  if (noteRows.length) {
+    const result = await client.query(
+      `with incoming as (
+         select *
+         from jsonb_to_recordset($1::jsonb) as row(
+           venue_id uuid,
+           raw_text text
+         )
+       )
+       update public.venues venue
+       set hours_note = coalesce(venue.hours_note, incoming.raw_text),
+           hours_last_verified_at = coalesce(venue.hours_last_verified_at, now())
+       from incoming
+       where venue.id = incoming.venue_id`,
+      [JSON.stringify(noteRows)],
+    );
+    affected += result.rowCount ?? 0;
+  }
+
+  if (intervalRows.length) {
+    const result = await client.query(
+      `with incoming as (
+         select *
+         from jsonb_to_recordset($1::jsonb) as row(
+           venue_id uuid,
+           day_of_week smallint,
+           interval_order integer,
+           is_closed boolean,
+           is_24_hours boolean,
+           raw_text text,
+           raw_metadata jsonb
+         )
+       )
+       insert into public.venue_hours (
+         venue_id, day_of_week, interval_order, is_closed, is_24_hours,
+         raw_text, raw_metadata, last_verified_at
+       )
+       select
+         venue_id, day_of_week, coalesce(interval_order, 0), coalesce(is_closed, false), coalesce(is_24_hours, false),
+         raw_text, coalesce(raw_metadata, '{}'::jsonb), now()
+       from incoming
+       on conflict (venue_id, day_of_week, interval_order, valid_from) do update set
+         is_closed = excluded.is_closed,
+         is_24_hours = excluded.is_24_hours,
+         raw_text = excluded.raw_text,
+         raw_metadata = public.venue_hours.raw_metadata || excluded.raw_metadata,
+         last_verified_at = excluded.last_verified_at,
+         updated_at = now()`,
+      [JSON.stringify(intervalRows)],
+    );
+    affected += result.rowCount ?? 0;
+  }
+
+  return { affected, noteRows: noteRows.length, intervalRows: intervalRows.length };
+}
+
+async function upsertSourcesBatch(client, selectedGuides) {
+  const sourcesByUrl = new Map();
+  for (const list of selectedGuides) {
+    for (const source of list.sources ?? []) {
+      if (!source?.url) {
+        continue;
+      }
+      sourcesByUrl.set(source.url, {
+        name: source.name?.trim() || source.url,
+        url: source.url,
+        publisher: source.publisher ?? null,
+        source_type: source.sourceType ?? source.source_type ?? null,
+      });
+    }
+  }
+  const sources = [...sourcesByUrl.values()];
+  if (!sources.length) {
+    return new Map();
+  }
+  const result = await client.query(
+    `with incoming as (
+       select *
+       from jsonb_to_recordset($1::jsonb) as row(
+         name text,
+         url text,
+         publisher text,
+         source_type text
+       )
+     ),
+     upserted as (
+       insert into public.sources (name, url, publisher, source_type, sourced_at, raw_metadata)
+       select name, url, publisher, source_type, now(), '{}'::jsonb
+       from incoming
+       on conflict (url) do update set
+         name = coalesce(excluded.name, public.sources.name),
+         publisher = coalesce(excluded.publisher, public.sources.publisher),
+         source_type = coalesce(excluded.source_type, public.sources.source_type),
+         sourced_at = greatest(public.sources.sourced_at, excluded.sourced_at)
+       returning id, url
+     )
+     select id, url from upserted`,
+    [JSON.stringify(sources)],
+  );
+  return new Map(result.rows.map((row) => [row.url, row.id]));
+}
+
+async function linkEntrySourcesBatch(client, selectedGuides, entryIdByLegacyId, sourceIdByUrl) {
+  const rowsByKey = new Map();
+  for (const list of selectedGuides) {
+    const entryId = entryIdByLegacyId.get(list.id);
+    for (const source of list.sources ?? []) {
+      const sourceId = sourceIdByUrl.get(source.url);
+      if (entryId && sourceId) {
+        rowsByKey.set(`entry|${entryId}|${sourceId}|reference`, {
+          entity_type: "entry",
+          entity_id: entryId,
+          source_id: sourceId,
+          relationship: "reference",
+        });
+      }
+    }
+  }
+  const rows = [...rowsByKey.values()];
+  if (!rows.length) {
+    return 0;
+  }
+  const result = await client.query(
+    `with incoming as (
+       select *
+       from jsonb_to_recordset($1::jsonb) as row(
+         entity_type public.rguide_source_entity_type,
+         entity_id uuid,
+         source_id uuid,
+         relationship text
+       )
+     )
+     insert into public.entity_sources (entity_type, entity_id, source_id, relationship)
+     select entity_type, entity_id, source_id, relationship
+     from incoming
+     on conflict (entity_type, entity_id, source_id, relationship) do update set
+       sourced_at = excluded.sourced_at`,
+    [JSON.stringify(rows)],
+  );
+  return result.rowCount ?? 0;
+}
+
+async function refreshEntryRenderCacheBatch(client, entryIds) {
+  if (!entryIds.length) {
+    return 0;
+  }
+  const result = await client.query(
+    [
+      "insert into public.entry_render_cache (",
+      "  entry_id, render_format, render_version, rendered_payload, source_hash,",
+      "  rendered_at, stale_at, is_current, metadata",
+      ")",
+      "select",
+      "  entry.id,",
+      "  'maplist',",
+      "  1,",
+      "  view.list,",
+      "  encode(digest(view.list::text, 'sha256'), 'hex'),",
+      "  now(),",
+      "  null,",
+      "  true,",
+      "  jsonb_build_object('refreshed_from', 'backfill-normalized-editorial-guides')",
+      "from public.entries entry",
+      "join public.entries_maplist view on view.id = entry.id",
+      "where entry.id = any($1::uuid[])",
+      "on conflict (entry_id, render_format, render_version) do update set",
+      "  rendered_payload = excluded.rendered_payload,",
+      "  source_hash = excluded.source_hash,",
+      "  rendered_at = excluded.rendered_at,",
+      "  stale_at = null,",
+      "  is_current = true,",
+      "  metadata = public.entry_render_cache.metadata || excluded.metadata",
+    ].join(" "),
+    [entryIds],
+  );
+  return result.rowCount ?? 0;
+}
+
+async function verifyPublishedScope(client, entryIdByLegacyId) {
+  const entryIds = [...entryIdByLegacyId.values()];
+  const { rows } = await client.query(
+    `select
+       count(distinct entry.id)::int as entry_count,
+       count(stop.id)::int as stop_count,
+       count(distinct stop.venue_id)::int as venue_count,
+       count(distinct cache.id)::int as render_cache_count
+     from public.entries entry
+     left join public.entry_stops stop on stop.entry_id = entry.id
+     left join public.entry_render_cache cache
+       on cache.entry_id = entry.id
+      and cache.render_format = 'maplist'
+      and cache.render_version = 1
+      and cache.is_current = true
+     where entry.id = any($1::uuid[])`,
+    [entryIds],
+  );
+  const mixed = await client.query(
+    `select
+       entry.legacy_id,
+       entry.slug,
+       entry.title,
+       array_remove(array_agg(distinct venue.lodging_type::text), null) as lodging_types
+     from public.entries entry
+     join public.entry_stops stop on stop.entry_id = entry.id
+     left join public.venues venue on venue.id = stop.venue_id
+     where entry.id = any($1::uuid[])
+       and entry.category = 'Stay'
+     group by entry.id
+     having array['hotel','hostel']::text[] <@ array_remove(array_agg(distinct venue.lodging_type::text), null)`,
+    [entryIds],
+  );
+  return { counts: rows[0], mixedStayGuides: mixed.rows };
+}
+
+async function publishBatched(client, maps, selectedGuides, stats) {
+  const contexts = buildGuideContexts(maps, selectedGuides);
+  const entryRows = buildEntryRows(selectedGuides, contexts);
+  const stopPayload = buildStopPayload(selectedGuides, contexts);
+
+  logPhase("phase editorial_pois:start", { rows: collectEditorialPois(selectedGuides).length });
+  stats.editorialPois = await upsertEditorialPoisBatch(client, collectEditorialPois(selectedGuides));
+  logPhase("phase editorial_pois:done", { affected: stats.editorialPois });
+
+  logPhase("phase entries:start", { rows: entryRows.length });
+  const entryIdByLegacyId = await upsertEntriesBatch(client, entryRows);
+  stats.entries = entryIdByLegacyId.size;
+  logPhase("phase entries:done", { affected: stats.entries });
+
+  logPhase("phase venues:start", { rows: stopPayload.venueRows.length });
+  const venueIdByKey = await upsertVenuesBatch(client, stopPayload.venueRows);
+  stats.venues = venueIdByKey.size;
+  logPhase("phase venues:done", { affected: stats.venues });
+
+  logPhase("phase venue_media:start", { rows: stopPayload.mediaRows.length });
+  stats.venueMedia = await upsertVenueMediaBatch(client, stopPayload.mediaRows, venueIdByKey);
+  logPhase("phase venue_media:done", { affected: stats.venueMedia });
+
+  logPhase("phase venue_hours:start", { rows: stopPayload.hoursRows.length });
+  const venueHoursResult = await upsertVenueHoursBatch(client, stopPayload.hoursRows, venueIdByKey);
+  stats.venueHours = venueHoursResult.affected;
+  logPhase("phase venue_hours:done", venueHoursResult);
+
+  logPhase("phase entry_stops:start", { rows: stopPayload.stopRows.length });
+  stats.entryStops = await replaceEntryStopsBatch(client, stopPayload.stopRows, entryIdByLegacyId, venueIdByKey);
+  logPhase("phase entry_stops:done", { affected: stats.entryStops });
+
+  logPhase("phase sources:start");
+  const sourceIdByUrl = await upsertSourcesBatch(client, selectedGuides);
+  stats.sources = sourceIdByUrl.size;
+  stats.sourceLinks = await linkEntrySourcesBatch(client, selectedGuides, entryIdByLegacyId, sourceIdByUrl);
+  logPhase("phase sources:done", { sources: stats.sources, links: stats.sourceLinks });
+
+  logPhase("phase render_cache:start", { entries: entryIdByLegacyId.size });
+  stats.renderCaches = await refreshEntryRenderCacheBatch(client, [...entryIdByLegacyId.values()]);
+  logPhase("phase render_cache:done", { affected: stats.renderCaches });
+
+  logPhase("phase verification:start");
+  const verification = await verifyPublishedScope(client, entryIdByLegacyId);
+  logPhase("phase verification:done", {
+    counts: verification.counts,
+    mixedStayGuides: verification.mixedStayGuides.length,
+  });
+  if (verification.mixedStayGuides.length) {
+    const details = verification.mixedStayGuides
+      .map((guide) => `${guide.slug}: ${guide.lodging_types.join(", ")}`)
+      .join("; ");
+    throw new Error(`Stay guide lodging type verification failed: ${details}`);
+  }
+
+  return verification;
 }
 
 async function upsertSource(client, source, stats) {
@@ -1030,10 +1967,11 @@ async function backfillGuide(client, maps, list, stats) {
 }
 
 async function main() {
+  const startedAt = process.hrtime.bigint();
   loadEnvFile(path.join(ROOT, ".env.local"));
   loadEnvFile(path.join(ROOT, ".env"));
 
-  const filters = parseEditorialGuideArgs(process.argv.slice(2));
+  const { dryRun, filters } = parsePublishArgs(process.argv.slice(2));
   requireScopedFilters(filters);
 
   const databaseUrl = process.env.SUPABASE_DB_URL ?? process.env.SUPABASE_DATABASE_URL ?? process.env.DATABASE_URL;
@@ -1046,23 +1984,52 @@ async function main() {
   if (!selectedGuides.length) {
     throw new Error(`No editorial guides matched ${describeEditorialGuideFilters(filters)}.`);
   }
+  const scope = describeEditorialGuideFilters(filters);
+  logPhase("selected guides", {
+    scope,
+    count: selectedGuides.length,
+    stops: selectedGuides.reduce((sum, list) => sum + (list.stops?.length ?? 0), 0),
+    dryRun,
+  });
 
   const client = new pg.Client({
     connectionString: databaseUrl,
     ssl: databaseUrl.includes("localhost") || databaseUrl.includes("127.0.0.1") ? false : { rejectUnauthorized: false },
   });
-  const stats = { entries: 0, entryStops: 0, venues: 0, venueMedia: 0, sources: 0, editorialPois: 0 };
+  const stats = {
+    entries: 0,
+    entryStops: 0,
+    venues: 0,
+    venueMedia: 0,
+    venueHours: 0,
+    sources: 0,
+    sourceLinks: 0,
+    editorialPois: 0,
+    renderCaches: 0,
+  };
 
   await client.connect();
   try {
     await client.query("begin");
+    logPhase("phase destination_maps:start");
     const maps = await loadDestinationMaps(client);
-    await upsertEditorialPois(client, collectEditorialPois(selectedGuides), stats);
-    for (const list of selectedGuides) {
-      await backfillGuide(client, maps, list, stats);
+    logPhase("phase destination_maps:done");
+    const verification = await publishBatched(client, maps, selectedGuides, stats);
+    if (dryRun) {
+      await client.query("rollback");
+      logPhase("dry run rolled back");
+    } else {
+      await client.query("commit");
     }
-    await client.query("commit");
-    console.log(JSON.stringify({ ok: true, scope: describeEditorialGuideFilters(filters), selectedGuides: selectedGuides.length, stats }, null, 2));
+    console.log(JSON.stringify({
+      ok: true,
+      scope,
+      dryRun,
+      selectedGuides: selectedGuides.length,
+      stats,
+      verification,
+      elapsedMs: elapsedMs(startedAt),
+    }, null, 2));
   } catch (error) {
     await client.query("rollback").catch(() => {});
     console.error("NORMALIZED_EDITORIAL_GUIDES_BACKFILL_FAILED");
