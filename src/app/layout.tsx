@@ -7,7 +7,7 @@ import { AuthModal } from "@/components/auth/AuthModal";
 import { AuthSync } from "@/components/auth/AuthSync";
 import { SubmittedGuidesSync } from "@/components/auth/SubmittedGuidesSync";
 import { Footer } from "@/components/layout/Footer";
-import { SITE_DESCRIPTION, SITE_NAME, SITE_URL } from "@/lib/constants";
+import { SITE_ALTERNATE_NAMES, SITE_DESCRIPTION, SITE_NAME, SITE_SEARCH_NAME, SITE_URL } from "@/lib/constants";
 import { getAbsoluteHref } from "@/lib/routes";
 
 import "@/app/globals.css";
@@ -26,25 +26,29 @@ const inter = Inter({
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
-  applicationName: SITE_NAME,
+  applicationName: SITE_SEARCH_NAME,
   title: {
-    default: `${SITE_NAME} | Curated Travel Guides`,
+    default: `${SITE_SEARCH_NAME} | Curated City Guides`,
     template: `%s | ${SITE_NAME}`,
   },
   description: SITE_DESCRIPTION,
+  authors: [{ name: SITE_NAME, url: SITE_URL }],
+  creator: SITE_NAME,
+  publisher: SITE_SEARCH_NAME,
+  category: "travel",
   alternates: {
     canonical: "/",
   },
   openGraph: {
-    title: SITE_NAME,
+    title: SITE_SEARCH_NAME,
     description: SITE_DESCRIPTION,
     url: "/",
-    siteName: SITE_NAME,
+    siteName: SITE_SEARCH_NAME,
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: SITE_NAME,
+    title: SITE_SEARCH_NAME,
     description: SITE_DESCRIPTION,
   },
   other: {
@@ -54,10 +58,27 @@ export const metadata: Metadata = {
 
 const websiteJsonLd = {
   "@context": "https://schema.org",
-  "@type": "WebSite",
-  name: SITE_NAME,
-  url: getAbsoluteHref("/"),
-  description: SITE_DESCRIPTION,
+  "@graph": [
+    {
+      "@type": "WebSite",
+      "@id": getAbsoluteHref("/#website"),
+      name: SITE_SEARCH_NAME,
+      alternateName: SITE_ALTERNATE_NAMES,
+      url: getAbsoluteHref("/"),
+      description: SITE_DESCRIPTION,
+      publisher: {
+        "@id": getAbsoluteHref("/#organization"),
+      },
+    },
+    {
+      "@type": "Organization",
+      "@id": getAbsoluteHref("/#organization"),
+      name: SITE_SEARCH_NAME,
+      alternateName: SITE_ALTERNATE_NAMES,
+      url: getAbsoluteHref("/"),
+      description: SITE_DESCRIPTION,
+    },
+  ],
 };
 
 export default function RootLayout({
