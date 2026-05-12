@@ -5,8 +5,9 @@ export type WeeklyEventCategory =
   | "Signature"
   | "Music"
   | "Film"
-  | "Festivals"
-  | "Markets"
+  | "Culture Festival"
+  | "Maker Fair"
+  | "Gaming"
   | "Sports"
   | "Culture";
 
@@ -75,8 +76,9 @@ export const weeklyEventCategoryOrder: WeeklyEventCategory[] = [
   "Signature",
   "Sports",
   "Culture",
-  "Festivals",
-  "Markets",
+  "Culture Festival",
+  "Maker Fair",
+  "Gaming",
   "Music",
   "Film",
 ];
@@ -86,8 +88,9 @@ const weeklyEventCategoryToGuideCategory: Record<WeeklyEventCategory, ListCatego
   Signature: "Activities",
   Music: "Nightlife",
   Film: "Culture",
-  Festivals: "Activities",
-  Markets: "Activities",
+  "Culture Festival": "Culture",
+  "Maker Fair": "Culture",
+  Gaming: "Activities",
   Sports: "Activities",
   Culture: "Culture",
 };

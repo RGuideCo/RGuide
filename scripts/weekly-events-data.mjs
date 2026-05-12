@@ -214,6 +214,34 @@ export function loadWeeklyEventGuideRecords() {
   );
 }
 
+export function loadWeeklyEventNormalizedRecords() {
+  return loadWeeklyEventGuideRecords().map((record) => ({
+    id: record.eventId,
+    renderedId: record.id,
+    cityId: record.cityId,
+    cityName: record.cityName,
+    country: record.country,
+    continent: record.continent,
+    weekLabel: record.weekLabel,
+    sourcedAt: record.sourcedAt,
+    timezone: record.timezone,
+    refreshCadence: record.refreshCadence,
+    title: record.eventTitle,
+    startsAt: record.startsAt,
+    endsAt: record.endsAt,
+    eventCategory: record.rawEvent.category,
+    guideCategory: record.guide.category,
+    hasSchedule: Boolean(record.rawEvent.activations?.length),
+    isFestival: Boolean(record.rawEvent.activations?.length && record.rawEvent.activations.length > 1),
+    isGuideWorthy: record.isGuideWorthy,
+    sourceName: record.rawEvent.sourceName,
+    officialUrl: record.rawEvent.url,
+    rawEvent: record.rawEvent,
+    renderedMapList: record.guide,
+    sourceRun: record.sourceRun,
+  }));
+}
+
 export function filterWeeklyEventRecords(records, filters) {
   const citySet = new Set(filters.cities.map(normalizeFilterValue));
   const idSet = new Set(filters.ids.map(normalizeFilterValue));

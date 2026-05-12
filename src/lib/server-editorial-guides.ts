@@ -29,6 +29,10 @@ interface DataApiRenderCacheRow {
   rendered_payload: MapList;
 }
 
+interface DataApiWeeklyEventGuideRow {
+  guide: MapList;
+}
+
 function getLocalWeeklyEventGuides() {
   return weeklyCityEventRuns.flatMap((run) =>
     run.events.map((event) => weeklyEventToGuideList(event, run)),
@@ -153,10 +157,51 @@ async function loadEditorialGuidesFromDataApi(): Promise<MapList[] | null> {
     .returns<DataApiGuideRow[]>();
 
   if (!error && data?.length) {
-    return [...data.map((row) => normalizeWeeklyEventGuide(row.list)), ...getLocalWeeklyEventGuides()];
+    return [
+      ...data.map((row) => normalizeWeeklyEventGuide(row.list)),
+      ...(await loadWeeklyEventsFromDataApi(supabase)),
+    ];
   }
 
   return loadRenderCacheGuidesFromDataApi(supabase);
+}
+
+async function loadWeeklyEventsFromDataApi(
+  supabase: SupabaseClient,
+): Promise<MapList[]> {
+  const normalized = await supabase
+    .from("weekly_events_maplist")
+    .select("guide")
+    .gte("sourced_at", new Date(Date.now() - 14 * 86400000).toISOString())
+    .order("starts_at", { ascending: true })
+    .returns<DataApiWeeklyEventGuideRow[]>();
+
+  if (!normalized.error && normalized.data?.length) {
+    return normalized.data.map((row) => normalizeWeeklyEventGuide(row.guide));
+  }
+
+  const publication = await supabase
+    .from("weekly_event_publications")
+    .select("guide:rendered_map_list")
+    .gte("sourced_at", new Date(Date.now() - 14 * 86400000).toISOString())
+    .order("starts_at", { ascending: true })
+    .returns<DataApiWeeklyEventGuideRow[]>();
+
+  if (!publication.error && publication.data?.length) {
+    return publication.data.map((row) => normalizeWeeklyEventGuide(row.guide));
+  }
+
+  const legacy = await supabase
+    .from("weekly_event_guides")
+    .select("guide")
+    .gte("sourced_at", new Date(Date.now() - 14 * 86400000).toISOString())
+    .returns<DataApiWeeklyEventGuideRow[]>();
+
+  if (!legacy.error && legacy.data?.length) {
+    return legacy.data.map((row) => normalizeWeeklyEventGuide(row.guide));
+  }
+
+  return getLocalWeeklyEventGuides();
 }
 
 async function loadRenderCacheGuidesFromDataApi(
@@ -174,7 +219,10 @@ async function loadRenderCacheGuidesFromDataApi(
     return null;
   }
 
-  return [...data.map((row) => normalizeWeeklyEventGuide(row.rendered_payload)), ...getLocalWeeklyEventGuides()];
+  return [
+    ...data.map((row) => normalizeWeeklyEventGuide(row.rendered_payload)),
+    ...(await loadWeeklyEventsFromDataApi(supabase)),
+  ];
 }
 
 async function loadNormalizedGuides(client: Client): Promise<MapList[] | null> {
@@ -196,7 +244,7 @@ async function loadNormalizedGuides(client: Client): Promise<MapList[] | null> {
       return null;
     }
 
-    const weeklyEventRows = await loadNormalizedWeeklyEvents(client);
+    const weeklyEventRows = await loadWeeklyEventsFromDatabase(client);
     const weeklyEventGuides = weeklyEventRows.length
       ? weeklyEventRows.map((row) => normalizeWeeklyEventGuide(row.guide))
       : getLocalWeeklyEventGuides();
@@ -225,12 +273,26 @@ async function loadRenderCacheGuides(client: Client): Promise<MapList[]> {
     ].join(" "),
   );
 
-  const weeklyEventRows = await loadWeeklyEventPublicationCache(client);
+  const weeklyEventRows = await loadWeeklyEventsFromDatabase(client);
   const weeklyEventGuides = weeklyEventRows.length
     ? weeklyEventRows.map((row) => normalizeWeeklyEventGuide(row.guide))
     : getLocalWeeklyEventGuides();
 
   return [...rows.map((row) => normalizeWeeklyEventGuide(row.rendered_payload)), ...weeklyEventGuides];
+}
+
+async function loadWeeklyEventsFromDatabase(client: Client) {
+  const normalizedRows = await loadNormalizedWeeklyEvents(client);
+  if (normalizedRows.length) {
+    return normalizedRows;
+  }
+
+  const publicationRows = await loadWeeklyEventPublicationCache(client);
+  if (publicationRows.length) {
+    return publicationRows;
+  }
+
+  return loadLegacyWeeklyEventGuides(client);
 }
 
 async function loadNormalizedWeeklyEvents(client: Client) {
@@ -245,20 +307,40 @@ async function loadNormalizedWeeklyEvents(client: Client) {
     );
     return result.rows;
   } catch {
-    return loadWeeklyEventPublicationCache(client);
+    return [];
   }
 }
 
 async function loadWeeklyEventPublicationCache(client: Client) {
-  const { rows } = await client.query<WeeklyEventGuideRow>(
-    [
-      "select rendered_map_list as guide",
-      "from public.weekly_event_publications",
-      "where sourced_at >= current_date - interval '14 days'",
-      "order by rendered_map_list->'location'->>'city' asc, starts_at asc, rendered_map_list->>'title' asc",
-    ].join(" "),
-  );
-  return rows;
+  try {
+    const { rows } = await client.query<WeeklyEventGuideRow>(
+      [
+        "select rendered_map_list as guide",
+        "from public.weekly_event_publications",
+        "where sourced_at >= current_date - interval '14 days'",
+        "order by rendered_map_list->'location'->>'city' asc, starts_at asc, rendered_map_list->>'title' asc",
+      ].join(" "),
+    );
+    return rows;
+  } catch {
+    return [];
+  }
+}
+
+async function loadLegacyWeeklyEventGuides(client: Client) {
+  try {
+    const { rows } = await client.query<WeeklyEventGuideRow>(
+      [
+        "select guide",
+        "from public.weekly_event_guides",
+        "where sourced_at >= current_date - interval '14 days'",
+        "order by guide->'location'->>'city' asc, guide->>'title' asc",
+      ].join(" "),
+    );
+    return rows;
+  } catch {
+    return [];
+  }
 }
 
 const getCachedEditorialGuidesFromSupabase = unstable_cache(

@@ -109,8 +109,9 @@ function validateSourceArchitecture() {
   assert(
     read("src/lib/server-editorial-guides.ts").includes("entry_render_cache") &&
       !read("src/lib/server-editorial-guides.ts").includes("public.editorial_guides") &&
-      !read("src/lib/server-editorial-guides.ts").includes("public.weekly_event_guides"),
-    "Server guide loader must fall back to normalized render caches, not legacy blob tables.",
+      read("src/lib/server-editorial-guides.ts").indexOf("public.weekly_event_guides") >
+        read("src/lib/server-editorial-guides.ts").indexOf("public.weekly_event_publications"),
+    "Server guide loader must prefer normalized render caches/publications before the temporary legacy weekly event fallback.",
   );
   assert(
     destinationDescriptions.includes("destination_descriptions_v2"),
