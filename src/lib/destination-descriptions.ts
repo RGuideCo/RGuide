@@ -40,6 +40,19 @@ interface DestinationContentRows {
   cityAffiliateLinks: CityAffiliateLinkRow[];
 }
 
+const CITY_LEFT_PANEL_STAY_LINK_FALLBACKS: Partial<Record<string, string>> = {
+  london: "https://booking.stay22.com/rguide/hN0aP0djwf",
+  paris: "https://booking.stay22.com/rguide/aPYDwK9gOi",
+  rome: "https://booking.stay22.com/rguide/weXiuuw22U",
+  barcelona: "https://booking.stay22.com/rguide/9lhd2N64ak",
+  madrid: "https://booking.stay22.com/rguide/4Da8kg-_5x",
+  milan: "https://booking.stay22.com/rguide/NeNvTrxffp",
+  amsterdam: "https://booking.stay22.com/rguide/ahy9--8FTa",
+  berlin: "https://booking.stay22.com/rguide/rWuh7Tdo5z",
+  prague: "https://booking.stay22.com/rguide/U4Q5S4mgTN",
+  istanbul: "https://booking.stay22.com/rguide/NuUJCj4Ldx",
+};
+
 const DESTINATION_DESCRIPTIONS_CACHE_SECONDS = Number.parseInt(
   process.env.DESTINATION_DESCRIPTIONS_CACHE_SECONDS ?? "900",
   10,
@@ -301,14 +314,16 @@ function cloneCityWithDescription(
   cityAffiliateLinks: Map<string, CityAffiliateLinkRow>,
 ) {
   const affiliateLink = cityAffiliateLinks.get(descriptionId("city", countryId, city.id));
+  const cityLeftPanelStayUrl =
+    affiliateLink?.cityLeftPanelStayUrl ?? CITY_LEFT_PANEL_STAY_LINK_FALLBACKS[city.id];
 
   return {
     ...city,
     description: descriptions.get(descriptionId("city", countryId, city.id)) ?? city.description,
-    affiliateLinks: affiliateLink
+    affiliateLinks: cityLeftPanelStayUrl
       ? {
           ...city.affiliateLinks,
-          cityLeftPanelStayUrl: affiliateLink.cityLeftPanelStayUrl,
+          cityLeftPanelStayUrl,
         }
       : city.affiliateLinks,
     subareas: cloneSubareasWithDescriptions(city.subareas, descriptions, {
