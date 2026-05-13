@@ -133,6 +133,18 @@ const GUIDE_LAYOUT_OPEN_TOTAL_MS = GUIDE_LAYOUT_OPEN_UP_START_MS + GUIDE_LAYOUT_
 const GUIDE_LAYOUT_CLOSE_SIDEWAYS_START_MS = 260;
 const GUIDE_LAYOUT_CLOSE_TOTAL_MS = GUIDE_LAYOUT_CLOSE_SIDEWAYS_START_MS + GUIDE_LAYOUT_OPEN_SIDEWAYS_MS;
 const GUIDE_CONTENT_REVEAL_DELAY_MS = GUIDE_LAYOUT_OPEN_TOTAL_MS + 80;
+const CITY_LEFT_PANEL_STAY_LINKS: Partial<Record<string, string>> = {
+  london: "https://booking.stay22.com/rguide/hN0aP0djwf",
+  paris: "https://booking.stay22.com/rguide/aPYDwK9gOi",
+  rome: "https://booking.stay22.com/rguide/weXiuuw22U",
+  barcelona: "https://booking.stay22.com/rguide/9lhd2N64ak",
+  madrid: "https://booking.stay22.com/rguide/4Da8kg-_5x",
+  milan: "https://booking.stay22.com/rguide/NeNvTrxffp",
+  amsterdam: "https://booking.stay22.com/rguide/ahy9--8FTa",
+  berlin: "https://booking.stay22.com/rguide/rWuh7Tdo5z",
+  prague: "https://booking.stay22.com/rguide/U4Q5S4mgTN",
+  istanbul: "https://booking.stay22.com/rguide/NuUJCj4Ldx",
+};
 
 const getDefaultCountryBrowseView = (country?: Country | null): "cities" | "regions" => {
   if (country?.id === "united-kingdom") {
@@ -3516,7 +3528,8 @@ export function SplitScreenSection({
         .join(", ")
     : null;
   const activeStayBookingHref = activeStayBookingQuery
-    ? `https://www.booking.com/searchresults.html?ss=${encodeURIComponent(activeStayBookingQuery)}`
+    ? CITY_LEFT_PANEL_STAY_LINKS[activeLocation.city?.id ?? ""] ??
+      `https://www.booking.com/searchresults.html?ss=${encodeURIComponent(activeStayBookingQuery)}`
     : null;
   const visibleSeoHeading = expandedGuide
     ? `${expandedGuide.title} in ${activeSeoPlaceLabel}`
