@@ -133,43 +133,6 @@ const GUIDE_LAYOUT_OPEN_TOTAL_MS = GUIDE_LAYOUT_OPEN_UP_START_MS + GUIDE_LAYOUT_
 const GUIDE_LAYOUT_CLOSE_SIDEWAYS_START_MS = 260;
 const GUIDE_LAYOUT_CLOSE_TOTAL_MS = GUIDE_LAYOUT_CLOSE_SIDEWAYS_START_MS + GUIDE_LAYOUT_OPEN_SIDEWAYS_MS;
 const GUIDE_CONTENT_REVEAL_DELAY_MS = GUIDE_LAYOUT_OPEN_TOTAL_MS + 80;
-const STAY22_ALLEZ_AID = "rguide";
-const TOP_EUROPE_STAY22_CITY_CAMPAIGNS: Partial<Record<string, string>> = {
-  london: "city-london-left-panel",
-  istanbul: "city-istanbul-left-panel",
-  paris: "city-paris-left-panel",
-  rome: "city-rome-left-panel",
-  barcelona: "city-barcelona-left-panel",
-  madrid: "city-madrid-left-panel",
-  milan: "city-milan-left-panel",
-  amsterdam: "city-amsterdam-left-panel",
-  berlin: "city-berlin-left-panel",
-  prague: "city-prague-left-panel",
-};
-
-function buildBookingCitySearchHref(query: string) {
-  return `https://www.booking.com/searchresults.html?ss=${encodeURIComponent(query)}`;
-}
-
-function buildStay22CitySearchHref(cityId: string | undefined, bookingHref: string) {
-  if (!cityId) {
-    return bookingHref;
-  }
-
-  const campaign = TOP_EUROPE_STAY22_CITY_CAMPAIGNS[cityId];
-
-  if (!campaign) {
-    return bookingHref;
-  }
-
-  const params = new URLSearchParams({
-    aid: STAY22_ALLEZ_AID,
-    campaign,
-    link: bookingHref,
-  });
-
-  return `https://www.stay22.com/allez/booking?${params.toString()}`;
-}
 
 const getDefaultCountryBrowseView = (country?: Country | null): "cities" | "regions" => {
   if (country?.id === "united-kingdom") {
@@ -3553,10 +3516,7 @@ export function SplitScreenSection({
         .join(", ")
     : null;
   const activeStayBookingHref = activeStayBookingQuery
-    ? buildStay22CitySearchHref(
-        activeLocation.city?.id,
-        buildBookingCitySearchHref(activeStayBookingQuery),
-      )
+    ? `https://www.booking.com/searchresults.html?ss=${encodeURIComponent(activeStayBookingQuery)}`
     : null;
   const visibleSeoHeading = expandedGuide
     ? `${expandedGuide.title} in ${activeSeoPlaceLabel}`
