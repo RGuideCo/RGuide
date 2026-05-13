@@ -3516,7 +3516,8 @@ export function SplitScreenSection({
         .join(", ")
     : null;
   const activeStayBookingHref = activeStayBookingQuery
-    ? `https://www.booking.com/searchresults.html?ss=${encodeURIComponent(activeStayBookingQuery)}`
+    ? activeLocation.city?.affiliateLinks?.cityLeftPanelStayUrl ??
+      `https://www.booking.com/searchresults.html?ss=${encodeURIComponent(activeStayBookingQuery)}`
     : null;
   const visibleSeoHeading = expandedGuide
     ? `${expandedGuide.title} in ${activeSeoPlaceLabel}`

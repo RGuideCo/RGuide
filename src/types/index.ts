@@ -319,6 +319,9 @@ export interface City {
   image: string;
   listCount: number;
   description: string;
+  affiliateLinks?: {
+    cityLeftPanelStayUrl?: string;
+  };
 }
 
 export interface Country {

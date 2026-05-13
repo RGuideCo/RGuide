@@ -30,12 +30,22 @@ interface DestinationDescriptionRow {
   description: string;
 }
 
+interface CityAffiliateLinkRow {
+  id: string;
+  cityLeftPanelStayUrl: string;
+}
+
+interface DestinationContentRows {
+  descriptions: DestinationDescriptionRow[];
+  cityAffiliateLinks: CityAffiliateLinkRow[];
+}
+
 const DESTINATION_DESCRIPTIONS_CACHE_SECONDS = Number.parseInt(
   process.env.DESTINATION_DESCRIPTIONS_CACHE_SECONDS ?? "900",
   10,
 );
 
-let destinationDescriptionRowsPromise: Promise<DestinationDescriptionRow[]> | null = null;
+let destinationContentRowsPromise: Promise<DestinationContentRows> | null = null;
 
 function descriptionId(...parts: string[]) {
   return parts.filter(Boolean).join(":");
@@ -158,15 +168,15 @@ function shouldSkipDatabaseConnection() {
   return isProductionBuild;
 }
 
-async function loadDestinationDescriptionRows(): Promise<DestinationDescriptionRow[]> {
+async function loadDestinationContentRows(): Promise<DestinationContentRows> {
   if (shouldSkipDatabaseConnection()) {
-    return [];
+    return { descriptions: [], cityAffiliateLinks: [] };
   }
 
   const databaseUrl = getDatabaseUrl();
 
   if (!databaseUrl) {
-    return [];
+    return { descriptions: [], cityAffiliateLinks: [] };
   }
 
   const client = new pg.Client({
@@ -179,12 +189,15 @@ async function loadDestinationDescriptionRows(): Promise<DestinationDescriptionR
 
   try {
     await client.connect();
-    const normalizedRows = await loadNormalizedDestinationDescriptionRows(client);
+    const [descriptions, cityAffiliateLinks] = await Promise.all([
+      loadNormalizedDestinationDescriptionRows(client),
+      loadCityLeftPanelAffiliateLinkRows(client),
+    ]);
 
-    return normalizedRows;
+    return { descriptions, cityAffiliateLinks };
   } catch (error) {
-    console.error("Failed to load destination descriptions", error);
-    return [];
+    console.error("Failed to load destination content", error);
+    return { descriptions: [], cityAffiliateLinks: [] };
   } finally {
     await client.end().catch(() => {});
   }
@@ -209,12 +222,36 @@ async function loadNormalizedDestinationDescriptionRows(client: Client) {
   }
 }
 
-const getCachedDestinationDescriptionRows = unstable_cache(
+async function loadCityLeftPanelAffiliateLinkRows(client: Client) {
+  try {
+    const { rows } = await client.query<CityAffiliateLinkRow>(
+      [
+        "select destination.legacy_id as id, affiliate.url as \"cityLeftPanelStayUrl\"",
+        "from public.affiliate_links affiliate",
+        "join public.destinations destination on destination.id = affiliate.entity_id",
+        "where affiliate.entity_type = 'destination'::public.rguide_affiliate_entity_type",
+        "  and affiliate.placement = 'city_left_panel'::public.rguide_affiliate_placement",
+        "  and affiliate.provider = 'stay22'::public.rguide_affiliate_provider",
+        "  and affiliate.is_active = true",
+        "  and (affiliate.valid_from is null or affiliate.valid_from <= now())",
+        "  and (affiliate.valid_until is null or affiliate.valid_until > now())",
+        "  and destination.scope = 'city'::public.destination_scope",
+        "  and destination.legacy_id is not null",
+        "order by affiliate.priority asc, affiliate.updated_at desc",
+      ].join(" "),
+    );
+    return rows;
+  } catch {
+    return [];
+  }
+}
+
+const getCachedDestinationContentRows = unstable_cache(
   async () => {
-    destinationDescriptionRowsPromise ??= loadDestinationDescriptionRows();
-    return destinationDescriptionRowsPromise;
+    destinationContentRowsPromise ??= loadDestinationContentRows();
+    return destinationContentRowsPromise;
   },
-  ["destination-description-rows"],
+  ["destination-content-rows"],
   {
     revalidate: Number.isFinite(DESTINATION_DESCRIPTIONS_CACHE_SECONDS)
       ? DESTINATION_DESCRIPTIONS_CACHE_SECONDS
@@ -257,10 +294,23 @@ function cloneStateWithDescription(countryId: string, state: CountryState, descr
   };
 }
 
-function cloneCityWithDescription(countryId: string, city: City, descriptions: Map<string, string>) {
+function cloneCityWithDescription(
+  countryId: string,
+  city: City,
+  descriptions: Map<string, string>,
+  cityAffiliateLinks: Map<string, CityAffiliateLinkRow>,
+) {
+  const affiliateLink = cityAffiliateLinks.get(descriptionId("city", countryId, city.id));
+
   return {
     ...city,
     description: descriptions.get(descriptionId("city", countryId, city.id)) ?? city.description,
+    affiliateLinks: affiliateLink
+      ? {
+          ...city.affiliateLinks,
+          cityLeftPanelStayUrl: affiliateLink.cityLeftPanelStayUrl,
+        }
+      : city.affiliateLinks,
     subareas: cloneSubareasWithDescriptions(city.subareas, descriptions, {
       type: "neighborhood",
       parentId: city.id,
@@ -270,7 +320,11 @@ function cloneCityWithDescription(countryId: string, city: City, descriptions: M
   };
 }
 
-function cloneCountryWithDescription(country: Country, descriptions: Map<string, string>) {
+function cloneCountryWithDescription(
+  country: Country,
+  descriptions: Map<string, string>,
+  cityAffiliateLinks: Map<string, CityAffiliateLinkRow>,
+) {
   return {
     ...country,
     description: descriptions.get(descriptionId("country", country.id)) ?? country.description,
@@ -280,28 +334,35 @@ function cloneCountryWithDescription(country: Country, descriptions: Map<string,
       countryId: country.id,
     }),
     states: country.states?.map((state) => cloneStateWithDescription(country.id, state, descriptions)),
-    cities: country.cities.map((city) => cloneCityWithDescription(country.id, city, descriptions)),
+    cities: country.cities.map((city) => cloneCityWithDescription(country.id, city, descriptions, cityAffiliateLinks)),
   };
 }
 
-export function applyDestinationDescriptions(continents: Continent[], rows: DestinationDescriptionRow[]) {
-  if (!rows.length) {
+export function applyDestinationDescriptions(
+  continents: Continent[],
+  rows: DestinationDescriptionRow[],
+  cityAffiliateRows: CityAffiliateLinkRow[] = [],
+) {
+  if (!rows.length && !cityAffiliateRows.length) {
     return continents;
   }
 
   const descriptions = new Map(rows.map((row) => [row.id, row.description.trim()]));
+  const cityAffiliateLinks = new Map(cityAffiliateRows.map((row) => [row.id, row]));
 
   return continents.map((continent) => ({
     ...continent,
-    countries: continent.countries.map((country) => cloneCountryWithDescription(country, descriptions)),
+    countries: continent.countries.map((country) =>
+      cloneCountryWithDescription(country, descriptions, cityAffiliateLinks),
+    ),
   }));
 }
 
 export async function getContinentsWithDestinationDescriptions() {
   const continents = getContinents();
-  const rows = await getCachedDestinationDescriptionRows().catch((error) => {
-    console.error("Failed to load cached destination descriptions", error);
-    return [];
+  const rows = await getCachedDestinationContentRows().catch((error) => {
+    console.error("Failed to load cached destination content", error);
+    return { descriptions: [], cityAffiliateLinks: [] };
   });
-  return applyDestinationDescriptions(continents, rows);
+  return applyDestinationDescriptions(continents, rows.descriptions, rows.cityAffiliateLinks);
 }
