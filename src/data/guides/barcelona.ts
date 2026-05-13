@@ -167,6 +167,413 @@ export const barcelonaCoreGuides = [
     ]
   },
   {
+    "id": "list-barcelona-airport-transfer-essentials",
+    "slug": "barcelona-airport-transfer-essentials",
+    "seoSlug": "airport-transfer-guide",
+    "seoTitle": "Barcelona Airport Transfer Guide",
+    "seoDescription": "Barcelona airport transfer essentials for Aerobus stops, R2 Nord train route and timetable, taxi ranks, Uber pickup, and city-side pickup points.",
+    "title": "Airport Transfers Without the Guesswork",
+    "description": "Barcelona airport transport is simple once you stop treating it as one option. Aerobus is the easiest city-center shuttle, the R2 Nord train is the cleanest rail move if Terminal 2 or Sants/Passeig de Gracia fit your route, and taxis or Uber make sense when luggage, late arrivals, or awkward addresses start to matter. Use this guide as the practical decision layer: where to stand, which direction the stops run, and which timetable link to trust before you move.",
+    "url": "https://www.google.com/maps/search/barcelona+airport+transport",
+    "category": "Essentials",
+    "location": {
+      "city": "Barcelona",
+      "country": "Spain",
+      "continent": "Europe",
+      "scope": "city"
+    },
+    "creator": {
+      "id": "user-rguide-essentials",
+      "name": "R Essentials",
+      "avatar": "data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160' viewBox='0 0 160 160'%3E%3Crect width='160' height='160' rx='80' fill='%230f766e'/%3E%3Ctext x='50%25' y='54%25' text-anchor='middle' dominant-baseline='middle' font-family='Arial,sans-serif' font-size='76' font-weight='700' fill='white'%3ER%3C/text%3E%3C/svg%3E"
+    },
+    "upvotes": 0,
+    "createdAt": "2026-05-13T00:00:00.000Z",
+    "stops": [
+      {
+        "id": "barcelona-airport-aerobus",
+        "name": "Aerobus A1/A2 Airport Bus",
+        "coordinates": [
+          41.3871,
+          2.1701
+        ],
+        "description": "Aerobus is the no-drama move between El Prat and the center: blue buses, luggage space, 24-hour service, and a route built around Placa Catalunya, Universitat, Urgell, and Placa Espanya. A1 is for Terminal 1 and A2 is for Terminal 2; check the live timetable before leaving because the route direction changes which city stops you use. Timetables: https://aerobusbarcelona.es/trip/lines-timetables-and-real-time-information/?lang=en",
+        "category": "Essentials",
+        "subcategory": "airport_bus",
+        "subcategories": [
+          "airport_bus",
+          "public_transport"
+        ],
+        "venueKind": "transport",
+        "attributeTags": [
+          "airport",
+          "bus",
+          "transit_hub",
+          "route"
+        ],
+        "officialUrl": "https://aerobusbarcelona.es/trip/lines-timetables-and-real-time-information/?lang=en",
+        "hours": {
+          "default": "24 hours daily; frequency varies by line and time of day."
+        },
+        "places": [
+          {
+            "id": "aerobus-t1-arrivals",
+            "name": "Aeroport T1 - Arrivals",
+            "coordinates": [
+              41.2892,
+              2.0746
+            ],
+            "description": "Use this stop for A1 from Terminal 1 into Barcelona. It is outside arrivals; follow the Aerobus/bus signs after baggage claim.",
+            "category": "Essentials",
+            "subcategory": "bus_stop",
+            "venueKind": "transport"
+          },
+          {
+            "id": "aerobus-t2b-t2c",
+            "name": "Aeroport T2B/T2C",
+            "coordinates": [
+              41.3043,
+              2.0832
+            ],
+            "description": "Use this stop for A2 from Terminal 2 into Barcelona. Terminal 2 has multiple sections, so check whether your airline is closer to T2A, T2B, or T2C before walking.",
+            "category": "Essentials",
+            "subcategory": "bus_stop",
+            "venueKind": "transport"
+          },
+          {
+            "id": "aerobus-placa-espanya",
+            "name": "Placa Espanya",
+            "coordinates": [
+              41.375,
+              2.1491
+            ],
+            "description": "The most useful west-side city stop, especially for Montjuic, Fira, Poble-sec, and hotels around Avinguda Paral.lel.",
+            "category": "Essentials",
+            "subcategory": "bus_stop",
+            "venueKind": "transport"
+          },
+          {
+            "id": "aerobus-gran-via-urgell",
+            "name": "Gran Via - Comte Borrell / Urgell",
+            "coordinates": [
+              41.3805,
+              2.1586
+            ],
+            "description": "Airport-to-city buses use the Gran Via/Comte Borrell area; city-to-airport buses use Sepulveda - Comte d'Urgell. This is the stop to understand if you are staying in the lower Eixample or Sant Antoni.",
+            "category": "Essentials",
+            "subcategory": "bus_stop",
+            "venueKind": "transport"
+          },
+          {
+            "id": "aerobus-placa-universitat",
+            "name": "Placa Universitat",
+            "coordinates": [
+              41.3867,
+              2.1634
+            ],
+            "description": "A central arrival stop that works well for the upper Raval, Universitat, and the west side of the Gothic Quarter when Placa Catalunya is more crowded than useful.",
+            "category": "Essentials",
+            "subcategory": "bus_stop",
+            "venueKind": "transport"
+          },
+          {
+            "id": "aerobus-placa-catalunya",
+            "name": "Placa Catalunya",
+            "coordinates": [
+              41.3871,
+              2.1701
+            ],
+            "description": "The main city terminus and easiest stop to find. Use it when you want the clearest landmark, onward metro access, or a simple pickup point in the center.",
+            "category": "Essentials",
+            "subcategory": "bus_stop",
+            "venueKind": "transport"
+          },
+          {
+            "id": "aerobus-sepulveda-urgell",
+            "name": "Sepulveda - Comte d'Urgell",
+            "coordinates": [
+              41.3832,
+              2.1592
+            ],
+            "description": "This is the key city-to-airport stop between Placa Catalunya and Placa Espanya. Use it for A1 or A2 outbound if you are staying around Sant Antoni or the lower Eixample.",
+            "category": "Essentials",
+            "subcategory": "bus_stop",
+            "venueKind": "transport"
+          }
+        ]
+      },
+      {
+        "id": "barcelona-airport-r2-nord-train",
+        "name": "R2 Nord Airport Train",
+        "coordinates": [
+          41.3042,
+          2.0745
+        ],
+        "description": "The R2 Nord is the airport train to know: it serves the Airport station at Terminal 2 and runs into Barcelona through El Prat, Bellvitge, Sants, Passeig de Gracia, and El Clot-Arago before continuing north. It is usually the best value if you are landing at T2 or connecting to Sants, but T1 passengers must first use the free terminal shuttle to reach the train. Timetables: https://rodalies.gencat.cat/en/horaris/index.html",
+        "category": "Essentials",
+        "subcategory": "airport_train",
+        "subcategories": [
+          "airport_train",
+          "public_transport"
+        ],
+        "venueKind": "transport",
+        "attributeTags": [
+          "airport",
+          "train",
+          "transit_hub",
+          "route"
+        ],
+        "officialUrl": "https://rodalies.gencat.cat/en/horaris/index.html",
+        "hours": {
+          "default": "R2 Nord airport service generally runs from early morning until late night; check Rodalies before travel."
+        },
+        "places": [
+          {
+            "id": "r2-nord-aeroport",
+            "name": "Aeroport Station (T2)",
+            "coordinates": [
+              41.3042,
+              2.0745
+            ],
+            "description": "The airport rail station is at Terminal 2. From Terminal 1, take the free airport shuttle to T2 before using the train.",
+            "category": "Essentials",
+            "subcategory": "train_station",
+            "venueKind": "transport"
+          },
+          {
+            "id": "r2-nord-el-prat",
+            "name": "El Prat de Llobregat",
+            "coordinates": [
+              41.3299,
+              2.0938
+            ],
+            "description": "Useful mainly for local connections and contingency routing; most visitors stay on board toward Sants or Passeig de Gracia.",
+            "category": "Essentials",
+            "subcategory": "train_station",
+            "venueKind": "transport"
+          },
+          {
+            "id": "r2-nord-bellvitge",
+            "name": "Bellvitge",
+            "coordinates": [
+              41.3547,
+              2.1159
+            ],
+            "description": "A suburban stop before the train enters the central Barcelona rail corridor.",
+            "category": "Essentials",
+            "subcategory": "train_station",
+            "venueKind": "transport"
+          },
+          {
+            "id": "r2-nord-barcelona-sants",
+            "name": "Barcelona-Sants",
+            "coordinates": [
+              41.3791,
+              2.14
+            ],
+            "description": "The best stop for high-speed trains, many metro connections, and hotels around Sants, Eixample Esquerra, or Placa Espanya.",
+            "category": "Essentials",
+            "subcategory": "train_station",
+            "venueKind": "transport"
+          },
+          {
+            "id": "r2-nord-passeig-de-gracia",
+            "name": "Passeig de Gracia",
+            "coordinates": [
+              41.3924,
+              2.1649
+            ],
+            "description": "The most useful central stop for Eixample, Casa Batllo, Passeig de Gracia hotels, and a short onward move toward Placa Catalunya.",
+            "category": "Essentials",
+            "subcategory": "train_station",
+            "venueKind": "transport"
+          },
+          {
+            "id": "r2-nord-el-clot-arago",
+            "name": "El Clot-Arago",
+            "coordinates": [
+              41.4102,
+              2.1873
+            ],
+            "description": "A practical stop for Clot, Poblenou-side transfers, and northeast Barcelona rather than the old city.",
+            "category": "Essentials",
+            "subcategory": "train_station",
+            "venueKind": "transport"
+          }
+        ]
+      },
+      {
+        "id": "barcelona-airport-taxi-uber",
+        "name": "Taxi and Uber Pickup Points",
+        "coordinates": [
+          41.2892,
+          2.0746
+        ],
+        "description": "Taxi or Uber is the right answer when the address is awkward, the bags are heavy, or the arrival is late enough that saving energy matters more than saving euros. Official taxis are black and yellow and queue outside the airport arrivals areas; Uber and other VTC services use app-assigned pickup points, often in dedicated parking areas rather than directly at the nearest curb. In the city, avoid asking a driver to thread into tiny Gothic lanes if you can walk to a clearer pickup edge like Placa Catalunya, Sants, Ronda Universitat, or Gran Via.",
+        "category": "Essentials",
+        "subcategory": "taxi_rideshare",
+        "subcategories": [
+          "taxi",
+          "rideshare",
+          "airport_transfer"
+        ],
+        "venueKind": "transport",
+        "attributeTags": [
+          "airport",
+          "taxi",
+          "rideshare",
+          "transit_hub"
+        ],
+        "officialUrl": "https://www.aena.es/en/josep-tarradellas-barcelona-el-prat/getting-there/taxi.html",
+        "hours": {
+          "default": "Official airport taxis operate 24/7; rideshare pickup depends on app availability and assigned pickup point."
+        },
+        "places": [
+          {
+            "id": "taxi-rank-airport-t1",
+            "name": "Airport Taxi Rank - T1 Ground Floor",
+            "coordinates": [
+              41.2892,
+              2.0746
+            ],
+            "description": "Aena lists the official T1 taxi service on the ground floor opposite arrivals. Use the signed taxi rank and the black-and-yellow official taxis.",
+            "category": "Essentials",
+            "subcategory": "taxi_rank",
+            "venueKind": "transport"
+          },
+          {
+            "id": "taxi-rank-airport-t2a",
+            "name": "Airport Taxi Rank - T2A",
+            "coordinates": [
+              41.3047,
+              2.0795
+            ],
+            "description": "Taxi rank outside the T2A arrivals side. Follow taxi signage after baggage claim.",
+            "category": "Essentials",
+            "subcategory": "taxi_rank",
+            "venueKind": "transport"
+          },
+          {
+            "id": "taxi-rank-airport-t2b",
+            "name": "Airport Taxi Rank - T2B",
+            "coordinates": [
+              41.3043,
+              2.0832
+            ],
+            "description": "The central Terminal 2 taxi rank and often the easiest T2 pickup point to orient around.",
+            "category": "Essentials",
+            "subcategory": "taxi_rank",
+            "venueKind": "transport"
+          },
+          {
+            "id": "taxi-rank-airport-t2c",
+            "name": "Airport Taxi Rank - T2C",
+            "coordinates": [
+              41.3036,
+              2.0877
+            ],
+            "description": "Taxi rank for the T2C end of Terminal 2; useful when your flight or airline exits on this side.",
+            "category": "Essentials",
+            "subcategory": "taxi_rank",
+            "venueKind": "transport"
+          },
+          {
+            "id": "vtc-uber-airport-t1",
+            "name": "Uber / VTC Pickup - T1",
+            "coordinates": [
+              41.2898,
+              2.0754
+            ],
+            "description": "Aena says Uber and other chauffeur-driven services use exclusive parking/pickup areas by terminal. Request the ride first, then follow the app and airport VTC signage rather than guessing from the nearest exit.",
+            "category": "Essentials",
+            "subcategory": "rideshare_pickup",
+            "venueKind": "transport",
+            "officialUrl": "https://www.aena.es/en/josep-tarradellas-barcelona-el-prat/getting-there/vehicles-for-hire.html"
+          },
+          {
+            "id": "vtc-uber-airport-t2",
+            "name": "Uber / VTC Pickup - T2 Express Parking",
+            "coordinates": [
+              41.3044,
+              2.0838
+            ],
+            "description": "For Terminal 2, Aena lists Uber pickup around the T2A/T2B express parking areas. The exact point can vary, so let the app route you after matching with a driver.",
+            "category": "Essentials",
+            "subcategory": "rideshare_pickup",
+            "venueKind": "transport",
+            "officialUrl": "https://www.aena.es/en/josep-tarradellas-barcelona-el-prat/airport-services/vehiculos-con-conductor/t2.html"
+          },
+          {
+            "id": "taxi-uber-city-placa-catalunya",
+            "name": "City Pickup - Placa Catalunya",
+            "coordinates": [
+              41.3871,
+              2.1701
+            ],
+            "description": "The simplest central city-side pickup point: visible, wide, and easy for taxis or app drivers to understand. Good for the Gothic Quarter, Raval, and upper Rambla if you can walk out with bags.",
+            "category": "Essentials",
+            "subcategory": "city_pickup",
+            "venueKind": "transport"
+          },
+          {
+            "id": "taxi-uber-city-barcelona-sants",
+            "name": "City Pickup - Barcelona-Sants",
+            "coordinates": [
+              41.3791,
+              2.14
+            ],
+            "description": "Best city-side pickup if you are already near Sants or arriving by train. Taxi ranks are obvious, traffic flow is built for pickups, and drivers do not have to hunt through old-town streets.",
+            "category": "Essentials",
+            "subcategory": "city_pickup",
+            "venueKind": "transport"
+          },
+          {
+            "id": "taxi-uber-city-ronda-universitat",
+            "name": "City Pickup - Ronda Universitat / Gran Via Edge",
+            "coordinates": [
+              41.3866,
+              2.1652
+            ],
+            "description": "A useful edge-of-center pickup zone for Eixample, Universitat, and the upper Raval. It is easier than trying to meet a car deep inside narrow old-city blocks.",
+            "category": "Essentials",
+            "subcategory": "city_pickup",
+            "venueKind": "transport"
+          }
+        ]
+      }
+    ],
+    "sources": [
+      {
+        "name": "Aerobus - Lines, timetables and real-time information",
+        "url": "https://aerobusbarcelona.es/trip/lines-timetables-and-real-time-information/?lang=en"
+      },
+      {
+        "name": "Aerobus - Lines, stops and schedules",
+        "url": "https://aerobusbarcelona.es/en/lines-stops-and-schedules/"
+      },
+      {
+        "name": "Rodalies - Timetables",
+        "url": "https://rodalies.gencat.cat/en/horaris/index.html"
+      },
+      {
+        "name": "Rodalies - Line R2 North",
+        "url": "https://rodalies.gencat.cat/en/sobre-rodalies/linies-i-estacions/servei_rodalia_barcelona/r2n/index.html"
+      },
+      {
+        "name": "Aena - Taxi",
+        "url": "https://www.aena.es/en/josep-tarradellas-barcelona-el-prat/getting-there/taxi.html"
+      },
+      {
+        "name": "Aena - Vehicles for hire",
+        "url": "https://www.aena.es/en/josep-tarradellas-barcelona-el-prat/getting-there/vehicles-for-hire.html"
+      },
+      {
+        "name": "Uber - Barcelona Airport pickup",
+        "url": "https://www.uber.com/global/en/r/airports/bcn/pickup/"
+      }
+    ]
+  },
+  {
     "id": "list-barcelona-gothic-quarter-restaurants",
     "slug": "barcelona-gothic-quarter-restaurants",
     "seoSlug": "best-restaurants",

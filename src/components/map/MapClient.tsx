@@ -1111,10 +1111,24 @@ function smoothRouteCoordinates(coordinates: Array<[number, number]>): Array<[nu
   return smoothed;
 }
 
-function createGuideRouteData(activeGuide?: MapList | null): FeatureCollection<LineString, GuideRouteFeatureProperties> {
-  const shouldShowRoute = activeGuide?.creator.id === "user-rguide-history" && (activeGuide.stops?.length ?? 0) > 1;
+function createGuideRouteData(
+  activeGuide?: MapList | null,
+  selectedStopId?: string | null,
+  visibleNestedStopParentIds: string[] = [],
+): FeatureCollection<LineString, GuideRouteFeatureProperties> {
+  const selectedParentStop = activeGuide?.stops.find((stop) => stop.id === selectedStopId);
+  const focusedNestedStop =
+    selectedParentStop ??
+    activeGuide?.stops.find((stop) => visibleNestedStopParentIds.includes(stop.id) && (stop.places?.length ?? 0) > 1);
+  const focusedNestedRouteCoordinates =
+    focusedNestedStop && (focusedNestedStop.category === "Routes" || focusedNestedStop.category === "Essentials")
+      ? (focusedNestedStop.places ?? []).map((place) => [place.coordinates[1], place.coordinates[0]] as [number, number])
+      : [];
+  const shouldShowNestedRoute = focusedNestedRouteCoordinates.length > 1;
+  const shouldShowGuideRoute =
+    activeGuide?.creator.id === "user-rguide-history" && (activeGuide.stops?.length ?? 0) > 1;
 
-  if (!shouldShowRoute || !activeGuide) {
+  if ((!shouldShowGuideRoute && !shouldShowNestedRoute) || !activeGuide) {
     return {
       type: "FeatureCollection",
       features: [],
@@ -1123,7 +1137,9 @@ function createGuideRouteData(activeGuide?: MapList | null): FeatureCollection<L
 
   const routeSegments: Array<Array<[number, number]>> = [];
   const baseRouteCoordinates =
-    activeGuide.id === "list-r-history-magellan-elcano-circumnavigation"
+    shouldShowNestedRoute
+      ? focusedNestedRouteCoordinates
+      : activeGuide.id === "list-r-history-magellan-elcano-circumnavigation"
       ? getMagellanElcanoRouteCoordinates(activeGuide)
       : activeGuide.stops.map((stop) => [stop.coordinates[1], stop.coordinates[0]] as [number, number]);
   const routeCoordinates =
@@ -1153,7 +1169,7 @@ function createGuideRouteData(activeGuide?: MapList | null): FeatureCollection<L
       type: "Feature" as const,
       properties: {
         id: `${activeGuide.id}-route-${index + 1}`,
-        category: activeGuide.category,
+        category: focusedNestedStop?.category ?? activeGuide.category,
       },
       geometry: {
         type: "LineString" as const,
@@ -2105,8 +2121,8 @@ export function MapClient({
     [activeGuide, visibleNestedStopParentIds],
   );
   const guideRouteData = useMemo(
-    () => createGuideRouteData(activeGuide),
-    [activeGuide],
+    () => createGuideRouteData(activeGuide, selectedStopId, visibleNestedStopParentIds),
+    [activeGuide, selectedStopId, visibleNestedStopParentIds],
   );
   const savedLocationData = useMemo(
     () => createSavedLocationData(continents, savedLocations),
