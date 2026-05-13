@@ -358,10 +358,6 @@ export function applyDestinationDescriptions(
   rows: DestinationDescriptionRow[],
   cityAffiliateRows: CityAffiliateLinkRow[] = [],
 ) {
-  if (!rows.length && !cityAffiliateRows.length) {
-    return continents;
-  }
-
   const descriptions = new Map(rows.map((row) => [row.id, row.description.trim()]));
   const cityAffiliateLinks = new Map(cityAffiliateRows.map((row) => [row.id, row]));
 
