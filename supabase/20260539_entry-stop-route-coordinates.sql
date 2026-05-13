@@ -1,5 +1,4 @@
--- Surface venue attribute tags in the MapList stop payload so the expanded
--- guide UI can render/filter POI attributes from normalized venue data.
+-- Preserve route geometry from normalized entry stop metadata in MapList payloads.
 
 create or replace view public.entries_maplist
 with (security_invoker = true) as
@@ -162,7 +161,7 @@ select
   now(),
   null,
   true,
-  jsonb_build_object('refreshed_from', 'entry_stop_attribute_tags')
+  jsonb_build_object('refreshed_from', 'entry_stop_route_coordinates')
 from public.entries entry
 join public.entries_maplist view on view.id = entry.id
 where entry.status = 'published'

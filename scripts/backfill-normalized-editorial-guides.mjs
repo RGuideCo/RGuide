@@ -755,7 +755,10 @@ function buildStopPayload(selectedGuides, contexts) {
         journey_day: stop.journeyDay ?? stop.itineraryDay ?? null,
         hours: stop.hours ?? null,
         places: stop.places ?? [],
-        metadata: { source: "editorial_guides" },
+        metadata: {
+          source: "editorial_guides",
+          ...(stop.routeCoordinates ? { routeCoordinates: stop.routeCoordinates } : {}),
+        },
       });
 
       if (stop.photo?.trim()) {
@@ -1875,7 +1878,10 @@ async function replaceEntryStops(client, entryId, list, context, stats) {
         stop.journeyDay ?? stop.itineraryDay ?? null,
         toJson(stop.hours),
         toJsonArray(stop.places),
-        toJsonObject({ source: "editorial_guides" }),
+        toJsonObject({
+          source: "editorial_guides",
+          ...(stop.routeCoordinates ? { routeCoordinates: stop.routeCoordinates } : {}),
+        }),
       ],
     );
     stats.entryStops += 1;
