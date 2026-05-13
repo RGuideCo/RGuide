@@ -249,6 +249,7 @@ export interface GuideStop {
   eventTime?: string;
   eventVenue?: string;
   places?: GuideStop[];
+  routeCoordinates?: [number, number][];
   itineraryDate?: string;
   itineraryDay?: number;
   journeyDate?: string;

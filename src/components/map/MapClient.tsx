@@ -863,7 +863,8 @@ function createGuideStopData(
         coordinates: [stop.coordinates[1], stop.coordinates[0]],
       },
     };
-    const nestedFeatures = visibleNestedParentSet.has(stop.id) ? (stop.places ?? []).map((place, placeIndex) => ({
+    const shouldShowNestedFeatures = visibleNestedParentSet.has(stop.id);
+    const nestedFeatures = shouldShowNestedFeatures ? (stop.places ?? []).map((place, placeIndex) => ({
       type: "Feature" as const,
       properties: {
         id: place.id,
@@ -880,7 +881,7 @@ function createGuideStopData(
         coordinates: [place.coordinates[1], place.coordinates[0]],
       },
     })) : [];
-    return [parentFeature, ...nestedFeatures];
+    return shouldShowNestedFeatures ? nestedFeatures : [parentFeature];
   });
   return {
     type: "FeatureCollection",
@@ -1111,6 +1112,37 @@ function smoothRouteCoordinates(coordinates: Array<[number, number]>): Array<[nu
   return smoothed;
 }
 
+const KNOWN_NESTED_ROUTE_COORDINATES: Record<string, Array<[number, number]>> = {
+  "barcelona-airport-aerobus": [
+    [2.0746, 41.2892],
+    [2.0795, 41.2917],
+    [2.0814, 41.2994],
+    [2.0832, 41.3043],
+    [2.0955, 41.315],
+    [2.1076, 41.3308],
+    [2.1236, 41.3506],
+    [2.1371, 41.3654],
+    [2.1491, 41.375],
+    [2.1586, 41.3805],
+    [2.1592, 41.3832],
+    [2.1634, 41.3867],
+    [2.1701, 41.3871],
+  ],
+  "barcelona-airport-r2-nord-train": [
+    [2.0745, 41.3042],
+    [2.0831, 41.3125],
+    [2.0938, 41.3299],
+    [2.1055, 41.3429],
+    [2.1159, 41.3547],
+    [2.1294, 41.3693],
+    [2.14, 41.3791],
+    [2.1516, 41.3848],
+    [2.1649, 41.3924],
+    [2.1763, 41.4012],
+    [2.1873, 41.4102],
+  ],
+};
+
 function createGuideRouteData(
   activeGuide?: MapList | null,
   selectedStopId?: string | null,
@@ -1120,9 +1152,18 @@ function createGuideRouteData(
   const focusedNestedStop =
     selectedParentStop ??
     activeGuide?.stops.find((stop) => visibleNestedStopParentIds.includes(stop.id) && (stop.places?.length ?? 0) > 1);
+  const explicitNestedRouteCoordinates =
+    focusedNestedStop?.routeCoordinates?.map(([lat, lng]) => [lng, lat] as [number, number]) ?? [];
+  const knownNestedRouteCoordinates = focusedNestedStop?.id
+    ? KNOWN_NESTED_ROUTE_COORDINATES[focusedNestedStop.id] ?? []
+    : [];
   const focusedNestedRouteCoordinates =
     focusedNestedStop && (focusedNestedStop.category === "Routes" || focusedNestedStop.category === "Essentials")
-      ? (focusedNestedStop.places ?? []).map((place) => [place.coordinates[1], place.coordinates[0]] as [number, number])
+      ? explicitNestedRouteCoordinates.length > 1
+        ? explicitNestedRouteCoordinates
+        : knownNestedRouteCoordinates.length > 1
+          ? knownNestedRouteCoordinates
+        : (focusedNestedStop.places ?? []).map((place) => [place.coordinates[1], place.coordinates[0]] as [number, number])
       : [];
   const shouldShowNestedRoute = focusedNestedRouteCoordinates.length > 1;
   const shouldShowGuideRoute =
@@ -1143,7 +1184,9 @@ function createGuideRouteData(
       ? getMagellanElcanoRouteCoordinates(activeGuide)
       : activeGuide.stops.map((stop) => [stop.coordinates[1], stop.coordinates[0]] as [number, number]);
   const routeCoordinates =
-    activeGuide.id === "list-r-history-magellan-elcano-circumnavigation"
+    shouldShowNestedRoute && (explicitNestedRouteCoordinates.length > 1 || knownNestedRouteCoordinates.length > 1)
+      ? baseRouteCoordinates
+      : activeGuide.id === "list-r-history-magellan-elcano-circumnavigation"
       ? baseRouteCoordinates
       : smoothRouteCoordinates(baseRouteCoordinates);
 
