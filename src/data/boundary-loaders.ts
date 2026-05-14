@@ -126,6 +126,7 @@ async function loadSupabaseNeighborhoodBoundaryMap(cityId: string) {
 
   try {
     const response = await fetch(`/api/destination-boundaries/${encodeURIComponent(cityId)}`, {
+      cache: "no-store",
       headers: { Accept: "application/json" },
     });
     if (!response.ok) {

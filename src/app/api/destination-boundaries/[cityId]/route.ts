@@ -80,7 +80,7 @@ export async function GET(
 
     return NextResponse.json(collection, {
       headers: {
-        "Cache-Control": "public, s-maxage=86400, stale-while-revalidate=604800",
+        "Cache-Control": "no-store, max-age=0",
       },
     });
   } catch (error) {
