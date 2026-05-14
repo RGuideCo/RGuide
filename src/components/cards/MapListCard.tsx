@@ -127,11 +127,82 @@ function normalizeLocationSubtitlePart(value?: string | null) {
     .toLowerCase();
 }
 
+function slugifyLocationPart(value: string) {
+  return normalizeLocationSubtitlePart(value)
+    .replace(/&/g, " and ")
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "");
+}
+
+function formatNeighborhoodFromSlug(value: string) {
+  const wordsToDrop = new Set([
+    "bars",
+    "culture",
+    "dive",
+    "food",
+    "hostels",
+    "hotels",
+    "nightlife",
+    "popular",
+    "pubs",
+    "restaurants",
+    "stays",
+  ]);
+  const parts = value.split("-").filter(Boolean);
+
+  while (parts.length && wordsToDrop.has(parts[parts.length - 1])) {
+    parts.pop();
+  }
+
+  if (!parts.length || parts[0] === "best") {
+    return null;
+  }
+
+  return parts
+    .map((part) => (part.length <= 3 ? part.toUpperCase() : part[0].toUpperCase() + part.slice(1)))
+    .join(" ");
+}
+
+function inferNeighborhoodFromGuideText(list: MapList) {
+  const city = list.location.city?.trim();
+  if (!city) {
+    return null;
+  }
+
+  const cityPattern = city.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+  const candidates = [list.location.neighborhood, list.seoTitle, list.title, list.seoDescription]
+    .filter((value): value is string => Boolean(value?.trim()));
+
+  for (const value of candidates) {
+    const match = value.match(new RegExp(`\\b(?:in|near|on)\\s+([^,]+),\\s*${cityPattern}\\b`, "i"));
+    const neighborhood = match?.[1]?.trim();
+    if (neighborhood && normalizeLocationSubtitlePart(neighborhood) !== normalizeLocationSubtitlePart(city)) {
+      return neighborhood;
+    }
+  }
+
+  const citySlug = slugifyLocationPart(city);
+  const slugCandidates = [list.seoSlug, list.slug].filter((value): value is string => Boolean(value?.trim()));
+  for (const slug of slugCandidates) {
+    const normalizedSlug = slugifyLocationPart(slug);
+    if (normalizedSlug.includes("citywide") || !normalizedSlug.startsWith(`${citySlug}-`)) {
+      continue;
+    }
+    const inferred = formatNeighborhoodFromSlug(normalizedSlug.slice(citySlug.length + 1));
+    if (inferred && normalizeLocationSubtitlePart(inferred) !== normalizeLocationSubtitlePart(city)) {
+      return inferred;
+    }
+  }
+
+  return null;
+}
+
 function buildLocationSubtitle(list: MapList, hiddenParts: string[] = []) {
   const hiddenLocationParts = new Set(hiddenParts.map(normalizeLocationSubtitlePart).filter(Boolean));
+  const neighborhoodLabel = list.location.neighborhood?.trim() || inferNeighborhoodFromGuideText(list);
 
   return [
-    list.location.neighborhood,
+    neighborhoodLabel,
     list.location.city,
     list.location.country,
     list.location.continent,

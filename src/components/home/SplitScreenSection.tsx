@@ -2249,11 +2249,80 @@ export function SplitScreenSection({
     const normalizedRight = normalizeLocationName(right);
     return Boolean(normalizedLeft && normalizedRight && normalizedLeft === normalizedRight);
   };
+  const slugifyLocationPart = (value: string) =>
+    normalizeLocationName(value)
+      .replace(/&/g, " and ")
+      .replace(/[^a-z0-9]+/g, "-")
+      .replace(/^-+|-+$/g, "");
+  const formatNeighborhoodFromSlug = (value: string) => {
+    const wordsToDrop = new Set([
+      "bars",
+      "culture",
+      "dive",
+      "food",
+      "hostels",
+      "hotels",
+      "nightlife",
+      "popular",
+      "pubs",
+      "restaurants",
+      "stays",
+    ]);
+    const parts = value.split("-").filter(Boolean);
+
+    while (parts.length && wordsToDrop.has(parts[parts.length - 1])) {
+      parts.pop();
+    }
+
+    if (!parts.length || parts[0] === "best") {
+      return null;
+    }
+
+    return parts
+      .map((part) => (part.length <= 3 ? part.toUpperCase() : part[0].toUpperCase() + part.slice(1)))
+      .join(" ");
+  };
+  const inferListNeighborhoodName = (list: MapList) => {
+    if (list.location.neighborhood?.trim()) {
+      return list.location.neighborhood.trim();
+    }
+    const cityName = activeLocation.city?.name ?? list.location.city;
+    if (!cityName) {
+      return null;
+    }
+
+    const escapedCityName = cityName.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+    const candidates = [list.seoTitle, list.title, list.seoDescription]
+      .filter((value): value is string => Boolean(value?.trim()));
+
+    for (const value of candidates) {
+      const match = value.match(new RegExp(`\\b(?:in|near|on)\\s+([^,]+),\\s*${escapedCityName}\\b`, "i"));
+      const neighborhoodName = match?.[1]?.trim();
+      if (neighborhoodName && !locationsMatch(neighborhoodName, cityName)) {
+        return neighborhoodName;
+      }
+    }
+
+    const citySlug = slugifyLocationPart(cityName);
+    const slugCandidates = [list.seoSlug, list.slug].filter((value): value is string => Boolean(value?.trim()));
+    for (const slug of slugCandidates) {
+      const normalizedSlug = slugifyLocationPart(slug);
+      if (normalizedSlug.includes("citywide") || !normalizedSlug.startsWith(`${citySlug}-`)) {
+        continue;
+      }
+      const neighborhoodName = formatNeighborhoodFromSlug(normalizedSlug.slice(citySlug.length + 1));
+      if (neighborhoodName && !locationsMatch(neighborhoodName, cityName)) {
+        return neighborhoodName;
+      }
+    }
+
+    return null;
+  };
   const isListNeighborhoodGuideForActiveCity = (list: MapList) =>
     Boolean(
       activeLocation.city &&
-        normalizeNeighborhoodName(list.location.neighborhood) &&
-        !locationsMatch(list.location.neighborhood, activeLocation.city.name),
+        normalizeNeighborhoodName(inferListNeighborhoodName(list)) &&
+        !locationsMatch(inferListNeighborhoodName(list), activeLocation.city.name),
     );
   const isListInActiveCity = (list: MapList) =>
     Boolean(
@@ -2291,13 +2360,16 @@ export function SplitScreenSection({
     if (activeLocation.city) {
       if (sameCity) {
         const activeNeighborhood = activeLocation.nestedSubarea ?? activeLocation.subarea;
-        if (activeNeighborhood && locationsMatch(list.location.neighborhood, activeNeighborhood.name)) {
+        const listNeighborhoodName = inferListNeighborhoodName(list);
+        if (activeNeighborhood && locationsMatch(listNeighborhoodName, activeNeighborhood.name)) {
           addHiddenPart(activeNeighborhood.name);
         }
-        if (locationsMatch(list.location.neighborhood, activeLocation.city.name)) {
-          addHiddenPart(list.location.neighborhood);
+        if (locationsMatch(listNeighborhoodName, activeLocation.city.name)) {
+          addHiddenPart(listNeighborhoodName);
         }
-        addHiddenPart(activeLocation.city.name);
+        if (listNeighborhoodName && !locationsMatch(listNeighborhoodName, activeLocation.city.name)) {
+          addHiddenPart(activeLocation.city.name);
+        }
         addHiddenPart(activeLocation.country?.name ?? activeLocation.city.country);
         addHiddenPart(activeLocation.continent?.name ?? activeLocation.country?.continent);
       }
@@ -3540,6 +3612,18 @@ export function SplitScreenSection({
   const remainingGuides = displayedGuide
     ? orderedRailFilteredLists.filter((list) => list.id !== displayedGuide.id)
     : orderedRailFilteredLists;
+  const shouldGroupCityGuideList =
+    Boolean(activeLocation.city) &&
+    !activeNeighborhoodKey &&
+    activeGuideRail === "all-guides" &&
+    !activeCategory &&
+    !activeSubcategory;
+  const citywideRailLists = shouldGroupCityGuideList
+    ? orderedRailFilteredLists.filter((list) => !isListNeighborhoodGuideForActiveCity(list))
+    : orderedRailFilteredLists;
+  const neighborhoodRailLists = shouldGroupCityGuideList
+    ? orderedRailFilteredLists.filter((list) => isListNeighborhoodGuideForActiveCity(list))
+    : [];
   const recentRGuideLists = useMemo(() => {
     if (!isGlobalSelection || activeGuideRail !== "all-guides" || activeGuideSource === "user-guides" || activeGuideSource === "favorites") {
       return [];
@@ -3568,6 +3652,37 @@ export function SplitScreenSection({
       })
       .slice(0, 20);
   }, [activeGuideRail, activeGuideSource, activeCategory, globalMergedLists, isGlobalSelection, orderedRailFilteredLists]);
+  const renderGuideRailCard = (list: MapList, keyPrefix = "") => (
+    <div
+      key={`${keyPrefix}${list.id}`}
+      ref={(node) => {
+        guideRefs.current[list.id] = node;
+      }}
+      className="scroll-mt-2"
+    >
+      <MapListCard
+        list={list}
+        expandable
+        expanded={closingGuide?.id === list.id && closingGuidePhase === "returning"}
+        preserveExpandedChrome={closingGuide?.id === list.id || openingGuideId === list.id}
+        retractExpandedChrome={closingGuide?.id === list.id && closingGuidePhase === "collapsing"}
+        expandExpandedChrome={openingGuideId === list.id}
+        onExpandChromeComplete={completeGuideOpening}
+        onToggleExpand={handleGuideToggle}
+        shouldAutoOpenSources={pendingSourcesOpenGuideId === list.id}
+        onAutoOpenSourcesHandled={handleAutoOpenSourcesHandled}
+        onRequestOpenSourcesWhenCollapsed={handleExpandAndOpenSources}
+        onHoverStart={setHoveredGuide}
+        onHoverEnd={() => setHoveredGuide(null)}
+        onStopHoverChange={setHoveredStopId}
+        onStopSelect={handleGuideStopSelect}
+        hoveredStopId={hoveredStopId}
+        forceExpandStopId={selectedGuideStopId}
+        forceExpandStopNonce={selectedGuideStopNonce}
+        collapsedLocationSubtitleHiddenParts={getCollapsedLocationSubtitleHiddenParts(list)}
+      />
+    </div>
+  );
   const activeSeoPlaceLabel = activeLocation.city
     ? activeLocation.nestedSubarea?.name ?? activeLocation.subarea?.name ?? activeLocation.city.name
     : activeDirectoryMeta.title;
@@ -7827,37 +7942,24 @@ export function SplitScreenSection({
                     </div>
                   ) : (
                     <>
-                      {orderedRailFilteredLists.map((list) => (
-                        <div
-                          key={list.id}
-                          ref={(node) => {
-                            guideRefs.current[list.id] = node;
-                          }}
-                          className="scroll-mt-2"
-                        >
-                          <MapListCard
-                            list={list}
-                            expandable
-                            expanded={closingGuide?.id === list.id && closingGuidePhase === "returning"}
-                            preserveExpandedChrome={closingGuide?.id === list.id || openingGuideId === list.id}
-                            retractExpandedChrome={closingGuide?.id === list.id && closingGuidePhase === "collapsing"}
-                            expandExpandedChrome={openingGuideId === list.id}
-                            onExpandChromeComplete={completeGuideOpening}
-                            onToggleExpand={handleGuideToggle}
-                            shouldAutoOpenSources={pendingSourcesOpenGuideId === list.id}
-                            onAutoOpenSourcesHandled={handleAutoOpenSourcesHandled}
-                            onRequestOpenSourcesWhenCollapsed={handleExpandAndOpenSources}
-                            onHoverStart={setHoveredGuide}
-                            onHoverEnd={() => setHoveredGuide(null)}
-                            onStopHoverChange={setHoveredStopId}
-                            onStopSelect={handleGuideStopSelect}
-                            hoveredStopId={hoveredStopId}
-                            forceExpandStopId={selectedGuideStopId}
-                            forceExpandStopNonce={selectedGuideStopNonce}
-                            collapsedLocationSubtitleHiddenParts={getCollapsedLocationSubtitleHiddenParts(list)}
-                          />
+                      {shouldGroupCityGuideList && citywideRailLists.length ? (
+                        <div className="space-y-4">
+                          <p className="px-1 text-[11px] font-medium uppercase tracking-[0.2em] text-slate-500">
+                            Citywide Guides
+                          </p>
+                          {citywideRailLists.map((list) => renderGuideRailCard(list, "citywide-"))}
                         </div>
-                      ))}
+                      ) : (
+                        citywideRailLists.map((list) => renderGuideRailCard(list))
+                      )}
+                      {shouldGroupCityGuideList && neighborhoodRailLists.length ? (
+                        <div className="space-y-4 border-t border-slate-200 pt-4">
+                          <p className="px-1 text-[11px] font-medium uppercase tracking-[0.2em] text-slate-500">
+                            Neighborhood Guides
+                          </p>
+                          {neighborhoodRailLists.map((list) => renderGuideRailCard(list, "neighborhood-"))}
+                        </div>
+                      ) : null}
                       {recentRGuideLists.length ? (
                         <div className="space-y-4 border-t border-slate-200 pt-4">
                           <p className="px-1 text-[11px] font-medium uppercase tracking-[0.2em] text-slate-500">
