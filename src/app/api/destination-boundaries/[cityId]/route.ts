@@ -2,11 +2,8 @@ import { NextResponse } from "next/server";
 import pg from "pg";
 import type { Feature, FeatureCollection, Geometry } from "geojson";
 
-import {
-  loadNeighborhoodBoundaryMap,
-  type NeighborhoodBoundaryMap,
-  type NeighborhoodBoundaryProperties,
-} from "@/data/boundary-loaders";
+import londonBoundaries from "@/data/boundaries/london.json";
+import type { NeighborhoodBoundaryProperties } from "@/data/boundary-loaders";
 
 export const dynamic = "force-dynamic";
 export const runtime = "nodejs";
@@ -40,12 +37,21 @@ function emptyCollection(): FeatureCollection<Geometry, NeighborhoodBoundaryProp
   };
 }
 
-function collectionFromBoundaryMap(
-  boundaryMap: NeighborhoodBoundaryMap,
-): FeatureCollection<Geometry, NeighborhoodBoundaryProperties> {
+function isPolygonFeature(
+  feature: unknown,
+): feature is Feature<Geometry, NeighborhoodBoundaryProperties> {
+  const geometryType = (feature as Feature<Geometry, NeighborhoodBoundaryProperties> | null)?.geometry?.type;
+  return geometryType === "Polygon" || geometryType === "MultiPolygon";
+}
+
+function localFallbackCollection(cityId: string): FeatureCollection<Geometry, NeighborhoodBoundaryProperties> {
+  if (cityId !== "london") {
+    return emptyCollection();
+  }
+
   return {
     type: "FeatureCollection",
-    features: Object.values(boundaryMap),
+    features: Object.values(londonBoundaries as Record<string, unknown>).filter(isPolygonFeature),
   };
 }
 
@@ -65,7 +71,7 @@ export async function GET(
   const databaseUrl = getDatabaseUrl();
 
   if (!databaseUrl) {
-    return boundaryResponse(collectionFromBoundaryMap(await loadNeighborhoodBoundaryMap(cityId)));
+    return boundaryResponse(localFallbackCollection(cityId));
   }
 
   const client = new pg.Client({
@@ -102,7 +108,7 @@ export async function GET(
     return boundaryResponse(collection);
   } catch (error) {
     console.error(`Failed to load destination boundaries for ${cityId}`, error);
-    return boundaryResponse(collectionFromBoundaryMap(await loadNeighborhoodBoundaryMap(cityId)));
+    return boundaryResponse(localFallbackCollection(cityId));
   } finally {
     await client.end().catch(() => {});
   }
