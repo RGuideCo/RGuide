@@ -1412,7 +1412,7 @@ const citySubareaSeeds = new Map<string, SubArea[]>([
         name: "Westminster",
         coordinates: [51.4994, -0.1276],
         description:
-          "The ceremonial and historic heart with Big Ben, Westminster Abbey, and Buckingham Palace in one compact central zone.",
+          "The ceremonial and historic heart around Parliament, Westminster Abbey, Whitehall, and the streets that carry London's state rituals.",
       },
       {
         id: "soho",
