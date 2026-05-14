@@ -992,11 +992,11 @@ async function upsertVenuesBatch(client, venueRows) {
          source_metadata = public.venues.source_metadata || excluded.source_metadata
        returning id, city_id, slug
      )
-     select incoming.row_key, venue.id
+     select incoming.row_key, upserted.id
      from incoming
-     join public.venues venue
-       on venue.city_id is not distinct from incoming.city_id
-      and venue.slug = incoming.slug`,
+     join upserted
+       on upserted.city_id is not distinct from incoming.city_id
+      and upserted.slug = incoming.slug`,
     [JSON.stringify(venueRows)],
   );
   return new Map(result.rows.map((row) => [row.row_key, row.id]));

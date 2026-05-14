@@ -743,14 +743,12 @@ function addGuideStopMarkerImage(
   category: MapList["category"],
   label: string,
 ) {
+  const imageData = createGuideStopMarkerImage(CATEGORY_STYLES[category].mapColor, label);
   if (map.hasImage(imageName)) {
+    map.updateImage(imageName, imageData);
     return;
   }
-  map.addImage(
-    imageName,
-    createGuideStopMarkerImage(CATEGORY_STYLES[category].mapColor, label),
-    { pixelRatio: 2 },
-  );
+  map.addImage(imageName, imageData, { pixelRatio: 2 });
 }
 
 function ensureGuideStopMarkerImages(map: maplibregl.Map, guideStopData: FeatureCollection<Point, GuideStopFeatureProperties>) {
@@ -881,7 +879,7 @@ function createGuideStopData(
         coordinates: [place.coordinates[1], place.coordinates[0]],
       },
     })) : [];
-    return shouldShowNestedFeatures ? nestedFeatures : [parentFeature];
+    return shouldShowNestedFeatures ? [parentFeature, ...nestedFeatures] : [parentFeature];
   });
   return {
     type: "FeatureCollection",
