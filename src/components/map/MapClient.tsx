@@ -3315,10 +3315,13 @@ export function MapClient({
     });
   }, [
     activeNeighborhoodBoundary,
+    activeGuide?.id,
+    activeGuide?.stops?.length,
     continents,
     selection,
     styleReadyTick,
     viewportMode,
+    viewportInsets,
   ]);
 
   useEffect(() => {
