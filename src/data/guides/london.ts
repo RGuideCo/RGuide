@@ -89,7 +89,6 @@ const poiPhotos: Record<string, string> = {
   "covent-food-barbary": "https://cdn.sanity.io/images/2o1bir6p/production/bfdaff00e6cd8158f57aedba0588f40c2507efd2-7155x4770.jpg?w=1920&q=90&auto=format",
   "covent-food-clos-maggiore": "https://cdn.prod.website-files.com/668d40cbb7db38de48db057d/668d44d25ab92dd3690fff90__DSC2645.avif",
   "covent-food-dishoom": "https://cdn.sanity.io/images/daku84np/production/b492504165ed7b5327abddaf1086b7a099f65418-1200x797.jpg?rect=0,86,1200,627&w=1200&h=627&fit=crop&auto=format",
-  "covent-food-frenchie": "https://frenchiecoventgarden.com/wp-content/uploads/2024/05/Frenchie-Covent-Garden-Dining-Room.jpg",
   "covent-food-rules": "https://i0.wp.com/rules.co.uk/wp-content/uploads/2024/05/Rules-Restaurant-Food-Menu-Venison.jpg?ssl=1&w=2500&quality=85",
   "covent-food-zedel": "https://www.brasseriezedel.com/wp-content/uploads/2026/04/Zedel_Spring_Mains-2000x1200.jpg",
   "covent-stay-fielding": "https://www.fieldinghotel.co.uk/wp-content/uploads/2024/02/fielding-hotel-covent-garden.jpg",
@@ -204,7 +203,6 @@ const poiHours: Record<string, GuideStop["hours"]> = {
   "covent-food-barbary": { default: "Mon-Sat noon-11:00 PM; Sun noon-10:00 PM." },
   "covent-food-clos-maggiore": { default: "Daily noon-2:30 PM and 5:00 PM-10:30 PM." },
   "covent-food-dishoom": { default: "Daily 8:00 AM-11:00 PM; Fri-Sat until midnight." },
-  "covent-food-frenchie": { default: "Tue-Sat noon-2:30 PM and 5:30 PM-10:00 PM; Sun-Mon closed." },
   "covent-food-rules": { default: "Mon-Sat noon-midnight; Sun noon-11:00 PM." },
   "covent-food-zedel": { default: "Daily noon-11:00 PM." },
   "covent-stay-fielding": { default: "24 hours." },
@@ -328,7 +326,6 @@ const stops: Record<string, GuideStop> = {
   closMaggiore: stop("covent-food-clos-maggiore", "Clos Maggiore", [51.5113, -0.1247], "Clos Maggiore is the romantic French restaurant booking in Covent Garden, with a polished dining room and pre-theatre usefulness that makes it a strong special-occasion anchor.", photo.restaurant, "$$$"),
   barbary: stop("covent-food-barbary", "The Barbary", [51.5142, -0.1268], "The Barbary gives the neighborhood a counter-service burst of North African and Middle Eastern cooking, ideal when Covent Garden needs energy instead of formality.", photo.restaurant, "$$"),
   dishoomCovent: stop("covent-food-dishoom", "Dishoom Covent Garden", [51.5124, -0.1269], "Dishoom Covent Garden is a buzzy destination for Indian street food in Bombay-style digs with vintage decor, breakfast, and upscale touches.", photo.restaurant, "$$"),
-  frenchie: stop("covent-food-frenchie", "Frenchie Covent Garden", [51.5113, -0.1239], "Frenchie is the modern Covent Garden reservation for a tighter, more contemporary dinner before or after the West End, with enough polish to justify planning around it.", photo.restaurant, "$$$"),
   zedel: stop("covent-food-zedel", "Brasserie Zedel", [51.5104, -0.1351], "Brasserie Zedel is the grand Piccadilly room for French brasserie cooking, pre-theatre usefulness, and a sense of occasion without turning dinner into a tasting menu.", photo.restaurant, "$$"),
 
   brat: stop("shoreditch-food-brat", "BRAT", [51.5245, -0.0755], "BRAT is the Shoreditch wood-fire benchmark for Basque-influenced cooking, built around turbot, grilled breads, seasonal produce, and a room worth planning around.", photo.restaurant, "$$$"),
