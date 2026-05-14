@@ -1449,6 +1449,34 @@ const citySubareaSeeds = new Map<string, SubArea[]>([
         description:
           "A village-feel central district with elegant streets, independent boutiques, and landmark attractions like Madame Tussauds.",
       },
+      {
+        id: "camden",
+        name: "Camden",
+        coordinates: [51.5394, -0.1432],
+        description:
+          "Camden Town's canal-side market district, live-music rooms, late pubs, and north London street energy packed around the high street and locks.",
+      },
+      {
+        id: "shoreditch",
+        name: "Shoreditch",
+        coordinates: [51.5255, -0.0796],
+        description:
+          "East London's creative-nightlife district, with restaurants, bars, clubs, galleries, and brick-lane routes clustered around Shoreditch and Hoxton.",
+      },
+      {
+        id: "hackney",
+        name: "Hackney",
+        coordinates: [51.545, -0.0553],
+        description:
+          "Hackney Central's east London core, where Mare Street, railway arches, pubs, restaurants, and cultural venues make a practical neighborhood anchor.",
+      },
+      {
+        id: "brixton",
+        name: "Brixton",
+        coordinates: [51.4613, -0.1156],
+        description:
+          "South London's market-and-music district, anchored by Brixton Village, Electric Avenue, Railton Road, late bars, and one of the city's defining live venues.",
+      },
     ],
   ],
   [
