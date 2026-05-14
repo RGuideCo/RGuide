@@ -2249,6 +2249,12 @@ export function SplitScreenSection({
     const normalizedRight = normalizeLocationName(right);
     return Boolean(normalizedLeft && normalizedRight && normalizedLeft === normalizedRight);
   };
+  const isListInActiveCity = (list: MapList) =>
+    Boolean(
+      activeLocation.city &&
+        (list.location.scope === "city" || list.location.scope === "neighborhood") &&
+        locationsMatch(list.location.city, activeLocation.city.name),
+    );
   const getCollapsedLocationSubtitleHiddenParts = (list: MapList) => {
     const hiddenParts: string[] = [];
     const addHiddenPart = (value?: string | null) => {
@@ -2648,7 +2654,9 @@ export function SplitScreenSection({
     () =>
       activeLocation.city
         ? activeEditorialLists.filter(
-            (list) => list.location.scope === "city" && list.location.city === activeLocation.city?.name,
+            (list) =>
+              (list.location.scope === "city" || list.location.scope === "neighborhood") &&
+              locationsMatch(list.location.city, activeLocation.city?.name),
           )
         : [],
     [activeEditorialLists, activeLocation.city],
@@ -2701,7 +2709,7 @@ export function SplitScreenSection({
       submittedLists.filter((list) =>
         (isPrivateJournalExperience(list) ? list.creator.id === currentUser?.id : true) &&
         (activeLocation.city
-          ? (list.location.scope === "city" && list.location.city === activeLocation.city.name) ||
+          ? isListInActiveCity(list) ||
             (list.location.scope === "country" &&
               list.location.country === activeLocation.country?.name &&
               list.location.continent === (activeLocation.continent?.name ?? activeLocation.country?.continent))
@@ -2888,15 +2896,12 @@ export function SplitScreenSection({
     }
     if (!activeNeighborhoodKey) {
       return allActiveLists.filter(
-        (list) =>
-          list.location.scope === "city" &&
-          list.location.city === activeLocation.city!.name,
+        (list) => isListInActiveCity(list),
       );
     }
     return allActiveLists.filter(
       (list) =>
-        list.location.scope === "city" &&
-        list.location.city === activeLocation.city!.name &&
+        isListInActiveCity(list) &&
         normalizeNeighborhoodName(list.location.neighborhood) === activeNeighborhoodKey,
     );
   }, [activeLocation.city, activeNeighborhoodKey, allActiveLists]);

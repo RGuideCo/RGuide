@@ -178,7 +178,7 @@ export interface LocationRef {
   neighborhood?: string;
   country: string;
   continent: string;
-  scope: "continent" | "country" | "city";
+  scope: "continent" | "country" | "city" | "neighborhood";
 }
 
 export interface MapList {
