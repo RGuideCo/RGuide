@@ -2,7 +2,11 @@ import { NextResponse } from "next/server";
 import pg from "pg";
 import type { Feature, FeatureCollection, Geometry } from "geojson";
 
-import type { NeighborhoodBoundaryProperties } from "@/data/boundary-loaders";
+import {
+  loadNeighborhoodBoundaryMap,
+  type NeighborhoodBoundaryMap,
+  type NeighborhoodBoundaryProperties,
+} from "@/data/boundary-loaders";
 
 export const dynamic = "force-dynamic";
 export const runtime = "nodejs";
@@ -36,6 +40,23 @@ function emptyCollection(): FeatureCollection<Geometry, NeighborhoodBoundaryProp
   };
 }
 
+function collectionFromBoundaryMap(
+  boundaryMap: NeighborhoodBoundaryMap,
+): FeatureCollection<Geometry, NeighborhoodBoundaryProperties> {
+  return {
+    type: "FeatureCollection",
+    features: Object.values(boundaryMap),
+  };
+}
+
+function boundaryResponse(collection: FeatureCollection<Geometry, NeighborhoodBoundaryProperties>) {
+  return NextResponse.json(collection, {
+    headers: {
+      "Cache-Control": "no-store, max-age=0",
+    },
+  });
+}
+
 export async function GET(
   _request: Request,
   context: { params: Promise<{ cityId: string }> },
@@ -44,7 +65,7 @@ export async function GET(
   const databaseUrl = getDatabaseUrl();
 
   if (!databaseUrl) {
-    return NextResponse.json(emptyCollection());
+    return boundaryResponse(collectionFromBoundaryMap(await loadNeighborhoodBoundaryMap(cityId)));
   }
 
   const client = new pg.Client({
@@ -78,14 +99,10 @@ export async function GET(
       })),
     };
 
-    return NextResponse.json(collection, {
-      headers: {
-        "Cache-Control": "no-store, max-age=0",
-      },
-    });
+    return boundaryResponse(collection);
   } catch (error) {
     console.error(`Failed to load destination boundaries for ${cityId}`, error);
-    return NextResponse.json(emptyCollection(), { status: 200 });
+    return boundaryResponse(collectionFromBoundaryMap(await loadNeighborhoodBoundaryMap(cityId)));
   } finally {
     await client.end().catch(() => {});
   }
