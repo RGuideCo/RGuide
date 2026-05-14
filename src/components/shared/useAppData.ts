@@ -10,8 +10,18 @@ export interface AppData {
 }
 
 let appDataPromise: Promise<AppData> | null = null;
+let appDataSnapshot: AppData | null = null;
+
+function seedAppData(initialData: AppData) {
+  appDataSnapshot = initialData;
+  appDataPromise = Promise.resolve(initialData);
+}
 
 function loadAppData() {
+  if (appDataSnapshot) {
+    return Promise.resolve(appDataSnapshot);
+  }
+
   if (!appDataPromise) {
     appDataPromise = fetch("/api/app-data", {
       headers: {
@@ -23,17 +33,27 @@ function loadAppData() {
       }
 
       return response.json() as Promise<AppData>;
+    }).then((nextData) => {
+      appDataSnapshot = nextData;
+      return nextData;
     });
   }
 
   return appDataPromise;
 }
 
-export function useAppData() {
+export function useAppData(initialData?: AppData) {
   const [data, setData] = useState<AppData | null>(null);
   const [error, setError] = useState<Error | null>(null);
 
   useEffect(() => {
+    if (initialData) {
+      seedAppData(initialData);
+      setData(initialData);
+      setError(null);
+      return;
+    }
+
     let isMounted = true;
 
     loadAppData()
@@ -53,7 +73,7 @@ export function useAppData() {
     return () => {
       isMounted = false;
     };
-  }, []);
+  }, [initialData]);
 
   return { data, error };
 }

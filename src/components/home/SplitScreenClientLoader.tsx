@@ -3,6 +3,7 @@
 import dynamic from "next/dynamic";
 
 import { useAppData } from "@/components/shared/useAppData";
+import type { AppData } from "@/components/shared/useAppData";
 import type { SplitScreenSectionProps } from "@/components/home/SplitScreenSection";
 
 const SplitScreenSection = dynamic(
@@ -16,10 +17,12 @@ const SplitScreenSection = dynamic(
 type SplitScreenClientLoaderProps = Omit<
   SplitScreenSectionProps,
   "continents" | "initialEditorialGuides"
->;
+> & {
+  initialAppData?: AppData;
+};
 
-export function SplitScreenClientLoader(props: SplitScreenClientLoaderProps) {
-  const { data } = useAppData();
+export function SplitScreenClientLoader({ initialAppData, ...props }: SplitScreenClientLoaderProps) {
+  const { data } = useAppData(initialAppData);
 
   if (!data) {
     return null;

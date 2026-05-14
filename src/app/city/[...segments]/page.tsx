@@ -97,6 +97,7 @@ export default async function CityDeepLinkPage({ params }: CityDeepLinkPageProps
       ))}
       <ProgressiveEnhancementShell fallback={<CityRouteSeoIndex route={route} guides={editorialGuides} />}>
         <SplitScreenClientLoader
+          initialAppData={{ continents, guides: editorialGuides }}
           initialRouteState={{
             selection: route.selection,
             activeCategory: route.activeCategory,

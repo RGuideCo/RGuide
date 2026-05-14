@@ -5,6 +5,7 @@ import { notFound } from "next/navigation";
 import { SplitScreenClientLoader } from "@/components/home/SplitScreenClientLoader";
 import { ProgressiveEnhancementShell } from "@/components/shared/ProgressiveEnhancementShell";
 import { users } from "@/data";
+import { getContinentsWithDestinationDescriptions } from "@/lib/destination-descriptions";
 import { getCreatorHref } from "@/lib/routes";
 import { getServerEditorialGuides } from "@/lib/server-editorial-guides";
 import { slugify } from "@/lib/utils";
@@ -142,7 +143,10 @@ export async function generateMetadata({ params }: CreatorPageProps): Promise<Me
 
 export default async function CreatorPage({ params }: CreatorPageProps) {
   const { name } = await params;
-  const editorialGuides = await getServerEditorialGuides();
+  const [continents, editorialGuides] = await Promise.all([
+    getContinentsWithDestinationDescriptions(),
+    getServerEditorialGuides(),
+  ]);
   const { creator, lists } = getCreatorProfile(name, editorialGuides);
 
   if (!creator) {
@@ -184,7 +188,10 @@ export default async function CreatorPage({ params }: CreatorPageProps) {
     <ProgressiveEnhancementShell
       fallback={<CreatorProfileFallback {...publicProfile} />}
     >
-      <SplitScreenClientLoader publicProfile={publicProfile} />
+      <SplitScreenClientLoader
+        initialAppData={{ continents, guides: editorialGuides }}
+        publicProfile={publicProfile}
+      />
     </ProgressiveEnhancementShell>
   );
 }

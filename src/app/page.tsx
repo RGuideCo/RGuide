@@ -16,7 +16,7 @@ export default async function HomePage() {
     <ProgressiveEnhancementShell
       fallback={<HomeServerContent continents={continents} editorialGuides={editorialGuides} />}
     >
-      <SplitScreenClientLoader />
+      <SplitScreenClientLoader initialAppData={{ continents, guides: editorialGuides }} />
     </ProgressiveEnhancementShell>
   );
 }
