@@ -1,9 +1,10 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { notFound } from "next/navigation";
+import { notFound, permanentRedirect } from "next/navigation";
 
 import { MapListCard } from "@/components/cards/MapListCard";
 import { ListGuideWorkspaceLoader } from "@/components/list/ListGuideWorkspaceLoader";
+import { getCanonicalGuidePath } from "@/lib/deep-link-routes";
 import { getAbsoluteHref, getCategoryHref, getCityHref, getListHref } from "@/lib/routes";
 import { getContinentsWithDestinationDescriptions } from "@/lib/destination-descriptions";
 import { getServerEditorialGuides } from "@/lib/server-editorial-guides";
@@ -29,17 +30,26 @@ export async function generateMetadata({ params }: ListDetailPageProps): Promise
   const locationLabel = list.location.city
     ? `${list.location.city}, ${list.location.country}`
     : `${list.location.country}, ${list.location.continent}`;
+  const canonicalPath =
+    list.location.scope === "city" && list.location.city
+      ? getCanonicalGuidePath(
+          { name: list.location.city },
+          list,
+          list.location.neighborhood ? { name: list.location.neighborhood } : undefined,
+          editorialGuides,
+        )
+      : getListHref(list);
 
   return {
     title: `${list.title} (${locationLabel})`,
     description: list.description,
     alternates: {
-      canonical: getListHref(list),
+      canonical: canonicalPath,
     },
     openGraph: {
       title: `${list.title} | ${locationLabel}`,
       description: list.description,
-      url: getListHref(list),
+      url: canonicalPath,
       images: [
         {
           url: list.creator.avatar,
@@ -60,6 +70,17 @@ export default async function ListDetailPage({ params }: ListDetailPageProps) {
 
   if (!list) {
     notFound();
+  }
+
+  if (list.location.scope === "city" && list.location.city) {
+    permanentRedirect(
+      getCanonicalGuidePath(
+        { name: list.location.city },
+        list,
+        list.location.neighborhood ? { name: list.location.neighborhood } : undefined,
+        editorialGuides,
+      ),
+    );
   }
 
   const relatedLists = editorialGuides
