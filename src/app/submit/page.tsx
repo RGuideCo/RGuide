@@ -9,6 +9,10 @@ export const metadata: Metadata = {
   alternates: {
     canonical: "/submit",
   },
+  robots: {
+    index: false,
+    follow: false,
+  },
 };
 
 export default function SubmitPage() {

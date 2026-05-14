@@ -71,6 +71,10 @@ export async function generateMetadata({ params }: VenuePageProps): Promise<Meta
   return {
     title: `${data.venue.name} events`,
     description: `Upcoming events at ${data.venue.name}.`,
+    robots: {
+      index: false,
+      follow: true,
+    },
   };
 }
 

@@ -1,5 +1,6 @@
 import { MapListCard } from "@/components/cards/MapListCard";
-import { getListHref } from "@/lib/routes";
+import { getCanonicalGuidePath } from "@/lib/deep-link-routes";
+import { getGuideHref } from "@/lib/routes";
 import { MapList } from "@/types";
 import Link from "next/link";
 
@@ -31,7 +32,19 @@ export function CategorySection({ category, lists }: CategorySectionProps) {
           <li key={list.id}>
             <article aria-labelledby={`${list.id}-heading`} className="space-y-2">
               <h3 id={`${list.id}-heading`} className="text-base font-semibold text-slate-900">
-                <Link href={getListHref(list)} className="hover:underline">
+                <Link
+                  href={
+                    list.location.city
+                      ? getCanonicalGuidePath(
+                          { name: list.location.city },
+                          list,
+                          list.location.neighborhood ? { name: list.location.neighborhood } : undefined,
+                          lists,
+                        )
+                      : getGuideHref(list)
+                  }
+                  className="hover:underline"
+                >
                   {list.title}
                 </Link>
               </h3>

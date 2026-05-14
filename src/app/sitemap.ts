@@ -1,7 +1,7 @@
 import type { MetadataRoute } from "next";
 
 import { getCityDeepLinkStaticParams } from "@/lib/deep-link-routes";
-import { getAbsoluteHref, getCategoryHref, getCreatorHref, getGuideHref } from "@/lib/routes";
+import { getAbsoluteHref, getCategoryHref, getCreatorHref } from "@/lib/routes";
 import { CATEGORIES } from "@/lib/constants";
 import { users } from "@/data";
 import { getContinentsWithDestinationDescriptions } from "@/lib/destination-descriptions";
@@ -23,12 +23,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       lastModified: now,
       changeFrequency: "weekly",
       priority: 1,
-    },
-    {
-      url: getAbsoluteHref("/submit"),
-      lastModified: now,
-      changeFrequency: "monthly",
-      priority: 0.4,
     },
     {
       url: getAbsoluteHref("/about"),
@@ -76,13 +70,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: 0.7,
   }));
 
-  const guideRoutes = editorialGuides.map((list) => ({
-    url: getAbsoluteHref(getGuideHref(list)),
-    lastModified: new Date(list.createdAt),
-    changeFrequency: "monthly" as const,
-    priority: 0.55,
-  }));
-
   const creatorRoutes = users.map((user) => ({
     url: getAbsoluteHref(getCreatorHref(user)),
     lastModified: now,
@@ -90,5 +77,5 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: 0.45,
   }));
 
-  return [...staticRoutes, ...cityRoutes, ...categoryRoutes, ...guideRoutes, ...creatorRoutes];
+  return [...staticRoutes, ...cityRoutes, ...categoryRoutes, ...creatorRoutes];
 }

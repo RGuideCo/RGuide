@@ -1,3 +1,13 @@
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Mobile Preview",
+  robots: {
+    index: false,
+    follow: false,
+  },
+};
+
 export default function MobilePreviewPage() {
   return (
     <div className="min-h-screen bg-neutral-950 px-4 py-6 text-white sm:px-6">

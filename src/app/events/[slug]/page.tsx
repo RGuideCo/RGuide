@@ -49,6 +49,10 @@ export async function generateMetadata({ params }: EventDetailPageProps): Promis
     alternates: {
       canonical: getEventHref(eventGuide),
     },
+    robots: {
+      index: false,
+      follow: true,
+    },
     openGraph: {
       title: `${eventGuide.title} | ${locationLabel}`,
       description: eventGuide.description,

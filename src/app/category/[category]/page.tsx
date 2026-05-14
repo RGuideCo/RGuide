@@ -4,8 +4,9 @@ import { notFound } from "next/navigation";
 import { CategoryCard } from "@/components/cards/CategoryCard";
 import { MapListCard } from "@/components/cards/MapListCard";
 import { CATEGORIES } from "@/lib/constants";
+import { getCanonicalGuidePath, getGuideSeoTitle } from "@/lib/deep-link-routes";
 import { getCategoryLabel } from "@/lib/mock-data";
-import { getCategoryHref } from "@/lib/routes";
+import { getCategoryHref, getGuideHref } from "@/lib/routes";
 import { getServerEditorialGuides } from "@/lib/server-editorial-guides";
 
 interface CategoryPageProps {
@@ -71,7 +72,35 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
       </div>
       <div className="mt-8 space-y-4">
         {lists.map((list) => (
-          <MapListCard key={list.id} list={list} />
+          <article key={list.id} className="space-y-3">
+            <div>
+              <h2 className="text-lg font-semibold text-slate-950">
+                <a
+                  href={
+                    list.location.scope === "city" && list.location.city
+                      ? getCanonicalGuidePath(
+                          { name: list.location.city },
+                          list,
+                          list.location.neighborhood ? { name: list.location.neighborhood } : undefined,
+                          editorialGuides,
+                        )
+                      : getGuideHref(list)
+                  }
+                  className="hover:text-orange-700"
+                >
+                  {list.location.scope === "city" && list.location.city
+                    ? getGuideSeoTitle(
+                        list,
+                        { name: list.location.city },
+                        list.location.neighborhood ? { name: list.location.neighborhood } : undefined,
+                      )
+                    : list.title}
+                </a>
+              </h2>
+              <p className="mt-1 text-sm text-slate-600">{list.description}</p>
+            </div>
+            <MapListCard list={list} />
+          </article>
         ))}
       </div>
     </div>

@@ -5,8 +5,9 @@ import { notFound } from "next/navigation";
 import { SplitScreenClientLoader } from "@/components/home/SplitScreenClientLoader";
 import { ProgressiveEnhancementShell } from "@/components/shared/ProgressiveEnhancementShell";
 import { users } from "@/data";
+import { getCanonicalGuidePath } from "@/lib/deep-link-routes";
 import { getContinentsWithDestinationDescriptions } from "@/lib/destination-descriptions";
-import { getCreatorHref } from "@/lib/routes";
+import { getCreatorHref, getGuideHref } from "@/lib/routes";
 import { getServerEditorialGuides } from "@/lib/server-editorial-guides";
 import { slugify } from "@/lib/utils";
 import type { MapList, User } from "@/types";
@@ -96,7 +97,19 @@ function CreatorProfileFallback({
                     {[list.category, list.location.city ?? list.location.country].filter(Boolean).join(" / ")}
                   </p>
                   <h3 className="mt-2 text-base font-semibold leading-6 text-slate-950">
-                    <Link href={`/list/${list.slug}`} className="hover:text-orange-700">
+                    <Link
+                      href={
+                        list.location.scope === "city" && list.location.city
+                          ? getCanonicalGuidePath(
+                              { name: list.location.city },
+                              list,
+                              list.location.neighborhood ? { name: list.location.neighborhood } : undefined,
+                              lists,
+                            )
+                          : getGuideHref(list)
+                      }
+                      className="hover:text-orange-700"
+                    >
                       {list.title}
                     </Link>
                   </h3>
