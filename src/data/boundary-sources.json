@@ -179,9 +179,6 @@
     "format": "geojson",
     "matchField": "ward_name",
     "mappings": {
-      "london::soho": [
-        "West End"
-      ],
       "london::shoreditch": [
         "Hoxton East & Shoreditch"
       ],
@@ -206,6 +203,89 @@
         "Notting Dale",
         "Colville"
       ]
+    }
+  },
+  "westminster-soho-neighbourhood-area": {
+    "provider": "Westminster City Council",
+    "datasetUrl": "https://www.westminster.gov.uk/neighbourhood-areas-forums-and-plans/soho-neighbourhood-plan/submitted-documents",
+    "format": "official-neighbourhood-area-boundary-streets",
+    "matchField": "Soho Neighbourhood Area",
+    "geometryByBoundaryKey": {
+      "london::soho": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -0.14262,
+              51.51533
+            ],
+            [
+              -0.1406,
+              51.51554
+            ],
+            [
+              -0.13785,
+              51.51581
+            ],
+            [
+              -0.13515,
+              51.51604
+            ],
+            [
+              -0.13265,
+              51.51622
+            ],
+            [
+              -0.13005,
+              51.51637
+            ],
+            [
+              -0.12953,
+              51.51515
+            ],
+            [
+              -0.12883,
+              51.51366
+            ],
+            [
+              -0.12825,
+              51.51258
+            ],
+            [
+              -0.13028,
+              51.51184
+            ],
+            [
+              -0.13258,
+              51.51112
+            ],
+            [
+              -0.13505,
+              51.51047
+            ],
+            [
+              -0.13748,
+              51.51005
+            ],
+            [
+              -0.13926,
+              51.51005
+            ],
+            [
+              -0.14058,
+              51.51165
+            ],
+            [
+              -0.14148,
+              51.51356
+            ],
+            [
+              -0.14262,
+              51.51533
+            ]
+          ]
+        ]
+      }
     }
   }
 }
