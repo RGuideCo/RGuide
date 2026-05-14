@@ -234,6 +234,146 @@ function buildGuideMeta(list: MapList, hiddenLocationParts?: string[]) {
     : [typeLabel, placeLabel, locationLabel].filter(Boolean).join(" • ");
 }
 
+function formatChipValue(value?: string | null) {
+  return (value ?? "")
+    .replace(/[_-]/g, " ")
+    .replace(/\s+/g, " ")
+    .trim()
+    .toLowerCase()
+    .replace(/\b\w/g, (match) => match.toUpperCase());
+}
+
+function valuesFromMaybeArray(value: string | string[] | null | undefined) {
+  if (Array.isArray(value)) {
+    return value.filter(Boolean);
+  }
+  return value ? [value] : [];
+}
+
+function getAllGuideStops(list: MapList) {
+  return list.stops.flatMap((stop) => [stop, ...(stop.places ?? [])]);
+}
+
+function getMostCommonValue(values: Array<string | null | undefined>) {
+  const counts = new Map<string, number>();
+
+  values.forEach((value) => {
+    const label = formatChipValue(value);
+    if (!label) {
+      return;
+    }
+    counts.set(label, (counts.get(label) ?? 0) + 1);
+  });
+
+  return [...counts.entries()].sort((left, right) => right[1] - left[1] || left[0].localeCompare(right[0]))[0]?.[0] ?? null;
+}
+
+function inferGuideSubcategory(list: MapList) {
+  const stops = getAllGuideStops(list);
+  const structuredSubcategory = getMostCommonValue(
+    stops.flatMap((stop) => [
+      ...valuesFromMaybeArray(stop.subcategory),
+      ...valuesFromMaybeArray(stop.subcategories),
+    ]),
+  );
+  if (structuredSubcategory) {
+    return structuredSubcategory;
+  }
+
+  if (list.category === "Stay") {
+    const lodgingType = getMostCommonValue(stops.map((stop) => stop.lodgingType));
+    if (lodgingType) {
+      return lodgingType.endsWith("s") ? lodgingType : `${lodgingType}s`;
+    }
+    return /\bhostels?\b/i.test(`${list.title} ${list.description}`) ? "Hostels" : "Hotels";
+  }
+
+  if (list.category === "Food") {
+    const foodType = getMostCommonValue(stops.map((stop) => stop.foodServiceType));
+    if (foodType) {
+      return foodType === "Fast Food" ? foodType : foodType.endsWith("s") ? foodType : `${foodType}s`;
+    }
+    if (/\b(markets?|grazing)\b/i.test(`${list.title} ${list.description}`)) {
+      return "Markets";
+    }
+    return "Restaurants";
+  }
+
+  if (list.category === "Nightlife") {
+    if (/\b(pub|pubs|pints?)\b/i.test(`${list.title} ${list.description}`)) {
+      return "Pubs";
+    }
+    return "Bars";
+  }
+
+  const titleText = `${list.title} ${list.description}`;
+  if (list.category === "Culture") {
+    if (/\bmuseums?\b/i.test(titleText)) return "Museums";
+    if (/\bgalleries?\b/i.test(titleText)) return "Galleries";
+    if (/\btheatre|stages?|opera\b/i.test(titleText)) return "Performance";
+    return "Culture";
+  }
+  if (list.category === "Nature") {
+    if (/\bparks?\b/i.test(titleText)) return "Parks";
+    if (/\bwaterfront|river|canal\b/i.test(titleText)) return "Waterfront";
+    return "Scenic";
+  }
+  if (list.category === "Activities") {
+    if (/\bwalking|walks?\b/i.test(titleText)) return "Walking";
+    return "Things To Do";
+  }
+  if (list.category === "Routes") {
+    return "Routes";
+  }
+  if (list.category === "Essentials") {
+    return "Essentials";
+  }
+
+  return null;
+}
+
+function inferGuideChipDetail(list: MapList) {
+  const text = `${list.title} ${list.description} ${getAllGuideStops(list)
+    .map((stop) => `${stop.name} ${stop.description}`)
+    .join(" ")}`.toLowerCase();
+
+  if (list.category === "Food") {
+    const foodMatches: Array<[string, RegExp]> = [
+      ["Tapas", /\btapas|pinchos\b/],
+      ["Seafood", /\bseafood|fish|oyster|coastal catch\b/],
+      ["Michelin", /\bmichelin|fine dining|tasting menu\b/],
+      ["Pub Food", /\bpub food|pints? that can become meals\b/],
+      ["Markets", /\bmarket|grazing|stalls?\b/],
+      ["Indian", /\bindian|curry|dishoom|south asian\b/],
+      ["Thai", /\bthai|kiln|smoking goat\b/],
+      ["British", /\bbritish|rules|pie|game\b/],
+      ["Wine", /\bwine|natural wine\b/],
+    ];
+    return foodMatches.find(([, pattern]) => pattern.test(text))?.[0] ?? null;
+  }
+
+  if (list.category === "Nightlife") {
+    const nightlifeType = getMostCommonValue(getAllGuideStops(list).map((stop) => stop.nightlifeType));
+    if (nightlifeType) {
+      return nightlifeType;
+    }
+    if (/\bdive\b/i.test(text)) return "Dive Bar";
+    if (/\bpub|pints?\b/i.test(text)) return "Pub";
+    if (/\brooftop|skyline\b/i.test(text)) return "Rooftop";
+    if (/\blive music|jazz|venue\b/i.test(text)) return "Live Music";
+    return "Cocktail Bar";
+  }
+
+  return null;
+}
+
+function buildCollapsedCategoryChip(list: MapList) {
+  return {
+    subcategory: inferGuideSubcategory(list),
+    detail: inferGuideChipDetail(list),
+  };
+}
+
 function getEventCardVenue(list: MapList, hiddenLocationParts?: string[]) {
   const firstEventStop = list.stops.find((stop) => stop.eventVenue);
   const label = firstEventStop?.eventVenue ?? buildLocationSubtitle(list, hiddenLocationParts);
@@ -476,6 +616,7 @@ export function MapListCard({
   const hiddenLocationParts = expandedChrome ? [] : collapsedLocationSubtitleHiddenParts;
   const locationSubtitle = buildLocationSubtitle(list, hiddenLocationParts);
   const guideMeta = buildGuideMeta(list, hiddenLocationParts);
+  const collapsedCategoryChip = buildCollapsedCategoryChip(list);
   const eventCardVenue = isEventGuide ? getEventCardVenue(list, hiddenLocationParts) : null;
   const eventCardDateLabel = isEventGuide ? buildEventCardDateLabel(list) : null;
   const GuideBodyComponent = isEventGuide ? EventCardBody : isItineraryGuide ? JourneyCardBody : GuideCardBody;
@@ -1164,9 +1305,40 @@ export function MapListCard({
                     >
                       {eventCardVenue.label}
                     </Link>
-                  ) : (
-                    <span className={`block min-w-0 truncate font-mono text-[10px] font-medium uppercase tracking-[0.1em] ${expandedChrome ? "text-white/75" : "text-slate-500"} ${retractingListChrome ? "guide-chrome-meta--retract" : ""} ${expandingListChrome ? "guide-chrome-meta--expand" : ""}`}>
+                  ) : expandedChrome ? (
+                    <span className={`block min-w-0 truncate font-mono text-[10px] font-medium uppercase tracking-[0.1em] text-white/75 ${retractingListChrome ? "guide-chrome-meta--retract" : ""} ${expandingListChrome ? "guide-chrome-meta--expand" : ""}`}>
                       {guideMeta}
+                    </span>
+                  ) : (
+                    <span className={`flex min-w-0 items-center gap-2 ${retractingListChrome ? "guide-chrome-meta--retract" : ""} ${expandingListChrome ? "guide-chrome-meta--expand" : ""}`}>
+                      <span
+                        className="inline-flex max-w-full shrink-0 items-center overflow-hidden rounded-full px-2 py-0.5 font-mono text-[9px] font-semibold uppercase tracking-[0.1em] text-white shadow-sm"
+                        style={{ backgroundColor: guideAccentColor }}
+                        title={[
+                          list.category,
+                          collapsedCategoryChip.subcategory,
+                          collapsedCategoryChip.detail,
+                        ].filter(Boolean).join(" • ")}
+                      >
+                        <span className="truncate">{list.category}</span>
+                        {collapsedCategoryChip.subcategory ? (
+                          <>
+                            <span className="mx-1.5 h-3 w-px shrink-0 bg-white/45" aria-hidden="true" />
+                            <span className="truncate">{collapsedCategoryChip.subcategory}</span>
+                          </>
+                        ) : null}
+                        {collapsedCategoryChip.detail ? (
+                          <>
+                            <span className="mx-1.5 h-3 w-px shrink-0 bg-white/45" aria-hidden="true" />
+                            <span className="truncate">{collapsedCategoryChip.detail}</span>
+                          </>
+                        ) : null}
+                      </span>
+                      <span className="min-w-0 truncate font-mono text-[10px] font-medium uppercase tracking-[0.1em] text-slate-500">
+                        {[`${list.stops.length} ${list.stops.length === 1 ? "place" : "places"}`, locationSubtitle]
+                          .filter(Boolean)
+                          .join(" • ")}
+                      </span>
                     </span>
                   )}
                 </span>
