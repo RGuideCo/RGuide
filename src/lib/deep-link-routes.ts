@@ -97,6 +97,24 @@ function getGuideIntentLabel(guide: GuideSeoSeed) {
   return "best things to do";
 }
 
+function getSeoTitleRouteSlug(guide: GuideSeoSeed) {
+  const seoTitle = guide.seoTitle?.trim();
+  if (!seoTitle) {
+    return "";
+  }
+  const placeTerms = [
+    guide.title,
+    guide.description,
+    guide.seoDescription,
+  ]
+    .join(" ")
+    .toLowerCase();
+  return slugify(seoTitle)
+    .split("-")
+    .filter((part) => part && !placeTerms.includes(part))
+    .join("-");
+}
+
 export function getGuideSeoSlug(guide: GuideSeoSeed) {
   return slugify(guide.seoSlug?.trim() || getGuideIntentLabel(guide));
 }
@@ -142,6 +160,11 @@ export function getGuideRouteSlug(
 
   if (duplicateCount <= 1) {
     return baseSlug;
+  }
+
+  const seoTitleSlug = getSeoTitleRouteSlug(guide);
+  if (seoTitleSlug && seoTitleSlug !== baseSlug) {
+    return `${baseSlug}-${seoTitleSlug}`;
   }
 
   const suffix = guide.slug
@@ -474,7 +497,7 @@ export function resolveCityDeepLink(
         ? `${neighborhood.name}, ${city.name}`
         : `${city.name} guides`;
   const title = guide
-    ? `${guideSeoTitle}: ${guide.title}`
+    ? guideSeoTitle!
     : category
       ? `${category} guides in ${placeLabel}`
       : neighborhood

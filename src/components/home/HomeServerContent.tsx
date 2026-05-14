@@ -3,21 +3,35 @@ import Link from "next/link";
 import { MapPinned } from "lucide-react";
 
 import {
+  getAllListsForCityRoute,
   getCanonicalGuidePath,
   getGuideSeoTitle,
 } from "@/lib/deep-link-routes";
 import { getCityHref } from "@/lib/routes";
 import { formatNumber } from "@/lib/utils";
-import type { City, Continent, MapList } from "@/types";
+import type { City, Continent, ListCategory, MapList } from "@/types";
 
 type ServerCityCard = City & {
   guideCount: number;
+};
+
+type HomeSeoLink = {
+  label: string;
+  href: string;
+};
+
+type HomeSeoCityLinkGroup = {
+  city: ServerCityCard;
+  links: HomeSeoLink[];
 };
 
 interface HomeServerContentProps {
   continents: Continent[];
   editorialGuides: MapList[];
 }
+
+const HOME_SEO_CITY_LIMIT = 40;
+const HOME_SEO_CATEGORY_ORDER: ListCategory[] = ["Stay", "Food", "Nightlife", "Culture", "Activities", "Nature"];
 
 function isGuideList(list: MapList) {
   return !list.id.startsWith("event-");
@@ -70,6 +84,54 @@ function getFeaturedStayGuides(editorialGuides: MapList[]) {
       return rightHotelIntent - leftHotelIntent || right.stops.length - left.stops.length || left.title.localeCompare(right.title);
     })
     .slice(0, 6);
+}
+
+function getHomeSeoCityLinkGroups(continents: Continent[], editorialGuides: MapList[]): HomeSeoCityLinkGroup[] {
+  return getCitiesFromContinents(continents, editorialGuides)
+    .filter((city) => city.guideCount > 0)
+    .sort((left, right) => right.guideCount - left.guideCount || left.name.localeCompare(right.name))
+    .slice(0, HOME_SEO_CITY_LIMIT)
+    .map((city) => {
+      const links = HOME_SEO_CATEGORY_ORDER.flatMap((category): HomeSeoLink[] => {
+        const categoryGuides = getAllListsForCityRoute(city, category, editorialGuides)
+          .filter(isGuideList)
+          .sort((left, right) => {
+            const leftCityWide = left.location.neighborhood ? 0 : 1;
+            const rightCityWide = right.location.neighborhood ? 0 : 1;
+            const leftSlugMatch = left.seoSlug?.startsWith("best-") ? 1 : 0;
+            const rightSlugMatch = right.seoSlug?.startsWith("best-") ? 1 : 0;
+            return (
+              rightCityWide - leftCityWide ||
+              rightSlugMatch - leftSlugMatch ||
+              right.upvotes - left.upvotes ||
+              right.stops.length - left.stops.length ||
+              left.title.localeCompare(right.title)
+            );
+          });
+        const guide = categoryGuides[0];
+
+        if (!guide) {
+          return [];
+        }
+
+        const neighborhood = guide.location.neighborhood ? { name: guide.location.neighborhood } : undefined;
+        return [
+          {
+            label: getGuideSeoTitle(guide, city, neighborhood),
+            href: getCanonicalGuidePath(city, guide, neighborhood, editorialGuides),
+          },
+        ];
+      });
+
+      return {
+        city,
+        links: [
+          { label: `${city.name} travel guides`, href: getCityHref(city) },
+          ...links,
+        ],
+      };
+    })
+    .filter((group) => group.links.length > 1);
 }
 
 function ServerCityCard({ city }: { city: ServerCityCard }) {
@@ -174,10 +236,48 @@ function StayGuideCard({ guide, guides }: { guide: MapList; guides: MapList[] })
   );
 }
 
+function HomeSeoCityIndex({ groups }: { groups: HomeSeoCityLinkGroup[] }) {
+  if (!groups.length) {
+    return null;
+  }
+
+  return (
+    <div className="mt-10 border-t border-slate-200 pt-6">
+      <div className="max-w-3xl">
+        <h2 className="text-lg font-semibold text-slate-950">City guide index</h2>
+        <p className="mt-1 text-sm leading-6 text-slate-600">
+          Fast routes into RGuide Travel destination pages for stays, restaurants, bars, culture, activities, and nature.
+        </p>
+      </div>
+      <div className="mt-5 grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+        {groups.map((group) => (
+          <nav key={group.city.id} aria-label={`${group.city.name} guide links`} className="rounded-lg border border-slate-950/10 bg-white p-4">
+            <h3 className="text-sm font-semibold text-slate-950">
+              <Link href={getCityHref(group.city)} className="hover:text-orange-700">
+                {group.city.name}
+              </Link>
+            </h3>
+            <ul className="mt-3 space-y-2 text-sm leading-5">
+              {group.links.map((link) => (
+                <li key={link.href}>
+                  <Link href={link.href} className="text-slate-600 hover:text-orange-700">
+                    {link.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </nav>
+        ))}
+      </div>
+    </div>
+  );
+}
+
 export function HomeServerContent({ continents, editorialGuides }: HomeServerContentProps) {
   const featuredCities = getFeaturedCities(continents, editorialGuides);
   const featuredStayGuides = getFeaturedStayGuides(editorialGuides);
   const featuredGuides = getFeaturedGuides(editorialGuides);
+  const seoCityLinkGroups = getHomeSeoCityLinkGroups(continents, editorialGuides);
 
   return (
     <section className="page-shell py-8 sm:py-10" aria-labelledby="home-server-content-heading">
@@ -247,6 +347,8 @@ export function HomeServerContent({ continents, editorialGuides }: HomeServerCon
             </div>
           </div>
         ) : null}
+
+        <HomeSeoCityIndex groups={seoCityLinkGroups} />
       </div>
     </section>
   );

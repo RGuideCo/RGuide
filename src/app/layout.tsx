@@ -7,7 +7,7 @@ import { AuthModal } from "@/components/auth/AuthModal";
 import { AuthSync } from "@/components/auth/AuthSync";
 import { SubmittedGuidesSync } from "@/components/auth/SubmittedGuidesSync";
 import { Footer } from "@/components/layout/Footer";
-import { SITE_DESCRIPTION, SITE_NAME, SITE_URL } from "@/lib/constants";
+import { SITE_ALTERNATE_NAMES, SITE_DESCRIPTION, SITE_NAME, SITE_SEARCH_NAME, SITE_URL } from "@/lib/constants";
 import { getAbsoluteHref } from "@/lib/routes";
 
 import "@/app/globals.css";
@@ -28,7 +28,7 @@ export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   applicationName: SITE_NAME,
   title: {
-    default: `${SITE_NAME} | Curated Travel Guides`,
+    default: `${SITE_SEARCH_NAME} | Curated City Travel Guides`,
     template: `%s | ${SITE_NAME}`,
   },
   description: SITE_DESCRIPTION,
@@ -36,7 +36,7 @@ export const metadata: Metadata = {
     canonical: "/",
   },
   openGraph: {
-    title: SITE_NAME,
+    title: SITE_SEARCH_NAME,
     description: SITE_DESCRIPTION,
     url: "/",
     siteName: SITE_NAME,
@@ -44,7 +44,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: SITE_NAME,
+    title: SITE_SEARCH_NAME,
     description: SITE_DESCRIPTION,
   },
   other: {
@@ -55,9 +55,18 @@ export const metadata: Metadata = {
 const websiteJsonLd = {
   "@context": "https://schema.org",
   "@type": "WebSite",
-  name: SITE_NAME,
+  name: SITE_SEARCH_NAME,
+  alternateName: SITE_ALTERNATE_NAMES,
   url: getAbsoluteHref("/"),
   description: SITE_DESCRIPTION,
+};
+
+const organizationJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  name: SITE_SEARCH_NAME,
+  alternateName: SITE_ALTERNATE_NAMES,
+  url: getAbsoluteHref("/"),
 };
 
 export default function RootLayout({
@@ -81,6 +90,10 @@ export default function RootLayout({
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteJsonLd) }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd) }}
         />
       </body>
     </html>

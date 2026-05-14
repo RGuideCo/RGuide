@@ -1,9 +1,16 @@
 import { ListCategory } from "@/types";
 
 export const SITE_NAME = "RGuide";
+export const SITE_SEARCH_NAME = "RGuide Travel";
+export const SITE_ALTERNATE_NAMES = [
+  "RGuide",
+  "R Guide Travel",
+  "RGuide city guides",
+  "RGuide travel guides",
+];
 export const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.rguide.co";
 export const SITE_DESCRIPTION =
-  "Discover curated travel guides by continent, country, and city.";
+  "RGuide Travel publishes curated city travel guides for where to stay, eat, drink, explore, and plan neighborhood-led trips.";
 
 export const CATEGORIES: ListCategory[] = [
   "Food",
