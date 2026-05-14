@@ -226,6 +226,14 @@ const cityHighlightThemes: Record<ListCategory, string[]> = {
   Essentials: ["Transit", "Arrival", "Basics"],
 };
 
+function getCityHighlightThemes(category: ListCategory, contextualFoodCuisineOptions: string[]) {
+  if (category === "Food") {
+    return contextualFoodCuisineOptions.slice(0, 3);
+  }
+
+  return cityHighlightThemes[category];
+}
+
 type CategoryDescriptionProfile = {
   city: string;
   food: string;
@@ -872,6 +880,12 @@ function doesGuideMatchHighlightTheme(list: MapList, theme: string) {
       return /\b(tapas|pintxos|bites|counter|cava|vermouth|blai)\b/.test(text);
     case "Seafood":
       return /\b(seafood|fish|shellfish|clams|squid|rice)\b/.test(text);
+    case "British":
+      return /\b(british|modern british|sunday roast|roast|pie|fish and chips|gastropub|pub)\b/.test(text);
+    case "Pub Food":
+      return /\b(pub|gastropub|pint|ale|roast|pie|fish and chips)\b/.test(text);
+    case "Indian":
+      return /\b(indian|south asian|curry|tandoor|biryani|dishoom|brick lane)\b/.test(text);
     case "Michelin-level dining":
     case "Michelin":
       return /\b(michelin|tasting menu|fine dining|chef-led|destination restaurant|special-occasion)\b/.test(text);
@@ -3780,7 +3794,8 @@ export function SplitScreenSection({
     return cityHighlightCategoryOrder.flatMap((entry) => {
       const categoryGuides = cityScopeLists.filter((list) => list.category === entry.category);
       const usedGuideIds = new Set<string>();
-      const items = cityHighlightThemes[entry.category].flatMap((theme) => {
+      const themes = getCityHighlightThemes(entry.category, contextualFoodCuisineOptions);
+      const items = themes.flatMap((theme) => {
         const guide =
           categoryGuides.find((list) => !usedGuideIds.has(list.id) && doesGuideMatchHighlightTheme(list, theme)) ??
           categoryGuides.find((list) => !usedGuideIds.has(list.id));
@@ -3804,7 +3819,7 @@ export function SplitScreenSection({
         },
       ];
     });
-  }, [activeLocation.city, activeNeighborhoodKey, allActiveLists]);
+  }, [activeLocation.city, activeNeighborhoodKey, allActiveLists, contextualFoodCuisineOptions]);
   useEffect(() => {
     if (!isGuidePaneTakingFullListPane) {
       return;
