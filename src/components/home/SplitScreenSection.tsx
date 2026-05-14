@@ -2249,6 +2249,12 @@ export function SplitScreenSection({
     const normalizedRight = normalizeLocationName(right);
     return Boolean(normalizedLeft && normalizedRight && normalizedLeft === normalizedRight);
   };
+  const isListNeighborhoodGuideForActiveCity = (list: MapList) =>
+    Boolean(
+      activeLocation.city &&
+        normalizeNeighborhoodName(list.location.neighborhood) &&
+        !locationsMatch(list.location.neighborhood, activeLocation.city.name),
+    );
   const isListInActiveCity = (list: MapList) =>
     Boolean(
       activeLocation.city &&
@@ -2287,6 +2293,9 @@ export function SplitScreenSection({
         const activeNeighborhood = activeLocation.nestedSubarea ?? activeLocation.subarea;
         if (activeNeighborhood && locationsMatch(list.location.neighborhood, activeNeighborhood.name)) {
           addHiddenPart(activeNeighborhood.name);
+        }
+        if (locationsMatch(list.location.neighborhood, activeLocation.city.name)) {
+          addHiddenPart(list.location.neighborhood);
         }
         addHiddenPart(activeLocation.city.name);
         addHiddenPart(activeLocation.country?.name ?? activeLocation.city.country);
@@ -2959,11 +2968,11 @@ export function SplitScreenSection({
     .slice()
     .sort((left, right) => {
       const leftNeighborhoodRank =
-        activeLocation.city && !activeNeighborhoodKey && normalizeNeighborhoodName(left.location.neighborhood)
+        activeLocation.city && !activeNeighborhoodKey && isListNeighborhoodGuideForActiveCity(left)
           ? 1
           : 0;
       const rightNeighborhoodRank =
-        activeLocation.city && !activeNeighborhoodKey && normalizeNeighborhoodName(right.location.neighborhood)
+        activeLocation.city && !activeNeighborhoodKey && isListNeighborhoodGuideForActiveCity(right)
           ? 1
           : 0;
       const leftCountryRootRank =
@@ -3110,6 +3119,27 @@ export function SplitScreenSection({
     activeLists,
     activeLocation.city,
   ]);
+  const orderedRailFilteredLists = useMemo(
+    () =>
+      railFilteredLists.slice().sort((left, right) => {
+        const leftNeighborhoodRank =
+          activeLocation.city && !activeNeighborhoodKey && isListNeighborhoodGuideForActiveCity(left) ? 1 : 0;
+        const rightNeighborhoodRank =
+          activeLocation.city && !activeNeighborhoodKey && isListNeighborhoodGuideForActiveCity(right) ? 1 : 0;
+        const rightCreatedAt = Date.parse(right.createdAt);
+        const leftCreatedAt = Date.parse(left.createdAt);
+        const rightCreatedTime = Number.isFinite(rightCreatedAt) ? rightCreatedAt : 0;
+        const leftCreatedTime = Number.isFinite(leftCreatedAt) ? leftCreatedAt : 0;
+
+        return (
+          leftNeighborhoodRank - rightNeighborhoodRank ||
+          right.upvotes - left.upvotes ||
+          rightCreatedTime - leftCreatedTime ||
+          left.title.localeCompare(right.title)
+        );
+      }),
+    [activeLocation.city, activeNeighborhoodKey, railFilteredLists],
+  );
   const activeCategoryOption = activeCategory
     ? categoryOptions.find((option) => option.category === activeCategory) ?? null
     : null;
@@ -3466,13 +3496,13 @@ export function SplitScreenSection({
     }
 
     const expandedList =
-      railFilteredLists.find((list) => list.id === expandedGuideId) ??
+      orderedRailFilteredLists.find((list) => list.id === expandedGuideId) ??
       globalMergedLists.find((list) => list.id === expandedGuideId);
 
     if (expandedList && activeGuideRail !== "itinerary") {
       setActiveCategory(expandedList.category);
     }
-  }, [activeGuideRail, expandedGuideId, globalMergedLists, railFilteredLists]);
+  }, [activeGuideRail, expandedGuideId, globalMergedLists, orderedRailFilteredLists]);
 
   useEffect(() => {
     if (skipInitialGuideRailCleanupRef.current) {
@@ -3491,7 +3521,7 @@ export function SplitScreenSection({
   }, [isProfileSubmitLayout]);
 
   const expandedGuide =
-    railFilteredLists.find((list) => list.id === expandedGuideId) ??
+    orderedRailFilteredLists.find((list) => list.id === expandedGuideId) ??
     globalMergedLists.find((list) => list.id === expandedGuideId) ??
     null;
   const displayedGuide = expandedGuide;
@@ -3508,14 +3538,14 @@ export function SplitScreenSection({
     isFoodOpenTimeMenuOpen || isFoodCuisineMenuOpen || isNightlifeBarMenuOpen;
   const isSavedPlacesRailActive = isLocationFavoritesRailActive && !expandedGuide;
   const remainingGuides = displayedGuide
-    ? railFilteredLists.filter((list) => list.id !== displayedGuide.id)
-    : railFilteredLists;
+    ? orderedRailFilteredLists.filter((list) => list.id !== displayedGuide.id)
+    : orderedRailFilteredLists;
   const recentRGuideLists = useMemo(() => {
     if (!isGlobalSelection || activeGuideRail !== "all-guides" || activeGuideSource === "user-guides" || activeGuideSource === "favorites") {
       return [];
     }
 
-    const worldwideGuideIds = new Set(railFilteredLists.map((list) => list.id));
+    const worldwideGuideIds = new Set(orderedRailFilteredLists.map((list) => list.id));
     const baseRecentLists = activeCategory
       ? globalMergedLists.filter((list) => list.category === activeCategory)
       : globalMergedLists;
@@ -3537,7 +3567,7 @@ export function SplitScreenSection({
         return rightTime - leftTime || right.upvotes - left.upvotes || left.title.localeCompare(right.title);
       })
       .slice(0, 20);
-  }, [activeGuideRail, activeGuideSource, activeCategory, globalMergedLists, isGlobalSelection, railFilteredLists]);
+  }, [activeGuideRail, activeGuideSource, activeCategory, globalMergedLists, isGlobalSelection, orderedRailFilteredLists]);
   const activeSeoPlaceLabel = activeLocation.city
     ? activeLocation.nestedSubarea?.name ?? activeLocation.subarea?.name ?? activeLocation.city.name
     : activeDirectoryMeta.title;
@@ -7797,7 +7827,7 @@ export function SplitScreenSection({
                     </div>
                   ) : (
                     <>
-                      {railFilteredLists.map((list) => (
+                      {orderedRailFilteredLists.map((list) => (
                         <div
                           key={list.id}
                           ref={(node) => {
