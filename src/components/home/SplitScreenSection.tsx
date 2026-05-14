@@ -1675,8 +1675,26 @@ export function SplitScreenSection({
     setSelection(() => ({ continentId }));
   };
   const handleResetToGlobalView = () => {
+    if (closingGuideTimeoutRef.current) {
+      clearTimeout(closingGuideTimeoutRef.current);
+      closingGuideTimeoutRef.current = null;
+    }
+    if (openingGuideTimeoutRef.current) {
+      clearTimeout(openingGuideTimeoutRef.current);
+      openingGuideTimeoutRef.current = null;
+    }
+    openingGuideIdRef.current = null;
+    clearGuideContentRevealSchedule();
     setFocusedCountrySignal(null);
     setIsLocationFavoritesRailActive(false);
+    setClosingGuide(null);
+    setClosingGuidePhase(null);
+    setOpeningGuideId(null);
+    setExpandedGuideId(null);
+    setSettlingGuideContentId(null);
+    setVisibleNestedStopParentIds([]);
+    setHoveredStopId(null);
+    setSelectedGuideStopId(null);
     setSelection({});
   };
   const handleSelectContinentSubarea = (continentId: string, continentSubareaId: string) => {
