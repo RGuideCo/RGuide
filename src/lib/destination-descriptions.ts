@@ -35,9 +35,15 @@ interface CityAffiliateLinkRow {
   cityLeftPanelStayUrl: string;
 }
 
+interface CityFoodCuisineRow {
+  id: string;
+  cuisines: string[];
+}
+
 interface DestinationContentRows {
   descriptions: DestinationDescriptionRow[];
   cityAffiliateLinks: CityAffiliateLinkRow[];
+  cityFoodCuisines: CityFoodCuisineRow[];
 }
 
 const CITY_LEFT_PANEL_STAY_LINK_FALLBACKS: Partial<Record<string, string>> = {
@@ -183,13 +189,13 @@ function shouldSkipDatabaseConnection() {
 
 async function loadDestinationContentRows(): Promise<DestinationContentRows> {
   if (shouldSkipDatabaseConnection()) {
-    return { descriptions: [], cityAffiliateLinks: [] };
+    return { descriptions: [], cityAffiliateLinks: [], cityFoodCuisines: [] };
   }
 
   const databaseUrl = getDatabaseUrl();
 
   if (!databaseUrl) {
-    return { descriptions: [], cityAffiliateLinks: [] };
+    return { descriptions: [], cityAffiliateLinks: [], cityFoodCuisines: [] };
   }
 
   const client = new pg.Client({
@@ -202,15 +208,16 @@ async function loadDestinationContentRows(): Promise<DestinationContentRows> {
 
   try {
     await client.connect();
-    const [descriptions, cityAffiliateLinks] = await Promise.all([
+    const [descriptions, cityAffiliateLinks, cityFoodCuisines] = await Promise.all([
       loadNormalizedDestinationDescriptionRows(client),
       loadCityLeftPanelAffiliateLinkRows(client),
+      loadCityFoodCuisineRows(client),
     ]);
 
-    return { descriptions, cityAffiliateLinks };
+    return { descriptions, cityAffiliateLinks, cityFoodCuisines };
   } catch (error) {
     console.error("Failed to load destination content", error);
-    return { descriptions: [], cityAffiliateLinks: [] };
+    return { descriptions: [], cityAffiliateLinks: [], cityFoodCuisines: [] };
   } finally {
     await client.end().catch(() => {});
   }
@@ -251,6 +258,27 @@ async function loadCityLeftPanelAffiliateLinkRows(client: Client) {
         "  and destination.scope = 'city'::public.destination_scope",
         "  and destination.legacy_id is not null",
         "order by affiliate.priority asc, affiliate.updated_at desc",
+      ].join(" "),
+    );
+    return rows;
+  } catch {
+    return [];
+  }
+}
+
+async function loadCityFoodCuisineRows(client: Client) {
+  try {
+    const { rows } = await client.query<CityFoodCuisineRow>(
+      [
+        "select destination.legacy_id as id, array_agg(cuisine.label order by cuisine.sort_order, cuisine.label) as cuisines",
+        "from public.destination_food_cuisines cuisine",
+        "join public.destinations destination on destination.id = cuisine.destination_id",
+        "where cuisine.is_active = true",
+        "  and cuisine.is_featured = true",
+        "  and destination.scope = 'city'::public.destination_scope",
+        "  and destination.legacy_id is not null",
+        "  and destination.is_published = true",
+        "group by destination.legacy_id",
       ].join(" "),
     );
     return rows;
@@ -312,20 +340,24 @@ function cloneCityWithDescription(
   city: City,
   descriptions: Map<string, string>,
   cityAffiliateLinks: Map<string, CityAffiliateLinkRow>,
+  cityFoodCuisines: Map<string, CityFoodCuisineRow>,
 ) {
-  const affiliateLink = cityAffiliateLinks.get(descriptionId("city", countryId, city.id));
+  const cityDescriptionId = descriptionId("city", countryId, city.id);
+  const affiliateLink = cityAffiliateLinks.get(cityDescriptionId);
+  const foodCuisines = cityFoodCuisines.get(cityDescriptionId)?.cuisines.filter(Boolean);
   const cityLeftPanelStayUrl =
     affiliateLink?.cityLeftPanelStayUrl ?? CITY_LEFT_PANEL_STAY_LINK_FALLBACKS[city.id];
 
   return {
     ...city,
-    description: descriptions.get(descriptionId("city", countryId, city.id)) ?? city.description,
+    description: descriptions.get(cityDescriptionId) ?? city.description,
     affiliateLinks: cityLeftPanelStayUrl
       ? {
           ...city.affiliateLinks,
           cityLeftPanelStayUrl,
         }
       : city.affiliateLinks,
+    popularFoodCuisines: foodCuisines?.length ? foodCuisines : city.popularFoodCuisines,
     subareas: cloneSubareasWithDescriptions(city.subareas, descriptions, {
       type: "neighborhood",
       parentId: city.id,
@@ -339,6 +371,7 @@ function cloneCountryWithDescription(
   country: Country,
   descriptions: Map<string, string>,
   cityAffiliateLinks: Map<string, CityAffiliateLinkRow>,
+  cityFoodCuisines: Map<string, CityFoodCuisineRow>,
 ) {
   return {
     ...country,
@@ -349,7 +382,9 @@ function cloneCountryWithDescription(
       countryId: country.id,
     }),
     states: country.states?.map((state) => cloneStateWithDescription(country.id, state, descriptions)),
-    cities: country.cities.map((city) => cloneCityWithDescription(country.id, city, descriptions, cityAffiliateLinks)),
+    cities: country.cities.map((city) =>
+      cloneCityWithDescription(country.id, city, descriptions, cityAffiliateLinks, cityFoodCuisines),
+    ),
   };
 }
 
@@ -357,14 +392,16 @@ export function applyDestinationDescriptions(
   continents: Continent[],
   rows: DestinationDescriptionRow[],
   cityAffiliateRows: CityAffiliateLinkRow[] = [],
+  cityFoodCuisineRows: CityFoodCuisineRow[] = [],
 ) {
   const descriptions = new Map(rows.map((row) => [row.id, row.description.trim()]));
   const cityAffiliateLinks = new Map(cityAffiliateRows.map((row) => [row.id, row]));
+  const cityFoodCuisines = new Map(cityFoodCuisineRows.map((row) => [row.id, row]));
 
   return continents.map((continent) => ({
     ...continent,
     countries: continent.countries.map((country) =>
-      cloneCountryWithDescription(country, descriptions, cityAffiliateLinks),
+      cloneCountryWithDescription(country, descriptions, cityAffiliateLinks, cityFoodCuisines),
     ),
   }));
 }
@@ -373,7 +410,12 @@ export async function getContinentsWithDestinationDescriptions() {
   const continents = getContinents();
   const rows = await getCachedDestinationContentRows().catch((error) => {
     console.error("Failed to load cached destination content", error);
-    return { descriptions: [], cityAffiliateLinks: [] };
+    return { descriptions: [], cityAffiliateLinks: [], cityFoodCuisines: [] };
   });
-  return applyDestinationDescriptions(continents, rows.descriptions, rows.cityAffiliateLinks);
+  return applyDestinationDescriptions(
+    continents,
+    rows.descriptions,
+    rows.cityAffiliateLinks,
+    rows.cityFoodCuisines,
+  );
 }

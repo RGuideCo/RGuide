@@ -2992,6 +2992,11 @@ export function SplitScreenSection({
       ? "region"
       : "country";
   const contextualFoodCuisineOptions = useMemo(() => {
+    const cityCuisines = activeLocation.city?.popularFoodCuisines;
+    if (cityCuisines?.length) {
+      return cityCuisines;
+    }
+
     const cityName = activeLocation.city?.name;
     const countryName = activeLocation.country?.name;
     if (cityName && contextualFoodCuisinesByCity[cityName]) {
@@ -3001,7 +3006,7 @@ export function SplitScreenSection({
       return contextualFoodCuisinesByCountry[countryName];
     }
     return contextualFoodCuisinesByScope[subcategoryScope];
-  }, [activeLocation.city?.name, activeLocation.country?.name, subcategoryScope]);
+  }, [activeLocation.city?.name, activeLocation.city?.popularFoodCuisines, activeLocation.country?.name, subcategoryScope]);
   const generalFoodCuisineOptions = useMemo(
     () => generalFoodCuisines.filter((cuisine) => !contextualFoodCuisineOptions.includes(cuisine)),
     [contextualFoodCuisineOptions],

@@ -323,6 +323,7 @@ export interface City {
   affiliateLinks?: {
     cityLeftPanelStayUrl?: string;
   };
+  popularFoodCuisines?: string[];
 }
 
 export interface Country {
