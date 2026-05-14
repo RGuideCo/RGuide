@@ -24,7 +24,7 @@ export function NestedPoiCard({
     <div
       data-active={isActive}
       data-expanded={isExpanded}
-      className="expanded-guide-place-card flex items-start gap-2 px-3 py-2 pl-3.5 transition-[border-color,background-color] duration-150"
+      className="expanded-guide-place-card ml-5 flex items-start gap-2 px-3 py-2 pl-3.5 transition-[border-color,background-color] duration-150 sm:ml-7"
       style={{ "--guide-poi-accent": categoryStyle.poiColor } as GuideCardStyle}
       onMouseEnter={() => handlers.onStopHoverChange?.(place.id)}
       onMouseLeave={() => handlers.onStopHoverChange?.(null)}

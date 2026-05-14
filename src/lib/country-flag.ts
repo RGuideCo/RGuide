@@ -44,9 +44,13 @@ function normalizeCountryName(name: string) {
 }
 
 export function getCountryFlagEmoji(countryName: string) {
+  const countryCode = getCountryFlagCode(countryName);
+  return countryCode ? codeToFlagEmoji(countryCode) : null;
+}
+
+export function getCountryFlagCode(countryName: string) {
   const normalized = normalizeCountryName(countryName);
   const alias = COUNTRY_NAME_ALIASES[normalized] ?? null;
   const lookupName = alias ? null : countryName;
-  const countryCode = alias ?? getCountryCode(lookupName ?? "") ?? null;
-  return countryCode ? codeToFlagEmoji(countryCode) : null;
+  return alias ?? getCountryCode(lookupName ?? "") ?? null;
 }

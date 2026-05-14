@@ -381,6 +381,7 @@ export const barcelonaCoreGuides = [
           "route"
         ],
         "officialUrl": "https://aerobusbarcelona.es/trip/lines-timetables-and-real-time-information/?lang=en",
+        "photo": "https://aerobusbarcelona.es/wp-content/uploads/2024/09/9-Terminal-1-1024x682.jpg",
         "hours": {
           "default": "24 hours daily; frequency varies by line and time of day."
         },
@@ -494,6 +495,7 @@ export const barcelonaCoreGuides = [
           "route"
         ],
         "officialUrl": "https://rodalies.gencat.cat/en/horaris/index.html",
+        "photo": "https://www.barcelona-airport.com/images/train-barcelona-airport.webp",
         "hours": {
           "default": "R2 Nord airport service generally runs from early morning until late night; check Rodalies before travel."
         },
@@ -596,6 +598,7 @@ export const barcelonaCoreGuides = [
           "transit_hub"
         ],
         "officialUrl": "https://www.aena.es/en/josep-tarradellas-barcelona-el-prat/getting-there/taxi.html",
+        "photo": "https://www.barcelonaairportbcn.com/wp-content/uploads/2025/01/barcelona-airport-taxis.jpg",
         "hours": {
           "default": "Official airport taxis operate 24/7; rideshare pickup depends on app availability and assigned pickup point."
         },
