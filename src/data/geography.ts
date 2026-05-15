@@ -1412,70 +1412,70 @@ const citySubareaSeeds = new Map<string, SubArea[]>([
         name: "Westminster",
         coordinates: [51.4994, -0.1276],
         description:
-          "The ceremonial and historic heart around Parliament, Westminster Abbey, Whitehall, and the streets that carry London's state rituals.",
+          "Westminster is London's ceremonial core, where Parliament, Westminster Abbey, Whitehall, St James's Park, and state-procession streets sit in tight formation. It works best as a landmark-heavy route with pub lunches, river pauses, and short walks that keep the pageantry from becoming a checklist.",
       },
       {
         id: "soho",
         name: "Soho",
         coordinates: [51.5136, -0.1365],
         description:
-          "London's entertainment center for West End theaters, destination dining, and one of the city's busiest nightlife scenes.",
+          "Soho is central London at close quarters: theatres, jazz rooms, queer history, old pubs, counter restaurants, and late streets packed between Oxford Street and Chinatown. It works best from afternoon into night, when food, drinks, shows, and small galleries can stack without crossing town.",
       },
       {
         id: "covent-garden",
         name: "Covent Garden",
         coordinates: [51.5118, -0.1238],
         description:
-          "Known for its piazza, street performers, shopping lanes, and the Royal Opera House in the center of town.",
+          "Covent Garden turns central London into a compact stage set, with the Royal Opera House, piazza, covered market, Strand institutions, and West End theatres close together. It works best for pre-show meals, polished hotels, museum detours, and short walks that leave room for a late booking.",
       },
       {
         id: "south-bank",
         name: "South Bank",
         coordinates: [51.505, -0.116],
         description:
-          "A cultural riverside stretch with the London Eye, Tate Modern, and major performance venues along the Thames.",
+          "South Bank is London's riverfront culture line, running from the London Eye and National Theatre toward Tate Modern, Bankside, Borough Market, and London Bridge. It works best as a walking day, using the Thames path to connect art, views, food stalls, and an easy evening crossing.",
       },
       {
         id: "bloomsbury",
         name: "Bloomsbury",
         coordinates: [51.5226, -0.1257],
         description:
-          "An intellectual district of garden squares, classic institutions, and museum-heavy routes anchored by the British Museum.",
+          "Bloomsbury is London's museum-and-square district, shaped by the British Museum, university blocks, bookish streets, garden squares, and Lamb's Conduit dining. It works best for slower central days, with cafes, wine rooms, and transit links making it calmer than the West End next door.",
       },
       {
         id: "marylebone",
         name: "Marylebone",
         coordinates: [51.5226, -0.1496],
         description:
-          "A village-feel central district with elegant streets, independent boutiques, and landmark attractions like Madame Tussauds.",
+          "Marylebone is the central village version of west London, where Marylebone High Street, Georgian blocks, medical streets, Regent's Park edges, and polished restaurants set the tone. It works best as a refined base, close to Oxford Street and Baker Street without feeling swallowed by either.",
       },
       {
         id: "camden",
         name: "Camden",
         coordinates: [51.5394, -0.1432],
         description:
-          "Camden Town's canal-side market district, live-music rooms, late pubs, and north London street energy packed around the high street and locks.",
+          "Camden is north London's canal-and-music district, packed around Camden Market, the locks, the Roundhouse, late pubs, food stalls, and the Northern line. It works best as a loud half-day or gig-night route, with Regent's Canal and nearby Primrose Hill giving the area an exit ramp.",
       },
       {
         id: "shoreditch",
         name: "Shoreditch",
         coordinates: [51.5255, -0.0796],
         description:
-          "East London's creative-nightlife district, with restaurants, bars, clubs, galleries, and brick-lane routes clustered around Shoreditch and Hoxton.",
+          "Shoreditch is east London's restaurant, gallery, and nightlife knot, with Hoxton, Brick Lane, Spitalfields, warehouse rooms, and street-art corridors pulling in different directions. It works best from late morning to late night, when markets, dinner, cocktails, and clubs can stay in one tight orbit.",
       },
       {
         id: "hackney",
         name: "Hackney",
         coordinates: [51.545, -0.0553],
         description:
-          "Hackney Central's east London core, where Mare Street, railway arches, pubs, restaurants, and cultural venues make a practical neighborhood anchor.",
+          "Hackney is east London beyond the Shoreditch shorthand, centered on Mare Street, Hackney Central, London Fields, railway arches, pubs, bakeries, and ambitious neighborhood restaurants. It works best when the day can loosen into parks, markets, canal edges, and a night that feels local rather than glossy.",
       },
       {
         id: "brixton",
         name: "Brixton",
         coordinates: [51.4613, -0.1156],
         description:
-          "South London's market-and-music district, anchored by Brixton Village, Electric Avenue, Railton Road, late bars, and one of the city's defining live venues.",
+          "Brixton is south London's market-and-music anchor, shaped by Brixton Village, Electric Avenue, Caribbean food, late bars, murals, and the O2 Academy's gig traffic. It works best as an evening-led route, where market meals, pubs, and live music make the neighborhood feel distinct from central London.",
       },
     ],
   ],
