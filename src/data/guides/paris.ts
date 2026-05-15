@@ -28,7 +28,7 @@ const photos = {
   activities: "https://images.unsplash.com/photo-1502602898657-3e91760cbb34?auto=format&fit=crop&w=900&q=80",
   eiffel: "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b4/Paris%2C_Eiffelturm_--_2014_--_1249.jpg/1280px-Paris%2C_Eiffelturm_--_2014_--_1249.jpg",
   seine: "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e8/Paris%2C_Seine_--_2014_--_1321.jpg/1280px-Paris%2C_Seine_--_2014_--_1321.jpg",
-  montmartre: "https://images.unsplash.com/photo-1539650116574-75c0c6d73f6e?auto=format&fit=crop&w=900&q=80",
+  montmartre: "https://www.sacre-coeur-montmartre.com/app/uploads/2023/09/basilique-butte.jpg",
   canal: "https://images.unsplash.com/photo-1511739001486-6bfe10ce785f?auto=format&fit=crop&w=900&q=80",
 };
 
@@ -506,8 +506,8 @@ const poiPhotoSources: Record<string, PoiPhotoSource> = {
     source: "https://www.prescriptioncocktailclub.com/",
   },
   "Relais Christine": {
-    photo: "https://www.relais-christine.com/_novaimg/4915897-1568694_0_0_4800_3023_2000_1260-1600.webp",
-    source: "https://www.relais-christine.com/",
+    photo: "https://images.trvl-media.com/lodging/11000000/10370000/10369100/10369036/1b28040f.jpg?impolicy=resizecrop&rw=1200&ra=fit",
+    source: "https://www.hotels.com/ho506523/relais-christine-paris-france/",
   },
   "Rosa Bonheur sur Seine": {
     photo: "https://rosabonheur.fr/wp-content/uploads/2024/06/Seine-RosaB-0822-LevietPhoto-8955-uai-2133x1600.jpg",
@@ -515,8 +515,8 @@ const poiPhotoSources: Record<string, PoiPhotoSource> = {
   },
   Sanukiya: {
     photo:
-      "https://scontent-akl1-1.xx.fbcdn.net/v/t39.30808-6/578416728_1269891911607016_4411219456707818124_n.jpg?_nc_cat=111&ccb=1-7&_nc_sid=2a1932&_nc_ohc=PjInFABFQKoQ7kNvwGT9MHm&_nc_oc=AdqDfLrX0u-HdWSLz0RTjbUR8nTbugfLx1AOCyv22Jx5bzHasulwvW0F4PpyMprJzYiPi_bMq61llE0tWcCbSVOb&_nc_zt=23&_nc_ht=scontent-akl1-1.xx&_nc_gid=YFFYhhnvEeYD2Bz_2mQgZw&_nc_ss=7b289&oh=00_Af49brobZ5nPCg8lL7rNx1UIC8KnhgNk3sHe28tITdo21A&oe=6A058A68",
-    source: "https://www.facebook.com/sanukiyaparis/",
+      "https://commons.wikimedia.org/wiki/Special:Redirect/file/Sanukiya%2C%20Paris%2C%2019%20March%202016.jpg?width=1200",
+    source: "https://commons.wikimedia.org/wiki/Category:Sanukiya",
   },
   Semilla: {
     photo: "https://cdn.prod.website-files.com/624f207df2b57804135dc63e/6713ef61488d938173013eef_DSC07439.jpg",

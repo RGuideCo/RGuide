@@ -1411,7 +1411,7 @@ export const barcelonaCoreGuides = [
           "sat": "12:00 PM-1:00 AM",
           "sun": "12:00 PM-12:00 AM"
         },
-        "photo": "https://www.elnacionalbcn.com/wp-content/uploads/2023/03/La-Llotja-6.webp"
+        "photo": "https://media.timeout.com/images/100628653/image.jpg"
       }
     ],
     "sources": [
@@ -2643,7 +2643,7 @@ export const barcelonaCoreGuides = [
           "sat": "12:00 PM-1:00 AM",
           "sun": "12:00 PM-12:00 AM"
         },
-        "photo": "https://www.elnacionalbcn.com/wp-content/uploads/2023/03/La-Llotja-6.webp"
+        "photo": "https://media.timeout.com/images/100628653/image.jpg"
       }
     ],
     "sources": [
@@ -6147,7 +6147,7 @@ export const barcelonaCoreGuides = [
           "sat": "6:00 PM-2:30 AM",
           "sun": "6:00 PM-12:00 AM"
         },
-        "photo": "https://scontent-akl1-1.xx.fbcdn.net/v/t39.30808-6/504916485_1116824243808543_2460676751873590023_n.jpg?_nc_cat=111&ccb=1-7&_nc_sid=13d280&_nc_ohc=sZCmlPJzCX4Q7kNvwFaHMuU&_nc_oc=AdrkM4N6nLHE5EJUU6YuY7QSfHKkqA0IJgK-YdSM1a_PcN3Dtd3Neyl2FtWK2brQw57nz8RyrECndYVyz81cff9S&_nc_zt=23&_nc_ht=scontent-akl1-1.xx&_nc_gid=5zxgTUV7XqWVe54w1Fk1Dw&_nc_ss=7b289&oh=00_Af5Go7Na7_qyy1d2o6QjktbMLAZAegPTFMdKaeGhP9xs1g&oe=6A057263"
+        "photo": "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/2a/72/76/ea/la-barra-mas-larga-de.jpg?w=1200&h=-1&s=1"
       },
       {
         "id": "gothic-els-quatre-gats",
@@ -6621,7 +6621,7 @@ export const barcelonaCoreGuides = [
           "sat": "6:00 PM-2:30 AM",
           "sun": "6:00 PM-12:00 AM"
         },
-        "photo": "https://elephanta.cat/wp-content/uploads/sb-instagram-feed-images/671178545_18581724403007790_4238195680031116418_nlow.webp"
+        "photo": "https://elephanta.cat/wp-content/uploads/2022/10/slider-elephanta-2.jpg"
       },
       {
         "id": "gracia-old-fashioned",
