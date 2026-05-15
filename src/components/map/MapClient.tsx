@@ -879,7 +879,7 @@ function createGuideStopData(
         coordinates: [place.coordinates[1], place.coordinates[0]],
       },
     })) : [];
-    return shouldShowNestedFeatures ? [parentFeature, ...nestedFeatures] : [parentFeature];
+    return shouldShowNestedFeatures ? nestedFeatures : [parentFeature];
   });
   return {
     type: "FeatureCollection",
