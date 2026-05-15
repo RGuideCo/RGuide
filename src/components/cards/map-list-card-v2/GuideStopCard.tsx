@@ -93,7 +93,7 @@ export function GuideStopCard({
               {stop.places?.length ? (
                 <div className="mt-3">
                   <div className="mb-2 flex items-center gap-2">
-                    <p className="font-mono text-[10px] font-semibold uppercase text-slate-500">POI</p>
+                    <p className="ml-5 font-mono text-[10px] font-semibold uppercase text-slate-500 sm:ml-7">POI</p>
                     <div className="h-px flex-1 bg-slate-950/10" />
                   </div>
                   <div className="space-y-2">
