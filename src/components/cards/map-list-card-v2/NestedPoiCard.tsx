@@ -7,6 +7,8 @@ import { CATEGORY_STYLES } from "@/lib/constants";
 import type { GuideCardStyle, NestedPoiCardProps } from "./types";
 import { getAlphaMarker, getPoiPhoto } from "./utils";
 
+const NESTED_POI_DIAMOND_FILL = "#c2410c";
+
 export function NestedPoiCard({
   place,
   parentStopId,
@@ -41,8 +43,11 @@ export function NestedPoiCard({
         }}
         onFocus={() => handlers.onStopHoverChange?.(place.id)}
         onBlur={() => handlers.onStopHoverChange?.(null)}
-        className="mt-0.5 inline-flex h-5 w-5 shrink-0 rotate-45 items-center justify-center rounded-[5px] font-mono text-[10px] font-semibold text-white shadow-sm"
-        style={{ backgroundColor: categoryStyle.poiColor }}
+        className="mt-0.5 inline-flex h-5 w-5 shrink-0 rotate-45 items-center justify-center rounded-[5px] border-2 font-mono text-[10px] font-semibold text-white shadow-sm"
+        style={{
+          backgroundColor: NESTED_POI_DIAMOND_FILL,
+          borderColor: categoryStyle.mapColor,
+        }}
         aria-label={`Select ${place.name} on map`}
         title={`Select ${place.name} on map`}
       >

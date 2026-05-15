@@ -110,6 +110,15 @@ type GuideRouteFeatureProperties = {
   category: MapList["category"];
 };
 
+type PoiMapMarkerFeatureProperties = {
+  id: string;
+  stopId: string;
+  name: string;
+  category: MapList["category"];
+  markerKind: "geometry" | "neighborhood-boundary";
+  active: boolean;
+};
+
 type SavedLocationFeatureProperties = {
   id: string;
   kind: SavedMapLocation["kind"];
@@ -138,6 +147,7 @@ const CITY_SOURCE_ID = "cities";
 const SAVED_LOCATION_SOURCE_ID = "saved-locations";
 const GUIDE_ROUTE_SOURCE_ID = "guide-route";
 const GUIDE_STOP_SOURCE_ID = "guide-stops";
+const POI_MAP_MARKER_SOURCE_ID = "poi-map-markers";
 const STATE_LABEL_SOURCE_ID = "state-labels";
 const NEIGHBORHOOD_BOUNDARY_SOURCE_ID = "neighborhood-boundaries";
 const SELECTED_BOUNDARY_LAYER_ID = "selected-country-boundary";
@@ -211,8 +221,52 @@ const GUIDE_STOP_GLOW_BASE_RADIUS = { lowZoom: 15, highZoom: 21 } as const;
 const GUIDE_STOP_DOT_BASE_RADIUS = { lowZoom: 8.2, highZoom: 10.4 } as const;
 const GUIDE_STOP_CITY_GLOW_SCALE = 11 / 15;
 const GUIDE_STOP_CITY_DOT_SCALE = 0.794;
+const NESTED_POI_DIAMOND_FILL = "#c2410c";
 const POI_DIAMOND_IMAGE_PREFIX = "poi-diamond";
+const POI_DIAMOND_PULSE_IMAGE_PREFIX = "poi-diamond-pulse";
 const GUIDE_STOP_MARKER_IMAGE_PREFIX = "guide-stop-marker";
+const POI_DIAMOND_ICON_IMAGE_MATCH = [
+  "match",
+  ["get", "category"],
+  "Food",
+  getPoiDiamondImageName("Food"),
+  "Nightlife",
+  getPoiDiamondImageName("Nightlife"),
+  "Culture",
+  getPoiDiamondImageName("Culture"),
+  "Stay",
+  getPoiDiamondImageName("Stay"),
+  "Nature",
+  getPoiDiamondImageName("Nature"),
+  "Activities",
+  getPoiDiamondImageName("Activities"),
+  "Routes",
+  getPoiDiamondImageName("Routes"),
+  "Essentials",
+  getPoiDiamondImageName("Essentials"),
+  getPoiDiamondImageName("Activities"),
+] as ExpressionSpecification;
+const POI_DIAMOND_PULSE_ICON_IMAGE_MATCH = [
+  "match",
+  ["get", "category"],
+  "Food",
+  getPoiDiamondPulseImageName("Food"),
+  "Nightlife",
+  getPoiDiamondPulseImageName("Nightlife"),
+  "Culture",
+  getPoiDiamondPulseImageName("Culture"),
+  "Stay",
+  getPoiDiamondPulseImageName("Stay"),
+  "Nature",
+  getPoiDiamondPulseImageName("Nature"),
+  "Activities",
+  getPoiDiamondPulseImageName("Activities"),
+  "Routes",
+  getPoiDiamondPulseImageName("Routes"),
+  "Essentials",
+  getPoiDiamondPulseImageName("Essentials"),
+  getPoiDiamondPulseImageName("Activities"),
+] as ExpressionSpecification;
 const continentFocusPresets: Record<
   string,
   {
@@ -701,6 +755,10 @@ function getPoiDiamondImageName(category: string) {
   return `${POI_DIAMOND_IMAGE_PREFIX}-${category.toLowerCase()}`;
 }
 
+function getPoiDiamondPulseImageName(category: string) {
+  return `${POI_DIAMOND_PULSE_IMAGE_PREFIX}-${category.toLowerCase()}`;
+}
+
 function getGuideStopMarkerImageName(category: string, label: string) {
   return `${GUIDE_STOP_MARKER_IMAGE_PREFIX}-${category.toLowerCase()}-${label.replace(/[^a-z0-9]/gi, "-").toLowerCase()}`;
 }
@@ -784,7 +842,7 @@ function addMissingGuideStopMarkerImage(
   );
 }
 
-function createPoiDiamondImage(color: string) {
+function createPoiDiamondImage(strokeColor: string) {
   const canvas = document.createElement("canvas");
   canvas.width = 68;
   canvas.height = 68;
@@ -796,9 +854,9 @@ function createPoiDiamondImage(color: string) {
   ctx.save();
   ctx.translate(34, 34);
   ctx.rotate(Math.PI / 4);
-  ctx.fillStyle = color;
-  ctx.strokeStyle = "#ffffff";
-  ctx.lineWidth = 2;
+  ctx.fillStyle = NESTED_POI_DIAMOND_FILL;
+  ctx.strokeStyle = strokeColor;
+  ctx.lineWidth = 3;
 
   const size = 38;
   const radius = 6;
@@ -821,11 +879,67 @@ function createPoiDiamondImage(color: string) {
   return ctx.getImageData(0, 0, 68, 68);
 }
 
+function createPoiDiamondPulseImage(color: string) {
+  const size = 88;
+  const canvas = document.createElement("canvas");
+  canvas.width = size;
+  canvas.height = size;
+  const ctx = canvas.getContext("2d");
+  if (!ctx) {
+    return { width: size, height: size, data: new Uint8Array(size * size * 4) };
+  }
+
+  ctx.save();
+  ctx.translate(size / 2, size / 2);
+  ctx.rotate(Math.PI / 4);
+
+  const drawDiamond = (diamondSize: number, radius: number) => {
+    const half = diamondSize / 2;
+    ctx.beginPath();
+    ctx.moveTo(-half + radius, -half);
+    ctx.lineTo(half - radius, -half);
+    ctx.quadraticCurveTo(half, -half, half, -half + radius);
+    ctx.lineTo(half, half - radius);
+    ctx.quadraticCurveTo(half, half, half - radius, half);
+    ctx.lineTo(-half + radius, half);
+    ctx.quadraticCurveTo(-half, half, -half, half - radius);
+    ctx.lineTo(-half, -half + radius);
+    ctx.quadraticCurveTo(-half, -half, -half + radius, -half);
+    ctx.closePath();
+  };
+
+  ctx.shadowColor = color;
+  ctx.shadowBlur = 14;
+  ctx.globalAlpha = 0.42;
+  ctx.fillStyle = color;
+  drawDiamond(44, 8);
+  ctx.fill();
+
+  ctx.shadowBlur = 0;
+  ctx.globalAlpha = 0.18;
+  drawDiamond(50, 9);
+  ctx.fill();
+  ctx.restore();
+
+  return ctx.getImageData(0, 0, size, size);
+}
+
 function addPoiDiamondImages(map: maplibregl.Map) {
   Object.entries(CATEGORY_STYLES).forEach(([category, style]) => {
     const imageName = getPoiDiamondImageName(category);
-    if (!map.hasImage(imageName)) {
-      map.addImage(imageName, createPoiDiamondImage(style.poiColor), { pixelRatio: 2 });
+    const imageData = createPoiDiamondImage(style.mapColor);
+    if (map.hasImage(imageName)) {
+      map.updateImage(imageName, imageData);
+    } else {
+      map.addImage(imageName, imageData, { pixelRatio: 2 });
+    }
+
+    const pulseImageName = getPoiDiamondPulseImageName(category);
+    const pulseImageData = createPoiDiamondPulseImage(style.mapGlowColor);
+    if (map.hasImage(pulseImageName)) {
+      map.updateImage(pulseImageName, pulseImageData);
+    } else {
+      map.addImage(pulseImageName, pulseImageData, { pixelRatio: 2 });
     }
   });
 }
@@ -879,7 +993,7 @@ function createGuideStopData(
         coordinates: [place.coordinates[1], place.coordinates[0]],
       },
     })) : [];
-    return shouldShowNestedFeatures ? [parentFeature, ...nestedFeatures] : [parentFeature];
+    return shouldShowNestedFeatures ? nestedFeatures : [parentFeature];
   });
   return {
     type: "FeatureCollection",
@@ -1190,6 +1304,62 @@ function createNeighborhoodBoundaryData(
   return {
     type: "FeatureCollection",
     features: activeFeature ? [activeFeature] : [],
+  };
+}
+
+function createPoiMapMarkerData(
+  activeGuide: MapList | null | undefined,
+  boundaryLookup: NeighborhoodBoundaryMap,
+  options: {
+    selectedStopId?: string | null;
+    hoveredStopId?: string | null;
+    visibleNestedStopParentIds?: string[];
+  },
+): FeatureCollection<Geometry, PoiMapMarkerFeatureProperties> {
+  const visibleNestedParentIds = new Set(options.visibleNestedStopParentIds ?? []);
+  const activeStopIds = new Set([options.selectedStopId, options.hoveredStopId].filter(Boolean) as string[]);
+  const stops = (activeGuide?.stops ?? []).flatMap((stop) => [
+    stop,
+    ...(visibleNestedParentIds.has(stop.id) ? (stop.places ?? []) : []),
+  ]);
+
+  const features = stops.flatMap((stop) => {
+    const marker = stop.mapMarker;
+    if (!marker) {
+      return [];
+    }
+
+    const geometry =
+      marker.kind === "geometry"
+        ? marker.geometry
+        : findNeighborhoodBoundaryFeature(
+            boundaryLookup,
+            marker.cityId ?? activeGuide?.location.city?.toLowerCase().replace(/\s+/g, "-"),
+            marker.subareaId,
+            marker.nestedSubareaId,
+          )?.geometry ?? null;
+
+    if (!geometry) {
+      return [];
+    }
+
+    return [{
+      type: "Feature" as const,
+      properties: {
+        id: `${activeGuide?.id ?? "guide"}-${stop.id}-map-marker`,
+        stopId: stop.id,
+        name: marker.label ?? stop.name,
+        category: stop.category ?? activeGuide?.category ?? "Activities",
+        markerKind: marker.kind,
+        active: activeStopIds.has(stop.id),
+      },
+      geometry,
+    }];
+  });
+
+  return {
+    type: "FeatureCollection",
+    features,
   };
 }
 
@@ -1866,6 +2036,80 @@ function addMapLayers(map: maplibregl.Map) {
   }, "continent-labels");
 
   map.addLayer({
+    id: "poi-map-marker-fill",
+    type: "fill",
+    source: POI_MAP_MARKER_SOURCE_ID,
+    filter: [
+      "any",
+      ["==", ["geometry-type"], "Polygon"],
+      ["==", ["geometry-type"], "MultiPolygon"],
+    ],
+    paint: {
+      "fill-color": GUIDE_STOP_COLOR_MATCH,
+      "fill-opacity": ["case", ["get", "active"], 0.2, 0.1],
+    },
+  }, "continent-labels");
+
+  map.addLayer({
+    id: "poi-map-marker-line-casing",
+    type: "line",
+    source: POI_MAP_MARKER_SOURCE_ID,
+    filter: [
+      "any",
+      ["==", ["geometry-type"], "Polygon"],
+      ["==", ["geometry-type"], "MultiPolygon"],
+      ["==", ["geometry-type"], "LineString"],
+      ["==", ["geometry-type"], "MultiLineString"],
+    ],
+    layout: {
+      "line-cap": "round",
+      "line-join": "round",
+    },
+    paint: {
+      "line-color": "rgba(255, 255, 255, 0.92)",
+      "line-opacity": ["case", ["get", "active"], 0.92, 0.64],
+      "line-width": ["interpolate", ["linear"], ["zoom"], 8, 5.2, 13, 9.2, 16, 13],
+      "line-blur": 0.35,
+    },
+  }, "continent-labels");
+
+  map.addLayer({
+    id: "poi-map-marker-line",
+    type: "line",
+    source: POI_MAP_MARKER_SOURCE_ID,
+    filter: [
+      "any",
+      ["==", ["geometry-type"], "Polygon"],
+      ["==", ["geometry-type"], "MultiPolygon"],
+      ["==", ["geometry-type"], "LineString"],
+      ["==", ["geometry-type"], "MultiLineString"],
+    ],
+    layout: {
+      "line-cap": "round",
+      "line-join": "round",
+    },
+    paint: {
+      "line-color": GUIDE_STOP_COLOR_MATCH,
+      "line-opacity": ["case", ["get", "active"], 0.92, 0.62],
+      "line-width": ["interpolate", ["linear"], ["zoom"], 8, 2.6, 13, 5.1, 16, 7.5],
+    },
+  }, "continent-labels");
+
+  map.addLayer({
+    id: "poi-map-marker-point",
+    type: "circle",
+    source: POI_MAP_MARKER_SOURCE_ID,
+    filter: ["==", ["geometry-type"], "Point"],
+    paint: {
+      "circle-radius": ["interpolate", ["linear"], ["zoom"], 8, 15, 13, 28, 16, 38],
+      "circle-color": GUIDE_STOP_GLOW_COLOR_MATCH,
+      "circle-opacity": ["case", ["get", "active"], 0.24, 0.12],
+      "circle-blur": 0.55,
+      "circle-stroke-width": 0,
+    },
+  }, "continent-labels");
+
+  map.addLayer({
     id: "guide-stop-glow",
     type: "circle",
     source: GUIDE_STOP_SOURCE_ID,
@@ -1985,29 +2229,51 @@ function addMapLayers(map: maplibregl.Map) {
   }, "continent-labels");
 
   map.addLayer({
+    id: "guide-stop-diamond-burst",
+    type: "symbol",
+    source: GUIDE_STOP_SOURCE_ID,
+    minzoom: 3,
+    filter: ["==", ["get", "id"], "__none__"],
+    layout: {
+      "icon-image": POI_DIAMOND_PULSE_ICON_IMAGE_MATCH,
+      "icon-size": ["interpolate", ["linear"], ["zoom"], 3, 0, 8, 0],
+      "symbol-sort-key": ["*", -1, ["get", "rank"]],
+      "icon-allow-overlap": true,
+      "icon-ignore-placement": true,
+    },
+    paint: {
+      "icon-opacity": 0,
+      "icon-opacity-transition": { duration: 0, delay: 0 },
+    },
+  }, "guide-stop-labels");
+
+  map.addLayer({
+    id: "guide-stop-diamond-hover",
+    type: "symbol",
+    source: GUIDE_STOP_SOURCE_ID,
+    minzoom: 3,
+    filter: ["==", ["get", "id"], "__none__"],
+    layout: {
+      "icon-image": POI_DIAMOND_ICON_IMAGE_MATCH,
+      "icon-size": ["interpolate", ["linear"], ["zoom"], 3, 1.02, 8, 1.08],
+      "symbol-sort-key": ["*", -1, ["get", "rank"]],
+      "icon-allow-overlap": true,
+      "icon-ignore-placement": true,
+    },
+    paint: {
+      "icon-opacity": 0,
+      "icon-opacity-transition": { duration: 0, delay: 0 },
+    },
+  }, "guide-stop-labels");
+
+  map.addLayer({
     id: "guide-stop-diamonds",
     type: "symbol",
     source: GUIDE_STOP_SOURCE_ID,
     minzoom: 3,
     filter: ["==", ["get", "isNested"], true],
     layout: {
-      "icon-image": [
-        "match",
-        ["get", "category"],
-        "Food",
-        getPoiDiamondImageName("Food"),
-        "Nightlife",
-        getPoiDiamondImageName("Nightlife"),
-        "Culture",
-        getPoiDiamondImageName("Culture"),
-        "Stay",
-        getPoiDiamondImageName("Stay"),
-        "Nature",
-        getPoiDiamondImageName("Nature"),
-        "Activities",
-        getPoiDiamondImageName("Activities"),
-        getPoiDiamondImageName("Activities"),
-      ],
+      "icon-image": POI_DIAMOND_ICON_IMAGE_MATCH,
       "icon-size": ["interpolate", ["linear"], ["zoom"], 3, 1.02, 8, 1.08],
       "symbol-sort-key": ["*", -1, ["get", "rank"]],
       "icon-allow-overlap": true,
@@ -2191,6 +2457,15 @@ export function MapClient({
     () => createNeighborhoodBoundaryData(activeNeighborhoodBoundary),
     [activeNeighborhoodBoundary],
   );
+  const poiMapMarkerData = useMemo(
+    () =>
+      createPoiMapMarkerData(activeGuide, neighborhoodBoundaryLookup, {
+        selectedStopId,
+        hoveredStopId,
+        visibleNestedStopParentIds,
+      }),
+    [activeGuide, hoveredStopId, neighborhoodBoundaryLookup, selectedStopId, visibleNestedStopParentIds],
+  );
   const selectionCameraKey = useMemo(
     () =>
       [
@@ -2358,6 +2633,11 @@ export function MapClient({
         data: guideRouteData,
       });
 
+      map.addSource(POI_MAP_MARKER_SOURCE_ID, {
+        type: "geojson",
+        data: poiMapMarkerData,
+      });
+
       map.addSource(GUIDE_STOP_SOURCE_ID, {
         type: "geojson",
         data: guideStopData,
@@ -2400,7 +2680,12 @@ export function MapClient({
 
       const syncHoveredGuideStop = (event: maplibregl.MapMouseEvent & { features?: maplibregl.MapGeoJSONFeature[] }) => {
         const feature = event.features?.[0];
-        const stopId = typeof feature?.properties?.id === "string" ? feature.properties.id : null;
+        const stopId =
+          typeof feature?.properties?.stopId === "string"
+            ? feature.properties.stopId
+            : typeof feature?.properties?.id === "string"
+              ? feature.properties.id
+              : null;
         handlersRef.current.onHoverGuideStop?.(stopId);
       };
 
@@ -2408,22 +2693,45 @@ export function MapClient({
       map.on("mousemove", "guide-stop-hover", syncHoveredGuideStop);
       map.on("mousemove", "guide-stop-labels", syncHoveredGuideStop);
       map.on("mousemove", "guide-stop-diamonds", syncHoveredGuideStop);
+      map.on("mousemove", "guide-stop-diamond-hover", syncHoveredGuideStop);
+      map.on("mousemove", "guide-stop-diamond-burst", syncHoveredGuideStop);
       map.on("mousemove", "guide-stop-diamond-labels", syncHoveredGuideStop);
+      map.on("mousemove", "poi-map-marker-fill", syncHoveredGuideStop);
+      map.on("mousemove", "poi-map-marker-line", syncHoveredGuideStop);
       map.on("mouseleave", "guide-stop-points", () => handlersRef.current.onHoverGuideStop?.(null));
       map.on("mouseleave", "guide-stop-hover", () => handlersRef.current.onHoverGuideStop?.(null));
       map.on("mouseleave", "guide-stop-labels", () => handlersRef.current.onHoverGuideStop?.(null));
       map.on("mouseleave", "guide-stop-diamonds", () => handlersRef.current.onHoverGuideStop?.(null));
+      map.on("mouseleave", "guide-stop-diamond-hover", () => handlersRef.current.onHoverGuideStop?.(null));
+      map.on("mouseleave", "guide-stop-diamond-burst", () => handlersRef.current.onHoverGuideStop?.(null));
       map.on("mouseleave", "guide-stop-diamond-labels", () => handlersRef.current.onHoverGuideStop?.(null));
+      map.on("mouseleave", "poi-map-marker-fill", () => handlersRef.current.onHoverGuideStop?.(null));
+      map.on("mouseleave", "poi-map-marker-line", () => handlersRef.current.onHoverGuideStop?.(null));
 
       map.on("click", (event) => {
         const clickedGuideStopFeature = map
           .queryRenderedFeatures(event.point, {
-            layers: ["guide-stop-diamond-labels", "guide-stop-diamonds", "guide-stop-labels", "guide-stop-hover", "guide-stop-points"],
+            layers: [
+              "guide-stop-diamond-labels",
+              "guide-stop-diamond-hover",
+              "guide-stop-diamond-burst",
+              "guide-stop-diamonds",
+              "guide-stop-labels",
+              "guide-stop-hover",
+              "guide-stop-points",
+            ],
           })
           .find((feature) => typeof feature.properties?.id === "string");
+        const clickedPoiMapMarkerFeature = map
+          .queryRenderedFeatures(event.point, {
+            layers: ["poi-map-marker-line", "poi-map-marker-line-casing", "poi-map-marker-fill", "poi-map-marker-point"],
+          })
+          .find((feature) => typeof feature.properties?.stopId === "string");
         const clickedGuideStopId =
           typeof clickedGuideStopFeature?.properties?.id === "string"
             ? clickedGuideStopFeature.properties.id
+            : typeof clickedPoiMapMarkerFeature?.properties?.stopId === "string"
+              ? clickedPoiMapMarkerFeature.properties.stopId
             : null;
         if (clickedGuideStopId) {
           handlersRef.current.onHoverGuideStop?.(clickedGuideStopId);
@@ -2437,7 +2745,7 @@ export function MapClient({
         }
 
         const features = map.queryRenderedFeatures(event.point, {
-          layers: ["city-points", "country-fills", "continent-labels", STATE_LABEL_LAYER_ID],
+          layers: ["city-points", "country-fills", "continent-labels"],
         });
         const allFeaturesAtPoint = map.queryRenderedFeatures(event.point);
         const clickedNames = new Set(
@@ -2482,73 +2790,6 @@ export function MapClient({
             return;
           }
 
-          const matchingState = (activeCountry?.states ?? []).find((state) => {
-            if (
-              currentSelection.countrySubareaId &&
-              state.countrySubareaId !== currentSelection.countrySubareaId
-            ) {
-              return false;
-            }
-            return Array.from(clickedNames).some((clickedName) =>
-              nameMatches(clickedName, normalizeLabelName(state.name)),
-            );
-          });
-
-          if (
-            matchingState &&
-            handlersRef.current.onSelectState &&
-            currentSelection.continentId &&
-            currentSelection.countryId
-          ) {
-            handlersRef.current.onSelectState(
-              currentSelection.continentId,
-              currentSelection.countryId,
-              matchingState.countrySubareaId,
-              matchingState.id,
-            );
-            return;
-          }
-
-          if (
-            currentSelection.countrySubareaId &&
-            (activeCountry?.states?.length ?? 0) > 0 &&
-            handlersRef.current.onSelectState
-          ) {
-            const scopedStates = (activeCountry?.states ?? []).filter(
-              (state) => state.countrySubareaId === currentSelection.countrySubareaId,
-            );
-            if (scopedStates.length) {
-              const nearest = scopedStates.reduce<{
-                id: string;
-                countrySubareaId: string;
-                distanceSquared: number;
-              } | null>((best, state) => {
-                const dLat = event.lngLat.lat - state.coordinates[0];
-                const dLng = event.lngLat.lng - state.coordinates[1];
-                const distanceSquared = dLat * dLat + dLng * dLng;
-                if (!best || distanceSquared < best.distanceSquared) {
-                  return { id: state.id, countrySubareaId: state.countrySubareaId, distanceSquared };
-                }
-                return best;
-              }, null);
-
-              const zoom = map.getZoom();
-              const maxAngularDistance =
-                zoom >= 8 ? 1.4 : zoom >= 6 ? 2.2 : zoom >= 4 ? 3.4 : 4.6;
-              const maxDistanceSquared = maxAngularDistance * maxAngularDistance;
-
-              if (nearest && nearest.distanceSquared <= maxDistanceSquared) {
-                handlersRef.current.onSelectState(
-                  currentSelection.continentId,
-                  currentSelection.countryId,
-                  nearest.countrySubareaId,
-                  nearest.id,
-                );
-                return;
-              }
-            }
-          }
-
           if (citySubareas.length && handlersRef.current.onSelectSubarea) {
             const matchingSubarea = citySubareas.find((subarea) =>
               Array.from(clickedNames).some((clickedName) =>
@@ -2585,37 +2826,6 @@ export function MapClient({
             handlersRef.current.onSelectCity(continentId, countryId, cityId);
           }
           return;
-        }
-
-        const stateLabelFeature = features.find((feature) => feature.layer.id === STATE_LABEL_LAYER_ID);
-        if (
-          stateLabelFeature &&
-          handlersRef.current.onSelectState &&
-          handlersRef.current.selection.continentId &&
-          handlersRef.current.selection.countryId
-        ) {
-          const stateLabelName =
-            typeof stateLabelFeature.properties?.name === "string"
-              ? normalizeLabelName(stateLabelFeature.properties.name)
-              : null;
-          const activeContinent = handlersRef.current.continents.find(
-            (continent) => continent.id === handlersRef.current.selection.continentId,
-          );
-          const activeCountry = activeContinent?.countries.find(
-            (country) => country.id === handlersRef.current.selection.countryId,
-          );
-          const matchingState = (activeCountry?.states ?? []).find((state) =>
-            stateLabelName ? nameMatches(stateLabelName, normalizeLabelName(state.name)) : false,
-          );
-          if (matchingState) {
-            handlersRef.current.onSelectState(
-              handlersRef.current.selection.continentId,
-              handlersRef.current.selection.countryId,
-              matchingState.countrySubareaId,
-              matchingState.id,
-            );
-            return;
-          }
         }
 
         const currentSelectionAfterCityCheck = handlersRef.current.selection;
@@ -2819,10 +3029,11 @@ export function MapClient({
     (map.getSource(SAVED_LOCATION_SOURCE_ID) as GeoJSONSource).setData(savedLocationData);
     (map.getSource(STATE_LABEL_SOURCE_ID) as GeoJSONSource).setData(stateLabelData);
     (map.getSource(GUIDE_ROUTE_SOURCE_ID) as GeoJSONSource).setData(guideRouteData);
+    (map.getSource(POI_MAP_MARKER_SOURCE_ID) as GeoJSONSource).setData(poiMapMarkerData);
     ensureGuideStopMarkerImages(map, guideStopData);
     (map.getSource(GUIDE_STOP_SOURCE_ID) as GeoJSONSource).setData(guideStopData);
     (map.getSource(NEIGHBORHOOD_BOUNDARY_SOURCE_ID) as GeoJSONSource).setData(neighborhoodBoundaryData);
-  }, [cityData, continentLabelData, countryData, guideRouteData, guideStopData, neighborhoodBoundaryData, savedLocationData, stateLabelData]);
+  }, [cityData, continentLabelData, countryData, guideRouteData, guideStopData, neighborhoodBoundaryData, poiMapMarkerData, savedLocationData, stateLabelData]);
 
   const activeGuidePulseStopId = useMemo(() => {
     const renderedStopIds = new Set(guideStopData.features.map((feature) => feature.properties.id));
@@ -2830,6 +3041,14 @@ export function MapClient({
 
     return candidateStopIds.find((stopId): stopId is string => Boolean(stopId && renderedStopIds.has(stopId))) ?? null;
   }, [guideStopData, hoveredStopId, selectedStopId, visibleNestedStopParentIds]);
+  const isActiveGuidePulseStopNested = useMemo(
+    () =>
+      activeGuidePulseStopId
+        ? guideStopData.features.find((feature) => feature.properties.id === activeGuidePulseStopId)
+            ?.properties.isNested === true
+        : false,
+    [activeGuidePulseStopId, guideStopData],
+  );
 
   useEffect(() => {
     const map = mapRef.current;
@@ -2838,6 +3057,8 @@ export function MapClient({
       !isStyleReadyRef.current ||
       !map.getLayer("guide-stop-hover") ||
       !map.getLayer("guide-stop-burst") ||
+      !map.getLayer("guide-stop-diamond-hover") ||
+      !map.getLayer("guide-stop-diamond-burst") ||
       !map.getLayer("guide-stop-glow")
     ) {
       return;
@@ -2852,8 +3073,12 @@ export function MapClient({
         visualState.burstT = 0;
       }
       visualState.target = 1;
-      map.setFilter("guide-stop-hover", ["==", ["get", "id"], activeGuidePulseStopId]);
-      map.setFilter("guide-stop-burst", ["==", ["get", "id"], activeGuidePulseStopId]);
+      const activeStopFilter: maplibregl.FilterSpecification = ["==", ["get", "id"], activeGuidePulseStopId];
+      const emptyStopFilter: maplibregl.FilterSpecification = ["==", ["get", "id"], "__none__"];
+      map.setFilter("guide-stop-hover", isActiveGuidePulseStopNested ? emptyStopFilter : activeStopFilter);
+      map.setFilter("guide-stop-burst", isActiveGuidePulseStopNested ? emptyStopFilter : activeStopFilter);
+      map.setFilter("guide-stop-diamond-hover", isActiveGuidePulseStopNested ? activeStopFilter : emptyStopFilter);
+      map.setFilter("guide-stop-diamond-burst", isActiveGuidePulseStopNested ? activeStopFilter : emptyStopFilter);
     } else {
       visualState.target = 0;
       visualState.burstActive = false;
@@ -2908,6 +3133,30 @@ export function MapClient({
         burstRadiusAtHighZoom,
       ]);
       map.setPaintProperty("guide-stop-burst", "circle-opacity", burstOpacity);
+      map.setLayoutProperty("guide-stop-diamond-hover", "icon-size", [
+        "interpolate",
+        ["linear"],
+        ["zoom"],
+        3,
+        1.02 + 0.1 * hoverScale + 0.045 * continuousPulse,
+        8,
+        1.08 + 0.13 * hoverScale + 0.06 * continuousPulse,
+      ]);
+      map.setPaintProperty("guide-stop-diamond-hover", "icon-opacity", isActiveGuidePulseStopNested ? 1 : 0);
+      map.setLayoutProperty("guide-stop-diamond-burst", "icon-size", [
+        "interpolate",
+        ["linear"],
+        ["zoom"],
+        3,
+        0.82 + 0.74 * burstGrow,
+        8,
+        0.9 + 0.98 * burstGrow,
+      ]);
+      map.setPaintProperty(
+        "guide-stop-diamond-burst",
+        "icon-opacity",
+        isActiveGuidePulseStopNested ? burstOpacity : 0,
+      );
 
       const done = Math.abs(state.target - state.amount) < 0.01;
       if (done) {
@@ -2920,7 +3169,11 @@ export function MapClient({
           state.frame = 0;
           map.setFilter("guide-stop-hover", ["==", ["get", "id"], "__none__"]);
           map.setFilter("guide-stop-burst", ["==", ["get", "id"], "__none__"]);
+          map.setFilter("guide-stop-diamond-hover", ["==", ["get", "id"], "__none__"]);
+          map.setFilter("guide-stop-diamond-burst", ["==", ["get", "id"], "__none__"]);
           map.setPaintProperty("guide-stop-burst", "circle-opacity", 0);
+          map.setPaintProperty("guide-stop-diamond-hover", "icon-opacity", 0);
+          map.setPaintProperty("guide-stop-diamond-burst", "icon-opacity", 0);
         }
         if (state.target === 1) {
           hoverAnimationFrameRef.current = requestAnimationFrame(tick);
@@ -2945,7 +3198,7 @@ export function MapClient({
         hoverAnimationFrameRef.current = null;
       }
     };
-  }, [activeGuidePulseStopId]);
+  }, [activeGuidePulseStopId, isActiveGuidePulseStopNested]);
 
   useEffect(() => {
     const map = mapRef.current;

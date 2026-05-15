@@ -416,6 +416,17 @@ const poiHours: Record<string, GuideStop["hours"]> = {
   "southbank-stay-sea-containers": { default: "24 hours." },
 };
 
+function streetLineMarker(label: string, coordinates: [number, number][]): NonNullable<GuideStop["mapMarker"]> {
+  return {
+    kind: "geometry",
+    label,
+    geometry: {
+      type: "LineString",
+      coordinates: coordinates.map(([lat, lng]) => [lng, lat]),
+    },
+  };
+}
+
 const stops: Record<string, GuideStop> = {
   nobleRot: stop("soho-food-noble-rot", "Noble Rot Soho", [51.5126, -0.1318], "Noble Rot Soho turns the former Gay Hussar site into a wine-led modern British dining room: go for serious bottles, confident seasonal cooking, and the feeling that dinner is plugged into Soho's literary and political past.", photo.restaurant, "$$$"),
   kiln: stop("soho-food-kiln", "Kiln", [51.5137, -0.1361], "Kiln is a counter around live fire, claypots, seafood, and regional Thai cooking shaped by northern Thailand, Burma, and Yunnan. Go when Soho needs heat, smoke, and close-up kitchen theatre rather than a polite pre-theatre table.", photo.restaurant, "$$"),
@@ -450,12 +461,27 @@ const stops: Record<string, GuideStop> = {
   maru: stop("mayfair-food-maru", "Maru", [51.5106, -0.1449], "Maru is a tiny Mayfair omakase counter built for precision: a small number of seats, Japanese technique, seasonal fish, and a quiet pace that adds East Asian fine-dining range to the London list.", photo.restaurant, "$$$"),
   tendril: stop("mayfair-food-tendril", "Tendril", [51.5115, -0.1448], "Tendril is a mostly vegan Mayfair restaurant for inventive vegetable-led cooking, cocktails, and a central London room that works when plant-based dining needs to feel current rather than worthy.", photo.restaurant, "$$"),
 
-  boroughMarket: stop("southbank-food-borough-market", "Borough Market", [51.5054, -0.0906], "Borough Market has traded near London Bridge for around 1,000 years and is still London's defining food market. Go for Kappacasein toasties, Bread Ahead doughnuts, Brindisa, produce stalls, seafood, and grazing under the railway arches.", photo.market, "$$"),
+  boroughMarket: {
+    ...stop("southbank-food-borough-market", "Borough Market", [51.5054, -0.0906], "Borough Market has traded near London Bridge for around 1,000 years and is still London's defining food market. Go for Kappacasein toasties, Bread Ahead doughnuts, Brindisa, produce stalls, seafood, and grazing under the railway arches.", photo.market, "$$"),
+    mapMarker: streetLineMarker("Borough Market", [
+      [51.5057, -0.0923],
+      [51.5055, -0.0914],
+      [51.5053, -0.0905],
+      [51.5051, -0.0896],
+    ]),
+  },
   padella: stop("southbank-food-padella", "Padella Borough", [51.5051, -0.0899], "Padella Borough opened at the edge of the market in 2016 and helped reset London's fresh-pasta expectations: hand-rolled pasta in the window, affordable plates, wine, and a queue that is part of the ritual.", photo.restaurant, "$$"),
   bratXclimpson: stop("southbank-food-brat-x-climpson", "BRAT x Climpson's Arch", [51.5059, -0.0921], "BRAT x Climpson's Arch is a working factory-style dining room where the appeal is smoke, scale, and looseness: seasonal food from wood-fired ovens and grills, cocktails, and a more industrial sibling to the Shoreditch original.", photo.restaurant, "$$$"),
   wrightBrothers: stop("southbank-food-wright-brothers", "Wright Brothers Borough", [51.5052, -0.0911], "Wright Brothers Borough is the seafood counter to use when Borough Market needs to become a seated meal: oysters, shellfish, fish plates, cold white wine, and a briny pause from street-food grazing.", photo.restaurant, "$$"),
   flatIronSquare: stop("southbank-food-flat-iron-square", "Flat Iron Square", [51.5056, -0.0961], "Flat Iron Square is a Bankside courtyard and taproom setup for groups: rotating street-food vendors, beer, cocktails, screenings, DJs, and flexible seating near London Bridge without committing to one restaurant.", photo.market, "$$"),
-  camdenMarket: stop("camden-food-market", "Camden Market", [51.5413, -0.1469], "Camden Market is the canal-side food-and-culture stop for street food, vintage fashion, alternative retail, and more than 1,000 stalls, shops, and vendors around Camden Lock and Hawley Wharf.", photo.market, "$$"),
+  camdenMarket: {
+    ...stop("camden-food-market", "Camden Market", [51.5413, -0.1469], "Camden Market is the canal-side food-and-culture stop for street food, vintage fashion, alternative retail, and more than 1,000 stalls, shops, and vendors around Camden Lock and Hawley Wharf.", photo.market, "$$"),
+    mapMarker: streetLineMarker("Camden Market", [
+      [51.5405, -0.1478],
+      [51.5412, -0.1469],
+      [51.5421, -0.1457],
+    ]),
+  },
   mallow: stop("southbank-food-mallow", "Mallow Borough Market", [51.5051, -0.0905], "Mallow Borough Market is the fully plant-based restaurant to use when the South Bank guide needs a seated vegan meal near the market: global flavors, colorful plates, cocktails, and a room that still feels casual.", photo.restaurant, "$$"),
   tofuVegan: stop("islington-food-tofu-vegan", "Tofu Vegan Islington", [51.5462, -0.1039], "Tofu Vegan Islington is the plant-based Chinese pick for mapo tofu, dumplings, mock-meat dishes, noodles, and a menu that makes vegan food feel abundant rather than like a compromise.", photo.restaurant, "$$"),
 
@@ -561,10 +587,24 @@ const stops: Record<string, GuideStop> = {
   barbican: stop("shoreditch-culture-barbican", "Barbican Centre", [51.5202, -0.0938], "The Barbican is a whole cultural estate rather than one venue: brutalist walkways, concert halls, cinemas, galleries, theatre, the conservatory, and enough concrete atmosphere to make east-central London feel cinematic.", photo.museum),
   whitechapelGallery: stop("shoreditch-culture-whitechapel", "Whitechapel Gallery", [51.5163, -0.0709], "Whitechapel Gallery has shown modern and contemporary art on the East End edge for more than a century. Go for serious exhibitions, artist commissions, books, and a sharper counterweight to Shoreditch street-art shorthand.", photo.museum),
   spitalfieldsMarket: stop("shoreditch-culture-spitalfields", "Old Spitalfields Market", [51.5197, -0.0755], "Old Spitalfields Market mixes a Victorian market hall with independent designers, artisan makers, vintage and antique dealers, restaurants, and street-food kitchens, making it a useful bridge between Liverpool Street and Shoreditch.", photo.market),
-  brickLane: stop("shoreditch-culture-brick-lane", "Brick Lane", [51.5217, -0.0717], "Brick Lane is the East End corridor where migration, food, street art, vintage retail, markets, curry houses, and bagel counters all overlap. Go to walk it slowly, then choose a specific food stop rather than treating the street as one venue.", photo.london),
+  brickLane: {
+    ...stop("shoreditch-culture-brick-lane", "Brick Lane", [51.5217, -0.0717], "Brick Lane is the East End corridor where migration, food, street art, vintage retail, markets, curry houses, and bagel counters all overlap. Go to walk it slowly, then choose a specific food stop rather than treating the street as one venue.", photo.london),
+    mapMarker: streetLineMarker("Brick Lane", [
+      [51.5186, -0.0719],
+      [51.5217, -0.0717],
+      [51.5245, -0.0715],
+    ]),
+  },
   geffrye: stop("shoreditch-culture-museum-home", "Museum of the Home", [51.5314, -0.0765], "Museum of the Home uses almshouse buildings, period rooms, gardens, and domestic objects to show how Londoners have lived. It gives a Shoreditch day a quieter, more human scale after markets and bars.", photo.museum),
 
-  portobello: stop("notting-culture-portobello", "Portobello Road Market", [51.5156, -0.2033], "Portobello Road Market is Notting Hill's main act: a mile-plus run of antiques, vintage, food, fashion, fruit and veg, and more than 1,000 vendors, with Friday and Saturday bringing the biggest antiques-and-crowd energy.", photo.market),
+  portobello: {
+    ...stop("notting-culture-portobello", "Portobello Road Market", [51.5156, -0.2033], "Portobello Road Market is Notting Hill's main act: a mile-plus run of antiques, vintage, food, fashion, fruit and veg, and more than 1,000 vendors, with Friday and Saturday bringing the biggest antiques-and-crowd energy.", photo.market),
+    mapMarker: streetLineMarker("Portobello Road Market", [
+      [51.5129, -0.2017],
+      [51.5156, -0.2033],
+      [51.519, -0.2055],
+    ]),
+  },
   electricCinema: stop("notting-culture-electric-cinema", "Electric Cinema", [51.515, -0.2058], "Electric Cinema gives Portobello a properly atmospheric evening stop: restored interiors, armchairs, sofas, a bar, and film programming that makes a movie feel like part of the neighborhood rather than a fallback plan.", photo.theatre),
   museumBrands: stop("notting-culture-museum-brands", "Museum of Brands", [51.5177, -0.2063], "Museum of Brands turns packaging, advertising, toys, household goods, and everyday design into a compact social-history walk. It is especially good when Portobello browsing needs context rather than another shop.", photo.museum),
   tabernacle: stop("notting-culture-tabernacle", "The Tabernacle", [51.5173, -0.2017], "The Tabernacle is Notting Hill's community-arts anchor, tied to carnival culture, live music, theatre, classes, food, and local programming. It helps the area feel lived-in rather than only cinematic.", photo.theatre),

@@ -1,3 +1,5 @@
+import type { Geometry } from "geojson";
+
 export type ListCategory =
   | "Food"
   | "Nightlife"
@@ -249,6 +251,7 @@ export interface GuideStop {
   eventTime?: string;
   eventVenue?: string;
   places?: GuideStop[];
+  mapMarker?: PoiMapMarker;
   routeCoordinates?: [number, number][];
   itineraryDate?: string;
   itineraryDay?: number;
@@ -271,6 +274,20 @@ export interface GuideStop {
         winter?: string;
       };
 }
+
+export type PoiMapMarker =
+  | {
+      kind: "geometry";
+      geometry: Geometry;
+      label?: string;
+    }
+  | {
+      kind: "neighborhood-boundary";
+      cityId?: string;
+      subareaId: string;
+      nestedSubareaId?: string;
+      label?: string;
+    };
 
 export interface VenueEvent {
   venue_id: string;

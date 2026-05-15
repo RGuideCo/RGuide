@@ -1343,27 +1343,6 @@ export function MapListCard({
                   )}
                 </span>
               </div>
-              {expandedChrome ? (
-                <button
-                  type="button"
-                  onClick={() => onToggleExpand?.(list)}
-                  aria-expanded={expanded}
-                  aria-controls={`guide-panel-${list.id}`}
-                  className="inline-flex h-7 w-7 shrink-0 items-center justify-center rounded-md"
-                  aria-label={`${expanded ? "Collapse" : "Expand"} ${list.title}`}
-                  title={`${expanded ? "Collapse" : "Expand"} ${list.title}`}
-                >
-                  <ChevronDown
-                    className={`h-4 w-4 shrink-0 transition-transform duration-300 ${
-                      expanded
-                        ? `rotate-180 text-white ${expandingListChrome ? "guide-chrome-chevron--expand" : ""}`
-                        : expandedChrome
-                          ? `text-white/80 ${retractingListChrome ? "guide-chrome-chevron--retract" : expandingListChrome ? "guide-chrome-chevron--expand" : ""}`
-                          : "text-slate-400 group-hover:translate-y-0.5 group-hover:text-slate-900 group-focus-within:translate-y-0.5 group-focus-within:text-slate-900"
-                    }`}
-                  />
-                </button>
-              ) : null}
             </div>
           ) : (
             <>
@@ -1434,6 +1413,32 @@ export function MapListCard({
             >
               <Heart className={`h-3.5 w-3.5 ${hasVoted ? "fill-current" : ""}`} />
               {visibleUpvotes > 0 ? <span>{formatNumber(visibleUpvotes)}</span> : null}
+            </button>
+          ) : null}
+          {expandable && expandedChrome ? (
+            <button
+              type="button"
+              onClick={(event) => {
+                event.stopPropagation();
+                onToggleExpand?.(list);
+              }}
+              aria-expanded={expanded}
+              aria-controls={`guide-panel-${list.id}`}
+              className="inline-flex h-7 w-5 shrink-0 items-center justify-center text-white/85 transition hover:text-white"
+              aria-label={`${expanded ? "Collapse" : "Expand"} ${list.title}`}
+              title={`${expanded ? "Collapse" : "Expand"} ${list.title}`}
+            >
+              <ChevronDown
+                className={`h-4 w-4 shrink-0 transition-transform duration-300 ${
+                  expanded
+                    ? `rotate-180 ${expandingListChrome ? "guide-chrome-chevron--expand" : ""}`
+                    : retractingListChrome
+                      ? "guide-chrome-chevron--retract"
+                      : expandingListChrome
+                        ? "guide-chrome-chevron--expand"
+                        : ""
+                }`}
+              />
             </button>
           ) : null}
           {expandable && !expandedChrome ? (
