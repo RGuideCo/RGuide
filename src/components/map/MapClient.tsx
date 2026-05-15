@@ -1193,6 +1193,39 @@ function createNeighborhoodBoundaryData(
   };
 }
 
+function findNeighborhoodBoundaryFeature(
+  boundaryLookup: NeighborhoodBoundaryMap,
+  cityId?: string,
+  subareaId?: string,
+  nestedSubareaId?: string,
+): Feature<Geometry, NeighborhoodBoundaryProperties> | null {
+  if (!cityId || !subareaId) {
+    return null;
+  }
+
+  const exactKey = nestedSubareaId
+    ? `${cityId}::${subareaId}::${nestedSubareaId}`
+    : `${cityId}::${subareaId}`;
+  const exactFeature = boundaryLookup[exactKey];
+  if (exactFeature) {
+    return exactFeature;
+  }
+
+  const selectedId = nestedSubareaId ?? subareaId;
+  const keySuffix = `::${selectedId}`;
+  const suffixFeature = Object.entries(boundaryLookup).find(([key]) => key.endsWith(keySuffix))?.[1];
+  if (suffixFeature) {
+    return suffixFeature;
+  }
+
+  const normalizedSelectedId = normalizeLabelName(selectedId);
+  return Object.values(boundaryLookup).find((feature) => {
+    const featureId = normalizeLabelName(feature.properties.id.split("::").at(-1) ?? "");
+    const featureName = normalizeLabelName(feature.properties.name);
+    return featureId === normalizedSelectedId || featureName === normalizedSelectedId;
+  }) ?? null;
+}
+
 function getSubareaCoordinates(subareas: Array<{ id: string; coordinates: [number, number]; subareas?: Array<{ id: string; coordinates: [number, number] }> }> | undefined, subareaId?: string, nestedSubareaId?: string) {
   if (!subareas || !subareaId) {
     return null;
@@ -2147,17 +2180,12 @@ export function MapClient({
     [activeGuide],
   );
   const activeNeighborhoodBoundary = useMemo(() => {
-    if (selection.cityId && selection.subareaId && selection.nestedSubareaId) {
-      return neighborhoodBoundaryLookup[
-        `${selection.cityId}::${selection.subareaId}::${selection.nestedSubareaId}`
-      ] ?? null;
-    }
-
-    if (selection.cityId && selection.subareaId) {
-      return neighborhoodBoundaryLookup[`${selection.cityId}::${selection.subareaId}`] ?? null;
-    }
-
-    return null;
+    return findNeighborhoodBoundaryFeature(
+      neighborhoodBoundaryLookup,
+      selection.cityId,
+      selection.subareaId,
+      selection.nestedSubareaId,
+    );
   }, [neighborhoodBoundaryLookup, selection.cityId, selection.nestedSubareaId, selection.subareaId]);
   const neighborhoodBoundaryData = useMemo(
     () => createNeighborhoodBoundaryData(activeNeighborhoodBoundary),
