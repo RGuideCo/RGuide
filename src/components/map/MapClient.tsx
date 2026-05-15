@@ -1235,11 +1235,15 @@ function createGuideRouteData(
     activeGuide?.stops.find((stop) => visibleNestedStopParentIds.includes(stop.id) && (stop.places?.length ?? 0) > 1);
   const explicitNestedRouteCoordinates =
     focusedNestedStop?.routeCoordinates?.map(([lat, lng]) => [lng, lat] as [number, number]) ?? [];
+  const placeSequenceRouteCoordinates =
+    focusedNestedStop?.category === "Routes"
+      ? (focusedNestedStop.places ?? []).map((place) => [place.coordinates[1], place.coordinates[0]] as [number, number])
+      : [];
   const focusedNestedRouteCoordinates =
     focusedNestedStop && (focusedNestedStop.category === "Routes" || focusedNestedStop.category === "Essentials")
       ? explicitNestedRouteCoordinates.length > 1
         ? explicitNestedRouteCoordinates
-        : (focusedNestedStop.places ?? []).map((place) => [place.coordinates[1], place.coordinates[0]] as [number, number])
+        : placeSequenceRouteCoordinates
       : [];
   const shouldShowNestedRoute = focusedNestedRouteCoordinates.length > 1;
   const shouldShowGuideRoute =
