@@ -142,6 +142,7 @@ const poiPhotos: Record<string, string> = {
   "covent-stay-nomad": "https://stories.hilton.com/uploads/2025/06/7-NoMad-London-Hotel-Exterior.jpg",
   "covent-stay-one-aldwych": "https://www.onealdwych.com/wp-content/uploads/2025/02/OA_Exterior-Day-1-PH019_OA0724_001_WEB-scaled.jpg",
   "covent-stay-savoy": "https://cdn.prod.website-files.com/68f4d1c2a6858f0bfbded01c/6905fd1604f6b402518f81d0_Savoy-SEO-Image.jpg",
+  "camden-food-market": "https://s3.eu-west-2.amazonaws.com/wp-media.camdenmarket.com/wp-content/uploads/2023/05/03144146/camden-lock.jpg",
   "hostel-astor-museum": "https://astorhostels.co.uk/wp-content/uploads/2023/11/astor-museum-hostel-london.jpg",
   "hostel-generator": "https://staygenerator.com/web/media/widget-spaces-rooms/london/rooms-photos/generator-london-hostel-private-room-superior-king-1.jpg?mode=max&quality=100&v=202210271039",
   "hostel-onefam-notting": "https://onefamhostels.com/wp-content/uploads/2024/01/onefam-notting-hill-london.jpg",
