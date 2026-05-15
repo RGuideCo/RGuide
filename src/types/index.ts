@@ -247,6 +247,7 @@ export interface GuideStop {
   priceSource?: string;
   bookingUrl?: string;
   officialUrl?: string;
+  timetableUrl?: string;
   eventVenueId?: string;
   eventTime?: string;
   eventVenue?: string;

@@ -995,9 +995,23 @@ function createGuideStopData(
     })) : [];
     return shouldShowNestedFeatures ? nestedFeatures : [parentFeature];
   });
+  const nestedCoordinates = features
+    .filter((feature) => feature.properties.isNested)
+    .map((feature) => feature.geometry.coordinates);
+  const visibleFeatures = nestedCoordinates.length
+    ? features.filter((feature) => {
+        if (feature.properties.isNested) {
+          return true;
+        }
+        const [lng, lat] = feature.geometry.coordinates;
+        return !nestedCoordinates.some(
+          ([nestedLng, nestedLat]) => Math.abs(nestedLng - lng) < 0.00005 && Math.abs(nestedLat - lat) < 0.00005,
+        );
+      })
+    : features;
   return {
     type: "FeatureCollection",
-    features,
+    features: visibleFeatures,
   };
 }
 

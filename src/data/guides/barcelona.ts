@@ -366,7 +366,7 @@ export const barcelonaCoreGuides = [
           41.3871,
           2.1701
         ],
-        "description": "Aerobus is the no-drama move between El Prat and the center: blue buses, luggage space, 24-hour service, and a route built around Placa Catalunya, Universitat, Urgell, and Placa Espanya. A1 is for Terminal 1 and A2 is for Terminal 2; check the live timetable before leaving because the route direction changes which city stops you use. Timetables: https://aerobusbarcelona.es/en/lines-stops-and-schedules/",
+        "description": "Aerobus is the no-drama move between El Prat and the center: blue buses, luggage space, 24-hour service, and a route built around Placa Catalunya, Universitat, Urgell, and Placa Espanya. A1 is for Terminal 1 and A2 is for Terminal 2; check the live timetable before leaving because the route direction changes which city stops you use.",
         "category": "Essentials",
         "subcategory": "airport_bus",
         "subcategories": [
@@ -380,7 +380,8 @@ export const barcelonaCoreGuides = [
           "transit_hub",
           "route"
         ],
-        "officialUrl": "https://aerobusbarcelona.es/en/lines-stops-and-schedules/",
+        "officialUrl": "https://aerobusbarcelona.es/en/",
+        "timetableUrl": "https://aerobusbarcelona.es/en/lines-stops-and-schedules/",
         "photo": "https://aerobusbarcelona.es/wp-content/uploads/2024/09/9-Terminal-1-1024x682.jpg",
         "hours": {
           "default": "24 hours daily; frequency varies by line and time of day."
