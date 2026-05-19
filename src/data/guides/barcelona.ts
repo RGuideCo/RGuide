@@ -858,7 +858,7 @@ export const barcelonaCoreGuides = [
           "sat": "12:00 PM-3:30 PM, 7:00 PM-11:00 PM",
           "sun": "Closed"
         },
-        "photo": "https://barlaplata.com/wp-content/uploads/2024/04/img_7003-1.jpg"
+        "photo": "https://barlaplata.com/wp-content/uploads/2025/11/ferran-nadeu4.png?w=4000&h="
       },
       {
         "id": "gothic-capet",
@@ -2029,7 +2029,7 @@ export const barcelonaCoreGuides = [
           "sat": "12:00 PM-3:30 PM, 7:00 PM-11:00 PM",
           "sun": "Closed"
         },
-        "photo": "https://barlaplata.com/wp-content/uploads/2024/04/img_7003-1.jpg"
+        "photo": "https://barlaplata.com/wp-content/uploads/2025/11/ferran-nadeu4.png?w=4000&h="
       },
       {
         "id": "citywide-la-pubilla",
@@ -2298,7 +2298,7 @@ export const barcelonaCoreGuides = [
           "sat": "11:00 AM-3:00 PM, 6:00 PM-11:00 PM",
           "sun": "Closed"
         },
-        "photo": "https://barlaplata.com/wp-content/uploads/2024/04/img_7003-1.jpg"
+        "photo": "https://barlaplata.com/wp-content/uploads/2025/11/ferran-nadeu4.png?w=4000&h="
       },
       {
         "id": "barcelona-tapas-can-paixano",
@@ -2740,7 +2740,7 @@ export const barcelonaCoreGuides = [
           "sat": "12:00 PM-3:30 PM, 7:00 PM-11:00 PM",
           "sun": "Closed"
         },
-        "photo": "https://barlaplata.com/wp-content/uploads/2024/04/img_7003-1.jpg"
+        "photo": "https://barlaplata.com/wp-content/uploads/2025/11/ferran-nadeu4.png?w=4000&h="
       },
       {
         "id": "barcelona-catalan-capet",
@@ -6049,7 +6049,7 @@ export const barcelonaCoreGuides = [
           "sat": "12:00 PM-2:00 AM",
           "sun": "12:00 PM-12:00 AM"
         },
-        "photo": "https://barlaplata.com/wp-content/uploads/2024/04/img_7003-1.jpg"
+        "photo": "https://barlaplata.com/wp-content/uploads/2025/11/ferran-nadeu4.png?w=4000&h="
       },
       {
         "id": "gothic-manchester",
@@ -7075,7 +7075,7 @@ export const barcelonaCoreGuides = [
           "sat": "12:00 PM-2:00 AM",
           "sun": "12:00 PM-12:00 AM"
         },
-        "photo": "https://barlaplata.com/wp-content/uploads/2024/04/img_7003-1.jpg"
+        "photo": "https://barlaplata.com/wp-content/uploads/2025/11/ferran-nadeu4.png?w=4000&h="
       },
       {
         "id": "citywide-dive-canigo",
@@ -7966,7 +7966,7 @@ export const barcelonaItineraryGuides = [
           "sat": "12:00 PM-2:00 AM",
           "sun": "12:00 PM-12:00 AM"
         },
-        "photo": "https://barlaplata.com/wp-content/uploads/2024/04/img_7003-1.jpg"
+        "photo": "https://barlaplata.com/wp-content/uploads/2025/11/ferran-nadeu4.png?w=4000&h="
       },
       {
         "id": "barcelona-week-santa-maria",
