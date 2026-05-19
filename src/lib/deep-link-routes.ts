@@ -319,7 +319,12 @@ export function getRelatedCityRouteGuides(
 }
 
 function buildSelection(city: City, neighborhood?: NeighborhoodMatch, continentSource: Continent[] = continents): SelectionState {
-  const continent = continentSource.find((item) => item.name === city.continent);
+  const containingContinent = continentSource.find((continent) =>
+    continent.countries.some((country) =>
+      country.name === city.country && country.cities.some((item) => item.id === city.id),
+    ),
+  );
+  const continent = containingContinent ?? continentSource.find((item) => item.name === city.continent);
   const country = continent?.countries.find((item) => item.name === city.country);
 
   return {
