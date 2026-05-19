@@ -1636,6 +1636,47 @@ export function SplitScreenSection({
 
     return city ? { city, neighborhood } : null;
   };
+  const getGuideCityRouteContext = (guide: MapList) => {
+    const currentContext = getCityRouteContext(selection);
+    if (
+      currentContext &&
+      (!guide.location.city || normalizeRoutePlaceName(currentContext.city.name) === normalizeRoutePlaceName(guide.location.city))
+    ) {
+      return currentContext;
+    }
+
+    if (!guide.location.city) {
+      return currentContext;
+    }
+
+    for (const continent of continents) {
+      if (guide.location.continent && normalizeRoutePlaceName(continent.name) !== normalizeRoutePlaceName(guide.location.continent)) {
+        continue;
+      }
+
+      for (const country of continent.countries) {
+        if (guide.location.country && normalizeRoutePlaceName(country.name) !== normalizeRoutePlaceName(guide.location.country)) {
+          continue;
+        }
+
+        const city = country.cities.find(
+          (item) => normalizeRoutePlaceName(item.name) === normalizeRoutePlaceName(guide.location.city),
+        );
+        if (city) {
+          return { city, neighborhood: getGuideRouteNeighborhood(city, guide) };
+        }
+      }
+    }
+
+    return currentContext;
+  };
+  const getGuideCanonicalRoutePath = (guide: MapList) => {
+    const context = getGuideCityRouteContext(guide);
+    if (!context) {
+      return null;
+    }
+    return getCanonicalGuidePath(context.city, guide, getGuideRouteNeighborhood(context.city, guide), activeEditorialLists);
+  };
   const getCurrentCityRoutePath = (categoryOverride: ListCategory | null = activeCategory) => {
     const context = getCityRouteContext(selection);
     if (!context) {
@@ -4241,13 +4282,15 @@ export function SplitScreenSection({
     deferGuideContentUntilMotionSettles(nextList.id);
     setOpeningGuideId(null);
     setExpandedGuideId(nextList.id);
+    setHoveredStopId(null);
+    setSelectedGuideStopId(null);
     if (activeGuideRail !== "itinerary") {
       setActiveCategory(nextList.category);
     }
     setActiveGuideFitNonce((current) => current + 1);
-    const context = getCityRouteContext(selection);
-    if (context) {
-      pushExplorerPath(getCanonicalGuidePath(context.city, nextList, getGuideRouteNeighborhood(context.city, nextList), activeEditorialLists));
+    const guidePath = getGuideCanonicalRoutePath(nextList);
+    if (guidePath) {
+      pushExplorerPath(guidePath);
     }
   };
   const handleGuideToggle = (nextList: MapList) => {
@@ -4271,6 +4314,8 @@ export function SplitScreenSection({
       setOpeningGuideId(null);
       setExpandedGuideId(null);
       setVisibleNestedStopParentIds([]);
+      setHoveredStopId(null);
+      setSelectedGuideStopId(null);
       const nextPath = getCurrentCityRoutePath(restoredCategory);
       if (nextPath) {
         pushExplorerPath(nextPath);
@@ -4296,6 +4341,12 @@ export function SplitScreenSection({
     openingGuideIdRef.current = nextList.id;
     setOpeningGuideId(nextList.id);
     setVisibleNestedStopParentIds([]);
+    setHoveredStopId(null);
+    setSelectedGuideStopId(null);
+    const guidePath = getGuideCanonicalRoutePath(nextList);
+    if (guidePath) {
+      pushExplorerPath(guidePath);
+    }
     openingGuideTimeoutRef.current = setTimeout(() => completeGuideOpening(nextList), GUIDE_OPEN_EXPAND_START_MS);
   };
   const handleCityHighlightGuideSelect = (nextList: MapList) => {
@@ -4336,23 +4387,29 @@ export function SplitScreenSection({
     setClosingGuide(null);
     setClosingGuidePhase(null);
     setVisibleNestedStopParentIds([]);
+    setHoveredStopId(null);
+    setSelectedGuideStopId(null);
     deferGuideContentUntilMotionSettles(nextList.id);
     setExpandedGuideId(nextList.id);
     setActiveCategory(nextList.category);
     setActiveGuideFitNonce((current) => current + 1);
 
-    const context = getCityRouteContext(selection);
-    if (context) {
-      pushExplorerPath(getCanonicalGuidePath(context.city, nextList, getGuideRouteNeighborhood(context.city, nextList), activeEditorialLists));
+    const guidePath = getGuideCanonicalRoutePath(nextList);
+    if (guidePath) {
+      pushExplorerPath(guidePath);
     }
   };
   const handleProfileGuideToggle = (nextList: MapList) => {
     setProfileExpandedGuideId((current) => {
       if (current === nextList.id) {
         setVisibleNestedStopParentIds([]);
+        setHoveredStopId(null);
+        setSelectedGuideStopId(null);
         return null;
       }
       setVisibleNestedStopParentIds([]);
+      setHoveredStopId(null);
+      setSelectedGuideStopId(null);
       setActiveGuideFitNonce((nonce) => nonce + 1);
       return nextList.id;
     });
