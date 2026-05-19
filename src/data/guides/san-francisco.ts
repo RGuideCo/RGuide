@@ -81,7 +81,7 @@ export const sanFranciscoGuides = [
           -122.5007596
         ],
         "description": "The Legion of Honor gives the guide a quieter fine-arts stop on the ocean edge, with a dramatic approach and a calmer pace than the central museums. Pair it with Lands End when you want culture and coastal walking in the same west-side loop.",
-        "photo": "https://www.famsf.org/storage/images/17c073c6-ccbe-4cff-9d05-83cf4d6a69cd/digital-22-image-social-share-r1.jpg?crop=1200,628,x0,y0&format=jpg&quality=80"
+        "photo": "https://commons.wikimedia.org/wiki/Special:Redirect/file/California%20Palace%20of%20the%20Legion%20of%20Honor%20202%202015-01-03.JPG?width=1200"
       },
       {
         "id": "gabriel-sf-lombard",

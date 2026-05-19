@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { CalendarCheck, ExternalLink, Navigation, Plus } from "lucide-react";
+import { CalendarCheck, Clock3, ExternalLink, Navigation, Plus } from "lucide-react";
 
 import type { GuideStopItem } from "./types";
 
@@ -18,6 +18,7 @@ interface GuideStopFooterActionsProps {
   showAddAction: boolean;
   isStopInItinerary: boolean;
   officialStopUrl?: string | null;
+  timetableUrl?: string | null;
   directionsPickerOpen: boolean;
   stayBookingDetails?: StayBookingDetails | null;
   getDirectionsHref: (stop: GuideStopItem) => string;
@@ -34,6 +35,7 @@ export function GuideStopFooterActions({
   showAddAction,
   isStopInItinerary,
   officialStopUrl,
+  timetableUrl,
   directionsPickerOpen,
   stayBookingDetails,
   getDirectionsHref,
@@ -86,6 +88,20 @@ export function GuideStopFooterActions({
           >
             <ExternalLink className="h-3.5 w-3.5" />
             <span>Official</span>
+          </Link>
+        ) : null}
+        {timetableUrl ? (
+          <Link
+            href={timetableUrl}
+            target="_blank"
+            rel="noreferrer"
+            onClick={(event) => event.stopPropagation()}
+            className="inline-flex items-center gap-1.5 rounded-md border border-slate-950/10 bg-white/80 px-2.5 py-1.5 text-[11px] font-medium text-slate-700 hover:border-slate-950/20 hover:text-slate-900"
+            aria-label={`Timetables for ${stop.name}`}
+            title={`Timetables for ${stop.name}`}
+          >
+            <Clock3 className="h-3.5 w-3.5" />
+            <span>Timetables</span>
           </Link>
         ) : null}
         <div className="relative">

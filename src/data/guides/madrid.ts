@@ -1658,7 +1658,7 @@ export const madridNeighborhoodGuides = [
           "sat": "24 hours",
           "sun": "24 hours"
         },
-        "photo": "https://petitpalacesavoyalfonsoxii.com/backoffice/images/365-surrounding-petit-palace-savoy-alfonso-xii-retiro1.webp"
+        "photo": "https://petitpalace.com/backoffice/images/4838-surrounding-petit-palace-savoy-alfonso-xii-retiro1.jpg"
       },
       {
         "id": "stay-only-you-atocha",
@@ -2150,7 +2150,7 @@ export const madridNeighborhoodGuides = [
           "sat": "6:00 PM-2:30 AM",
           "sun": "6:00 PM-12:00 AM"
         },
-        "photo": "https://cdn.corner.inc/place-photo/AZose0n_3OpO_i5zeyI2xMI-wwp0xNVWhKbajc4GfaV-jJ0zo4WhKN7Kp9EPWq0s_NKsPGsAwGLNj_u9NU_IwxVkQ1ntJJs5XvO2atajqXSXkMF4rl26Py4XubUVQG1uBtgarIYNf-RVFHl3oV32qy5rx8w-y53OijCQM4bxAgQHG6PHspKO"
+        "photo": "https://estaticos.esmadrid.com/cdn/farfuture/f2OlWoiKmQozuxODMg8jCByoDu9gIyI31IYrKt8vme4/mtime:1593508178/sites/default/files/recursosturisticos/noche/1862_dry_bar_2.jpg"
       },
       {
         "id": "malasana-nightlife-mondo",
@@ -3866,7 +3866,7 @@ export const madridNeighborhoodGuides = [
           "sat": "10:00 AM-7:00 PM",
           "sun": "10:00 AM-7:00 PM"
         },
-        "photo": "https://www.cultura.gob.es/.imaging/mte/micrositios-theme/contenido-cim-gr/dam/micrositios/mromanticismo/actividades/programa/mediacion-cultural/salon-baile/jcr:content/salon-baile.png"
+        "photo": "https://upload.wikimedia.org/wikipedia/commons/b/be/Museo_del_Romanticismo_-_Sal%C3%B3n_de_baile_-_Sala_IV_Sal%C3%B3n_de_Baile.jpg"
       },
       {
         "id": "chueca-culture-plaza",
@@ -4249,7 +4249,7 @@ export const madridCitywideGuides = [
           "sat": "6:00 PM-2:30 AM",
           "sun": "6:00 PM-12:00 AM"
         },
-        "photo": "https://cdn.corner.inc/place-photo/AZose0n_3OpO_i5zeyI2xMI-wwp0xNVWhKbajc4GfaV-jJ0zo4WhKN7Kp9EPWq0s_NKsPGsAwGLNj_u9NU_IwxVkQ1ntJJs5XvO2atajqXSXkMF4rl26Py4XubUVQG1uBtgarIYNf-RVFHl3oV32qy5rx8w-y53OijCQM4bxAgQHG6PHspKO"
+        "photo": "https://estaticos.esmadrid.com/cdn/farfuture/f2OlWoiKmQozuxODMg8jCByoDu9gIyI31IYrKt8vme4/mtime:1593508178/sites/default/files/recursosturisticos/noche/1862_dry_bar_2.jpg"
       },
       {
         "id": "madrid-nightlife-mondo-disko",
