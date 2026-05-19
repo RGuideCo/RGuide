@@ -2311,7 +2311,7 @@ export const barcelonaCoreGuides = [
         "price": "$",
         "priceSource": "Official site / Barcelona Food Experience",
         "officialUrl": "https://www.canpaixano.com/",
-        "photo": "https://www.canpaixano.com/assets/bg_h_2.jpg"
+        "photo": "https://www.canpaixano.com/content/public/collage/imagen-1630656933.3526.jpg"
       },
       {
         "id": "barcelona-tapas-el-vaso-de-oro",
