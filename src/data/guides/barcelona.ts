@@ -2193,9 +2193,9 @@ export const barcelonaCoreGuides = [
     "slug": "barcelona-citywide-tapas",
     "seoSlug": "best-tapas",
     "seoTitle": "Best Tapas in Barcelona",
-    "seoDescription": "Best tapas in Barcelona, from standing-room montaditos and cava counters to polished small plates, vermouth rooms, classic taverns, and neighborhood tapas bars worth planning around.",
-    "title": "Counters, Conservas, and Vermouth Plates",
-    "description": "Tapas in Barcelona is not one mood; it is a series of rooms, counters, and small decisions. Quimet & Quimet and El Xampanyet give you the standing, salty, bottle-lined version, while Bar del Pla, Paco Meralgo, and Sensi Bistro let the plates get more composed. Bar Canigo, Bodega Quimet, Bormuth, Casa Delfin, La Platilleria, Cerveceria Catalana, and Bodega Joan are here for the vermouth, group-table, and keep-ordering-one-more-thing nights.",
+    "seoDescription": "Best tapas in Barcelona, from Barceloneta classics and standing-room cava counters to Gothic taverns, vermouth bodegas, market bars, and polished small plates.",
+    "title": "Old Counters, Cava, and Small Plates",
+    "description": "Barcelona tapas is less a checklist than a way of moving through the city: one counter for a bomba, another for fried fish, a glass of cava before the room fills, a vermouth bodega when Gràcia starts to loosen up. This guide leans into places with a reason to exist. La Cova Fumada, Bar La Plata, El Vaso de Oro, and Can Paixano keep the old rhythm alive; Quimet & Quimet, El Xampanyet, and Bodega Quimet cover the salty bottle-lined ritual; Bar Cañete, Bar del Pla, Paco Meralgo, and La Platilleria give the crawl enough polish to become dinner.",
     "url": "https://www.google.com/maps/search/best+tapas+barcelona",
     "category": "Food",
     "location": {
@@ -2213,15 +2213,38 @@ export const barcelonaCoreGuides = [
     "createdAt": "2026-05-02T00:00:00.000Z",
     "stops": [
       {
+        "id": "barcelona-tapas-la-cova-fumada",
+        "name": "La Cova Fumada",
+        "coordinates": [
+          41.3806,
+          2.1895
+        ],
+        "description": "La Cova Fumada is the Barceloneta bar every tapas guide wants to sound casual about, but the place has earned the attention. No sign, odd hours, shared tables, a blackboard menu, and the famous bomba make it feel closer to a neighborhood inheritance than a restaurant concept. Go early, accept the wait, order from the board, and let the room do what it has done since 1944: feed whoever squeezes in.",
+        "price": "$",
+        "priceSource": "Official site / Barcelona Food Experience",
+        "officialUrl": "https://lacovafumada.com/",
+        "hours": {
+          "mon": "9:00 AM-3:00 PM",
+          "tue": "9:00 AM-3:00 PM",
+          "wed": "9:00 AM-3:00 PM",
+          "thu": "9:00 AM-3:00 PM, 6:00 PM-8:00 PM",
+          "fri": "9:00 AM-3:00 PM, 6:00 PM-8:00 PM",
+          "sat": "9:00 AM-1:00 PM",
+          "sun": "Closed"
+        },
+        "photo": "https://lacovafumada.com/wp-content/uploads/2019/05/la-cova-fumada-la-barceloneta.jpg"
+      },
+      {
         "id": "barcelona-tapas-quimet-quimet",
         "name": "Quimet & Quimet",
         "coordinates": [
           41.3738,
           2.1635
         ],
-        "description": "Quimet & Quimet is the tapas essential because multiple source types agree on its very specific appeal: standing-room service, house-made conservas, montaditos, beer, vermouth, and a bottle-lined room that has barely enough space to pause. Go when it opens, order decisively, and treat it as a short, high-impact Poble-sec stop.",
+        "description": "Quimet & Quimet is the standing-room essential: tins, smoked fish, montaditos, beer, vermouth, and bottles stacked so tightly the room feels built out of appetite. It is too famous to be a secret and too singular to skip. Treat it as a short, high-impact Poble-sec stop, order decisively, and do not expect the meal to slow down for you.",
         "price": "$$",
-        "priceSource": "Official site / The Infatuation / Time Out",
+        "priceSource": "Official site / The Infatuation / Barcelona Food Experience",
+        "officialUrl": "https://quimetiquimet.com/en/",
         "hours": {
           "mon": "12:00 PM-4:00 PM, 6:00 PM-10:30 PM",
           "tue": "12:00 PM-4:00 PM, 6:00 PM-10:30 PM",
@@ -2240,9 +2263,10 @@ export const barcelonaCoreGuides = [
           41.3847,
           2.1836
         ],
-        "description": "El Xampanyet is tapas as a quick ritual: cava, anchovies, conservas, shoulder-to-shoulder service, and just enough chaos to make the stop feel alive. It works best before dinner or after the Picasso Museum, when one salty round is the goal.",
+        "description": "El Xampanyet is the Born at full volume: cava, anchovies, conservas, tile walls, and a room that usually feels one order away from overflowing. It is best as a quick ritual before dinner or after the Picasso Museum, when the right move is one salty round, a glass in hand, and no fantasy that you will have the table to yourself.",
         "price": "$",
         "priceSource": "The Infatuation / Tripadvisor",
+        "officialUrl": "https://www.elxampanyet.com/",
         "hours": {
           "mon": "7:00 PM-11:00 PM",
           "tue": "12:00 PM-3:30 PM, 7:00 PM-11:00 PM",
@@ -2255,15 +2279,80 @@ export const barcelonaCoreGuides = [
         "photo": "https://www.elxampanyet.com/wp-content/uploads/2024/10/Iriarte_0117-2048x1352.jpg"
       },
       {
+        "id": "barcelona-tapas-bar-la-plata",
+        "name": "Bar La Plata",
+        "coordinates": [
+          41.3818,
+          2.1799
+        ],
+        "description": "Bar La Plata is a Gothic Quarter corrective: four tapas, vermouth, fried fish, tomato salad, butifarra, anchovies, and not much interest in becoming anything else. Since 1945, the power here has been restraint. Drop in when the old city starts feeling too theatrical and you want a bar that wins by refusing to over-explain itself.",
+        "price": "$",
+        "priceSource": "Official site / Barcelona Food Experience",
+        "officialUrl": "https://barlaplata.com/",
+        "hours": {
+          "mon": "11:00 AM-3:00 PM, 6:00 PM-11:00 PM",
+          "tue": "11:00 AM-3:00 PM, 6:00 PM-11:00 PM",
+          "wed": "11:00 AM-3:00 PM, 6:00 PM-11:00 PM",
+          "thu": "11:00 AM-3:00 PM, 6:00 PM-11:00 PM",
+          "fri": "11:00 AM-3:00 PM, 6:00 PM-11:00 PM",
+          "sat": "11:00 AM-3:00 PM, 6:00 PM-11:00 PM",
+          "sun": "Closed"
+        },
+        "photo": "https://barlaplata.com/wp-content/uploads/2024/04/img_6987.jpg?w=1024"
+      },
+      {
+        "id": "barcelona-tapas-can-paixano",
+        "name": "Can Paixano",
+        "coordinates": [
+          41.3827,
+          2.1831
+        ],
+        "description": "Can Paixano is the cava-counter crush you plan around rather than stumble into: sparkling wine, sandwiches, simple tapas, bodies pressed into a narrow Barceloneta room, and a rule of motion that rewards arriving early. It is not delicate and does not need to be. Come for cheap bubbles and the old La Xampanyeria energy, then leave before the crowd turns the doorway into a negotiation.",
+        "price": "$",
+        "priceSource": "Official site / Barcelona Food Experience",
+        "officialUrl": "https://www.canpaixano.com/",
+        "photo": "https://www.canpaixano.com/assets/bg_h_2.jpg"
+      },
+      {
+        "id": "barcelona-tapas-el-vaso-de-oro",
+        "name": "El Vaso de Oro",
+        "coordinates": [
+          41.3804,
+          2.1891
+        ],
+        "description": "El Vaso de Oro is Barceloneta standing-room theater: house beer pulled with precision, cooks moving fast, and the famous solomillo with foie giving the bar its richer edge. It looks simple until you watch how tightly the room operates. Use it when tapas should feel muscular, salty, and a little impatient, with beer doing as much work as the food.",
+        "price": "$$",
+        "priceSource": "Official site / Barcelona Food Experience",
+        "officialUrl": "https://www.vasodeoro.com/",
+        "hours": {
+          "default": "Daily 12:00 PM-12:00 AM. Kitchen runs continuously."
+        },
+        "photo": "https://www.vasodeoro.com/wp-content/uploads/go-x/u/0edead92-2509-4dde-a74b-0d2e8fa21178/image-455x454.jpg"
+      },
+      {
+        "id": "barcelona-tapas-bar-canete",
+        "name": "Bar Cañete",
+        "coordinates": [
+          41.3798,
+          2.1736
+        ],
+        "description": "Bar Cañete is the Raval’s polished tapas machine, where the bar still matters but the seafood, rice, jamón, and service push it into reservation territory. It is not the cheapest or quietest stop, and that is partly the point: go when tapas should have ceremony, professional speed, and enough room energy to make the meal feel like the night’s main event.",
+        "price": "$$$",
+        "priceSource": "Official site / Barcelona Food Experience",
+        "officialUrl": "https://barcanete.com/",
+        "photo": "https://barcanete.com/wp-content/uploads/2024/07/canete-barra-y-mantel.png"
+      },
+      {
         "id": "barcelona-tapas-bar-del-pla",
         "name": "Bar del Pla",
         "coordinates": [
           41.3857,
           2.1817
         ],
-        "description": "Bar del Pla handles the tapas guide’s full-meal slot, where small plates become dinner instead of a snack stop. The draw is creative Catalan cooking, natural wine, and a room that feels more considered than the tourist-facing counters nearby.",
+        "description": "Bar del Pla handles the guide’s modern full-meal slot, where small plates can become dinner without losing the looseness of tapas. The draw is creative Catalan cooking, a wine-first mood, and a Born room that feels current rather than preserved. Book it when the crawl needs to sit down, breathe, and eat properly.",
         "price": "$$",
         "priceSource": "The Infatuation / Google Maps",
+        "officialUrl": "https://www.bardelpla.cat/",
         "hours": {
           "mon": "12:30 PM-4:00 PM, 7:30 PM-11:00 PM",
           "tue": "12:30 PM-4:00 PM, 7:30 PM-11:00 PM",
@@ -2282,9 +2371,10 @@ export const barcelonaCoreGuides = [
           41.3915,
           2.1519
         ],
-        "description": "Paco Meralgo is the reliable Eixample tapas counter: croquettes, bombas, seafood, tortillas, and quick service in a polished room. It belongs here because it solves the practical problem of a good tapas meal when the highest-demand reservations are unavailable.",
+        "description": "Paco Meralgo is the Eixample tapas safety net in the best sense: polished enough for visitors, useful enough for locals, and broad enough to solve a table with mixed cravings. Croquettes, bombas, tortillas, seafood, and quick service keep it practical, especially when the city’s more romantic counters are full or too chaotic for the night you actually have.",
         "price": "$$",
-        "priceSource": "Google Maps / Tripadvisor",
+        "priceSource": "Google Maps / Tripadvisor / Barcelona Food Experience",
+        "officialUrl": "https://restaurantpacomeralgo.com/",
         "hours": {
           "mon": "12:30 PM-4:00 PM, 7:30 PM-11:00 PM",
           "tue": "12:30 PM-4:00 PM, 7:30 PM-11:00 PM",
@@ -2297,130 +2387,26 @@ export const barcelonaCoreGuides = [
         "photo": "https://restaurantpacomeralgo.com/wp-content/uploads/2024/05/paco4.jpg"
       },
       {
-        "id": "barcelona-tapas-cerveceria-catalana",
-        "name": "Cervecería Catalana",
+        "id": "barcelona-tapas-bodega-quimet",
+        "name": "Bodega Quimet",
         "coordinates": [
-          41.3921,
-          2.1602
+          41.4029,
+          2.1562
         ],
-        "description": "Cervecería Catalana is the big, busy tapas machine: montaditos, seafood, tortillas, and counter speed near Passeig de Gràcia. It is here for reliability and range, with no pretense that you have found something hidden.",
+        "description": "Bodega Quimet gives the guide a Gràcia bodega that behaves like a neighborhood habit: vermouth, conservas, cheeses, anchovies, cured meats, and a room that still understands the pleasure of standing around with one more small plate. It is less trophy stop than texture, which is exactly why it belongs.",
         "price": "$$",
-        "priceSource": "Google Maps / Tripadvisor",
+        "priceSource": "Official site / Google Maps / Barcelona Food Experience",
+        "officialUrl": "https://www.bodegaquimet.com/",
         "hours": {
-          "mon": "12:00 PM-12:00 AM",
-          "tue": "12:00 PM-12:00 AM",
-          "wed": "12:00 PM-12:00 AM",
-          "thu": "12:00 PM-12:00 AM",
-          "fri": "12:00 PM-1:00 AM",
-          "sat": "12:00 PM-1:00 AM",
+          "mon": "12:00 PM-12:30 AM",
+          "tue": "12:00 PM-12:30 AM",
+          "wed": "12:00 PM-12:30 AM",
+          "thu": "12:00 PM-1:30 AM",
+          "fri": "12:00 PM-2:00 AM",
+          "sat": "12:00 PM-2:00 AM",
           "sun": "12:00 PM-12:00 AM"
         },
-        "photo": "https://lh3.googleusercontent.com/p/AF1QipP14Wt5ejOwRKMNMFlYcbWhtdDHLmufLjj3SFc=s1360-w1360-h1020-rw"
-      },
-      {
-              "id": "barcelona-tapas-bodega-joan",
-              "name": "Bodega Joan",
-              "coordinates": [
-                      41.396,
-                      2.1684
-              ],
-              "description": "Bodega Joan gives the tapas guide a homestyle Eixample option: Catalan small plates, charcuterie boards, paellas, and sangria in straightforward quarters. Use it when tapas should become a full, filling meal.",
-              "price": "$$",
-              "priceSource": "Google Maps / Tripadvisor",
-              "hours": {
-                      "mon": "12:00 PM-12:30 AM",
-                      "tue": "12:00 PM-12:30 AM",
-                      "wed": "12:00 PM-12:30 AM",
-                      "thu": "12:00 PM-1:30 AM",
-                      "fri": "12:00 PM-2:00 AM",
-                      "sat": "12:00 PM-2:00 AM",
-                      "sun": "12:00 PM-12:00 AM"
-              },
-              "photo": "https://cdn.prod.website-files.com/649bffef1ea0320a4ff37c9f/649c01ab052368397680fa21_5_b.jpg"
-      },
-      {
-              "id": "barcelona-tapas-bar-canigo",
-              "name": "Bar Canigó",
-              "coordinates": [
-                      41.4022,
-                      2.1564
-              ],
-              "description": "Bar Canigó adds a Gràcia tapas-and-vermouth rhythm to the citywide tapas list, with breakfast and lunch usefulness giving way to small plates and neighborhood drinking later. It is everyday Barcelona rather than a trophy stop.",
-              "price": "$$",
-              "priceSource": "Official site / Google Maps",
-              "hours": {
-                      "mon": "12:00 PM-12:30 AM",
-                      "tue": "12:00 PM-12:30 AM",
-                      "wed": "12:00 PM-12:30 AM",
-                      "thu": "12:00 PM-1:30 AM",
-                      "fri": "12:00 PM-2:00 AM",
-                      "sat": "12:00 PM-2:00 AM",
-                      "sun": "12:00 PM-12:00 AM"
-              },
-              "photo": "https://www.barcanigo.com/assets/img/BarCanigo_Back_4.jpg"
-      },
-      {
-              "id": "barcelona-tapas-bodega-quimet",
-              "name": "Bodega Quimet",
-              "coordinates": [
-                      41.4029,
-                      2.1562
-              ],
-              "description": "Bodega Quimet is the Gràcia vermouth-and-tapas bodega for conservas, cheese, anchovies, and a tavern room that still feels old-school. It gives the tapas guide a classic neighborhood counterpoint to the Born and Eixample names.",
-              "price": "$$",
-              "priceSource": "Official site / Google Maps",
-              "hours": {
-                      "mon": "12:00 PM-12:30 AM",
-                      "tue": "12:00 PM-12:30 AM",
-                      "wed": "12:00 PM-12:30 AM",
-                      "thu": "12:00 PM-1:30 AM",
-                      "fri": "12:00 PM-2:00 AM",
-                      "sat": "12:00 PM-2:00 AM",
-                      "sun": "12:00 PM-12:00 AM"
-              },
-              "photo": "https://www.bodegaquimet.com/img-trans/productos/24272/fotos/1024-67ac8f5bebe2f-bar-bodega-quimet.png"
-      },
-      {
-              "id": "barcelona-tapas-bormuth",
-              "name": "Bormuth",
-              "coordinates": [
-                      41.3839,
-                      2.1811
-              ],
-              "description": "Bormuth gives the citywide tapas list an easy Born option with vermouth, small plates, and enough seating for a real meal. It is practical, central, and useful when the tapas plan needs less friction.",
-              "price": "$$",
-              "priceSource": "Google Maps / Tripadvisor",
-              "hours": {
-                      "mon": "12:00 PM-12:30 AM",
-                      "tue": "12:00 PM-12:30 AM",
-                      "wed": "12:00 PM-12:30 AM",
-                      "thu": "12:00 PM-1:30 AM",
-                      "fri": "12:00 PM-2:00 AM",
-                      "sat": "12:00 PM-2:00 AM",
-                      "sun": "12:00 PM-12:00 AM"
-              },
-              "photo": "https://cdn.barselona.io/cdn-cgi/imagedelivery/35dtYK6MaGFKaBcATdNk5w/6f232061-8680-44ab-8b7f-d9c79e414200/w=1500"
-      },
-      {
-              "id": "barcelona-tapas-casa-delfin",
-              "name": "Casa Delfín",
-              "coordinates": [
-                      41.3834,
-                      2.1824
-              ],
-              "description": "Casa Delfín is the Born restaurant-and-tavern tapas pick for vermouth, rice, and classic plates near the market. It fits when citywide tapas should feel like a sit-down old-neighborhood meal.",
-              "price": "$$",
-              "priceSource": "Google Maps / Tripadvisor",
-              "hours": {
-                      "mon": "12:00 PM-12:30 AM",
-                      "tue": "12:00 PM-12:30 AM",
-                      "wed": "12:00 PM-12:30 AM",
-                      "thu": "12:00 PM-1:30 AM",
-                      "fri": "12:00 PM-2:00 AM",
-                      "sat": "12:00 PM-2:00 AM",
-                      "sun": "12:00 PM-12:00 AM"
-              },
-              "photo": "https://casadelfinrestaurant.com/wp-content/uploads/2022/06/galeria-home-02.jpg"
+        "photo": "https://www.bodegaquimet.com/img-trans/productos/24272/fotos/1024-67ac8f5bebe2f-bar-bodega-quimet.png"
       },
       {
         "id": "barcelona-tapas-la-platilleria",
@@ -2429,7 +2415,7 @@ export const barcelonaCoreGuides = [
           41.3746,
           2.1658
         ],
-        "description": "La Platilleria gives Poble-sec a calmer small-plates option beyond the busiest Carrer de Blai circuit. Review signals support it for approachable service, compact plates, and a flexible dinner rhythm before theater, after Montjuïc, or before an Apolo night.",
+        "description": "La Platilleria keeps Poble-sec from being reduced to one famous standing-room address. The room is calmer, the plates are compact and approachable, and the rhythm works before theater, after Montjuïc, or before an Apolo night. It is the kind of tapas stop that lets the neighborhood stay useful instead of turning every meal into a queue.",
         "price": "$$",
         "priceSource": "Google Maps / Tripadvisor",
         "hours": {
@@ -2442,30 +2428,13 @@ export const barcelonaCoreGuides = [
           "sun": "Closed"
         },
         "photo": "https://media-cdn.tripadvisor.com/media/photo-o/09/24/e4/7a/la-platilleria.jpg"
-      },
-      {
-        "id": "barcelona-tapas-sensi-bistro",
-        "name": "Sensi Bistro",
-        "coordinates": [
-          41.3803,
-          2.1771
-        ],
-        "description": "Sensi Bistro gives the tapas guide an easy group option near Plaça Reial, especially when polished sharing plates matter more than old-tavern authenticity. Use it for a low-friction Gothic Quarter dinner with broad appeal.",
-        "price": "$$",
-        "priceSource": "Tripadvisor / Google Maps",
-        "hours": {
-          "mon": "12:30 PM-4:00 PM, 7:30 PM-11:00 PM",
-          "tue": "12:30 PM-4:00 PM, 7:30 PM-11:00 PM",
-          "wed": "12:30 PM-4:00 PM, 7:30 PM-11:00 PM",
-          "thu": "12:30 PM-4:00 PM, 7:30 PM-11:00 PM",
-          "fri": "12:30 PM-4:00 PM, 7:30 PM-11:30 PM",
-          "sat": "12:30 PM-4:00 PM, 7:30 PM-11:30 PM",
-          "sun": "12:30 PM-4:00 PM, 7:30 PM-11:00 PM"
-        },
-        "photo": "https://sensi.es/bistro/core/uploads/2022/12/events.jpg"
       }
     ],
     "sources": [
+      {
+        "name": "Barcelona Food Experience - Best Tapas Bars in Barcelona",
+        "url": "https://www.barcelonafoodexperience.com/blog/best-tapas"
+      },
       {
         "name": "The Infatuation - Best Tapas Spots in Barcelona",
         "url": "https://www.theinfatuation.com/barcelona/guides/best-tapas-spots-barcelona"
@@ -2475,20 +2444,28 @@ export const barcelonaCoreGuides = [
         "url": "https://www.timeout.com/barcelona/restaurants/barcelonas-best-tapas-bars"
       },
       {
-        "name": "Eater - Best Restaurants in Barcelona",
-        "url": "https://www.eater.com/maps/best-restaurants-barcelona-spain"
+        "name": "La Cova Fumada official",
+        "url": "https://lacovafumada.com/"
       },
       {
-        "name": "Eater - Old City restaurants",
-        "url": "https://www.eater.com/maps/barcelona-old-city-gothic-quarter-best-restaurants"
+        "name": "Bar La Plata official",
+        "url": "https://barlaplata.com/"
+      },
+      {
+        "name": "El Vaso de Oro official",
+        "url": "https://www.vasodeoro.com/"
+      },
+      {
+        "name": "Can Paixano official",
+        "url": "https://www.canpaixano.com/"
+      },
+      {
+        "name": "Bar Cañete official",
+        "url": "https://barcanete.com/"
       },
       {
         "name": "Quimet & Quimet official",
         "url": "https://quimetiquimet.com/en/"
-      },
-      {
-        "name": "Tripadvisor - Barcelona restaurants",
-        "url": "https://www.tripadvisor.com/Restaurants-g187497-Barcelona_Catalonia.html"
       },
       {
         "name": "Google Maps",
