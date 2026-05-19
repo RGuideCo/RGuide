@@ -2327,7 +2327,7 @@ export const barcelonaCoreGuides = [
         "hours": {
           "default": "Daily 12:00 PM-12:00 AM. Kitchen runs continuously."
         },
-        "photo": "https://www.vasodeoro.com/wp-content/uploads/go-x/u/0edead92-2509-4dde-a74b-0d2e8fa21178/image-455x454.jpg"
+        "photo": "https://www.vasodeoro.com/wp-content/uploads/go-x/u/65dfec25-755f-4d07-8ff0-f2a39a020580/image-384x576.jpg"
       },
       {
         "id": "barcelona-tapas-bar-canete",
@@ -2340,7 +2340,7 @@ export const barcelonaCoreGuides = [
         "price": "$$$",
         "priceSource": "Official site / Barcelona Food Experience",
         "officialUrl": "https://barcanete.com/",
-        "photo": "https://barcanete.com/wp-content/uploads/2024/07/canete-barra-y-mantel.png"
+        "photo": "https://barcanete.com/wp-content/uploads/2025/12/CANETE-9-2.jpg"
       },
       {
         "id": "barcelona-tapas-bar-del-pla",
