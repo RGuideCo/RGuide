@@ -366,7 +366,7 @@ export const barcelonaCoreGuides = [
           41.3871,
           2.1701
         ],
-        "description": "Aerobus is the no-drama move between El Prat and the center: blue buses, luggage space, 24-hour service, and a route built around Placa Catalunya, Universitat, Urgell, and Placa Espanya. A1 is for Terminal 1 and A2 is for Terminal 2; check the live timetable before leaving because the route direction changes which city stops you use. Timetables: https://aerobusbarcelona.es/trip/lines-timetables-and-real-time-information/?lang=en",
+        "description": "Aerobus is the no-drama move between El Prat and the center: blue buses, luggage space, 24-hour service, and a route built around Placa Catalunya, Universitat, Urgell, and Placa Espanya. A1 is for Terminal 1 and A2 is for Terminal 2; check the live timetable before leaving because the route direction changes which city stops you use. Timetables: https://aerobusbarcelona.es/en/lines-stops-and-schedules/",
         "category": "Essentials",
         "subcategory": "airport_bus",
         "subcategories": [
@@ -380,7 +380,7 @@ export const barcelonaCoreGuides = [
           "transit_hub",
           "route"
         ],
-        "officialUrl": "https://aerobusbarcelona.es/trip/lines-timetables-and-real-time-information/?lang=en",
+        "officialUrl": "https://aerobusbarcelona.es/en/lines-stops-and-schedules/",
         "photo": "https://aerobusbarcelona.es/wp-content/uploads/2024/09/9-Terminal-1-1024x682.jpg",
         "hours": {
           "default": "24 hours daily; frequency varies by line and time of day."
@@ -391,8 +391,8 @@ export const barcelonaCoreGuides = [
             "id": "aerobus-t1-arrivals",
             "name": "Aeroport T1 - Arrivals",
             "coordinates": [
-              41.2892,
-              2.0746
+              41.2883503,
+              2.0729368
             ],
             "description": "Use this stop for A1 from Terminal 1 into Barcelona. It is outside arrivals; follow the Aerobus/bus signs after baggage claim.",
             "category": "Essentials",
@@ -400,13 +400,25 @@ export const barcelonaCoreGuides = [
             "venueKind": "transport"
           },
           {
-            "id": "aerobus-t2b-t2c",
-            "name": "Aeroport T2B/T2C",
+            "id": "aerobus-t2b-arrivals",
+            "name": "Aeroport T2B - Arrivals",
             "coordinates": [
-              41.3043,
-              2.0832
+              41.303285,
+              2.0768589
             ],
-            "description": "Use this stop for A2 from Terminal 2 into Barcelona. Terminal 2 has multiple sections, so check whether your airline is closer to T2A, T2B, or T2C before walking.",
+            "description": "Use this A2 stop from Terminal 2B arrivals into Barcelona. It is the better marker for most T2 arrivals than a generic point in the terminal complex.",
+            "category": "Essentials",
+            "subcategory": "bus_stop",
+            "venueKind": "transport"
+          },
+          {
+            "id": "aerobus-t2c",
+            "name": "Aeroport T2C",
+            "coordinates": [
+              41.3049186,
+              2.0818193
+            ],
+            "description": "Use this A2 stop when you are closer to Terminal 2C. Terminal 2 is spread out enough that the exact stop matters with bags.",
             "category": "Essentials",
             "subcategory": "bus_stop",
             "venueKind": "transport"
@@ -415,8 +427,8 @@ export const barcelonaCoreGuides = [
             "id": "aerobus-placa-espanya",
             "name": "Placa Espanya",
             "coordinates": [
-              41.375,
-              2.1491
+              41.374392,
+              2.1480194
             ],
             "description": "The most useful west-side city stop, especially for Montjuic, Fira, Poble-sec, and hotels around Avinguda Paral.lel.",
             "category": "Essentials",
@@ -427,8 +439,8 @@ export const barcelonaCoreGuides = [
             "id": "aerobus-gran-via-urgell",
             "name": "Gran Via - Comte Borrell / Urgell",
             "coordinates": [
-              41.3805,
-              2.1586
+              41.3817987,
+              2.1582757
             ],
             "description": "Airport-to-city buses use the Gran Via/Comte Borrell area; city-to-airport buses use Sepulveda - Comte d'Urgell. This is the stop to understand if you are staying in the lower Eixample or Sant Antoni.",
             "category": "Essentials",
@@ -439,8 +451,8 @@ export const barcelonaCoreGuides = [
             "id": "aerobus-placa-universitat",
             "name": "Placa Universitat",
             "coordinates": [
-              41.3867,
-              2.1634
+              41.3860627,
+              2.1639593
             ],
             "description": "A central arrival stop that works well for the upper Raval, Universitat, and the west side of the Gothic Quarter when Placa Catalunya is more crowded than useful.",
             "category": "Essentials",
@@ -448,13 +460,25 @@ export const barcelonaCoreGuides = [
             "venueKind": "transport"
           },
           {
-            "id": "aerobus-placa-catalunya",
-            "name": "Placa Catalunya",
+            "id": "aerobus-placa-catalunya-a1",
+            "name": "Placa Catalunya - A1 / Andana Central",
             "coordinates": [
-              41.3871,
-              2.1701
+              41.3875895,
+              2.1704925
             ],
-            "description": "The main city terminus and easiest stop to find. Use it when you want the clearest landmark, onward metro access, or a simple pickup point in the center.",
+            "description": "The A1 city terminus is on the Plaça Catalunya bus platforms rather than in the middle of the plaza. Use this side for Terminal 1.",
+            "category": "Essentials",
+            "subcategory": "bus_stop",
+            "venueKind": "transport"
+          },
+          {
+            "id": "aerobus-placa-catalunya-a2",
+            "name": "Placa Catalunya - A2 / Fontanella",
+            "coordinates": [
+              41.3872608,
+              2.1708952
+            ],
+            "description": "The A2 city terminus sits on the Fontanella side of Plaça Catalunya, close to El Corte Inglés. Use this side for Terminal 2.",
             "category": "Essentials",
             "subcategory": "bus_stop",
             "venueKind": "transport"
@@ -463,8 +487,8 @@ export const barcelonaCoreGuides = [
             "id": "aerobus-sepulveda-urgell",
             "name": "Sepulveda - Comte d'Urgell",
             "coordinates": [
-              41.3832,
-              2.1592
+              41.38093,
+              2.1593743
             ],
             "description": "This is the key city-to-airport stop between Placa Catalunya and Placa Espanya. Use it for A1 or A2 outbound if you are staying around Sant Antoni or the lower Eixample.",
             "category": "Essentials",
@@ -681,10 +705,10 @@ export const barcelonaCoreGuides = [
             "id": "taxi-uber-city-placa-catalunya",
             "name": "City Pickup - Placa Catalunya",
             "coordinates": [
-              41.3871,
-              2.1701
+              41.3868594,
+              2.1692738
             ],
-            "description": "The simplest central city-side pickup point: visible, wide, and easy for taxis or app drivers to understand. Good for the Gothic Quarter, Raval, and upper Rambla if you can walk out with bags.",
+            "description": "Use the curb edge around Bergara/Ronda Universitat rather than dropping a pin in the center of the plaza. It is visible, wide, and easier for taxis or app drivers to understand.",
             "category": "Essentials",
             "subcategory": "city_pickup",
             "venueKind": "transport"
@@ -718,10 +742,6 @@ export const barcelonaCoreGuides = [
     ],
     "sources": [
       {
-        "name": "Aerobus - Lines, timetables and real-time information",
-        "url": "https://aerobusbarcelona.es/trip/lines-timetables-and-real-time-information/?lang=en"
-      },
-      {
         "name": "Aerobus - Lines, stops and schedules",
         "url": "https://aerobusbarcelona.es/en/lines-stops-and-schedules/"
       },
@@ -744,6 +764,10 @@ export const barcelonaCoreGuides = [
       {
         "name": "Uber - Barcelona Airport pickup",
         "url": "https://www.uber.com/global/en/r/airports/bcn/pickup/"
+      },
+      {
+        "name": "OpenStreetMap - Barcelona Aerobus stop platforms",
+        "url": "https://www.openstreetmap.org/search?query=Aerobus%20Pla%C3%A7a%20Catalunya%20Barcelona"
       }
     ]
   },
