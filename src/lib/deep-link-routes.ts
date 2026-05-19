@@ -97,24 +97,6 @@ function getGuideIntentLabel(guide: GuideSeoSeed) {
   return "best things to do";
 }
 
-function getSeoTitleRouteSlug(guide: GuideSeoSeed) {
-  const seoTitle = guide.seoTitle?.trim();
-  if (!seoTitle) {
-    return "";
-  }
-  const placeTerms = [
-    guide.title,
-    guide.description,
-    guide.seoDescription,
-  ]
-    .join(" ")
-    .toLowerCase();
-  return slugify(seoTitle)
-    .split("-")
-    .filter((part) => part && !placeTerms.includes(part))
-    .join("-");
-}
-
 export function getGuideSeoSlug(guide: GuideSeoSeed) {
   return slugify(guide.seoSlug?.trim() || getGuideIntentLabel(guide));
 }
