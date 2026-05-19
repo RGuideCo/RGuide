@@ -2298,7 +2298,7 @@ export const barcelonaCoreGuides = [
           "sat": "11:00 AM-3:00 PM, 6:00 PM-11:00 PM",
           "sun": "Closed"
         },
-        "photo": "https://barlaplata.com/wp-content/uploads/2024/04/img_6987.jpg?w=1024"
+        "photo": "https://barlaplata.com/wp-content/uploads/2024/04/img_7003-1.jpg"
       },
       {
         "id": "barcelona-tapas-can-paixano",
