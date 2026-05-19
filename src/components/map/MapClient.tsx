@@ -217,8 +217,8 @@ const GUIDE_STOP_GLOW_COLOR_MATCH = [
   CATEGORY_STYLES.Essentials.mapGlowColor,
   CATEGORY_STYLES.Activities.mapGlowColor,
 ] as ExpressionSpecification;
-const GUIDE_STOP_GLOW_BASE_RADIUS = { lowZoom: 15, highZoom: 21 } as const;
-const GUIDE_STOP_DOT_BASE_RADIUS = { lowZoom: 8.2, highZoom: 10.4 } as const;
+const GUIDE_STOP_GLOW_BASE_RADIUS = { lowZoom: 16.5, highZoom: 23 } as const;
+const GUIDE_STOP_DOT_BASE_RADIUS = { lowZoom: 9, highZoom: 11.4 } as const;
 const GUIDE_STOP_CITY_GLOW_SCALE = 11 / 15;
 const GUIDE_STOP_CITY_DOT_SCALE = 0.794;
 const NESTED_POI_DIAMOND_FILL = "#c2410c";
@@ -267,6 +267,15 @@ const POI_DIAMOND_PULSE_ICON_IMAGE_MATCH = [
   getPoiDiamondPulseImageName("Essentials"),
   getPoiDiamondPulseImageName("Activities"),
 ] as ExpressionSpecification;
+const BASE_TRANSIT_STOP_OPACITY_BY_ZOOM = [
+  "interpolate",
+  ["linear"],
+  ["zoom"],
+  12.6,
+  0,
+  13.4,
+  0.8,
+] as const;
 const continentFocusPresets: Record<
   string,
   {
@@ -687,6 +696,125 @@ function configureBaseCountryLabels(map: maplibregl.Map) {
   });
 }
 
+function trySetBasePaintProperty(
+  map: maplibregl.Map,
+  layerId: string,
+  property: string,
+  value: unknown,
+) {
+  try {
+    map.setPaintProperty(layerId, property, value as never);
+  } catch {
+    // Basemap styles vary by layer; skip layers that do not accept a cosmetic override.
+  }
+}
+
+function trySetBaseLayoutProperty(
+  map: maplibregl.Map,
+  layerId: string,
+  property: string,
+  value: unknown,
+) {
+  try {
+    map.setLayoutProperty(layerId, property, value as never);
+  } catch {
+    // Basemap styles vary by layer; skip layers that do not accept a cosmetic override.
+  }
+}
+
+function coolBaseMapGround(map: maplibregl.Map) {
+  const styleLayers = map.getStyle().layers ?? [];
+
+  for (const layer of styleLayers) {
+    const layerSpec = layer as { source?: string; type?: string; id: string; ["source-layer"]?: string };
+    const sourceLayer = (layerSpec["source-layer"] ?? "").toLowerCase();
+    const layerId = layerSpec.id.toLowerCase();
+
+    if (layerSpec.type === "background") {
+      trySetBasePaintProperty(map, layerSpec.id, "background-color", "#eee9df");
+      continue;
+    }
+
+    if (layerSpec.source !== "openmaptiles" || layerSpec.type !== "fill") {
+      continue;
+    }
+
+    const isParkOrGreen =
+      sourceLayer.includes("park") ||
+      sourceLayer.includes("landcover") ||
+      layerId.includes("park") ||
+      layerId.includes("wood") ||
+      layerId.includes("grass") ||
+      layerId.includes("green");
+    const isLandSurface =
+      sourceLayer.includes("landuse") ||
+      sourceLayer.includes("landcover") ||
+      layerId.includes("land") ||
+      layerId.includes("earth") ||
+      layerId.includes("background");
+
+    if (isParkOrGreen) {
+      continue;
+    }
+
+    if (isLandSurface) {
+      trySetBasePaintProperty(map, layerSpec.id, "fill-color", "#efe9df");
+      trySetBasePaintProperty(map, layerSpec.id, "fill-opacity", 0.86);
+    }
+  }
+}
+
+function boostBaseRoadContrast(map: maplibregl.Map) {
+  const styleLayers = map.getStyle().layers ?? [];
+
+  for (const layer of styleLayers) {
+    const layerSpec = layer as { source?: string; type?: string; id: string; ["source-layer"]?: string };
+    const sourceLayer = (layerSpec["source-layer"] ?? "").toLowerCase();
+    const layerId = layerSpec.id.toLowerCase();
+    const isTransportationLine =
+      layerSpec.source === "openmaptiles" &&
+      layerSpec.type === "line" &&
+      (sourceLayer.includes("transportation") ||
+        layerId.includes("road") ||
+        layerId.includes("street") ||
+        layerId.includes("highway") ||
+        layerId.includes("path"));
+    const isTransitLine =
+      layerId.includes("rail") ||
+      layerId.includes("transit") ||
+      layerId.includes("subway") ||
+      layerId.includes("tram") ||
+      layerId.includes("metro") ||
+      layerId.includes("ferry") ||
+      layerId.includes("aerialway");
+
+    if (!isTransportationLine || isTransitLine) {
+      continue;
+    }
+
+    const isMajorRoad =
+      layerId.includes("highway") ||
+      layerId.includes("trunk") ||
+      layerId.includes("primary") ||
+      layerId.includes("secondary") ||
+      layerId.includes("major");
+    const isRoadCasing =
+      layerId.includes("case") ||
+      layerId.includes("casing") ||
+      layerId.includes("outline") ||
+      layerId.includes("border");
+
+    if (isRoadCasing) {
+      trySetBasePaintProperty(map, layerSpec.id, "line-color", isMajorRoad ? "#d9bd78" : "#d1c7b5");
+      trySetBasePaintProperty(map, layerSpec.id, "line-opacity", isMajorRoad ? 0.62 : 0.5);
+      continue;
+    }
+
+    trySetBasePaintProperty(map, layerSpec.id, "line-color", isMajorRoad ? "#f4d98b" : "#f8fafc");
+    trySetBasePaintProperty(map, layerSpec.id, "line-opacity", isMajorRoad ? 0.9 : 0.8);
+  }
+}
+
 function hideBasePlaceDots(map: maplibregl.Map) {
   const styleLayers = map.getStyle().layers ?? [];
 
@@ -708,12 +836,12 @@ function hideBasePlaceDots(map: maplibregl.Map) {
     }
 
     if (layerSpec.type === "symbol") {
-      map.setPaintProperty(layerSpec.id, "icon-opacity", 0);
+      trySetBasePaintProperty(map, layerSpec.id, "icon-opacity", 0);
       continue;
     }
 
     if (layerSpec.type === "circle") {
-      map.setPaintProperty(layerSpec.id, "circle-opacity", 0);
+      trySetBasePaintProperty(map, layerSpec.id, "circle-opacity", 0);
     }
   }
 }
@@ -747,7 +875,43 @@ function softenBaseReliefAndBuildings(map: maplibregl.Map) {
       continue;
     }
 
-    map.setLayoutProperty(layerSpec.id, "visibility", "none");
+    trySetBaseLayoutProperty(map, layerSpec.id, "visibility", "none");
+  }
+}
+
+function softenBaseTransitStops(map: maplibregl.Map) {
+  const styleLayers = map.getStyle().layers ?? [];
+
+  for (const layer of styleLayers) {
+    const layerSpec = layer as { source?: string; type?: string; id: string; ["source-layer"]?: string };
+    const sourceLayer = (layerSpec["source-layer"] ?? "").toLowerCase();
+    const layerId = layerSpec.id.toLowerCase();
+    const isTransitStopLayer =
+      sourceLayer.includes("transportation") ||
+      sourceLayer.includes("transit") ||
+      layerId.includes("transit") ||
+      layerId.includes("station") ||
+      layerId.includes("subway") ||
+      layerId.includes("metro") ||
+      layerId.includes("tram") ||
+      layerId.includes("bus") ||
+      layerId.includes("rail") ||
+      layerId.includes("platform") ||
+      layerId.includes("stop");
+
+    if (layerSpec.source !== "openmaptiles" || !isTransitStopLayer) {
+      continue;
+    }
+
+    if (layerSpec.type === "symbol") {
+      trySetBasePaintProperty(map, layerSpec.id, "icon-opacity", BASE_TRANSIT_STOP_OPACITY_BY_ZOOM);
+      trySetBasePaintProperty(map, layerSpec.id, "text-opacity", BASE_TRANSIT_STOP_OPACITY_BY_ZOOM);
+      continue;
+    }
+
+    if (layerSpec.type === "circle") {
+      trySetBasePaintProperty(map, layerSpec.id, "circle-opacity", BASE_TRANSIT_STOP_OPACITY_BY_ZOOM);
+    }
   }
 }
 
@@ -764,7 +928,7 @@ function getGuideStopMarkerImageName(category: string, label: string) {
 }
 
 function createGuideStopMarkerImage(color: string, label: string) {
-  const size = 56;
+  const size = 64;
   const canvas = document.createElement("canvas");
   canvas.width = size;
   canvas.height = size;
@@ -777,16 +941,16 @@ function createGuideStopMarkerImage(color: string, label: string) {
   ctx.translate(size / 2, size / 2);
   ctx.fillStyle = color;
   ctx.strokeStyle = "#ffffff";
-  ctx.lineWidth = 3;
+  ctx.lineWidth = 3.4;
   ctx.beginPath();
-  ctx.arc(0, 0, 20, 0, Math.PI * 2);
+  ctx.arc(0, 0, 23, 0, Math.PI * 2);
   ctx.fill();
   ctx.stroke();
   ctx.restore();
 
   ctx.save();
   ctx.fillStyle = "#ffffff";
-  ctx.font = label.length > 1 ? "700 20px 'Noto Sans', Arial, sans-serif" : "700 23px 'Noto Sans', Arial, sans-serif";
+  ctx.font = label.length > 1 ? "700 22px 'Noto Sans', Arial, sans-serif" : "700 25px 'Noto Sans', Arial, sans-serif";
   ctx.textAlign = "center";
   ctx.textBaseline = "middle";
   ctx.fillText(label, size / 2, size / 2 + 0.5);
@@ -844,22 +1008,22 @@ function addMissingGuideStopMarkerImage(
 
 function createPoiDiamondImage(strokeColor: string) {
   const canvas = document.createElement("canvas");
-  canvas.width = 68;
-  canvas.height = 68;
+  canvas.width = 76;
+  canvas.height = 76;
   const ctx = canvas.getContext("2d");
   if (!ctx) {
-    return { width: 68, height: 68, data: new Uint8Array(68 * 68 * 4) };
+    return { width: 76, height: 76, data: new Uint8Array(76 * 76 * 4) };
   }
 
   ctx.save();
-  ctx.translate(34, 34);
+  ctx.translate(38, 38);
   ctx.rotate(Math.PI / 4);
   ctx.fillStyle = NESTED_POI_DIAMOND_FILL;
   ctx.strokeStyle = strokeColor;
   ctx.lineWidth = 3;
 
-  const size = 38;
-  const radius = 6;
+  const size = 42;
+  const radius = 7;
   const half = size / 2;
   ctx.beginPath();
   ctx.moveTo(-half + radius, -half);
@@ -876,7 +1040,7 @@ function createPoiDiamondImage(strokeColor: string) {
   ctx.stroke();
   ctx.restore();
 
-  return ctx.getImageData(0, 0, 68, 68);
+  return ctx.getImageData(0, 0, 76, 76);
 }
 
 function createPoiDiamondPulseImage(color: string) {
@@ -2157,7 +2321,7 @@ function addMapLayers(map: maplibregl.Map) {
     source: GUIDE_STOP_SOURCE_ID,
     layout: {
       "icon-image": ["get", "markerImage"],
-      "icon-size": ["interpolate", ["linear"], ["zoom"], 3, 0.8, 8, 0.96],
+      "icon-size": ["interpolate", ["linear"], ["zoom"], 3, 0.82, 8, 0.98],
       "symbol-sort-key": ["*", -1, ["get", "rank"]],
       "icon-allow-overlap": true,
       "icon-ignore-placement": true,
@@ -2292,7 +2456,7 @@ function addMapLayers(map: maplibregl.Map) {
     filter: ["==", ["get", "isNested"], true],
     layout: {
       "icon-image": POI_DIAMOND_ICON_IMAGE_MATCH,
-      "icon-size": ["interpolate", ["linear"], ["zoom"], 3, 1.02, 8, 1.08],
+      "icon-size": ["interpolate", ["linear"], ["zoom"], 3, 1.04, 8, 1.12],
       "symbol-sort-key": ["*", -1, ["get", "rank"]],
       "icon-allow-overlap": true,
       "icon-ignore-placement": true,
@@ -2676,9 +2840,12 @@ export function MapClient({
       } catch (error) {
         console.error("Map layer initialization failed", error);
       }
+      coolBaseMapGround(map);
+      boostBaseRoadContrast(map);
       configureBaseCountryLabels(map);
       hideBasePlaceDots(map);
       softenBaseReliefAndBuildings(map);
+      softenBaseTransitStops(map);
 
       map.on("mouseenter", "country-fills", () => {
         map.getCanvas().style.cursor = "pointer";

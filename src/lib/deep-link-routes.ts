@@ -119,6 +119,30 @@ export function getGuideSeoSlug(guide: GuideSeoSeed) {
   return slugify(guide.seoSlug?.trim() || getGuideIntentLabel(guide));
 }
 
+function getSeoTitleRouteSlug(
+  guide: GuideSeoSeed,
+  city: Pick<City, "name">,
+  neighborhood?: Pick<SubArea, "name">,
+) {
+  const seoTitle = guide.seoTitle?.trim();
+  if (!seoTitle) {
+    return "";
+  }
+
+  let titleSlug = slugify(seoTitle);
+  for (const place of [neighborhood?.name, city.name]) {
+    const placeSlug = place ? slugify(place) : "";
+    if (!placeSlug) {
+      continue;
+    }
+    titleSlug = titleSlug
+      .replace(new RegExp(`-(in|near|on)-${placeSlug}(?=-|$)`, "g"), "")
+      .replace(new RegExp(`-${placeSlug}$`), "");
+  }
+
+  return titleSlug.replace(/-{2,}/g, "-").replace(/^-+|-+$/g, "");
+}
+
 export function getGuideSeoTitle(
   guide: GuideSeoSeed,
   city: Pick<City, "name">,
@@ -162,11 +186,39 @@ export function getGuideRouteSlug(
     return baseSlug;
   }
 
-  const seoTitleSlug = getSeoTitleRouteSlug(guide);
+  const seoTitleSlug = getSeoTitleRouteSlug(guide, city, neighborhood);
   if (seoTitleSlug && seoTitleSlug !== baseSlug) {
-    return `${baseSlug}-${seoTitleSlug}`;
+    const seoTitleSlugDuplicateCount = guideSource.filter(
+      (list) =>
+        list.location.scope === "city" &&
+        list.location.city === city.name &&
+        list.category === guide.category &&
+        normalizeRouteText(list.location.neighborhood) === neighborhoodKey &&
+        getSeoTitleRouteSlug(list, city, neighborhood) === seoTitleSlug,
+    ).length;
+
+    if (seoTitleSlugDuplicateCount <= 1) {
+      return seoTitleSlug;
+    }
   }
 
+  const suffix = guide.slug
+    .replace(slugify(city.name), "")
+    .replace(neighborhood ? slugify(neighborhood.name) : "", "")
+    .replace(slugify(guide.category), "")
+    .replace(baseSlug, "")
+    .replace(/^-+|-+$/g, "")
+    .replace(/-{2,}/g, "-");
+
+  return `${baseSlug}-${suffix || slugify(guide.id)}`;
+}
+
+function getLegacyDuplicateGuideRouteSlug(
+  city: Pick<City, "name">,
+  guide: GuideSeoSeed & Pick<MapList, "id">,
+  neighborhood?: Pick<SubArea, "name">,
+) {
+  const baseSlug = getGuideSeoSlug(guide);
   const suffix = guide.slug
     .replace(slugify(city.name), "")
     .replace(neighborhood ? slugify(neighborhood.name) : "", "")
@@ -469,7 +521,8 @@ export function resolveCityDeepLink(
         list.slug === guideSlug ||
         slugify(list.title) === guideSlug ||
         getGuideSeoSlug(list) === guideSlug ||
-        getGuideRouteSlug(city, list, neighborhoodMatch?.subarea, guideSource) === guideSlug,
+        getGuideRouteSlug(city, list, neighborhoodMatch?.subarea, guideSource) === guideSlug ||
+        getLegacyDuplicateGuideRouteSlug(city, list, neighborhoodMatch?.subarea) === guideSlug,
     );
     if (!guide) {
       return null;

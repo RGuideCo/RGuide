@@ -4,13 +4,16 @@ export const SITE_NAME = "RGuide";
 export const SITE_SEARCH_NAME = "RGuide Travel";
 export const SITE_ALTERNATE_NAMES = [
   "RGuide",
+  "R Guide",
+  "RGuide Travel",
   "R Guide Travel",
   "RGuide city guides",
   "RGuide travel guides",
+  "RGuide City Guides",
 ];
 export const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.rguide.co";
 export const SITE_DESCRIPTION =
-  "RGuide Travel publishes curated city travel guides for where to stay, eat, drink, explore, and plan neighborhood-led trips.";
+  "RGuide Travel publishes independent city travel guides for hotels, restaurants, bars, culture, itineraries, and neighborhood-led trips.";
 
 export const CATEGORIES: ListCategory[] = [
   "Food",

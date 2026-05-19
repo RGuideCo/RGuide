@@ -26,12 +26,16 @@ const inter = Inter({
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
-  applicationName: SITE_NAME,
+  applicationName: SITE_SEARCH_NAME,
   title: {
     default: `${SITE_SEARCH_NAME} | Curated City Travel Guides`,
     template: `%s | ${SITE_NAME}`,
   },
   description: SITE_DESCRIPTION,
+  authors: [{ name: SITE_NAME, url: SITE_URL }],
+  creator: SITE_NAME,
+  publisher: SITE_SEARCH_NAME,
+  category: "travel",
   alternates: {
     canonical: "/",
   },
@@ -39,7 +43,7 @@ export const metadata: Metadata = {
     title: SITE_SEARCH_NAME,
     description: SITE_DESCRIPTION,
     url: "/",
-    siteName: SITE_NAME,
+    siteName: SITE_SEARCH_NAME,
     type: "website",
   },
   twitter: {
@@ -54,19 +58,27 @@ export const metadata: Metadata = {
 
 const websiteJsonLd = {
   "@context": "https://schema.org",
-  "@type": "WebSite",
-  name: SITE_SEARCH_NAME,
-  alternateName: SITE_ALTERNATE_NAMES,
-  url: getAbsoluteHref("/"),
-  description: SITE_DESCRIPTION,
-};
-
-const organizationJsonLd = {
-  "@context": "https://schema.org",
-  "@type": "Organization",
-  name: SITE_SEARCH_NAME,
-  alternateName: SITE_ALTERNATE_NAMES,
-  url: getAbsoluteHref("/"),
+  "@graph": [
+    {
+      "@type": "WebSite",
+      "@id": getAbsoluteHref("/#website"),
+      name: SITE_SEARCH_NAME,
+      alternateName: SITE_ALTERNATE_NAMES,
+      url: getAbsoluteHref("/"),
+      description: SITE_DESCRIPTION,
+      publisher: {
+        "@id": getAbsoluteHref("/#organization"),
+      },
+    },
+    {
+      "@type": "Organization",
+      "@id": getAbsoluteHref("/#organization"),
+      name: SITE_SEARCH_NAME,
+      alternateName: SITE_ALTERNATE_NAMES,
+      url: getAbsoluteHref("/"),
+      description: SITE_DESCRIPTION,
+    },
+  ],
 };
 
 export default function RootLayout({
@@ -90,10 +102,6 @@ export default function RootLayout({
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteJsonLd) }}
-        />
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd) }}
         />
       </body>
     </html>
