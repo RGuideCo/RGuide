@@ -19,6 +19,8 @@ const IMAGE_EXT_BY_TYPE = new Map([
 const FALLBACK_HOST_ADDRESSES = new Map([
   ["aws-1-us-east-2.pooler.supabase.com", ["13.58.13.125", "3.148.140.216", "3.131.201.192"]],
 ]);
+const WIKIMEDIA_API_URL = "https://commons.wikimedia.org/w/api.php";
+const USER_AGENT = "rGuide-media-ingest/1.0 (https://rguide.co; media@rguide.co)";
 
 function loadEnvFile(filePath) {
   if (!fs.existsSync(filePath)) return;
@@ -181,6 +183,119 @@ function extensionFromUrl(url) {
   return null;
 }
 
+function decodePathSegment(value) {
+  try {
+    return decodeURIComponent(value);
+  } catch {
+    return value;
+  }
+}
+
+function normalizeWikimediaFileTitle(value) {
+  const title = decodePathSegment(value ?? "").replace(/_/g, " ").trim();
+  if (!title) return null;
+  return title.toLowerCase().startsWith("file:") ? title : `File:${title}`;
+}
+
+function getWikimediaFileTitle(sourceUrl) {
+  try {
+    const url = new URL(sourceUrl);
+    const host = url.hostname.toLowerCase();
+    const pathname = url.pathname;
+
+    if (host === "commons.wikimedia.org") {
+      const filePathMarker = "/wiki/Special:FilePath/";
+      if (pathname.startsWith(filePathMarker)) {
+        return normalizeWikimediaFileTitle(pathname.slice(filePathMarker.length));
+      }
+      const fileMarker = "/wiki/File:";
+      if (pathname.startsWith(fileMarker)) {
+        return normalizeWikimediaFileTitle(pathname.slice("/wiki/".length));
+      }
+    }
+
+    if (host === "upload.wikimedia.org") {
+      const thumbMarker = "/wikipedia/commons/thumb/";
+      if (pathname.startsWith(thumbMarker)) {
+        const parts = pathname.slice(thumbMarker.length).split("/");
+        if (parts.length >= 4) {
+          return normalizeWikimediaFileTitle(parts.slice(2, -1).join("/"));
+        }
+      }
+
+      const commonsMarker = "/wikipedia/commons/";
+      if (pathname.startsWith(commonsMarker)) {
+        const parts = pathname.slice(commonsMarker.length).split("/");
+        if (parts.length >= 3) {
+          return normalizeWikimediaFileTitle(parts.slice(2).join("/"));
+        }
+      }
+    }
+  } catch {
+    return null;
+  }
+
+  return null;
+}
+
+function cleanWikimediaMetadataValue(value) {
+  if (typeof value !== "string") return null;
+  const cleaned = value
+    .replace(/<[^>]+>/g, " ")
+    .replace(/\s+/g, " ")
+    .trim();
+  return cleaned || null;
+}
+
+function pickWikimediaMetadata(extmetadata, key) {
+  return cleanWikimediaMetadataValue(extmetadata?.[key]?.value);
+}
+
+async function resolveWikimediaSource(sourceUrl) {
+  const title = getWikimediaFileTitle(sourceUrl);
+  if (!title) return null;
+
+  const apiUrl = new URL(WIKIMEDIA_API_URL);
+  apiUrl.searchParams.set("action", "query");
+  apiUrl.searchParams.set("format", "json");
+  apiUrl.searchParams.set("formatversion", "2");
+  apiUrl.searchParams.set("prop", "imageinfo");
+  apiUrl.searchParams.set("titles", title);
+  apiUrl.searchParams.set("iiprop", "url|mime|size|extmetadata");
+  apiUrl.searchParams.set("iiurlwidth", "1920");
+
+  const response = await fetch(apiUrl, {
+    headers: {
+      "accept": "application/json",
+      "user-agent": USER_AGENT,
+    },
+  });
+  if (!response.ok) {
+    throw new Error(`wikimedia api returned ${response.status}`);
+  }
+
+  const body = await response.json();
+  const page = body?.query?.pages?.[0];
+  const imageInfo = page?.imageinfo?.[0];
+  if (!imageInfo?.url && !imageInfo?.thumburl) {
+    throw new Error(`wikimedia api did not return an image for ${title}`);
+  }
+
+  const extmetadata = imageInfo.extmetadata ?? {};
+  return {
+    downloadUrl: imageInfo.thumburl ?? imageInfo.url,
+    canonicalUrl: imageInfo.descriptionurl ?? `https://commons.wikimedia.org/wiki/${encodeURIComponent(title.replace(/ /g, "_"))}`,
+    provider: "wikimedia_commons",
+    fileTitle: page?.title ?? title,
+    mime: imageInfo.mime ?? null,
+    width: imageInfo.thumbwidth ?? imageInfo.width ?? null,
+    height: imageInfo.thumbheight ?? imageInfo.height ?? null,
+    credit: pickWikimediaMetadata(extmetadata, "Artist") ?? pickWikimediaMetadata(extmetadata, "Credit"),
+    license: pickWikimediaMetadata(extmetadata, "LicenseShortName") ?? pickWikimediaMetadata(extmetadata, "License"),
+    licenseUrl: pickWikimediaMetadata(extmetadata, "LicenseUrl"),
+  };
+}
+
 function normalizeCountryFolder(row) {
   if (row.country_code) {
     return row.country_code.toLowerCase();
@@ -209,7 +324,7 @@ async function fetchImage(url) {
     redirect: "follow",
     headers: {
       "accept": "image/avif,image/webp,image/png,image/jpeg,image/*;q=0.8,*/*;q=0.1",
-      "user-agent": "rGuide-media-ingest/1.0",
+      "user-agent": USER_AGENT,
     },
   });
 
@@ -227,6 +342,29 @@ async function fetchImage(url) {
   }
 
   return { bytes, contentType };
+}
+
+async function fetchSourceImage(sourceUrl) {
+  const wikimedia = await resolveWikimediaSource(sourceUrl);
+  const image = await fetchImage(wikimedia?.downloadUrl ?? sourceUrl);
+  return {
+    ...image,
+    resolvedSourceUrl: wikimedia?.canonicalUrl ?? sourceUrl,
+    sourceMetadata: wikimedia
+      ? {
+          provider: wikimedia.provider,
+          file_title: wikimedia.fileTitle,
+          download_url: wikimedia.downloadUrl,
+          canonical_url: wikimedia.canonicalUrl,
+          mime: wikimedia.mime,
+          width: wikimedia.width,
+          height: wikimedia.height,
+          credit: wikimedia.credit,
+          license: wikimedia.license,
+          license_url: wikimedia.licenseUrl,
+        }
+      : null,
+  };
 }
 
 async function loadCandidates(client, options, publicBaseUrl) {
@@ -304,7 +442,7 @@ async function updateMediaRow(client, row, storage, bucket, publicBaseUrl) {
   const publicUrl = `${publicBaseUrl.replace(/\/$/, "")}/${storage.key}`;
   await client.query(
     `update public.venue_media
-     set source_url = coalesce(nullif(source_url, ''), url),
+     set source_url = coalesce($7, nullif(source_url, ''), url),
          url = $2,
          public_url = $2,
          storage_provider = 'cloudflare_r2',
@@ -318,9 +456,25 @@ async function updateMediaRow(client, row, storage, bucket, publicBaseUrl) {
          validation_error = null,
          last_validated_at = now(),
          ingested_at = now(),
+         source_type = coalesce(source_type, $8),
+         credit = coalesce(credit, $9),
+         license = coalesce(license, $10),
+         raw_metadata = raw_metadata || $11::jsonb,
          updated_at = now()
      where id = $1`,
-    [row.media_id, publicUrl, bucket, storage.key, storage.contentType, storage.bytes.length],
+    [
+      row.media_id,
+      publicUrl,
+      bucket,
+      storage.key,
+      storage.contentType,
+      storage.bytes.length,
+      storage.resolvedSourceUrl,
+      storage.sourceMetadata?.provider ?? null,
+      storage.sourceMetadata?.credit ?? null,
+      storage.sourceMetadata?.license ?? null,
+      JSON.stringify(storage.sourceMetadata ? { source_resolver: storage.sourceMetadata } : {}),
+    ],
   );
   return publicUrl;
 }
@@ -394,7 +548,7 @@ async function main() {
           stats.skipped += 1;
           continue;
         }
-        const image = await fetchImage(row.source_image_url);
+        const image = await fetchSourceImage(row.source_image_url);
         const key = buildStorageKey(row, image.contentType);
         const publicUrl = `${publicBaseUrl.replace(/\/$/, "")}/${key}`;
         console.log(JSON.stringify({
