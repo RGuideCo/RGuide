@@ -217,7 +217,8 @@ const poiPhotoSources: Record<string, PoiPhotoSource> = {
     source: "https://www.hotelmontalembert-paris.com/",
   },
   "Hotel Monte Cristo": {
-    photo: "https://www.hotelmontecristoparis.com/cache/img/e8b93377a5a0f233a42671a9297f92d6c68129b6-220038-1700-1138-auto.jpg?q=1716385244",
+    photo:
+      "https://api.pulse-cdn.com/api/v1/resize/uploads/153367-hotel-montecristo/b5e89c5c-97e0-46c5-94b9-b5cd8803b032.jpg-resize-900-0-90-webp",
     source: "https://www.hotelmontecristoparis.com/",
   },
   "Hotel Providence": {
@@ -338,9 +339,8 @@ const poiPhotoSources: Record<string, PoiPhotoSource> = {
     source: "https://www.tripadvisor.com/",
   },
   "Le Piano Vache": {
-    photo:
-      "https://scontent-akl1-1.xx.fbcdn.net/v/t39.30808-6/487767264_1202613125203676_3118745092519676828_n.jpg?_nc_cat=108&ccb=1-7&_nc_sid=2a1932&_nc_ohc=ooPpM4hnkBoQ7kNvwGQAc4K&_nc_oc=Ado1Raxbg9UnWWnzF2pYADk7Qx9-knWtdDFkVTYETA5zrnGpMS5wwrCqzRTOFIa_QPSsPkiUESfGFDLsYVMsJ_uL&_nc_zt=23&_nc_ht=scontent-akl1-1.xx&_nc_gid=BlViuotPZMm-qvDqHN3mFg&_nc_ss=7b289&oh=00_Af4IOgg6il_lP2LlHSYW5E7ZRSzT9L22k2zAzurDyfvnHg&oe=6A06E690",
-    source: "https://www.facebook.com/lepianovache/",
+    photo: "https://www.lepianovache.fr/wp-content/uploads/2019/02/cropped-wolfgang-hasselmann-1266795-unsplash-1.jpg",
+    source: "https://www.lepianovache.fr/",
   },
   "Le Poulbot": {
     photo: "https://lepoulbot.com/wp-content/uploads/2017/11/Post_1_Deux_Poulbot.jpg",
@@ -567,7 +567,7 @@ const poiPhotoSources: Record<string, PoiPhotoSource> = {
   },
   "The Cambridge Public House": {
     photo:
-      "https://www.thecambridge.paris/i/the-cambridge-650415/3/6/0/6/8/5/1/5/2/0/2/2/3/1715590703_242/01c090c020bf664e4a7078f36173b693.website.jpg",
+      "https://assets.softr-files.com/applications/c2cee8a4-259a-4091-b855-5852ab255c78/assets/520508b0-b7e0-4eb3-a200-83352def6907.jpeg",
     source: "https://www.thecambridge.paris/en/",
   },
   "The Hoxton Paris": {
