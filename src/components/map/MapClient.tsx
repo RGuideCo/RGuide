@@ -102,6 +102,7 @@ type GuideStopFeatureProperties = {
   markerImage: string;
   category: MapList["category"];
   isNested: boolean;
+  isSelected: boolean;
   placesBeenKind: "countries" | "cities" | "places" | "default";
 };
 
@@ -217,7 +218,6 @@ const GUIDE_STOP_GLOW_COLOR_MATCH = [
   CATEGORY_STYLES.Essentials.mapGlowColor,
   CATEGORY_STYLES.Activities.mapGlowColor,
 ] as ExpressionSpecification;
-const GUIDE_STOP_GLOW_BASE_RADIUS = { lowZoom: 16.5, highZoom: 23 } as const;
 const GUIDE_STOP_DOT_BASE_RADIUS = { lowZoom: 9, highZoom: 11.4 } as const;
 const GUIDE_STOP_CITY_GLOW_SCALE = 11 / 15;
 const GUIDE_STOP_CITY_DOT_SCALE = 0.794;
@@ -1072,17 +1072,16 @@ function createPoiDiamondPulseImage(color: string) {
     ctx.closePath();
   };
 
-  ctx.shadowColor = color;
-  ctx.shadowBlur = 14;
-  ctx.globalAlpha = 0.42;
-  ctx.fillStyle = color;
+  ctx.globalAlpha = 0.9;
+  ctx.strokeStyle = color;
+  ctx.lineWidth = 4.5;
   drawDiamond(44, 8);
-  ctx.fill();
+  ctx.stroke();
 
-  ctx.shadowBlur = 0;
-  ctx.globalAlpha = 0.18;
+  ctx.globalAlpha = 0.34;
+  ctx.lineWidth = 2.5;
   drawDiamond(50, 9);
-  ctx.fill();
+  ctx.stroke();
   ctx.restore();
 
   return ctx.getImageData(0, 0, size, size);
@@ -1111,8 +1110,15 @@ function addPoiDiamondImages(map: maplibregl.Map) {
 function createGuideStopData(
   activeGuide?: MapList | null,
   visibleNestedStopParentIds: string[] = [],
+  selectedStopId?: string | null,
+  hoveredStopId?: string | null,
 ): FeatureCollection<Point, GuideStopFeatureProperties> {
   const visibleNestedParentSet = new Set(visibleNestedStopParentIds);
+  for (const stop of activeGuide?.stops ?? []) {
+    if ((stop.places ?? []).some((place) => place.id === selectedStopId || place.id === hoveredStopId)) {
+      visibleNestedParentSet.add(stop.id);
+    }
+  }
   const features = (activeGuide?.stops ?? []).flatMap((stop, index) => {
     const stopCategory = stop.category ?? activeGuide?.category ?? "Activities";
     const placesBeenKind: GuideStopFeatureProperties["placesBeenKind"] = stop.id.startsWith("places-been-cities-")
@@ -1132,6 +1138,7 @@ function createGuideStopData(
         markerImage: getGuideStopMarkerImageName(stopCategory, String(index + 1)),
         category: stopCategory,
         isNested: false,
+        isSelected: stop.id === selectedStopId,
         placesBeenKind,
       },
       geometry: {
@@ -1139,7 +1146,8 @@ function createGuideStopData(
         coordinates: [stop.coordinates[1], stop.coordinates[0]],
       },
     };
-    const shouldShowNestedFeatures = visibleNestedParentSet.has(stop.id);
+    const nestedPlaceCount = stop.places?.length ?? 0;
+    const shouldShowNestedFeatures = visibleNestedParentSet.has(stop.id) && nestedPlaceCount > 0;
     const nestedFeatures = shouldShowNestedFeatures ? (stop.places ?? []).map((place, placeIndex) => ({
       type: "Feature" as const,
       properties: {
@@ -1150,6 +1158,7 @@ function createGuideStopData(
         markerImage: "",
         category: place.category ?? stopCategory,
         isNested: true,
+        isSelected: place.id === selectedStopId,
         placesBeenKind: "default" as const,
       },
       geometry: {
@@ -1157,7 +1166,7 @@ function createGuideStopData(
         coordinates: [place.coordinates[1], place.coordinates[0]],
       },
     })) : [];
-    return shouldShowNestedFeatures ? nestedFeatures : [parentFeature];
+    return shouldShowNestedFeatures ? [parentFeature, ...nestedFeatures] : [parentFeature];
   });
   const nestedCoordinates = features
     .filter((feature) => feature.properties.isNested)
@@ -2292,30 +2301,6 @@ function addMapLayers(map: maplibregl.Map) {
   }, "continent-labels");
 
   map.addLayer({
-    id: "guide-stop-glow",
-    type: "circle",
-    source: GUIDE_STOP_SOURCE_ID,
-    filter: ["!=", ["get", "isNested"], true],
-    paint: {
-      "circle-radius": [
-        "interpolate",
-        ["linear"],
-        ["zoom"],
-        3,
-        GUIDE_STOP_GLOW_BASE_RADIUS.lowZoom,
-        8,
-        GUIDE_STOP_GLOW_BASE_RADIUS.highZoom,
-      ],
-      "circle-color": GUIDE_STOP_GLOW_COLOR_MATCH,
-      "circle-opacity": 0.18,
-      "circle-blur": 0.9,
-      "circle-stroke-width": 0,
-      "circle-radius-transition": { duration: 0, delay: 0 },
-      "circle-opacity-transition": { duration: 0, delay: 0 },
-    },
-  }, "continent-labels");
-
-  map.addLayer({
     id: "guide-stop-points",
     type: "symbol",
     source: GUIDE_STOP_SOURCE_ID,
@@ -2359,7 +2344,7 @@ function addMapLayers(map: maplibregl.Map) {
       "circle-opacity-transition": { duration: 0, delay: 0 },
       "circle-stroke-width-transition": { duration: 0, delay: 0 },
     },
-  }, "continent-labels");
+  }, "guide-stop-points");
 
   map.addLayer({
     id: "guide-stop-burst",
@@ -2379,14 +2364,18 @@ function addMapLayers(map: maplibregl.Map) {
         8,
         0,
       ],
-      "circle-color": GUIDE_STOP_GLOW_COLOR_MATCH,
+      "circle-color": "rgba(255, 255, 255, 0)",
       "circle-opacity": 0,
-      "circle-blur": 0.35,
-      "circle-stroke-width": 0,
+      "circle-blur": 0,
+      "circle-stroke-color": GUIDE_STOP_COLOR_MATCH,
+      "circle-stroke-opacity": 0,
+      "circle-stroke-width": 2.2,
       "circle-radius-transition": { duration: 0, delay: 0 },
       "circle-opacity-transition": { duration: 0, delay: 0 },
+      "circle-stroke-opacity-transition": { duration: 0, delay: 0 },
+      "circle-stroke-width-transition": { duration: 0, delay: 0 },
     },
-  }, "continent-labels");
+  }, "guide-stop-points");
 
   map.addLayer({
     id: "guide-stop-labels",
@@ -2411,14 +2400,13 @@ function addMapLayers(map: maplibregl.Map) {
   }, "continent-labels");
 
   map.addLayer({
-    id: "guide-stop-diamond-burst",
+    id: "guide-stop-selected-points",
     type: "symbol",
     source: GUIDE_STOP_SOURCE_ID,
-    minzoom: 3,
     filter: ["==", ["get", "id"], "__none__"],
     layout: {
-      "icon-image": POI_DIAMOND_PULSE_ICON_IMAGE_MATCH,
-      "icon-size": ["interpolate", ["linear"], ["zoom"], 3, 0, 8, 0],
+      "icon-image": ["get", "markerImage"],
+      "icon-size": ["interpolate", ["linear"], ["zoom"], 3, 0.82, 8, 0.98],
       "symbol-sort-key": ["*", -1, ["get", "rank"]],
       "icon-allow-overlap": true,
       "icon-ignore-placement": true,
@@ -2430,14 +2418,14 @@ function addMapLayers(map: maplibregl.Map) {
   }, "guide-stop-labels");
 
   map.addLayer({
-    id: "guide-stop-diamond-hover",
+    id: "guide-stop-diamond-burst",
     type: "symbol",
     source: GUIDE_STOP_SOURCE_ID,
     minzoom: 3,
     filter: ["==", ["get", "id"], "__none__"],
     layout: {
-      "icon-image": POI_DIAMOND_ICON_IMAGE_MATCH,
-      "icon-size": ["interpolate", ["linear"], ["zoom"], 3, 1.02, 8, 1.08],
+      "icon-image": POI_DIAMOND_PULSE_ICON_IMAGE_MATCH,
+      "icon-size": ["interpolate", ["linear"], ["zoom"], 3, 0, 8, 0],
       "symbol-sort-key": ["*", -1, ["get", "rank"]],
       "icon-allow-overlap": true,
       "icon-ignore-placement": true,
@@ -2488,8 +2476,54 @@ function addMapLayers(map: maplibregl.Map) {
     },
   }, "continent-labels");
 
+  map.addLayer({
+    id: "guide-stop-selected-diamonds",
+    type: "symbol",
+    source: GUIDE_STOP_SOURCE_ID,
+    minzoom: 3,
+    filter: ["==", ["get", "id"], "__none__"],
+    layout: {
+      "icon-image": POI_DIAMOND_ICON_IMAGE_MATCH,
+      "icon-size": ["interpolate", ["linear"], ["zoom"], 3, 1.04, 8, 1.12],
+      "symbol-sort-key": ["*", -1, ["get", "rank"]],
+      "icon-allow-overlap": true,
+      "icon-ignore-placement": true,
+    },
+    paint: {
+      "icon-opacity": 0,
+      "icon-opacity-transition": { duration: 0, delay: 0 },
+    },
+  }, "continent-labels");
+
+  map.addLayer({
+    id: "guide-stop-selected-diamond-labels",
+    type: "symbol",
+    source: GUIDE_STOP_SOURCE_ID,
+    minzoom: 3,
+    filter: ["==", ["get", "id"], "__none__"],
+    layout: {
+      "text-field": ["get", "rankLabel"],
+      "text-size": ["interpolate", ["linear"], ["zoom"], 3, 10.2, 8, 11.6],
+      "text-font": ["Noto Sans Bold"],
+      "text-anchor": "center",
+      "symbol-sort-key": ["*", -1, ["get", "rank"]],
+      "text-allow-overlap": true,
+      "text-ignore-placement": true,
+    },
+    paint: {
+      "text-color": "#ffffff",
+      "text-halo-color": "rgba(15, 23, 42, 0.16)",
+      "text-halo-width": 0.4,
+      "text-opacity": 0,
+      "text-opacity-transition": { duration: 0, delay: 0 },
+    },
+  }, "continent-labels");
+
   if (map.getLayer("guide-stop-points") && map.getLayer("guide-stop-labels")) {
     map.moveLayer("guide-stop-points", "guide-stop-labels");
+  }
+  if (map.getLayer("guide-stop-selected-points") && map.getLayer("guide-stop-labels")) {
+    map.moveLayer("guide-stop-selected-points", "guide-stop-labels");
   }
 }
 
@@ -2603,8 +2637,8 @@ export function MapClient({
   );
   const stateLabelData = useMemo(() => createStateLabelData(selection), [selection]);
   const guideStopData = useMemo(
-    () => createGuideStopData(activeGuide, visibleNestedStopParentIds),
-    [activeGuide, visibleNestedStopParentIds],
+    () => createGuideStopData(activeGuide, visibleNestedStopParentIds, selectedStopId, hoveredStopId),
+    [activeGuide, hoveredStopId, selectedStopId, visibleNestedStopParentIds],
   );
   const guideRouteData = useMemo(
     () => createGuideRouteData(activeGuide, selectedStopId, visibleNestedStopParentIds),
@@ -2875,19 +2909,23 @@ export function MapClient({
       };
 
       map.on("mousemove", "guide-stop-points", syncHoveredGuideStop);
+      map.on("mousemove", "guide-stop-selected-points", syncHoveredGuideStop);
       map.on("mousemove", "guide-stop-hover", syncHoveredGuideStop);
       map.on("mousemove", "guide-stop-labels", syncHoveredGuideStop);
       map.on("mousemove", "guide-stop-diamonds", syncHoveredGuideStop);
-      map.on("mousemove", "guide-stop-diamond-hover", syncHoveredGuideStop);
+      map.on("mousemove", "guide-stop-selected-diamonds", syncHoveredGuideStop);
+      map.on("mousemove", "guide-stop-selected-diamond-labels", syncHoveredGuideStop);
       map.on("mousemove", "guide-stop-diamond-burst", syncHoveredGuideStop);
       map.on("mousemove", "guide-stop-diamond-labels", syncHoveredGuideStop);
       map.on("mousemove", "poi-map-marker-fill", syncHoveredGuideStop);
       map.on("mousemove", "poi-map-marker-line", syncHoveredGuideStop);
       map.on("mouseleave", "guide-stop-points", () => handlersRef.current.onHoverGuideStop?.(null));
+      map.on("mouseleave", "guide-stop-selected-points", () => handlersRef.current.onHoverGuideStop?.(null));
       map.on("mouseleave", "guide-stop-hover", () => handlersRef.current.onHoverGuideStop?.(null));
       map.on("mouseleave", "guide-stop-labels", () => handlersRef.current.onHoverGuideStop?.(null));
       map.on("mouseleave", "guide-stop-diamonds", () => handlersRef.current.onHoverGuideStop?.(null));
-      map.on("mouseleave", "guide-stop-diamond-hover", () => handlersRef.current.onHoverGuideStop?.(null));
+      map.on("mouseleave", "guide-stop-selected-diamonds", () => handlersRef.current.onHoverGuideStop?.(null));
+      map.on("mouseleave", "guide-stop-selected-diamond-labels", () => handlersRef.current.onHoverGuideStop?.(null));
       map.on("mouseleave", "guide-stop-diamond-burst", () => handlersRef.current.onHoverGuideStop?.(null));
       map.on("mouseleave", "guide-stop-diamond-labels", () => handlersRef.current.onHoverGuideStop?.(null));
       map.on("mouseleave", "poi-map-marker-fill", () => handlersRef.current.onHoverGuideStop?.(null));
@@ -2897,10 +2935,12 @@ export function MapClient({
         const clickedGuideStopFeature = map
           .queryRenderedFeatures(event.point, {
             layers: [
+              "guide-stop-selected-diamond-labels",
+              "guide-stop-selected-diamonds",
               "guide-stop-diamond-labels",
-              "guide-stop-diamond-hover",
               "guide-stop-diamond-burst",
               "guide-stop-diamonds",
+              "guide-stop-selected-points",
               "guide-stop-labels",
               "guide-stop-hover",
               "guide-stop-points",
@@ -3222,10 +3262,10 @@ export function MapClient({
 
   const activeGuidePulseStopId = useMemo(() => {
     const renderedStopIds = new Set(guideStopData.features.map((feature) => feature.properties.id));
-    const candidateStopIds = [hoveredStopId, selectedStopId, visibleNestedStopParentIds[0] ?? null];
+    const candidateStopIds = [selectedStopId];
 
     return candidateStopIds.find((stopId): stopId is string => Boolean(stopId && renderedStopIds.has(stopId))) ?? null;
-  }, [guideStopData, hoveredStopId, selectedStopId, visibleNestedStopParentIds]);
+  }, [guideStopData, selectedStopId]);
   const isActiveGuidePulseStopNested = useMemo(
     () =>
       activeGuidePulseStopId
@@ -3240,11 +3280,12 @@ export function MapClient({
     if (
       !map ||
       !isStyleReadyRef.current ||
+      !map.getLayer("guide-stop-selected-points") ||
+      !map.getLayer("guide-stop-selected-diamonds") ||
+      !map.getLayer("guide-stop-selected-diamond-labels") ||
       !map.getLayer("guide-stop-hover") ||
       !map.getLayer("guide-stop-burst") ||
-      !map.getLayer("guide-stop-diamond-hover") ||
-      !map.getLayer("guide-stop-diamond-burst") ||
-      !map.getLayer("guide-stop-glow")
+      !map.getLayer("guide-stop-diamond-burst")
     ) {
       return;
     }
@@ -3256,13 +3297,17 @@ export function MapClient({
         visualState.burstTriggered = false;
         visualState.burstActive = false;
         visualState.burstT = 0;
+        visualState.amount = 0;
+        visualState.frame = 0;
       }
-      visualState.target = 1;
+      visualState.target = 0;
       const activeStopFilter: maplibregl.FilterSpecification = ["==", ["get", "id"], activeGuidePulseStopId];
       const emptyStopFilter: maplibregl.FilterSpecification = ["==", ["get", "id"], "__none__"];
-      map.setFilter("guide-stop-hover", isActiveGuidePulseStopNested ? emptyStopFilter : activeStopFilter);
+      map.setFilter("guide-stop-selected-points", isActiveGuidePulseStopNested ? emptyStopFilter : activeStopFilter);
+      map.setFilter("guide-stop-selected-diamonds", isActiveGuidePulseStopNested ? activeStopFilter : emptyStopFilter);
+      map.setFilter("guide-stop-selected-diamond-labels", isActiveGuidePulseStopNested ? activeStopFilter : emptyStopFilter);
+      map.setFilter("guide-stop-hover", emptyStopFilter);
       map.setFilter("guide-stop-burst", isActiveGuidePulseStopNested ? emptyStopFilter : activeStopFilter);
-      map.setFilter("guide-stop-diamond-hover", isActiveGuidePulseStopNested ? activeStopFilter : emptyStopFilter);
       map.setFilter("guide-stop-diamond-burst", isActiveGuidePulseStopNested ? activeStopFilter : emptyStopFilter);
     } else {
       visualState.target = 0;
@@ -3289,15 +3334,23 @@ export function MapClient({
         }
       }
 
-      const continuousPulse = state.target === 1 ? (Math.sin(state.frame * 0.12) + 1) / 2 : 0;
+      const continuousPulse = state.target === 1 ? (state.frame % 54) / 54 : 0;
       const burstGrow = state.target === 1 ? continuousPulse : state.burstT;
       const burstFade = state.target === 1 ? 1 - continuousPulse : state.burstActive ? 1 - state.burstT : 0;
 
-      const hoverRadiusAtLowZoom = 6 + 3.5 * hoverScale + 1.7 * continuousPulse;
-      const hoverRadiusAtHighZoom = 7.8 + 4.5 * hoverScale + 2.2 * continuousPulse;
+      const hoverRadiusAtLowZoom = 6 + 5.2 * hoverScale;
+      const hoverRadiusAtHighZoom = 7.8 + 6.4 * hoverScale;
       const burstRadiusAtLowZoom = 9 + 14 * burstGrow;
       const burstRadiusAtHighZoom = 12 + 20 * burstGrow;
-      const burstOpacity = state.target === 1 ? 0.26 * burstFade : 0.32 * burstFade;
+      const burstOpacity = state.target === 1 ? 0.72 * burstFade : 0.78 * burstFade;
+      const burstStrokeWidth = 2.9 - 1.35 * burstGrow;
+      const selectedPointLowZoom = 0.82 + 0.16 * hoverScale;
+      const selectedPointHighZoom = 0.98 + 0.18 * hoverScale;
+      const selectedDiamondLowZoom = 1.04 + 0.2 * hoverScale;
+      const selectedDiamondHighZoom = 1.12 + 0.22 * hoverScale;
+      const selectedDiamondLabelLowZoom = 10.2 + 1.2 * hoverScale;
+      const selectedDiamondLabelHighZoom = 11.6 + 1.4 * hoverScale;
+      const shouldUpdateSymbolLayout = !map.isMoving();
 
       map.setPaintProperty("guide-stop-hover", "circle-radius", [
         "interpolate",
@@ -3317,26 +3370,60 @@ export function MapClient({
         8,
         burstRadiusAtHighZoom,
       ]);
-      map.setPaintProperty("guide-stop-burst", "circle-opacity", burstOpacity);
-      map.setLayoutProperty("guide-stop-diamond-hover", "icon-size", [
-        "interpolate",
-        ["linear"],
-        ["zoom"],
-        3,
-        1.02 + 0.1 * hoverScale + 0.045 * continuousPulse,
-        8,
-        1.08 + 0.13 * hoverScale + 0.06 * continuousPulse,
-      ]);
-      map.setPaintProperty("guide-stop-diamond-hover", "icon-opacity", isActiveGuidePulseStopNested ? 1 : 0);
-      map.setLayoutProperty("guide-stop-diamond-burst", "icon-size", [
-        "interpolate",
-        ["linear"],
-        ["zoom"],
-        3,
-        0.82 + 0.74 * burstGrow,
-        8,
-        0.9 + 0.98 * burstGrow,
-      ]);
+      map.setPaintProperty("guide-stop-burst", "circle-opacity", 0);
+      map.setPaintProperty("guide-stop-burst", "circle-stroke-opacity", burstOpacity);
+      map.setPaintProperty("guide-stop-burst", "circle-stroke-width", burstStrokeWidth);
+      if (shouldUpdateSymbolLayout) {
+        map.setLayoutProperty("guide-stop-selected-points", "icon-size", [
+          "interpolate",
+          ["linear"],
+          ["zoom"],
+          3,
+          selectedPointLowZoom,
+          8,
+          selectedPointHighZoom,
+        ]);
+      }
+      map.setPaintProperty("guide-stop-selected-points", "icon-opacity", isActiveGuidePulseStopNested ? 0 : hoverScale);
+      if (shouldUpdateSymbolLayout) {
+        map.setLayoutProperty("guide-stop-selected-diamonds", "icon-size", [
+          "interpolate",
+          ["linear"],
+          ["zoom"],
+          3,
+          selectedDiamondLowZoom,
+          8,
+          selectedDiamondHighZoom,
+        ]);
+      }
+      map.setPaintProperty("guide-stop-selected-diamonds", "icon-opacity", isActiveGuidePulseStopNested ? hoverScale : 0);
+      if (shouldUpdateSymbolLayout) {
+        map.setLayoutProperty("guide-stop-selected-diamond-labels", "text-size", [
+          "interpolate",
+          ["linear"],
+          ["zoom"],
+          3,
+          selectedDiamondLabelLowZoom,
+          8,
+          selectedDiamondLabelHighZoom,
+        ]);
+      }
+      map.setPaintProperty(
+        "guide-stop-selected-diamond-labels",
+        "text-opacity",
+        isActiveGuidePulseStopNested ? hoverScale : 0,
+      );
+      if (shouldUpdateSymbolLayout) {
+        map.setLayoutProperty("guide-stop-diamond-burst", "icon-size", [
+          "interpolate",
+          ["linear"],
+          ["zoom"],
+          3,
+          0.82 + 0.74 * burstGrow,
+          8,
+          0.9 + 0.98 * burstGrow,
+        ]);
+      }
       map.setPaintProperty(
         "guide-stop-diamond-burst",
         "icon-opacity",
@@ -3353,11 +3440,16 @@ export function MapClient({
           state.burstT = 0;
           state.frame = 0;
           map.setFilter("guide-stop-hover", ["==", ["get", "id"], "__none__"]);
+          map.setFilter("guide-stop-selected-points", ["==", ["get", "id"], "__none__"]);
+          map.setFilter("guide-stop-selected-diamonds", ["==", ["get", "id"], "__none__"]);
+          map.setFilter("guide-stop-selected-diamond-labels", ["==", ["get", "id"], "__none__"]);
           map.setFilter("guide-stop-burst", ["==", ["get", "id"], "__none__"]);
-          map.setFilter("guide-stop-diamond-hover", ["==", ["get", "id"], "__none__"]);
           map.setFilter("guide-stop-diamond-burst", ["==", ["get", "id"], "__none__"]);
+          map.setPaintProperty("guide-stop-selected-points", "icon-opacity", 0);
+          map.setPaintProperty("guide-stop-selected-diamonds", "icon-opacity", 0);
+          map.setPaintProperty("guide-stop-selected-diamond-labels", "text-opacity", 0);
           map.setPaintProperty("guide-stop-burst", "circle-opacity", 0);
-          map.setPaintProperty("guide-stop-diamond-hover", "icon-opacity", 0);
+          map.setPaintProperty("guide-stop-burst", "circle-stroke-opacity", 0);
           map.setPaintProperty("guide-stop-diamond-burst", "icon-opacity", 0);
         }
         if (state.target === 1) {
@@ -3375,9 +3467,33 @@ export function MapClient({
       cancelAnimationFrame(hoverAnimationFrameRef.current);
       hoverAnimationFrameRef.current = null;
     }
-    hoverAnimationFrameRef.current = requestAnimationFrame(tick);
+    let startFrameId: number | null = null;
+    let isCancelled = false;
+    const startAnimation = () => {
+      if (isCancelled) {
+        return;
+      }
+      hoverVisualStateRef.current.target = activeGuidePulseStopId ? 1 : 0;
+      hoverAnimationFrameRef.current = requestAnimationFrame(tick);
+    };
+    const waitForCameraThenStart = () => {
+      if (isCancelled) {
+        return;
+      }
+      if (activeGuidePulseStopId && map.isMoving()) {
+        map.once("moveend", startAnimation);
+        return;
+      }
+      startAnimation();
+    };
+    startFrameId = requestAnimationFrame(waitForCameraThenStart);
 
     return () => {
+      isCancelled = true;
+      if (startFrameId !== null) {
+        cancelAnimationFrame(startFrameId);
+      }
+      map.off("moveend", startAnimation);
       if (hoverAnimationFrameRef.current !== null) {
         cancelAnimationFrame(hoverAnimationFrameRef.current);
         hoverAnimationFrameRef.current = null;
@@ -3481,23 +3597,6 @@ export function MapClient({
       activeGuideCameraKeyRef.current = null;
       return;
     }
-    const nextCameraKey = [
-      activeGuide.id,
-      activeGuideFitNonce,
-      activeGuideStopSignature,
-      visibleNestedStopParentIds.join(","),
-      selectedStopId ?? "",
-      viewportModeRef.current,
-      viewportInsetsRef.current
-        ? `${viewportInsetsRef.current.top},${viewportInsetsRef.current.right},${viewportInsetsRef.current.bottom},${viewportInsetsRef.current.left}`
-        : "",
-    ].join("|");
-    if (activeGuideCameraKeyRef.current === nextCameraKey) {
-      return;
-    }
-    activeGuideCameraKeyRef.current = nextCameraKey;
-    selectionCameraKeyRef.current = selectionCameraKey;
-    const activeViewportInsets = getViewportInsets(map, viewportModeRef.current, viewportInsetsRef.current);
     const selectedParentStop =
       selectedStopId
         ? activeGuide.stops.find((stop) => stop.id === selectedStopId)
@@ -3513,6 +3612,30 @@ export function MapClient({
             )
             .find(({ place }) => place.id === selectedStopId)
         : null;
+    const selectedCameraTargetId =
+      selectedParentStop?.id ?? selectedNestedStop?.place.id ?? "";
+    const nextCameraKey = selectedCameraTargetId
+      ? [
+          activeGuide.id,
+          activeGuideStopSignature,
+          selectedCameraTargetId,
+          viewportModeRef.current,
+        ].join("|")
+      : [
+          activeGuide.id,
+          activeGuideFitNonce,
+          activeGuideStopSignature,
+          viewportModeRef.current,
+          viewportInsetsRef.current
+            ? `${viewportInsetsRef.current.top},${viewportInsetsRef.current.right},${viewportInsetsRef.current.bottom},${viewportInsetsRef.current.left}`
+            : "",
+        ].join("|");
+    if (activeGuideCameraKeyRef.current === nextCameraKey) {
+      return;
+    }
+    activeGuideCameraKeyRef.current = nextCameraKey;
+    selectionCameraKeyRef.current = selectionCameraKey;
+    const activeViewportInsets = getViewportInsets(map, viewportModeRef.current, viewportInsetsRef.current);
 
     if (selectedParentStop || selectedNestedStop) {
       const focusedPoint = selectedParentStop ?? selectedNestedStop!.place;
@@ -3522,50 +3645,12 @@ export function MapClient({
         mergePadding({ top: 48, right: 52, bottom: 56, left: 52 }, activeViewportInsets),
       );
 
+      map.stop();
       map.easeTo({
         center: [lng, lat],
         zoom: Math.max(map.getZoom(), 14.8),
         padding: focusPadding,
         duration: 950,
-        easing: smoothCameraEasing,
-        essential: true,
-      });
-      return;
-    }
-
-    const focusedStopId = visibleNestedStopParentIds[visibleNestedStopParentIds.length - 1] ?? null;
-    const focusedStop = focusedStopId
-      ? activeGuide.stops.find((stop) => stop.id === focusedStopId)
-      : null;
-
-    if (focusedStop) {
-      const [lat, lng] = focusedStop.coordinates;
-      const focusedBounds = new LngLatBounds([lng, lat], [lng, lat]);
-      for (const place of focusedStop.places ?? []) {
-        const [placeLat, placeLng] = place.coordinates;
-        focusedBounds.extend([placeLng, placeLat]);
-      }
-      const focusPadding = clampPaddingToMap(
-        map,
-        mergePadding({ top: 48, right: 52, bottom: 56, left: 52 }, activeViewportInsets),
-      );
-
-      if ((focusedStop.places ?? []).length === 0 || getBoundsArea(focusedBounds) < 0.000001) {
-        map.easeTo({
-          center: [lng, lat],
-          zoom: Math.max(map.getZoom(), 14.2),
-          padding: focusPadding,
-          duration: 1150,
-          easing: smoothCameraEasing,
-          essential: true,
-        });
-        return;
-      }
-
-      map.fitBounds(focusedBounds, {
-        padding: focusPadding,
-        maxZoom: 15.4,
-        duration: 1250,
         easing: smoothCameraEasing,
         essential: true,
       });
@@ -3620,7 +3705,6 @@ export function MapClient({
     selectionCameraKey,
     styleReadyTick,
     selectedStopId,
-    visibleNestedStopParentIds,
     viewportInsets,
   ]);
 
