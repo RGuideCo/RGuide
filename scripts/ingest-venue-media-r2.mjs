@@ -20,6 +20,8 @@ const FALLBACK_HOST_ADDRESSES = new Map([
   ["aws-1-us-east-2.pooler.supabase.com", ["13.58.13.125", "3.148.140.216", "3.131.201.192"]],
 ]);
 const WIKIMEDIA_API_URL = "https://commons.wikimedia.org/w/api.php";
+const OPENVERSE_API_URL = "https://api.openverse.engineering/v1/images/";
+const OPENVERSE_ALLOWED_LICENSES = "by,by-sa,cc0,pdm";
 const USER_AGENT = "rGuide-media-ingest/1.0 (https://rguide.co; media@rguide.co)";
 
 function loadEnvFile(filePath) {
@@ -44,6 +46,9 @@ function parseArgs(argv) {
     limit: 25,
     dryRun: false,
     force: false,
+    failedOnly: false,
+    openverseFallback: false,
+    openverseMinScore: 8,
   };
 
   for (let index = 0; index < argv.length; index += 1) {
@@ -61,11 +66,17 @@ function parseArgs(argv) {
     else if (arg === "--limit") options.limit = Number(readValue());
     else if (arg === "--dry-run") options.dryRun = true;
     else if (arg === "--force") options.force = true;
+    else if (arg === "--failed-only") options.failedOnly = true;
+    else if (arg === "--openverse-fallback") options.openverseFallback = true;
+    else if (arg === "--openverse-min-score") options.openverseMinScore = Number(readValue());
     else throw new Error(`Unknown argument: ${arg}`);
   }
 
   if (!Number.isInteger(options.limit) || options.limit < 1) {
     throw new Error("--limit must be a positive integer.");
+  }
+  if (!Number.isFinite(options.openverseMinScore) || options.openverseMinScore < 0) {
+    throw new Error("--openverse-min-score must be a non-negative number.");
   }
 
   return options;
@@ -258,6 +269,160 @@ function cleanWikimediaMetadataValue(value) {
   return cleaned || null;
 }
 
+function normalizeSearchText(value) {
+  return String(value ?? "")
+    .normalize("NFKD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .toLowerCase()
+    .replace(/&/g, " and ")
+    .replace(/[^a-z0-9]+/g, " ")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
+function venueSearchTokens(value) {
+  const stopwords = new Set([
+    "a",
+    "an",
+    "and",
+    "bar",
+    "cafe",
+    "club",
+    "de",
+    "del",
+    "der",
+    "el",
+    "hotel",
+    "hostel",
+    "la",
+    "le",
+    "les",
+    "museum",
+    "of",
+    "restaurant",
+    "the",
+  ]);
+  return normalizeSearchText(value)
+    .split(" ")
+    .filter((token) => token.length > 2 && !stopwords.has(token));
+}
+
+function scoreOpenverseResult(row, result) {
+  const venueText = normalizeSearchText(row.venue_name);
+  const cityText = normalizeSearchText(row.city_name);
+  const titleText = normalizeSearchText(result.title);
+  const creatorText = normalizeSearchText(result.creator);
+  const landingText = normalizeSearchText(result.foreign_landing_url);
+  const tagText = (result.tags ?? [])
+    .map((tag) => normalizeSearchText(tag.name ?? tag))
+    .filter(Boolean)
+    .join(" ");
+  const identityText = [titleText, creatorText, landingText].join(" ");
+  const combinedText = [identityText, tagText].join(" ");
+  const tokens = venueSearchTokens(row.venue_name);
+  const matchedTokens = tokens.filter((token) => identityText.includes(token));
+  const cityMatched = Boolean(cityText && combinedText.includes(cityText));
+
+  let score = 0;
+  if (venueText && titleText.includes(venueText)) score += 12;
+  if (cityMatched) score += 4;
+  score += matchedTokens.length * 3;
+  if (tokens.length && matchedTokens.length === tokens.length) score += 5;
+  if (result.source === "wikimedia_commons" || result.source === "flickr") score += 1;
+  if (result.width && result.height) {
+    const megapixels = (Number(result.width) * Number(result.height)) / 1_000_000;
+    score += Math.min(3, Math.max(0, megapixels / 2));
+  }
+
+  return score;
+}
+
+function isCredibleOpenverseResult(row, result, score, minScore) {
+  if (score < minScore) return false;
+
+  const venueText = normalizeSearchText(row.venue_name);
+  const cityText = normalizeSearchText(row.city_name);
+  const titleText = normalizeSearchText(result.title);
+  const landingText = normalizeSearchText(result.foreign_landing_url);
+  const identityText = [titleText, landingText].join(" ");
+  const tagText = (result.tags ?? [])
+    .map((tag) => normalizeSearchText(tag.name ?? tag))
+    .filter(Boolean)
+    .join(" ");
+  const cityMatched = Boolean(cityText && [identityText, tagText].join(" ").includes(cityText));
+  const tokens = venueSearchTokens(row.venue_name);
+  const matchedTokens = tokens.filter((token) => identityText.includes(token));
+
+  if (venueText && titleText.includes(venueText)) return true;
+  if (tokens.length >= 2 && matchedTokens.length >= 2 && cityMatched) return true;
+  if (tokens.length === 1 && matchedTokens.length === 1 && cityMatched) return true;
+  return false;
+}
+
+async function searchOpenverseSource(row, originalError, minScore) {
+  const queries = [
+    [row.venue_name, row.city_name].filter(Boolean).join(" "),
+    [row.venue_name, row.country_name].filter(Boolean).join(" "),
+  ].filter((query, index, all) => query && all.indexOf(query) === index);
+
+  for (const query of queries) {
+    const apiUrl = new URL(OPENVERSE_API_URL);
+    apiUrl.searchParams.set("q", query);
+    apiUrl.searchParams.set("page_size", "10");
+    apiUrl.searchParams.set("mature", "false");
+    apiUrl.searchParams.set("license_type", "commercial");
+    apiUrl.searchParams.set("license", OPENVERSE_ALLOWED_LICENSES);
+    apiUrl.searchParams.set("category", "photograph");
+
+    const response = await fetch(apiUrl, {
+      headers: {
+        "accept": "application/json",
+        "user-agent": USER_AGENT,
+      },
+    });
+    if (!response.ok) {
+      throw new Error(`openverse api returned ${response.status}`);
+    }
+
+    const body = await response.json();
+    const results = (body?.results ?? [])
+      .filter((result) => result?.url && /^https?:\/\//i.test(result.url))
+      .filter((result) => !result.width || !result.height || (Number(result.width) >= 400 && Number(result.height) >= 300))
+      .map((result) => ({
+        result,
+        score: scoreOpenverseResult(row, result),
+      }))
+      .filter(({ result, score }) => isCredibleOpenverseResult(row, result, score, minScore))
+      .sort((a, b) => b.score - a.score);
+
+    const best = results[0];
+    if (!best) continue;
+
+    return {
+      resolvedSourceUrl: best.result.foreign_landing_url ?? best.result.url,
+      downloadUrl: best.result.url,
+      sourceMetadata: {
+        provider: "openverse",
+        source: best.result.source ?? null,
+        title: best.result.title ?? null,
+        creator: best.result.creator ?? null,
+        credit: best.result.creator ?? null,
+        license: best.result.license ?? null,
+        license_url: best.result.license_url ?? null,
+        foreign_landing_url: best.result.foreign_landing_url ?? null,
+        download_url: best.result.url,
+        width: best.result.width ?? null,
+        height: best.result.height ?? null,
+        matched_query: query,
+        match_score: best.score,
+        fallback_reason: originalError?.message ?? null,
+      },
+    };
+  }
+
+  throw originalError;
+}
+
 function pickWikimediaMetadata(extmetadata, key) {
   return cleanWikimediaMetadataValue(extmetadata?.[key]?.value);
 }
@@ -411,6 +576,9 @@ async function loadCandidates(client, options, publicBaseUrl) {
   if (options.id) {
     values.push(options.id);
     conditions.push("(entry.legacy_id = $" + values.length + " or entry.id::text = $" + values.length + ")");
+  }
+  if (options.failedOnly) {
+    conditions.push("media.ingestion_status = 'failed'");
   }
 
   values.push(options.limit);
@@ -671,7 +839,23 @@ async function main() {
           stats.skipped += 1;
           continue;
         }
-        const resolvedSource = await resolveSource(row.source_image_url);
+        let resolvedSource;
+        try {
+          resolvedSource = await resolveSource(row.source_image_url);
+        } catch (sourceError) {
+          if (!options.openverseFallback) {
+            throw sourceError;
+          }
+          resolvedSource = await searchOpenverseSource(row, sourceError, options.openverseMinScore);
+          console.log(JSON.stringify({
+            phase: "openverse_fallback",
+            mediaId: row.media_id,
+            venue: row.venue_name,
+            query: resolvedSource.sourceMetadata?.matched_query,
+            score: resolvedSource.sourceMetadata?.match_score,
+            source: resolvedSource.sourceMetadata?.foreign_landing_url,
+          }));
+        }
         const storedMedia = await findStoredMediaBySource(client, row, resolvedSource, publicBaseUrl);
         if (storedMedia) {
           const publicUrl = storedMedia.public_url ?? storedMedia.url;
@@ -692,7 +876,46 @@ async function main() {
           continue;
         }
 
-        const image = await fetchResolvedImage(resolvedSource);
+        let image;
+        try {
+          image = await fetchResolvedImage(resolvedSource);
+        } catch (sourceError) {
+          if (!options.openverseFallback) {
+            throw sourceError;
+          }
+
+          resolvedSource = await searchOpenverseSource(row, sourceError, options.openverseMinScore);
+          console.log(JSON.stringify({
+            phase: "openverse_fallback",
+            mediaId: row.media_id,
+            venue: row.venue_name,
+            query: resolvedSource.sourceMetadata?.matched_query,
+            score: resolvedSource.sourceMetadata?.match_score,
+            source: resolvedSource.sourceMetadata?.foreign_landing_url,
+          }));
+
+          const fallbackStoredMedia = await findStoredMediaBySource(client, row, resolvedSource, publicBaseUrl);
+          if (fallbackStoredMedia) {
+            const publicUrl = fallbackStoredMedia.public_url ?? fallbackStoredMedia.url;
+            console.log(JSON.stringify({
+              phase: options.dryRun ? "would_reuse" : "reuse",
+              mediaId: row.media_id,
+              venue: row.venue_name,
+              sourceMediaId: fallbackStoredMedia.id,
+              publicUrl,
+            }));
+
+            if (!options.dryRun) {
+              await reuseStoredMediaRow(client, row, fallbackStoredMedia, resolvedSource);
+              if (row.entry_id) touchedEntryIds.add(row.entry_id);
+            }
+
+            stats.uploaded += 1;
+            continue;
+          }
+
+          image = await fetchResolvedImage(resolvedSource);
+        }
         const key = buildStorageKey(row, image.contentType);
         const publicUrl = `${publicBaseUrl.replace(/\/$/, "")}/${key}`;
         console.log(JSON.stringify({
