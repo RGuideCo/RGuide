@@ -169,6 +169,17 @@ function isR2Url(url, publicBaseUrl) {
   return url?.startsWith(`${publicBaseUrl.replace(/\/$/, "")}/`);
 }
 
+function normalizeDedupeUrl(value) {
+  if (!value) return null;
+  try {
+    const url = new URL(value);
+    url.hash = "";
+    return url.toString();
+  } catch {
+    return null;
+  }
+}
+
 function extensionFromUrl(url) {
   try {
     const pathname = new URL(url).pathname;
@@ -344,12 +355,11 @@ async function fetchImage(url) {
   return { bytes, contentType };
 }
 
-async function fetchSourceImage(sourceUrl) {
+async function resolveSource(sourceUrl) {
   const wikimedia = await resolveWikimediaSource(sourceUrl);
-  const image = await fetchImage(wikimedia?.downloadUrl ?? sourceUrl);
   return {
-    ...image,
     resolvedSourceUrl: wikimedia?.canonicalUrl ?? sourceUrl,
+    downloadUrl: wikimedia?.downloadUrl ?? sourceUrl,
     sourceMetadata: wikimedia
       ? {
           provider: wikimedia.provider,
@@ -364,6 +374,15 @@ async function fetchSourceImage(sourceUrl) {
           license_url: wikimedia.licenseUrl,
         }
       : null,
+  };
+}
+
+async function fetchResolvedImage(resolvedSource) {
+  const image = await fetchImage(resolvedSource.downloadUrl);
+  return {
+    ...image,
+    resolvedSourceUrl: resolvedSource.resolvedSourceUrl,
+    sourceMetadata: resolvedSource.sourceMetadata,
   };
 }
 
@@ -435,6 +454,110 @@ async function markFailed(client, row, error) {
          updated_at = now()
      where id = $1`,
     [row.media_id, error.message.slice(0, 500)],
+  );
+}
+
+function sourceDedupeKeys(row, resolvedSource) {
+  return [
+    row.source_image_url,
+    row.source_url,
+    row.url,
+    resolvedSource?.resolvedSourceUrl,
+    resolvedSource?.downloadUrl,
+    resolvedSource?.sourceMetadata?.canonical_url,
+    resolvedSource?.sourceMetadata?.download_url,
+  ]
+    .map(normalizeDedupeUrl)
+    .filter(Boolean)
+    .filter((value, index, all) => all.indexOf(value) === index);
+}
+
+async function findStoredMediaBySource(client, row, resolvedSource, publicBaseUrl) {
+  const keys = sourceDedupeKeys(row, resolvedSource);
+  if (!keys.length) return null;
+
+  const { rows } = await client.query(
+    `select
+       media.id,
+       media.url,
+       media.public_url,
+       media.storage_provider,
+       media.storage_bucket,
+       media.storage_key,
+       media.content_type,
+       media.byte_size,
+       media.source_url,
+       media.source_type,
+       media.credit,
+       media.license,
+       media.raw_metadata
+     from public.venue_media media
+     where media.id <> $1
+       and media.is_active = true
+       and media.media_type = 'image'
+       and media.storage_provider = 'cloudflare_r2'
+       and media.ingestion_status = 'stored'
+       and media.public_url like $3
+       and (
+         media.source_url = any($2::text[])
+         or media.raw_metadata #>> '{source_resolver,canonical_url}' = any($2::text[])
+         or media.raw_metadata #>> '{source_resolver,download_url}' = any($2::text[])
+       )
+     order by media.ingested_at desc nulls last, media.updated_at desc
+     limit 1`,
+    [row.media_id, keys, `${publicBaseUrl.replace(/\/$/, "")}/%`],
+  );
+
+  return rows[0] ?? null;
+}
+
+async function reuseStoredMediaRow(client, row, storedMedia, resolvedSource) {
+  const sourceMetadata = resolvedSource?.sourceMetadata;
+  const resolvedSourceUrl = resolvedSource?.resolvedSourceUrl ?? storedMedia.source_url;
+  const rawMetadataPatch = {
+    deduped_from_media_id: storedMedia.id,
+    ...(sourceMetadata ? { source_resolver: sourceMetadata } : {}),
+  };
+
+  await client.query(
+    `update public.venue_media
+     set source_url = coalesce($9, source_url),
+         url = $2,
+         public_url = $2,
+         storage_provider = $3,
+         storage_bucket = $4,
+         storage_key = $5,
+         content_type = $6,
+         byte_size = $7,
+         ingestion_status = 'stored',
+         ingestion_error = null,
+         validation_status = 'valid',
+         validation_error = null,
+         last_validated_at = now(),
+         ingested_at = now(),
+         source_type = coalesce(source_type, $10, $11),
+         credit = coalesce(credit, $12, $13),
+         license = coalesce(license, $14, $15),
+         raw_metadata = raw_metadata || $8::jsonb,
+         updated_at = now()
+     where id = $1`,
+    [
+      row.media_id,
+      storedMedia.public_url ?? storedMedia.url,
+      storedMedia.storage_provider,
+      storedMedia.storage_bucket,
+      storedMedia.storage_key,
+      storedMedia.content_type,
+      storedMedia.byte_size,
+      JSON.stringify(rawMetadataPatch),
+      resolvedSourceUrl,
+      sourceMetadata?.provider ?? null,
+      storedMedia.source_type,
+      sourceMetadata?.credit ?? null,
+      storedMedia.credit,
+      sourceMetadata?.license ?? null,
+      storedMedia.license,
+    ],
   );
 }
 
@@ -548,7 +671,28 @@ async function main() {
           stats.skipped += 1;
           continue;
         }
-        const image = await fetchSourceImage(row.source_image_url);
+        const resolvedSource = await resolveSource(row.source_image_url);
+        const storedMedia = await findStoredMediaBySource(client, row, resolvedSource, publicBaseUrl);
+        if (storedMedia) {
+          const publicUrl = storedMedia.public_url ?? storedMedia.url;
+          console.log(JSON.stringify({
+            phase: options.dryRun ? "would_reuse" : "reuse",
+            mediaId: row.media_id,
+            venue: row.venue_name,
+            sourceMediaId: storedMedia.id,
+            publicUrl,
+          }));
+
+          if (!options.dryRun) {
+            await reuseStoredMediaRow(client, row, storedMedia, resolvedSource);
+            if (row.entry_id) touchedEntryIds.add(row.entry_id);
+          }
+
+          stats.uploaded += 1;
+          continue;
+        }
+
+        const image = await fetchResolvedImage(resolvedSource);
         const key = buildStorageKey(row, image.contentType);
         const publicUrl = `${publicBaseUrl.replace(/\/$/, "")}/${key}`;
         console.log(JSON.stringify({
