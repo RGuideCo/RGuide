@@ -686,7 +686,7 @@ textarea:focus-visible {
   }
 
   .expanded-guide-stop-body {
-    padding: 0 0 0.75rem;
+    padding: 0;
   }
 
   .expanded-guide-stop-body .expanded-poi-bio:not(.expanded-poi-bio-no-photo) {
@@ -709,7 +709,9 @@ textarea:focus-visible {
   }
 
   .expanded-guide-stop-body .expanded-guide-stop-actions {
-    padding: 0 1rem;
+    margin-bottom: 0;
+    padding: 0.65rem 1rem 0.75rem;
+    background: rgba(255, 255, 255, 0.86);
   }
 }
 

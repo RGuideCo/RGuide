@@ -1,7 +1,9 @@
 "use client";
 
 import type { ReactNode } from "react";
+import Link from "next/link";
 
+import { getCreatorHref } from "@/lib/routes";
 import type { MapList } from "@/types";
 
 interface GuideExpandedIntroProps {
@@ -36,6 +38,14 @@ export function GuideExpandedIntro({ list, sourceAction }: GuideExpandedIntroPro
       >
         {list.description}
       </p>
+      <Link
+        href={getCreatorHref({ name: list.creator.name })}
+        className="guide-content-cascade-item relative z-10 mt-2 block px-4 text-sm font-bold text-slate-900 lg:hidden"
+        style={{ animationDelay: "50ms" }}
+      >
+        <span className="mr-1 text-slate-400">-</span>
+        {list.creator.name}
+      </Link>
       {list.highlights?.length ? (
         <div
           className="guide-content-cascade-item relative z-10 mt-3 rounded-2xl border border-slate-200 bg-white px-3 py-3"

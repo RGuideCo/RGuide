@@ -455,6 +455,7 @@ function formatItineraryDayLabel(dateKey: string, index: number) {
 }
 
 const STOP_SCROLL_TOP_INSET = 4;
+const MOBILE_LAST_STOP_SCROLL_EXTRA = 96;
 
 function getSourceDisplayName(source: GuideSource) {
   return source.name
@@ -820,6 +821,7 @@ export function MapListCard({
       const lastStopSentinel = lastStop
         ? document.getElementById(`guide-stop-top-${list.id}-${lastStop.id}`)
         : null;
+      const lastStopElement = lastStop ? document.getElementById(`guide-stop-item-${list.id}-${lastStop.id}`) : null;
 
       if (!scrollElement || !stopListElement || !lastStopSentinel) {
         setStopListEndPadding(0);
@@ -832,10 +834,21 @@ export function MapListCard({
       const previousPadding = Number.parseFloat(window.getComputedStyle(stopListElement).paddingBottom) || 0;
       const sentinelTop = scrollElement.scrollTop + sentinelRect.top - listRect.top;
       const naturalScrollHeight = scrollElement.scrollHeight - previousPadding;
-      const nextPadding = Math.max(0, Math.ceil(sentinelTop + scrollElement.clientHeight - naturalScrollHeight));
+      const desktopMaxScrollTop = Math.max(0, Math.ceil(sentinelTop - STOP_SCROLL_TOP_INSET));
+      const lastStopBottom = lastStopElement
+        ? scrollElement.scrollTop + lastStopElement.getBoundingClientRect().bottom - listRect.top
+        : sentinelTop;
+      const mobileMaxScrollTop = Math.max(
+        desktopMaxScrollTop,
+        Math.ceil(lastStopBottom - scrollElement.clientHeight + MOBILE_LAST_STOP_SCROLL_EXTRA),
+      );
+      const nextMaxScrollTop = shouldUseMobileScroller ? mobileMaxScrollTop : desktopMaxScrollTop;
+      const nextPadding = shouldUseMobileScroller
+        ? 0
+        : Math.max(0, Math.ceil(nextMaxScrollTop + scrollElement.clientHeight - naturalScrollHeight));
 
       setStopListEndPadding(nextPadding);
-      setStopListMaxScrollTop(Math.max(0, Math.ceil(sentinelTop - STOP_SCROLL_TOP_INSET)));
+      setStopListMaxScrollTop(nextMaxScrollTop);
     };
 
     updateEndPadding();
@@ -1736,7 +1749,6 @@ export function MapListCard({
                   </ol>
                 </>
               ) : null}
-              {fillPane ? renderExpandedFooter("lg:hidden") : null}
               </GuideBodyComponent>
             </div>
           </div>
