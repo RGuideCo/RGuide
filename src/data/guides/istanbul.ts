@@ -55,7 +55,7 @@ export const istanbulCitywideGuides = [
         foodServiceType: "restaurant",
         venueKind: "food_drink",
         hours: { default: "Daily lunch-dinner; confirm current hours before crossing." },
-        photo: "https://ciya.com.tr/wp-content/uploads/2023/02/ciya-sofrasi.jpg",
+        photo: "https://ciya.com.tr/cliparts/kapak78.jpg",
         officialUrl: "https://ciya.com.tr/",
       },
       {
@@ -77,7 +77,7 @@ export const istanbulCitywideGuides = [
           sat: "12:00 PM-4:00 PM, 5:30 PM-12:00 AM",
           sun: "4:00 PM-12:00 AM",
         },
-        photo: "https://www.karakoylokantasi.com/assets/images/karakoy-lokantasi-og.jpg",
+        photo: "https://www.karakoylokantasi.com/assets/img/info/lunch-small-1.jpg",
         officialUrl: "https://www.karakoylokantasi.com/en/info",
       },
       {
@@ -191,7 +191,7 @@ export const istanbulCitywideGuides = [
         nightlifeType: "cocktail_bar",
         venueKind: "nightlife",
         hours: { default: "Evenings-late; confirm current schedule." },
-        photo: "https://alexandrabar.com/wp-content/uploads/2016/09/home-bg-01-1.png",
+        photo: "https://db.curiousspoon.app/storage/v1/object/public/dish-images/alexandra_cocktail_bar.png",
         officialUrl: "https://alexandrabar.com/",
       },
       {
@@ -219,7 +219,7 @@ export const istanbulCitywideGuides = [
         nightlifeType: "live_music_venue",
         venueKind: "nightlife",
         hours: { default: "Evenings-late; programming varies by night." },
-        photo: "https://arkaoda.com/wp-content/uploads/2024/01/arkaoda.jpg",
+        photo: "https://www.arkaoda.com/uploads/details/20170830190108.jpg",
         officialUrl: "https://www.arkaoda.com/",
       },
       {
@@ -233,7 +233,7 @@ export const istanbulCitywideGuides = [
         nightlifeType: "rooftop_bar",
         venueKind: "nightlife",
         hours: { default: "Daily evening-late; club programming varies." },
-        photo: "https://www.360istanbul.com/wp-content/uploads/2022/09/360istanbul.jpg",
+        photo: "https://360istanbul.com/wp-content/uploads/2024/09/slide1.jpg",
         officialUrl: "https://www.360istanbul.com/",
       },
     ],
@@ -457,7 +457,7 @@ export const istanbulCitywideGuides = [
           "Kilic Ali Pasa Hamami gives the list a ritual rather than another sight. Set in a restored Sinan complex, it offers timed bathing sessions and a central Tophane location, making it one of the easiest ways to turn an overfull walking day into something slower, quieter, and more embodied.",
         venueKind: "service",
         hours: { default: "Daily by appointment; men and women use separate time windows." },
-        photo: "https://kilicalipasahamami.com/wp-content/uploads/2021/09/kilic-ali-pasa-hamami.jpg",
+        photo: "https://kilicalipasahamami.com/storage/sliders/May2023/mtDhvGvv1s4ENIVV4sHz.jpg",
         officialUrl: "https://kilicalipasahamami.com/",
       },
       {
@@ -488,7 +488,7 @@ export const istanbulCitywideGuides = [
       "Best hotels in Istanbul, comparing Sultanahmet heritage stays, Pera grand hotels, Karakoy waterfront luxury, Beyoglu design rooms, and Bosphorus mansions.",
     title: "Sultanahmet, Pera, Karakoy, and the Bosphorus",
     description:
-      "This hotel guide compares bases as much as properties: Four Seasons for immediate Sultanahmet access, Pera Palace for historic grand-hotel atmosphere, Soho House for a design-led Beyoglu stay, The Peninsula for Karakoy waterfront luxury, and Six Senses for a quieter Bosphorus mansion experience north of the center.",
+      "This hotel guide compares bases as much as properties: Four Seasons for immediate Sultanahmet access, Pera Palace for historic grand-hotel atmosphere, Soho House for a design-led Beyoglu stay, The Peninsula for Karakoy waterfront luxury, and Kocatas Mansions for a quieter Bosphorus mansion experience north of the center.",
     url: "https://www.google.com/maps/search/best+hotels+istanbul",
     category: "Stay",
     location: cityLocation,
@@ -533,7 +533,8 @@ export const istanbulCitywideGuides = [
         venueKind: "lodging",
         lodgingType: "hotel",
         hours: alwaysOpen,
-        photo: "https://images.ctfassets.net/8urtyqugdt2l/3vPvxD4aY2OvuVwRwe4qfD/47f71d58e21427ecdc8ce77fa704ec69/SH.Istanbul.House.jpg",
+        photo:
+          "https://media.fastly.sohohousedigital.com/f_auto,q_auto,fl_progressive:steep,w_640/t_dc_base/sitecore-prod/images/dotcom-sites/house-pages/2024-house-page-update/eu/istanbul/001_soho-house-istanbul-carousel.jpg",
         officialUrl: "https://www.sohohouse.com/en-us/houses/soho-house-istanbul",
       },
       {
@@ -551,16 +552,17 @@ export const istanbulCitywideGuides = [
       },
       {
         id: "istanbul-hotel-six-senses-kocatas",
-        name: "Six Senses Kocatas Mansions",
+        name: "Kocatas Mansions Istanbul",
         coordinates: [41.1662, 29.0548],
         description:
-          "Six Senses Kocatas Mansions is the northern Bosphorus counterpoint to the central hotels. Set in restored waterfront mansions, it offers more resort mood than city-hotel efficiency, making it best for travelers who value water, quiet, and a slower return each night more than quick access to Sultanahmet.",
+          "Kocatas Mansions Istanbul is the northern Bosphorus counterpoint to the central hotels. Set in restored Ottoman-era mansions above the water, it offers more resort mood than city-hotel efficiency, making it best for travelers who value quiet, views, and a slower return each night more than quick access to Sultanahmet.",
         category: "Stay",
         venueKind: "lodging",
         lodgingType: "hotel",
         hours: alwaysOpen,
-        photo: "https://www.sixsenses.com/media/5030/six-senses-kocatas-mansions-istanbul-exterior.jpg",
-        officialUrl: "https://www.sixsenses.com/en/hotels-resorts/europe/turkey/kocatas-mansions-istanbul/",
+        photo:
+          "https://assets.anantara.com/image/upload/q_auto,f_auto,c_limit,w_1920/media/minor/anantara/images/kocatas-mansion-istanbul/akmi-image/1_homepage/kocatas_mansions_homepage_banner_1920x900.jpg",
+        officialUrl: "https://www.anantara.com/en/kocatas-mansions-istanbul",
       },
     ],
     sources: [
@@ -568,7 +570,7 @@ export const istanbulCitywideGuides = [
       { name: "Pera Palace official", url: "https://perapalace.com/en/" },
       { name: "Soho House Istanbul official", url: "https://www.sohohouse.com/en-us/houses/soho-house-istanbul" },
       { name: "The Peninsula Istanbul official", url: "https://www.peninsula.com/en/istanbul/5-star-luxury-hotel-karakoy" },
-      { name: "Six Senses Kocatas Mansions official", url: "https://www.sixsenses.com/en/hotels-resorts/europe/turkey/kocatas-mansions-istanbul/" },
+      { name: "Kocatas Mansions Istanbul official", url: "https://www.anantara.com/en/kocatas-mansions-istanbul" },
       { name: "Conde Nast Traveler - Istanbul hotels", url: "https://www.cntraveler.com/gallery/best-hotels-in-istanbul" },
     ],
   },
@@ -599,7 +601,7 @@ export const istanbulCitywideGuides = [
         venueKind: "lodging",
         lodgingType: "hostel",
         hours: alwaysOpen,
-        photo: "https://www.cheershostel.com/wp-content/uploads/2023/12/cheers-hostel-istanbul-rooftop.jpg",
+        photo: "https://www.cheershostel.com/panel/uploads/galleries_v/images/cheers//570x570/dsc00885-edit.jpg",
         officialUrl: "https://www.cheershostel.com/",
       },
       {
@@ -612,7 +614,8 @@ export const istanbulCitywideGuides = [
         venueKind: "lodging",
         lodgingType: "hostel",
         hours: alwaysOpen,
-        photo: "https://bahaushostel.com/wp-content/uploads/2022/06/bahaus-guesthouse-hostel-istanbul.jpg",
+        photo:
+          "https://a.hwstatic.com/image/upload/f_auto,q_auto,h_320,c_limit,e_sharpen,e_improve,e_vibrance:60/propertyimages/6/6418/sdf6usepeqak67j4ufj3.jpg",
         officialUrl: "https://bahaushostel.com/",
       },
       {
@@ -638,7 +641,8 @@ export const istanbulCitywideGuides = [
         venueKind: "lodging",
         lodgingType: "hostel",
         hours: alwaysOpen,
-        photo: "https://hushhostels.com/wp-content/uploads/2022/10/hush-hostel-lounge-istanbul.jpg",
+        photo:
+          "https://a.hwstatic.com/image/upload/f_auto,q_auto,h_320,c_limit,e_sharpen,e_improve,e_vibrance:60/propertyimages/4/42030/6.jpg",
         officialUrl: "https://hushhostels.com/",
       },
       {
@@ -651,7 +655,8 @@ export const istanbulCitywideGuides = [
         venueKind: "lodging",
         lodgingType: "hostel",
         hours: alwaysOpen,
-        photo: "https://www.secondhomehostel.com/wp-content/uploads/2022/01/second-home-hostel-istanbul.jpg",
+        photo:
+          "https://a.hwstatic.com/image/upload/f_auto,q_auto,h_320,c_limit,e_sharpen,e_improve,e_vibrance:60/propertyimages/3/35924/r4pnt012uzd7ggiqa456.jpg",
         officialUrl: "https://www.secondhomehostel.com/",
       },
     ],
