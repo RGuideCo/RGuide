@@ -1824,7 +1824,7 @@ export const barcelonaCoreGuides = [
           "sat": "12:30 PM-4:00 PM, 7:30 PM-11:30 PM",
           "sun": "12:30 PM-4:00 PM, 7:30 PM-11:00 PM"
         },
-        "photo": "https://www.novacircle.com/images/french_9-compressed.webp"
+        "photo": "https://media.timeout.com/images/106162177/1024/576/image.jpg"
       }],
     "sources": [
       {
