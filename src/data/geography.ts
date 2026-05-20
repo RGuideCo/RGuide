@@ -3608,10 +3608,13 @@ function createFallbackPrimaryCity(country: WorldCountrySeed): City {
   const countryCode = getCountryCode(country.name);
   const countryData = countryCode ? getCountryData(countryCode) : undefined;
   const capitalFeature = countryCapitalLookup.get(normalizePlaceName(country.name));
-  const fallbackCityName = capitalFeature?.capital || countryData?.capital || `${country.name} City`;
-  const fallbackCoordinates = capitalFeature?.coordinates
-    ? ([capitalFeature.coordinates[1], capitalFeature.coordinates[0]] as [number, number])
-    : country.coordinates;
+  const fallbackCityName =
+    capitalNameOverrides[country.id] ?? capitalFeature?.capital ?? countryData?.capital ?? `${country.name} City`;
+  const fallbackCoordinates =
+    capitalCoordinateOverrides[country.id] ??
+    (capitalFeature?.coordinates
+      ? ([capitalFeature.coordinates[1], capitalFeature.coordinates[0]] as [number, number])
+      : country.coordinates);
 
   return {
     id: slugify(`${country.id}-${fallbackCityName}`),
@@ -3621,7 +3624,7 @@ function createFallbackPrimaryCity(country: WorldCountrySeed): City {
     coordinates: fallbackCoordinates,
     image: cityImage(slugify(fallbackCityName)),
     listCount: 0,
-    description: `Primary city guide seed for ${country.name}, used while fuller city coverage is being added.`,
+    description: `${fallbackCityName} gives ${country.name}'s guide a practical city starting point, helping travelers orient around the capital before branching into the wider country.`,
   };
 }
 
@@ -4019,8 +4022,23 @@ const countryDescriptionOverrides: Record<string, string> = {
 
 const countryDescriptionLimit = 320;
 const capitalNameOverrides: Record<string, string> = {
+  "northern-cyprus": "North Nicosia",
+  "republic-of-serbia": "Belgrade",
+  somaliland: "Hargeisa",
+  "the-bahamas": "Nassau",
   "united-republic-of-tanzania": "Dodoma",
   ukraine: "Kyiv",
+  "west-bank": "Ramallah",
+};
+
+const capitalCoordinateOverrides: Record<string, [number, number]> = {
+  "northern-cyprus": [35.1856, 33.3823],
+  "republic-of-serbia": [44.7866, 20.4489],
+  somaliland: [9.5624, 44.077],
+  "the-bahamas": [25.0443, -77.3504],
+  "united-republic-of-tanzania": [-6.163, 35.7516],
+  ukraine: [50.4501, 30.5234],
+  "west-bank": [31.9038, 35.2034],
 };
 
 function appendIfFits(base: string, addition: string, limit = countryDescriptionLimit): string {
