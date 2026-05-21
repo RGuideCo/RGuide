@@ -48,6 +48,7 @@ function parseArgs(argv) {
     dryRun: false,
     force: false,
     failedOnly: false,
+    quarantinedOnly: false,
     openverseFallback: false,
     openverseMinScore: 8,
   };
@@ -69,6 +70,7 @@ function parseArgs(argv) {
     else if (arg === "--dry-run") options.dryRun = true;
     else if (arg === "--force") options.force = true;
     else if (arg === "--failed-only") options.failedOnly = true;
+    else if (arg === "--quarantined-only") options.quarantinedOnly = true;
     else if (arg === "--openverse-fallback") options.openverseFallback = true;
     else if (arg === "--openverse-min-score") options.openverseMinScore = Number(readValue());
     else throw new Error(`Unknown argument: ${arg}`);
@@ -555,17 +557,24 @@ async function fetchResolvedImage(resolvedSource) {
 
 async function loadCandidates(client, options, publicBaseUrl) {
   const conditions = [
-    "media.is_active = true",
     "media.media_type = 'image'",
     "media.url is not null",
     "btrim(media.url) <> ''",
   ];
   const values = [];
 
+  if (options.quarantinedOnly) {
+    conditions.push("media.raw_metadata #>> '{quarantine_reason}' = 'cross_venue_r2_dedupe'");
+  } else {
+    conditions.push("media.is_active = true");
+  }
+
   if (!options.force) {
     values.push(publicBaseUrl.replace(/\/$/, "") + "/%");
-    conditions.push("(media.public_url is null or media.public_url not like $" + values.length + ")");
-    conditions.push("(media.storage_provider is null or media.storage_provider <> 'cloudflare_r2')");
+    if (!options.quarantinedOnly) {
+      conditions.push("(media.public_url is null or media.public_url not like $" + values.length + ")");
+      conditions.push("(media.storage_provider is null or media.storage_provider <> 'cloudflare_r2')");
+    }
   }
   if (options.city) {
     values.push(options.city);
@@ -597,6 +606,7 @@ async function loadCandidates(client, options, publicBaseUrl) {
       "  media.venue_id,",
       "  media.url,",
       "  media.source_url,",
+      "  media.raw_metadata #>> '{quarantine_reason}' as quarantine_reason,",
       "  media.role,",
       "  venue.slug as venue_slug,",
       "  venue.name as venue_name,",
@@ -619,6 +629,10 @@ async function loadCandidates(client, options, publicBaseUrl) {
   );
 
   return rows.filter((row) => !isR2Url(row.source_image_url, publicBaseUrl));
+}
+
+function isQuarantinedPlaceholder(row) {
+  return row.quarantine_reason === "cross_venue_r2_dedupe";
 }
 
 async function markFailed(client, row, error) {
@@ -698,7 +712,8 @@ async function reuseStoredMediaRow(client, row, storedMedia, resolvedSource) {
 
   await client.query(
     `update public.venue_media
-     set source_url = coalesce($9, source_url),
+     set is_active = true,
+         source_url = coalesce($9, source_url),
          url = $2,
          public_url = $2,
          storage_provider = $3,
@@ -715,7 +730,13 @@ async function reuseStoredMediaRow(client, row, storedMedia, resolvedSource) {
          source_type = coalesce(source_type, $10, $11),
          credit = coalesce(credit, $12, $13),
          license = coalesce(license, $14, $15),
-         raw_metadata = raw_metadata || $8::jsonb,
+         raw_metadata = (
+           raw_metadata
+           - 'quarantined_at'
+           - 'quarantine_reason'
+           - 'quarantine_storage_key'
+           - 'quarantine_owner_media_id'
+         ) || $8::jsonb,
          updated_at = now()
      where id = $1`,
     [
@@ -742,7 +763,8 @@ async function updateMediaRow(client, row, storage, bucket, publicBaseUrl) {
   const publicUrl = `${publicBaseUrl.replace(/\/$/, "")}/${storage.key}`;
   await client.query(
     `update public.venue_media
-     set source_url = coalesce($7, nullif(source_url, ''), url),
+     set is_active = true,
+         source_url = coalesce($7, nullif(source_url, ''), url),
          url = $2,
          public_url = $2,
          storage_provider = 'cloudflare_r2',
@@ -759,7 +781,13 @@ async function updateMediaRow(client, row, storage, bucket, publicBaseUrl) {
          source_type = coalesce(source_type, $8),
          credit = coalesce(credit, $9),
          license = coalesce(license, $10),
-         raw_metadata = raw_metadata || $11::jsonb,
+         raw_metadata = (
+           raw_metadata
+           - 'quarantined_at'
+           - 'quarantine_reason'
+           - 'quarantine_storage_key'
+           - 'quarantine_owner_media_id'
+         ) || $11::jsonb,
          updated_at = now()
      where id = $1`,
     [
@@ -850,6 +878,9 @@ async function main() {
         }
         let resolvedSource;
         try {
+          if (isQuarantinedPlaceholder(row)) {
+            throw new Error("quarantined placeholder source skipped");
+          }
           resolvedSource = await resolveSource(row.source_image_url);
         } catch (sourceError) {
           if (!options.openverseFallback) {
