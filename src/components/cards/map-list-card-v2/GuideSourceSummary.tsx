@@ -33,7 +33,7 @@ export function GuideSourceSummary({
   if (variant === "collapsed") {
     return (
       <div
-        className="relative z-10 mt-2 flex w-full items-center gap-2 border-t border-slate-950/15 pt-2 pl-0.5 text-left"
+        className="relative z-10 -mb-1.5 mt-2 flex w-full items-center gap-2 border-t border-slate-950/15 pt-1.5 text-left"
         aria-label="Guide sources"
       >
         <span className="font-mono text-[9px] font-semibold uppercase tracking-[0.16em] text-slate-400">
@@ -44,7 +44,7 @@ export function GuideSourceSummary({
           {sourcePreview.map((source, index) => (
             <span
               key={`${listId}-source-strip-${source.name}-${index}`}
-              className="inline-flex h-4 w-4 items-center justify-center overflow-hidden bg-white ring-1 ring-slate-200"
+              className="inline-flex h-5 w-5 items-center justify-center overflow-hidden bg-white ring-1 ring-slate-200"
               title={source.name}
             >
               <img
@@ -52,7 +52,7 @@ export function GuideSourceSummary({
                 alt=""
                 loading="lazy"
                 decoding="async"
-                className="h-3 w-3"
+                className="h-4 w-4"
               />
             </span>
           ))}

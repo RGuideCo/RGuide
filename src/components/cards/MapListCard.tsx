@@ -621,6 +621,9 @@ export function MapListCard({
   const eventCardVenue = isEventGuide ? getEventCardVenue(list, hiddenLocationParts) : null;
   const eventCardDateLabel = isEventGuide ? buildEventCardDateLabel(list) : null;
   const GuideBodyComponent = isEventGuide ? EventCardBody : isItineraryGuide ? JourneyCardBody : GuideCardBody;
+  const firstPoi = list.stops[0];
+  const collapsedFirstPoiPhoto =
+    !expandedChrome && firstPoi ? getPoiPhoto(firstPoi.photo) ?? getPoiPhoto(firstPoi.places?.[0]?.photo) : null;
   const preservingListChrome = preserveExpandedChrome && !fillPane;
   const retractingListChrome = preservingListChrome && retractExpandedChrome;
   const expandingListChrome = expandExpandedChrome && expandedChrome;
@@ -1226,7 +1229,7 @@ export function MapListCard({
     </div>
   );
 
-  return (
+  const card = (
     <MapListCardRoot
       list={list}
       fillPane={fillPane}
@@ -1601,6 +1604,7 @@ export function MapListCard({
                         const stopCategoryStyle = CATEGORY_STYLES[stopCategory];
                         const stopPhoto = getPoiPhoto(stop.photo);
                         const stopAttributeTags = getPoiAttributeTags(stop, stopCategory);
+                        const hasStopCopy = stopContent.summary.trim().length > 0 || stopAttributeTags.length > 0;
                         const stayBookingDetails = getStayBookingDetails(list, stop, stopCategory);
                         const timetableUrl = stop.timetableUrl;
                         const officialStopUrl = list.id.startsWith("event-")
@@ -1682,16 +1686,18 @@ export function MapListCard({
                                     />
                                   </button>
                                 ) : null}
-                                <div className="expanded-poi-copy min-w-0">
-                                  <p>{stopContent.summary}</p>
-                                  {stopAttributeTags.length ? (
-                                    <div className="expanded-poi-tags" aria-label={`${stop.name} attributes`}>
-                                      {stopAttributeTags.map((tag) => (
-                                        <span key={`${stop.id}-tag-${tag}`}>{tag}</span>
-                                      ))}
-                                    </div>
-                                  ) : null}
-                                </div>
+                                {hasStopCopy ? (
+                                  <div className="expanded-poi-copy min-w-0">
+                                    {stopContent.summary.trim().length ? <p>{stopContent.summary}</p> : null}
+                                    {stopAttributeTags.length ? (
+                                      <div className="expanded-poi-tags" aria-label={`${stop.name} attributes`}>
+                                        {stopAttributeTags.map((tag) => (
+                                          <span key={`${stop.id}-tag-${tag}`}>{tag}</span>
+                                        ))}
+                                      </div>
+                                    ) : null}
+                                  </div>
+                                ) : null}
                               </div>
                               {stop.places?.length ? (
                                 <div className="mt-3">
@@ -1967,5 +1973,37 @@ export function MapListCard({
           )
         : null}
     </MapListCardRoot>
+  );
+
+  if (!collapsedFirstPoiPhoto || expandedChrome) {
+    return card;
+  }
+
+  return (
+    <div
+      className="collapsed-guide-card-with-outboard-image"
+      style={{ "--guide-accent": guideAccentColor } as React.CSSProperties}
+      onMouseEnter={() => onHoverStart?.(list)}
+      onMouseLeave={() => {
+        onStopHoverChange?.(null);
+        onHoverEnd?.();
+      }}
+      onFocus={() => onHoverStart?.(list)}
+      onBlur={() => {
+        onStopHoverChange?.(null);
+        onHoverEnd?.();
+      }}
+    >
+      <div className="collapsed-guide-outboard-image" style={{ borderColor: guideAccentColor }} aria-hidden="true">
+        <img
+          src={collapsedFirstPoiPhoto}
+          alt=""
+          loading="lazy"
+          decoding="async"
+          className="h-full w-full object-cover"
+        />
+      </div>
+      {card}
+    </div>
   );
 }

@@ -5534,8 +5534,8 @@ export function SplitScreenSection({
             style={
               {
                 "--shell-cols": isLeftPaneCollapsed
-                  ? "0px minmax(0,1fr) minmax(0,1fr)"
-                  : "minmax(280px,0.66fr) minmax(0,1.14fr) minmax(576px,1.2fr)",
+                  ? "0px minmax(0,0.9fr) minmax(640px,1.25fr)"
+                  : "minmax(280px,0.66fr) minmax(0,0.98fr) minmax(640px,1.38fr)",
               } as React.CSSProperties
             }
           >
