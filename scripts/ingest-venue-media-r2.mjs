@@ -43,6 +43,7 @@ function parseArgs(argv) {
     city: null,
     slug: null,
     id: null,
+    mediaId: null,
     limit: 25,
     dryRun: false,
     force: false,
@@ -63,6 +64,7 @@ function parseArgs(argv) {
     if (arg === "--city") options.city = readValue();
     else if (arg === "--slug") options.slug = readValue();
     else if (arg === "--id") options.id = readValue();
+    else if (arg === "--media-id") options.mediaId = readValue();
     else if (arg === "--limit") options.limit = Number(readValue());
     else if (arg === "--dry-run") options.dryRun = true;
     else if (arg === "--force") options.force = true;
@@ -577,6 +579,10 @@ async function loadCandidates(client, options, publicBaseUrl) {
     values.push(options.id);
     conditions.push("(entry.legacy_id = $" + values.length + " or entry.id::text = $" + values.length + ")");
   }
+  if (options.mediaId) {
+    values.push(options.mediaId);
+    conditions.push("media.id::text = $" + values.length);
+  }
   if (options.failedOnly) {
     conditions.push("media.ingestion_status = 'failed'");
   }
@@ -588,6 +594,7 @@ async function loadCandidates(client, options, publicBaseUrl) {
     [
       "select distinct on (media.id)",
       "  media.id as media_id,",
+      "  media.venue_id,",
       "  media.url,",
       "  media.source_url,",
       "  media.role,",
@@ -654,6 +661,7 @@ async function findStoredMediaBySource(client, row, resolvedSource, publicBaseUr
        media.storage_key,
        media.content_type,
        media.byte_size,
+       media.venue_id,
        media.source_url,
        media.source_type,
        media.credit,
@@ -661,6 +669,7 @@ async function findStoredMediaBySource(client, row, resolvedSource, publicBaseUr
        media.raw_metadata
      from public.venue_media media
      where media.id <> $1
+       and media.venue_id = $4
        and media.is_active = true
        and media.media_type = 'image'
        and media.storage_provider = 'cloudflare_r2'
@@ -673,7 +682,7 @@ async function findStoredMediaBySource(client, row, resolvedSource, publicBaseUr
        )
      order by media.ingested_at desc nulls last, media.updated_at desc
      limit 1`,
-    [row.media_id, keys, `${publicBaseUrl.replace(/\/$/, "")}/%`],
+    [row.media_id, keys, `${publicBaseUrl.replace(/\/$/, "")}/%`, row.venue_id],
   );
 
   return rows[0] ?? null;
