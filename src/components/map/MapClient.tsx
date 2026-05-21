@@ -36,12 +36,15 @@ interface MapClientProps {
   activeGuide?: MapList | null;
   activeGuideFitNonce?: number;
   guideLists?: MapList[];
+  visibleGuideMarkerIds?: string[];
+  hoveredGuideMarkerId?: string | null;
   savedLocations?: SavedMapLocation[];
   visibleNestedStopParentIds?: string[];
   hoveredStopId?: string | null;
   selectedStopId?: string | null;
   onHoverGuideStop?: (stopId: string | null) => void;
   onSelectGuideStop?: (stopId: string) => void;
+  onHoverGuideMarker?: (guideId: string | null) => void;
   onSubmitMapClick?: (coordinates: [number, number]) => void;
   onSelectContinent: (continentId: string) => void;
   onSelectCountry: (continentId: string, countryId: string) => void;
@@ -111,6 +114,15 @@ type GuideRouteFeatureProperties = {
   category: MapList["category"];
 };
 
+type VisibleGuideMarkerFeatureProperties = {
+  id: string;
+  name: string;
+  category: MapList["category"];
+  markerImage: string;
+  enteredAt: number;
+  popProgress: number;
+};
+
 type PoiMapMarkerFeatureProperties = {
   id: string;
   stopId: string;
@@ -147,6 +159,7 @@ const CONTINENT_LABEL_SOURCE_ID = "continent-labels";
 const CITY_SOURCE_ID = "cities";
 const SAVED_LOCATION_SOURCE_ID = "saved-locations";
 const GUIDE_ROUTE_SOURCE_ID = "guide-route";
+const VISIBLE_GUIDE_MARKER_SOURCE_ID = "visible-guide-markers";
 const GUIDE_STOP_SOURCE_ID = "guide-stops";
 const POI_MAP_MARKER_SOURCE_ID = "poi-map-markers";
 const STATE_LABEL_SOURCE_ID = "state-labels";
@@ -197,34 +210,13 @@ const GUIDE_STOP_NESTED_COLOR_MATCH = [
   CATEGORY_STYLES.Essentials.poiColor,
   CATEGORY_STYLES.Activities.poiColor,
 ] as ExpressionSpecification;
-const GUIDE_STOP_GLOW_COLOR_MATCH = [
-  "match",
-  ["get", "category"],
-  "Food",
-  CATEGORY_STYLES.Food.mapGlowColor,
-  "Nightlife",
-  CATEGORY_STYLES.Nightlife.mapGlowColor,
-  "Culture",
-  CATEGORY_STYLES.Culture.mapGlowColor,
-  "Stay",
-  CATEGORY_STYLES.Stay.mapGlowColor,
-  "Nature",
-  CATEGORY_STYLES.Nature.mapGlowColor,
-  "Activities",
-  CATEGORY_STYLES.Activities.mapGlowColor,
-  "Routes",
-  CATEGORY_STYLES.Routes.mapGlowColor,
-  "Essentials",
-  CATEGORY_STYLES.Essentials.mapGlowColor,
-  CATEGORY_STYLES.Activities.mapGlowColor,
-] as ExpressionSpecification;
 const GUIDE_STOP_DOT_BASE_RADIUS = { lowZoom: 9, highZoom: 11.4 } as const;
-const GUIDE_STOP_CITY_GLOW_SCALE = 11 / 15;
 const GUIDE_STOP_CITY_DOT_SCALE = 0.794;
 const NESTED_POI_DIAMOND_FILL = "#c2410c";
 const POI_DIAMOND_IMAGE_PREFIX = "poi-diamond";
 const POI_DIAMOND_PULSE_IMAGE_PREFIX = "poi-diamond-pulse";
 const GUIDE_STOP_MARKER_IMAGE_PREFIX = "guide-stop-marker";
+const VISIBLE_GUIDE_MARKER_IMAGE_PREFIX = "visible-guide-marker";
 const POI_DIAMOND_ICON_IMAGE_MATCH = [
   "match",
   ["get", "category"],
@@ -927,6 +919,133 @@ function getGuideStopMarkerImageName(category: string, label: string) {
   return `${GUIDE_STOP_MARKER_IMAGE_PREFIX}-${category.toLowerCase()}-${label.replace(/[^a-z0-9]/gi, "-").toLowerCase()}`;
 }
 
+function getVisibleGuideMarkerImageName(category: string) {
+  return `${VISIBLE_GUIDE_MARKER_IMAGE_PREFIX}-${category.toLowerCase()}`;
+}
+
+type LucideIconNode = Array<[
+  "path" | "circle" | "line",
+  Record<string, string>,
+]>;
+
+const VISIBLE_GUIDE_MARKER_ICON_NODES: Record<MapList["category"], LucideIconNode> = {
+  Food: [
+    ["path", { d: "m16 2-2.3 2.3a3 3 0 0 0 0 4.2l1.8 1.8a3 3 0 0 0 4.2 0L22 8" }],
+    ["path", { d: "M15 15 3.3 3.3a4.2 4.2 0 0 0 0 6l7.3 7.3c.7.7 2 .7 2.8 0L15 15Zm0 0 7 7" }],
+    ["path", { d: "m2.1 21.8 6.4-6.3" }],
+    ["path", { d: "m19 5-7 7" }],
+  ],
+  Nightlife: [
+    ["path", { d: "M18 5h4" }],
+    ["path", { d: "M20 3v4" }],
+    ["path", { d: "M20.985 12.486a9 9 0 1 1-9.473-9.472c.405-.022.617.46.402.803a6 6 0 0 0 8.268 8.268c.344-.215.825-.004.803.401" }],
+  ],
+  Culture: [
+    ["path", { d: "M10 18v-7" }],
+    ["path", { d: "M11.119 2.205a2 2 0 0 1 1.762 0l7.84 3.846A.5.5 0 0 1 20.5 7h-17a.5.5 0 0 1-.22-.949z" }],
+    ["path", { d: "M14 18v-7" }],
+    ["path", { d: "M18 18v-7" }],
+    ["path", { d: "M3 22h18" }],
+    ["path", { d: "M6 18v-7" }],
+  ],
+  Stay: [
+    ["path", { d: "M2 20v-8a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v8" }],
+    ["path", { d: "M4 10V6a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v4" }],
+    ["path", { d: "M12 4v6" }],
+    ["path", { d: "M2 18h20" }],
+  ],
+  Nature: [
+    ["path", { d: "M10 10v.2A3 3 0 0 1 8.9 16H5a3 3 0 0 1-1-5.8V10a3 3 0 0 1 6 0Z" }],
+    ["path", { d: "M7 16v6" }],
+    ["path", { d: "M13 19v3" }],
+    ["path", { d: "M12 19h8.3a1 1 0 0 0 .7-1.7L18 14h.3a1 1 0 0 0 .7-1.7L16 9h.2a1 1 0 0 0 .8-1.7L13 3l-1.4 1.5" }],
+  ],
+  Activities: [
+    ["path", { d: "M11.017 2.814a1 1 0 0 1 1.966 0l1.051 5.558a2 2 0 0 0 1.594 1.594l5.558 1.051a1 1 0 0 1 0 1.966l-5.558 1.051a2 2 0 0 0-1.594 1.594l-1.051 5.558a1 1 0 0 1-1.966 0l-1.051-5.558a2 2 0 0 0-1.594-1.594l-5.558-1.051a1 1 0 0 1 0-1.966l5.558-1.051a2 2 0 0 0 1.594-1.594z" }],
+    ["path", { d: "M20 2v4" }],
+    ["path", { d: "M22 4h-4" }],
+    ["circle", { cx: "4", cy: "20", r: "2" }],
+  ],
+  Routes: [
+    ["path", { d: "M12 17v4" }],
+    ["path", { d: "M12 5V3" }],
+    ["path", { d: "M12 9v3" }],
+    ["path", { d: "M2.077 18.449A2 2 0 0 0 4 21h16a2 2 0 0 0 1.924-2.55l-4-14A2 2 0 0 0 16 3H8a2 2 0 0 0-1.924 1.45z" }],
+  ],
+  Essentials: [
+    ["path", { d: "M3.85 8.62a4 4 0 0 1 4.78-4.77 4 4 0 0 1 6.74 0 4 4 0 0 1 4.78 4.78 4 4 0 0 1 0 6.74 4 4 0 0 1-4.77 4.78 4 4 0 0 1-6.75 0 4 4 0 0 1-4.78-4.77 4 4 0 0 1 0-6.76Z" }],
+    ["line", { x1: "12", x2: "12", y1: "16", y2: "12" }],
+    ["line", { x1: "12", x2: "12.01", y1: "8", y2: "8" }],
+  ],
+};
+
+function drawCategoryIcon(ctx: CanvasRenderingContext2D, category: MapList["category"], centerX: number, centerY: number) {
+  ctx.save();
+  ctx.strokeStyle = "#ffffff";
+  ctx.fillStyle = "#ffffff";
+  ctx.lineWidth = 2.35;
+  ctx.lineCap = "round";
+  ctx.lineJoin = "round";
+  ctx.translate(centerX - 12, centerY - 12);
+  ctx.scale(1, 1);
+
+  for (const [tag, attrs] of VISIBLE_GUIDE_MARKER_ICON_NODES[category]) {
+    if (tag === "path" && typeof Path2D !== "undefined") {
+      ctx.stroke(new Path2D(attrs.d));
+    } else if (tag === "circle") {
+      ctx.beginPath();
+      ctx.arc(Number(attrs.cx), Number(attrs.cy), Number(attrs.r), 0, Math.PI * 2);
+      ctx.stroke();
+    } else if (tag === "line") {
+      ctx.beginPath();
+      ctx.moveTo(Number(attrs.x1), Number(attrs.y1));
+      ctx.lineTo(Number(attrs.x2), Number(attrs.y2));
+      ctx.stroke();
+    }
+  }
+
+  ctx.restore();
+}
+
+function createVisibleGuideMarkerImage(category: MapList["category"]) {
+  const size = 64;
+  const canvas = document.createElement("canvas");
+  canvas.width = size;
+  canvas.height = size;
+  const ctx = canvas.getContext("2d");
+  if (!ctx) {
+    return { width: size, height: size, data: new Uint8Array(size * size * 4) };
+  }
+
+  ctx.save();
+  ctx.translate(size / 2, size / 2);
+  ctx.fillStyle = CATEGORY_STYLES[category].mapColor;
+  ctx.strokeStyle = "#ffffff";
+  ctx.lineWidth = 3.2;
+  ctx.beginPath();
+  ctx.arc(0, 0, 20.5, 0, Math.PI * 2);
+  ctx.fill();
+  ctx.stroke();
+  ctx.restore();
+
+  drawCategoryIcon(ctx, category, size / 2, size / 2);
+
+  return ctx.getImageData(0, 0, size, size);
+}
+
+function addVisibleGuideMarkerImages(map: maplibregl.Map) {
+  Object.keys(CATEGORY_STYLES).forEach((category) => {
+    const typedCategory = category as MapList["category"];
+    const imageName = getVisibleGuideMarkerImageName(category);
+    const imageData = createVisibleGuideMarkerImage(typedCategory);
+    if (map.hasImage(imageName)) {
+      map.updateImage(imageName, imageData);
+    } else {
+      map.addImage(imageName, imageData, { pixelRatio: 2 });
+    }
+  });
+}
+
 function createGuideStopMarkerImage(color: string, label: string) {
   const size = 64;
   const canvas = document.createElement("canvas");
@@ -1098,7 +1217,7 @@ function addPoiDiamondImages(map: maplibregl.Map) {
     }
 
     const pulseImageName = getPoiDiamondPulseImageName(category);
-    const pulseImageData = createPoiDiamondPulseImage(style.mapGlowColor);
+    const pulseImageData = createPoiDiamondPulseImage(style.mapColor);
     if (map.hasImage(pulseImageName)) {
       map.updateImage(pulseImageName, pulseImageData);
     } else {
@@ -1185,6 +1304,44 @@ function createGuideStopData(
   return {
     type: "FeatureCollection",
     features: visibleFeatures,
+  };
+}
+
+function createVisibleGuideMarkerData(
+  guideLists: MapList[],
+  visibleGuideMarkerIds: string[] = [],
+  activeGuide?: MapList | null,
+  markerEnteredAt?: Map<string, number>,
+): FeatureCollection<Point, VisibleGuideMarkerFeatureProperties> {
+  const visibleGuideIdSet = new Set(visibleGuideMarkerIds);
+  const activeGuideId = activeGuide?.id ?? null;
+  const now = typeof performance !== "undefined" ? performance.now() : Date.now();
+  const features = guideLists.flatMap((guide) => {
+    const firstStop = guide.stops[0];
+    if (!firstStop || !visibleGuideIdSet.has(guide.id) || guide.id === activeGuideId) {
+      return [];
+    }
+
+    return [{
+      type: "Feature" as const,
+      properties: {
+        id: guide.id,
+        name: guide.title,
+        category: guide.category,
+        markerImage: getVisibleGuideMarkerImageName(guide.category),
+        enteredAt: markerEnteredAt?.get(guide.id) ?? 0,
+        popProgress: Math.min(1, Math.max(0, (now - (markerEnteredAt?.get(guide.id) ?? now)) / 320)),
+      },
+      geometry: {
+        type: "Point" as const,
+        coordinates: [firstStop.coordinates[1], firstStop.coordinates[0]],
+      },
+    }];
+  });
+
+  return {
+    type: "FeatureCollection",
+    features,
   };
 }
 
@@ -1822,6 +1979,7 @@ function createCityData(
 
 function addMapLayers(map: maplibregl.Map) {
   addPoiDiamondImages(map);
+  addVisibleGuideMarkerImages(map);
 
   const countryLabelLayerId = BASE_COUNTRY_LABEL_LAYER_IDS.find((layerId) => map.getLayer(layerId));
   const cityDotBeforeLayerId = map.getLayer("label_other") ? "label_other" : countryLabelLayerId;
@@ -2045,30 +2203,6 @@ function addMapLayers(map: maplibregl.Map) {
   }, "continent-labels");
 
   map.addLayer({
-    id: "selected-neighborhood-point-glow",
-    type: "circle",
-    source: NEIGHBORHOOD_BOUNDARY_SOURCE_ID,
-    filter: ["==", ["geometry-type"], "Point"],
-    paint: {
-      "circle-radius": [
-        "interpolate",
-        ["linear"],
-        ["zoom"],
-        9,
-        28,
-        12,
-        46,
-        15,
-        72,
-      ],
-      "circle-color": "#5b8dee",
-      "circle-opacity": 0.12,
-      "circle-blur": 0.75,
-      "circle-stroke-width": 0,
-    },
-  }, "continent-labels");
-
-  map.addLayer({
     id: "selected-neighborhood-point-outline",
     type: "circle",
     source: NEIGHBORHOOD_BOUNDARY_SOURCE_ID,
@@ -2152,27 +2286,6 @@ function addMapLayers(map: maplibregl.Map) {
   }, cityDotBeforeLayerId);
 
   map.addLayer({
-    id: "saved-location-glow",
-    type: "circle",
-    source: SAVED_LOCATION_SOURCE_ID,
-    paint: {
-      "circle-radius": [
-        "interpolate",
-        ["linear"],
-        ["zoom"],
-        2,
-        8,
-        8,
-        15,
-      ],
-      "circle-color": "#14b8a6",
-      "circle-opacity": 0.18,
-      "circle-blur": 0.75,
-      "circle-stroke-width": 0,
-    },
-  }, cityDotBeforeLayerId);
-
-  map.addLayer({
     id: "saved-location-points",
     type: "circle",
     source: SAVED_LOCATION_SOURCE_ID,
@@ -2192,6 +2305,43 @@ function addMapLayers(map: maplibregl.Map) {
       "circle-opacity": 0.96,
     },
   }, cityDotBeforeLayerId);
+
+  map.addLayer({
+    id: "visible-guide-marker-point",
+    type: "symbol",
+    source: VISIBLE_GUIDE_MARKER_SOURCE_ID,
+    layout: {
+      "icon-image": ["get", "markerImage"],
+      "icon-size": [
+        "*",
+        ["interpolate", ["linear"], ["zoom"], 3, 0.68, 8, 0.84, 13, 1],
+        ["interpolate", ["linear"], ["get", "popProgress"], 0, 0.72, 1, 1],
+      ],
+      "icon-allow-overlap": true,
+      "icon-ignore-placement": true,
+    },
+    paint: {
+      "icon-opacity": ["interpolate", ["linear"], ["get", "popProgress"], 0, 0, 1, 0.96],
+      "icon-opacity-transition": { duration: 220, delay: 0 },
+    },
+  }, "continent-labels");
+
+  map.addLayer({
+    id: "visible-guide-marker-hover",
+    type: "symbol",
+    source: VISIBLE_GUIDE_MARKER_SOURCE_ID,
+    filter: ["==", ["get", "id"], "__none__"],
+    layout: {
+      "icon-image": ["get", "markerImage"],
+      "icon-size": ["interpolate", ["linear"], ["zoom"], 3, 0.86, 8, 1.06, 13, 1.25],
+      "icon-allow-overlap": true,
+      "icon-ignore-placement": true,
+    },
+    paint: {
+      "icon-opacity": 1,
+      "icon-opacity-transition": { duration: 120, delay: 0 },
+    },
+  }, "continent-labels");
 
   map.addLayer({
     id: "guide-route-casing",
@@ -2292,11 +2442,11 @@ function addMapLayers(map: maplibregl.Map) {
     source: POI_MAP_MARKER_SOURCE_ID,
     filter: ["==", ["geometry-type"], "Point"],
     paint: {
-      "circle-radius": ["interpolate", ["linear"], ["zoom"], 8, 15, 13, 28, 16, 38],
-      "circle-color": GUIDE_STOP_GLOW_COLOR_MATCH,
-      "circle-opacity": ["case", ["get", "active"], 0.24, 0.12],
-      "circle-blur": 0.55,
-      "circle-stroke-width": 0,
+      "circle-radius": ["interpolate", ["linear"], ["zoom"], 8, 5.8, 13, 9.2, 16, 12],
+      "circle-color": GUIDE_STOP_COLOR_MATCH,
+      "circle-opacity": ["case", ["get", "active"], 0.94, 0.72],
+      "circle-stroke-color": "#ffffff",
+      "circle-stroke-width": ["case", ["get", "active"], 2, 1.35],
     },
   }, "continent-labels");
 
@@ -2540,12 +2690,15 @@ export function MapClient({
   activeGuide,
   activeGuideFitNonce = 0,
   guideLists = mapLists,
+  visibleGuideMarkerIds = [],
+  hoveredGuideMarkerId,
   savedLocations = [],
   visibleNestedStopParentIds = [],
   hoveredStopId,
   selectedStopId,
   onHoverGuideStop,
   onSelectGuideStop,
+  onHoverGuideMarker,
   onSubmitMapClick,
   onSelectContinent,
   onSelectCountry,
@@ -2586,6 +2739,7 @@ export function MapClient({
     onSelectState,
     onHoverGuideStop,
     onSelectGuideStop,
+    onHoverGuideMarker,
     onSubmitMapClick,
     continents,
     selection,
@@ -2594,6 +2748,9 @@ export function MapClient({
   const viewportInsetsRef = useRef<MapViewportInsets | undefined>(viewportInsets);
   const activeGuideCameraKeyRef = useRef<string | null>(null);
   const selectionCameraKeyRef = useRef<string | null>(null);
+  const visibleGuideMarkerEnteredAtRef = useRef<Map<string, number>>(new Map());
+  const visibleGuideMarkerAnimationFrameRef = useRef<number | null>(null);
+  const [visibleGuideMarkerAnimationTick, setVisibleGuideMarkerAnimationTick] = useState(0);
 
   useEffect(() => {
     const cityId = selection.cityId;
@@ -2639,6 +2796,16 @@ export function MapClient({
   const guideStopData = useMemo(
     () => createGuideStopData(activeGuide, visibleNestedStopParentIds, selectedStopId, hoveredStopId),
     [activeGuide, hoveredStopId, selectedStopId, visibleNestedStopParentIds],
+  );
+  const visibleGuideMarkerData = useMemo(
+    () =>
+      createVisibleGuideMarkerData(
+        guideLists,
+        visibleGuideMarkerIds,
+        activeGuide,
+        visibleGuideMarkerEnteredAtRef.current,
+      ),
+    [activeGuide, guideLists, visibleGuideMarkerAnimationTick, visibleGuideMarkerIds],
   );
   const guideRouteData = useMemo(
     () => createGuideRouteData(activeGuide, selectedStopId, visibleNestedStopParentIds),
@@ -2754,14 +2921,64 @@ export function MapClient({
       onSelectState,
       onHoverGuideStop,
       onSelectGuideStop,
+      onHoverGuideMarker,
       onSubmitMapClick,
       continents,
       selection,
     };
-  }, [continents, onHoverGuideStop, onSelectCity, onSelectContinent, onSelectCountry, onSelectGuideStop, onSelectSubarea, onSelectState, onSubmitMapClick, selection]);
+  }, [continents, onHoverGuideMarker, onHoverGuideStop, onSelectCity, onSelectContinent, onSelectCountry, onSelectGuideStop, onSelectSubarea, onSelectState, onSubmitMapClick, selection]);
   useEffect(() => {
     guideStopDataRef.current = guideStopData;
   }, [guideStopData]);
+
+  useEffect(() => {
+    const now = performance.now();
+    const nextVisibleIds = new Set(visibleGuideMarkerIds);
+    const enteredAt = visibleGuideMarkerEnteredAtRef.current;
+    let hasNewMarker = false;
+
+    visibleGuideMarkerIds.forEach((guideId) => {
+      if (!enteredAt.has(guideId)) {
+        enteredAt.set(guideId, now);
+        hasNewMarker = true;
+      }
+    });
+
+    Array.from(enteredAt.keys()).forEach((guideId) => {
+      if (!nextVisibleIds.has(guideId)) {
+        enteredAt.delete(guideId);
+      }
+    });
+
+    if (!hasNewMarker) {
+      setVisibleGuideMarkerAnimationTick((current) => current + 1);
+      return;
+    }
+
+    if (visibleGuideMarkerAnimationFrameRef.current !== null) {
+      cancelAnimationFrame(visibleGuideMarkerAnimationFrameRef.current);
+    }
+
+    const animationStartedAt = now;
+    const animate = () => {
+      setVisibleGuideMarkerAnimationTick((current) => current + 1);
+      if (performance.now() - animationStartedAt < 360) {
+        visibleGuideMarkerAnimationFrameRef.current = requestAnimationFrame(animate);
+        return;
+      }
+      visibleGuideMarkerAnimationFrameRef.current = null;
+    };
+
+    visibleGuideMarkerAnimationFrameRef.current = requestAnimationFrame(animate);
+
+    return () => {
+      if (visibleGuideMarkerAnimationFrameRef.current !== null) {
+        cancelAnimationFrame(visibleGuideMarkerAnimationFrameRef.current);
+        visibleGuideMarkerAnimationFrameRef.current = null;
+      }
+    };
+  }, [visibleGuideMarkerIds]);
+
   useEffect(() => {
     viewportModeRef.current = viewportMode;
   }, [viewportMode]);
@@ -2839,6 +3056,11 @@ export function MapClient({
         data: savedLocationData,
       });
 
+      map.addSource(VISIBLE_GUIDE_MARKER_SOURCE_ID, {
+        type: "geojson",
+        data: visibleGuideMarkerData,
+      });
+
       map.addSource(STATE_LABEL_SOURCE_ID, {
         type: "geojson",
         data: stateLabelData,
@@ -2897,6 +3119,13 @@ export function MapClient({
         map.getCanvas().style.cursor = "";
       });
 
+      const syncHoveredGuideMarker = (event: maplibregl.MapMouseEvent & { features?: maplibregl.MapGeoJSONFeature[] }) => {
+        const guideId =
+          typeof event.features?.[0]?.properties?.id === "string" ? event.features[0].properties.id : null;
+        map.getCanvas().style.cursor = guideId ? "pointer" : "";
+        handlersRef.current.onHoverGuideMarker?.(guideId);
+      };
+
       const syncHoveredGuideStop = (event: maplibregl.MapMouseEvent & { features?: maplibregl.MapGeoJSONFeature[] }) => {
         const feature = event.features?.[0];
         const stopId =
@@ -2908,6 +3137,16 @@ export function MapClient({
         handlersRef.current.onHoverGuideStop?.(stopId);
       };
 
+      map.on("mousemove", "visible-guide-marker-point", syncHoveredGuideMarker);
+      map.on("mousemove", "visible-guide-marker-hover", syncHoveredGuideMarker);
+      map.on("mouseleave", "visible-guide-marker-point", () => {
+        map.getCanvas().style.cursor = "";
+        handlersRef.current.onHoverGuideMarker?.(null);
+      });
+      map.on("mouseleave", "visible-guide-marker-hover", () => {
+        map.getCanvas().style.cursor = "";
+        handlersRef.current.onHoverGuideMarker?.(null);
+      });
       map.on("mousemove", "guide-stop-points", syncHoveredGuideStop);
       map.on("mousemove", "guide-stop-selected-points", syncHoveredGuideStop);
       map.on("mousemove", "guide-stop-hover", syncHoveredGuideStop);
@@ -3252,13 +3491,23 @@ export function MapClient({
     (map.getSource(CONTINENT_LABEL_SOURCE_ID) as GeoJSONSource).setData(continentLabelData);
     (map.getSource(CITY_SOURCE_ID) as GeoJSONSource).setData(cityData);
     (map.getSource(SAVED_LOCATION_SOURCE_ID) as GeoJSONSource).setData(savedLocationData);
+    (map.getSource(VISIBLE_GUIDE_MARKER_SOURCE_ID) as GeoJSONSource).setData(visibleGuideMarkerData);
     (map.getSource(STATE_LABEL_SOURCE_ID) as GeoJSONSource).setData(stateLabelData);
     (map.getSource(GUIDE_ROUTE_SOURCE_ID) as GeoJSONSource).setData(guideRouteData);
     (map.getSource(POI_MAP_MARKER_SOURCE_ID) as GeoJSONSource).setData(poiMapMarkerData);
     ensureGuideStopMarkerImages(map, guideStopData);
     (map.getSource(GUIDE_STOP_SOURCE_ID) as GeoJSONSource).setData(guideStopData);
     (map.getSource(NEIGHBORHOOD_BOUNDARY_SOURCE_ID) as GeoJSONSource).setData(neighborhoodBoundaryData);
-  }, [cityData, continentLabelData, countryData, guideRouteData, guideStopData, neighborhoodBoundaryData, poiMapMarkerData, savedLocationData, stateLabelData]);
+  }, [cityData, continentLabelData, countryData, guideRouteData, guideStopData, neighborhoodBoundaryData, poiMapMarkerData, savedLocationData, stateLabelData, visibleGuideMarkerData]);
+
+  useEffect(() => {
+    const map = mapRef.current;
+    if (!map || !isStyleReadyRef.current || !map.getLayer("visible-guide-marker-hover")) {
+      return;
+    }
+
+    map.setFilter("visible-guide-marker-hover", ["==", ["get", "id"], hoveredGuideMarkerId ?? "__none__"]);
+  }, [hoveredGuideMarkerId]);
 
   const activeGuidePulseStopId = useMemo(() => {
     const renderedStopIds = new Set(guideStopData.features.map((feature) => feature.properties.id));

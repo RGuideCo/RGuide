@@ -35,12 +35,15 @@ interface InteractiveMapProps {
   activeGuide?: MapList | null;
   activeGuideFitNonce?: number;
   guideLists?: MapList[];
+  visibleGuideMarkerIds?: string[];
+  hoveredGuideMarkerId?: string | null;
   savedLocations?: SavedMapLocation[];
   visibleNestedStopParentIds?: string[];
   hoveredStopId?: string | null;
   selectedStopId?: string | null;
   onHoverGuideStop?: (stopId: string | null) => void;
   onSelectGuideStop?: (stopId: string) => void;
+  onHoverGuideMarker?: (guideId: string | null) => void;
   onSubmitMapClick?: (coordinates: [number, number]) => void;
   onSelectContinent: (continentId: string) => void;
   onSelectCountry: (continentId: string, countryId: string) => void;

@@ -34,7 +34,6 @@ export const CATEGORY_STYLES: Record<
     stopNumber: string;
     stopDot: string;
     mapColor: string;
-    mapGlowColor: string;
     poiColor: string;
   }
 > = {
@@ -44,7 +43,6 @@ export const CATEGORY_STYLES: Record<
     stopNumber: "bg-amber-500 text-white",
     stopDot: "bg-amber-500",
     mapColor: "#f59e0b",
-    mapGlowColor: "#fbbf24",
     poiColor: "#b45309",
   },
   Nightlife: {
@@ -53,7 +51,6 @@ export const CATEGORY_STYLES: Record<
     stopNumber: "bg-indigo-500 text-white",
     stopDot: "bg-indigo-500",
     mapColor: "#6366f1",
-    mapGlowColor: "#818cf8",
     poiColor: "#4338ca",
   },
   Culture: {
@@ -62,7 +59,6 @@ export const CATEGORY_STYLES: Record<
     stopNumber: "bg-rose-500 text-white",
     stopDot: "bg-rose-500",
     mapColor: "#f43f5e",
-    mapGlowColor: "#fb7185",
     poiColor: "#be123c",
   },
   Stay: {
@@ -71,7 +67,6 @@ export const CATEGORY_STYLES: Record<
     stopNumber: "bg-cyan-600 text-white",
     stopDot: "bg-cyan-600",
     mapColor: "#0891b2",
-    mapGlowColor: "#67e8f9",
     poiColor: "#0e7490",
   },
   Nature: {
@@ -80,7 +75,6 @@ export const CATEGORY_STYLES: Record<
     stopNumber: "bg-emerald-500 text-white",
     stopDot: "bg-emerald-500",
     mapColor: "#10b981",
-    mapGlowColor: "#34d399",
     poiColor: "#047857",
   },
   Activities: {
@@ -89,7 +83,6 @@ export const CATEGORY_STYLES: Record<
     stopNumber: "bg-orange-500 text-white",
     stopDot: "bg-orange-500",
     mapColor: "#f97316",
-    mapGlowColor: "#fb923c",
     poiColor: "#c2410c",
   },
   Routes: {
@@ -98,7 +91,6 @@ export const CATEGORY_STYLES: Record<
     stopNumber: "bg-blue-600 text-white",
     stopDot: "bg-blue-600",
     mapColor: "#2563eb",
-    mapGlowColor: "#60a5fa",
     poiColor: "#1d4ed8",
   },
   Essentials: {
@@ -107,7 +99,6 @@ export const CATEGORY_STYLES: Record<
     stopNumber: "bg-violet-600 text-white",
     stopDot: "bg-violet-600",
     mapColor: "#7c3aed",
-    mapGlowColor: "#a78bfa",
     poiColor: "#6d28d9",
   },
 };

@@ -174,26 +174,45 @@ textarea:focus-visible {
 
 .collapsed-guide-card-with-outboard-image {
   position: relative;
-  padding-left: 8.3rem;
+  padding-top: 0.55rem;
+  padding-left: 5.75rem;
+  isolation: isolate;
 }
 
-.collapsed-guide-card-with-outboard-image > .collapsed-guide-card {
+.collapsed-guide-card-with-outboard-image > .collapsed-guide-card,
+.collapsed-guide-card-with-outboard-image > article {
+  position: relative;
+  z-index: 20;
   min-width: 0;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  transition:
+    border-color 240ms ease,
+    border-width 240ms ease,
+    box-shadow 360ms ease,
+    transform 560ms cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .collapsed-guide-outboard-image {
   position: absolute;
-  inset: 0 auto 0 0;
+  inset: 0 auto auto 0;
   z-index: 10;
+  display: block;
   width: 7.75rem;
+  height: calc(100% - 0.55rem);
+  padding: 0;
   overflow: hidden;
   border: 1px solid;
   border-radius: 7px;
   background: rgba(226, 232, 240, 0.76);
+  cursor: pointer;
+  transform: translateZ(0);
+  backface-visibility: hidden;
   box-shadow:
     0 1px 0 rgba(255, 255, 255, 0.9) inset,
     0 7px 18px rgba(15, 23, 42, 0.08);
   transition:
+    opacity 320ms ease,
     transform 260ms cubic-bezier(0.22, 1, 0.36, 1),
     border-color 240ms ease,
     border-width 240ms ease,
@@ -249,6 +268,38 @@ textarea:focus-visible {
   opacity: 0.42;
 }
 
+.collapsed-guide-card-with-outboard-image[data-guide-opening="true"] .collapsed-guide-outboard-image {
+  opacity: 0;
+  pointer-events: none;
+  transform: translate3d(-0.5rem, -1px, 0) scale(0.985);
+  border-color: transparent;
+  box-shadow: none;
+  will-change: opacity, transform;
+}
+
+.collapsed-guide-card-with-outboard-image[data-guide-opening="true"] > article {
+  transform: translate3d(0.875rem, 0, 0);
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.92) inset,
+    0 14px 28px rgba(15, 23, 42, 0.1);
+  will-change: transform;
+}
+
+.collapsed-guide-card-with-outboard-image[data-guide-closing="true"] .collapsed-guide-outboard-image {
+  pointer-events: none;
+  animation: guide-outboard-image-return 560ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  will-change: opacity, transform;
+}
+
+.collapsed-guide-card-with-outboard-image[data-guide-closing="true"] > article {
+  animation: guide-collapsed-card-return 560ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  will-change: transform;
+}
+
+.collapsed-guide-card-with-outboard-image[data-guide-chrome-preserved="true"] > article {
+  overflow: hidden;
+}
+
 .collapsed-guide-card::after {
   content: "";
   position: absolute;
@@ -262,7 +313,8 @@ textarea:focus-visible {
 }
 
 .collapsed-guide-card:hover::after,
-.collapsed-guide-card:focus-within::after {
+.collapsed-guide-card:focus-within::after,
+.collapsed-guide-card[data-external-hover="true"]::after {
   opacity: 0.78;
 }
 
@@ -283,6 +335,7 @@ textarea:focus-visible {
 
 .collapsed-guide-card:hover .collapsed-guide-hover-description,
 .collapsed-guide-card:focus-within .collapsed-guide-hover-description,
+.collapsed-guide-card[data-external-hover="true"] .collapsed-guide-hover-description,
 .collapsed-guide-card-with-outboard-image:hover .collapsed-guide-card .collapsed-guide-hover-description,
 .collapsed-guide-card-with-outboard-image:focus-within .collapsed-guide-card .collapsed-guide-hover-description {
   height: 2rem;
@@ -296,11 +349,28 @@ textarea:focus-visible {
   transform: translateZ(0);
   transform-origin: left center;
   backface-visibility: hidden;
+  contain: paint;
+}
+
+.guide-chrome-header-wipe {
+  inset: -0.75rem -0.75rem -0.5rem -0.75rem;
+  border-top-left-radius: inherit;
+  border-top-right-radius: inherit;
+  transform-origin: left bottom;
+}
+
+.guide-chrome-header-wipe.guide-chrome-wipe--retract {
+  animation-name: guide-chrome-header-wipe-retract;
+}
+
+.guide-chrome-header-wipe.guide-chrome-wipe--expand {
+  animation-name: guide-chrome-header-wipe-expand;
 }
 
 .guide-chrome-wipe--retract {
+  clip-path: none;
   animation: guide-chrome-wipe-retract 560ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
-  will-change: clip-path;
+  will-change: transform;
 }
 
 .guide-chrome-wipe--expand {
@@ -333,13 +403,36 @@ textarea:focus-visible {
   animation: guide-chrome-chevron-expand 560ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
 }
 
+.guide-expanded-content-collapse-bottom-up {
+  display: grid;
+  grid-template-rows: 1fr;
+  overflow: hidden;
+  animation: guide-expanded-content-collapse-bottom-up 260ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  transform-origin: top center;
+  will-change: grid-template-rows, clip-path, opacity;
+}
+
+.guide-expanded-content-collapse-bottom-up > .guide-expanded-content-collapse-content,
+.guide-expanded-content-collapsed > .guide-expanded-content-collapse-content {
+  min-height: 0;
+  overflow: hidden;
+}
+
+.guide-expanded-content-collapsed {
+  display: grid;
+  grid-template-rows: 0fr;
+  overflow: hidden;
+  opacity: 0;
+  clip-path: inset(0 0 100% 0);
+}
+
 @keyframes guide-chrome-wipe-retract {
   from {
-    clip-path: inset(0 0 0 0);
+    transform: translateZ(0) scaleX(1);
   }
 
   to {
-    clip-path: inset(0 calc(100% - 4px) 0 0);
+    transform: translateZ(0) scaleX(0.012);
   }
 }
 
@@ -350,6 +443,75 @@ textarea:focus-visible {
 
   to {
     transform: translateZ(0) scaleX(1);
+  }
+}
+
+@keyframes guide-chrome-header-wipe-retract {
+  0% {
+    transform: translateZ(0) scaleX(1) scaleY(1);
+  }
+
+  68% {
+    transform: translateZ(0) scaleX(0.012) scaleY(1);
+  }
+
+  100% {
+    transform: translateZ(0) scaleX(0.012) scaleY(0.36);
+  }
+}
+
+@keyframes guide-chrome-header-wipe-expand {
+  0% {
+    transform: translateZ(0) scaleX(0.012) scaleY(0.36);
+  }
+
+  28% {
+    transform: translateZ(0) scaleX(0.012) scaleY(1);
+  }
+
+  100% {
+    transform: translateZ(0) scaleX(1) scaleY(1);
+  }
+}
+
+@keyframes guide-outboard-image-return {
+  0%,
+  18% {
+    opacity: 0;
+    transform: translate3d(-0.5rem, -1px, 0) scale(0.985);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+}
+
+@keyframes guide-collapsed-card-return {
+  from {
+    transform: translate3d(0.875rem, 0, 0);
+  }
+
+  to {
+    transform: translateZ(0);
+  }
+}
+
+@keyframes guide-expanded-content-collapse-bottom-up {
+  0% {
+    grid-template-rows: 1fr;
+    clip-path: inset(0 0 0 0);
+    opacity: 1;
+  }
+
+  62% {
+    opacity: 1;
+  }
+
+  100% {
+    grid-template-rows: 0fr;
+    clip-path: inset(0 0 100% 0);
+    opacity: 0;
   }
 }
 

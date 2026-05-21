@@ -41,6 +41,8 @@ interface MapListCardProps {
   preserveExpandedChrome?: boolean;
   retractExpandedChrome?: boolean;
   expandExpandedChrome?: boolean;
+  collapseExpandedContent?: boolean;
+  hideExpandedContent?: boolean;
   deferExpandedContent?: boolean;
   onExpandChromeComplete?: (list: MapList) => void;
   expandable?: boolean;
@@ -52,6 +54,7 @@ interface MapListCardProps {
   onEditGuide?: (list: MapList) => void;
   onExpandedStopIdsChange?: (stopIds: string[]) => void;
   collapsedLocationSubtitleHiddenParts?: string[];
+  isExternallyHovered?: boolean;
 }
 
 function usesRankedStops(title: string) {
@@ -575,6 +578,8 @@ export function MapListCard({
   preserveExpandedChrome = false,
   retractExpandedChrome = false,
   expandExpandedChrome = false,
+  collapseExpandedContent = false,
+  hideExpandedContent = false,
   deferExpandedContent = false,
   onExpandChromeComplete,
   expandable = false,
@@ -586,6 +591,7 @@ export function MapListCard({
   onEditGuide,
   onExpandedStopIdsChange,
   collapsedLocationSubtitleHiddenParts = [],
+  isExternallyHovered = false,
 }: MapListCardProps) {
   const router = useRouter();
   const weekdayLabel = new Intl.DateTimeFormat(undefined, { weekday: "short" }).format(new Date());
@@ -622,11 +628,12 @@ export function MapListCard({
   const eventCardDateLabel = isEventGuide ? buildEventCardDateLabel(list) : null;
   const GuideBodyComponent = isEventGuide ? EventCardBody : isItineraryGuide ? JourneyCardBody : GuideCardBody;
   const firstPoi = list.stops[0];
-  const collapsedFirstPoiPhoto =
-    !expandedChrome && firstPoi ? getPoiPhoto(firstPoi.photo) ?? getPoiPhoto(firstPoi.places?.[0]?.photo) : null;
+  const collapsedFirstPoiPhoto = firstPoi ? getPoiPhoto(firstPoi.photo) ?? getPoiPhoto(firstPoi.places?.[0]?.photo) : null;
   const preservingListChrome = preserveExpandedChrome && !fillPane;
   const retractingListChrome = preservingListChrome && retractExpandedChrome;
   const expandingListChrome = expandExpandedChrome && expandedChrome;
+  const isOutboardImageOpening = preservingListChrome && expandingListChrome && !expanded;
+  const isOutboardImageClosing = preservingListChrome && retractingListChrome && !expanded;
   const deferHeavyExpandedContent = expanded && deferExpandedContent;
   const [expandedStopIds, setExpandedStopIds] = useState<string[]>([]);
   const [expandedPlaceIds, setExpandedPlaceIds] = useState<string[]>([]);
@@ -1240,6 +1247,7 @@ export function MapListCard({
       onHoverStart={onHoverStart}
       onHoverEnd={onHoverEnd}
       onStopHoverClear={() => onStopHoverChange?.(null)}
+      isExternallyHovered={isExternallyHovered}
     >
       <div
         className={`relative z-10 flex items-center justify-between gap-3 ${preservingListChrome ? "overflow-visible" : "overflow-hidden"} ${
@@ -1272,12 +1280,15 @@ export function MapListCard({
         ) : null}
         {preservingListChrome ? (
           <span
-            className={`guide-chrome-wipe pointer-events-none absolute -inset-x-3 -bottom-3 -top-3 z-0 ${
+            className={`guide-chrome-wipe guide-chrome-header-wipe pointer-events-none absolute z-0 ${
               retractingListChrome ? "guide-chrome-wipe--retract" : expandingListChrome ? "guide-chrome-wipe--expand" : ""
             }`}
             style={{ backgroundColor: guideExpandedColor }}
             onAnimationEnd={(event) => {
-              if (event.animationName === "guide-chrome-wipe-expand") {
+              if (
+                event.animationName === "guide-chrome-wipe-expand" ||
+                event.animationName === "guide-chrome-header-wipe-expand"
+              ) {
                 onExpandChromeComplete?.(list);
               }
             }}
@@ -1531,6 +1542,16 @@ export function MapListCard({
               className={`${fillPane && expanded ? "mobile-guide-scroll-container flex min-h-0 flex-1 flex-col overflow-y-auto overscroll-contain pb-3 pr-1 lg:overflow-hidden lg:pb-0 lg:pr-0" : ""} relative pt-2`}
             >
               <GuideBodyComponent>
+              <div
+                className={
+                  collapseExpandedContent
+                    ? "guide-expanded-content-collapse-bottom-up"
+                    : hideExpandedContent
+                      ? "guide-expanded-content-collapsed"
+                      : "contents"
+                }
+              >
+                <div className={collapseExpandedContent || hideExpandedContent ? "guide-expanded-content-collapse-content" : "contents"}>
               <GuideExpandedIntro
                 list={list}
                 sourceAction={
@@ -1551,52 +1572,51 @@ export function MapListCard({
                 }
               />
               {list.stops.length && !deferHeavyExpandedContent ? (
-                <GuidePhotoStrip
-                  stops={list.stops}
-                  title={isEventGuide ? "Schedule" : "Places of Interest"}
-                  activeStopId={forceExpandStopId}
-                  fallbackCategory={list.category}
-                  getStopCategory={(stop) =>
-                    isItineraryGuide ? inferJourneyStopCategory(stop, list.category) : stop.category ?? list.category
-                  }
-                  handlers={{
-                    onStopSelect: activateGuideStop,
-                    onStopHoverChange,
-                  }}
-                  style={{ animationDelay: "65ms" }}
-                />
-              ) : null}
-              {list.stops.length && !deferHeavyExpandedContent ? (
-                <>
-                  <ol
-                    id={`guide-stop-list-${list.id}`}
-                    onScroll={(event) => {
-                      if (stopListMaxScrollTop === null) {
-                        return;
+                <div className="contents">
+                  <div className="contents">
+                    <GuidePhotoStrip
+                      stops={list.stops}
+                      title={isEventGuide ? "Schedule" : "Places of Interest"}
+                      activeStopId={forceExpandStopId}
+                      fallbackCategory={list.category}
+                      getStopCategory={(stop) =>
+                        isItineraryGuide ? inferJourneyStopCategory(stop, list.category) : stop.category ?? list.category
                       }
-                      const shouldClampDesktopScroller =
-                        typeof window !== "undefined" && window.matchMedia("(min-width: 1024px)").matches;
-                      if (!shouldClampDesktopScroller) {
-                        return;
+                      handlers={{
+                        onStopSelect: activateGuideStop,
+                        onStopHoverChange,
+                      }}
+                      style={{ animationDelay: "65ms" }}
+                    />
+                    <ol
+                      id={`guide-stop-list-${list.id}`}
+                      onScroll={(event) => {
+                        if (stopListMaxScrollTop === null) {
+                          return;
+                        }
+                        const shouldClampDesktopScroller =
+                          typeof window !== "undefined" && window.matchMedia("(min-width: 1024px)").matches;
+                        if (!shouldClampDesktopScroller) {
+                          return;
+                        }
+                        const element = event.currentTarget;
+                        if (element.scrollTop > stopListMaxScrollTop) {
+                          element.scrollTop = stopListMaxScrollTop;
+                        }
+                      }}
+                      style={
+                        fillPane && expanded && stopListEndPadding > 0
+                          ? { paddingBottom: stopListEndPadding }
+                          : undefined
                       }
-                      const element = event.currentTarget;
-                      if (element.scrollTop > stopListMaxScrollTop) {
-                        element.scrollTop = stopListMaxScrollTop;
-                      }
-                    }}
-                    style={
-                      fillPane && expanded && stopListEndPadding > 0
-                        ? { paddingBottom: stopListEndPadding }
-                        : undefined
-                    }
-                    className={`relative z-10 mt-2 grid gap-2 ${
-                      fillPane && expanded
-                        ? "guide-stop-list min-h-0 touch-pan-y auto-rows-max pt-0.5 pr-1 lg:flex-1 lg:overflow-y-auto lg:overscroll-contain"
-                        : ""
-                    }`}
-                  >
-                    {list.stops.map((stop, index) => (
-                      (() => {
+                      className={`relative z-10 mt-2 grid gap-2 ${
+                        fillPane && expanded
+                          ? "guide-stop-list min-h-0 touch-pan-y auto-rows-max pt-0.5 pr-1 lg:flex-1 lg:overflow-y-auto lg:overscroll-contain"
+                          : ""
+                      }`}
+                    >
+                      {list.stops.map((stop, index) => (
+                        (() => {
                         const stopContent = splitStopDescriptionAndHours(stop.description);
                         const resolvedStopHours = resolveStopHours(stop) ?? stopContent.hours;
                         const stopItineraryId = `${list.id}:${stop.id}`;
@@ -1751,10 +1771,13 @@ export function MapListCard({
                       </Fragment>
                         );
                       })()
-                    ))}
-                  </ol>
-                </>
+                      ))}
+                    </ol>
+                  </div>
+                </div>
               ) : null}
+                </div>
+              </div>
               </GuideBodyComponent>
             </div>
           </div>
@@ -1975,13 +1998,16 @@ export function MapListCard({
     </MapListCardRoot>
   );
 
-  if (!collapsedFirstPoiPhoto || expandedChrome) {
+  if (!collapsedFirstPoiPhoto || expanded || fillPane) {
     return card;
   }
 
   return (
     <div
       className="collapsed-guide-card-with-outboard-image"
+      data-guide-opening={isOutboardImageOpening ? "true" : undefined}
+      data-guide-closing={isOutboardImageClosing ? "true" : undefined}
+      data-guide-chrome-preserved={preservingListChrome ? "true" : undefined}
       style={{ "--guide-accent": guideAccentColor } as React.CSSProperties}
       onMouseEnter={() => onHoverStart?.(list)}
       onMouseLeave={() => {
@@ -1994,7 +2020,21 @@ export function MapListCard({
         onHoverEnd?.();
       }}
     >
-      <div className="collapsed-guide-outboard-image" style={{ borderColor: guideAccentColor }} aria-hidden="true">
+      <button
+        type="button"
+        className="collapsed-guide-outboard-image"
+        style={{ borderColor: guideAccentColor }}
+        onClick={(event) => {
+          event.stopPropagation();
+          if (expandable) {
+            onToggleExpand?.(list);
+          }
+        }}
+        aria-expanded={expanded}
+        aria-controls={`guide-panel-${list.id}`}
+        aria-label={`Expand ${list.title}`}
+        title={`Expand ${list.title}`}
+      >
         <img
           src={collapsedFirstPoiPhoto}
           alt=""
@@ -2002,7 +2042,7 @@ export function MapListCard({
           decoding="async"
           className="h-full w-full object-cover"
         />
-      </div>
+      </button>
       {card}
     </div>
   );

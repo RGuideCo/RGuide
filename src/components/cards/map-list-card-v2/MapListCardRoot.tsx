@@ -17,6 +17,7 @@ interface MapListCardRootProps {
   onHoverStart?: (list: MapList) => void;
   onHoverEnd?: () => void;
   onStopHoverClear?: () => void;
+  isExternallyHovered?: boolean;
 }
 
 export function MapListCardRoot({
@@ -30,6 +31,7 @@ export function MapListCardRoot({
   onHoverStart,
   onHoverEnd,
   onStopHoverClear,
+  isExternallyHovered = false,
 }: MapListCardRootProps) {
   return (
     <article
@@ -44,6 +46,7 @@ export function MapListCardRoot({
             : "border border-slate-300 !bg-slate-50 px-3 pb-3 pt-0"
           : "collapsed-guide-card p-3 hover:border-slate-950/30 focus-within:border-slate-950/30"
       }`}
+      data-external-hover={isExternallyHovered ? "true" : undefined}
       style={!expandedChrome ? ({ "--guide-accent": guideAccentColor, borderColor: guideAccentColor } as GuideCardStyle) : undefined}
       onMouseEnter={() => onHoverStart?.(list)}
       onMouseLeave={() => {

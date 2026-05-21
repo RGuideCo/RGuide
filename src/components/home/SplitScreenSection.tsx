@@ -130,8 +130,10 @@ const GUIDE_LAYOUT_OPEN_SIDEWAYS_MS = 560;
 const GUIDE_LAYOUT_OPEN_UP_MS = 500;
 const GUIDE_LAYOUT_OPEN_UP_START_MS = GUIDE_LAYOUT_OPEN_SIDEWAYS_MS - 72;
 const GUIDE_LAYOUT_OPEN_TOTAL_MS = GUIDE_LAYOUT_OPEN_UP_START_MS + GUIDE_LAYOUT_OPEN_UP_MS;
-const GUIDE_LAYOUT_CLOSE_SIDEWAYS_START_MS = 260;
+const GUIDE_LAYOUT_CLOSE_SIDEWAYS_START_MS = GUIDE_LAYOUT_OPEN_UP_MS;
 const GUIDE_LAYOUT_CLOSE_TOTAL_MS = GUIDE_LAYOUT_CLOSE_SIDEWAYS_START_MS + GUIDE_LAYOUT_OPEN_SIDEWAYS_MS;
+const GUIDE_COLLAPSE_CONTENT_START_MS = GUIDE_LAYOUT_CLOSE_SIDEWAYS_START_MS;
+const GUIDE_PRE_COLLAPSE_CONTENT_MS = 260;
 const GUIDE_CONTENT_REVEAL_DELAY_MS = GUIDE_LAYOUT_OPEN_TOTAL_MS + 80;
 const CITY_LEFT_PANEL_STAY_LINK_FALLBACKS: Partial<Record<string, string>> = {
   london: "https://booking.stay22.com/rguide/hN0aP0djwf",
@@ -1184,8 +1186,10 @@ export function SplitScreenSection({
   const [isDesktopSearchOpen, setIsDesktopSearchOpen] = useState(false);
   const [isMobileExplorerSearchOpen, setIsMobileExplorerSearchOpen] = useState(false);
   const [hoveredGuide, setHoveredGuide] = useState<MapList | null>(null);
+  const [hoveredGuideMarkerId, setHoveredGuideMarkerId] = useState<string | null>(null);
   const [hoveredStopId, setHoveredStopId] = useState<string | null>(null);
   const [visibleNestedStopParentIds, setVisibleNestedStopParentIds] = useState<string[]>([]);
+  const [visibleGuideMarkerIds, setVisibleGuideMarkerIds] = useState<string[]>([]);
   const [selectedGuideStopId, setSelectedGuideStopId] = useState<string | null>(null);
   const [selectedGuideStopNonce, setSelectedGuideStopNonce] = useState(0);
   const [activeGuideFitNonce, setActiveGuideFitNonce] = useState(0);
@@ -1195,7 +1199,7 @@ export function SplitScreenSection({
   const [expandedGuideId, setExpandedGuideId] = useState<string | null>(initialRouteState?.expandedGuideId ?? null);
   const [pendingSourcesOpenGuideId, setPendingSourcesOpenGuideId] = useState<string | null>(null);
   const [closingGuide, setClosingGuide] = useState<MapList | null>(null);
-  const [closingGuidePhase, setClosingGuidePhase] = useState<"returning" | "collapsing" | null>(null);
+  const [closingGuidePhase, setClosingGuidePhase] = useState<"precollapsing" | "returning" | "collapsing" | null>(null);
   const [openingGuideId, setOpeningGuideId] = useState<string | null>(null);
   const [settlingGuideContentId, setSettlingGuideContentId] = useState<string | null>(null);
   const [isMobileListSheetExpanded, setIsMobileListSheetExpanded] = useState(false);
@@ -1348,6 +1352,7 @@ export function SplitScreenSection({
   const leftPaneRef = useRef<HTMLDivElement | null>(null);
   const mapViewportPanelRef = useRef<HTMLDivElement | null>(null);
   const rightPaneRef = useRef<HTMLDivElement | null>(null);
+  const hoveredGuideMarkerScrollRef = useRef<string | null>(null);
   const initialRouteStateKey = JSON.stringify(initialRouteState ?? null);
   const selectionRef = useRef(selection);
   const activeCategoryRef = useRef(activeCategory);
@@ -3712,9 +3717,155 @@ export function SplitScreenSection({
       })
       .slice(0, 20);
   }, [activeGuideRail, activeGuideSource, activeCategory, globalMergedLists, isGlobalSelection, orderedRailFilteredLists]);
+
+  const visibleGuideMarkerListSignature = useMemo(
+    () =>
+      [
+        ...orderedRailFilteredLists.map((list) => list.id),
+        ...recentRGuideLists.map((list) => list.id),
+        ...profileRailLists.map((list) => list.id),
+      ].join("|"),
+    [orderedRailFilteredLists, profileRailLists, recentRGuideLists],
+  );
+  const visibleGuideMarkerFallbackIds = useMemo(() => {
+    const seen = new Set<string>();
+    const lists = isProfileMode ? profileRailLists : [...orderedRailFilteredLists, ...recentRGuideLists];
+    return lists
+      .filter((list) => {
+        if (seen.has(list.id) || list.id === activeMapGuide?.id) {
+          return false;
+        }
+        seen.add(list.id);
+        return true;
+      })
+      .slice(0, 30)
+      .map((list) => list.id);
+  }, [activeMapGuide?.id, isProfileMode, orderedRailFilteredLists, profileRailLists, recentRGuideLists]);
+
+  useEffect(() => {
+    if (typeof window === "undefined" || isProfileSubmitLayout || isGuidePaneTakingFullListPane) {
+      setVisibleGuideMarkerIds([]);
+      return;
+    }
+
+    const rightPane = rightPaneRef.current;
+    if (!rightPane) {
+      setVisibleGuideMarkerIds([]);
+      return;
+    }
+
+    const isEffectivelyVisible = (element: HTMLElement) => {
+      let current: HTMLElement | null = element;
+      while (current && current !== rightPane) {
+        const className = current.getAttribute("class") ?? "";
+        if (className.includes("pointer-events-none") || className.includes("opacity-0")) {
+          return false;
+        }
+        const style = window.getComputedStyle(current);
+        if (style.display === "none" || style.visibility === "hidden" || style.pointerEvents === "none") {
+          return false;
+        }
+        current = current.parentElement;
+      }
+      return true;
+    };
+
+    let publishFrame: number | null = null;
+    const activeGuideId = activeMapGuide?.id ?? null;
+
+    const publishVisibleGuideIds = () => {
+      publishFrame = null;
+
+      const scrollContainers = Array.from(rightPane.querySelectorAll<HTMLElement>("[data-guides-scroll]")).filter(
+        (scroller) => {
+          const rect = scroller.getBoundingClientRect();
+          return rect.width > 0 && rect.height > 0 && isEffectivelyVisible(scroller);
+        },
+      );
+
+      const seen = new Set<string>();
+      const markerLimit = 30;
+      const markerCandidates: Array<{ id: string; distance: number; order: number }> = [];
+      let cardOrder = 0;
+
+      scrollContainers.forEach((scroller) => {
+        const scrollerRect = scroller.getBoundingClientRect();
+        const cards = Array.from(scroller.querySelectorAll<HTMLElement>("[data-guide-card-anchor]"));
+
+        cards.forEach((card) => {
+          const guideId = card.getAttribute("data-guide-card-anchor");
+          if (!guideId || guideId === activeGuideId || seen.has(guideId) || !isEffectivelyVisible(card)) {
+            return;
+          }
+
+          const cardRect = card.getBoundingClientRect();
+          const cardCenter = cardRect.top + cardRect.height / 2;
+          const viewportCenter = scrollerRect.top + scrollerRect.height / 2;
+
+          seen.add(guideId);
+          markerCandidates.push({
+            id: guideId,
+            distance: Math.abs(cardCenter - viewportCenter),
+            order: cardOrder,
+          });
+          cardOrder += 1;
+        });
+      });
+
+      const nextIds = markerCandidates
+        .sort((left, right) => left.distance - right.distance || left.order - right.order)
+        .slice(0, markerLimit)
+        .sort((left, right) => left.order - right.order)
+        .map((candidate) => candidate.id);
+      const stableNextIds = nextIds.length ? nextIds : visibleGuideMarkerFallbackIds;
+
+      setVisibleGuideMarkerIds((current) =>
+        current.length === stableNextIds.length && current.every((id, index) => id === stableNextIds[index])
+          ? current
+          : stableNextIds,
+      );
+    };
+
+    const schedulePublish = () => {
+      if (publishFrame !== null) {
+        return;
+      }
+      publishFrame = window.requestAnimationFrame(publishVisibleGuideIds);
+    };
+
+    const scrollContainers = Array.from(rightPane.querySelectorAll<HTMLElement>("[data-guides-scroll]"));
+    scrollContainers.forEach((scroller) => scroller.addEventListener("scroll", schedulePublish, { passive: true }));
+    window.addEventListener("resize", schedulePublish, { passive: true });
+
+    let resizeObserver: ResizeObserver | null = null;
+    if (typeof ResizeObserver !== "undefined") {
+      resizeObserver = new ResizeObserver(schedulePublish);
+      resizeObserver.observe(rightPane);
+      scrollContainers.forEach((scroller) => resizeObserver?.observe(scroller));
+    }
+
+    schedulePublish();
+
+    return () => {
+      scrollContainers.forEach((scroller) => scroller.removeEventListener("scroll", schedulePublish));
+      window.removeEventListener("resize", schedulePublish);
+      resizeObserver?.disconnect();
+      if (publishFrame !== null) {
+        window.cancelAnimationFrame(publishFrame);
+      }
+    };
+  }, [
+    activeMapGuide?.id,
+    isGuidePaneTakingFullListPane,
+    isProfileSubmitLayout,
+    visibleGuideMarkerFallbackIds,
+    visibleGuideMarkerListSignature,
+  ]);
+
   const renderGuideRailCard = (list: MapList, keyPrefix = "") => (
     <div
       key={`${keyPrefix}${list.id}`}
+      data-guide-card-anchor={list.id}
       ref={(node) => {
         guideRefs.current[list.id] = node;
       }}
@@ -3727,6 +3878,7 @@ export function SplitScreenSection({
         preserveExpandedChrome={closingGuide?.id === list.id || openingGuideId === list.id}
         retractExpandedChrome={closingGuide?.id === list.id && closingGuidePhase === "collapsing"}
         expandExpandedChrome={openingGuideId === list.id}
+        hideExpandedContent={closingGuide?.id === list.id && closingGuidePhase === "returning"}
         onExpandChromeComplete={completeGuideOpening}
         onToggleExpand={handleGuideToggle}
         shouldAutoOpenSources={pendingSourcesOpenGuideId === list.id}
@@ -3737,6 +3889,7 @@ export function SplitScreenSection({
         onStopHoverChange={setHoveredStopId}
         onStopSelect={handleGuideStopSelect}
         hoveredStopId={hoveredStopId}
+        isExternallyHovered={hoveredGuideMarkerId === list.id}
         forceExpandStopId={selectedGuideStopId}
         forceExpandStopNonce={selectedGuideStopNonce}
         collapsedLocationSubtitleHiddenParts={getCollapsedLocationSubtitleHiddenParts(list)}
@@ -3871,13 +4024,36 @@ export function SplitScreenSection({
     setHoveredCategoryLabel(null);
     setIsMobileListSheetExpanded(true);
   }, [isGuidePaneTakingFullListPane]);
+  const getVisibleGuideAnchorElements = () =>
+    Array.from(document.querySelectorAll<HTMLDivElement>("[data-guide-card-anchor]")).filter((element) => {
+      const scroller = element.closest("[data-guides-scroll]");
+      if (!(scroller instanceof HTMLElement)) {
+        return false;
+      }
+
+      const elementRect = element.getBoundingClientRect();
+      const scrollerRect = scroller.getBoundingClientRect();
+      return (
+        elementRect.width > 0 &&
+        elementRect.height > 0 &&
+        scrollerRect.width > 0 &&
+        scrollerRect.height > 0 &&
+        elementRect.bottom >= scrollerRect.top &&
+        elementRect.top <= scrollerRect.bottom
+      );
+    });
+  const getVisibleGuideAnchorElement = (guideId: string) =>
+    getVisibleGuideAnchorElements().find((element) => element.dataset.guideCardAnchor === guideId) ?? null;
+  const getGuideAnchorElement = (guideId: string) =>
+    getVisibleGuideAnchorElement(guideId) ??
+    document.querySelector<HTMLDivElement>(`[data-guide-card-anchor="${CSS.escape(guideId)}"]`);
   const scrollGuideIntoView = (
     guideId: string,
     options: { behavior?: ScrollBehavior; defer?: boolean } = {},
   ) => {
     const { behavior = "smooth", defer = true } = options;
     const runScroll = () => {
-      const element = guideRefs.current[guideId];
+      const element = getGuideAnchorElement(guideId);
       const scroller = element?.closest("[data-guides-scroll]");
 
       if (!(element instanceof HTMLElement) || !(scroller instanceof HTMLElement)) {
@@ -3900,6 +4076,25 @@ export function SplitScreenSection({
 
     runScroll();
   };
+  const handleHoverGuideMarker = (guideId: string | null) => {
+    setHoveredGuideMarkerId(guideId);
+
+    if (!guideId) {
+      hoveredGuideMarkerScrollRef.current = null;
+      setHoveredGuide(null);
+      return;
+    }
+
+    const guide =
+      activeEditorialLists.find((list) => list.id === guideId) ??
+      globalMergedLists.find((list) => list.id === guideId) ??
+      null;
+    setHoveredGuide(guide);
+    if (hoveredGuideMarkerScrollRef.current !== guideId) {
+      hoveredGuideMarkerScrollRef.current = guideId;
+      scrollGuideIntoView(guideId, { behavior: "smooth", defer: false });
+    }
+  };
   const captureGuideLayoutPositions = (motion: "default" | "open" | "close" = "default") => {
     guideLayoutAnimationFramesRef.current.forEach((frame) => cancelAnimationFrame(frame));
     guideLayoutAnimationFramesRef.current = [];
@@ -3907,9 +4102,9 @@ export function SplitScreenSection({
     guideLayoutCleanupTimeoutsRef.current = [];
     guideLayoutMotionRef.current = motion;
     guideLayoutPositionsRef.current = Object.fromEntries(
-      Object.entries(guideRefs.current)
-        .filter((entry): entry is [string, HTMLDivElement] => entry[1] instanceof HTMLDivElement)
-        .map(([guideId, element]) => [guideId, element.getBoundingClientRect()]),
+      getVisibleGuideAnchorElements()
+        .map((element) => [element.dataset.guideCardAnchor, element.getBoundingClientRect()] as const)
+        .filter((entry): entry is [string, DOMRect] => Boolean(entry[0])),
     );
     shouldAnimateGuideLayoutRef.current = true;
   };
@@ -3928,10 +4123,15 @@ export function SplitScreenSection({
       return;
     }
 
-    const changedElements = Object.entries(guideRefs.current).flatMap(([guideId, element]) => {
+    const changedElements = getVisibleGuideAnchorElements().flatMap((element) => {
+      const guideId = element.dataset.guideCardAnchor;
+      if (!guideId) {
+        return [];
+      }
+
       const previousRect = guideLayoutPositionsRef.current[guideId];
 
-      if (!(element instanceof HTMLDivElement) || !previousRect) {
+      if (!previousRect) {
         return [];
       }
 
@@ -4279,7 +4479,6 @@ export function SplitScreenSection({
       openingGuideTimeoutRef.current = null;
     }
     captureGuideLayoutPositions("open");
-    deferGuideContentUntilMotionSettles(nextList.id);
     setOpeningGuideId(null);
     setExpandedGuideId(nextList.id);
     setHoveredStopId(null);
@@ -4307,12 +4506,10 @@ export function SplitScreenSection({
     setSettlingGuideContentId(null);
 
     if (expandedGuideId === nextList.id && expandedGuide) {
-      captureGuideLayoutPositions("close");
       const restoredCategory = restoreCategoryAfterGuideCollapse();
       setClosingGuide(expandedGuide);
-      setClosingGuidePhase("returning");
+      setClosingGuidePhase("precollapsing");
       setOpeningGuideId(null);
-      setExpandedGuideId(null);
       setVisibleNestedStopParentIds([]);
       setHoveredStopId(null);
       setSelectedGuideStopId(null);
@@ -4321,17 +4518,21 @@ export function SplitScreenSection({
         pushExplorerPath(nextPath);
       }
       closingGuideTimeoutRef.current = setTimeout(() => {
-        setClosingGuidePhase("collapsing");
+        captureGuideLayoutPositions("close");
+        setClosingGuidePhase("returning");
+        setExpandedGuideId(null);
         closingGuideTimeoutRef.current = setTimeout(() => {
-          setClosingGuide(null);
-          setClosingGuidePhase(null);
-          closingGuideTimeoutRef.current = null;
-        }, GUIDE_CHROME_WIPE_MS);
-      }, GUIDE_LAYOUT_CLOSE_SIDEWAYS_START_MS);
+          setClosingGuidePhase("collapsing");
+          closingGuideTimeoutRef.current = setTimeout(() => {
+            setClosingGuide(null);
+            setClosingGuidePhase(null);
+            closingGuideTimeoutRef.current = null;
+          }, GUIDE_CHROME_WIPE_MS);
+        }, GUIDE_COLLAPSE_CONTENT_START_MS);
+      }, GUIDE_PRE_COLLAPSE_CONTENT_MS);
       return;
     }
 
-    scrollGuideIntoView(nextList.id, { behavior: "auto", defer: false });
     captureGuideLayoutPositions();
     if (!expandedGuideId) {
       categoryBeforeGuideExpandRef.current = activeCategory;
@@ -4389,7 +4590,6 @@ export function SplitScreenSection({
     setVisibleNestedStopParentIds([]);
     setHoveredStopId(null);
     setSelectedGuideStopId(null);
-    deferGuideContentUntilMotionSettles(nextList.id);
     setExpandedGuideId(nextList.id);
     setActiveCategory(nextList.category);
     setActiveGuideFitNonce((current) => current + 1);
@@ -5028,11 +5228,14 @@ export function SplitScreenSection({
               activeGuide={activeMapGuide}
               activeGuideFitNonce={activeGuideFitNonce}
               guideLists={activeEditorialLists}
+              visibleGuideMarkerIds={visibleGuideMarkerIds}
+              hoveredGuideMarkerId={hoveredGuideMarkerId}
               savedLocations={savedMapLocations}
               visibleNestedStopParentIds={visibleNestedStopParentIds}
               hoveredStopId={hoveredStopId}
               selectedStopId={selectedGuideStopId}
               onHoverGuideStop={setHoveredStopId}
+              onHoverGuideMarker={handleHoverGuideMarker}
               onSelectGuideStop={(stopId) => {
                 setHoveredStopId(stopId);
                 setSelectedGuideStopId(stopId);
@@ -7950,6 +8153,7 @@ export function SplitScreenSection({
                     <div className={isGuideTakingFullListPane ? "flex h-full min-h-0 flex-col" : "space-y-4"}>
                       <div
                         key={displayedGuide.id}
+                        data-guide-card-anchor={displayedGuide.id}
                         ref={(node) => {
                           guideRefs.current[displayedGuide.id] = node;
                         }}
@@ -7961,6 +8165,7 @@ export function SplitScreenSection({
                           expanded={Boolean(expandedGuide)}
                           fillPane={isGuideTakingFullListPane}
                           deferExpandedContent={settlingGuideContentId === displayedGuide.id}
+                          collapseExpandedContent={closingGuide?.id === displayedGuide.id && closingGuidePhase === "precollapsing"}
                           onToggleExpand={handleGuideToggle}
                           shouldAutoOpenSources={pendingSourcesOpenGuideId === displayedGuide.id}
                           onAutoOpenSourcesHandled={handleAutoOpenSourcesHandled}
@@ -7970,6 +8175,7 @@ export function SplitScreenSection({
                           onStopHoverChange={setHoveredStopId}
                           onStopSelect={handleGuideStopSelect}
                           hoveredStopId={hoveredStopId}
+                          isExternallyHovered={hoveredGuideMarkerId === displayedGuide.id}
                           onExpandedStopIdsChange={setVisibleNestedStopParentIds}
                           forceExpandStopId={selectedGuideStopId}
                           forceExpandStopNonce={selectedGuideStopNonce}
@@ -7986,6 +8192,7 @@ export function SplitScreenSection({
                         {remainingGuides.map((list) => (
                           <div
                             key={list.id}
+                            data-guide-card-anchor={list.id}
                             ref={(node) => {
                               guideRefs.current[list.id] = node;
                             }}
@@ -7998,6 +8205,7 @@ export function SplitScreenSection({
                               preserveExpandedChrome={closingGuide?.id === list.id || openingGuideId === list.id}
                               retractExpandedChrome={closingGuide?.id === list.id && closingGuidePhase === "collapsing"}
                               expandExpandedChrome={openingGuideId === list.id}
+                              hideExpandedContent={closingGuide?.id === list.id && closingGuidePhase === "returning"}
                               onExpandChromeComplete={completeGuideOpening}
                               onToggleExpand={handleGuideToggle}
                               shouldAutoOpenSources={pendingSourcesOpenGuideId === list.id}
@@ -8008,6 +8216,7 @@ export function SplitScreenSection({
                               onStopHoverChange={setHoveredStopId}
                               onStopSelect={handleGuideStopSelect}
                               hoveredStopId={hoveredStopId}
+                              isExternallyHovered={hoveredGuideMarkerId === list.id}
                               forceExpandStopId={selectedGuideStopId}
                               forceExpandStopNonce={selectedGuideStopNonce}
                               collapsedLocationSubtitleHiddenParts={getCollapsedLocationSubtitleHiddenParts(list)}
@@ -8045,6 +8254,7 @@ export function SplitScreenSection({
                           {recentRGuideLists.map((list) => (
                             <div
                               key={`recent-rguide-${list.id}`}
+                              data-guide-card-anchor={list.id}
                               ref={(node) => {
                                 guideRefs.current[list.id] = node;
                               }}
@@ -8057,6 +8267,7 @@ export function SplitScreenSection({
                                 preserveExpandedChrome={closingGuide?.id === list.id || openingGuideId === list.id}
                                 retractExpandedChrome={closingGuide?.id === list.id && closingGuidePhase === "collapsing"}
                                 expandExpandedChrome={openingGuideId === list.id}
+                                hideExpandedContent={closingGuide?.id === list.id && closingGuidePhase === "returning"}
                                 onExpandChromeComplete={completeGuideOpening}
                                 onToggleExpand={handleGuideToggle}
                                 onHoverStart={setHoveredGuide}
@@ -8064,6 +8275,7 @@ export function SplitScreenSection({
                                 onStopHoverChange={setHoveredStopId}
                                 onStopSelect={handleGuideStopSelect}
                                 hoveredStopId={hoveredStopId}
+                                isExternallyHovered={hoveredGuideMarkerId === list.id}
                                 forceExpandStopId={selectedGuideStopId}
                                 forceExpandStopNonce={selectedGuideStopNonce}
                                 collapsedLocationSubtitleHiddenParts={getCollapsedLocationSubtitleHiddenParts(list)}
@@ -8195,6 +8407,7 @@ export function SplitScreenSection({
                             onStopHoverChange={setHoveredStopId}
                             onStopSelect={handleGuideStopSelect}
                             hoveredStopId={hoveredStopId}
+                            isExternallyHovered={hoveredGuideMarkerId === profileExpandedGuide?.id}
                             onExpandedStopIdsChange={setVisibleNestedStopParentIds}
                             forceExpandStopId={selectedGuideStopId}
                             forceExpandStopNonce={selectedGuideStopNonce}
@@ -8213,6 +8426,7 @@ export function SplitScreenSection({
                               onStopHoverChange={setHoveredStopId}
                               onStopSelect={handleGuideStopSelect}
                               hoveredStopId={hoveredStopId}
+                              isExternallyHovered={hoveredGuideMarkerId === list.id}
                               forceExpandStopId={selectedGuideStopId}
                               forceExpandStopNonce={selectedGuideStopNonce}
                               onEditGuide={handleEditGuideFromProfile}
