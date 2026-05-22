@@ -130,11 +130,12 @@ const GUIDE_LAYOUT_OPEN_SIDEWAYS_MS = 560;
 const GUIDE_LAYOUT_OPEN_UP_MS = 500;
 const GUIDE_LAYOUT_OPEN_UP_START_MS = GUIDE_LAYOUT_OPEN_SIDEWAYS_MS - 72;
 const GUIDE_LAYOUT_OPEN_TOTAL_MS = GUIDE_LAYOUT_OPEN_UP_START_MS + GUIDE_LAYOUT_OPEN_UP_MS;
-const GUIDE_LAYOUT_CLOSE_SIDEWAYS_START_MS = GUIDE_LAYOUT_OPEN_UP_MS;
-const GUIDE_LAYOUT_CLOSE_TOTAL_MS = GUIDE_LAYOUT_CLOSE_SIDEWAYS_START_MS + GUIDE_LAYOUT_OPEN_SIDEWAYS_MS;
+const GUIDE_LAYOUT_CLOSE_SIDEWAYS_START_MS = 220;
+const GUIDE_LAYOUT_CLOSE_TOTAL_MS = 780;
 const GUIDE_COLLAPSE_CONTENT_START_MS = GUIDE_LAYOUT_CLOSE_SIDEWAYS_START_MS;
-const GUIDE_PRE_COLLAPSE_CONTENT_MS = 260;
-const GUIDE_CONTENT_REVEAL_DELAY_MS = GUIDE_LAYOUT_OPEN_TOTAL_MS + 80;
+const GUIDE_PRE_COLLAPSE_CONTENT_MS = 180;
+const GUIDE_CONTENT_REVEAL_DELAY_MS = GUIDE_OPEN_EXPAND_START_MS + 240;
+const GUIDE_DIRECT_CONTENT_REVEAL_DELAY_MS = 220;
 const CITY_LEFT_PANEL_STAY_LINK_FALLBACKS: Partial<Record<string, string>> = {
   london: "https://booking.stay22.com/rguide/hN0aP0djwf",
   paris: "https://booking.stay22.com/rguide/aPYDwK9gOi",
@@ -1201,7 +1202,9 @@ export function SplitScreenSection({
   const [closingGuide, setClosingGuide] = useState<MapList | null>(null);
   const [closingGuidePhase, setClosingGuidePhase] = useState<"precollapsing" | "returning" | "collapsing" | null>(null);
   const [openingGuideId, setOpeningGuideId] = useState<string | null>(null);
-  const [settlingGuideContentId, setSettlingGuideContentId] = useState<string | null>(null);
+  const [settlingGuideContentId, setSettlingGuideContentId] = useState<string | null>(
+    initialRouteState?.expandedGuideId ?? null,
+  );
   const [isMobileListSheetExpanded, setIsMobileListSheetExpanded] = useState(false);
 
   useEffect(() => {
@@ -1307,6 +1310,7 @@ export function SplitScreenSection({
   const openingGuideIdRef = useRef<string | null>(null);
   const guideContentRevealTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const guideContentRevealFrameRef = useRef<ReturnType<typeof requestAnimationFrame> | null>(null);
+  const initialGuideContentRevealScheduledRef = useRef(false);
   const morphCommitTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const morphCleanupTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const morphFrameRef = useRef<ReturnType<typeof requestAnimationFrame> | null>(null);
@@ -1327,7 +1331,7 @@ export function SplitScreenSection({
       guideContentRevealFrameRef.current = null;
     }
   };
-  const deferGuideContentUntilMotionSettles = (guideId: string) => {
+  const deferGuideContentUntilMotionSettles = (guideId: string, delayMs = GUIDE_CONTENT_REVEAL_DELAY_MS) => {
     clearGuideContentRevealSchedule();
     setSettlingGuideContentId(guideId);
     guideContentRevealTimeoutRef.current = setTimeout(() => {
@@ -1338,8 +1342,23 @@ export function SplitScreenSection({
           setSettlingGuideContentId((current) => (current === guideId ? null : current));
         });
       });
-    }, GUIDE_CONTENT_REVEAL_DELAY_MS);
+    }, delayMs);
   };
+  useEffect(() => {
+    const initialExpandedGuideId = initialRouteState?.expandedGuideId;
+    if (!initialExpandedGuideId || initialGuideContentRevealScheduledRef.current) {
+      return;
+    }
+
+    initialGuideContentRevealScheduledRef.current = true;
+    const revealTimeout = window.setTimeout(() => {
+      startTransition(() => {
+        setSettlingGuideContentId((current) => (current === initialExpandedGuideId ? null : current));
+      });
+    }, GUIDE_DIRECT_CONTENT_REVEAL_DELAY_MS);
+
+    return () => window.clearTimeout(revealTimeout);
+  }, [initialRouteState?.expandedGuideId]);
   const isPublicProfileMode = Boolean(publicProfile);
   const [isPublicProfileEntering, setIsPublicProfileEntering] = useState(isPublicProfileMode);
   const previousRailIconsRef = useRef<Record<ExitingRailIcon["kind"], ExitingRailIcon | null>>({
@@ -1361,9 +1380,19 @@ export function SplitScreenSection({
   const expandedGuideIdRef = useRef(expandedGuideId);
   const skipInitialSelectionCleanupRef = useRef(Boolean(initialRouteState?.expandedGuideId));
   const skipInitialGuideRailCleanupRef = useRef(Boolean(initialRouteState?.expandedGuideId));
-  const categoryBeforeGuideExpandRef = useRef<ListCategory | null>(
-    initialRouteState?.expandedGuideId ? initialRouteState.activeCategory ?? null : null,
-  );
+  const categoryBeforeGuideExpandRef = useRef<{
+    captured: boolean;
+    category: ListCategory | null;
+  }>({
+    captured: Boolean(initialRouteState?.expandedGuideId),
+    category: null,
+  });
+  const clearCategoryBeforeGuideExpand = () => {
+    categoryBeforeGuideExpandRef.current = { captured: false, category: null };
+  };
+  const captureCategoryBeforeGuideExpand = (category: ListCategory | null = activeCategoryRef.current) => {
+    categoryBeforeGuideExpandRef.current = { captured: true, category };
+  };
 
   useEffect(() => {
     selectionRef.current = selection;
@@ -1414,6 +1443,16 @@ export function SplitScreenSection({
       setActiveSubcategory(null);
     }
     if (currentGuideId !== nextGuideId) {
+      if (!nextGuideId && closingGuideTimeoutRef.current) {
+        return;
+      }
+      if (nextGuideId) {
+        if (!categoryBeforeGuideExpandRef.current.captured) {
+          captureCategoryBeforeGuideExpand(null);
+        }
+      } else {
+        clearCategoryBeforeGuideExpand();
+      }
       setExpandedGuideId(nextGuideId);
       setClosingGuide(null);
       setVisibleNestedStopParentIds([]);
@@ -1442,6 +1481,11 @@ export function SplitScreenSection({
       setSelection(route.selection);
       setActiveCategory(route.activeCategory ?? null);
       setActiveSubcategory(null);
+      if (route.expandedGuideId) {
+        captureCategoryBeforeGuideExpand(null);
+      } else {
+        clearCategoryBeforeGuideExpand();
+      }
       setExpandedGuideId(route.expandedGuideId ?? null);
       setClosingGuide(null);
       setVisibleNestedStopParentIds([]);
@@ -1726,8 +1770,9 @@ export function SplitScreenSection({
     return { name: neighborhoodName };
   };
   const restoreCategoryAfterGuideCollapse = () => {
-    const restoredCategory = categoryBeforeGuideExpandRef.current;
-    categoryBeforeGuideExpandRef.current = null;
+    const snapshot = categoryBeforeGuideExpandRef.current;
+    const restoredCategory = snapshot.captured ? snapshot.category : null;
+    clearCategoryBeforeGuideExpand();
     setActiveCategory(restoredCategory);
     return restoredCategory;
   };
@@ -1753,6 +1798,7 @@ export function SplitScreenSection({
     setClosingGuidePhase(null);
     setOpeningGuideId(null);
     setExpandedGuideId(null);
+    clearCategoryBeforeGuideExpand();
     setSettlingGuideContentId(null);
     setVisibleNestedStopParentIds([]);
     setHoveredStopId(null);
@@ -1995,6 +2041,7 @@ export function SplitScreenSection({
       setActiveCategory(null);
       setActiveSubcategory(null);
       setExpandedGuideId(null);
+      clearCategoryBeforeGuideExpand();
       setClosingGuide(null);
       pushExplorerPath(getCanonicalCityPath(city));
     }
@@ -2348,6 +2395,9 @@ export function SplitScreenSection({
     if (list.location.neighborhood?.trim()) {
       return list.location.neighborhood.trim();
     }
+    if (slugifyLocationPart(list.id).includes("citywide")) {
+      return null;
+    }
     const cityName = activeLocation.city?.name ?? list.location.city;
     if (!cityName) {
       return null;
@@ -2685,6 +2735,7 @@ export function SplitScreenSection({
     setActiveCategory(null);
     setActiveSubcategory(null);
     setExpandedGuideId(null);
+    clearCategoryBeforeGuideExpand();
     setClosingGuide(null);
 
     const context = getCityRouteContext(location.selection);
@@ -3348,11 +3399,13 @@ export function SplitScreenSection({
     setIsFoodCuisineMenuOpen(false);
     setActiveNightlifeBarType(NIGHTLIFE_BAR_TYPE_ANY);
     setIsNightlifeBarMenuOpen(false);
+    clearCategoryBeforeGuideExpand();
   };
   const handleLocationFavoritesRailToggle = () => {
     const nextActive = !isLocationFavoritesRailActive;
     setIsLocationFavoritesRailActive(nextActive);
     setExpandedGuideId(null);
+    clearCategoryBeforeGuideExpand();
     setClosingGuide(null);
     setVisibleNestedStopParentIds([]);
 
@@ -3366,6 +3419,7 @@ export function SplitScreenSection({
     setActiveGuideSource(sourceId);
     setIsLocationFavoritesRailActive(false);
     setExpandedGuideId(null);
+    clearCategoryBeforeGuideExpand();
     setClosingGuide(null);
     setVisibleNestedStopParentIds([]);
   };
@@ -3374,6 +3428,7 @@ export function SplitScreenSection({
     setActiveGuideRail(nextRail);
     setIsLocationFavoritesRailActive(false);
     setExpandedGuideId(null);
+    clearCategoryBeforeGuideExpand();
     setClosingGuide(null);
     setVisibleNestedStopParentIds([]);
 
@@ -3465,7 +3520,7 @@ export function SplitScreenSection({
     setActiveNightlifeBarType(NIGHTLIFE_BAR_TYPE_ANY);
     setIsNightlifeBarMenuOpen(false);
     setExpandedGuideId(null);
-    categoryBeforeGuideExpandRef.current = null;
+    clearCategoryBeforeGuideExpand();
     setClosingGuide(null);
     setActiveCategory(nextCategory);
     const nextPath = getCurrentCityRoutePath(nextCategory);
@@ -3534,6 +3589,7 @@ export function SplitScreenSection({
     setExpandedGuideId(null);
     setClosingGuide(null);
     setClosingGuidePhase(null);
+    clearCategoryBeforeGuideExpand();
     openingGuideIdRef.current = null;
     setOpeningGuideId(null);
     clearGuideContentRevealSchedule();
@@ -3638,26 +3694,13 @@ export function SplitScreenSection({
   }, []);
 
   useEffect(() => {
-    if (!expandedGuideId || closingGuide) {
-      return;
-    }
-
-    const expandedList =
-      orderedRailFilteredLists.find((list) => list.id === expandedGuideId) ??
-      globalMergedLists.find((list) => list.id === expandedGuideId);
-
-    if (expandedList && activeGuideRail !== "itinerary") {
-      setActiveCategory(expandedList.category);
-    }
-  }, [activeGuideRail, closingGuide, expandedGuideId, globalMergedLists, orderedRailFilteredLists]);
-
-  useEffect(() => {
     if (skipInitialGuideRailCleanupRef.current) {
       skipInitialGuideRailCleanupRef.current = false;
       return;
     }
 
     setExpandedGuideId(null);
+    clearCategoryBeforeGuideExpand();
     setClosingGuide(null);
   }, [activeGuideRail, activeGuideSource]);
   useEffect(() => {
@@ -3678,7 +3721,9 @@ export function SplitScreenSection({
       ? profileExpandedGuide
       : expandedGuide;
   const isGuideTakingFullListPane = Boolean(expandedGuide && !isPublicProfileMode);
-  const isGuideReturningToListPane = Boolean(closingGuide && closingGuidePhase === "returning" && !isPublicProfileMode);
+  const isGuideReturningToListPane = Boolean(
+    closingGuide && (closingGuidePhase === "returning" || closingGuidePhase === "collapsing") && !isPublicProfileMode,
+  );
   const isGuidePaneTakingFullListPane = isGuideTakingFullListPane || isGuideReturningToListPane;
   const isLeftPaneCollapsed = isProfileSubmitLayout || isGuidePaneTakingFullListPane || isProfileGuideTakingFullListPane;
   const isSubcategoryMenuOpen =
@@ -3919,11 +3964,14 @@ export function SplitScreenSection({
       <MapListCard
         list={list}
         expandable
-        expanded={closingGuide?.id === list.id && closingGuidePhase === "returning"}
+        expanded={false}
         preserveExpandedChrome={closingGuide?.id === list.id || openingGuideId === list.id}
-        retractExpandedChrome={closingGuide?.id === list.id && closingGuidePhase === "collapsing"}
+        retractExpandedChrome={
+          closingGuide?.id === list.id &&
+          (closingGuidePhase === "returning" || closingGuidePhase === "collapsing")
+        }
         expandExpandedChrome={openingGuideId === list.id}
-        hideExpandedContent={closingGuide?.id === list.id && closingGuidePhase === "returning"}
+        hideExpandedContent={closingGuide?.id === list.id}
         onExpandChromeComplete={completeGuideOpening}
         onToggleExpand={handleGuideToggle}
         shouldAutoOpenSources={pendingSourcesOpenGuideId === list.id}
@@ -4292,16 +4340,8 @@ export function SplitScreenSection({
       changedElements.forEach(({ deltaX, deltaY, element, reverseSidewaysFirst, scaleX, stageSidewaysFirst }) => {
         if (stageSidewaysFirst) {
           if (reverseSidewaysFirst) {
-            element.style.transition = `transform ${GUIDE_LAYOUT_OPEN_UP_MS}ms cubic-bezier(0.22, 1, 0.36, 1)`;
-            element.style.transform = `translate(${deltaX}px, 0)`;
-            const sidewaysTimeout = window.setTimeout(() => {
-              element.style.transition = `transform ${GUIDE_LAYOUT_OPEN_SIDEWAYS_MS}ms cubic-bezier(0.33, 1, 0.68, 1)`;
-              element.style.transform = "translate(0, 0)";
-              guideLayoutCleanupTimeoutsRef.current = guideLayoutCleanupTimeoutsRef.current.filter(
-                (timeoutId) => timeoutId !== sidewaysTimeout,
-              );
-            }, GUIDE_LAYOUT_CLOSE_SIDEWAYS_START_MS);
-            guideLayoutCleanupTimeoutsRef.current.push(sidewaysTimeout);
+            element.style.transition = `transform ${GUIDE_LAYOUT_CLOSE_TOTAL_MS}ms cubic-bezier(0.22, 1, 0.36, 1)`;
+            element.style.transform = "translate(0, 0)";
             return;
           }
 
@@ -4639,11 +4679,13 @@ export function SplitScreenSection({
         captureGuideLayoutPositions("close");
         setClosingGuidePhase("returning");
         setExpandedGuideId(null);
+        setActiveCategory(restoredCategory);
         closingGuideTimeoutRef.current = setTimeout(() => {
           setClosingGuidePhase("collapsing");
           closingGuideTimeoutRef.current = setTimeout(() => {
             setClosingGuide(null);
             setClosingGuidePhase(null);
+            setActiveCategory(restoredCategory);
             closingGuideTimeoutRef.current = null;
           }, GUIDE_CHROME_WIPE_MS);
         }, GUIDE_COLLAPSE_CONTENT_START_MS);
@@ -4653,12 +4695,13 @@ export function SplitScreenSection({
 
     captureGuideLayoutPositions();
     if (!expandedGuideId) {
-      categoryBeforeGuideExpandRef.current = activeCategory;
+      captureCategoryBeforeGuideExpand();
     }
     setClosingGuide(null);
     setClosingGuidePhase(null);
     openingGuideIdRef.current = nextList.id;
     setOpeningGuideId(nextList.id);
+    deferGuideContentUntilMotionSettles(nextList.id);
     setVisibleNestedStopParentIds([]);
     setHoveredStopId(null);
     setSelectedGuideStopId(null);
@@ -4701,10 +4744,11 @@ export function SplitScreenSection({
     scrollGuideIntoView(nextList.id, { behavior: "auto", defer: false });
     captureGuideLayoutPositions();
     if (!expandedGuideId) {
-      categoryBeforeGuideExpandRef.current = activeCategory;
+      captureCategoryBeforeGuideExpand();
     }
     setClosingGuide(null);
     setClosingGuidePhase(null);
+    deferGuideContentUntilMotionSettles(nextList.id, GUIDE_DIRECT_CONTENT_REVEAL_DELAY_MS);
     setVisibleNestedStopParentIds([]);
     setHoveredStopId(null);
     setSelectedGuideStopId(null);
@@ -4739,6 +4783,22 @@ export function SplitScreenSection({
   const handleAutoOpenSourcesHandled = (listId: string) => {
     setPendingSourcesOpenGuideId((current) => (current === listId ? null : current));
   };
+  const handleSelectGuideMarker = (guideId: string) => {
+    const guide =
+      activeEditorialLists.find((list) => list.id === guideId) ??
+      globalMergedLists.find((list) => list.id === guideId) ??
+      null;
+
+    if (!guide) {
+      return;
+    }
+
+    setHoveredGuideMarkerId(guideId);
+    setHoveredGuide(guide);
+    hoveredGuideMarkerScrollRef.current = guideId;
+    scrollGuideIntoView(guideId, { behavior: "auto", defer: false });
+    handleGuideToggle(guide);
+  };
   const handleGuideStopSelect = (stopId: string) => {
     setHoveredStopId(stopId);
     setSelectedGuideStopId(stopId);
@@ -4746,7 +4806,7 @@ export function SplitScreenSection({
   };
   const handleOpenItineraryGuide = (list: MapList) => {
     setActiveCategory(null);
-    categoryBeforeGuideExpandRef.current = null;
+    clearCategoryBeforeGuideExpand();
     setActiveSubcategory(null);
     if (expandedGuideId !== list.id) {
       handleGuideToggle(list);
@@ -5354,6 +5414,7 @@ export function SplitScreenSection({
               selectedStopId={selectedGuideStopId}
               onHoverGuideStop={setHoveredStopId}
               onHoverGuideMarker={handleHoverGuideMarker}
+              onSelectGuideMarker={handleSelectGuideMarker}
               onSelectGuideStop={(stopId) => {
                 setHoveredStopId(stopId);
                 setSelectedGuideStopId(stopId);
@@ -8319,11 +8380,14 @@ export function SplitScreenSection({
                             <MapListCard
                               list={list}
                               expandable
-                              expanded={closingGuide?.id === list.id && closingGuidePhase === "returning"}
+                              expanded={false}
                               preserveExpandedChrome={closingGuide?.id === list.id || openingGuideId === list.id}
-                              retractExpandedChrome={closingGuide?.id === list.id && closingGuidePhase === "collapsing"}
+                              retractExpandedChrome={
+                                closingGuide?.id === list.id &&
+                                (closingGuidePhase === "returning" || closingGuidePhase === "collapsing")
+                              }
                               expandExpandedChrome={openingGuideId === list.id}
-                              hideExpandedContent={closingGuide?.id === list.id && closingGuidePhase === "returning"}
+                              hideExpandedContent={closingGuide?.id === list.id}
                               onExpandChromeComplete={completeGuideOpening}
                               onToggleExpand={handleGuideToggle}
                               shouldAutoOpenSources={pendingSourcesOpenGuideId === list.id}
@@ -8381,11 +8445,14 @@ export function SplitScreenSection({
                               <MapListCard
                                 list={list}
                                 expandable
-                                expanded={closingGuide?.id === list.id && closingGuidePhase === "returning"}
+                                expanded={false}
                                 preserveExpandedChrome={closingGuide?.id === list.id || openingGuideId === list.id}
-                                retractExpandedChrome={closingGuide?.id === list.id && closingGuidePhase === "collapsing"}
+                                retractExpandedChrome={
+                                  closingGuide?.id === list.id &&
+                                  (closingGuidePhase === "returning" || closingGuidePhase === "collapsing")
+                                }
                                 expandExpandedChrome={openingGuideId === list.id}
-                                hideExpandedContent={closingGuide?.id === list.id && closingGuidePhase === "returning"}
+                                hideExpandedContent={closingGuide?.id === list.id}
                                 onExpandChromeComplete={completeGuideOpening}
                                 onToggleExpand={handleGuideToggle}
                                 onHoverStart={setHoveredGuide}

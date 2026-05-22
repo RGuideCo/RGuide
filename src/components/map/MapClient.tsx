@@ -45,6 +45,7 @@ interface MapClientProps {
   onHoverGuideStop?: (stopId: string | null) => void;
   onSelectGuideStop?: (stopId: string) => void;
   onHoverGuideMarker?: (guideId: string | null) => void;
+  onSelectGuideMarker?: (guideId: string) => void;
   onSubmitMapClick?: (coordinates: [number, number]) => void;
   onSelectContinent: (continentId: string) => void;
   onSelectCountry: (continentId: string, countryId: string) => void;
@@ -218,6 +219,7 @@ const POI_DIAMOND_IMAGE_PREFIX = "poi-diamond";
 const POI_DIAMOND_PULSE_IMAGE_PREFIX = "poi-diamond-pulse";
 const GUIDE_STOP_MARKER_IMAGE_PREFIX = "guide-stop-marker";
 const VISIBLE_GUIDE_MARKER_IMAGE_PREFIX = "visible-guide-marker";
+const VISIBLE_GUIDE_MARKER_HOVER_SIZE_BOOST = 0.26;
 const POI_DIAMOND_ICON_IMAGE_MATCH = [
   "match",
   ["get", "category"],
@@ -2063,6 +2065,40 @@ function getNearestRealCityClickTarget(
   return best;
 }
 
+function getVisibleGuideMarkerIconSizeExpression(directHoverGuideId: string | null = null): ExpressionSpecification {
+  const baseSize: ExpressionSpecification = [
+    "interpolate",
+    ["linear"],
+    ["get", "popProgress"],
+    0,
+    0.72,
+    1,
+    0.96,
+  ];
+  const hoverBoost: ExpressionSpecification = directHoverGuideId
+    ? [
+        "case",
+        ["==", ["get", "id"], directHoverGuideId],
+        VISIBLE_GUIDE_MARKER_HOVER_SIZE_BOOST,
+        ["*", ["get", "hoverProgress"], VISIBLE_GUIDE_MARKER_HOVER_SIZE_BOOST],
+      ]
+    : ["*", ["get", "hoverProgress"], VISIBLE_GUIDE_MARKER_HOVER_SIZE_BOOST];
+
+  return ["+", baseSize, hoverBoost];
+}
+
+function setVisibleGuideMarkerHoverLayout(map: maplibregl.Map, guideId: string | null) {
+  if (!map.getLayer("visible-guide-marker-point")) {
+    return;
+  }
+
+  map.setLayoutProperty(
+    "visible-guide-marker-point",
+    "icon-size",
+    getVisibleGuideMarkerIconSizeExpression(guideId),
+  );
+}
+
 function addVisibleGuideMarkerLayers(map: maplibregl.Map) {
   ensureVisibleGuideMarkerImages(map);
 
@@ -2082,11 +2118,7 @@ function addVisibleGuideMarkerLayers(map: maplibregl.Map) {
       source: VISIBLE_GUIDE_MARKER_SOURCE_ID,
       layout: {
         "icon-image": ["get", "markerImage"],
-        "icon-size": [
-          "+",
-          ["interpolate", ["linear"], ["get", "popProgress"], 0, 0.72, 1, 0.96],
-          ["*", ["get", "hoverProgress"], 0.26],
-        ],
+        "icon-size": getVisibleGuideMarkerIconSizeExpression(),
         "icon-allow-overlap": true,
         "icon-ignore-placement": true,
       },
@@ -2784,6 +2816,7 @@ export function MapClient({
   onHoverGuideStop,
   onSelectGuideStop,
   onHoverGuideMarker,
+  onSelectGuideMarker,
   onSubmitMapClick,
   onSelectContinent,
   onSelectCountry,
@@ -2825,6 +2858,7 @@ export function MapClient({
     onHoverGuideStop,
     onSelectGuideStop,
     onHoverGuideMarker,
+    onSelectGuideMarker,
     onSubmitMapClick,
     continents,
     selection,
@@ -2836,7 +2870,8 @@ export function MapClient({
   const visibleGuideMarkerEnteredAtRef = useRef<Map<string, number>>(new Map());
   const visibleGuideMarkerHoverProgressRef = useRef<Map<string, number>>(new Map());
   const visibleGuideMarkerAnimationFrameRef = useRef<number | null>(null);
-  const visibleGuideMarkerHoverFrameRef = useRef<number | null>(null);
+  const visibleGuideMarkerDirectHoverIdRef = useRef<string | null>(null);
+  const visibleGuideMarkerNotifiedHoverIdRef = useRef<string | null>(null);
   const [visibleGuideMarkerAnimationTick, setVisibleGuideMarkerAnimationTick] = useState(0);
 
   useEffect(() => {
@@ -3010,11 +3045,12 @@ export function MapClient({
       onHoverGuideStop,
       onSelectGuideStop,
       onHoverGuideMarker,
+      onSelectGuideMarker,
       onSubmitMapClick,
       continents,
       selection,
     };
-  }, [continents, onHoverGuideMarker, onHoverGuideStop, onSelectCity, onSelectContinent, onSelectCountry, onSelectGuideStop, onSelectSubarea, onSelectState, onSubmitMapClick, selection]);
+  }, [continents, onHoverGuideMarker, onHoverGuideStop, onSelectCity, onSelectContinent, onSelectCountry, onSelectGuideMarker, onSelectGuideStop, onSelectSubarea, onSelectState, onSubmitMapClick, selection]);
   useEffect(() => {
     guideStopDataRef.current = guideStopData;
   }, [guideStopData]);
@@ -3075,66 +3111,21 @@ export function MapClient({
   }, [visibleGuideMarkerIds]);
 
   useEffect(() => {
-    if (visibleGuideMarkerHoverFrameRef.current !== null) {
-      cancelAnimationFrame(visibleGuideMarkerHoverFrameRef.current);
-      visibleGuideMarkerHoverFrameRef.current = null;
-    }
-
+    const map = mapRef.current;
     const visibleIdSet = new Set(visibleGuideMarkerIds);
     const hoverTargetId = hoveredGuideMarkerId && visibleIdSet.has(hoveredGuideMarkerId) ? hoveredGuideMarkerId : null;
     const hoverProgress = visibleGuideMarkerHoverProgressRef.current;
-    const animatedIds = new Set([...hoverProgress.keys()]);
-    if (hoverTargetId) {
-      animatedIds.add(hoverTargetId);
+    if (hoverProgress.size) {
+      hoverProgress.clear();
+      setVisibleGuideMarkerAnimationTick((current) => current + 1);
     }
 
-    if (!animatedIds.size) {
+    if (!map || !isStyleReadyRef.current) {
       return;
     }
 
-    const startedAt = performance.now();
-    const duration = 180;
-    const startValues = new Map<string, number>();
-    const targetValues = new Map<string, number>();
-
-    animatedIds.forEach((guideId) => {
-      startValues.set(guideId, hoverProgress.get(guideId) ?? 0);
-      targetValues.set(guideId, guideId === hoverTargetId ? 1 : 0);
-    });
-
-    const animate = () => {
-      const rawProgress = Math.min(1, (performance.now() - startedAt) / duration);
-      const easedProgress = 1 - Math.pow(1 - rawProgress, 3);
-
-      animatedIds.forEach((guideId) => {
-        const startValue = startValues.get(guideId) ?? 0;
-        const targetValue = targetValues.get(guideId) ?? 0;
-        const nextValue = startValue + (targetValue - startValue) * easedProgress;
-        if (nextValue <= 0.001 && targetValue === 0) {
-          hoverProgress.delete(guideId);
-          return;
-        }
-        hoverProgress.set(guideId, nextValue);
-      });
-
-      setVisibleGuideMarkerAnimationTick((current) => current + 1);
-
-      if (rawProgress < 1) {
-        visibleGuideMarkerHoverFrameRef.current = requestAnimationFrame(animate);
-        return;
-      }
-
-      visibleGuideMarkerHoverFrameRef.current = null;
-    };
-
-    visibleGuideMarkerHoverFrameRef.current = requestAnimationFrame(animate);
-
-    return () => {
-      if (visibleGuideMarkerHoverFrameRef.current !== null) {
-        cancelAnimationFrame(visibleGuideMarkerHoverFrameRef.current);
-        visibleGuideMarkerHoverFrameRef.current = null;
-      }
-    };
+    visibleGuideMarkerDirectHoverIdRef.current = hoverTargetId;
+    setVisibleGuideMarkerHoverLayout(map, hoverTargetId);
   }, [hoveredGuideMarkerId, visibleGuideMarkerIds]);
 
   useEffect(() => {
@@ -3277,11 +3268,40 @@ export function MapClient({
         map.getCanvas().style.cursor = "";
       });
 
-      const syncHoveredGuideMarker = (event: maplibregl.MapMouseEvent & { features?: maplibregl.MapGeoJSONFeature[] }) => {
-        const guideId =
-          typeof event.features?.[0]?.properties?.id === "string" ? event.features[0].properties.id : null;
-        map.getCanvas().style.cursor = guideId ? "pointer" : "";
+      const setDirectHoveredGuideMarker = (guideId: string | null) => {
+        if (visibleGuideMarkerDirectHoverIdRef.current === guideId) {
+          return;
+        }
+
+        visibleGuideMarkerDirectHoverIdRef.current = guideId;
+        setVisibleGuideMarkerHoverLayout(map, guideId);
+      };
+
+      const notifyHoveredGuideMarker = (guideId: string | null) => {
+        if (visibleGuideMarkerNotifiedHoverIdRef.current === guideId) {
+          return;
+        }
+
+        visibleGuideMarkerNotifiedHoverIdRef.current = guideId;
         handlersRef.current.onHoverGuideMarker?.(guideId);
+      };
+
+      const syncHoveredGuideMarker = (event: maplibregl.MapMouseEvent) => {
+        const previousGuideId = visibleGuideMarkerDirectHoverIdRef.current;
+        const features = map.getLayer("visible-guide-marker-point")
+          ? map.queryRenderedFeatures(event.point, {
+              layers: ["visible-guide-marker-point"],
+            })
+          : [];
+        const guideId =
+          typeof features[0]?.properties?.id === "string" ? features[0].properties.id : null;
+        setDirectHoveredGuideMarker(guideId);
+        if (guideId) {
+          map.getCanvas().style.cursor = "pointer";
+        } else if (previousGuideId) {
+          map.getCanvas().style.cursor = "";
+        }
+        notifyHoveredGuideMarker(guideId);
       };
 
       const syncHoveredGuideStop = (event: maplibregl.MapMouseEvent & { features?: maplibregl.MapGeoJSONFeature[] }) => {
@@ -3295,10 +3315,11 @@ export function MapClient({
         handlersRef.current.onHoverGuideStop?.(stopId);
       };
 
-      map.on("mousemove", "visible-guide-marker-point", syncHoveredGuideMarker);
-      map.on("mouseleave", "visible-guide-marker-point", () => {
+      map.on("mousemove", syncHoveredGuideMarker);
+      map.on("mouseout", () => {
+        setDirectHoveredGuideMarker(null);
         map.getCanvas().style.cursor = "";
-        handlersRef.current.onHoverGuideMarker?.(null);
+        notifyHoveredGuideMarker(null);
       });
       map.on("mousemove", "guide-stop-points", syncHoveredGuideStop);
       map.on("mousemove", "guide-stop-selected-points", syncHoveredGuideStop);
@@ -3324,6 +3345,21 @@ export function MapClient({
       map.on("mouseleave", "poi-map-marker-line", () => handlersRef.current.onHoverGuideStop?.(null));
 
       map.on("click", (event) => {
+        const clickedGuideMarkerFeature = map.getLayer("visible-guide-marker-point")
+          ? map
+              .queryRenderedFeatures(event.point, {
+                layers: ["visible-guide-marker-point"],
+              })
+              .find((feature) => typeof feature.properties?.id === "string")
+          : null;
+        const clickedGuideMarkerId =
+          typeof clickedGuideMarkerFeature?.properties?.id === "string" ? clickedGuideMarkerFeature.properties.id : null;
+        if (clickedGuideMarkerId) {
+          handlersRef.current.onHoverGuideMarker?.(clickedGuideMarkerId);
+          handlersRef.current.onSelectGuideMarker?.(clickedGuideMarkerId);
+          return;
+        }
+
         const clickedGuideStopFeature = map
           .queryRenderedFeatures(event.point, {
             layers: [
@@ -3584,10 +3620,6 @@ export function MapClient({
       if (visibleGuideMarkerAnimationFrameRef.current !== null) {
         cancelAnimationFrame(visibleGuideMarkerAnimationFrameRef.current);
         visibleGuideMarkerAnimationFrameRef.current = null;
-      }
-      if (visibleGuideMarkerHoverFrameRef.current !== null) {
-        cancelAnimationFrame(visibleGuideMarkerHoverFrameRef.current);
-        visibleGuideMarkerHoverFrameRef.current = null;
       }
       isStyleReadyRef.current = false;
       map.remove();

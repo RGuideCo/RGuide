@@ -188,9 +188,8 @@ textarea:focus-visible {
   backface-visibility: hidden;
   transition:
     border-color 240ms ease,
-    border-width 240ms ease,
-    box-shadow 360ms ease,
     transform 560ms cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: auto;
 }
 
 .collapsed-guide-outboard-image {
@@ -210,13 +209,11 @@ textarea:focus-visible {
   backface-visibility: hidden;
   box-shadow:
     0 1px 0 rgba(255, 255, 255, 0.9) inset,
-    0 7px 18px rgba(15, 23, 42, 0.08);
+    0 5px 14px rgba(15, 23, 42, 0.07);
   transition:
     opacity 320ms ease,
     transform 260ms cubic-bezier(0.22, 1, 0.36, 1),
-    border-color 240ms ease,
-    border-width 240ms ease,
-    box-shadow 240ms ease;
+    border-color 240ms ease;
 }
 
 .collapsed-guide-outboard-image img {
@@ -240,10 +237,9 @@ textarea:focus-visible {
 .collapsed-guide-card-with-outboard-image:focus-within .collapsed-guide-outboard-image {
   transform: translateY(-1px);
   border-color: var(--guide-accent, rgba(15, 23, 42, 0.18));
-  border-width: 1.5px;
   box-shadow:
     0 1px 0 rgba(255, 255, 255, 0.92) inset,
-    0 9px 20px rgba(15, 23, 42, 0.11);
+    0 7px 16px rgba(15, 23, 42, 0.1);
 }
 
 .collapsed-guide-card-with-outboard-image:hover .collapsed-guide-outboard-image img,
@@ -255,7 +251,6 @@ textarea:focus-visible {
 .collapsed-guide-card-with-outboard-image:hover .collapsed-guide-card,
 .collapsed-guide-card-with-outboard-image:focus-within .collapsed-guide-card {
   border-color: var(--guide-accent, rgba(15, 23, 42, 0.3)) !important;
-  border-width: 1.5px;
 }
 
 .collapsed-guide-card-with-outboard-image:hover .collapsed-guide-card::after,
@@ -279,9 +274,6 @@ textarea:focus-visible {
 
 .collapsed-guide-card-with-outboard-image[data-guide-opening="true"] > article {
   transform: translate3d(0.875rem, 0, 0);
-  box-shadow:
-    0 1px 0 rgba(255, 255, 255, 0.92) inset,
-    0 14px 28px rgba(15, 23, 42, 0.1);
   will-change: transform;
 }
 
@@ -404,12 +396,11 @@ textarea:focus-visible {
 }
 
 .guide-expanded-content-collapse-bottom-up {
-  display: grid;
-  grid-template-rows: 1fr;
   overflow: hidden;
-  animation: guide-expanded-content-collapse-bottom-up 260ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
-  transform-origin: top center;
-  will-change: grid-template-rows, clip-path, opacity;
+  animation: guide-expanded-content-fade-out 180ms ease-out forwards;
+  will-change: opacity;
+  contain: layout paint style;
+  pointer-events: none;
 }
 
 .guide-expanded-content-collapse-bottom-up > .guide-expanded-content-collapse-content,
@@ -423,7 +414,8 @@ textarea:focus-visible {
   grid-template-rows: 0fr;
   overflow: hidden;
   opacity: 0;
-  clip-path: inset(0 0 100% 0);
+  visibility: hidden;
+  pointer-events: none;
 }
 
 @keyframes guide-chrome-wipe-retract {
@@ -449,14 +441,17 @@ textarea:focus-visible {
 @keyframes guide-chrome-header-wipe-retract {
   0% {
     transform: translateZ(0) scaleX(1) scaleY(1);
+    opacity: 1;
   }
 
-  68% {
+  72% {
     transform: translateZ(0) scaleX(0.012) scaleY(1);
+    opacity: 1;
   }
 
   100% {
-    transform: translateZ(0) scaleX(0.012) scaleY(0.36);
+    transform: translateZ(0) scaleX(0.012) scaleY(1);
+    opacity: 0;
   }
 }
 
@@ -497,20 +492,12 @@ textarea:focus-visible {
   }
 }
 
-@keyframes guide-expanded-content-collapse-bottom-up {
+@keyframes guide-expanded-content-fade-out {
   0% {
-    grid-template-rows: 1fr;
-    clip-path: inset(0 0 0 0);
-    opacity: 1;
-  }
-
-  62% {
     opacity: 1;
   }
 
   100% {
-    grid-template-rows: 0fr;
-    clip-path: inset(0 0 100% 0);
     opacity: 0;
   }
 }
@@ -582,7 +569,7 @@ textarea:focus-visible {
 }
 
 .guide-expand-panel {
-  contain: layout style;
+  contain: layout paint style;
 }
 
 .guide-expand-panel-content {
@@ -601,7 +588,7 @@ textarea:focus-visible {
     rgba(255, 255, 255, 0.92);
   box-shadow:
     0 1px 0 rgba(255, 255, 255, 0.82) inset,
-    0 8px 20px rgba(15, 23, 42, 0.06);
+    0 5px 14px rgba(15, 23, 42, 0.045);
 }
 
 .expanded-guide-stop-card::before {
@@ -631,7 +618,7 @@ textarea:focus-visible {
   border-color: color-mix(in srgb, var(--guide-accent, #94a3b8) 22%, rgba(15, 23, 42, 0.14));
   box-shadow:
     0 1px 0 rgba(255, 255, 255, 0.86) inset,
-    0 12px 24px rgba(15, 23, 42, 0.08);
+    0 8px 18px rgba(15, 23, 42, 0.07);
 }
 
 .expanded-guide-stop-card:hover::after,
@@ -643,7 +630,7 @@ textarea:focus-visible {
   border: 2px solid color-mix(in srgb, var(--guide-accent, #94a3b8) 82%, rgba(15, 23, 42, 0.1));
   box-shadow:
     0 1px 0 rgba(255, 255, 255, 0.86) inset,
-    0 12px 24px rgba(15, 23, 42, 0.08);
+    0 8px 18px rgba(15, 23, 42, 0.07);
 }
 
 .expanded-guide-stop-card[data-expanded="true"]::before {
@@ -662,14 +649,14 @@ textarea:focus-visible {
   box-shadow:
     0 0 0 2px color-mix(in srgb, var(--guide-accent, #94a3b8) 58%, rgba(255, 255, 255, 0.1)),
     0 1px 0 rgba(255, 255, 255, 0.88) inset,
-    0 14px 26px rgba(15, 23, 42, 0.12);
+    0 9px 20px rgba(15, 23, 42, 0.1);
 }
 
 .expanded-guide-stop-card[data-expanded="true"][data-active="true"] {
   border: 2px solid color-mix(in srgb, var(--guide-accent, #94a3b8) 82%, rgba(15, 23, 42, 0.1));
   box-shadow:
     0 1px 0 rgba(255, 255, 255, 0.86) inset,
-    0 12px 24px rgba(15, 23, 42, 0.08);
+    0 8px 18px rgba(15, 23, 42, 0.07);
 }
 
 .expanded-guide-stop-card[data-active="true"]::before {
@@ -737,6 +724,11 @@ textarea:focus-visible {
 .guide-stop-list,
 .guide-stop-list > * {
   overflow-anchor: none;
+}
+
+.guide-stop-list > .guide-content-cascade-item {
+  content-visibility: auto;
+  contain-intrinsic-size: 5.25rem;
 }
 
 .expanded-guide-place-card {
@@ -1076,7 +1068,7 @@ textarea:focus-visible {
 }
 
 .guide-content-cascade-item {
-  animation: guide-content-cascade-down 420ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation: guide-content-cascade-down 300ms cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
 @keyframes subcategory-cascade-down {

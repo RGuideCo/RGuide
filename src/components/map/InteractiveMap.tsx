@@ -44,6 +44,7 @@ interface InteractiveMapProps {
   onHoverGuideStop?: (stopId: string | null) => void;
   onSelectGuideStop?: (stopId: string) => void;
   onHoverGuideMarker?: (guideId: string | null) => void;
+  onSelectGuideMarker?: (guideId: string) => void;
   onSubmitMapClick?: (coordinates: [number, number]) => void;
   onSelectContinent: (continentId: string) => void;
   onSelectCountry: (continentId: string, countryId: string) => void;

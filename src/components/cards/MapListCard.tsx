@@ -1,6 +1,6 @@
 "use client";
 
-import { Fragment, useEffect, useLayoutEffect, useRef, useState } from "react";
+import { Fragment, useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -167,6 +167,9 @@ function formatNeighborhoodFromSlug(value: string) {
 }
 
 function inferNeighborhoodFromGuideText(list: MapList) {
+  if (slugifyLocationPart(list.id).includes("citywide")) {
+    return null;
+  }
   const city = list.location.city?.trim();
   if (!city) {
     return null;
@@ -393,11 +396,7 @@ function formatEventCardDate(value?: string) {
     return null;
   }
 
-  return new Intl.DateTimeFormat(undefined, {
-    timeZone: "UTC",
-    month: "short",
-    day: "numeric",
-  }).format(new Date(`${value}T00:00:00`));
+  return EVENT_CARD_DATE_FORMATTER.format(new Date(`${value}T00:00:00`));
 }
 
 function buildEventCardDateLabel(list: MapList) {
@@ -448,17 +447,27 @@ function formatItineraryDayLabel(dateKey: string, index: number) {
   if (!/^\d{4}-\d{2}-\d{2}$/.test(dateKey)) {
     return dayLabel;
   }
-  const formatted = new Intl.DateTimeFormat(undefined, {
-    timeZone: "UTC",
-    month: "short",
-    day: "numeric",
-    year: "numeric",
-  }).format(new Date(`${dateKey}T00:00:00`));
+  const formatted = ITINERARY_DAY_DATE_FORMATTER.format(new Date(`${dateKey}T00:00:00`));
   return `${dayLabel} - ${formatted}`;
 }
 
 const STOP_SCROLL_TOP_INSET = 4;
 const MOBILE_LAST_STOP_SCROLL_EXTRA = 96;
+const EXPANDED_CONTENT_LOCAL_REVEAL_MS = 180;
+const TODAY_WEEKDAY_LABEL = new Intl.DateTimeFormat(undefined, { weekday: "short" }).format(new Date());
+const EVENT_CARD_DATE_FORMATTER = new Intl.DateTimeFormat(undefined, {
+  timeZone: "UTC",
+  month: "short",
+  day: "numeric",
+});
+const ITINERARY_DAY_DATE_FORMATTER = new Intl.DateTimeFormat(undefined, {
+  timeZone: "UTC",
+  month: "short",
+  day: "numeric",
+  year: "numeric",
+});
+const EMPTY_HIDDEN_LOCATION_PARTS: string[] = [];
+const EMPTY_SOURCES: GuideSource[] = [];
 
 function getSourceDisplayName(source: GuideSource) {
   return source.name
@@ -594,7 +603,7 @@ export function MapListCard({
   isExternallyHovered = false,
 }: MapListCardProps) {
   const router = useRouter();
-  const weekdayLabel = new Intl.DateTimeFormat(undefined, { weekday: "short" }).format(new Date());
+  const weekdayLabel = TODAY_WEEKDAY_LABEL;
   const currentUser = useAppStore((state) => state.currentUser);
   const submittedLists = useAppStore((state) => state.submittedLists);
   const votedIds = useAppStore((state) => state.votedIds);
@@ -620,12 +629,28 @@ export function MapListCard({
   const guideExpandedColor = isItineraryGuide && !isEventGuide ? "#111827" : categoryStyle.mapColor;
   const visibleUpvotes = list.upvotes + (hasVoted ? 1 : 0);
   const expandedChrome = expanded || preserveExpandedChrome;
-  const hiddenLocationParts = expandedChrome ? [] : collapsedLocationSubtitleHiddenParts;
-  const locationSubtitle = buildLocationSubtitle(list, hiddenLocationParts);
-  const guideMeta = buildGuideMeta(list, hiddenLocationParts);
-  const collapsedCategoryChip = buildCollapsedCategoryChip(list);
-  const eventCardVenue = isEventGuide ? getEventCardVenue(list, hiddenLocationParts) : null;
-  const eventCardDateLabel = isEventGuide ? buildEventCardDateLabel(list) : null;
+  const hiddenLocationPartsKey = expandedChrome ? "" : collapsedLocationSubtitleHiddenParts.join("\u0001");
+  const hiddenLocationParts = useMemo(
+    () => (hiddenLocationPartsKey ? hiddenLocationPartsKey.split("\u0001") : EMPTY_HIDDEN_LOCATION_PARTS),
+    [hiddenLocationPartsKey],
+  );
+  const locationSubtitle = useMemo(
+    () => buildLocationSubtitle(list, hiddenLocationParts),
+    [hiddenLocationParts, list],
+  );
+  const guideMeta = useMemo(
+    () => buildGuideMeta(list, hiddenLocationParts),
+    [hiddenLocationParts, list],
+  );
+  const collapsedCategoryChip = useMemo(() => buildCollapsedCategoryChip(list), [list]);
+  const eventCardVenue = useMemo(
+    () => (isEventGuide ? getEventCardVenue(list, hiddenLocationParts) : null),
+    [hiddenLocationParts, isEventGuide, list],
+  );
+  const eventCardDateLabel = useMemo(
+    () => (isEventGuide ? buildEventCardDateLabel(list) : null),
+    [isEventGuide, list],
+  );
   const GuideBodyComponent = isEventGuide ? EventCardBody : isItineraryGuide ? JourneyCardBody : GuideCardBody;
   const firstPoi = list.stops[0];
   const collapsedFirstPoiPhoto = firstPoi ? getPoiPhoto(firstPoi.photo) ?? getPoiPhoto(firstPoi.places?.[0]?.photo) : null;
@@ -634,7 +659,30 @@ export function MapListCard({
   const expandingListChrome = expandExpandedChrome && expandedChrome;
   const isOutboardImageOpening = preservingListChrome && expandingListChrome && !expanded;
   const isOutboardImageClosing = preservingListChrome && retractingListChrome && !expanded;
-  const deferHeavyExpandedContent = expanded && deferExpandedContent;
+  const shouldDeferExpandedContent = expanded && deferExpandedContent;
+  const [deferredExpandedContentReady, setDeferredExpandedContentReady] = useState(false);
+  useEffect(() => {
+    if (!shouldDeferExpandedContent) {
+      setDeferredExpandedContentReady(false);
+      return;
+    }
+
+    setDeferredExpandedContentReady(false);
+    let revealTimeout: number | null = null;
+    const revealFrame = window.requestAnimationFrame(() => {
+      revealTimeout = window.setTimeout(() => {
+        setDeferredExpandedContentReady(true);
+      }, EXPANDED_CONTENT_LOCAL_REVEAL_MS);
+    });
+
+    return () => {
+      window.cancelAnimationFrame(revealFrame);
+      if (revealTimeout) {
+        window.clearTimeout(revealTimeout);
+      }
+    };
+  }, [list.id, shouldDeferExpandedContent]);
+  const deferHeavyExpandedContent = shouldDeferExpandedContent && !deferredExpandedContentReady;
   const [expandedStopIds, setExpandedStopIds] = useState<string[]>([]);
   const [expandedPlaceIds, setExpandedPlaceIds] = useState<string[]>([]);
   const [itineraryPickerTarget, setItineraryPickerTarget] = useState<null | { kind: "list" | "stop"; key: string }>(null);
@@ -653,12 +701,13 @@ export function MapListCard({
   const previousExpandedGuideRef = useRef<string | null>(null);
   const showStopNumbers = true;
   const isRGuide = list.creator.name.startsWith("R ");
-  const allSources = isRGuide ? list.sources ?? [] : [];
-  const sourcePreview = allSources.slice(0, 5);
-  const sourceSummary = allSources.length ? buildSourceSummary(allSources) : null;
+  const allSources = isRGuide ? list.sources ?? EMPTY_SOURCES : EMPTY_SOURCES;
+  const sourcePreview = useMemo(() => allSources.slice(0, 5), [allSources]);
+  const sourceSummary = useMemo(() => (allSources.length ? buildSourceSummary(allSources) : null), [allSources]);
   const [sourcesPinnedOpen, setSourcesPinnedOpen] = useState(false);
   const sourcesOpen = Boolean(allSources.length) && sourcesPinnedOpen;
-  const itineraryStopGroups = isItineraryGuide && !deferHeavyExpandedContent
+  const itineraryStopGroups = useMemo(
+    () => isItineraryGuide && !deferHeavyExpandedContent
     ? list.stops.reduce<Array<{ dateKey: string; stops: Array<{ stop: MapList["stops"][number]; index: number }> }>>(
         (groups, stop, index) => {
           const dateKey = getItineraryStopDate(list, stop, index);
@@ -672,7 +721,9 @@ export function MapListCard({
         },
         [],
       )
-    : [];
+    : [],
+    [deferHeavyExpandedContent, isItineraryGuide, list],
+  );
 
   const togglePlace = (placeId: string) => {
     setExpandedPlaceIds((current) =>
@@ -861,9 +912,8 @@ export function MapListCard({
       setStopListMaxScrollTop(nextMaxScrollTop);
     };
 
-    updateEndPadding();
     const updateFrame = window.requestAnimationFrame(updateEndPadding);
-    const updateTimeouts = [360, 560].map((delay) => window.setTimeout(updateEndPadding, delay));
+    const updateTimeouts = [560, 920].map((delay) => window.setTimeout(updateEndPadding, delay));
     window.addEventListener("resize", updateEndPadding);
     return () => {
       window.cancelAnimationFrame(updateFrame);
@@ -1653,7 +1703,7 @@ export function MapListCard({
                         <li
                           key={`${list.id}-itinerary-day-${itineraryDateKey}`}
                           className="guide-content-cascade-item list-none pt-2 first:pt-0"
-                          style={{ animationDelay: `${120 + index * 45}ms` }}
+                          style={{ animationDelay: `${90 + Math.min(index, 4) * 24}ms` }}
                         >
                           <div className="flex items-center gap-2">
                             <span
@@ -1676,7 +1726,7 @@ export function MapListCard({
                         showStopNumbers={showStopNumbers}
                         isExpanded={isStopExpanded}
                         isActive={isStopMapSelected}
-                        animationDelay={`${140 + index * 45}ms`}
+                        animationDelay={`${110 + Math.min(index, 4) * 24}ms`}
                         onHeaderActivate={activateStopHeader}
                         handlers={{
                           onStopSelect: activateGuideStop,
