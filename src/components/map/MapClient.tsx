@@ -121,6 +121,7 @@ type VisibleGuideMarkerFeatureProperties = {
   markerImage: string;
   enteredAt: number;
   popProgress: number;
+  hoverProgress: number;
 };
 
 type PoiMapMarkerFeatureProperties = {
@@ -1046,6 +1047,15 @@ function addVisibleGuideMarkerImages(map: maplibregl.Map) {
   });
 }
 
+function ensureVisibleGuideMarkerImages(map: maplibregl.Map) {
+  const hasAllImages = Object.keys(CATEGORY_STYLES).every((category) =>
+    map.hasImage(getVisibleGuideMarkerImageName(category)),
+  );
+  if (!hasAllImages) {
+    addVisibleGuideMarkerImages(map);
+  }
+}
+
 function createGuideStopMarkerImage(color: string, label: string) {
   const size = 64;
   const canvas = document.createElement("canvas");
@@ -1312,6 +1322,7 @@ function createVisibleGuideMarkerData(
   visibleGuideMarkerIds: string[] = [],
   activeGuide?: MapList | null,
   markerEnteredAt?: Map<string, number>,
+  markerHoverProgress?: Map<string, number>,
 ): FeatureCollection<Point, VisibleGuideMarkerFeatureProperties> {
   const visibleGuideIdSet = new Set(visibleGuideMarkerIds);
   const activeGuideId = activeGuide?.id ?? null;
@@ -1331,6 +1342,7 @@ function createVisibleGuideMarkerData(
         markerImage: getVisibleGuideMarkerImageName(guide.category),
         enteredAt: markerEnteredAt?.get(guide.id) ?? 0,
         popProgress: Math.min(1, Math.max(0, (now - (markerEnteredAt?.get(guide.id) ?? now)) / 320)),
+        hoverProgress: markerHoverProgress?.get(guide.id) ?? 0,
       },
       geometry: {
         type: "Point" as const,
@@ -1977,9 +1989,117 @@ function createCityData(
   };
 }
 
+function getSelectionCountry(
+  continents: Continent[],
+  selection: SelectionState,
+) {
+  const continent = selection.continentId
+    ? continents.find((item) => item.id === selection.continentId)
+    : undefined;
+  const country = selection.countryId
+    ? continent?.countries.find((item) => item.id === selection.countryId)
+    : undefined;
+
+  return { continent, country };
+}
+
+function getNearestRealCityClickTarget(
+  map: maplibregl.Map,
+  point: { x: number; y: number },
+  continents: Continent[],
+  selection: SelectionState,
+) {
+  const zoom = map.getZoom();
+  if (zoom < 8) {
+    return null;
+  }
+
+  const { country } = getSelectionCountry(continents, selection);
+  const candidateCountries = country
+    ? [country]
+    : selection.continentId
+      ? continents.find((continent) => continent.id === selection.continentId)?.countries ?? []
+      : continents.flatMap((continent) => continent.countries);
+  const pixelLimit = zoom >= 11 ? 360 : zoom >= 9 ? 280 : 180;
+  const pixelLimitSquared = pixelLimit * pixelLimit;
+
+  let best:
+    | {
+        continentId: string;
+        countryId: string;
+        cityId: string;
+        distanceSquared: number;
+      }
+    | null = null;
+
+  for (const candidateContinent of continents) {
+    for (const candidateCountry of candidateContinent.countries) {
+      if (!candidateCountries.some((item) => item.id === candidateCountry.id)) {
+        continue;
+      }
+
+      for (const city of candidateCountry.cities) {
+        if (city.isPlaceholderRegion) {
+          continue;
+        }
+
+        const projected = map.project([city.coordinates[1], city.coordinates[0]]);
+        const distanceSquared = (projected.x - point.x) ** 2 + (projected.y - point.y) ** 2;
+        if (distanceSquared > pixelLimitSquared) {
+          continue;
+        }
+        if (!best || distanceSquared < best.distanceSquared) {
+          best = {
+            continentId: candidateContinent.id,
+            countryId: candidateCountry.id,
+            cityId: city.id,
+            distanceSquared,
+          };
+        }
+      }
+    }
+  }
+
+  return best;
+}
+
+function addVisibleGuideMarkerLayers(map: maplibregl.Map) {
+  ensureVisibleGuideMarkerImages(map);
+
+  const existingPointLayer = map.getLayer("visible-guide-marker-point");
+  if (existingPointLayer && existingPointLayer.type !== "symbol") {
+    map.removeLayer("visible-guide-marker-point");
+  }
+  const existingHoverLayer = map.getLayer("visible-guide-marker-hover");
+  if (existingHoverLayer) {
+    map.removeLayer("visible-guide-marker-hover");
+  }
+
+  if (!map.getLayer("visible-guide-marker-point")) {
+    map.addLayer({
+      id: "visible-guide-marker-point",
+      type: "symbol",
+      source: VISIBLE_GUIDE_MARKER_SOURCE_ID,
+      layout: {
+        "icon-image": ["get", "markerImage"],
+        "icon-size": [
+          "+",
+          ["interpolate", ["linear"], ["get", "popProgress"], 0, 0.72, 1, 0.96],
+          ["*", ["get", "hoverProgress"], 0.26],
+        ],
+        "icon-allow-overlap": true,
+        "icon-ignore-placement": true,
+      },
+      paint: {
+        "icon-opacity": 1,
+        "icon-opacity-transition": { duration: 220, delay: 0 },
+      },
+    });
+  }
+}
+
 function addMapLayers(map: maplibregl.Map) {
   addPoiDiamondImages(map);
-  addVisibleGuideMarkerImages(map);
 
   const countryLabelLayerId = BASE_COUNTRY_LABEL_LAYER_IDS.find((layerId) => map.getLayer(layerId));
   const cityDotBeforeLayerId = map.getLayer("label_other") ? "label_other" : countryLabelLayerId;
@@ -2306,42 +2426,7 @@ function addMapLayers(map: maplibregl.Map) {
     },
   }, cityDotBeforeLayerId);
 
-  map.addLayer({
-    id: "visible-guide-marker-point",
-    type: "symbol",
-    source: VISIBLE_GUIDE_MARKER_SOURCE_ID,
-    layout: {
-      "icon-image": ["get", "markerImage"],
-      "icon-size": [
-        "*",
-        ["interpolate", ["linear"], ["zoom"], 3, 0.68, 8, 0.84, 13, 1],
-        ["interpolate", ["linear"], ["get", "popProgress"], 0, 0.72, 1, 1],
-      ],
-      "icon-allow-overlap": true,
-      "icon-ignore-placement": true,
-    },
-    paint: {
-      "icon-opacity": ["interpolate", ["linear"], ["get", "popProgress"], 0, 0, 1, 0.96],
-      "icon-opacity-transition": { duration: 220, delay: 0 },
-    },
-  }, "continent-labels");
-
-  map.addLayer({
-    id: "visible-guide-marker-hover",
-    type: "symbol",
-    source: VISIBLE_GUIDE_MARKER_SOURCE_ID,
-    filter: ["==", ["get", "id"], "__none__"],
-    layout: {
-      "icon-image": ["get", "markerImage"],
-      "icon-size": ["interpolate", ["linear"], ["zoom"], 3, 0.86, 8, 1.06, 13, 1.25],
-      "icon-allow-overlap": true,
-      "icon-ignore-placement": true,
-    },
-    paint: {
-      "icon-opacity": 1,
-      "icon-opacity-transition": { duration: 120, delay: 0 },
-    },
-  }, "continent-labels");
+  addVisibleGuideMarkerLayers(map);
 
   map.addLayer({
     id: "guide-route-casing",
@@ -2749,7 +2834,9 @@ export function MapClient({
   const activeGuideCameraKeyRef = useRef<string | null>(null);
   const selectionCameraKeyRef = useRef<string | null>(null);
   const visibleGuideMarkerEnteredAtRef = useRef<Map<string, number>>(new Map());
+  const visibleGuideMarkerHoverProgressRef = useRef<Map<string, number>>(new Map());
   const visibleGuideMarkerAnimationFrameRef = useRef<number | null>(null);
+  const visibleGuideMarkerHoverFrameRef = useRef<number | null>(null);
   const [visibleGuideMarkerAnimationTick, setVisibleGuideMarkerAnimationTick] = useState(0);
 
   useEffect(() => {
@@ -2804,6 +2891,7 @@ export function MapClient({
         visibleGuideMarkerIds,
         activeGuide,
         visibleGuideMarkerEnteredAtRef.current,
+        visibleGuideMarkerHoverProgressRef.current,
       ),
     [activeGuide, guideLists, visibleGuideMarkerAnimationTick, visibleGuideMarkerIds],
   );
@@ -2936,19 +3024,26 @@ export function MapClient({
     const nextVisibleIds = new Set(visibleGuideMarkerIds);
     const enteredAt = visibleGuideMarkerEnteredAtRef.current;
     let hasNewMarker = false;
+    let hasChangedMarkers = false;
 
     visibleGuideMarkerIds.forEach((guideId) => {
       if (!enteredAt.has(guideId)) {
         enteredAt.set(guideId, now);
         hasNewMarker = true;
+        hasChangedMarkers = true;
       }
     });
 
     Array.from(enteredAt.keys()).forEach((guideId) => {
       if (!nextVisibleIds.has(guideId)) {
         enteredAt.delete(guideId);
+        hasChangedMarkers = true;
       }
     });
+
+    if (!hasChangedMarkers) {
+      return;
+    }
 
     if (!hasNewMarker) {
       setVisibleGuideMarkerAnimationTick((current) => current + 1);
@@ -2978,6 +3073,69 @@ export function MapClient({
       }
     };
   }, [visibleGuideMarkerIds]);
+
+  useEffect(() => {
+    if (visibleGuideMarkerHoverFrameRef.current !== null) {
+      cancelAnimationFrame(visibleGuideMarkerHoverFrameRef.current);
+      visibleGuideMarkerHoverFrameRef.current = null;
+    }
+
+    const visibleIdSet = new Set(visibleGuideMarkerIds);
+    const hoverTargetId = hoveredGuideMarkerId && visibleIdSet.has(hoveredGuideMarkerId) ? hoveredGuideMarkerId : null;
+    const hoverProgress = visibleGuideMarkerHoverProgressRef.current;
+    const animatedIds = new Set([...hoverProgress.keys()]);
+    if (hoverTargetId) {
+      animatedIds.add(hoverTargetId);
+    }
+
+    if (!animatedIds.size) {
+      return;
+    }
+
+    const startedAt = performance.now();
+    const duration = 180;
+    const startValues = new Map<string, number>();
+    const targetValues = new Map<string, number>();
+
+    animatedIds.forEach((guideId) => {
+      startValues.set(guideId, hoverProgress.get(guideId) ?? 0);
+      targetValues.set(guideId, guideId === hoverTargetId ? 1 : 0);
+    });
+
+    const animate = () => {
+      const rawProgress = Math.min(1, (performance.now() - startedAt) / duration);
+      const easedProgress = 1 - Math.pow(1 - rawProgress, 3);
+
+      animatedIds.forEach((guideId) => {
+        const startValue = startValues.get(guideId) ?? 0;
+        const targetValue = targetValues.get(guideId) ?? 0;
+        const nextValue = startValue + (targetValue - startValue) * easedProgress;
+        if (nextValue <= 0.001 && targetValue === 0) {
+          hoverProgress.delete(guideId);
+          return;
+        }
+        hoverProgress.set(guideId, nextValue);
+      });
+
+      setVisibleGuideMarkerAnimationTick((current) => current + 1);
+
+      if (rawProgress < 1) {
+        visibleGuideMarkerHoverFrameRef.current = requestAnimationFrame(animate);
+        return;
+      }
+
+      visibleGuideMarkerHoverFrameRef.current = null;
+    };
+
+    visibleGuideMarkerHoverFrameRef.current = requestAnimationFrame(animate);
+
+    return () => {
+      if (visibleGuideMarkerHoverFrameRef.current !== null) {
+        cancelAnimationFrame(visibleGuideMarkerHoverFrameRef.current);
+        visibleGuideMarkerHoverFrameRef.current = null;
+      }
+    };
+  }, [hoveredGuideMarkerId, visibleGuideMarkerIds]);
 
   useEffect(() => {
     viewportModeRef.current = viewportMode;
@@ -3138,12 +3296,7 @@ export function MapClient({
       };
 
       map.on("mousemove", "visible-guide-marker-point", syncHoveredGuideMarker);
-      map.on("mousemove", "visible-guide-marker-hover", syncHoveredGuideMarker);
       map.on("mouseleave", "visible-guide-marker-point", () => {
-        map.getCanvas().style.cursor = "";
-        handlersRef.current.onHoverGuideMarker?.(null);
-      });
-      map.on("mouseleave", "visible-guide-marker-hover", () => {
         map.getCanvas().style.cursor = "";
         handlersRef.current.onHoverGuideMarker?.(null);
       });
@@ -3227,25 +3380,27 @@ export function MapClient({
             .filter((value): value is string => Boolean(value)),
         );
 
+        const clickZoom = map.getZoom();
         const currentSelection = handlersRef.current.selection;
+        const { country: activeCountry } = getSelectionCountry(
+          handlersRef.current.continents,
+          currentSelection,
+        );
+        const activeCity = currentSelection.cityId
+          ? activeCountry?.cities.find((city) => city.id === currentSelection.cityId)
+          : undefined;
+
         if (currentSelection.continentId && currentSelection.countryId) {
-          const activeContinent = handlersRef.current.continents.find(
-            (continent) => continent.id === currentSelection.continentId,
-          );
-          const activeCountry = activeContinent?.countries.find(
-            (country) => country.id === currentSelection.countryId,
-          );
-          const activeCity = currentSelection.cityId
-            ? activeCountry?.cities.find((city) => city.id === currentSelection.cityId)
-            : undefined;
           const citySubareas = activeCity?.subareas ?? [];
           const matchingCountryCity = (activeCountry?.cities ?? []).find((city) =>
-            Array.from(clickedNames).some((clickedName) =>
-              nameMatches(clickedName, normalizeLabelName(city.name)),
-            ),
+            !city.isPlaceholderRegion &&
+            Array.from(clickedNames).some((clickedName) => nameMatches(clickedName, normalizeLabelName(city.name))),
           );
 
           if (matchingCountryCity) {
+            if (matchingCountryCity.id === currentSelection.cityId) {
+              return;
+            }
             handlersRef.current.onSelectCity(
               currentSelection.continentId,
               currentSelection.countryId,
@@ -3292,6 +3447,23 @@ export function MapClient({
           return;
         }
 
+        const nearestCityClickTarget = getNearestRealCityClickTarget(
+          map,
+          event.point,
+          handlersRef.current.continents,
+          currentSelection,
+        );
+        if (nearestCityClickTarget) {
+          if (nearestCityClickTarget.cityId !== currentSelection.cityId) {
+            handlersRef.current.onSelectCity(
+              nearestCityClickTarget.continentId,
+              nearestCityClickTarget.countryId,
+              nearestCityClickTarget.cityId,
+            );
+          }
+          return;
+        }
+
         const currentSelectionAfterCityCheck = handlersRef.current.selection;
         if (
           currentSelectionAfterCityCheck.continentId &&
@@ -3324,9 +3496,8 @@ export function MapClient({
               return best;
             }, null);
 
-            const zoom = map.getZoom();
             const maxAngularDistance =
-              zoom >= 11 ? 0.22 : zoom >= 9 ? 0.42 : zoom >= 7 ? 0.75 : 1.1;
+              clickZoom >= 12 ? 0.045 : clickZoom >= 10 ? 0.07 : clickZoom >= 8 ? 0.1 : 0;
             const maxDistanceSquared = maxAngularDistance * maxAngularDistance;
 
             if (nearest && nearest.distanceSquared <= maxDistanceSquared) {
@@ -3365,10 +3536,11 @@ export function MapClient({
                 currentSelection.nestedSubareaId,
             );
             if (
+              clickZoom > 7.2 ||
               isSameCountryAsCurrent &&
               hasLocalSelection
             ) {
-              // When deeply zoomed in, ignore same-country polygon fallback so local labels/city targets can win.
+              // At local zoom, broad country polygons sit behind every click. Ignore them so city/POI intent wins.
               return;
             } else {
               const continent = handlersRef.current.continents.find((item) => item.id === continentId);
@@ -3388,6 +3560,10 @@ export function MapClient({
           }
         }
 
+        if (clickZoom > 4.2) {
+          return;
+        }
+
         const continentFeature = features.find((feature) => feature.layer.id === "continent-labels");
         const continentId =
           typeof continentFeature?.properties?.id === "string"
@@ -3404,6 +3580,14 @@ export function MapClient({
       if (hoverAnimationFrameRef.current !== null) {
         cancelAnimationFrame(hoverAnimationFrameRef.current);
         hoverAnimationFrameRef.current = null;
+      }
+      if (visibleGuideMarkerAnimationFrameRef.current !== null) {
+        cancelAnimationFrame(visibleGuideMarkerAnimationFrameRef.current);
+        visibleGuideMarkerAnimationFrameRef.current = null;
+      }
+      if (visibleGuideMarkerHoverFrameRef.current !== null) {
+        cancelAnimationFrame(visibleGuideMarkerHoverFrameRef.current);
+        visibleGuideMarkerHoverFrameRef.current = null;
       }
       isStyleReadyRef.current = false;
       map.remove();
@@ -3491,6 +3675,7 @@ export function MapClient({
     (map.getSource(CONTINENT_LABEL_SOURCE_ID) as GeoJSONSource).setData(continentLabelData);
     (map.getSource(CITY_SOURCE_ID) as GeoJSONSource).setData(cityData);
     (map.getSource(SAVED_LOCATION_SOURCE_ID) as GeoJSONSource).setData(savedLocationData);
+    addVisibleGuideMarkerLayers(map);
     (map.getSource(VISIBLE_GUIDE_MARKER_SOURCE_ID) as GeoJSONSource).setData(visibleGuideMarkerData);
     (map.getSource(STATE_LABEL_SOURCE_ID) as GeoJSONSource).setData(stateLabelData);
     (map.getSource(GUIDE_ROUTE_SOURCE_ID) as GeoJSONSource).setData(guideRouteData);
@@ -3499,15 +3684,6 @@ export function MapClient({
     (map.getSource(GUIDE_STOP_SOURCE_ID) as GeoJSONSource).setData(guideStopData);
     (map.getSource(NEIGHBORHOOD_BOUNDARY_SOURCE_ID) as GeoJSONSource).setData(neighborhoodBoundaryData);
   }, [cityData, continentLabelData, countryData, guideRouteData, guideStopData, neighborhoodBoundaryData, poiMapMarkerData, savedLocationData, stateLabelData, visibleGuideMarkerData]);
-
-  useEffect(() => {
-    const map = mapRef.current;
-    if (!map || !isStyleReadyRef.current || !map.getLayer("visible-guide-marker-hover")) {
-      return;
-    }
-
-    map.setFilter("visible-guide-marker-hover", ["==", ["get", "id"], hoveredGuideMarkerId ?? "__none__"]);
-  }, [hoveredGuideMarkerId]);
 
   const activeGuidePulseStopId = useMemo(() => {
     const renderedStopIds = new Set(guideStopData.features.map((feature) => feature.properties.id));

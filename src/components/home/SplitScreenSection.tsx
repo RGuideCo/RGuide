@@ -1353,6 +1353,8 @@ export function SplitScreenSection({
   const mapViewportPanelRef = useRef<HTMLDivElement | null>(null);
   const rightPaneRef = useRef<HTMLDivElement | null>(null);
   const hoveredGuideMarkerScrollRef = useRef<string | null>(null);
+  const guideScrollAnimationFrameRef = useRef<number | null>(null);
+  const guideScrollSettleTimeoutRef = useRef<number | null>(null);
   const initialRouteStateKey = JSON.stringify(initialRouteState ?? null);
   const selectionRef = useRef(selection);
   const activeCategoryRef = useRef(activeCategory);
@@ -3624,11 +3626,19 @@ export function SplitScreenSection({
       }
       guideLayoutAnimationFramesRef.current.forEach((frame) => cancelAnimationFrame(frame));
       guideLayoutCleanupTimeoutsRef.current.forEach((timeoutId) => window.clearTimeout(timeoutId));
+      if (guideScrollAnimationFrameRef.current !== null) {
+        cancelAnimationFrame(guideScrollAnimationFrameRef.current);
+        guideScrollAnimationFrameRef.current = null;
+      }
+      if (guideScrollSettleTimeoutRef.current !== null) {
+        window.clearTimeout(guideScrollSettleTimeoutRef.current);
+        guideScrollSettleTimeoutRef.current = null;
+      }
     };
   }, []);
 
   useEffect(() => {
-    if (!expandedGuideId) {
+    if (!expandedGuideId || closingGuide) {
       return;
     }
 
@@ -3639,7 +3649,7 @@ export function SplitScreenSection({
     if (expandedList && activeGuideRail !== "itinerary") {
       setActiveCategory(expandedList.category);
     }
-  }, [activeGuideRail, expandedGuideId, globalMergedLists, orderedRailFilteredLists]);
+  }, [activeGuideRail, closingGuide, expandedGuideId, globalMergedLists, orderedRailFilteredLists]);
 
   useEffect(() => {
     if (skipInitialGuideRailCleanupRef.current) {
@@ -3738,7 +3748,7 @@ export function SplitScreenSection({
         seen.add(list.id);
         return true;
       })
-      .slice(0, 30)
+      .slice(0, 45)
       .map((list) => list.id);
   }, [activeMapGuide?.id, isProfileMode, orderedRailFilteredLists, profileRailLists, recentRGuideLists]);
 
@@ -3784,8 +3794,8 @@ export function SplitScreenSection({
       );
 
       const seen = new Set<string>();
-      const markerLimit = 30;
-      const markerCandidates: Array<{ id: string; distance: number; order: number }> = [];
+      const markerLimit = 45;
+      const markerCandidates: Array<{ id: string; order: number; isInPane: boolean }> = [];
       let cardOrder = 0;
 
       scrollContainers.forEach((scroller) => {
@@ -3799,24 +3809,59 @@ export function SplitScreenSection({
           }
 
           const cardRect = card.getBoundingClientRect();
-          const cardCenter = cardRect.top + cardRect.height / 2;
-          const viewportCenter = scrollerRect.top + scrollerRect.height / 2;
+          const isInPane = cardRect.bottom >= scrollerRect.top && cardRect.top <= scrollerRect.bottom;
 
           seen.add(guideId);
           markerCandidates.push({
             id: guideId,
-            distance: Math.abs(cardCenter - viewportCenter),
             order: cardOrder,
+            isInPane,
           });
           cardOrder += 1;
         });
       });
 
-      const nextIds = markerCandidates
-        .sort((left, right) => left.distance - right.distance || left.order - right.order)
-        .slice(0, markerLimit)
-        .sort((left, right) => left.order - right.order)
-        .map((candidate) => candidate.id);
+      const orderedCandidates = markerCandidates.sort((left, right) => left.order - right.order);
+      const visibleIndexes = orderedCandidates.flatMap((candidate, index) =>
+        candidate.isInPane ? [index] : [],
+      );
+      let markerWindow = orderedCandidates.slice(0, markerLimit);
+
+      if (visibleIndexes.length) {
+        const firstVisibleIndex = visibleIndexes[0];
+        const lastVisibleIndex = visibleIndexes[visibleIndexes.length - 1];
+        const visibleWindow = orderedCandidates.slice(firstVisibleIndex, lastVisibleIndex + 1);
+
+        if (visibleWindow.length >= markerLimit) {
+          markerWindow = visibleWindow.slice(0, markerLimit);
+        } else {
+          const availableBefore = orderedCandidates.slice(0, firstVisibleIndex);
+          const availableAfter = orderedCandidates.slice(lastVisibleIndex + 1);
+          const remainingSlots = markerLimit - visibleWindow.length;
+          const targetBeforeCount = Math.floor(remainingSlots / 2);
+          const targetAfterCount = remainingSlots - targetBeforeCount;
+          let beforeCount = Math.min(targetBeforeCount, availableBefore.length);
+          let afterCount = Math.min(targetAfterCount, availableAfter.length);
+          const missingBeforeCount = targetBeforeCount - beforeCount;
+
+          if (missingBeforeCount > 0) {
+            afterCount += Math.min(missingBeforeCount, availableAfter.length - afterCount);
+          }
+
+          const missingAfterCount = targetAfterCount - afterCount;
+          if (missingAfterCount > 0) {
+            beforeCount += Math.min(missingAfterCount, availableBefore.length - beforeCount);
+          }
+
+          markerWindow = [
+            ...availableBefore.slice(-beforeCount),
+            ...visibleWindow,
+            ...availableAfter.slice(0, afterCount),
+          ];
+        }
+      }
+
+      const nextIds = markerWindow.map((candidate) => candidate.id);
       const stableNextIds = nextIds.length ? nextIds : visibleGuideMarkerFallbackIds;
 
       setVisibleGuideMarkerIds((current) =>
@@ -4047,26 +4092,99 @@ export function SplitScreenSection({
   const getGuideAnchorElement = (guideId: string) =>
     getVisibleGuideAnchorElement(guideId) ??
     document.querySelector<HTMLDivElement>(`[data-guide-card-anchor="${CSS.escape(guideId)}"]`);
+  const cancelGuideScrollAnimation = () => {
+    if (guideScrollAnimationFrameRef.current !== null) {
+      cancelAnimationFrame(guideScrollAnimationFrameRef.current);
+      guideScrollAnimationFrameRef.current = null;
+    }
+    if (guideScrollSettleTimeoutRef.current !== null) {
+      window.clearTimeout(guideScrollSettleTimeoutRef.current);
+      guideScrollSettleTimeoutRef.current = null;
+    }
+  };
+  const getGuideScrollTarget = (guideId: string) => {
+    const element = getGuideAnchorElement(guideId);
+    const scroller = element?.closest("[data-guides-scroll]");
+
+    if (!(element instanceof HTMLElement) || !(scroller instanceof HTMLElement)) {
+      return null;
+    }
+
+    const elementRect = element.getBoundingClientRect();
+    const scrollerRect = scroller.getBoundingClientRect();
+
+    return {
+      scroller,
+      top: Math.max(0, scroller.scrollTop + elementRect.top - scrollerRect.top),
+    };
+  };
+  const alignGuideToScrollerTop = (guideId: string) => {
+    const target = getGuideScrollTarget(guideId);
+    if (!target) {
+      return;
+    }
+
+    target.scroller.scrollTo({
+      top: target.top,
+      behavior: "auto",
+    });
+  };
   const scrollGuideIntoView = (
     guideId: string,
     options: { behavior?: ScrollBehavior; defer?: boolean } = {},
   ) => {
     const { behavior = "smooth", defer = true } = options;
     const runScroll = () => {
-      const element = getGuideAnchorElement(guideId);
-      const scroller = element?.closest("[data-guides-scroll]");
+      cancelGuideScrollAnimation();
 
-      if (!(element instanceof HTMLElement) || !(scroller instanceof HTMLElement)) {
+      const target = getGuideScrollTarget(guideId);
+      if (!target) {
         return;
       }
 
-      const elementRect = element.getBoundingClientRect();
-      const scrollerRect = scroller.getBoundingClientRect();
-      const offsetTop = scroller.scrollTop + elementRect.top - scrollerRect.top;
-      scroller.scrollTo({
-        top: Math.max(0, offsetTop),
-        behavior,
-      });
+      if (behavior !== "smooth") {
+        target.scroller.scrollTo({
+          top: target.top,
+          behavior,
+        });
+        return;
+      }
+
+      const scroller = target.scroller;
+      const startTop = scroller.scrollTop;
+      const startedAt = performance.now();
+      const duration = 520;
+      const easeOutCubic = (value: number) => 1 - Math.pow(1 - value, 3);
+
+      const animate = () => {
+        const latestTarget = getGuideScrollTarget(guideId);
+        if (!latestTarget || latestTarget.scroller !== scroller) {
+          guideScrollAnimationFrameRef.current = null;
+          return;
+        }
+
+        const progress = Math.min(1, (performance.now() - startedAt) / duration);
+        const easedProgress = easeOutCubic(progress);
+        const nextTop = startTop + (latestTarget.top - startTop) * easedProgress;
+        scroller.scrollTo({
+          top: nextTop,
+          behavior: "auto",
+        });
+
+        if (progress < 1) {
+          guideScrollAnimationFrameRef.current = requestAnimationFrame(animate);
+          return;
+        }
+
+        guideScrollAnimationFrameRef.current = null;
+        alignGuideToScrollerTop(guideId);
+        guideScrollSettleTimeoutRef.current = window.setTimeout(() => {
+          guideScrollSettleTimeoutRef.current = null;
+          alignGuideToScrollerTop(guideId);
+        }, 120);
+      };
+
+      guideScrollAnimationFrameRef.current = requestAnimationFrame(animate);
     };
 
     if (defer) {
@@ -5227,7 +5345,7 @@ export function SplitScreenSection({
               guideFocus={null}
               activeGuide={activeMapGuide}
               activeGuideFitNonce={activeGuideFitNonce}
-              guideLists={activeEditorialLists}
+              guideLists={globalMergedLists}
               visibleGuideMarkerIds={visibleGuideMarkerIds}
               hoveredGuideMarkerId={hoveredGuideMarkerId}
               savedLocations={savedMapLocations}

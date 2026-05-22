@@ -38,6 +38,11 @@ type PoiPhotoSource = {
 };
 
 const poiPhotoSources: Record<string, PoiPhotoSource> = {
+  "Arc de Triomphe": {
+    photo:
+      "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e2/Arc_de_Triomphe%2C_Paris_5_February_2019.jpg/1280px-Arc_de_Triomphe%2C_Paris_5_February_2019.jpg",
+    source: "https://commons.wikimedia.org/wiki/File:Arc_de_Triomphe,_Paris_5_February_2019.jpg",
+  },
   "Basilique du Sacre-Coeur": {
     photo: "https://www.sacre-coeur-montmartre.com/app/uploads/2023/07/3-bonnes-raisons-visite-dome-500x691.jpg",
     source: "https://www.sacre-coeur-montmartre.com/",
@@ -1307,49 +1312,6 @@ const citywideSmallArtCulture: StopSeed[] = [
   },
 ];
 
-const citywideEiffelViews: StopSeed[] = [
-  {
-    id: "paris-views-trocadero",
-    name: "Trocadero Gardens",
-    coordinates: [48.8629, 2.2884],
-    description:
-      "Trocadero Gardens are the classic full-frontal Eiffel Tower viewpoint, with broad terraces, fountains, and the tower centered across the Seine.",
-    photo: photos.eiffel,
-  },
-  {
-    id: "paris-views-champ-mars",
-    name: "Champ de Mars",
-    coordinates: [48.8556, 2.2986],
-    description:
-      "Champ de Mars gives the tower a long green foreground, making it one of the easiest places for relaxed Eiffel Tower views from the 7th.",
-    photo: photos.eiffel,
-  },
-  {
-    id: "paris-views-bir-hakeim",
-    name: "Pont de Bir-Hakeim",
-    coordinates: [48.8554, 2.2876],
-    description:
-      "Pont de Bir-Hakeim frames the Eiffel Tower with bridge arches, Seine water, and metro structure, giving the view a more cinematic edge.",
-    photo: photos.seine,
-  },
-  {
-    id: "paris-views-rue-universite",
-    name: "Rue de l'Universite",
-    coordinates: [48.858, 2.2991],
-    description:
-      "Rue de l'Universite gives a street-level tower view with Paris stone facades in the foreground, useful when the view should feel more neighborhood than panorama.",
-    photo: photos.eiffel,
-  },
-  {
-    id: "paris-views-arc-triomphe",
-    name: "Arc de Triomphe Terrace",
-    coordinates: [48.8738, 2.295],
-    description:
-      "The Arc de Triomphe terrace gives one of the best elevated Eiffel Tower views, with the avenues of western Paris spreading out below.",
-    photo: photos.eiffel,
-  },
-];
-
 const citywideHotelStay: StopSeed[] = [
   {
     id: "paris-stay-cheval-blanc",
@@ -1530,52 +1492,83 @@ const citywideNature: StopSeed[] = [
 
 const citywideActivities: StopSeed[] = [
   {
-    id: "paris-activity-louvre-tuileries",
-    name: "Louvre, Tuileries, and Palais Royal",
-    coordinates: [48.8612, 2.3376],
+    id: "paris-activity-eiffel-tower",
+    name: "Eiffel Tower",
+    coordinates: [48.8584, 2.2945],
     description:
-      "Start with a bounded Louvre plan, then use Tuileries and Palais Royal as the breathing room around it. This stop keeps the first day central, scenic, and realistic without pretending the Louvre can be fully solved in one visit.",
-    photo: photos.culture,
-  },
-  {
-    id: "paris-activity-marais-vosges",
-    name: "Le Marais and Place des Vosges",
-    coordinates: [48.8567, 2.365],
-    description:
-      "Use Le Marais as the saved-map wandering day: Picasso or Carnavalet, Place des Vosges, Rue des Rosiers, boutiques, and a bistro or cocktail room. The point is density, not distance.",
-    photo: photos.culture,
-  },
-  {
-    id: "paris-activity-left-bank",
-    name: "Saint-Germain and the Latin Quarter",
-    coordinates: [48.8501, 2.3385],
-    description:
-      "Pair Saint-Germain polish with Latin Quarter history so the Left Bank becomes more than cafe lore: a brasserie, a bookshop, the Pantheon or Cluny, and Luxembourg Garden as the route's soft landing.",
-    photo: photos.culture,
-  },
-  {
-    id: "paris-activity-orsay-rodin-eiffel",
-    name: "Orsay, Rodin, and the Eiffel Side",
-    coordinates: [48.8584, 2.3126],
-    description:
-      "This 7th-arrondissement route gives the Eiffel Tower context by surrounding it with Orsay, Rodin, Invalides, river walks, and one serious meal. It is best as a slow westward day, not a tower-only errand.",
+      "The Eiffel Tower is the defining Paris activity: observation levels, ironwork, restaurants, history, and night illumination in one landmark. Book ahead if going up the tower, or time the visit for evening light around the Champ de Mars.",
     photo: photos.eiffel,
   },
   {
-    id: "paris-activity-canal-belleville",
-    name: "Canal Saint-Martin to Belleville",
-    coordinates: [48.8725, 2.3736],
+    id: "paris-activity-louvre",
+    name: "Musee du Louvre",
+    coordinates: [48.8606, 2.3376],
     description:
-      "Build the east-side day from bakery and canal paths into Belleville food, Parc de Belleville, or a late jazz/electronic room. It keeps Paris current, local-feeling, and less museum-heavy.",
-    photo: photos.canal,
+      "The Louvre is Paris's essential museum activity, with the Mona Lisa, Winged Victory, Venus de Milo, Egyptian antiquities, French painting, decorative arts, and the palace architecture itself. Pick a theme or wing rather than trying to cover everything.",
+    photo: photos.culture,
   },
   {
-    id: "paris-activity-montmartre-pigalle",
-    name: "Montmartre into South Pigalle",
-    coordinates: [48.884, 2.338],
+    id: "paris-activity-notre-dame",
+    name: "Notre-Dame Cathedral",
+    coordinates: [48.853, 2.3499],
     description:
-      "Make Montmartre a morning or golden-hour walk, then drop into South Pigalle for dinner, cocktails, or a show. This pacing keeps the hill from becoming a crowded postcard and gives the night a natural finish.",
+      "Notre-Dame Cathedral is the Gothic heart of the Ile de la Cite, with twin towers, rose windows, sculpted portals, flying buttresses, and a restored interior shaped by centuries of worship and civic memory.",
+    photo: photos.culture,
+  },
+  {
+    id: "paris-activity-sainte-chapelle",
+    name: "Sainte-Chapelle",
+    coordinates: [48.8554, 2.345],
+    description:
+      "Sainte-Chapelle is one of Paris's most concentrated visual experiences: a royal Gothic chapel whose upper room rises into walls of blue, red, and gold stained glass. Timed entry helps keep the visit simple.",
+    photo: photos.culture,
+  },
+  {
+    id: "paris-activity-orsay",
+    name: "Musee d'Orsay",
+    coordinates: [48.8599, 2.3266],
+    description:
+      "Musee d'Orsay turns a former railway station into the city's major Impressionist and Post-Impressionist museum, with Monet, Renoir, Degas, Manet, Van Gogh, sculpture, decorative arts, and a great clock-facing hall.",
+    photo: photos.culture,
+  },
+  {
+    id: "paris-activity-arc-triomphe",
+    name: "Arc de Triomphe",
+    coordinates: [48.8738, 2.295],
+    description:
+      "The Arc de Triomphe is the monumental anchor of the Champs-Elysees, with sculpted reliefs, the Tomb of the Unknown Soldier, and a rooftop terrace looking over the avenues of western Paris.",
+  },
+  {
+    id: "paris-activity-sacre-coeur",
+    name: "Basilique du Sacre-Coeur",
+    coordinates: [48.8867, 2.3431],
+    description:
+      "Basilique du Sacre-Coeur is Montmartre's white-domed hilltop church, with mosaics, crypt spaces, a dome climb, and one of the city's clearest high viewpoints from the basilica steps and summit.",
     photo: photos.montmartre,
+  },
+  {
+    id: "paris-activity-palais-garnier",
+    name: "Palais Garnier",
+    coordinates: [48.8719, 2.3316],
+    description:
+      "Palais Garnier is Paris's 19th-century opera house, built for opera and ballet on a spectacular scale. The Grand Staircase, gilded foyers, auditorium, Chagall ceiling, and marble-heavy facade make the visit feel theatrical even without a performance.",
+    photo: photos.culture,
+  },
+  {
+    id: "paris-activity-orangerie",
+    name: "Musee de l'Orangerie",
+    coordinates: [48.8638, 2.3227],
+    description:
+      "Musee de l'Orangerie is the art stop for Monet's Water Lilies rooms, plus Impressionist and Post-Impressionist works by Renoir, Cezanne, Matisse, Modigliani, Picasso, and Soutine.",
+    photo: photos.culture,
+  },
+  {
+    id: "paris-activity-catacombs",
+    name: "Paris Catacombs",
+    coordinates: [48.8338, 2.3324],
+    description:
+      "The Paris Catacombs are an underground ossuary in former limestone quarry tunnels, with narrow passages, carved signs, and stacked bones that make the visit one of the city's most physically memorable historic experiences.",
+    photo: photos.culture,
   },
 ];
 
@@ -1731,21 +1724,6 @@ export const parisCitywideGuides = [
     sources: parisCultureSources,
   }),
   guide({
-    id: "list-paris-best-eiffel-tower-views",
-    slug: "paris-best-eiffel-tower-views",
-    seoSlug: "best-eiffel-tower-views",
-    seoTitle: "Best Eiffel Tower Views in Paris",
-    seoDescription:
-      "Best Eiffel Tower views in Paris from Trocadero, Champ de Mars, Pont de Bir-Hakeim, Rue de l'Universite, and the Arc de Triomphe terrace.",
-    title: "Best Eiffel Tower Views",
-    description:
-      "The Eiffel Tower deserves more than one quick mention. This guide collects the strongest view angles across the city, from the classic Trocadero panorama to street-level, river, lawn, and rooftop-feeling perspectives.",
-    url: "https://www.google.com/maps/search/best+eiffel+tower+views+paris",
-    category: "Activities",
-    stops: citywideEiffelViews,
-    sources: parisCultureSources,
-  }),
-  guide({
     id: "list-paris-citywide-stays",
     slug: "paris-best-hotels",
     seoSlug: "best-hotels",
@@ -1791,19 +1769,19 @@ export const parisCitywideGuides = [
     sources: parisNatureSources,
   }),
   guide({
-    id: "list-paris-weekend-activities",
-    slug: "paris-weekend-activities",
+    id: "list-paris-top-things-to-do",
+    slug: "paris-top-10-things-to-do",
     seoSlug: "best-things-to-do",
-    seoTitle: "Best Things to Do in Paris for a Weekend",
+    seoTitle: "Top 10 Things to Do in Paris",
     seoDescription:
-      "Best things to do in Paris for a weekend, pacing museums, bistros, river walks, Marais wandering, Left Bank routes, the 7th, Belleville, and Montmartre.",
-    title: "A Weekend With Museum Breathing Room",
+      "Top 10 things to do in Paris, including the Eiffel Tower, Louvre, Notre-Dame, Sainte-Chapelle, Musee d'Orsay, Arc de Triomphe, Sacre-Coeur, Palais Garnier, Orangerie, and the Catacombs.",
+    title: "Top 10 Things to Do in Paris",
     description:
-      "This Paris activity guide turns the city into route blocks: one major museum, one Left Bank day, one Marais wander, one Eiffel-side culture path, and an east-side or Montmartre evening. It is built to prevent museum overload while still leaving room for meals and streets.",
-    url: "https://www.google.com/maps/search/best+things+to+do+paris+weekend",
+      "Ten essential Paris places to visit, from landmark viewpoints and Gothic interiors to major museums, opera-house spectacle, and the Catacombs below the city.",
+    url: "https://www.google.com/maps/search/top+10+things+to+do+paris",
     category: "Activities",
     stops: citywideActivities,
-    sources: [...parisCultureSources, ...parisFoodSources, ...parisNatureSources],
+    sources: parisCultureSources,
   }),
 ] satisfies MapList[];
 
@@ -1825,8 +1803,9 @@ const neighborhoodCategories = [
   "Nature",
   "Culture",
   "Stay",
-  "Activities",
 ] as const satisfies readonly EditorialCategory[];
+
+type NeighborhoodCategory = (typeof neighborhoodCategories)[number];
 
 const neighborhoodTopics: Record<EditorialCategory, string> = {
   Food: "Restaurants",
@@ -1871,7 +1850,7 @@ function nStop(
   return { id, name, coordinates, description, ...details };
 }
 
-const parisNeighborhoodGuideSeeds: Record<ParisNeighborhood, Record<EditorialCategory, NeighborhoodGuideSeedValue>> = {
+const parisNeighborhoodGuideSeeds: Record<ParisNeighborhood, Record<NeighborhoodCategory, NeighborhoodGuideSeedValue>> = {
   "1st Arrondissement": {
     Food: {
       title: "Museum-Day Meals Around the Royal Core",
@@ -1927,17 +1906,6 @@ const parisNeighborhoodGuideSeeds: Record<ParisNeighborhood, Record<EditorialCat
         nStop("first-stay-le-meurice", "Le Meurice", [48.865, 2.3286], "Le Meurice gives the 1st classic palace gravity on Rue de Rivoli, with Tuileries and the Louvre almost outside the door. It is a grand-service hotel for travelers who want old Paris formality, polished rooms, and a major hotel bar.", { price: "$$$", priceSource: "Official hotel site / Google Travel", officialUrl: "https://www.dorchestercollection.com/paris/le-meurice/", ...hotelStay }),
         nStop("first-stay-regina-louvre", "Hotel Regina Louvre", [48.8638, 2.3322], "Hotel Regina Louvre is the heritage hotel opposite the Tuileries, with Belle Epoque character, Louvre-side views, and a location that keeps Palais Royal, Rue de Rivoli, and the river close.", { price: "$$$", priceSource: "Google Travel / Tripadvisor", officialUrl: "https://www.regina-hotel.com/", ...hotelStay }),
         nStop("first-stay-madame-reve", "Hotel Madame Reve", [48.8626, 2.3428], "Hotel Madame Reve gives the 1st a contemporary hotel in the former Louvre post-office building, with warm rooms, restaurants, rooftop-facing energy, and central access to Les Halles, the Louvre, and the Seine.", { price: "$$$", priceSource: "Conde Nast Traveler / Google Travel", officialUrl: "https://madamereve.com/", ...hotelStay }),
-      ],
-    },
-    Activities: {
-      title: "A Central Day That Does Not Spiral",
-      description:
-        "The 1st is strongest when it becomes a tight route rather than a list of famous errands. This guide groups museum time, gardens, island glass, passages, and Seine walks into manageable activity blocks.",
-      stops: [
-        nStop("first-activity-louvre-tuileries", "Louvre and Tuileries Block", [48.8612, 2.3376], "The Louvre and Tuileries block is the central activity anchor: one planned museum theme, then garden air and a clean westward walk. Use it as a half-day structure instead of trying to solve the whole museum.", { photo: photos.culture }),
-        nStop("first-activity-sainte-chapelle-cite", "Sainte-Chapelle and Ile de la Cite", [48.8554, 2.345], "Sainte-Chapelle and Ile de la Cite turn the edge of the 1st into a short Gothic-and-river activity. It is best with timed entry, Pont Neuf, and a slow move back toward the Louvre.", { photo: photos.culture }),
-        nStop("first-activity-palais-royal-passages", "Palais Royal and Covered Passages", [48.8642, 2.3381], "Palais Royal and the nearby covered passages make a weather-proof walk with arcades, shops, and architecture. Use it when the day needs detail and browsing after a major sight.", { photo: photos.culture }),
-        nStop("first-activity-samaritaine-seine", "Samaritaine and the Seine", [48.8591, 2.3426], "Samaritaine and the Seine give the 1st a shopping-and-river activity that stays compact. It works for a lighter block between meals, hotel check-in, and central evening plans.", { photo: photos.seine }),
       ],
     },
   },
@@ -2007,17 +1975,6 @@ const parisNeighborhoodGuideSeeds: Record<ParisNeighborhood, Record<EditorialCat
         ],
       },
     ],
-    Activities: {
-      title: "Old Streets, Squares, and Late Stops",
-      description:
-        "Le Marais activities are about density: a mansion museum, a square, food streets, boutiques, and a bar can all fit without transit. This guide turns the neighborhood into a flexible half-day or evening route.",
-      stops: [
-        nStop("marais-activity-vosges-picasso", "Place des Vosges to Musee Picasso", [48.8578, 2.364], "Place des Vosges to Musee Picasso is the classic Marais culture walk, pairing a square, mansion museum, and old streets. Use it as the backbone of a daytime route.", { photo: photos.culture }),
-        nStop("marais-activity-rue-rosiers", "Rue des Rosiers Food Walk", [48.8574, 2.3591], "Rue des Rosiers turns a Marais wander into a food-and-history stop with falafel counters, bakeries, and Jewish-quarter context. It is best as a focused lunch or snack block.", { photo: photos.food }),
-        nStop("marais-activity-rue-bretagne", "Rue de Bretagne and Enfants Rouges", [48.8627, 2.3612], "Rue de Bretagne and Enfants Rouges keep the north Marais useful for market grazing, shopping, and cafe stops. Use it when the route needs flexible pacing.", { photo: photos.food }),
-        nStop("marais-activity-cocktail-loop", "Marais Cocktail Loop", [48.862, 2.36], "The Marais cocktail loop links Bar Nouveau, Cambridge, Candelaria, and sidewalk cafes without requiring a cross-town night. It works when dinner and drinks should stay close.", { photo: photos.nightlife }),
-      ],
-    },
   },
   "Saint-Germain-des-Pres": {
     Food: {
@@ -2073,17 +2030,6 @@ const parisNeighborhoodGuideSeeds: Record<ParisNeighborhood, Record<EditorialCat
         nStop("saint-germain-stay-relais-christine", "Relais Christine", [48.8541, 2.3403], "Relais Christine gives Saint-Germain a tucked-away luxury hotel near the river and Odeon, with historic-street access, intimate rooms, and a quieter mood than the larger Left Bank addresses.", { price: "$$$", priceSource: "Conde Nast Traveler / Google Travel", ...hotelStay }),
         nStop("saint-germain-stay-aubusson", "Hotel d'Aubusson", [48.8545, 2.3396], "Hotel d'Aubusson sits in a 17th-century townhouse with elegant rooms, grand public spaces, a jazz bar, and easy access to Rue de Buci, the Seine, galleries, and Left Bank evenings.", { price: "$$$", priceSource: "Google Travel / Tripadvisor", officialUrl: "https://www.hoteldaubusson.com/", ...hotelStay }),
         nStop("saint-germain-stay-madison", "Madison Hotel", [48.8534, 2.3338], "Madison Hotel is a polished boutique hotel beside Saint-Germain-des-Pres church, with rooms and suites that keep the boulevard, classic cafes, metro access, and gallery streets close.", { price: "$$", priceSource: "Google Travel / Tripadvisor", officialUrl: "https://www.hotel-madison.com/", ...hotelStay }),
-      ],
-    },
-    Activities: {
-      title: "Cafe Rituals, Galleries, and Garden Time",
-      description:
-        "Saint-Germain activities are best built as a slow Left Bank sequence: coffee, church, galleries, garden, river, and dinner. This guide keeps the neighborhood polished without turning it into a postcard cafe crawl.",
-      stops: [
-        nStop("saint-germain-activity-cafe-abbey", "Cafe and Abbey Loop", [48.854, 2.334], "The cafe and abbey loop links Cafe de Flore, Brasserie Lipp, and Eglise Saint-Germain-des-Pres into one compact Left Bank ritual. Use it early, before the boulevard gets too crowded.", { photo: photos.food }),
-        nStop("saint-germain-activity-rue-seine", "Rue de Seine Gallery Walk", [48.8547, 2.3367], "Rue de Seine gives Saint-Germain a browsable gallery spine between the church and river. It works when the day needs looking, wandering, and small cultural stops without another ticket.", { photo: photos.culture }),
-        nStop("saint-germain-activity-luxembourg-odeon", "Luxembourg to Odeon", [48.8488, 2.339], "Luxembourg to Odeon is the soft walking block that connects garden chairs, bookshops, cinemas, and dinner streets. Use it to keep the Left Bank day relaxed.", { photo: photos.nature }),
-        nStop("saint-germain-activity-orsay-bridge", "Orsay Bridge Walk", [48.8585, 2.3295], "The Orsay bridge walk connects Saint-Germain to the museum side through the Seine instead of the metro. It is a useful activity when art, views, and dinner need to stay aligned.", { photo: photos.seine }),
       ],
     },
   },
@@ -2153,17 +2099,6 @@ const parisNeighborhoodGuideSeeds: Record<ParisNeighborhood, Record<EditorialCat
         ],
       },
     ],
-    Activities: {
-      title: "A Bookish Left Bank Day",
-      description:
-        "Latin Quarter activities should move between books, civic history, gardens, and student streets. This guide turns the neighborhood into a walkable day with culture, browsing, food, and river edges.",
-      stops: [
-        nStop("latin-activity-pantheon-cluny", "Pantheon and Cluny Route", [48.8484, 2.3447], "The Pantheon and Cluny route gives the Latin Quarter its civic and medieval backbone in one compact walk. Use it when the day needs two strong cultural anchors without cross-town travel.", { photo: photos.culture }),
-        nStop("latin-activity-bookshops-seine", "Bookshops and the Seine", [48.8526, 2.3471], "Bookshops and the Seine link Shakespeare and Company, bouquinistes, Notre-Dame views, and river walking. It is the classic short activity when the neighborhood needs romance and browsing.", { photo: photos.seine }),
-        nStop("latin-activity-jardin-plantes", "Jardin des Plantes Afternoon", [48.8439, 2.3599], "A Jardin des Plantes afternoon adds gardens, natural-history museums, and family-friendly pacing to the Latin Quarter. It works especially well after dense historic streets.", { photo: photos.nature }),
-        nStop("latin-activity-mouffetard", "Rue Mouffetard Food Walk", [48.8427, 2.3494], "Rue Mouffetard gives the area a market-street activity with bakeries, cheese shops, cafes, and casual dinner options. Use it when the day needs food texture rather than another ticket.", { photo: photos.food }),
-      ],
-    },
   },
   Montmartre: {
     Food: {
@@ -2233,17 +2168,6 @@ const parisNeighborhoodGuideSeeds: Record<ParisNeighborhood, Record<EditorialCat
         ],
       },
     ],
-    Activities: {
-      title: "A Hill Walk With Timing",
-      description:
-        "Montmartre activities need timing because the famous lanes crowd quickly. This guide builds the hill as a route: basilica, museum, old streets, lower-hill cafes, and an evening that does not depend on one viewpoint.",
-      stops: [
-        nStop("montmartre-activity-sacre-sunrise", "Sacre-Coeur Early or Late", [48.8867, 2.3431], "Sacre-Coeur early or late is the best way to make the hill feel spacious rather than hectic. Use the timing to pair the basilica, steps, and view with quieter lanes.", { photo: photos.montmartre }),
-        nStop("montmartre-activity-artist-lanes", "Musee de Montmartre and Artist Lanes", [48.8872, 2.3408], "Musee de Montmartre and the artist lanes give the neighborhood context beyond Place du Tertre. It is a useful activity block for travelers who want history with the walk.", { photo: photos.culture }),
-        nStop("montmartre-activity-abbesses-lamarck", "Abbesses to Lamarck-Caulaincourt", [48.886, 2.3365], "Abbesses to Lamarck-Caulaincourt is the calmer slope walk through cafes, shops, and back-of-hill streets. Use it when the route needs Montmartre texture without staying on the summit.", { photo: photos.montmartre }),
-        nStop("montmartre-activity-cabaret-night", "Cabaret and Hill Night", [48.8888, 2.3401], "A cabaret and hill night uses Au Lapin Agile, rooftop drinks, or lower-hill bars to keep Montmartre after dark. It works when the evening is planned around a show or view.", { photo: photos.nightlife }),
-      ],
-    },
   },
   "Canal Saint-Martin": {
     Food: {
@@ -2311,17 +2235,6 @@ const parisNeighborhoodGuideSeeds: Record<ParisNeighborhood, Record<EditorialCat
         ],
       },
     ],
-    Activities: {
-      title: "A Waterline Day Into Night",
-      description:
-        "Canal Saint-Martin activities work as a sequence: bakery, locks, shopping streets, Republique, wider water, and music or drinks. This guide keeps the day linear so the neighborhood feels easy to follow.",
-      stops: [
-        nStop("canal-activity-bakery-locks", "Bakery and Locks Morning", [48.8721, 2.3648], "A bakery and locks morning starts at Du Pain et des Idees, then follows bridges and water north. It is the easiest way to make the canal feel like a route, not a single photo stop.", { photo: photos.food }),
-        nStop("canal-activity-vinaigriers", "Rue des Vinaigriers and Canal Shops", [48.873, 2.362], "Rue des Vinaigriers and the canal shops give the neighborhood a browsing spine with cafes, small retailers, and bars nearby. Use it between brunch and aperitif.", { photo: photos.canal }),
-        nStop("canal-activity-republique-canal", "Republique to the Canal", [48.8675, 2.363], "Republique to the canal is the practical southern approach, linking a major square to quieter bridges and water. It works when friends need an easy meeting point before wandering.", { photo: photos.culture }),
-        nStop("canal-activity-point-ephemere-night", "Point Ephemere Night", [48.8819, 2.3686], "A Point Ephemere night turns the canal into music, terrace, and late programming. Check the event calendar and build dinner or drinks around the show rather than hoping something is on.", { photo: photos.nightlife }),
-      ],
-    },
   },
   "7th Arrondissement": {
     Food: {
@@ -2378,17 +2291,6 @@ const parisNeighborhoodGuideSeeds: Record<ParisNeighborhood, Record<EditorialCat
         nStop("seventh-stay-le-walt", "Hotel Le Walt", [48.8548, 2.3089], "Hotel Le Walt is a smaller hotel near Ecole Militaire, the Eiffel route, Rue Cler, and Invalides, with a quieter room-focused stay that keeps the 7th's museum and monument days easy.", { price: "$$", priceSource: "Google Travel / Tripadvisor", officialUrl: "https://www.lewaltparis.com/", ...hotelStay }),
         nStop("seventh-stay-jk-place", "J.K. Place Paris", [48.8604, 2.3183], "J.K. Place Paris is an intimate design-luxury hotel near the Seine, Orsay, and Invalides, with a wellness spa, marble-and-tile pool, and the polished profile of a global best-hotel-list regular.", { price: "$$$", priceSource: "Conde Nast Traveler / Google Travel", officialUrl: "https://www.jkplaces.com/jkparis/", ...hotelStay }),
         nStop("seventh-stay-montalembert", "Hotel Montalembert", [48.8565, 2.327], "Hotel Montalembert sits on the Saint-Germain edge of the 7th, with elegant rooms, Left Bank dining nearby, and easy movement between Orsay, galleries, Rue du Bac, and Saint-Germain cafes.", { price: "$$$", priceSource: "Google Travel / Tripadvisor", officialUrl: "https://www.hotelmontalembert-paris.com/", ...hotelStay }),
-      ],
-    },
-    Activities: {
-      title: "A Westward Museum and Monument Day",
-      description:
-        "The 7th works best as a westward route with art, gardens, river views, and one Eiffel-side moment. This guide makes the district feel like a full day rather than separate errands for photos and tickets.",
-      stops: [
-        nStop("seventh-activity-orsay-rodin-invalides", "Orsay, Rodin, and Invalides", [48.8576, 2.318], "Orsay, Rodin, and Invalides create the strongest cultural route in the 7th, moving from art to sculpture garden to military history. Use it as a slow museum day with outdoor pauses.", { photo: photos.culture }),
-        nStop("seventh-activity-eiffel-champ", "Eiffel Tower and Champ de Mars", [48.8584, 2.2945], "Eiffel Tower and Champ de Mars is the classic district activity, but it works best with timing and a plan for the surrounding lawns and streets. Avoid making the tower the only stop.", { photo: photos.eiffel }),
-        nStop("seventh-activity-quai-branly-river", "Quai Branly and River Walk", [48.8609, 2.2976], "Quai Branly and the river walk add cultural substance and waterline movement beside the Eiffel Tower. Use it when the area needs more than a view.", { photo: photos.seine }),
-        nStop("seventh-activity-rue-cler", "Rue Cler and Rue Saint-Dominique", [48.856, 2.306], "Rue Cler and Rue Saint-Dominique give the 7th a food-shopping and cafe activity between monuments. It is useful for a lighter block before dinner or after Champ de Mars.", { photo: photos.food }),
       ],
     },
   },
