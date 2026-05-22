@@ -20,6 +20,7 @@ import {
   amsterdamItineraryGuides,
   amsterdamNeighborhoodGuides,
 } from "@/data/guides/amsterdam";
+import { berlinCitywideGuides } from "@/data/guides/berlin";
 import { istanbulCitywideGuides } from "@/data/guides/istanbul";
 import { romeGuides } from "@/data/guides/rome";
 import { sanFranciscoGuides } from "@/data/guides/san-francisco";
@@ -34,6 +35,7 @@ export const editorialGuideLists: MapList[] = [
   ...globalGuides,
   ...istanbulCitywideGuides,
   ...barcelonaCoreGuides,
+  ...berlinCitywideGuides,
   ...amsterdamNeighborhoodGuides,
   ...amsterdamCitywideGuides,
   ...amsterdamItineraryGuides,
