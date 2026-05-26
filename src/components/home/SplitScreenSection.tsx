@@ -5540,15 +5540,17 @@ export function SplitScreenSection({
                 )}
               </div>
 	              <div
-                  className="pointer-events-auto absolute right-3 top-3 z-[80] flex flex-col items-end gap-1.5 lg:hidden"
+                  className={`pointer-events-auto absolute right-3 top-3 flex flex-col items-end gap-1.5 lg:hidden ${
+                    isMobileExplorerSearchOpen ? "z-[180]" : "z-[80]"
+                  }`}
                   role="toolbar"
                   aria-label="Menu bar"
                 >
 	                <div
-                    className={`flex h-8 items-center justify-end overflow-visible rounded-lg transition-[width,background-color,border-color,box-shadow] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] ${
+                    className={`relative flex h-8 items-center justify-end overflow-visible rounded-lg transition-[width,background-color,border-color,box-shadow] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] ${
                       isMobileExplorerSearchOpen
-                        ? "w-[min(22rem,calc(100vw-1.5rem))] border border-slate-200 bg-white shadow-sm"
-                        : "w-8 border border-transparent bg-transparent"
+                        ? "z-[180] w-[min(22rem,calc(100vw-1.5rem))] border border-slate-200 bg-white shadow-sm"
+                        : "z-10 w-8 border border-transparent bg-transparent"
                     }`}
                   >
                     {isMobileExplorerSearchOpen ? (
@@ -7970,8 +7972,8 @@ export function SplitScreenSection({
 	                      <div
 	                        className={`absolute right-0 flex items-center justify-end overflow-visible rounded-lg transition-[width,background-color,border-color,box-shadow] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] ${
 	                          isDesktopSearchOpen
-                              ? "top-0 h-10 w-full border border-slate-200 bg-white shadow-sm"
-                              : "top-0.5 h-9 w-9 border border-transparent bg-transparent"
+                              ? "top-0 z-[260] h-10 w-full border border-slate-200 bg-white shadow-sm"
+                              : "top-0.5 z-20 h-9 w-9 border border-transparent bg-transparent"
 	                        }`}
 	                      >
                         {isDesktopSearchOpen ? (

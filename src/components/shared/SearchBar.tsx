@@ -3,7 +3,8 @@
 import clsx from "clsx";
 import Link from "next/link";
 import { Search } from "lucide-react";
-import { useId, useMemo, useState } from "react";
+import { useCallback, useEffect, useId, useMemo, useRef, useState } from "react";
+import { createPortal } from "react-dom";
 
 import { cities } from "@/data";
 import { getCityHref, getGuideHref } from "@/lib/routes";
@@ -29,7 +30,9 @@ export function SearchBar({
   embedded = false,
 }: SearchBarProps) {
   const editorialLists = useAppStore((state) => state.editorialLists);
+  const rootRef = useRef<HTMLDivElement | null>(null);
   const [query, setQuery] = useState("");
+  const [dropdownRect, setDropdownRect] = useState<{ left: number; top: number; width: number } | null>(null);
   const searchId = useId();
   const searchableLists = useMemo(() => getEditorialLists(editorialLists), [editorialLists]);
   const resolvedSize = size ?? (compact ? "sm" : "lg");
@@ -63,8 +66,81 @@ export function SearchBar({
     return [...cityMatches, ...listMatches].slice(0, 6);
   }, [query, searchableLists]);
 
+  const updateDropdownRect = useCallback(() => {
+    const root = rootRef.current;
+    if (!root) {
+      return;
+    }
+
+    const rect = root.getBoundingClientRect();
+    setDropdownRect({
+      left: rect.left,
+      top: rect.bottom + (variant === "square" ? 8 : 12),
+      width: rect.width,
+    });
+  }, [variant]);
+
+  useEffect(() => {
+    if (!results.length) {
+      setDropdownRect(null);
+      return;
+    }
+
+    updateDropdownRect();
+    const root = rootRef.current;
+    const resizeObserver =
+      typeof ResizeObserver !== "undefined" && root
+        ? new ResizeObserver(updateDropdownRect)
+        : null;
+
+    if (root) {
+      resizeObserver?.observe(root);
+    }
+    window.addEventListener("resize", updateDropdownRect);
+    window.addEventListener("scroll", updateDropdownRect, true);
+
+    return () => {
+      resizeObserver?.disconnect();
+      window.removeEventListener("resize", updateDropdownRect);
+      window.removeEventListener("scroll", updateDropdownRect, true);
+    };
+  }, [results.length, updateDropdownRect]);
+
+  const resultPanel =
+    results.length && dropdownRect
+      ? createPortal(
+          <div
+            className={clsx(
+              "surface fixed z-[1000] p-2 shadow-xl",
+              variant === "square" ? "rounded-lg" : "rounded-[1.4rem]",
+            )}
+            style={{
+              left: dropdownRect.left,
+              top: dropdownRect.top,
+              width: dropdownRect.width,
+            }}
+          >
+            {results.map((result) => (
+              <Link
+                key={result.id}
+                href={result.href}
+                className={clsx("block px-4 py-3 hover:bg-stone-100", variant === "square" ? "rounded-md" : "rounded-2xl")}
+                onClick={() => {
+                  setQuery("");
+                  onResultSelect?.();
+                }}
+              >
+                <p className="font-medium text-slate-900">{result.title}</p>
+                <p className="text-sm text-slate-600">{result.subtitle}</p>
+              </Link>
+            ))}
+          </div>,
+          document.body,
+        )
+      : null;
+
   return (
-    <div className={clsx("relative w-full max-w-xl", className)}>
+    <div ref={rootRef} className={clsx("relative isolate z-[260] w-full max-w-xl", className)}>
       <label className="sr-only" htmlFor={searchId}>
         Search cities and lists
       </label>
@@ -98,29 +174,7 @@ export function SearchBar({
         />
       </div>
 
-      {results.length ? (
-        <div
-          className={clsx(
-            "surface absolute left-0 right-0 z-30 p-2",
-            variant === "square" ? "top-[calc(100%+0.5rem)] rounded-lg" : "top-[calc(100%+0.75rem)]",
-          )}
-        >
-          {results.map((result) => (
-            <Link
-              key={result.id}
-              href={result.href}
-              className={clsx("block px-4 py-3 hover:bg-stone-100", variant === "square" ? "rounded-md" : "rounded-2xl")}
-              onClick={() => {
-                setQuery("");
-                onResultSelect?.();
-              }}
-            >
-              <p className="font-medium text-slate-900">{result.title}</p>
-              <p className="text-sm text-slate-600">{result.subtitle}</p>
-            </Link>
-          ))}
-        </div>
-      ) : null}
+      {resultPanel}
     </div>
   );
 }
