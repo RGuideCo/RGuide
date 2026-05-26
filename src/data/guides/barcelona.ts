@@ -5191,7 +5191,7 @@ export const barcelonaCoreGuides = [
           "sat": "24 hours",
           "sun": "24 hours"
         },
-        "photo": "https://factorybcn.com/wp-content/uploads/2022/01/factory-hostels-great-space.jpg"
+        "photo": "https://factorybcn.com/wp-content/uploads/2023/07/terreza-exterior-renovada.webp"
       },
       {
         "id": "gracia-hostel-yeah-edge",
