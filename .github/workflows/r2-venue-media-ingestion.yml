@@ -1,0 +1,132 @@
+name: R2 Venue Media Ingestion
+
+on:
+  workflow_dispatch:
+    inputs:
+      cities:
+        description: "Comma-separated city names to ingest, for example: London,Rome,Amsterdam"
+        required: true
+        default: "London,Rome,Amsterdam"
+      limit:
+        description: "Maximum venue media rows per city"
+        required: true
+        default: "1000"
+      openverse_fallback:
+        description: "Use Openverse when the original image source fails"
+        type: boolean
+        required: true
+        default: true
+      failed_only:
+        description: "Only retry rows previously marked failed"
+        type: boolean
+        required: true
+        default: false
+      force:
+        description: "Reprocess rows even if they already appear stored"
+        type: boolean
+        required: true
+        default: false
+      dry_run:
+        description: "Select and resolve rows without uploading or updating Supabase"
+        type: boolean
+        required: true
+        default: false
+
+concurrency:
+  group: r2-venue-media-ingestion
+  cancel-in-progress: false
+
+jobs:
+  ingest:
+    name: Ingest venue media to R2
+    runs-on: ubuntu-latest
+    timeout-minutes: 360
+
+    env:
+      SUPABASE_DB_URL: ${{ secrets.SUPABASE_DB_URL }}
+      CLOUDFLARE_R2_BUCKET: ${{ secrets.CLOUDFLARE_R2_BUCKET }}
+      CLOUDFLARE_R2_ENDPOINT: ${{ secrets.CLOUDFLARE_R2_ENDPOINT }}
+      CLOUDFLARE_R2_ACCESS_KEY_ID: ${{ secrets.CLOUDFLARE_R2_ACCESS_KEY_ID }}
+      CLOUDFLARE_R2_SECRET_ACCESS_KEY: ${{ secrets.CLOUDFLARE_R2_SECRET_ACCESS_KEY }}
+      CLOUDFLARE_R2_PUBLIC_BASE_URL: ${{ secrets.CLOUDFLARE_R2_PUBLIC_BASE_URL }}
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "24"
+          cache: "npm"
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Validate required secrets
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          missing=0
+          for name in \
+            SUPABASE_DB_URL \
+            CLOUDFLARE_R2_BUCKET \
+            CLOUDFLARE_R2_ENDPOINT \
+            CLOUDFLARE_R2_ACCESS_KEY_ID \
+            CLOUDFLARE_R2_SECRET_ACCESS_KEY \
+            CLOUDFLARE_R2_PUBLIC_BASE_URL
+          do
+            if [ -z "${!name:-}" ]; then
+              echo "::error::Missing required GitHub secret: ${name}"
+              missing=1
+            fi
+          done
+
+          if [ "$missing" -ne 0 ]; then
+            exit 1
+          fi
+
+          node --input-type=module -e '
+            const url = new URL(process.env.SUPABASE_DB_URL);
+            const safe = {
+              host: url.hostname,
+              port: url.port || "5432",
+              database: url.pathname.replace(/^\//, ""),
+              usesPooler: url.hostname.includes("pooler.supabase.com"),
+              passwordSet: Boolean(url.password),
+            };
+            console.log(JSON.stringify({ phase: "database_url_check", ...safe }));
+          '
+
+      - name: Ingest selected cities
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          IFS=',' read -ra RAW_CITIES <<< "${{ inputs.cities }}"
+
+          common_args=(--limit "${{ inputs.limit }}")
+          if [ "${{ inputs.openverse_fallback }}" = "true" ]; then
+            common_args+=(--openverse-fallback)
+          fi
+          if [ "${{ inputs.failed_only }}" = "true" ]; then
+            common_args+=(--failed-only)
+          fi
+          if [ "${{ inputs.force }}" = "true" ]; then
+            common_args+=(--force)
+          fi
+          if [ "${{ inputs.dry_run }}" = "true" ]; then
+            common_args+=(--dry-run)
+          fi
+
+          for raw_city in "${RAW_CITIES[@]}"; do
+            city="$(echo "$raw_city" | xargs)"
+            if [ -z "$city" ]; then
+              continue
+            fi
+
+            echo "::group::R2 venue media ingestion: ${city}"
+            npm run ingest:venue-media-r2 -- --city "$city" "${common_args[@]}"
+            echo "::endgroup::"
+          done
