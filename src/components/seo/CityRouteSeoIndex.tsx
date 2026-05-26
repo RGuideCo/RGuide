@@ -14,6 +14,7 @@ import {
   getRelatedCityRouteGuides,
 } from "@/lib/deep-link-routes";
 import { CATEGORIES } from "@/lib/constants";
+import { buildStay22StopUrl, isStay22Url } from "@/lib/stay22";
 import { MapList } from "@/types";
 
 type CityRouteSeoIndexProps = {
@@ -25,78 +26,29 @@ function pluralize(count: number, singular: string, plural = `${singular}s`) {
   return `${count} ${count === 1 ? singular : plural}`;
 }
 
-type StayBookingPlatform = "booking" | "hostelworld";
-
-function isHostelGuide(guide: MapList) {
-  const slug = guide.slug.toLowerCase();
-  const isMixedStayGuide = slug.includes("hotels-and-hostels");
-  return (
-    !isMixedStayGuide &&
-    (guide.seoSlug === "best-hostels" ||
-      slug === "hostels" ||
-      slug.endsWith("-hostels") ||
-      slug.includes("best-hostels"))
-  );
-}
-
-function isHostelStop(guide: MapList, stop: MapList["stops"][number]) {
-  const stopText = [stop.name, stop.priceSource].filter(Boolean).join(" ").toLowerCase();
-
-  return (
-    isHostelGuide(guide) ||
-    /\bhostelworld\b/.test(stopText) ||
-    /\bhostels?\b/.test(stopText) ||
-    /\bhostal\b/.test(stopText) ||
-    /\bostello\b/.test(stopText) ||
-    /\bguesthouse\b/.test(stopText)
-  );
-}
-
-function getStayBookingPlatformFromUrl(url?: string): StayBookingPlatform | null {
-  if (!url) {
-    return null;
-  }
-
-  try {
-    const hostname = new URL(url).hostname.toLowerCase();
-    if (hostname.includes("hostelworld.")) {
-      return "hostelworld";
-    }
-    if (hostname.includes("booking.")) {
-      return "booking";
-    }
-  } catch {
-    return null;
-  }
-
-  return null;
-}
-
 function getStayBookingDetails(guide: MapList, stop: MapList["stops"][number]) {
   if ((stop.category ?? guide.category) !== "Stay") {
     return null;
   }
 
-  const platform =
-    getStayBookingPlatformFromUrl(stop.bookingUrl) ?? (isHostelStop(guide, stop) ? "hostelworld" : "booking");
-  const platformLabel = platform === "hostelworld" ? "Hostelworld" : "Booking.com";
+  const existingBookingUrl = stop.bookingUrl;
 
-  if (stop.bookingUrl) {
+  if (isStay22Url(existingBookingUrl)) {
     return {
-      href: stop.bookingUrl,
-      platformLabel,
+      href: existingBookingUrl,
+      platformLabel: "Stay22",
     };
   }
 
-  const searchQuery = [stop.name, guide.location.city, guide.location.country].filter(Boolean).join(", ");
-  const encodedQuery = encodeURIComponent(searchQuery);
-
   return {
-    href:
-      platform === "hostelworld"
-        ? `https://www.hostelworld.com/find/keywordsuggestions?internalsearch=yes&search_keywords=${encodedQuery}`
-        : `https://www.booking.com/searchresults.html?ss=${encodedQuery}`,
-    platformLabel,
+    href: buildStay22StopUrl({
+      stop,
+      city: guide.location.city,
+      country: guide.location.country,
+      neighborhood: guide.location.neighborhood,
+      campaign: `seo_stay_${guide.location.city ?? "destination"}_${guide.id}`,
+    }),
+    platformLabel: "Stay22",
   };
 }
 

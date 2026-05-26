@@ -10,6 +10,7 @@ import { ChevronDown, Heart, Plus, X } from "lucide-react";
 import { getPoiAttributeTags } from "@/lib/poi-tags";
 import { getCreatorHref, getGuideHref, getVenueHref } from "@/lib/routes";
 import { resolveStopHours } from "@/lib/seasonal-hours";
+import { buildStay22StopUrl, isStay22Url } from "@/lib/stay22";
 import { formatNumber } from "@/lib/utils";
 import { CATEGORY_STYLES } from "@/lib/constants";
 import {
@@ -499,78 +500,29 @@ function getPoiPhoto(photo?: string) {
   return photo?.trim() || null;
 }
 
-type StayBookingPlatform = "booking" | "hostelworld";
-
-function isHostelGuide(list: MapList) {
-  const slug = list.slug.toLowerCase();
-  const isMixedStayGuide = slug.includes("hotels-and-hostels");
-  return (
-    !isMixedStayGuide &&
-    (list.seoSlug === "best-hostels" ||
-      slug === "hostels" ||
-      slug.endsWith("-hostels") ||
-      slug.includes("best-hostels"))
-  );
-}
-
-function isHostelStop(list: MapList, stop: MapList["stops"][number]) {
-  const stopText = [stop.name, stop.priceSource].filter(Boolean).join(" ").toLowerCase();
-
-  return (
-    isHostelGuide(list) ||
-    /\bhostelworld\b/.test(stopText) ||
-    /\bhostels?\b/.test(stopText) ||
-    /\bhostal\b/.test(stopText) ||
-    /\bostello\b/.test(stopText) ||
-    /\bguesthouse\b/.test(stopText)
-  );
-}
-
-function getStayBookingPlatformFromUrl(url?: string): StayBookingPlatform | null {
-  if (!url) {
-    return null;
-  }
-
-  try {
-    const hostname = new URL(url).hostname.toLowerCase();
-    if (hostname.includes("hostelworld.")) {
-      return "hostelworld";
-    }
-    if (hostname.includes("booking.")) {
-      return "booking";
-    }
-  } catch {
-    return null;
-  }
-
-  return null;
-}
-
 function getStayBookingDetails(list: MapList, stop: MapList["stops"][number], resolvedCategory: ListCategory = stop.category ?? list.category) {
   if (resolvedCategory !== "Stay") {
     return null;
   }
 
-  const platform: StayBookingPlatform =
-    getStayBookingPlatformFromUrl(stop.bookingUrl) ?? (isHostelStop(list, stop) ? "hostelworld" : "booking");
-  const platformLabel = platform === "hostelworld" ? "Hostelworld" : "Booking.com";
+  const existingBookingUrl = stop.bookingUrl;
 
-  if (stop.bookingUrl) {
+  if (isStay22Url(existingBookingUrl)) {
     return {
-      href: stop.bookingUrl,
-      platformLabel,
+      href: existingBookingUrl,
+      platformLabel: "Stay22",
     };
   }
 
-  const searchQuery = [stop.name, list.location.city, list.location.country].filter(Boolean).join(", ");
-  const encodedQuery = encodeURIComponent(searchQuery);
-
   return {
-    href:
-      platform === "hostelworld"
-        ? `https://www.hostelworld.com/find/keywordsuggestions?internalsearch=yes&search_keywords=${encodedQuery}`
-        : `https://www.booking.com/searchresults.html?ss=${encodedQuery}`,
-    platformLabel,
+    href: buildStay22StopUrl({
+      stop,
+      city: list.location.city,
+      country: list.location.country,
+      neighborhood: list.location.neighborhood,
+      campaign: `guide_stop_${list.location.city ?? "destination"}_${list.id}`,
+    }),
+    platformLabel: "Stay22",
   };
 }
 

@@ -19,8 +19,8 @@ export default function AffiliateDisclosurePage() {
         <div className="mt-6 space-y-5 text-sm leading-7 text-slate-600">
           <p>
             RGuide may earn a commission when visitors use partner or affiliate links to book hotels,
-            hostels, activities, or other travel services. This does not change the price you pay.
-            As a Booking.com Affiliate, I earn from qualifying transactions.
+            hostels, activities, or other travel services through Stay22 and other booking partners.
+            This does not change the price you pay.
           </p>
           <p>
             Recommendations are selected for location fit, planning usefulness, and editorial relevance.

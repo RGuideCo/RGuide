@@ -77,6 +77,7 @@ import { usePlacesBeenDirectory } from "@/components/home/use-places-been-direct
 import { usePersistedPlacesBeen } from "@/components/home/use-persisted-places-been";
 import { getCountryFlagEmoji } from "@/lib/country-flag";
 import { CATEGORY_STYLES } from "@/lib/constants";
+import { buildStay22DestinationUrl } from "@/lib/stay22";
 import {
   CityDeepLinkState,
   getCanonicalCityCategoryPath,
@@ -136,19 +137,6 @@ const GUIDE_COLLAPSE_CONTENT_START_MS = GUIDE_LAYOUT_CLOSE_SIDEWAYS_START_MS;
 const GUIDE_PRE_COLLAPSE_CONTENT_MS = 180;
 const GUIDE_CONTENT_REVEAL_DELAY_MS = GUIDE_OPEN_EXPAND_START_MS + 240;
 const GUIDE_DIRECT_CONTENT_REVEAL_DELAY_MS = 220;
-const CITY_LEFT_PANEL_STAY_LINK_FALLBACKS: Partial<Record<string, string>> = {
-  london: "https://booking.stay22.com/rguide/hN0aP0djwf",
-  paris: "https://booking.stay22.com/rguide/aPYDwK9gOi",
-  rome: "https://booking.stay22.com/rguide/weXiuuw22U",
-  barcelona: "https://booking.stay22.com/rguide/9lhd2N64ak",
-  madrid: "https://booking.stay22.com/rguide/4Da8kg-_5x",
-  milan: "https://booking.stay22.com/rguide/NeNvTrxffp",
-  amsterdam: "https://booking.stay22.com/rguide/ahy9--8FTa",
-  berlin: "https://booking.stay22.com/rguide/rWuh7Tdo5z",
-  prague: "https://booking.stay22.com/rguide/U4Q5S4mgTN",
-  istanbul: "https://booking.stay22.com/rguide/NuUJCj4Ldx",
-};
-
 const getDefaultCountryBrowseView = (country?: Country | null): "cities" | "regions" => {
   if (country?.id === "united-kingdom") {
     return "cities";
@@ -4001,10 +3989,21 @@ export function SplitScreenSection({
         .filter(Boolean)
         .join(", ")
     : null;
-  const activeStayBookingHref = activeStayBookingQuery
-    ? activeLocation.city?.affiliateLinks?.cityLeftPanelStayUrl ??
-      CITY_LEFT_PANEL_STAY_LINK_FALLBACKS[activeLocation.city?.id ?? ""] ??
-      `https://www.booking.com/searchresults.html?ss=${encodeURIComponent(activeStayBookingQuery)}`
+  const activeStayBookingNeighborhood = activeLocation.nestedSubarea?.name ?? activeLocation.subarea?.name;
+  const activeStayBookingHref = activeStayBookingQuery && activeLocation.city
+    ? activeStayBookingNeighborhood
+      ? buildStay22DestinationUrl({
+          city: activeLocation.city.name,
+          country: activeLocation.country?.name ?? activeLocation.city.country,
+          neighborhood: activeStayBookingNeighborhood,
+          campaign: `neighborhood_left_panel_${activeLocation.city.id}_${activeStayBookingNeighborhood}`,
+        })
+      : activeLocation.city.affiliateLinks?.cityLeftPanelStayUrl ??
+        buildStay22DestinationUrl({
+          city: activeLocation.city.name,
+          country: activeLocation.country?.name ?? activeLocation.city.country,
+          campaign: `city_left_panel_${activeLocation.city.id}`,
+        })
     : null;
   const visibleSeoHeading = expandedGuide
     ? `${expandedGuide.title} in ${activeSeoPlaceLabel}`
@@ -6379,7 +6378,7 @@ export function SplitScreenSection({
                                   target="_blank"
                                   rel="noreferrer sponsored"
                                   className="inline-flex h-9 items-center gap-1 border-l border-cyan-600/25 px-2.5 text-[11px] font-semibold uppercase tracking-[0.12em] text-cyan-800 transition hover:bg-cyan-50 hover:text-cyan-950"
-                                  aria-label={`Search Booking.com stays in ${activeStayBookingQuery}`}
+                                  aria-label={`Search stays in ${activeStayBookingQuery}`}
                                   title={`Book stays in ${activeStayBookingQuery}`}
                                 >
                                   <span>Book</span>
