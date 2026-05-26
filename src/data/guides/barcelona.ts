@@ -1882,27 +1882,6 @@ export const barcelonaCoreGuides = [
     "createdAt": "2026-05-02T00:00:00.000Z",
     "stops": [
       {
-        "id": "citywide-disfrutar",
-        "name": "Disfrutar",
-        "coordinates": [
-          41.3878,
-          2.1533
-        ],
-        "description": "Disfrutar anchors the citywide list as the meal people plan trips around: global recognition, a long tasting-menu arc, and very little room for spontaneity. It should read as the special reservation, not one more Barcelona dinner idea.",
-        "price": "$$$",
-        "priceSource": "MICHELIN Guide / World's 50 Best",
-        "hours": {
-          "mon": "Closed",
-          "tue": "1:00 PM-2:15 PM, 8:00 PM-9:15 PM",
-          "wed": "1:00 PM-2:15 PM, 8:00 PM-9:15 PM",
-          "thu": "1:00 PM-2:15 PM, 8:00 PM-9:15 PM",
-          "fri": "1:00 PM-2:15 PM, 8:00 PM-9:15 PM",
-          "sat": "1:00 PM-2:15 PM, 8:00 PM-9:15 PM",
-          "sun": "Closed"
-        },
-        "photo": "https://www.disfrutarbarcelona.com/api/uploads/restaurant/slider/images/original/cd60e682ef18d378de9e38ab983d2f2b_phpup3Axy.jpg"
-      },
-      {
         "id": "citywide-cal-pep",
         "name": "Cal Pep",
         "coordinates": [
@@ -1964,6 +1943,27 @@ export const barcelonaCoreGuides = [
           "sun": "12:30 PM-4:00 PM, 7:30 PM-11:00 PM"
         },
         "photo": "https://www.bardelpla.cat/wp-content/uploads/2023/11/BdP-31-10-23_4328-close-up-copia-2.jpg"
+      },
+      {
+        "id": "citywide-disfrutar",
+        "name": "Disfrutar",
+        "coordinates": [
+          41.3878,
+          2.1533
+        ],
+        "description": "Disfrutar anchors the citywide list as the meal people plan trips around: global recognition, a long tasting-menu arc, and very little room for spontaneity. It should read as the special reservation, not one more Barcelona dinner idea.",
+        "price": "$$$",
+        "priceSource": "MICHELIN Guide / World's 50 Best",
+        "hours": {
+          "mon": "Closed",
+          "tue": "1:00 PM-2:15 PM, 8:00 PM-9:15 PM",
+          "wed": "1:00 PM-2:15 PM, 8:00 PM-9:15 PM",
+          "thu": "1:00 PM-2:15 PM, 8:00 PM-9:15 PM",
+          "fri": "1:00 PM-2:15 PM, 8:00 PM-9:15 PM",
+          "sat": "1:00 PM-2:15 PM, 8:00 PM-9:15 PM",
+          "sun": "Closed"
+        },
+        "photo": "https://www.disfrutarbarcelona.com/api/uploads/restaurant/slider/images/original/cd60e682ef18d378de9e38ab983d2f2b_phpup3Axy.jpg"
       },
       {
         "id": "citywide-bodega-bonay",
@@ -4950,7 +4950,7 @@ export const barcelonaCoreGuides = [
           "sat": "24 hours",
           "sun": "24 hours"
         },
-        "photo": "https://blackswanhostels.com/wp-content/uploads/2024/07/Imagen-de-WhatsApp-2024-06-19-a-las-19.44.31_27805d15-e1724665627758.jpg"
+        "photo": "https://blackswanhostels.com/wp-content/uploads/2024/07/IMG-20240701-WA0164.jpg"
       }
     ],
     "sources": [
