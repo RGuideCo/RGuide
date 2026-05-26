@@ -82,11 +82,9 @@ const websiteJsonLd = {
   ],
 };
 
-const STAY22_PREVIEW_LMA_ID = "6a16094744a8f50eb135b857";
+const STAY22_DEFAULT_LMA_ID = "6a16094744a8f50eb135b857";
 
-const stay22LmaId =
-  process.env.NEXT_PUBLIC_STAY22_LMA_ID?.trim() ||
-  (process.env.VERCEL_ENV === "preview" ? STAY22_PREVIEW_LMA_ID : "");
+const stay22LmaId = process.env.NEXT_PUBLIC_STAY22_LMA_ID?.trim() || STAY22_DEFAULT_LMA_ID;
 
 export default function RootLayout({
   children,
