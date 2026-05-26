@@ -3884,7 +3884,7 @@ export const barcelonaCoreGuides = [
           "sat": "24 hours",
           "sun": "24 hours"
         },
-        "photo": "https://www.safestay.com/wp-content/uploads/2023/06/BCNPG-2023-Low-Res-58.jpg"
+        "photo": "https://www.safestay.com/wp-content/uploads/2023/07/BCNGT-2023-9-aspect-ratio-927-676.jpg"
       }
     ],
     "sources": [
@@ -4238,7 +4238,7 @@ export const barcelonaCoreGuides = [
           "sat": "24 hours",
           "sun": "24 hours"
         },
-        "photo": "https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=900&q=80"
+        "photo": "https://cf.bstatic.com/xdata/images/hotel/max1024x768/829518336.jpg?k=3f40f1675107fde48a585586b92258a7949fa829fd8f50542e39d48765ab8c02&o="
       },
       {
         "id": "gracia-hotel-ronda-lesseps",
@@ -4295,7 +4295,7 @@ export const barcelonaCoreGuides = [
           "sat": "24 hours",
           "sun": "24 hours"
         },
-        "photo": "https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=900&q=80"
+        "photo": "https://images.cataloniahotels.com/styles/talla_siete/cloud-storage/images/2024-12/highlight-instalaciones-hivern-0.jpg.webp"
       }
     ],
     "sources": [
@@ -4393,7 +4393,7 @@ export const barcelonaCoreGuides = [
           "sat": "24 hours",
           "sun": "24 hours"
         },
-        "photo": "https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=900&q=80"
+        "photo": "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/22/19/5f/f6/hostal-apolo.jpg?w=1100&h=-1&s=1"
       },
       {
         "id": "poblesec-coronado",
@@ -4431,7 +4431,7 @@ export const barcelonaCoreGuides = [
           "sat": "24 hours",
           "sun": "24 hours"
         },
-        "photo": "https://www.yomobcnport.com/idb/84500/YOMO-BCN-PORT-14-1440x800.jpg"
+        "photo": "https://www.yomobcnport.com/idb/84500/hab-doble-twin-3-490x330.jpg"
       }
     ],
     "sources": [
@@ -4814,7 +4814,7 @@ export const barcelonaCoreGuides = [
           "sat": "24 hours",
           "sun": "24 hours"
         },
-        "photo": "https://www.safestay.com/wp-content/uploads/2023/06/BCNPG-2023-Low-Res-58.jpg"
+        "photo": "https://www.safestay.com/wp-content/uploads/2023/07/BCNGT-2023-9-aspect-ratio-927-676.jpg"
       },
       {
         "id": "gothic-hostel-new-york",
@@ -5032,7 +5032,7 @@ export const barcelonaCoreGuides = [
           "sat": "24 hours",
           "sun": "24 hours"
         },
-        "photo": "https://www.santjordihostels.com/wp-content/uploads/Mobile_fixed_banner_rock_palace_001-2018_v4.jpg"
+        "photo": "https://www.santjordihostels.com/wp-content/uploads/Terraza_Rock3-scaled.jpg"
       },
       {
         "id": "eixample-hostel-onefam-batllo",
@@ -5334,7 +5334,7 @@ export const barcelonaCoreGuides = [
           "sat": "24 hours",
           "sun": "24 hours"
         },
-        "photo": "https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=900&q=80"
+        "photo": "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/22/19/5f/f6/hostal-apolo.jpg?w=1100&h=-1&s=1"
       }
     ],
     "sources": [
