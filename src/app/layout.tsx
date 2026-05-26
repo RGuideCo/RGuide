@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Host_Grotesk, Inter } from "next/font/google";
+import Script from "next/script";
 import type { ReactNode } from "react";
 
 import { Analytics } from "@vercel/analytics/next";
@@ -81,6 +82,12 @@ const websiteJsonLd = {
   ],
 };
 
+const STAY22_PREVIEW_LMA_ID = "6a16094744a8f50eb135b857";
+
+const stay22LmaId =
+  process.env.NEXT_PUBLIC_STAY22_LMA_ID?.trim() ||
+  (process.env.VERCEL_ENV === "preview" ? STAY22_PREVIEW_LMA_ID : "");
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -91,6 +98,22 @@ export default function RootLayout({
       <head>
         <meta name="agd-partner-manual-verification" />
         <link rel="preconnect" href="https://tiles.openfreemap.org" crossOrigin="anonymous" />
+        {stay22LmaId ? (
+          <>
+            <Script
+              id="stay22-lma-config"
+              strategy="beforeInteractive"
+              dangerouslySetInnerHTML={{
+                __html: `window.Stay22 = window.Stay22 || {}; window.Stay22.params = { lmaID: ${JSON.stringify(stay22LmaId)} };`,
+              }}
+            />
+            <Script
+              id="stay22-lma"
+              src="https://scripts.stay22.com/letmeallez.js"
+              strategy="beforeInteractive"
+            />
+          </>
+        ) : null}
       </head>
       <body className={`${hostGrotesk.variable} ${inter.variable}`}>
         <AuthSync />
