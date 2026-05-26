@@ -124,19 +124,17 @@ type MapViewportInsets = {
   left: number;
 };
 
-const GUIDE_CHROME_WIPE_MS = 560;
-const GUIDE_OPEN_EXPAND_START_MS = GUIDE_CHROME_WIPE_MS - 48;
-const GUIDE_LAYOUT_MOTION_MS = 520;
-const GUIDE_LAYOUT_OPEN_SIDEWAYS_MS = 560;
-const GUIDE_LAYOUT_OPEN_UP_MS = 500;
-const GUIDE_LAYOUT_OPEN_UP_START_MS = GUIDE_LAYOUT_OPEN_SIDEWAYS_MS - 72;
-const GUIDE_LAYOUT_OPEN_TOTAL_MS = GUIDE_LAYOUT_OPEN_UP_START_MS + GUIDE_LAYOUT_OPEN_UP_MS;
-const GUIDE_LAYOUT_CLOSE_SIDEWAYS_START_MS = 220;
-const GUIDE_LAYOUT_CLOSE_TOTAL_MS = 780;
-const GUIDE_COLLAPSE_CONTENT_START_MS = GUIDE_LAYOUT_CLOSE_SIDEWAYS_START_MS;
-const GUIDE_PRE_COLLAPSE_CONTENT_MS = 180;
-const GUIDE_CONTENT_REVEAL_DELAY_MS = GUIDE_OPEN_EXPAND_START_MS + 240;
-const GUIDE_DIRECT_CONTENT_REVEAL_DELAY_MS = 220;
+const GUIDE_CHROME_WIPE_MS = 420;
+const GUIDE_OPEN_EXPAND_START_MS = 360;
+const GUIDE_LAYOUT_MOTION_MS = 420;
+const GUIDE_LAYOUT_OPEN_TOTAL_MS = 560;
+const GUIDE_LAYOUT_OPEN_SIDEWAYS_OFFSET = 0.58;
+const GUIDE_LAYOUT_CLOSE_VERTICAL_OFFSET = 1 - GUIDE_LAYOUT_OPEN_SIDEWAYS_OFFSET;
+const GUIDE_LAYOUT_CLOSE_TOTAL_MS = 520;
+const GUIDE_COLLAPSE_CONTENT_START_MS = 0;
+const GUIDE_PRE_COLLAPSE_CONTENT_MS = 70;
+const GUIDE_CONTENT_REVEAL_DELAY_MS = GUIDE_OPEN_EXPAND_START_MS + 120;
+const GUIDE_DIRECT_CONTENT_REVEAL_DELAY_MS = 160;
 const getDefaultCountryBrowseView = (country?: Country | null): "cities" | "regions" => {
   if (country?.id === "united-kingdom") {
     return "cities";
@@ -1289,9 +1287,11 @@ export function SplitScreenSection({
   const [shellTransitionPhase, setShellTransitionPhase] = useState<"idle" | "exiting" | "entering">("idle");
   const guideRefs = useRef<Record<string, HTMLDivElement | null>>({});
   const guideLayoutPositionsRef = useRef<Record<string, DOMRect>>({});
+  const guideLayoutTargetIdsRef = useRef<Set<string> | null>(null);
   const shouldAnimateGuideLayoutRef = useRef(false);
   const guideLayoutMotionRef = useRef<"default" | "open" | "close">("default");
   const guideLayoutAnimationFramesRef = useRef<ReturnType<typeof requestAnimationFrame>[]>([]);
+  const guideLayoutAnimationsRef = useRef<Animation[]>([]);
   const guideLayoutCleanupTimeoutsRef = useRef<number[]>([]);
   const closingGuideTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const openingGuideTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -3669,6 +3669,7 @@ export function SplitScreenSection({
         cancelAnimationFrame(morphFrameRef.current);
       }
       guideLayoutAnimationFramesRef.current.forEach((frame) => cancelAnimationFrame(frame));
+      guideLayoutAnimationsRef.current.forEach((animation) => animation.cancel());
       guideLayoutCleanupTimeoutsRef.current.forEach((timeoutId) => window.clearTimeout(timeoutId));
       if (guideScrollAnimationFrameRef.current !== null) {
         cancelAnimationFrame(guideScrollAnimationFrameRef.current);
@@ -3709,9 +3710,7 @@ export function SplitScreenSection({
       ? profileExpandedGuide
       : expandedGuide;
   const isGuideTakingFullListPane = Boolean(expandedGuide && !isPublicProfileMode);
-  const isGuideReturningToListPane = Boolean(
-    closingGuide && (closingGuidePhase === "returning" || closingGuidePhase === "collapsing") && !isPublicProfileMode,
-  );
+  const isGuideReturningToListPane = false;
   const isGuidePaneTakingFullListPane = isGuideTakingFullListPane || isGuideReturningToListPane;
   const isLeftPaneCollapsed = isProfileSubmitLayout || isGuidePaneTakingFullListPane || isProfileGuideTakingFullListPane;
   const isSubcategoryMenuOpen =
@@ -4116,15 +4115,25 @@ export function SplitScreenSection({
     setHoveredCategoryLabel(null);
     setIsMobileListSheetExpanded(true);
   }, [isGuidePaneTakingFullListPane]);
-  const getVisibleGuideAnchorElements = () =>
-    Array.from(document.querySelectorAll<HTMLDivElement>("[data-guide-card-anchor]")).filter((element) => {
+  const getVisibleGuideAnchorElements = (targetIds?: Set<string> | null) => {
+    const scrollerRects = new WeakMap<HTMLElement, DOMRect>();
+    return Array.from(document.querySelectorAll<HTMLDivElement>("[data-guide-card-anchor]")).filter((element) => {
+      const guideId = element.dataset.guideCardAnchor;
+      if (targetIds && (!guideId || !targetIds.has(guideId))) {
+        return false;
+      }
+
       const scroller = element.closest("[data-guides-scroll]");
       if (!(scroller instanceof HTMLElement)) {
         return false;
       }
 
       const elementRect = element.getBoundingClientRect();
-      const scrollerRect = scroller.getBoundingClientRect();
+      const cachedScrollerRect = scrollerRects.get(scroller);
+      const scrollerRect = cachedScrollerRect ?? scroller.getBoundingClientRect();
+      if (!cachedScrollerRect) {
+        scrollerRects.set(scroller, scrollerRect);
+      }
       return (
         elementRect.width > 0 &&
         elementRect.height > 0 &&
@@ -4134,6 +4143,7 @@ export function SplitScreenSection({
         elementRect.top <= scrollerRect.bottom
       );
     });
+  };
   const getVisibleGuideAnchorElement = (guideId: string) =>
     getVisibleGuideAnchorElements().find((element) => element.dataset.guideCardAnchor === guideId) ?? null;
   const getGuideAnchorElement = (guideId: string) =>
@@ -4260,14 +4270,23 @@ export function SplitScreenSection({
       scrollGuideIntoView(guideId, { behavior: "smooth", defer: false });
     }
   };
-  const captureGuideLayoutPositions = (motion: "default" | "open" | "close" = "default") => {
+  const captureGuideLayoutPositions = (
+    motion: "default" | "open" | "close" = "default",
+    guideIds?: string | string[],
+  ) => {
     guideLayoutAnimationFramesRef.current.forEach((frame) => cancelAnimationFrame(frame));
     guideLayoutAnimationFramesRef.current = [];
+    guideLayoutAnimationsRef.current.forEach((animation) => animation.cancel());
+    guideLayoutAnimationsRef.current = [];
     guideLayoutCleanupTimeoutsRef.current.forEach((timeoutId) => window.clearTimeout(timeoutId));
     guideLayoutCleanupTimeoutsRef.current = [];
     guideLayoutMotionRef.current = motion;
+    const targetIds = guideIds
+      ? new Set(Array.isArray(guideIds) ? guideIds : [guideIds])
+      : null;
+    guideLayoutTargetIdsRef.current = targetIds;
     guideLayoutPositionsRef.current = Object.fromEntries(
-      getVisibleGuideAnchorElements()
+      getVisibleGuideAnchorElements(targetIds)
         .map((element) => [element.dataset.guideCardAnchor, element.getBoundingClientRect()] as const)
         .filter((entry): entry is [string, DOMRect] => Boolean(entry[0])),
     );
@@ -4282,13 +4301,15 @@ export function SplitScreenSection({
     shouldAnimateGuideLayoutRef.current = false;
     const guideLayoutMotion = guideLayoutMotionRef.current;
     guideLayoutMotionRef.current = "default";
+    const targetIds = guideLayoutTargetIdsRef.current;
+    guideLayoutTargetIdsRef.current = null;
 
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
       guideLayoutPositionsRef.current = {};
       return;
     }
 
-    const changedElements = getVisibleGuideAnchorElements().flatMap((element) => {
+    const changedElements = getVisibleGuideAnchorElements(targetIds).flatMap((element) => {
       const guideId = element.dataset.guideCardAnchor;
       if (!guideId) {
         return [];
@@ -4303,28 +4324,27 @@ export function SplitScreenSection({
       const nextRect = element.getBoundingClientRect();
       const deltaX = previousRect.left - nextRect.left;
       const deltaY = previousRect.top - nextRect.top;
-      const scaleX = previousRect.width > 0 && nextRect.width > 0 ? previousRect.width / nextRect.width : 1;
-      const stageSidewaysFirst = (guideLayoutMotion === "open" || guideLayoutMotion === "close") && Math.abs(deltaX) > 8 && Math.abs(deltaY) > 8;
 
       if (Math.abs(deltaX) < 1 && Math.abs(deltaY) < 1) {
         return [];
       }
 
       element.style.transition = "none";
-      element.style.transformOrigin = stageSidewaysFirst && guideLayoutMotion === "open" ? "top left" : "";
-      element.style.transform = stageSidewaysFirst && guideLayoutMotion === "open"
-        ? `translate(${deltaX}px, ${deltaY}px) scaleX(${scaleX})`
-        : `translate(${deltaX}px, ${deltaY}px)`;
+      element.style.transformOrigin = "top left";
+      element.style.transform = `translate3d(${deltaX}px, ${deltaY}px, 0)`;
       element.style.willChange = "transform";
 
       return [
         {
+          element,
           deltaX,
           deltaY,
-          element,
-          reverseSidewaysFirst: guideLayoutMotion === "close",
-          scaleX,
-          stageSidewaysFirst,
+          motion: guideLayoutMotion,
+          duration: guideLayoutMotion === "open"
+            ? GUIDE_LAYOUT_OPEN_TOTAL_MS
+            : guideLayoutMotion === "close"
+              ? GUIDE_LAYOUT_CLOSE_TOTAL_MS
+              : GUIDE_LAYOUT_MOTION_MS,
         },
       ];
     });
@@ -4336,47 +4356,82 @@ export function SplitScreenSection({
     }
 
     const animationFrame = requestAnimationFrame(() => {
-      changedElements.forEach(({ deltaX, deltaY, element, reverseSidewaysFirst, scaleX, stageSidewaysFirst }) => {
-        if (stageSidewaysFirst) {
-          if (reverseSidewaysFirst) {
-            element.style.transition = `transform ${GUIDE_LAYOUT_CLOSE_TOTAL_MS}ms cubic-bezier(0.22, 1, 0.36, 1)`;
-            element.style.transform = "translate(0, 0)";
-            return;
-          }
-
-          element.style.transition = `transform ${GUIDE_LAYOUT_OPEN_SIDEWAYS_MS}ms cubic-bezier(0.33, 1, 0.68, 1)`;
-          element.style.transform = `translate(0, ${deltaY}px) scaleX(1)`;
-          const verticalTimeout = window.setTimeout(() => {
-            element.style.transition = `transform ${GUIDE_LAYOUT_OPEN_UP_MS}ms cubic-bezier(0.22, 1, 0.36, 1)`;
-            element.style.transform = "translate(0, 0) scaleX(1)";
-            guideLayoutCleanupTimeoutsRef.current = guideLayoutCleanupTimeoutsRef.current.filter(
-              (timeoutId) => timeoutId !== verticalTimeout,
-            );
-          }, GUIDE_LAYOUT_OPEN_UP_START_MS);
-          guideLayoutCleanupTimeoutsRef.current.push(verticalTimeout);
+      changedElements.forEach(({ deltaX, deltaY, duration, element, motion }) => {
+        const easing = "cubic-bezier(0.22, 1, 0.36, 1)";
+        if (motion === "open" && Math.abs(deltaX) > 8 && Math.abs(deltaY) > 8 && "animate" in element) {
+          const animation = element.animate(
+            [
+              {
+                offset: 0,
+                transform: `translate3d(${deltaX}px, ${deltaY}px, 0)`,
+                easing: "cubic-bezier(0.33, 1, 0.68, 1)",
+              },
+              {
+                offset: GUIDE_LAYOUT_OPEN_SIDEWAYS_OFFSET,
+                transform: `translate3d(0, ${deltaY}px, 0)`,
+                easing,
+              },
+              {
+                offset: 1,
+                transform: "translate3d(0, 0, 0)",
+              },
+            ],
+            {
+              duration,
+              fill: "both",
+            },
+          );
+          guideLayoutAnimationsRef.current.push(animation);
+          element.style.transform = "";
           return;
         }
 
-        element.style.transition = `transform ${GUIDE_LAYOUT_MOTION_MS}ms cubic-bezier(0.22, 1, 0.36, 1)`;
-        element.style.transform = "translate(0, 0)";
+        if (motion === "close" && Math.abs(deltaX) > 8 && Math.abs(deltaY) > 8 && "animate" in element) {
+          const animation = element.animate(
+            [
+              {
+                offset: 0,
+                transform: `translate3d(${deltaX}px, ${deltaY}px, 0)`,
+                easing,
+              },
+              {
+                offset: GUIDE_LAYOUT_CLOSE_VERTICAL_OFFSET,
+                transform: `translate3d(${deltaX}px, 0, 0)`,
+                easing: "cubic-bezier(0.33, 1, 0.68, 1)",
+              },
+              {
+                offset: 1,
+                transform: "translate3d(0, 0, 0)",
+              },
+            ],
+            {
+              duration,
+              fill: "both",
+            },
+          );
+          guideLayoutAnimationsRef.current.push(animation);
+          element.style.transform = "";
+          return;
+        }
+
+        element.style.transition = `transform ${duration}ms ${easing}`;
+        element.style.transform = "translate3d(0, 0, 0)";
       });
 
       const cleanupFrame = requestAnimationFrame(() => {
         const cleanupTimeout = window.setTimeout(() => {
           changedElements.forEach(({ element }) => {
+            element.getAnimations().forEach((animation) => animation.cancel());
             element.style.transition = "";
             element.style.transform = "";
             element.style.transformOrigin = "";
             element.style.willChange = "";
           });
+          guideLayoutAnimationsRef.current = [];
           guideLayoutCleanupTimeoutsRef.current = guideLayoutCleanupTimeoutsRef.current.filter(
             (timeoutId) => timeoutId !== cleanupTimeout,
           );
-        }, changedElements.some((item) => item.reverseSidewaysFirst)
-          ? GUIDE_LAYOUT_CLOSE_TOTAL_MS + 80
-          : changedElements.some((item) => item.stageSidewaysFirst)
-            ? GUIDE_LAYOUT_OPEN_TOTAL_MS + 80
-            : GUIDE_LAYOUT_MOTION_MS + 40);
+        }, Math.max(...changedElements.map((item) => item.duration)) + 64);
         guideLayoutCleanupTimeoutsRef.current.push(cleanupTimeout);
       });
 
@@ -4635,7 +4690,7 @@ export function SplitScreenSection({
       clearTimeout(openingGuideTimeoutRef.current);
       openingGuideTimeoutRef.current = null;
     }
-    captureGuideLayoutPositions("open");
+    captureGuideLayoutPositions("open", nextList.id);
     setOpeningGuideId(null);
     setExpandedGuideId(nextList.id);
     setHoveredStopId(null);
@@ -4675,7 +4730,7 @@ export function SplitScreenSection({
         pushExplorerPath(nextPath);
       }
       closingGuideTimeoutRef.current = setTimeout(() => {
-        captureGuideLayoutPositions("close");
+        captureGuideLayoutPositions("close", expandedGuide.id);
         setClosingGuidePhase("returning");
         setExpandedGuideId(null);
         setActiveCategory(restoredCategory);
@@ -4692,7 +4747,7 @@ export function SplitScreenSection({
       return;
     }
 
-    captureGuideLayoutPositions();
+    captureGuideLayoutPositions("open", nextList.id);
     if (!expandedGuideId) {
       captureCategoryBeforeGuideExpand();
     }
@@ -4704,10 +4759,6 @@ export function SplitScreenSection({
     setVisibleNestedStopParentIds([]);
     setHoveredStopId(null);
     setSelectedGuideStopId(null);
-    const guidePath = getGuideCanonicalRoutePath(nextList);
-    if (guidePath) {
-      pushExplorerPath(guidePath);
-    }
     openingGuideTimeoutRef.current = setTimeout(() => completeGuideOpening(nextList), GUIDE_OPEN_EXPAND_START_MS);
   };
   const handleCityHighlightGuideSelect = (nextList: MapList) => {
@@ -4741,7 +4792,7 @@ export function SplitScreenSection({
     }
 
     scrollGuideIntoView(nextList.id, { behavior: "auto", defer: false });
-    captureGuideLayoutPositions();
+    captureGuideLayoutPositions("open", nextList.id);
     if (!expandedGuideId) {
       captureCategoryBeforeGuideExpand();
     }

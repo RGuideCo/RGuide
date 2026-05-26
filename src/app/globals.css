@@ -188,7 +188,7 @@ textarea:focus-visible {
   backface-visibility: hidden;
   transition:
     border-color 240ms ease,
-    transform 560ms cubic-bezier(0.22, 1, 0.36, 1);
+    transform 420ms cubic-bezier(0.22, 1, 0.36, 1);
   will-change: auto;
 }
 
@@ -279,12 +279,12 @@ textarea:focus-visible {
 
 .collapsed-guide-card-with-outboard-image[data-guide-closing="true"] .collapsed-guide-outboard-image {
   pointer-events: none;
-  animation: guide-outboard-image-return 560ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation: guide-outboard-image-return 420ms cubic-bezier(0.22, 1, 0.36, 1) both;
   will-change: opacity, transform;
 }
 
 .collapsed-guide-card-with-outboard-image[data-guide-closing="true"] > article {
-  animation: guide-collapsed-card-return 560ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation: guide-collapsed-card-return 420ms cubic-bezier(0.22, 1, 0.36, 1) both;
   will-change: transform;
 }
 
@@ -361,38 +361,38 @@ textarea:focus-visible {
 
 .guide-chrome-wipe--retract {
   clip-path: none;
-  animation: guide-chrome-wipe-retract 560ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  animation: guide-chrome-wipe-retract 420ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
   will-change: transform;
 }
 
 .guide-chrome-wipe--expand {
   clip-path: none;
-  animation: guide-chrome-wipe-expand 560ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  animation: guide-chrome-wipe-expand 420ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
   will-change: transform;
 }
 
 .guide-chrome-title--retract {
-  animation: guide-chrome-title-retract 560ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  animation: guide-chrome-title-retract 420ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
 }
 
 .guide-chrome-title--expand {
-  animation: guide-chrome-title-expand 560ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  animation: guide-chrome-title-expand 420ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
 }
 
 .guide-chrome-meta--retract {
-  animation: guide-chrome-meta-retract 560ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  animation: guide-chrome-meta-retract 420ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
 }
 
 .guide-chrome-meta--expand {
-  animation: guide-chrome-meta-expand 560ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  animation: guide-chrome-meta-expand 420ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
 }
 
 .guide-chrome-chevron--retract {
-  animation: guide-chrome-chevron-retract 560ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  animation: guide-chrome-chevron-retract 420ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
 }
 
 .guide-chrome-chevron--expand {
-  animation: guide-chrome-chevron-expand 560ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  animation: guide-chrome-chevron-expand 420ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
 }
 
 .guide-expanded-content-collapse-bottom-up {

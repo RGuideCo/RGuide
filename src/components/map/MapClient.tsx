@@ -98,6 +98,16 @@ type CityFeatureProperties = {
   guideHighlighted: boolean;
 };
 
+type NeighborhoodMarkerFeatureProperties = {
+  id: string;
+  name: string;
+  continentId: string;
+  countryId: string;
+  cityId: string;
+  subareaId: string;
+  selected: boolean;
+};
+
 type GuideStopFeatureProperties = {
   id: string;
   name: string;
@@ -159,6 +169,7 @@ const MAP_STYLE = "https://tiles.openfreemap.org/styles/liberty";
 const COUNTRY_SOURCE_ID = "countries";
 const CONTINENT_LABEL_SOURCE_ID = "continent-labels";
 const CITY_SOURCE_ID = "cities";
+const NEIGHBORHOOD_MARKER_SOURCE_ID = "neighborhood-markers";
 const SAVED_LOCATION_SOURCE_ID = "saved-locations";
 const GUIDE_ROUTE_SOURCE_ID = "guide-route";
 const VISIBLE_GUIDE_MARKER_SOURCE_ID = "visible-guide-markers";
@@ -1991,6 +2002,43 @@ function createCityData(
   };
 }
 
+function createNeighborhoodMarkerData(
+  continents: Continent[],
+  selection: SelectionState,
+): FeatureCollection<Point, NeighborhoodMarkerFeatureProperties> {
+  if (!selection.continentId || !selection.countryId || !selection.cityId) {
+    return {
+      type: "FeatureCollection",
+      features: [],
+    };
+  }
+
+  const continent = continents.find((item) => item.id === selection.continentId);
+  const country = continent?.countries.find((item) => item.id === selection.countryId);
+  const city = country?.cities.find((item) => item.id === selection.cityId);
+  const subareas = city?.subareas ?? [];
+
+  return {
+    type: "FeatureCollection",
+    features: subareas.map((subarea) => ({
+      type: "Feature" as const,
+      properties: {
+        id: `${city?.id ?? selection.cityId}-${subarea.id}`,
+        name: subarea.name,
+        continentId: selection.continentId!,
+        countryId: selection.countryId!,
+        cityId: selection.cityId!,
+        subareaId: subarea.id,
+        selected: selection.subareaId === subarea.id && !selection.nestedSubareaId,
+      },
+      geometry: {
+        type: "Point" as const,
+        coordinates: [subarea.coordinates[1], subarea.coordinates[0]],
+      },
+    })),
+  };
+}
+
 function getSelectionCountry(
   continents: Continent[],
   selection: SelectionState,
@@ -2438,6 +2486,98 @@ function addMapLayers(map: maplibregl.Map) {
   }, cityDotBeforeLayerId);
 
   map.addLayer({
+    id: "neighborhood-marker-hit",
+    type: "circle",
+    source: NEIGHBORHOOD_MARKER_SOURCE_ID,
+    minzoom: 9.5,
+    paint: {
+      "circle-radius": [
+        "interpolate",
+        ["linear"],
+        ["zoom"],
+        9.5,
+        16,
+        12,
+        22,
+        15,
+        28,
+      ],
+      "circle-color": "rgba(15, 23, 42, 0.01)",
+    },
+  });
+
+  map.addLayer({
+    id: "neighborhood-marker-halo",
+    type: "circle",
+    source: NEIGHBORHOOD_MARKER_SOURCE_ID,
+    minzoom: 9.5,
+    paint: {
+      "circle-radius": [
+        "interpolate",
+        ["linear"],
+        ["zoom"],
+        9.5,
+        ["case", ["get", "selected"], 7.5, 6],
+        12,
+        ["case", ["get", "selected"], 10, 8],
+        15,
+        ["case", ["get", "selected"], 12.5, 10],
+      ],
+      "circle-color": ["case", ["get", "selected"], "rgba(15, 23, 42, 0.14)", "rgba(255, 255, 255, 0.72)"],
+      "circle-stroke-color": ["case", ["get", "selected"], "#0f172a", "#64748b"],
+      "circle-stroke-width": ["case", ["get", "selected"], 1.8, 1],
+      "circle-stroke-opacity": ["case", ["get", "selected"], 0.9, 0.58],
+      "circle-blur": 0.06,
+    },
+  });
+
+  map.addLayer({
+    id: "neighborhood-marker-point",
+    type: "circle",
+    source: NEIGHBORHOOD_MARKER_SOURCE_ID,
+    minzoom: 9.5,
+    paint: {
+      "circle-radius": [
+        "interpolate",
+        ["linear"],
+        ["zoom"],
+        9.5,
+        ["case", ["get", "selected"], 3.8, 3],
+        12,
+        ["case", ["get", "selected"], 4.6, 3.6],
+        15,
+        ["case", ["get", "selected"], 5.4, 4.4],
+      ],
+      "circle-color": ["case", ["get", "selected"], "#0f172a", "#ffffff"],
+      "circle-stroke-color": "#0f172a",
+      "circle-stroke-width": ["case", ["get", "selected"], 1.5, 1],
+      "circle-opacity": 0.96,
+    },
+  });
+
+  map.addLayer({
+    id: "neighborhood-marker-label",
+    type: "symbol",
+    source: NEIGHBORHOOD_MARKER_SOURCE_ID,
+    minzoom: 10.2,
+    layout: {
+      "text-field": ["get", "name"],
+      "text-size": ["interpolate", ["linear"], ["zoom"], 10.2, 10.5, 13, 12.5, 15, 14],
+      "text-font": ["Noto Sans Medium"],
+      "text-offset": [0, 1.25],
+      "text-anchor": "top",
+      "text-allow-overlap": false,
+      "text-padding": 2,
+    },
+    paint: {
+      "text-color": "#0f172a",
+      "text-halo-color": "rgba(255, 255, 255, 0.95)",
+      "text-halo-width": 1.35,
+      "text-opacity": ["case", ["get", "selected"], 1, 0.82],
+    },
+  });
+
+  map.addLayer({
     id: "saved-location-points",
     type: "circle",
     source: SAVED_LOCATION_SOURCE_ID,
@@ -2866,6 +3006,9 @@ export function MapClient({
   const viewportModeRef = useRef<"full" | "center" | "submit">(viewportMode);
   const viewportInsetsRef = useRef<MapViewportInsets | undefined>(viewportInsets);
   const activeGuideCameraKeyRef = useRef<string | null>(null);
+  const activeGuideCameraPendingKeyRef = useRef<string | null>(null);
+  const activeGuideCameraFrameRef = useRef<number | null>(null);
+  const activeGuideCameraTimeoutsRef = useRef<number[]>([]);
   const selectionCameraKeyRef = useRef<string | null>(null);
   const visibleGuideMarkerEnteredAtRef = useRef<Map<string, number>>(new Map());
   const visibleGuideMarkerHoverProgressRef = useRef<Map<string, number>>(new Map());
@@ -2913,6 +3056,10 @@ export function MapClient({
   const cityData = useMemo(
     () => createCityData(continents, selection, guideLists, guideFocus),
     [continents, guideFocus, guideLists, selection],
+  );
+  const neighborhoodMarkerData = useMemo(
+    () => createNeighborhoodMarkerData(continents, selection),
+    [continents, selection],
   );
   const stateLabelData = useMemo(() => createStateLabelData(selection), [selection]);
   const guideStopData = useMemo(
@@ -3200,6 +3347,11 @@ export function MapClient({
         data: cityData,
       });
 
+      map.addSource(NEIGHBORHOOD_MARKER_SOURCE_ID, {
+        type: "geojson",
+        data: neighborhoodMarkerData,
+      });
+
       map.addSource(SAVED_LOCATION_SOURCE_ID, {
         type: "geojson",
         data: savedLocationData,
@@ -3267,6 +3419,21 @@ export function MapClient({
       map.on("mouseleave", "city-points", () => {
         map.getCanvas().style.cursor = "";
       });
+
+      const setNeighborhoodMarkerCursor = () => {
+        map.getCanvas().style.cursor = "pointer";
+      };
+      const clearNeighborhoodMarkerCursor = () => {
+        map.getCanvas().style.cursor = "";
+      };
+      map.on("mouseenter", "neighborhood-marker-hit", setNeighborhoodMarkerCursor);
+      map.on("mouseenter", "neighborhood-marker-label", setNeighborhoodMarkerCursor);
+      map.on("mouseenter", "neighborhood-marker-point", setNeighborhoodMarkerCursor);
+      map.on("mouseenter", "neighborhood-marker-halo", setNeighborhoodMarkerCursor);
+      map.on("mouseleave", "neighborhood-marker-hit", clearNeighborhoodMarkerCursor);
+      map.on("mouseleave", "neighborhood-marker-label", clearNeighborhoodMarkerCursor);
+      map.on("mouseleave", "neighborhood-marker-point", clearNeighborhoodMarkerCursor);
+      map.on("mouseleave", "neighborhood-marker-halo", clearNeighborhoodMarkerCursor);
 
       const setDirectHoveredGuideMarker = (guideId: string | null) => {
         if (visibleGuideMarkerDirectHoverIdRef.current === guideId) {
@@ -3345,21 +3512,6 @@ export function MapClient({
       map.on("mouseleave", "poi-map-marker-line", () => handlersRef.current.onHoverGuideStop?.(null));
 
       map.on("click", (event) => {
-        const clickedGuideMarkerFeature = map.getLayer("visible-guide-marker-point")
-          ? map
-              .queryRenderedFeatures(event.point, {
-                layers: ["visible-guide-marker-point"],
-              })
-              .find((feature) => typeof feature.properties?.id === "string")
-          : null;
-        const clickedGuideMarkerId =
-          typeof clickedGuideMarkerFeature?.properties?.id === "string" ? clickedGuideMarkerFeature.properties.id : null;
-        if (clickedGuideMarkerId) {
-          handlersRef.current.onHoverGuideMarker?.(clickedGuideMarkerId);
-          handlersRef.current.onSelectGuideMarker?.(clickedGuideMarkerId);
-          return;
-        }
-
         const clickedGuideStopFeature = map
           .queryRenderedFeatures(event.point, {
             layers: [
@@ -3389,6 +3541,55 @@ export function MapClient({
         if (clickedGuideStopId) {
           handlersRef.current.onHoverGuideStop?.(clickedGuideStopId);
           handlersRef.current.onSelectGuideStop?.(clickedGuideStopId);
+          return;
+        }
+
+        const clickedNeighborhoodMarkerFeature = map.getLayer("neighborhood-marker-hit")
+          ? map
+              .queryRenderedFeatures(event.point, {
+                layers: [
+                  "neighborhood-marker-hit",
+                  "neighborhood-marker-label",
+                  "neighborhood-marker-point",
+                  "neighborhood-marker-halo",
+                ],
+              })
+              .find((feature) => typeof feature.properties?.subareaId === "string")
+          : null;
+        if (clickedNeighborhoodMarkerFeature) {
+          const markerProps = clickedNeighborhoodMarkerFeature.properties ?? {};
+          const continentId = typeof markerProps.continentId === "string" ? markerProps.continentId : null;
+          const countryId = typeof markerProps.countryId === "string" ? markerProps.countryId : null;
+          const cityId = typeof markerProps.cityId === "string" ? markerProps.cityId : null;
+          const subareaId = typeof markerProps.subareaId === "string" ? markerProps.subareaId : null;
+          const currentMarkerSelection = handlersRef.current.selection;
+          const isAlreadySelected =
+            currentMarkerSelection.continentId === continentId &&
+            currentMarkerSelection.countryId === countryId &&
+            currentMarkerSelection.cityId === cityId &&
+            currentMarkerSelection.subareaId === subareaId &&
+            !currentMarkerSelection.nestedSubareaId;
+
+          if (continentId && countryId && cityId && subareaId) {
+            if (!isAlreadySelected) {
+              handlersRef.current.onSelectSubarea?.(continentId, countryId, cityId, subareaId);
+            }
+            return;
+          }
+        }
+
+        const clickedGuideMarkerFeature = map.getLayer("visible-guide-marker-point")
+          ? map
+              .queryRenderedFeatures(event.point, {
+                layers: ["visible-guide-marker-point"],
+              })
+              .find((feature) => typeof feature.properties?.id === "string")
+          : null;
+        const clickedGuideMarkerId =
+          typeof clickedGuideMarkerFeature?.properties?.id === "string" ? clickedGuideMarkerFeature.properties.id : null;
+        if (clickedGuideMarkerId) {
+          handlersRef.current.onHoverGuideMarker?.(clickedGuideMarkerId);
+          handlersRef.current.onSelectGuideMarker?.(clickedGuideMarkerId);
           return;
         }
 
@@ -3422,12 +3623,8 @@ export function MapClient({
           handlersRef.current.continents,
           currentSelection,
         );
-        const activeCity = currentSelection.cityId
-          ? activeCountry?.cities.find((city) => city.id === currentSelection.cityId)
-          : undefined;
 
         if (currentSelection.continentId && currentSelection.countryId) {
-          const citySubareas = activeCity?.subareas ?? [];
           const matchingCountryCity = (activeCountry?.cities ?? []).find((city) =>
             !city.isPlaceholderRegion &&
             Array.from(clickedNames).some((clickedName) => nameMatches(clickedName, normalizeLabelName(city.name))),
@@ -3443,24 +3640,6 @@ export function MapClient({
               matchingCountryCity.id,
             );
             return;
-          }
-
-          if (citySubareas.length && handlersRef.current.onSelectSubarea) {
-            const matchingSubarea = citySubareas.find((subarea) =>
-              Array.from(clickedNames).some((clickedName) =>
-                nameMatches(clickedName, normalizeLabelName(subarea.name)),
-              ),
-            );
-
-            if (matchingSubarea && currentSelection.cityId) {
-              handlersRef.current.onSelectSubarea(
-                currentSelection.continentId,
-                currentSelection.countryId,
-                currentSelection.cityId,
-                matchingSubarea.id,
-              );
-              return;
-            }
           }
         }
 
@@ -3498,54 +3677,6 @@ export function MapClient({
             );
           }
           return;
-        }
-
-        const currentSelectionAfterCityCheck = handlersRef.current.selection;
-        if (
-          currentSelectionAfterCityCheck.continentId &&
-          currentSelectionAfterCityCheck.countryId &&
-          currentSelectionAfterCityCheck.cityId &&
-          handlersRef.current.onSelectSubarea
-        ) {
-          const activeContinent = handlersRef.current.continents.find(
-            (continent) => continent.id === currentSelectionAfterCityCheck.continentId,
-          );
-          const activeCountry = activeContinent?.countries.find(
-            (country) => country.id === currentSelectionAfterCityCheck.countryId,
-          );
-          const activeCity = activeCountry?.cities.find(
-            (city) => city.id === currentSelectionAfterCityCheck.cityId,
-          );
-          const citySubareas = activeCity?.subareas ?? [];
-
-          if (citySubareas.length) {
-            const nearest = citySubareas.reduce<{
-              id: string;
-              distanceSquared: number;
-            } | null>((best, subarea) => {
-              const dLat = event.lngLat.lat - subarea.coordinates[0];
-              const dLng = event.lngLat.lng - subarea.coordinates[1];
-              const distanceSquared = dLat * dLat + dLng * dLng;
-              if (!best || distanceSquared < best.distanceSquared) {
-                return { id: subarea.id, distanceSquared };
-              }
-              return best;
-            }, null);
-
-            const maxAngularDistance =
-              clickZoom >= 12 ? 0.045 : clickZoom >= 10 ? 0.07 : clickZoom >= 8 ? 0.1 : 0;
-            const maxDistanceSquared = maxAngularDistance * maxAngularDistance;
-
-            if (nearest && nearest.distanceSquared <= maxDistanceSquared) {
-              handlersRef.current.onSelectSubarea(
-                currentSelectionAfterCityCheck.continentId,
-                currentSelectionAfterCityCheck.countryId,
-                currentSelectionAfterCityCheck.cityId,
-                nearest.id,
-              );
-              return;
-            }
-          }
         }
 
         const countryFeature = features.find((feature) => feature.layer.id === "country-fills");
@@ -3621,6 +3752,13 @@ export function MapClient({
         cancelAnimationFrame(visibleGuideMarkerAnimationFrameRef.current);
         visibleGuideMarkerAnimationFrameRef.current = null;
       }
+      if (activeGuideCameraFrameRef.current !== null) {
+        cancelAnimationFrame(activeGuideCameraFrameRef.current);
+        activeGuideCameraFrameRef.current = null;
+      }
+      activeGuideCameraTimeoutsRef.current.forEach((timeoutId) => window.clearTimeout(timeoutId));
+      activeGuideCameraTimeoutsRef.current = [];
+      activeGuideCameraPendingKeyRef.current = null;
       isStyleReadyRef.current = false;
       map.remove();
       mapRef.current = null;
@@ -3706,6 +3844,7 @@ export function MapClient({
     (map.getSource(COUNTRY_SOURCE_ID) as GeoJSONSource).setData(countryData);
     (map.getSource(CONTINENT_LABEL_SOURCE_ID) as GeoJSONSource).setData(continentLabelData);
     (map.getSource(CITY_SOURCE_ID) as GeoJSONSource).setData(cityData);
+    (map.getSource(NEIGHBORHOOD_MARKER_SOURCE_ID) as GeoJSONSource).setData(neighborhoodMarkerData);
     (map.getSource(SAVED_LOCATION_SOURCE_ID) as GeoJSONSource).setData(savedLocationData);
     addVisibleGuideMarkerLayers(map);
     (map.getSource(VISIBLE_GUIDE_MARKER_SOURCE_ID) as GeoJSONSource).setData(visibleGuideMarkerData);
@@ -3715,7 +3854,7 @@ export function MapClient({
     ensureGuideStopMarkerImages(map, guideStopData);
     (map.getSource(GUIDE_STOP_SOURCE_ID) as GeoJSONSource).setData(guideStopData);
     (map.getSource(NEIGHBORHOOD_BOUNDARY_SOURCE_ID) as GeoJSONSource).setData(neighborhoodBoundaryData);
-  }, [cityData, continentLabelData, countryData, guideRouteData, guideStopData, neighborhoodBoundaryData, poiMapMarkerData, savedLocationData, stateLabelData, visibleGuideMarkerData]);
+  }, [cityData, continentLabelData, countryData, guideRouteData, guideStopData, neighborhoodBoundaryData, neighborhoodMarkerData, poiMapMarkerData, savedLocationData, stateLabelData, visibleGuideMarkerData]);
 
   const activeGuidePulseStopId = useMemo(() => {
     const renderedStopIds = new Set(guideStopData.features.map((feature) => feature.properties.id));
@@ -4052,6 +4191,13 @@ export function MapClient({
     }
     if (!activeGuide?.stops?.length || !activeGuideStopSignature) {
       activeGuideCameraKeyRef.current = null;
+      activeGuideCameraPendingKeyRef.current = null;
+      if (activeGuideCameraFrameRef.current !== null) {
+        cancelAnimationFrame(activeGuideCameraFrameRef.current);
+        activeGuideCameraFrameRef.current = null;
+      }
+      activeGuideCameraTimeoutsRef.current.forEach((timeoutId) => window.clearTimeout(timeoutId));
+      activeGuideCameraTimeoutsRef.current = [];
       return;
     }
     const selectedParentStop =
@@ -4087,74 +4233,127 @@ export function MapClient({
             ? `${viewportInsetsRef.current.top},${viewportInsetsRef.current.right},${viewportInsetsRef.current.bottom},${viewportInsetsRef.current.left}`
             : "",
         ].join("|");
-    if (activeGuideCameraKeyRef.current === nextCameraKey) {
+    if (
+      activeGuideCameraKeyRef.current === nextCameraKey ||
+      activeGuideCameraPendingKeyRef.current === nextCameraKey
+    ) {
       return;
     }
-    activeGuideCameraKeyRef.current = nextCameraKey;
     selectionCameraKeyRef.current = selectionCameraKey;
-    const activeViewportInsets = getViewportInsets(map, viewportModeRef.current, viewportInsetsRef.current);
 
-    if (selectedParentStop || selectedNestedStop) {
-      const focusedPoint = selectedParentStop ?? selectedNestedStop!.place;
-      const [lat, lng] = focusedPoint.coordinates;
-      const focusPadding = clampPaddingToMap(
-        map,
-        mergePadding({ top: 48, right: 52, bottom: 56, left: 52 }, activeViewportInsets),
-      );
-
-      map.stop();
-      map.easeTo({
-        center: [lng, lat],
-        zoom: Math.max(map.getZoom(), 14.8),
-        padding: focusPadding,
-        duration: 950,
-        easing: smoothCameraEasing,
-        essential: true,
-      });
-      return;
+    if (activeGuideCameraFrameRef.current !== null) {
+      cancelAnimationFrame(activeGuideCameraFrameRef.current);
+      activeGuideCameraFrameRef.current = null;
     }
+    activeGuideCameraTimeoutsRef.current.forEach((timeoutId) => window.clearTimeout(timeoutId));
+    activeGuideCameraTimeoutsRef.current = [];
+    activeGuideCameraPendingKeyRef.current = nextCameraKey;
 
-    if (activeGuide.stops.length === 1) {
-      const [lat, lng] = activeGuide.stops[0].coordinates;
-      map.easeTo({
-        center: [lng, lat],
-        zoom: Math.max(map.getZoom(), 12.4),
-        padding: clampPaddingToMap(
-          map,
-          mergePadding({ top: 36, right: 36, bottom: 36, left: 36 }, activeViewportInsets),
-        ),
-        duration: 1550,
-        easing: smoothCameraEasing,
-        essential: true,
-      });
-      return;
-    }
-
-    const guideBounds = new LngLatBounds();
-    for (const stop of activeGuide.stops) {
-      const [lat, lng] = stop.coordinates;
-      guideBounds.extend([lng, lat]);
-      for (const place of stop.places ?? []) {
-        const [placeLat, placeLng] = place.coordinates;
-        guideBounds.extend([placeLng, placeLat]);
+    const runCamera = (duration: number) => {
+      activeGuideCameraFrameRef.current = null;
+      const currentMap = mapRef.current;
+      const isPendingCamera = activeGuideCameraPendingKeyRef.current === nextCameraKey;
+      const isCurrentCamera = activeGuideCameraKeyRef.current === nextCameraKey;
+      if (!currentMap || !isStyleReadyRef.current || (!isPendingCamera && !isCurrentCamera)) {
+        return;
       }
-    }
+      if (isPendingCamera) {
+        activeGuideCameraPendingKeyRef.current = null;
+      }
+      activeGuideCameraKeyRef.current = nextCameraKey;
 
-    if (guideBounds.isEmpty()) {
-      return;
-    }
+      currentMap.resize();
+      const activeViewportInsets = getViewportInsets(
+        currentMap,
+        viewportModeRef.current,
+        viewportInsetsRef.current,
+      );
+      currentMap.stop();
 
-    map.easeTo({
-      center: guideBounds.getCenter(),
-      zoom: getGuideBoundsZoom(guideBounds),
-      padding: clampPaddingToMap(
-        map,
-        mergePadding({ top: 40, right: 40, bottom: 48, left: 40 }, activeViewportInsets),
-      ),
-      duration: 1700,
-      easing: smoothCameraEasing,
-      essential: true,
+      if (selectedParentStop || selectedNestedStop) {
+        const focusedPoint = selectedParentStop ?? selectedNestedStop!.place;
+        const [lat, lng] = focusedPoint.coordinates;
+        currentMap.easeTo({
+          center: [lng, lat],
+          zoom: Math.max(currentMap.getZoom(), 14.8),
+          padding: clampPaddingToMap(
+            currentMap,
+            mergePadding({ top: 48, right: 52, bottom: 56, left: 52 }, activeViewportInsets),
+          ),
+          duration,
+          easing: smoothCameraEasing,
+          essential: true,
+        });
+        return;
+      }
+
+      const guideBounds = new LngLatBounds();
+      let guideCoordinateCount = 0;
+      for (const stop of activeGuide.stops) {
+        const [lat, lng] = stop.coordinates;
+        guideBounds.extend([lng, lat]);
+        guideCoordinateCount += 1;
+        for (const place of stop.places ?? []) {
+          const [placeLat, placeLng] = place.coordinates;
+          guideBounds.extend([placeLng, placeLat]);
+          guideCoordinateCount += 1;
+        }
+      }
+
+      if (guideCoordinateCount === 1) {
+        const [lat, lng] = activeGuide.stops[0].coordinates;
+        currentMap.easeTo({
+          center: [lng, lat],
+          zoom: Math.max(currentMap.getZoom(), 12.4),
+          padding: clampPaddingToMap(
+            currentMap,
+            mergePadding({ top: 36, right: 36, bottom: 36, left: 36 }, activeViewportInsets),
+          ),
+          duration,
+          easing: smoothCameraEasing,
+          essential: true,
+        });
+        return;
+      }
+
+      if (guideBounds.isEmpty()) {
+        return;
+      }
+
+      currentMap.fitBounds(guideBounds, {
+        padding: clampPaddingToMap(
+          currentMap,
+          mergePadding({ top: 40, right: 40, bottom: 48, left: 40 }, activeViewportInsets),
+        ),
+        duration,
+        easing: smoothCameraEasing,
+        essential: true,
+        maxZoom: Math.max(12.8, getGuideBoundsZoom(guideBounds)),
+      });
+    };
+
+    activeGuideCameraFrameRef.current = requestAnimationFrame(() => {
+      activeGuideCameraFrameRef.current = requestAnimationFrame(() => runCamera(700));
     });
+    const settleTimeout = window.setTimeout(() => {
+      activeGuideCameraTimeoutsRef.current = activeGuideCameraTimeoutsRef.current.filter(
+        (timeoutId) => timeoutId !== settleTimeout,
+      );
+      runCamera(520);
+    }, 620);
+    activeGuideCameraTimeoutsRef.current.push(settleTimeout);
+
+    return () => {
+      if (activeGuideCameraFrameRef.current !== null) {
+        cancelAnimationFrame(activeGuideCameraFrameRef.current);
+        activeGuideCameraFrameRef.current = null;
+      }
+      activeGuideCameraTimeoutsRef.current.forEach((timeoutId) => window.clearTimeout(timeoutId));
+      activeGuideCameraTimeoutsRef.current = [];
+      if (activeGuideCameraPendingKeyRef.current === nextCameraKey) {
+        activeGuideCameraPendingKeyRef.current = null;
+      }
+    };
   }, [
     activeGuide,
     activeGuideFitNonce,
