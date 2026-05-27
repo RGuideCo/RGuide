@@ -52,9 +52,14 @@ type AnalyticsClickRow = {
 
 function getSupabaseAnalyticsConfig() {
   const url = process.env.SUPABASE_URL ?? process.env.NEXT_PUBLIC_SUPABASE_URL ?? null;
-  const key = process.env.SUPABASE_SERVICE_ROLE_KEY ?? null;
+  const serviceKey = process.env.SUPABASE_SERVICE_ROLE_KEY ?? null;
+  const publicKey =
+    process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY ??
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ??
+    null;
+  const key = serviceKey ?? publicKey;
 
-  return url && key ? { url, key } : null;
+  return url && key ? { url, key, canWriteDirectly: Boolean(serviceKey) } : null;
 }
 
 function getDatabaseUrl() {
@@ -116,6 +121,16 @@ async function insertWithDataApi(row: AnalyticsClickRow) {
   const supabase = createClient(config.url, config.key, {
     auth: { persistSession: false, autoRefreshToken: false },
   });
+
+  if (!config.canWriteDirectly) {
+    const { error } = await supabase.rpc("record_analytics_click", { p_event: row });
+
+    if (error) {
+      throw error;
+    }
+
+    return true;
+  }
 
   const { error } = await supabase.from("analytics_click_events").insert(row);
 
@@ -234,7 +249,11 @@ export async function POST(request: NextRequest) {
     const inserted = await insertWithDataApi(row);
 
     if (!inserted) {
-      await insertWithDatabaseUrl(row);
+      const insertedWithDatabaseUrl = await insertWithDatabaseUrl(row);
+
+      if (!insertedWithDatabaseUrl) {
+        return NextResponse.json({ error: "Analytics storage is not configured." }, { status: 500 });
+      }
     }
   } catch (error) {
     console.error("Failed to store analytics click", error);
