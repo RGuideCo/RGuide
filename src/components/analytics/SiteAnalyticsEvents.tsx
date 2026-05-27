@@ -1,9 +1,14 @@
 "use client";
 
-import { track } from "@vercel/analytics";
 import { useEffect } from "react";
 
 const MAX_TEXT_LENGTH = 80;
+const ANALYTICS_SESSION_KEY = "rguide_analytics_session_id";
+
+type AnalyticsEvent = {
+  eventType: string;
+  properties: Record<string, string | undefined>;
+};
 
 function truncate(value: string, maxLength = MAX_TEXT_LENGTH) {
   const normalized = value.replace(/\s+/g, " ").trim();
@@ -69,7 +74,7 @@ function getEventForAnchor(anchor: HTMLAnchorElement) {
 
   if (isStay22) {
     return {
-      name: "affiliate_click",
+      eventType: "affiliate_click",
       properties: {
         ...baseProperties,
         affiliate: "stay22",
@@ -80,20 +85,20 @@ function getEventForAnchor(anchor: HTMLAnchorElement) {
 
   if (!isInternal) {
     return {
-      name: "outbound_click",
+      eventType: "outbound_click",
       properties: baseProperties,
     };
   }
 
   if (url.pathname.startsWith("/city/") || url.pathname.startsWith("/list/")) {
     return {
-      name: "guide_link_click",
+      eventType: "guide_link_click",
       properties: baseProperties,
     };
   }
 
   return {
-    name: "internal_link_click",
+    eventType: "internal_link_click",
     properties: baseProperties,
   };
 }
@@ -106,13 +111,55 @@ function getEventForButton(button: HTMLButtonElement) {
   }
 
   return {
-    name: "button_click",
+    eventType: "button_click",
     properties: {
       currentPath: getCurrentPath(),
       buttonText: text,
       buttonLabel: truncate(button.getAttribute("aria-label") || ""),
     },
   };
+}
+
+function getSessionId() {
+  try {
+    const existing = window.localStorage.getItem(ANALYTICS_SESSION_KEY);
+
+    if (existing) {
+      return existing;
+    }
+
+    const next = window.crypto?.randomUUID?.() ?? `${Date.now()}-${Math.random().toString(36).slice(2)}`;
+    window.localStorage.setItem(ANALYTICS_SESSION_KEY, next);
+    return next;
+  } catch {
+    return undefined;
+  }
+}
+
+function sendAnalyticsEvent(analyticsEvent: AnalyticsEvent) {
+  const payload = JSON.stringify({
+    ...analyticsEvent,
+    sessionId: getSessionId(),
+    referrer: document.referrer || undefined,
+  });
+
+  if (navigator.sendBeacon) {
+    const sent = navigator.sendBeacon(
+      "/api/analytics/click",
+      new Blob([payload], { type: "application/json" }),
+    );
+
+    if (sent) {
+      return;
+    }
+  }
+
+  void fetch("/api/analytics/click", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: payload,
+    keepalive: true,
+  }).catch(() => undefined);
 }
 
 export function SiteAnalyticsEvents() {
@@ -130,7 +177,7 @@ export function SiteAnalyticsEvents() {
         const analyticsEvent = getEventForAnchor(anchor);
 
         if (analyticsEvent) {
-          track(analyticsEvent.name, analyticsEvent.properties);
+          sendAnalyticsEvent(analyticsEvent);
         }
 
         return;
@@ -142,7 +189,7 @@ export function SiteAnalyticsEvents() {
         const analyticsEvent = getEventForButton(button);
 
         if (analyticsEvent) {
-          track(analyticsEvent.name, analyticsEvent.properties);
+          sendAnalyticsEvent(analyticsEvent);
         }
       }
     }
