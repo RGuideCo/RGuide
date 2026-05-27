@@ -1,6 +1,7 @@
 import crypto from "node:crypto";
 
 import { NextRequest, NextResponse } from "next/server";
+import pg from "pg";
 import { createClient } from "@supabase/supabase-js";
 
 export const dynamic = "force-dynamic";
@@ -23,11 +24,52 @@ type ClickPayload = {
 
 type ClickProperties = Record<string, string | undefined>;
 
+type AnalyticsClickRow = {
+  event_type: string;
+  session_id: string | null;
+  ip_hash: string | null;
+  user_agent: string | null;
+  referrer: string | null;
+  country: string | null;
+  region: string | null;
+  metro: string | null;
+  current_path: string | null;
+  destination_host: string | null;
+  destination_path: string | null;
+  link_text: string | null;
+  city_slug: string | null;
+  neighborhood_slug: string | null;
+  category_slug: string | null;
+  guide_slug: string | null;
+  button_text: string | null;
+  button_label: string | null;
+  affiliate: string | null;
+  affiliate_aid: string | null;
+  affiliate_campaign: string | null;
+  affiliate_hotel_name: string | null;
+  raw_properties: ClickProperties;
+};
+
 function getSupabaseAnalyticsConfig() {
   const url = process.env.SUPABASE_URL ?? process.env.NEXT_PUBLIC_SUPABASE_URL ?? null;
   const key = process.env.SUPABASE_SERVICE_ROLE_KEY ?? null;
 
   return url && key ? { url, key } : null;
+}
+
+function getDatabaseUrl() {
+  return (
+    process.env.SUPABASE_DB_URL ??
+    process.env.SUPABASE_DATABASE_URL ??
+    process.env.DATABASE_URL ??
+    null
+  );
+}
+
+function getPgSslConfig(databaseUrl: string) {
+  return databaseUrl.includes("localhost") || databaseUrl.includes("127.0.0.1")
+    ? false
+    : { rejectUnauthorized: false };
 }
 
 function truncate(value: unknown, maxLength: number) {
@@ -64,6 +106,88 @@ function getIpHash(request: NextRequest) {
   return crypto.createHash("sha256").update(`${salt}:${ip}`).digest("hex");
 }
 
+async function insertWithDataApi(row: AnalyticsClickRow) {
+  const config = getSupabaseAnalyticsConfig();
+
+  if (!config) {
+    return false;
+  }
+
+  const supabase = createClient(config.url, config.key, {
+    auth: { persistSession: false, autoRefreshToken: false },
+  });
+
+  const { error } = await supabase.from("analytics_click_events").insert(row);
+
+  if (error) {
+    throw error;
+  }
+
+  return true;
+}
+
+async function insertWithDatabaseUrl(row: AnalyticsClickRow) {
+  const databaseUrl = getDatabaseUrl();
+
+  if (!databaseUrl) {
+    return false;
+  }
+
+  const client = new pg.Client({
+    connectionString: databaseUrl,
+    ssl: getPgSslConfig(databaseUrl),
+  });
+
+  await client.connect();
+
+  try {
+    await client.query(
+      [
+        "insert into public.analytics_click_events (",
+        "  event_type, session_id, ip_hash, user_agent, referrer, country, region, metro,",
+        "  current_path, destination_host, destination_path, link_text, city_slug, neighborhood_slug,",
+        "  category_slug, guide_slug, button_text, button_label, affiliate, affiliate_aid,",
+        "  affiliate_campaign, affiliate_hotel_name, raw_properties",
+        ") values (",
+        "  $1, $2, $3, $4, $5, $6, $7, $8,",
+        "  $9, $10, $11, $12, $13, $14,",
+        "  $15, $16, $17, $18, $19, $20,",
+        "  $21, $22, $23::jsonb",
+        ")",
+      ].join(" "),
+      [
+        row.event_type,
+        row.session_id,
+        row.ip_hash,
+        row.user_agent,
+        row.referrer,
+        row.country,
+        row.region,
+        row.metro,
+        row.current_path,
+        row.destination_host,
+        row.destination_path,
+        row.link_text,
+        row.city_slug,
+        row.neighborhood_slug,
+        row.category_slug,
+        row.guide_slug,
+        row.button_text,
+        row.button_label,
+        row.affiliate,
+        row.affiliate_aid,
+        row.affiliate_campaign,
+        row.affiliate_hotel_name,
+        JSON.stringify(row.raw_properties),
+      ],
+    );
+  } finally {
+    await client.end().catch(() => {});
+  }
+
+  return true;
+}
+
 export async function POST(request: NextRequest) {
   let payload: ClickPayload;
 
@@ -79,19 +203,8 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: "Unsupported analytics event." }, { status: 400 });
   }
 
-  const config = getSupabaseAnalyticsConfig();
-
-  if (!config) {
-    console.warn("Analytics click ignored because Supabase service-role configuration is missing.");
-    return new NextResponse(null, { status: 204 });
-  }
-
   const properties = getProperties(payload);
-  const supabase = createClient(config.url, config.key, {
-    auth: { persistSession: false, autoRefreshToken: false },
-  });
-
-  const { error } = await supabase.from("analytics_click_events").insert({
+  const row: AnalyticsClickRow = {
     event_type: eventType,
     session_id: truncate(payload.sessionId, 120),
     ip_hash: getIpHash(request),
@@ -115,9 +228,15 @@ export async function POST(request: NextRequest) {
     affiliate_campaign: truncate(properties.campaign, 180),
     affiliate_hotel_name: truncate(properties.hotelName, 255),
     raw_properties: properties,
-  });
+  };
 
-  if (error) {
+  try {
+    const inserted = await insertWithDataApi(row);
+
+    if (!inserted) {
+      await insertWithDatabaseUrl(row);
+    }
+  } catch (error) {
     console.error("Failed to store analytics click", error);
     return NextResponse.json({ error: "Analytics event could not be stored." }, { status: 500 });
   }
