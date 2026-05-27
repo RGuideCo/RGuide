@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import pg from "pg";
+import { createClient } from "@supabase/supabase-js";
 
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
@@ -53,6 +54,11 @@ type AnalyticsDashboardData = {
   recent: RecentRow[];
 };
 
+type AnalyticsClickEvent = RecentRow & {
+  session_id: string | null;
+  created_at: string;
+};
+
 function getDatabaseUrl() {
   return (
     process.env.SUPABASE_DB_URL ??
@@ -60,6 +66,13 @@ function getDatabaseUrl() {
     process.env.DATABASE_URL ??
     null
   );
+}
+
+function getSupabaseAnalyticsConfig() {
+  const url = process.env.SUPABASE_URL ?? process.env.NEXT_PUBLIC_SUPABASE_URL ?? null;
+  const key = process.env.SUPABASE_SERVICE_ROLE_KEY ?? null;
+
+  return url && key ? { url, key } : null;
 }
 
 function getPgSslConfig(databaseUrl: string) {
@@ -72,11 +85,116 @@ function toNumber(value: unknown) {
   return typeof value === "number" ? value : Number(value ?? 0);
 }
 
+function countBy<T>(
+  rows: T[],
+  getLabel: (row: T) => string | null | undefined,
+  limit = 12,
+): LabelCountRow[] {
+  const counts = new Map<string, number>();
+
+  for (const row of rows) {
+    const label = getLabel(row) || "(blank)";
+    counts.set(label, (counts.get(label) ?? 0) + 1);
+  }
+
+  return Array.from(counts.entries())
+    .map(([label, count]) => ({ label, count }))
+    .sort((a, b) => b.count - a.count)
+    .slice(0, limit);
+}
+
+function buildDailyRows(rows: AnalyticsClickEvent[]): DayRow[] {
+  const today = new Date();
+  const days = Array.from({ length: 14 }, (_, index) => {
+    const date = new Date(today);
+    date.setDate(today.getDate() - (13 - index));
+    date.setHours(0, 0, 0, 0);
+    return date;
+  });
+
+  return days.map((day) => {
+    const nextDay = new Date(day);
+    nextDay.setDate(day.getDate() + 1);
+    const dayRows = rows.filter((row) => {
+      const createdAt = new Date(row.created_at);
+      return createdAt >= day && createdAt < nextDay;
+    });
+
+    return {
+      day: day.toLocaleDateString("en-US", { month: "short", day: "2-digit" }),
+      total: dayRows.length,
+      affiliate_clicks: dayRows.filter((row) => row.event_type === "affiliate_click").length,
+    };
+  });
+}
+
+async function loadSupabaseDashboardData(): Promise<AnalyticsDashboardData | null> {
+  const config = getSupabaseAnalyticsConfig();
+
+  if (!config) {
+    return null;
+  }
+
+  const supabase = createClient(config.url, config.key, {
+    auth: { persistSession: false, autoRefreshToken: false },
+  });
+
+  const [allCount, affiliateCount, recentRows] = await Promise.all([
+    supabase.from("analytics_click_events").select("id", { count: "exact", head: true }),
+    supabase
+      .from("analytics_click_events")
+      .select("id", { count: "exact", head: true })
+      .eq("event_type", "affiliate_click"),
+    supabase
+      .from("analytics_click_events")
+      .select(
+        [
+          "created_at",
+          "event_type",
+          "session_id",
+          "current_path",
+          "destination_host",
+          "destination_path",
+          "link_text",
+          "affiliate_campaign",
+          "affiliate_hotel_name",
+          "country",
+        ].join(","),
+      )
+      .order("created_at", { ascending: false })
+      .limit(5000),
+  ]);
+
+  if (allCount.error) throw allCount.error;
+  if (affiliateCount.error) throw affiliateCount.error;
+  if (recentRows.error) throw recentRows.error;
+
+  const rows = (recentRows.data ?? []) as unknown as AnalyticsClickEvent[];
+  const dayAgo = Date.now() - 24 * 60 * 60 * 1000;
+  const uniqueSessions = new Set(rows.map((row) => row.session_id).filter(Boolean));
+
+  return {
+    metrics: {
+      total: allCount.count ?? rows.length,
+      affiliate_clicks: affiliateCount.count ?? rows.filter((row) => row.event_type === "affiliate_click").length,
+      unique_sessions: uniqueSessions.size,
+      clicks_24h: rows.filter((row) => new Date(row.created_at).getTime() >= dayAgo).length,
+    },
+    daily: buildDailyRows(rows),
+    eventTypes: countBy(rows, (row) => row.event_type),
+    campaigns: countBy(rows.filter((row) => row.event_type === "affiliate_click"), (row) => row.affiliate_campaign),
+    pages: countBy(rows, (row) => row.current_path),
+    hotels: countBy(rows.filter((row) => row.event_type === "affiliate_click"), (row) => row.affiliate_hotel_name),
+    countries: countBy(rows, (row) => row.country),
+    recent: rows.slice(0, 30),
+  };
+}
+
 async function loadAnalyticsDashboardData(): Promise<AnalyticsDashboardData | null> {
   const databaseUrl = getDatabaseUrl();
 
   if (!databaseUrl) {
-    return null;
+    return loadSupabaseDashboardData();
   }
 
   const client = new pg.Client({
