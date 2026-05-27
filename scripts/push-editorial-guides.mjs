@@ -1,18 +1,18 @@
+import { spawn } from "node:child_process";
 import process from "node:process";
 
-console.error(
-  [
-    "scripts/push-editorial-guides.mjs is deprecated.",
-    "Editorial guide publishing must write normalized tables only:",
-    "  entries, entry_stops, venues, sources, entity_sources, and entry_render_cache.",
-    "",
-    "Use:",
-    "  npm run push:editorial-guides -- --id <guide-id>",
-    "  npm run push:editorial-guides -- --slug <guide-slug>",
-    "  npm run push:editorial-guides -- --city <city-name>",
-    "",
-    "The old public.editorial_guides blob table is archival/backfill input only.",
-  ].join("\n"),
-);
+function run(command, args) {
+  return new Promise((resolve, reject) => {
+    const child = spawn(command, args, { stdio: "inherit" });
+    child.on("error", reject);
+    child.on("exit", (code) => {
+      if (code === 0) resolve();
+      else reject(new Error(`${command} ${args.join(" ")} exited with ${code}`));
+    });
+  });
+}
 
-process.exit(1);
+const args = process.argv.slice(2);
+
+await run(process.execPath, ["scripts/backfill-normalized-editorial-guides.mjs", ...args]);
+await run(process.execPath, ["scripts/enforce-r2-venue-photos.mjs", ...args]);
