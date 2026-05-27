@@ -33,10 +33,22 @@ interface DataApiWeeklyEventGuideRow {
   guide: MapList;
 }
 
+interface EditorialGuideScope {
+  cityName?: string;
+}
+
 function getLocalWeeklyEventGuides() {
   return weeklyCityEventRuns.flatMap((run) =>
     run.events.map((event) => weeklyEventToGuideList(event, run)),
   );
+}
+
+function filterGuidesByScope(guides: MapList[], scope: EditorialGuideScope = {}) {
+  if (!scope.cityName) {
+    return guides;
+  }
+
+  return guides.filter((guide) => guide.location.city === scope.cityName);
 }
 
 function normalizeWeeklyEventGuide(guide: MapList): MapList {
@@ -96,15 +108,15 @@ function getPgSslConfig(databaseUrl: string) {
     : { rejectUnauthorized: false };
 }
 
-async function loadEditorialGuidesFromSupabase(): Promise<MapList[] | null> {
+async function loadEditorialGuidesFromSupabase(scope: EditorialGuideScope = {}): Promise<MapList[] | null> {
   if (shouldSkipDatabaseConnection()) {
-    return loadEditorialGuidesFromDataApi();
+    return loadEditorialGuidesFromDataApi(scope);
   }
 
   const databaseUrl = getDatabaseUrl();
 
   if (!databaseUrl) {
-    return loadEditorialGuidesFromDataApi();
+    return loadEditorialGuidesFromDataApi(scope);
   }
 
   const client = new pg.Client({
@@ -115,25 +127,44 @@ async function loadEditorialGuidesFromSupabase(): Promise<MapList[] | null> {
   try {
     await client.connect();
     if (process.env.RGUIDE_FORCE_RENDER_CACHE === "1") {
-      return loadRenderCacheGuides(client);
+      return loadRenderCacheGuides(client, scope);
     }
 
-    const normalizedGuides = await loadNormalizedGuides(client);
+    const normalizedGuides = await loadNormalizedGuides(client, scope);
 
     if (normalizedGuides) {
       return normalizedGuides;
     }
 
-    return loadRenderCacheGuides(client);
+    return loadRenderCacheGuides(client, scope);
   } catch (error) {
     console.error("Failed to load server editorial guides", error);
-    return loadEditorialGuidesFromDataApi();
+    return loadEditorialGuidesFromDataApi(scope);
   } finally {
     await client.end().catch(() => {});
   }
 }
 
-async function loadEditorialGuidesFromDataApi(): Promise<MapList[] | null> {
+async function getCityIdFromDataApi(supabase: SupabaseClient, cityName?: string) {
+  if (!cityName) {
+    return null;
+  }
+
+  const { data, error } = await supabase
+    .from("destinations")
+    .select("id")
+    .eq("scope", "city")
+    .eq("name", cityName)
+    .maybeSingle<{ id: string }>();
+
+  if (error) {
+    return null;
+  }
+
+  return data?.id ?? null;
+}
+
+async function loadEditorialGuidesFromDataApi(scope: EditorialGuideScope = {}): Promise<MapList[] | null> {
   const config = getSupabaseDataApiConfig();
 
   if (!config) {
@@ -148,31 +179,51 @@ async function loadEditorialGuidesFromDataApi(): Promise<MapList[] | null> {
   });
 
   if (process.env.RGUIDE_FORCE_RENDER_CACHE === "1") {
-    return loadRenderCacheGuidesFromDataApi(supabase);
+    return loadRenderCacheGuidesFromDataApi(supabase, scope);
   }
 
-  const { data, error } = await supabase
+  const cityId = await getCityIdFromDataApi(supabase, scope.cityName);
+  let query = supabase
     .from("entries_maplist")
-    .select("list")
-    .returns<DataApiGuideRow[]>();
+    .select("list");
+
+  if (scope.cityName) {
+    if (!cityId) {
+      return null;
+    }
+    query = query.eq("city_id", cityId);
+  }
+
+  const { data, error } = await query.returns<DataApiGuideRow[]>();
 
   if (!error && data?.length) {
     return [
       ...data.map((row) => normalizeWeeklyEventGuide(row.list)),
-      ...(await loadWeeklyEventsFromDataApi(supabase)),
+      ...(await loadWeeklyEventsFromDataApi(supabase, scope)),
     ];
   }
 
-  return loadRenderCacheGuidesFromDataApi(supabase);
+  return loadRenderCacheGuidesFromDataApi(supabase, scope);
 }
 
 async function loadWeeklyEventsFromDataApi(
   supabase: SupabaseClient,
+  scope: EditorialGuideScope = {},
 ): Promise<MapList[]> {
-  const normalized = await supabase
+  const cityId = await getCityIdFromDataApi(supabase, scope.cityName);
+  let normalizedQuery = supabase
     .from("weekly_events_maplist")
     .select("guide")
-    .gte("sourced_at", new Date(Date.now() - 14 * 86400000).toISOString())
+    .gte("sourced_at", new Date(Date.now() - 14 * 86400000).toISOString());
+
+  if (scope.cityName) {
+    if (!cityId) {
+      return [];
+    }
+    normalizedQuery = normalizedQuery.eq("city_id", cityId);
+  }
+
+  const normalized = await normalizedQuery
     .order("starts_at", { ascending: true })
     .returns<DataApiWeeklyEventGuideRow[]>();
 
@@ -180,10 +231,16 @@ async function loadWeeklyEventsFromDataApi(
     return normalized.data.map((row) => normalizeWeeklyEventGuide(row.guide));
   }
 
-  const publication = await supabase
+  let publicationQuery = supabase
     .from("weekly_event_publications")
     .select("guide:rendered_map_list")
-    .gte("sourced_at", new Date(Date.now() - 14 * 86400000).toISOString())
+    .gte("sourced_at", new Date(Date.now() - 14 * 86400000).toISOString());
+
+  if (scope.cityName) {
+    publicationQuery = publicationQuery.eq("city_id", cityId);
+  }
+
+  const publication = await publicationQuery
     .order("starts_at", { ascending: true })
     .returns<DataApiWeeklyEventGuideRow[]>();
 
@@ -191,29 +248,44 @@ async function loadWeeklyEventsFromDataApi(
     return publication.data.map((row) => normalizeWeeklyEventGuide(row.guide));
   }
 
-  const legacy = await supabase
+  let legacyQuery = supabase
     .from("weekly_event_guides")
     .select("guide")
-    .gte("sourced_at", new Date(Date.now() - 14 * 86400000).toISOString())
-    .returns<DataApiWeeklyEventGuideRow[]>();
+    .gte("sourced_at", new Date(Date.now() - 14 * 86400000).toISOString());
+
+  if (scope.cityName) {
+    legacyQuery = legacyQuery.eq("city_id", cityId);
+  }
+
+  const legacy = await legacyQuery.returns<DataApiWeeklyEventGuideRow[]>();
 
   if (!legacy.error && legacy.data?.length) {
     return legacy.data.map((row) => normalizeWeeklyEventGuide(row.guide));
   }
 
-  return getLocalWeeklyEventGuides();
+  return filterGuidesByScope(getLocalWeeklyEventGuides(), scope);
 }
 
 async function loadRenderCacheGuidesFromDataApi(
   supabase: SupabaseClient,
+  scope: EditorialGuideScope = {},
 ): Promise<MapList[] | null> {
-  const { data, error } = await supabase
+  const cityId = await getCityIdFromDataApi(supabase, scope.cityName);
+  let query = supabase
     .from("entry_render_cache")
     .select("rendered_payload")
     .eq("render_format", "maplist")
     .eq("render_version", 1)
-    .eq("is_current", true)
-    .returns<DataApiRenderCacheRow[]>();
+    .eq("is_current", true);
+
+  if (scope.cityName) {
+    if (!cityId) {
+      return null;
+    }
+    query = query.eq("rendered_payload->location->>city", scope.cityName);
+  }
+
+  const { data, error } = await query.returns<DataApiRenderCacheRow[]>();
 
   if (error || !data?.length) {
     return null;
@@ -221,33 +293,42 @@ async function loadRenderCacheGuidesFromDataApi(
 
   return [
     ...data.map((row) => normalizeWeeklyEventGuide(row.rendered_payload)),
-    ...(await loadWeeklyEventsFromDataApi(supabase)),
+    ...(await loadWeeklyEventsFromDataApi(supabase, scope)),
   ];
 }
 
-async function loadNormalizedGuides(client: Client): Promise<MapList[] | null> {
+async function loadNormalizedGuides(client: Client, scope: EditorialGuideScope = {}): Promise<MapList[] | null> {
   try {
+    const values: string[] = [];
+    const cityFilter = scope.cityName ? "  and city.name = $1" : "";
+    if (scope.cityName) {
+      values.push(scope.cityName);
+    }
+
     const { rows } = await client.query<NormalizedGuideRow>(
       [
         "select view.list",
         "from public.entries entry",
         "join public.entries_maplist view on view.id = entry.id",
+        "left join public.destinations city on city.id = entry.city_id",
         "where entry.source_table = 'editorial_guides'",
+        cityFilter,
         "order by entry.category asc, entry.country_name asc nulls last,",
         "  (view.list->'location'->>'city') asc nulls last,",
         "  (view.list->'location'->>'neighborhood') asc nulls last,",
         "  view.list->>'title' asc",
       ].join(" "),
+      values,
     );
 
     if (!rows.length) {
       return null;
     }
 
-    const weeklyEventRows = await loadWeeklyEventsFromDatabase(client);
+    const weeklyEventRows = await loadWeeklyEventsFromDatabase(client, scope);
     const weeklyEventGuides = weeklyEventRows.length
       ? weeklyEventRows.map((row) => normalizeWeeklyEventGuide(row.guide))
-      : getLocalWeeklyEventGuides();
+      : filterGuidesByScope(getLocalWeeklyEventGuides(), scope);
 
     return [...rows.map((row) => normalizeWeeklyEventGuide(row.list)), ...weeklyEventGuides];
   } catch {
@@ -255,55 +336,73 @@ async function loadNormalizedGuides(client: Client): Promise<MapList[] | null> {
   }
 }
 
-async function loadRenderCacheGuides(client: Client): Promise<MapList[]> {
+async function loadRenderCacheGuides(client: Client, scope: EditorialGuideScope = {}): Promise<MapList[]> {
+  const values: string[] = [];
+  const cityFilter = scope.cityName ? "  and city.name = $1" : "";
+  if (scope.cityName) {
+    values.push(scope.cityName);
+  }
+
   const { rows } = await client.query<RenderCacheRow>(
     [
       "select cache.rendered_payload",
       "from public.entry_render_cache cache",
       "join public.entries entry on entry.id = cache.entry_id",
+      "left join public.destinations city on city.id = entry.city_id",
       "where cache.render_format = 'maplist'",
       "  and cache.render_version = 1",
       "  and cache.is_current = true",
       "  and entry.source_table = 'editorial_guides'",
       "  and entry.status = 'published'",
+      cityFilter,
       "order by entry.category asc, entry.country_name asc nulls last,",
       "  cache.rendered_payload->'location'->>'city' asc nulls last,",
       "  cache.rendered_payload->'location'->>'neighborhood' asc nulls last,",
       "  cache.rendered_payload->>'title' asc",
     ].join(" "),
+    values,
   );
 
-  const weeklyEventRows = await loadWeeklyEventsFromDatabase(client);
+  const weeklyEventRows = await loadWeeklyEventsFromDatabase(client, scope);
   const weeklyEventGuides = weeklyEventRows.length
     ? weeklyEventRows.map((row) => normalizeWeeklyEventGuide(row.guide))
-    : getLocalWeeklyEventGuides();
+    : filterGuidesByScope(getLocalWeeklyEventGuides(), scope);
 
   return [...rows.map((row) => normalizeWeeklyEventGuide(row.rendered_payload)), ...weeklyEventGuides];
 }
 
-async function loadWeeklyEventsFromDatabase(client: Client) {
-  const normalizedRows = await loadNormalizedWeeklyEvents(client);
+async function loadWeeklyEventsFromDatabase(client: Client, scope: EditorialGuideScope = {}) {
+  const normalizedRows = await loadNormalizedWeeklyEvents(client, scope);
   if (normalizedRows.length) {
     return normalizedRows;
   }
 
-  const publicationRows = await loadWeeklyEventPublicationCache(client);
+  const publicationRows = await loadWeeklyEventPublicationCache(client, scope);
   if (publicationRows.length) {
     return publicationRows;
   }
 
-  return loadLegacyWeeklyEventGuides(client);
+  return loadLegacyWeeklyEventGuides(client, scope);
 }
 
-async function loadNormalizedWeeklyEvents(client: Client) {
+async function loadNormalizedWeeklyEvents(client: Client, scope: EditorialGuideScope = {}) {
   try {
+    const values: string[] = [];
+    const cityFilter = scope.cityName ? "and city.name = $1" : "";
+    if (scope.cityName) {
+      values.push(scope.cityName);
+    }
+
     const result = await client.query<WeeklyEventGuideRow>(
       [
         "select guide",
-        "from public.weekly_events_maplist",
+        "from public.weekly_events_maplist event",
+        "left join public.destinations city on city.id = event.city_id",
         "where sourced_at >= current_date - interval '14 days'",
+        cityFilter,
         "order by guide->'location'->>'city' asc, starts_at asc, guide->>'title' asc",
       ].join(" "),
+      values,
     );
     return result.rows;
   } catch {
@@ -311,15 +410,24 @@ async function loadNormalizedWeeklyEvents(client: Client) {
   }
 }
 
-async function loadWeeklyEventPublicationCache(client: Client) {
+async function loadWeeklyEventPublicationCache(client: Client, scope: EditorialGuideScope = {}) {
   try {
+    const values: string[] = [];
+    const cityFilter = scope.cityName ? "and city.name = $1" : "";
+    if (scope.cityName) {
+      values.push(scope.cityName);
+    }
+
     const { rows } = await client.query<WeeklyEventGuideRow>(
       [
         "select rendered_map_list as guide",
-        "from public.weekly_event_publications",
+        "from public.weekly_event_publications publication",
+        "left join public.destinations city on city.id = publication.city_id",
         "where sourced_at >= current_date - interval '14 days'",
+        cityFilter,
         "order by rendered_map_list->'location'->>'city' asc, starts_at asc, rendered_map_list->>'title' asc",
       ].join(" "),
+      values,
     );
     return rows;
   } catch {
@@ -327,15 +435,24 @@ async function loadWeeklyEventPublicationCache(client: Client) {
   }
 }
 
-async function loadLegacyWeeklyEventGuides(client: Client) {
+async function loadLegacyWeeklyEventGuides(client: Client, scope: EditorialGuideScope = {}) {
   try {
+    const values: string[] = [];
+    const cityFilter = scope.cityName ? "and city.name = $1" : "";
+    if (scope.cityName) {
+      values.push(scope.cityName);
+    }
+
     const { rows } = await client.query<WeeklyEventGuideRow>(
       [
         "select guide",
-        "from public.weekly_event_guides",
+        "from public.weekly_event_guides guide",
+        "left join public.destinations city on city.id = guide.city_id",
         "where sourced_at >= current_date - interval '14 days'",
+        cityFilter,
         "order by guide->'location'->>'city' asc, guide->>'title' asc",
       ].join(" "),
+      values,
     );
     return rows;
   } catch {
@@ -344,8 +461,8 @@ async function loadLegacyWeeklyEventGuides(client: Client) {
 }
 
 const getCachedEditorialGuidesFromSupabase = unstable_cache(
-  async () => {
-    return loadEditorialGuidesFromSupabase();
+  async (cityName?: string) => {
+    return loadEditorialGuidesFromSupabase({ cityName });
   },
   ["server-editorial-guides"],
   {
@@ -356,8 +473,8 @@ const getCachedEditorialGuidesFromSupabase = unstable_cache(
   },
 );
 
-export async function getServerEditorialGuides() {
-  const supabaseGuides = await getCachedEditorialGuidesFromSupabase().catch((error) => {
+export async function getServerEditorialGuides(scope: EditorialGuideScope = {}) {
+  const supabaseGuides = await getCachedEditorialGuidesFromSupabase(scope.cityName).catch((error) => {
     console.error("Failed to load cached server editorial guides", error);
     return null;
   });
@@ -366,5 +483,8 @@ export async function getServerEditorialGuides() {
     return supabaseGuides;
   }
 
-  return [...mapLists.map(normalizeWeeklyEventGuide), ...getLocalWeeklyEventGuides()];
+  return filterGuidesByScope(
+    [...mapLists.map(normalizeWeeklyEventGuide), ...getLocalWeeklyEventGuides()],
+    scope,
+  );
 }
