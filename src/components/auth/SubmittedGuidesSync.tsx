@@ -7,6 +7,9 @@ import { loadEditorialGuides } from "@/lib/supabase/editorial-guides";
 import { loadSubmittedGuides } from "@/lib/supabase/submitted-guides";
 import { useAppStore } from "@/store/app-store";
 
+const ENABLE_EDITORIAL_REALTIME =
+  process.env.NEXT_PUBLIC_ENABLE_EDITORIAL_REALTIME === "1";
+
 export function SubmittedGuidesSync() {
   const setEditorialLists = useAppStore((state) => state.setEditorialLists);
   const setSubmittedLists = useAppStore((state) => state.setSubmittedLists);
@@ -35,7 +38,9 @@ export function SubmittedGuidesSync() {
       setSubmittedLists(guides);
     }
 
-    void refreshEditorialGuides();
+    if (ENABLE_EDITORIAL_REALTIME) {
+      void refreshEditorialGuides();
+    }
     void refreshSubmittedGuides();
 
     if (!supabase) {
@@ -49,35 +54,39 @@ export function SubmittedGuidesSync() {
     } = supabase.auth.onAuthStateChange(() => {
       void refreshSubmittedGuides();
     });
-    const normalizedContentChannel = supabase
-      .channel("normalized-content-sync")
-      .on(
-        "postgres_changes",
-        { event: "*", schema: "public", table: "entries" },
-        () => {
-          void refreshEditorialGuides();
-        },
-      )
-      .on(
-        "postgres_changes",
-        { event: "*", schema: "public", table: "entry_render_cache" },
-        () => {
-          void refreshEditorialGuides();
-        },
-      )
-      .on(
-        "postgres_changes",
-        { event: "*", schema: "public", table: "weekly_event_publications" },
-        () => {
-          void refreshEditorialGuides();
-        },
-      )
-      .subscribe();
+    const normalizedContentChannel = ENABLE_EDITORIAL_REALTIME
+      ? supabase
+          .channel("normalized-content-sync")
+          .on(
+            "postgres_changes",
+            { event: "*", schema: "public", table: "entries" },
+            () => {
+              void refreshEditorialGuides();
+            },
+          )
+          .on(
+            "postgres_changes",
+            { event: "*", schema: "public", table: "entry_render_cache" },
+            () => {
+              void refreshEditorialGuides();
+            },
+          )
+          .on(
+            "postgres_changes",
+            { event: "*", schema: "public", table: "weekly_event_publications" },
+            () => {
+              void refreshEditorialGuides();
+            },
+          )
+          .subscribe()
+      : null;
 
     return () => {
       isMounted = false;
       subscription.unsubscribe();
-      void supabase.removeChannel(normalizedContentChannel);
+      if (normalizedContentChannel) {
+        void supabase.removeChannel(normalizedContentChannel);
+      }
     };
   }, [setEditorialLists, setSubmittedLists]);
 
