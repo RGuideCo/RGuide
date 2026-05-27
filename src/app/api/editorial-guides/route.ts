@@ -14,10 +14,13 @@ export const revalidate = 900;
 export const dynamic = "force-dynamic";
 export const runtime = "nodejs";
 
-export async function GET() {
+export async function GET(request: Request) {
   try {
+    const { searchParams } = new URL(request.url);
+    const cityName = searchParams.get("city")?.trim() || undefined;
+
     return NextResponse.json(
-      { guides: await getServerEditorialGuides() },
+      { guides: await getServerEditorialGuides({ cityName }) },
       {
         headers: {
           "Cache-Control": `public, s-maxage=${cacheSeconds}, stale-while-revalidate=${cacheSeconds * 4}`,
