@@ -4,6 +4,7 @@ import Script from "next/script";
 import type { ReactNode } from "react";
 
 import { Analytics } from "@vercel/analytics/next";
+import { SiteAnalyticsEvents } from "@/components/analytics/SiteAnalyticsEvents";
 import { AuthModal } from "@/components/auth/AuthModal";
 import { AuthSync } from "@/components/auth/AuthSync";
 import { SubmittedGuidesSync } from "@/components/auth/SubmittedGuidesSync";
@@ -119,6 +120,7 @@ export default function RootLayout({
         <main>{children}</main>
         <Footer />
         <AuthModal />
+        <SiteAnalyticsEvents />
         <Analytics />
         <script
           type="application/ld+json"
