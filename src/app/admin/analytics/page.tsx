@@ -70,9 +70,14 @@ function getDatabaseUrl() {
 
 function getSupabaseAnalyticsConfig() {
   const url = process.env.SUPABASE_URL ?? process.env.NEXT_PUBLIC_SUPABASE_URL ?? null;
-  const key = process.env.SUPABASE_SERVICE_ROLE_KEY ?? null;
+  const serviceKey = process.env.SUPABASE_SERVICE_ROLE_KEY ?? null;
+  const publicKey =
+    process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY ??
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ??
+    null;
+  const key = serviceKey ?? publicKey;
 
-  return url && key ? { url, key } : null;
+  return url && key ? { url, key, canReadDirectly: Boolean(serviceKey) } : null;
 }
 
 function getPgSslConfig(databaseUrl: string) {
@@ -138,6 +143,16 @@ async function loadSupabaseDashboardData(): Promise<AnalyticsDashboardData | nul
   const supabase = createClient(config.url, config.key, {
     auth: { persistSession: false, autoRefreshToken: false },
   });
+
+  if (!config.canReadDirectly) {
+    const { data, error } = await supabase.rpc("analytics_dashboard_summary");
+
+    if (error) {
+      throw error;
+    }
+
+    return data as AnalyticsDashboardData;
+  }
 
   const [allCount, affiliateCount, recentRows] = await Promise.all([
     supabase.from("analytics_click_events").select("id", { count: "exact", head: true }),
