@@ -3119,6 +3119,13 @@ export function MapClient({
       }),
     [activeGuide, hoveredStopId, neighborhoodBoundaryLookup, selectedStopId, visibleNestedStopParentIds],
   );
+  const activeGuidePoiMarkerSignature = useMemo(
+    () =>
+      poiMapMarkerData.features
+        .map((feature) => `${feature.properties.stopId}:${feature.geometry.type}`)
+        .join("|"),
+    [poiMapMarkerData],
+  );
   const selectionCameraKey = useMemo(
     () =>
       [
@@ -4217,10 +4224,14 @@ export function MapClient({
         : null;
     const selectedCameraTargetId =
       selectedParentStop?.id ?? selectedNestedStop?.place.id ?? "";
+    const selectedPoiMapMarker = selectedCameraTargetId
+      ? poiMapMarkerData.features.find((feature) => feature.properties.stopId === selectedCameraTargetId) ?? null
+      : null;
     const nextCameraKey = selectedCameraTargetId
       ? [
           activeGuide.id,
           activeGuideStopSignature,
+          activeGuidePoiMarkerSignature,
           selectedCameraTargetId,
           viewportModeRef.current,
         ].join("|")
@@ -4228,6 +4239,7 @@ export function MapClient({
           activeGuide.id,
           activeGuideFitNonce,
           activeGuideStopSignature,
+          activeGuidePoiMarkerSignature,
           viewportModeRef.current,
           viewportInsetsRef.current
             ? `${viewportInsetsRef.current.top},${viewportInsetsRef.current.right},${viewportInsetsRef.current.bottom},${viewportInsetsRef.current.left}`
@@ -4271,6 +4283,26 @@ export function MapClient({
       currentMap.stop();
 
       if (selectedParentStop || selectedNestedStop) {
+        if (selectedPoiMapMarker?.geometry) {
+          const markerCoordinates = getGeometryCoordinates(selectedPoiMapMarker.geometry);
+          if (markerCoordinates) {
+            const markerBounds = new LngLatBounds();
+            extendBoundsFromCoordinates(markerBounds, markerCoordinates);
+            if (!markerBounds.isEmpty()) {
+              currentMap.fitBounds(markerBounds, {
+                padding: clampPaddingToMap(
+                  currentMap,
+                  mergePadding({ top: 52, right: 56, bottom: 60, left: 56 }, activeViewportInsets),
+                ),
+                duration,
+                easing: smoothCameraEasing,
+                essential: true,
+                maxZoom: Math.max(15.2, getGuideBoundsZoom(markerBounds)),
+              });
+              return;
+            }
+          }
+        }
         const focusedPoint = selectedParentStop ?? selectedNestedStop!.place;
         const [lat, lng] = focusedPoint.coordinates;
         currentMap.easeTo({
@@ -4289,6 +4321,7 @@ export function MapClient({
 
       const guideBounds = new LngLatBounds();
       let guideCoordinateCount = 0;
+      let guideMarkerGeometryCount = 0;
       for (const stop of activeGuide.stops) {
         const [lat, lng] = stop.coordinates;
         guideBounds.extend([lng, lat]);
@@ -4299,8 +4332,16 @@ export function MapClient({
           guideCoordinateCount += 1;
         }
       }
+      for (const markerFeature of poiMapMarkerData.features) {
+        const markerCoordinates = getGeometryCoordinates(markerFeature.geometry);
+        if (!markerCoordinates) {
+          continue;
+        }
+        extendBoundsFromCoordinates(guideBounds, markerCoordinates);
+        guideMarkerGeometryCount += 1;
+      }
 
-      if (guideCoordinateCount === 1) {
+      if (guideCoordinateCount === 1 && guideMarkerGeometryCount === 0) {
         const [lat, lng] = activeGuide.stops[0].coordinates;
         currentMap.easeTo({
           center: [lng, lat],
@@ -4357,7 +4398,9 @@ export function MapClient({
   }, [
     activeGuide,
     activeGuideFitNonce,
+    activeGuidePoiMarkerSignature,
     activeGuideStopSignature,
+    poiMapMarkerData,
     selectionCameraKey,
     styleReadyTick,
     selectedStopId,
