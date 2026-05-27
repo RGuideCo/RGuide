@@ -5,7 +5,7 @@ import { SplitScreenClientLoader } from "@/components/home/SplitScreenClientLoad
 import { CityRouteSeoIndex } from "@/components/seo/CityRouteSeoIndex";
 import { ProgressiveEnhancementShell } from "@/components/shared/ProgressiveEnhancementShell";
 import { getContinentsWithDestinationDescriptions } from "@/lib/destination-descriptions";
-import { getCityDeepLinkStaticParams, resolveCityDeepLink } from "@/lib/deep-link-routes";
+import { getCityBySimpleSlug, getCityDeepLinkStaticParams, resolveCityDeepLink } from "@/lib/deep-link-routes";
 import { getCitiesFromContinents } from "@/lib/geography-tree";
 import { getServerEditorialGuides } from "@/lib/server-editorial-guides";
 
@@ -21,15 +21,25 @@ export function generateStaticParams() {
   return getCityDeepLinkStaticParams();
 }
 
+function getRequestedCityName(segments: string[], cities: ReturnType<typeof getCitiesFromContinents>) {
+  const citySlug = segments[0];
+  const nestedCitySlug = segments.length >= 3 ? segments[2] : undefined;
+  return (
+    (citySlug ? getCityBySimpleSlug(citySlug, cities) : undefined) ??
+    (nestedCitySlug ? getCityBySimpleSlug(nestedCitySlug, cities) : undefined)
+  )?.name;
+}
+
 export async function generateMetadata({ params }: CityDeepLinkPageProps): Promise<Metadata> {
   const { segments } = await params;
-  const [continents, editorialGuides] = await Promise.all([
-    getContinentsWithDestinationDescriptions(),
-    getServerEditorialGuides(),
-  ]);
+  const continents = await getContinentsWithDestinationDescriptions();
+  const cities = getCitiesFromContinents(continents);
+  const editorialGuides = await getServerEditorialGuides({
+    cityName: getRequestedCityName(segments, cities),
+  });
   const route = resolveCityDeepLink(segments, {
     continents,
-    cities: getCitiesFromContinents(continents),
+    cities,
     guides: editorialGuides,
   });
 
@@ -67,13 +77,14 @@ export async function generateMetadata({ params }: CityDeepLinkPageProps): Promi
 
 export default async function CityDeepLinkPage({ params }: CityDeepLinkPageProps) {
   const { segments } = await params;
-  const [continents, editorialGuides] = await Promise.all([
-    getContinentsWithDestinationDescriptions(),
-    getServerEditorialGuides(),
-  ]);
+  const continents = await getContinentsWithDestinationDescriptions();
+  const cities = getCitiesFromContinents(continents);
+  const editorialGuides = await getServerEditorialGuides({
+    cityName: getRequestedCityName(segments, cities),
+  });
   const route = resolveCityDeepLink(segments, {
     continents,
-    cities: getCitiesFromContinents(continents),
+    cities,
     guides: editorialGuides,
   });
 
