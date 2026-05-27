@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
+import { cookies } from "next/headers";
 import pg from "pg";
 import { createClient } from "@supabase/supabase-js";
+import { timingSafeEqual } from "node:crypto";
 
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
@@ -58,6 +60,33 @@ type AnalyticsClickEvent = RecentRow & {
   session_id: string | null;
   created_at: string;
 };
+
+const ANALYTICS_ACCESS_COOKIE = "rguide_analytics_access";
+
+function getAnalyticsAccessToken() {
+  return process.env.ANALYTICS_DASHBOARD_TOKEN?.trim() || null;
+}
+
+function isValidAccessToken(candidate: string | undefined | null) {
+  const token = getAnalyticsAccessToken();
+
+  if (!token || !candidate) {
+    return false;
+  }
+
+  const tokenBuffer = Buffer.from(token);
+  const candidateBuffer = Buffer.from(candidate);
+
+  return (
+    tokenBuffer.length === candidateBuffer.length &&
+    timingSafeEqual(tokenBuffer, candidateBuffer)
+  );
+}
+
+async function hasAnalyticsAccess() {
+  const cookieStore = await cookies();
+  return isValidAccessToken(cookieStore.get(ANALYTICS_ACCESS_COOKIE)?.value);
+}
 
 function getDatabaseUrl() {
   return (
@@ -429,7 +458,56 @@ function RecentClicks({ rows }: { rows: RecentRow[] }) {
   );
 }
 
+function AnalyticsAccessGate() {
+  const tokenConfigured = Boolean(getAnalyticsAccessToken());
+
+  return (
+    <main className="min-h-screen bg-slate-50 px-4 py-10 text-slate-950">
+      <div className="mx-auto max-w-md rounded-lg border border-slate-200 bg-white p-6 shadow-sm">
+        <p className="text-sm font-medium uppercase tracking-wide text-teal-700">RGuide</p>
+        <h1 className="mt-2 text-2xl font-semibold">Analytics Access</h1>
+        {tokenConfigured ? (
+          <>
+            <p className="mt-2 text-sm text-slate-500">
+              Enter the private analytics token to view the dashboard.
+            </p>
+            <form className="mt-5 space-y-4" action="/admin/analytics/access" method="post">
+              <label className="block text-sm font-medium text-slate-700" htmlFor="analytics-token">
+                Access token
+              </label>
+              <input
+                id="analytics-token"
+                name="token"
+                type="password"
+                autoComplete="current-password"
+                className="w-full rounded-md border border-slate-300 bg-white px-3 py-2 text-sm text-slate-950 outline-none focus:border-teal-600 focus:ring-2 focus:ring-teal-100"
+                required
+              />
+              <button
+                type="submit"
+                className="w-full rounded-md bg-slate-950 px-4 py-2 text-sm font-semibold text-white transition hover:bg-slate-800"
+              >
+                Unlock Dashboard
+              </button>
+            </form>
+          </>
+        ) : (
+          <div className="mt-4 rounded-md border border-amber-200 bg-amber-50 p-4 text-sm text-amber-950">
+            Analytics is locked. Add ANALYTICS_DASHBOARD_TOKEN in Vercel to enable private access.
+          </div>
+        )}
+      </div>
+    </main>
+  );
+}
+
 export default async function AnalyticsDashboardPage() {
+  const canViewAnalytics = await hasAnalyticsAccess();
+
+  if (!canViewAnalytics) {
+    return <AnalyticsAccessGate />;
+  }
+
   const data = await loadAnalyticsDashboardData();
 
   if (!data) {
