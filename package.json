@@ -11,7 +11,7 @@
     "enrich:neighborhoods": "node scripts/fetch-city-neighborhoods.mjs",
     "enrich:boundaries": "node scripts/fetch-city-neighborhoods.mjs --boundaries-only",
     "export:editorial-guides": "node scripts/export-editorial-guides-sql.mjs",
-    "push:editorial-guides": "node scripts/backfill-normalized-editorial-guides.mjs",
+    "push:editorial-guides": "node scripts/push-editorial-guides.mjs",
     "export:destination-descriptions": "node scripts/export-destination-descriptions-sql.mjs",
     "push:destination-descriptions": "node scripts/push-destination-descriptions.mjs",
     "validate:content-source": "node scripts/validate-content-source-html.mjs",
@@ -21,7 +21,7 @@
     "push:weekly-events": "node scripts/push-weekly-events.mjs",
     "push:destination-boundaries": "node scripts/backfill-destination-boundaries.mjs",
     "sync:editorial-poi-photos": "node scripts/sync-editorial-poi-photos.mjs",
-    "ingest:venue-media-r2": "node scripts/ingest-venue-media-r2.mjs"
+    "ingest:venue-media-r2": "node scripts/ingest-venue-media-r2-pipeline.mjs"
   },
   "dependencies": {
     "@aws-sdk/client-s3": "^3.1050.0",
