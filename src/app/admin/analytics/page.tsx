@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { cookies } from "next/headers";
+import Link from "next/link";
 import pg from "pg";
 import { createClient } from "@supabase/supabase-js";
 import { timingSafeEqual } from "node:crypto";
@@ -54,6 +55,7 @@ type AnalyticsDashboardData = {
   hotels: LabelCountRow[];
   countries: LabelCountRow[];
   recent: RecentRow[];
+  recentTotal: number;
 };
 
 type AnalyticsClickEvent = RecentRow & {
@@ -63,6 +65,22 @@ type AnalyticsClickEvent = RecentRow & {
 
 const ANALYTICS_ACCESS_COOKIE = "rguide_analytics_access";
 const DEFAULT_ANALYTICS_PASSWORD = "rguide2026";
+const RECENT_PAGE_SIZE = 50;
+const TIME_ZONE = "Pacific/Auckland";
+const RANGE_OPTIONS = [
+  { label: "7 days", value: "7", days: 7 },
+  { label: "14 days", value: "14", days: 14 },
+  { label: "30 days", value: "30", days: 30 },
+  { label: "90 days", value: "90", days: 90 },
+  { label: "All time", value: "all", days: 0 },
+] as const;
+
+type AnalyticsRange = (typeof RANGE_OPTIONS)[number];
+type AnalyticsQuery = {
+  range: AnalyticsRange;
+  page: number;
+  offset: number;
+};
 
 function getAnalyticsAccessToken() {
   return process.env.ANALYTICS_DASHBOARD_TOKEN?.trim() || DEFAULT_ANALYTICS_PASSWORD;
@@ -120,6 +138,45 @@ function toNumber(value: unknown) {
   return typeof value === "number" ? value : Number(value ?? 0);
 }
 
+function getAnalyticsQuery(searchParams: Record<string, string | string[] | undefined>): AnalyticsQuery {
+  const daysParam = Array.isArray(searchParams.days) ? searchParams.days[0] : searchParams.days;
+  const pageParam = Array.isArray(searchParams.page) ? searchParams.page[0] : searchParams.page;
+  const range = RANGE_OPTIONS.find((option) => option.value === daysParam) ?? RANGE_OPTIONS[2];
+  const page = Math.max(Number.parseInt(pageParam ?? "1", 10) || 1, 1);
+
+  return {
+    range,
+    page,
+    offset: (page - 1) * RECENT_PAGE_SIZE,
+  };
+}
+
+function getRangeStart(days: number) {
+  if (days <= 0) {
+    return null;
+  }
+
+  return Date.now() - days * 24 * 60 * 60 * 1000;
+}
+
+function isInsideRange(row: AnalyticsClickEvent, days: number) {
+  const rangeStart = getRangeStart(days);
+  return !rangeStart || new Date(row.created_at).getTime() >= rangeStart;
+}
+
+function formatDashboardTime(value: string) {
+  return new Intl.DateTimeFormat("en-NZ", {
+    dateStyle: "medium",
+    timeStyle: "medium",
+    timeZone: TIME_ZONE,
+    timeZoneName: "short",
+  }).format(new Date(value));
+}
+
+function getRangeHref(days: string, page = 1) {
+  return `/admin/analytics?days=${days}&page=${page}`;
+}
+
 function countBy<T>(
   rows: T[],
   getLabel: (row: T) => string | null | undefined,
@@ -138,16 +195,17 @@ function countBy<T>(
     .slice(0, limit);
 }
 
-function buildDailyRows(rows: AnalyticsClickEvent[]): DayRow[] {
+function buildDailyRows(rows: AnalyticsClickEvent[], days: number): DayRow[] {
   const today = new Date();
-  const days = Array.from({ length: 14 }, (_, index) => {
+  const chartDays = days > 0 ? Math.min(days, 90) : 90;
+  const dayBuckets = Array.from({ length: chartDays }, (_, index) => {
     const date = new Date(today);
-    date.setDate(today.getDate() - (13 - index));
+    date.setDate(today.getDate() - (chartDays - 1 - index));
     date.setHours(0, 0, 0, 0);
     return date;
   });
 
-  return days.map((day) => {
+  return dayBuckets.map((day) => {
     const nextDay = new Date(day);
     nextDay.setDate(day.getDate() + 1);
     const dayRows = rows.filter((row) => {
@@ -163,7 +221,7 @@ function buildDailyRows(rows: AnalyticsClickEvent[]): DayRow[] {
   });
 }
 
-async function loadSupabaseDashboardData(): Promise<AnalyticsDashboardData | null> {
+async function loadSupabaseDashboardData(query: AnalyticsQuery): Promise<AnalyticsDashboardData | null> {
   const config = getSupabaseAnalyticsConfig();
 
   if (!config) {
@@ -175,21 +233,73 @@ async function loadSupabaseDashboardData(): Promise<AnalyticsDashboardData | nul
   });
 
   if (!config.canReadDirectly) {
-    const { data, error } = await supabase.rpc("analytics_dashboard_summary");
+    const { data, error } = await supabase.rpc("analytics_dashboard_summary", {
+      p_days: query.range.days,
+      p_recent_limit: RECENT_PAGE_SIZE,
+      p_recent_offset: query.offset,
+    });
 
-    if (error) {
+    if (!error) {
+      const dashboardData = data as AnalyticsDashboardData;
+      return {
+        ...dashboardData,
+        recentTotal: toNumber(dashboardData.recentTotal ?? dashboardData.recent?.length ?? 0),
+      };
+    }
+
+    const { data: fallbackData, error: fallbackError } = await supabase.rpc("analytics_dashboard_summary");
+
+    if (fallbackError) {
       throw error;
     }
 
-    return data as AnalyticsDashboardData;
+    const dashboardData = fallbackData as AnalyticsDashboardData;
+    return {
+      ...dashboardData,
+      recentTotal: toNumber(dashboardData.recentTotal ?? dashboardData.recent?.length ?? 0),
+    };
   }
 
-  const [allCount, affiliateCount, recentRows] = await Promise.all([
-    supabase.from("analytics_click_events").select("id", { count: "exact", head: true }),
-    supabase
-      .from("analytics_click_events")
-      .select("id", { count: "exact", head: true })
-      .eq("event_type", "affiliate_click"),
+  const rangeStart = getRangeStart(query.range.days);
+  const allCountQuery = supabase.from("analytics_click_events").select("id", { count: "exact", head: true });
+  const affiliateCountQuery = supabase
+    .from("analytics_click_events")
+    .select("id", { count: "exact", head: true })
+    .eq("event_type", "affiliate_click");
+  const recentCountQuery = supabase
+    .from("analytics_click_events")
+    .select("id", { count: "exact", head: true });
+  const recentRowsQuery = supabase
+    .from("analytics_click_events")
+    .select(
+      [
+        "created_at",
+        "event_type",
+        "session_id",
+        "current_path",
+        "destination_host",
+        "destination_path",
+        "link_text",
+        "affiliate_campaign",
+        "affiliate_hotel_name",
+        "country",
+      ].join(","),
+    )
+    .order("created_at", { ascending: false })
+    .range(query.offset, query.offset + RECENT_PAGE_SIZE - 1);
+
+  if (rangeStart) {
+    const since = new Date(rangeStart).toISOString();
+    allCountQuery.gte("created_at", since);
+    affiliateCountQuery.gte("created_at", since);
+    recentCountQuery.gte("created_at", since);
+    recentRowsQuery.gte("created_at", since);
+  }
+
+  const [allCount, affiliateCount, recentCount, summaryRows, recentRows] = await Promise.all([
+    allCountQuery,
+    affiliateCountQuery,
+    recentCountQuery,
     supabase
       .from("analytics_click_events")
       .select(
@@ -208,13 +318,18 @@ async function loadSupabaseDashboardData(): Promise<AnalyticsDashboardData | nul
       )
       .order("created_at", { ascending: false })
       .limit(5000),
+    recentRowsQuery,
   ]);
 
   if (allCount.error) throw allCount.error;
   if (affiliateCount.error) throw affiliateCount.error;
+  if (recentCount.error) throw recentCount.error;
+  if (summaryRows.error) throw summaryRows.error;
   if (recentRows.error) throw recentRows.error;
 
-  const rows = (recentRows.data ?? []) as unknown as AnalyticsClickEvent[];
+  const rows = ((summaryRows.data ?? []) as unknown as AnalyticsClickEvent[]).filter((row) =>
+    isInsideRange(row, query.range.days),
+  );
   const dayAgo = Date.now() - 24 * 60 * 60 * 1000;
   const uniqueSessions = new Set(rows.map((row) => row.session_id).filter(Boolean));
 
@@ -225,21 +340,22 @@ async function loadSupabaseDashboardData(): Promise<AnalyticsDashboardData | nul
       unique_sessions: uniqueSessions.size,
       clicks_24h: rows.filter((row) => new Date(row.created_at).getTime() >= dayAgo).length,
     },
-    daily: buildDailyRows(rows),
+    daily: buildDailyRows(rows, query.range.days),
     eventTypes: countBy(rows, (row) => row.event_type),
     campaigns: countBy(rows.filter((row) => row.event_type === "affiliate_click"), (row) => row.affiliate_campaign),
     pages: countBy(rows, (row) => row.current_path),
     hotels: countBy(rows.filter((row) => row.event_type === "affiliate_click"), (row) => row.affiliate_hotel_name),
     countries: countBy(rows, (row) => row.country),
-    recent: rows.slice(0, 30),
+    recent: (recentRows.data ?? []) as unknown as RecentRow[],
+    recentTotal: recentCount.count ?? 0,
   };
 }
 
-async function loadAnalyticsDashboardData(): Promise<AnalyticsDashboardData | null> {
+async function loadAnalyticsDashboardData(query: AnalyticsQuery): Promise<AnalyticsDashboardData | null> {
   const databaseUrl = getDatabaseUrl();
 
   if (!databaseUrl) {
-    return loadSupabaseDashboardData();
+    return loadSupabaseDashboardData(query);
   }
 
   const client = new pg.Client({
@@ -250,6 +366,16 @@ async function loadAnalyticsDashboardData(): Promise<AnalyticsDashboardData | nu
   await client.connect();
 
   try {
+    const rangeWhere = query.range.days > 0 ? "where created_at >= now() - ($1::int * interval '1 day')" : "";
+    const affiliateRangeWhere =
+      query.range.days > 0
+        ? "where event_type = 'affiliate_click' and created_at >= now() - ($1::int * interval '1 day')"
+        : "where event_type = 'affiliate_click'";
+    const queryParams = query.range.days > 0 ? [query.range.days] : [];
+    const recentParams = query.range.days > 0
+      ? [query.range.days, RECENT_PAGE_SIZE, query.offset]
+      : [RECENT_PAGE_SIZE, query.offset];
+
     const [
       metrics,
       daily,
@@ -259,6 +385,7 @@ async function loadAnalyticsDashboardData(): Promise<AnalyticsDashboardData | nu
       hotels,
       countries,
       recent,
+      recentTotal,
     ] = await Promise.all([
       client.query<MetricRow>(
         [
@@ -268,59 +395,76 @@ async function loadAnalyticsDashboardData(): Promise<AnalyticsDashboardData | nu
           "count(distinct session_id)::int as unique_sessions,",
           "count(*) filter (where created_at >= now() - interval '24 hours')::int as clicks_24h",
           "from public.analytics_click_events",
+          rangeWhere,
         ].join(" "),
+        queryParams,
       ),
       client.query<DayRow>(
         [
           "select to_char(day, 'Mon DD') as day,",
           "coalesce(count(event.id), 0)::int as total,",
           "coalesce(count(event.id) filter (where event.event_type = 'affiliate_click'), 0)::int as affiliate_clicks",
-          "from generate_series(current_date - interval '13 days', current_date, interval '1 day') day",
+          `from generate_series(current_date - interval '${query.range.days > 0 ? Math.min(query.range.days, 90) - 1 : 89} days', current_date, interval '1 day') day`,
           "left join public.analytics_click_events event on event.created_at >= day",
           "and event.created_at < day + interval '1 day'",
+          query.range.days > 0 ? "and event.created_at >= now() - ($1::int * interval '1 day')" : "",
           "group by day order by day",
         ].join(" "),
+        queryParams,
       ),
       client.query<LabelCountRow>(
-        "select event_type as label, count(*)::int from public.analytics_click_events group by event_type order by count desc",
+        `select event_type as label, count(*)::int from public.analytics_click_events ${rangeWhere} group by event_type order by count desc`,
+        queryParams,
       ),
       client.query<LabelCountRow>(
         [
           "select coalesce(affiliate_campaign, '(no campaign)') as label, count(*)::int",
           "from public.analytics_click_events",
-          "where event_type = 'affiliate_click'",
+          affiliateRangeWhere,
           "group by affiliate_campaign order by count desc limit 12",
         ].join(" "),
+        queryParams,
       ),
       client.query<LabelCountRow>(
         [
           "select coalesce(current_path, '(unknown page)') as label, count(*)::int",
           "from public.analytics_click_events",
+          rangeWhere,
           "group by current_path order by count desc limit 12",
         ].join(" "),
+        queryParams,
       ),
       client.query<LabelCountRow>(
         [
           "select coalesce(affiliate_hotel_name, '(no hotel name)') as label, count(*)::int",
           "from public.analytics_click_events",
-          "where event_type = 'affiliate_click'",
+          affiliateRangeWhere,
           "group by affiliate_hotel_name order by count desc limit 12",
         ].join(" "),
+        queryParams,
       ),
       client.query<LabelCountRow>(
         [
           "select coalesce(country, '(unknown)') as label, count(*)::int",
           "from public.analytics_click_events",
+          rangeWhere,
           "group by country order by count desc limit 12",
         ].join(" "),
+        queryParams,
       ),
       client.query<RecentRow>(
         [
           "select created_at, event_type, current_path, destination_host, destination_path,",
           "link_text, affiliate_campaign, affiliate_hotel_name, country",
           "from public.analytics_click_events",
-          "order by created_at desc limit 30",
+          rangeWhere,
+          `order by created_at desc limit $${query.range.days > 0 ? 2 : 1} offset $${query.range.days > 0 ? 3 : 2}`,
         ].join(" "),
+        recentParams,
+      ),
+      client.query<{ count: number }>(
+        `select count(*)::int from public.analytics_click_events ${rangeWhere}`,
+        queryParams,
       ),
     ]);
 
@@ -349,6 +493,7 @@ async function loadAnalyticsDashboardData(): Promise<AnalyticsDashboardData | nu
       hotels: hotels.rows.map((row) => ({ ...row, count: toNumber(row.count) })),
       countries: countries.rows.map((row) => ({ ...row, count: toNumber(row.count) })),
       recent: recent.rows,
+      recentTotal: toNumber(recentTotal.rows[0]?.count),
     };
   } finally {
     await client.end().catch(() => {});
@@ -419,10 +564,69 @@ function DailyChart({ rows }: { rows: DayRow[] }) {
   );
 }
 
-function RecentClicks({ rows }: { rows: RecentRow[] }) {
+function RangeControls({ selectedRange }: { selectedRange: AnalyticsRange }) {
+  return (
+    <div className="flex flex-wrap gap-2">
+      {RANGE_OPTIONS.map((option) => {
+        const isSelected = option.value === selectedRange.value;
+        return (
+          <Link
+            key={option.value}
+            href={getRangeHref(option.value)}
+            className={`rounded-md border px-3 py-2 text-sm font-medium transition ${
+              isSelected
+                ? "border-slate-950 bg-slate-950 text-white"
+                : "border-slate-200 bg-white text-slate-700 hover:border-slate-300"
+            }`}
+          >
+            {option.label}
+          </Link>
+        );
+      })}
+    </div>
+  );
+}
+
+function RecentClicks({
+  rows,
+  query,
+  total,
+}: {
+  rows: RecentRow[];
+  query: AnalyticsQuery;
+  total: number;
+}) {
+  const firstRow = total === 0 ? 0 : query.offset + 1;
+  const lastRow = Math.min(query.offset + rows.length, total);
+  const hasPrevious = query.page > 1;
+  const hasNext = query.offset + rows.length < total;
+
   return (
     <section className="rounded-lg border border-slate-200 bg-white p-4 shadow-sm lg:col-span-2">
-      <h2 className="text-base font-semibold text-slate-950">Recent Clicks</h2>
+      <div className="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
+        <div>
+          <h2 className="text-base font-semibold text-slate-950">Click History</h2>
+          <p className="mt-1 text-xs text-slate-500">Times shown in NZ time. Showing {firstRow.toLocaleString()}-{lastRow.toLocaleString()} of {total.toLocaleString()} clicks in this range.</p>
+        </div>
+        <div className="flex gap-2">
+          {hasPrevious ? (
+            <Link
+              className="rounded-md border border-slate-200 bg-white px-3 py-2 text-sm font-medium text-slate-700 hover:border-slate-300"
+              href={getRangeHref(query.range.value, query.page - 1)}
+            >
+              Previous
+            </Link>
+          ) : null}
+          {hasNext ? (
+            <Link
+              className="rounded-md border border-slate-200 bg-white px-3 py-2 text-sm font-medium text-slate-700 hover:border-slate-300"
+              href={getRangeHref(query.range.value, query.page + 1)}
+            >
+              Next
+            </Link>
+          ) : null}
+        </div>
+      </div>
       <div className="mt-4 overflow-x-auto">
         <table className="min-w-full text-left text-sm">
           <thead className="border-b border-slate-200 text-xs uppercase text-slate-500">
@@ -438,7 +642,7 @@ function RecentClicks({ rows }: { rows: RecentRow[] }) {
             {rows.length ? rows.map((row) => (
               <tr key={`${row.created_at}-${row.event_type}-${row.current_path}`}>
                 <td className="whitespace-nowrap py-2 pr-4 text-slate-500">
-                  {new Date(row.created_at).toLocaleString()}
+                  {formatDashboardTime(row.created_at)}
                 </td>
                 <td className="whitespace-nowrap py-2 pr-4 font-medium text-slate-950">{row.event_type}</td>
                 <td className="max-w-xs truncate py-2 pr-4 text-slate-700">{row.current_path || row.link_text || "-"}</td>
@@ -492,14 +696,19 @@ function AnalyticsAccessGate() {
   );
 }
 
-export default async function AnalyticsDashboardPage() {
+export default async function AnalyticsDashboardPage({
+  searchParams,
+}: {
+  searchParams?: Promise<Record<string, string | string[] | undefined>>;
+}) {
   const canViewAnalytics = await hasAnalyticsAccess();
 
   if (!canViewAnalytics) {
     return <AnalyticsAccessGate />;
   }
 
-  const data = await loadAnalyticsDashboardData();
+  const query = getAnalyticsQuery((await searchParams) ?? {});
+  const data = await loadAnalyticsDashboardData(query);
 
   if (!data) {
     return (
@@ -514,12 +723,18 @@ export default async function AnalyticsDashboardPage() {
   return (
     <main className="min-h-screen bg-slate-50 px-4 py-8 text-slate-950">
       <div className="mx-auto max-w-7xl">
-        <div className="mb-6 flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
+        <div className="mb-6 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
           <div>
             <p className="text-sm font-medium uppercase tracking-wide text-teal-700">RGuide</p>
             <h1 className="text-3xl font-semibold">Analytics Dashboard</h1>
+            <p className="mt-2 text-sm text-slate-500">
+              Showing {query.range.label.toLowerCase()} from the first-party click tracker.
+            </p>
           </div>
-          <p className="text-sm text-slate-500">Updates when the page refreshes.</p>
+          <div className="flex flex-col items-start gap-2 sm:items-end">
+            <RangeControls selectedRange={query.range} />
+            <p className="text-sm text-slate-500">Updates when the page refreshes.</p>
+          </div>
         </div>
 
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
@@ -536,7 +751,7 @@ export default async function AnalyticsDashboardPage() {
           <BarList title="Top Pages" rows={data.pages} />
           <BarList title="Top Hotels" rows={data.hotels} />
           <BarList title="Countries" rows={data.countries} />
-          <RecentClicks rows={data.recent} />
+          <RecentClicks rows={data.recent} query={query} total={data.recentTotal} />
         </div>
       </div>
     </main>
