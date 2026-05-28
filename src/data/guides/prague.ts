@@ -193,6 +193,53 @@ const sources = {
   ],
 };
 
+const hours: Record<string, GuideStop["hours"]> = {
+  laDegustation: { default: "Daily 11:30 AM-1:30 PM and 6:00 PM-midnight." },
+  field: {
+    mon: "11:00 AM-2:30 PM and 6:00 PM-10:30 PM",
+    tue: "11:00 AM-2:30 PM and 6:00 PM-10:30 PM",
+    wed: "11:00 AM-2:30 PM and 6:00 PM-10:30 PM",
+    thu: "11:00 AM-2:30 PM and 6:00 PM-10:30 PM",
+    fri: "11:00 AM-2:30 PM and 6:00 PM-10:30 PM",
+    sat: "12:00 PM-3:00 PM and 6:00 PM-10:30 PM",
+    sun: "12:00 PM-3:00 PM and 6:00 PM-10:00 PM",
+  },
+  eska: { default: "Mon-Fri 8:00 AM-6:00 PM; Sat-Sun 9:00 AM-6:00 PM." },
+  cafeSavoy: { default: "Mon-Fri 8:00 AM-10:00 PM; Sat-Sun 9:00 AM-10:00 PM." },
+  naseMaso: { default: "Mon-Thu 11:00 AM-10:00 PM; Fri-Sat 10:00 AM-10:00 PM; Sun closed." },
+  havelskaKoruna: { default: "Daily 10:00 AM-8:00 PM." },
+  lokalDlouha: { default: "Mon-Sat 11:00 AM-midnight; Sun 11:00 AM-10:00 PM." },
+  sisters: { default: "Mon-Fri 8:00 AM-8:00 PM; Sat-Sun 9:00 AM-6:00 PM." },
+  mrHotDog: { default: "Daily 11:30 AM-10:00 PM." },
+  hotel: { default: "Reception operates 24 hours; check-in and check-out times vary by room and booking channel." },
+  hostel: { default: "Reception and arrival hours vary by property; confirm check-in, late-arrival, and luggage-storage details before booking." },
+  uSadu: { default: "Mon and Sun 8:00 AM-2:00 AM; Tue-Sat 8:00 AM-4:00 AM." },
+  uVoka: { default: "Mon-Sat 4:30 PM-1:00 AM; Sun closed." },
+  uZlatehoTygra: { default: "Daily 3:00 PM-11:00 PM." },
+  uPinkasu: { default: "Sun-Mon 10:00 AM-11:30 PM; Tue-Sat 10:00 AM-1:00 AM." },
+  uFleku: { default: "Daily 10:00 AM-11:00 PM." },
+  hemingway: { default: "Mon-Thu and Sun 5:00 PM-1:00 AM; Fri-Sat 5:00 PM-2:00 AM." },
+  anonymous: { default: "Daily 5:00 PM-2:00 AM; public holidays follow Sunday hours." },
+  lfleur: { default: "Sun-Thu 6:00 PM-2:00 AM; Fri-Sat 6:00 PM-3:00 AM." },
+  pragueCastle: {
+    default: "Castle grounds daily 6:00 AM-10:00 PM; visitor buildings generally Apr-Oct 9:00 AM-5:00 PM and Nov-Mar 9:00 AM-4:00 PM.",
+  },
+  oldTownHall: { default: "Jan-Mar daily 10:00 AM-7:00 PM; Apr-Dec daily 9:00 AM-8:00 PM." },
+  jewishMuseum: { default: "Apr-Oct Sun-Fri 9:00 AM-6:00 PM; Nov-Mar Sun-Fri 9:00 AM-4:30 PM; Sat and Jewish holidays closed." },
+  nationalMuseum: { default: "Daily 10:00 AM-6:00 PM." },
+  nationalGallery: { default: "Tue-Sun 10:00 AM-6:00 PM; Mon closed." },
+  dox: { default: "Tue-Sun 11:00 AM-7:00 PM; Mon closed." },
+  municipalHouse: { default: "Box office daily 10:00 AM-7:00 PM; guided tours, concerts, restaurants, and exhibitions run on separate schedules." },
+  museumKampa: { default: "Daily 10:00 AM-6:00 PM; last admission 5:30 PM." },
+  charlesBridge: { default: "Bridge open 24 hours daily; bridge towers keep separate ticketed hours." },
+  letna: { default: "Park open 24 hours daily; beer garden and facilities are seasonal." },
+  petrin: {
+    default: "Jan-Mar daily 10:00 AM-6:00 PM; Apr-Aug daily 9:00 AM-7:00 PM; Sep daily 9:00 AM-6:00 PM; Oct-Dec daily 10:00 AM-6:00 PM.",
+  },
+  vysehrad: { default: "Fortress grounds open daily; ticketed interiors and guided areas generally keep daytime seasonal hours." },
+  kampa: { default: "Island and park paths open 24 hours daily; Museum Kampa keeps separate ticketed hours." },
+};
+
 type StopOptions = Partial<GuideStop> & {
   sourcePhoto: string;
   mapQuery?: string;
@@ -259,6 +306,7 @@ const diningStops = [
       price: "$$$",
       priceSource: "MICHELIN Guide / official restaurant site",
       attributeTags: ["fine_dining", "tasting_menu", "reservation_recommended", "date_night", "open_kitchen"],
+      hours: hours.laDegustation,
       officialUrl: "https://www.ladegustation.cz/en/",
       sourcePhoto: imageSources.laDegustation,
       imageSourceUrl: "https://www.flickr.com/photos/54549113@N00/54423600553",
@@ -280,6 +328,7 @@ const diningStops = [
       price: "$$$",
       priceSource: "MICHELIN Guide / Prague City Tourism",
       attributeTags: ["fine_dining", "seasonal", "tasting_menu", "reservation_recommended", "wine_pairing"],
+      hours: hours.field,
       officialUrl: "https://www.fieldrestaurant.cz/en/",
       sourcePhoto: imageSources.field,
       editorialUrls: [
@@ -300,6 +349,7 @@ const diningStops = [
       price: "$$",
       priceSource: "Official restaurant site / MICHELIN Bib Gourmand source",
       attributeTags: ["bakery", "brunch", "fermentation", "karlin", "walk_in_friendly"],
+      hours: hours.eska,
       officialUrl: "https://www.eska.ambi.cz/en/",
       sourcePhoto: imageSources.eska,
       editorialUrls: [
@@ -320,6 +370,7 @@ const diningStops = [
       price: "$$",
       priceSource: "Official cafe site / Prague City Tourism",
       attributeTags: ["historic_cafe", "breakfast", "brunch", "dessert", "reservation_recommended"],
+      hours: hours.cafeSavoy,
       officialUrl: "https://www.cafesavoy.ambi.cz/en/",
       sourcePhoto: imageSources.cafeSavoy,
       editorialUrls: [
@@ -340,6 +391,7 @@ const diningStops = [
       price: "$$",
       priceSource: "Official butcher shop site / Taste of Prague",
       attributeTags: ["butcher_shop", "counter_service", "quick_meal", "old_town", "walk_in_friendly"],
+      hours: hours.naseMaso,
       officialUrl: "https://www.nasemaso.ambi.cz/en/",
       sourcePhoto: imageSources.naseMaso,
       editorialUrls: [
@@ -363,6 +415,7 @@ const cheapEatStops = [
       price: "$",
       priceSource: "PragueHere / Tabiji cheap-eats sources",
       attributeTags: ["cheap_eats", "self_service", "traditional_czech", "quick_meal", "central"],
+      hours: hours.havelskaKoruna,
       officialUrl: "https://www.havelska-koruna.cz/",
       sourcePhoto: imageSources.havelskaKoruna,
       editorialUrls: [
@@ -383,6 +436,7 @@ const cheapEatStops = [
       price: "$$",
       priceSource: "Official pub site / Prague cheap-eats sources",
       attributeTags: ["tank_beer", "traditional_czech", "group_friendly", "old_town", "casual"],
+      hours: hours.lokalDlouha,
       officialUrl: "https://lokal-dlouha.ambi.cz/en/",
       sourcePhoto: imageSources.lokalDlouha,
       editorialUrls: [
@@ -403,6 +457,7 @@ const cheapEatStops = [
       price: "$",
       priceSource: "Tabiji / official bistro site",
       attributeTags: ["cheap_eats", "chlebicky", "quick_meal", "old_town", "counter_service"],
+      hours: hours.sisters,
       officialUrl: "https://www.sistersbistro.cz/en/",
       sourcePhoto: imageSources.sisters,
       editorialUrls: [
@@ -423,6 +478,7 @@ const cheapEatStops = [
       price: "$",
       priceSource: "Official site / Google Maps",
       attributeTags: ["cheap_eats", "fast_casual", "group_friendly", "letna", "lateish"],
+      hours: hours.mrHotDog,
       officialUrl: "https://www.mrhotdog.cz/",
       sourcePhoto: imageSources.mrHotDog,
       editorialUrls: [
@@ -443,6 +499,7 @@ const cheapEatStops = [
       price: "$$",
       priceSource: "Official butcher shop site / Taste of Prague",
       attributeTags: ["butcher_shop", "quick_meal", "counter_service", "old_town", "meat"],
+      hours: hours.naseMaso,
       officialUrl: "https://www.nasemaso.ambi.cz/en/",
       sourcePhoto: imageSources.naseMaso,
       editorialUrls: [
@@ -465,6 +522,7 @@ const hotelStops = [
       price: "$$$",
       priceSource: "Conde Nast Traveler / Google Travel",
       attributeTags: ["luxury", "riverfront", "old_town", "spa", "service_led"],
+      hours: hours.hotel,
       officialUrl: "https://www.fourseasons.com/prague/",
       bookingUrl: "https://www.fourseasons.com/prague/",
       sourcePhoto: imageSources.fourSeasons,
@@ -485,6 +543,7 @@ const hotelStops = [
       price: "$$$",
       priceSource: "Fairmont official / Google Travel",
       attributeTags: ["luxury", "spa", "riverfront", "design", "old_town"],
+      hours: hours.hotel,
       officialUrl: "https://www.fairmont.com/en/hotels/prague/fairmont-golden-prague.html",
       bookingUrl: "https://www.fairmont.com/en/hotels/prague/fairmont-golden-prague.html",
       sourcePhoto: imageSources.fairmont,
@@ -505,6 +564,7 @@ const hotelStops = [
       price: "$$$",
       priceSource: "Official hotel site / Vogue",
       attributeTags: ["luxury", "mala_strana", "historic_building", "spa", "quiet_base"],
+      hours: hours.hotel,
       officialUrl: "https://www.mandarinoriental.com/en/prague/mala-strana",
       bookingUrl: "https://www.mandarinoriental.com/en/prague/mala-strana",
       sourcePhoto: imageSources.mandarin,
@@ -525,6 +585,7 @@ const hotelStops = [
       price: "$$$",
       priceSource: "Conde Nast Traveler / official hotel site",
       attributeTags: ["boutique", "design", "new_town", "walkable", "central"],
+      hours: hours.hotel,
       officialUrl: "https://www.hotelbohoprague.com/en/",
       bookingUrl: "https://www.hotelbohoprague.com/en/",
       sourcePhoto: imageSources.boho,
@@ -545,6 +606,7 @@ const hotelStops = [
       price: "$$$",
       priceSource: "Official hotel site / Google Travel",
       attributeTags: ["boutique", "old_town", "historic_building", "river_access", "romantic"],
+      hours: hours.hotel,
       officialUrl: "https://www.themozart.com/",
       bookingUrl: "https://www.themozart.com/",
       sourcePhoto: imageSources.mozart,
@@ -568,6 +630,7 @@ const hostelStops = [
       price: "$",
       priceSource: "Hostelworld / HelloPrague",
       attributeTags: ["hostel", "social", "holesovice", "kitchen", "budget"],
+      hours: hours.hostel,
       officialUrl: "https://www.sirtobys.com/",
       bookingUrl: "https://www.sirtobys.com/",
       sourcePhoto: imageSources.sirTobys,
@@ -588,6 +651,7 @@ const hostelStops = [
       price: "$$",
       priceSource: "HelloPrague / Hostelworld",
       attributeTags: ["hostel", "social", "old_town", "small_property", "solo_travel"],
+      hours: hours.hostel,
       officialUrl: "https://www.theroadhouseprague.com/",
       bookingUrl: "https://www.theroadhouseprague.com/",
       sourcePhoto: imageSources.roadhouse,
@@ -608,6 +672,7 @@ const hostelStops = [
       price: "$",
       priceSource: "Official hostel site / Hostelworld",
       attributeTags: ["hostel", "design", "vinohrady", "private_rooms", "budget"],
+      hours: hours.hostel,
       officialUrl: "https://www.czech-inn.com/",
       bookingUrl: "https://www.czech-inn.com/",
       sourcePhoto: imageSources.czechInn,
@@ -628,6 +693,7 @@ const hostelStops = [
       price: "$",
       priceSource: "Official hostel site / Hostelworld-style sources",
       attributeTags: ["hostel", "party_social", "central", "solo_travel", "budget"],
+      hours: hours.hostel,
       officialUrl: "https://www.themadhouseprague.com/",
       bookingUrl: "https://www.themadhouseprague.com/",
       sourcePhoto: imageSources.madhouse,
@@ -648,6 +714,7 @@ const hostelStops = [
       price: "$",
       priceSource: "Official hostel site / Google Travel",
       attributeTags: ["hostel", "castle_area", "mala_strana", "budget", "sightseeing_base"],
+      hours: hours.hostel,
       officialUrl: "https://www.littlequarter.com/",
       bookingUrl: "https://www.littlequarter.com/",
       sourcePhoto: imageSources.littleQuarter,
@@ -672,6 +739,7 @@ const pubStops = [
       price: "$",
       priceSource: "Prague Beer Garden / Google Maps",
       attributeTags: ["pub", "zizkov", "beer", "casual", "late"],
+      hours: hours.uSadu,
       officialUrl: "https://www.usadu.cz/",
       sourcePhoto: imageSources.uSadu,
       editorialUrls: [
@@ -692,6 +760,7 @@ const pubStops = [
       price: "$",
       priceSource: "Prague City Tourism / Google Maps",
       attributeTags: ["dive_bar", "zizkov", "live_music", "cash_culture", "local_pub"],
+      hours: hours.uVoka,
       officialUrl: "https://www.uvoka.cz/okokontakt/",
       sourcePhoto: imageSources.uVoka,
       editorialUrls: [
@@ -712,6 +781,7 @@ const pubStops = [
       price: "$",
       priceSource: "Official pub site / Prague City Tourism",
       attributeTags: ["pub", "beer_hall", "old_town", "pilsner", "shared_tables"],
+      hours: hours.uZlatehoTygra,
       officialUrl: "https://www.uzlatehotygra.cz/",
       sourcePhoto: imageSources.uZlatehoTygra,
       editorialUrls: [
@@ -732,6 +802,7 @@ const pubStops = [
       price: "$$",
       priceSource: "Official pub site / Google Maps",
       attributeTags: ["pub", "beer_garden", "central", "pilsner", "historic"],
+      hours: hours.uPinkasu,
       officialUrl: "https://www.upinkasu.cz/",
       sourcePhoto: imageSources.uPinkasu,
       editorialUrls: [
@@ -752,6 +823,7 @@ const pubStops = [
       price: "$$",
       priceSource: "Official brewery site / Google Maps",
       attributeTags: ["brewery", "beer_hall", "historic", "group_friendly", "central"],
+      hours: hours.uFleku,
       officialUrl: "https://ufleku.cz/en/",
       sourcePhoto: imageSources.uFleku,
       editorialUrls: [
@@ -775,6 +847,7 @@ const cocktailStops = [
       price: "$$$",
       priceSource: "Time Out / official bar site",
       attributeTags: ["cocktails", "absinthe", "reservation_recommended", "old_town_edge", "date_night"],
+      hours: hours.hemingway,
       officialUrl: "https://www.hemingwaybar.cz/bar-prague/",
       sourcePhoto: imageSources.hemingway,
       editorialUrls: [
@@ -795,6 +868,7 @@ const cocktailStops = [
       price: "$$$",
       priceSource: "PragueHere / official bar site",
       attributeTags: ["cocktails", "theatrical", "old_town", "date_night", "reservation_recommended"],
+      hours: hours.anonymous,
       officialUrl: "https://www.anonymousbar.cz/",
       sourcePhoto: imageSources.anonymous,
       editorialUrls: [
@@ -815,6 +889,7 @@ const cocktailStops = [
       price: "$$$",
       priceSource: "Official bar site / Prague cocktail sources",
       attributeTags: ["cocktails", "speakeasy_style", "interactive", "small_group", "reservation_recommended"],
+      hours: hours.anonymous,
       officialUrl: "https://www.shrinksoffice.cz/en",
       sourcePhoto: imageSources.shrink,
       editorialUrls: [
@@ -835,6 +910,7 @@ const cocktailStops = [
       price: "$$$",
       priceSource: "Taste of Prague / official bar site",
       attributeTags: ["cocktails", "champagne", "old_town", "date_night", "reservation_recommended"],
+      hours: hours.lfleur,
       officialUrl: "https://www.lfleur.cz/",
       sourcePhoto: imageSources.lfleur,
       editorialUrls: [
@@ -855,6 +931,7 @@ const cultureStops = [
       venueKind: "culture",
       subcategory: "castle_complex",
       attributeTags: ["history", "architecture", "viewpoint", "ticketed", "family_friendly"],
+      hours: hours.pragueCastle,
       officialUrl: "https://www.hrad.cz/en/prague-castle-for-visitors",
       sourcePhoto: imageSources.pragueCastle,
       imageSourceUrl: "https://www.flickr.com/photos/58661913@N00/27843347935",
@@ -873,6 +950,7 @@ const cultureStops = [
       venueKind: "culture",
       subcategory: "historic_tower",
       attributeTags: ["history", "architecture", "viewpoint", "ticketed", "old_town"],
+      hours: hours.oldTownHall,
       officialUrl: "https://prague.eu/en/objevujte/old-town-hall-with-astronomical-clock-staromestska-radnice-s-orlojem/",
       sourcePhoto: imageSources.oldTownHall,
       editorialUrls: [
@@ -890,6 +968,7 @@ const cultureStops = [
       venueKind: "culture",
       subcategory: "museum_complex",
       attributeTags: ["jewish_history", "museum", "cemetery", "ticketed", "old_town"],
+      hours: hours.jewishMuseum,
       officialUrl: "https://www.jewishmuseum.cz/en/info/visit/",
       sourcePhoto: imageSources.jewishMuseum,
       editorialUrls: [
@@ -907,6 +986,7 @@ const cultureStops = [
       venueKind: "culture",
       subcategory: "national_museum",
       attributeTags: ["museum", "history", "science", "architecture", "rainy_day"],
+      hours: hours.nationalMuseum,
       officialUrl: "https://www.nm.cz/en",
       sourcePhoto: imageSources.nationalMuseum,
       editorialUrls: [
@@ -924,6 +1004,7 @@ const cultureStops = [
       venueKind: "culture",
       subcategory: "art_museum",
       attributeTags: ["art", "museum", "modern_art", "holesovice", "rainy_day"],
+      hours: hours.nationalGallery,
       officialUrl: "https://www.ngprague.cz/en/",
       sourcePhoto: imageSources.nationalGallery,
       editorialUrls: [
@@ -941,6 +1022,7 @@ const cultureStops = [
       venueKind: "culture",
       subcategory: "contemporary_art",
       attributeTags: ["contemporary_art", "museum", "holesovice", "design", "rainy_day"],
+      hours: hours.dox,
       officialUrl: "https://www.dox.cz/en",
       sourcePhoto: imageSources.dox,
       editorialUrls: [
@@ -958,6 +1040,7 @@ const cultureStops = [
       venueKind: "culture",
       subcategory: "concert_hall",
       attributeTags: ["art_nouveau", "architecture", "music", "guided_tour", "central"],
+      hours: hours.municipalHouse,
       officialUrl: "https://www.obecnidum.cz/en/",
       sourcePhoto: imageSources.municipalHouse,
       editorialUrls: [
@@ -975,6 +1058,7 @@ const cultureStops = [
       venueKind: "culture",
       subcategory: "art_museum",
       attributeTags: ["modern_art", "museum", "kampa", "river_walk", "rainy_day"],
+      hours: hours.museumKampa,
       officialUrl: "https://www.museumkampa.cz/en/",
       sourcePhoto: imageSources.museumKampa,
       editorialUrls: [
@@ -995,6 +1079,7 @@ const activityStops = [
       venueKind: "landmark",
       subcategory: "castle_complex",
       attributeTags: ["history", "architecture", "viewpoint", "ticketed", "route_anchor"],
+      hours: hours.pragueCastle,
       officialUrl: "https://www.hrad.cz/en/prague-castle-for-visitors",
       sourcePhoto: imageSources.pragueCastle,
       imageSourceUrl: "https://www.flickr.com/photos/58661913@N00/27843347935",
@@ -1013,6 +1098,7 @@ const activityStops = [
       venueKind: "landmark",
       subcategory: "bridge",
       attributeTags: ["free_entry", "river_walk", "architecture", "photo_spot", "early_morning"],
+      hours: hours.charlesBridge,
       officialUrl: "https://prague.eu/en/objevujte/charles-bridge-karluv-most/",
       sourcePhoto: imageSources.charlesBridge,
       editorialUrls: [
@@ -1030,6 +1116,7 @@ const activityStops = [
       venueKind: "landmark",
       subcategory: "historic_tower",
       attributeTags: ["viewpoint", "history", "ticketed", "old_town", "architecture"],
+      hours: hours.oldTownHall,
       officialUrl: "https://prague.eu/en/objevujte/old-town-hall-with-astronomical-clock-staromestska-radnice-s-orlojem/",
       sourcePhoto: imageSources.oldTownHall,
       editorialUrls: [
@@ -1047,6 +1134,7 @@ const activityStops = [
       venueKind: "culture",
       subcategory: "museum_complex",
       attributeTags: ["jewish_history", "ticketed", "old_town", "museum", "route_anchor"],
+      hours: hours.jewishMuseum,
       officialUrl: "https://www.jewishmuseum.cz/en/info/visit/",
       sourcePhoto: imageSources.jewishMuseum,
       editorialUrls: [
@@ -1064,6 +1152,7 @@ const activityStops = [
       venueKind: "outdoors",
       subcategory: "park",
       attributeTags: ["park", "viewpoint", "free_entry", "beer_garden", "outdoor"],
+      hours: hours.letna,
       officialUrl: "https://prague.eu/en/objevujte/letna-park-letenske-sady/",
       sourcePhoto: imageSources.letna,
       editorialUrls: [
@@ -1081,6 +1170,7 @@ const activityStops = [
       venueKind: "landmark",
       subcategory: "viewpoint",
       attributeTags: ["viewpoint", "park", "ticketed", "family_friendly", "outdoor"],
+      hours: hours.petrin,
       officialUrl: "https://prague.eu/en/objevujte/petrin-tower-petrinska-rozhledna/",
       sourcePhoto: imageSources.petrin,
       editorialUrls: [
@@ -1098,6 +1188,7 @@ const activityStops = [
       venueKind: "culture",
       subcategory: "fortress",
       attributeTags: ["history", "viewpoint", "park", "free_entry", "river_walk"],
+      hours: hours.vysehrad,
       officialUrl: "https://www.praha-vysehrad.cz/?l=9",
       sourcePhoto: imageSources.vysehrad,
       editorialUrls: [
@@ -1115,6 +1206,7 @@ const activityStops = [
       venueKind: "outdoors",
       subcategory: "river_island",
       attributeTags: ["river_walk", "free_entry", "mala_strana", "park", "art_nearby"],
+      hours: hours.kampa,
       officialUrl: "https://prague.eu/en/objevujte/kampa/",
       sourcePhoto: imageSources.kampa,
       editorialUrls: [
@@ -1135,6 +1227,7 @@ const activityStops = [
       price: "$$",
       priceSource: "Official butcher shop site / Taste of Prague",
       attributeTags: ["quick_meal", "old_town", "butcher_shop", "food_route", "walk_in_friendly"],
+      hours: hours.naseMaso,
       officialUrl: "https://www.nasemaso.ambi.cz/en/",
       sourcePhoto: imageSources.naseMaso,
       editorialUrls: [
@@ -1155,6 +1248,7 @@ const activityStops = [
       price: "$$$",
       priceSource: "Time Out / official bar site",
       attributeTags: ["cocktails", "nightcap", "reservation_recommended", "old_town_edge", "date_night"],
+      hours: hours.hemingway,
       officialUrl: "https://www.hemingwaybar.cz/bar-prague/",
       sourcePhoto: imageSources.hemingway,
       editorialUrls: [
