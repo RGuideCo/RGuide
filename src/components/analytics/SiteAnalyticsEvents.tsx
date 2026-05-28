@@ -4,10 +4,39 @@ import { useEffect } from "react";
 
 const MAX_TEXT_LENGTH = 80;
 const ANALYTICS_SESSION_KEY = "rguide_analytics_session_id";
+const ANALYTICS_QUEUE_KEY = "rguide_analytics_event_queue_v2";
+const MAX_QUEUE_SIZE = 80;
+const MAX_BATCH_SIZE = 25;
+const FLUSH_INTERVAL_MS = 45_000;
+const LOW_VALUE_SAMPLE_RATE = 0.1;
+const GUIDE_LINK_SAMPLE_RATE = 0.35;
+const DIRECT_SUPABASE_URL = process.env.NEXT_PUBLIC_SUPABASE_URL
+  ? `${process.env.NEXT_PUBLIC_SUPABASE_URL.replace(/\/$/, "")}/rest/v1/rpc/record_analytics_batch`
+  : null;
+const DIRECT_SUPABASE_KEY =
+  process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY ??
+  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ??
+  null;
+const ENABLE_VERCEL_FALLBACK = process.env.NEXT_PUBLIC_ANALYTICS_ENABLE_VERCEL_FALLBACK === "true";
+
+type AnalyticsEventType =
+  | "affiliate_click"
+  | "outbound_click"
+  | "guide_link_click"
+  | "internal_link_click"
+  | "button_click";
 
 type AnalyticsEvent = {
-  eventType: string;
-  properties: Record<string, string | undefined>;
+  eventType: AnalyticsEventType;
+  sessionId?: string;
+  referrer?: string;
+  sampleRate?: number;
+  sampleWeight?: number;
+  properties: Record<string, string | number | undefined>;
+};
+
+type QueuedAnalyticsEvent = AnalyticsEvent & {
+  queuedAt: string;
 };
 
 function truncate(value: string, maxLength = MAX_TEXT_LENGTH) {
@@ -17,6 +46,24 @@ function truncate(value: string, maxLength = MAX_TEXT_LENGTH) {
 
 function getCurrentPath() {
   return `${window.location.pathname}${window.location.search}`;
+}
+
+function isAdminOrDevTraffic() {
+  const host = window.location.hostname;
+
+  return (
+    host === "localhost" ||
+    host === "127.0.0.1" ||
+    host.endsWith(".local") ||
+    window.location.pathname.startsWith("/admin")
+  );
+}
+
+function isLikelyBot() {
+  const userAgent = window.navigator.userAgent.toLowerCase();
+  return /bot|crawl|spider|slurp|headless|lighthouse|pagespeed|preview|facebookexternalhit|whatsapp|telegram|bingpreview/.test(
+    userAgent,
+  );
 }
 
 function getLinkText(element: HTMLElement) {
@@ -51,6 +98,45 @@ function getStay22Params(url: URL) {
   };
 }
 
+function isMeaningfulButton(text: string) {
+  return /book|reserve|hotel|stay|open|submit|save|share|favorite|view|map|directions/i.test(text);
+}
+
+function shouldSample(rate: number) {
+  return Math.random() < rate;
+}
+
+function withSampling(event: AnalyticsEvent, rate: number) {
+  return {
+    ...event,
+    sampleRate: rate,
+    sampleWeight: Math.round(1 / rate),
+  };
+}
+
+function prioritizeEvent(event: AnalyticsEvent) {
+  if (event.eventType === "affiliate_click" || event.eventType === "outbound_click") {
+    return event;
+  }
+
+  if (event.eventType === "guide_link_click") {
+    return shouldSample(GUIDE_LINK_SAMPLE_RATE) ? withSampling(event, GUIDE_LINK_SAMPLE_RATE) : null;
+  }
+
+  if (event.eventType === "internal_link_click") {
+    return shouldSample(LOW_VALUE_SAMPLE_RATE) ? withSampling(event, LOW_VALUE_SAMPLE_RATE) : null;
+  }
+
+  if (event.eventType === "button_click") {
+    const buttonText = String(event.properties.buttonText ?? "");
+    return isMeaningfulButton(buttonText) && shouldSample(LOW_VALUE_SAMPLE_RATE)
+      ? withSampling(event, LOW_VALUE_SAMPLE_RATE)
+      : null;
+  }
+
+  return null;
+}
+
 function getEventForAnchor(anchor: HTMLAnchorElement) {
   const rawHref = anchor.getAttribute("href");
 
@@ -64,13 +150,18 @@ function getEventForAnchor(anchor: HTMLAnchorElement) {
   const currentPath = getCurrentPath();
   const destinationPath = `${url.pathname}${url.search}`;
   const routeParts = getRouteParts(url.pathname);
+  const linkText = getLinkText(anchor);
   const baseProperties = {
     currentPath,
     destinationHost: url.hostname,
     destinationPath: truncate(destinationPath, 160),
-    linkText: getLinkText(anchor),
+    linkText,
     ...routeParts,
   };
+
+  if (!linkText && !isStay22) {
+    return null;
+  }
 
   if (isStay22) {
     return {
@@ -80,27 +171,27 @@ function getEventForAnchor(anchor: HTMLAnchorElement) {
         affiliate: "stay22",
         ...getStay22Params(url),
       },
-    };
+    } satisfies AnalyticsEvent;
   }
 
   if (!isInternal) {
     return {
       eventType: "outbound_click",
       properties: baseProperties,
-    };
+    } satisfies AnalyticsEvent;
   }
 
   if (url.pathname.startsWith("/city/") || url.pathname.startsWith("/list/")) {
     return {
       eventType: "guide_link_click",
       properties: baseProperties,
-    };
+    } satisfies AnalyticsEvent;
   }
 
   return {
     eventType: "internal_link_click",
     properties: baseProperties,
-  };
+  } satisfies AnalyticsEvent;
 }
 
 function getEventForButton(button: HTMLButtonElement) {
@@ -117,7 +208,7 @@ function getEventForButton(button: HTMLButtonElement) {
       buttonText: text,
       buttonLabel: truncate(button.getAttribute("aria-label") || ""),
     },
-  };
+  } satisfies AnalyticsEvent;
 }
 
 function getSessionId() {
@@ -136,22 +227,59 @@ function getSessionId() {
   }
 }
 
-function sendAnalyticsEvent(analyticsEvent: AnalyticsEvent) {
-  const payload = JSON.stringify({
-    ...analyticsEvent,
-    sessionId: getSessionId(),
-    referrer: document.referrer || undefined,
+function readQueue(): QueuedAnalyticsEvent[] {
+  try {
+    const parsed = JSON.parse(window.localStorage.getItem(ANALYTICS_QUEUE_KEY) || "[]");
+    return Array.isArray(parsed) ? parsed.slice(-MAX_QUEUE_SIZE) : [];
+  } catch {
+    return [];
+  }
+}
+
+function writeQueue(queue: QueuedAnalyticsEvent[]) {
+  try {
+    window.localStorage.setItem(ANALYTICS_QUEUE_KEY, JSON.stringify(queue.slice(-MAX_QUEUE_SIZE)));
+  } catch {
+    // Storage can be unavailable in private contexts; analytics should never break UX.
+  }
+}
+
+function clearSentEvents(sentCount: number) {
+  const queue = readQueue();
+  writeQueue(queue.slice(sentCount));
+}
+
+function buildPayload(events: QueuedAnalyticsEvent[]) {
+  return JSON.stringify({ events });
+}
+
+async function sendDirectToSupabase(events: QueuedAnalyticsEvent[]) {
+  if (!DIRECT_SUPABASE_URL || !DIRECT_SUPABASE_KEY) {
+    return false;
+  }
+
+  const response = await fetch(DIRECT_SUPABASE_URL, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      apikey: DIRECT_SUPABASE_KEY,
+      Authorization: `Bearer ${DIRECT_SUPABASE_KEY}`,
+    },
+    body: JSON.stringify({ p_events: events }),
+    keepalive: true,
   });
 
+  return response.ok;
+}
+
+function sendFallbackToVercel(events: QueuedAnalyticsEvent[]) {
+  const payload = buildPayload(events);
+
   if (navigator.sendBeacon) {
-    const sent = navigator.sendBeacon(
+    return navigator.sendBeacon(
       "/api/analytics/click",
       new Blob([payload], { type: "application/json" }),
     );
-
-    if (sent) {
-      return;
-    }
   }
 
   void fetch("/api/analytics/click", {
@@ -160,10 +288,63 @@ function sendAnalyticsEvent(analyticsEvent: AnalyticsEvent) {
     body: payload,
     keepalive: true,
   }).catch(() => undefined);
+
+  return true;
+}
+
+function flushAnalyticsQueue({ allowVercelFallback = false } = {}) {
+  const queue = readQueue();
+
+  if (!queue.length) {
+    return;
+  }
+
+  const batch = queue.slice(0, MAX_BATCH_SIZE);
+
+  void sendDirectToSupabase(batch)
+    .then((sent) => {
+      if (sent) {
+        clearSentEvents(batch.length);
+        return;
+      }
+
+      if (allowVercelFallback && ENABLE_VERCEL_FALLBACK && sendFallbackToVercel(batch)) {
+        clearSentEvents(batch.length);
+      }
+    })
+    .catch(() => {
+      if (allowVercelFallback && ENABLE_VERCEL_FALLBACK && sendFallbackToVercel(batch)) {
+        clearSentEvents(batch.length);
+      }
+    });
+}
+
+function queueAnalyticsEvent(analyticsEvent: AnalyticsEvent) {
+  const event = prioritizeEvent({
+    ...analyticsEvent,
+    sessionId: getSessionId(),
+    referrer: document.referrer || undefined,
+  });
+
+  if (!event) {
+    return;
+  }
+
+  const queue = readQueue();
+  const nextQueue = [...queue, { ...event, queuedAt: new Date().toISOString() }].slice(-MAX_QUEUE_SIZE);
+  writeQueue(nextQueue);
+
+  if (event.eventType === "affiliate_click" || nextQueue.length >= MAX_BATCH_SIZE) {
+    flushAnalyticsQueue();
+  }
 }
 
 export function SiteAnalyticsEvents() {
   useEffect(() => {
+    if (isAdminOrDevTraffic() || isLikelyBot()) {
+      return;
+    }
+
     function handleClick(event: MouseEvent) {
       const target = event.target instanceof Element ? event.target : null;
 
@@ -177,7 +358,7 @@ export function SiteAnalyticsEvents() {
         const analyticsEvent = getEventForAnchor(anchor);
 
         if (analyticsEvent) {
-          sendAnalyticsEvent(analyticsEvent);
+          queueAnalyticsEvent(analyticsEvent);
         }
 
         return;
@@ -189,15 +370,32 @@ export function SiteAnalyticsEvents() {
         const analyticsEvent = getEventForButton(button);
 
         if (analyticsEvent) {
-          sendAnalyticsEvent(analyticsEvent);
+          queueAnalyticsEvent(analyticsEvent);
         }
       }
     }
 
+    function handleVisibilityChange() {
+      if (document.visibilityState === "hidden") {
+        flushAnalyticsQueue({ allowVercelFallback: true });
+      }
+    }
+
+    function handlePageHide() {
+      flushAnalyticsQueue({ allowVercelFallback: true });
+    }
+
     document.addEventListener("click", handleClick, { capture: true });
+    document.addEventListener("visibilitychange", handleVisibilityChange);
+    window.addEventListener("pagehide", handlePageHide);
+    const interval = window.setInterval(() => flushAnalyticsQueue(), FLUSH_INTERVAL_MS);
+    flushAnalyticsQueue();
 
     return () => {
       document.removeEventListener("click", handleClick, { capture: true });
+      document.removeEventListener("visibilitychange", handleVisibilityChange);
+      window.removeEventListener("pagehide", handlePageHide);
+      window.clearInterval(interval);
     };
   }, []);
 
