@@ -35,7 +35,18 @@ export type LodgingType =
   | "camping"
   | "holiday_park";
 
-export type FoodServiceType = "restaurant" | "cafe" | "fast_food" | "stall" | "food_truck" | "food_cart";
+export type FoodServiceType =
+  | "restaurant"
+  | "cafe"
+  | "fast_food"
+  | "stall"
+  | "food_truck"
+  | "food_cart"
+  | "bakery"
+  | "counter_service"
+  | "cafeteria"
+  | "pub"
+  | "fast_casual";
 
 export type NightlifeType =
   | "dive_bar"
@@ -239,11 +250,28 @@ export interface GuideStop {
   venueKind?: VenueKind;
   lodgingType?: LodgingType;
   foodServiceType?: FoodServiceType;
+  cuisineTypes?: string[];
   nightlifeType?: NightlifeType;
+  musicGenres?: string[];
   attributeTags?: VenueAttributeTag[] | string[];
   tags?: string[];
   photo?: string;
-  price?: "$" | "$$" | "$$$";
+  imageSourceUrl?: string;
+  imageSourceName?: string;
+  imageCredit?: string;
+  imageLicense?: string;
+  sourceUrls?: string[];
+  sourceEvidence?: {
+    officialUrl?: string;
+    mapUrl?: string;
+    currentStatusUrl?: string;
+    imageSourceUrl?: string;
+    editorialUrls?: string[];
+    platformUrls?: string[];
+    notes?: string;
+    checkedAt?: string;
+  };
+  price?: PriceTier;
   priceSource?: string;
   bookingUrl?: string;
   officialUrl?: string;
