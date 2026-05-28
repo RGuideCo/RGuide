@@ -17,6 +17,7 @@
     "validate:content-source": "node scripts/validate-content-source-html.mjs",
     "refresh:entry-render-cache": "node scripts/refresh-entry-render-cache.mjs",
     "verify:normalized-backfill": "node scripts/verify-normalized-backfill.mjs",
+    "verify:guide-publish": "node scripts/verify-guide-publish.mjs",
     "export:weekly-events": "node scripts/export-weekly-events-sql.mjs",
     "push:weekly-events": "node scripts/push-weekly-events.mjs",
     "push:destination-boundaries": "node scripts/backfill-destination-boundaries.mjs",

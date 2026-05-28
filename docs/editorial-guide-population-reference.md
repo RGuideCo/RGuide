@@ -2,6 +2,8 @@
 
 Use this when asking Codex to populate R Guide editorial lists, audit existing lists, or rewrite guide descriptions. Barcelona is the working example because the seed data already covers every app category: Food, Nightlife, Nature, Culture, Stay, and Activities.
 
+For new guide creation, agents must also follow [New Guide Population Runbook](new-guide-population-runbook.md). That runbook defines the staged research, source evidence, publish, R2 ingestion, and verification gates.
+
 Related source notes:
 
 - [Restaurant research sources](restaurant-research-sources.md)
