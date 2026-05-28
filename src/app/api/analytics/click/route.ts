@@ -7,6 +7,7 @@ import { createClient } from "@supabase/supabase-js";
 export const dynamic = "force-dynamic";
 export const runtime = "nodejs";
 
+const MAX_BATCH_SIZE = 25;
 const ALLOWED_EVENT_TYPES = new Set([
   "affiliate_click",
   "outbound_click",
@@ -17,37 +18,25 @@ const ALLOWED_EVENT_TYPES = new Set([
 
 type ClickPayload = {
   eventType?: unknown;
+  event_type?: unknown;
   sessionId?: unknown;
+  session_id?: unknown;
   referrer?: unknown;
   properties?: unknown;
+  raw_properties?: unknown;
 };
 
-type ClickProperties = Record<string, string | undefined>;
+type BatchPayload = ClickPayload & {
+  event?: unknown;
+  events?: unknown;
+};
 
-type AnalyticsClickRow = {
-  event_type: string;
-  session_id: string | null;
-  ip_hash: string | null;
-  user_agent: string | null;
-  referrer: string | null;
-  country: string | null;
-  region: string | null;
-  metro: string | null;
-  current_path: string | null;
-  destination_host: string | null;
-  destination_path: string | null;
-  link_text: string | null;
-  city_slug: string | null;
-  neighborhood_slug: string | null;
-  category_slug: string | null;
-  guide_slug: string | null;
-  button_text: string | null;
-  button_label: string | null;
-  affiliate: string | null;
-  affiliate_aid: string | null;
-  affiliate_campaign: string | null;
-  affiliate_hotel_name: string | null;
-  raw_properties: ClickProperties;
+type AnalyticsRpcResult = {
+  received?: number;
+  accepted?: number;
+  dropped?: number;
+  rawInserted?: number;
+  rollupGroups?: number;
 };
 
 function getSupabaseAnalyticsConfig() {
@@ -59,7 +48,7 @@ function getSupabaseAnalyticsConfig() {
     null;
   const key = serviceKey ?? publicKey;
 
-  return url && key ? { url, key, canWriteDirectly: Boolean(serviceKey) } : null;
+  return url && key ? { url, key } : null;
 }
 
 function getDatabaseUrl() {
@@ -86,14 +75,6 @@ function truncate(value: unknown, maxLength: number) {
   return normalized ? normalized.slice(0, maxLength) : null;
 }
 
-function getProperties(payload: ClickPayload): ClickProperties {
-  if (!payload.properties || typeof payload.properties !== "object" || Array.isArray(payload.properties)) {
-    return {};
-  }
-
-  return payload.properties as ClickProperties;
-}
-
 function getHeader(request: NextRequest, name: string) {
   return truncate(request.headers.get(name), 255);
 }
@@ -111,41 +92,69 @@ function getIpHash(request: NextRequest) {
   return crypto.createHash("sha256").update(`${salt}:${ip}`).digest("hex");
 }
 
-async function insertWithDataApi(row: AnalyticsClickRow) {
+function isPlainObject(value: unknown): value is Record<string, unknown> {
+  return Boolean(value) && typeof value === "object" && !Array.isArray(value);
+}
+
+function getEvents(payload: BatchPayload): ClickPayload[] {
+  if (Array.isArray(payload.events)) {
+    return payload.events.filter(isPlainObject).slice(0, MAX_BATCH_SIZE) as ClickPayload[];
+  }
+
+  if (isPlainObject(payload.event)) {
+    return [payload.event as ClickPayload];
+  }
+
+  return [payload];
+}
+
+function enrichEvent(event: ClickPayload, request: NextRequest) {
+  const eventType = truncate(event.eventType ?? event.event_type, 80);
+
+  if (!eventType || !ALLOWED_EVENT_TYPES.has(eventType)) {
+    return null;
+  }
+
+  return {
+    ...event,
+    eventType,
+    event_type: eventType,
+    sessionId: truncate(event.sessionId ?? event.session_id, 120) ?? undefined,
+    session_id: truncate(event.sessionId ?? event.session_id, 120) ?? undefined,
+    referrer: truncate(event.referrer, 500) ?? undefined,
+    ip_hash: getIpHash(request),
+    user_agent: getHeader(request, "user-agent"),
+    country: getHeader(request, "x-vercel-ip-country") ?? getHeader(request, "cf-ipcountry"),
+    region: getHeader(request, "x-vercel-ip-country-region"),
+    metro: getHeader(request, "x-vercel-ip-city"),
+  };
+}
+
+async function recordWithDataApi(events: ReturnType<typeof enrichEvent>[]) {
   const config = getSupabaseAnalyticsConfig();
 
   if (!config) {
-    return false;
+    return null;
   }
 
   const supabase = createClient(config.url, config.key, {
     auth: { persistSession: false, autoRefreshToken: false },
   });
 
-  if (!config.canWriteDirectly) {
-    const { error } = await supabase.rpc("record_analytics_click", { p_event: row });
-
-    if (error) {
-      throw error;
-    }
-
-    return true;
-  }
-
-  const { error } = await supabase.from("analytics_click_events").insert(row);
+  const { data, error } = await supabase.rpc("record_analytics_batch", { p_events: events });
 
   if (error) {
     throw error;
   }
 
-  return true;
+  return data as AnalyticsRpcResult;
 }
 
-async function insertWithDatabaseUrl(row: AnalyticsClickRow) {
+async function recordWithDatabaseUrl(events: ReturnType<typeof enrichEvent>[]) {
   const databaseUrl = getDatabaseUrl();
 
   if (!databaseUrl) {
-    return false;
+    return null;
   }
 
   const client = new pg.Client({
@@ -156,109 +165,50 @@ async function insertWithDatabaseUrl(row: AnalyticsClickRow) {
   await client.connect();
 
   try {
-    await client.query(
-      [
-        "insert into public.analytics_click_events (",
-        "  event_type, session_id, ip_hash, user_agent, referrer, country, region, metro,",
-        "  current_path, destination_host, destination_path, link_text, city_slug, neighborhood_slug,",
-        "  category_slug, guide_slug, button_text, button_label, affiliate, affiliate_aid,",
-        "  affiliate_campaign, affiliate_hotel_name, raw_properties",
-        ") values (",
-        "  $1, $2, $3, $4, $5, $6, $7, $8,",
-        "  $9, $10, $11, $12, $13, $14,",
-        "  $15, $16, $17, $18, $19, $20,",
-        "  $21, $22, $23::jsonb",
-        ")",
-      ].join(" "),
-      [
-        row.event_type,
-        row.session_id,
-        row.ip_hash,
-        row.user_agent,
-        row.referrer,
-        row.country,
-        row.region,
-        row.metro,
-        row.current_path,
-        row.destination_host,
-        row.destination_path,
-        row.link_text,
-        row.city_slug,
-        row.neighborhood_slug,
-        row.category_slug,
-        row.guide_slug,
-        row.button_text,
-        row.button_label,
-        row.affiliate,
-        row.affiliate_aid,
-        row.affiliate_campaign,
-        row.affiliate_hotel_name,
-        JSON.stringify(row.raw_properties),
-      ],
+    const result = await client.query<{ result: AnalyticsRpcResult }>(
+      "select public.record_analytics_batch($1::jsonb) as result",
+      [JSON.stringify(events)],
     );
+
+    return result.rows[0]?.result ?? null;
   } finally {
     await client.end().catch(() => {});
   }
-
-  return true;
 }
 
 export async function POST(request: NextRequest) {
-  let payload: ClickPayload;
+  let payload: BatchPayload;
 
   try {
-    payload = (await request.json()) as ClickPayload;
+    payload = (await request.json()) as BatchPayload;
   } catch {
     return NextResponse.json({ error: "Invalid analytics payload." }, { status: 400 });
   }
 
-  const eventType = truncate(payload.eventType, 80);
+  const events = getEvents(payload)
+    .map((event) => enrichEvent(event, request))
+    .filter(Boolean);
 
-  if (!eventType || !ALLOWED_EVENT_TYPES.has(eventType)) {
-    return NextResponse.json({ error: "Unsupported analytics event." }, { status: 400 });
+  if (!events.length) {
+    return NextResponse.json({ received: 0, accepted: 0, dropped: 0, rawInserted: 0, rollupGroups: 0 });
   }
-
-  const properties = getProperties(payload);
-  const row: AnalyticsClickRow = {
-    event_type: eventType,
-    session_id: truncate(payload.sessionId, 120),
-    ip_hash: getIpHash(request),
-    user_agent: getHeader(request, "user-agent"),
-    referrer: truncate(payload.referrer, 500),
-    country: getHeader(request, "x-vercel-ip-country") ?? getHeader(request, "cf-ipcountry"),
-    region: getHeader(request, "x-vercel-ip-country-region"),
-    metro: getHeader(request, "x-vercel-ip-city"),
-    current_path: truncate(properties.currentPath, 500),
-    destination_host: truncate(properties.destinationHost, 255),
-    destination_path: truncate(properties.destinationPath, 700),
-    link_text: truncate(properties.linkText, 160),
-    city_slug: truncate(properties.city, 120),
-    neighborhood_slug: truncate(properties.neighborhood, 180),
-    category_slug: truncate(properties.category, 120),
-    guide_slug: truncate(properties.guideSlug, 180),
-    button_text: truncate(properties.buttonText, 160),
-    button_label: truncate(properties.buttonLabel, 160),
-    affiliate: truncate(properties.affiliate, 80),
-    affiliate_aid: truncate(properties.aid, 120),
-    affiliate_campaign: truncate(properties.campaign, 180),
-    affiliate_hotel_name: truncate(properties.hotelName, 255),
-    raw_properties: properties,
-  };
 
   try {
-    const inserted = await insertWithDataApi(row);
+    const result = (await recordWithDataApi(events)) ?? (await recordWithDatabaseUrl(events));
 
-    if (!inserted) {
-      const insertedWithDatabaseUrl = await insertWithDatabaseUrl(row);
-
-      if (!insertedWithDatabaseUrl) {
-        return NextResponse.json({ error: "Analytics storage is not configured." }, { status: 500 });
-      }
+    if (!result) {
+      return NextResponse.json({ error: "Analytics storage is not configured." }, { status: 500 });
     }
-  } catch (error) {
-    console.error("Failed to store analytics click", error);
-    return NextResponse.json({ error: "Analytics event could not be stored." }, { status: 500 });
-  }
 
-  return new NextResponse(null, { status: 204 });
+    return NextResponse.json({
+      received: result.received ?? events.length,
+      accepted: result.accepted ?? 0,
+      dropped: result.dropped ?? 0,
+      rawInserted: result.rawInserted ?? 0,
+      rollupGroups: result.rollupGroups ?? 0,
+    });
+  } catch (error) {
+    console.error("Failed to store analytics batch", error);
+    return NextResponse.json({ error: "Analytics batch could not be stored." }, { status: 500 });
+  }
 }
