@@ -112,7 +112,7 @@ const cityImage = (query: string) => {
   const normalizedQuery = slugify(query);
   const slug = cityImageSlugAliases[normalizedQuery] ?? normalizedQuery;
 
-  return `/api/destination-image/${slug}-v2`;
+  return `/destination-images/${slug}-v2.svg`;
 };
 
 const topCityDescriptionOverrides = new Map<string, string>([

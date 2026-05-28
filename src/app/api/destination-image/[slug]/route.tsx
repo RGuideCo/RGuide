@@ -206,6 +206,9 @@ export async function GET(request: Request, context: { params: Promise<{ slug: s
     {
       width: WIDTH,
       height: HEIGHT,
+      headers: {
+        "Cache-Control": "public, max-age=86400, s-maxage=604800, stale-while-revalidate=2592000",
+      },
     },
   );
 }

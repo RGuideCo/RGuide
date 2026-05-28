@@ -5,7 +5,7 @@ import type { Feature, FeatureCollection, Geometry } from "geojson";
 import londonBoundaries from "@/data/boundaries/london.json";
 import type { NeighborhoodBoundaryProperties } from "@/data/boundary-loaders";
 
-export const dynamic = "force-dynamic";
+export const revalidate = 86400;
 export const runtime = "nodejs";
 
 type BoundaryRow = {
@@ -58,7 +58,7 @@ function localFallbackCollection(cityId: string): FeatureCollection<Geometry, Ne
 function boundaryResponse(collection: FeatureCollection<Geometry, NeighborhoodBoundaryProperties>) {
   return NextResponse.json(collection, {
     headers: {
-      "Cache-Control": "no-store, max-age=0",
+      "Cache-Control": "public, max-age=86400, s-maxage=604800, stale-while-revalidate=2592000",
     },
   });
 }

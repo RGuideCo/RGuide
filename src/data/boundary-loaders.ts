@@ -102,9 +102,9 @@ function mergeBoundaryMaps(maps: NeighborhoodBoundaryMap[]) {
 }
 
 async function loadNeighborhoodBoundaryMapUncached(cityId: string) {
-  const supabaseBoundaryMap = await loadSupabaseNeighborhoodBoundaryMap(cityId);
-  if (Object.keys(supabaseBoundaryMap).length) {
-    return supabaseBoundaryMap;
+  const staticBoundaryMap = await loadStaticNeighborhoodBoundaryMap(cityId);
+  if (Object.keys(staticBoundaryMap).length) {
+    return staticBoundaryMap;
   }
 
   const loaders = priorityBoundaryLoaders[cityId] ?? (
@@ -119,14 +119,14 @@ async function loadNeighborhoodBoundaryMapUncached(cityId: string) {
   return mergeBoundaryMaps(maps);
 }
 
-async function loadSupabaseNeighborhoodBoundaryMap(cityId: string) {
+async function loadStaticNeighborhoodBoundaryMap(cityId: string) {
   if (typeof window === "undefined") {
     return {};
   }
 
   try {
-    const response = await fetch(`/api/destination-boundaries/${encodeURIComponent(cityId)}`, {
-      cache: "no-store",
+    const response = await fetch(`/data/boundaries/${encodeURIComponent(cityId)}.geojson`, {
+      cache: "force-cache",
       headers: { Accept: "application/json" },
     });
     if (!response.ok) {

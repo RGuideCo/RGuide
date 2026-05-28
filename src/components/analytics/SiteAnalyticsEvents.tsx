@@ -381,15 +381,20 @@ export function SiteAnalyticsEvents() {
       }
     }
 
+    function handlePageHide() {
+      flushAnalyticsQueue({ allowVercelFallback: true });
+    }
+
     document.addEventListener("click", handleClick, { capture: true });
     document.addEventListener("visibilitychange", handleVisibilityChange);
-    window.addEventListener("pagehide", () => flushAnalyticsQueue({ allowVercelFallback: true }));
+    window.addEventListener("pagehide", handlePageHide);
     const interval = window.setInterval(() => flushAnalyticsQueue(), FLUSH_INTERVAL_MS);
     flushAnalyticsQueue();
 
     return () => {
       document.removeEventListener("click", handleClick, { capture: true });
       document.removeEventListener("visibilitychange", handleVisibilityChange);
+      window.removeEventListener("pagehide", handlePageHide);
       window.clearInterval(interval);
     };
   }, []);

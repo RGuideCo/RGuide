@@ -566,9 +566,13 @@ async function runLiveChecks(guides, options) {
         continue;
       }
 
-      const pois = Array.isArray(row.rendered_payload?.pois) ? row.rendered_payload.pois : [];
+      const pois = Array.isArray(row.rendered_payload?.pois)
+        ? row.rendered_payload.pois
+        : Array.isArray(row.rendered_payload?.stops)
+          ? row.rendered_payload.stops
+          : [];
       if (!pois.length && topLevelStopCount(guide) > 0) {
-        addIssue(report, "error", label, "Rendered MapList payload has no pois.");
+        addIssue(report, "error", label, "Rendered MapList payload has no pois/stops.");
       }
       for (const poi of pois) {
         report.checkedStops += 1;
