@@ -166,8 +166,12 @@ function isInsideRange(row: AnalyticsClickEvent, days: number) {
 
 function formatDashboardTime(value: string) {
   return new Intl.DateTimeFormat("en-NZ", {
-    dateStyle: "medium",
-    timeStyle: "medium",
+    year: "numeric",
+    month: "short",
+    day: "numeric",
+    hour: "numeric",
+    minute: "2-digit",
+    second: "2-digit",
     timeZone: TIME_ZONE,
     timeZoneName: "short",
   }).format(new Date(value));
