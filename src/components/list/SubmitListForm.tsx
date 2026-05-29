@@ -3,7 +3,7 @@
 import { useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import Link from "next/link";
-import { ChevronDown, ChevronRight, GripVertical, Navigation, Pencil, Trash2, X } from "lucide-react";
+import { ChevronDown, ChevronRight, Globe2, GripVertical, Navigation, Pencil, Trash2, X } from "lucide-react";
 
 import { continents } from "@/data";
 import { CATEGORIES, CATEGORY_STYLES } from "@/lib/constants";
@@ -374,6 +374,7 @@ export function SubmitListForm({
   const [visitedAt, setVisitedAt] = useState("");
   const [itineraryStartDate, setItineraryStartDate] = useState("");
   const [itineraryEndDate, setItineraryEndDate] = useState("");
+  const [publishPublic, setPublishPublic] = useState(false);
   const [category, setCategory] = useState(CATEGORIES[0]);
   const [message, setMessage] = useState<string | null>(null);
   const [appliedAddQueryKey, setAppliedAddQueryKey] = useState<string | null>(null);
@@ -391,6 +392,7 @@ export function SubmitListForm({
     setVisitedAt("");
     setItineraryStartDate("");
     setItineraryEndDate("");
+    setPublishPublic(false);
     setContinentId("");
     setCountryId("");
     setRegionId("");
@@ -660,6 +662,7 @@ export function SubmitListForm({
   const categoryStyle = CATEGORY_STYLES[category];
   const formTitle = title.trim() || (editingListId ? `Edit ${submissionNoun}` : `New ${submissionNoun}`);
   const formSubtitle = editingListId ? `Editing ${submissionNoun}` : `Create ${submissionNoun}`;
+  const canPublishPublic = currentUser?.canPublishGuides === true;
 
   useEffect(() => {
     if (!onPreviewListChange) {
@@ -1392,6 +1395,7 @@ export function SubmitListForm({
     setDescriptionApplied(true);
     setCategory(list.category);
     setUrl(list.url === "https://www.google.com/maps" ? "" : list.url);
+    setPublishPublic(canPublishPublic && list.visibility === "public");
     setItineraryStartDate(list.itinerary?.startDate ?? list.stops.find((stop) => stop.itineraryDate)?.itineraryDate ?? "");
     setItineraryEndDate(
       list.itinerary?.endDate ?? [...list.stops].reverse().find((stop) => stop.itineraryDate)?.itineraryDate ?? "",
@@ -1672,6 +1676,7 @@ export function SubmitListForm({
       journalNote: activeSubmissionType === "journal" ? journalNote : undefined,
       itineraryStartDate: isItinerarySubmission ? itineraryStartDate : undefined,
       itineraryEndDate: isItinerarySubmission ? itineraryEndDate : undefined,
+      publishPublic: canPublishPublic && publishPublic,
       stops: manualStops,
     };
     const response = editingListId
@@ -3005,7 +3010,19 @@ export function SubmitListForm({
                 </label>
               </div>
 
-              <div className="flex items-center justify-end gap-2">
+              <div className="flex flex-wrap items-center justify-end gap-2">
+                {canPublishPublic ? (
+                  <label className="inline-flex h-11 items-center gap-2 rounded-full border border-slate-200 bg-white px-3 text-sm font-medium text-slate-700">
+                    <Globe2 className="h-4 w-4 text-slate-500" />
+                    <span>Publish public</span>
+                    <input
+                      type="checkbox"
+                      checked={publishPublic}
+                      onChange={(event) => setPublishPublic(event.target.checked)}
+                      className="h-4 w-4 rounded border-slate-300 text-slate-900"
+                    />
+                  </label>
+                ) : null}
                 {editingListId ? (
                   <button
                     type="button"

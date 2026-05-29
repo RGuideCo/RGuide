@@ -184,6 +184,8 @@ export interface User {
   joinedAt?: string;
   avatar: string;
   bio: string;
+  canPublishGuides?: boolean;
+  userType?: string;
 }
 
 export interface LocationRef {
@@ -197,6 +199,7 @@ export interface LocationRef {
 export interface MapList {
   id: string;
   slug: string;
+  visibility?: "private" | "followers" | "public";
   seoSlug?: string;
   seoTitle?: string;
   seoDescription?: string;

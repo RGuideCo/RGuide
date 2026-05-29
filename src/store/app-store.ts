@@ -28,6 +28,7 @@ interface SubmitInput {
   journalNote?: string;
   itineraryStartDate?: string;
   itineraryEndDate?: string;
+  publishPublic?: boolean;
   stops?: MapList["stops"];
 }
 
@@ -365,9 +366,13 @@ export const useAppStore = create<AppState>()(
         const localityToken = input.city?.trim() || input.country.trim();
         const hasCity = Boolean(input.city?.trim());
         const hasNeighborhood = Boolean(input.neighborhood?.trim());
+        const visibility: MapList["visibility"] =
+          input.publishPublic && currentUser.canPublishGuides ? "public" : "followers";
+
         const nextList: MapList = {
           id: `submission-${Date.now()}`,
           slug: slugify(`${localityToken}-${input.submissionType}-${input.title}`),
+          visibility,
           title: input.title,
           description: isJournal ? (journalDescription || "Journey journal entry.") : input.description,
           url: input.url,
@@ -466,9 +471,12 @@ export const useAppStore = create<AppState>()(
           .join("\n\n");
         const hasCity = Boolean(input.city?.trim());
         const hasNeighborhood = Boolean(input.neighborhood?.trim());
+        const visibility: MapList["visibility"] =
+          input.publishPublic && currentUser.canPublishGuides ? "public" : "followers";
 
         const updatedList: MapList = {
           ...existing,
+          visibility,
           title: input.title,
           description: isJournal ? (journalDescription || "Journey journal entry.") : input.description,
           url: input.url,
