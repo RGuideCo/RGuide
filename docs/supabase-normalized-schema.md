@@ -173,7 +173,7 @@ Recommended write model:
 
 Backfill order:
 
-1. Populate `destinations` from local geography.
+1. Populate `destinations` from local geography, then run `npm run ingest:destination-images-r2 -- --scope city --published-entries-only` or use `npm run sync:destinations` so populated city rows get a real Openverse/Wikimedia image copied into R2.
 2. Link and copy descriptions into `destination_descriptions_v2`.
 3. Insert editorial content into `entries` and `entry_stops`.
 4. Link venues, classifications, hours, tags, and sources.

@@ -21,6 +21,8 @@
     "export:weekly-events": "node scripts/export-weekly-events-sql.mjs",
     "push:weekly-events": "node scripts/push-weekly-events.mjs",
     "push:destination-boundaries": "node scripts/backfill-destination-boundaries.mjs",
+    "ingest:destination-images-r2": "node scripts/ingest-destination-images-r2.mjs",
+    "sync:destinations": "node scripts/backfill-normalized-schema.mjs && node scripts/ingest-destination-images-r2.mjs --scope city --published-entries-only --limit 200",
     "generate:static-assets": "node scripts/generate-static-assets.mjs",
     "sync:editorial-poi-photos": "node scripts/sync-editorial-poi-photos.mjs",
     "ingest:venue-media-r2": "node scripts/ingest-venue-media-r2-pipeline.mjs"

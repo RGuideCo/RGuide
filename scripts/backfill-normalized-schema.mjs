@@ -708,7 +708,12 @@ async function upsertDestination(client, row, stats) {
        timezone = excluded.timezone,
        coordinates = excluded.coordinates,
        bounds = excluded.bounds,
-       image_url = excluded.image_url,
+       image_url = case
+         when public.destinations.metadata #>> '{destination_image,storage_provider}' = 'cloudflare_r2'
+           and nullif(public.destinations.image_url, '') is not null
+         then public.destinations.image_url
+         else excluded.image_url
+       end,
        description = excluded.description,
        list_count = excluded.list_count,
        subarea_count = excluded.subarea_count,
@@ -1055,7 +1060,12 @@ async function backfillDestinations(client, geography, editorialLists, stats) {
        timezone = excluded.timezone,
        coordinates = excluded.coordinates,
        bounds = excluded.bounds,
-       image_url = excluded.image_url,
+       image_url = case
+         when public.destinations.metadata #>> '{destination_image,storage_provider}' = 'cloudflare_r2'
+           and nullif(public.destinations.image_url, '') is not null
+         then public.destinations.image_url
+         else excluded.image_url
+       end,
        description = excluded.description,
        list_count = excluded.list_count,
        subarea_count = excluded.subarea_count,
