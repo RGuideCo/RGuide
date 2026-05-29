@@ -28,6 +28,11 @@ const GENERIC_DESCRIPTION_PATTERNS = [
   /\boffers a unique\b/i,
   /\bis known for its delicious\b/i,
 ];
+const BANNED_SEO_SLUG_PATTERNS = [
+  /\bcitywide\b/i,
+  /\btop-?10\b/i,
+  /^list-/i,
+];
 
 function usage() {
   return [
@@ -174,6 +179,15 @@ function normalizeText(value) {
     .trim();
 }
 
+function slugifySegment(value) {
+  return normalizeText(value)
+    .normalize("NFKD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/&/g, " and ")
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "");
+}
+
 function countWords(value) {
   return normalizeText(value).split(/\s+/).filter(Boolean).length;
 }
@@ -290,9 +304,25 @@ function checkGuideBasics(list, report, options) {
   const label = guideLabel(list);
   const sources = Array.isArray(list.sources) ? list.sources.filter((source) => isValidUrl(source?.url)) : [];
 
-  for (const field of ["id", "slug", "seoTitle", "seoDescription", "title", "description", "url", "category"]) {
+  for (const field of ["id", "slug", "seoSlug", "seoTitle", "seoDescription", "title", "description", "url", "category"]) {
     if (!String(list[field] ?? "").trim()) {
       addIssue(report, "error", label, `Missing guide field: ${field}`);
+    }
+  }
+
+  const seoSlug = String(list.seoSlug ?? "").trim();
+  if (seoSlug) {
+    if (!/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(seoSlug)) {
+      addIssue(report, "error", label, `seoSlug must be a clean lowercase URL segment: ${seoSlug}`);
+    }
+    for (const pattern of BANNED_SEO_SLUG_PATTERNS) {
+      if (pattern.test(seoSlug)) {
+        addIssue(report, "error", label, `seoSlug contains a banned SEO URL pattern: ${seoSlug}`);
+      }
+    }
+    const citySlug = slugifySegment(list.location?.city);
+    if (citySlug && seoSlug.includes(citySlug)) {
+      addIssue(report, "error", label, `seoSlug should not repeat the city name: ${seoSlug}`);
     }
   }
 
@@ -475,9 +505,27 @@ function runLocalChecks(guides, options) {
   };
 
   const allDescriptions = new Map();
+  const seoKeys = new Map();
   for (const list of guides) {
     checkGuideBasics(list, report, options);
     checkGuideConsistency(list, report, options);
+
+    const seoSlug = String(list.seoSlug ?? "").trim();
+    if (seoSlug) {
+      const key = [
+        slugifySegment(list.location?.city),
+        slugifySegment(list.location?.neighborhood),
+        slugifySegment(list.category),
+        seoSlug,
+      ].join("|");
+      const first = seoKeys.get(key);
+      if (first) {
+        addIssue(report, "error", guideLabel(list), `Duplicate seoSlug in the same city/neighborhood/category as ${first}. Make this seoSlug more specific.`);
+      } else {
+        seoKeys.set(key, guideLabel(list));
+      }
+    }
+
     walkStops(list, (stop, currentList, pathParts) => {
       report.checkedStops += 1;
       checkStopBasics(currentList, stop, pathParts, report, options);

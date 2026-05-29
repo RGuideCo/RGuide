@@ -46,7 +46,12 @@ When you receive one of the short prompts above:
 2. Use its Short Prompt Dispatch and Reusable City Prompt Template.
 3. Follow `docs/new-guide-population-runbook.md` for the actual staged workflow.
 4. Do not edit guide data beyond Stage 0 scaffolding until the source ledger and candidate selection are complete.
-5. Do not call the task done until strict local verification, normalized publish, R2 ingestion, and strict live verification have passed.
+5. Apply the hard quality gates before writing:
+   - every guide needs an explicit clean `seoSlug` for the canonical `/city/...` URL;
+   - never put `citywide`, `top-10`, `list-`, or the city name in `seoSlug`;
+   - every stop needs verified hours or a source-backed schedule caveat;
+   - every stop description needs source-grounded editorial texture: Anthony Bourdain curiosity with TripAdvisor usefulness, not keyword chains.
+6. Do not call the task done until strict local verification, normalized publish, R2 ingestion, and strict live verification have passed.
 
 Required final commands:
 

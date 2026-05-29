@@ -354,8 +354,8 @@ Submission types are separate from categories. R Guide can contain several top-l
 Required list-level fields:
 
 - `id`: stable ID, usually `list-{city}-{neighborhood-or-scope}-{topic}`.
-- `slug`: stable route slug. Keep it SEO-readable and do not churn it casually.
-- `seoSlug`: reusable SEO phrase such as `best-restaurants`, `best-bars`, `best-hostels`, `best-things-to-do`, or `best-parks`.
+- `slug`: internal/legacy identity. Keep it stable and do not churn it casually.
+- `seoSlug`: explicit public URL slug such as `best-restaurants`, `best-bars`, `best-hostels`, `best-things-to-do`, or `best-parks`. Do not derive it from `slug`.
 - `seoTitle`: direct search phrase, usually `Best {Category} in {Neighborhood}, {City}`.
 - `seoDescription`: concise search-facing summary with the city, category, and real selection angle.
 - `title`: human-facing guide title. Make it specific, editorial, and contextual to the area. Keep the SEO/search wording out of the visible title unless it is genuinely useful to the reader.
@@ -375,7 +375,7 @@ Required stop-level fields:
 - `name`: current public name from official site or Google Maps.
 - `coordinates`: `[latitude, longitude]`. This app uses latitude first.
 - `description`: usually 2-4 substantial sentences explaining why the place belongs in this exact guide, what the visitor experiences, and the practical caveat or best-use context.
-- `hours`: verified from Google Maps, official site, or venue platform. Use structured day keys when possible.
+- `hours`: verified from Google Maps, official site, or venue platform. Use structured day keys when possible. These must publish to normalized `venue_hours`/`venue_special_hours`; `entry_stops.hours` is only for guide-specific display notes or overrides.
 
 Conditional stop-level fields:
 
@@ -438,13 +438,31 @@ Use a source-backed editorial standard, not a generic "top-rated" standard.
 
 Keep search fields stable and generic; make visible guide copy editorial.
 
-- `slug`, `seoSlug`, `seoTitle`, and `seoDescription` should stay keyword-forward so Google can still understand queries like `best dive bars`, `best restaurants`, `best hostels`, or `best things to do`.
+- `slug` is internal/legacy identity. `seoSlug` is the public URL slug.
+- Every guide must write an explicit `seoSlug`.
+- Citywide guide URLs resolve to `/city/{city}/{category}/{seoSlug}`, such as `/city/barcelona/food/best-restaurants`.
+- Neighborhood guide URLs resolve to `/city/{city}/{neighborhood}/{category}/{seoSlug}`, such as `/city/barcelona/el-born/food/best-restaurants`.
+- `seoSlug`, `seoTitle`, and `seoDescription` should stay keyword-forward so Google can still understand queries like `best dive bars`, `best restaurants`, `best hostels`, or `best things to do`.
+- Never use `citywide`, `top-10`, `list-`, or duplicated city names in `seoSlug`.
+- Do not generate `seoSlug` values like `best-restaurants-citywide`, `barcelona-best-restaurants`, or `list-barcelona-citywide-dining`.
+- Preferred `seoSlug` values include `best-restaurants`, `best-cheap-eats`, `best-hotels`, `best-hostels`, `best-bars`, `best-dive-bars`, `best-cocktail-bars`, `best-rooftop-bars`, `best-culture`, `best-museums-and-cultural-stops`, `best-parks`, and `best-things-to-do`.
+- If multiple guides in the same city, neighborhood, and category would produce the same `seoSlug`, make the `seoSlug` more specific.
+- Directly opening a canonical guide URL must expand the exact matching guide.
+- Legacy/internal URLs should redirect to the clean canonical URL when possible.
+- Only canonical SEO URLs should be added to the sitemap.
 - The visible `title` should not simply repeat the SEO phrase or city name. Use a memorable guide name that reflects the neighborhood, route, scene, cuisine, or trip use case.
 - Avoid putting the city name in a visible `title` when the page context already shows the city. Use it only when there is a real disambiguation need.
 - Neighborhood titles should feel local: reference the old-city lanes, market, waterfront, hill, plaza culture, nightlife strip, architecture grid, or other place-specific context.
 - Citywide rollup titles should communicate selection logic: cross-town essentials, counter meals, late-night rooms, hostel bases, museum spine, weekend route, etc.
 - List descriptions should be more than a category label. Name the geography, the reason this guide exists, the kind of stops included, and the best-use context.
 - Do not change SEO fields just because the visible title changes. Preserve indexed routes unless there is a clear product or SEO reason to migrate them.
+
+Editorial voice standard:
+
+- Write with Anthony Bourdain curiosity and TripAdvisor usefulness: sensory, specific, opinionated, and practical.
+- Use real facts from source pages: signature dishes, room type, collection focus, crowd, reservation posture, transit fit, price tradeoff, design, view, or route role.
+- Avoid tourist-board adjectives and review-site filler. Do not write keyword chains.
+- Each stop needs one useful caveat or best-use note: go early, book ahead, skip if you want quiet, best for a first night, strong with a museum route, better for lunch than dinner, and so on.
 
 Good pattern:
 

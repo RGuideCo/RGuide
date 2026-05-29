@@ -58,6 +58,19 @@ If the user requested only one category or neighborhood, keep the same process b
 
 Do not edit guide files beyond Stage 0 scaffolding until Stage 1 and Stage 2 are complete.
 
+Hard gates before any guide data is considered publishable:
+- Every guide must include an explicit `seoSlug`. Do not derive it from the internal `slug`.
+- Citywide guide URLs resolve as `/city/{city}/{category}/{seoSlug}`.
+- Neighborhood guide URLs resolve as `/city/{city}/{neighborhood}/{category}/{seoSlug}`.
+- `slug` is internal/legacy identity. `seoSlug` is the public URL slug.
+- Never use `citywide`, `top-10`, `list-`, or duplicated city names in `seoSlug`.
+- Use clean search-intent slugs such as `best-restaurants`, `best-cheap-eats`, `best-hotels`, `best-hostels`, `best-dive-bars`, `best-cocktail-bars`, `best-culture`, or `best-things-to-do`.
+- If two guides in the same city, neighborhood, and category would share a `seoSlug`, make the newer one more specific, such as `best-cocktail-bars`, `best-dive-bars`, or `best-rooftop-bars`.
+- Direct canonical guide URLs must expand that exact guide. Legacy/internal URLs should redirect to the clean canonical URL when possible.
+- Sitemap entries must use only canonical SEO URLs.
+- Every real venue stop must have verified hours. Write hours into the local stop data so the normalized publisher can persist them to `venue_hours`/`venue_special_hours` and preserve any guide-specific display override in `entry_stops.hours`.
+- Descriptions must have editorial bite and practical truth: Anthony Bourdain curiosity, TripAdvisor usefulness, actual source facts, one useful caveat, and no generic review filler.
+
 Stage 1: Source ledger
 Create a source ledger first. Each guide needs at least 10 meaningful list-level sources. Include:
 - official venue/property/attraction pages,
@@ -96,7 +109,7 @@ Category fields are required:
 - Stay: lodgingType, bookingUrl, price/priceSource where useful, attributeTags.
 - Nightlife: nightlifeType, musicGenres where relevant, price/priceSource where useful, attributeTags.
 
-Descriptions must use actual facts from venue/property/source pages. Write 2-4 specific sentences per stop. Do not use generic travel copy, keyword chains, repeated sentence frames, or unsupported claims.
+Descriptions must use actual facts from venue/property/source pages. Write 2-4 specific sentences per stop with editorial flair and practical judgment: what the place feels like, what it is best for, what to order/book/avoid/time correctly, and why it belongs in this exact guide. Do not use generic travel copy, keyword chains, repeated sentence frames, or unsupported claims.
 
 Photo sourcing:
 - Start with the actual venue/property/official website.

@@ -93,12 +93,42 @@ Edit only the matching city module under `src/data/guides/{city-id}.ts`. Add a n
 Each guide needs:
 
 - stable `id` and `slug`;
-- keyword-forward SEO fields;
+- explicit canonical SEO fields: `seoSlug`, `seoTitle`, and `seoDescription`;
 - editorial visible `title`;
 - source-backed `description`;
 - correct `category`;
 - `sources` with at least 10 meaningful URLs for new guide work;
 - stops with stable ids, coordinates, descriptions, hours, source evidence, category-specific classification fields, and image source fields.
+
+Canonical SEO URL rules:
+
+- `slug` is internal/legacy identity.
+- `seoSlug` is the public URL slug and must be written explicitly.
+- Citywide guides resolve to `/city/{city}/{category}/{seoSlug}`.
+- Neighborhood guides resolve to `/city/{city}/{neighborhood}/{category}/{seoSlug}`.
+- Never use `citywide`, `top-10`, `list-`, or duplicated city names in `seoSlug`.
+- Do not create URLs like `/city/barcelona/food/best-restaurants-citywide`, `/city/barcelona/barcelona-best-restaurants`, or `/city/barcelona/list-barcelona-citywide-dining`.
+- Use clean search-intent slugs such as `best-restaurants`, `best-cheap-eats`, `best-hotels`, `best-hostels`, `best-bars`, `best-dive-bars`, `best-cocktail-bars`, `best-rooftop-bars`, `best-culture`, `best-museums-and-cultural-stops`, `best-parks`, and `best-things-to-do`.
+- If multiple guides in the same city, neighborhood, and category would produce the same `seoSlug`, make the `seoSlug` more specific.
+- Directly opening a canonical guide URL must expand that exact guide.
+- Legacy/internal URLs should redirect to the clean canonical URL when possible.
+- Only canonical SEO URLs should be added to the sitemap.
+
+Good examples:
+
+```ts
+seoSlug: "best-restaurants"
+seoTitle: "Best Restaurants in Barcelona"
+seoDescription: "Best restaurants in Barcelona for tapas, seafood, tasting menus, neighborhood dining, and local favorites."
+```
+
+Bad examples:
+
+```ts
+seoSlug: "best-restaurants-citywide"
+seoSlug: "barcelona-best-restaurants"
+seoSlug: "list-barcelona-citywide-dining"
+```
 
 Description rules:
 
@@ -107,8 +137,17 @@ Description rules:
 - explain why the stop belongs in this exact guide;
 - name the source-backed draw: dish, room, collection, crowd, price tradeoff, location fit, booking posture, view, design, or route role;
 - add one useful caveat or best-use note;
+- write with Anthony Bourdain curiosity and TripAdvisor usefulness: textured, opinionated, and specific, but still practical for someone deciding where to go;
 - do not use generic keyword chains, tourist-board wording, repeated sentence frames, or phrases like `hidden gem`, `must-see`, or `something for everyone`;
 - when the same venue appears in two guides, write a different description for each guide context.
+
+Hours rules:
+
+- every real venue stop needs current hours from Google Maps, the official site, a booking platform, or another current-status source;
+- use structured day keys where possible;
+- use a schedule caveat only when hours are genuinely event-dependent, seasonal, or unavailable from reliable sources;
+- persist venue-level hours through the normalized publisher into `venue_hours`/`venue_special_hours`;
+- use `entry_stops.hours` only for guide-specific display notes or overrides.
 
 Category requirements:
 
