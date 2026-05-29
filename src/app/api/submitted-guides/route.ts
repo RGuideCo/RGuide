@@ -830,6 +830,26 @@ export async function DELETE(request: NextRequest) {
     return NextResponse.json({ error: "You can only delete your own guides." }, { status: 403 });
   }
 
+  const { error: cacheError } = await service
+    .from("entry_render_cache")
+    .delete()
+    .eq("entry_id", existingEntry.id);
+
+  if (cacheError) {
+    console.error("Failed to delete submitted guide render cache", cacheError);
+    return NextResponse.json({ error: "Guide could not be deleted." }, { status: 500 });
+  }
+
+  const { error: stopsError } = await service
+    .from("entry_stops")
+    .delete()
+    .eq("entry_id", existingEntry.id);
+
+  if (stopsError) {
+    console.error("Failed to delete submitted guide stops", stopsError);
+    return NextResponse.json({ error: "Guide could not be deleted." }, { status: 500 });
+  }
+
   const { error } = await service
     .from("entries")
     .delete()

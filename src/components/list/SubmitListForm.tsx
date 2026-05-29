@@ -377,10 +377,12 @@ export function SubmitListForm({
   const [category, setCategory] = useState(CATEGORIES[0]);
   const [message, setMessage] = useState<string | null>(null);
   const [appliedAddQueryKey, setAppliedAddQueryKey] = useState<string | null>(null);
+  const hydratedEditListIdRef = useRef<string | null>(null);
   const manualLocationRowRefs = useRef<Record<string, HTMLDivElement | null>>({});
   const previousManualLocationRectsRef = useRef<Record<string, DOMRect>>({});
   const resetFormState = () => {
     setEditingListId(null);
+    hydratedEditListIdRef.current = null;
     setUrl("");
     setTitle("");
     setDescription("");
@@ -1502,16 +1504,6 @@ export function SubmitListForm({
     }
   };
   const handleTrashClick = () => {
-    if (editingManualLocationId) {
-      const target = manualGuideLocations.find((location) => location.id === editingManualLocationId);
-      setPendingDelete({
-        kind: "entry",
-        id: editingManualLocationId,
-        name: target?.name ?? "this entry",
-      });
-      return;
-    }
-
     handleDeleteEditingGuide();
   };
   const handleConfirmPendingDelete = () => {
@@ -1543,7 +1535,7 @@ export function SubmitListForm({
 
   useEffect(() => {
     const editId = controlledEditListId ?? searchParams.get("edit");
-    if (!editId || editingListId === editId) {
+    if (!editId || hydratedEditListIdRef.current === editId) {
       return;
     }
 
@@ -1558,8 +1550,9 @@ export function SubmitListForm({
       return;
     }
 
+    hydratedEditListIdRef.current = editId;
     handleEditSubmittedList(target);
-  }, [controlledEditListId, currentUser, editingListId, searchParams, submittedLists]);
+  }, [controlledEditListId, currentUser, searchParams, submittedLists]);
   useEffect(() => {
     if (controlledEditListId === null && editingListId && hideModeToggle) {
       resetFormState();
@@ -3027,8 +3020,8 @@ export function SubmitListForm({
                     className={`inline-flex h-11 w-11 items-center justify-center rounded-full border border-red-200 bg-white text-red-600 hover:border-red-300 hover:text-red-700 ${
                       draggingNestedPlace || draggingManualLocationId ? "shadow-md ring-2 ring-red-100" : ""
                     }`}
-                    aria-label={editingManualLocationId ? "Delete entry" : "Delete guide"}
-                    title={editingManualLocationId ? "Delete entry" : "Delete guide"}
+                    aria-label="Delete guide"
+                    title="Delete guide"
                   >
                     <Trash2 className="h-4 w-4" />
                   </button>
