@@ -68,7 +68,6 @@ export async function loadSubmittedGuides() {
     .from("entries_maplist")
     .select("list,updated_at")
     .eq("source_table", "submitted_guides")
-    .eq("user_id", user.id)
     .order("updated_at", { ascending: false })
     .returns<SubmittedGuideRecord[]>();
 

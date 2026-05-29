@@ -13,6 +13,7 @@ export const dynamic = "force-dynamic";
 export const runtime = "nodejs";
 
 type Coordinates = [number, number];
+type GuideVisibility = "private" | "followers" | "public";
 
 type DestinationRow = {
   id: string;
@@ -89,6 +90,40 @@ function cleanText(value: unknown, maxLength: number) {
 function optionalText(value: unknown, maxLength: number) {
   const cleaned = cleanText(value, maxLength);
   return cleaned || null;
+}
+
+function getAppMetadataString(user: SupabaseUser, key: string) {
+  const value = user.app_metadata?.[key];
+  return typeof value === "string" ? value : undefined;
+}
+
+function getAppMetadataBoolean(user: SupabaseUser, key: string) {
+  const value = user.app_metadata?.[key];
+  return typeof value === "boolean" ? value : undefined;
+}
+
+function canPublishPublicGuides(user: SupabaseUser) {
+  if (
+    getAppMetadataBoolean(user, "can_publish_guides") === true ||
+    getAppMetadataBoolean(user, "rguide_can_publish_guides") === true
+  ) {
+    return true;
+  }
+
+  const userType =
+    getAppMetadataString(user, "rguide_user_type") ??
+    getAppMetadataString(user, "user_type") ??
+    getAppMetadataString(user, "role");
+
+  return ["admin", "editor", "publisher", "guide_publisher"].includes(
+    userType?.toLowerCase() ?? "",
+  );
+}
+
+function getRequestedVisibility(list: MapList): GuideVisibility {
+  if (list.visibility === "public") return "public";
+  if (list.visibility === "private" || list.journal?.visibility === "private") return "private";
+  return "followers";
 }
 
 function dateOnly(value: string | undefined) {
@@ -704,7 +739,18 @@ export async function POST(request: NextRequest) {
       ),
     );
     const slug = await getAvailableEntrySlug(service, list.slug, existingEntry?.id ?? null);
-    const status = list.journal?.visibility === "private" ? "draft" : "published";
+    const requestedVisibility = getRequestedVisibility(list);
+    const canPublishPublic = canPublishPublicGuides(user);
+
+    if (requestedVisibility === "public" && !canPublishPublic) {
+      return NextResponse.json(
+        { error: "Your account is not allowed to publish public guides yet." },
+        { status: 403 },
+      );
+    }
+
+    const visibility = requestedVisibility === "public" ? "public" : requestedVisibility;
+    const status = visibility === "public" ? "published" : "draft";
 
     const { data: entryRows, error: entryError } = await service
       .from("entries")
@@ -738,11 +784,17 @@ export async function POST(request: NextRequest) {
           journey_end_date: dateOnly(list.journey?.endDate ?? list.itinerary?.endDate),
           journal_visited_at: dateOnly(list.journal?.visitedAt),
           journal_note: list.journal?.note ?? null,
-          journal_visibility: list.journal?.visibility ?? null,
+          journal_visibility:
+            list.submissionType === "journal"
+              ? visibility === "public"
+                ? "public"
+                : "private"
+              : null,
           source_table: "submitted_guides",
           metadata: {
             submittedFrom: "browser",
             savePath: "server_resolved_venues",
+            visibility,
             stopCount: resolvedStops.length,
           },
         },
@@ -794,6 +846,13 @@ export async function POST(request: NextRequest) {
       guide: {
         ...list,
         slug,
+        visibility,
+        journal: list.journal
+          ? {
+              ...list.journal,
+              visibility: visibility === "public" ? "public" : "private",
+            }
+          : list.journal,
         stops: resolvedStops,
       },
     });

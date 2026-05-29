@@ -1,0 +1,336 @@
+-- Keep submitted guides non-public by default while allowing approved
+-- publisher accounts to intentionally publish them.
+
+create table if not exists public.user_follows (
+  follower_id uuid not null references auth.users(id) on delete cascade,
+  following_id uuid not null references auth.users(id) on delete cascade,
+  created_at timestamptz not null default now(),
+  primary key (follower_id, following_id),
+  constraint user_follows_no_self_follow check (follower_id <> following_id)
+);
+
+create index if not exists user_follows_following_idx
+on public.user_follows (following_id, follower_id);
+
+alter table public.user_follows enable row level security;
+
+grant select, insert, delete on public.user_follows to authenticated;
+
+do $$
+begin
+  create policy "Users can read their follow graph"
+  on public.user_follows
+  for select
+  using (auth.uid() in (follower_id, following_id));
+exception
+  when duplicate_object then null;
+end;
+$$;
+
+do $$
+begin
+  create policy "Users can follow from their own account"
+  on public.user_follows
+  for insert
+  with check (auth.uid() = follower_id);
+exception
+  when duplicate_object then null;
+end;
+$$;
+
+do $$
+begin
+  create policy "Users can unfollow from their own account"
+  on public.user_follows
+  for delete
+  using (auth.uid() = follower_id);
+exception
+  when duplicate_object then null;
+end;
+$$;
+
+update public.entries entry
+set
+  status = 'draft'::public.rguide_entry_status,
+  journal_visibility = case
+    when entry.submission_type = 'journal'::public.rguide_submission_type then 'private'
+    else entry.journal_visibility
+  end,
+  metadata = jsonb_set(
+    coalesce(entry.metadata, '{}'::jsonb),
+    '{visibility}',
+    '"followers"'::jsonb,
+    true
+  )
+where entry.source_table = 'submitted_guides'
+  and coalesce(entry.metadata->>'visibility', 'followers') <> 'public';
+
+update public.entry_render_cache cache
+set
+  is_current = false,
+  stale_at = now(),
+  metadata = coalesce(cache.metadata, '{}'::jsonb) || jsonb_build_object('stale_reason', 'submitted_guide_visibility')
+where exists (
+  select 1
+  from public.entries entry
+  where entry.id = cache.entry_id
+    and entry.source_table = 'submitted_guides'
+    and entry.status <> 'published'::public.rguide_entry_status
+);
+
+do $$
+begin
+  create policy "Followers can read followed submitted entries"
+  on public.entries
+  for select
+  using (
+    source_table = 'submitted_guides'
+    and coalesce(metadata->>'visibility', 'followers') = 'followers'
+    and exists (
+      select 1
+      from public.user_follows follow
+      where follow.follower_id = auth.uid()
+        and follow.following_id = entries.user_id
+    )
+  );
+exception
+  when duplicate_object then null;
+end;
+$$;
+
+do $$
+begin
+  create policy "Followers can read stops for followed submitted entries"
+  on public.entry_stops
+  for select
+  using (
+    exists (
+      select 1
+      from public.entries entry
+      join public.user_follows follow
+        on follow.follower_id = auth.uid()
+        and follow.following_id = entry.user_id
+      where entry.id = entry_stops.entry_id
+        and entry.source_table = 'submitted_guides'
+        and coalesce(entry.metadata->>'visibility', 'followers') = 'followers'
+    )
+  );
+exception
+  when duplicate_object then null;
+end;
+$$;
+
+do $$
+begin
+  create policy "Followers can read sources for followed submitted entries"
+  on public.sources
+  for select
+  using (
+    exists (
+      select 1
+      from public.entity_sources entity_source
+      join public.entries entry on entry.id = entity_source.entity_id
+      join public.user_follows follow
+        on follow.follower_id = auth.uid()
+        and follow.following_id = entry.user_id
+      where entity_source.source_id = sources.id
+        and entity_source.entity_type = 'entry'::public.rguide_source_entity_type
+        and entry.source_table = 'submitted_guides'
+        and coalesce(entry.metadata->>'visibility', 'followers') = 'followers'
+    )
+  );
+exception
+  when duplicate_object then null;
+end;
+$$;
+
+do $$
+begin
+  create policy "Followers can read entity sources for followed submitted entries"
+  on public.entity_sources
+  for select
+  using (
+    entity_type = 'entry'::public.rguide_source_entity_type
+    and exists (
+      select 1
+      from public.entries entry
+      join public.user_follows follow
+        on follow.follower_id = auth.uid()
+        and follow.following_id = entry.user_id
+      where entry.id = entity_sources.entity_id
+        and entry.source_table = 'submitted_guides'
+        and coalesce(entry.metadata->>'visibility', 'followers') = 'followers'
+    )
+  );
+exception
+  when duplicate_object then null;
+end;
+$$;
+
+create or replace view public.entries_maplist
+with (security_invoker = true) as
+select
+  entry.id,
+  jsonb_build_object(
+    'id', coalesce(entry.legacy_id, entry.id::text),
+    'slug', entry.slug,
+    'visibility', case
+      when entry.status = 'published'::public.rguide_entry_status then 'public'
+      when entry.metadata->>'visibility' in ('private', 'followers') then entry.metadata->>'visibility'
+      else 'followers'
+    end,
+    'seoSlug', entry.seo_slug,
+    'seoTitle', entry.seo_title,
+    'seoDescription', entry.seo_description,
+    'title', entry.title,
+    'description', entry.description,
+    'highlights', to_jsonb(entry.highlights),
+    'photo', entry.photo_url,
+    'url', coalesce(entry.canonical_url, '/guides/' || entry.slug),
+    'category', entry.category,
+    'submissionType', case
+      when entry.submission_type = 'journey'::public.rguide_submission_type then 'itinerary'
+      else entry.submission_type::text
+    end,
+    'schemaSubmissionType', entry.submission_type::text,
+    'journey', case
+      when entry.journey_start_date is null and entry.journey_end_date is null then null
+      else jsonb_build_object(
+        'startDate', entry.journey_start_date,
+        'endDate', entry.journey_end_date
+      )
+    end,
+    'itinerary', case
+      when entry.journey_start_date is null and entry.journey_end_date is null then null
+      else jsonb_build_object(
+        'startDate', entry.journey_start_date,
+        'endDate', entry.journey_end_date
+      )
+    end,
+    'journal', case
+      when entry.journal_visited_at is null and entry.journal_note is null then null
+      else jsonb_build_object(
+        'visitedAt', entry.journal_visited_at,
+        'note', entry.journal_note,
+        'visibility', entry.journal_visibility
+      )
+    end,
+    'location', jsonb_build_object(
+      'city', city.name,
+      'neighborhood', neighborhood.name,
+      'country', coalesce(entry.country_name, city.country_name, destination.country_name),
+      'continent', coalesce(
+        entry.continent_name,
+        city.continent_name,
+        destination.continent_name,
+        case when destination.scope = 'continent'::public.destination_scope then destination.name end
+      ),
+      'scope', coalesce(
+        case when city.id is not null then 'city' end,
+        destination.scope::text,
+        case when entry.country_name = 'World' and entry.continent_name = 'Global' then 'continent' end,
+        case when entry.country_name is not null then 'country' end
+      )
+    ),
+    'creator', jsonb_build_object(
+      'id', entry.creator_id,
+      'name', entry.creator_name,
+      'avatar', entry.creator_avatar
+    ),
+    'upvotes', entry.upvotes,
+    'createdAt', entry.created_on,
+    'stops', coalesce(stops.items, '[]'::jsonb),
+    'sources', coalesce(sources.items, '[]'::jsonb)
+  ) as list,
+  entry.submission_type,
+  entry.category,
+  entry.city_id,
+  entry.neighborhood_id,
+  entry.destination_id,
+  entry.status,
+  entry.created_at,
+  entry.updated_at,
+  entry.user_id,
+  entry.source_table
+from public.entries entry
+left join public.destinations destination on destination.id = entry.destination_id
+left join public.destinations city on city.id = entry.city_id
+left join public.destinations neighborhood on neighborhood.id = entry.neighborhood_id
+left join lateral (
+  select jsonb_agg(
+    jsonb_strip_nulls(
+      jsonb_build_object(
+        'id', coalesce(stop.legacy_id, stop.id::text),
+        'poiId', stop.poi_legacy_id,
+        'venueId', stop.venue_id,
+        'sourceKind', stop.metadata ->> 'sourceKind',
+        'sourceListId', stop.metadata ->> 'sourceListId',
+        'sourceStopId', stop.metadata ->> 'sourceStopId',
+        'sourceVenueId', stop.metadata ->> 'sourceVenueId',
+        'externalPlace', stop.metadata -> 'externalPlace',
+        'defaultDescription', stop.metadata ->> 'defaultDescription',
+        'name', stop.name,
+        'coordinates', stop.coordinates,
+        'description', stop.description,
+        'category', stop.category,
+        'venueKind', venue.venue_kind,
+        'lodgingType', venue.lodging_type,
+        'foodServiceType', venue.food_service_type,
+        'cuisineTypes', to_jsonb(venue.cuisine_types),
+        'nightlifeType', venue.nightlife_type,
+        'musicGenres', to_jsonb(venue.music_genres),
+        'attributeTags', to_jsonb(venue.attribute_tags),
+        'tags', to_jsonb(venue.attribute_tags),
+        'photo', coalesce(primary_media.public_url, primary_media.url),
+        'price', stop.price_label,
+        'priceSource', stop.price_source,
+        'bookingUrl', stop.booking_url,
+        'officialUrl', stop.official_url,
+        'eventTime', stop.event_time_label,
+        'eventVenue', stop.event_venue_label,
+        'places', stop.places,
+        'routeCoordinates', stop.metadata -> 'routeCoordinates',
+        'journeyDate', stop.journey_date,
+        'journeyDay', stop.journey_day,
+        'itineraryDate', stop.journey_date,
+        'itineraryDay', stop.journey_day,
+        'hours', stop.hours
+      )
+    )
+    order by stop.stop_order, stop.created_at
+  ) as items
+  from public.entry_stops stop
+  left join public.venues venue on venue.id = stop.venue_id
+  left join public.venue_media primary_media
+    on primary_media.id = venue.primary_photo_id
+    and primary_media.is_active = true
+  where stop.entry_id = entry.id
+) stops on true
+left join lateral (
+  select jsonb_agg(
+    jsonb_build_object('name', source.name, 'url', source.url)
+    order by entity_source.sourced_at desc
+  ) as items
+  from public.entity_sources entity_source
+  join public.sources source on source.id = entity_source.source_id
+  where entity_source.entity_type = 'entry'::public.rguide_source_entity_type
+    and entity_source.entity_id = entry.id
+) sources on true
+where (
+    entry.status = 'published'::public.rguide_entry_status
+    and (
+      entry.submission_type <> 'journal'::public.rguide_submission_type
+      or coalesce(entry.journal_visibility, 'public') = 'public'
+    )
+  )
+  or entry.user_id = auth.uid()
+  or (
+    entry.source_table = 'submitted_guides'
+    and coalesce(entry.metadata->>'visibility', 'followers') = 'followers'
+    and exists (
+      select 1
+      from public.user_follows follow
+      where follow.follower_id = auth.uid()
+        and follow.following_id = entry.user_id
+    )
+  );
