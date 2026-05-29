@@ -1,7 +1,7 @@
 "use client";
 
 import type { ReactNode } from "react";
-import { ChevronDown } from "lucide-react";
+import { ChevronDown, Plus } from "lucide-react";
 
 import { CATEGORY_STYLES } from "@/lib/constants";
 import type { ListCategory } from "@/types";
@@ -17,8 +17,12 @@ interface GuideStopCardChromeProps {
   showStopNumbers?: boolean;
   isExpanded: boolean;
   isActive: boolean;
+  showAddAction: boolean;
+  isStopInItinerary: boolean;
+  isStopAddedToGuide: boolean;
   animationDelay?: string;
   onHeaderActivate?: (stopId: string) => void;
+  onAddStop: () => void;
   handlers: GuideStopHandlers;
   children: ReactNode;
 }
@@ -32,12 +36,17 @@ export function GuideStopCardChrome({
   showStopNumbers = true,
   isExpanded,
   isActive,
+  showAddAction,
+  isStopInItinerary,
+  isStopAddedToGuide,
   animationDelay,
   onHeaderActivate,
+  onAddStop,
   handlers,
   children,
 }: GuideStopCardChromeProps) {
   const categoryStyle = CATEGORY_STYLES[category];
+  const isAddActive = isStopInItinerary || isStopAddedToGuide;
 
   return (
     <li
@@ -110,20 +119,38 @@ export function GuideStopCardChrome({
                 </span>
               ) : null}
             </span>
-            {stop.price ? (
-              <span
-                title={stop.priceSource ? `Price source: ${stop.priceSource}` : "Restaurant price tier"}
-                className="rounded-md bg-white/80 px-2 py-0.5 text-[10px] font-semibold text-slate-500 ring-1 ring-slate-950/10"
-              >
-                {stop.price}
-              </span>
-            ) : null}
             {stop.places?.length ? (
               <span className="rounded-md bg-slate-950/[0.04] px-2 py-0.5 text-[10px] font-medium uppercase text-slate-600 ring-1 ring-slate-950/[0.04]">
                 {stop.places.length} places
               </span>
             ) : null}
           </div>
+          {stop.price ? (
+            <span
+              title={stop.priceSource ? `Price source: ${stop.priceSource}` : "Restaurant price tier"}
+              className="inline-flex h-7 min-w-7 shrink-0 items-center justify-center rounded-md bg-white/80 px-2 text-[10px] font-semibold text-slate-500 ring-1 ring-slate-950/10"
+            >
+              {stop.price}
+            </span>
+          ) : null}
+          {isExpanded && showAddAction ? (
+            <button
+              type="button"
+              onClick={(event) => {
+                event.stopPropagation();
+                onAddStop();
+              }}
+              className={`inline-flex h-7 w-7 shrink-0 items-center justify-center rounded-full border text-[11px] font-medium transition ${
+                isAddActive
+                  ? "border-emerald-600 bg-emerald-600 text-white"
+                  : "border-slate-950/10 bg-white/80 text-slate-700 hover:border-slate-950/20 hover:text-slate-900"
+              }`}
+              aria-label="Add"
+              title="Add"
+            >
+              <Plus className="h-3.5 w-3.5" />
+            </button>
+          ) : null}
           <button
             type="button"
             onClick={() => handlers.onStopToggle?.(stop.id)}
