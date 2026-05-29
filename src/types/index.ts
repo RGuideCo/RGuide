@@ -241,6 +241,13 @@ export interface ListSource {
 export interface GuideStop {
   id: string;
   poiId?: string;
+  venueId?: string;
+  sourceKind?: "guide" | "stop";
+  sourceListId?: string;
+  sourceStopId?: string;
+  sourceVenueId?: string;
+  defaultDescription?: string;
+  externalPlace?: ExternalPlaceReference;
   name: string;
   coordinates: [number, number];
   description: string;
@@ -302,6 +309,30 @@ export interface GuideStop {
         fall?: string;
         winter?: string;
       };
+}
+
+export type ExternalPlaceProvider =
+  | "geoapify"
+  | "google"
+  | "osm"
+  | "rguide"
+  | "manual"
+  | "wikidata"
+  | "foursquare"
+  | "other";
+
+export interface ExternalPlaceReference {
+  provider: ExternalPlaceProvider;
+  providerPlaceId?: string;
+  label?: string;
+  addressLine1?: string;
+  addressLine2?: string;
+  city?: string;
+  state?: string;
+  country?: string;
+  postcode?: string;
+  url?: string;
+  coordinates?: [number, number];
 }
 
 export type PoiMapMarker =

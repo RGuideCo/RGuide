@@ -10,7 +10,7 @@ import { CATEGORIES, CATEGORY_STYLES } from "@/lib/constants";
 import { getListHref } from "@/lib/routes";
 import { slugify } from "@/lib/utils";
 import { useAppStore } from "@/store/app-store";
-import { MapList, SelectionState, SubmissionType } from "@/types";
+import { ExternalPlaceReference, MapList, SelectionState, SubmissionType } from "@/types";
 
 const urlPattern = /^https:\/\/((www\.)?google\.[a-z.]+\/maps|maps\.app\.goo\.gl)/i;
 const DRAFT_PLACE_SEARCH_TARGET = "__draft-location__";
@@ -174,10 +174,23 @@ interface GeoapifySuggestion {
   id: string;
   label: string;
   helperText: string;
+  provider?: "rguide" | "geoapify";
+  source?: "internal" | "external";
+  venueId?: string;
+  poiId?: string;
   city?: string;
   state?: string;
   country?: string;
   coordinates?: [number, number];
+  officialUrl?: string;
+  venueKind?: MapList["stops"][number]["venueKind"];
+  lodgingType?: MapList["stops"][number]["lodgingType"];
+  foodServiceType?: MapList["stops"][number]["foodServiceType"];
+  cuisineTypes?: MapList["stops"][number]["cuisineTypes"];
+  nightlifeType?: MapList["stops"][number]["nightlifeType"];
+  musicGenres?: MapList["stops"][number]["musicGenres"];
+  attributeTags?: MapList["stops"][number]["attributeTags"];
+  externalPlace?: ExternalPlaceReference;
 }
 
 interface ManualGuideLocation {
@@ -186,6 +199,22 @@ interface ManualGuideLocation {
   context: string;
   description: string;
   category?: MapList["category"];
+  venueId?: string;
+  poiId?: string;
+  sourceKind?: MapList["stops"][number]["sourceKind"];
+  sourceListId?: string;
+  sourceStopId?: string;
+  sourceVenueId?: string;
+  defaultDescription?: string;
+  externalPlace?: ExternalPlaceReference;
+  officialUrl?: string;
+  venueKind?: MapList["stops"][number]["venueKind"];
+  lodgingType?: MapList["stops"][number]["lodgingType"];
+  foodServiceType?: MapList["stops"][number]["foodServiceType"];
+  cuisineTypes?: MapList["stops"][number]["cuisineTypes"];
+  nightlifeType?: MapList["stops"][number]["nightlifeType"];
+  musicGenres?: MapList["stops"][number]["musicGenres"];
+  attributeTags?: MapList["stops"][number]["attributeTags"];
   itineraryDate?: string;
   country?: string;
   continent?: string;
@@ -197,6 +226,22 @@ interface DraftManualLocation {
   name: string;
   context: string;
   category?: MapList["category"];
+  venueId?: string;
+  poiId?: string;
+  sourceKind?: MapList["stops"][number]["sourceKind"];
+  sourceListId?: string;
+  sourceStopId?: string;
+  sourceVenueId?: string;
+  defaultDescription?: string;
+  externalPlace?: ExternalPlaceReference;
+  officialUrl?: string;
+  venueKind?: MapList["stops"][number]["venueKind"];
+  lodgingType?: MapList["stops"][number]["lodgingType"];
+  foodServiceType?: MapList["stops"][number]["foodServiceType"];
+  cuisineTypes?: MapList["stops"][number]["cuisineTypes"];
+  nightlifeType?: MapList["stops"][number]["nightlifeType"];
+  musicGenres?: MapList["stops"][number]["musicGenres"];
+  attributeTags?: MapList["stops"][number]["attributeTags"];
   itineraryDate?: string;
   country?: string;
   continent?: string;
@@ -275,7 +320,7 @@ export function SubmitListForm({
   fillPane = false,
   onClose,
 }: SubmitListFormProps) {
-  const geoapifyApiKey = process.env.NEXT_PUBLIC_GEOAPIFY_API_KEY;
+  const livePlaceSearchEnabled = true;
   const searchParams = useSearchParams();
   const { currentUser, submittedLists, submitList, updateSubmittedList, deleteSubmittedList, openAuthModal } = useAppStore();
   const [submissionType, setSubmissionType] = useState<SubmissionType>("guide");
@@ -404,7 +449,7 @@ export function SubmitListForm({
     return manualGuideLocations.find((location) => location.id === placeSearchTargetId) ?? null;
   }, [draftManualLocation, manualGuideLocations, placeSearchTargetId]);
   const shouldShowPlaceSuggestionsPanel = Boolean(
-    !geoapifyApiKey ||
+    !livePlaceSearchEnabled ||
       isPlaceSearching ||
       placeSuggestions.length > 0 ||
       (placeSearch.trim().length >= 2 && !isPlaceSearching),
@@ -853,7 +898,7 @@ export function SubmitListForm({
 
   useEffect(() => {
     const query = locationSearch.trim();
-    if (!showLocationSearch || !geoapifyApiKey || query.length < 2) {
+    if (!showLocationSearch || !livePlaceSearchEnabled || query.length < 2) {
       setLocationSuggestions([]);
       setIsLocationSearching(false);
       return;
@@ -863,47 +908,18 @@ export function SubmitListForm({
     const timeout = setTimeout(async () => {
       setIsLocationSearching(true);
       try {
-        const endpoint = new URL("https://api.geoapify.com/v1/geocode/autocomplete");
-        endpoint.searchParams.set("text", query);
-        endpoint.searchParams.set("format", "json");
+        const endpoint = new URL("/api/places/search", window.location.origin);
+        endpoint.searchParams.set("query", query);
         endpoint.searchParams.set("limit", "6");
-        endpoint.searchParams.set("apiKey", geoapifyApiKey);
+        if (selectedCity?.name) endpoint.searchParams.set("city", selectedCity.name);
+        if (selectedCountry?.name) endpoint.searchParams.set("country", selectedCountry.name);
 
         const response = await fetch(endpoint.toString(), { signal: controller.signal });
         if (!response.ok) {
-          throw new Error("Geoapify request failed");
+          throw new Error("Place search failed");
         }
-        const payload = (await response.json()) as {
-          results?: Array<{
-            place_id?: string;
-            formatted?: string;
-            city?: string;
-            state?: string;
-            country?: string;
-            lat?: number;
-            lon?: number;
-          }>;
-        };
-
-        const suggestions = (payload.results ?? [])
-          .map((result) => {
-            const label = result.formatted?.trim();
-            if (!label) return null;
-            const helperParts = [result.city, result.state, result.country].filter(Boolean);
-            return {
-              id: result.place_id ?? label,
-              label,
-              helperText: helperParts.join(" • "),
-              city: result.city,
-              state: result.state,
-              country: result.country,
-              coordinates:
-                typeof result.lat === "number" && typeof result.lon === "number"
-                  ? [result.lat, result.lon]
-                  : undefined,
-            } as GeoapifySuggestion;
-          })
-          .filter((item): item is GeoapifySuggestion => Boolean(item));
+        const payload = (await response.json()) as { suggestions?: GeoapifySuggestion[] };
+        const suggestions = payload.suggestions ?? [];
 
         setLocationSuggestions(suggestions);
       } catch {
@@ -917,11 +933,11 @@ export function SubmitListForm({
       controller.abort();
       clearTimeout(timeout);
     };
-  }, [geoapifyApiKey, locationSearch, showLocationSearch]);
+  }, [livePlaceSearchEnabled, locationSearch, selectedCity?.name, selectedCountry?.name, showLocationSearch]);
 
   useEffect(() => {
     const query = placeSearch.trim();
-    if (!placeSearchTargetId || !activePlaceSearchLocation || !geoapifyApiKey || query.length < 2) {
+    if (!placeSearchTargetId || !activePlaceSearchLocation || !livePlaceSearchEnabled || query.length < 2) {
       setPlaceSuggestions([]);
       setIsPlaceSearching(false);
       return;
@@ -931,47 +947,18 @@ export function SubmitListForm({
     const timeout = setTimeout(async () => {
       setIsPlaceSearching(true);
       try {
-        const endpoint = new URL("https://api.geoapify.com/v1/geocode/autocomplete");
-        endpoint.searchParams.set("text", query);
-        endpoint.searchParams.set("format", "json");
+        const endpoint = new URL("/api/places/search", window.location.origin);
+        endpoint.searchParams.set("query", query);
         endpoint.searchParams.set("limit", "6");
-        endpoint.searchParams.set("apiKey", geoapifyApiKey);
+        if (selectedCity?.name) endpoint.searchParams.set("city", selectedCity.name);
+        if (selectedCountry?.name) endpoint.searchParams.set("country", selectedCountry.name);
 
         const response = await fetch(endpoint.toString(), { signal: controller.signal });
         if (!response.ok) {
-          throw new Error("Geoapify request failed");
+          throw new Error("Place search failed");
         }
-        const payload = (await response.json()) as {
-          results?: Array<{
-            place_id?: string;
-            formatted?: string;
-            city?: string;
-            state?: string;
-            country?: string;
-            lat?: number;
-            lon?: number;
-          }>;
-        };
-
-        const suggestions = (payload.results ?? [])
-          .map((result) => {
-            const label = result.formatted?.trim();
-            if (!label) return null;
-            const helperParts = [result.city, result.state, result.country].filter(Boolean);
-            return {
-              id: result.place_id ?? label,
-              label,
-              helperText: helperParts.join(" • "),
-              city: result.city,
-              state: result.state,
-              country: result.country,
-              coordinates:
-                typeof result.lat === "number" && typeof result.lon === "number"
-                  ? [result.lat, result.lon]
-                  : undefined,
-            } as GeoapifySuggestion;
-          })
-          .filter((item): item is GeoapifySuggestion => Boolean(item));
+        const payload = (await response.json()) as { suggestions?: GeoapifySuggestion[] };
+        const suggestions = payload.suggestions ?? [];
 
         setPlaceSuggestions(suggestions);
       } catch {
@@ -985,7 +972,14 @@ export function SubmitListForm({
       controller.abort();
       clearTimeout(timeout);
     };
-  }, [activePlaceSearchLocation, geoapifyApiKey, placeSearch, placeSearchTargetId]);
+  }, [
+    activePlaceSearchLocation,
+    livePlaceSearchEnabled,
+    placeSearch,
+    placeSearchTargetId,
+    selectedCity?.name,
+    selectedCountry?.name,
+  ]);
 
   const handleAutofillFromLink = () => {
     if (!url.trim()) {
@@ -1069,6 +1063,17 @@ export function SubmitListForm({
         country: locationCountry,
         continent: locationContinent,
         coordinates: suggestionOverride?.coordinates ?? inferred?.coordinates,
+        venueId: suggestionOverride?.venueId,
+        poiId: suggestionOverride?.poiId,
+        externalPlace: suggestionOverride?.externalPlace,
+        officialUrl: suggestionOverride?.officialUrl,
+        venueKind: suggestionOverride?.venueKind,
+        lodgingType: suggestionOverride?.lodgingType,
+        foodServiceType: suggestionOverride?.foodServiceType,
+        cuisineTypes: suggestionOverride?.cuisineTypes,
+        nightlifeType: suggestionOverride?.nightlifeType,
+        musicGenres: suggestionOverride?.musicGenres,
+        attributeTags: suggestionOverride?.attributeTags,
       });
       setDraftManualDescription("");
       setLocationSearch(locationName);
@@ -1126,6 +1131,17 @@ export function SubmitListForm({
         country: draftManualLocation.country,
         continent: draftManualLocation.continent,
         coordinates: draftManualLocation.coordinates,
+        venueId: draftManualLocation.venueId,
+        poiId: draftManualLocation.poiId,
+        externalPlace: draftManualLocation.externalPlace,
+        officialUrl: draftManualLocation.officialUrl,
+        venueKind: draftManualLocation.venueKind,
+        lodgingType: draftManualLocation.lodgingType,
+        foodServiceType: draftManualLocation.foodServiceType,
+        cuisineTypes: draftManualLocation.cuisineTypes,
+        nightlifeType: draftManualLocation.nightlifeType,
+        musicGenres: draftManualLocation.musicGenres,
+        attributeTags: draftManualLocation.attributeTags,
         places: draftManualLocation.places?.filter((place) => place.name.trim() || place.description.trim()),
       },
     ]);
@@ -1175,6 +1191,17 @@ export function SubmitListForm({
       country: placeCountry,
       continent: placeContinent,
       coordinates: suggestionOverride?.coordinates ?? inferred?.coordinates ?? parentLocation.coordinates,
+      venueId: suggestionOverride?.venueId,
+      poiId: suggestionOverride?.poiId,
+      externalPlace: suggestionOverride?.externalPlace,
+      officialUrl: suggestionOverride?.officialUrl,
+      venueKind: suggestionOverride?.venueKind,
+      lodgingType: suggestionOverride?.lodgingType,
+      foodServiceType: suggestionOverride?.foodServiceType,
+      cuisineTypes: suggestionOverride?.cuisineTypes,
+      nightlifeType: suggestionOverride?.nightlifeType,
+      musicGenres: suggestionOverride?.musicGenres,
+      attributeTags: suggestionOverride?.attributeTags,
     };
     setPlaceSearch("");
     setPlaceSuggestions([]);
@@ -1396,6 +1423,22 @@ export function SubmitListForm({
           context: [list.location.country, list.location.continent].filter(Boolean).join(" • "),
           description: stop.description,
           category: stop.category ?? list.category,
+          venueId: stop.venueId,
+          poiId: stop.poiId,
+          sourceKind: stop.sourceKind,
+          sourceListId: stop.sourceListId,
+          sourceStopId: stop.sourceStopId,
+          sourceVenueId: stop.sourceVenueId,
+          defaultDescription: stop.defaultDescription,
+          externalPlace: stop.externalPlace,
+          officialUrl: stop.officialUrl,
+          venueKind: stop.venueKind,
+          lodgingType: stop.lodgingType,
+          foodServiceType: stop.foodServiceType,
+          cuisineTypes: stop.cuisineTypes,
+          nightlifeType: stop.nightlifeType,
+          musicGenres: stop.musicGenres,
+          attributeTags: stop.attributeTags,
           itineraryDate: stop.itineraryDate,
           coordinates: stop.coordinates,
           places: stop.places?.map((place, placeIndex) => ({
@@ -1404,6 +1447,22 @@ export function SubmitListForm({
             context: stop.name,
             description: place.description,
             category: place.category ?? stop.category ?? list.category,
+            venueId: place.venueId,
+            poiId: place.poiId,
+            sourceKind: place.sourceKind,
+            sourceListId: place.sourceListId,
+            sourceStopId: place.sourceStopId,
+            sourceVenueId: place.sourceVenueId,
+            defaultDescription: place.defaultDescription,
+            externalPlace: place.externalPlace,
+            officialUrl: place.officialUrl,
+            venueKind: place.venueKind,
+            lodgingType: place.lodgingType,
+            foodServiceType: place.foodServiceType,
+            cuisineTypes: place.cuisineTypes,
+            nightlifeType: place.nightlifeType,
+            musicGenres: place.musicGenres,
+            attributeTags: place.attributeTags,
             coordinates: place.coordinates,
           })),
         })),
@@ -1556,20 +1615,52 @@ export function SubmitListForm({
       isManualGuide
         ? manualGuideLocations.map((location, index) => ({
             id: `manual-stop-${slugify(`${location.name}-${index + 1}`)}`,
+            poiId: location.poiId,
+            venueId: location.venueId,
+            sourceKind: location.sourceKind,
+            sourceListId: location.sourceListId,
+            sourceStopId: location.sourceStopId,
+            sourceVenueId: location.sourceVenueId,
+            defaultDescription: location.defaultDescription,
+            externalPlace: location.externalPlace,
             name: location.name,
             coordinates: location.coordinates ?? selectedCity?.coordinates ?? [0, 0],
             description: location.description.trim() || `${location.name} stop`,
             category: location.category ?? category,
+            officialUrl: location.officialUrl,
+            venueKind: location.venueKind,
+            lodgingType: location.lodgingType,
+            foodServiceType: location.foodServiceType,
+            cuisineTypes: location.cuisineTypes,
+            nightlifeType: location.nightlifeType,
+            musicGenres: location.musicGenres,
+            attributeTags: location.attributeTags,
             itineraryDate: isItinerarySubmission ? location.itineraryDate : undefined,
             itineraryDay: isItinerarySubmission
               ? getItineraryDayForDate(location.itineraryDate, itineraryStartDate)
               : undefined,
             places: location.places?.map((place, placeIndex) => ({
               id: `nested-stop-${slugify(`${place.name}-${placeIndex + 1}`)}`,
+              poiId: place.poiId,
+              venueId: place.venueId,
+              sourceKind: place.sourceKind,
+              sourceListId: place.sourceListId,
+              sourceStopId: place.sourceStopId,
+              sourceVenueId: place.sourceVenueId,
+              defaultDescription: place.defaultDescription,
+              externalPlace: place.externalPlace,
               name: place.name.trim() || `Place ${placeIndex + 1}`,
               coordinates: place.coordinates ?? location.coordinates ?? selectedCity?.coordinates ?? [0, 0],
               description: place.description.trim() || `${place.name || `Place ${placeIndex + 1}`} stop`,
               category: place.category ?? location.category ?? category,
+              officialUrl: place.officialUrl,
+              venueKind: place.venueKind,
+              lodgingType: place.lodgingType,
+              foodServiceType: place.foodServiceType,
+              cuisineTypes: place.cuisineTypes,
+              nightlifeType: place.nightlifeType,
+              musicGenres: place.musicGenres,
+              attributeTags: place.attributeTags,
             })),
           }))
         : [];
@@ -2167,21 +2258,21 @@ export function SubmitListForm({
                             </button>
                           </div>
                           <div className="absolute left-0 right-0 z-20 mt-2 overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-lg">
-                            {!geoapifyApiKey ? (
+                            {!livePlaceSearchEnabled ? (
                               <div className="px-4 py-3 text-xs text-slate-500">
-                                Add `NEXT_PUBLIC_GEOAPIFY_API_KEY` to enable live location suggestions.
+                                Live place search is unavailable.
                               </div>
                             ) : null}
-                            {geoapifyApiKey && isLocationSearching ? (
+                            {livePlaceSearchEnabled && isLocationSearching ? (
                               <div className="px-4 py-3 text-xs text-slate-500">Searching locations...</div>
                             ) : null}
-                            {geoapifyApiKey &&
+                            {livePlaceSearchEnabled &&
                             !isLocationSearching &&
                             locationSuggestions.length === 0 &&
                             locationSearch.trim().length >= 2 ? (
                               <div className="px-4 py-3 text-xs text-slate-500">No suggestions found.</div>
                             ) : null}
-                            {geoapifyApiKey &&
+                            {livePlaceSearchEnabled &&
                               locationSuggestions.map((suggestion) => (
                                 <button
                                   key={suggestion.id}
@@ -2420,21 +2511,21 @@ export function SubmitListForm({
                                           </div>
                                           {shouldShowPlaceSuggestionsPanel ? (
                                           <div className="absolute left-0 right-0 z-20 mt-2 overflow-hidden rounded-xl border border-slate-200 bg-white shadow-lg">
-                                            {!geoapifyApiKey ? (
+                                            {!livePlaceSearchEnabled ? (
                                               <div className="px-3 py-2 text-xs text-slate-500">
-                                                Add `NEXT_PUBLIC_GEOAPIFY_API_KEY` to enable live place suggestions.
+                                                Live place search is unavailable.
                                               </div>
                                             ) : null}
-                                            {geoapifyApiKey && isPlaceSearching ? (
+                                            {livePlaceSearchEnabled && isPlaceSearching ? (
                                               <div className="px-3 py-2 text-xs text-slate-500">Searching places...</div>
                                             ) : null}
-                                            {geoapifyApiKey &&
+                                            {livePlaceSearchEnabled &&
                                             !isPlaceSearching &&
                                             placeSuggestions.length === 0 &&
                                             placeSearch.trim().length >= 2 ? (
                                               <div className="px-3 py-2 text-xs text-slate-500">No suggestions found.</div>
                                             ) : null}
-                                            {geoapifyApiKey &&
+                                            {livePlaceSearchEnabled &&
                                               placeSuggestions.map((suggestion) => (
                                                 <button
                                                   key={suggestion.id}
@@ -2707,21 +2798,21 @@ export function SubmitListForm({
                               </div>
                               {shouldShowPlaceSuggestionsPanel ? (
                               <div className="absolute left-0 right-0 z-20 mt-2 overflow-hidden rounded-xl border border-slate-200 bg-white shadow-lg">
-                                {!geoapifyApiKey ? (
+                                {!livePlaceSearchEnabled ? (
                                   <div className="px-3 py-2 text-xs text-slate-500">
-                                    Add `NEXT_PUBLIC_GEOAPIFY_API_KEY` to enable live place suggestions.
+                                    Live place search is unavailable.
                                   </div>
                                 ) : null}
-                                {geoapifyApiKey && isPlaceSearching ? (
+                                {livePlaceSearchEnabled && isPlaceSearching ? (
                                   <div className="px-3 py-2 text-xs text-slate-500">Searching places...</div>
                                 ) : null}
-                                {geoapifyApiKey &&
+                                {livePlaceSearchEnabled &&
                                 !isPlaceSearching &&
                                 placeSuggestions.length === 0 &&
                                 placeSearch.trim().length >= 2 ? (
                                   <div className="px-3 py-2 text-xs text-slate-500">No suggestions found.</div>
                                 ) : null}
-                                {geoapifyApiKey &&
+                                {livePlaceSearchEnabled &&
                                   placeSuggestions.map((suggestion) => (
                                     <button
                                       key={suggestion.id}
