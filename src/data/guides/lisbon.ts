@@ -250,7 +250,7 @@ const diningStops = [
     "lisbon-dining-belcanto",
     "Belcanto",
     [38.710061, -9.141488],
-    "Belcanto is the formal reservation in this guide, with Jose Avillez's Chiado dining room still carrying Lisbon's clearest two-star tasting-menu signal. MICHELIN and the restaurant's own site frame it around contemporary Portuguese cooking rather than a generic luxury room. Book it for a whole evening, not as a quick stop between viewpoints.",
+    "Belcanto is Lisbon dressed for dinner: quiet Chiado polish, precise Portuguese flavors, and the kind of service that makes the room feel slower than the street outside. The cooking is modern without losing the Atlantic salt and old-country backbone that make it belong here. Book it for a whole evening, not as a quick stop between viewpoints.",
     {
       venueKind: "food_drink",
       foodServiceType: "restaurant",
@@ -267,7 +267,7 @@ const diningStops = [
     "lisbon-dining-cervejaria-ramiro",
     "Cervejaria Ramiro",
     [38.720198, -9.135706],
-    "Ramiro gives the list Lisbon's seafood counterweight to tasting menus: shellfish, beer, fast service, and the famous prego finish. Eater and current dining guides keep it in the essential conversation, and the official site remains active for restaurant details. Go off peak or expect the queue to become part of the plan.",
+    "Ramiro is the seafood meal with elbows on the table: scarlet prawns, crab shells, cold beer, and a prego at the end like Lisbon's little punchline. It is not romantic in the candlelit sense; it is romantic because the room moves like a machine built for appetite. Go off peak or accept that the queue is part of the ritual.",
     {
       venueKind: "food_drink",
       foodServiceType: "restaurant",
@@ -284,7 +284,7 @@ const diningStops = [
     "lisbon-dining-prado",
     "Prado",
     [38.710563, -9.135024],
-    "Prado is the produce-led modern Portuguese room near the cathedral, useful when you want Lisbon to taste seasonal rather than nostalgic. Its official page and major restaurant lists place it in the current farm-to-table conversation, with small plates and Portuguese wines carrying the meal. It is better as a reserved dinner than as a last-minute old-town fallback.",
+    "Prado is where old Lisbon's stone lanes meet the new Portuguese pantry: vegetables with bite, seafood handled cleanly, and wines that make the meal feel rooted rather than showy. The room is relaxed, but the cooking is not casual. Reserve it for a proper dinner, because wandering in after a cathedral loop sells it short.",
     {
       venueKind: "food_drink",
       foodServiceType: "restaurant",
@@ -301,7 +301,7 @@ const diningStops = [
     "lisbon-dining-canalha",
     "Canalha",
     [38.6971, -9.2003],
-    "Canalha earns a Belém-side dining slot because it gives the neighborhood a serious contemporary Portuguese meal beyond pastry and monuments. MICHELIN highlights dishes like prawn omelette and squid with sheep's butter, while the official Paradigma page keeps the restaurant open in its current group portfolio. Use it when a Belém day should end with dinner instead of a tram ride back to Chiado.",
+    "Canalha is the Belém correction to a day that can get trapped between pastry boxes and monument queues. The kitchen leans Portuguese, generous, and a little rough around the edges in the best way: seafood, eggs, butter, smoke, and plates built to share. Use it when the west side deserves dinner instead of a tram ride back to Chiado.",
     {
       venueKind: "food_drink",
       foodServiceType: "restaurant",
@@ -318,7 +318,7 @@ const diningStops = [
     "lisbon-dining-o-velho-eurico",
     "O Velho Eurico",
     [38.712715, -9.135417],
-    "O Velho Eurico keeps the guide from becoming only polished dining, because its Mouraria neo-tasca energy sits close to Lisbon's everyday restaurant grammar. The Infatuation and current local roundups keep pointing travelers toward the room, while the venue's Instagram remains the most direct maintained channel. Reserve or arrive with patience; the draw is compact, loud, and food-first.",
+    "O Velho Eurico is the room that keeps this list honest: loud, tight, funny, and more interested in feeding you well than flattering your itinerary. It feels like a tasca that swallowed a younger chef's record collection and kept the good instincts. Reserve or arrive with patience; the payoff is food with pulse, not white-tablecloth calm.",
     {
       venueKind: "food_drink",
       foodServiceType: "restaurant",
@@ -339,7 +339,7 @@ const cheapEatStops = [
     "lisbon-cheap-manteigaria",
     "Manteigaria",
     [38.710764, -9.144062],
-    "Manteigaria is the practical pastel de nata stop when you want the pastry made in front of you without building the day around Belém. The official site and cheap-eats sources keep it positioned around custard tarts, coffee, and takeaway flow. Use the Chiado shop as a quick hill-break, not as a full breakfast plan.",
+    "Manteigaria is a perfect Lisbon utility stop: a warm pastel de nata, a bitter little coffee, and enough counter theater to make ten minutes feel like a plan. You can watch the pastry line work while the city keeps climbing outside. Use the Chiado shop as a hill-break, not as a full breakfast fantasy.",
     {
       venueKind: "food_drink",
       foodServiceType: "cafe",
@@ -356,7 +356,7 @@ const cheapEatStops = [
     "lisbon-cheap-o-trevo",
     "O Trevo",
     [38.710902, -9.143013],
-    "O Trevo is the Camões-square bifana counter that makes a cheap Lisbon lunch or late snack feel specific instead of improvised. The official page centers the bifana, while Time Out keeps the bar in Lisbon's quick-eats memory. It is small and busy, so treat it as a standing sandwich stop with beer rather than a lingering meal.",
+    "O Trevo is a bifana, a beer, and the kind of counter where overthinking would only get in the way. The sandwich is the move: pork, bread, heat, and enough grease to make the next hill feel possible. It is small and busy, so treat it as a standing snack with purpose rather than a lingering lunch.",
     {
       venueKind: "food_drink",
       foodServiceType: "fast_food",
@@ -373,7 +373,7 @@ const cheapEatStops = [
     "lisbon-cheap-a-provinciana",
     "A Provinciana",
     [38.715497, -9.140154],
-    "A Provinciana gives this guide a true central tasca where the value is lunch rhythm, house wine, and quick service rather than design. Lisboa's Lojas Com Historia page calls out its informal atmosphere, cheap food, fast service, and clock-filled room. Go for a weekday meal and keep expectations simple: this is about a plate, not a tasting arc.",
+    "A Provinciana is the central tasca you want when lunch needs to be food, not branding. The room is plain, the pace is brisk, and the charm is in plates landing before you have had time to become precious about them. Go on a weekday and keep expectations simple: this is about being fed well and getting back to the city.",
     {
       venueKind: "food_drink",
       foodServiceType: "restaurant",
@@ -390,7 +390,7 @@ const cheapEatStops = [
     "lisbon-cheap-time-out-market",
     "Time Out Market Lisboa",
     [38.707093, -9.145897],
-    "Time Out Market is not the cheapest room in Lisbon, but it is useful when a group needs several Portuguese food options in one Cais do Sodré stop. The official market page and travel sources tie it to Mercado da Ribeira and a curated stall format. Go early or outside peak dinner; the central hall gets noisy fast.",
+    "Time Out Market is not where you go to pretend you discovered a secret; it is where you go when five people want five different dinners and nobody wants to negotiate. The Mercado da Ribeira bones give it a little gravity under the glossy food-hall polish. Go early or off peak, because the central hall can turn into airport energy with better seafood.",
     {
       venueKind: "food_drink",
       foodServiceType: "stall",
@@ -407,7 +407,7 @@ const cheapEatStops = [
     "lisbon-cheap-casa-do-alentejo",
     "Casa do Alentejo",
     [38.715923, -9.139854],
-    "Casa do Alentejo works as a medium-priced comfort-food stop because the dining rooms sit inside a cultural association rather than a standard restaurant shell. Its official site confirms the institution, while cheap-eats guides keep pointing travelers to traditional Portuguese lunch value around Rossio. Check service times before going; the building is half the reason to choose it.",
+    "Casa do Alentejo is half meal, half accidental palace visit: you walk in from Rossio and suddenly the building starts doing its own performance. The food leans traditional and comforting, better for a grounded lunch than a cutting-edge dinner. Check service times before going, because the room matters almost as much as the plate.",
     {
       venueKind: "food_drink",
       foodServiceType: "restaurant",
@@ -428,7 +428,7 @@ const hotelStops = [
     "lisbon-hotel-bairro-alto",
     "Bairro Alto Hotel",
     [38.710285, -9.143282],
-    "Bairro Alto Hotel is the polished first-timer base because it sits between Chiado, Bairro Alto, and Cais do Sodré without forcing every night uphill. The official site presents it as a five-star boutique hotel on Praça Luís de Camões, and hotel roundups keep it near the top of central Lisbon stays. Ask for room fit carefully if street noise is a concern.",
+    "Bairro Alto Hotel is the polished move when you want Lisbon at your feet without sleeping in the middle of the party. Chiado, Bairro Alto, and Cais do Sodré all pull at the door, but the hotel gives the chaos a grown-up filter. Ask carefully about room position if you are noise-sensitive; location this good always has a little street tax.",
     {
       venueKind: "lodging",
       lodgingType: "hotel",
@@ -445,7 +445,7 @@ const hotelStops = [
     "lisbon-hotel-memmo-alfama",
     "Memmo Alfama",
     [38.710276, -9.130463],
-    "Memmo Alfama is the hillside old-quarter choice for travelers who want the lanes and river views to shape the stay. The official hotel page places it in Alfama, and hotel sources consistently frame it as a compact design property rather than a grand palace. It is strongest if you like walking and do not mind taxis stopping below the narrowest streets.",
+    "Memmo Alfama is for travelers who want the old quarter to boss the trip around a little. The payoff is river light, tiled lanes, and the feeling that breakfast and bedtime both belong to the hill. It is strongest if you like walking and do not mind taxis giving up before the narrowest streets do.",
     {
       venueKind: "lodging",
       lodgingType: "hotel",
@@ -462,7 +462,7 @@ const hotelStops = [
     "lisbon-hotel-valverde",
     "Valverde Lisboa Hotel & Garden",
     [38.719736, -9.144486],
-    "Valverde is the Avenida da Liberdade boutique option when you want central transit and a calmer garden-house feel. The official site foregrounds the hotel-and-garden setup, while Lisbon hotel lists use it as a more intimate alternative to the big luxury names. It works best for travelers who want easy taxis and metro access after long hill days.",
+    "Valverde is the Avenida da Liberdade stay for people who want calm without leaving the city grid. It has that small, tucked-away luxury mood: garden, soft edges, and easy exits when the hills have taken enough out of you. Choose it for taxis, metro access, and quiet recovery after a day of stairs.",
     {
       venueKind: "lodging",
       lodgingType: "hotel",
@@ -479,7 +479,7 @@ const hotelStops = [
     "lisbon-hotel-the-ivens",
     "The Ivens",
     [38.709594, -9.140392],
-    "The Ivens gives Chiado a bolder design-hotel choice, with the official site tying the property to a historical building and strong visual identity near museums and shops. Hotel coverage favors it for style and central convenience rather than resort quiet. Pick it when restaurants, galleries, and late walks matter more than a pool-and-spa day.",
+    "The Ivens is Chiado with a louder jacket on: theatrical, design-heavy, and happy to make the hotel part of the night out. It is close to galleries, restaurants, and the kind of streets that reward one more drink before bed. Pick it for style and central movement, not for disappearing into resort silence.",
     {
       venueKind: "lodging",
       lodgingType: "hotel",
@@ -496,7 +496,7 @@ const hotelStops = [
     "lisbon-hotel-palacio-principe-real",
     "Palacio Principe Real",
     [38.715886, -9.149657],
-    "Palacio Principe Real is the small palace stay for travelers who want garden calm above the nightlife corridors. The official site shows the restored building and Príncipe Real setting, while hotel roundups point to it as a character-led luxury alternative. It is not the most transit-simple base, but the neighborhood pays you back with restaurants and views.",
+    "Palacio Principe Real is the small palace fantasy without the stiff-upper-lip museum feeling. You get garden calm above the nightlife corridors, with Príncipe Real's restaurants and viewpoints close enough to make staying uphill feel like a privilege. It is not the easiest transit base, but the neighborhood pays interest every evening.",
     {
       venueKind: "lodging",
       lodgingType: "hotel",
@@ -516,7 +516,7 @@ const hostelStops = [
     "lisbon-hostel-goodmorning",
     "Goodmorning Solo Traveller Hostel",
     [38.715752, -9.140957],
-    "Goodmorning is the social Rossio-area hostel for solo travelers who want activities built into the stay. Hostelworld and hostel roundups keep it near the top of Lisbon lists, and the official site remains active for direct booking. Choose it for connection and central movement; choose elsewhere if you need a quieter hotel-like sleep.",
+    "Goodmorning is the hostel for solo travelers who would rather inherit a crew than assemble one from scratch. It sits close to Rossio, keeps the city easy, and leans into the social machinery that makes hostels either great or unbearable depending on your mood. Choose it for connection; choose elsewhere if you want hotel-grade hush.",
     {
       venueKind: "lodging",
       lodgingType: "hostel",
@@ -533,7 +533,7 @@ const hostelStops = [
     "lisbon-hostel-home-lisbon",
     "Home Lisbon Hostel",
     [38.710575, -9.136156],
-    "Home Lisbon Hostel is the Baixa hostel pick when you want a friendly shared-dinner culture without leaving the grid of first-time sightseeing. The official site and hostel sources emphasize its long-running reputation among social hostels. It is central enough to be convenient, so book early if the exact vibe matters.",
+    "Home Lisbon Hostel is the Baixa pick when you want a hostel that understands dinner as social infrastructure. The location keeps first-time sightseeing easy, but the better reason to stay is the house rhythm: people actually talk here. Book early if you want that specific warm, communal lane rather than just any central bunk.",
     {
       venueKind: "lodging",
       lodgingType: "hostel",
@@ -550,7 +550,7 @@ const hostelStops = [
     "lisbon-hostel-living-lounge",
     "Living Lounge Hostel",
     [38.711103, -9.13907],
-    "Living Lounge keeps the guide in Baixa-Chiado but with a smaller art-and-design hostel feel. Its official site shows shared rooms and lounge spaces, while current hostel lists keep Lisbon's older central hostel scene in play. It is best for travelers who want walkability and social options without a full party-hostel posture.",
+    "Living Lounge is the smaller Baixa-Chiado hostel for people who want art-school warmth more than party-hostel volume. It keeps you walkable to the center while giving the stay a softer, more designed common-room feel. It is best when you want people around, but not a lobby that sounds like a dare.",
     {
       venueKind: "lodging",
       lodgingType: "hostel",
@@ -567,7 +567,7 @@ const hostelStops = [
     "lisbon-hostel-lisbon-destination",
     "Lisbon Destination Hostel",
     [38.71448, -9.140837],
-    "Lisbon Destination Hostel earns a spot because sleeping inside Rossio Station is both practical and unusually memorable for a budget stay. The Destination Hostels page describes the winter-garden setup inside the late-19th-century station, and Hostelworld keeps the property visible in current Lisbon searches. It suits train-linked itineraries especially well, but light sleepers should check room category.",
+    "Lisbon Destination Hostel wins on the absurd pleasure of sleeping inside Rossio Station, where budget lodging gets a little cinematic. The winter-garden feeling softens the transit setting, and the location makes day trips and central walks beautifully simple. It suits train-linked itineraries especially well, but light sleepers should pay attention to room choice.",
     {
       venueKind: "lodging",
       lodgingType: "hostel",
@@ -584,7 +584,7 @@ const hostelStops = [
     "lisbon-hostel-yes-lisbon",
     "Yes! Lisbon Hostel",
     [38.709167, -9.137709],
-    "Yes! Lisbon Hostel is the Baixa social hostel for travelers who want an easy group base close to Praça do Comércio and the river. Its official site and hostel-platform listings keep the property active for direct booking and dorm availability. It is better for meeting people than for retreating from the city, which is exactly why it belongs here.",
+    "Yes! Lisbon Hostel is the Baixa social base for travelers who want the river, Praça do Comércio, and new friends within easy reach. It is not trying to be a boutique cocoon; it is trying to make the city feel immediately usable. Stay here when meeting people is part of the brief, not a side effect.",
     {
       venueKind: "lodging",
       lodgingType: "hostel",
@@ -604,7 +604,7 @@ const casualBarStops = [
     "lisbon-casual-pensao-amor",
     "Pensao Amor",
     [38.70731, -9.143535],
-    "Pensao Amor is the Cais do Sodré bar to use when the night needs theater without becoming a club plan. Its official site and current bar listings tie the room to the former red-light district and the Pink Street corridor. Go for one or two drinks and the setting; later nights can become crowded and less conversational.",
+    "Pensao Amor is Cais do Sodré with lipstick on the mirror: theatrical, louche, and aware of its own myth without entirely ruining it. The room works best when you want a drink with scenery but not a full club commitment. Go for one or two rounds and the setting; later, the crowd can flatten the mood.",
     {
       venueKind: "nightlife",
       nightlifeType: "lounge",
@@ -621,7 +621,7 @@ const casualBarStops = [
     "lisbon-casual-tasca-do-chico",
     "A Tasca do Chico",
     [38.711631, -9.144132],
-    "A Tasca do Chico is the casual Bairro Alto fado stop for travelers who want a small-room drink-and-music night rather than a formal dinner show. AFAR and fado guides point to its Rua do Diário de Notícias address and informal format, with Facebook acting as the maintained venue channel. Arrive early and keep quiet during songs; the room is compact.",
+    "A Tasca do Chico is fado without the velvet-rope dinner-show machinery: small room, close voices, and the awkward beauty of everyone having to shut up and listen. The drink is secondary to the moment, which is exactly why the room works. Arrive early, stand gracefully if needed, and keep quiet when the singing starts.",
     {
       venueKind: "nightlife",
       nightlifeType: "pub",
@@ -639,7 +639,7 @@ const casualBarStops = [
     "lisbon-casual-cerveteca",
     "Cerveteca Lisboa",
     [38.74103, -9.136462],
-    "Cerveteca Lisboa gives beer drinkers a quieter craft-beer address away from the core nightlife crush. The official site is active, and map evidence places it in Areeiro rather than the Bairro Alto spillover zone. It is best when you want conversation and Portuguese bottles or taps, not a late dancing night.",
+    "Cerveteca Lisboa is the beer-drinker's escape hatch from Lisbon's louder nightlife corridors. Out in Areeiro, the point is not chaos; it is bottles, taps, and enough calm to actually taste what you ordered. Go when the night wants conversation and malt instead of another packed doorway in Bairro Alto.",
     {
       venueKind: "nightlife",
       nightlifeType: "beer_bar",
@@ -656,7 +656,7 @@ const casualBarStops = [
     "lisbon-casual-sol-e-pesca",
     "Sol e Pesca",
     [38.707289, -9.143805],
-    "Sol e Pesca is the Pink Street tinned-fish-and-drinks stop, useful because it turns a quick bar visit into something distinctly Lisbon. Time Out and current listings keep it attached to Rua Nova do Carvalho, and map evidence shows it active in the Cais do Sodré bar strip. Use it early in the night before the street turns louder.",
+    "Sol e Pesca is Pink Street before the neon fully wins: tinned fish, drinks, and the strange charm of turning a former fishing-shop idea into a bar snack. It is more specific than it has any right to be in such a busy strip. Use it early, before Cais do Sodré gets louder and less interesting.",
     {
       venueKind: "nightlife",
       nightlifeType: "pub",
@@ -673,7 +673,7 @@ const casualBarStops = [
     "lisbon-casual-a-ginjinha",
     "A Ginjinha",
     [38.714696, -9.139064],
-    "A Ginjinha is barely a bar in the usual sense, which is why it belongs in the casual-night guide: a tiny stand, a sour-cherry liqueur, and the street doing the seating. Lojas Com Historia documents the shop's old Lisbon identity, and Visit Lisboa treats ginjinha as a required local flavor. Stop for one glass before dinner or theater, not for a full evening.",
+    "A Ginjinha is barely a bar, and that is the whole pleasure: one tiny counter, sour-cherry liqueur, and the street doing all the seating. It is a Lisbon ritual small enough to fit between plans but strong enough to mark the night. Stop for one glass before dinner or theater, not for a full evening.",
     {
       venueKind: "nightlife",
       nightlifeType: "pub",
@@ -693,7 +693,7 @@ const cocktailStops = [
     "lisbon-cocktail-red-frog",
     "Red Frog",
     [38.719431, -9.145855],
-    "Red Frog is Lisbon's benchmark speakeasy-style cocktail room, with 50 Best Discovery noting its World’s 50 Best Bars recognition and average cocktail pricing. The official site remains active, and the bar sits just off Avenida da Liberdade. Reserve or arrive early, because this is a table-service cocktail night rather than a casual crawl stop.",
+    "Red Frog is the polished speakeasy move when Lisbon's wine and beer starts to feel too easy. The room is built for measured drinking: dark corners, careful glassware, and cocktails that want your attention. Reserve or arrive early, because this is a table-service night, not a stumble-in crawl stop.",
     {
       venueKind: "nightlife",
       nightlifeType: "cocktail_bar",
@@ -710,7 +710,7 @@ const cocktailStops = [
     "lisbon-cocktail-monkey-mash",
     "Monkey Mash",
     [38.718199, -9.144724],
-    "Monkey Mash gives the cocktail guide a tropical, high-energy sibling to Red Frog in the same broader Príncipe Real/Avenida zone. The official site is active, and Lisbon cocktail sources group it with the city's modern mixed-drink circuit. Go when the group wants color and punchier flavors, not a hushed classic-bar evening.",
+    "Monkey Mash is the louder sibling in Lisbon's serious cocktail family: tropical, bright, and happy to push fruit, acid, spice, and rum into the foreground. It is not the place for a whispered martini and a moral inventory. Go when the group wants color, punchier flavors, and a room that refuses to sulk.",
     {
       venueKind: "nightlife",
       nightlifeType: "cocktail_bar",
@@ -727,7 +727,7 @@ const cocktailStops = [
     "lisbon-cocktail-cinco-lounge",
     "Cinco Lounge",
     [38.714213, -9.149675],
-    "Cinco Lounge is the long-running Príncipe Real cocktail anchor, useful when you want a proven bar without a password routine. Its official site says it has served classic and signature cocktails since 2004, and Time Out keeps it in Lisbon's cocktail canon. It is a strong first-drink stop before dinner nearby.",
+    "Cinco Lounge is the dependable Príncipe Real cocktail room that does not need a password to prove it knows what it is doing. The appeal is simple: a grown-up bar, a serious drink, and enough ease to start the evening without ceremony. It is especially good as the first stop before dinner nearby.",
     {
       venueKind: "nightlife",
       nightlifeType: "cocktail_bar",
@@ -744,7 +744,7 @@ const cocktailStops = [
     "lisbon-cocktail-foxtrot",
     "Foxtrot",
     [38.713917, -9.151876],
-    "Foxtrot is the old-school São Bento bar for people who want cocktails, low light, and an English-pub-meets-Art-Deco room. The official site describes more than 45 years of history, four dim rooms, a garden, and a fireplace. It is less fashionable than the newer speakeasy set, which is exactly why it adds range.",
+    "Foxtrot is old-school São Bento in low light: part English pub, part Art Deco den, part Lisbon time capsule that still understands a drink. It is less fashionable than the newer speakeasy set, which is exactly why it matters. Come for a slower round, a fireplace mood, and a bar that does not chase the room.",
     {
       venueKind: "nightlife",
       nightlifeType: "cocktail_bar",
@@ -761,7 +761,7 @@ const cocktailStops = [
     "lisbon-cocktail-pavilhao-chines",
     "Pavilhao Chines",
     [38.715713, -9.146769],
-    "Pavilhao Chines belongs as the maximalist classic: cabinets, collectibles, billiards, and drinks in a room that feels older than the current cocktail boom. Current bar guides and map evidence keep the Príncipe Real address active, while the maintained Facebook page is the direct venue channel. Go for atmosphere first and serious cocktail precision second.",
+    "Pavilhao Chines is maximalist bar archaeology: cabinets, uniforms, toys, billiards, and enough objects to make your drink feel like a prop in someone else's dream. It belongs because Lisbon nights need a little weirdness with their polish. Go for atmosphere first and cocktail precision second.",
     {
       venueKind: "nightlife",
       nightlifeType: "cocktail_bar",
@@ -782,7 +782,7 @@ const cultureStops = [
     "lisbon-culture-castelo-sao-jorge",
     "Castelo de Sao Jorge",
     [38.713926, -9.133483],
-    "Castelo de Sao Jorge is the culture stop that explains Lisbon's hill logic before any museum label does. The official castle site handles ticketing and visitor information, while activity sources use it as an old-city anchor. Go early or late and walk down through Alfama or Mouraria instead of treating it as a taxi-in, taxi-out monument.",
+    "Castelo de Sao Jorge is where Lisbon stops being pretty and starts making geographic sense. From the walls, the river, Baixa, Alfama, and the city's stubborn hills arrange themselves into a map you can feel in your legs. Go early or late, then walk down through Alfama or Mouraria instead of treating it like a taxi-in monument.",
     {
       venueKind: "culture",
       subcategory: "castle",
@@ -796,7 +796,7 @@ const cultureStops = [
     "lisbon-culture-jeronimos",
     "Jeronimos Monastery",
     [38.697753, -9.205591],
-    "Jeronimos Monastery is the Belém cultural anchor, carrying Portugal's maritime-era memory in Manueline stone rather than just postcard scale. The official monument site and UNESCO-linked sources place it beside Belém Tower as the district's heavyweight stop. Book or arrive early, because queues can swallow the rhythm of an otherwise manageable Belém morning.",
+    "Jeronimos Monastery is Portugal's maritime ego carved into stone, but the scale is still hard to argue with. The cloisters slow the pulse in a way the Belém crowds outside absolutely do not. Book or arrive early, because queues can swallow the rhythm of an otherwise manageable morning.",
     {
       venueKind: "culture",
       subcategory: "monastery",
@@ -810,7 +810,7 @@ const cultureStops = [
     "lisbon-culture-belem-tower",
     "Belem Tower",
     [38.691586, -9.215929],
-    "Belem Tower makes more sense as a riverside fortification and symbol than as a long interior visit. Official monument sources and Lisbon guides tie it to the same UNESCO Belém route as Jeronimos, with the Tagus setting doing much of the work. See it early, then decide whether the interior line is worth your limited time.",
+    "Belem Tower is better understood from the river edge than from the back of a slow line. It is a fort, a symbol, and a postcard that somehow survives being photographed to death. See it early, let the Tagus do half the work, and decide on the interior only after measuring the queue against your patience.",
     {
       venueKind: "culture",
       subcategory: "fortified_tower",
@@ -824,7 +824,7 @@ const cultureStops = [
     "lisbon-culture-gulbenkian",
     "Calouste Gulbenkian Museum",
     [38.737823, -9.153515],
-    "Gulbenkian is the museum to choose when you want Lisbon's culture day to breathe: collection, garden, and modernist campus in one Avenidas Novas stop. The official museum page and culture guides frame it as one of the city's strongest private art collections. Give it a slower block rather than squeezing it between Belém and Alfama.",
+    "Gulbenkian is the museum for when Lisbon needs to exhale: art, gardens, shade, and a campus that gives you room to think. It is not fighting for your attention with tilework and tram bells; it trusts you to slow down. Give it a proper block rather than wedging it between Belém and Alfama.",
     {
       venueKind: "culture",
       subcategory: "art_museum",
@@ -838,7 +838,7 @@ const cultureStops = [
     "lisbon-culture-azulejo",
     "National Tile Museum",
     [38.724724, -9.113914],
-    "The National Tile Museum is the best way to turn Lisbon's blue-and-white surfaces into history rather than background decoration. The official museum source and culture guides connect the collection to the Madre de Deus convent and Portugal's azulejo tradition. It sits east of the usual center, so pair it with the Pantheon or Feira da Ladra side of town.",
+    "The National Tile Museum turns Lisbon's walls from pretty backdrop into language. Inside the old convent, azulejos stop being souvenirs and start telling you about religion, empire, domestic life, and taste. It sits east of the usual center, so pair it with the Pantheon or Feira da Ladra side of town.",
     {
       venueKind: "culture",
       subcategory: "design_museum",
@@ -852,7 +852,7 @@ const cultureStops = [
     "lisbon-culture-maat",
     "MAAT",
     [38.695934, -9.193624],
-    "MAAT gives Belém a contemporary counterweight to monasteries and maritime stone, with art, architecture, technology, and a riverfront roofline in one stop. The official site carries current exhibitions, while museum guides point to the building as part of the newer Lisbon museum map. Use it late afternoon if you want the river light after the galleries.",
+    "MAAT is Belém's contemporary palate cleanser after all that monastery stone and imperial memory. The building curves along the river like Lisbon trying on a sharper future, and the exhibitions give the stop more bite than a roofline photo alone. Go late afternoon if you want the Tagus light after the galleries.",
     {
       venueKind: "culture",
       subcategory: "contemporary_museum",
@@ -866,7 +866,7 @@ const cultureStops = [
     "lisbon-culture-fado-museum",
     "Museu do Fado",
     [38.711025, -9.12766],
-    "Museu do Fado is the right daytime companion to an Alfama or Bairro Alto music night. The official museum page anchors the genre in Lisbon history, while fado guides make clear that live rooms need context and etiquette. Visit before a show if you want the evening to feel less like a tourist performance and more like a local form.",
+    "Museu do Fado is the daytime homework that makes a night of fado land harder. The music can be sold badly in tourist districts, but its history is tougher, sadder, and more urban than the dinner-show version suggests. Visit before a performance so the silence between songs feels earned.",
     {
       venueKind: "culture",
       subcategory: "music_museum",
@@ -880,7 +880,7 @@ const cultureStops = [
     "lisbon-culture-oceanario",
     "Oceanario de Lisboa",
     [38.76352, -9.093716],
-    "Oceanario de Lisboa is the Parque das Nações culture pick for families, rainy days, or anyone who needs a break from hill-and-tile sightseeing. The official site keeps visitor information current, and broader Lisbon lists treat it as one of the city's reliable large-scale attractions. It is farther from the historic center, so pair it with the riverfront Expo district.",
+    "Oceanario de Lisboa is the clean break from hills, churches, and tile fatigue. Out in Parque das Nações, the city opens into a different Lisbon: wide riverfront, Expo-era architecture, and a big-ticket aquarium that actually works for adults as well as kids. Build in transit time and make the eastern riverfront part of the outing.",
     {
       venueKind: "culture",
       subcategory: "aquarium",
@@ -897,7 +897,7 @@ const activityStops = [
     "lisbon-activity-praca-comercio",
     "Praca do Comercio",
     [38.707793, -9.136554],
-    "Start at Praca do Comercio when you need Lisbon to open onto the river before the hills begin. Visit Lisboa and activity guides position the square as a central orientation point, with the Rua Augusta arch pulling you toward Baixa. It is best as a route starter, not a place to linger through the harshest midday light.",
+    "Start at Praca do Comercio when you need Lisbon to introduce itself properly: river first, city second, hills waiting behind the arch. The square is grand, exposed, and better as a beginning than a place to bake in the midday glare. Use it to orient yourself, then let Rua Augusta pull you into Baixa.",
     {
       venueKind: "landmark",
       subcategory: "public_square",
@@ -911,7 +911,7 @@ const activityStops = [
     "lisbon-activity-castelo-sao-jorge",
     "Castelo de Sao Jorge",
     [38.713926, -9.133483],
-    "Climb or ride up to Castelo de Sao Jorge when you want the city's slope, river, and old districts to line up visually. The official castle page covers tickets and visitor access, while top-things lists keep it as a first-trip anchor. Walk down afterward through Alfama or Mouraria so the stop becomes a route, not a single viewpoint.",
+    "Climb or ride up to Castelo de Sao Jorge when you want the city to stop being a tangle and start becoming a map. The view gives you the river, Baixa, Alfama, and the hills in one useful hit. Walk down afterward through Alfama or Mouraria so the stop becomes a route, not a single viewpoint.",
     {
       venueKind: "landmark",
       subcategory: "castle",
@@ -925,7 +925,7 @@ const activityStops = [
     "lisbon-activity-miradouro-senhora-monte",
     "Miradouro da Senhora do Monte",
     [38.719159, -9.13281],
-    "Miradouro da Senhora do Monte is the view to save for a deliberate climb, because it gives the castle, Baixa, river, and bridge in one sweep. Visit Lisboa's viewpoint material and map evidence keep it in the core miradouro set. Go near golden hour, but bring water and expect the descent to matter as much as the lookout.",
+    "Miradouro da Senhora do Monte is the view you earn with calves and patience. From up here, the castle, Baixa, river, and bridge sit in one sweep, and Lisbon looks almost logical for a minute. Go near golden hour, bring water, and remember the descent is part of the experience.",
     {
       venueKind: "outdoors",
       subcategory: "viewpoint",
@@ -939,7 +939,7 @@ const activityStops = [
     "lisbon-activity-jeronimos",
     "Jeronimos Monastery",
     [38.697753, -9.205591],
-    "Jeronimos Monastery should anchor the Belém half-day because its scale and stonework explain why the district pulls so many first-time routes west. Official monument information and Lisbon activity guides connect it to the Age of Discoveries corridor. Arrive early, then continue by foot toward the river instead of bouncing between tram stops.",
+    "Jeronimos Monastery should anchor the Belém half-day because the building makes the district's maritime mythology impossible to miss. The stonework is ornate, proud, and a little overwhelming, which is exactly the point. Arrive early, then continue by foot toward the river instead of bouncing between tram stops.",
     {
       venueKind: "landmark",
       subcategory: "monastery",
@@ -953,7 +953,7 @@ const activityStops = [
     "lisbon-activity-belem-tower",
     "Belem Tower",
     [38.691586, -9.215929],
-    "Belem Tower works best as the riverfront punctuation mark after Jeronimos, pastry, or MAAT rather than as a standalone cross-town errand. Official monument sources keep the tower tied to Lisbon's maritime memory, and activity guides still route visitors to the Tagus edge. Decide on the interior only after seeing the line.",
+    "Belem Tower works best as the riverfront punctuation mark after Jeronimos, pastry, or MAAT rather than as a standalone cross-town errand. The exterior gives you most of the drama: stone against water, Lisbon selling itself hard and well. Decide on the interior only after seeing the line.",
     {
       venueKind: "landmark",
       subcategory: "tower",
@@ -967,7 +967,7 @@ const activityStops = [
     "lisbon-activity-maat",
     "MAAT",
     [38.695934, -9.193624],
-    "MAAT is the easiest way to keep a Belém route from becoming only monuments and pastry. The official museum site carries changing exhibition information, and museum guides call out the riverfront architecture as part of the visit. Even a shorter gallery stop works if you leave time for the roofline and Tagus walk.",
+    "MAAT is how you keep a Belém route from becoming only monuments and pastry. The building pulls you toward the river, the galleries add a contemporary edge, and the roofline gives the whole stop a little cinematic swagger. Even a shorter visit works if you leave time for the Tagus walk.",
     {
       venueKind: "culture",
       subcategory: "contemporary_museum",
@@ -981,7 +981,7 @@ const activityStops = [
     "lisbon-activity-gulbenkian",
     "Calouste Gulbenkian Museum",
     [38.737823, -9.153515],
-    "Gulbenkian is the itinerary reset button: art, gardens, and a calmer neighborhood north of the old center. Official museum information and culture guides support it as one of Lisbon's most rewarding collection visits. Use it on a hot afternoon or rainy day when another steep old-town walk would be a mistake.",
+    "Gulbenkian is the itinerary reset button: art, gardens, and a calmer neighborhood north of the old center. It gives you shade, space, and a collection that rewards attention without shouting for it. Use it on a hot afternoon or rainy day when another steep old-town walk would be a mistake.",
     {
       venueKind: "culture",
       subcategory: "art_museum",
@@ -995,7 +995,7 @@ const activityStops = [
     "lisbon-activity-oceanario",
     "Oceanario de Lisboa",
     [38.76352, -9.093716],
-    "Oceanario de Lisboa is the best activity excuse to see Parque das Nações rather than staying only in pre-20th-century Lisbon. The official site handles current visitor details, and activity guides keep it in the family-friendly top tier. Build in transit time and a riverside walk so the trip east feels intentional.",
+    "Oceanario de Lisboa is the best excuse to see Parque das Nações instead of pretending Lisbon ended before the 20th century. The aquarium is big, polished, and genuinely useful for families or rainy-day adults who need a reset. Build in transit time and a riverside walk so the trip east feels intentional.",
     {
       venueKind: "culture",
       subcategory: "aquarium",
@@ -1009,7 +1009,7 @@ const activityStops = [
     "lisbon-activity-time-out-market",
     "Time Out Market Lisboa",
     [38.707093, -9.145897],
-    "Time Out Market is an activity stop when logistics matter: mixed groups, Cais do Sodré transit, and one hall where everyone can eat differently. The official market page keeps stall information current, while food guides warn that it is more convenient than deeply local. Go off-peak and treat it as a reset point before the river or nightlife.",
+    "Time Out Market is an activity stop when logistics matter: mixed groups, Cais do Sodré transit, and one hall where everyone can eat differently without a committee meeting. It is more convenient than soulful, but convenience has its place on a Lisbon day with hills. Go off peak and treat it as a reset before the river or nightlife.",
     {
       venueKind: "food_drink",
       foodServiceType: "stall",
@@ -1026,7 +1026,7 @@ const activityStops = [
     "lisbon-activity-a-ginjinha",
     "A Ginjinha",
     [38.714696, -9.139064],
-    "A Ginjinha is the tiny Lisbon ritual to fold into a Baixa or Rossio walk: order at the counter, decide with or without cherries, and keep moving. Lojas Com Historia documents the shop's street-drinking identity, while Visit Lisboa treats ginjinha as part of the city's flavor map. It works because it takes ten minutes, not because it becomes a whole night.",
+    "A Ginjinha is the tiny Lisbon ritual to fold into a Baixa or Rossio walk: order at the counter, decide with or without cherries, and keep moving. The whole thing is over almost before it starts, which is part of the charm. It works because it takes ten minutes, not because it becomes a whole night.",
     {
       venueKind: "nightlife",
       nightlifeType: "pub",
