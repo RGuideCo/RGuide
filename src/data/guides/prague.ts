@@ -298,7 +298,7 @@ const diningStops = [
     "prague-dining-la-degustation",
     "La Degustation Boheme Bourgeoise",
     [50.091032, 14.425106],
-    "La Degustation is the formal Czech tasting-menu table in this set, built around a modern reading of Bohemian bourgeois cooking and an open-kitchen room. MICHELIN lists it among Prague's starred restaurants, while its own page ties the restaurant to the Ambiente group and a set-menu format. Book it as a whole-evening reservation, not as a casual Old Town dinner between sights.",
+    "La Degustation is the formal, slow-burn Czech dinner in this guide: a modern Bohemian tasting menu, an open kitchen, and the kind of room that asks you to settle in. Book it as the plan for the evening, not as something to squeeze between Old Town sights.",
     {
       venueKind: "food_drink",
       foodServiceType: "restaurant",
@@ -320,7 +320,7 @@ const diningStops = [
     "prague-dining-field",
     "Field",
     [50.09171, 14.421936],
-    "Field gives Prague a sharper contemporary register, with MICHELIN noting its creative tasting menus, seasonal produce, Czech ingredients, and polished front-of-house team. Prague City Tourism also lists the restaurant as a Michelin one-star address and publishes its lunch and dinner hours. It belongs when the trip needs precision and produce focus, but the shorter menu is the better move if you are pacing a museum day.",
+    "Field is the sharper contemporary counterpoint to a classic Czech meal, built around seasonal produce, Czech ingredients, and a polished tasting-menu rhythm. It is the pick when the trip needs precision and quiet confidence; take the shorter menu if you are trying to leave room for a museum day.",
     {
       venueKind: "food_drink",
       foodServiceType: "restaurant",
@@ -341,7 +341,7 @@ const diningStops = [
     "prague-dining-eska",
     "Eska",
     [50.09133, 14.45442],
-    "Eska anchors Karlin with a bakery, restaurant, and shop in one converted-industrial address. The official page says the kitchen works with fire, fermentation, local ingredients, and older craft techniques, and VisitCzechia documents its Bib Gourmand recognition. Go earlier in the day if you want the bakery side; the upstairs Stangl tasting room is a different, reservation-led proposition.",
+    "Eska gives Karlin its all-day food anchor, with bakery shelves, a shop, and a kitchen that leans into fire, fermentation, local ingredients, and older Czech craft. Go earlier for the bakery and casual restaurant side; the upstairs Stangl tasting room is a different, reservation-led mood.",
     {
       venueKind: "food_drink",
       foodServiceType: "bakery",
@@ -362,7 +362,7 @@ const diningStops = [
     "prague-dining-cafe-savoy",
     "Cafe Savoy",
     [50.080926, 14.407216],
-    "Cafe Savoy works because it turns Prague cafe culture into an actual meal plan, not just coffee under chandeliers. Its official interior page traces the site to 1893 and describes the wood, marble, seven-meter neo-Renaissance ceiling, and Viennese-cafe atmosphere. Use it for breakfast, lunch, or a calmer Mala Strana bridge day, and reserve at peak brunch times.",
+    "Cafe Savoy turns grand cafe culture into an actual meal plan, not just coffee under chandeliers. The wood, marble, and seven-meter neo-Renaissance ceiling make breakfast or lunch feel properly staged, especially on a calmer Mala Strana bridge day.",
     {
       venueKind: "food_drink",
       foodServiceType: "cafe",
@@ -383,7 +383,7 @@ const diningStops = [
     "prague-dining-nase-maso",
     "Nase maso",
     [50.091235, 14.42675],
-    "Nase maso is a butcher shop first, which is exactly why it earns a citywide dining slot rather than acting like another sit-down Czech restaurant. The Ambiente page positions it as a butcher's shop, and Taste of Prague repeatedly treats it as one of the city's defining bites. Go off-peak for the counter rhythm; at lunch it can feel like the whole Dlouha food corridor has arrived at once.",
+    "Nase maso is a butcher shop first, which is exactly why it cuts through a city full of longer Czech meals. Treat it as a counter stop for a burger, sausage, or meat-heavy bite in the Dlouha corridor; go off-peak if you want the rhythm without the lunch crush.",
     {
       venueKind: "food_drink",
       foodServiceType: "counter_service",
@@ -407,7 +407,7 @@ const cheapEatStops = [
     "prague-cheap-havelska-koruna",
     "Havelska Koruna",
     [50.085525, 14.421665],
-    "Havelska Koruna is the central self-service Czech cafeteria that makes budget eating practical between Old Town and Wenceslas Square. Current cheap-eats roundups keep calling out its hot Czech meals, and the official page focuses on traditional Czech cooking and hot-meal delivery. It is better for a quick plate and cash-register efficiency than for lingering over atmosphere.",
+    "Havelska Koruna is the central self-service cafeteria that makes a real Czech plate practical between Old Town and Wenceslas Square. Come for hot, traditional food and fast tray-line efficiency; this is a useful lunch move, not a room to linger in.",
     {
       venueKind: "food_drink",
       foodServiceType: "cafeteria",
@@ -428,7 +428,7 @@ const cheapEatStops = [
     "prague-cheap-lokal-dlouha",
     "Lokal Dlouhaaa",
     [50.090717, 14.425906],
-    "Lokal Dlouhaaa is useful because it solves the classic Prague problem: dependable Czech food and tank beer in a center that can punish lazy choices. Ambiente's official page keeps the pub in the same Dlouha corridor as Nase maso and Sisters, while cheap-eats sources use Lokal as a reliable comfort-food baseline. It is not the quiet choice; go for lunch or early dinner if you want fewer groups.",
+    "Lokal Dlouhaaa solves the classic center-city problem: dependable Czech comfort food and tank beer in an area where lazy choices can get expensive fast. It is not the quiet move, but lunch or early dinner gives you the best shot at the room before groups take over.",
     {
       venueKind: "food_drink",
       foodServiceType: "pub",
@@ -449,7 +449,7 @@ const cheapEatStops = [
     "prague-cheap-sisters",
     "Sisters Bistro v Dlouhe",
     [50.091235, 14.42675],
-    "Sisters keeps the chlebicky stop compact and specific: open-faced sandwiches in the same Dlouha food cluster as Nase maso. Cheap-eats lists point travelers here for a Czech snack that is cheaper and more useful than another heavy pub meal. Use it as a daytime bite, because the format is built for a quick counter stop rather than a long dinner.",
+    "Sisters keeps the chlebicky stop compact and specific: open-faced sandwiches in the same Dlouha food cluster as Nase maso. Use it as a daytime bite when another heavy pub meal would slow the route down; the format is built for a quick counter stop, not a long dinner.",
     {
       venueKind: "food_drink",
       foodServiceType: "counter_service",
@@ -470,7 +470,7 @@ const cheapEatStops = [
     "prague-cheap-mr-hotdog",
     "Mr. HotDog",
     [50.099569, 14.427677],
-    "Mr. HotDog gives the list a Letna-Holesovice option that is deliberately lower-stakes than the Old Town food corridor. The official site centers the place on hot dogs, sliders, and a bar-like casual setup, which makes it useful for groups who want something fast before a park or gallery night. It belongs in medium-to-cheap eats because it is a focused, inexpensive meal rather than a Czech-cuisine lesson.",
+    "Mr. HotDog gives the guide a lower-stakes Letna-Holesovice meal: hot dogs, sliders, and a casual bar-like setup. It is useful before a park walk, a gallery night, or a group plan where nobody wants a full Czech-cuisine lesson.",
     {
       venueKind: "food_drink",
       foodServiceType: "fast_casual",
@@ -491,7 +491,7 @@ const cheapEatStops = [
     "prague-cheap-nase-maso",
     "Nase maso",
     [50.091235, 14.42675],
-    "In the cheap-eats context, Nase maso is the move for a butcher-counter lunch that still feels distinctly Prague. Its official page makes clear this is a meat counter, not a full restaurant, and Taste of Prague treats its quick bites as part of the city's essential food route. Expect queues and limited lingering space; that tradeoff is why it works best as a stop, not a whole evening.",
+    "In the cheap-eats context, Nase maso is the move for a butcher-counter lunch that still feels distinctly local. Expect queues, little lingering space, and a very clear point of view: quick meat, done well, then back into the Old Town route.",
     {
       venueKind: "food_drink",
       foodServiceType: "counter_service",
@@ -515,7 +515,7 @@ const hotelStops = [
     "prague-hotel-four-seasons",
     "Four Seasons Hotel Prague",
     [50.08771, 14.414537],
-    "Four Seasons is the polished Old Town river-base, useful when the hotel itself needs to remove logistics rather than add personality homework. Conde Nast Traveler notes the Charles Bridge and Old Town Hall are both less than ten minutes on foot, and the official page emphasizes its city-centre setting near the bridge. The caveat is price: choose it for service, river proximity, and a classic five-star stay.",
+    "Four Seasons is the polished Old Town river base for travelers who want the hotel to remove friction from the trip. Charles Bridge, the riverfront, and Old Town Hall are all easy walks, so the price makes most sense when service and location matter more than discovery.",
     {
       venueKind: "lodging",
       lodgingType: "hotel",
@@ -536,7 +536,7 @@ const hotelStops = [
     "prague-hotel-fairmont-golden-prague",
     "Fairmont Golden Prague",
     [50.0914, 14.4184],
-    "Fairmont Golden Prague is the strongest current hotel story because the former InterContinental has returned as a fully reworked Fairmont at the end of Parizska Street. Fairmont's own location page places it by the Vltava, and Prague City Tourism describes the property as rising above the river at the end of the prestigious shopping street. It is a better fit for travelers who want restored 1970s architecture and spa scale than old-world boutique quiet.",
+    "Fairmont Golden Prague is the big comeback hotel story, bringing the former InterContinental back as a reworked riverfront Fairmont at the end of Parizska Street. Choose it for restored 1970s architecture, spa scale, and a Vltava-side base rather than old-world boutique quiet.",
     {
       venueKind: "lodging",
       lodgingType: "hotel",
@@ -557,7 +557,7 @@ const hotelStops = [
     "prague-hotel-mandarin-oriental",
     "Mandarin Oriental, Prague",
     [50.08472, 14.405461],
-    "Mandarin Oriental is the monastery-base option in Mala Strana, close enough to Charles Bridge for sightseeing but calmer than sleeping inside Old Town traffic. Vogue highlights the property for travelers who want old-world luxury, and the official page places it in Mala Strana with full-service five-star positioning. It works best when the trip leans castle, Kampa, and quiet courtyards rather than late-night Old Town.",
+    "Mandarin Oriental is the monastery-base option in Mala Strana, close enough to Charles Bridge for sightseeing but calmer than sleeping inside Old Town traffic. It works best when the trip leans castle, Kampa, spa time, and quiet courtyards rather than late-night Old Town.",
     {
       venueKind: "lodging",
       lodgingType: "hotel",
@@ -578,7 +578,7 @@ const hotelStops = [
     "prague-hotel-boho",
     "BoHo Hotel Prague",
     [50.086101, 14.429328],
-    "BoHo is the compact design-hotel choice by the station side of New Town, which is helpful when you want central access without full palace theatrics. Conde Nast Traveler notes it opened in 2014 in an early-20th-century former newspaper building, and the official site presents it as an exclusive hotel near the Old Town edge. It is not a resort stay; pick it for clean design, location, and a smaller footprint.",
+    "BoHo is the compact design-hotel choice near the station side of New Town, useful when you want central access without palace theatrics. The early-20th-century former newspaper building keeps it characterful, but the appeal is clean design, walkability, and a smaller footprint.",
     {
       venueKind: "lodging",
       lodgingType: "hotel",
@@ -599,7 +599,7 @@ const hotelStops = [
     "prague-hotel-the-mozart",
     "The Mozart Prague",
     [50.084616, 14.414087],
-    "The Mozart Prague gives the hotel guide an independent Old Town address by the river and the Charles Bridge approach. The hotel's official site foregrounds its courtyard and historic-city setting, while broader hotel sources position it among Prague's more characterful central properties. It is best for travelers who want old-building romance and walkability, with the usual central-street noise caveat to check room category carefully.",
+    "The Mozart gives the hotel guide an independent Old Town address by the river and the Charles Bridge approach. Pick it for courtyard romance, historic-building texture, and walkability; check the room category carefully if street noise is a concern.",
     {
       venueKind: "lodging",
       lodgingType: "hotel",
@@ -623,7 +623,7 @@ const hostelStops = [
     "prague-hostel-sir-tobys",
     "Sir Toby's Hostel",
     [50.103123, 14.448093],
-    "Sir Toby's is the Holesovice hostel for travelers who want social space without making Old Town the whole trip. Hostelworld describes the brick cellar pub, garden BBQs, kitchen, board games, and 24-hour reception, while HelloPrague frames the location as a worthwhile tradeoff for a more local neighborhood. It is strongest for stays of more than two nights, when the tram ride becomes part of the rhythm.",
+    "Sir Toby's is the Holesovice hostel for travelers who want social space without making Old Town the whole trip. The brick cellar pub, garden BBQs, kitchen, board games, and 24-hour reception make the tram ride feel like a fair trade, especially on stays longer than two nights.",
     {
       venueKind: "lodging",
       lodgingType: "hostel",
@@ -644,7 +644,7 @@ const hostelStops = [
     "prague-hostel-roadhouse",
     "The RoadHouse Prague",
     [50.08445, 14.415802],
-    "The RoadHouse is the small social hostel for people who want a central base but not a huge party factory. Hostel roundups repeatedly single it out for community feel, and its official site shows dorms, common areas, and a kitchen-oriented setup. Book early if the exact vibe matters, because smaller hostels lose availability faster than big chain beds.",
+    "The RoadHouse is the small social hostel for people who want a central base without committing to a huge party factory. Dorms, common areas, and a kitchen-led setup make it feel more like a house than a bed warehouse, so book early if that exact scale matters.",
     {
       venueKind: "lodging",
       lodgingType: "hostel",
@@ -665,7 +665,7 @@ const hostelStops = [
     "prague-hostel-czech-inn",
     "Czech Inn",
     [50.071888, 14.446254],
-    "Czech Inn is the design-hostel pick in Vrsovice/Vinohrady territory, useful if you want cheaper beds with a more residential evening scene. The official site shows both dorms and private rooms, plus updated room photography, while Hostelworld-style sources keep it in the main Prague hostel conversation. It is less immediate for first-time Old Town sightseeing, so check tram routes before booking.",
+    "Czech Inn is the design-hostel pick in Vrsovice/Vinohrady territory, useful when cheaper beds and a more residential evening scene matter more than sleeping beside Old Town Square. It has both dorms and private rooms, but check tram routes before booking if this is a first-time sightseeing trip.",
     {
       venueKind: "lodging",
       lodgingType: "hostel",
@@ -686,7 +686,7 @@ const hostelStops = [
     "prague-hostel-madhouse",
     "The MadHouse Prague",
     [50.081052, 14.419547],
-    "The MadHouse belongs only in a hostel guide that is honest about social energy. Its official site and hostel sources emphasize group activity, awards, and a central Spalena address, so it fits travelers who want built-in company more than quiet. The manual-review note is audience fit: light sleepers or early museum planners should choose a calmer hostel.",
+    "The MadHouse belongs in a hostel guide that is honest about social energy. The central Spalena address and activity-heavy setup suit solo travelers who want built-in company; light sleepers and early museum planners should choose a calmer bed.",
     {
       venueKind: "lodging",
       lodgingType: "hostel",
@@ -707,7 +707,7 @@ const hostelStops = [
     "prague-hostel-little-quarter",
     "Little Quarter Hostel",
     [50.088465, 14.399311],
-    "Little Quarter is the castle-side hostel, valuable because it puts budget travelers in Hradcany/Mala Strana instead of only the Old Town party belt. The official site shows dorms, rooms, reception, kitchen, and common-room photos in a Nerudova Street location. It is a better sightseeing base than nightlife base, especially if Prague Castle and Petrin are high on the plan.",
+    "Little Quarter is the castle-side hostel, valuable because it puts budget travelers on Nerudova Street instead of only in the Old Town party belt. It is a better sightseeing base than nightlife base, especially if Prague Castle, Mala Strana, and Petrin are high on the plan.",
     {
       venueKind: "lodging",
       lodgingType: "hostel",
@@ -731,7 +731,7 @@ const pubStops = [
     "prague-pub-u-sadu",
     "U Sadu",
     [50.080779, 14.448998],
-    "U Sadu is the Zizkov pub for a messy, useful version of Prague beer culture, with a location right by the television tower and Jiriho z Podebrad. Prague Beer Garden notes the two-floor setup, with a pubbier downstairs and a restaurant-like upstairs, and the official page ties the name to Skroupovo Square history. It works best when you are already east of the center; crossing town just for one beer can flatten the point.",
+    "U Sadu is the Zizkov pub for a messy, useful version of beer culture, close to the TV tower and Jiriho z Podebrad. The two-floor setup lets you choose between a pubbier downstairs and a more meal-friendly upstairs; it works best when you are already east of the center.",
     {
       venueKind: "nightlife",
       nightlifeType: "pub",
@@ -752,7 +752,7 @@ const pubStops = [
     "prague-pub-u-vystrelenyho-oka",
     "U Vystrelenyho oka",
     [50.087154, 14.449556],
-    "U Vystrelenyho oka is the rough-edged Zizkov pick, still treated by Prague City Tourism as a legendary old Prague pub. The official contact page lists its U Bozich bojovniku address and late Monday-Saturday hours, while bar guides point to its courtyard, concerts, and literary evenings. Bring cash patience and do not expect polished Old Town service; that is part of why it belongs here.",
+    "U Vystrelenyho oka is the rough-edged Zizkov pick, the kind of pub that makes more sense when you want a night with corners. The courtyard, concerts, literary evenings, and late Monday-Saturday hours are the draw; bring cash patience and leave polished Old Town service expectations behind.",
     {
       venueKind: "nightlife",
       nightlifeType: "dive_bar",
@@ -773,7 +773,7 @@ const pubStops = [
     "prague-pub-u-zlateho-tygra",
     "U Zlateho Tygra",
     [50.085817, 14.418036],
-    "U Zlateho Tygra is the Old Town beer-hall classic that still matters because the room is the point as much as the Pilsner. Its official site describes a traditional Plzen pub with a hard-to-repeat atmosphere, and Prague City Tourism traces the house name and beer-culture role. Go early, share tables gracefully, and treat it as a short beer stop rather than a private dinner.",
+    "U Zlateho Tygra is the Old Town beer-hall classic where the room matters as much as the Pilsner. Go early, share tables gracefully, and treat it as a short beer stop rather than a private dinner with personal space.",
     {
       venueKind: "nightlife",
       nightlifeType: "pub",
@@ -794,7 +794,7 @@ const pubStops = [
     "prague-pub-u-pinkasu",
     "U Pinkasu",
     [50.083245, 14.42343],
-    "U Pinkasu earns its place as a central pub with deep Pilsner history rather than as a dive. The official site is the current property evidence, and local beer recommendations keep it in the conversation for a classic garden-backed beer stop near Wenceslas Square. It can be busy with visitors, so use it for location and beer tradition rather than a neighborhood-bar fantasy.",
+    "U Pinkasu is the central Pilsner-history stop, more classic pub than dive. The garden-backed setting near Wenceslas Square is useful, but it can be busy with visitors, so use it for location and beer tradition rather than a neighborhood-bar fantasy.",
     {
       venueKind: "nightlife",
       nightlifeType: "pub",
@@ -815,7 +815,7 @@ const pubStops = [
     "prague-pub-u-fleku",
     "U Fleku",
     [50.078898, 14.416976],
-    "U Fleku is not the scruffiest pub in Prague, but it belongs because it is an operating brewery-restaurant with enough history and scale to define one version of the city's beer night. The official site presents it as a brewery and restaurant, and its own image set shows the traditional service context. Go with clear expectations: it is a famous stop and can feel tour-heavy, but the house dark lager gives it a specific reason to be here.",
+    "U Fleku is not the scruffiest pub in town, but its brewery-restaurant scale and house dark lager make it a defining version of a beer night. Go with clear expectations: it is famous, it can feel tour-heavy, and it still gives the group a specific reason to sit down.",
     {
       venueKind: "nightlife",
       nightlifeType: "brewery",
@@ -839,7 +839,7 @@ const cocktailStops = [
     "prague-cocktail-hemingway",
     "Hemingway Bar",
     [50.08401, 14.414321],
-    "Hemingway Bar is the Prague cocktail benchmark for travelers who want serious drinks without guessing. Time Out calls it one of Prague's best bars, and Taste of Prague highlights its absinthe, rum, and champagne focus. Book or arrive early, because the room is small enough that spontaneity can turn into a wait.",
+    "Hemingway Bar is the cocktail benchmark for travelers who want serious drinks without guessing. The absinthe, rum, and Champagne focus gives the menu a point of view; book or arrive early, because the room is small enough for spontaneity to turn into a wait.",
     {
       venueKind: "nightlife",
       nightlifeType: "cocktail_bar",
@@ -860,7 +860,7 @@ const cocktailStops = [
     "prague-cocktail-anonymous",
     "AnonymouS Bar",
     [50.085284, 14.419995],
-    "AnonymouS Bar gives the guide its theatrical Old Town room, with a concept that is intentionally more performative than a quiet hotel bar. Cocktail guides consistently include it near the top of the Prague list, and the official site confirms the Michalska address. It belongs for a playful night, but it is not the pick if the group wants understated classics only.",
+    "AnonymouS Bar gives the cocktail guide its theatrical Old Town room, built for a night that wants some performance with the drink. It belongs when the group wants playfulness and a little drama, not when everyone is craving understated classics only.",
     {
       venueKind: "nightlife",
       nightlifeType: "cocktail_bar",
@@ -881,7 +881,7 @@ const cocktailStops = [
     "prague-cocktail-shrink",
     "AnonymouS Shrink's Office",
     [50.0811, 14.4232],
-    "Shrink's Office is the more intimate AnonymouS sibling, built around the idea of cocktail therapy and drink choices interpreted through ink-blot style prompts. Its official page lists the Jungmannova address and explains the concept, while Prague cocktail roundups mention it as part of the city's creative bar circuit. It is best for a small group that wants interaction, not a fast round before dinner.",
+    "Shrink's Office is the more intimate AnonymouS sibling, built around cocktail therapy and drink choices interpreted through ink-blot style prompts. It is best for a small group that wants interaction and a bit of theater, not a fast round before dinner.",
     {
       venueKind: "nightlife",
       nightlifeType: "cocktail_bar",
@@ -902,7 +902,7 @@ const cocktailStops = [
     "prague-cocktail-lfleur",
     "L'Fleur",
     [50.089629, 14.421693],
-    "L'Fleur is the grown-up Champagne-and-mixology stop just off the busiest Old Town routes. Taste of Prague frames it as a softer, more adult counterpoint to louder central bars, and the official site keeps the focus on cocktails, wine, and a reservation-led evening. It is strongest when you want conversation and polish rather than a gimmick-heavy bar crawl.",
+    "L'Fleur is the grown-up Champagne-and-mixology stop just off the busiest Old Town routes. It is strongest when the night wants conversation, polish, good glassware, and a slower reservation-led pace rather than a gimmick-heavy bar crawl.",
     {
       venueKind: "nightlife",
       nightlifeType: "cocktail_bar",
@@ -926,7 +926,7 @@ const cultureStops = [
     "prague-culture-prague-castle",
     "Prague Castle",
     [50.090811, 14.400523],
-    "Prague Castle is the city's culture anchor because it gathers cathedral, palace, basilica, Golden Lane, gardens, and state symbolism into one ridge-top complex. The official visitor information gives grounds hours from early morning to late evening and separates free grounds from ticketed interiors. Go early or late in the day, and do not try to combine every interior with a full Old Town museum schedule.",
+    "Prague Castle is the culture anchor because it gathers cathedral, palace, basilica, Golden Lane, gardens, and state symbolism into one ridge-top complex. The grounds and ticketed interiors move on different rhythms, so go early or late and resist pairing every room with a full Old Town museum schedule.",
     {
       venueKind: "culture",
       subcategory: "castle_complex",
@@ -945,7 +945,7 @@ const cultureStops = [
     "prague-culture-old-town-hall",
     "Old Town Hall with Astronomical Clock",
     [50.086924, 14.420316],
-    "Old Town Hall is the right way to make the astronomical clock more than a crowd moment. Prague City Tourism describes the 1338 town hall, the medieval clock, the hourly apostles, the chapel, state rooms, underground, and tower views. Time the exterior for early or late, then use the interior ticket when the square is too crowded to enjoy from ground level.",
+    "Old Town Hall is the way to make the astronomical clock more than a crowd moment. The 1338 town hall, chapel, state rooms, underground, and tower views give the square a second layer; use the interior ticket when the ground-level crush starts to flatten the experience.",
     {
       venueKind: "culture",
       subcategory: "historic_tower",
@@ -963,7 +963,7 @@ const cultureStops = [
     "prague-culture-jewish-museum",
     "Jewish Museum in Prague",
     [50.090285, 14.4211],
-    "The Jewish Museum is not a single-room museum stop; the official visitor page frames it through monuments and exhibitions across Josefov. Its ticketing structure connects synagogues, the Old Jewish Cemetery, and Jewish Town sites into one historical route. Give it a morning or afternoon with emotional space, and check synagogue closures before building the day around it.",
+    "The Jewish Museum is not a single-room museum stop; it is a Josefov route through synagogues, exhibitions, the Old Jewish Cemetery, and Jewish Town sites. Give it a morning or afternoon with emotional space, and check closures before building the whole day around it.",
     {
       venueKind: "culture",
       subcategory: "museum_complex",
@@ -981,7 +981,7 @@ const cultureStops = [
     "prague-culture-national-museum",
     "National Museum",
     [50.078919, 14.430968],
-    "The National Museum gives Wenceslas Square a real cultural stop rather than only a boulevard photo. Its official site presents the national institution and current exhibitions, and the historic main building gives the visit architectural weight before you reach the collections. It works best as a rainy-day anchor or as the cultural start to a New Town walk.",
+    "The National Museum gives Wenceslas Square a real cultural stop instead of only a boulevard photo. The historic main building gives the visit architectural weight before you even reach the collections, making it a strong rainy-day anchor or New Town starting point.",
     {
       venueKind: "culture",
       subcategory: "national_museum",
@@ -999,7 +999,7 @@ const cultureStops = [
     "prague-culture-national-gallery",
     "National Gallery Prague - Trade Fair Palace",
     [50.101523, 14.432334],
-    "The Trade Fair Palace gives the National Gallery a modernist, Holesovice-scale counterweight to the old-city monuments. The National Gallery's official site covers its collection network, while museum guides point to the Trade Fair Palace for major Czech and international art holdings. Pair it with Letna or DOX rather than forcing it into a castle day.",
+    "The Trade Fair Palace gives the National Gallery a modernist, Holesovice-scale counterweight to the old-city monuments. Go for Czech and international art in a building that feels properly urban, then pair it with Letna or DOX instead of forcing it into a castle day.",
     {
       venueKind: "culture",
       subcategory: "art_museum",
@@ -1017,7 +1017,7 @@ const cultureStops = [
     "prague-culture-dox",
     "DOX Centre for Contemporary Art",
     [50.106798, 14.447242],
-    "DOX is the contemporary-art stop that gets travelers out to Holesovice and into Prague's newer cultural geography. The official site foregrounds current exhibitions and the Gulliver airship image has become part of the center's identity. It belongs when you want Prague beyond Gothic and Baroque, but check the exhibition calendar before committing a cross-town ride.",
+    "DOX is the contemporary-art stop that gets travelers out to Holesovice and into the city's newer cultural geography. The Gulliver airship gives the center its memorable silhouette, but the exhibition calendar should decide whether the cross-town ride is worth it.",
     {
       venueKind: "culture",
       subcategory: "contemporary_art",
@@ -1035,7 +1035,7 @@ const cultureStops = [
     "prague-culture-municipal-house",
     "Municipal House",
     [50.087756, 14.427764],
-    "Municipal House is the Art Nouveau interior stop that makes Prague's turn-of-the-century civic culture visible. The official site positions it as a Prague landmark with concert halls, restaurants, and guided access, and its location at Republic Square makes it easy to pair with the Powder Gate. Book a tour or performance if you want more than the lobby and cafe layer.",
+    "Municipal House is the Art Nouveau interior stop that makes turn-of-the-century civic culture visible. Its Republic Square location makes it easy to pair with the Powder Gate, but book a tour or performance if you want more than the lobby and cafe layer.",
     {
       venueKind: "culture",
       subcategory: "concert_hall",
@@ -1053,7 +1053,7 @@ const cultureStops = [
     "prague-culture-museum-kampa",
     "Museum Kampa",
     [50.083999, 14.408491],
-    "Museum Kampa gives Mala Strana and the river islands a focused modern-art stop instead of only postcard walking. The official museum site covers its exhibitions and location in the Sova Mills, and the building sits directly in the Kampa route below Charles Bridge. It is best as a compact art break between the bridge, the Lennon Wall area, and the riverbank.",
+    "Museum Kampa gives Mala Strana and the river islands a focused modern-art stop instead of only postcard walking. The Sova Mills location sits directly in the Kampa route below Charles Bridge, making it an easy art break between the Lennon Wall area and the riverbank.",
     {
       venueKind: "culture",
       subcategory: "art_museum",
@@ -1074,7 +1074,7 @@ const activityStops = [
     "prague-activity-prague-castle",
     "Prague Castle",
     [50.090811, 14.400523],
-    "Start with Prague Castle when you need the city to make geographic sense: the ridge, cathedral, courtyards, gardens, and Mala Strana descent all organize the rest of the trip. Official visitor information separates the free grounds from ticketed interiors, so you can scale the stop to your stamina. Go early, then walk downhill rather than doubling back by tram.",
+    "Start with Prague Castle when you need the city to make geographic sense: the ridge, cathedral, courtyards, gardens, and Mala Strana descent organize the rest of the trip. Scale the stop to your stamina, then walk downhill rather than doubling back by tram.",
     {
       venueKind: "landmark",
       subcategory: "castle_complex",
@@ -1093,7 +1093,7 @@ const activityStops = [
     "prague-activity-charles-bridge",
     "Charles Bridge",
     [50.086486, 14.411371],
-    "Charles Bridge earns the obvious slot because it is still the cleanest pedestrian link between Old Town and Mala Strana. Prague City Tourism dates construction from 1357 under Charles IV and notes the fortified bridge towers at both ends. Cross at sunrise or after dark if you want the stone, statues, and river to register before the crowds take over.",
+    "Charles Bridge earns the obvious slot because it is still the cleanest pedestrian link between Old Town and Mala Strana. The 1357 bridge, fortified towers, statues, and river views land best at sunrise or after dark, before the crossing turns into a moving crowd.",
     {
       venueKind: "landmark",
       subcategory: "bridge",
@@ -1111,7 +1111,7 @@ const activityStops = [
     "prague-activity-old-town-hall",
     "Old Town Hall with Astronomical Clock",
     [50.086924, 14.420316],
-    "Old Town Hall is the best way to handle Old Town Square without treating it as only a photo crush. The official page covers the 1338 town hall, the astronomical clock, tower, chapel, interiors, and underground. Watch the clock if you want, but the tower view is the part that makes the stop earn itinerary time.",
+    "Old Town Hall is the best way to handle Old Town Square without treating it as only a photo crush. Watch the astronomical clock if you want, but the tower, chapel, interiors, and underground are what make the stop earn itinerary time.",
     {
       venueKind: "landmark",
       subcategory: "historic_tower",
@@ -1129,7 +1129,7 @@ const activityStops = [
     "prague-activity-jewish-museum",
     "Jewish Museum in Prague",
     [50.090285, 14.4211],
-    "Put Josefov in the top-things route because it changes the emotional register of a Prague day. The Jewish Museum's visitor page connects synagogues, exhibitions, and monuments into a ticketed route, which is more meaningful than a quick cemetery glance. Check opening days and dress for quiet attention; this is not a filler stop between beer halls.",
+    "Put Josefov in the top-things route because it changes the emotional register of the day. The synagogues, exhibitions, monuments, and cemetery are more meaningful as a ticketed route than as a quick glance, so check opening days and leave space for quiet attention.",
     {
       venueKind: "culture",
       subcategory: "museum_complex",
@@ -1147,7 +1147,7 @@ const activityStops = [
     "prague-activity-letna-park",
     "Letna Park",
     [50.096405, 14.414141],
-    "Letna Park is the decompression stop above the Vltava, especially after Old Town crowds. Prague City Tourism lists it as Letna Park, and the current image and map evidence make it a reliable outdoor break with city views. Use it for a walk, sunset, or beer-garden pause, then continue toward Holesovice if you still have energy.",
+    "Letna Park is the decompression stop above the Vltava, especially after Old Town crowds. Use it for a walk, sunset, or beer-garden pause with city views, then continue toward Holesovice if the day still has energy.",
     {
       venueKind: "outdoors",
       subcategory: "park",
@@ -1165,7 +1165,7 @@ const activityStops = [
     "prague-activity-petrin-tower",
     "Petrin Tower",
     [50.083535, 14.395577],
-    "Petrin Tower is the hill-view stop that gives Prague a greener half-day without leaving the city. Prague City Tourism sells official tickets and explains the lookout tower context, while the surrounding gardens let you turn the climb into a slower Mala Strana route. Use the funicular only if the queue is short; walking down is often the better part.",
+    "Petrin Tower is the hill-view stop that gives the day a greener half without leaving the city. The lookout tower is the payoff, but the surrounding gardens and Mala Strana descent are the reason to slow down; use the funicular only if the queue is short.",
     {
       venueKind: "landmark",
       subcategory: "viewpoint",
@@ -1183,7 +1183,7 @@ const activityStops = [
     "prague-activity-vysehrad",
     "Vysehrad",
     [50.062134, 14.423201],
-    "Vysehrad belongs because it moves the trip south to ramparts, cemetery paths, river views, and a less compressed layer of Prague history. The official site identifies it as a national cultural monument, and current map evidence keeps it practical as a route stop. Go when you need space; it rewards wandering more than checklist behavior.",
+    "Vysehrad moves the trip south to ramparts, cemetery paths, river views, and a less compressed layer of city history. Go when you need space, time, and a wider horizon; the fortress rewards wandering more than checklist behavior.",
     {
       venueKind: "culture",
       subcategory: "fortress",
@@ -1201,7 +1201,7 @@ const activityStops = [
     "prague-activity-kampa-island",
     "Kampa Island",
     [50.083876, 14.407663],
-    "Kampa Island is the bridge-to-river pause that keeps a Mala Strana walk from becoming only staircases and palace facades. Prague City Tourism's Kampa page and Museum Kampa source evidence place it directly in the river-island route below Charles Bridge. It is a soft stop, best paired with Museum Kampa, the Lennon Wall area, or a slower Vltava walk.",
+    "Kampa Island is the bridge-to-river pause that keeps a Mala Strana walk from becoming only staircases and palace facades. It is a soft stop, best paired with Museum Kampa, the Lennon Wall area, or a slower Vltava walk below Charles Bridge.",
     {
       venueKind: "outdoors",
       subcategory: "river_island",
@@ -1219,7 +1219,7 @@ const activityStops = [
     "prague-activity-nase-maso",
     "Nase maso",
     [50.091235, 14.42675],
-    "Add Nase maso to a top-things list because Prague needs one food stop that is quick, local in form, and easy to route around Old Town. The official butcher-shop page and Taste of Prague evidence make it more than a random lunch pin. Use it as part of a Dlouha mini-crawl with Sisters or Lokal, then move on before the line eats the afternoon.",
+    "Nase maso earns a top-things slot because the city needs one food stop that is quick, local in form, and easy to route around Old Town. Use it as part of a Dlouha mini-crawl with Sisters or Lokal, then move on before the line eats the afternoon.",
     {
       venueKind: "food_drink",
       foodServiceType: "counter_service",
@@ -1240,7 +1240,7 @@ const activityStops = [
     "prague-activity-hemingway-bar",
     "Hemingway Bar",
     [50.08401, 14.414321],
-    "Hemingway Bar is the nightcap stop that keeps the top-things guide from ending at monuments. Time Out and Taste of Prague both support it as a serious cocktail address, especially for rum, absinthe, and Champagne-focused drinking. Reserve or go early, and treat it as one excellent drink rather than a moving bar crawl.",
+    "Hemingway Bar is the nightcap stop that keeps the top-things guide from ending at monuments. The bar is especially strong for rum, absinthe, and Champagne-focused drinking; reserve or go early, and treat it as one excellent drink rather than a moving bar crawl.",
     {
       venueKind: "nightlife",
       nightlifeType: "cocktail_bar",
