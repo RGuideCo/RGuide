@@ -212,6 +212,24 @@ function getLegacyDuplicateGuideRouteSlug(
   return `${baseSlug}-${suffix || slugify(guide.id)}`;
 }
 
+function findGuideForRouteSlug(
+  city: City,
+  guideSlug: string,
+  neighborhood: Pick<SubArea, "name"> | undefined,
+  category: ListCategory | undefined,
+  guideSource: MapList[],
+) {
+  const candidateLists = getListsForCityRoute(city, neighborhood, category, guideSource);
+  return candidateLists.find(
+    (list) =>
+      list.slug === guideSlug ||
+      slugify(list.title) === guideSlug ||
+      getGuideSeoSlug(list) === guideSlug ||
+      getGuideRouteSlug(city, list, neighborhood, guideSource) === guideSlug ||
+      getLegacyDuplicateGuideRouteSlug(city, list, neighborhood) === guideSlug,
+  );
+}
+
 export function getCanonicalGuidePath(
   city: Pick<City, "name">,
   guide: GuideSeoSeed & Pick<MapList, "id">,
@@ -486,26 +504,25 @@ export function resolveCityDeepLink(
   } else if (rest[cursor]) {
     neighborhoodMatch = findNeighborhood(city, rest[cursor]);
     if (!neighborhoodMatch) {
-      return null;
-    }
-    cursor += 1;
-    category = categoryBySlug.get(rest[cursor] ?? "");
-    if (category) {
+      const citywideGuide = findGuideForRouteSlug(city, rest[cursor], undefined, undefined, guideSource);
+      if (!citywideGuide) {
+        return null;
+      }
+      guide = citywideGuide;
+      category = citywideGuide.category;
       cursor += 1;
+    } else {
+      cursor += 1;
+      category = categoryBySlug.get(rest[cursor] ?? "");
+      if (category) {
+        cursor += 1;
+      }
     }
   }
 
   if (rest[cursor]) {
     const guideSlug = rest[cursor];
-    const candidateLists = getListsForCityRoute(city, neighborhoodMatch?.subarea, category, guideSource);
-    guide = candidateLists.find(
-      (list) =>
-        list.slug === guideSlug ||
-        slugify(list.title) === guideSlug ||
-        getGuideSeoSlug(list) === guideSlug ||
-        getGuideRouteSlug(city, list, neighborhoodMatch?.subarea, guideSource) === guideSlug ||
-        getLegacyDuplicateGuideRouteSlug(city, list, neighborhoodMatch?.subarea) === guideSlug,
-    );
+    guide = findGuideForRouteSlug(city, guideSlug, neighborhoodMatch?.subarea, category, guideSource);
     if (!guide) {
       return null;
     }

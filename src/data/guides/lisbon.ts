@@ -1044,6 +1044,7 @@ const activityStops = [
 function guide(
   id: string,
   slug: string,
+  seoSlug: string,
   title: string,
   description: string,
   category: ListCategory,
@@ -1055,13 +1056,13 @@ function guide(
   return {
     id,
     slug,
-    seoSlug: slug,
+    seoSlug,
     seoTitle,
     seoDescription,
     title,
     description,
     photo: stops[0]?.photo,
-    url: `/city/lisbon/${slug}`,
+    url: `https://www.google.com/maps/search/${encodeURIComponent(seoTitle.toLowerCase())}`,
     category,
     submissionType: "guide",
     location: lisbonLocation,
@@ -1081,6 +1082,7 @@ export const lisbonCitywideGuides: MapList[] = [
   guide(
     "list-lisbon-citywide-dining",
     "list-lisbon-citywide-dining",
+    "best-restaurants",
     "Seafood, Tascas, and Modern Portuguese Rooms",
     "A citywide dining map for Lisbon that balances seafood halls, contemporary Portuguese reservations, and neo-tascas across Chiado, Mouraria, Belém, and Intendente.",
     "Food",
@@ -1092,6 +1094,7 @@ export const lisbonCitywideGuides: MapList[] = [
   guide(
     "list-lisbon-citywide-cheap-eats",
     "list-lisbon-citywide-cheap-eats",
+    "best-cheap-eats",
     "Pastéis, Bifanas, Markets, and Tascas",
     "A practical Lisbon cheap-to-midrange eating guide for quick pastries, bifanas, traditional lunch rooms, and market halls that work around Baixa, Chiado, Rossio, and Cais do Sodré.",
     "Food",
@@ -1103,6 +1106,7 @@ export const lisbonCitywideGuides: MapList[] = [
   guide(
     "list-lisbon-citywide-hotels",
     "list-lisbon-citywide-hotels",
+    "best-hotels",
     "Boutique Bases for Hills, River Views, and Central Walks",
     "A Lisbon hotel guide that separates Chiado convenience, Alfama atmosphere, Avenida calm, and Príncipe Real character so the stay matches the city's hills and transit.",
     "Stay",
@@ -1114,6 +1118,7 @@ export const lisbonCitywideGuides: MapList[] = [
   guide(
     "list-lisbon-citywide-hostels",
     "list-lisbon-citywide-hostels",
+    "best-hostels",
     "Social, Central, and Solo-Friendly Beds",
     "A Lisbon hostel guide focused only on hostels, with social central beds around Rossio, Baixa, Chiado, and the station zone for travelers who want community and walkability.",
     "Stay",
@@ -1125,6 +1130,7 @@ export const lisbonCitywideGuides: MapList[] = [
   guide(
     "list-lisbon-citywide-casual-bars",
     "list-lisbon-citywide-casual-bars",
+    "best-bars",
     "Fado Rooms, Beer Stops, Ginjinha, and Pink Street",
     "A casual Lisbon nightlife guide for low-key drinks, small-room fado, craft beer, tinned fish, and a quick ginjinha stop before the city turns late.",
     "Nightlife",
@@ -1136,6 +1142,7 @@ export const lisbonCitywideGuides: MapList[] = [
   guide(
     "list-lisbon-citywide-cocktail-bars",
     "list-lisbon-citywide-cocktail-bars",
+    "best-cocktail-bars",
     "Speakeasies, Classics, and Design-Heavy Rooms",
     "A cocktail-focused Lisbon guide that separates award-listed speakeasy energy, long-running Príncipe Real rooms, and old-school bars with strong atmosphere.",
     "Nightlife",
@@ -1147,6 +1154,7 @@ export const lisbonCitywideGuides: MapList[] = [
   guide(
     "list-lisbon-citywide-culture",
     "list-lisbon-citywide-culture",
+    "best-culture",
     "Castles, Tiles, Fado, Museums, and the Riverfront",
     "A culture guide for Lisbon that connects hilltop history, Belém monuments, azulejo craft, art collections, fado context, and modern riverfront museums.",
     "Culture",
@@ -1158,6 +1166,7 @@ export const lisbonCitywideGuides: MapList[] = [
   guide(
     "list-lisbon-citywide-top-things-to-do",
     "list-lisbon-citywide-top-things-to-do",
+    "best-things-to-do",
     "Top Things to Do in Lisbon: Views, Belém, Museums, Markets, and Rituals",
     "A route-useful Lisbon activity guide that paces viewpoints, Belém, museums, market eating, riverfront walks, and one quick ginjinha ritual without overloading the hills.",
     "Activities",
