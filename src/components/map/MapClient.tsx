@@ -3122,7 +3122,29 @@ export function MapClient({
   const activeGuidePoiMarkerSignature = useMemo(
     () =>
       poiMapMarkerData.features
-        .map((feature) => `${feature.properties.stopId}:${feature.geometry.type}`)
+        .map((feature) => {
+          const markerCoordinates = getGeometryCoordinates(feature.geometry);
+          if (!markerCoordinates) {
+            return `${feature.properties.stopId}:${feature.geometry.type}:empty`;
+          }
+
+          const markerBounds = new LngLatBounds();
+          extendBoundsFromCoordinates(markerBounds, markerCoordinates);
+          if (markerBounds.isEmpty()) {
+            return `${feature.properties.stopId}:${feature.geometry.type}:empty`;
+          }
+
+          const southWest = markerBounds.getSouthWest();
+          const northEast = markerBounds.getNorthEast();
+          return [
+            feature.properties.stopId,
+            feature.geometry.type,
+            southWest.lng.toFixed(5),
+            southWest.lat.toFixed(5),
+            northEast.lng.toFixed(5),
+            northEast.lat.toFixed(5),
+          ].join(":");
+        })
         .join("|"),
     [poiMapMarkerData],
   );
@@ -4269,12 +4291,18 @@ export function MapClient({
       if (!currentMap || !isStyleReadyRef.current || (!isPendingCamera && !isCurrentCamera)) {
         return;
       }
-      if (isPendingCamera) {
-        activeGuideCameraPendingKeyRef.current = null;
-      }
-      activeGuideCameraKeyRef.current = nextCameraKey;
-
       currentMap.resize();
+      const container = currentMap.getContainer();
+      if (container.clientWidth < 120 || container.clientHeight < 120) {
+        return;
+      }
+
+      const completeCameraRequest = () => {
+        if (isPendingCamera) {
+          activeGuideCameraPendingKeyRef.current = null;
+        }
+        activeGuideCameraKeyRef.current = nextCameraKey;
+      };
       const activeViewportInsets = getViewportInsets(
         currentMap,
         viewportModeRef.current,
@@ -4289,6 +4317,7 @@ export function MapClient({
             const markerBounds = new LngLatBounds();
             extendBoundsFromCoordinates(markerBounds, markerCoordinates);
             if (!markerBounds.isEmpty()) {
+              completeCameraRequest();
               currentMap.fitBounds(markerBounds, {
                 padding: clampPaddingToMap(
                   currentMap,
@@ -4305,6 +4334,7 @@ export function MapClient({
         }
         const focusedPoint = selectedParentStop ?? selectedNestedStop!.place;
         const [lat, lng] = focusedPoint.coordinates;
+        completeCameraRequest();
         currentMap.easeTo({
           center: [lng, lat],
           zoom: Math.max(currentMap.getZoom(), 14.8),
@@ -4343,6 +4373,7 @@ export function MapClient({
 
       if (guideCoordinateCount === 1 && guideMarkerGeometryCount === 0) {
         const [lat, lng] = activeGuide.stops[0].coordinates;
+        completeCameraRequest();
         currentMap.easeTo({
           center: [lng, lat],
           zoom: Math.max(currentMap.getZoom(), 12.4),
@@ -4361,6 +4392,7 @@ export function MapClient({
         return;
       }
 
+      completeCameraRequest();
       currentMap.fitBounds(guideBounds, {
         padding: clampPaddingToMap(
           currentMap,
@@ -4382,7 +4414,13 @@ export function MapClient({
       );
       runCamera(520);
     }, 620);
-    activeGuideCameraTimeoutsRef.current.push(settleTimeout);
+    const lateSettleTimeout = window.setTimeout(() => {
+      activeGuideCameraTimeoutsRef.current = activeGuideCameraTimeoutsRef.current.filter(
+        (timeoutId) => timeoutId !== lateSettleTimeout,
+      );
+      runCamera(420);
+    }, 1180);
+    activeGuideCameraTimeoutsRef.current.push(settleTimeout, lateSettleTimeout);
 
     return () => {
       if (activeGuideCameraFrameRef.current !== null) {
@@ -4404,6 +4442,7 @@ export function MapClient({
     selectionCameraKey,
     styleReadyTick,
     selectedStopId,
+    viewportMode,
     viewportInsets,
   ]);
 
