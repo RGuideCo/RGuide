@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { CalendarCheck, Clock3, ExternalLink, Navigation, Plus } from "lucide-react";
+import { CalendarCheck, Clock3, ExternalLink, Navigation } from "lucide-react";
 
 import type { GuideStopItem } from "./types";
 
@@ -15,15 +15,11 @@ interface GuideStopFooterActionsProps {
   resolvedStopHours?: string | null;
   isHistoricalGuide: boolean;
   weekdayLabel: string;
-  showAddAction: boolean;
-  isStopInItinerary: boolean;
-  isStopAddedToGuide: boolean;
   officialStopUrl?: string | null;
   timetableUrl?: string | null;
   directionsPickerOpen: boolean;
   stayBookingDetails?: StayBookingDetails | null;
   getDirectionsHref: (stop: GuideStopItem) => string;
-  onAddStop: () => void;
   onToggleDirectionsPicker: () => void;
   onCloseDirectionsPicker: () => void;
 }
@@ -33,20 +29,14 @@ export function GuideStopFooterActions({
   resolvedStopHours,
   isHistoricalGuide,
   weekdayLabel,
-  showAddAction,
-  isStopInItinerary,
-  isStopAddedToGuide,
   officialStopUrl,
   timetableUrl,
   directionsPickerOpen,
   stayBookingDetails,
   getDirectionsHref,
-  onAddStop,
   onToggleDirectionsPicker,
   onCloseDirectionsPicker,
 }: GuideStopFooterActionsProps) {
-  const isAddActive = isStopInItinerary || isStopAddedToGuide;
-
   return (
     <div className="expanded-guide-stop-actions poi-footer-row mt-3 flex items-center justify-between gap-3 border-t border-slate-950/10 bg-white/80 py-2">
       <div className="min-w-0">
@@ -64,21 +54,6 @@ export function GuideStopFooterActions({
           <span className="max-w-[11rem] truncate rounded-md border border-slate-950/10 bg-white/80 px-2 py-1.5 text-[11px] font-medium text-slate-600">
             {stop.eventVenue}
           </span>
-        ) : null}
-        {showAddAction ? (
-          <button
-            type="button"
-            onClick={onAddStop}
-            className={`inline-flex h-7 w-7 items-center justify-center rounded-md border text-[11px] font-medium transition ${
-              isAddActive
-                ? "border-emerald-600 bg-emerald-600 text-white"
-                : "border-slate-950/10 bg-white/80 text-slate-700 hover:border-slate-950/20 hover:text-slate-900"
-            }`}
-            aria-label="Add"
-            title="Add"
-          >
-            <Plus className="h-3.5 w-3.5" />
-          </button>
         ) : null}
         {officialStopUrl ? (
           <Link

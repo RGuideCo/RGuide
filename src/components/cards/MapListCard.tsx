@@ -11,7 +11,6 @@ import { getPoiAttributeTags } from "@/lib/poi-tags";
 import { getCreatorHref, getGuideHref, getVenueHref } from "@/lib/routes";
 import { resolveStopHours } from "@/lib/seasonal-hours";
 import { buildStay22StopUrl, isStay22Url } from "@/lib/stay22";
-import { formatNumber } from "@/lib/utils";
 import { CATEGORY_STYLES } from "@/lib/constants";
 import {
   EventCardBody,
@@ -641,7 +640,6 @@ export function MapListCard({
   const categoryStyle = CATEGORY_STYLES[list.category];
   const guideAccentColor = isItineraryGuide && !isEventGuide ? "#020617" : categoryStyle.mapColor;
   const guideExpandedColor = isItineraryGuide && !isEventGuide ? "#111827" : categoryStyle.mapColor;
-  const visibleUpvotes = list.upvotes + (hasVoted ? 1 : 0);
   const expandedChrome = expanded || preserveExpandedChrome;
   const hiddenLocationPartsKey = expandedChrome ? "" : collapsedLocationSubtitleHiddenParts.join("\u0001");
   const hiddenLocationParts = useMemo(
@@ -1501,14 +1499,13 @@ export function MapListCard({
                 event.stopPropagation();
                 toggleUpvote(list.id);
               }}
-              className={`inline-flex h-7 min-w-7 items-center justify-center gap-1 rounded-full px-2 text-[11px] font-medium ${
+              className={`inline-flex h-7 w-7 items-center justify-center rounded-full text-[11px] font-medium ${
                 hasVoted ? "bg-rose-950 text-rose-50" : "border border-slate-200 bg-white text-slate-700"
               }`}
               aria-label={hasVoted ? "Remove favorite" : "Favorite guide"}
               title={hasVoted ? "Remove favorite" : "Favorite guide"}
             >
               <Heart className={`h-3.5 w-3.5 ${hasVoted ? "fill-current" : ""}`} />
-              {visibleUpvotes > 0 ? <span>{formatNumber(visibleUpvotes)}</span> : null}
             </button>
           ) : null}
           {expandable && expandedChrome ? (
@@ -1742,8 +1739,12 @@ export function MapListCard({
                         showStopNumbers={showStopNumbers}
                         isExpanded={isStopExpanded}
                         isActive={isStopMapSelected}
+                        showAddAction={!isItineraryGuide}
+                        isStopInItinerary={isStopInItinerary}
+                        isStopAddedToGuide={isStopAddedToGuide}
                         animationDelay={`${110 + Math.min(index, 4) * 24}ms`}
                         onHeaderActivate={activateStopHeader}
+                        onAddStop={() => openAddPickerForStop(stopItineraryId)}
                         handlers={{
                           onStopSelect: activateGuideStop,
                           onStopToggle: toggleStopWithActivation,
@@ -1819,15 +1820,11 @@ export function MapListCard({
                                 resolvedStopHours={resolvedStopHours}
                                 isHistoricalGuide={isHistoricalGuide}
                                 weekdayLabel={weekdayLabel}
-                                showAddAction={!isItineraryGuide}
-                                isStopInItinerary={isStopInItinerary}
-                                isStopAddedToGuide={isStopAddedToGuide}
                                 officialStopUrl={officialStopUrl}
                                 timetableUrl={timetableUrl}
                                 directionsPickerOpen={directionsPickerStopId === stop.id}
                                 stayBookingDetails={stayBookingDetails}
                                 getDirectionsHref={getDirectionsHref}
-                                onAddStop={() => openAddPickerForStop(stopItineraryId)}
                                 onToggleDirectionsPicker={() =>
                                   setDirectionsPickerStopId((current) => (current === stop.id ? null : stop.id))
                                 }
