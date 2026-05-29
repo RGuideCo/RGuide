@@ -406,7 +406,19 @@ export const useAppStore = create<AppState>()(
         set((state) => ({
           submittedLists: [nextList, ...state.submittedLists],
         }));
-        void saveSubmittedGuide(nextList);
+        void saveSubmittedGuide(nextList).then(({ guide, error }) => {
+          if (error) {
+            console.error("Failed to sync submitted guide", error);
+            return;
+          }
+          if (guide) {
+            set((state) => ({
+              submittedLists: state.submittedLists.map((list) =>
+                list.id === nextList.id ? guide : list,
+              ),
+            }));
+          }
+        });
 
         return {
           ok: true,
@@ -490,7 +502,19 @@ export const useAppStore = create<AppState>()(
             list.id === listId ? updatedList : list,
           ),
         }));
-        void saveSubmittedGuide(updatedList);
+        void saveSubmittedGuide(updatedList).then(({ guide, error }) => {
+          if (error) {
+            console.error("Failed to sync submitted guide update", error);
+            return;
+          }
+          if (guide) {
+            set((state) => ({
+              submittedLists: state.submittedLists.map((list) =>
+                list.id === listId ? guide : list,
+              ),
+            }));
+          }
+        });
 
         return {
           ok: true,
@@ -527,7 +551,11 @@ export const useAppStore = create<AppState>()(
         set((state) => ({
           submittedLists: state.submittedLists.filter((list) => list.id !== listId),
         }));
-        void deleteSubmittedGuide(listId);
+        void deleteSubmittedGuide(listId).then(({ error }) => {
+          if (error) {
+            console.error("Failed to sync submitted guide delete", error);
+          }
+        });
 
         return {
           ok: true,
@@ -560,7 +588,19 @@ export const useAppStore = create<AppState>()(
             });
 
             if (updatedJournal) {
-              void saveSubmittedGuide(updatedJournal);
+              void saveSubmittedGuide(updatedJournal).then(({ guide, error }) => {
+                if (error) {
+                  console.error("Failed to sync journal visibility", error);
+                  return;
+                }
+                if (guide) {
+                  set((latestState) => ({
+                    submittedLists: latestState.submittedLists.map((list) =>
+                      list.id === guide.id ? guide : list,
+                    ),
+                  }));
+                }
+              });
             }
 
             return { submittedLists };

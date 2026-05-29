@@ -500,6 +500,68 @@ function getPoiPhoto(photo?: string) {
   return photo?.trim() || null;
 }
 
+function sameCoordinates(
+  first: MapList["stops"][number]["coordinates"] | undefined,
+  second: MapList["stops"][number]["coordinates"] | undefined,
+) {
+  if (!first || !second) {
+    return false;
+  }
+
+  return Math.abs(first[0] - second[0]) < 0.000001 && Math.abs(first[1] - second[1]) < 0.000001;
+}
+
+function isSavedStopFromSource(
+  savedStop: MapList["stops"][number],
+  sourceListId: string,
+  sourceStop: MapList["stops"][number],
+) {
+  if (savedStop.sourceListId === sourceListId && savedStop.sourceStopId === sourceStop.id) {
+    return true;
+  }
+
+  if (savedStop.poiId && sourceStop.poiId && savedStop.poiId === sourceStop.poiId) {
+    return true;
+  }
+
+  if (savedStop.venueId && sourceStop.venueId && savedStop.venueId === sourceStop.venueId) {
+    return true;
+  }
+
+  return savedStop.name === sourceStop.name && sameCoordinates(savedStop.coordinates, sourceStop.coordinates);
+}
+
+function containsSavedStopFromSource(
+  savedStop: MapList["stops"][number],
+  sourceListId: string,
+  sourceStop: MapList["stops"][number],
+): boolean {
+  if (isSavedStopFromSource(savedStop, sourceListId, sourceStop)) {
+    return true;
+  }
+
+  return savedStop.places?.some((place) => containsSavedStopFromSource(place, sourceListId, sourceStop)) ?? false;
+}
+
+function isSavedGuideFromSource(savedStop: MapList["stops"][number], sourceList: MapList) {
+  if (savedStop.sourceKind === "guide" && savedStop.sourceListId === sourceList.id) {
+    return true;
+  }
+
+  if (savedStop.sourceListId === sourceList.id && !savedStop.sourceStopId && savedStop.name === sourceList.title) {
+    return true;
+  }
+
+  return (
+    savedStop.name === sourceList.title &&
+    Boolean(
+      savedStop.places?.some((place) =>
+        sourceList.stops.some((sourceStop) => isSavedStopFromSource(place, sourceList.id, sourceStop)),
+      ),
+    )
+  );
+}
+
 function getStayBookingDetails(list: MapList, stop: MapList["stops"][number], resolvedCategory: ListCategory = stop.category ?? list.category) {
   if (resolvedCategory !== "Stay") {
     return null;
@@ -992,22 +1054,30 @@ export function MapListCard({
       entry.submissionType !== "itinerary" &&
       !isItineraryLikeGuide(entry),
   );
+  const isListAddedToUserGuide = ownGuideOptions.some((guide) =>
+    guide.stops.some((stop) => isSavedGuideFromSource(stop, list)),
+  );
+  const isStopAddedToUserGuide = (sourceStop: MapList["stops"][number]) =>
+    ownGuideOptions.some((guide) =>
+      guide.stops.some((savedStop) => containsSavedStopFromSource(savedStop, list.id, sourceStop)),
+    );
   const cloneStopForGuideAddition = (
     stop: MapList["stops"][number],
     prefix: string,
     index: number,
+    sourceListId = list.id,
   ): MapList["stops"][number] => ({
+    ...stop,
     id: `${prefix}-poi-${index}-${stop.id}`,
-    name: stop.name,
-    coordinates: stop.coordinates,
-    description: stop.description,
+    sourceKind: "stop",
+    sourceListId: stop.sourceListId ?? sourceListId,
+    sourceStopId: stop.sourceStopId ?? stop.id,
+    sourceVenueId: stop.sourceVenueId ?? stop.venueId,
+    defaultDescription: stop.defaultDescription ?? stop.description,
     category: stop.category ?? list.category,
-    price: stop.price,
-    priceSource: stop.priceSource,
-    bookingUrl: stop.bookingUrl,
-    officialUrl: stop.officialUrl,
-    timetableUrl: stop.timetableUrl,
-    hours: stop.hours,
+    places: stop.places?.map((place, placeIndex) =>
+      cloneStopForGuideAddition(place, `${prefix}-nested-${index}`, placeIndex, sourceListId),
+    ),
   });
   const buildNestedStopFromList = (): MapList["stops"][number] => {
     const idPrefix = `manual-stop-${Date.now()}-${Math.random().toString(36).slice(2, 7)}`;
@@ -1015,9 +1085,13 @@ export function MapListCard({
 
     return {
       id: idPrefix,
+      sourceKind: "guide",
+      sourceListId: list.id,
       name: list.title,
       coordinates: firstStop?.coordinates ?? ([0, 0] as [number, number]),
       description: list.description,
+      category: list.category,
+      photo: list.photo ?? firstStop?.photo ?? firstStop?.places?.[0]?.photo,
       places: list.stops.map((stop, index) => cloneStopForGuideAddition(stop, idPrefix, index)),
     };
   };
@@ -1028,20 +1102,7 @@ export function MapListCard({
       const stop = list.stops.find((entry) => entry.id === stopId);
       if (stop) {
         const idPrefix = `manual-stop-${Date.now()}-${Math.random().toString(36).slice(2, 7)}`;
-        return {
-          id: idPrefix,
-          name: stop.name,
-          coordinates: stop.coordinates,
-          description: stop.description,
-          category: stop.category ?? list.category,
-          price: stop.price,
-          priceSource: stop.priceSource,
-          bookingUrl: stop.bookingUrl,
-          officialUrl: stop.officialUrl,
-          timetableUrl: stop.timetableUrl,
-          hours: stop.hours,
-          places: stop.places?.map((place, index) => cloneStopForGuideAddition(place, idPrefix, index)),
-        };
+        return cloneStopForGuideAddition(stop, idPrefix, 0);
       }
     }
     if (target.kind === "list") {
@@ -1423,7 +1484,9 @@ export function MapListCard({
                 openAddPickerForList();
               }}
               className={`inline-flex h-7 w-7 items-center justify-center rounded-full text-[11px] font-medium ${
-                isInItinerary ? "bg-emerald-600 text-white" : "border border-slate-200 bg-white text-slate-700"
+                isInItinerary || isListAddedToUserGuide
+                  ? "bg-emerald-600 text-white"
+                  : "border border-slate-200 bg-white text-slate-700"
               }`}
               aria-label="Add"
               title="Add"
@@ -1637,6 +1700,7 @@ export function MapListCard({
                         const isStopInItinerary =
                           itineraryStopIds.includes(stopItineraryId) ||
                           itineraryPlaylists.some((playlist) => playlist.stopKeys.includes(stopItineraryId));
+                        const isStopAddedToGuide = isStopAddedToUserGuide(stop);
                         const isStopExpanded = expandedStopIds.includes(stop.id);
                         const isStopMapSelected = forceExpandStopId === stop.id;
                         const itineraryDateKey = isItineraryGuide ? getItineraryStopDate(list, stop, index) : "";
@@ -1757,6 +1821,7 @@ export function MapListCard({
                                 weekdayLabel={weekdayLabel}
                                 showAddAction={!isItineraryGuide}
                                 isStopInItinerary={isStopInItinerary}
+                                isStopAddedToGuide={isStopAddedToGuide}
                                 officialStopUrl={officialStopUrl}
                                 timetableUrl={timetableUrl}
                                 directionsPickerOpen={directionsPickerStopId === stop.id}

@@ -17,6 +17,7 @@ interface GuideStopFooterActionsProps {
   weekdayLabel: string;
   showAddAction: boolean;
   isStopInItinerary: boolean;
+  isStopAddedToGuide: boolean;
   officialStopUrl?: string | null;
   timetableUrl?: string | null;
   directionsPickerOpen: boolean;
@@ -34,6 +35,7 @@ export function GuideStopFooterActions({
   weekdayLabel,
   showAddAction,
   isStopInItinerary,
+  isStopAddedToGuide,
   officialStopUrl,
   timetableUrl,
   directionsPickerOpen,
@@ -43,6 +45,8 @@ export function GuideStopFooterActions({
   onToggleDirectionsPicker,
   onCloseDirectionsPicker,
 }: GuideStopFooterActionsProps) {
+  const isAddActive = isStopInItinerary || isStopAddedToGuide;
+
   return (
     <div className="expanded-guide-stop-actions poi-footer-row mt-3 flex items-center justify-between gap-3 border-t border-slate-950/10 bg-white/80 py-2">
       <div className="min-w-0">
@@ -66,7 +70,7 @@ export function GuideStopFooterActions({
             type="button"
             onClick={onAddStop}
             className={`inline-flex h-7 w-7 items-center justify-center rounded-md border text-[11px] font-medium transition ${
-              isStopInItinerary
+              isAddActive
                 ? "border-emerald-600 bg-emerald-600 text-white"
                 : "border-slate-950/10 bg-white/80 text-slate-700 hover:border-slate-950/20 hover:text-slate-900"
             }`}

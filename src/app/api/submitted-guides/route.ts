@@ -1,0 +1,845 @@
+import crypto from "node:crypto";
+
+import { NextRequest, NextResponse } from "next/server";
+import type { SupabaseClient, User as SupabaseUser } from "@supabase/supabase-js";
+
+import {
+  getAuthenticatedSupabaseUser,
+  getSupabaseServiceClient,
+} from "@/lib/supabase/server";
+import type { ExternalPlaceProvider, ExternalPlaceReference, GuideStop, ListCategory, MapList } from "@/types";
+
+export const dynamic = "force-dynamic";
+export const runtime = "nodejs";
+
+type Coordinates = [number, number];
+
+type DestinationRow = {
+  id: string;
+};
+
+type EntryRow = {
+  id: string;
+  slug: string;
+  user_id: string | null;
+  source_table: string | null;
+};
+
+type VenueRow = {
+  id: string;
+  legacy_id: string | null;
+  slug: string;
+  name: string;
+  normalized_name: string;
+  city_id: string | null;
+  coordinates: unknown;
+  merged_into_venue_id: string | null;
+};
+
+type VenueExternalRefRow = {
+  venue_id: string;
+};
+
+const CATEGORY_TO_VENUE_KIND: Record<ListCategory, string> = {
+  Food: "food_drink",
+  Nightlife: "nightlife",
+  Nature: "outdoors",
+  Culture: "culture",
+  Stay: "lodging",
+  Activities: "landmark",
+  Routes: "outdoors",
+  Essentials: "service",
+};
+
+const ALLOWED_EXTERNAL_PROVIDERS = new Set<ExternalPlaceProvider>([
+  "geoapify",
+  "google",
+  "osm",
+  "rguide",
+  "manual",
+  "wikidata",
+  "foursquare",
+  "other",
+]);
+
+function getNumberEnv(key: string, fallback: number) {
+  const value = Number.parseInt(process.env[key] ?? "", 10);
+  return Number.isFinite(value) && value > 0 ? value : fallback;
+}
+
+function slugify(value: string | undefined | null) {
+  return String(value ?? "")
+    .normalize("NFKD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .toLowerCase()
+    .replace(/&/g, " and ")
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "");
+}
+
+function normalizeName(value: string | undefined | null) {
+  return slugify(value).replace(/-/g, " ").replace(/\s+/g, " ").trim();
+}
+
+function cleanText(value: unknown, maxLength: number) {
+  if (typeof value !== "string") return "";
+  return value.replace(/\s+/g, " ").trim().slice(0, maxLength);
+}
+
+function optionalText(value: unknown, maxLength: number) {
+  const cleaned = cleanText(value, maxLength);
+  return cleaned || null;
+}
+
+function dateOnly(value: string | undefined) {
+  return value ? value.slice(0, 10) : null;
+}
+
+function toSchemaSubmissionType(value: MapList["submissionType"]) {
+  return value === "itinerary" ? "journey" : value ?? "guide";
+}
+
+function isUuid(value: string | undefined | null) {
+  return Boolean(
+    value &&
+      /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(value),
+  );
+}
+
+function toCoordinates(value: unknown): Coordinates | null {
+  if (
+    Array.isArray(value) &&
+    value.length === 2 &&
+    typeof value[0] === "number" &&
+    typeof value[1] === "number" &&
+    Number.isFinite(value[0]) &&
+    Number.isFinite(value[1]) &&
+    Math.abs(value[0]) <= 90 &&
+    Math.abs(value[1]) <= 180
+  ) {
+    return value[0] === 0 && value[1] === 0 ? null : [value[0], value[1]];
+  }
+
+  return null;
+}
+
+function toEntryCoordinates(value: unknown): Coordinates | null {
+  if (
+    Array.isArray(value) &&
+    value.length === 2 &&
+    typeof value[0] === "number" &&
+    typeof value[1] === "number" &&
+    Number.isFinite(value[0]) &&
+    Number.isFinite(value[1]) &&
+    Math.abs(value[0]) <= 90 &&
+    Math.abs(value[1]) <= 180
+  ) {
+    return [value[0], value[1]];
+  }
+
+  return null;
+}
+
+function distanceMeters(a?: Coordinates | null, b?: Coordinates | null) {
+  if (!a || !b) return Number.POSITIVE_INFINITY;
+
+  const radius = 6371000;
+  const lat1 = (a[0] * Math.PI) / 180;
+  const lat2 = (b[0] * Math.PI) / 180;
+  const dLat = ((b[0] - a[0]) * Math.PI) / 180;
+  const dLon = ((b[1] - a[1]) * Math.PI) / 180;
+  const sinLat = Math.sin(dLat / 2);
+  const sinLon = Math.sin(dLon / 2);
+  const h = sinLat * sinLat + Math.cos(lat1) * Math.cos(lat2) * sinLon * sinLon;
+
+  return 2 * radius * Math.asin(Math.sqrt(h));
+}
+
+function sanitizeExternalPlace(value: unknown): ExternalPlaceReference | null {
+  if (!value || typeof value !== "object" || Array.isArray(value)) {
+    return null;
+  }
+
+  const candidate = value as ExternalPlaceReference;
+  const provider = ALLOWED_EXTERNAL_PROVIDERS.has(candidate.provider) ? candidate.provider : null;
+
+  if (!provider) {
+    return null;
+  }
+
+  return {
+    provider,
+    providerPlaceId: optionalText(candidate.providerPlaceId, 220) ?? undefined,
+    label: optionalText(candidate.label, 220) ?? undefined,
+    addressLine1: optionalText(candidate.addressLine1, 260) ?? undefined,
+    addressLine2: optionalText(candidate.addressLine2, 260) ?? undefined,
+    city: optionalText(candidate.city, 120) ?? undefined,
+    state: optionalText(candidate.state, 120) ?? undefined,
+    country: optionalText(candidate.country, 120) ?? undefined,
+    postcode: optionalText(candidate.postcode, 40) ?? undefined,
+    url: optionalText(candidate.url, 500) ?? undefined,
+    coordinates: toCoordinates(candidate.coordinates) ?? undefined,
+  };
+}
+
+function inferVenueKind(stop: GuideStop, fallbackCategory: ListCategory) {
+  if (stop.venueKind) return stop.venueKind;
+  if (stop.lodgingType) return "lodging";
+  if (stop.foodServiceType || stop.cuisineTypes?.length) return "food_drink";
+  if (stop.nightlifeType || stop.musicGenres?.length) return "nightlife";
+  return CATEGORY_TO_VENUE_KIND[stop.category ?? fallbackCategory] ?? "other";
+}
+
+async function resolveDestinationIds(supabase: SupabaseClient, list: MapList) {
+  let cityId: string | null = null;
+  let neighborhoodId: string | null = null;
+
+  if (list.location.city) {
+    const { data } = await supabase
+      .from("destinations")
+      .select("id")
+      .eq("scope", "city")
+      .eq("name", list.location.city)
+      .eq("country_name", list.location.country)
+      .limit(1)
+      .returns<DestinationRow[]>();
+
+    cityId = data?.[0]?.id ?? null;
+  }
+
+  if (cityId && list.location.neighborhood) {
+    const { data } = await supabase
+      .from("destinations")
+      .select("id")
+      .eq("scope", "neighborhood")
+      .eq("name", list.location.neighborhood)
+      .eq("parent_id", cityId)
+      .limit(1)
+      .returns<DestinationRow[]>();
+
+    neighborhoodId = data?.[0]?.id ?? null;
+  }
+
+  return {
+    destinationId: neighborhoodId ?? cityId,
+    cityId,
+    neighborhoodId,
+  };
+}
+
+async function getExistingEntry(supabase: SupabaseClient, listId: string) {
+  const { data, error } = await supabase
+    .from("entries")
+    .select("id,slug,user_id,source_table")
+    .eq("legacy_id", listId)
+    .limit(1)
+    .returns<EntryRow[]>();
+
+  if (error) throw error;
+  return data?.[0] ?? null;
+}
+
+async function getAvailableEntrySlug(supabase: SupabaseClient, baseSlug: string, existingEntryId: string | null) {
+  const base = slugify(baseSlug) || `guide-${Date.now()}`;
+
+  for (let index = 0; index < 8; index += 1) {
+    const slug = index === 0 ? base : `${base}-${index + 1}`;
+    const { data, error } = await supabase
+      .from("entries")
+      .select("id")
+      .eq("slug", slug)
+      .limit(1)
+      .returns<Array<{ id: string }>>();
+
+    if (error) throw error;
+    if (!data?.[0] || data[0].id === existingEntryId) {
+      return slug;
+    }
+  }
+
+  return `${base}-${Date.now()}`;
+}
+
+async function getVenueById(supabase: SupabaseClient, venueId: string | undefined) {
+  if (!isUuid(venueId)) return null;
+
+  const { data } = await supabase
+    .from("venues")
+    .select("id,legacy_id,slug,name,normalized_name,city_id,coordinates,merged_into_venue_id")
+    .eq("id", venueId)
+    .is("merged_into_venue_id", null)
+    .limit(1)
+    .returns<VenueRow[]>();
+
+  return data?.[0] ?? null;
+}
+
+async function getVenueByExternalRef(supabase: SupabaseClient, externalPlace: ExternalPlaceReference | null) {
+  if (!externalPlace?.providerPlaceId) return null;
+
+  const { data: refRows } = await supabase
+    .from("venue_external_refs")
+    .select("venue_id")
+    .eq("provider", externalPlace.provider)
+    .eq("provider_place_id", externalPlace.providerPlaceId)
+    .limit(1)
+    .returns<VenueExternalRefRow[]>();
+
+  return getVenueById(supabase, refRows?.[0]?.venue_id);
+}
+
+async function getVenueByLegacyId(supabase: SupabaseClient, poiId: string | undefined) {
+  const cleanedPoiId = optionalText(poiId, 240);
+
+  if (!cleanedPoiId) return null;
+
+  const { data } = await supabase
+    .from("venues")
+    .select("id,legacy_id,slug,name,normalized_name,city_id,coordinates,merged_into_venue_id")
+    .eq("legacy_id", cleanedPoiId)
+    .is("merged_into_venue_id", null)
+    .limit(1)
+    .returns<VenueRow[]>();
+
+  return data?.[0] ?? null;
+}
+
+async function getVenueByName(supabase: SupabaseClient, params: {
+  cityId: string | null;
+  name: string;
+  coordinates: Coordinates | null;
+}) {
+  const normalizedName = normalizeName(params.name);
+  if (!normalizedName || !params.cityId) return null;
+
+  const { data: exactRows } = await supabase
+    .from("venues")
+    .select("id,legacy_id,slug,name,normalized_name,city_id,coordinates,merged_into_venue_id")
+    .eq("city_id", params.cityId)
+    .eq("normalized_name", normalizedName)
+    .is("merged_into_venue_id", null)
+    .limit(1)
+    .returns<VenueRow[]>();
+
+  if (exactRows?.[0]) {
+    return exactRows[0];
+  }
+
+  const firstToken = normalizedName.split(" ")[0];
+  if (!firstToken || firstToken.length < 3) {
+    return null;
+  }
+
+  const { data: candidates } = await supabase
+    .from("venues")
+    .select("id,legacy_id,slug,name,normalized_name,city_id,coordinates,merged_into_venue_id")
+    .eq("city_id", params.cityId)
+    .is("merged_into_venue_id", null)
+    .ilike("normalized_name", `%${firstToken}%`)
+    .limit(20)
+    .returns<VenueRow[]>();
+
+  return (
+    candidates?.find((candidate) => {
+      const candidateName = candidate.normalized_name || normalizeName(candidate.name);
+      if (candidateName === normalizedName) return true;
+      if (distanceMeters(toCoordinates(candidate.coordinates), params.coordinates) > 75) return false;
+      return candidateName.includes(normalizedName) || normalizedName.includes(candidateName);
+    }) ?? null
+  );
+}
+
+async function getAvailableVenueSlug(supabase: SupabaseClient, cityId: string | null, baseSlug: string) {
+  const base = slugify(baseSlug) || `venue-${Date.now()}`;
+
+  for (let index = 0; index < 8; index += 1) {
+    const slug = index === 0 ? base : `${base}-${index + 1}`;
+    let query = supabase
+      .from("venues")
+      .select("id")
+      .eq("slug", slug)
+      .limit(1);
+
+    query = cityId ? query.eq("city_id", cityId) : query.is("city_id", null);
+
+    const { data, error } = await query.returns<Array<{ id: string }>>();
+    if (error) throw error;
+    if (!data?.[0]) return slug;
+  }
+
+  return `${base}-${Date.now()}`;
+}
+
+async function createUserSubmittedVenue(supabase: SupabaseClient, params: {
+  user: SupabaseUser;
+  list: MapList;
+  stop: GuideStop;
+  cityId: string | null;
+  neighborhoodId: string | null;
+  externalPlace: ExternalPlaceReference | null;
+}) {
+  const name = cleanText(params.stop.name || params.externalPlace?.label, 220);
+  if (!name) return null;
+
+  const coordinates = toCoordinates(params.stop.coordinates) ?? params.externalPlace?.coordinates ?? null;
+  const normalizedName = normalizeName(name);
+  const venueKind = inferVenueKind(params.stop, params.list.category);
+  const slug = await getAvailableVenueSlug(
+    supabase,
+    params.cityId,
+    params.stop.poiId ?? params.externalPlace?.providerPlaceId ?? name,
+  );
+
+  const { data, error } = await supabase
+    .from("venues")
+    .insert({
+      legacy_id: optionalText(params.stop.poiId, 240),
+      slug,
+      name,
+      normalized_name: normalizedName,
+      aliases: [],
+      destination_id: params.neighborhoodId ?? params.cityId,
+      city_id: params.cityId,
+      neighborhood_id: params.neighborhoodId,
+      address_line1: optionalText(params.externalPlace?.addressLine1, 260),
+      address_line2: optionalText(params.externalPlace?.addressLine2, 260),
+      locality: optionalText(params.externalPlace?.city, 120) ?? params.list.location.city ?? null,
+      region: optionalText(params.externalPlace?.state, 120),
+      postal_code: optionalText(params.externalPlace?.postcode, 40),
+      country: optionalText(params.externalPlace?.country, 120) ?? params.list.location.country,
+      coordinates,
+      official_url: optionalText(params.stop.officialUrl, 500) ?? optionalText(params.externalPlace?.url, 500),
+      source_metadata: {
+        source: "user_submission",
+        entryId: params.list.id,
+        stopId: params.stop.id,
+        externalPlace: params.externalPlace,
+      },
+      venue_kind: venueKind,
+      venue_kinds: [venueKind],
+      lodging_type: params.stop.lodgingType ?? null,
+      food_service_type: params.stop.foodServiceType ?? null,
+      cuisine_types: params.stop.cuisineTypes ?? [],
+      nightlife_type: params.stop.nightlifeType ?? null,
+      music_genres: params.stop.musicGenres ?? [],
+      attribute_tags: params.stop.attributeTags ?? params.stop.tags ?? [],
+      created_by: params.user.id,
+      created_source: "user_submission",
+      moderation_status: "pending",
+      last_user_submitted_at: new Date().toISOString(),
+    })
+    .select("id,legacy_id,slug,name,normalized_name,city_id,coordinates,merged_into_venue_id")
+    .returns<VenueRow[]>();
+
+  if (error) {
+    const existing = await getVenueByName(supabase, {
+      cityId: params.cityId,
+      name,
+      coordinates,
+    });
+
+    if (existing) return existing;
+    throw error;
+  }
+
+  return data?.[0] ?? null;
+}
+
+async function upsertExternalRef(supabase: SupabaseClient, params: {
+  user: SupabaseUser;
+  venueId: string | null;
+  externalPlace: ExternalPlaceReference | null;
+  listId: string;
+  stopId: string;
+}) {
+  if (!params.venueId || !params.externalPlace?.providerPlaceId) {
+    return;
+  }
+
+  const payload = {
+    venue_id: params.venueId,
+    provider: params.externalPlace.provider,
+    provider_place_id: params.externalPlace.providerPlaceId,
+    provider_url: params.externalPlace.url ?? null,
+    label: params.externalPlace.label ?? null,
+    confidence: 0.82,
+    raw_metadata: {
+      source: "user_submission",
+      entryId: params.listId,
+      stopId: params.stopId,
+      externalPlace: params.externalPlace,
+    },
+    created_by: params.user.id,
+  };
+
+  const { error } = await supabase
+    .from("venue_external_refs")
+    .upsert(payload, { onConflict: "provider,provider_place_id", ignoreDuplicates: true });
+
+  if (error) throw error;
+}
+
+async function resolveVenue(supabase: SupabaseClient, params: {
+  user: SupabaseUser;
+  list: MapList;
+  stop: GuideStop;
+  cityId: string | null;
+  neighborhoodId: string | null;
+}) {
+  const externalPlace = sanitizeExternalPlace(params.stop.externalPlace);
+  const coordinates = toCoordinates(params.stop.coordinates) ?? externalPlace?.coordinates ?? null;
+  const directVenue =
+    (await getVenueById(supabase, params.stop.venueId)) ??
+    (await getVenueByExternalRef(supabase, externalPlace)) ??
+    (await getVenueByLegacyId(supabase, params.stop.poiId)) ??
+    (await getVenueByName(supabase, {
+      cityId: params.cityId,
+      name: params.stop.name,
+      coordinates,
+    }));
+
+  const venue =
+    directVenue ??
+    (await createUserSubmittedVenue(supabase, {
+      user: params.user,
+      list: params.list,
+      stop: params.stop,
+      cityId: params.cityId,
+      neighborhoodId: params.neighborhoodId,
+      externalPlace,
+    }));
+
+  await upsertExternalRef(supabase, {
+    user: params.user,
+    venueId: venue?.id ?? null,
+    externalPlace,
+    listId: params.list.id,
+    stopId: params.stop.id,
+  });
+
+  return { venue, externalPlace };
+}
+
+async function resolveStopTree(supabase: SupabaseClient, params: {
+  user: SupabaseUser;
+  list: MapList;
+  stop: GuideStop;
+  cityId: string | null;
+  neighborhoodId: string | null;
+}): Promise<GuideStop> {
+  const { venue, externalPlace } = await resolveVenue(supabase, params);
+  const places = params.stop.places
+    ? await Promise.all(
+        params.stop.places.map((place) =>
+          resolveStopTree(supabase, {
+            ...params,
+            stop: place,
+          }),
+        ),
+      )
+    : undefined;
+
+  return {
+    ...params.stop,
+    venueId: venue?.id ?? params.stop.venueId,
+    sourceVenueId: params.stop.sourceVenueId ?? params.stop.venueId,
+    externalPlace: externalPlace ?? params.stop.externalPlace,
+    places,
+  };
+}
+
+function stopMetadata(stop: GuideStop) {
+  return JSON.parse(JSON.stringify({
+    submittedFrom: "browser",
+    sourceKind: stop.sourceKind,
+    sourceListId: stop.sourceListId,
+    sourceStopId: stop.sourceStopId,
+    sourceVenueId: stop.sourceVenueId ?? stop.venueId,
+    externalPlace: sanitizeExternalPlace(stop.externalPlace),
+    defaultDescription: stop.defaultDescription,
+    routeCoordinates: stop.routeCoordinates,
+  }));
+}
+
+async function refreshEntryRenderCache(supabase: SupabaseClient, entryId: string) {
+  const { data, error: viewError } = await supabase
+    .from("entries_maplist")
+    .select("list")
+    .eq("id", entryId)
+    .limit(1)
+    .returns<Array<{ list: MapList }>>();
+
+  if (viewError) throw viewError;
+
+  const list = data?.[0]?.list;
+
+  if (!list) {
+    const { error } = await supabase
+      .from("entry_render_cache")
+      .update({
+        is_current: false,
+        stale_at: new Date().toISOString(),
+      })
+      .eq("entry_id", entryId)
+      .eq("render_format", "maplist")
+      .eq("render_version", 1);
+    if (error) throw error;
+    return;
+  }
+
+  const hash = crypto.createHash("sha256").update(JSON.stringify(list)).digest("hex");
+
+  const { error } = await supabase.from("entry_render_cache").upsert(
+    {
+      entry_id: entryId,
+      render_format: "maplist",
+      render_version: 1,
+      rendered_payload: list,
+      source_hash: hash,
+      rendered_at: new Date().toISOString(),
+      stale_at: null,
+      is_current: true,
+      metadata: { refreshed_from: "submitted_guides_api" },
+    },
+    { onConflict: "entry_id,render_format,render_version" },
+  );
+  if (error) throw error;
+}
+
+function validateList(list: MapList) {
+  const maxStops = getNumberEnv("USER_GUIDE_MAX_STOPS", 200);
+  const title = cleanText(list.title, 140);
+  const description = cleanText(list.description, 2400);
+  const stops = Array.isArray(list.stops) ? list.stops : [];
+
+  if (title.length < 3) {
+    return { ok: false as const, error: "Give this guide a title before saving." };
+  }
+
+  if (description.length < 10) {
+    return { ok: false as const, error: "Add a short description before saving." };
+  }
+
+  if (!stops.length) {
+    return { ok: false as const, error: "Add at least one stop before saving." };
+  }
+
+  if (stops.length > maxStops) {
+    return { ok: false as const, error: `This guide has too many stops. Keep it under ${maxStops}.` };
+  }
+
+  const emptyStop = stops.find((stop) => !cleanText(stop.name, 220) || !cleanText(stop.description, 2400));
+  if (emptyStop) {
+    return { ok: false as const, error: "Every stop needs a name and description before saving." };
+  }
+
+  return { ok: true as const };
+}
+
+export async function POST(request: NextRequest) {
+  const service = getSupabaseServiceClient();
+  const { user, error: userError } = await getAuthenticatedSupabaseUser(request);
+
+  if (!service) {
+    return NextResponse.json({ error: "Supabase service role is not configured." }, { status: 500 });
+  }
+
+  if (!user) {
+    return NextResponse.json({ error: userError ?? "Sign in before saving." }, { status: 401 });
+  }
+
+  let list: MapList;
+  try {
+    const payload = (await request.json()) as { list?: MapList };
+    if (!payload.list) throw new Error("Missing list.");
+    list = payload.list;
+  } catch {
+    return NextResponse.json({ error: "Invalid guide payload." }, { status: 400 });
+  }
+
+  const validation = validateList(list);
+  if (!validation.ok) {
+    return NextResponse.json({ error: validation.error }, { status: 400 });
+  }
+
+  try {
+    const existingEntry = await getExistingEntry(service, list.id);
+
+    if (existingEntry?.source_table && existingEntry.source_table !== "submitted_guides") {
+      return NextResponse.json({ error: "That guide id belongs to canonical content." }, { status: 409 });
+    }
+
+    if (existingEntry?.user_id && existingEntry.user_id !== user.id) {
+      return NextResponse.json({ error: "You can only edit your own guides." }, { status: 403 });
+    }
+
+    if (!existingEntry) {
+      const maxGuides = getNumberEnv("USER_GUIDE_MAX_GUIDES", 1000);
+      const { count, error: countError } = await service
+        .from("entries")
+        .select("id", { count: "exact", head: true })
+        .eq("user_id", user.id)
+        .eq("source_table", "submitted_guides");
+
+      if (countError) throw countError;
+
+      if ((count ?? 0) >= maxGuides) {
+        return NextResponse.json(
+          { error: `Guide limit reached. Archive or delete a guide before creating more than ${maxGuides}.` },
+          { status: 429 },
+        );
+      }
+    }
+
+    const { destinationId, cityId, neighborhoodId } = await resolveDestinationIds(service, list);
+    const resolvedStops = await Promise.all(
+      list.stops.map((stop) =>
+        resolveStopTree(service, {
+          user,
+          list,
+          stop,
+          cityId,
+          neighborhoodId,
+        }),
+      ),
+    );
+    const slug = await getAvailableEntrySlug(service, list.slug, existingEntry?.id ?? null);
+    const status = list.journal?.visibility === "private" ? "draft" : "published";
+
+    const { data: entryRows, error: entryError } = await service
+      .from("entries")
+      .upsert(
+        {
+          legacy_id: list.id,
+          slug,
+          seo_slug: list.seoSlug ?? null,
+          seo_title: list.seoTitle ?? null,
+          seo_description: list.seoDescription ?? null,
+          title: cleanText(list.title, 140),
+          description: cleanText(list.description, 2400),
+          highlights: list.highlights ?? [],
+          photo_url: list.photo ?? null,
+          canonical_url: list.url,
+          category: list.category,
+          submission_type: toSchemaSubmissionType(list.submissionType),
+          status,
+          destination_id: destinationId,
+          city_id: cityId,
+          neighborhood_id: neighborhoodId,
+          country_name: list.location.country,
+          continent_name: list.location.continent,
+          creator_id: user.id,
+          creator_name: list.creator.name,
+          creator_avatar: list.creator.avatar,
+          user_id: user.id,
+          upvotes: list.upvotes ?? 0,
+          created_on: dateOnly(list.createdAt) ?? new Date().toISOString().slice(0, 10),
+          journey_start_date: dateOnly(list.journey?.startDate ?? list.itinerary?.startDate),
+          journey_end_date: dateOnly(list.journey?.endDate ?? list.itinerary?.endDate),
+          journal_visited_at: dateOnly(list.journal?.visitedAt),
+          journal_note: list.journal?.note ?? null,
+          journal_visibility: list.journal?.visibility ?? null,
+          source_table: "submitted_guides",
+          metadata: {
+            submittedFrom: "browser",
+            savePath: "server_resolved_venues",
+            stopCount: resolvedStops.length,
+          },
+        },
+        { onConflict: "legacy_id" },
+      )
+      .select("id")
+      .returns<Array<{ id: string }>>();
+
+    if (entryError || !entryRows?.[0]) {
+      throw entryError ?? new Error("Could not save guide.");
+    }
+
+    const entryId = entryRows[0].id;
+    const { error: deleteStopsError } = await service.from("entry_stops").delete().eq("entry_id", entryId);
+    if (deleteStopsError) throw deleteStopsError;
+
+    const stopRows = resolvedStops.map((stop, index) => ({
+      entry_id: entryId,
+      legacy_id: stop.id,
+      stop_order: index,
+      poi_legacy_id: stop.poiId ?? null,
+      name: cleanText(stop.name, 220),
+      description: cleanText(stop.description, 2400),
+      category: stop.category ?? null,
+      subcategory: stop.subcategory ?? null,
+      subcategories: stop.subcategories ?? [],
+      destination_id: neighborhoodId ?? cityId,
+      venue_id: stop.venueId ?? null,
+      coordinates: toEntryCoordinates(stop.coordinates),
+      price_label: stop.price ?? null,
+      price_source: stop.priceSource ?? null,
+      booking_url: stop.bookingUrl ?? null,
+      official_url: stop.officialUrl ?? null,
+      event_time_label: stop.eventTime ?? null,
+      event_venue_label: stop.eventVenue ?? null,
+      journey_date: dateOnly(stop.journeyDate ?? stop.itineraryDate),
+      journey_day: stop.journeyDay ?? stop.itineraryDay ?? null,
+      hours: stop.hours ?? null,
+      places: stop.places ?? [],
+      metadata: stopMetadata(stop),
+    }));
+
+    const { error: stopsError } = await service.from("entry_stops").insert(stopRows);
+    if (stopsError) throw stopsError;
+
+    await refreshEntryRenderCache(service, entryId);
+
+    return NextResponse.json({
+      guide: {
+        ...list,
+        slug,
+        stops: resolvedStops,
+      },
+    });
+  } catch (error) {
+    console.error("Failed to save submitted guide", error);
+    return NextResponse.json({ error: "Guide could not be saved." }, { status: 500 });
+  }
+}
+
+export async function DELETE(request: NextRequest) {
+  const service = getSupabaseServiceClient();
+  const { user, error: userError } = await getAuthenticatedSupabaseUser(request);
+  const listId = request.nextUrl.searchParams.get("id")?.trim();
+
+  if (!service) {
+    return NextResponse.json({ error: "Supabase service role is not configured." }, { status: 500 });
+  }
+
+  if (!user) {
+    return NextResponse.json({ error: userError ?? "Sign in before deleting." }, { status: 401 });
+  }
+
+  if (!listId) {
+    return NextResponse.json({ error: "Guide id is required." }, { status: 400 });
+  }
+
+  const existingEntry = await getExistingEntry(service, listId);
+
+  if (!existingEntry) {
+    return NextResponse.json({ ok: true });
+  }
+
+  if (existingEntry.user_id !== user.id) {
+    return NextResponse.json({ error: "You can only delete your own guides." }, { status: 403 });
+  }
+
+  const { error } = await service
+    .from("entries")
+    .delete()
+    .eq("id", existingEntry.id)
+    .eq("user_id", user.id);
+
+  if (error) {
+    console.error("Failed to delete submitted guide", error);
+    return NextResponse.json({ error: "Guide could not be deleted." }, { status: 500 });
+  }
+
+  return NextResponse.json({ ok: true });
+}
