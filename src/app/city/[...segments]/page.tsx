@@ -47,9 +47,7 @@ export async function generateMetadata({ params }: CityDeepLinkPageProps): Promi
     return { title: "City not found" };
   }
 
-  const cityImageUrl = route.city.image.endsWith("-v2.svg")
-    ? route.city.image.replace(/-v2\.svg$/, "-v2-title.svg")
-    : route.city.image;
+  const cityImageUrl = `${route.city.image}${route.city.image.includes("?") ? "&" : "?"}title=1`;
 
   return {
     title: route.title,
