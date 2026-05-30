@@ -40,10 +40,17 @@ interface CityFoodCuisineRow {
   cuisines: string[];
 }
 
+interface CityImageRow {
+  id: string;
+  imageUrl: string;
+  imageUpdatedAt: string | null;
+}
+
 interface DestinationContentRows {
   descriptions: DestinationDescriptionRow[];
   cityAffiliateLinks: CityAffiliateLinkRow[];
   cityFoodCuisines: CityFoodCuisineRow[];
+  cityImages: CityImageRow[];
 }
 
 const DESTINATION_DESCRIPTIONS_CACHE_SECONDS = Number.parseInt(
@@ -51,10 +58,18 @@ const DESTINATION_DESCRIPTIONS_CACHE_SECONDS = Number.parseInt(
   10,
 );
 
-let destinationContentRowsPromise: Promise<DestinationContentRows> | null = null;
-
 function descriptionId(...parts: string[]) {
   return parts.filter(Boolean).join(":");
+}
+
+function versionedImageUrl(imageUrl: string | undefined, imageUpdatedAt: string | null | undefined) {
+  if (!imageUrl || !imageUpdatedAt || imageUrl.startsWith("/")) {
+    return imageUrl;
+  }
+
+  const separator = imageUrl.includes("?") ? "&" : "?";
+  const version = encodeURIComponent(imageUpdatedAt);
+  return `${imageUrl}${separator}v=${version}`;
 }
 
 function collectSubareaDescriptions(
@@ -176,13 +191,13 @@ function shouldSkipDatabaseConnection() {
 
 async function loadDestinationContentRows(): Promise<DestinationContentRows> {
   if (shouldSkipDatabaseConnection()) {
-    return { descriptions: [], cityAffiliateLinks: [], cityFoodCuisines: [] };
+    return { descriptions: [], cityAffiliateLinks: [], cityFoodCuisines: [], cityImages: [] };
   }
 
   const databaseUrl = getDatabaseUrl();
 
   if (!databaseUrl) {
-    return { descriptions: [], cityAffiliateLinks: [], cityFoodCuisines: [] };
+    return { descriptions: [], cityAffiliateLinks: [], cityFoodCuisines: [], cityImages: [] };
   }
 
   const client = new pg.Client({
@@ -195,16 +210,17 @@ async function loadDestinationContentRows(): Promise<DestinationContentRows> {
 
   try {
     await client.connect();
-    const [descriptions, cityAffiliateLinks, cityFoodCuisines] = await Promise.all([
+    const [descriptions, cityAffiliateLinks, cityFoodCuisines, cityImages] = await Promise.all([
       loadNormalizedDestinationDescriptionRows(client),
       loadCityLeftPanelAffiliateLinkRows(client),
       loadCityFoodCuisineRows(client),
+      loadCityImageRows(client),
     ]);
 
-    return { descriptions, cityAffiliateLinks, cityFoodCuisines };
+    return { descriptions, cityAffiliateLinks, cityFoodCuisines, cityImages };
   } catch (error) {
     console.error("Failed to load destination content", error);
-    return { descriptions: [], cityAffiliateLinks: [], cityFoodCuisines: [] };
+    return { descriptions: [], cityAffiliateLinks: [], cityFoodCuisines: [], cityImages: [] };
   } finally {
     await client.end().catch(() => {});
   }
@@ -274,12 +290,31 @@ async function loadCityFoodCuisineRows(client: Client) {
   }
 }
 
+async function loadCityImageRows(client: Client) {
+  try {
+    const { rows } = await client.query<CityImageRow>(
+      [
+        "select destination.legacy_id as id,",
+        "       destination.image_url as \"imageUrl\",",
+        "       coalesce(destination.metadata #>> '{destination_image,ingested_at}', destination.updated_at::text) as \"imageUpdatedAt\"",
+        "from public.destinations destination",
+        "where destination.scope = 'city'::public.destination_scope",
+        "  and destination.legacy_id is not null",
+        "  and nullif(destination.image_url, '') is not null",
+        "  and destination.is_published = true",
+      ].join(" "),
+    );
+    return rows;
+  } catch {
+    return [];
+  }
+}
+
 const getCachedDestinationContentRows = unstable_cache(
   async () => {
-    destinationContentRowsPromise ??= loadDestinationContentRows();
-    return destinationContentRowsPromise;
+    return loadDestinationContentRows();
   },
-  ["destination-content-rows"],
+  ["destination-content-rows", "city-images-v2"],
   {
     revalidate: Number.isFinite(DESTINATION_DESCRIPTIONS_CACHE_SECONDS)
       ? DESTINATION_DESCRIPTIONS_CACHE_SECONDS
@@ -328,15 +363,19 @@ function cloneCityWithDescription(
   descriptions: Map<string, string>,
   cityAffiliateLinks: Map<string, CityAffiliateLinkRow>,
   cityFoodCuisines: Map<string, CityFoodCuisineRow>,
+  cityImages: Map<string, CityImageRow>,
 ) {
   const cityDescriptionId = descriptionId("city", countryId, city.id);
   const affiliateLink = cityAffiliateLinks.get(cityDescriptionId);
   const foodCuisines = cityFoodCuisines.get(cityDescriptionId)?.cuisines.filter(Boolean);
+  const cityImage = cityImages.get(cityDescriptionId);
+  const imageUrl = versionedImageUrl(cityImage?.imageUrl, cityImage?.imageUpdatedAt);
   const cityLeftPanelStayUrl = affiliateLink?.cityLeftPanelStayUrl;
 
   return {
     ...city,
     description: descriptions.get(cityDescriptionId) ?? city.description,
+    image: imageUrl ?? city.image,
     affiliateLinks: cityLeftPanelStayUrl
       ? {
           ...city.affiliateLinks,
@@ -358,6 +397,7 @@ function cloneCountryWithDescription(
   descriptions: Map<string, string>,
   cityAffiliateLinks: Map<string, CityAffiliateLinkRow>,
   cityFoodCuisines: Map<string, CityFoodCuisineRow>,
+  cityImages: Map<string, CityImageRow>,
 ) {
   return {
     ...country,
@@ -369,7 +409,7 @@ function cloneCountryWithDescription(
     }),
     states: country.states?.map((state) => cloneStateWithDescription(country.id, state, descriptions)),
     cities: country.cities.map((city) =>
-      cloneCityWithDescription(country.id, city, descriptions, cityAffiliateLinks, cityFoodCuisines),
+      cloneCityWithDescription(country.id, city, descriptions, cityAffiliateLinks, cityFoodCuisines, cityImages),
     ),
   };
 }
@@ -379,29 +419,36 @@ export function applyDestinationDescriptions(
   rows: DestinationDescriptionRow[],
   cityAffiliateRows: CityAffiliateLinkRow[] = [],
   cityFoodCuisineRows: CityFoodCuisineRow[] = [],
+  cityImageRows: CityImageRow[] = [],
 ) {
   const descriptions = new Map(rows.map((row) => [row.id, row.description.trim()]));
   const cityAffiliateLinks = new Map(cityAffiliateRows.map((row) => [row.id, row]));
   const cityFoodCuisines = new Map(cityFoodCuisineRows.map((row) => [row.id, row]));
+  const cityImages = new Map(cityImageRows.map((row) => [row.id, row]));
 
   return continents.map((continent) => ({
     ...continent,
     countries: continent.countries.map((country) =>
-      cloneCountryWithDescription(country, descriptions, cityAffiliateLinks, cityFoodCuisines),
+      cloneCountryWithDescription(country, descriptions, cityAffiliateLinks, cityFoodCuisines, cityImages),
     ),
   }));
 }
 
 export async function getContinentsWithDestinationDescriptions() {
   const continents = getContinents();
-  const rows = await getCachedDestinationContentRows().catch((error) => {
+  const loadRows =
+    process.env.NODE_ENV === "development"
+      ? loadDestinationContentRows
+      : getCachedDestinationContentRows;
+  const rows = await loadRows().catch((error) => {
     console.error("Failed to load cached destination content", error);
-    return { descriptions: [], cityAffiliateLinks: [], cityFoodCuisines: [] };
+    return { descriptions: [], cityAffiliateLinks: [], cityFoodCuisines: [], cityImages: [] };
   });
   return applyDestinationDescriptions(
     continents,
     rows.descriptions,
     rows.cityAffiliateLinks,
     rows.cityFoodCuisines,
+    rows.cityImages,
   );
 }

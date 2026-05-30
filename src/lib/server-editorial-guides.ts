@@ -460,11 +460,11 @@ async function loadLegacyWeeklyEventGuides(client: Client, scope: EditorialGuide
   }
 }
 
-const getCachedEditorialGuidesFromSupabase = unstable_cache(
-  async (cityName?: string) => {
+const getCachedCityEditorialGuidesFromSupabase = unstable_cache(
+  async (cityName: string) => {
     return loadEditorialGuidesFromSupabase({ cityName });
   },
-  ["server-editorial-guides"],
+  ["server-editorial-guides", "city-scoped"],
   {
     revalidate: Number.isFinite(EDITORIAL_GUIDES_CACHE_SECONDS)
       ? EDITORIAL_GUIDES_CACHE_SECONDS
@@ -474,7 +474,11 @@ const getCachedEditorialGuidesFromSupabase = unstable_cache(
 );
 
 export async function getServerEditorialGuides(scope: EditorialGuideScope = {}) {
-  const supabaseGuides = await getCachedEditorialGuidesFromSupabase(scope.cityName).catch((error) => {
+  const supabaseGuideLoader = scope.cityName
+    ? getCachedCityEditorialGuidesFromSupabase(scope.cityName)
+    : loadEditorialGuidesFromSupabase(scope);
+
+  const supabaseGuides = await supabaseGuideLoader.catch((error) => {
     console.error("Failed to load cached server editorial guides", error);
     return null;
   });

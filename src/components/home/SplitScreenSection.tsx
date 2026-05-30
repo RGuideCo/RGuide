@@ -753,10 +753,12 @@ function CityWeatherChip({
   cityId,
   cityName,
   coordinates,
+  onImage = false,
 }: {
   cityId?: string;
   cityName?: string;
   coordinates?: [number, number];
+  onImage?: boolean;
 }) {
   const [weather, setWeather] = useState<CityWeather | null>(null);
   const [isLoading, setIsLoading] = useState(false);
@@ -826,14 +828,18 @@ function CityWeatherChip({
 
   return (
     <div
-      className="absolute right-5 top-5 z-20 flex max-w-[7rem] items-start justify-end gap-1.5 text-right text-xs text-slate-600"
+      className={`absolute right-4 top-4 z-20 flex max-w-[7.25rem] items-start justify-end gap-1.5 text-right text-xs ${
+        onImage
+          ? "text-white drop-shadow-[0_1px_2px_rgba(0,0,0,0.85)]"
+          : "rounded-full bg-white/80 px-2.5 py-2 text-slate-600 shadow-sm ring-1 ring-slate-200 backdrop-blur"
+      }`}
       title={weather ? `${cityName ?? "City"} weather: ${Math.round(weather.temperature)}°C, ${weather.condition}` : "Loading weather"}
       aria-live="polite"
     >
-      <CloudSun className="h-8 w-8 shrink-0 self-stretch text-orange-500" aria-hidden="true" />
+      <CloudSun className={`h-8 w-8 shrink-0 self-stretch ${onImage ? "text-amber-200" : "text-orange-500"}`} aria-hidden="true" />
       {weather ? (
         <span className="min-w-0 leading-tight">
-          <span className="block text-sm font-semibold text-slate-900">
+          <span className={`block text-sm font-semibold ${onImage ? "text-white" : "text-slate-900"}`}>
             {Math.round(weather.temperature)}
             °C
           </span>
@@ -919,7 +925,7 @@ function doesGuideMatchHighlightTheme(list: MapList, theme: string) {
   }
 }
 
-function getDarkCategoryTextColor(category: ListCategory) {
+function getLightCategoryTextColor(category: ListCategory, mixWithWhite = 0.58) {
   const color = CATEGORY_STYLES[category].mapColor;
   const normalized = color.startsWith("#") ? color.slice(1) : color;
 
@@ -935,7 +941,7 @@ function getDarkCategoryTextColor(category: ListCategory) {
     return color;
   }
 
-  const mix = (channel: number) => Math.round(channel * 0.34);
+  const mix = (channel: number) => Math.round(channel * (1 - mixWithWhite) + 255 * mixWithWhite);
   const toHex = (channel: number) => mix(channel).toString(16).padStart(2, "0");
 
   return `#${toHex(red)}${toHex(green)}${toHex(blue)}`;
@@ -2586,6 +2592,7 @@ export function SplitScreenSection({
     activeLocation.state?.description ??
     activeLocation.country?.description;
   const activeLocationDescription = formatLocationDescription(activeLocationDescriptionRaw) || null;
+  const activeDestinationImage = activeLocation.city?.image ?? null;
   const activeFavoriteLocation = useMemo<FavoriteLocation | null>(() => {
     if (!activeLocation.continent) {
       return null;
@@ -4440,8 +4447,10 @@ export function SplitScreenSection({
 
     guideLayoutAnimationFramesRef.current.push(animationFrame);
   });
-  const breadcrumbButtonClass =
-    "font-medium text-slate-600 transition hover:text-slate-900";
+  const breadcrumbButtonClass = activeDestinationImage
+    ? "font-medium text-white drop-shadow-sm transition hover:text-white"
+    : "font-medium text-slate-600 transition hover:text-slate-900";
+  const breadcrumbSeparatorClass = activeDestinationImage ? "text-white/80 drop-shadow-sm" : "text-slate-400";
   const showGlobalViewButton = Boolean(
     selection.continentId || continentTitleMorph?.kind === "continent",
   );
@@ -4698,6 +4707,7 @@ export function SplitScreenSection({
     if (activeGuideRail !== "itinerary") {
       setActiveCategory(nextList.category);
     }
+    setMapResizeSignal((current) => current + 1);
     setActiveGuideFitNonce((current) => current + 1);
     const guidePath = getGuideCanonicalRoutePath(nextList);
     if (guidePath) {
@@ -5113,7 +5123,7 @@ export function SplitScreenSection({
                   setActiveCategory(null);
                   setActiveSubcategory(null);
                 }}
-                className="rail-switch-item flex h-10 w-10 items-center justify-center rounded-full border border-slate-950 bg-slate-950 font-mono text-sm font-semibold uppercase tracking-tight text-white shadow-sm transition hover:scale-105 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-400/70"
+                className="rail-switch-item flex h-10 w-10 items-center justify-center rounded-full border border-white/55 bg-[#1a1a1a] font-mono text-sm font-semibold uppercase tracking-tight text-white shadow-sm ring-1 ring-[#1a1a1a] transition hover:scale-105 hover:border-white/75 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-400/70"
                 aria-label="RGuide home"
                 title="RGuide"
               >
@@ -5499,7 +5509,7 @@ export function SplitScreenSection({
                     setActiveCategory(null);
                     setActiveSubcategory(null);
                   }}
-                  className="flex h-8 w-8 items-center justify-center rounded-full border border-slate-950 bg-slate-950 font-mono text-xs font-semibold uppercase tracking-tight text-white shadow-sm transition hover:scale-105 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-400/70"
+                  className="flex h-8 w-8 items-center justify-center rounded-full border border-white/55 bg-[#1a1a1a] font-mono text-xs font-semibold uppercase tracking-tight text-white shadow-sm ring-1 ring-[#1a1a1a] transition hover:scale-105 hover:border-white/75 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-400/70"
                   aria-label="RGuide home"
                   title="RGuide"
                 >
@@ -5968,14 +5978,14 @@ export function SplitScreenSection({
             style={
               {
                 "--shell-cols": isLeftPaneCollapsed
-                  ? "0px minmax(0,0.9fr) minmax(640px,1.25fr)"
-                  : "minmax(280px,0.66fr) minmax(0,0.98fr) minmax(640px,1.38fr)",
+                  ? "0px minmax(0,1fr) minmax(520px,1fr)"
+                  : "minmax(260px,2fr) minmax(0,3.5fr) minmax(520px,4.5fr)",
               } as React.CSSProperties
             }
           >
             <div
               ref={leftPaneRef}
-              className={`frosted-pane-left pointer-events-auto relative z-30 hidden min-h-0 flex-col overflow-visible p-4 transition-[transform,opacity] ease-[cubic-bezier(0.22,1,0.36,1)] lg:z-auto lg:flex lg:h-full lg:overflow-hidden lg:p-5 ${
+              className={`frosted-pane-left left-pane-dark-preview pointer-events-auto relative z-30 hidden min-h-0 flex-col overflow-visible p-4 transition-[transform,opacity] ease-[cubic-bezier(0.22,1,0.36,1)] lg:z-auto lg:flex lg:h-full lg:overflow-hidden lg:p-5 ${
                 isLeftPaneCollapsed
                   ? "duration-[620ms] -translate-x-20 opacity-0 pointer-events-none"
                   : "duration-500 translate-x-0 opacity-100"
@@ -5983,11 +5993,36 @@ export function SplitScreenSection({
                 isLeftPaneCollapsed ? "max-h-0 !min-h-0 p-0 lg:max-h-none lg:p-5" : ""
               }`}
             >
-              <div className={`left-pane-content flex h-full min-h-0 flex-col ${paneTransitionClass}`}>
+              {activeDestinationImage ? (
+                <div
+                  className="pointer-events-none absolute inset-x-0 top-0 h-[18.75rem] overflow-hidden bg-slate-950"
+                  style={{
+                    WebkitMaskImage: "linear-gradient(to bottom, black 0%, black 64%, rgba(0, 0, 0, 0.28) 86%, transparent 100%)",
+                    maskImage: "linear-gradient(to bottom, black 0%, black 64%, rgba(0, 0, 0, 0.28) 86%, transparent 100%)",
+                  }}
+                  aria-hidden="true"
+                >
+                  <img
+                    src={activeDestinationImage}
+                    alt=""
+                    className="absolute inset-0 h-full w-full object-cover opacity-80"
+                  />
+                  <div className="absolute inset-0" style={{ backgroundColor: "rgba(0, 0, 0, 0.34)" }} />
+                  <div
+                    className="absolute inset-0"
+                    style={{
+                      background:
+                        "linear-gradient(to bottom, rgba(0, 0, 0, 0.18) 0%, rgba(0, 0, 0, 0.24) 55%, rgba(0, 0, 0, 0.62) 100%)",
+                    }}
+                  />
+                </div>
+              ) : null}
+              <div className={`left-pane-content relative z-10 flex h-full min-h-0 flex-col ${paneTransitionClass}`}>
               <CityWeatherChip
                 cityId={activeLocation.city?.id}
                 cityName={activeLocation.city?.name}
                 coordinates={activeLocation.city?.coordinates}
+                onImage={Boolean(activeDestinationImage)}
               />
               {continentTitleMorph ? (
                 <div
@@ -6044,7 +6079,9 @@ export function SplitScreenSection({
                       const scale = stage === "idle" ? fromScale : 1;
                       return (
                     <p
-                      className="inline-block max-w-full whitespace-nowrap font-semibold text-slate-900"
+                      className={`inline-block max-w-full whitespace-nowrap font-semibold ${
+                        activeDestinationImage ? "text-white drop-shadow-sm" : "text-slate-900"
+                      }`}
                       style={{
                         fontSize: `${continentTitleMorph.toFontSize}px`,
                         lineHeight: "1.15",
@@ -6080,13 +6117,13 @@ export function SplitScreenSection({
                     aria-hidden={continentTitleMorph ? "true" : "false"}
                   >
                     {visibleSeoContextLabel ? (
-                      <p className="mb-1 max-w-[calc(100%-8rem)] text-sm font-medium text-slate-600">
+                      <p className={`mb-1 max-w-[calc(100%-8rem)] text-sm font-medium ${activeDestinationImage ? "text-white drop-shadow-sm" : "text-slate-600"}`}>
                         {visibleSeoContextLabel}
                       </p>
                     ) : null}
                     <h1
                       ref={titleRef}
-                      className="max-w-[calc(100%-8rem)] text-2xl font-semibold text-slate-900"
+                      className={`max-w-[calc(100%-8rem)] text-2xl font-semibold ${activeDestinationImage ? "text-white drop-shadow-sm" : "text-slate-900"}`}
                     >
                       <span ref={titleTextRef} className="inline-block">
                         {visibleSeoHeading}
@@ -6095,7 +6132,7 @@ export function SplitScreenSection({
                     {!isSavedPlacesRailActive ? (
                       <div
                         ref={detailRef}
-                        className="mt-1 max-w-[calc(100%-3rem)] text-sm text-slate-600 transition-all duration-300"
+                        className={`mt-1 max-w-[calc(100%-3rem)] text-sm transition-all duration-300 ${activeDestinationImage ? "text-white drop-shadow-sm" : "text-slate-600"}`}
                         style={{
                           opacity: postMorphRevealPhase >= 1 ? 1 : 0,
                           transform:
@@ -6121,7 +6158,7 @@ export function SplitScreenSection({
                               >
                                 {formatBreadcrumbName(activeCountrySubarea.name)}
                               </button>
-                              <span className="text-slate-400">,</span>
+                              <span className={breadcrumbSeparatorClass}>,</span>
                             </>
                           ) : null}
                           <button
@@ -6166,7 +6203,7 @@ export function SplitScreenSection({
                           </button>
                           {activeLocation.state ? (
                             <>
-                              <span className="text-slate-400">,</span>
+                              <span className={breadcrumbSeparatorClass}>,</span>
                               <button
                                 type="button"
                                 onClick={(event) =>
@@ -6188,7 +6225,7 @@ export function SplitScreenSection({
                           ) : null}
                           {activeCountrySubarea ? (
                             <>
-                              <span className="text-slate-400">,</span>
+                              <span className={breadcrumbSeparatorClass}>,</span>
                               <button
                                 type="button"
                                 onClick={() =>
@@ -6204,7 +6241,7 @@ export function SplitScreenSection({
                               </button>
                             </>
                           ) : null}
-                          <span className="text-slate-400">,</span>
+                          <span className={breadcrumbSeparatorClass}>,</span>
                           <button
                             type="button"
                             onClick={() =>
@@ -6235,7 +6272,7 @@ export function SplitScreenSection({
                           </button>
                           {activeLocation.state ? (
                             <>
-                              <span className="text-slate-400">,</span>
+                              <span className={breadcrumbSeparatorClass}>,</span>
                               <button
                                 type="button"
                                 onClick={(event) =>
@@ -6257,7 +6294,7 @@ export function SplitScreenSection({
                           ) : null}
                           {activeCountrySubarea ? (
                             <>
-                              <span className="text-slate-400">,</span>
+                              <span className={breadcrumbSeparatorClass}>,</span>
                               <button
                                 type="button"
                                 onClick={() =>
@@ -6273,7 +6310,7 @@ export function SplitScreenSection({
                               </button>
                             </>
                           ) : null}
-                          <span className="text-slate-400">,</span>
+                          <span className={breadcrumbSeparatorClass}>,</span>
                           <button
                             type="button"
                             onClick={() =>
@@ -6308,7 +6345,7 @@ export function SplitScreenSection({
                           {activeCountrySubarea ? (
                             <>
                               {activeLocation.state ? (
-                                <span className="text-slate-400">,</span>
+                                <span className={breadcrumbSeparatorClass}>,</span>
                               ) : null}
                               <button
                                 type="button"
@@ -6326,7 +6363,7 @@ export function SplitScreenSection({
                             </>
                           ) : null}
                           {(activeLocation.state || activeCountrySubarea) ? (
-                            <span className="text-slate-400">,</span>
+                            <span className={breadcrumbSeparatorClass}>,</span>
                           ) : null}
                           <button
                             type="button"
@@ -6347,7 +6384,7 @@ export function SplitScreenSection({
                           >
                             {activeLocation.continent.name}
                           </button>
-                          <span className="text-slate-400">,</span>
+                          <span className={breadcrumbSeparatorClass}>,</span>
                           <span>{formatBreadcrumbName(activeDirectoryMeta.detail)}</span>
                         </div>
                       ) : (
@@ -6404,7 +6441,13 @@ export function SplitScreenSection({
                         }}
                       >
                         {visibleIntroCopyDisplay ? (
-                          <p className="ml-3 min-h-[9rem] border-l border-slate-200 pl-3 text-sm leading-5 text-slate-600">
+                          <p
+                            className={`ml-3 min-h-[9rem] border-l pl-3 text-sm leading-5 ${
+                              activeDestinationImage
+                                ? "border-white/35 text-white drop-shadow-sm"
+                                : "border-slate-200 text-slate-600"
+                            }`}
+                          >
                             {visibleIntroCopyDisplay}
                           </p>
                         ) : null}
@@ -6444,10 +6487,10 @@ export function SplitScreenSection({
                                 <button
                                   type="button"
                                   onClick={() => toggleFavoriteLocation(activeFavoriteLocation)}
-                                  className={`inline-flex h-9 w-9 items-center justify-center rounded-full border bg-white shadow-sm transition ${
+                                  className={`inline-flex h-9 w-9 items-center justify-center rounded-full border bg-black/25 shadow-sm transition ${
                                     isActiveLocationFavorited
-                                      ? "border-teal-600 text-teal-700"
-                                      : "border-slate-200 text-slate-600 hover:border-slate-300 hover:text-slate-900"
+                                      ? "border-teal-200/85 text-teal-50"
+                                      : "border-white/34 text-white hover:border-white/52 hover:bg-black/34"
                                   }`}
                                   aria-label={`${isActiveLocationFavorited ? "Remove" : "Save"} ${activeSeoPlaceLabel} ${isActiveLocationFavorited ? "from" : "to"} saved places`}
                                   title={isActiveLocationFavorited ? "Remove saved place" : "Save place"}
@@ -6458,7 +6501,7 @@ export function SplitScreenSection({
                               {activeLocation.city ? (
                                 <button
                                   type="button"
-                                  className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-slate-200 bg-white text-slate-600 shadow-sm transition hover:border-slate-300 hover:text-slate-900"
+                                  className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-white/34 bg-black/25 text-white shadow-sm transition hover:border-white/52 hover:bg-black/34"
                                   aria-label={`Tour ${activeSeoPlaceLabel}`}
                                   title="Neighborhood tour coming soon"
                                 >
@@ -6472,8 +6515,8 @@ export function SplitScreenSection({
                           <div className="mt-3 space-y-1.5 overflow-hidden text-sm leading-5">
                             {cityHighlightRows.map((row) => {
                               const isActiveRow = activeCategory === row.category;
-                              const rowColor = CATEGORY_STYLES[row.category].mapColor;
-                              const contentColor = getDarkCategoryTextColor(row.category);
+                              const rowColor = getLightCategoryTextColor(row.category, 0.48);
+                              const contentColor = getLightCategoryTextColor(row.category, 0.68);
 
                               return (
                                 <div
@@ -6963,35 +7006,60 @@ export function SplitScreenSection({
                       {cityListItems.length ? (
                         <div className="space-y-2">
                           {cityListItems.map((item) => (
-                            <button
-                              key={item.id}
-                              type="button"
-                              title={item.name}
-                              className={`flex w-full items-center gap-2 rounded-2xl px-3 py-2 text-left text-sm transition ${
-                                (item.isNested ? selection.nestedSubareaId : selection.subareaId) === item.id
-                                  ? "bg-orange-50 text-orange-700"
-                                  : "text-slate-700 hover:bg-stone-100"
-                              }`}
-                              onClick={() =>
-                                item.isNested
-                                  ? handleSelectNestedSubarea(
-                                      activeLocation.continent!.id,
-                                      activeLocation.country!.id,
-                                      activeLocation.city!.id,
-                                      activeLocation.subarea!.id,
-                                      item.id,
-                                    )
-                                  : handleSelectSubarea(
-                                      activeLocation.continent!.id,
-                                      activeLocation.country!.id,
-                                      activeLocation.city!.id,
-                                      item.id,
-                                    )
-                              }
-                            >
-                              <MapPin className="h-4 w-4" />
-                                {formatBreadcrumbName(item.name)}
-                            </button>
+                            (() => {
+                              const isSelected = (item.isNested ? selection.nestedSubareaId : selection.subareaId) === item.id;
+
+                              return (
+                                <button
+                                  key={item.id}
+                                  type="button"
+                                  title={item.name}
+                                  className={`group relative flex w-full items-center gap-2 overflow-hidden rounded-2xl border border-transparent px-3 py-2 text-left text-sm transition ${
+                                    isSelected
+                                      ? "text-white"
+                                      : "border-transparent text-slate-200 hover:text-white"
+                                  }`}
+                                  onClick={() =>
+                                    item.isNested
+                                      ? handleSelectNestedSubarea(
+                                          activeLocation.continent!.id,
+                                          activeLocation.country!.id,
+                                          activeLocation.city!.id,
+                                          activeLocation.subarea!.id,
+                                          item.id,
+                                        )
+                                      : handleSelectSubarea(
+                                          activeLocation.continent!.id,
+                                          activeLocation.country!.id,
+                                          activeLocation.city!.id,
+                                          item.id,
+                                        )
+                                  }
+                                >
+                                  {isSelected ? (
+                                    <span
+                                      className="pointer-events-none absolute inset-0 overflow-hidden rounded-2xl"
+                                      aria-hidden="true"
+                                    >
+                                      <span className="neighborhood-selection-swipe absolute inset-0 rounded-2xl border border-white/80" />
+                                    </span>
+                                  ) : null}
+                                  <span className="relative h-4 w-4 shrink-0" aria-hidden="true">
+                                    <MapPin
+                                      className={`absolute inset-0 h-4 w-4 text-red-500 transition-colors ${
+                                        isSelected ? "fill-red-500" : "fill-transparent group-hover:fill-red-500"
+                                      }`}
+                                    />
+                                    <span
+                                      className={`absolute left-1/2 top-[4px] h-1.5 w-1.5 -translate-x-1/2 rounded-full bg-[#1a1a1a] transition-opacity ${
+                                        isSelected ? "opacity-100" : "opacity-0 group-hover:opacity-100"
+                                      }`}
+                                    />
+                                  </span>
+                                  {formatBreadcrumbName(item.name)}
+                                </button>
+                              );
+                            })()
                           ))}
                         </div>
                       ) : (
@@ -7821,7 +7889,7 @@ export function SplitScreenSection({
               onPointerCancel={handleMobileListSheetDragEnd}
             >
               <div
-                className="mobile-rguides-tab absolute left-0 -top-7 z-[80] flex h-7 min-w-[6.25rem] touch-none items-center rounded-t-lg border border-b-0 border-slate-200 bg-slate-950 px-3 text-[10px] font-semibold uppercase tracking-[0.16em] text-white shadow-[0_-5px_12px_rgba(15,23,42,0.12)] transition-opacity duration-300 lg:hidden"
+                className="mobile-rguides-tab absolute left-0 -top-7 z-[80] flex h-7 min-w-[6.25rem] touch-none items-center rounded-t-lg border border-b-0 border-slate-200 bg-[#1a1a1a] px-3 text-[10px] font-semibold uppercase tracking-[0.16em] text-white shadow-[0_-5px_12px_rgba(15,23,42,0.12)] transition-opacity duration-300 lg:hidden"
                 data-mobile-sheet-handle
                 onPointerDown={handleMobileListSheetDragStart}
                 onPointerMove={handleMobileListSheetDragMove}
@@ -7851,7 +7919,7 @@ export function SplitScreenSection({
                   onPointerDown={handleMobileListSheetDragStart}
                 >
                   <div className={`min-w-0 pr-2 transition-opacity duration-200 ${isGuidePaneTakingFullListPane ? "opacity-0" : "opacity-100"}`}>
-                    <p className="truncate text-xs font-semibold uppercase tracking-[0.14em] text-slate-500">
+                    <p className="truncate text-xs font-semibold uppercase tracking-[0.14em] text-white/62">
                       {categoryTitleLabel}
                     </p>
                   </div>
@@ -7871,7 +7939,7 @@ export function SplitScreenSection({
                               type="button"
                               onClick={() => handleCategoryToggle(option.category)}
                               className={`flex h-7 w-7 shrink-0 items-center justify-center rounded-full border shadow-sm transition-[background-color,color,border-color,transform] duration-200 hover:scale-105 ${
-                                isActive ? "text-white" : "bg-white text-slate-600"
+                                isActive ? "text-white" : "bg-white/8 text-white/72 hover:bg-white/12 hover:text-white"
                               }`}
                               style={{
                                 backgroundColor: isActive ? CATEGORY_STYLES[option.category].mapColor : undefined,
@@ -7898,7 +7966,7 @@ export function SplitScreenSection({
 		                  } ${isSubcategoryMenuOpen || isDesktopSearchOpen ? "z-[140]" : "z-10"} overflow-visible`}
 		                >
                     <div
-                      className="relative left-1/2 -mt-5 w-[calc(100%+2.5rem)] -translate-x-1/2 border-b border-slate-400/60 bg-slate-300/85 px-5 pb-3 pt-5 shadow-[inset_0_1px_0_rgba(255,255,255,0.45)]"
+                      className="relative left-1/2 -mt-5 w-[calc(100%+2.5rem)] -translate-x-1/2 border-b border-white/12 bg-[#1a1a1a]/95 px-5 pb-3 pt-5 shadow-[inset_0_1px_0_rgba(255,255,255,0.08)]"
                       role="toolbar"
                       aria-label="Menu bar"
                     >
@@ -7914,7 +7982,7 @@ export function SplitScreenSection({
                             aria-label="Guide source"
                           >
                             <span
-                              className="pointer-events-none absolute -left-0.5 top-0 h-10 w-[calc(75%+2.875rem)] rounded-[0.625rem] bg-white"
+                              className="pointer-events-none absolute -left-0.5 top-0 h-10 w-[calc(75%+2.875rem)] rounded-[0.625rem] bg-black/18 ring-1 ring-white/10"
                               aria-hidden="true"
                             />
                             {guideSourceSelectors.map((selector) => {
@@ -7927,8 +7995,8 @@ export function SplitScreenSection({
                                   onClick={() => handleGuideSourceSelect(selector.id)}
                                   className={`relative z-10 flex h-9 w-9 items-center justify-center rounded-lg border shadow-sm transition-[background-color,color,border-color,transform] duration-200 hover:scale-105 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-400/70 ${
                                     isActive
-                                      ? "border-slate-950 bg-slate-950 text-white hover:border-slate-950 hover:text-white"
-                                      : "border-transparent bg-transparent text-slate-700 shadow-none hover:border-slate-300 hover:text-slate-900"
+                                      ? "border-white bg-white text-slate-950 hover:border-white hover:text-slate-950"
+                                      : "border-transparent bg-transparent text-white shadow-none hover:border-white/20 hover:text-white"
                                   }`}
                                   aria-label={selector.label}
                                   title={selector.label}
@@ -7938,7 +8006,7 @@ export function SplitScreenSection({
                               );
                             })}
                           </div>
-                          <span className="inline-flex w-[8.5rem] justify-center text-center text-sm font-bold uppercase tracking-[0.18em] text-slate-950">
+                          <span className="inline-flex w-[8.5rem] justify-center text-center text-sm font-bold uppercase tracking-[0.18em] text-white">
                             {menuBarTitleLabel}
                           </span>
                           <div className="grid h-9 w-full grid-cols-4 items-center justify-items-end gap-2">
@@ -7951,7 +8019,7 @@ export function SplitScreenSection({
                                   type="button"
                                   onClick={() => handleGuideRailSelect(selector.id)}
                                   style={isActive ? guideActionActiveStyles[selector.id] : undefined}
-                                  className={`relative flex h-9 w-9 items-center justify-center overflow-hidden rounded-lg border border-slate-200 bg-white text-slate-600 shadow-sm transition-[background-color,color,border-color,transform] duration-200 hover:scale-105 hover:border-slate-300 hover:text-slate-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-400/70 ${
+                                  className={`relative flex h-9 w-9 items-center justify-center overflow-hidden rounded-lg border border-white/16 bg-white/8 text-white shadow-sm transition-[background-color,color,border-color,transform] duration-200 hover:scale-105 hover:border-white/28 hover:bg-white/12 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-400/70 ${
                                     isActive ? "shadow-md hover:text-current" : ""
                                   }`}
                                   aria-label={selector.label}
@@ -7995,10 +8063,10 @@ export function SplitScreenSection({
                             setIsNightlifeBarMenuOpen(false);
                             setIsDesktopSearchOpen((current) => !current);
                           }}
-                          className={`inline-flex shrink-0 items-center justify-center rounded-lg text-slate-700 transition hover:text-slate-900 ${
+                          className={`inline-flex shrink-0 items-center justify-center rounded-lg text-white transition hover:text-white ${
                             isDesktopSearchOpen
                               ? "h-10 w-10 border border-transparent bg-transparent shadow-none"
-                              : "h-9 w-9 border border-slate-200 bg-white shadow-sm hover:border-slate-300"
+                              : "h-9 w-9 border border-white/16 bg-white/8 shadow-sm hover:border-white/28 hover:bg-white/12"
                           }`}
                           aria-label={isDesktopSearchOpen ? "Close search" : "Open search"}
                           title={isDesktopSearchOpen ? "Close search" : "Search"}
@@ -8031,7 +8099,7 @@ export function SplitScreenSection({
                                   className={`flex h-9 w-9 items-center justify-center rounded-lg outline-none transition focus:outline-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-400/70 ${
                                     activeCategory === option.category
                                       ? "border text-white"
-                                      : "border bg-white text-slate-600 hover:text-slate-900"
+                                      : "border bg-white/8 text-white/72 hover:bg-white/12 hover:text-white"
                                   }`}
                                   style={
                                     activeCategory === option.category
@@ -8049,7 +8117,7 @@ export function SplitScreenSection({
                                 </button>
                               ))}
                             </div>
-                            <span className="inline-flex w-[8.5rem] justify-center text-center text-[11px] font-medium uppercase tracking-[0.18em] text-slate-500">
+                            <span className="inline-flex w-[8.5rem] justify-center text-center text-[11px] font-medium uppercase tracking-[0.18em] text-white/54">
                               {categoryTitleLabel}
                             </span>
                             <div className="grid w-full grid-cols-4 items-center justify-items-end gap-2">
@@ -8063,7 +8131,7 @@ export function SplitScreenSection({
                                   className={`flex h-9 w-9 items-center justify-center rounded-lg outline-none transition focus:outline-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-400/70 ${
                                     activeCategory === option.category
                                       ? "border text-white"
-                                      : "border bg-white text-slate-600 hover:text-slate-900"
+                                      : "border bg-white/8 text-white/72 hover:bg-white/12 hover:text-white"
                                   }`}
                                   style={
                                     activeCategory === option.category
@@ -8416,7 +8484,7 @@ export function SplitScreenSection({
                       {!isGuideTakingFullListPane && remainingGuides.length ? (
                         <div className="space-y-4 border-t border-slate-200 pt-4">
                         {activeGuideRail !== "itinerary" ? (
-                          <p className="px-1 text-[11px] font-medium uppercase tracking-[0.2em] text-slate-500">
+                          <p className="px-1 text-[11px] font-medium uppercase tracking-[0.2em] text-white/62">
                             More Guides
                           </p>
                         ) : null}
@@ -8473,16 +8541,16 @@ export function SplitScreenSection({
                         citywideRailLists.map((list) => renderGuideRailCard(list))
                       )}
                       {shouldGroupCityGuideList && neighborhoodRailLists.length ? (
-                        <div className="space-y-4 border-t border-slate-200 pt-4">
-                          <p className="px-1 text-[11px] font-medium uppercase tracking-[0.2em] text-slate-500">
+                        <div className="space-y-4 border-t border-white/14 pt-4">
+                          <p className="px-1 text-[11px] font-medium uppercase tracking-[0.2em] text-white/62">
                             Neighborhood Guides
                           </p>
                           {neighborhoodRailLists.map((list) => renderGuideRailCard(list, "neighborhood-"))}
                         </div>
                       ) : null}
                       {recentRGuideLists.length ? (
-                        <div className="space-y-4 border-t border-slate-200 pt-4">
-                          <p className="px-1 text-[11px] font-medium uppercase tracking-[0.2em] text-slate-500">
+                        <div className="space-y-4 border-t border-white/14 pt-4">
+                          <p className="px-1 text-[11px] font-medium uppercase tracking-[0.2em] text-white/62">
                             Recent Guides
                           </p>
                           {recentRGuideLists.map((list) => (
