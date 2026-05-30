@@ -16,6 +16,13 @@ const IMAGE_EXT_BY_TYPE = new Map([
   ["image/webp", "webp"],
   ["image/avif", "avif"],
 ]);
+const IMAGE_TYPE_BY_EXT = new Map([
+  ["jpg", "image/jpeg"],
+  ["jpeg", "image/jpeg"],
+  ["png", "image/png"],
+  ["webp", "image/webp"],
+  ["avif", "image/avif"],
+]);
 const FALLBACK_HOST_ADDRESSES = new Map([
   ["aws-1-us-east-2.pooler.supabase.com", ["13.58.13.125", "3.148.140.216", "3.131.201.192"]],
 ]);
@@ -54,6 +61,13 @@ Options:
   --limit <count>              Maximum destinations to process. Defaults to 25.
   --provider <auto|openverse|wikimedia>
                                Search provider order. Defaults to auto.
+  --query <text>               Override generated search queries. Can be passed multiple times.
+  --source-url <url>           Use a specific image URL instead of searching Openverse/Wikimedia.
+  --source-file <path>         Use a local image file instead of searching Openverse/Wikimedia.
+  --source-title <text>        Title to store for a manual source URL.
+  --source-credit <text>       Credit to store for a manual source URL.
+  --source-license <text>      License/rights label to store for a manual source URL.
+  --key-suffix <suffix>        Add a suffix to the stored image filename, useful for cache-busting replacements.
   --min-list-count <count>     Only process destinations with at least this many lists/guides.
   --published-entries-only     Only process destinations linked to at least one published entry.
   --include-placeholder-regions
@@ -76,6 +90,13 @@ function parseArgs(argv) {
     country: null,
     limit: 25,
     provider: "auto",
+    queries: [],
+    sourceUrl: null,
+    sourceFile: null,
+    sourceTitle: null,
+    sourceCredit: null,
+    sourceLicense: null,
+    keySuffix: null,
     minListCount: null,
     publishedEntriesOnly: false,
     includePlaceholderRegions: false,
@@ -102,6 +123,13 @@ function parseArgs(argv) {
     else if (arg === "--country") options.country = readValue();
     else if (arg === "--limit") options.limit = Number(readValue());
     else if (arg === "--provider") options.provider = readValue();
+    else if (arg === "--query") options.queries.push(readValue());
+    else if (arg === "--source-url") options.sourceUrl = readValue();
+    else if (arg === "--source-file") options.sourceFile = readValue();
+    else if (arg === "--source-title") options.sourceTitle = readValue();
+    else if (arg === "--source-credit") options.sourceCredit = readValue();
+    else if (arg === "--source-license") options.sourceLicense = readValue();
+    else if (arg === "--key-suffix") options.keySuffix = readValue();
     else if (arg === "--min-list-count") options.minListCount = Number(readValue());
     else if (arg === "--published-entries-only") options.publishedEntriesOnly = true;
     else if (arg === "--include-placeholder-regions") options.includePlaceholderRegions = true;
@@ -267,6 +295,11 @@ function extensionFromUrl(url) {
   return null;
 }
 
+function contentTypeFromFilePath(filePath) {
+  const extension = path.extname(filePath).replace(/^\./, "").toLowerCase();
+  return IMAGE_TYPE_BY_EXT.get(extension) ?? null;
+}
+
 function cleanMetadataValue(value) {
   if (typeof value !== "string") return null;
   const cleaned = value
@@ -304,7 +337,11 @@ function destinationTokens(row) {
     .filter((token) => token.length > 2 && !stopwords.has(token));
 }
 
-function destinationSearchQueries(row) {
+function destinationSearchQueries(row, options = {}) {
+  if (options.queries?.length) {
+    return options.queries.filter((query, index, all) => query && all.indexOf(query) === index);
+  }
+
   const name = destinationSearchName(row);
   const country = row.country_name || row.country_code;
   const stateOrRegion = row.state_name || row.region_name;
@@ -434,7 +471,7 @@ function isCredibleDestinationImage(row, image, score, minScore, options = {}) {
 }
 
 async function searchOpenverseDestination(row, minScore, options) {
-  for (const query of destinationSearchQueries(row)) {
+  for (const query of destinationSearchQueries(row, options)) {
     const apiUrl = new URL(OPENVERSE_API_URL);
     apiUrl.searchParams.set("q", query);
     apiUrl.searchParams.set("page_size", "20");
@@ -495,8 +532,8 @@ function wikimediaDescriptionUrl(title) {
   return `https://commons.wikimedia.org/wiki/${encodeURIComponent(String(title).replace(/ /g, "_"))}`;
 }
 
-async function searchWikimediaDestination(row, minScore) {
-  for (const query of destinationSearchQueries(row)) {
+async function searchWikimediaDestination(row, minScore, options) {
+  for (const query of destinationSearchQueries(row, options)) {
     const apiUrl = new URL(WIKIMEDIA_API_URL);
     apiUrl.searchParams.set("action", "query");
     apiUrl.searchParams.set("format", "json");
@@ -580,19 +617,81 @@ async function searchWikimediaDestination(row, minScore) {
 }
 
 async function selectDestinationImage(row, options) {
+  if (options.sourceFile) {
+    const absolutePath = path.resolve(options.sourceFile);
+    return {
+      provider: "manual",
+      resolvedSourceUrl: null,
+      downloadUrl: `file://${absolutePath}`,
+      metadata: {
+        provider: "manual",
+        source: "owner_provided",
+        title: options.sourceTitle ?? `${destinationSearchName(row)} owner-provided image`,
+        creator: options.sourceCredit ?? null,
+        credit: options.sourceCredit ?? null,
+        license: options.sourceLicense ?? "owner-provided",
+        license_url: null,
+        foreign_landing_url: null,
+        source_file_name: path.basename(absolutePath),
+        download_url: null,
+        width: null,
+        height: null,
+        matched_query: null,
+        match_score: null,
+      },
+    };
+  }
+
+  if (options.sourceUrl) {
+    return {
+      provider: "manual",
+      resolvedSourceUrl: options.sourceUrl,
+      downloadUrl: options.sourceUrl,
+      metadata: {
+        provider: "manual",
+        source: "owner_provided",
+        title: options.sourceTitle ?? `${destinationSearchName(row)} owner-provided image`,
+        creator: options.sourceCredit ?? null,
+        credit: options.sourceCredit ?? null,
+        license: options.sourceLicense ?? "owner-provided",
+        license_url: null,
+        foreign_landing_url: options.sourceUrl,
+        download_url: options.sourceUrl,
+        width: null,
+        height: null,
+        matched_query: null,
+        match_score: null,
+      },
+    };
+  }
+
   if (options.provider === "openverse") {
     return searchOpenverseDestination(row, options.openverseMinScore, options);
   }
   if (options.provider === "wikimedia") {
-    return searchWikimediaDestination(row, options.wikimediaMinScore);
+    return searchWikimediaDestination(row, options.wikimediaMinScore, options);
   }
 
   const openverse = await searchOpenverseDestination(row, options.openverseMinScore, options);
   if (openverse) return openverse;
-  return searchWikimediaDestination(row, options.wikimediaMinScore);
+  return searchWikimediaDestination(row, options.wikimediaMinScore, options);
 }
 
 async function fetchImage(url) {
+  if (url.startsWith("file://")) {
+    const filePath = fileURLToPath(url);
+    const contentType = contentTypeFromFilePath(filePath);
+    if (!contentType) {
+      throw new Error(`local source file has unsupported image extension: ${filePath}`);
+    }
+    const bytes = fs.readFileSync(filePath);
+    if (!bytes.length) throw new Error("local source file is empty");
+    if (bytes.byteLength > MAX_IMAGE_BYTES) {
+      throw new Error(`local source image is too large: ${bytes.byteLength} bytes`);
+    }
+    return { bytes: new Uint8Array(bytes), contentType };
+  }
+
   const response = await fetch(url, {
     redirect: "follow",
     headers: {
@@ -631,12 +730,14 @@ function normalizeCountryFolder(row) {
   return "unknown";
 }
 
-function buildStorageKey(row, contentType, source) {
+function buildStorageKey(row, contentType, source, options = {}) {
   const scope = slugify(row.scope || "destination") || "destination";
   const country = normalizeCountryFolder(row);
   const destination = slugify(row.slug || row.name || row.id) || String(row.id).slice(0, 8);
   const extension = IMAGE_EXT_BY_TYPE.get(contentType) ?? extensionFromUrl(source.downloadUrl) ?? "jpg";
-  return `destinations/${scope}/${country}/${destination}/primary.${extension}`;
+  const suffix = slugify(options.keySuffix);
+  const filename = suffix ? `primary-${suffix}` : "primary";
+  return `destinations/${scope}/${country}/${destination}/${filename}.${extension}`;
 }
 
 async function loadCandidates(client, options, publicBaseUrl) {
@@ -822,7 +923,7 @@ async function main() {
         }
 
         const image = await fetchImage(source.downloadUrl);
-        const key = buildStorageKey(row, image.contentType, source);
+        const key = buildStorageKey(row, image.contentType, source, options);
         const storage = { ...image, key, source };
         const publicUrl = `${publicBaseUrl.replace(/\/$/, "")}/${key}`;
 
