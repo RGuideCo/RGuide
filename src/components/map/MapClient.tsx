@@ -3011,6 +3011,8 @@ export function MapClient({
   });
   const viewportModeRef = useRef<"full" | "center" | "submit">(viewportMode);
   const viewportInsetsRef = useRef<MapViewportInsets | undefined>(viewportInsets);
+  const activeGuideIdRef = useRef<string | null>(activeGuide?.id ?? null);
+  const selectedStopIdRef = useRef<string | null | undefined>(selectedStopId);
   const activeGuideCameraKeyRef = useRef<string | null>(null);
   const activeGuideCameraPendingKeyRef = useRef<string | null>(null);
   const activeGuideCameraFrameRef = useRef<number | null>(null);
@@ -3023,6 +3025,8 @@ export function MapClient({
   const visibleGuideMarkerDirectHoverIdRef = useRef<string | null>(null);
   const visibleGuideMarkerNotifiedHoverIdRef = useRef<string | null>(null);
   const [visibleGuideMarkerAnimationTick, setVisibleGuideMarkerAnimationTick] = useState(0);
+  activeGuideIdRef.current = activeGuide?.id ?? null;
+  selectedStopIdRef.current = selectedStopId;
 
   useEffect(() => {
     const cityId = selection.cityId;
@@ -3126,9 +3130,16 @@ export function MapClient({
       }),
     [activeGuide, hoveredStopId, neighborhoodBoundaryLookup, selectedStopId, visibleNestedStopParentIds],
   );
+  const cameraPoiMapMarkerData = useMemo(
+    () =>
+      createPoiMapMarkerData(activeGuide, neighborhoodBoundaryLookup, {
+        visibleNestedStopParentIds,
+      }),
+    [activeGuide, neighborhoodBoundaryLookup, visibleNestedStopParentIds],
+  );
   const activeGuidePoiMarkerSignature = useMemo(
     () =>
-      poiMapMarkerData.features
+      cameraPoiMapMarkerData.features
         .map((feature) => {
           const markerCoordinates = getGeometryCoordinates(feature.geometry);
           if (!markerCoordinates) {
@@ -3153,7 +3164,7 @@ export function MapClient({
           ].join(":");
         })
         .join("|"),
-    [poiMapMarkerData],
+    [cameraPoiMapMarkerData],
   );
   const visibleGuideBoundsSignature = useMemo(
     () =>
@@ -3585,6 +3596,7 @@ export function MapClient({
               ? clickedPoiMapMarkerFeature.properties.stopId
             : null;
         if (clickedGuideStopId) {
+          selectedStopIdRef.current = clickedGuideStopId;
           handlersRef.current.onHoverGuideStop?.(clickedGuideStopId);
           handlersRef.current.onSelectGuideStop?.(clickedGuideStopId);
           return;
@@ -4264,7 +4276,7 @@ export function MapClient({
     const selectedCameraTargetId =
       selectedParentStop?.id ?? selectedNestedStop?.place.id ?? "";
     const selectedPoiMapMarker = selectedCameraTargetId
-      ? poiMapMarkerData.features.find((feature) => feature.properties.stopId === selectedCameraTargetId) ?? null
+      ? cameraPoiMapMarkerData.features.find((feature) => feature.properties.stopId === selectedCameraTargetId) ?? null
       : null;
     const nextCameraKey = selectedCameraTargetId
       ? [
@@ -4307,6 +4319,13 @@ export function MapClient({
       const isPendingCamera = activeGuideCameraPendingKeyRef.current === nextCameraKey;
       const isCurrentCamera = activeGuideCameraKeyRef.current === nextCameraKey;
       if (!currentMap || !isStyleReadyRef.current || (!isPendingCamera && !isCurrentCamera)) {
+        return;
+      }
+      const latestSelectedStopId = selectedStopIdRef.current ?? null;
+      if (
+        activeGuideIdRef.current !== activeGuide.id ||
+        (selectedCameraTargetId ? latestSelectedStopId !== selectedCameraTargetId : latestSelectedStopId !== null)
+      ) {
         return;
       }
       currentMap.resize();
@@ -4381,7 +4400,7 @@ export function MapClient({
           guideCoordinateCount += 1;
         }
       }
-      for (const markerFeature of poiMapMarkerData.features) {
+      for (const markerFeature of cameraPoiMapMarkerData.features) {
         const markerCoordinates = getGeometryCoordinates(markerFeature.geometry);
         if (!markerCoordinates) {
           continue;
@@ -4457,7 +4476,7 @@ export function MapClient({
     activeGuideFitNonce,
     activeGuidePoiMarkerSignature,
     activeGuideStopSignature,
-    poiMapMarkerData,
+    cameraPoiMapMarkerData,
     resizeSignal,
     selectionCameraKey,
     styleReadyTick,
