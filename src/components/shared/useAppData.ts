@@ -17,13 +17,14 @@ function seedAppData(initialData: AppData) {
   appDataPromise = Promise.resolve(initialData);
 }
 
-function loadAppData() {
-  if (appDataSnapshot) {
+function loadAppData(options: { forceRefresh?: boolean } = {}) {
+  if (appDataSnapshot && !options.forceRefresh) {
     return Promise.resolve(appDataSnapshot);
   }
 
-  if (!appDataPromise) {
+  if (!appDataPromise || options.forceRefresh) {
     appDataPromise = fetch("/api/app-data", {
+      cache: "no-store",
       headers: {
         Accept: "application/json",
       },
@@ -47,14 +48,31 @@ export function useAppData(initialData?: AppData) {
   const [error, setError] = useState<Error | null>(null);
 
   useEffect(() => {
+    let isMounted = true;
+
     if (initialData) {
       seedAppData(initialData);
       setData(initialData);
       setError(null);
-      return;
-    }
 
-    let isMounted = true;
+      loadAppData({ forceRefresh: true })
+        .then((nextData) => {
+          if (isMounted) {
+            setData(nextData);
+          }
+        })
+        .catch((nextError: Error) => {
+          appDataPromise = Promise.resolve(initialData);
+          console.error(nextError);
+          if (isMounted) {
+            setError(nextError);
+          }
+        });
+
+      return () => {
+        isMounted = false;
+      };
+    }
 
     loadAppData()
       .then((nextData) => {
