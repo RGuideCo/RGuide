@@ -2316,6 +2316,26 @@ export function SplitScreenSection({
       (list) => !isItineraryList(list, noKnownItineraryIds),
     );
   }, [activeProfileRightRail, favoriteIds, globalMergedLists, noKnownItineraryIds, profileGuides, profileItineraries, profileJournals]);
+  const profileFavoriteGuideLists = useMemo(
+    () =>
+      globalMergedLists.filter(
+        (list) =>
+          favoriteIds.includes(list.id) &&
+          !list.id.startsWith("event-") &&
+          list.submissionType !== "journal" &&
+          !isItineraryList(list, noKnownItineraryIds),
+      ),
+    [favoriteIds, globalMergedLists, noKnownItineraryIds],
+  );
+  const profileUserGuideLists = useMemo(
+    () =>
+      profileGuides.filter(
+        (list) =>
+          !list.id.startsWith("event-") &&
+          !isItineraryList(list, noKnownItineraryIds),
+      ),
+    [noKnownItineraryIds, profileGuides],
+  );
   const publicProfileLists = useMemo(
     () =>
       publicProfile
@@ -2573,6 +2593,30 @@ export function SplitScreenSection({
       list.submissionType !== "journal" &&
       !isItineraryList(list, allKnownItineraryListIds);
 
+    if (isProfileMode) {
+      const baseProfileLists =
+        activeGuideSource === "favorites"
+          ? profileFavoriteGuideLists
+          : activeGuideSource === "user-guides"
+            ? profileUserGuideLists
+            : [...profileUserGuideLists, ...profileFavoriteGuideLists].filter((list, index, listSet) =>
+                listSet.findIndex((candidate) => candidate.id === list.id) === index,
+              );
+
+      return baseProfileLists.filter((list) => {
+        if (activeCategory && !doesListMatchCategory(list, activeCategory)) {
+          return false;
+        }
+        if (activeSubcategory && !doesListMatchSubcategory(list, activeSubcategory)) {
+          return false;
+        }
+        if (activeFoodPrice && !doesListMatchFoodPrice(list, activeFoodPrice)) {
+          return false;
+        }
+        return true;
+      });
+    }
+
     if (activeGuideRail === null) {
       return filteredLists
         .filter((list) => list.submissionType !== "journal")
@@ -2641,6 +2685,8 @@ export function SplitScreenSection({
   }, [
     activeGuideRail,
     activeGuideSource,
+    activeSubcategory,
+    activeFoodPrice,
     favoriteIds,
     filteredLists,
     globalMergedLists,
@@ -2649,6 +2695,9 @@ export function SplitScreenSection({
     itineraryIds,
     itineraryPlaylists,
     publicProfileGuideLists,
+    profileFavoriteGuideLists,
+    profileUserGuideLists,
+    isProfileMode,
     votedIds,
     activeCategory,
     activeLists,
@@ -2692,11 +2741,17 @@ export function SplitScreenSection({
     { id: "user-guides" as const, label: "User guides", shortLabel: "User", icon: UserRound },
     { id: "favorites" as const, label: "Favorites", shortLabel: "Fav", icon: Heart },
   ];
+  const visibleGuideSourceSelectors = isProfileMode
+    ? guideSourceSelectors.filter((selector) => selector.id !== "r-guides")
+    : guideSourceSelectors;
   const guideActionSelectors = [
     { id: "all-guides" as const, label: "Guides", shortLabel: "Guide", icon: MapIcon },
     { id: "week-events" as const, label: "Events", shortLabel: "Events", icon: CalendarDays },
     { id: "itinerary" as const, label: "Journeys", shortLabel: "Journey", icon: Route },
   ];
+  const visibleGuideActionSelectors = isProfileMode
+    ? guideActionSelectors.filter((selector) => selector.id === "all-guides")
+    : guideActionSelectors;
   const guideActionActiveStyles = {
     "all-guides": {
       backgroundColor: "#0f172a",
@@ -2720,10 +2775,10 @@ export function SplitScreenSection({
     },
   } as const;
   const activeGuideSourceSelector =
-    guideSourceSelectors.find((selector) => selector.id === activeGuideSource) ?? guideSourceSelectors[0];
+    visibleGuideSourceSelectors.find((selector) => selector.id === activeGuideSource) ?? visibleGuideSourceSelectors[0];
   const activeGuideSourceIndex = Math.max(
     0,
-    guideSourceSelectors.findIndex((selector) => selector.id === activeGuideSourceSelector.id),
+    visibleGuideSourceSelectors.findIndex((selector) => selector.id === activeGuideSourceSelector.id),
   );
   const activeGuideActionSelector =
     guideActionSelectors.find((selector) => selector.id === activeGuideRail) ?? null;
@@ -2769,6 +2824,16 @@ export function SplitScreenSection({
     setVisibleNestedStopParentIds([]);
   };
   const handleGuideRailSelect = (railId: "all-guides" | "week-events" | "itinerary") => {
+    if (isProfileMode) {
+      setActiveGuideRail("all-guides");
+      setIsLocationFavoritesRailActive(false);
+      setExpandedGuideId(null);
+      clearCategoryBeforeGuideExpand();
+      setClosingGuide(null);
+      setVisibleNestedStopParentIds([]);
+      return;
+    }
+
     const nextRail = activeGuideRail === railId ? null : railId;
     setActiveGuideRail(nextRail);
     setIsLocationFavoritesRailActive(false);
@@ -3063,13 +3128,11 @@ export function SplitScreenSection({
   const displayedGuide = expandedGuide;
   const activeMapGuide = isProfileSubmitLayout
     ? profileSubmissionPreviewList
-    : isProfileMode
-      ? profileExpandedGuide
-      : expandedGuide;
+    : expandedGuide;
   const isGuideTakingFullListPane = Boolean(expandedGuide && !isPublicProfileMode);
   const isGuideReturningToListPane = false;
   const isGuidePaneTakingFullListPane = isGuideTakingFullListPane || isGuideReturningToListPane;
-  const isLeftPaneCollapsed = isProfileSubmitLayout || isGuidePaneTakingFullListPane || isProfileGuideTakingFullListPane;
+  const isLeftPaneCollapsed = isProfileSubmitLayout || isGuidePaneTakingFullListPane;
   const isSubcategoryMenuOpen =
     isFoodOpenTimeMenuOpen || isFoodCuisineMenuOpen || isNightlifeBarMenuOpen;
   const isSavedPlacesRailActive = isLocationFavoritesRailActive && !expandedGuide;
@@ -3122,13 +3185,12 @@ export function SplitScreenSection({
       [
         ...orderedRailFilteredLists.map((list) => list.id),
         ...recentRGuideLists.map((list) => list.id),
-        ...profileRailLists.map((list) => list.id),
       ].join("|"),
-    [orderedRailFilteredLists, profileRailLists, recentRGuideLists],
+    [orderedRailFilteredLists, recentRGuideLists],
   );
   const visibleGuideMarkerFallbackIds = useMemo(() => {
     const seen = new Set<string>();
-    const lists = isProfileMode ? profileRailLists : [...orderedRailFilteredLists, ...recentRGuideLists];
+    const lists = [...orderedRailFilteredLists, ...recentRGuideLists];
     return lists
       .filter((list) => {
         if (seen.has(list.id) || list.id === activeMapGuide?.id) {
@@ -3139,7 +3201,7 @@ export function SplitScreenSection({
       })
       .slice(0, 45)
       .map((list) => list.id);
-  }, [activeMapGuide?.id, isProfileMode, orderedRailFilteredLists, profileRailLists, recentRGuideLists]);
+  }, [activeMapGuide?.id, orderedRailFilteredLists, recentRGuideLists]);
 
   useEffect(() => {
     if (typeof window === "undefined" || isProfileSubmitLayout || isGuidePaneTakingFullListPane) {
@@ -4328,6 +4390,12 @@ export function SplitScreenSection({
   }, [isProfileMode]);
   useEffect(() => {
     if (isProfileMode) {
+      setActiveGuideRail("all-guides");
+      setActiveGuideSource("all-guides");
+      setExpandedGuideId(null);
+      setClosingGuide(null);
+      setVisibleNestedStopParentIds([]);
+      setProfileExpandedGuideId(null);
       setActiveProfileLeftRail(null);
       setActivePlacesBeenFilter("countries");
       setExpandedPlacesBeenCountries([]);
@@ -4563,26 +4631,6 @@ export function SplitScreenSection({
                     </button>
 	                  </div>
 	                ))}
-                  <div className="rail-switch-item h-px w-7 bg-slate-300/70" aria-hidden="true" />
-                  {profileRightRailOptions.map((option, index) => (
-                    <div
-                      key={option.id}
-                      className="rail-switch-item profile-rail-item relative h-10 w-10"
-                      style={profileRailItemStyle(index + profileLeftRailOptions.length + 1)}
-                    >
-                      <button
-                        type="button"
-                        onClick={() => setActiveProfileRightRail(option.id)}
-                        className={`guide-rail-button relative z-10 flex h-10 w-10 items-center justify-center rounded-full border border-slate-200/90 bg-white/95 text-slate-700 shadow-sm transition hover:scale-105 hover:border-slate-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-400/70 ${
-                          activeProfileRightRail === option.id ? "guide-rail-button-active border-slate-900 text-slate-900" : ""
-                        }`}
-                        aria-label={option.label}
-                        title={option.label}
-                      >
-                        <option.icon className="h-4 w-4" />
-                      </button>
-                    </div>
-                  ))}
 	              </>
             ) : (
               <>
@@ -4949,7 +4997,7 @@ export function SplitScreenSection({
                         style={{ transform: `translateY(${activeGuideSourceIndex * 30}px)` }}
                         aria-hidden="true"
                       />
-                      {guideSourceSelectors.map((selector) => {
+                      {visibleGuideSourceSelectors.map((selector) => {
                         const isActive = activeGuideSource === selector.id;
                         const SelectorIcon = selector.icon;
                         return (
@@ -7264,7 +7312,7 @@ export function SplitScreenSection({
               <div className={`relative z-[85] flex h-full flex-col ${paneTransitionClass} ${publicProfilePaneTransitionClass}`}>
                 <div
                   className={`relative flex shrink-0 items-center transition-[height,margin-bottom] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] lg:hidden ${
-                    isGuidePaneTakingFullListPane || isProfileMode || isPublicProfileMode ? "mb-0 h-0" : "mb-2 h-8"
+                    isGuidePaneTakingFullListPane || isPublicProfileMode ? "mb-0 h-0" : "mb-2 h-8"
                   }`}
                   onPointerDown={handleMobileListSheetDragStart}
                 >
@@ -7308,7 +7356,7 @@ export function SplitScreenSection({
                 </div>
 	                <div
 	                  className={`relative hidden w-full shrink-0 lg:block ${
-	                    isProfileMode || isPublicProfileMode
+                    isPublicProfileMode
 	                      ? "!hidden lg:!hidden"
 	                      : isGuidePaneTakingFullListPane
 	                        ? "pointer-events-none max-h-0 -translate-y-3 pb-0 opacity-0 transition-[opacity,transform] duration-200 ease-out"
@@ -7327,15 +7375,19 @@ export function SplitScreenSection({
                           }`}
                         >
                           <div
-                            className="relative grid h-10 w-full grid-cols-4 items-center justify-items-start gap-2"
+                            className={`relative grid h-10 w-full items-center justify-items-start gap-2 ${
+                              isProfileMode ? "grid-cols-3" : "grid-cols-4"
+                            }`}
                             role="group"
                             aria-label="Guide source"
                           >
                             <span
-                              className="pointer-events-none absolute -left-0.5 top-0 h-10 w-[calc(75%+2.875rem)] rounded-[0.625rem] bg-black/18 ring-1 ring-white/10"
+                              className={`pointer-events-none absolute -left-0.5 top-0 h-10 rounded-[0.625rem] bg-black/18 ring-1 ring-white/10 ${
+                                isProfileMode ? "w-[calc(75%+2rem)]" : "w-[calc(75%+2.875rem)]"
+                              }`}
                               aria-hidden="true"
                             />
-                            {guideSourceSelectors.map((selector) => {
+                            {visibleGuideSourceSelectors.map((selector) => {
                               const isActive = activeGuideSource === selector.id;
                               const SelectorIcon = selector.icon;
                               return (
@@ -7360,7 +7412,7 @@ export function SplitScreenSection({
                             {menuBarTitleLabel}
                           </span>
                           <div className="grid h-9 w-full grid-cols-4 items-center justify-items-end gap-2">
-                            {guideActionSelectors.map((selector) => {
+                            {visibleGuideActionSelectors.map((selector) => {
                               const isActive = activeGuideRail === selector.id;
                               const SelectorIcon = selector.icon;
                               return (
@@ -7943,7 +7995,7 @@ export function SplitScreenSection({
                   )}
                 </div>
               </div>
-              {isProfileMode && currentUser ? (
+              {isProfileMode && currentUser && isProfileSubmitting ? (
                 <div
                   className={`frosted-pane-right absolute inset-0 z-20 transition-[padding] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] ${
                     isProfileRightPaneFilled ? "p-0" : "p-5"
