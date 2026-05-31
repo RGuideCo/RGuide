@@ -13,7 +13,7 @@ export const runtime = "nodejs";
 export async function GET() {
   try {
     const [continents, guides] = await Promise.all([
-      getContinentsWithDestinationDescriptions(),
+      getContinentsWithDestinationDescriptions({ forceDatabase: true }),
       getServerEditorialGuides(),
     ]);
 

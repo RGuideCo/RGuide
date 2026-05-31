@@ -53,6 +53,10 @@ interface DestinationContentRows {
   cityImages: CityImageRow[];
 }
 
+interface DestinationContentLoadOptions {
+  forceDatabase?: boolean;
+}
+
 const DESTINATION_DESCRIPTIONS_CACHE_SECONDS = Number.parseInt(
   process.env.DESTINATION_DESCRIPTIONS_CACHE_SECONDS ?? "900",
   10,
@@ -174,7 +178,11 @@ function getDatabaseUrl() {
   );
 }
 
-function shouldSkipDatabaseConnection() {
+function shouldSkipDatabaseConnection(options: DestinationContentLoadOptions = {}) {
+  if (options.forceDatabase) {
+    return false;
+  }
+
   if (process.env.RGUIDE_ALLOW_BUILD_DB === "1") {
     return false;
   }
@@ -189,8 +197,8 @@ function shouldSkipDatabaseConnection() {
   return isProductionBuild;
 }
 
-async function loadDestinationContentRows(): Promise<DestinationContentRows> {
-  if (shouldSkipDatabaseConnection()) {
+async function loadDestinationContentRows(options: DestinationContentLoadOptions = {}): Promise<DestinationContentRows> {
+  if (shouldSkipDatabaseConnection(options)) {
     return { descriptions: [], cityAffiliateLinks: [], cityFoodCuisines: [], cityImages: [] };
   }
 
@@ -210,12 +218,10 @@ async function loadDestinationContentRows(): Promise<DestinationContentRows> {
 
   try {
     await client.connect();
-    const [descriptions, cityAffiliateLinks, cityFoodCuisines, cityImages] = await Promise.all([
-      loadNormalizedDestinationDescriptionRows(client),
-      loadCityLeftPanelAffiliateLinkRows(client),
-      loadCityFoodCuisineRows(client),
-      loadCityImageRows(client),
-    ]);
+    const descriptions = await loadNormalizedDestinationDescriptionRows(client);
+    const cityAffiliateLinks = await loadCityLeftPanelAffiliateLinkRows(client);
+    const cityFoodCuisines = await loadCityFoodCuisineRows(client);
+    const cityImages = await loadCityImageRows(client);
 
     return { descriptions, cityAffiliateLinks, cityFoodCuisines, cityImages };
   } catch (error) {
@@ -315,6 +321,19 @@ const getCachedDestinationContentRows = unstable_cache(
     return loadDestinationContentRows();
   },
   ["destination-content-rows", "city-images-v2"],
+  {
+    revalidate: Number.isFinite(DESTINATION_DESCRIPTIONS_CACHE_SECONDS)
+      ? DESTINATION_DESCRIPTIONS_CACHE_SECONDS
+      : 900,
+    tags: ["destination-descriptions"],
+  },
+);
+
+const getCachedRuntimeDestinationContentRows = unstable_cache(
+  async () => {
+    return loadDestinationContentRows({ forceDatabase: true });
+  },
+  ["destination-content-rows", "city-images-runtime-v1"],
   {
     revalidate: Number.isFinite(DESTINATION_DESCRIPTIONS_CACHE_SECONDS)
       ? DESTINATION_DESCRIPTIONS_CACHE_SECONDS
@@ -434,11 +453,13 @@ export function applyDestinationDescriptions(
   }));
 }
 
-export async function getContinentsWithDestinationDescriptions() {
+export async function getContinentsWithDestinationDescriptions(options: DestinationContentLoadOptions = {}) {
   const continents = getContinents();
   const loadRows =
     process.env.NODE_ENV === "development"
-      ? loadDestinationContentRows
+      ? () => loadDestinationContentRows(options)
+      : options.forceDatabase
+      ? getCachedRuntimeDestinationContentRows
       : getCachedDestinationContentRows;
   const rows = await loadRows().catch((error) => {
     console.error("Failed to load cached destination content", error);
