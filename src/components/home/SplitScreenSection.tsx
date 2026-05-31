@@ -7490,17 +7490,17 @@ export function SplitScreenSection({
                         <p className="mt-1 text-base font-semibold text-slate-900">{publicProfile.stats.placesBeenCount}</p>
                       </div>
                     </div>
-                    <div className="pane-cascade-item mt-3 min-h-0 flex-1 overflow-hidden rounded-xl border border-slate-200 bg-stone-50 p-3">
-                      <p className="text-[10px] uppercase tracking-[0.12em] text-slate-500">Places been</p>
+                    <div className="pane-cascade-item mt-3 min-h-0 flex-1 overflow-hidden rounded-xl border border-white/[0.12] bg-white/[0.07] p-3 shadow-[inset_0_1px_0_rgba(255,255,255,0.08),0_12px_24px_rgba(0,0,0,0.14)]">
+                      <p className="text-[10px] uppercase tracking-[0.14em] text-white/[0.48]">Places been</p>
                       <div className="mt-2 max-h-full space-y-1.5 overflow-y-auto pr-1">
                         {publicProfilePlacesBeen.length ? (
                           publicProfilePlacesBeen.map((place) => (
-                            <div key={place} className="rounded-lg bg-white/75 px-2.5 py-1.5 text-sm font-medium text-slate-800">
+                            <div key={place} className="rounded-lg border border-white/[0.1] bg-white/[0.08] px-2.5 py-1.5 text-sm font-medium text-white/[0.86] shadow-[inset_0_1px_0_rgba(255,255,255,0.06)]">
                               {place}
                             </div>
                           ))
                         ) : (
-                          <p className="text-sm text-slate-500">No places shared yet.</p>
+                          <p className="text-sm text-white/[0.5]">No places shared yet.</p>
                         )}
                       </div>
                     </div>
@@ -7847,15 +7847,15 @@ export function SplitScreenSection({
                       </div>
                     ) : null}
                     {activeProfileLeftRail !== "places-been" && activeProfileLeftRail !== "edit-profile" ? (
-                      <div className="mt-3 rounded-xl border border-slate-200 bg-stone-50 p-3">
-                        <p className="text-[10px] uppercase tracking-[0.12em] text-slate-500">Favorites</p>
+                      <div className="mt-3 rounded-xl border border-white/[0.12] bg-white/[0.07] p-3 shadow-[inset_0_1px_0_rgba(255,255,255,0.08),0_12px_24px_rgba(0,0,0,0.14)]">
+                        <p className="text-[10px] uppercase tracking-[0.14em] text-white/[0.48]">Favorites</p>
                         <div className="mt-2 space-y-1.5">
                           {profileFavoriteHighlights.map((favorite) => (
-                            <div key={favorite.type} className="flex items-center justify-between rounded-lg bg-white/75 px-2.5 py-1.5">
-                              <span className="text-[10px] font-semibold uppercase tracking-[0.12em] text-slate-500">
+                            <div key={favorite.type} className="flex min-h-10 items-center justify-between rounded-lg border border-white/[0.1] bg-white/[0.08] px-3 py-2 shadow-[inset_0_1px_0_rgba(255,255,255,0.06)]">
+                              <span className="text-[10px] font-semibold uppercase tracking-[0.14em] text-white/[0.42]">
                                 {favorite.type}
                               </span>
-                              <span className="ml-3 truncate text-sm font-medium text-slate-800">{favorite.value}</span>
+                              <span className="ml-4 truncate text-sm font-semibold text-white/[0.88]">{favorite.value}</span>
                             </div>
                           ))}
                         </div>
