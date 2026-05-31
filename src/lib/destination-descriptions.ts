@@ -1,6 +1,7 @@
 import pg from "pg";
 import type { Client } from "pg";
 import { unstable_cache } from "next/cache";
+import { createClient } from "@supabase/supabase-js";
 
 import { getContinents } from "@/lib/mock-data";
 import type { City, Continent, Country, CountryState, SubArea } from "@/types";
@@ -44,6 +45,17 @@ interface CityImageRow {
   id: string;
   imageUrl: string;
   imageUpdatedAt: string | null;
+}
+
+interface DestinationDataApiImageRow {
+  legacy_id: string | null;
+  image_url: string | null;
+  updated_at: string | null;
+  metadata: {
+    destination_image?: {
+      ingested_at?: string;
+    };
+  } | null;
 }
 
 interface DestinationContentRows {
@@ -178,6 +190,17 @@ function getDatabaseUrl() {
   );
 }
 
+function getSupabaseDataApiConfig() {
+  const url = process.env.SUPABASE_URL ?? process.env.NEXT_PUBLIC_SUPABASE_URL ?? null;
+  const key =
+    process.env.SUPABASE_SERVICE_ROLE_KEY ??
+    process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY ??
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ??
+    null;
+
+  return url && key ? { url, key } : null;
+}
+
 function shouldSkipDatabaseConnection(options: DestinationContentLoadOptions = {}) {
   if (options.forceDatabase) {
     return false;
@@ -199,13 +222,13 @@ function shouldSkipDatabaseConnection(options: DestinationContentLoadOptions = {
 
 async function loadDestinationContentRows(options: DestinationContentLoadOptions = {}): Promise<DestinationContentRows> {
   if (shouldSkipDatabaseConnection(options)) {
-    return { descriptions: [], cityAffiliateLinks: [], cityFoodCuisines: [], cityImages: [] };
+    return loadDestinationContentRowsFromDataApi();
   }
 
   const databaseUrl = getDatabaseUrl();
 
   if (!databaseUrl) {
-    return { descriptions: [], cityAffiliateLinks: [], cityFoodCuisines: [], cityImages: [] };
+    return loadDestinationContentRowsFromDataApi();
   }
 
   const client = new pg.Client({
@@ -226,10 +249,49 @@ async function loadDestinationContentRows(options: DestinationContentLoadOptions
     return { descriptions, cityAffiliateLinks, cityFoodCuisines, cityImages };
   } catch (error) {
     console.error("Failed to load destination content", error);
-    return { descriptions: [], cityAffiliateLinks: [], cityFoodCuisines: [], cityImages: [] };
+    return loadDestinationContentRowsFromDataApi();
   } finally {
     await client.end().catch(() => {});
   }
+}
+
+async function loadDestinationContentRowsFromDataApi(): Promise<DestinationContentRows> {
+  const config = getSupabaseDataApiConfig();
+
+  if (!config) {
+    return { descriptions: [], cityAffiliateLinks: [], cityFoodCuisines: [], cityImages: [] };
+  }
+
+  const supabase = createClient(config.url, config.key, {
+    auth: { autoRefreshToken: false, persistSession: false },
+  });
+
+  const { data, error } = await supabase
+    .from("destinations")
+    .select("legacy_id,image_url,updated_at,metadata")
+    .eq("scope", "city")
+    .eq("is_published", true)
+    .not("legacy_id", "is", null)
+    .not("image_url", "is", null)
+    .returns<DestinationDataApiImageRow[]>();
+
+  const cityImages: CityImageRow[] = error
+    ? []
+    : (data ?? []).flatMap((row) => {
+        if (!row.legacy_id || !row.image_url) {
+          return [];
+        }
+
+        return [
+          {
+            id: row.legacy_id,
+            imageUrl: row.image_url,
+            imageUpdatedAt: row.metadata?.destination_image?.ingested_at ?? row.updated_at,
+          },
+        ];
+      });
+
+  return { descriptions: [], cityAffiliateLinks: [], cityFoodCuisines: [], cityImages };
 }
 
 async function loadNormalizedDestinationDescriptionRows(client: Client) {
