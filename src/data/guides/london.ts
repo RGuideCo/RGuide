@@ -207,7 +207,7 @@ const poiPhotos: Record<string, string> = {
   "shoreditch-culture-museum-home": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/01/The_Geffrye_Museum_in_Shoreditch_%2801%29.jpg/500px-The_Geffrye_Museum_in_Shoreditch_%2801%29.jpg",
   "shoreditch-culture-spitalfields": "https://oldspitalfieldsmarket.com/cms/2024/07/97b653e2-ad14-414c-91fb-dd2fb366beb1.jpg",
   "shoreditch-culture-whitechapel": "https://www.whitechapelgallery.org/wp-content/uploads/2026/04/Whitechapel-Gallery-Membership-Website-Banner_1170x655_acf_cropped.jpg",
-  "shoreditch-food-brat": "https://bratrestaurant.co.uk/src/img/brat-climpsons-arch-04.jpg",
+  "shoreditch-food-brat": "https://bratrestaurant.co.uk/src/img/brat-restaurant-plaice.jpg",
   "shoreditch-food-manteca": "https://images.squarespace-cdn.com/content/v1/6148999de4729f514b11cace/b8d87449-e960-4d89-b8c2-115fc6888c82/0P4A3706.jpeg?format=2500w",
   "shoreditch-food-pellicci": "https://epellicci.co.uk/wp-content/uploads/image4-1.jpg",
   "shoreditch-food-smoking-goat": "https://scontent-fra3-1.cdninstagram.com/v/t51.82787-15/631787597_18557849956038872_4486591311782996719_n.jpg?stp=dst-jpg_e35_tt6&_nc_cat=106&ccb=7-5&_nc_sid=18de74&efg=eyJlZmdfdGFnIjoiQ0xJUFMuYmVzdF9pbWFnZV91cmxnZW4uQzMifQ%3D%3D&_nc_ohc=X3m_X8AFZc8Q7kNvwFBpfzW&_nc_oc=AdobxRpTO3ytuvhV_bfkixpOdrCEOieTvOysDr9keC3uhoPJR_8cw8lbPxR-mvfsfAHRUuedxGihbFG3Lqjb_bRT&_nc_zt=23&_nc_ht=scontent-fra3-1.cdninstagram.com&edm=ANo9K5cEAAAA&_nc_gid=IEMX_mo-jyzwC-8A5dqi-A&_nc_tpa=Q5bMBQGzawiEA1v8bZ_WHH9CEs2IWOydEPta-BT36oyP9jgiduBhXAUvFwb_TrIYASHLZJWUrrnhuqo6&oh=00_Af7X46w-iKRbAeVon3A_Eit7R_v_v8JjeO7BZJ_QTzBELQ&oe=6A0C973D",
