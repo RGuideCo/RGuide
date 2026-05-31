@@ -217,6 +217,7 @@ export function ContinentList({
             hideHeader
             framed={false}
             mode={selectedCountryMode}
+            itemVariant="chips"
             countrySubareas={selectedCountry.subareas}
             countryStates={selectedCountry.states}
             onToggleCountry={() => toggleCountry(selectedContinent.id, selectedCountry.id)}
