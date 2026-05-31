@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 
+import { checkRateLimit, rateLimitResponse, withRateLimitHeaders } from "@/lib/rate-limit";
 import { getSupabaseServiceClient } from "@/lib/supabase/server";
 import type { ExternalPlaceReference } from "@/types";
 
@@ -344,9 +345,19 @@ export async function GET(request: NextRequest) {
   const limit = Number.isFinite(requestedLimit)
     ? Math.min(Math.max(requestedLimit, 1), 12)
     : DEFAULT_LIMIT;
+  const rateLimit = checkRateLimit(request, {
+    namespace: "places-search",
+    limit: 60,
+    windowMs: 60_000,
+    keyParts: [city, country],
+  });
+
+  if (!rateLimit.allowed) {
+    return rateLimitResponse(rateLimit);
+  }
 
   if (query.length < 2) {
-    return NextResponse.json({ suggestions: [] });
+    return withRateLimitHeaders(NextResponse.json({ suggestions: [] }), rateLimit);
   }
 
   const cityRecord = await resolveCity(city, country);
@@ -389,14 +400,17 @@ export async function GET(request: NextRequest) {
         : suggestion;
     });
 
-  return NextResponse.json(
-    {
-      suggestions: [...internal, ...externalWithKnownRefs].slice(0, limit),
-    },
-    {
-      headers: {
-        "Cache-Control": "private, no-store",
+  return withRateLimitHeaders(
+    NextResponse.json(
+      {
+        suggestions: [...internal, ...externalWithKnownRefs].slice(0, limit),
       },
-    },
+      {
+        headers: {
+          "Cache-Control": "private, no-store",
+        },
+      },
+    ),
+    rateLimit,
   );
 }

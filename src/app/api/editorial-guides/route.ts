@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 
+import { checkRateLimit, rateLimitResponse, withRateLimitHeaders } from "@/lib/rate-limit";
 import { getServerEditorialGuides } from "@/lib/server-editorial-guides";
 
 const EDITORIAL_GUIDES_CACHE_SECONDS = Number.parseInt(
@@ -18,14 +19,27 @@ export async function GET(request: Request) {
   try {
     const { searchParams } = new URL(request.url);
     const cityName = searchParams.get("city")?.trim() || undefined;
+    const rateLimit = checkRateLimit(request, {
+      namespace: "editorial-guides",
+      limit: 120,
+      windowMs: 60_000,
+      keyParts: [cityName],
+    });
 
-    return NextResponse.json(
-      { guides: await getServerEditorialGuides({ cityName }) },
-      {
-        headers: {
-          "Cache-Control": `public, s-maxage=${cacheSeconds}, stale-while-revalidate=${cacheSeconds * 4}`,
+    if (!rateLimit.allowed) {
+      return rateLimitResponse(rateLimit);
+    }
+
+    return withRateLimitHeaders(
+      NextResponse.json(
+        { guides: await getServerEditorialGuides({ cityName }) },
+        {
+          headers: {
+            "Cache-Control": `public, s-maxage=${cacheSeconds}, stale-while-revalidate=${cacheSeconds * 4}`,
+          },
         },
-      },
+      ),
+      rateLimit,
     );
   } catch (error) {
     console.error("Failed to load editorial guides", error);

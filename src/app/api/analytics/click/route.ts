@@ -4,6 +4,8 @@ import { NextRequest, NextResponse } from "next/server";
 import pg from "pg";
 import { createClient } from "@supabase/supabase-js";
 
+import { checkRateLimit, rateLimitResponse, withRateLimitHeaders } from "@/lib/rate-limit";
+
 export const dynamic = "force-dynamic";
 export const runtime = "nodejs";
 
@@ -177,12 +179,25 @@ async function recordWithDatabaseUrl(events: ReturnType<typeof enrichEvent>[]) {
 }
 
 export async function POST(request: NextRequest) {
+  const rateLimit = checkRateLimit(request, {
+    namespace: "analytics-click",
+    limit: 180,
+    windowMs: 60_000,
+  });
+
+  if (!rateLimit.allowed) {
+    return rateLimitResponse(rateLimit);
+  }
+
   let payload: BatchPayload;
 
   try {
     payload = (await request.json()) as BatchPayload;
   } catch {
-    return NextResponse.json({ error: "Invalid analytics payload." }, { status: 400 });
+    return withRateLimitHeaders(
+      NextResponse.json({ error: "Invalid analytics payload." }, { status: 400 }),
+      rateLimit,
+    );
   }
 
   const events = getEvents(payload)
@@ -190,25 +205,37 @@ export async function POST(request: NextRequest) {
     .filter(Boolean);
 
   if (!events.length) {
-    return NextResponse.json({ received: 0, accepted: 0, dropped: 0, rawInserted: 0, rollupGroups: 0 });
+    return withRateLimitHeaders(
+      NextResponse.json({ received: 0, accepted: 0, dropped: 0, rawInserted: 0, rollupGroups: 0 }),
+      rateLimit,
+    );
   }
 
   try {
     const result = (await recordWithDataApi(events)) ?? (await recordWithDatabaseUrl(events));
 
     if (!result) {
-      return NextResponse.json({ error: "Analytics storage is not configured." }, { status: 500 });
+      return withRateLimitHeaders(
+        NextResponse.json({ error: "Analytics storage is not configured." }, { status: 500 }),
+        rateLimit,
+      );
     }
 
-    return NextResponse.json({
-      received: result.received ?? events.length,
-      accepted: result.accepted ?? 0,
-      dropped: result.dropped ?? 0,
-      rawInserted: result.rawInserted ?? 0,
-      rollupGroups: result.rollupGroups ?? 0,
-    });
+    return withRateLimitHeaders(
+      NextResponse.json({
+        received: result.received ?? events.length,
+        accepted: result.accepted ?? 0,
+        dropped: result.dropped ?? 0,
+        rawInserted: result.rawInserted ?? 0,
+        rollupGroups: result.rollupGroups ?? 0,
+      }),
+      rateLimit,
+    );
   } catch (error) {
     console.error("Failed to store analytics batch", error);
-    return NextResponse.json({ error: "Analytics batch could not be stored." }, { status: 500 });
+    return withRateLimitHeaders(
+      NextResponse.json({ error: "Analytics batch could not be stored." }, { status: 500 }),
+      rateLimit,
+    );
   }
 }
