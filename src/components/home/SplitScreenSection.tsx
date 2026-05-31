@@ -2592,7 +2592,7 @@ export function SplitScreenSection({
     activeLocation.state?.description ??
     activeLocation.country?.description;
   const activeLocationDescription = formatLocationDescription(activeLocationDescriptionRaw) || null;
-  const activeDestinationImage = activeLocation.city?.image ?? null;
+  const activeDestinationImage = activeLocation.city?.image ?? activeLocation.country?.image ?? null;
   const activeFavoriteLocation = useMemo<FavoriteLocation | null>(() => {
     if (!activeLocation.continent) {
       return null;

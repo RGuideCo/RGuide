@@ -411,6 +411,7 @@ export interface Country {
   name: string;
   continent: string;
   description: string;
+  image?: string;
   cities: City[];
   subareas?: SubArea[];
   states?: CountryState[];

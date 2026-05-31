@@ -41,7 +41,7 @@ interface CityFoodCuisineRow {
   cuisines: string[];
 }
 
-interface CityImageRow {
+interface DestinationImageRow {
   id: string;
   imageUrl: string;
   imageUpdatedAt: string | null;
@@ -62,7 +62,7 @@ interface DestinationContentRows {
   descriptions: DestinationDescriptionRow[];
   cityAffiliateLinks: CityAffiliateLinkRow[];
   cityFoodCuisines: CityFoodCuisineRow[];
-  cityImages: CityImageRow[];
+  destinationImages: DestinationImageRow[];
 }
 
 interface DestinationContentLoadOptions {
@@ -244,9 +244,9 @@ async function loadDestinationContentRows(options: DestinationContentLoadOptions
     const descriptions = await loadNormalizedDestinationDescriptionRows(client);
     const cityAffiliateLinks = await loadCityLeftPanelAffiliateLinkRows(client);
     const cityFoodCuisines = await loadCityFoodCuisineRows(client);
-    const cityImages = await loadCityImageRows(client);
+    const destinationImages = await loadDestinationImageRows(client);
 
-    return { descriptions, cityAffiliateLinks, cityFoodCuisines, cityImages };
+    return { descriptions, cityAffiliateLinks, cityFoodCuisines, destinationImages };
   } catch (error) {
     console.error("Failed to load destination content", error);
     return loadDestinationContentRowsFromDataApi();
@@ -259,7 +259,7 @@ async function loadDestinationContentRowsFromDataApi(): Promise<DestinationConte
   const config = getSupabaseDataApiConfig();
 
   if (!config) {
-    return { descriptions: [], cityAffiliateLinks: [], cityFoodCuisines: [], cityImages: [] };
+    return { descriptions: [], cityAffiliateLinks: [], cityFoodCuisines: [], destinationImages: [] };
   }
 
   const supabase = createClient(config.url, config.key, {
@@ -269,13 +269,13 @@ async function loadDestinationContentRowsFromDataApi(): Promise<DestinationConte
   const { data, error } = await supabase
     .from("destinations")
     .select("legacy_id,image_url,updated_at,metadata")
-    .eq("scope", "city")
+    .in("scope", ["city", "country"])
     .eq("is_published", true)
     .not("legacy_id", "is", null)
     .not("image_url", "is", null)
     .returns<DestinationDataApiImageRow[]>();
 
-  const cityImages: CityImageRow[] = error
+  const destinationImages: DestinationImageRow[] = error
     ? []
     : (data ?? []).flatMap((row) => {
         if (!row.legacy_id || !row.image_url) {
@@ -291,7 +291,7 @@ async function loadDestinationContentRowsFromDataApi(): Promise<DestinationConte
         ];
       });
 
-  return { descriptions: [], cityAffiliateLinks: [], cityFoodCuisines: [], cityImages };
+  return { descriptions: [], cityAffiliateLinks: [], cityFoodCuisines: [], destinationImages };
 }
 
 async function loadNormalizedDestinationDescriptionRows(client: Client) {
@@ -358,15 +358,15 @@ async function loadCityFoodCuisineRows(client: Client) {
   }
 }
 
-async function loadCityImageRows(client: Client) {
+async function loadDestinationImageRows(client: Client) {
   try {
-    const { rows } = await client.query<CityImageRow>(
+    const { rows } = await client.query<DestinationImageRow>(
       [
         "select destination.legacy_id as id,",
         "       destination.image_url as \"imageUrl\",",
         "       coalesce(destination.metadata #>> '{destination_image,ingested_at}', destination.updated_at::text) as \"imageUpdatedAt\"",
         "from public.destinations destination",
-        "where destination.scope = 'city'::public.destination_scope",
+        "where destination.scope in ('city'::public.destination_scope, 'country'::public.destination_scope)",
         "  and destination.legacy_id is not null",
         "  and nullif(destination.image_url, '') is not null",
         "  and destination.is_published = true",
@@ -444,12 +444,12 @@ function cloneCityWithDescription(
   descriptions: Map<string, string>,
   cityAffiliateLinks: Map<string, CityAffiliateLinkRow>,
   cityFoodCuisines: Map<string, CityFoodCuisineRow>,
-  cityImages: Map<string, CityImageRow>,
+  destinationImages: Map<string, DestinationImageRow>,
 ) {
   const cityDescriptionId = descriptionId("city", countryId, city.id);
   const affiliateLink = cityAffiliateLinks.get(cityDescriptionId);
   const foodCuisines = cityFoodCuisines.get(cityDescriptionId)?.cuisines.filter(Boolean);
-  const cityImage = cityImages.get(cityDescriptionId);
+  const cityImage = destinationImages.get(cityDescriptionId);
   const imageUrl = versionedImageUrl(cityImage?.imageUrl, cityImage?.imageUpdatedAt);
   const cityLeftPanelStayUrl = affiliateLink?.cityLeftPanelStayUrl;
 
@@ -478,11 +478,15 @@ function cloneCountryWithDescription(
   descriptions: Map<string, string>,
   cityAffiliateLinks: Map<string, CityAffiliateLinkRow>,
   cityFoodCuisines: Map<string, CityFoodCuisineRow>,
-  cityImages: Map<string, CityImageRow>,
+  destinationImages: Map<string, DestinationImageRow>,
 ) {
+  const countryImage = destinationImages.get(descriptionId("country", country.id));
+  const imageUrl = versionedImageUrl(countryImage?.imageUrl, countryImage?.imageUpdatedAt);
+
   return {
     ...country,
     description: descriptions.get(descriptionId("country", country.id)) ?? country.description,
+    image: imageUrl ?? country.image,
     subareas: cloneSubareasWithDescriptions(country.subareas, descriptions, {
       type: "region",
       parentId: country.id,
@@ -490,7 +494,7 @@ function cloneCountryWithDescription(
     }),
     states: country.states?.map((state) => cloneStateWithDescription(country.id, state, descriptions)),
     cities: country.cities.map((city) =>
-      cloneCityWithDescription(country.id, city, descriptions, cityAffiliateLinks, cityFoodCuisines, cityImages),
+      cloneCityWithDescription(country.id, city, descriptions, cityAffiliateLinks, cityFoodCuisines, destinationImages),
     ),
   };
 }
@@ -500,17 +504,17 @@ export function applyDestinationDescriptions(
   rows: DestinationDescriptionRow[],
   cityAffiliateRows: CityAffiliateLinkRow[] = [],
   cityFoodCuisineRows: CityFoodCuisineRow[] = [],
-  cityImageRows: CityImageRow[] = [],
+  destinationImageRows: DestinationImageRow[] = [],
 ) {
   const descriptions = new Map(rows.map((row) => [row.id, row.description.trim()]));
   const cityAffiliateLinks = new Map(cityAffiliateRows.map((row) => [row.id, row]));
   const cityFoodCuisines = new Map(cityFoodCuisineRows.map((row) => [row.id, row]));
-  const cityImages = new Map(cityImageRows.map((row) => [row.id, row]));
+  const destinationImages = new Map(destinationImageRows.map((row) => [row.id, row]));
 
   return continents.map((continent) => ({
     ...continent,
     countries: continent.countries.map((country) =>
-      cloneCountryWithDescription(country, descriptions, cityAffiliateLinks, cityFoodCuisines, cityImages),
+      cloneCountryWithDescription(country, descriptions, cityAffiliateLinks, cityFoodCuisines, destinationImages),
     ),
   }));
 }
@@ -525,13 +529,13 @@ export async function getContinentsWithDestinationDescriptions(options: Destinat
       : getCachedDestinationContentRows;
   const rows = await loadRows().catch((error) => {
     console.error("Failed to load cached destination content", error);
-    return { descriptions: [], cityAffiliateLinks: [], cityFoodCuisines: [], cityImages: [] };
+    return { descriptions: [], cityAffiliateLinks: [], cityFoodCuisines: [], destinationImages: [] };
   });
   return applyDestinationDescriptions(
     continents,
     rows.descriptions,
     rows.cityAffiliateLinks,
     rows.cityFoodCuisines,
-    rows.cityImages,
+    rows.destinationImages,
   );
 }
