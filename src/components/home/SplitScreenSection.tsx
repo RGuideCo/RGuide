@@ -83,7 +83,9 @@ import {
   getCanonicalCityCategoryPath,
   getCanonicalCityNeighborhoodPath,
   getCanonicalCityPath,
+  getCanonicalCountryPath,
   getCanonicalGuidePath,
+  resolveCountryDeepLink,
   resolveCityDeepLink,
 } from "@/lib/deep-link-routes";
 import { updateSupabaseProfile } from "@/lib/supabase/profile";
@@ -1458,11 +1460,30 @@ export function SplitScreenSection({
 
   useEffect(() => {
     const handlePopState = () => {
-      const citySegments = window.location.pathname.split("/").filter(Boolean);
-      if (citySegments[0] !== "city") {
+      const routeSegments = window.location.pathname.split("/").filter(Boolean);
+      if (routeSegments[0] === "country") {
+        const route = resolveCountryDeepLink(routeSegments.slice(1), {
+          continents,
+        });
+        if (!route) {
+          return;
+        }
+
+        setIsLocationFavoritesRailActive(false);
+        setSelection(route.selection);
+        setActiveCategory(null);
+        setActiveSubcategory(null);
+        clearCategoryBeforeGuideExpand();
+        setExpandedGuideId(null);
+        setClosingGuide(null);
+        setVisibleNestedStopParentIds([]);
         return;
       }
-      const route = resolveCityDeepLink(citySegments.slice(1), {
+
+      if (routeSegments[0] !== "city") {
+        return;
+      }
+      const route = resolveCityDeepLink(routeSegments.slice(1), {
         continents,
         guides: activeEditorialLists,
       });
@@ -1865,6 +1886,17 @@ export function SplitScreenSection({
     setFocusedCountrySignal({ countryId, nonce: Date.now() });
     setIsLocationFavoritesRailActive(false);
     setSelection(() => ({ continentId, countryId }));
+    const country = continents
+      .find((continent) => continent.id === continentId)
+      ?.countries.find((item) => item.id === countryId);
+    if (country) {
+      setActiveCategory(null);
+      setActiveSubcategory(null);
+      setExpandedGuideId(null);
+      clearCategoryBeforeGuideExpand();
+      setClosingGuide(null);
+      pushExplorerPath(getCanonicalCountryPath(country));
+    }
   };
   const handleSelectContinentFromGlobal = (
     continentId: string,

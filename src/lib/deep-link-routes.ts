@@ -3,7 +3,7 @@ import { CATEGORIES } from "@/lib/constants";
 import { getCitiesFromContinents } from "@/lib/geography-tree";
 import { getAbsoluteHref } from "@/lib/routes";
 import { slugify } from "@/lib/utils";
-import { City, Continent, ListCategory, MapList, SelectionState, SubArea } from "@/types";
+import { City, Continent, Country, ListCategory, MapList, SelectionState, SubArea } from "@/types";
 
 export type CityDeepLinkState = {
   selection: SelectionState;
@@ -25,6 +25,17 @@ export type CityDeepLinkResolution = CityDeepLinkState & {
   structuredData: object[];
 };
 
+export type CountryDeepLinkResolution = CityDeepLinkState & {
+  continent: Continent;
+  country: Country;
+  canonicalPath: string;
+  title: string;
+  description: string;
+  h1: string;
+  intro: string;
+  structuredData: object[];
+};
+
 type NeighborhoodMatch = {
   subarea: SubArea;
   parent?: SubArea;
@@ -38,6 +49,10 @@ function cleanSegments(segments: string[]) {
 
 export function getCanonicalCityPath(city: Pick<City, "name">) {
   return `/city/${slugify(city.name)}`;
+}
+
+export function getCanonicalCountryPath(country: Pick<Country, "name">) {
+  return `/country/${slugify(country.name)}`;
 }
 
 export function getCanonicalCityNeighborhoodPath(city: Pick<City, "name">, neighborhood: Pick<SubArea, "name">) {
@@ -243,6 +258,17 @@ export function getCityBySimpleSlug(citySlug: string, citySource: City[] = citie
   return citySource.find((city) => slugify(city.name) === citySlug);
 }
 
+export function getCountryBySimpleSlug(countrySlug: string, continentSource: Continent[] = continents) {
+  for (const continent of continentSource) {
+    const country = continent.countries.find((item) => slugify(item.name) === countrySlug);
+    if (country) {
+      return { continent, country };
+    }
+  }
+
+  return undefined;
+}
+
 function findNeighborhood(city: City, neighborhoodSlug?: string): NeighborhoodMatch | undefined {
   if (!neighborhoodSlug) {
     return undefined;
@@ -387,6 +413,94 @@ function buildSelection(city: City, neighborhood?: NeighborhoodMatch, continentS
     cityId: city.id,
     subareaId: neighborhood?.parent ? neighborhood.parent.id : neighborhood?.subarea.id,
     nestedSubareaId: neighborhood?.parent ? neighborhood.subarea.id : undefined,
+  };
+}
+
+function buildCountryBreadcrumbData(country: Country, canonicalPath: string) {
+  const items = [
+    { name: "Home", item: "/" },
+    { name: country.name, item: canonicalPath },
+  ];
+
+  return {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: items.map((item, index) => ({
+      "@type": "ListItem",
+      position: index + 1,
+      name: item.name,
+      item: getAbsoluteHref(item.item),
+    })),
+  };
+}
+
+function buildCountryItemListData(country: Country, canonicalPath: string) {
+  const cityItems = country.cities
+    .filter((city) => !city.isPlaceholderRegion)
+    .map((city, index) => ({
+      "@type": "ListItem",
+      position: index + 1,
+      name: city.name,
+      url: getAbsoluteHref(getCanonicalCityPath(city)),
+    }));
+
+  return {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    name: `RGuide ${country.name} travel guides`,
+    url: getAbsoluteHref(canonicalPath),
+    itemListElement: cityItems,
+  };
+}
+
+export function resolveCountryDeepLink(
+  rawSegments: string[],
+  routeData: {
+    continents?: Continent[];
+  } = {},
+): CountryDeepLinkResolution | null {
+  const continentSource = routeData.continents ?? continents;
+  const segments = cleanSegments(rawSegments);
+  const [countrySlug, ...rest] = segments;
+
+  if (!countrySlug || rest.length > 0) {
+    return null;
+  }
+
+  const match = getCountryBySimpleSlug(countrySlug, continentSource);
+  if (!match) {
+    return null;
+  }
+
+  const { continent, country } = match;
+  const canonicalPath = getCanonicalCountryPath(country);
+  const cityCount = country.cities.filter((city) => !city.isPlaceholderRegion).length;
+  const cityLabel = cityCount === 1 ? "city" : "cities";
+  const title = `RGuide ${country.name} Travel Guide`;
+  const description =
+    country.description ||
+    `Explore RGuide city guides, neighborhoods, restaurants, hotels, bars, culture, and things to do across ${country.name}.`;
+  const h1 = country.name;
+  const intro =
+    country.description ||
+    `Browse ${cityCount} ${cityLabel} in ${country.name}, then open city guides for restaurants, hotels, nightlife, culture, and things to do.`;
+
+  return {
+    selection: {
+      continentId: continent.id,
+      countryId: country.id,
+    },
+    continent,
+    country,
+    canonicalPath,
+    title,
+    description,
+    h1,
+    intro,
+    structuredData: [
+      buildCountryBreadcrumbData(country, canonicalPath),
+      buildCountryItemListData(country, canonicalPath),
+    ],
   };
 }
 
@@ -648,4 +762,12 @@ export function getCityDeepLinkStaticParams(
   }
 
   return params;
+}
+
+export function getCountryDeepLinkStaticParams(continentSource: Continent[] = continents) {
+  return continentSource.flatMap((continent) =>
+    continent.countries.map((country) => ({
+      segments: [slugify(country.name)],
+    })),
+  );
 }

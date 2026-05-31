@@ -1,4 +1,4 @@
-import { City, ListCategory, MapList, User } from "@/types";
+import { City, Country, ListCategory, MapList, User } from "@/types";
 import { SITE_URL } from "@/lib/constants";
 import { slugify } from "@/lib/utils";
 
@@ -8,6 +8,10 @@ export function getAbsoluteHref(pathOrUrl: string) {
 
 export function getCityHref(city: Pick<City, "continent" | "country" | "name">) {
   return `/city/${slugify(city.name)}`;
+}
+
+export function getCountryHref(country: Pick<Country, "name">) {
+  return `/country/${slugify(country.name)}`;
 }
 
 export function getCategoryHref(category: ListCategory) {
