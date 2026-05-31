@@ -7484,7 +7484,7 @@ export function SplitScreenSection({
               ) : null}
               </div>
               {publicProfile ? (
-                <div className="profile-left-pane profile-left-intro frosted-pane-left absolute inset-0 z-20 p-5">
+                <div className="profile-left-pane profile-left-intro frosted-pane-left left-pane-dark-preview absolute inset-0 z-20 p-5">
                   <div className={`left-pane-content flex h-full min-h-0 flex-col p-1 ${publicProfilePaneTransitionClass}`}>
                     <div className="flex flex-col items-center text-center">
                       <span className="profile-left-avatar inline-flex h-24 w-24 shrink-0 overflow-hidden rounded-full">
@@ -7542,7 +7542,7 @@ export function SplitScreenSection({
               {isProfileMode && currentUser ? (
                 <div
                   key={`profile-left-intro-${profileIntroNonce}`}
-                  className="profile-left-pane profile-left-intro frosted-pane-left absolute inset-0 z-20 p-5"
+                  className="profile-left-pane profile-left-intro frosted-pane-left left-pane-dark-preview absolute inset-0 z-20 p-5"
                 >
                   <div className={`left-pane-content flex h-full min-h-0 flex-col p-1 ${paneTransitionClass}`}>
                     <div
@@ -7946,7 +7946,7 @@ export function SplitScreenSection({
               <div className={`relative z-[85] flex h-full flex-col ${paneTransitionClass} ${publicProfilePaneTransitionClass}`}>
                 <div
                   className={`relative flex shrink-0 items-center transition-[height,margin-bottom] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] lg:hidden ${
-                    isGuidePaneTakingFullListPane ? "mb-0 h-0" : "mb-2 h-8"
+                    isGuidePaneTakingFullListPane || isProfileMode || isPublicProfileMode ? "mb-0 h-0" : "mb-2 h-8"
                   }`}
                   onPointerDown={handleMobileListSheetDragStart}
                 >
@@ -7990,8 +7990,8 @@ export function SplitScreenSection({
                 </div>
 	                <div
 	                  className={`relative hidden w-full shrink-0 lg:block ${
-	                    isPublicProfileMode
-	                      ? "hidden"
+	                    isProfileMode || isPublicProfileMode
+	                      ? "!hidden lg:!hidden"
 	                      : isGuidePaneTakingFullListPane
 	                        ? "pointer-events-none max-h-0 -translate-y-3 pb-0 opacity-0 transition-[opacity,transform] duration-200 ease-out"
 	                        : "max-h-56 translate-y-0 pb-0 opacity-100 transition-[opacity,transform] duration-200 ease-out"
