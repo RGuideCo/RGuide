@@ -45,6 +45,8 @@ export function MapListCardRoot({
             ? "border border-slate-300 !bg-slate-50 p-3"
             : "border border-slate-300 !bg-slate-50 px-3 pb-3 pt-0"
           : "collapsed-guide-card p-3 hover:border-slate-950/30 focus-within:border-slate-950/30"
+      } ${
+        fillPane && expanded ? "!bg-transparent" : ""
       }`}
       data-external-hover={isExternallyHovered ? "true" : undefined}
       style={!expandedChrome ? ({ "--guide-accent": guideAccentColor, borderColor: guideAccentColor } as GuideCardStyle) : undefined}

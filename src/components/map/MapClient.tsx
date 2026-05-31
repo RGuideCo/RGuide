@@ -473,6 +473,10 @@ function mergePadding(base: MapViewportInsets, insets: MapViewportInsets): MapVi
   };
 }
 
+function resetCameraPadding(map: maplibregl.Map) {
+  map.setPadding({ top: 0, right: 0, bottom: 0, left: 0 });
+}
+
 function clampPaddingToMap(map: maplibregl.Map, padding: MapViewportInsets): MapViewportInsets {
   const container = map.getContainer();
   const maxHorizontalPadding = Math.max(0, container.clientWidth - 160);
@@ -564,6 +568,7 @@ function fitMapToCountry(
   viewportInsets: MapViewportInsets,
   options?: { duration?: number },
 ) {
+  resetCameraPadding(map);
   const preset = countryFocusPresets[countryId];
 
   if (preset) {
@@ -594,6 +599,7 @@ function fitMapToContinent(
   viewportInsets: MapViewportInsets,
   options?: { duration?: number },
 ) {
+  resetCameraPadding(map);
   const preset = continentFocusPresets[continent.id];
 
   if (preset) {
@@ -3009,6 +3015,7 @@ export function MapClient({
   const activeGuideCameraPendingKeyRef = useRef<string | null>(null);
   const activeGuideCameraFrameRef = useRef<number | null>(null);
   const activeGuideCameraTimeoutsRef = useRef<number[]>([]);
+  const collapsedGuidesCameraKeyRef = useRef<string | null>(null);
   const selectionCameraKeyRef = useRef<string | null>(null);
   const visibleGuideMarkerEnteredAtRef = useRef<Map<string, number>>(new Map());
   const visibleGuideMarkerHoverProgressRef = useRef<Map<string, number>>(new Map());
@@ -3147,6 +3154,16 @@ export function MapClient({
         })
         .join("|"),
     [poiMapMarkerData],
+  );
+  const visibleGuideBoundsSignature = useMemo(
+    () =>
+      visibleGuideMarkerData.features
+        .map((feature) => {
+          const [lng, lat] = feature.geometry.coordinates;
+          return `${feature.properties.id}:${lat.toFixed(5)},${lng.toFixed(5)}`;
+        })
+        .join("|"),
+    [visibleGuideMarkerData],
   );
   const selectionCameraKey = useMemo(
     () =>
@@ -4260,6 +4277,7 @@ export function MapClient({
       : [
           activeGuide.id,
           activeGuideFitNonce,
+          resizeSignal,
           activeGuideStopSignature,
           activeGuidePoiMarkerSignature,
           viewportModeRef.current,
@@ -4309,6 +4327,7 @@ export function MapClient({
         viewportInsetsRef.current,
       );
       currentMap.stop();
+      resetCameraPadding(currentMap);
 
       if (selectedParentStop || selectedNestedStop) {
         if (selectedPoiMapMarker?.geometry) {
@@ -4439,6 +4458,7 @@ export function MapClient({
     activeGuidePoiMarkerSignature,
     activeGuideStopSignature,
     poiMapMarkerData,
+    resizeSignal,
     selectionCameraKey,
     styleReadyTick,
     selectedStopId,
@@ -4460,6 +4480,7 @@ export function MapClient({
     }
     selectionCameraKeyRef.current = nextCameraKey;
     const activeViewportInsets = getViewportInsets(map, viewportModeRef.current, viewportInsetsRef.current);
+    resetCameraPadding(map);
 
     const activeContinent = continents.find((continent) => continent.id === selection.continentId);
     const activeCountryFromContinent = activeContinent?.countries.find(
@@ -4636,6 +4657,7 @@ export function MapClient({
       return;
     }
     const focusBounds = getCountryFocusBounds(matchedCountry.id, matchedCountry.bounds);
+    resetCameraPadding(map);
     map.fitBounds(focusBounds, {
       padding: { top: 28, right: 28, bottom: 28, left: 28 },
       duration: 1900,
@@ -4656,6 +4678,85 @@ export function MapClient({
     selection.stateId,
     selection.subareaId,
     styleReadyTick,
+  ]);
+
+  useEffect(() => {
+    const map = mapRef.current;
+    if (activeGuide?.stops?.length) {
+      collapsedGuidesCameraKeyRef.current = null;
+      return;
+    }
+    if (
+      !map ||
+      !isStyleReadyRef.current ||
+      viewportMode === "submit" ||
+      !selection.cityId ||
+      !visibleGuideBoundsSignature
+    ) {
+      return;
+    }
+
+    const nextCameraKey = [
+      selection.cityId,
+      visibleGuideBoundsSignature,
+      viewportModeRef.current,
+      viewportInsetsRef.current
+        ? `${viewportInsetsRef.current.top},${viewportInsetsRef.current.right},${viewportInsetsRef.current.bottom},${viewportInsetsRef.current.left}`
+        : "",
+    ].join("|");
+    if (collapsedGuidesCameraKeyRef.current === nextCameraKey) {
+      return;
+    }
+    collapsedGuidesCameraKeyRef.current = nextCameraKey;
+
+    map.resize();
+    resetCameraPadding(map);
+    const activeViewportInsets = getViewportInsets(map, viewportModeRef.current, viewportInsetsRef.current);
+    const guideBounds = new LngLatBounds();
+
+    visibleGuideMarkerData.features.forEach((feature) => {
+      const [lng, lat] = feature.geometry.coordinates;
+      guideBounds.extend([lng, lat]);
+    });
+
+    if (guideBounds.isEmpty()) {
+      return;
+    }
+
+    if (visibleGuideMarkerData.features.length === 1) {
+      const [lng, lat] = visibleGuideMarkerData.features[0].geometry.coordinates;
+      map.easeTo({
+        center: [lng, lat],
+        zoom: Math.max(map.getZoom(), 12.2),
+        padding: clampPaddingToMap(
+          map,
+          mergePadding({ top: 36, right: 36, bottom: 40, left: 36 }, activeViewportInsets),
+        ),
+        duration: 1050,
+        easing: smoothCameraEasing,
+        essential: true,
+      });
+      return;
+    }
+
+    map.fitBounds(guideBounds, {
+      padding: clampPaddingToMap(
+        map,
+        mergePadding({ top: 36, right: 36, bottom: 44, left: 36 }, activeViewportInsets),
+      ),
+      duration: 1050,
+      easing: smoothCameraEasing,
+      essential: true,
+      maxZoom: Math.max(12.2, getGuideBoundsZoom(guideBounds)),
+    });
+  }, [
+    activeGuide,
+    selection.cityId,
+    styleReadyTick,
+    viewportInsets,
+    viewportMode,
+    visibleGuideBoundsSignature,
+    visibleGuideMarkerData,
   ]);
 
   return <div ref={containerRef} className="rguide-map-layer min-h-[60vh] overflow-hidden lg:min-h-[calc(100vh-15rem)]" />;

@@ -1221,7 +1221,7 @@ export function MapListCard({
                 ? "mt-2.5 max-h-20 overflow-visible opacity-100 translate-y-0 pointer-events-auto"
                 : ""
             }`
-      } ${expanded ? "bg-slate-50" : ""} ${className}`}
+      } ${expanded && !fillPane ? "bg-slate-50" : ""} ${className}`}
     >
       <div>
         <div className="grid grid-cols-[1fr_auto_1fr] items-center gap-2 border-t border-slate-200 pt-2.5">
@@ -1579,7 +1579,7 @@ export function MapListCard({
           className={`guide-expand-panel grid transition-[grid-template-rows,opacity,margin,background-color] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] ${
             expanded ? "mt-2 grid-rows-[1fr] opacity-100" : "mt-0 grid-rows-[0fr] opacity-0"
           } ${fillPane && expanded ? "min-h-0 flex-1 basis-0" : ""} ${
-            expanded ? "relative -mx-3 bg-slate-50 px-3" : ""
+            expanded ? `relative -mx-3 px-3 ${fillPane ? "bg-transparent" : "bg-slate-50"}` : ""
           }`}
         >
           <div
