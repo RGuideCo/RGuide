@@ -45,12 +45,12 @@ function commons(fileName: string) {
 }
 
 const imageSources = {
-  laDegustation: "https://live.staticflickr.com/65535/54423600553_4dddb45901_b.jpg",
+  laDegustation: "https://ladegustation.ambi.cz/cf-image?url=https%3A%2F%2Fdata.eu.cntmbr.com%2Fambiente%2Fambiente-prod%2F42e3d3e8-6e46-47c8-ae9b-2a61993384f4.jpeg&width=1920&quality=75&format=auto",
   field: "https://www.fieldrestaurant.cz/images/bg/8.jpg?v1",
   eska: commons("Eska Restaurant Prague (34800991860).jpg"),
-  cafeSavoy: "https://data.eu.cntmbr.com/ambiente/ambiente-prod/184d4bc0-e259-4b5e-9bbc-aae7b904d347.png",
+  cafeSavoy: "https://www.cafesavoy.ambi.cz/cf-image?url=https%3A%2F%2Fdata.eu.cntmbr.com%2Fambiente%2Fambiente-prod%2F04988600-a8f7-4793-b064-410daffdc14b.jpeg&width=3840&quality=75&format=auto",
   naseMaso: "https://nasemaso.dlouha.ambi.cz/cf-image?url=https%3A%2F%2Fdata.eu.cntmbr.com%2Fambiente%2Fambiente-prod%2F880ab51d-2d9e-426a-a563-e59e9294baad.png&width=1200&quality=75&format=auto",
-  havelskaKoruna: "https://www.havelska-koruna.cz/img/master-banner-2.jpg",
+  havelskaKoruna: "https://www.havelska-koruna.cz/img/rest.jpg",
   lokalDlouha: "https://lokal-dlouha.ambi.cz/assets/fb/lokal-1.jpg",
   sisters: "https://cdn.myshoptet.com/usr/www.sistersbistro.cz/user/front_images/ogImage/hp.jpg?t=1779936660",
   mrHotDog: "https://i-p.rmcdn.net/5f6a0286c135fc0067edb7bc/2866014/image-7e1ff50c-92d3-448e-9fa0-603f5e2473a1.jpg?e=webp",
@@ -59,14 +59,14 @@ const imageSources = {
   mandarin: "https://media.ffycdn.net/eu/mandarin-oriental-hotel-group/1RRikx2EzAu9Wv7TpKTd.jpg",
   boho: "https://www.hotelbohoprague.com/blog/wp-content/uploads/2015/11/superior-room.jpg",
   mozart: "https://themozart.com/wp-content/uploads/2024/07/the-mozart-hotel-prague-courtyard-night.webp",
-  sirTobys: "https://sirtobys.com/wp-content/uploads/2023/07/N93A4889-2-950x550_c.jpg",
+  sirTobys: "https://sirtobys.com/wp-content/uploads/2023/06/SirTobys-Reception-013-scaled.jpg",
   roadhouse: "https://theroadhouseprague.com/wp-content/uploads/2017/03/RH-Finished-3.jpg",
   czechInn: "https://czechinn.com/wp-content/uploads/2025/05/Exterior-CI.webp",
-  madhouse: "https://www.themadhouseprague.com/wp-content/uploads/sb-instagram-feed-images/madhouseprague.jpg",
-  littleQuarter: "https://www.littlequarter.com/images/2023/hostel-01.jpg",
+  madhouse: "https://www.themadhouseprague.com/wp-content/uploads/2023/05/IMG_7220-scaled.jpg",
+  littleQuarter: "https://www.littlequarter.cz/images/2023/terasa-old-01.jpg",
   uSadu: "https://imgproxy.cdn.praguecitytourism.city/insecure/rt:fit/w:1864/q:60/plain/https://pct-wp-prod.storage.googleapis.com/2024/03/13093812/bdfbbaba2bc011da14387e2630caf503-scaled.jpg@webp",
   uVoka: "https://cdn.praguecitytourism.city/2024/03/13071419/12961195-1700585820196461-209473186145452140-o.jpg",
-  uZlatehoTygra: "https://cdn.praguecitytourism.city/2024/06/29145303/matej-batka-wiki-zlaty-tygr-1024x766.jpg",
+  uZlatehoTygra: "https://upload.wikimedia.org/wikipedia/commons/d/d8/Gospoda_U_Zlateho_Tygra_-_Praga2.jpg",
   uPinkasu: commons("U Pinkasu - zazahradka - 2009.jpg"),
   uFleku: "https://en.ufleku.cz/media/VS2.jpg",
   hemingway: "https://www.hemingwaybar.cz/media/bar/hembar-drinks-2020-13.jpg",
@@ -309,7 +309,7 @@ const diningStops = [
       hours: hours.laDegustation,
       officialUrl: "https://www.ladegustation.cz/en/",
       sourcePhoto: imageSources.laDegustation,
-      imageSourceUrl: "https://www.flickr.com/photos/54549113@N00/54423600553",
+      imageSourceUrl: imageSources.laDegustation,
       editorialUrls: [
         "https://guide.michelin.com/gb/en/prague/prague/restaurants",
         "https://www.tasteofprague.com/pragueblog/prague-michelin-star-restaurants-guide",
@@ -599,7 +599,7 @@ const hotelStops = [
     "prague-hotel-the-mozart",
     "The Mozart Prague",
     [50.084616, 14.414087],
-    "The Mozart gives the hotel guide an independent Old Town address by the river and the Charles Bridge approach. Pick it for courtyard romance, historic-building texture, and walkability; check the room category carefully if street noise is a concern.",
+    "The Mozart gives the hotel guide an independent Old Town address by the river and the Charles Bridge approach. Pick it for courtyard romance, historic-building texture, polished service, and easy walks into Old Town, Mala Strana, and the riverside.",
     {
       venueKind: "lodging",
       lodgingType: "hotel",
@@ -623,7 +623,7 @@ const hostelStops = [
     "prague-hostel-sir-tobys",
     "Sir Toby's Hostel",
     [50.103123, 14.448093],
-    "Sir Toby's is the Holesovice hostel for travelers who want social space without making Old Town the whole trip. The brick cellar pub, garden BBQs, kitchen, board games, and 24-hour reception make the tram ride feel like a fair trade, especially on stays longer than two nights.",
+    "Sir Toby's is a Holesovice hostel with dorms and private rooms for travelers who want social space without making Old Town the whole trip. The brick cellar pub, garden BBQs, guest kitchen, board games, and 24-hour reception make the tram ride feel like a fair trade, especially on stays longer than two nights.",
     {
       venueKind: "lodging",
       lodgingType: "hostel",
@@ -644,7 +644,7 @@ const hostelStops = [
     "prague-hostel-roadhouse",
     "The RoadHouse Prague",
     [50.08445, 14.415802],
-    "The RoadHouse is the small social hostel for people who want a central base without committing to a huge party factory. Dorms, common areas, and a kitchen-led setup make it feel more like a house than a bed warehouse, so book early if that exact scale matters.",
+    "The RoadHouse is a small social hostel with dorms for travelers who want a central base without committing to a huge party factory. Common areas and a kitchen-led setup make it feel more like a house than a bed warehouse, so book early if that exact scale matters.",
     {
       venueKind: "lodging",
       lodgingType: "hostel",
@@ -665,7 +665,7 @@ const hostelStops = [
     "prague-hostel-czech-inn",
     "Czech Inn",
     [50.071888, 14.446254],
-    "Czech Inn is the design-hostel pick in Vrsovice/Vinohrady territory, useful when cheaper beds and a more residential evening scene matter more than sleeping beside Old Town Square. It has both dorms and private rooms, but check tram routes before booking if this is a first-time sightseeing trip.",
+    "Czech Inn is a design-led hostel in Vrsovice/Vinohrady territory with dorms, private rooms, and apartment-style options. It works well if you want a residential evening scene, tram access, and better value than the Old Town core while still keeping the main sights reachable.",
     {
       venueKind: "lodging",
       lodgingType: "hostel",
@@ -686,7 +686,7 @@ const hostelStops = [
     "prague-hostel-madhouse",
     "The MadHouse Prague",
     [50.081052, 14.419547],
-    "The MadHouse belongs in a hostel guide that is honest about social energy. The central Spalena address and activity-heavy setup suit solo travelers who want built-in company; light sleepers and early museum planners should choose a calmer bed.",
+    "The MadHouse Prague is a central social hostel with dorms, private-room options, organized activities, and a strong solo-traveler rhythm. Book it when built-in company and a lively shared-house feel are part of the trip; choose a quieter hostel if you want early nights every day.",
     {
       venueKind: "lodging",
       lodgingType: "hostel",
@@ -707,7 +707,7 @@ const hostelStops = [
     "prague-hostel-little-quarter",
     "Little Quarter Hostel",
     [50.088465, 14.399311],
-    "Little Quarter is the castle-side hostel, valuable because it puts budget travelers on Nerudova Street instead of only in the Old Town party belt. It is a better sightseeing base than nightlife base, especially if Prague Castle, Mala Strana, and Petrin are high on the plan.",
+    "Little Quarter Hostel is the castle-side budget base with dorms and private rooms on Nerudova Street. It is a better sightseeing base than nightlife base, especially if Prague Castle, Mala Strana, Petrin, and quieter hill walks are high on the plan.",
     {
       venueKind: "lodging",
       lodgingType: "hostel",
@@ -815,7 +815,7 @@ const pubStops = [
     "prague-pub-u-fleku",
     "U Fleku",
     [50.078898, 14.416976],
-    "U Fleku is not the scruffiest pub in town, but its brewery-restaurant scale and house dark lager make it a defining version of a beer night. Go with clear expectations: it is famous, it can feel tour-heavy, and it still gives the group a specific reason to sit down.",
+    "U Fleku is a historic brewery-restaurant whose scale, long beer-hall rooms, and house dark lager make it a defining version of a Prague beer night. Go with clear expectations: it is famous, it can feel tour-heavy, and it still gives a group a specific reason to sit down.",
     {
       venueKind: "nightlife",
       nightlifeType: "brewery",
@@ -945,7 +945,7 @@ const cultureStops = [
     "prague-culture-old-town-hall",
     "Old Town Hall with Astronomical Clock",
     [50.086924, 14.420316],
-    "Old Town Hall is the way to make the astronomical clock more than a crowd moment. The 1338 town hall, chapel, state rooms, underground, and tower views give the square a second layer; use the interior ticket when the ground-level crush starts to flatten the experience.",
+    "Old Town Hall is the way to make the astronomical clock more than a crowd moment. The 1338 town hall, chapel, state rooms, underground, and tower views give the square a second layer, especially if you want context beyond the hourly show outside.",
     {
       venueKind: "culture",
       subcategory: "historic_tower",
@@ -1053,7 +1053,7 @@ const cultureStops = [
     "prague-culture-museum-kampa",
     "Museum Kampa",
     [50.083999, 14.408491],
-    "Museum Kampa gives Mala Strana and the river islands a focused modern-art stop instead of only postcard walking. The Sova Mills location sits directly in the Kampa route below Charles Bridge, making it an easy art break between the Lennon Wall area and the riverbank.",
+    "Museum Kampa adds a focused modern-art stop to Mala Strana and the river islands, with Central European work, the Sova Mills setting, and views back toward the water. It is an easy art break between the Lennon Wall area, Kampa Island, and the Charles Bridge riverbank.",
     {
       venueKind: "culture",
       subcategory: "art_museum",
@@ -1373,7 +1373,7 @@ export const pragueCitywideGuides: MapList[] = [
     "list-prague-top-things-to-do",
     "prague-top-things-to-do",
     "best-things-to-do",
-    "Ten Stops That Make a Trip Work",
+    "Top Ten Stops for a First Prague Trip",
     "A top-things Prague guide built as a usable route mix: castle ridge, bridge crossing, Old Town tower, Josefov, parks, river islands, Vysehrad, one defining food stop, and one serious cocktail finish.",
     activityStops,
     sources.activities,
