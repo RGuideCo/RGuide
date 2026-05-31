@@ -5,7 +5,7 @@ import process from "node:process";
 import { fileURLToPath } from "node:url";
 
 import { PutObjectCommand, S3Client } from "@aws-sdk/client-s3";
-import { getCountryCode } from "countries-list";
+import { countries, getCountryCode } from "countries-list";
 import pg from "pg";
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
@@ -34,6 +34,38 @@ const DEFAULT_PUBLIC_BASE_URL = "https://media.rguide.co";
 const MIN_IMAGE_WIDTH = 900;
 const MIN_IMAGE_HEIGHT = 500;
 const MAX_IMAGE_BYTES = 14 * 1024 * 1024;
+const KNOWN_COUNTRY_NAMES = Object.entries(countries)
+  .flatMap(([code, country]) => [country.name, country.native, code])
+  .map((value) => normalizeSearchText(value))
+  .filter((value) => value.length > 3);
+const COUNTRY_SCENIC_TERMS = [
+  "aerial",
+  "architecture",
+  "beach",
+  "castle",
+  "cityscape",
+  "coast",
+  "coastal",
+  "forest",
+  "harbor",
+  "harbour",
+  "historic",
+  "island",
+  "lake",
+  "landmark",
+  "landscape",
+  "mountain",
+  "national park",
+  "old town",
+  "panorama",
+  "river",
+  "scenery",
+  "skyline",
+  "town",
+  "valley",
+  "view",
+  "village",
+];
 
 function loadEnvFile(filePath) {
   if (!fs.existsSync(filePath)) return;
@@ -79,6 +111,7 @@ Options:
   --missing-only               Only process destinations with no image_url.
   --openverse-min-score <n>    Minimum Openverse match score. Defaults to 10.
   --wikimedia-min-score <n>    Minimum Wikimedia match score. Defaults to 10.
+  --review-output <path>       Write selected candidates to JSON for pre-ingest review.
   --help                       Show this help.
 `);
 }
@@ -106,6 +139,7 @@ function parseArgs(argv) {
     missingOnly: false,
     openverseMinScore: 10,
     wikimediaMinScore: 10,
+    reviewOutput: null,
     help: false,
   };
 
@@ -146,6 +180,7 @@ function parseArgs(argv) {
     else if (arg === "--missing-only") options.missingOnly = true;
     else if (arg === "--openverse-min-score") options.openverseMinScore = Number(readValue());
     else if (arg === "--wikimedia-min-score") options.wikimediaMinScore = Number(readValue());
+    else if (arg === "--review-output") options.reviewOutput = readValue();
     else if (arg === "--help" || arg === "-h") options.help = true;
     else throw new Error(`Unknown argument: ${arg}`);
   }
@@ -323,7 +358,9 @@ function destinationTokens(row) {
     "city",
     "commune",
     "county",
+    "de",
     "district",
+    "el",
     "greater",
     "municipality",
     "of",
@@ -345,6 +382,21 @@ function destinationSearchQueries(row, options = {}) {
   const name = destinationSearchName(row);
   const country = row.country_name || row.country_code;
   const stateOrRegion = row.state_name || row.region_name;
+  if (row.scope === "country") {
+    const countryName = row.country_name || name;
+    const countryQueries = [
+      [countryName, "landscape photograph"].filter(Boolean).join(" "),
+      [countryName, "scenery photograph"].filter(Boolean).join(" "),
+      [countryName, "landscape photograph", `incategory:"Landscapes of ${countryName}"`].filter(Boolean).join(" "),
+      [countryName, "view photograph", `incategory:"Landscapes of ${countryName}"`].filter(Boolean).join(" "),
+      [countryName, "cityscape photograph"].filter(Boolean).join(" "),
+      [countryName, "landmark photograph"].filter(Boolean).join(" "),
+      [countryName, "travel photograph"].filter(Boolean).join(" "),
+      [countryName, "panorama photograph"].filter(Boolean).join(" "),
+    ];
+    return countryQueries.filter((query, index, all) => query && all.indexOf(query) === index);
+  }
+
   const scopeQualifier = row.scope === "city" ? "city" : row.scope;
   const baseQueries = [
     [name, stateOrRegion, country, scopeQualifier].filter(Boolean).join(" "),
@@ -358,33 +410,108 @@ function destinationSearchQueries(row, options = {}) {
 function blockedImageWords() {
   return [
     "aerial map",
+    "air force",
+    "aircraft",
+    "army",
+    "archive",
+    "archivio",
+    "aster",
+    "base map",
+    "basemap",
     "blank map",
     "bus",
+    "cabinet",
     "chart",
     "climate",
     "coach",
     "coat of arms",
+    "conference",
+    "copernicus",
+    "delegation",
+    "demographic",
+    "destroyed",
     "diagram",
+    "drawing",
+    "dust over",
     "emblem",
+    "esa",
     "flag",
+    "flight into",
+    "flower",
     "graph",
+    "helicopter",
+    "indoor",
+    "interior",
     "locator map",
     "location map",
+    "loc",
     "logo",
     "map of",
+    "meeting",
     "metro map",
+    "minister",
+    "modis",
+    "motor",
+    "museum",
+    "museo",
+    "nasa",
+    "oil on canvas",
+    "painting",
+    "plant",
+    "police",
     "political map",
+    "president",
+    "perurail",
+    "railway",
+    "satellite",
     "seal of",
+    "secretary",
+    "shop",
+    "shopping",
     "show your stripes",
+    "space station",
+    "species",
     "stripes",
+    "supermarket",
+    "tessuto",
+    "textile",
     "temperature",
     "transit map",
+    "vehicle",
+    "weapon",
   ];
 }
 
 function hasBlockedImageTerm(value) {
   const text = ` ${normalizeSearchText(value)} `;
   return blockedImageWords().some((term) => text.includes(` ${normalizeSearchText(term)} `));
+}
+
+function containsNormalizedPhrase(value, phrase) {
+  const normalizedPhrase = normalizeSearchText(phrase);
+  if (!normalizedPhrase) return false;
+  return ` ${normalizeSearchText(value)} `.includes(` ${normalizedPhrase} `);
+}
+
+function hasOtherCountryTerm(row, value) {
+  if (row.scope !== "country") return false;
+  const text = ` ${normalizeSearchText(value)} `;
+  const allowed = new Set([
+    normalizeSearchText(row.name),
+    normalizeSearchText(row.display_name),
+    normalizeSearchText(row.country_name),
+    normalizeSearchText(row.country_code),
+    normalizeSearchText(row.slug),
+  ].filter((term) => term.length > 3));
+
+  return KNOWN_COUNTRY_NAMES.some((term) => {
+    if (allowed.has(term)) return false;
+    return text.includes(` ${term} `);
+  });
+}
+
+function hasCountryScenicTerm(value) {
+  return COUNTRY_SCENIC_TERMS.some((term) => containsNormalizedPhrase(value, term));
 }
 
 function imageLooksLikeDestination(row, image) {
@@ -403,9 +530,23 @@ function imageLooksLikeDestination(row, image) {
   const tokenMatches = tokens.filter((token) => identityText.includes(token));
 
   if (hasBlockedImageTerm(combinedText)) return false;
-  if (destinationText && identityText.includes(destinationText)) return true;
+  if (hasOtherCountryTerm(row, identityText)) return false;
+  if (row.scope === "country" && destinationText.includes(" ") && !containsNormalizedPhrase(identityText, destinationText)) {
+    return false;
+  }
+  if (
+    row.scope === "country"
+    && !destinationText.includes(" ")
+    && !containsNormalizedPhrase([titleText, landingText].join(" "), destinationText)
+  ) {
+    return false;
+  }
+  if (row.scope === "country" && !destinationText.includes(" ") && !hasCountryScenicTerm([titleText, landingText].join(" "))) {
+    return false;
+  }
+  if (destinationText && containsNormalizedPhrase(identityText, destinationText)) return true;
   if (tokens.length >= 2 && tokenMatches.length >= 2) return true;
-  if (tokens.length === 1 && tokenMatches.length === 1 && countryText && identityText.includes(countryText)) return true;
+  if (tokens.length === 1 && tokenMatches.length === 1 && countryText && containsNormalizedPhrase(identityText, countryText)) return true;
   return false;
 }
 
@@ -426,13 +567,70 @@ function scoreDestinationImage(row, image) {
   const tokenMatches = tokens.filter((token) => combinedText.includes(token));
 
   let score = 0;
-  if (destinationText && titleText.includes(destinationText)) score += 14;
-  if (destinationText && combinedText.includes(destinationText)) score += 8;
-  if (countryText && combinedText.includes(countryText)) score += 4;
-  if (stateOrRegionText && combinedText.includes(stateOrRegionText)) score += 2;
+  if (destinationText && containsNormalizedPhrase(titleText, destinationText)) score += 14;
+  if (destinationText && containsNormalizedPhrase(combinedText, destinationText)) score += 8;
+  if (countryText && containsNormalizedPhrase(combinedText, countryText)) score += 4;
+  if (stateOrRegionText && containsNormalizedPhrase(combinedText, stateOrRegionText)) score += 2;
   score += tokenMatches.length * 3;
   if (tokens.length && tokenMatches.length === tokens.length) score += 4;
   if (image.source === "wikimedia_commons" || image.provider === "wikimedia_commons") score += 2;
+
+  if (row.scope === "country") {
+    for (const term of COUNTRY_SCENIC_TERMS) {
+      if (containsNormalizedPhrase(combinedText, term)) score += 3;
+    }
+
+    const officialOrIncidentalTerms = [
+      "air force",
+      "aircraft",
+      "army",
+      "archive",
+      "archivio",
+      "aster",
+      "base map",
+      "basemap",
+      "cabinet",
+      "car",
+      "conference",
+      "copernicus",
+      "delegation",
+      "demographic",
+      "destroyed",
+      "drawing",
+      "dust",
+      "esa",
+      "flight into",
+      "flower",
+      "helicopter",
+      "industrial",
+      "iss",
+      "loc",
+      "meeting",
+      "minister",
+      "modis",
+      "museum",
+      "museo",
+      "nasa",
+      "painting",
+      "plant",
+      "police",
+      "president",
+      "perurail",
+      "railway",
+      "satellite",
+      "secretary",
+      "shop",
+      "species",
+      "supermarket",
+      "tessuto",
+      "textile",
+      "vehicle",
+      "visit",
+    ];
+    for (const term of officialOrIncidentalTerms) {
+      if (combinedText.includes(normalizeSearchText(term))) score -= 8;
+    }
+  }
 
   const width = Number(image.width ?? 0);
   const height = Number(image.height ?? 0);
@@ -445,11 +643,13 @@ function scoreDestinationImage(row, image) {
   }
 
   if (hasBlockedImageTerm(combinedText)) score -= 18;
+  if (hasOtherCountryTerm(row, [titleText, descriptionText, landingText].join(" "))) score -= 24;
   return score;
 }
 
 function isCredibleDestinationImage(row, image, score, minScore, options = {}) {
-  if (score < minScore) return false;
+  const effectiveMinScore = row.scope === "country" ? Math.max(minScore, 30) : minScore;
+  if (score < effectiveMinScore) return false;
   if (!imageLooksLikeDestination(row, image)) return false;
 
   if (
@@ -532,6 +732,35 @@ function wikimediaDescriptionUrl(title) {
   return `https://commons.wikimedia.org/wiki/${encodeURIComponent(String(title).replace(/ /g, "_"))}`;
 }
 
+function wikimediaSearchExpression(row, query) {
+  const expression = `${query} filetype:bitmap`;
+  if (row.scope !== "country") return expression;
+  return [
+    expression,
+    "-aircraft",
+    "-aster",
+    "-conference",
+    "-copernicus",
+    "-demographic",
+    "-destroyed",
+    "-flag",
+    "-interior",
+    "-map",
+    "-minister",
+    "-modis",
+    "-museum",
+    "-nasa",
+    "-painting",
+    "-president",
+    "-railway",
+    "-satellite",
+    "-secretary",
+    "-shop",
+    "-supermarket",
+    "-vehicle",
+  ].join(" ");
+}
+
 async function searchWikimediaDestination(row, minScore, options) {
   for (const query of destinationSearchQueries(row, options)) {
     const apiUrl = new URL(WIKIMEDIA_API_URL);
@@ -539,7 +768,7 @@ async function searchWikimediaDestination(row, minScore, options) {
     apiUrl.searchParams.set("format", "json");
     apiUrl.searchParams.set("formatversion", "2");
     apiUrl.searchParams.set("generator", "search");
-    apiUrl.searchParams.set("gsrsearch", `${query} filetype:bitmap`);
+    apiUrl.searchParams.set("gsrsearch", wikimediaSearchExpression(row, query));
     apiUrl.searchParams.set("gsrnamespace", "6");
     apiUrl.searchParams.set("gsrlimit", "20");
     apiUrl.searchParams.set("prop", "imageinfo");
@@ -670,6 +899,12 @@ async function selectDestinationImage(row, options) {
   }
   if (options.provider === "wikimedia") {
     return searchWikimediaDestination(row, options.wikimediaMinScore, options);
+  }
+
+  if (row.scope === "country") {
+    const wikimedia = await searchWikimediaDestination(row, options.wikimediaMinScore, options);
+    if (wikimedia) return wikimedia;
+    return searchOpenverseDestination(row, options.openverseMinScore, options);
   }
 
   const openverse = await searchOpenverseDestination(row, options.openverseMinScore, options);
@@ -836,7 +1071,7 @@ async function markFailed(client, row, error) {
            'destination_image_ingestion',
            jsonb_build_object(
              'status', 'failed',
-             'error', $2,
+             'error', $2::text,
              'attempted_at', now()
            )
          ),
@@ -875,6 +1110,97 @@ async function updateDestinationImage(client, row, storage, bucket, publicBaseUr
   return publicUrl;
 }
 
+function reviewRecord(row, source, image, publicUrl, key) {
+  const metadata = source.metadata ?? {};
+  return {
+    destinationId: row.id,
+    slug: row.slug,
+    scope: row.scope,
+    name: destinationSearchName(row),
+    country: row.country_name ?? row.country_code ?? null,
+    currentImageUrl: row.image_url ?? null,
+    provider: source.provider,
+    publicUrl,
+    storageKey: key,
+    sourceUrl: source.resolvedSourceUrl,
+    downloadUrl: source.downloadUrl,
+    title: metadata.file_title ?? metadata.title ?? null,
+    credit: metadata.credit ?? metadata.creator ?? null,
+    license: metadata.license ?? null,
+    width: metadata.width ?? null,
+    height: metadata.height ?? null,
+    contentType: image.contentType,
+    byteSize: image.bytes.length,
+    score: metadata.match_score ?? null,
+    query: metadata.matched_query ?? null,
+  };
+}
+
+function reviewFailureRecord(row, error) {
+  return {
+    destinationId: row.id,
+    slug: row.slug,
+    scope: row.scope,
+    name: destinationSearchName(row),
+    country: row.country_name ?? row.country_code ?? null,
+    currentImageUrl: row.image_url ?? null,
+    error: error.message,
+  };
+}
+
+function escapeHtml(value) {
+  return String(value ?? "")
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;");
+}
+
+function writeReviewOutput(filePath, records) {
+  if (!filePath) return;
+  const outputPath = path.resolve(filePath);
+  fs.mkdirSync(path.dirname(outputPath), { recursive: true });
+
+  if (outputPath.endsWith(".html")) {
+    const rows = records.map((record) => `
+      <tr>
+        <td>${escapeHtml(record.name)}<br><small>${escapeHtml(record.slug)}</small></td>
+        <td>${record.downloadUrl ? `<img src="${escapeHtml(record.downloadUrl)}" alt="${escapeHtml(record.name)}">` : ""}</td>
+        <td>${record.currentImageUrl ? `<img src="${escapeHtml(record.currentImageUrl)}" alt="Current ${escapeHtml(record.name)}">` : ""}</td>
+        <td>${escapeHtml(record.provider ?? "failed")}<br><small>score: ${escapeHtml(record.score ?? "")}</small><br><small>${escapeHtml(record.query ?? "")}</small></td>
+        <td>${record.sourceUrl ? `<a href="${escapeHtml(record.sourceUrl)}">${escapeHtml(record.title ?? record.sourceUrl)}</a>` : escapeHtml(record.error ?? "")}</td>
+      </tr>
+    `).join("\n");
+
+    fs.writeFileSync(outputPath, `<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Destination Image Review</title>
+  <style>
+    body { font: 14px/1.4 system-ui, sans-serif; margin: 24px; color: #172033; }
+    table { border-collapse: collapse; width: 100%; }
+    th, td { border: 1px solid #d7dce5; padding: 8px; text-align: left; vertical-align: top; }
+    th { background: #f3f5f8; position: sticky; top: 0; }
+    img { display: block; width: 220px; height: 130px; object-fit: cover; background: #eef1f5; }
+    small { color: #677387; }
+  </style>
+</head>
+<body>
+  <h1>Destination Image Review</h1>
+  <p>${records.length} candidates generated ${escapeHtml(new Date().toISOString())}</p>
+  <table>
+    <thead><tr><th>Destination</th><th>Candidate</th><th>Current</th><th>Match</th><th>Source</th></tr></thead>
+    <tbody>${rows}</tbody>
+  </table>
+</body>
+</html>`);
+    return;
+  }
+
+  fs.writeFileSync(outputPath, `${JSON.stringify(records, null, 2)}\n`);
+}
+
 async function main() {
   loadEnvFile(path.join(ROOT, ".env.local"));
   loadEnvFile(path.join(ROOT, ".env"));
@@ -903,6 +1229,7 @@ async function main() {
 
   const client = await connectPgClient(databaseUrl);
   const stats = { selected: 0, uploaded: 0, failed: 0, skipped: 0 };
+  const reviewRecords = [];
 
   try {
     const candidates = await loadCandidates(client, options, publicBaseUrl);
@@ -926,6 +1253,7 @@ async function main() {
         const key = buildStorageKey(row, image.contentType, source, options);
         const storage = { ...image, key, source };
         const publicUrl = `${publicBaseUrl.replace(/\/$/, "")}/${key}`;
+        reviewRecords.push(reviewRecord(row, source, image, publicUrl, key));
 
         console.log(JSON.stringify({
           phase: options.dryRun ? "would_upload" : "upload",
@@ -954,6 +1282,7 @@ async function main() {
         stats.uploaded += 1;
       } catch (error) {
         stats.failed += 1;
+        reviewRecords.push(reviewFailureRecord(row, error));
         console.error(JSON.stringify({
           phase: "failed",
           destinationId: row.id,
@@ -970,6 +1299,8 @@ async function main() {
   } finally {
     await client.end();
   }
+
+  writeReviewOutput(options.reviewOutput, reviewRecords);
 
   console.log(JSON.stringify({ phase: "complete", ...stats }));
 }
