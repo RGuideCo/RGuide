@@ -34,8 +34,9 @@ export async function generateMetadata({ params }: CityDeepLinkPageProps): Promi
   const { segments } = await params;
   const continents = await getContinentsWithDestinationDescriptions();
   const cities = getCitiesFromContinents(continents);
+  const requestedCityName = getRequestedCityName(segments, cities);
   const editorialGuides = await getServerEditorialGuides({
-    cityName: getRequestedCityName(segments, cities),
+    cityName: requestedCityName,
   });
   const route = resolveCityDeepLink(segments, {
     continents,
@@ -79,8 +80,9 @@ export default async function CityDeepLinkPage({ params }: CityDeepLinkPageProps
   const { segments } = await params;
   const continents = await getContinentsWithDestinationDescriptions();
   const cities = getCitiesFromContinents(continents);
+  const requestedCityName = getRequestedCityName(segments, cities);
   const editorialGuides = await getServerEditorialGuides({
-    cityName: getRequestedCityName(segments, cities),
+    cityName: requestedCityName,
   });
   const route = resolveCityDeepLink(segments, {
     continents,
@@ -109,6 +111,7 @@ export default async function CityDeepLinkPage({ params }: CityDeepLinkPageProps
       <ProgressiveEnhancementShell fallback={<CityRouteSeoIndex route={route} guides={editorialGuides} />}>
         <SplitScreenClientLoader
           initialAppData={{ continents, guides: editorialGuides }}
+          appDataScope={{ cityName: requestedCityName }}
           initialRouteState={{
             selection: route.selection,
             activeCategory: route.activeCategory,

@@ -1,8 +1,7 @@
-import crypto from "node:crypto";
-
 import { NextRequest, NextResponse } from "next/server";
 import type { SupabaseClient, User as SupabaseUser } from "@supabase/supabase-js";
 
+import { checkRateLimit, rateLimitResponse, withRateLimitHeaders } from "@/lib/rate-limit";
 import {
   getAuthenticatedSupabaseUser,
   getSupabaseServiceClient,
@@ -596,49 +595,119 @@ function stopMetadata(stop: GuideStop) {
   }));
 }
 
-async function refreshEntryRenderCache(supabase: SupabaseClient, entryId: string) {
-  const { data, error: viewError } = await supabase
-    .from("entries_maplist")
-    .select("list")
-    .eq("id", entryId)
-    .limit(1)
-    .returns<Array<{ list: MapList }>>();
+function buildSubmittedEntryPayload(params: {
+  list: MapList;
+  user: SupabaseUser;
+  slug: string;
+  visibility: GuideVisibility;
+  status: "draft" | "published";
+  destinationId: string | null;
+  cityId: string | null;
+  neighborhoodId: string | null;
+  stopCount: number;
+}) {
+  const { list, user, slug, visibility, status, destinationId, cityId, neighborhoodId, stopCount } = params;
 
-  if (viewError) throw viewError;
+  return {
+    legacy_id: list.id,
+    slug,
+    seo_slug: list.seoSlug ?? null,
+    seo_title: list.seoTitle ?? null,
+    seo_description: list.seoDescription ?? null,
+    title: cleanText(list.title, 140),
+    description: cleanText(list.description, 2400),
+    highlights: list.highlights ?? [],
+    photo_url: list.photo ?? null,
+    canonical_url: list.url,
+    category: list.category,
+    submission_type: toSchemaSubmissionType(list.submissionType),
+    status,
+    destination_id: destinationId,
+    city_id: cityId,
+    neighborhood_id: neighborhoodId,
+    country_name: list.location.country,
+    continent_name: list.location.continent,
+    creator_id: user.id,
+    creator_name: list.creator.name,
+    creator_avatar: list.creator.avatar,
+    user_id: user.id,
+    upvotes: list.upvotes ?? 0,
+    created_on: dateOnly(list.createdAt) ?? new Date().toISOString().slice(0, 10),
+    journey_start_date: dateOnly(list.journey?.startDate ?? list.itinerary?.startDate),
+    journey_end_date: dateOnly(list.journey?.endDate ?? list.itinerary?.endDate),
+    journal_visited_at: dateOnly(list.journal?.visitedAt),
+    journal_note: list.journal?.note ?? null,
+    journal_visibility:
+      list.submissionType === "journal"
+        ? visibility === "public"
+          ? "public"
+          : "private"
+        : null,
+    metadata: {
+      submittedFrom: "browser",
+      savePath: "server_resolved_venues",
+      visibility,
+      stopCount,
+    },
+  };
+}
 
-  const list = data?.[0]?.list;
+function buildSubmittedStopPayload(stop: GuideStop, index: number, destinationId: string | null) {
+  return {
+    legacy_id: stop.id,
+    stop_order: index,
+    poi_legacy_id: stop.poiId ?? null,
+    name: cleanText(stop.name, 220),
+    description: cleanText(stop.description, 2400),
+    category: stop.category ?? null,
+    subcategory: stop.subcategory ?? null,
+    subcategories: stop.subcategories ?? [],
+    destination_id: destinationId,
+    venue_id: stop.venueId ?? null,
+    coordinates: toEntryCoordinates(stop.coordinates),
+    price_label: stop.price ?? null,
+    price_source: stop.priceSource ?? null,
+    booking_url: stop.bookingUrl ?? null,
+    official_url: stop.officialUrl ?? null,
+    event_time_label: stop.eventTime ?? null,
+    event_venue_label: stop.eventVenue ?? null,
+    journey_date: dateOnly(stop.journeyDate ?? stop.itineraryDate),
+    journey_day: stop.journeyDay ?? stop.itineraryDay ?? null,
+    hours: stop.hours ?? null,
+    places: stop.places ?? [],
+    metadata: stopMetadata(stop),
+  };
+}
 
-  if (!list) {
-    const { error } = await supabase
-      .from("entry_render_cache")
-      .update({
-        is_current: false,
-        stale_at: new Date().toISOString(),
-      })
-      .eq("entry_id", entryId)
-      .eq("render_format", "maplist")
-      .eq("render_version", 1);
-    if (error) throw error;
-    return;
+async function saveSubmittedGuideTransaction(
+  supabase: SupabaseClient,
+  entryPayload: ReturnType<typeof buildSubmittedEntryPayload>,
+  stopPayloads: ReturnType<typeof buildSubmittedStopPayload>[],
+) {
+  const { data, error } = await supabase.rpc("save_submitted_guide_transaction", {
+    p_entry: entryPayload,
+    p_stops: stopPayloads,
+  });
+
+  if (error) throw error;
+  if (!data || typeof data !== "string") {
+    throw new Error("Submitted guide transaction did not return an entry id.");
   }
 
-  const hash = crypto.createHash("sha256").update(JSON.stringify(list)).digest("hex");
+  return data;
+}
 
-  const { error } = await supabase.from("entry_render_cache").upsert(
-    {
-      entry_id: entryId,
-      render_format: "maplist",
-      render_version: 1,
-      rendered_payload: list,
-      source_hash: hash,
-      rendered_at: new Date().toISOString(),
-      stale_at: null,
-      is_current: true,
-      metadata: { refreshed_from: "submitted_guides_api" },
-    },
-    { onConflict: "entry_id,render_format,render_version" },
-  );
+async function deleteSubmittedGuideTransaction(
+  supabase: SupabaseClient,
+  params: { entryId: string; userId: string },
+) {
+  const { data, error } = await supabase.rpc("delete_submitted_guide_transaction", {
+    p_entry_id: params.entryId,
+    p_user_id: params.userId,
+  });
+
   if (error) throw error;
+  return data === true;
 }
 
 function validateList(list: MapList) {
@@ -683,29 +752,43 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: userError ?? "Sign in before saving." }, { status: 401 });
   }
 
+  const rateLimit = checkRateLimit(request, {
+    namespace: "submitted-guides:write",
+    limit: getNumberEnv("USER_GUIDE_WRITE_LIMIT_PER_10_MINUTES", 40),
+    windowMs: 10 * 60_000,
+    keyParts: [user.id],
+  });
+
+  if (!rateLimit.allowed) {
+    return rateLimitResponse(rateLimit);
+  }
+
+  const json = (body: unknown, init?: ResponseInit) =>
+    withRateLimitHeaders(NextResponse.json(body, init), rateLimit);
+
   let list: MapList;
   try {
     const payload = (await request.json()) as { list?: MapList };
     if (!payload.list) throw new Error("Missing list.");
     list = payload.list;
   } catch {
-    return NextResponse.json({ error: "Invalid guide payload." }, { status: 400 });
+    return json({ error: "Invalid guide payload." }, { status: 400 });
   }
 
   const validation = validateList(list);
   if (!validation.ok) {
-    return NextResponse.json({ error: validation.error }, { status: 400 });
+    return json({ error: validation.error }, { status: 400 });
   }
 
   try {
     const existingEntry = await getExistingEntry(service, list.id);
 
     if (existingEntry?.source_table && existingEntry.source_table !== "submitted_guides") {
-      return NextResponse.json({ error: "That guide id belongs to canonical content." }, { status: 409 });
+      return json({ error: "That guide id belongs to canonical content." }, { status: 409 });
     }
 
     if (existingEntry?.user_id && existingEntry.user_id !== user.id) {
-      return NextResponse.json({ error: "You can only edit your own guides." }, { status: 403 });
+      return json({ error: "You can only edit your own guides." }, { status: 403 });
     }
 
     if (!existingEntry) {
@@ -719,7 +802,7 @@ export async function POST(request: NextRequest) {
       if (countError) throw countError;
 
       if ((count ?? 0) >= maxGuides) {
-        return NextResponse.json(
+        return json(
           { error: `Guide limit reached. Archive or delete a guide before creating more than ${maxGuides}.` },
           { status: 429 },
         );
@@ -743,7 +826,7 @@ export async function POST(request: NextRequest) {
     const canPublishPublic = canPublishPublicGuides(user);
 
     if (requestedVisibility === "public" && !canPublishPublic) {
-      return NextResponse.json(
+      return json(
         { error: "Your account is not allowed to publish public guides yet." },
         { status: 403 },
       );
@@ -752,97 +835,23 @@ export async function POST(request: NextRequest) {
     const visibility = requestedVisibility === "public" ? "public" : requestedVisibility;
     const status = visibility === "public" ? "published" : "draft";
 
-    const { data: entryRows, error: entryError } = await service
-      .from("entries")
-      .upsert(
-        {
-          legacy_id: list.id,
-          slug,
-          seo_slug: list.seoSlug ?? null,
-          seo_title: list.seoTitle ?? null,
-          seo_description: list.seoDescription ?? null,
-          title: cleanText(list.title, 140),
-          description: cleanText(list.description, 2400),
-          highlights: list.highlights ?? [],
-          photo_url: list.photo ?? null,
-          canonical_url: list.url,
-          category: list.category,
-          submission_type: toSchemaSubmissionType(list.submissionType),
-          status,
-          destination_id: destinationId,
-          city_id: cityId,
-          neighborhood_id: neighborhoodId,
-          country_name: list.location.country,
-          continent_name: list.location.continent,
-          creator_id: user.id,
-          creator_name: list.creator.name,
-          creator_avatar: list.creator.avatar,
-          user_id: user.id,
-          upvotes: list.upvotes ?? 0,
-          created_on: dateOnly(list.createdAt) ?? new Date().toISOString().slice(0, 10),
-          journey_start_date: dateOnly(list.journey?.startDate ?? list.itinerary?.startDate),
-          journey_end_date: dateOnly(list.journey?.endDate ?? list.itinerary?.endDate),
-          journal_visited_at: dateOnly(list.journal?.visitedAt),
-          journal_note: list.journal?.note ?? null,
-          journal_visibility:
-            list.submissionType === "journal"
-              ? visibility === "public"
-                ? "public"
-                : "private"
-              : null,
-          source_table: "submitted_guides",
-          metadata: {
-            submittedFrom: "browser",
-            savePath: "server_resolved_venues",
-            visibility,
-            stopCount: resolvedStops.length,
-          },
-        },
-        { onConflict: "legacy_id" },
-      )
-      .select("id")
-      .returns<Array<{ id: string }>>();
+    await saveSubmittedGuideTransaction(
+      service,
+      buildSubmittedEntryPayload({
+        list,
+        user,
+        slug,
+        visibility,
+        status,
+        destinationId,
+        cityId,
+        neighborhoodId,
+        stopCount: resolvedStops.length,
+      }),
+      resolvedStops.map((stop, index) => buildSubmittedStopPayload(stop, index, neighborhoodId ?? cityId)),
+    );
 
-    if (entryError || !entryRows?.[0]) {
-      throw entryError ?? new Error("Could not save guide.");
-    }
-
-    const entryId = entryRows[0].id;
-    const { error: deleteStopsError } = await service.from("entry_stops").delete().eq("entry_id", entryId);
-    if (deleteStopsError) throw deleteStopsError;
-
-    const stopRows = resolvedStops.map((stop, index) => ({
-      entry_id: entryId,
-      legacy_id: stop.id,
-      stop_order: index,
-      poi_legacy_id: stop.poiId ?? null,
-      name: cleanText(stop.name, 220),
-      description: cleanText(stop.description, 2400),
-      category: stop.category ?? null,
-      subcategory: stop.subcategory ?? null,
-      subcategories: stop.subcategories ?? [],
-      destination_id: neighborhoodId ?? cityId,
-      venue_id: stop.venueId ?? null,
-      coordinates: toEntryCoordinates(stop.coordinates),
-      price_label: stop.price ?? null,
-      price_source: stop.priceSource ?? null,
-      booking_url: stop.bookingUrl ?? null,
-      official_url: stop.officialUrl ?? null,
-      event_time_label: stop.eventTime ?? null,
-      event_venue_label: stop.eventVenue ?? null,
-      journey_date: dateOnly(stop.journeyDate ?? stop.itineraryDate),
-      journey_day: stop.journeyDay ?? stop.itineraryDay ?? null,
-      hours: stop.hours ?? null,
-      places: stop.places ?? [],
-      metadata: stopMetadata(stop),
-    }));
-
-    const { error: stopsError } = await service.from("entry_stops").insert(stopRows);
-    if (stopsError) throw stopsError;
-
-    await refreshEntryRenderCache(service, entryId);
-
-    return NextResponse.json({
+    return json({
       guide: {
         ...list,
         slug,
@@ -858,7 +867,7 @@ export async function POST(request: NextRequest) {
     });
   } catch (error) {
     console.error("Failed to save submitted guide", error);
-    return NextResponse.json({ error: "Guide could not be saved." }, { status: 500 });
+    return json({ error: "Guide could not be saved." }, { status: 500 });
   }
 }
 
@@ -875,50 +884,47 @@ export async function DELETE(request: NextRequest) {
     return NextResponse.json({ error: userError ?? "Sign in before deleting." }, { status: 401 });
   }
 
+  const rateLimit = checkRateLimit(request, {
+    namespace: "submitted-guides:delete",
+    limit: getNumberEnv("USER_GUIDE_DELETE_LIMIT_PER_10_MINUTES", 30),
+    windowMs: 10 * 60_000,
+    keyParts: [user.id],
+  });
+
+  if (!rateLimit.allowed) {
+    return rateLimitResponse(rateLimit);
+  }
+
+  const json = (body: unknown, init?: ResponseInit) =>
+    withRateLimitHeaders(NextResponse.json(body, init), rateLimit);
+
   if (!listId) {
-    return NextResponse.json({ error: "Guide id is required." }, { status: 400 });
+    return json({ error: "Guide id is required." }, { status: 400 });
   }
 
   const existingEntry = await getExistingEntry(service, listId);
 
   if (!existingEntry) {
-    return NextResponse.json({ ok: true });
+    return json({ ok: true });
   }
 
   if (existingEntry.user_id !== user.id) {
-    return NextResponse.json({ error: "You can only delete your own guides." }, { status: 403 });
+    return json({ error: "You can only delete your own guides." }, { status: 403 });
   }
 
-  const { error: cacheError } = await service
-    .from("entry_render_cache")
-    .delete()
-    .eq("entry_id", existingEntry.id);
+  try {
+    const deleted = await deleteSubmittedGuideTransaction(service, {
+      entryId: existingEntry.id,
+      userId: user.id,
+    });
 
-  if (cacheError) {
-    console.error("Failed to delete submitted guide render cache", cacheError);
-    return NextResponse.json({ error: "Guide could not be deleted." }, { status: 500 });
-  }
-
-  const { error: stopsError } = await service
-    .from("entry_stops")
-    .delete()
-    .eq("entry_id", existingEntry.id);
-
-  if (stopsError) {
-    console.error("Failed to delete submitted guide stops", stopsError);
-    return NextResponse.json({ error: "Guide could not be deleted." }, { status: 500 });
-  }
-
-  const { error } = await service
-    .from("entries")
-    .delete()
-    .eq("id", existingEntry.id)
-    .eq("user_id", user.id);
-
-  if (error) {
+    if (!deleted) {
+      return json({ error: "Guide could not be deleted." }, { status: 404 });
+    }
+  } catch (error) {
     console.error("Failed to delete submitted guide", error);
-    return NextResponse.json({ error: "Guide could not be deleted." }, { status: 500 });
+    return json({ error: "Guide could not be deleted." }, { status: 500 });
   }
 
-  return NextResponse.json({ ok: true });
+  return json({ ok: true });
 }

@@ -9,21 +9,42 @@ export interface AppData {
   guides: MapList[];
 }
 
-let appDataPromise: Promise<AppData> | null = null;
-let appDataSnapshot: AppData | null = null;
-
-function seedAppData(initialData: AppData) {
-  appDataSnapshot = initialData;
-  appDataPromise = Promise.resolve(initialData);
+export interface AppDataScope {
+  cityName?: string | null;
 }
 
-function loadAppData(options: { forceRefresh?: boolean } = {}) {
-  if (appDataSnapshot && !options.forceRefresh) {
-    return Promise.resolve(appDataSnapshot);
+const appDataPromises = new Map<string, Promise<AppData>>();
+const appDataSnapshots = new Map<string, AppData>();
+
+function getAppDataKey(scope: AppDataScope = {}) {
+  const cityName = scope.cityName?.trim().toLowerCase();
+  return cityName ? `city:${cityName}` : "all";
+}
+
+function getAppDataUrl(scope: AppDataScope = {}) {
+  const cityName = scope.cityName?.trim();
+  if (!cityName) return "/api/app-data";
+
+  const params = new URLSearchParams({ city: cityName });
+  return `/api/app-data?${params.toString()}`;
+}
+
+function seedAppData(initialData: AppData, scope: AppDataScope = {}) {
+  const key = getAppDataKey(scope);
+  appDataSnapshots.set(key, initialData);
+  appDataPromises.set(key, Promise.resolve(initialData));
+}
+
+function loadAppData(options: { forceRefresh?: boolean; scope?: AppDataScope } = {}) {
+  const key = getAppDataKey(options.scope);
+  const snapshot = appDataSnapshots.get(key);
+
+  if (snapshot && !options.forceRefresh) {
+    return Promise.resolve(snapshot);
   }
 
-  if (!appDataPromise || options.forceRefresh) {
-    appDataPromise = fetch("/api/app-data", {
+  if (!appDataPromises.has(key) || options.forceRefresh) {
+    const promise = fetch(getAppDataUrl(options.scope), {
       cache: "no-store",
       headers: {
         Accept: "application/json",
@@ -35,34 +56,39 @@ function loadAppData(options: { forceRefresh?: boolean } = {}) {
 
       return response.json() as Promise<AppData>;
     }).then((nextData) => {
-      appDataSnapshot = nextData;
+      appDataSnapshots.set(key, nextData);
       return nextData;
     });
+
+    appDataPromises.set(key, promise);
   }
 
-  return appDataPromise;
+  return appDataPromises.get(key) as Promise<AppData>;
 }
 
-export function useAppData(initialData?: AppData) {
+export function useAppData(initialData?: AppData, scope: AppDataScope = {}) {
   const [data, setData] = useState<AppData | null>(null);
   const [error, setError] = useState<Error | null>(null);
+  const cityName = scope.cityName ?? null;
 
   useEffect(() => {
     let isMounted = true;
+    const requestScope = { cityName };
+    const key = getAppDataKey(requestScope);
 
     if (initialData) {
-      seedAppData(initialData);
+      seedAppData(initialData, requestScope);
       setData(initialData);
       setError(null);
 
-      loadAppData({ forceRefresh: true })
+      loadAppData({ forceRefresh: true, scope: requestScope })
         .then((nextData) => {
           if (isMounted) {
             setData(nextData);
           }
         })
         .catch((nextError: Error) => {
-          appDataPromise = Promise.resolve(initialData);
+          appDataPromises.set(key, Promise.resolve(initialData));
           console.error(nextError);
           if (isMounted) {
             setError(nextError);
@@ -74,14 +100,14 @@ export function useAppData(initialData?: AppData) {
       };
     }
 
-    loadAppData()
+    loadAppData({ scope: requestScope })
       .then((nextData) => {
         if (isMounted) {
           setData(nextData);
         }
       })
       .catch((nextError: Error) => {
-        appDataPromise = null;
+        appDataPromises.delete(key);
         console.error(nextError);
         if (isMounted) {
           setError(nextError);
@@ -91,7 +117,7 @@ export function useAppData(initialData?: AppData) {
     return () => {
       isMounted = false;
     };
-  }, [initialData]);
+  }, [initialData, cityName]);
 
   return { data, error };
 }
