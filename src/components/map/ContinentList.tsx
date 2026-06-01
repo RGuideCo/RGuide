@@ -160,10 +160,10 @@ export function ContinentList({
                   key={region.id}
                   type="button"
                   title={region.name}
-                  className={`flex w-full items-center gap-2 rounded-2xl px-3 py-2 text-left text-sm transition ${
+                  className={`flex w-full items-center gap-2 rounded-2xl border px-3 py-2 text-left text-sm transition ${
                     selection.continentSubareaId === region.id
-                      ? "bg-orange-50 text-orange-700"
-                      : "text-slate-700 hover:bg-stone-100"
+                      ? "border-white text-white"
+                      : "border-transparent text-[rgba(255,255,255,0.62)] hover:border-white hover:text-white"
                   }`}
                   onClick={() => onSelectContinentSubarea?.(selectedContinent.id, region.id)}
                 >
@@ -175,10 +175,10 @@ export function ContinentList({
                 <button
                   key={`${countryCascadeEpoch}-${country.id}`}
                   type="button"
-                  className={`continent-country-cascade flex w-full items-center gap-2 rounded-2xl px-3 py-2 text-left text-sm transition ${
+                  className={`continent-country-cascade flex w-full items-center gap-2 rounded-2xl border px-3 py-2 text-left text-sm transition ${
                     selection.countryId === country.id
-                      ? "bg-orange-50 text-orange-700"
-                      : "text-slate-700 hover:bg-stone-100"
+                      ? "border-white text-white"
+                      : "border-transparent text-[rgba(255,255,255,0.62)] hover:border-white hover:text-white"
                   }`}
                   style={{ animationDelay: `${Math.min(9, index) * 90}ms` }}
                   onClick={(event) =>
@@ -217,6 +217,8 @@ export function ContinentList({
             hideHeader
             framed={false}
             mode={selectedCountryMode}
+            itemVariant="rows"
+            tone="dark"
             countrySubareas={selectedCountry.subareas}
             countryStates={selectedCountry.states}
             onToggleCountry={() => toggleCountry(selectedContinent.id, selectedCountry.id)}

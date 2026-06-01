@@ -5,13 +5,13 @@ import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { createPortal } from "react-dom";
-import { ChevronDown, Heart, Plus, X } from "lucide-react";
+import { Check, ChevronDown, GripVertical, Heart, Minus, Plus, Upload, X } from "lucide-react";
 
 import { getPoiAttributeTags } from "@/lib/poi-tags";
 import { getCreatorHref, getGuideHref, getVenueHref } from "@/lib/routes";
 import { resolveStopHours } from "@/lib/seasonal-hours";
 import { buildStay22StopUrl, isStay22Url } from "@/lib/stay22";
-import { CATEGORY_STYLES } from "@/lib/constants";
+import { CATEGORIES, CATEGORY_STYLES } from "@/lib/constants";
 import {
   EventCardBody,
   GuideCardBody,
@@ -52,6 +52,7 @@ interface MapListCardProps {
   onAutoOpenSourcesHandled?: (listId: string) => void;
   onRequestOpenSourcesWhenCollapsed?: (list: MapList) => void;
   onEditGuide?: (list: MapList) => void;
+  startInlineEditingNonce?: number;
   onExpandedStopIdsChange?: (stopIds: string[]) => void;
   collapsedLocationSubtitleHiddenParts?: string[];
   isExternallyHovered?: boolean;
@@ -238,6 +239,26 @@ function buildGuideMeta(list: MapList, hiddenLocationParts?: string[]) {
   return isEventGuide
     ? [eventVenueLabel].filter(Boolean).join(" • ")
     : [typeLabel, placeLabel, locationLabel].filter(Boolean).join(" • ");
+}
+
+function buildEditableGuideMetaTail(list: MapList, hiddenLocationParts?: string[]) {
+  const placeCount = list.stops.length;
+  const isEventGuide = list.submissionType === "event" || list.id.startsWith("event-");
+  const placeLabel = `${placeCount} ${placeCount === 1 ? "place" : "places"}`;
+  const locationLabel = buildLocationSubtitle(list, hiddenLocationParts);
+  const eventVenueLabel =
+    list.stops.find((stop) => stop.eventVenue)?.eventVenue ??
+    locationLabel;
+
+  if (isEventGuide) {
+    return eventVenueLabel;
+  }
+
+  if (list.submissionType === "itinerary") {
+    return ["Journey", placeLabel, locationLabel].filter(Boolean).join(" • ");
+  }
+
+  return [placeLabel, locationLabel].filter(Boolean).join(" • ");
 }
 
 function formatChipValue(value?: string | null) {
@@ -611,6 +632,7 @@ export function MapListCard({
   onAutoOpenSourcesHandled,
   onRequestOpenSourcesWhenCollapsed,
   onEditGuide,
+  startInlineEditingNonce = 0,
   onExpandedStopIdsChange,
   collapsedLocationSubtitleHiddenParts = [],
   isExternallyHovered = false,
@@ -652,6 +674,10 @@ export function MapListCard({
   );
   const guideMeta = useMemo(
     () => buildGuideMeta(list, hiddenLocationParts),
+    [hiddenLocationParts, list],
+  );
+  const editableGuideMetaTail = useMemo(
+    () => buildEditableGuideMetaTail(list, hiddenLocationParts),
     [hiddenLocationParts, list],
   );
   const collapsedCategoryChip = useMemo(() => buildCollapsedCategoryChip(list), [list]);
@@ -706,6 +732,9 @@ export function MapListCard({
   const [itineraryPickerMessage, setItineraryPickerMessage] = useState<string | null>(null);
   const [guidePickerMessage, setGuidePickerMessage] = useState<string | null>(null);
   const [photoPreview, setPhotoPreview] = useState<null | { src: string; title: string }>(null);
+  const [inlineEditing, setInlineEditing] = useState(false);
+  const [inlineEditMessage, setInlineEditMessage] = useState<string | null>(null);
+  const [draggingInlineStopId, setDraggingInlineStopId] = useState<string | null>(null);
   const [stopListEndPadding, setStopListEndPadding] = useState(0);
   const [stopListMaxScrollTop, setStopListMaxScrollTop] = useState<number | null>(null);
   const [pendingScrollStopId, setPendingScrollStopId] = useState<string | null>(null);
@@ -736,6 +765,146 @@ export function MapListCard({
     : [],
     [deferHeavyExpandedContent, isItineraryGuide, list],
   );
+  const canInlineEditGuide = isOwnEditableGuide && expandedChrome;
+
+  const persistInlineGuideChange = (
+    overrides: Partial<Pick<MapList, "title" | "description" | "category" | "stops">> & { publishPublic?: boolean },
+  ) => {
+    if (!canInlineEditGuide) {
+      return false;
+    }
+    const response = updateSubmittedList(list.id, {
+      submissionType: list.submissionType ?? "guide",
+      url: list.url,
+      title: overrides.title ?? list.title,
+      description: overrides.description ?? list.description,
+      category: overrides.category ?? list.category,
+      continent: list.location.continent,
+      country: list.location.country,
+      city: list.location.city,
+      neighborhood: list.location.neighborhood,
+      visitedAt: list.journal?.visitedAt,
+      journalNote: list.journal?.note,
+      itineraryStartDate: list.itinerary?.startDate ?? list.journey?.startDate,
+      itineraryEndDate: list.itinerary?.endDate ?? list.journey?.endDate,
+      publishPublic: overrides.publishPublic ?? (list.visibility === "public"),
+      stops: overrides.stops ?? list.stops,
+    });
+    setInlineEditMessage(response.ok ? null : response.message);
+    return response.ok;
+  };
+  const toggleInlineGuidePublish = () => {
+    if (!currentUser?.canPublishGuides) {
+      setInlineEditMessage("Your account is not allowed to publish public guides yet.");
+      return;
+    }
+    persistInlineGuideChange({ publishPublic: list.visibility !== "public" });
+  };
+
+  const updateInlineGuideDescription = (description: string) => {
+    const nextDescription = description.trim();
+    if (nextDescription && nextDescription !== list.description) {
+      persistInlineGuideChange({ description: nextDescription });
+    }
+  };
+
+  const updateInlineGuideTitle = (title: string) => {
+    const nextTitle = title.trim();
+    if (nextTitle && nextTitle !== list.title) {
+      persistInlineGuideChange({ title: nextTitle });
+    }
+  };
+  const updateInlineGuideCategory = (category: ListCategory) => {
+    if (category !== list.category) {
+      persistInlineGuideChange({ category });
+    }
+  };
+
+  const updateInlineStop = (stopId: string, patch: Partial<MapList["stops"][number]>) => {
+    const nextStops = list.stops.map((stop) => (stop.id === stopId ? { ...stop, ...patch } : stop));
+    persistInlineGuideChange({ stops: nextStops });
+  };
+
+  const buildInlineStopDescription = (summary: string, currentDescription: string) => {
+    const current = splitStopDescriptionAndHours(currentDescription);
+    const nextSummary = summary.trim();
+    return current.hours ? `${nextSummary}\n\nHours: ${current.hours}` : nextSummary;
+  };
+
+  const updateInlineStopDescription = (stop: MapList["stops"][number], summary: string) => {
+    const nextDescription = buildInlineStopDescription(summary, stop.description);
+    if (nextDescription !== stop.description) {
+      updateInlineStop(stop.id, { description: nextDescription });
+    }
+  };
+
+  const updateInlineStopName = (stop: MapList["stops"][number], name: string) => {
+    const nextName = name.trim();
+    if (nextName && nextName !== stop.name) {
+      updateInlineStop(stop.id, { name: nextName });
+    }
+  };
+
+  const addInlineStop = () => {
+    const anchorStop = list.stops[list.stops.length - 1];
+    const nextStop: MapList["stops"][number] = {
+      id: `manual-poi-${Date.now()}-${Math.random().toString(36).slice(2, 7)}`,
+      name: "New place",
+      coordinates: anchorStop?.coordinates ?? ([0, 0] as [number, number]),
+      description: "Click to add a description.",
+      category: list.category,
+    };
+    const nextStops = [...list.stops, nextStop];
+    if (persistInlineGuideChange({ stops: nextStops })) {
+      setExpandedStopIds((current) => [...current, nextStop.id]);
+      setPendingScrollStopId(nextStop.id);
+    }
+  };
+
+  const removeInlineStop = (stopId: string) => {
+    const nextStops = list.stops.filter((stop) => stop.id !== stopId);
+    if (persistInlineGuideChange({ stops: nextStops })) {
+      setExpandedStopIds((current) => current.filter((id) => id !== stopId));
+      if (forceExpandStopId === stopId) {
+        const nextActiveStopId = nextStops[0]?.id;
+        if (nextActiveStopId) {
+          onStopSelect?.(nextActiveStopId);
+        }
+      }
+    }
+  };
+
+  const reorderInlineStop = (targetStopId: string) => {
+    const sourceStopId = draggingInlineStopId;
+    if (!sourceStopId || sourceStopId === targetStopId) {
+      setDraggingInlineStopId(null);
+      return;
+    }
+    const sourceIndex = list.stops.findIndex((stop) => stop.id === sourceStopId);
+    const targetIndex = list.stops.findIndex((stop) => stop.id === targetStopId);
+    if (sourceIndex < 0 || targetIndex < 0) {
+      setDraggingInlineStopId(null);
+      return;
+    }
+    const nextStops = [...list.stops];
+    const [movedStop] = nextStops.splice(sourceIndex, 1);
+    nextStops.splice(targetIndex, 0, movedStop);
+    persistInlineGuideChange({ stops: nextStops });
+    setDraggingInlineStopId(null);
+  };
+
+  const uploadInlineStopPhoto = (stopId: string, file?: File) => {
+    if (!file) {
+      return;
+    }
+    const reader = new FileReader();
+    reader.onload = () => {
+      if (typeof reader.result === "string") {
+        updateInlineStop(stopId, { photo: reader.result });
+      }
+    };
+    reader.readAsDataURL(file);
+  };
 
   const togglePlace = (placeId: string) => {
     setExpandedPlaceIds((current) =>
@@ -828,6 +997,21 @@ export function MapListCard({
       setSourcesPinnedOpen(false);
     }
   }, [expandable, expanded]);
+
+  useEffect(() => {
+    if (!canInlineEditGuide) {
+      setInlineEditing(false);
+      setInlineEditMessage(null);
+      setDraggingInlineStopId(null);
+    }
+  }, [canInlineEditGuide, list.id]);
+
+  useEffect(() => {
+    if (canInlineEditGuide && startInlineEditingNonce > 0) {
+      setInlineEditing(true);
+      setInlineEditMessage(null);
+    }
+  }, [canInlineEditGuide, list.id, startInlineEditingNonce]);
 
   useEffect(() => {
     if (!expanded) {
@@ -1133,6 +1317,7 @@ export function MapListCard({
       country: targetGuide.location.country,
       city: targetGuide.location.city,
       neighborhood: targetGuide.location.neighborhood,
+      publishPublic: targetGuide.visibility === "public",
       stops: [...targetGuide.stops, nextStop],
     });
     if (!response.ok) {
@@ -1373,7 +1558,24 @@ export function MapListCard({
                 aria-controls={`guide-panel-${list.id}`}
                 className="min-w-0 flex-1 cursor-pointer select-text"
               >
-                <h3 className={`min-w-0 text-lg font-semibold leading-6 transition-colors ${expandedChrome ? "text-white" : "text-slate-900 group-hover:text-slate-950"} ${retractingListChrome ? "guide-chrome-title--retract" : ""} ${expandingListChrome ? "guide-chrome-title--expand" : ""}`}>{list.title}</h3>
+                {inlineEditing ? (
+                  <input
+                    key={`${list.id}-title-${list.title}`}
+                    defaultValue={list.title}
+                    onClick={(event) => event.stopPropagation()}
+                    onBlur={(event) => updateInlineGuideTitle(event.currentTarget.value)}
+                    onKeyDown={(event) => {
+                      event.stopPropagation();
+                      if (event.key === "Enter") {
+                        event.currentTarget.blur();
+                      }
+                    }}
+                    className={`-mx-0.5 block w-[calc(100%+0.25rem)] min-w-0 rounded border border-white/35 bg-transparent px-0.5 py-0 text-lg font-semibold leading-6 text-white outline-none transition placeholder:text-white/45 focus:border-white ${retractingListChrome ? "guide-chrome-title--retract" : ""} ${expandingListChrome ? "guide-chrome-title--expand" : ""}`}
+                    aria-label="Edit guide title"
+                  />
+                ) : (
+                  <h3 className={`min-w-0 text-lg font-semibold leading-6 transition-colors ${expandedChrome ? "text-white" : "text-slate-900 group-hover:text-slate-950"} ${retractingListChrome ? "guide-chrome-title--retract" : ""} ${expandingListChrome ? "guide-chrome-title--expand" : ""}`}>{list.title}</h3>
+                )}
                 <span className="mt-0.5 flex min-w-0 items-center gap-2">
                   {eventCardDateLabel ? (
                     <span
@@ -1398,8 +1600,34 @@ export function MapListCard({
                       {eventCardVenue.label}
                     </Link>
                   ) : expandedChrome ? (
-                    <span className={`block min-w-0 truncate font-mono text-[10px] font-medium uppercase tracking-[0.1em] text-white/75 ${retractingListChrome ? "guide-chrome-meta--retract" : ""} ${expandingListChrome ? "guide-chrome-meta--expand" : ""}`}>
-                      {guideMeta}
+                    <span className={`flex min-w-0 items-center gap-1.5 font-mono text-[10px] font-medium uppercase tracking-[0.1em] text-white/75 ${retractingListChrome ? "guide-chrome-meta--retract" : ""} ${expandingListChrome ? "guide-chrome-meta--expand" : ""}`}>
+                      {inlineEditing ? (
+                        <>
+                          <select
+                            value={list.category}
+                            onClick={(event) => event.stopPropagation()}
+                            onChange={(event) => updateInlineGuideCategory(event.currentTarget.value as ListCategory)}
+                            onKeyDown={(event) => event.stopPropagation()}
+                            className="-ml-0.5 max-w-[7.5rem] rounded border border-white/30 bg-transparent px-0.5 py-0 font-mono text-[10px] font-medium uppercase tracking-[0.1em] text-white outline-none transition focus:border-white"
+                            aria-label="Edit guide category"
+                            title="Edit guide category"
+                          >
+                            {CATEGORIES.map((category) => (
+                              <option key={category} value={category} className="bg-white text-slate-950">
+                                {category}
+                              </option>
+                            ))}
+                          </select>
+                          {editableGuideMetaTail ? (
+                            <>
+                              <span className="text-white/55" aria-hidden="true">•</span>
+                              <span className="min-w-0 truncate">{editableGuideMetaTail}</span>
+                            </>
+                          ) : null}
+                        </>
+                      ) : (
+                        <span className="min-w-0 truncate">{guideMeta}</span>
+                      )}
                     </span>
                   ) : (
                     <span className={`flex min-w-0 items-center gap-2 ${retractingListChrome ? "guide-chrome-meta--retract" : ""} ${expandingListChrome ? "guide-chrome-meta--expand" : ""}`}>
@@ -1448,31 +1676,43 @@ export function MapListCard({
           )}
         </div>
         <div className="relative z-10 flex shrink-0 items-center gap-1.5">
-          {isOwnEditableGuide ? (
-            onEditGuide ? (
-              <button
-                type="button"
-                onClick={(event) => {
-                  event.stopPropagation();
-                  onEditGuide(list);
-                }}
-                className="inline-flex items-center rounded-full border border-slate-200 bg-white px-2 py-1 text-[11px] font-medium text-slate-700 hover:border-slate-300 hover:text-slate-900"
-                aria-label="Edit guide"
-                title="Edit guide"
-              >
-                Edit
-              </button>
-            ) : (
-              <Link
-                href={`/submit?edit=${encodeURIComponent(list.id)}&type=${list.submissionType ?? "guide"}`}
-                onClick={(event) => event.stopPropagation()}
-                className="inline-flex items-center rounded-full border border-slate-200 bg-white px-2 py-1 text-[11px] font-medium text-slate-700 hover:border-slate-300 hover:text-slate-900"
-                aria-label="Edit guide"
-                title="Edit guide"
-              >
-                Edit
-              </Link>
-            )
+          {canInlineEditGuide && currentUser?.canPublishGuides ? (
+            <button
+              type="button"
+              onClick={(event) => {
+                event.stopPropagation();
+                toggleInlineGuidePublish();
+              }}
+              className={`inline-flex items-center gap-1 rounded-full border px-2 py-1 text-[11px] font-medium transition ${
+                list.visibility === "public"
+                  ? "border-emerald-300 bg-emerald-50 text-emerald-700 hover:border-emerald-400"
+                  : "border-slate-200 bg-white text-slate-700 hover:border-slate-300 hover:text-slate-900"
+              }`}
+              aria-label={list.visibility === "public" ? "Unpublish guide" : "Publish guide"}
+              title={list.visibility === "public" ? "Published" : "Draft"}
+            >
+              <span>{list.visibility === "public" ? "Public" : "Draft"}</span>
+            </button>
+          ) : null}
+          {canInlineEditGuide ? (
+            <button
+              type="button"
+              onClick={(event) => {
+                event.stopPropagation();
+                setInlineEditing((current) => !current);
+                setInlineEditMessage(null);
+              }}
+              className={`inline-flex items-center gap-1 rounded-full border px-2 py-1 text-[11px] font-medium transition ${
+                inlineEditing
+                  ? "border-slate-900 bg-slate-900 text-white"
+                  : "border-slate-200 bg-white text-slate-700 hover:border-slate-300 hover:text-slate-900"
+              }`}
+              aria-label={inlineEditing ? "Finish editing guide" : "Edit guide"}
+              title={inlineEditing ? "Finish editing guide" : "Edit guide"}
+            >
+              {inlineEditing ? <Check className="h-3 w-3" /> : null}
+              <span>{inlineEditing ? "Done" : "Edit"}</span>
+            </button>
           ) : null}
           {usesGuideActions ? (
             <button
@@ -1616,6 +1856,8 @@ export function MapListCard({
                 <div className={collapseExpandedContent || hideExpandedContent ? "guide-expanded-content-collapse-content" : "contents"}>
               <GuideExpandedIntro
                 list={list}
+                isEditing={inlineEditing}
+                onDescriptionChange={updateInlineGuideDescription}
                 sourceAction={
                   sourceSummary ? (
                   <GuideSourceSummary
@@ -1633,7 +1875,12 @@ export function MapListCard({
                   ) : null
                 }
               />
-              {list.stops.length && !deferHeavyExpandedContent ? (
+              {inlineEditing && inlineEditMessage ? (
+                <p className="guide-content-cascade-item relative z-10 mt-2 rounded-md border border-rose-200 bg-rose-50 px-3 py-2 text-xs font-semibold text-rose-700">
+                  {inlineEditMessage}
+                </p>
+              ) : null}
+              {(list.stops.length > 0 || inlineEditing) && !deferHeavyExpandedContent ? (
                 <div className="contents">
                   <div className="contents">
                     <GuidePhotoStrip
@@ -1745,6 +1992,63 @@ export function MapListCard({
                         animationDelay={`${110 + Math.min(index, 4) * 24}ms`}
                         onHeaderActivate={activateStopHeader}
                         onAddStop={() => openAddPickerForStop(stopItineraryId)}
+                        titleContent={
+                          inlineEditing ? (
+                            <input
+                              key={`${stop.id}-name-${stop.name}`}
+                              defaultValue={stop.name}
+                              onClick={(event) => event.stopPropagation()}
+                              onBlur={(event) => updateInlineStopName(stop, event.currentTarget.value)}
+                              onKeyDown={(event) => {
+                                event.stopPropagation();
+                                if (event.key === "Enter") {
+                                  event.currentTarget.blur();
+                                }
+                              }}
+                              className="-mx-0.5 block w-[calc(100%+0.25rem)] rounded border border-slate-950/16 bg-transparent px-0.5 py-0 text-base font-semibold leading-5 text-slate-900 outline-none transition focus:border-slate-500"
+                              aria-label={`Edit ${stop.name} name`}
+                            />
+                          ) : null
+                        }
+                        editActions={
+                          inlineEditing ? (
+                            <div className="flex shrink-0 items-center gap-1">
+                              <button
+                                type="button"
+                                draggable
+                                onDragStart={(event) => {
+                                  event.stopPropagation();
+                                  setDraggingInlineStopId(stop.id);
+                                  event.dataTransfer.effectAllowed = "move";
+                                }}
+                                onDragEnd={() => setDraggingInlineStopId(null)}
+                                className="inline-flex h-7 w-7 cursor-grab items-center justify-center rounded-md border border-slate-950/10 bg-white/80 text-slate-500 transition hover:border-slate-950/20 hover:text-slate-800 active:cursor-grabbing"
+                                aria-label={`Reorder ${stop.name}`}
+                                title="Drag to reorder"
+                              >
+                                <GripVertical className="h-3.5 w-3.5" />
+                              </button>
+                              <button
+                                type="button"
+                                onClick={(event) => {
+                                  event.stopPropagation();
+                                  removeInlineStop(stop.id);
+                                }}
+                                className="inline-flex h-7 w-7 items-center justify-center rounded-md border border-rose-200 bg-white/80 text-rose-600 transition hover:border-rose-300 hover:bg-rose-50"
+                                aria-label={`Remove ${stop.name}`}
+                                title={`Remove ${stop.name}`}
+                              >
+                                <Minus className="h-3.5 w-3.5" />
+                              </button>
+                            </div>
+                          ) : null
+                        }
+                        isEditing={inlineEditing}
+                        onReorderDragOver={(event) => {
+                          event.preventDefault();
+                          event.dataTransfer.dropEffect = "move";
+                        }}
+                        onReorderDrop={reorderInlineStop}
                         handlers={{
                           onStopSelect: activateGuideStop,
                           onStopToggle: toggleStopWithActivation,
@@ -1752,30 +2056,75 @@ export function MapListCard({
                         }}
                       >
                             <div className="expanded-guide-stop-body border-t border-slate-950/10 px-4 py-3">
-                              <div className={`expanded-poi-bio ${stopPhoto ? "" : "expanded-poi-bio-no-photo"}`}>
-                                {stopPhoto ? (
-                                  <button
-                                    type="button"
-                                    onClick={(event) => {
-                                      event.stopPropagation();
-                                      openPhotoPreview({ src: stopPhoto, title: stop.name });
-                                    }}
-                                    className="expanded-poi-bio-photo"
-                                    aria-label={`Open photo of ${stop.name}`}
-                                    title={`Open photo of ${stop.name}`}
-                                  >
-                                    <img
-                                      src={stopPhoto}
-                                      alt=""
-                                      loading="lazy"
-                                      decoding="async"
-                                      className="h-full w-full object-cover"
-                                    />
-                                  </button>
+                              <div className={`expanded-poi-bio ${stopPhoto || inlineEditing ? "" : "expanded-poi-bio-no-photo"}`}>
+                                {stopPhoto || inlineEditing ? (
+                                  inlineEditing ? (
+                                    <label
+                                      className="expanded-poi-bio-photo group relative cursor-pointer overflow-hidden"
+                                      onClick={(event) => event.stopPropagation()}
+                                      title={`Upload photo for ${stop.name}`}
+                                    >
+                                      <input
+                                        type="file"
+                                        accept="image/*"
+                                        className="sr-only"
+                                        onChange={(event) => uploadInlineStopPhoto(stop.id, event.currentTarget.files?.[0])}
+                                      />
+                                      {stopPhoto ? (
+                                        <img
+                                          src={stopPhoto ?? ""}
+                                          alt=""
+                                          loading="lazy"
+                                          decoding="async"
+                                          className="h-full w-full object-cover"
+                                        />
+                                      ) : (
+                                        <span className="flex h-full w-full flex-col items-center justify-center gap-1 bg-slate-100 text-[11px] font-semibold uppercase tracking-[0.12em] text-slate-500">
+                                          <Upload className="h-4 w-4" />
+                                          Photo
+                                        </span>
+                                      )}
+                                      <span className="absolute inset-x-0 bottom-0 bg-slate-950/75 px-2 py-1 text-center text-[10px] font-semibold uppercase tracking-[0.12em] text-white opacity-0 transition group-hover:opacity-100">
+                                        Upload
+                                      </span>
+                                    </label>
+                                  ) : (
+                                    <button
+                                      type="button"
+                                      onClick={(event) => {
+                                        event.stopPropagation();
+                                        openPhotoPreview({ src: stopPhoto ?? "", title: stop.name });
+                                      }}
+                                      className="expanded-poi-bio-photo"
+                                      aria-label={`Open photo of ${stop.name}`}
+                                      title={`Open photo of ${stop.name}`}
+                                    >
+                                      <img
+                                        src={stopPhoto ?? ""}
+                                        alt=""
+                                        loading="lazy"
+                                        decoding="async"
+                                        className="h-full w-full object-cover"
+                                      />
+                                    </button>
+                                  )
                                 ) : null}
-                                {hasStopCopy ? (
+                                {hasStopCopy || inlineEditing ? (
                                   <div className="expanded-poi-copy min-w-0">
-                                    {stopContent.summary.trim().length ? <p>{stopContent.summary}</p> : null}
+                                    {inlineEditing ? (
+                                      <textarea
+                                        key={`${stop.id}-description-${stop.description}`}
+                                        defaultValue={stopContent.summary}
+                                        rows={4}
+                                        onClick={(event) => event.stopPropagation()}
+                                        onBlur={(event) => updateInlineStopDescription(stop, event.currentTarget.value)}
+                                        onKeyDown={(event) => event.stopPropagation()}
+                                        className="w-full resize-y rounded-md border border-slate-950/10 bg-white/85 px-3 py-2 text-base leading-7 text-slate-700 outline-none transition focus:border-slate-400 focus:bg-white"
+                                        aria-label={`Edit ${stop.name} description`}
+                                      />
+                                    ) : stopContent.summary.trim().length ? (
+                                      <p>{stopContent.summary}</p>
+                                    ) : null}
                                     {stopAttributeTags.length ? (
                                       <div className="expanded-poi-tags" aria-label={`${stop.name} attributes`}>
                                         {stopAttributeTags.map((tag) => (
@@ -1836,6 +2185,21 @@ export function MapListCard({
                         );
                       })()
                       ))}
+                      {inlineEditing ? (
+                        <li className="guide-content-cascade-item list-none pt-1">
+                          <button
+                            type="button"
+                            onClick={(event) => {
+                              event.stopPropagation();
+                              addInlineStop();
+                            }}
+                            className="flex w-full items-center justify-center gap-2 rounded-md border border-dashed border-slate-300 bg-white/70 px-4 py-3 text-sm font-semibold text-slate-600 transition hover:border-slate-400 hover:bg-white hover:text-slate-900"
+                          >
+                            <Plus className="h-4 w-4" />
+                            <span>Add place</span>
+                          </button>
+                        </li>
+                      ) : null}
                     </ol>
                   </div>
                 </div>

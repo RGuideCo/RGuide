@@ -1,6 +1,6 @@
 "use client";
 
-import type { ReactNode } from "react";
+import type { DragEvent, ReactNode } from "react";
 import { ChevronDown, Plus } from "lucide-react";
 
 import { CATEGORY_STYLES } from "@/lib/constants";
@@ -23,6 +23,11 @@ interface GuideStopCardChromeProps {
   animationDelay?: string;
   onHeaderActivate?: (stopId: string) => void;
   onAddStop: () => void;
+  editActions?: ReactNode;
+  titleContent?: ReactNode;
+  isEditing?: boolean;
+  onReorderDragOver?: (event: DragEvent<HTMLElement>) => void;
+  onReorderDrop?: (stopId: string) => void;
   handlers: GuideStopHandlers;
   children: ReactNode;
 }
@@ -42,6 +47,11 @@ export function GuideStopCardChrome({
   animationDelay,
   onHeaderActivate,
   onAddStop,
+  editActions,
+  titleContent,
+  isEditing = false,
+  onReorderDragOver,
+  onReorderDrop,
   handlers,
   children,
 }: GuideStopCardChromeProps) {
@@ -60,6 +70,15 @@ export function GuideStopCardChrome({
       <section
         onMouseEnter={() => handlers.onStopHoverChange?.(stop.id)}
         onMouseLeave={() => handlers.onStopHoverChange?.(null)}
+        onDragOver={isEditing ? onReorderDragOver : undefined}
+        onDrop={
+          isEditing
+            ? (event) => {
+                event.preventDefault();
+                onReorderDrop?.(stop.id);
+              }
+            : undefined
+        }
         data-active={isActive}
         data-expanded={isExpanded}
         className="expanded-guide-stop-card transition-[border-color,box-shadow,background-color] duration-150"
@@ -112,7 +131,9 @@ export function GuideStopCardChrome({
             className="flex min-w-0 flex-1 cursor-pointer select-text items-center gap-2 text-left"
           >
             <span className="min-w-0 flex-1">
-              <span className="block text-base font-semibold leading-5 text-slate-900">{stop.name}</span>
+              {titleContent ?? (
+                <span className="block text-base font-semibold leading-5 text-slate-900">{stop.name}</span>
+              )}
               {stop.eventTime ? (
                 <span className="mt-0.5 block text-[11px] font-medium uppercase tracking-[0.08em] text-slate-500">
                   {stop.eventTime}
@@ -133,6 +154,7 @@ export function GuideStopCardChrome({
               {stop.price}
             </span>
           ) : null}
+          {editActions}
           {isExpanded && showAddAction ? (
             <button
               type="button"

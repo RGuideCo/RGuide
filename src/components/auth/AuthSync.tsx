@@ -5,6 +5,7 @@ import type { User as SupabaseUser } from "@supabase/supabase-js";
 
 import { getSupabaseBrowserClient } from "@/lib/supabase/client";
 import { useAppStore } from "@/store/app-store";
+import { users } from "@/data/users";
 import type { User } from "@/types";
 
 function getStringMetadata(user: SupabaseUser, key: string) {
@@ -72,6 +73,12 @@ function toAppUser(user: SupabaseUser): User {
   };
 }
 
+function getDevelopmentFallbackUser() {
+  return process.env.NODE_ENV === "development"
+    ? users.find((user) => user.id === "user-brodriguezdesign") ?? null
+    : null;
+}
+
 export function AuthSync() {
   const setCurrentUser = useAppStore((state) => state.setCurrentUser);
 
@@ -79,14 +86,18 @@ export function AuthSync() {
     const supabase = getSupabaseBrowserClient();
 
     if (!supabase) {
-      setCurrentUser(null);
+      setCurrentUser(getDevelopmentFallbackUser());
       return;
     }
+
+    supabase.auth.getSession().then(({ data }) => {
+      setCurrentUser(data.session?.user ? toAppUser(data.session.user) : getDevelopmentFallbackUser());
+    });
 
     const {
       data: { subscription },
     } = supabase.auth.onAuthStateChange((_event, session) => {
-      setCurrentUser(session?.user ? toAppUser(session.user) : null);
+      setCurrentUser(session?.user ? toAppUser(session.user) : getDevelopmentFallbackUser());
     });
 
     return () => subscription.unsubscribe();

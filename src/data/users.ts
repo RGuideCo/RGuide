@@ -89,5 +89,7 @@ export const users: User[] = [
     joinedAt: "2026-01-10T00:00:00.000Z",
     avatar: "https://images.unsplash.com/photo-1499092346589-b9b6be3e94b2?auto=format&fit=crop&w=400&q=80",
     bio: "Design-led city explorer building map guides and place-based experiences.",
+    canPublishGuides: true,
+    userType: "publisher",
   },
 ];

@@ -432,6 +432,7 @@ export function SplitScreenSection({
   const itineraryPlaylists = useAppStore((state) => state.itineraryPlaylists);
   const editorialLists = useAppStore((state) => state.editorialLists);
   const submittedLists = useAppStore((state) => state.submittedLists);
+  const submitList = useAppStore((state) => state.submitList);
   const hydratedEditorialLists = editorialLists.length ? editorialLists : initialEditorialGuides;
   const activeEditorialLists = useMemo(
     () => getEditorialLists(hydratedEditorialLists),
@@ -664,6 +665,16 @@ export function SplitScreenSection({
     hasCurrentUser: Boolean(currentUser),
   });
   const globeRailVideoRef = useRef<HTMLVideoElement | null>(null);
+  const [profileInlineEditNonce, setProfileInlineEditNonce] = useState(0);
+  const [isProfileCreateModalOpen, setIsProfileCreateModalOpen] = useState(false);
+  const [profileCreateName, setProfileCreateName] = useState("");
+  const [profileCreateType, setProfileCreateType] = useState<"guide" | "itinerary" | "event">("guide");
+  const [profileCreateCategory, setProfileCreateCategory] = useState<ListCategory>("Food");
+  const [profileCreateContinentId, setProfileCreateContinentId] = useState("");
+  const [profileCreateCountryId, setProfileCreateCountryId] = useState("");
+  const [profileCreateCityId, setProfileCreateCityId] = useState("");
+  const [profileCreateSubareaId, setProfileCreateSubareaId] = useState("");
+  const [profileCreateNestedSubareaId, setProfileCreateNestedSubareaId] = useState("");
   const captureCategoryBeforeGuideExpand = (category: ListCategory | null = activeCategoryRef.current) => {
     captureCategoryBeforeGuideExpandBase(category);
   };
@@ -2243,10 +2254,18 @@ export function SplitScreenSection({
       : activeLocation.continent
         ? selectedContinentLists
         : selectedGlobalLists;
+  const submittedPublicLists = useMemo(
+    () =>
+      submittedLists.filter(
+        (list) =>
+          list.visibility === "public" &&
+          (list.submissionType !== "journal" || list.journal?.visibility !== "private"),
+      ),
+    [submittedLists],
+  );
   const submittedActiveLists = useMemo(
     () =>
-      submittedLists.filter((list) =>
-        (isPrivateJournalExperience(list) ? list.creator.id === currentUser?.id : true) &&
+      submittedPublicLists.filter((list) =>
         (activeLocation.city
           ? isListInActiveCity(list) ||
             (list.location.scope === "country" &&
@@ -2262,29 +2281,42 @@ export function SplitScreenSection({
                 ? list.location.scope === "continent" && list.location.continent === "Global"
                 : false),
       ),
-    [activeLocation.city, activeLocation.continent, activeLocation.country, currentUser?.id, isCountryRootSelection, isGlobalSelection, submittedLists],
+    [activeLocation.city, activeLocation.continent, activeLocation.country, isCountryRootSelection, isGlobalSelection, submittedPublicLists],
   );
   const allActiveLists = useMemo(
     () => [...coreActiveLists, ...submittedActiveLists],
     [coreActiveLists, submittedActiveLists],
   );
   const globalMergedLists = useMemo(() => {
-    const merged = [...submittedLists, ...activeEditorialLists];
+    const merged = [...submittedPublicLists, ...activeEditorialLists];
     const seen = new Set<string>();
     return merged.filter((list) => {
-      if (isPrivateJournalExperience(list) && list.creator.id !== currentUser?.id) {
-        return false;
-      }
       if (seen.has(list.id)) {
         return false;
       }
       seen.add(list.id);
       return true;
     });
-  }, [activeEditorialLists, currentUser?.id, submittedLists]);
+  }, [activeEditorialLists, submittedPublicLists]);
   const profileLists = useMemo(
-    () => (currentUser ? globalMergedLists.filter((list) => list.creator.id === currentUser.id) : []),
-    [currentUser, globalMergedLists],
+    () => {
+      if (!currentUser) {
+        return [];
+      }
+      const merged = [
+        ...submittedLists.filter((list) => list.creator.id === currentUser.id),
+        ...globalMergedLists.filter((list) => list.creator.id === currentUser.id),
+      ];
+      const seen = new Set<string>();
+      return merged.filter((list) => {
+        if (seen.has(list.id)) {
+          return false;
+        }
+        seen.add(list.id);
+        return true;
+      });
+    },
+    [currentUser, globalMergedLists, submittedLists],
   );
   const profileGuides = useMemo(
     () => profileLists.filter((list) => list.submissionType !== "journal" && list.submissionType !== "itinerary"),
@@ -2303,19 +2335,83 @@ export function SplitScreenSection({
     [noKnownItineraryIds, profileLists],
   );
   const profileRailLists = useMemo(() => {
-    if (activeProfileRightRail === "experiences") {
-      return profileJournals;
-    }
-    if (activeProfileRightRail === "itineraries") {
-      return profileItineraries;
-    }
-    if (activeProfileRightRail === "favorites") {
-      return globalMergedLists.filter((list) => favoriteIds.includes(list.id));
-    }
-    return profileGuides.filter(
-      (list) => !isItineraryList(list, noKnownItineraryIds),
+    const isEventList = (list: MapList) => list.id.startsWith("event-");
+    const isJourneyList = (list: MapList) => isItineraryList(list, noKnownItineraryIds);
+    const profileVisibleLists = [...profileLists, ...globalMergedLists].filter(
+      (list, index, listSet) => listSet.findIndex((candidate) => candidate.id === list.id) === index,
     );
-  }, [activeProfileRightRail, favoriteIds, globalMergedLists, noKnownItineraryIds, profileGuides, profileItineraries, profileJournals]);
+    const favoriteLists = profileVisibleLists.filter((list) => favoriteIds.includes(list.id));
+    const sourceLists =
+      activeGuideSource === "favorites"
+        ? favoriteLists
+        : activeGuideSource === "user-guides"
+          ? profileLists
+          : [...profileLists, ...favoriteLists].filter(
+              (list, index, listSet) =>
+                listSet.findIndex((candidate) => candidate.id === list.id) === index,
+            );
+
+    return sourceLists.filter((list) => {
+      if (activeGuideRail === "all-guides") {
+        if (isEventList(list) || list.submissionType === "journal" || isJourneyList(list)) {
+          return false;
+        }
+      } else if (activeGuideRail === "week-events") {
+        if (!isEventList(list)) {
+          return false;
+        }
+      } else if (activeGuideRail === "itinerary") {
+        if (list.submissionType === "journal" || !isJourneyList(list)) {
+          return false;
+        }
+      } else if (list.submissionType === "journal") {
+        return false;
+      }
+
+      if (activeCategory && !doesListMatchCategory(list, activeCategory)) {
+        return false;
+      }
+      if (activeSubcategory && !doesListMatchSubcategory(list, activeSubcategory)) {
+        return false;
+      }
+      if (activeFoodPrice && !doesListMatchFoodPrice(list, activeFoodPrice)) {
+        return false;
+      }
+      return true;
+    });
+  }, [
+    activeCategory,
+    activeFoodPrice,
+    activeGuideRail,
+    activeGuideSource,
+    activeSubcategory,
+    favoriteIds,
+    globalMergedLists,
+    noKnownItineraryIds,
+    profileLists,
+  ]);
+  const profileFavoriteGuideLists = useMemo(
+    () =>
+      [...profileLists, ...globalMergedLists]
+        .filter((list, index, listSet) => listSet.findIndex((candidate) => candidate.id === list.id) === index)
+        .filter(
+        (list) =>
+          favoriteIds.includes(list.id) &&
+          !list.id.startsWith("event-") &&
+          list.submissionType !== "journal" &&
+          !isItineraryList(list, noKnownItineraryIds),
+      ),
+    [favoriteIds, globalMergedLists, noKnownItineraryIds, profileLists],
+  );
+  const profileUserGuideLists = useMemo(
+    () =>
+      profileGuides.filter(
+        (list) =>
+          !list.id.startsWith("event-") &&
+          !isItineraryList(list, noKnownItineraryIds),
+      ),
+    [noKnownItineraryIds, profileGuides],
+  );
   const publicProfileLists = useMemo(
     () =>
       publicProfile
@@ -2573,6 +2669,30 @@ export function SplitScreenSection({
       list.submissionType !== "journal" &&
       !isItineraryList(list, allKnownItineraryListIds);
 
+    if (isProfileMode) {
+      const baseProfileLists =
+        activeGuideSource === "favorites"
+          ? profileFavoriteGuideLists
+          : activeGuideSource === "user-guides"
+            ? profileUserGuideLists
+            : [...profileUserGuideLists, ...profileFavoriteGuideLists].filter((list, index, listSet) =>
+                listSet.findIndex((candidate) => candidate.id === list.id) === index,
+              );
+
+      return baseProfileLists.filter((list) => {
+        if (activeCategory && !doesListMatchCategory(list, activeCategory)) {
+          return false;
+        }
+        if (activeSubcategory && !doesListMatchSubcategory(list, activeSubcategory)) {
+          return false;
+        }
+        if (activeFoodPrice && !doesListMatchFoodPrice(list, activeFoodPrice)) {
+          return false;
+        }
+        return true;
+      });
+    }
+
     if (activeGuideRail === null) {
       return filteredLists
         .filter((list) => list.submissionType !== "journal")
@@ -2641,6 +2761,8 @@ export function SplitScreenSection({
   }, [
     activeGuideRail,
     activeGuideSource,
+    activeSubcategory,
+    activeFoodPrice,
     favoriteIds,
     filteredLists,
     globalMergedLists,
@@ -2649,6 +2771,9 @@ export function SplitScreenSection({
     itineraryIds,
     itineraryPlaylists,
     publicProfileGuideLists,
+    profileFavoriteGuideLists,
+    profileUserGuideLists,
+    isProfileMode,
     votedIds,
     activeCategory,
     activeLists,
@@ -2692,11 +2817,15 @@ export function SplitScreenSection({
     { id: "user-guides" as const, label: "User guides", shortLabel: "User", icon: UserRound },
     { id: "favorites" as const, label: "Favorites", shortLabel: "Fav", icon: Heart },
   ];
+  const visibleGuideSourceSelectors = isProfileMode
+    ? guideSourceSelectors.filter((selector) => selector.id !== "r-guides")
+    : guideSourceSelectors;
   const guideActionSelectors = [
     { id: "all-guides" as const, label: "Guides", shortLabel: "Guide", icon: MapIcon },
     { id: "week-events" as const, label: "Events", shortLabel: "Events", icon: CalendarDays },
     { id: "itinerary" as const, label: "Journeys", shortLabel: "Journey", icon: Route },
   ];
+  const visibleGuideActionSelectors = guideActionSelectors;
   const guideActionActiveStyles = {
     "all-guides": {
       backgroundColor: "#0f172a",
@@ -2720,10 +2849,10 @@ export function SplitScreenSection({
     },
   } as const;
   const activeGuideSourceSelector =
-    guideSourceSelectors.find((selector) => selector.id === activeGuideSource) ?? guideSourceSelectors[0];
+    visibleGuideSourceSelectors.find((selector) => selector.id === activeGuideSource) ?? visibleGuideSourceSelectors[0];
   const activeGuideSourceIndex = Math.max(
     0,
-    guideSourceSelectors.findIndex((selector) => selector.id === activeGuideSourceSelector.id),
+    visibleGuideSourceSelectors.findIndex((selector) => selector.id === activeGuideSourceSelector.id),
   );
   const activeGuideActionSelector =
     guideActionSelectors.find((selector) => selector.id === activeGuideRail) ?? null;
@@ -3063,13 +3192,11 @@ export function SplitScreenSection({
   const displayedGuide = expandedGuide;
   const activeMapGuide = isProfileSubmitLayout
     ? profileSubmissionPreviewList
-    : isProfileMode
-      ? profileExpandedGuide
-      : expandedGuide;
+    : expandedGuide;
   const isGuideTakingFullListPane = Boolean(expandedGuide && !isPublicProfileMode);
   const isGuideReturningToListPane = false;
   const isGuidePaneTakingFullListPane = isGuideTakingFullListPane || isGuideReturningToListPane;
-  const isLeftPaneCollapsed = isProfileSubmitLayout || isGuidePaneTakingFullListPane || isProfileGuideTakingFullListPane;
+  const isLeftPaneCollapsed = isProfileSubmitLayout || isGuidePaneTakingFullListPane;
   const isSubcategoryMenuOpen =
     isFoodOpenTimeMenuOpen || isFoodCuisineMenuOpen || isNightlifeBarMenuOpen;
   const isSavedPlacesRailActive = isLocationFavoritesRailActive && !expandedGuide;
@@ -3122,13 +3249,12 @@ export function SplitScreenSection({
       [
         ...orderedRailFilteredLists.map((list) => list.id),
         ...recentRGuideLists.map((list) => list.id),
-        ...profileRailLists.map((list) => list.id),
       ].join("|"),
-    [orderedRailFilteredLists, profileRailLists, recentRGuideLists],
+    [orderedRailFilteredLists, recentRGuideLists],
   );
   const visibleGuideMarkerFallbackIds = useMemo(() => {
     const seen = new Set<string>();
-    const lists = isProfileMode ? profileRailLists : [...orderedRailFilteredLists, ...recentRGuideLists];
+    const lists = [...orderedRailFilteredLists, ...recentRGuideLists];
     return lists
       .filter((list) => {
         if (seen.has(list.id) || list.id === activeMapGuide?.id) {
@@ -3139,7 +3265,7 @@ export function SplitScreenSection({
       })
       .slice(0, 45)
       .map((list) => list.id);
-  }, [activeMapGuide?.id, isProfileMode, orderedRailFilteredLists, profileRailLists, recentRGuideLists]);
+  }, [activeMapGuide?.id, orderedRailFilteredLists, recentRGuideLists]);
 
   useEffect(() => {
     if (typeof window === "undefined" || isProfileSubmitLayout || isGuidePaneTakingFullListPane) {
@@ -4224,20 +4350,123 @@ export function SplitScreenSection({
     }
     scrollGuideIntoView(list.id);
   };
+  const getProfileCreateDefaults = () => {
+    const fallbackContinent = continents[0];
+    const fallbackCountry = fallbackContinent?.countries[0];
+    const fallbackCity = fallbackCountry?.cities.find((city) => !city.isPlaceholderRegion) ?? fallbackCountry?.cities[0];
+
+    return {
+      continentId: activeLocation.continent?.id ?? fallbackContinent?.id ?? "",
+      countryId: activeLocation.country?.id ?? fallbackCountry?.id ?? "",
+      cityId: activeLocation.city?.id ?? fallbackCity?.id ?? "",
+      subareaId: activeLocation.subarea?.id ?? "",
+      nestedSubareaId: activeLocation.nestedSubarea?.id ?? "",
+    };
+  };
+  const openProfileCreateModal = () => {
+    if (!currentUser) {
+      openAuthModal("login");
+      return;
+    }
+    const defaults = getProfileCreateDefaults();
+    setProfileCreateName("");
+    setProfileCreateType("guide");
+    setProfileCreateCategory(activeCategory ?? "Food");
+    setProfileCreateContinentId(defaults.continentId);
+    setProfileCreateCountryId(defaults.countryId);
+    setProfileCreateCityId(defaults.cityId);
+    setProfileCreateSubareaId(defaults.subareaId);
+    setProfileCreateNestedSubareaId(defaults.nestedSubareaId);
+    setIsProfileCreateModalOpen(true);
+  };
+  const getProfileDraftGuideLocation = () => {
+    const selectedContinent = continents.find((continent) => continent.id === profileCreateContinentId);
+    const fallbackContinent = selectedContinent ?? continents[0];
+    const selectedCountry = fallbackContinent?.countries.find((country) => country.id === profileCreateCountryId);
+    const fallbackCountry = selectedCountry ?? fallbackContinent?.countries[0];
+    const selectedCity = profileCreateCityId
+      ? fallbackCountry?.cities.find((city) => city.id === profileCreateCityId)
+      : undefined;
+    const selectedSubarea = selectedCity?.subareas?.find((subarea) => subarea.id === profileCreateSubareaId);
+    const selectedNestedSubarea = selectedSubarea?.subareas?.find((subarea) => subarea.id === profileCreateNestedSubareaId);
+    const countryBounds = fallbackCountry?.bounds;
+    const fallbackCoordinates: [number, number] = countryBounds
+      ? [
+          (countryBounds[0][0] + countryBounds[1][0]) / 2,
+          (countryBounds[0][1] + countryBounds[1][1]) / 2,
+        ]
+      : selectedCity?.coordinates ?? fallbackContinent?.coordinates ?? [0, 0];
+    const stopCoordinates =
+      selectedNestedSubarea?.coordinates ??
+      selectedSubarea?.coordinates ??
+      selectedCity?.coordinates ??
+      fallbackCoordinates;
+
+    return {
+      continent: fallbackContinent?.name ?? "North America",
+      country: fallbackCountry?.name ?? "United States",
+      city: selectedCity?.name,
+      neighborhood: selectedNestedSubarea?.name ?? selectedSubarea?.name,
+      stopCoordinates,
+    };
+  };
+  const handleCreateProfileGuide = () => {
+    if (!currentUser) {
+      openAuthModal("login");
+      return;
+    }
+
+    const draftLocation = getProfileDraftGuideLocation();
+    const typeLabel =
+      profileCreateType === "itinerary" ? "journey" : profileCreateType === "event" ? "event" : "guide";
+    const title = profileCreateName.trim() || `Untitled ${typeLabel}`;
+    const response = submitList({
+      submissionType: profileCreateType,
+      url: "https://www.google.com/maps",
+      title,
+      description:
+        profileCreateType === "event"
+          ? "Add event details."
+          : profileCreateType === "itinerary"
+            ? "Add a journey description."
+            : "Add a guide description.",
+      category: profileCreateCategory,
+      continent: draftLocation.continent,
+      country: draftLocation.country,
+      city: draftLocation.city,
+      neighborhood: draftLocation.neighborhood,
+      stops: [
+        {
+          id: `manual-poi-${Date.now()}`,
+          name: profileCreateType === "event" ? "Event location" : "New place",
+          coordinates: draftLocation.stopCoordinates,
+          description: profileCreateType === "event" ? "Add event location details." : "Add a POI description.",
+          category: profileCreateCategory,
+        },
+      ],
+    });
+
+    if (!response.ok || !response.list) {
+      return;
+    }
+
+    setActiveGuideSource("user-guides");
+    setActiveGuideRail(profileCreateType === "event" ? "week-events" : profileCreateType === "itinerary" ? "itinerary" : "all-guides");
+    setActiveProfileRightRail("guides");
+    setProfileEditingListId(null);
+    setIsProfileSubmitting(false);
+    setIsProfileCreateModalOpen(false);
+    setProfileExpandedGuideId(response.list.id);
+    setProfileInlineEditNonce((current) => current + 1);
+  };
   const handleEditGuideFromProfile = (list: MapList) => {
     if (!currentUser || list.creator.id !== currentUser.id) {
       return;
     }
-    const isItineraryGuide = isItineraryList(list, noKnownItineraryIds);
-    setActiveProfileRightRail(
-      list.submissionType === "journal" ? "experiences" : isItineraryGuide ? "itineraries" : "guides",
-    );
-    setProfileSubmissionType(isItineraryGuide ? "itinerary" : list.submissionType ?? "guide");
-    setProfileGuideSubmissionVariant(
-      isItineraryGuide ? "itinerary" : "guide",
-    );
-    setProfileEditingListId(list.id);
-    setIsProfileSubmitting(true);
+    setProfileEditingListId(null);
+    setIsProfileSubmitting(false);
+    setProfileExpandedGuideId(list.id);
+    setProfileInlineEditNonce((current) => current + 1);
   };
   useEffect(() => {
     if (isPublicProfileMode && isProfileShellActive) {
@@ -4264,6 +4493,27 @@ export function SplitScreenSection({
         : "";
   const publicProfilePaneTransitionClass = isPublicProfileEntering ? "pane-content-enter" : "";
   const publicProfileRailTransitionClass = isPublicProfileEntering ? "rail-switch-enter" : "";
+  const darkPaneHeadingClass = "text-sm font-semibold text-[rgba(255,255,255,0.76)]";
+  const darkPaneToggleClass = (active: boolean, enabled = true) =>
+    `flex h-8 w-8 items-center justify-center rounded-full border transition ${
+      active
+        ? "border-white bg-white text-slate-950 shadow-sm"
+        : "border-[rgba(255,255,255,0.16)] bg-[rgba(255,255,255,0.08)] text-[rgba(255,255,255,0.72)] hover:border-[rgba(255,255,255,0.34)] hover:bg-[rgba(255,255,255,0.13)] hover:text-white"
+    } ${enabled ? "" : "cursor-not-allowed opacity-45"}`;
+  const darkPaneRowClass = (active: boolean) =>
+    `group flex w-full items-center gap-2 rounded-2xl border px-3 py-2 text-left text-sm transition ${
+      active
+        ? "border-white text-white"
+        : "border-transparent text-[rgba(255,255,255,0.62)] hover:border-white hover:text-white"
+    }`;
+  const darkPanePillClass = (active: boolean, size: "xs" | "sm" = "sm") =>
+    `rounded-full border transition ${
+      size === "xs" ? "px-3 py-1 text-xs font-medium" : "px-3 py-1.5 text-sm"
+    } ${
+      active
+        ? "border-white text-white"
+        : "border-transparent text-[rgba(255,255,255,0.62)] hover:border-white hover:text-white"
+    }`;
   const railEnteringMode =
     shellTransitionPhase === "entering" ? displayShellMode : null;
   const profileRailItemStyle = (index: number) =>
@@ -4328,6 +4578,12 @@ export function SplitScreenSection({
   }, [isProfileMode]);
   useEffect(() => {
     if (isProfileMode) {
+      setActiveGuideRail("all-guides");
+      setActiveGuideSource("all-guides");
+      setExpandedGuideId(null);
+      setClosingGuide(null);
+      setVisibleNestedStopParentIds([]);
+      setProfileExpandedGuideId(null);
       setActiveProfileLeftRail(null);
       setActivePlacesBeenFilter("countries");
       setExpandedPlacesBeenCountries([]);
@@ -4461,6 +4717,32 @@ export function SplitScreenSection({
     };
   }, [displayShellMode, isGuidePaneTakingFullListPane, isMobileListSheetExpanded, isProfileMode, isProfileSubmitLayout]);
 
+  const profileCreateContinent = continents.find((continent) => continent.id === profileCreateContinentId) ?? null;
+  const profileCreateCountry =
+    profileCreateContinent?.countries.find((country) => country.id === profileCreateCountryId) ?? null;
+  const profileCreateCity =
+    profileCreateCountry?.cities.find((city) => city.id === profileCreateCityId) ?? null;
+  const profileCreateSubarea =
+    profileCreateCity?.subareas?.find((subarea) => subarea.id === profileCreateSubareaId) ?? null;
+  const profileCreateNestedSubarea =
+    profileCreateSubarea?.subareas?.find((subarea) => subarea.id === profileCreateNestedSubareaId) ?? null;
+  const profileCreateNeighborhoodOptions =
+    profileCreateCity?.subareas?.flatMap((subarea) => [
+      {
+        id: `subarea:${subarea.id}`,
+        label: subarea.name,
+      },
+      ...(subarea.subareas?.map((nestedSubarea) => ({
+        id: `nested:${subarea.id}:${nestedSubarea.id}`,
+        label: `${subarea.name} / ${nestedSubarea.name}`,
+      })) ?? []),
+    ]) ?? [];
+  const profileCreateTypeOptions = [
+    { id: "guide" as const, label: "Guide", icon: MapIcon },
+    { id: "itinerary" as const, label: "Journey", icon: Route },
+    { id: "event" as const, label: "Event", icon: CalendarDays },
+  ];
+
   return (
     <section id="map-explorer" className="w-full py-0 lg:pb-0 lg:pt-2">
       <div className="flex w-full flex-col items-stretch gap-2 lg:flex-row lg:items-start lg:gap-0">
@@ -4563,26 +4845,6 @@ export function SplitScreenSection({
                     </button>
 	                  </div>
 	                ))}
-                  <div className="rail-switch-item h-px w-7 bg-slate-300/70" aria-hidden="true" />
-                  {profileRightRailOptions.map((option, index) => (
-                    <div
-                      key={option.id}
-                      className="rail-switch-item profile-rail-item relative h-10 w-10"
-                      style={profileRailItemStyle(index + profileLeftRailOptions.length + 1)}
-                    >
-                      <button
-                        type="button"
-                        onClick={() => setActiveProfileRightRail(option.id)}
-                        className={`guide-rail-button relative z-10 flex h-10 w-10 items-center justify-center rounded-full border border-slate-200/90 bg-white/95 text-slate-700 shadow-sm transition hover:scale-105 hover:border-slate-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-400/70 ${
-                          activeProfileRightRail === option.id ? "guide-rail-button-active border-slate-900 text-slate-900" : ""
-                        }`}
-                        aria-label={option.label}
-                        title={option.label}
-                      >
-                        <option.icon className="h-4 w-4" />
-                      </button>
-                    </div>
-                  ))}
 	              </>
             ) : (
               <>
@@ -4949,7 +5211,7 @@ export function SplitScreenSection({
                         style={{ transform: `translateY(${activeGuideSourceIndex * 30}px)` }}
                         aria-hidden="true"
                       />
-                      {guideSourceSelectors.map((selector) => {
+                      {visibleGuideSourceSelectors.map((selector) => {
                         const isActive = activeGuideSource === selector.id;
                         const SelectorIcon = selector.icon;
                         return (
@@ -5931,11 +6193,7 @@ export function SplitScreenSection({
                         <button
                           type="button"
                           onClick={() => setCountryBrowseView("cities")}
-                          className={`rounded-full px-3 py-1 text-xs font-medium transition ${
-                            countryBrowseView === "cities"
-                              ? "bg-slate-900 text-white"
-                              : "bg-stone-100 text-slate-700 hover:bg-stone-200"
-                          }`}
+                          className={darkPanePillClass(countryBrowseView === "cities", "xs")}
                         >
                           Cities
                         </button>
@@ -5943,17 +6201,15 @@ export function SplitScreenSection({
                           type="button"
                           onClick={() => setCountryBrowseView("regions")}
                           disabled={!activeCountrySubareas.length}
-                          className={`rounded-full px-3 py-1 text-xs font-medium transition ${
-                            countryBrowseView === "regions"
-                              ? "bg-slate-900 text-white"
-                              : "bg-stone-100 text-slate-700 hover:bg-stone-200"
-                          } ${activeCountrySubareas.length ? "" : "cursor-not-allowed opacity-50"}`}
+                          className={`${darkPanePillClass(countryBrowseView === "regions", "xs")} ${
+                            activeCountrySubareas.length ? "" : "cursor-not-allowed opacity-45"
+                          }`}
                         >
                           Regions
                         </button>
                       </div>
                     ) : null}
-                    <p className="mb-2 text-[11px] font-medium uppercase tracking-[0.2em] text-slate-500">
+                    <p className="mb-2 text-[11px] font-medium uppercase tracking-[0.2em] text-[rgba(255,255,255,0.48)]">
                       {cityUsesNestedDistricts && activeLocation.city && activeNestedCitySubareas.length
                         ? "Neighborhoods"
                         : activeLocation.city && activeCitySubareas.length
@@ -5987,11 +6243,7 @@ export function SplitScreenSection({
                                 nestedSubarea.id,
                               )
                             }
-                            className={`rounded-full px-3 py-1.5 text-sm transition ${
-                              selection.nestedSubareaId === nestedSubarea.id
-                                ? "bg-orange-50 text-orange-700"
-                                : "bg-stone-100 text-slate-700 hover:bg-stone-200"
-                            }`}
+                            className={darkPanePillClass(selection.nestedSubareaId === nestedSubarea.id)}
                           >
                             {nestedSubarea.name}
                           </button>
@@ -6010,11 +6262,7 @@ export function SplitScreenSection({
                                 subarea.id,
                               )
                             }
-                            className={`rounded-full px-3 py-1.5 text-sm transition ${
-                              selection.subareaId === subarea.id
-                                ? "bg-orange-50 text-orange-700"
-                                : "bg-stone-100 text-slate-700 hover:bg-stone-200"
-                            }`}
+                            className={darkPanePillClass(selection.subareaId === subarea.id)}
                           >
                             {formatBreadcrumbName(subarea.name)}
                           </button>
@@ -6032,11 +6280,7 @@ export function SplitScreenSection({
                                   subarea.id,
                                 )
                               }
-                              className={`rounded-full px-3 py-1.5 text-sm transition ${
-                                selection.subareaId === subarea.id
-                                  ? "bg-orange-50 text-orange-700"
-                                  : "bg-stone-100 text-slate-700 hover:bg-stone-200"
-                              }`}
+                              className={darkPanePillClass(selection.subareaId === subarea.id)}
                             >
                               {formatBreadcrumbName(subarea.name)}
                             </button>
@@ -6054,11 +6298,7 @@ export function SplitScreenSection({
                                   event.currentTarget,
                                 )
                               }
-                            className={`rounded-full px-3 py-1.5 text-sm transition ${
-                                selection.cityId === city.id
-                                  ? "bg-orange-50 text-orange-700"
-                                  : "bg-stone-100 text-slate-700 hover:bg-stone-200"
-                              }`}
+                            className={darkPanePillClass(selection.cityId === city.id)}
                             >
                               <span data-morph-origin="label" className="inline-block">
                                 {city.name}
@@ -6078,11 +6318,7 @@ export function SplitScreenSection({
                                   subarea.id,
                                 )
                               }
-                              className={`rounded-full px-3 py-1.5 text-sm transition ${
-                                selection.subareaId === subarea.id
-                                  ? "bg-orange-50 text-orange-700"
-                                  : "bg-stone-100 text-slate-700 hover:bg-stone-200"
-                              }`}
+                              className={darkPanePillClass(selection.subareaId === subarea.id)}
                             >
                               {formatBreadcrumbName(subarea.name)}
                             </button>
@@ -6101,11 +6337,7 @@ export function SplitScreenSection({
                                   event.currentTarget,
                                 )
                               }
-                              className={`rounded-full px-3 py-1.5 text-sm transition ${
-                                selection.stateId === state.id
-                                  ? "bg-orange-50 text-orange-700"
-                                  : "bg-stone-100 text-slate-700 hover:bg-stone-200"
-                              }`}
+                              className={darkPanePillClass(selection.stateId === state.id)}
                             >
                               <span data-morph-origin="label" className="inline-block">
                                 {state.name}
@@ -6124,11 +6356,7 @@ export function SplitScreenSection({
                                 event.currentTarget,
                               )
                             }
-                            className={`rounded-full px-3 py-1.5 text-sm transition ${
-                              selection.cityId === city.id
-                                ? "bg-orange-50 text-orange-700"
-                                : "bg-stone-100 text-slate-700 hover:bg-stone-200"
-                            }`}
+                            className={darkPanePillClass(selection.cityId === city.id)}
                           >
                             <span data-morph-origin="label" className="inline-block">
                               {city.name}
@@ -6420,18 +6648,14 @@ export function SplitScreenSection({
                 ) : isRegionSelection ? (
                   <div className="flex h-full min-h-0 flex-col">
                     <div className="mb-2 shrink-0 flex items-center justify-between">
-                      <p className="text-sm font-semibold text-slate-700">
+                      <p className={darkPaneHeadingClass}>
                         {regionBrowseView === "states" ? countryStateLabel : "Cities"}
                       </p>
                       <div className="flex items-center gap-2">
                         <button
                           type="button"
                           onClick={() => setRegionBrowseView("cities")}
-                          className={`flex h-8 w-8 items-center justify-center rounded-full border transition ${
-                            regionBrowseView === "cities"
-                              ? "border-slate-900 bg-slate-900 text-white"
-                              : "border-slate-300 bg-white text-slate-700 hover:border-slate-400 hover:bg-slate-50"
-                          }`}
+                          className={darkPaneToggleClass(regionBrowseView === "cities")}
                           aria-label="Show cities"
                         >
                           <Building2 className="h-4 w-4" />
@@ -6440,11 +6664,7 @@ export function SplitScreenSection({
                           type="button"
                           onClick={() => setRegionBrowseView("states")}
                           disabled={!activeCountryStates.length}
-                          className={`flex h-8 w-8 items-center justify-center rounded-full border transition ${
-                            regionBrowseView === "states"
-                              ? "border-slate-900 bg-slate-900 text-white"
-                              : "border-slate-300 bg-white text-slate-700 hover:border-slate-400 hover:bg-slate-50"
-                          } ${activeCountryStates.length ? "" : "cursor-not-allowed opacity-50"}`}
+                          className={darkPaneToggleClass(regionBrowseView === "states", Boolean(activeCountryStates.length))}
                           aria-label={`Show ${countryStateLabelLower}`}
                         >
                           <Flag className="h-4 w-4" />
@@ -6460,11 +6680,7 @@ export function SplitScreenSection({
                               <button
                                 key={state.id}
                                 type="button"
-                                className={`flex w-full items-center gap-2 rounded-2xl px-3 py-2 text-left text-sm transition ${
-                                  selection.stateId === state.id
-                                    ? "bg-orange-50 text-orange-700"
-                                    : "text-slate-700 hover:bg-stone-100"
-                                }`}
+                                className={darkPaneRowClass(selection.stateId === state.id)}
                                 onClick={(event) =>
                                   handleSelectStateFromCountryList(
                                     activeLocation.continent!.id,
@@ -6491,11 +6707,7 @@ export function SplitScreenSection({
                               <button
                                 key={city.id}
                                 type="button"
-                                className={`flex w-full items-center gap-2 rounded-2xl px-3 py-2 text-left text-sm transition ${
-                                  selection.cityId === city.id
-                                    ? "bg-orange-50 text-orange-700"
-                                    : "text-slate-700 hover:bg-stone-100"
-                                }`}
+                                className={darkPaneRowClass(selection.cityId === city.id)}
                                 onClick={(event) =>
                                   handleSelectCityFromList(
                                     activeLocation.continent!.id,
@@ -6516,18 +6728,14 @@ export function SplitScreenSection({
                 ) : isStateSelection ? (
                   <div className="flex h-full min-h-0 flex-col">
                     <div className="mb-2 shrink-0 flex items-center justify-between">
-                      <p className="text-sm font-semibold text-slate-700">
+                      <p className={darkPaneHeadingClass}>
                         {stateBrowseView === "regions" ? "Regions" : "Cities"}
                       </p>
                       <div className="flex items-center gap-2">
                         <button
                           type="button"
                           onClick={() => setStateBrowseView("cities")}
-                          className={`flex h-8 w-8 items-center justify-center rounded-full border transition ${
-                            stateBrowseView === "cities"
-                              ? "border-slate-900 bg-slate-900 text-white"
-                              : "border-slate-300 bg-white text-slate-700 hover:border-slate-400 hover:bg-slate-50"
-                          }`}
+                          className={darkPaneToggleClass(stateBrowseView === "cities")}
                           aria-label="Show cities"
                         >
                           <Building2 className="h-4 w-4" />
@@ -6536,11 +6744,7 @@ export function SplitScreenSection({
                           type="button"
                           onClick={() => setStateBrowseView("regions")}
                           disabled={!activeCountrySubareas.length}
-                          className={`flex h-8 w-8 items-center justify-center rounded-full border transition ${
-                            stateBrowseView === "regions"
-                              ? "border-slate-900 bg-slate-900 text-white"
-                              : "border-slate-300 bg-white text-slate-700 hover:border-slate-400 hover:bg-slate-50"
-                          } ${activeCountrySubareas.length ? "" : "cursor-not-allowed opacity-50"}`}
+                          className={darkPaneToggleClass(stateBrowseView === "regions", Boolean(activeCountrySubareas.length))}
                           aria-label="Show regions"
                         >
                           <MapIcon className="h-4 w-4" />
@@ -6557,11 +6761,7 @@ export function SplitScreenSection({
                                 key={subarea.id}
                                 type="button"
                                 title={subarea.name}
-                                className={`flex w-full items-center gap-2 rounded-2xl px-3 py-2 text-left text-sm transition ${
-                                  selection.countrySubareaId === subarea.id
-                                    ? "bg-orange-50 text-orange-700"
-                                    : "text-slate-700 hover:bg-stone-100"
-                                }`}
+                                className={darkPaneRowClass(selection.countrySubareaId === subarea.id)}
                                 onClick={() =>
                                   handleSelectCountrySubarea(
                                     activeLocation.continent!.id,
@@ -6581,11 +6781,7 @@ export function SplitScreenSection({
                               <button
                                 key={city.id}
                                 type="button"
-                                className={`flex w-full items-center gap-2 rounded-2xl px-3 py-2 text-left text-sm transition ${
-                                  selection.cityId === city.id
-                                    ? "bg-orange-50 text-orange-700"
-                                    : "text-slate-700 hover:bg-stone-100"
-                                }`}
+                                className={darkPaneRowClass(selection.cityId === city.id)}
                                 onClick={(event) =>
                                   handleSelectCityFromList(
                                     activeLocation.continent!.id,
@@ -6610,7 +6806,7 @@ export function SplitScreenSection({
                     }`}
                   >
                     <div className="mb-2 shrink-0 flex items-center justify-between">
-                      <p className="text-sm font-semibold text-slate-700">
+                      <p className={darkPaneHeadingClass}>
                         <span
                           key={continentLabelRevealKey}
                           className={
@@ -6624,11 +6820,7 @@ export function SplitScreenSection({
                         <button
                           type="button"
                           onClick={() => setContinentBrowseView("countries")}
-                          className={`flex h-8 w-8 items-center justify-center rounded-full border transition ${
-                            continentBrowseView === "countries"
-                              ? "border-slate-900 bg-slate-900 text-white"
-                              : "border-slate-300 bg-white text-slate-700 hover:border-slate-400 hover:bg-slate-50"
-                          }`}
+                          className={darkPaneToggleClass(continentBrowseView === "countries")}
                           aria-label="Show countries"
                         >
                           <Flag className="h-4 w-4" />
@@ -6637,11 +6829,7 @@ export function SplitScreenSection({
                           type="button"
                           onClick={() => setContinentBrowseView("regions")}
                           disabled={!activeContinentSubareas.length}
-                          className={`flex h-8 w-8 items-center justify-center rounded-full border transition ${
-                            continentBrowseView === "regions"
-                              ? "border-slate-900 bg-slate-900 text-white"
-                              : "border-slate-300 bg-white text-slate-700 hover:border-slate-400 hover:bg-slate-50"
-                          } ${activeContinentSubareas.length ? "" : "cursor-not-allowed opacity-50"}`}
+                          className={darkPaneToggleClass(continentBrowseView === "regions", Boolean(activeContinentSubareas.length))}
                           aria-label="Show regions"
                         >
                           <MapIcon className="h-4 w-4" />
@@ -6673,18 +6861,14 @@ export function SplitScreenSection({
                     }`}
                   >
                     <div className="mb-2 shrink-0 flex items-center justify-between">
-                      <p className="text-sm font-semibold text-slate-700">
+                      <p className={darkPaneHeadingClass}>
                         {countryBrowseView === "regions" ? "Regions" : hasStateHierarchyCountry ? countryStateLabel : "Cities"}
                       </p>
                       <div className="flex items-center gap-2">
                       <button
                         type="button"
                         onClick={() => setCountryBrowseView("cities")}
-                        className={`flex h-8 w-8 items-center justify-center rounded-full border transition ${
-                          countryBrowseView === "cities"
-                            ? "border-slate-900 bg-slate-900 text-white"
-                            : "border-slate-300 bg-white text-slate-700 hover:border-slate-400 hover:bg-slate-50"
-                        }`}
+                        className={darkPaneToggleClass(countryBrowseView === "cities")}
                         aria-label={hasStateHierarchyCountry ? `Show ${countryStateLabelLower}` : "Show cities"}
                       >
                         {hasStateHierarchyCountry ? <Flag className="h-4 w-4" /> : <Building2 className="h-4 w-4" />}
@@ -6693,11 +6877,7 @@ export function SplitScreenSection({
                         type="button"
                         onClick={() => setCountryBrowseView("regions")}
                         disabled={!activeCountrySubareas.length}
-                        className={`flex h-8 w-8 items-center justify-center rounded-full border transition ${
-                          countryBrowseView === "regions"
-                            ? "border-slate-900 bg-slate-900 text-white"
-                            : "border-slate-300 bg-white text-slate-700 hover:border-slate-400 hover:bg-slate-50"
-                        } ${activeCountrySubareas.length ? "" : "cursor-not-allowed opacity-50"}`}
+                        className={darkPaneToggleClass(countryBrowseView === "regions", Boolean(activeCountrySubareas.length))}
                         aria-label="Show regions"
                       >
                         <MapIcon className="h-4 w-4" />
@@ -6727,24 +6907,26 @@ export function SplitScreenSection({
                     }`}
                   >
                     <div className="mb-2 shrink-0 flex items-center justify-between">
-                      <p className="text-sm font-semibold text-slate-700">Continents</p>
+                      <p className="text-sm font-semibold text-white/72">Continents</p>
                       <div className="flex items-center gap-2">
-                        <span className="flex h-8 w-8 items-center justify-center rounded-full border border-slate-900 bg-slate-900 text-white">
+                        <span className="flex h-8 w-8 items-center justify-center rounded-full border border-white/16 bg-white/10 text-white">
                           <Globe2 className="h-4 w-4" />
                         </span>
                       </div>
                     </div>
                     <div className="min-h-0 flex-1 overflow-hidden bg-transparent">
-                      <div className="h-full overflow-y-auto divide-y divide-slate-200">
+                      <div className="h-full overflow-y-auto divide-y divide-white/10">
                         {continents.map((continent) => {
                           if (continentTitleMorph?.id === continent.id) {
                             return <div key={continent.id} className="h-[66px]" aria-hidden="true" />;
                           }
                           const countryCount = continent.countries.length;
-                          const cityCount = continent.countries.reduce(
-                            (total, country) =>
-                              total + country.cities.filter((city) => !city.isPlaceholderRegion).length,
-                            0,
+                          const guideCount = globalMergedLists.filter(
+                            (list) =>
+                              list.location.continent === continent.name &&
+                              !list.id.startsWith("event-") &&
+                              list.submissionType !== "journal" &&
+                              !isItineraryList(list, noKnownItineraryIds),
                           );
 
                           return (
@@ -6754,29 +6936,29 @@ export function SplitScreenSection({
                               onClick={(event) =>
                                 handleSelectContinentFromGlobal(continent.id, event.currentTarget)
                               }
-                              className="group flex w-full items-center gap-4 px-4 py-3 text-left transition hover:bg-stone-50"
+                              className="group flex w-full items-center gap-4 px-4 py-3 text-left transition hover:bg-white/[0.08]"
                             >
                               <div
-                                className={`flex h-10 w-12 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br ${continent.backgroundGradient}`}
+                                className="flex h-10 w-12 shrink-0 items-center justify-center"
                               >
                                 <img
                                   src={`/assets/continents/${continent.id}.svg`}
                                   alt=""
                                   aria-hidden="true"
-                                  className="h-7 w-auto opacity-85"
+                                  className="h-7 w-auto opacity-90 brightness-0 invert"
                                 />
                               </div>
                               <div className="min-w-0 flex-1">
-                                <p className="font-semibold text-slate-900">
+                                <p className="font-semibold text-white">
                                   <span data-morph-origin="label" className="inline-block">
                                     {continent.name}
                                   </span>
                                 </p>
-                                <p className="mt-0.5 text-xs text-slate-600">
-                                  {countryCount} countries • {cityCount} cities
+                                <p className="mt-0.5 text-xs font-medium text-[rgba(255,255,255,0.68)]">
+                                  {countryCount} countries • {guideCount.length} guides
                                 </p>
                               </div>
-                              <ChevronRight className="h-4 w-4 text-slate-400 transition group-hover:translate-x-0.5 group-hover:text-slate-600" />
+                              <ChevronRight className="h-4 w-4 text-white/35 transition group-hover:translate-x-0.5 group-hover:text-white/72" />
                             </button>
                           );
                         })}
@@ -6969,8 +7151,8 @@ export function SplitScreenSection({
                       ) : null}
                       {activeProfileLeftRail === "places-been" ? (
                         <div className="mt-2 flex min-h-0 flex-1 w-full flex-col text-left">
-                          <p className="text-[10px] uppercase tracking-[0.12em] text-slate-500">Places been</p>
-                          <p className="mt-1 text-sm text-slate-600">{profilePlacesBeenSummary}</p>
+                          <p className="text-[10px] uppercase tracking-[0.12em] text-white/48">Places been</p>
+                          <p className="mt-1 text-sm text-white/68">{profilePlacesBeenSummary}</p>
                           <div className="mt-3 flex items-center gap-1.5">
                             <div className="grid flex-1 grid-cols-3 gap-1.5">
                               {(
@@ -6986,8 +7168,8 @@ export function SplitScreenSection({
                                   onClick={() => handlePlacesBeenFilterSelect(filter.id)}
                                   className={`rounded-full border px-2 py-1 text-xs font-medium transition ${
                                     activePlacesBeenFilter === filter.id
-                                      ? "border-slate-900 bg-slate-900 text-white"
-                                      : "border-slate-300 bg-white text-slate-600 hover:border-slate-400 hover:text-slate-900"
+                                      ? "border-white bg-white text-slate-950 shadow-sm"
+                                      : "border-white/14 bg-white/[0.08] text-white/72 hover:border-white/24 hover:bg-white/[0.13] hover:text-white"
                                   }`}
                                 >
                                   {filter.label}
@@ -6999,8 +7181,8 @@ export function SplitScreenSection({
                               onClick={() => setIsAddingPlacesBeenCountry((current) => !current)}
                               className={`inline-flex h-7 w-7 items-center justify-center rounded-full border transition ${
                                 isAddingPlacesBeenCountry
-                                  ? "border-slate-900 bg-slate-900 text-white"
-                                  : "border-slate-300 bg-white text-slate-600 hover:border-slate-400 hover:text-slate-900"
+                                  ? "border-white bg-white text-slate-950 shadow-sm"
+                                  : "border-white/14 bg-white/[0.08] text-white/72 hover:border-white/24 hover:bg-white/[0.13] hover:text-white"
                               }`}
                               aria-label={`Add ${
                                 activePlacesBeenFilter === "countries"
@@ -7264,7 +7446,7 @@ export function SplitScreenSection({
               <div className={`relative z-[85] flex h-full flex-col ${paneTransitionClass} ${publicProfilePaneTransitionClass}`}>
                 <div
                   className={`relative flex shrink-0 items-center transition-[height,margin-bottom] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] lg:hidden ${
-                    isGuidePaneTakingFullListPane || isProfileMode || isPublicProfileMode ? "mb-0 h-0" : "mb-2 h-8"
+                    isGuidePaneTakingFullListPane || isPublicProfileMode ? "mb-0 h-0" : "mb-2 h-8"
                   }`}
                   onPointerDown={handleMobileListSheetDragStart}
                 >
@@ -7308,7 +7490,7 @@ export function SplitScreenSection({
                 </div>
 	                <div
 	                  className={`relative hidden w-full shrink-0 lg:block ${
-	                    isProfileMode || isPublicProfileMode
+                    isPublicProfileMode
 	                      ? "!hidden lg:!hidden"
 	                      : isGuidePaneTakingFullListPane
 	                        ? "pointer-events-none max-h-0 -translate-y-3 pb-0 opacity-0 transition-[opacity,transform] duration-200 ease-out"
@@ -7327,15 +7509,30 @@ export function SplitScreenSection({
                           }`}
                         >
                           <div
-                            className="relative grid h-10 w-full grid-cols-4 items-center justify-items-start gap-2"
+                            className={`relative grid h-10 w-full items-center justify-items-start gap-2 ${
+                              isProfileMode ? "grid-cols-4" : "grid-cols-4"
+                            }`}
                             role="group"
                             aria-label="Guide source"
                           >
                             <span
-                              className="pointer-events-none absolute -left-0.5 top-0 h-10 w-[calc(75%+2.875rem)] rounded-[0.625rem] bg-black/18 ring-1 ring-white/10"
+                              className={`pointer-events-none absolute -left-0.5 top-0 h-10 rounded-[0.625rem] bg-black/18 ring-1 ring-white/10 ${
+                                isProfileMode ? "w-[calc(100%+0.25rem)]" : "w-[calc(75%+2.875rem)]"
+                              }`}
                               aria-hidden="true"
                             />
-                            {guideSourceSelectors.map((selector) => {
+                            {isProfileMode ? (
+                              <button
+                                type="button"
+                                onClick={openProfileCreateModal}
+                                className="relative z-10 flex h-9 w-9 items-center justify-center rounded-lg border border-white bg-white text-slate-950 shadow-sm transition-[background-color,color,border-color,transform] duration-200 hover:scale-105 hover:border-white hover:text-slate-950 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-400/70"
+                                aria-label="Create guide"
+                                title="Create guide"
+                              >
+                                <Plus className="h-4 w-4" />
+                              </button>
+                            ) : null}
+                            {visibleGuideSourceSelectors.map((selector) => {
                               const isActive = activeGuideSource === selector.id;
                               const SelectorIcon = selector.icon;
                               return (
@@ -7360,7 +7557,7 @@ export function SplitScreenSection({
                             {menuBarTitleLabel}
                           </span>
                           <div className="grid h-9 w-full grid-cols-4 items-center justify-items-end gap-2">
-                            {guideActionSelectors.map((selector) => {
+                            {visibleGuideActionSelectors.map((selector) => {
                               const isActive = activeGuideRail === selector.id;
                               const SelectorIcon = selector.icon;
                               return (
@@ -7943,7 +8140,7 @@ export function SplitScreenSection({
                   )}
                 </div>
               </div>
-              {isProfileMode && currentUser ? (
+              {isProfileMode && currentUser && isProfileSubmitting ? (
                 <div
                   className={`frosted-pane-right absolute inset-0 z-20 transition-[padding] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] ${
                     isProfileRightPaneFilled ? "p-0" : "p-5"
@@ -8067,6 +8264,7 @@ export function SplitScreenSection({
                             forceExpandStopId={selectedGuideStopId}
                             forceExpandStopNonce={selectedGuideStopNonce}
                             onEditGuide={handleEditGuideFromProfile}
+                            startInlineEditingNonce={profileInlineEditNonce}
                           />
                         ) : profileRailLists.length ? (
                           profileRailLists.map((list) => (
@@ -8085,6 +8283,7 @@ export function SplitScreenSection({
                               forceExpandStopId={selectedGuideStopId}
                               forceExpandStopNonce={selectedGuideStopNonce}
                               onEditGuide={handleEditGuideFromProfile}
+                              startInlineEditingNonce={profileExpandedGuideId === list.id ? profileInlineEditNonce : 0}
                             />
                           ))
                         ) : (
@@ -8137,6 +8336,243 @@ export function SplitScreenSection({
         </div>
         </div>
       </div>
+      {isProfileCreateModalOpen ? (
+        <div
+          className="fixed inset-0 z-[500] flex items-center justify-center bg-slate-950/55 px-4 backdrop-blur-sm"
+          role="dialog"
+          aria-modal="true"
+          aria-label="Create new entry"
+          onClick={() => setIsProfileCreateModalOpen(false)}
+        >
+          <form
+            className="w-full max-w-xl overflow-hidden rounded-xl border border-white/16 bg-[#191919] text-white shadow-2xl ring-1 ring-black/40"
+            onClick={(event) => event.stopPropagation()}
+            onSubmit={(event) => {
+              event.preventDefault();
+              handleCreateProfileGuide();
+            }}
+          >
+            <div className="flex items-center justify-between border-b border-white/10 px-5 py-4">
+              <div>
+                <p className="font-mono text-[10px] font-semibold uppercase tracking-[0.18em] text-white/45">
+                  New RGuide
+                </p>
+                <h2 className="mt-1 text-xl font-semibold text-white">Create entry</h2>
+              </div>
+              <button
+                type="button"
+                onClick={() => setIsProfileCreateModalOpen(false)}
+                className="inline-flex h-9 w-9 items-center justify-center rounded-lg border border-white/10 bg-white/8 text-white/70 transition hover:bg-white/12 hover:text-white"
+                aria-label="Close create entry"
+                title="Close"
+              >
+                <X className="h-4 w-4" />
+              </button>
+            </div>
+
+            <div className="max-h-[72vh] space-y-5 overflow-y-auto px-5 py-5">
+              <label className="block">
+                <span className="font-mono text-[10px] font-semibold uppercase tracking-[0.16em] text-white/48">
+                  Name
+                </span>
+                <input
+                  value={profileCreateName}
+                  onChange={(event) => setProfileCreateName(event.target.value)}
+                  autoFocus
+                  placeholder="Untitled guide"
+                  className="mt-2 block w-full rounded-lg border border-white/18 bg-white px-3 py-2.5 text-sm font-semibold text-slate-950 outline-none transition placeholder:text-slate-400 focus:border-white focus:bg-white"
+                />
+              </label>
+
+              <div>
+                <p className="font-mono text-[10px] font-semibold uppercase tracking-[0.16em] text-white/48">
+                  Type
+                </p>
+                <div className="mt-2 grid grid-cols-3 gap-2">
+                  {profileCreateTypeOptions.map((option) => {
+                    const TypeIcon = option.icon;
+                    const isActive = profileCreateType === option.id;
+                    return (
+                      <button
+                        key={option.id}
+                        type="button"
+                        onClick={() => setProfileCreateType(option.id)}
+                        className={`flex h-10 items-center justify-center gap-2 rounded-lg border text-sm font-semibold transition ${
+                          isActive
+                            ? "border-white bg-white text-slate-950"
+                            : "border-white/12 bg-white/8 text-white/70 hover:border-white/24 hover:bg-white/12 hover:text-white"
+                        }`}
+                      >
+                        <TypeIcon className="h-4 w-4" />
+                        <span>{option.label}</span>
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+
+              <div>
+                <p className="font-mono text-[10px] font-semibold uppercase tracking-[0.16em] text-white/48">
+                  Location
+                </p>
+                <div className="mt-2 grid gap-2 sm:grid-cols-2">
+                  <label className="block">
+                    <span className="sr-only">Continent</span>
+                    <select
+                      value={profileCreateContinentId}
+                      onChange={(event) => {
+                        const nextContinent = continents.find((continent) => continent.id === event.target.value) ?? null;
+                        const nextCountry = nextContinent?.countries[0] ?? null;
+                        const nextCity = nextCountry?.cities.find((city) => !city.isPlaceholderRegion) ?? nextCountry?.cities[0] ?? null;
+                        setProfileCreateContinentId(event.target.value);
+                        setProfileCreateCountryId(nextCountry?.id ?? "");
+                        setProfileCreateCityId(nextCity?.id ?? "");
+                        setProfileCreateSubareaId("");
+                        setProfileCreateNestedSubareaId("");
+                      }}
+                      className="w-full rounded-lg border border-white/12 bg-[#242424] px-3 py-2.5 text-sm font-semibold text-white outline-none transition focus:border-white/35"
+                    >
+                      {continents.map((continent) => (
+                        <option key={continent.id} value={continent.id}>
+                          {continent.name}
+                        </option>
+                      ))}
+                    </select>
+                  </label>
+                  <label className="block">
+                    <span className="sr-only">Country</span>
+                    <select
+                      value={profileCreateCountryId}
+                      onChange={(event) => {
+                        const nextCountry = profileCreateContinent?.countries.find((country) => country.id === event.target.value) ?? null;
+                        const nextCity = nextCountry?.cities.find((city) => !city.isPlaceholderRegion) ?? nextCountry?.cities[0] ?? null;
+                        setProfileCreateCountryId(event.target.value);
+                        setProfileCreateCityId(nextCity?.id ?? "");
+                        setProfileCreateSubareaId("");
+                        setProfileCreateNestedSubareaId("");
+                      }}
+                      className="w-full rounded-lg border border-white/12 bg-[#242424] px-3 py-2.5 text-sm font-semibold text-white outline-none transition focus:border-white/35"
+                    >
+                      {(profileCreateContinent?.countries ?? []).map((country) => (
+                        <option key={country.id} value={country.id}>
+                          {country.name}
+                        </option>
+                      ))}
+                    </select>
+                  </label>
+                  <label className="block">
+                    <span className="sr-only">City</span>
+                    <select
+                      value={profileCreateCityId}
+                      onChange={(event) => {
+                        setProfileCreateCityId(event.target.value);
+                        setProfileCreateSubareaId("");
+                        setProfileCreateNestedSubareaId("");
+                      }}
+                      className="w-full rounded-lg border border-white/12 bg-[#242424] px-3 py-2.5 text-sm font-semibold text-white outline-none transition focus:border-white/35"
+                    >
+                      <option value="">Countrywide</option>
+                      {(profileCreateCountry?.cities ?? []).filter((city) => !city.isPlaceholderRegion).map((city) => (
+                        <option key={city.id} value={city.id}>
+                          {city.name}
+                        </option>
+                      ))}
+                    </select>
+                  </label>
+                  <label className="block">
+                    <span className="sr-only">Neighborhood</span>
+                    <select
+                      value={
+                        profileCreateNestedSubarea
+                          ? `nested:${profileCreateSubareaId}:${profileCreateNestedSubareaId}`
+                          : profileCreateSubarea
+                            ? `subarea:${profileCreateSubareaId}`
+                            : ""
+                      }
+                      onChange={(event) => {
+                        const [kind, subareaId, nestedSubareaId] = event.target.value.split(":");
+                        if (!event.target.value) {
+                          setProfileCreateSubareaId("");
+                          setProfileCreateNestedSubareaId("");
+                          return;
+                        }
+                        if (kind === "nested") {
+                          setProfileCreateSubareaId(subareaId ?? "");
+                          setProfileCreateNestedSubareaId(nestedSubareaId ?? "");
+                          return;
+                        }
+                        setProfileCreateSubareaId(subareaId ?? "");
+                        setProfileCreateNestedSubareaId("");
+                      }}
+                      disabled={!profileCreateNeighborhoodOptions.length}
+                      className="w-full rounded-lg border border-white/12 bg-[#242424] px-3 py-2.5 text-sm font-semibold text-white outline-none transition disabled:opacity-45 focus:border-white/35"
+                    >
+                      <option value="">All neighborhoods</option>
+                      {profileCreateNeighborhoodOptions.map((neighborhoodOption) => (
+                        <option key={neighborhoodOption.id} value={neighborhoodOption.id}>
+                          {neighborhoodOption.label}
+                        </option>
+                      ))}
+                    </select>
+                  </label>
+                </div>
+              </div>
+
+              <div>
+                <p className="font-mono text-[10px] font-semibold uppercase tracking-[0.16em] text-white/48">
+                  Category
+                </p>
+                <div className="mt-2 grid grid-cols-4 gap-2">
+                  {categoryOptions.map((option) => {
+                    const isActive = profileCreateCategory === option.category;
+                    return (
+                      <button
+                        key={`create-category-${option.category}`}
+                        type="button"
+                        onClick={() => setProfileCreateCategory(option.category)}
+                        className={`flex h-10 items-center justify-center rounded-lg border text-white transition hover:scale-[1.03] ${
+                          isActive ? "shadow-sm" : "bg-white/8 text-white/72 hover:bg-white/12 hover:text-white"
+                        }`}
+                        style={{
+                          borderColor: CATEGORY_STYLES[option.category].mapColor,
+                          backgroundColor: isActive ? CATEGORY_STYLES[option.category].mapColor : undefined,
+                        }}
+                        aria-label={option.label}
+                        title={option.label}
+                      >
+                        <option.icon className="h-4 w-4" />
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+            </div>
+
+            <div className="flex items-center justify-between gap-3 border-t border-white/10 px-5 py-4">
+              <p className="min-w-0 truncate text-xs font-medium text-white/45">
+                {[profileCreateCountry?.name, profileCreateCity?.name, profileCreateNestedSubarea?.name ?? profileCreateSubarea?.name]
+                  .filter(Boolean)
+                  .join(" / ")}
+              </p>
+              <div className="flex shrink-0 items-center gap-2">
+                <button
+                  type="button"
+                  onClick={() => setIsProfileCreateModalOpen(false)}
+                  className="rounded-lg border border-white/12 bg-white/8 px-3 py-2 text-sm font-semibold text-white/70 transition hover:bg-white/12 hover:text-white"
+                >
+                  Cancel
+                </button>
+                <button
+                  type="submit"
+                  className="rounded-lg border border-white bg-white px-4 py-2 text-sm font-semibold text-slate-950 transition hover:scale-[1.02]"
+                >
+                  Create
+                </button>
+              </div>
+            </div>
+          </form>
+        </div>
+      ) : null}
     </section>
   );
 }

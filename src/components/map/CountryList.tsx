@@ -15,6 +15,8 @@ interface CountryListProps {
   fillHeight?: boolean;
   framed?: boolean;
   mode?: "cities" | "regions" | "states";
+  itemVariant?: "rows" | "chips";
+  tone?: "light" | "dark";
   countrySubareas?: Country["subareas"];
   countryStates?: Country["states"];
   onToggleCountry: () => void;
@@ -31,6 +33,8 @@ export function CountryList({
   fillHeight = false,
   framed = true,
   mode = "cities",
+  itemVariant = "rows",
+  tone = "light",
   countrySubareas = [],
   countryStates = [],
   onToggleCountry,
@@ -46,6 +50,8 @@ export function CountryList({
     .sort((left, right) => left.name.localeCompare(right.name));
   const showRegions = mode === "regions";
   const showStates = mode === "states";
+  const useChipItems = itemVariant === "chips";
+  const isDarkTone = tone === "dark";
   const sortedCountrySubareas = countrySubareas.slice().sort((left, right) => left.name.localeCompare(right.name));
   const sortedCountryStates = countryStates.slice().sort((left, right) => left.name.localeCompare(right.name));
 
@@ -81,7 +87,7 @@ export function CountryList({
       (showRegions ? sortedCountrySubareas.length : showStates ? sortedCountryStates.length : realCities.length) ? (
         <div
           className={cn(
-            "space-y-2",
+            useChipItems ? "flex flex-wrap content-start items-start gap-2" : "space-y-2",
             hideHeader ? "pt-0" : "mt-3 border-t border-slate-200 pt-3",
             fillHeight && "min-h-0 flex-1 overflow-y-auto",
           )}
@@ -93,14 +99,20 @@ export function CountryList({
                   type="button"
                   title={state.name}
                   className={cn(
-                    "flex w-full items-center gap-2 rounded-2xl px-3 py-2 text-left text-sm",
+                    useChipItems
+                      ? "self-start rounded-full px-3 py-1.5 text-sm transition"
+                      : "group flex w-full items-center gap-2 rounded-2xl px-3 py-2 text-left text-sm transition",
                     selection.stateId === state.id
-                      ? "bg-orange-50 text-orange-700"
-                      : "text-slate-700 hover:bg-stone-100",
+                      ? isDarkTone
+                        ? "text-white"
+                        : "bg-orange-50 text-orange-700"
+                      : isDarkTone
+                        ? "text-[rgba(255,255,255,0.62)] hover:text-white"
+                        : "text-slate-700 hover:bg-stone-100",
                   )}
                   onClick={(event) => onSelectState?.(state.id, state.countrySubareaId, event.currentTarget)}
                 >
-                  <StateShapeIcon countryId={country.id} stateId={state.id} />
+                  {useChipItems ? null : <StateShapeIcon countryId={country.id} stateId={state.id} />}
                   <span data-morph-origin="label" className="inline-block">
                     {formatDisplayName(state.name)}
                   </span>
@@ -113,14 +125,41 @@ export function CountryList({
                   type="button"
                   title={subarea.name}
                   className={cn(
-                    "flex w-full items-center gap-2 rounded-2xl px-3 py-2 text-left text-sm",
+                    useChipItems
+                      ? "self-start rounded-full px-3 py-1.5 text-sm transition"
+                      : "group flex w-full items-center gap-2 rounded-2xl px-3 py-2 text-left text-sm transition",
                     selection.countrySubareaId === subarea.id
-                      ? "bg-orange-50 text-orange-700"
-                      : "text-slate-700 hover:bg-stone-100",
+                      ? isDarkTone
+                        ? "text-white"
+                        : "bg-orange-50 text-orange-700"
+                      : isDarkTone
+                        ? "text-[rgba(255,255,255,0.62)] hover:text-white"
+                        : "text-slate-700 hover:bg-stone-100",
                   )}
                   onClick={() => onSelectCountrySubarea?.(subarea.id)}
                 >
-                  <MapPin className="h-4 w-4" />
+                  {useChipItems ? null : isDarkTone ? (
+                    <span className="relative h-4 w-4 shrink-0" aria-hidden="true">
+                      <MapPin
+                        className={cn(
+                          "absolute inset-0 h-4 w-4 text-red-500 transition-colors",
+                          selection.countrySubareaId === subarea.id
+                            ? "fill-red-500"
+                            : "fill-transparent group-hover:fill-red-500",
+                        )}
+                      />
+                      <span
+                        className={cn(
+                          "absolute left-1/2 top-[4px] h-1.5 w-1.5 -translate-x-1/2 rounded-full bg-[#1a1a1a] transition-opacity",
+                          selection.countrySubareaId === subarea.id
+                            ? "opacity-100"
+                            : "opacity-0 group-hover:opacity-100",
+                        )}
+                      />
+                    </span>
+                  ) : (
+                    <MapPin className="h-4 w-4" />
+                  )}
                   {formatDisplayName(subarea.name)}
                 </button>
               ))
@@ -129,14 +168,39 @@ export function CountryList({
                   key={city.id}
                   type="button"
                   className={cn(
-                    "flex w-full items-center gap-2 rounded-2xl px-3 py-2 text-left text-sm",
+                    useChipItems
+                      ? "self-start rounded-full px-3 py-1.5 text-sm transition"
+                      : "group flex w-full items-center gap-2 rounded-2xl px-3 py-2 text-left text-sm transition",
                     selection.cityId === city.id
-                      ? "bg-orange-50 text-orange-700"
-                      : "text-slate-700 hover:bg-stone-100",
+                      ? isDarkTone
+                        ? "text-white"
+                        : "bg-orange-50 text-orange-700"
+                      : isDarkTone
+                        ? "text-[rgba(255,255,255,0.62)] hover:text-white"
+                        : "text-slate-700 hover:bg-stone-100",
                   )}
                   onClick={(event) => onSelectCity(city.id, event.currentTarget)}
                 >
-                  <MapPin className="h-4 w-4" />
+                  {useChipItems ? null : isDarkTone ? (
+                    <span className="relative h-4 w-4 shrink-0" aria-hidden="true">
+                      <MapPin
+                        className={cn(
+                          "absolute inset-0 h-4 w-4 text-red-500 transition-colors",
+                          selection.cityId === city.id
+                            ? "fill-red-500"
+                            : "fill-transparent group-hover:fill-red-500",
+                        )}
+                      />
+                      <span
+                        className={cn(
+                          "absolute left-1/2 top-[4px] h-1.5 w-1.5 -translate-x-1/2 rounded-full bg-[#1a1a1a] transition-opacity",
+                          selection.cityId === city.id ? "opacity-100" : "opacity-0 group-hover:opacity-100",
+                        )}
+                      />
+                    </span>
+                  ) : (
+                    <MapPin className="h-4 w-4" />
+                  )}
                   <span data-morph-origin="label" className="inline-block">
                     {city.name}
                   </span>
