@@ -8,13 +8,20 @@ import { getEditorialLists, useAppStore } from "@/store/app-store";
 
 export default function FavoritesPage() {
   const favoriteIds = useAppStore((state) => state.favoriteIds);
+  const currentUser = useAppStore((state) => state.currentUser);
   const editorialLists = useAppStore((state) => state.editorialLists);
   const submittedLists = useAppStore((state) => state.submittedLists);
 
   const lists = useMemo(() => {
-    const merged = [...submittedLists, ...getEditorialLists(editorialLists)];
+    const visibleSubmittedLists = submittedLists.filter(
+      (list) =>
+        list.creator.id === currentUser?.id ||
+        (list.visibility === "public" &&
+          (list.submissionType !== "journal" || list.journal?.visibility !== "private")),
+    );
+    const merged = [...visibleSubmittedLists, ...getEditorialLists(editorialLists)];
     return merged.filter((list) => favoriteIds.includes(list.id));
-  }, [editorialLists, favoriteIds, submittedLists]);
+  }, [currentUser?.id, editorialLists, favoriteIds, submittedLists]);
 
   return (
     <div className="page-shell py-10">

@@ -9,9 +9,11 @@ import type { MapList } from "@/types";
 interface GuideExpandedIntroProps {
   list: MapList;
   sourceAction?: ReactNode;
+  isEditing?: boolean;
+  onDescriptionChange?: (description: string) => void;
 }
 
-export function GuideExpandedIntro({ list, sourceAction }: GuideExpandedIntroProps) {
+export function GuideExpandedIntro({ list, sourceAction, isEditing = false, onDescriptionChange }: GuideExpandedIntroProps) {
   const dateRange = [list.itinerary?.startDate ?? list.journey?.startDate, list.itinerary?.endDate ?? list.journey?.endDate]
     .filter(Boolean)
     .join(" to ");
@@ -32,12 +34,26 @@ export function GuideExpandedIntro({ list, sourceAction }: GuideExpandedIntroPro
           {dateRange}
         </p>
       ) : null}
-      <p
-        className="guide-content-cascade-item expanded-guide-description relative z-10 mt-2 px-4"
-        style={{ animationDelay: "45ms" }}
-      >
-        {list.description}
-      </p>
+      {isEditing ? (
+        <textarea
+          key={`${list.id}-description-${list.description}`}
+          defaultValue={list.description}
+          rows={3}
+          onClick={(event) => event.stopPropagation()}
+          onBlur={(event) => onDescriptionChange?.(event.currentTarget.value)}
+          onKeyDown={(event) => event.stopPropagation()}
+          className="guide-content-cascade-item expanded-guide-description relative z-10 mt-2 w-full resize-y rounded-md border border-slate-950/10 bg-white/85 px-4 py-3 text-slate-700 outline-none transition focus:border-slate-400 focus:bg-white"
+          style={{ animationDelay: "45ms" }}
+          aria-label="Edit guide description"
+        />
+      ) : (
+        <p
+          className="guide-content-cascade-item expanded-guide-description relative z-10 mt-2 px-4"
+          style={{ animationDelay: "45ms" }}
+        >
+          {list.description}
+        </p>
+      )}
       <Link
         href={getCreatorHref({ name: list.creator.name })}
         className="guide-content-cascade-item relative z-10 mt-2 block px-4 text-sm font-bold text-slate-900 lg:hidden"
