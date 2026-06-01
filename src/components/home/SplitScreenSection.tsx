@@ -3447,8 +3447,8 @@ export function SplitScreenSection({
         shouldAutoOpenSources={pendingSourcesOpenGuideId === list.id}
         onAutoOpenSourcesHandled={handleAutoOpenSourcesHandled}
         onRequestOpenSourcesWhenCollapsed={handleExpandAndOpenSources}
-        onHoverStart={setHoveredGuide}
-        onHoverEnd={() => setHoveredGuide(null)}
+        onHoverStart={handleGuideCardHoverStart}
+        onHoverEnd={handleGuideCardHoverEnd}
         onStopHoverChange={setHoveredStopId}
         onStopSelect={handleGuideStopSelect}
         hoveredStopId={hoveredStopId}
@@ -3752,6 +3752,14 @@ export function SplitScreenSection({
       hoveredGuideMarkerScrollRef.current = guideId;
       scrollGuideIntoView(guideId, { behavior: "smooth", defer: false });
     }
+  };
+  const handleGuideCardHoverStart = (list: MapList) => {
+    setHoveredGuide(list);
+    setHoveredGuideMarkerId(list.id);
+  };
+  const handleGuideCardHoverEnd = () => {
+    setHoveredGuide(null);
+    setHoveredGuideMarkerId(null);
   };
   const captureGuideLayoutPositions = (
     motion: "default" | "open" | "close" = "default",
@@ -8016,8 +8024,8 @@ export function SplitScreenSection({
                           shouldAutoOpenSources={pendingSourcesOpenGuideId === displayedGuide.id}
                           onAutoOpenSourcesHandled={handleAutoOpenSourcesHandled}
                           onRequestOpenSourcesWhenCollapsed={handleExpandAndOpenSources}
-                          onHoverStart={setHoveredGuide}
-                          onHoverEnd={() => setHoveredGuide(null)}
+                          onHoverStart={handleGuideCardHoverStart}
+                          onHoverEnd={handleGuideCardHoverEnd}
                           onStopHoverChange={setHoveredStopId}
                           onStopSelect={handleGuideStopSelect}
                           hoveredStopId={hoveredStopId}
@@ -8060,8 +8068,8 @@ export function SplitScreenSection({
                               shouldAutoOpenSources={pendingSourcesOpenGuideId === list.id}
                               onAutoOpenSourcesHandled={handleAutoOpenSourcesHandled}
                               onRequestOpenSourcesWhenCollapsed={handleExpandAndOpenSources}
-                              onHoverStart={setHoveredGuide}
-                              onHoverEnd={() => setHoveredGuide(null)}
+                              onHoverStart={handleGuideCardHoverStart}
+                              onHoverEnd={handleGuideCardHoverEnd}
                               onStopHoverChange={setHoveredStopId}
                               onStopSelect={handleGuideStopSelect}
                               hoveredStopId={hoveredStopId}
@@ -8122,8 +8130,8 @@ export function SplitScreenSection({
                                 hideExpandedContent={closingGuide?.id === list.id}
                                 onExpandChromeComplete={completeGuideOpening}
                                 onToggleExpand={handleGuideToggle}
-                                onHoverStart={setHoveredGuide}
-                                onHoverEnd={() => setHoveredGuide(null)}
+                                onHoverStart={handleGuideCardHoverStart}
+                                onHoverEnd={handleGuideCardHoverEnd}
                                 onStopHoverChange={setHoveredStopId}
                                 onStopSelect={handleGuideStopSelect}
                                 hoveredStopId={hoveredStopId}
@@ -8254,8 +8262,8 @@ export function SplitScreenSection({
                             expanded
                             fillPane
                             onToggleExpand={handleProfileGuideToggle}
-                            onHoverStart={setHoveredGuide}
-                            onHoverEnd={() => setHoveredGuide(null)}
+                            onHoverStart={handleGuideCardHoverStart}
+                            onHoverEnd={handleGuideCardHoverEnd}
                             onStopHoverChange={setHoveredStopId}
                             onStopSelect={handleGuideStopSelect}
                             hoveredStopId={hoveredStopId}
@@ -8274,8 +8282,8 @@ export function SplitScreenSection({
                               expandable
                               expanded={profileExpandedGuideId === list.id}
                               onToggleExpand={handleProfileGuideToggle}
-                              onHoverStart={setHoveredGuide}
-                              onHoverEnd={() => setHoveredGuide(null)}
+                              onHoverStart={handleGuideCardHoverStart}
+                              onHoverEnd={handleGuideCardHoverEnd}
                               onStopHoverChange={setHoveredStopId}
                               onStopSelect={handleGuideStopSelect}
                               hoveredStopId={hoveredStopId}
