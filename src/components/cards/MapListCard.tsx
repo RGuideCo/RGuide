@@ -295,6 +295,76 @@ function getMostCommonValue(values: Array<string | null | undefined>) {
   return [...counts.entries()].sort((left, right) => right[1] - left[1] || left[0].localeCompare(right[0]))[0]?.[0] ?? null;
 }
 
+function getMostCommonEntry(values: Array<string | null | undefined>) {
+  const counts = new Map<string, number>();
+
+  values.forEach((value) => {
+    const label = formatChipValue(value);
+    if (!label) {
+      return;
+    }
+    counts.set(label, (counts.get(label) ?? 0) + 1);
+  });
+
+  return [...counts.entries()].sort((left, right) => right[1] - left[1] || left[0].localeCompare(right[0]))[0] ?? null;
+}
+
+function pluralizeChipLabel(label: string) {
+  if (!label) {
+    return label;
+  }
+  if (/(s|x|z|ch|sh)$/i.test(label)) {
+    return label;
+  }
+  return `${label}s`;
+}
+
+function getDominantCuisineLabel(list: MapList) {
+  const stops = getAllGuideStops(list);
+  const entry = getMostCommonEntry(stops.flatMap((stop) => stop.cuisineTypes ?? []));
+  if (!entry) {
+    return null;
+  }
+
+  const [label, count] = entry;
+  const enoughStopsShareCuisine = count >= Math.max(2, Math.ceil(stops.length * 0.45));
+  if (!enoughStopsShareCuisine) {
+    return null;
+  }
+
+  const cuisinePriority: Record<string, string> = {
+    Vegan: "Vegan",
+    Vegetarian: "Vegetarian",
+    "Plant Based": "Vegetarian",
+    Tapas: "Tapas",
+    Pinchos: "Tapas",
+    Seafood: "Seafood",
+    "Fine Dining": "Fine Dining",
+    Michelin: "Michelin",
+    "Tasting Menu": "Fine Dining",
+    Market: "Markets",
+    "Food Hall": "Markets",
+    "Street Food": "Street Food",
+    Pub: "Pub Food",
+    "Pub Food": "Pub Food",
+    Indian: "Indian",
+    "South Asian": "South Asian",
+    Thai: "Thai",
+    Chinese: "Chinese",
+    Japanese: "Japanese",
+    Mediterranean: "Mediterranean",
+    French: "French",
+    Italian: "Italian",
+    Dutch: "Dutch",
+    German: "German",
+    Portuguese: "Portuguese",
+    Spanish: "Spanish",
+    Catalan: "Catalan",
+  };
+
+  return cuisinePriority[label] ?? label;
+}
+
 function inferGuideSubcategory(list: MapList) {
   const stops = getAllGuideStops(list);
   const structuredSubcategory = getMostCommonValue(
@@ -395,9 +465,97 @@ function inferGuideChipDetail(list: MapList) {
 }
 
 function buildCollapsedCategoryChip(list: MapList) {
+  const titleText = `${list.title} ${list.description}`.toLowerCase();
+
+  if (list.category === "Stay") {
+    const lodgingType = getMostCommonValue(getAllGuideStops(list).map((stop) => stop.lodgingType));
+    if (lodgingType) {
+      return { label: pluralizeChipLabel(lodgingType) };
+    }
+    if (/\bhostels?\b/i.test(titleText)) {
+      return { label: "Hostels" };
+    }
+    if (/\bhotels?\b/i.test(titleText)) {
+      return { label: "Hotels" };
+    }
+    return { label: "Stay" };
+  }
+
+  if (list.category === "Food") {
+    const explicitFoodThemes: Array<[string, RegExp]> = [
+      ["Vegetarian", /\b(vegetarian|vegan|plant[-\s]?based)\b/],
+      ["Tapas", /\b(tapas|pinchos)\b/],
+      ["Seafood", /\b(seafood|fish|oyster|coastal catch)\b/],
+      ["Fine Dining", /\b(fine dining|tasting menu|michelin|reservations?)\b/],
+      ["Markets", /\b(markets?|grazing|food hall|stalls?)\b/],
+      ["Pub Food", /\b(pub food|pub lunches?|pub dinners?|pints? that can become meals)\b/],
+      ["South Asian", /\b(south asian|indian|sri lankan|spice routes?)\b/],
+      ["Thai", /\bthai\b/],
+      ["Chinese", /\bchinese\b/],
+      ["Japanese", /\b(japanese|omakase|sushi)\b/],
+      ["Restaurants", /\b(restaurants?|tables?|dining|meals?)\b/],
+    ];
+    const explicitTheme = explicitFoodThemes.find(([, pattern]) => pattern.test(titleText))?.[0];
+    if (explicitTheme) {
+      return { label: explicitTheme };
+    }
+
+    const dominantCuisine = getDominantCuisineLabel(list);
+    if (dominantCuisine) {
+      return { label: dominantCuisine };
+    }
+
+    const foodType = getMostCommonValue(getAllGuideStops(list).map((stop) => stop.foodServiceType));
+    if (foodType) {
+      if (foodType === "Fast Food") {
+        return { label: foodType };
+      }
+      if (foodType === "Stall") {
+        return { label: "Street Food" };
+      }
+      return { label: pluralizeChipLabel(foodType) };
+    }
+
+    return { label: "Restaurants" };
+  }
+
+  if (list.category === "Activities") {
+    return { label: "Top 10" };
+  }
+
+  if (list.category === "Nightlife") {
+    if (/\b(lgbtq|queer)\b/i.test(titleText)) return { label: "LGBTQ+" };
+    if (/\b(pub|pubs|pints?)\b/i.test(titleText)) return { label: "Pubs" };
+    if (/\b(rooftop|skyline)\b/i.test(titleText)) return { label: "Rooftops" };
+    if (/\b(cocktail|cocktails)\b/i.test(titleText)) return { label: "Cocktails" };
+    const nightlifeType = getMostCommonValue(getAllGuideStops(list).map((stop) => stop.nightlifeType));
+    return { label: nightlifeType ?? "Bars" };
+  }
+
+  if (list.category === "Culture") {
+    if (/\bmuseums?\b/i.test(titleText)) return { label: "Museums" };
+    if (/\bgalleries?\b/i.test(titleText)) return { label: "Galleries" };
+    if (/\btheatre|stages?|opera\b/i.test(titleText)) return { label: "Performance" };
+    if (/\blandmarks?\b/i.test(titleText)) return { label: "Landmarks" };
+    return { label: "Culture" };
+  }
+
+  if (list.category === "Nature") {
+    if (/\bparks?\b/i.test(titleText)) return { label: "Parks" };
+    if (/\bwaterfront|river|canal\b/i.test(titleText)) return { label: "Waterfront" };
+    return { label: "Scenic" };
+  }
+
+  if (list.category === "Routes") {
+    return { label: "Routes" };
+  }
+
+  if (list.category === "Essentials") {
+    return { label: "Essentials" };
+  }
+
   return {
-    subcategory: inferGuideSubcategory(list),
-    detail: inferGuideChipDetail(list),
+    label: inferGuideChipDetail(list) ?? inferGuideSubcategory(list) ?? list.category,
   };
 }
 
@@ -1634,25 +1792,9 @@ export function MapListCard({
                       <span
                         className="inline-flex max-w-full shrink-0 items-center overflow-hidden rounded-full px-2 py-0.5 font-mono text-[9px] font-semibold uppercase tracking-[0.1em] text-white shadow-sm"
                         style={{ backgroundColor: guideAccentColor }}
-                        title={[
-                          list.category,
-                          collapsedCategoryChip.subcategory,
-                          collapsedCategoryChip.detail,
-                        ].filter(Boolean).join(" • ")}
+                        title={collapsedCategoryChip.label}
                       >
-                        <span className="truncate">{list.category}</span>
-                        {collapsedCategoryChip.subcategory ? (
-                          <>
-                            <span className="mx-1.5 h-3 w-px shrink-0 bg-white/45" aria-hidden="true" />
-                            <span className="truncate">{collapsedCategoryChip.subcategory}</span>
-                          </>
-                        ) : null}
-                        {collapsedCategoryChip.detail ? (
-                          <>
-                            <span className="mx-1.5 h-3 w-px shrink-0 bg-white/45" aria-hidden="true" />
-                            <span className="truncate">{collapsedCategoryChip.detail}</span>
-                          </>
-                        ) : null}
+                        <span className="truncate">{collapsedCategoryChip.label}</span>
                       </span>
                       <span className="min-w-0 truncate font-mono text-[10px] font-medium uppercase tracking-[0.1em] text-slate-500">
                         {[`${list.stops.length} ${list.stops.length === 1 ? "place" : "places"}`, locationSubtitle]

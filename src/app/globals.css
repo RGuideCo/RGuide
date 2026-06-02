@@ -1398,6 +1398,20 @@ textarea:focus-visible {
   animation: guide-rail-spin 3.8s linear infinite;
 }
 
+.profile-mode-rail-button {
+  box-shadow: none;
+}
+
+.profile-mode-rail-button::before,
+.profile-mode-rail-button::after {
+  display: none;
+}
+
+.profile-mode-rail-button-active {
+  background: transparent;
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.08);
+}
+
 @keyframes guide-rail-spin {
   to {
     transform: rotate(360deg);
