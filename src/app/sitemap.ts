@@ -8,7 +8,7 @@ import { getContinentsWithDestinationDescriptions } from "@/lib/destination-desc
 import { getCitiesFromContinents } from "@/lib/geography-tree";
 import { getServerEditorialGuides } from "@/lib/server-editorial-guides";
 
-export const revalidate = 900;
+export const revalidate = 86400;
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const now = new Date();

@@ -4,10 +4,10 @@ import { getContinentsWithDestinationDescriptions } from "@/lib/destination-desc
 import { checkRateLimit, rateLimitResponse, withRateLimitHeaders } from "@/lib/rate-limit";
 import { getServerEditorialGuides } from "@/lib/server-editorial-guides";
 
-const APP_DATA_CACHE_SECONDS = Number.parseInt(process.env.APP_DATA_CACHE_SECONDS ?? "900", 10);
-const cacheSeconds = Number.isFinite(APP_DATA_CACHE_SECONDS) ? APP_DATA_CACHE_SECONDS : 900;
+const APP_DATA_CACHE_SECONDS = Number.parseInt(process.env.APP_DATA_CACHE_SECONDS ?? "21600", 10);
+const cacheSeconds = Number.isFinite(APP_DATA_CACHE_SECONDS) ? APP_DATA_CACHE_SECONDS : 21600;
 
-export const revalidate = 900;
+export const revalidate = 21600;
 export const dynamic = "force-dynamic";
 export const runtime = "nodejs";
 

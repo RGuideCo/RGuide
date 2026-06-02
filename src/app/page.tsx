@@ -4,7 +4,7 @@ import { ProgressiveEnhancementShell } from "@/components/shared/ProgressiveEnha
 import { getContinentsWithDestinationDescriptions } from "@/lib/destination-descriptions";
 import { getServerEditorialGuides } from "@/lib/server-editorial-guides";
 
-export const revalidate = 900;
+export const revalidate = 21600;
 
 export default async function HomePage() {
   const [continents, editorialGuides] = await Promise.all([

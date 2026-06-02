@@ -70,7 +70,7 @@ interface DestinationContentLoadOptions {
 }
 
 const DESTINATION_DESCRIPTIONS_CACHE_SECONDS = Number.parseInt(
-  process.env.DESTINATION_DESCRIPTIONS_CACHE_SECONDS ?? "900",
+  process.env.DESTINATION_DESCRIPTIONS_CACHE_SECONDS ?? "86400",
   10,
 );
 
@@ -386,7 +386,7 @@ const getCachedDestinationContentRows = unstable_cache(
   {
     revalidate: Number.isFinite(DESTINATION_DESCRIPTIONS_CACHE_SECONDS)
       ? DESTINATION_DESCRIPTIONS_CACHE_SECONDS
-      : 900,
+      : 86400,
     tags: ["destination-descriptions"],
   },
 );
@@ -399,7 +399,7 @@ const getCachedRuntimeDestinationContentRows = unstable_cache(
   {
     revalidate: Number.isFinite(DESTINATION_DESCRIPTIONS_CACHE_SECONDS)
       ? DESTINATION_DESCRIPTIONS_CACHE_SECONDS
-      : 900,
+      : 86400,
     tags: ["destination-descriptions"],
   },
 );
