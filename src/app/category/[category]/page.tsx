@@ -8,12 +8,32 @@ import { getCanonicalGuidePath, getGuideSeoTitle } from "@/lib/deep-link-routes"
 import { getCategoryLabel } from "@/lib/mock-data";
 import { getCategoryHref, getGuideHref } from "@/lib/routes";
 import { getServerEditorialGuides } from "@/lib/server-editorial-guides";
+import type { ListCategory } from "@/types";
 
 interface CategoryPageProps {
   params: Promise<{
     category: string;
   }>;
 }
+
+const CATEGORY_INTROS: Record<ListCategory, string> = {
+  Food:
+    "Browse RGuide restaurant and food guides by city and neighborhood, from London fine dining and Shoreditch restaurants to market routes, casual counters, and destination meals worth planning around.",
+  Nightlife:
+    "Find bars, pubs, clubs, cocktail rooms, and nightlife guides organized by city, neighborhood, late-night energy, and the kind of night travelers are actually trying to build.",
+  Nature:
+    "Explore parks, gardens, waterfronts, viewpoints, and outdoor routes that help travelers balance museums, restaurants, nightlife, and city walking with real breathing room.",
+  Culture:
+    "Browse museum, gallery, landmark, theatre, design, and neighborhood culture guides with routes that make the city easier to understand, not just harder to schedule.",
+  Stay:
+    "Compare hotel and hostel guides by city and neighborhood, including Barcelona hostels, Madrid hotels, London hostels, and practical stay advice for transit, nightlife, value, and first-time trips.",
+  Activities:
+    "Plan things to do with city itineraries, weekend routes, one-day plans, and activity guides that connect restaurants, culture, parks, nightlife, and neighborhood pacing.",
+  Routes:
+    "Follow curated city routes and travel sequences built for practical movement through neighborhoods, sights, food stops, and places worth saving along the way.",
+  Essentials:
+    "Use essential city-planning guides for practical travel context, neighborhood fit, stay decisions, and the basic choices that shape the rest of a trip.",
+};
 
 export async function generateMetadata({ params }: CategoryPageProps): Promise<Metadata> {
   const { category } = await params;
@@ -56,9 +76,7 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
       <div className="max-w-3xl">
         <p className="text-sm font-medium uppercase tracking-[0.24em] text-orange-600">Category</p>
         <h1 className="mt-2 text-4xl font-semibold text-slate-900">{label}</h1>
-        <p className="mt-3 text-slate-600">
-          Clean, crawlable category landing page for future SEO scale and internal linking.
-        </p>
+        <p className="mt-3 text-slate-600">{CATEGORY_INTROS[label]}</p>
       </div>
 
       <div className="mt-8 grid gap-4 md:grid-cols-2 xl:grid-cols-4">
