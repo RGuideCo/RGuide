@@ -465,7 +465,8 @@ function inferGuideChipDetail(list: MapList) {
 }
 
 function buildCollapsedCategoryChip(list: MapList) {
-  const titleText = `${list.title} ${list.description}`.toLowerCase();
+  const headingText = `${list.title} ${list.seoTitle ?? ""} ${list.seoSlug ?? ""}`.toLowerCase();
+  const titleText = `${headingText} ${list.description}`.toLowerCase();
 
   if (list.category === "Stay") {
     const lodgingType = getMostCommonValue(getAllGuideStops(list).map((stop) => stop.lodgingType));
@@ -482,7 +483,7 @@ function buildCollapsedCategoryChip(list: MapList) {
   }
 
   if (list.category === "Food") {
-    const explicitFoodThemes: Array<[string, RegExp]> = [
+    const headingFoodThemes: Array<[string, RegExp]> = [
       ["Vegetarian", /\b(vegetarian|vegan|plant[-\s]?based)\b/],
       ["Tapas", /\b(tapas|pinchos)\b/],
       ["Seafood", /\b(seafood|fish|oyster|coastal catch)\b/],
@@ -495,14 +496,31 @@ function buildCollapsedCategoryChip(list: MapList) {
       ["Japanese", /\b(japanese|omakase|sushi)\b/],
       ["Restaurants", /\b(restaurants?|tables?|dining|meals?)\b/],
     ];
-    const explicitTheme = explicitFoodThemes.find(([, pattern]) => pattern.test(titleText))?.[0];
-    if (explicitTheme) {
-      return { label: explicitTheme };
+    const headingTheme = headingFoodThemes.find(([, pattern]) => pattern.test(headingText))?.[0];
+    if (headingTheme) {
+      return { label: headingTheme };
     }
 
     const dominantCuisine = getDominantCuisineLabel(list);
     if (dominantCuisine) {
       return { label: dominantCuisine };
+    }
+
+    const descriptionThemes: Array<[string, RegExp]> = [
+      ["Vegetarian", /\b(vegetarian|vegan|plant[-\s]?based)\b/],
+      ["Tapas", /\b(tapas|pinchos)\b/],
+      ["Fine Dining", /\b(fine dining|tasting menu|michelin|reservations?)\b/],
+      ["Markets", /\b(markets?|grazing|food hall|stalls?)\b/],
+      ["Pub Food", /\b(pub food|pub lunches?|pub dinners?|pints? that can become meals)\b/],
+      ["South Asian", /\b(south asian|indian|sri lankan|spice routes?)\b/],
+      ["Thai", /\bthai\b/],
+      ["Chinese", /\bchinese\b/],
+      ["Japanese", /\b(japanese|omakase|sushi)\b/],
+      ["Restaurants", /\b(restaurants?|tables?|dining|meals?)\b/],
+    ];
+    const descriptionTheme = descriptionThemes.find(([, pattern]) => pattern.test(titleText))?.[0];
+    if (descriptionTheme) {
+      return { label: descriptionTheme };
     }
 
     const foodType = getMostCommonValue(getAllGuideStops(list).map((stop) => stop.foodServiceType));
