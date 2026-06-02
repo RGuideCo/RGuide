@@ -23,6 +23,7 @@ import {
 import { berlinCitywideGuides } from "@/data/guides/berlin";
 import { istanbulCitywideGuides } from "@/data/guides/istanbul";
 import { lisbonCitywideGuides } from "@/data/guides/lisbon";
+import { newYorkCityCitywideGuides } from "@/data/guides/new-york-city";
 import { pragueCitywideGuides } from "@/data/guides/prague";
 import { romeGuides } from "@/data/guides/rome";
 import { sanFranciscoGuides } from "@/data/guides/san-francisco";
@@ -34,6 +35,7 @@ export const editorialGuideLists: MapList[] = enrichGuidesCuisineTypes([
   ...parisCitywideGuides,
   ...londonNeighborhoodGuides,
   ...londonCitywideGuides,
+  ...newYorkCityCitywideGuides,
   ...madridNeighborhoodGuides,
   ...globalGuides,
   ...istanbulCitywideGuides,
