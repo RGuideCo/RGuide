@@ -4843,8 +4843,8 @@ export function SplitScreenSection({
                     <button
                       type="button"
                       onClick={() => setActiveProfileLeftRail(option.id)}
-                      className={`guide-rail-button relative z-10 flex h-10 w-10 items-center justify-center rounded-full border border-slate-200/90 bg-white/95 text-slate-700 shadow-sm transition hover:scale-105 hover:border-slate-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-400/70 ${
-                        activeProfileLeftRail === option.id ? "guide-rail-button-active border-slate-900 text-slate-900" : ""
+                      className={`guide-rail-button profile-mode-rail-button relative z-10 flex h-10 w-10 items-center justify-center rounded-full border bg-transparent text-white/58 transition hover:scale-105 hover:border-white/55 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/55 ${
+                        activeProfileLeftRail === option.id ? "profile-mode-rail-button-active border-white/70 text-white" : "border-transparent"
                       }`}
                       aria-label={option.label}
                       title={option.label}
