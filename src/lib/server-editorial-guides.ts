@@ -63,7 +63,7 @@ function normalizeWeeklyEventGuide(guide: MapList): MapList {
 }
 
 const EDITORIAL_GUIDES_CACHE_SECONDS = Number.parseInt(
-  process.env.EDITORIAL_GUIDES_CACHE_SECONDS ?? "900",
+  process.env.EDITORIAL_GUIDES_CACHE_SECONDS ?? "86400",
   10,
 );
 
@@ -468,7 +468,7 @@ const getCachedCityEditorialGuidesFromSupabase = unstable_cache(
   {
     revalidate: Number.isFinite(EDITORIAL_GUIDES_CACHE_SECONDS)
       ? EDITORIAL_GUIDES_CACHE_SECONDS
-      : 900,
+      : 86400,
     tags: ["editorial-guides"],
   },
 );

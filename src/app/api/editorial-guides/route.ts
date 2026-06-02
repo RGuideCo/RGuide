@@ -4,14 +4,14 @@ import { checkRateLimit, rateLimitResponse, withRateLimitHeaders } from "@/lib/r
 import { getServerEditorialGuides } from "@/lib/server-editorial-guides";
 
 const EDITORIAL_GUIDES_CACHE_SECONDS = Number.parseInt(
-  process.env.EDITORIAL_GUIDES_CACHE_SECONDS ?? "900",
+  process.env.EDITORIAL_GUIDES_CACHE_SECONDS ?? "21600",
   10,
 );
 const cacheSeconds = Number.isFinite(EDITORIAL_GUIDES_CACHE_SECONDS)
   ? EDITORIAL_GUIDES_CACHE_SECONDS
-  : 900;
+  : 21600;
 
-export const revalidate = 900;
+export const revalidate = 21600;
 export const dynamic = "force-dynamic";
 export const runtime = "nodejs";
 

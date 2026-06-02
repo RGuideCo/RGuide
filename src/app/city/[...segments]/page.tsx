@@ -15,7 +15,7 @@ interface CityDeepLinkPageProps {
   }>;
 }
 
-export const revalidate = 900;
+export const revalidate = 86400;
 
 export function generateStaticParams() {
   return getCityDeepLinkStaticParams();
