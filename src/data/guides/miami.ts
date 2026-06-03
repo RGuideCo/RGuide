@@ -220,6 +220,8 @@ const hoursByName: Record<string, StopHours> = {
 };
 
 function expandDefaultHours(input: StopHours): StopHours {
+  if (typeof input !== "object") return input;
+
   const hasDayKeys = ["mon", "tue", "wed", "thu", "fri", "sat", "sun"].some((key) => key in input);
   if (hasDayKeys) return input;
   if (input.default) return daily(input.default);

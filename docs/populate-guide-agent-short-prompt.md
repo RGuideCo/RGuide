@@ -49,7 +49,8 @@ When you receive one of the short prompts above:
 5. Apply the hard quality gates before writing:
    - every guide needs an explicit clean `seoSlug` for the canonical `/city/...` URL;
    - never put `citywide`, `top-10`, `list-`, or the city name in `seoSlug`;
-   - every stop needs verified hours or a source-backed schedule caveat;
+   - every stop needs a non-empty `hours` field backed by Google Maps, the official site, a booking/platform page, or a clearly sourced seasonal/event caveat;
+   - do not publish if any real venue stop is missing hours; fix the stop data first so the normalized publisher can write `entry_stops.hours` and canonical `venue_hours`/`venue_special_hours`;
    - every stop description needs source-grounded editorial texture: Anthony Bourdain curiosity with TripAdvisor usefulness, not keyword chains.
 6. Do not call the task done until strict local verification, normalized publish, R2 ingestion, and strict live verification have passed.
 
@@ -61,5 +62,7 @@ npm run push:editorial-guides -- --city {City}
 npm run ingest:venue-media-r2 -- --city {City}
 npm run verify:guide-publish -- --city {City} --strict --live
 ```
+
+If verification reports missing hours, missing canonical venue hours, or schedule caveats without source evidence, stop and repair the guide data before rerunning publish. Do not describe the guide as complete while hours are only implied by sources or visible on a website.
 
 If the prompt is category- or neighborhood-scoped, use the same workflow and narrow the guide set to that requested scope.

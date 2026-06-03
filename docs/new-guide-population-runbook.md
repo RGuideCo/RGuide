@@ -143,10 +143,14 @@ Description rules:
 
 Hours rules:
 
-- every real venue stop needs current hours from Google Maps, the official site, a booking platform, or another current-status source;
+- every real venue stop must have a non-empty `hours` field before publish;
+- verify hours from Google Maps, the official site, a booking platform, an official calendar, or another current-status source;
 - use structured day keys where possible;
-- use a schedule caveat only when hours are genuinely event-dependent, seasonal, or unavailable from reliable sources;
-- persist venue-level hours through the normalized publisher into `venue_hours`/`venue_special_hours`;
+- use `{ default: "..." }` when the source gives summary hours or when the venue is schedule-driven;
+- use a schedule caveat only when hours are genuinely event-dependent, seasonal, weather-dependent, or unavailable from reliable sources, and make the caveat source-backed;
+- do not use vague placeholders like `Hours vary` unless the caveat names what varies and where to verify it;
+- do not publish if any stop is missing `hours`; fix the guide data first;
+- persist venue-level hours through the normalized publisher into `venue_hours`/`venue_special_hours` or `venues.hours_note`;
 - use `entry_stops.hours` only for guide-specific display notes or overrides.
 
 Category requirements:
@@ -163,6 +167,8 @@ Run the local gate before publishing:
 ```bash
 npm run verify:guide-publish -- --city {City} --strict --local-only
 ```
+
+If the local gate reports missing hours or weak schedule caveats, stop and repair the local guide file. Do not publish first and repair later.
 
 For a single guide:
 

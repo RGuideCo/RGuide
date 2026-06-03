@@ -151,9 +151,11 @@ export const useAppStore = create<AppState>()(
       },
       toggleFavorite: (listId) =>
         set((state) => ({
-          favoriteIds: state.favoriteIds.includes(listId)
-            ? state.favoriteIds.filter((id) => id !== listId)
-            : [...state.favoriteIds, listId],
+          favoriteIds:
+            state.favoriteIds.includes(listId) || state.votedIds.includes(listId)
+              ? state.favoriteIds.filter((id) => id !== listId)
+              : [...state.favoriteIds, listId],
+          votedIds: state.votedIds.filter((id) => id !== listId),
         })),
       toggleFavoriteLocation: (location) =>
         set((state) => ({

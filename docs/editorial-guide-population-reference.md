@@ -375,7 +375,7 @@ Required stop-level fields:
 - `name`: current public name from official site or Google Maps.
 - `coordinates`: `[latitude, longitude]`. This app uses latitude first.
 - `description`: usually 2-4 substantial sentences explaining why the place belongs in this exact guide, what the visitor experiences, and the practical caveat or best-use context.
-- `hours`: verified from Google Maps, official site, or venue platform. Use structured day keys when possible. These must publish to normalized `venue_hours`/`venue_special_hours`; `entry_stops.hours` is only for guide-specific display notes or overrides.
+- `hours`: required for every real stop. Verify from Google Maps, the official site, a venue platform, booking platform, official calendar, or another current-status source. Use structured day keys when possible; otherwise use `{ default: "..." }` with a clear source-backed schedule caveat. These must publish to normalized `venue_hours`/`venue_special_hours` or `venues.hours_note`; `entry_stops.hours` is only for guide-specific display notes or overrides. Do not publish stops with blank, implied, or unsourced hours.
 
 Conditional stop-level fields:
 
