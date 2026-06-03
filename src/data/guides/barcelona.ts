@@ -1245,7 +1245,7 @@ export const barcelonaCoreGuides = [
     "seoSlug": "best-restaurants",
     "seoTitle": "Best Restaurants in Eixample, Barcelona",
     "seoDescription": "Best restaurants in Eixample, Barcelona, from destination tasting menus and polished tapas counters to design-hotel dining rooms and reliable group-friendly classics.",
-    "title": "Big-Deal Tables and Tapas",
+    "title": "Upscale Dining & Tapas",
     "description": "Eixample is where Barcelona can afford to be polished without losing its appetite. Disfrutar is the obvious pilgrimage, but the guide also gives you Bar Mut's steak-and-wine confidence, Bodega Bonay's looser modern mood, and Paco Meralgo or Cerveceria Catalana when tapas need tempo. Bodega Joan and El Nacional are here for the big-table, no-mystery nights when logistics matter as much as taste.",
     "url": "https://www.google.com/maps/search/eixample+restaurants+barcelona",
     "category": "Food",
@@ -1863,7 +1863,7 @@ export const barcelonaCoreGuides = [
     "seoSlug": "best-restaurants",
     "seoTitle": "Best Restaurants in Barcelona",
     "seoDescription": "Best restaurants in Barcelona, from world-class tasting menus and seafood counters to natural-wine rooms, tavern classics, market lunches, and neighborhood meals worth crossing town for.",
-    "title": "Tables Worth Crossing Town For",
+    "title": "Essential Local Spots",
     "description": "This is the cross-town list for meals that can carry a day instead of merely interrupting it. Disfrutar, Cal Pep, Quimet & Quimet, and Bar del Pla are the heavy anchors, but the guide also makes room for Bodega Bonay, La Sosenga, La Pubilla, and Capet, the places that make a neighborhood feel legible through the plate. Martinez, Bar Brutal, Bar La Plata, and Bemba keep the range honest: splurge, counter, wine, burger, repeat as needed.",
     "url": "https://www.google.com/maps/search/best+restaurants+barcelona",
     "category": "Food",
@@ -2194,7 +2194,7 @@ export const barcelonaCoreGuides = [
     "seoSlug": "best-tapas",
     "seoTitle": "Best Tapas in Barcelona",
     "seoDescription": "Best tapas in Barcelona, from Barceloneta classics and standing-room cava counters to Gothic taverns, vermouth bodegas, market bars, and polished small plates.",
-    "title": "Old Counters, Cava, and Small Plates",
+    "title": "Old Counter Classics: Tapas & Cava",
     "description": "Barcelona tapas is less a checklist than a way of moving through the city: one counter for a bomba, another for fried fish, a glass of cava before the room fills, a vermouth bodega when Gràcia starts to loosen up. This guide leans into places with a reason to exist. La Cova Fumada, Bar La Plata, El Vaso de Oro, and Can Paixano keep the old rhythm alive; Quimet & Quimet, El Xampanyet, and Bodega Quimet cover the salty bottle-lined ritual; Bar Cañete, Bar del Pla, Paco Meralgo, and La Platilleria give the crawl enough polish to become dinner.",
     "url": "https://www.google.com/maps/search/best+tapas+barcelona",
     "category": "Food",
@@ -2479,7 +2479,7 @@ export const barcelonaCoreGuides = [
     "seoSlug": "best-seafood",
     "seoTitle": "Best Seafood in Barcelona",
     "seoDescription": "Best seafood in Barcelona, from Born seafood counters and Montjuïc rice terraces to robata fish, Venetian-Catalan plates, market taverns, and polished seafood rooms.",
-    "title": "Fish Counters and Rice With a View",
+    "title": "Scenic Seafood",
     "description": "This guide is seafood without pretending every good fish in Barcelona has to come with a beach view. Cal Pep is the counter classic, Martinez gives rice and citywide panorama, and Fismuler brings a more polished, modern dining-room pace. Xemei, El Xampanyet, and El Nacional fill in the rest: Venetian edges, anchovy-cava simplicity, and a grander room when the night needs scale.",
     "url": "https://www.google.com/maps/search/best+seafood+barcelona",
     "category": "Food",
@@ -2661,7 +2661,7 @@ export const barcelonaCoreGuides = [
     "seoSlug": "best-catalan-food",
     "seoTitle": "Best Catalan Food in Barcelona",
     "seoDescription": "Best Catalan food in Barcelona, from old taverns and market lunches to contemporary Catalan tasting menus, polished bistros, tapas counters, and regional cooking worth booking.",
-    "title": "Taverns, Markets, and Modern Catalan Rooms",
+    "title": "Local Taverns & Market Bites",
     "description": "Catalan cooking can be quiet, seasonal, stubborn, and deeply satisfying when you stop chasing novelty. La Sosenga, La Pubilla, and Bar La Plata bring the tavern and market bones; Capet, Bar Mut, and Paco Meralgo make the tradition sharper and more urban. Bodega Bonay stretches the category just enough, letting wine, design, and familiar flavors sit at the same table.",
     "url": "https://www.google.com/maps/search/best+catalan+food+barcelona",
     "category": "Food",
@@ -2867,7 +2867,7 @@ export const barcelonaCoreGuides = [
     "seoSlug": "best-fine-dining",
     "seoTitle": "Best Fine Dining in Barcelona",
     "seoDescription": "Best fine dining in Barcelona, from world-famous tasting menus and Michelin-backed rooms to chef-led Catalan dinners, seafood splurges, and polished reservations.",
-    "title": "Reservations to Build the Trip Around",
+    "title": "Destination Dining",
     "description": "These are the reservations that change the shape of the day around them. Disfrutar is the headline act, but Capet and Con Gracia give the city smaller rooms with ambition, while Martinez and Cal Pep prove that seafood can still feel like theater without a white tablecloth script. Bar Mut closes the loop with the kind of polished, carnivorous confidence that wants a long bottle and no rush.",
     "url": "https://www.google.com/maps/search/best+fine+dining+barcelona",
     "category": "Food",
@@ -3771,10 +3771,10 @@ export const barcelonaCoreGuides = [
     "slug": "barcelona-gothic-quarter-stays",
     "seoSlug": "best-places-to-stay",
     "seoTitle": "Best Places to Stay in the Gothic Quarter, Barcelona",
-    "seoDescription": "Best places to stay in the Gothic Quarter, Barcelona, for old-city hotels, boutique stays, hostels, cathedral access, and walkable historic lanes.",
+    "seoDescription": "Best places to stay in the Gothic Quarter, Barcelona, for old-city hotels, boutique stays, cathedral access, and walkable historic lanes.",
     "title": "Sleep in the Old City",
-    "description": "Sleeping in the Gothic Quarter is a bargain with the city: you get the old lanes at your door, and you accept the noise, the tourists, and the late-night churn. Hotel Neri and Mercer make the romance feel grown-up, while Kimpton Vividora and H10 Madison give the base more modern ease. Safestay Gothic keeps the same central logic for travelers spending less and staying out more.",
-    "url": "https://www.google.com/maps/search/gothic+quarter+hotels+hostels+barcelona",
+    "description": "Sleeping in the Gothic Quarter is a bargain with the city: you get the old lanes at your door, and you accept the noise, the tourists, and the late-night churn. Hotel Neri and Mercer make the romance feel grown-up, while Kimpton Vividora and H10 Madison give the base more modern ease.",
+    "url": "https://www.google.com/maps/search/gothic+quarter+hotels+barcelona",
     "category": "Stay",
     "location": {
       "city": "Barcelona",
@@ -3867,25 +3867,7 @@ export const barcelonaCoreGuides = [
         },
         "photo": "https://pro-static.h10hotels.com/gallery/Cabecera_Fichahotel_HMD1.jpg"
       },
-      {
-        "id": "gothic-safestay-gothic",
-        "name": "Safestay Barcelona Gothic",
-        "coordinates": [
-          41.3838,
-          2.1786
-        ],
-        "description": "Safestay Barcelona Gothic gives the old-city list a budget option supported by location and hostel-platform visibility. The reason to choose it is not luxury; it is dorm pricing, social travel, and a base that sits between Gothic lanes, El Born, and the museum/bar circuit.",
-        "hours": {
-          "mon": "24 hours",
-          "tue": "24 hours",
-          "wed": "24 hours",
-          "thu": "24 hours",
-          "fri": "24 hours",
-          "sat": "24 hours",
-          "sun": "24 hours"
-        },
-        "photo": "https://www.safestay.com/wp-content/uploads/2023/07/BCNGT-2023-9-aspect-ratio-927-676.jpg"
-      }
+
     ],
     "sources": [
       {
@@ -4043,10 +4025,10 @@ export const barcelonaCoreGuides = [
     "slug": "barcelona-eixample-stays",
     "seoSlug": "best-places-to-stay",
     "seoTitle": "Best Places to Stay in Eixample, Barcelona",
-    "seoDescription": "Best places to stay in Eixample, Barcelona, for design hotels, central transit, Modernista architecture, hostels, and calmer bases outside the old-city lanes.",
-    "title": "Design Hotels on the Grid",
-    "description": "Eixample is the base for travelers who want Barcelona to function smoothly: wider streets, better taxis, Modernista walks, and fewer old-city compromises. Casa Bonay and Almanac bring design and polish, Praktik Bakery adds a small daily pleasure right in the building, and The One gives the stay a luxury register. Yeah Barcelona Hostel keeps the same map logic for travelers who want social energy over room service.",
-    "url": "https://www.google.com/maps/search/eixample+hotels+hostels+barcelona",
+    "seoDescription": "Best places to stay in Eixample, Barcelona, for design hotels, central transit, Modernista architecture, and calmer bases outside the old-city lanes.",
+    "title": "Design Stays on the Grid",
+    "description": "Eixample is the base for travelers who want Barcelona to function smoothly: wider streets, better taxis, Modernista walks, and fewer old-city compromises. Casa Bonay and Almanac bring design and polish, Praktik Bakery adds a small daily pleasure right in the building, and The One gives the stay a luxury register.",
+    "url": "https://www.google.com/maps/search/eixample+hotels+barcelona",
     "category": "Stay",
     "location": {
       "city": "Barcelona",
@@ -4139,28 +4121,7 @@ export const barcelonaCoreGuides = [
         },
         "photo": "https://static.hoteltreats.com/site/styles/hero/s3/2019-12/9-2-17_Terraza-piscina-de-dia_0056.jpg?itok=KLPQ2WKO"
       },
-      {
-        "id": "eixample-yeah-hostel",
-        "name": "Yeah Barcelona Hostel",
-        "coordinates": [
-          41.3983,
-          2.1654
-        ],
-        "description": "Yeah Barcelona Hostel is included because it gives Eixample a social, budget-conscious option with dorms and private rooms. Its location works especially well for travelers splitting time between Gràcia, Sagrada Família, and Eixample dining, while still wanting hostel programming and shared spaces.",
-        "category": "Stay",
-        "venueKind": "lodging",
-        "lodgingType": "hostel",
-        "hours": {
-          "mon": "24 hours",
-          "tue": "24 hours",
-          "wed": "24 hours",
-          "thu": "24 hours",
-          "fri": "24 hours",
-          "sat": "24 hours",
-          "sun": "24 hours"
-        },
-        "photo": "https://images.trvl-media.com/lodging/28000000/27090000/27084800/27084729/9f0a3253.jpg?impolicy=resizecrop&ra=fit&rw=1200"
-      }
+
     ],
     "sources": [
       {
@@ -4182,10 +4143,10 @@ export const barcelonaCoreGuides = [
     "slug": "barcelona-gracia-stays",
     "seoSlug": "best-places-to-stay",
     "seoTitle": "Best Places to Stay in Gràcia, Barcelona",
-    "seoDescription": "Best places to stay in Gràcia, Barcelona, for village-like plazas, Park Guell access, budget hostels, boutique lodging, and a less tourist-saturated base.",
+    "seoDescription": "Best places to stay in Gràcia, Barcelona, for village-like plazas, Park Guell access, boutique lodging, and a less tourist-saturated base.",
     "title": "Village-Base Stays",
-    "description": "Gracia asks you to trade a little central convenience for a neighborhood that feels like it has its own weather. Casa Gracia and Sonder La Casa del Sol put you near the plazas, while Hotel Ronda Lesseps and Catalonia Park Guell make the Park Guell side more practical. Rocket Hostels Gracia is for the traveler who wants the village rhythm without pretending this is a sleepy part of town.",
-    "url": "https://www.google.com/maps/search/gracia+hotels+hostels+barcelona",
+    "description": "Gracia asks you to trade a little central convenience for a neighborhood that feels like it has its own weather. Sonder La Casa del Sol puts you near the plazas, while Hotel Ronda Lesseps and Catalonia Park Guell make the Park Guell side more practical.",
+    "url": "https://www.google.com/maps/search/gracia+hotels+barcelona",
     "category": "Stay",
     "location": {
       "city": "Barcelona",
@@ -4202,25 +4163,6 @@ export const barcelonaCoreGuides = [
     "upvotes": 0,
     "createdAt": "2026-04-29T00:00:00.000Z",
     "stops": [
-      {
-        "id": "gracia-casa-gracia",
-        "name": "Casa Gràcia",
-        "coordinates": [
-          41.3978,
-          2.1578
-        ],
-        "description": "Casa Gràcia is the most flexible Gràcia stay because sources position it between hostel, hotel, and social hub. On the Diagonal edge, it works for private rooms, dorms, communal spaces, and travelers who want immediate access to Gràcia plazas without losing Eixample transit connections.",
-        "hours": {
-          "mon": "24 hours",
-          "tue": "24 hours",
-          "wed": "24 hours",
-          "thu": "24 hours",
-          "fri": "24 hours",
-          "sat": "24 hours",
-          "sun": "24 hours"
-        },
-        "photo": "https://a.hwstatic.com/image/upload/f_auto,q_auto,h_320,c_limit,e_sharpen,e_improve,e_vibrance:60/propertyimages/4/45620/dcpnqaebwoizjbeaiopu.jpg"
-      },
       {
         "id": "gracia-sonder-la-casa-del-sol",
         "name": "Sonder La Casa del Sol",
@@ -4258,25 +4200,6 @@ export const barcelonaCoreGuides = [
           "sun": "24 hours"
         },
         "photo": "https://www.hotellesseps.com/wp-content/uploads/sites/436/2024/05/HRL-2024-Terrassa-Gran-01.jpg"
-      },
-      {
-        "id": "gracia-rocket-hostels",
-        "name": "Rocket Hostels Gràcia",
-        "coordinates": [
-          41.4108,
-          2.1514
-        ],
-        "description": "Rocket Hostels Gràcia earns a place as the low-cost hillside option near Park Güell. The fit is specific: backpackers or budget travelers who want a smaller hostel, less old-town noise, and easier access to the upper Gràcia/Collserola side of the city.",
-        "hours": {
-          "mon": "24 hours",
-          "tue": "24 hours",
-          "wed": "24 hours",
-          "thu": "24 hours",
-          "fri": "24 hours",
-          "sat": "24 hours",
-          "sun": "24 hours"
-        },
-        "photo": "https://images.unsplash.com/photo-1555854877-bab0e564b8d5?auto=format&fit=crop&w=900&q=80"
       },
       {
         "id": "gracia-catalonia-park-guell",
@@ -4318,10 +4241,10 @@ export const barcelonaCoreGuides = [
     "slug": "barcelona-poble-sec-stays",
     "seoSlug": "best-places-to-stay",
     "seoTitle": "Best Places to Stay in Poble-sec, Barcelona",
-    "seoDescription": "Best places to stay in Poble-sec, Barcelona, for Montjuic access, theater nights, Sala Apolo proximity, budget rooms, and a base between old town and the hill.",
+    "seoDescription": "Best places to stay in Poble-sec, Barcelona, for Montjuic access, theater nights, Sala Apolo proximity, hotels, and a base between old town and the hill.",
     "title": "Sleep Near Montjuïc",
-    "description": "Poble-sec is not the postcard base, which is exactly why it can work. Hotel Brummell gives the neighborhood a design-hotel pulse, INNSiDE Apolo and Hostal Apolo keep you close to Parallel and the late-night circuit, and Hotel Coronado stays simple and useful. Hostal Bcn Port stretches the map toward the waterfront when the trip needs port access as much as tapas and Montjuic.",
-    "url": "https://www.google.com/maps/search/poble+sec+hotels+hostels+barcelona",
+    "description": "Poble-sec is not the postcard base, which is exactly why it can work. Hotel Brummell gives the neighborhood a design-hotel pulse, INNSiDE Apolo keeps you close to Parallel and the late-night circuit, and Hotel Coronado stays simple and useful.",
+    "url": "https://www.google.com/maps/search/poble+sec+hotels+barcelona",
     "category": "Stay",
     "location": {
       "city": "Barcelona",
@@ -4377,25 +4300,6 @@ export const barcelonaCoreGuides = [
         "photo": "https://innsidebymeliaapolo.barcelonahotel.org/data/Photos/OriginalPhoto/17655/1765572/1765572628/photo-innside-by-melia-barcelona-apolo-barcelona-1.JPEG"
       },
       {
-        "id": "poblesec-hostal-apolo",
-        "name": "Hostal Apolo",
-        "coordinates": [
-          41.3747,
-          2.169
-        ],
-        "description": "Hostal Apolo is included as a simple budget base in the theater-and-club corridor. The value is location rather than amenities: quick access to Paral·lel, Sala Apolo, Carrer de Blai, and Montjuïc for travelers who need an affordable room more than a design stay.",
-        "hours": {
-          "mon": "24 hours",
-          "tue": "24 hours",
-          "wed": "24 hours",
-          "thu": "24 hours",
-          "fri": "24 hours",
-          "sat": "24 hours",
-          "sun": "24 hours"
-        },
-        "photo": "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/22/19/5f/f6/hostal-apolo.jpg?w=1100&h=-1&s=1"
-      },
-      {
         "id": "poblesec-coronado",
         "name": "Hotel Coronado",
         "coordinates": [
@@ -4413,25 +4317,6 @@ export const barcelonaCoreGuides = [
           "sun": "24 hours"
         },
         "photo": "https://www.hotelcoronado.net/wp-content/uploads/2023/05/02-4.jpg"
-      },
-      {
-        "id": "poblesec-hostal-bcn-port",
-        "name": "Hostal Bcn Port",
-        "coordinates": [
-          41.3753,
-          2.1758
-        ],
-        "description": "Hostal Bcn Port is included for travelers whose Barcelona logistics involve the port side of Poble-sec. It is budget-friendly, simple, and useful for cruise-adjacent stays or Rambla-to-Montjuïc walking routes, with less neighborhood charm than Brummell but stronger practical positioning.",
-        "hours": {
-          "mon": "24 hours",
-          "tue": "24 hours",
-          "wed": "24 hours",
-          "thu": "24 hours",
-          "fri": "24 hours",
-          "sat": "24 hours",
-          "sun": "24 hours"
-        },
-        "photo": "https://www.yomobcnport.com/idb/84500/hab-doble-twin-3-490x330.jpg"
       }
     ],
     "sources": [
@@ -7603,7 +7488,7 @@ export const barcelonaItineraryGuides = [
   {
     "id": "list-barcelona-weekend-activities",
     "slug": "barcelona-weekend-itinerary",
-    "seoSlug": "best-things-to-do",
+    "seoSlug": "weekend-itinerary",
     "seoTitle": "Best Things to Do in Barcelona for a Weekend",
     "seoDescription": "Best Barcelona weekend journey, mixing culture, restaurants, dive bars, popular nightlife, hostel/stay context, and neighborhood pacing across two days.",
     "title": "Two Nights, Five Neighborhood Moods",
@@ -7798,7 +7683,7 @@ export const barcelonaItineraryGuides = [
   {
     "id": "list-barcelona-week-activities",
     "slug": "barcelona-week-itinerary",
-    "seoSlug": "best-things-to-do",
+    "seoSlug": "one-week-itinerary",
     "seoTitle": "Best Things to Do in Barcelona for a Week",
     "seoDescription": "Best one-week Barcelona journey, using the strongest citywide picks across restaurants, culture, dive bars, popular bars, hostels, stays, neighborhoods, and Montjuïc.",
     "title": "A Week From Gràcia to the Hill",
