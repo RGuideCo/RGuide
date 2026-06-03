@@ -70,7 +70,27 @@ function commons(fileName: string) {
 }
 
 function daily(text: string): StopHours {
-  return { default: `Daily ${text}` };
+  return {
+    mon: text,
+    tue: text,
+    wed: text,
+    thu: text,
+    fri: text,
+    sat: text,
+    sun: text,
+  };
+}
+
+function closed(): StopHours {
+  return {
+    mon: "Closed",
+    tue: "Closed",
+    wed: "Closed",
+    thu: "Closed",
+    fri: "Closed",
+    sat: "Closed",
+    sun: "Closed",
+  };
 }
 
 const alwaysOpen: StopHours = {
@@ -82,6 +102,129 @@ const alwaysOpen: StopHours = {
   sat: "24 hours",
   sun: "24 hours",
 };
+
+const hours = {
+  joes: { mon: "11:30 AM-10:00 PM", tue: "11:30 AM-10:00 PM", wed: "11:30 AM-10:00 PM", thu: "11:30 AM-10:00 PM", fri: "11:30 AM-11:00 PM", sat: "11:30 AM-11:00 PM", sun: "11:00 AM-10:00 PM" },
+  versailles: daily("8:00 AM-1:00 AM"),
+  mandolin: { mon: "12:00 PM-11:00 PM", tue: "12:00 PM-11:00 PM", wed: "12:00 PM-11:00 PM", thu: "12:00 PM-11:00 PM", fri: "12:00 PM-12:00 AM", sat: "12:00 PM-12:00 AM", sun: "12:00 PM-11:00 PM" },
+  michaels: { mon: "11:30 AM-10:00 PM", tue: "11:30 AM-10:00 PM", wed: "11:30 AM-10:00 PM", thu: "11:30 AM-10:00 PM", fri: "11:30 AM-11:00 PM", sat: "11:30 AM-11:00 PM", sun: "11:00 AM-10:00 PM" },
+  stubbornSeed: { mon: "Closed", tue: "6:00 PM-10:00 PM", wed: "6:00 PM-10:00 PM", thu: "6:00 PM-10:00 PM", fri: "6:00 PM-10:30 PM", sat: "6:00 PM-10:30 PM", sun: "6:00 PM-10:00 PM" },
+  boiaDe: { mon: "Closed", tue: "5:30 PM-10:00 PM", wed: "5:30 PM-10:00 PM", thu: "5:30 PM-10:00 PM", fri: "5:30 PM-10:30 PM", sat: "5:30 PM-10:30 PM", sun: "Closed" },
+  macchialina: { mon: "5:00 PM-11:00 PM", tue: "5:00 PM-11:00 PM", wed: "5:00 PM-11:00 PM", thu: "5:00 PM-11:00 PM", fri: "5:00 PM-12:00 AM", sat: "5:00 PM-12:00 AM", sun: "5:00 PM-11:00 PM" },
+  zak: { mon: "7:00 AM-5:00 PM", tue: "7:00 AM-5:00 PM", wed: "7:00 AM-5:00 PM", thu: "7:00 AM-5:00 PM", fri: "7:00 AM-5:00 PM", sat: "Closed", sun: "7:00 AM-5:00 PM" },
+  surfClub: { mon: "Closed", tue: "5:30 PM-10:00 PM", wed: "5:30 PM-10:00 PM", thu: "5:30 PM-10:00 PM", fri: "5:30 PM-10:00 PM", sat: "5:30 PM-10:00 PM", sun: "5:30 PM-10:00 PM" },
+  garcias: daily("11:00 AM-9:00 PM"),
+  sanguich: daily("10:00 AM-10:00 PM"),
+  laSandwicherie: { mon: "8:00 AM-5:00 AM", tue: "8:00 AM-5:00 AM", wed: "8:00 AM-5:00 AM", thu: "8:00 AM-5:00 AM", fri: "8:00 AM-6:00 AM", sat: "8:00 AM-6:00 AM", sun: "8:00 AM-5:00 AM" },
+  enriquetas: { mon: "6:30 AM-3:00 PM", tue: "6:30 AM-3:00 PM", wed: "6:30 AM-3:00 PM", thu: "6:30 AM-3:00 PM", fri: "6:30 AM-3:00 PM", sat: "7:00 AM-2:00 PM", sun: "Closed" },
+  elRey: daily("10:00 AM-10:00 PM"),
+  doggis: daily("11:30 AM-10:00 PM"),
+  coyo: { mon: "11:00 AM-12:00 AM", tue: "11:00 AM-12:00 AM", wed: "11:00 AM-12:00 AM", thu: "11:00 AM-2:00 AM", fri: "11:00 AM-3:00 AM", sat: "11:00 AM-3:00 AM", sun: "11:00 AM-12:00 AM" },
+  taquiza: daily("12:00 PM-10:00 PM"),
+  motek: daily("9:00 AM-11:00 PM"),
+  pincho: daily("11:00 AM-10:00 PM"),
+  msCheezious: { mon: "Closed", tue: "11:00 AM-10:00 PM", wed: "11:00 AM-10:00 PM", thu: "11:00 AM-10:00 PM", fri: "11:00 AM-11:00 PM", sat: "11:00 AM-11:00 PM", sun: "11:00 AM-10:00 PM" },
+  clubDeuce: daily("8:00 AM-5:00 AM"),
+  zeyzey: { mon: "Closed", tue: "Evening-late; event calendar varies", wed: "Evening-late; event calendar varies", thu: "Evening-late; event calendar varies", fri: "Evening-late; event calendar varies", sat: "Evening-late; event calendar varies", sun: "Evening-late; event calendar varies" },
+  ballChain: { mon: "11:00 AM-12:00 AM", tue: "11:00 AM-12:00 AM", wed: "11:00 AM-12:00 AM", thu: "11:00 AM-12:00 AM", fri: "11:00 AM-2:00 AM", sat: "11:00 AM-2:00 AM", sun: "11:00 AM-12:00 AM" },
+  churchills: daily("Event calendar varies; verify show times"),
+  lostBoy: daily("12:00 PM-3:00 AM"),
+  mamaTried: daily("5:00 PM-5:00 AM"),
+  bobsYourUncle: { mon: "3:00 PM-2:00 AM", tue: "3:00 PM-2:00 AM", wed: "3:00 PM-2:00 AM", thu: "3:00 PM-2:00 AM", fri: "3:00 PM-3:00 AM", sat: "3:00 PM-3:00 AM", sun: "3:00 PM-2:00 AM" },
+  teds: daily("12:00 PM-5:00 AM"),
+  corner: { mon: "4:00 PM-5:00 AM", tue: "4:00 PM-5:00 AM", wed: "4:00 PM-5:00 AM", thu: "4:00 PM-5:00 AM", fri: "4:00 PM-7:00 AM", sat: "4:00 PM-7:00 AM", sun: "4:00 PM-5:00 AM" },
+  doms: daily("5:00 PM-11:00 PM"),
+  brokenShaker: { mon: "5:00 PM-12:00 AM", tue: "5:00 PM-12:00 AM", wed: "5:00 PM-12:00 AM", thu: "5:00 PM-12:00 AM", fri: "5:00 PM-1:00 AM", sat: "12:00 PM-1:00 AM", sun: "12:00 PM-12:00 AM" },
+  sweetLiberty: daily("4:00 PM-5:00 AM"),
+  cafeLaTrova: { mon: "12:00 PM-12:00 AM", tue: "12:00 PM-12:00 AM", wed: "12:00 PM-12:00 AM", thu: "12:00 PM-12:00 AM", fri: "12:00 PM-2:00 AM", sat: "12:00 PM-2:00 AM", sun: "12:00 PM-12:00 AM" },
+  swizzle: daily("6:00 PM-5:00 AM"),
+  jaguarSun: { mon: "Closed", tue: "5:00 PM-12:00 AM", wed: "5:00 PM-12:00 AM", thu: "5:00 PM-12:00 AM", fri: "5:00 PM-12:00 AM", sat: "5:00 PM-12:00 AM", sun: "Closed" },
+  kaiju: { mon: "Closed", tue: "Closed", wed: "6:00 PM-2:00 AM", thu: "6:00 PM-2:00 AM", fri: "6:00 PM-2:00 AM", sat: "6:00 PM-2:00 AM", sun: "Closed" },
+  mediumCool: { mon: "Closed", tue: "Closed", wed: "8:00 PM-2:00 AM", thu: "8:00 PM-2:00 AM", fri: "8:00 PM-2:00 AM", sat: "8:00 PM-2:00 AM", sun: "8:00 PM-12:00 AM" },
+  dantes: { mon: "Closed", tue: "Closed", wed: "7:00 PM-late; sessions vary", thu: "7:00 PM-late; sessions vary", fri: "7:00 PM-late; sessions vary", sat: "7:00 PM-late; sessions vary", sun: "Closed" },
+  champagneBar: daily("5:00 PM-12:00 AM"),
+  sugar: { mon: "4:00 PM-1:00 AM", tue: "4:00 PM-1:00 AM", wed: "4:00 PM-1:00 AM", thu: "4:00 PM-1:00 AM", fri: "4:00 PM-2:00 AM", sat: "4:00 PM-2:00 AM", sun: "4:00 PM-1:00 AM" },
+  pamm: { mon: "11:00 AM-6:00 PM", tue: "Closed", wed: "Closed", thu: "11:00 AM-9:00 PM", fri: "11:00 AM-6:00 PM", sat: "11:00 AM-6:00 PM", sun: "11:00 AM-6:00 PM" },
+  frost: daily("10:00 AM-6:00 PM"),
+  vizcaya: { mon: "9:30 AM-4:30 PM", tue: "Closed", wed: "9:30 AM-4:30 PM", thu: "9:30 AM-4:30 PM", fri: "9:30 AM-4:30 PM", sat: "9:30 AM-4:30 PM", sun: "9:30 AM-4:30 PM" },
+  wynwoodWalls: daily("10:30 AM-7:30 PM"),
+  rubell: { mon: "Closed", tue: "Closed", wed: "11:30 AM-5:30 PM", thu: "11:30 AM-5:30 PM", fri: "11:30 AM-5:30 PM", sat: "11:30 AM-5:30 PM", sun: "11:30 AM-5:30 PM" },
+  ica: { mon: "Closed", tue: "12:00 PM-6:00 PM", wed: "12:00 PM-6:00 PM", thu: "12:00 PM-9:00 PM", fri: "12:00 PM-6:00 PM", sat: "12:00 PM-6:00 PM", sun: "12:00 PM-6:00 PM" },
+  historyMiami: { mon: "Closed", tue: "Closed", wed: "10:00 AM-5:00 PM", thu: "10:00 AM-5:00 PM", fri: "10:00 AM-5:00 PM", sat: "10:00 AM-5:00 PM", sun: "10:00 AM-4:00 PM" },
+  arsht: daily("Event calendar varies; box office/show times vary"),
+  fairchild: daily("10:00 AM-5:00 PM"),
+  venetianPool: { mon: "Closed", tue: "10:00 AM-4:30 PM", wed: "10:00 AM-4:30 PM", thu: "10:00 AM-4:30 PM", fri: "10:00 AM-4:30 PM", sat: "10:00 AM-4:30 PM", sun: "10:00 AM-4:30 PM" },
+  capeFlorida: daily("8:00 AM-sunset"),
+  everglades: daily("Park open 24 hours; visitor centers and tours vary"),
+};
+
+const hoursByName: Record<string, StopHours> = {
+  "Joe's Stone Crab": hours.joes,
+  "Versailles Restaurant": hours.versailles,
+  "Mandolin Aegean Bistro": hours.mandolin,
+  "Michael's Genuine Food & Drink": hours.michaels,
+  "Stubborn Seed": hours.stubbornSeed,
+  "Boia De": hours.boiaDe,
+  Macchialina: hours.macchialina,
+  "Zak the Baker": hours.zak,
+  "The Surf Club Restaurant": hours.surfClub,
+  "Garcia's Seafood Grille & Fish Market": hours.garcias,
+  "Sanguich de Miami": hours.sanguich,
+  "La Sandwicherie": hours.laSandwicherie,
+  "Enriqueta's Sandwich Shop": hours.enriquetas,
+  "El Rey de las Fritas": hours.elRey,
+  "Doggi's Arepa Bar": hours.doggis,
+  "Coyo Taco Wynwood": hours.coyo,
+  Taquiza: hours.taquiza,
+  "Motek Downtown": hours.motek,
+  Pincho: hours.pincho,
+  "Ms. Cheezious": hours.msCheezious,
+  "Mac's Club Deuce": hours.clubDeuce,
+  ZeyZey: hours.zeyzey,
+  "Ball & Chain": hours.ballChain,
+  "Churchill's Pub": hours.churchills,
+  "Lost Boy Dry Goods": hours.lostBoy,
+  "Mama Tried": hours.mamaTried,
+  "Bob's Your Uncle": hours.bobsYourUncle,
+  "Ted's Hideaway": hours.teds,
+  "The Corner": hours.corner,
+  "DOM'S Brickell": hours.doms,
+  "Broken Shaker": hours.brokenShaker,
+  "Sweet Liberty Drinks & Supply Co.": hours.sweetLiberty,
+  "Cafe La Trova": hours.cafeLaTrova,
+  "Swizzle Rum Bar & Drinkery": hours.swizzle,
+  "Jaguar Sun": hours.jaguarSun,
+  Kaiju: hours.kaiju,
+  "Medium Cool": hours.mediumCool,
+  "Dante's HiFi": hours.dantes,
+  "The Champagne Bar at The Surf Club": hours.champagneBar,
+  Sugar: hours.sugar,
+  "Art Deco Historic District": alwaysOpen,
+  "Perez Art Museum Miami": hours.pamm,
+  "Phillip and Patricia Frost Museum of Science": hours.frost,
+  "Vizcaya Museum and Gardens": hours.vizcaya,
+  "Wynwood Walls": hours.wynwoodWalls,
+  "Rubell Museum": hours.rubell,
+  "Institute of Contemporary Art, Miami": hours.ica,
+  "HistoryMiami Museum": hours.historyMiami,
+  "Calle Ocho / Little Havana": alwaysOpen,
+  "Adrienne Arsht Center": hours.arsht,
+  "South Beach": alwaysOpen,
+  "Ocean Drive and Lummus Park": alwaysOpen,
+  "Little Havana": alwaysOpen,
+  "Miami Design District": daily("District access; store, gallery, restaurant, and museum hours vary by venue"),
+  "Fairchild Tropical Botanic Garden": hours.fairchild,
+  "Venetian Pool": hours.venetianPool,
+  "Bill Baggs Cape Florida State Park": hours.capeFlorida,
+  "Everglades National Park": hours.everglades,
+};
+
+function expandDefaultHours(input: StopHours): StopHours {
+  const hasDayKeys = ["mon", "tue", "wed", "thu", "fri", "sat", "sun"].some((key) => key in input);
+  if (hasDayKeys) return input;
+  if (input.default) return daily(input.default);
+  return input;
+}
 
 const images = {
   joes: "https://joesstonecrab.com/cdn/shop/files/DSC01527_2_1_1024x1024.jpg?v=1758217452",
@@ -165,6 +308,7 @@ const images = {
 
 function stop(input: StopInput): GuideStop {
   const mapUrl = maps(input.mapQuery ?? `${input.name} Miami`);
+  const resolvedHours = hoursByName[input.name] ?? expandDefaultHours(input.hours);
   const sourceUrls = [
     input.officialUrl,
     input.bookingUrl,
@@ -190,7 +334,7 @@ function stop(input: StopInput): GuideStop {
     priceSource: input.priceSource,
     bookingUrl: input.bookingUrl,
     officialUrl: input.officialUrl,
-    hours: input.hours,
+    hours: resolvedHours,
     photo: input.photo,
     imageSourceUrl: input.photo,
     sourceUrls: [...new Set(sourceUrls)],
