@@ -6,8 +6,11 @@ import type { ExpressionSpecification } from "@maplibre/maplibre-gl-style-spec";
 import maplibregl, { GeoJSONSource, LngLatBounds } from "maplibre-gl";
 
 import { mapLists } from "@/data/lists";
-import { countryBoundaryFeatures } from "@/data/map-boundaries";
-import { ensureCountryBoundaryHighResLoaded } from "@/data/map-boundaries";
+import {
+  countryBoundaryFeatures,
+  ensureCountryBoundaryHighResLoaded,
+  isCountryBoundaryHighResLoaded,
+} from "@/data/map-boundaries";
 import {
   loadNeighborhoodBoundaryMap,
   type NeighborhoodBoundaryMap,
@@ -172,6 +175,22 @@ type MapViewportInsets = {
   left: number;
 };
 
+type RGuideMapPerfMetrics = {
+  startedAt: number;
+  sourceSetDataCounts: Record<string, number>;
+  resizeCount: number;
+  cameraCount: number;
+  events: Array<{ name: string; at: number; detail?: string }>;
+  maxRenderGap: number;
+  lastRenderAt: number | null;
+};
+
+declare global {
+  interface Window {
+    __rguideMapPerf?: RGuideMapPerfMetrics;
+  }
+}
+
 const worldCountrySeeds = worldCountries as unknown as WorldCountrySeed[];
 const worldCountryCenters = new Map(worldCountrySeeds.map((country) => [country.id, country.coordinates]));
 const worldCountryIso3 = new Map(
@@ -203,6 +222,10 @@ const SELECTED_BOUNDARY_LAYER_ID = "selected-country-boundary";
 const SUBNATIONAL_BOUNDARY_LAYER_ID = "selected-country-subnational-boundary";
 const STATE_LABEL_LAYER_ID = "state-label-layer";
 const BASE_COUNTRY_LABEL_LAYER_IDS = ["label_country_1", "label_country_2", "label_country_3"] as const;
+const SHOULD_RECORD_MAP_PERF = process.env.NODE_ENV !== "production";
+const MAX_MAP_PERF_EVENTS = 180;
+const COUNTRY_GEOJSON_SOURCE_OPTIONS = { buffer: 0, maxzoom: 6, tolerance: 0.5 } as const;
+const POINT_GEOJSON_SOURCE_OPTIONS = { buffer: 0 } as const;
 const GUIDE_STOP_COLOR_MATCH = [
   "match",
   ["get", "category"],
@@ -500,13 +523,107 @@ function resetCameraPadding(map: maplibregl.Map) {
   map.setPadding({ top: 0, right: 0, bottom: 0, left: 0 });
 }
 
+function createMapPerfMetrics(): RGuideMapPerfMetrics {
+  const now = performance.now();
+
+  return {
+    startedAt: now,
+    sourceSetDataCounts: {},
+    resizeCount: 0,
+    cameraCount: 0,
+    events: [],
+    maxRenderGap: 0,
+    lastRenderAt: null,
+  };
+}
+
+function resetMapPerfMetrics() {
+  if (!SHOULD_RECORD_MAP_PERF || typeof window === "undefined" || typeof performance === "undefined") {
+    return null;
+  }
+
+  window.__rguideMapPerf = createMapPerfMetrics();
+  return window.__rguideMapPerf;
+}
+
+function getMapPerfMetrics() {
+  if (!SHOULD_RECORD_MAP_PERF || typeof window === "undefined" || typeof performance === "undefined") {
+    return null;
+  }
+
+  if (!window.__rguideMapPerf) {
+    window.__rguideMapPerf = createMapPerfMetrics();
+  }
+
+  return window.__rguideMapPerf;
+}
+
+function recordMapPerfEvent(name: string, detail?: string) {
+  const metrics = getMapPerfMetrics();
+  if (!metrics) {
+    return;
+  }
+
+  metrics.events.push({ name, at: Math.round(performance.now() - metrics.startedAt), detail });
+  if (metrics.events.length > MAX_MAP_PERF_EVENTS) {
+    metrics.events.splice(0, metrics.events.length - MAX_MAP_PERF_EVENTS);
+  }
+}
+
+function recordMapSourceSetData(sourceId: string) {
+  const metrics = getMapPerfMetrics();
+  if (!metrics) {
+    return;
+  }
+
+  metrics.sourceSetDataCounts[sourceId] = (metrics.sourceSetDataCounts[sourceId] ?? 0) + 1;
+}
+
+function recordMapResize(reason: string) {
+  const metrics = getMapPerfMetrics();
+  if (!metrics) {
+    return;
+  }
+
+  metrics.resizeCount += 1;
+  recordMapPerfEvent("map:resize", reason);
+}
+
+function recordMapCamera(kind: string, detail?: string) {
+  const metrics = getMapPerfMetrics();
+  if (!metrics) {
+    return;
+  }
+
+  metrics.cameraCount += 1;
+  recordMapPerfEvent(`camera:${kind}`, detail);
+}
+
+function recordMapRenderGap() {
+  const metrics = getMapPerfMetrics();
+  if (!metrics) {
+    return;
+  }
+
+  const now = performance.now();
+  if (metrics.lastRenderAt !== null) {
+    metrics.maxRenderGap = Math.max(metrics.maxRenderGap, Math.round(now - metrics.lastRenderAt));
+  }
+  metrics.lastRenderAt = now;
+}
+
 function setGeoJsonSourceData(
   map: maplibregl.Map,
   sourceId: string,
   data: Parameters<GeoJSONSource["setData"]>[0],
 ) {
   const source = map.getSource(sourceId) as GeoJSONSource | undefined;
-  source?.setData(data);
+  if (!source) {
+    return;
+  }
+
+  recordMapSourceSetData(sourceId);
+  source.setData(data);
 }
 
 function clampPaddingToMap(map: maplibregl.Map, padding: MapViewportInsets): MapViewportInsets {
@@ -604,6 +721,7 @@ function fitMapToCountry(
   const preset = countryFocusPresets[countryId];
 
   if (preset) {
+    recordMapCamera("country:preset", countryId);
     map.easeTo({
       center: preset.center,
       zoom: preset.zoom,
@@ -616,6 +734,7 @@ function fitMapToCountry(
   }
 
   const focusBounds = getCountryFocusBounds(countryId, bounds);
+  recordMapCamera("country:bounds", countryId);
   map.fitBounds(focusBounds, {
     padding: mergePadding({ top: 28, right: 28, bottom: 28, left: 28 }, viewportInsets),
     duration: options?.duration ?? 2200,
@@ -635,6 +754,7 @@ function fitMapToContinent(
   const preset = continentFocusPresets[continent.id];
 
   if (preset) {
+    recordMapCamera("continent:preset", continent.id);
     map.easeTo({
       center: preset.center,
       zoom: preset.zoom,
@@ -646,6 +766,7 @@ function fitMapToContinent(
     return;
   }
 
+  recordMapCamera("continent:bounds", continent.id);
   map.fitBounds(
     new LngLatBounds(
       [continent.bounds[0][1], continent.bounds[0][0]],
@@ -2763,7 +2884,7 @@ function addMapLayers(map: maplibregl.Map) {
       visibility: "none",
       "text-field": ["get", "name"],
       "text-size": ["interpolate", ["linear"], ["zoom"], 2.2, 8.5, 3.35, 9.5, 6, 11.5, 9, 13],
-      "text-font": ["Noto Sans Medium"],
+      "text-font": ["Noto Sans Regular"],
       "text-letter-spacing": 0.01,
       "text-allow-overlap": true,
       "text-ignore-placement": true,
@@ -2947,7 +3068,7 @@ function addMapLayers(map: maplibregl.Map) {
     layout: {
       "text-field": ["get", "name"],
       "text-size": ["interpolate", ["linear"], ["zoom"], 10.2, 10.5, 13, 12.5, 15, 14],
-      "text-font": ["Noto Sans Medium"],
+      "text-font": ["Noto Sans Regular"],
       "text-offset": [0, 1.25],
       "text-anchor": "top",
       "text-allow-overlap": false,
@@ -3399,6 +3520,7 @@ export function MapClient({
   const collapsedGuidesCameraTimeoutRef = useRef<number | null>(null);
   const selectionCameraKeyRef = useRef<string | null>(null);
   const selectionCameraSettlingUntilRef = useRef(0);
+  const countryBoundaryHighResTimeoutRef = useRef<number | null>(null);
   const visibleGuideMarkerEnteredAtRef = useRef<Map<string, number>>(new Map());
   const visibleGuideMarkerHoverProgressRef = useRef<Map<string, number>>(new Map());
   const visibleGuideMarkerAnimationFrameRef = useRef<number | null>(null);
@@ -3729,37 +3851,75 @@ export function MapClient({
 
   useEffect(() => {
     let isDisposed = false;
+    const isCityLevelSelection = Boolean(selection.cityId || selection.subareaId || selection.nestedSubareaId);
 
     const shouldLoadHighRes = Boolean(
-      selectedBoundaryIso3.length > 0 || focusedCountryId || selection.cityId || selection.countryId,
+      !isCityLevelSelection && (selectedBoundaryIso3.length > 0 || focusedCountryId || selection.countryId),
     );
 
     if (!shouldLoadHighRes) {
+      recordMapPerfEvent(
+        "country-boundary-highres:skipped",
+        isCityLevelSelection ? "city-level-selection" : "not-needed",
+      );
       return;
     }
 
-    ensureCountryBoundaryHighResLoaded()
-      .then(() => {
-        if (!isDisposed) {
-          setCountryBoundaryDataVersion((current) => current + 1);
-        }
-      })
-      .catch((error) => {
-        if (!isDisposed) {
-          console.error("Failed to load high-resolution country boundary data", error);
-        }
-      });
+    if (countryBoundaryHighResTimeoutRef.current !== null) {
+      window.clearTimeout(countryBoundaryHighResTimeoutRef.current);
+      countryBoundaryHighResTimeoutRef.current = null;
+    }
+
+    const delayMs = isCountryBoundaryHighResLoaded()
+      ? 0
+      : selection.countryId
+        ? 1650
+        : 350;
+
+    countryBoundaryHighResTimeoutRef.current = window.setTimeout(() => {
+      if (isDisposed) {
+        return;
+      }
+
+      countryBoundaryHighResTimeoutRef.current = null;
+      recordMapPerfEvent("country-boundary-highres:start", delayMs ? `deferred:${delayMs}` : "ready");
+      ensureCountryBoundaryHighResLoaded()
+        .then(() => {
+          if (!isDisposed) {
+            recordMapPerfEvent("country-boundary-highres:loaded");
+            setCountryBoundaryDataVersion((current) => current + 1);
+          }
+        })
+        .catch((error) => {
+          if (!isDisposed) {
+            console.error("Failed to load high-resolution country boundary data", error);
+          }
+        });
+    }, delayMs);
 
     return () => {
       isDisposed = true;
+      if (countryBoundaryHighResTimeoutRef.current !== null) {
+        window.clearTimeout(countryBoundaryHighResTimeoutRef.current);
+        countryBoundaryHighResTimeoutRef.current = null;
+      }
     };
-  }, [focusedCountryId, selectedBoundaryIso3, selection.cityId, selection.countryId]);
+  }, [
+    focusedCountryId,
+    selectedBoundaryIso3,
+    selection.cityId,
+    selection.countryId,
+    selection.nestedSubareaId,
+    selection.subareaId,
+  ]);
 
   useEffect(() => {
     if (!containerRef.current || mapRef.current) {
       return;
     }
 
+    resetMapPerfMetrics();
+    recordMapPerfEvent("map:create");
     const map = new maplibregl.Map({
       container: containerRef.current,
       style: MAP_STYLE,
@@ -3772,49 +3932,65 @@ export function MapClient({
 
     map.addControl(new maplibregl.NavigationControl({ showCompass: false }), "top-right");
     mapRef.current = map;
+    const recordRenderGap = () => {
+      recordMapRenderGap();
+    };
+    map.on("render", recordRenderGap);
 
     map.on("load", () => {
+      recordMapPerfEvent("map:load");
+      map.once("idle", () => {
+        recordMapPerfEvent("map:first-idle");
+      });
       isStyleReadyRef.current = true;
       setStyleReadyTick((current) => current + 1);
 
       map.addSource(COUNTRY_SOURCE_ID, {
         type: "geojson",
         data: countryData,
+        ...COUNTRY_GEOJSON_SOURCE_OPTIONS,
       });
 
       map.addSource(CONTINENT_LABEL_SOURCE_ID, {
         type: "geojson",
         data: continentLabelData,
+        ...POINT_GEOJSON_SOURCE_OPTIONS,
       });
 
       map.addSource(CITY_SOURCE_ID, {
         type: "geojson",
         data: cityData,
+        ...POINT_GEOJSON_SOURCE_OPTIONS,
       });
 
       map.addSource(NEIGHBORHOOD_MARKER_SOURCE_ID, {
         type: "geojson",
         data: neighborhoodMarkerData,
+        ...POINT_GEOJSON_SOURCE_OPTIONS,
       });
 
       map.addSource(SAVED_LOCATION_SOURCE_ID, {
         type: "geojson",
         data: savedLocationData,
+        ...POINT_GEOJSON_SOURCE_OPTIONS,
       });
 
       map.addSource(VISIBLE_GUIDE_MARKER_SOURCE_ID, {
         type: "geojson",
         data: visibleGuideMarkerData,
+        ...POINT_GEOJSON_SOURCE_OPTIONS,
       });
 
       map.addSource(VISIBLE_GUIDE_CITY_MARKER_SOURCE_ID, {
         type: "geojson",
         data: visibleGuideCityMarkerData,
+        ...POINT_GEOJSON_SOURCE_OPTIONS,
       });
 
       map.addSource(STATE_LABEL_SOURCE_ID, {
         type: "geojson",
         data: stateLabelData,
+        ...POINT_GEOJSON_SOURCE_OPTIONS,
       });
 
       map.addSource(GUIDE_ROUTE_SOURCE_ID, {
@@ -3830,6 +4006,7 @@ export function MapClient({
       map.addSource(GUIDE_STOP_SOURCE_ID, {
         type: "geojson",
         data: guideStopData,
+        ...POINT_GEOJSON_SOURCE_OPTIONS,
       });
 
       map.addSource(NEIGHBORHOOD_BOUNDARY_SOURCE_ID, {
@@ -3848,12 +4025,14 @@ export function MapClient({
       } catch (error) {
         console.error("Map layer initialization failed", error);
       }
+      recordMapPerfEvent("map:base-style-customize:start");
       coolBaseMapGround(map);
       boostBaseRoadContrast(map);
       configureBaseCountryLabels(map);
       hideBasePlaceDots(map);
       softenBaseReliefAndBuildings(map);
       softenBaseTransitStops(map);
+      recordMapPerfEvent("map:base-style-customize:end");
 
       map.on("mouseenter", "country-fills", () => {
         map.getCanvas().style.cursor = "pointer";
@@ -4295,6 +4474,7 @@ export function MapClient({
       }
       activeGuideCameraPendingKeyRef.current = null;
       isStyleReadyRef.current = false;
+      map.off("render", recordRenderGap);
       map.remove();
       mapRef.current = null;
     };
@@ -4313,6 +4493,7 @@ export function MapClient({
     };
     const resizeAndSyncViewportChrome = () => {
       resizeFrame = null;
+      recordMapResize("window");
       map.resize();
       syncViewportChrome();
     };
@@ -4341,7 +4522,6 @@ export function MapClient({
       const insets = getViewportInsets(map, viewportMode, viewportInsets);
       const controlRight = Math.max(12, insets.right + 14);
       map.getContainer().style.setProperty("--rguide-map-controls-right", `${controlRight}px`);
-      map.resize();
     });
     return () => {
       window.cancelAnimationFrame(frameId);
@@ -4357,6 +4537,7 @@ export function MapClient({
     let rafIdTwo: number | null = null;
     rafIdOne = window.requestAnimationFrame(() => {
       rafIdTwo = window.requestAnimationFrame(() => {
+        recordMapResize("resize-signal");
         map.resize();
       });
     });
@@ -4801,14 +4982,10 @@ export function MapClient({
         : null;
     const selectedCameraTargetId =
       selectedParentStop?.id ?? selectedNestedStop?.place.id ?? "";
-    const selectedPoiMapMarker = selectedCameraTargetId
-      ? cameraPoiMapMarkerData.features.find((feature) => feature.properties.stopId === selectedCameraTargetId) ?? null
-      : null;
     const nextCameraKey = selectedCameraTargetId
       ? [
           activeGuide.id,
           activeGuideStopSignature,
-          activeGuidePoiMarkerSignature,
           selectedCameraTargetId,
           viewportModeRef.current,
         ].join("|")
@@ -4818,9 +4995,6 @@ export function MapClient({
           activeGuideStopSignature,
           activeGuidePoiMarkerSignature,
           viewportModeRef.current,
-          viewportInsetsRef.current
-            ? `${viewportInsetsRef.current.top},${viewportInsetsRef.current.right},${viewportInsetsRef.current.bottom},${viewportInsetsRef.current.left}`
-            : "",
         ].join("|");
     if (
       activeGuideCameraKeyRef.current === nextCameraKey ||
@@ -4853,7 +5027,6 @@ export function MapClient({
       ) {
         return;
       }
-      currentMap.resize();
       const container = currentMap.getContainer();
       if (container.clientWidth < 120 || container.clientHeight < 120) {
         return;
@@ -4874,30 +5047,10 @@ export function MapClient({
       resetCameraPadding(currentMap);
 
       if (selectedParentStop || selectedNestedStop) {
-        if (selectedPoiMapMarker?.geometry) {
-          const markerCoordinates = getGeometryCoordinates(selectedPoiMapMarker.geometry);
-          if (markerCoordinates) {
-            const markerBounds = new LngLatBounds();
-            extendBoundsFromCoordinates(markerBounds, markerCoordinates);
-            if (!markerBounds.isEmpty()) {
-              completeCameraRequest();
-              currentMap.fitBounds(markerBounds, {
-                padding: clampPaddingToMap(
-                  currentMap,
-                  mergePadding({ top: 52, right: 56, bottom: 60, left: 56 }, activeViewportInsets),
-                ),
-                duration,
-                easing: smoothCameraEasing,
-                essential: true,
-                maxZoom: Math.max(15.2, getGuideBoundsZoom(markerBounds)),
-              });
-              return;
-            }
-          }
-        }
         const focusedPoint = selectedParentStop ?? selectedNestedStop!.place;
         const [lat, lng] = focusedPoint.coordinates;
         completeCameraRequest();
+        recordMapCamera("active-guide:selected-point", nextCameraKey);
         currentMap.easeTo({
           center: [lng, lat],
           zoom: Math.max(currentMap.getZoom(), 14.8),
@@ -4937,6 +5090,7 @@ export function MapClient({
       if (guideCoordinateCount === 1 && guideMarkerGeometryCount === 0) {
         const [lat, lng] = activeGuide.stops[0].coordinates;
         completeCameraRequest();
+        recordMapCamera("active-guide:single-stop", nextCameraKey);
         currentMap.easeTo({
           center: [lng, lat],
           zoom: Math.max(currentMap.getZoom(), 12.4),
@@ -4956,6 +5110,7 @@ export function MapClient({
       }
 
       completeCameraRequest();
+      recordMapCamera("active-guide:bounds", nextCameraKey);
       currentMap.fitBounds(guideBounds, {
         padding: clampPaddingToMap(
           currentMap,
@@ -4999,7 +5154,6 @@ export function MapClient({
     styleReadyTick,
     selectedStopId,
     viewportMode,
-    viewportInsets,
   ]);
 
   useEffect(() => {
@@ -5020,6 +5174,7 @@ export function MapClient({
     selectionCameraSettlingUntilRef.current = performance.now() + cameraDuration + 180;
     const activeViewportInsets = getViewportInsets(map, viewportModeRef.current, viewportInsetsRef.current);
     resetCameraPadding(map);
+    recordMapCamera("selection", nextCameraKey);
 
     const activeContinent = continents.find((continent) => continent.id === selection.continentId);
     const activeCountryFromContinent = activeContinent?.countries.find(
@@ -5197,6 +5352,7 @@ export function MapClient({
     }
     const focusBounds = getCountryFocusBounds(matchedCountry.id, matchedCountry.bounds);
     resetCameraPadding(map);
+    recordMapCamera("focused-country", focusedCountryId);
     map.fitBounds(focusBounds, {
       padding: { top: 28, right: 28, bottom: 28, left: 28 },
       duration: 1900,
@@ -5243,9 +5399,6 @@ export function MapClient({
       selection.cityId,
       visibleGuideBoundsSignature,
       viewportModeRef.current,
-      viewportInsetsRef.current
-        ? `${viewportInsetsRef.current.top},${viewportInsetsRef.current.right},${viewportInsetsRef.current.bottom},${viewportInsetsRef.current.left}`
-        : "",
     ].join("|");
     if (collapsedGuidesCameraKeyRef.current === nextCameraKey) {
       return;
@@ -5262,7 +5415,6 @@ export function MapClient({
       }
       collapsedGuidesCameraKeyRef.current = nextCameraKey;
 
-      map.resize();
       resetCameraPadding(map);
       const activeViewportInsets = getViewportInsets(map, viewportModeRef.current, viewportInsetsRef.current);
       const guideBounds = new LngLatBounds();
@@ -5278,6 +5430,7 @@ export function MapClient({
 
       if (visibleGuideMarkerData.features.length === 1) {
         const [lng, lat] = visibleGuideMarkerData.features[0].geometry.coordinates;
+        recordMapCamera("collapsed-guides:single", nextCameraKey);
         map.easeTo({
           center: [lng, lat],
           zoom: Math.max(map.getZoom(), 12.2),
@@ -5292,6 +5445,7 @@ export function MapClient({
         return;
       }
 
+      recordMapCamera("collapsed-guides:bounds", nextCameraKey);
       map.fitBounds(guideBounds, {
         padding: clampPaddingToMap(
           map,
@@ -5320,7 +5474,6 @@ export function MapClient({
     activeGuide,
     selection.cityId,
     styleReadyTick,
-    viewportInsets,
     viewportMode,
     visibleGuideBoundsSignature,
     visibleGuideMarkerData,
