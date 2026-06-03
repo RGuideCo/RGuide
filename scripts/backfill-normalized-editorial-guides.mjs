@@ -1146,7 +1146,7 @@ function buildVenueHoursPayload(hoursRows, venueIdByKey) {
       day_of_week: dayOfWeek,
       interval_order: 0,
       is_closed: ["closed", "closed today"].includes(lowered),
-      is_24_hours: ["24 hours", "open 24 hours", "24/7"].includes(lowered),
+      is_24_hours: isTwentyFourHoursText(normalized),
       raw_text: normalized,
       raw_metadata: { source },
     });
@@ -1169,15 +1169,9 @@ function buildVenueHoursPayload(hoursRows, venueIdByKey) {
     }
 
     const defaultRawText = addNote(venueId, hours.default);
-    if (defaultRawText) {
-      const normalizedDefault = defaultRawText.toLowerCase().replace(/\.$/, "");
-      if (
-        ["24 hours", "open 24 hours", "24/7"].includes(normalizedDefault) ||
-        normalizedDefault.startsWith("daily ")
-      ) {
-        for (let dayOfWeek = 0; dayOfWeek <= 6; dayOfWeek += 1) {
-          addInterval(venueId, dayOfWeek, defaultRawText, "entry_stops.hours.default");
-        }
+    if (defaultRawText && isDefaultWeeklyHoursText(defaultRawText)) {
+      for (let dayOfWeek = 0; dayOfWeek <= 6; dayOfWeek += 1) {
+        addInterval(venueId, dayOfWeek, defaultRawText, "entry_stops.hours.default");
       }
     }
 
@@ -1634,6 +1628,32 @@ const HOURS_DAY_MAP = new Map([
   ["saturday", 6],
 ]);
 
+function isTwentyFourHoursText(value) {
+  const normalized = normalizeHoursText(value)?.toLowerCase().replace(/\.$/, "");
+  if (!normalized) {
+    return false;
+  }
+  return (
+    ["24 hours", "open 24 hours", "24/7"].includes(normalized) ||
+    /(^|[^a-z])(open |operates |ferry operates )?24[- ]?hours( daily)?([^a-z]|$)/.test(normalized)
+  );
+}
+
+function isDefaultWeeklyHoursText(value) {
+  const normalized = normalizeHoursText(value)?.toLowerCase().replace(/\.$/, "");
+  if (!normalized) {
+    return false;
+  }
+  return (
+    isTwentyFourHoursText(normalized) ||
+    normalized.startsWith("daily ") ||
+    normalized.includes(" daily") ||
+    normalized.startsWith("park open daily") ||
+    normalized.startsWith("pedestrian path open daily") ||
+    normalized.startsWith("terminal open daily")
+  );
+}
+
 function normalizeHoursText(value) {
   if (value === undefined || value === null) {
     return null;
@@ -1670,7 +1690,6 @@ async function upsertVenueHoursFromStop(client, venueId, stop) {
 
   const defaultRawText = normalizeHoursText(stop.hours.default);
   if (defaultRawText) {
-    const normalizedDefault = defaultRawText.toLowerCase().replace(/\.$/, "");
     await client.query(
       `update public.venues
        set hours_note = coalesce(hours_note, $2),
@@ -1679,10 +1698,7 @@ async function upsertVenueHoursFromStop(client, venueId, stop) {
       [venueId, defaultRawText],
     );
 
-    if (
-      ["24 hours", "open 24 hours", "24/7"].includes(normalizedDefault) ||
-      normalizedDefault.startsWith("daily ")
-    ) {
+    if (isDefaultWeeklyHoursText(defaultRawText)) {
       for (let dayOfWeek = 0; dayOfWeek <= 6; dayOfWeek += 1) {
         await client.query(
           `insert into public.venue_hours (
@@ -1700,7 +1716,7 @@ async function upsertVenueHoursFromStop(client, venueId, stop) {
           [
             venueId,
             dayOfWeek,
-            ["24 hours", "open 24 hours", "24/7"].includes(normalizedDefault),
+            isTwentyFourHoursText(defaultRawText),
             defaultRawText,
             toJsonObject({ source: "entry_stops.hours.default" }),
           ],
@@ -1733,7 +1749,7 @@ async function upsertVenueHoursFromStop(client, venueId, stop) {
         venueId,
         dayOfWeek,
         ["closed", "closed today"].includes(normalized),
-        ["24 hours", "open 24 hours", "24/7"].includes(normalized),
+        isTwentyFourHoursText(rawText),
         rawText,
         toJsonObject({ source: "entry_stops.hours" }),
       ],
