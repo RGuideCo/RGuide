@@ -45,6 +45,7 @@ for (const country of worldCountrySeeds) {
 
 export const countryBoundaryFeatures: Record<string, Feature<Geometry>> = {};
 let highResLoadPromise: Promise<void> | null = null;
+let highResLoaded = false;
 
 function addFeatureBoundary(feature: Feature<Geometry>, overwrite = false) {
   const properties = feature.properties ?? {};
@@ -99,6 +100,7 @@ export function ensureCountryBoundaryHighResLoaded() {
       for (const feature of features) {
         addFeatureBoundary(feature, true);
       }
+      highResLoaded = true;
     })
     .catch((error) => {
       highResLoadPromise = null;
@@ -106,6 +108,10 @@ export function ensureCountryBoundaryHighResLoaded() {
     });
 
   return highResLoadPromise;
+}
+
+export function isCountryBoundaryHighResLoaded() {
+  return highResLoaded;
 }
 
 addSeedBoundaries();

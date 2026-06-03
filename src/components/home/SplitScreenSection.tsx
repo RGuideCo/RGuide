@@ -178,18 +178,6 @@ function areGuideCollectionsEquivalent(left: MapList[], right: MapList[]) {
   });
 }
 
-function seedInitialEditorialGuides(initialEditorialGuides: MapList[]) {
-  if (typeof window === "undefined" || !initialEditorialGuides.length) {
-    return;
-  }
-
-  const currentEditorialGuides = useAppStore.getState().editorialLists;
-
-  if (!areGuideCollectionsEquivalent(currentEditorialGuides, initialEditorialGuides)) {
-    useAppStore.setState({ editorialLists: initialEditorialGuides });
-  }
-}
-
 type CityWeather = {
   temperature: number;
   condition: string;
@@ -408,8 +396,6 @@ export function SplitScreenSection({
   seoContent,
   publicProfile,
 }: SplitScreenSectionProps) {
-  seedInitialEditorialGuides(initialEditorialGuides);
-
   useEffect(() => {
     document.documentElement.classList.add("rguide-split-screen-ready");
 
