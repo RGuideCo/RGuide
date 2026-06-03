@@ -500,6 +500,15 @@ function resetCameraPadding(map: maplibregl.Map) {
   map.setPadding({ top: 0, right: 0, bottom: 0, left: 0 });
 }
 
+function setGeoJsonSourceData(
+  map: maplibregl.Map,
+  sourceId: string,
+  data: Parameters<GeoJSONSource["setData"]>[0],
+) {
+  const source = map.getSource(sourceId) as GeoJSONSource | undefined;
+  source?.setData(data);
+}
+
 function clampPaddingToMap(map: maplibregl.Map, padding: MapViewportInsets): MapViewportInsets {
   const container = map.getContainer();
   const maxHorizontalPadding = Math.max(0, container.clientWidth - 160);
@@ -3387,7 +3396,9 @@ export function MapClient({
   const activeGuideCameraFrameRef = useRef<number | null>(null);
   const activeGuideCameraTimeoutsRef = useRef<number[]>([]);
   const collapsedGuidesCameraKeyRef = useRef<string | null>(null);
+  const collapsedGuidesCameraTimeoutRef = useRef<number | null>(null);
   const selectionCameraKeyRef = useRef<string | null>(null);
+  const selectionCameraSettlingUntilRef = useRef(0);
   const visibleGuideMarkerEnteredAtRef = useRef<Map<string, number>>(new Map());
   const visibleGuideMarkerHoverProgressRef = useRef<Map<string, number>>(new Map());
   const visibleGuideMarkerAnimationFrameRef = useRef<number | null>(null);
@@ -4278,6 +4289,10 @@ export function MapClient({
       }
       activeGuideCameraTimeoutsRef.current.forEach((timeoutId) => window.clearTimeout(timeoutId));
       activeGuideCameraTimeoutsRef.current = [];
+      if (collapsedGuidesCameraTimeoutRef.current !== null) {
+        window.clearTimeout(collapsedGuidesCameraTimeoutRef.current);
+        collapsedGuidesCameraTimeoutRef.current = null;
+      }
       activeGuideCameraPendingKeyRef.current = null;
       isStyleReadyRef.current = false;
       map.remove();
@@ -4361,22 +4376,69 @@ export function MapClient({
       return;
     }
 
-    (map.getSource(COUNTRY_SOURCE_ID) as GeoJSONSource).setData(countryData);
-    (map.getSource(CONTINENT_LABEL_SOURCE_ID) as GeoJSONSource).setData(continentLabelData);
-    (map.getSource(CITY_SOURCE_ID) as GeoJSONSource).setData(cityData);
-    (map.getSource(NEIGHBORHOOD_MARKER_SOURCE_ID) as GeoJSONSource).setData(neighborhoodMarkerData);
-    (map.getSource(SAVED_LOCATION_SOURCE_ID) as GeoJSONSource).setData(savedLocationData);
+    setGeoJsonSourceData(map, COUNTRY_SOURCE_ID, countryData);
+    setGeoJsonSourceData(map, CONTINENT_LABEL_SOURCE_ID, continentLabelData);
+    setGeoJsonSourceData(map, CITY_SOURCE_ID, cityData);
+    setGeoJsonSourceData(map, NEIGHBORHOOD_MARKER_SOURCE_ID, neighborhoodMarkerData);
+    setGeoJsonSourceData(map, SAVED_LOCATION_SOURCE_ID, savedLocationData);
+    setGeoJsonSourceData(map, STATE_LABEL_SOURCE_ID, stateLabelData);
+    setGeoJsonSourceData(map, NEIGHBORHOOD_BOUNDARY_SOURCE_ID, neighborhoodBoundaryData);
+  }, [
+    cityData,
+    continentLabelData,
+    countryData,
+    neighborhoodBoundaryData,
+    neighborhoodMarkerData,
+    savedLocationData,
+    stateLabelData,
+  ]);
+
+  useEffect(() => {
+    const map = mapRef.current;
+    if (!map || !isStyleReadyRef.current) {
+      return;
+    }
+
+    setGeoJsonSourceData(map, VISIBLE_GUIDE_MARKER_SOURCE_ID, visibleGuideMarkerData);
+  }, [visibleGuideMarkerData]);
+
+  useEffect(() => {
+    const map = mapRef.current;
+    if (!map || !isStyleReadyRef.current) {
+      return;
+    }
+
     ensureVisibleGuideCityMarkerImages(map, visibleGuideCityMarkerData);
-    addVisibleGuideMarkerLayers(map);
-    (map.getSource(VISIBLE_GUIDE_MARKER_SOURCE_ID) as GeoJSONSource).setData(visibleGuideMarkerData);
-    (map.getSource(VISIBLE_GUIDE_CITY_MARKER_SOURCE_ID) as GeoJSONSource).setData(visibleGuideCityMarkerData);
-    (map.getSource(STATE_LABEL_SOURCE_ID) as GeoJSONSource).setData(stateLabelData);
-    (map.getSource(GUIDE_ROUTE_SOURCE_ID) as GeoJSONSource).setData(guideRouteData);
-    (map.getSource(POI_MAP_MARKER_SOURCE_ID) as GeoJSONSource).setData(poiMapMarkerData);
+    setGeoJsonSourceData(map, VISIBLE_GUIDE_CITY_MARKER_SOURCE_ID, visibleGuideCityMarkerData);
+  }, [visibleGuideCityMarkerData]);
+
+  useEffect(() => {
+    const map = mapRef.current;
+    if (!map || !isStyleReadyRef.current) {
+      return;
+    }
+
+    setGeoJsonSourceData(map, GUIDE_ROUTE_SOURCE_ID, guideRouteData);
+  }, [guideRouteData]);
+
+  useEffect(() => {
+    const map = mapRef.current;
+    if (!map || !isStyleReadyRef.current) {
+      return;
+    }
+
+    setGeoJsonSourceData(map, POI_MAP_MARKER_SOURCE_ID, poiMapMarkerData);
+  }, [poiMapMarkerData]);
+
+  useEffect(() => {
+    const map = mapRef.current;
+    if (!map || !isStyleReadyRef.current) {
+      return;
+    }
+
     ensureGuideStopMarkerImages(map, guideStopData);
-    (map.getSource(GUIDE_STOP_SOURCE_ID) as GeoJSONSource).setData(guideStopData);
-    (map.getSource(NEIGHBORHOOD_BOUNDARY_SOURCE_ID) as GeoJSONSource).setData(neighborhoodBoundaryData);
-  }, [cityData, continentLabelData, countryData, guideRouteData, guideStopData, neighborhoodBoundaryData, neighborhoodMarkerData, poiMapMarkerData, savedLocationData, stateLabelData, visibleGuideCityMarkerData, visibleGuideMarkerData]);
+    setGeoJsonSourceData(map, GUIDE_STOP_SOURCE_ID, guideStopData);
+  }, [guideStopData]);
 
   const activeGuidePulseStopId = useMemo(() => {
     const renderedStopIds = new Set(guideStopData.features.map((feature) => feature.properties.id));
@@ -4753,7 +4815,6 @@ export function MapClient({
       : [
           activeGuide.id,
           activeGuideFitNonce,
-          resizeSignal,
           activeGuideStopSignature,
           activeGuidePoiMarkerSignature,
           viewportModeRef.current,
@@ -4907,22 +4968,15 @@ export function MapClient({
       });
     };
 
-    activeGuideCameraFrameRef.current = requestAnimationFrame(() => {
-      activeGuideCameraFrameRef.current = requestAnimationFrame(() => runCamera(700));
-    });
-    const settleTimeout = window.setTimeout(() => {
+    const cameraDelay = selectedCameraTargetId ? 0 : 160;
+    const cameraDuration = selectedCameraTargetId ? 520 : 760;
+    const startTimeout = window.setTimeout(() => {
       activeGuideCameraTimeoutsRef.current = activeGuideCameraTimeoutsRef.current.filter(
-        (timeoutId) => timeoutId !== settleTimeout,
+        (timeoutId) => timeoutId !== startTimeout,
       );
-      runCamera(520);
-    }, 620);
-    const lateSettleTimeout = window.setTimeout(() => {
-      activeGuideCameraTimeoutsRef.current = activeGuideCameraTimeoutsRef.current.filter(
-        (timeoutId) => timeoutId !== lateSettleTimeout,
-      );
-      runCamera(420);
-    }, 1180);
-    activeGuideCameraTimeoutsRef.current.push(settleTimeout, lateSettleTimeout);
+      activeGuideCameraFrameRef.current = requestAnimationFrame(() => runCamera(cameraDuration));
+    }, cameraDelay);
+    activeGuideCameraTimeoutsRef.current.push(startTimeout);
 
     return () => {
       if (activeGuideCameraFrameRef.current !== null) {
@@ -4941,7 +4995,6 @@ export function MapClient({
     activeGuidePoiMarkerSignature,
     activeGuideStopSignature,
     cameraPoiMapMarkerData,
-    resizeSignal,
     selectionCameraKey,
     styleReadyTick,
     selectedStopId,
@@ -4961,7 +5014,10 @@ export function MapClient({
     if (selectionCameraKeyRef.current === nextCameraKey) {
       return;
     }
+    const isInitialSelectionCamera = selectionCameraKeyRef.current === null;
+    const cameraDuration = isInitialSelectionCamera ? 0 : 1450;
     selectionCameraKeyRef.current = nextCameraKey;
+    selectionCameraSettlingUntilRef.current = performance.now() + cameraDuration + 180;
     const activeViewportInsets = getViewportInsets(map, viewportModeRef.current, viewportInsetsRef.current);
     resetCameraPadding(map);
 
@@ -4997,7 +5053,7 @@ export function MapClient({
       if (!geometryBounds.isEmpty()) {
         map.fitBounds(geometryBounds, {
           padding: mergePadding({ top: 36, right: 36, bottom: 36, left: 36 }, activeViewportInsets),
-          duration: 2200,
+          duration: cameraDuration,
           easing: smoothCameraEasing,
           essential: true,
           maxZoom: activeNestedSubarea ? 13.8 : 12.9,
@@ -5011,7 +5067,7 @@ export function MapClient({
         center: [activeNestedSubarea.coordinates[1], activeNestedSubarea.coordinates[0]],
         zoom: activeCity?.name === "New York City" ? 13.2 : 13.4,
         padding: mergePadding({ top: 28, right: 28, bottom: 28, left: 28 }, activeViewportInsets),
-        duration: 2100,
+        duration: cameraDuration,
         easing: smoothCameraEasing,
         essential: true,
       });
@@ -5023,7 +5079,7 @@ export function MapClient({
         center: [activeSubarea.coordinates[1], activeSubarea.coordinates[0]],
         zoom: activeCity?.name === "New York City" ? 11.6 : 12.6,
         padding: mergePadding({ top: 28, right: 28, bottom: 28, left: 28 }, activeViewportInsets),
-        duration: 2100,
+        duration: cameraDuration,
         easing: smoothCameraEasing,
         essential: true,
       });
@@ -5033,7 +5089,7 @@ export function MapClient({
     if (activeCity) {
       if (activeCity.isPlaceholderRegion) {
         if (activeCountry) {
-          fitMapToCountry(map, activeCountry.id, activeCountry.bounds, activeViewportInsets, { duration: 2200 });
+          fitMapToCountry(map, activeCountry.id, activeCountry.bounds, activeViewportInsets, { duration: cameraDuration });
           return;
         }
       }
@@ -5042,7 +5098,7 @@ export function MapClient({
         center: [activeCity.coordinates[1], activeCity.coordinates[0]],
         zoom: 11.8,
         padding: mergePadding({ top: 28, right: 28, bottom: 28, left: 28 }, activeViewportInsets),
-        duration: 2100,
+        duration: cameraDuration,
         easing: smoothCameraEasing,
         essential: true,
       });
@@ -5054,7 +5110,7 @@ export function MapClient({
         center: [activeState.coordinates[1], activeState.coordinates[0]],
         zoom: 5.85,
         padding: mergePadding({ top: 28, right: 28, bottom: 28, left: 28 }, activeViewportInsets),
-        duration: 2100,
+        duration: cameraDuration,
         easing: smoothCameraEasing,
         essential: true,
       });
@@ -5068,7 +5124,7 @@ export function MapClient({
       if (subareaBounds && !subareaBounds.isEmpty()) {
         map.fitBounds(subareaBounds, {
           padding: mergePadding({ top: 30, right: 30, bottom: 30, left: 30 }, activeViewportInsets),
-          duration: 2100,
+          duration: cameraDuration,
           easing: smoothCameraEasing,
           essential: true,
           maxZoom: 6.2,
@@ -5080,7 +5136,7 @@ export function MapClient({
         center: [activeCountrySubarea.coordinates[1], activeCountrySubarea.coordinates[0]],
         zoom: activeCountry?.id === "usa" ? 4.95 : 6,
         padding: mergePadding({ top: 28, right: 28, bottom: 28, left: 28 }, activeViewportInsets),
-        duration: 2100,
+        duration: cameraDuration,
         easing: smoothCameraEasing,
         essential: true,
       });
@@ -5088,12 +5144,12 @@ export function MapClient({
     }
 
     if (activeCountry) {
-      fitMapToCountry(map, activeCountry.id, activeCountry.bounds, activeViewportInsets);
+      fitMapToCountry(map, activeCountry.id, activeCountry.bounds, activeViewportInsets, { duration: cameraDuration });
       return;
     }
 
     if (activeContinent) {
-      fitMapToContinent(map, activeContinent, activeViewportInsets);
+      fitMapToContinent(map, activeContinent, activeViewportInsets, { duration: cameraDuration });
       return;
     }
 
@@ -5101,7 +5157,7 @@ export function MapClient({
       center: [10, 20],
       zoom: 1.8,
       padding: mergePadding({ top: 24, right: 24, bottom: 24, left: 24 }, activeViewportInsets),
-      duration: 2200,
+      duration: cameraDuration,
       easing: smoothCameraEasing,
       essential: true,
     });
@@ -5165,6 +5221,10 @@ export function MapClient({
 
   useEffect(() => {
     const map = mapRef.current;
+    if (collapsedGuidesCameraTimeoutRef.current !== null) {
+      window.clearTimeout(collapsedGuidesCameraTimeoutRef.current);
+      collapsedGuidesCameraTimeoutRef.current = null;
+    }
     if (activeGuide?.stops?.length) {
       collapsedGuidesCameraKeyRef.current = null;
       return;
@@ -5190,48 +5250,72 @@ export function MapClient({
     if (collapsedGuidesCameraKeyRef.current === nextCameraKey) {
       return;
     }
-    collapsedGuidesCameraKeyRef.current = nextCameraKey;
 
-    map.resize();
-    resetCameraPadding(map);
-    const activeViewportInsets = getViewportInsets(map, viewportModeRef.current, viewportInsetsRef.current);
-    const guideBounds = new LngLatBounds();
+    const runCollapsedGuidesCamera = () => {
+      collapsedGuidesCameraTimeoutRef.current = null;
+      if (
+        collapsedGuidesCameraKeyRef.current === nextCameraKey ||
+        activeGuideIdRef.current ||
+        !isStyleReadyRef.current
+      ) {
+        return;
+      }
+      collapsedGuidesCameraKeyRef.current = nextCameraKey;
 
-    visibleGuideMarkerData.features.forEach((feature) => {
-      const [lng, lat] = feature.geometry.coordinates;
-      guideBounds.extend([lng, lat]);
-    });
+      map.resize();
+      resetCameraPadding(map);
+      const activeViewportInsets = getViewportInsets(map, viewportModeRef.current, viewportInsetsRef.current);
+      const guideBounds = new LngLatBounds();
 
-    if (guideBounds.isEmpty()) {
-      return;
-    }
+      visibleGuideMarkerData.features.forEach((feature) => {
+        const [lng, lat] = feature.geometry.coordinates;
+        guideBounds.extend([lng, lat]);
+      });
 
-    if (visibleGuideMarkerData.features.length === 1) {
-      const [lng, lat] = visibleGuideMarkerData.features[0].geometry.coordinates;
-      map.easeTo({
-        center: [lng, lat],
-        zoom: Math.max(map.getZoom(), 12.2),
+      if (guideBounds.isEmpty()) {
+        return;
+      }
+
+      if (visibleGuideMarkerData.features.length === 1) {
+        const [lng, lat] = visibleGuideMarkerData.features[0].geometry.coordinates;
+        map.easeTo({
+          center: [lng, lat],
+          zoom: Math.max(map.getZoom(), 12.2),
+          padding: clampPaddingToMap(
+            map,
+            mergePadding({ top: 36, right: 36, bottom: 40, left: 36 }, activeViewportInsets),
+          ),
+          duration: 720,
+          easing: smoothCameraEasing,
+          essential: true,
+        });
+        return;
+      }
+
+      map.fitBounds(guideBounds, {
         padding: clampPaddingToMap(
           map,
-          mergePadding({ top: 36, right: 36, bottom: 40, left: 36 }, activeViewportInsets),
+          mergePadding({ top: 36, right: 36, bottom: 44, left: 36 }, activeViewportInsets),
         ),
-        duration: 1050,
+        duration: 720,
         easing: smoothCameraEasing,
         essential: true,
+        maxZoom: Math.max(12.2, getGuideBoundsZoom(guideBounds)),
       });
-      return;
+    };
+
+    const delay = Math.max(0, selectionCameraSettlingUntilRef.current - performance.now());
+    if (delay > 40) {
+      collapsedGuidesCameraTimeoutRef.current = window.setTimeout(runCollapsedGuidesCamera, delay);
+      return () => {
+        if (collapsedGuidesCameraTimeoutRef.current !== null) {
+          window.clearTimeout(collapsedGuidesCameraTimeoutRef.current);
+          collapsedGuidesCameraTimeoutRef.current = null;
+        }
+      };
     }
 
-    map.fitBounds(guideBounds, {
-      padding: clampPaddingToMap(
-        map,
-        mergePadding({ top: 36, right: 36, bottom: 44, left: 36 }, activeViewportInsets),
-      ),
-      duration: 1050,
-      easing: smoothCameraEasing,
-      essential: true,
-      maxZoom: Math.max(12.2, getGuideBoundsZoom(guideBounds)),
-    });
+    runCollapsedGuidesCamera();
   }, [
     activeGuide,
     selection.cityId,
@@ -5242,5 +5326,10 @@ export function MapClient({
     visibleGuideMarkerData,
   ]);
 
-  return <div ref={containerRef} className="rguide-map-layer min-h-[60vh] overflow-hidden lg:min-h-[calc(100vh-15rem)]" />;
+  return (
+    <div
+      ref={containerRef}
+      className="rguide-map-layer min-h-[60vh] overflow-hidden bg-slate-100 lg:min-h-[calc(100vh-15rem)]"
+    />
+  );
 }
