@@ -196,6 +196,59 @@ type StopOptions = Partial<GuideStop> & {
   editorialUrls?: string[];
 };
 
+type StopHours = NonNullable<GuideStop["hours"]>;
+
+const hoursByStopId: Record<string, StopHours> = {
+  "lisbon-dining-belcanto": { default: "Fine-dining service runs on selected lunch and dinner sessions; book ahead and confirm current seating times on the official reservation calendar." },
+  "lisbon-dining-cervejaria-ramiro": { default: "Seafood service usually runs daily from midday into late evening, with seasonal or holiday changes; verify same-day hours before going." },
+  "lisbon-dining-prado": { default: "Lunch and dinner service vary by day; reservations recommended and current hours should be checked on the official site." },
+  "lisbon-dining-canalha": { default: "Lunch and dinner service are posted by day on the official restaurant page; reserve and confirm current hours before routing to Belem." },
+  "lisbon-dining-o-velho-eurico": { default: "Lunch and dinner service vary by day and book out quickly; confirm current openings and reservations on the official Instagram/listing." },
+  "lisbon-cheap-manteigaria": { default: "Daily pastry-counter hours generally run from morning into evening; verify the Chiado shop before going." },
+  "lisbon-cheap-o-trevo": { default: "Counter-service hours are daytime into evening and can shift by day; check the current listing before planning around a bifana stop." },
+  "lisbon-cheap-a-provinciana": { default: "Traditional lunch and dinner service varies by day, with possible Sunday or holiday changes; check the current listing before going." },
+  "lisbon-cheap-time-out-market": { default: "Market hall hours usually run daily from late morning to late evening; individual kitchens and bars can vary." },
+  "lisbon-cheap-casa-do-alentejo": { default: "Restaurant and cultural-room hours vary by service and event schedule; confirm current lunch/dinner times before going." },
+  "lisbon-hotel-bairro-alto": { default: "Hotel operates daily; reception and guest services are generally 24 hours. Restaurant, bar, and rooftop hours vary." },
+  "lisbon-hotel-memmo-alfama": { default: "Hotel operates daily; reception and guest services are generally 24 hours. Terrace and bar hours vary by season." },
+  "lisbon-hotel-valverde": { default: "Hotel operates daily; reception and guest services are generally 24 hours. Restaurant and garden service hours vary." },
+  "lisbon-hotel-the-ivens": { default: "Hotel operates daily; reception and guest services are generally 24 hours. Dining and bar hours vary by venue." },
+  "lisbon-hotel-palacio-principe-real": { default: "Hotel operates daily; reception and guest services run by property schedule. Confirm arrival, bar, and restaurant hours directly." },
+  "lisbon-hostel-goodmorning": { default: "Hostel operates daily; reception, check-in, and activity schedules should be confirmed with the property before arrival." },
+  "lisbon-hostel-home-lisbon": { default: "Hostel operates daily; reception, check-in, private-room, and dorm availability should be confirmed before arrival." },
+  "lisbon-hostel-living-lounge": { default: "Hostel operates daily; reception, check-in, dorm, and private-room availability should be confirmed before arrival." },
+  "lisbon-hostel-lisbon-destination": { default: "Hostel operates daily inside Rossio Station; confirm reception/check-in hours, dorms, and private rooms before arrival." },
+  "lisbon-hostel-yes-lisbon": { default: "Hostel operates daily; reception, check-in, and room availability should be confirmed before arrival." },
+  "lisbon-casual-pensao-amor": { default: "Bar hours usually run from evening into late night, with events and holidays changing the schedule; check the official page before going." },
+  "lisbon-casual-tasca-do-chico": { default: "Fado nights and bar hours vary by program; arrive early and check the current schedule before planning around live music." },
+  "lisbon-casual-cerveteca": { default: "Craft-beer bar hours vary by day, generally afternoon/evening service; check the current listing before going." },
+  "lisbon-casual-sol-e-pesca": { default: "Bar and snack service generally runs afternoon into late night; confirm current Cais do Sodre hours before going." },
+  "lisbon-casual-a-ginjinha": { default: "Tiny counter usually opens daily from morning or midday into the evening; verify current posted hours around holidays." },
+  "lisbon-cocktail-red-frog": { default: "Cocktail service runs evening into late night on selected days; reservations recommended and current hours should be checked before going." },
+  "lisbon-cocktail-monkey-mash": { default: "Cocktail service generally runs evening into late night; check the current opening days and reservations before going." },
+  "lisbon-cocktail-cinco-lounge": { default: "Evening cocktail service varies by day; check the official site or listing before making it a fixed stop." },
+  "lisbon-cocktail-foxtrot": { default: "Bar and late-night food service run evening into late night, with day-by-day changes; confirm current hours before going." },
+  "lisbon-cocktail-pavilhao-chines": { default: "Evening bar hours vary by day; check the current listing before planning a late stop." },
+  "lisbon-culture-castelo-sao-jorge": { default: "Open daily with seasonal visitor hours; last entry is before closing. Check the official ticket page before going." },
+  "lisbon-culture-jeronimos": { default: "Visitor hours vary by season and ticket area, with weekly closures possible; check the official monument page before going." },
+  "lisbon-culture-belem-tower": { default: "Visitor hours vary by season, weather, and restoration schedule; check the official monument page before going." },
+  "lisbon-culture-gulbenkian": { default: "Museum and garden hours vary by day and exhibition; check the official calendar before going." },
+  "lisbon-culture-azulejo": { default: "Museum hours vary by day, with weekly closure and holiday changes possible; check the official museum page before going." },
+  "lisbon-culture-maat": { default: "Museum hours vary by exhibition and day, with weekly closures possible; check the official MAAT calendar before going." },
+  "lisbon-culture-fado-museum": { default: "Museum hours vary by day, with weekly or holiday closures possible; check the official museum page before going." },
+  "lisbon-culture-oceanario": { default: "Aquarium visitor hours run daily with seasonal changes; check the official ticket calendar before going." },
+  "lisbon-activity-praca-comercio": { default: "Public square open 24 hours; surrounding cafes, museum spaces, and arch access have separate hours." },
+  "lisbon-activity-castelo-sao-jorge": { default: "Open daily with seasonal visitor hours; last entry is before closing. Check the official ticket page before going." },
+  "lisbon-activity-miradouro-senhora-monte": { default: "Public viewpoint open 24 hours; daylight and sunset visits are most useful, and nearby services vary." },
+  "lisbon-activity-jeronimos": { default: "Visitor hours vary by season and ticket area, with weekly closures possible; check the official monument page before going." },
+  "lisbon-activity-belem-tower": { default: "Visitor hours vary by season, weather, and restoration schedule; check the official monument page before going." },
+  "lisbon-activity-maat": { default: "Museum hours vary by exhibition and day, with weekly closures possible; check the official MAAT calendar before going." },
+  "lisbon-activity-gulbenkian": { default: "Museum and garden hours vary by day and exhibition; check the official calendar before going." },
+  "lisbon-activity-oceanario": { default: "Aquarium visitor hours run daily with seasonal changes; check the official ticket calendar before going." },
+  "lisbon-activity-time-out-market": { default: "Market hall hours usually run daily from late morning to late evening; individual kitchens and bars can vary." },
+  "lisbon-activity-a-ginjinha": { default: "Tiny counter usually opens daily from morning or midday into the evening; verify current posted hours around holidays." },
+};
+
 function stop(id: string, name: string, coordinates: [number, number], description: string, options: StopOptions): GuideStop {
   const {
     sourcePhoto,
@@ -223,7 +276,7 @@ function stop(id: string, name: string, coordinates: [number, number], descripti
     name,
     coordinates,
     description,
-    hours: {
+    hours: hoursByStopId[id] ?? {
       default: "Open and active in current source set; hours vary by day. Check the official site or Google Maps before going.",
     },
     photo: sourcePhoto,
