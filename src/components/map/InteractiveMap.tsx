@@ -97,7 +97,18 @@ export function InteractiveMap(props: InteractiveMapProps) {
 
   useEffect(() => {
     let idleId: number | null = null;
+    let fallbackId: number | null = null;
+    let didStartLoad = false;
+    let isCancelled = false;
     const scheduleMapLoad = () => {
+      if (didStartLoad || isCancelled) {
+        return;
+      }
+      didStartLoad = true;
+      if (fallbackId !== null) {
+        window.clearTimeout(fallbackId);
+        fallbackId = null;
+      }
       loadMapLibreStyles();
       setShouldLoadMap(true);
     };
@@ -108,11 +119,16 @@ export function InteractiveMap(props: InteractiveMapProps) {
       }
       scheduleMapLoad();
     });
+    fallbackId = window.setTimeout(scheduleMapLoad, 900);
 
     return () => {
+      isCancelled = true;
       window.cancelAnimationFrame(scheduleId);
       if (idleId !== null && "cancelIdleCallback" in window) {
         window.cancelIdleCallback(idleId);
+      }
+      if (fallbackId !== null) {
+        window.clearTimeout(fallbackId);
       }
     };
   }, []);
