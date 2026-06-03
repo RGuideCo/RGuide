@@ -284,7 +284,7 @@ const images = {
   kaiju: "https://images.squarespace-cdn.com/content/v1/68378a0022476b1092657eb6/1748470272865-PSOFY66YU661N5VQI6F2/01.png",
   mediumCool: "https://images.squarespace-cdn.com/content/v1/68378a0022476b1092657eb6/1748470272883-5CM06PWOKV3QFR7SZFZO/10.png",
   dantes: "https://danteshifi.com/wp-content/uploads/2021/10/Hero-banner-image.jpg",
-  champagneBar: "https://edge.sitecorecloud.io/swirehotels1-swirehotels-production-ebf6/media/Project/EAST-Hotels/Miami/Eat-and-Drink/Done---Sugar/Done---3x2/Sugar-Miami---4_Resized.jpg?h=1000&iar=0&w=1500",
+  champagneBar: "https://www.fourseasons.com/alt/img-opt/~65.3402.0,0000-234,9812-2999,9742-1687,4855/publish/content/dam/fourseasons/images/web/MFL/MFL_1649_original.jpg",
   sugar: "https://edge.sitecorecloud.io/swirehotels1-swirehotels-production-ebf6/media/Project/EAST-Hotels/Miami/Eat-and-Drink/Done---Sugar/Done---3x2/Sugar-Miami---4_Resized.jpg?h=1000&iar=0&w=1500",
   artDeco: "https://upload.wikimedia.org/wikipedia/commons/e/e2/Ocean_Drive_in_the_Miami_Beach_Art_Deco_Historic_District.jpg",
   pamm: "https://upload.wikimedia.org/wikipedia/commons/c/ce/Perez_Art_Museum_Miami.jpg",
