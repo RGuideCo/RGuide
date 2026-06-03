@@ -817,17 +817,18 @@ export function MapListCard({
   const weekdayLabel = TODAY_WEEKDAY_LABEL;
   const currentUser = useAppStore((state) => state.currentUser);
   const submittedLists = useAppStore((state) => state.submittedLists);
+  const favoriteIds = useAppStore((state) => state.favoriteIds);
   const votedIds = useAppStore((state) => state.votedIds);
   const itineraryStopIds = useAppStore((state) => state.itineraryStopIds);
   const itineraryPlaylists = useAppStore((state) => state.itineraryPlaylists);
-  const toggleUpvote = useAppStore((state) => state.toggleUpvote);
+  const toggleFavorite = useAppStore((state) => state.toggleFavorite);
   const addListToItineraryPlaylist = useAppStore((state) => state.addListToItineraryPlaylist);
   const addStopToItineraryPlaylist = useAppStore((state) => state.addStopToItineraryPlaylist);
   const createItineraryPlaylist = useAppStore((state) => state.createItineraryPlaylist);
   const submitList = useAppStore((state) => state.submitList);
   const updateSubmittedList = useAppStore((state) => state.updateSubmittedList);
 
-  const hasVoted = votedIds.includes(list.id);
+  const isFavorited = favoriteIds.includes(list.id) || votedIds.includes(list.id);
   const isInItinerary = itineraryPlaylists.some((playlist) => playlist.listIds.includes(list.id));
   const isEventGuide = list.submissionType === "event" || list.id.startsWith("event-");
   const isItineraryGuide = isInItinerary || isItineraryLikeGuide(list);
@@ -1897,15 +1898,15 @@ export function MapListCard({
               type="button"
               onClick={(event) => {
                 event.stopPropagation();
-                toggleUpvote(list.id);
+                toggleFavorite(list.id);
               }}
               className={`inline-flex h-7 w-7 items-center justify-center rounded-full text-[11px] font-medium ${
-                hasVoted ? "bg-rose-950 text-rose-50" : "border border-slate-200 bg-white text-slate-700"
+                isFavorited ? "bg-rose-950 text-rose-50" : "border border-slate-200 bg-white text-slate-700"
               }`}
-              aria-label={hasVoted ? "Remove favorite" : "Favorite guide"}
-              title={hasVoted ? "Remove favorite" : "Favorite guide"}
+              aria-label={isFavorited ? "Remove favorite" : "Favorite guide"}
+              title={isFavorited ? "Remove favorite" : "Favorite guide"}
             >
-              <Heart className={`h-3.5 w-3.5 ${hasVoted ? "fill-current" : ""}`} />
+              <Heart className={`h-3.5 w-3.5 ${isFavorited ? "fill-current" : ""}`} />
             </button>
           ) : null}
           {expandable && expandedChrome ? (

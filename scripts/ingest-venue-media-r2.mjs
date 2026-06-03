@@ -23,6 +23,7 @@ const WIKIMEDIA_API_URL = "https://commons.wikimedia.org/w/api.php";
 const OPENVERSE_API_URL = "https://api.openverse.engineering/v1/images/";
 const OPENVERSE_ALLOWED_LICENSES = "by,by-sa,cc0,pdm";
 const USER_AGENT = "rGuide-media-ingest/1.0 (https://rguide.co; media@rguide.co)";
+const BROWSER_USER_AGENT = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0 Safari/537.36";
 
 function loadEnvFile(filePath) {
   if (!fs.existsSync(filePath)) return;
@@ -500,13 +501,18 @@ function buildStorageKey(row, contentType) {
 }
 
 async function fetchImage(url) {
-  const response = await fetch(url, {
+  const fetchWithUserAgent = (userAgent) => fetch(url, {
     redirect: "follow",
     headers: {
       "accept": "image/avif,image/webp,image/png,image/jpeg,image/*;q=0.8,*/*;q=0.1",
-      "user-agent": USER_AGENT,
+      "user-agent": userAgent,
     },
   });
+
+  let response = await fetchWithUserAgent(USER_AGENT);
+  if (response.status === 403) {
+    response = await fetchWithUserAgent(BROWSER_USER_AGENT);
+  }
 
   const contentType = response.headers.get("content-type")?.split(";")[0]?.toLowerCase() ?? "";
   if (!response.ok) {

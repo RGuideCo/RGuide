@@ -25,6 +25,11 @@ export function GuideSourceSummary({
   onToggle,
 }: GuideSourceSummaryProps) {
   const sourcePreview = variant === "collapsed" ? sources.slice(0, 3) : sources.slice(0, 3);
+  const collapsedRemainingSourceCount = Math.max(0, sources.length - sourcePreview.length);
+  const collapsedSourceLabel =
+    collapsedRemainingSourceCount > 0
+      ? `+${collapsedRemainingSourceCount} Sources`
+      : `${sources.length} ${sources.length === 1 ? "Source" : "Sources"}`;
 
   if (!sourceSummary) {
     return null;
@@ -33,13 +38,9 @@ export function GuideSourceSummary({
   if (variant === "collapsed") {
     return (
       <div
-        className="relative z-10 -mb-1.5 mt-2 flex w-full items-center gap-2 border-t border-slate-950/15 pt-1.5 text-left"
+        className="relative z-10 mt-2 flex w-full items-center gap-2 border-t border-slate-950/15 pt-1.5 text-left"
         aria-label="Guide sources"
       >
-        <span className="font-mono text-[9px] font-semibold uppercase tracking-[0.16em] text-slate-400">
-          Sourced
-        </span>
-        <span className="h-px w-4 shrink-0 bg-slate-300/80" aria-hidden="true" />
         <span className="flex shrink-0 items-center gap-1">
           {sourcePreview.map((source, index) => (
             <span
@@ -57,8 +58,8 @@ export function GuideSourceSummary({
             </span>
           ))}
         </span>
-        <span className="min-w-0 flex-1 truncate text-[11px] font-medium leading-none text-slate-600">
-          {sourceSummary}
+        <span className="min-w-0 flex-1 truncate text-[11px] font-semibold leading-none text-slate-600">
+          {collapsedSourceLabel}
         </span>
       </div>
     );

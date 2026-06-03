@@ -7464,14 +7464,13 @@ export function SplitScreenSection({
                               key={option.label}
                               type="button"
                               onClick={() => handleCategoryToggle(option.category)}
-                              className={`flex h-7 w-7 shrink-0 items-center justify-center rounded-full border shadow-sm transition-[background-color,color,border-color,transform] duration-200 hover:scale-105 ${
-                                isActive ? "text-white" : "bg-white/8 text-white/72 hover:bg-white/12 hover:text-white"
-                              }`}
+                              className={`category-icon-button flex h-7 w-7 shrink-0 items-center justify-center rounded-full border border-transparent shadow-sm ${
+                                isActive ? "text-white" : "bg-white/8 text-slate-950 hover:bg-white/12 hover:text-slate-950"
+                              } ${isActive ? "category-icon-button-active" : ""}`}
                               style={{
-                                backgroundColor: isActive ? CATEGORY_STYLES[option.category].mapColor : undefined,
-                                borderColor: CATEGORY_STYLES[option.category].mapColor,
+                                "--category-color": CATEGORY_STYLES[option.category].mapColor,
                                 transitionDelay: `${index * 18}ms`,
-                              }}
+                              } as React.CSSProperties}
                               aria-label={isActive ? `Clear ${option.label}` : option.label}
                               aria-pressed={isActive}
                             >
@@ -7637,20 +7636,19 @@ export function SplitScreenSection({
                                   onClick={() => handleCategoryToggle(option.category)}
                                   onMouseEnter={() => setHoveredCategoryLabel(option.label)}
                                   onMouseLeave={() => setHoveredCategoryLabel(null)}
-                                  className={`flex h-9 w-9 items-center justify-center rounded-lg outline-none transition focus:outline-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-400/70 ${
+                                  className={`category-icon-button flex h-9 w-9 items-center justify-center rounded-lg border border-transparent outline-none focus:outline-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-400/70 ${
                                     activeCategory === option.category
-                                      ? "border text-white"
-                                      : "border bg-white/8 text-white/72 hover:bg-white/12 hover:text-white"
+                                      ? "category-icon-button-active text-white"
+                                      : "bg-white/8 text-slate-950 hover:bg-white/12 hover:text-slate-950"
                                   }`}
                                   style={
                                     activeCategory === option.category
                                       ? {
-                                          backgroundColor: CATEGORY_STYLES[option.category].mapColor,
-                                          borderColor: CATEGORY_STYLES[option.category].mapColor,
-                                        }
+                                          "--category-color": CATEGORY_STYLES[option.category].mapColor,
+                                        } as React.CSSProperties
                                       : {
-                                          borderColor: CATEGORY_STYLES[option.category].mapColor,
-                                        }
+                                          "--category-color": CATEGORY_STYLES[option.category].mapColor,
+                                        } as React.CSSProperties
                                   }
                                   aria-label={option.label}
                                 >
@@ -7669,20 +7667,19 @@ export function SplitScreenSection({
                                   onClick={() => handleCategoryToggle(option.category)}
                                   onMouseEnter={() => setHoveredCategoryLabel(option.label)}
                                   onMouseLeave={() => setHoveredCategoryLabel(null)}
-                                  className={`flex h-9 w-9 items-center justify-center rounded-lg outline-none transition focus:outline-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-400/70 ${
+                                  className={`category-icon-button flex h-9 w-9 items-center justify-center rounded-lg border border-transparent outline-none focus:outline-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-400/70 ${
                                     activeCategory === option.category
-                                      ? "border text-white"
-                                      : "border bg-white/8 text-white/72 hover:bg-white/12 hover:text-white"
+                                      ? "category-icon-button-active text-white"
+                                      : "bg-white/8 text-slate-950 hover:bg-white/12 hover:text-slate-950"
                                   }`}
                                   style={
                                     activeCategory === option.category
                                       ? {
-                                          backgroundColor: CATEGORY_STYLES[option.category].mapColor,
-                                          borderColor: CATEGORY_STYLES[option.category].mapColor,
-                                        }
+                                          "--category-color": CATEGORY_STYLES[option.category].mapColor,
+                                        } as React.CSSProperties
                                       : {
-                                          borderColor: CATEGORY_STYLES[option.category].mapColor,
-                                        }
+                                          "--category-color": CATEGORY_STYLES[option.category].mapColor,
+                                        } as React.CSSProperties
                                   }
                                   aria-label={option.label}
                                 >
@@ -8524,13 +8521,12 @@ export function SplitScreenSection({
                         key={`create-category-${option.category}`}
                         type="button"
                         onClick={() => setProfileCreateCategory(option.category)}
-                        className={`flex h-10 items-center justify-center rounded-lg border text-white transition hover:scale-[1.03] ${
-                          isActive ? "shadow-sm" : "bg-white/8 text-white/72 hover:bg-white/12 hover:text-white"
+                        className={`category-icon-button flex h-10 items-center justify-center rounded-lg border border-transparent ${
+                          isActive ? "category-icon-button-active shadow-sm" : "bg-white/8 text-slate-950 hover:bg-white/12 hover:text-slate-950"
                         }`}
                         style={{
-                          borderColor: CATEGORY_STYLES[option.category].mapColor,
-                          backgroundColor: isActive ? CATEGORY_STYLES[option.category].mapColor : undefined,
-                        }}
+                          "--category-color": CATEGORY_STYLES[option.category].mapColor,
+                        } as React.CSSProperties}
                         aria-label={option.label}
                         title={option.label}
                       >

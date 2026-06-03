@@ -277,27 +277,6 @@ const GUIDE_STOP_MARKER_IMAGE_PREFIX = "guide-stop-marker";
 const VISIBLE_GUIDE_MARKER_IMAGE_PREFIX = "visible-guide-marker";
 const VISIBLE_GUIDE_CITY_MARKER_IMAGE_PREFIX = "visible-guide-city-marker";
 const VISIBLE_GUIDE_MARKER_HOVER_SIZE_BOOST = 0.26;
-const POI_DIAMOND_ICON_IMAGE_MATCH = [
-  "match",
-  ["get", "category"],
-  "Food",
-  getPoiDiamondImageName("Food"),
-  "Nightlife",
-  getPoiDiamondImageName("Nightlife"),
-  "Culture",
-  getPoiDiamondImageName("Culture"),
-  "Stay",
-  getPoiDiamondImageName("Stay"),
-  "Nature",
-  getPoiDiamondImageName("Nature"),
-  "Activities",
-  getPoiDiamondImageName("Activities"),
-  "Routes",
-  getPoiDiamondImageName("Routes"),
-  "Essentials",
-  getPoiDiamondImageName("Essentials"),
-  getPoiDiamondImageName("Activities"),
-] as ExpressionSpecification;
 const POI_DIAMOND_PULSE_ICON_IMAGE_MATCH = [
   "match",
   ["get", "category"],
@@ -1080,8 +1059,9 @@ function softenBaseTransitStops(map: maplibregl.Map) {
   }
 }
 
-function getPoiDiamondImageName(category: string) {
-  return `${POI_DIAMOND_IMAGE_PREFIX}-${category.toLowerCase()}`;
+function getPoiDiamondImageName(category: string, label?: string) {
+  const labelKey = label ? `-${label.replace(/[^a-z0-9]/gi, "-").toLowerCase()}` : "";
+  return `${POI_DIAMOND_IMAGE_PREFIX}-${category.toLowerCase()}${labelKey}`;
 }
 
 function getPoiDiamondPulseImageName(category: string) {
@@ -1389,6 +1369,15 @@ function addGuideStopMarkerImage(
 function ensureGuideStopMarkerImages(map: maplibregl.Map, guideStopData: FeatureCollection<Point, GuideStopFeatureProperties>) {
   for (const feature of guideStopData.features) {
     if (feature.properties.isNested) {
+      const imageData = createPoiDiamondImage(
+        CATEGORY_STYLES[feature.properties.category].mapColor,
+        feature.properties.rankLabel,
+      );
+      if (map.hasImage(feature.properties.markerImage)) {
+        map.updateImage(feature.properties.markerImage, imageData);
+      } else {
+        map.addImage(feature.properties.markerImage, imageData, { pixelRatio: 2 });
+      }
       continue;
     }
     addGuideStopMarkerImage(
@@ -1419,7 +1408,7 @@ function addMissingGuideStopMarkerImage(
   );
 }
 
-function createPoiDiamondImage(strokeColor: string) {
+function createPoiDiamondImage(strokeColor: string, label?: string) {
   const canvas = document.createElement("canvas");
   canvas.width = 76;
   canvas.height = 76;
@@ -1452,6 +1441,16 @@ function createPoiDiamondImage(strokeColor: string) {
   ctx.fill();
   ctx.stroke();
   ctx.restore();
+
+  if (label) {
+    ctx.save();
+    ctx.fillStyle = "#ffffff";
+    ctx.font = label.length > 1 ? "700 16px 'Noto Sans', Arial, sans-serif" : "700 19px 'Noto Sans', Arial, sans-serif";
+    ctx.textAlign = "center";
+    ctx.textBaseline = "middle";
+    ctx.fillText(label, 38, 38.5);
+    ctx.restore();
+  }
 
   return ctx.getImageData(0, 0, 76, 76);
 }
@@ -1561,24 +1560,28 @@ function createGuideStopData(
     };
     const nestedPlaceCount = stop.places?.length ?? 0;
     const shouldShowNestedFeatures = visibleNestedParentSet.has(stop.id) && nestedPlaceCount > 0;
-    const nestedFeatures = shouldShowNestedFeatures ? (stop.places ?? []).map((place, placeIndex) => ({
-      type: "Feature" as const,
-      properties: {
-        id: place.id,
-        name: place.name,
-        rank: index + 1 + (placeIndex + 1) / 100,
-        rankLabel: String.fromCharCode(65 + (placeIndex % 26)),
-        markerImage: "",
-        category: place.category ?? stopCategory,
-        isNested: true,
-        isSelected: place.id === selectedStopId,
-        placesBeenKind: "default" as const,
-      },
-      geometry: {
-        type: "Point" as const,
-        coordinates: [place.coordinates[1], place.coordinates[0]],
-      },
-    })) : [];
+    const nestedFeatures = shouldShowNestedFeatures ? (stop.places ?? []).map((place, placeIndex) => {
+      const rankLabel = String.fromCharCode(65 + (placeIndex % 26));
+      const category = place.category ?? stopCategory;
+      return {
+        type: "Feature" as const,
+        properties: {
+          id: place.id,
+          name: place.name,
+          rank: index + 1 + (placeIndex + 1) / 100,
+          rankLabel,
+          markerImage: getPoiDiamondImageName(category, rankLabel),
+          category,
+          isNested: true,
+          isSelected: place.id === selectedStopId,
+          placesBeenKind: "default" as const,
+        },
+        geometry: {
+          type: "Point" as const,
+          coordinates: [place.coordinates[1], place.coordinates[0]],
+        },
+      };
+    }) : [];
     return shouldShowNestedFeatures ? [parentFeature, ...nestedFeatures] : [parentFeature];
   });
   const nestedCoordinates = features
@@ -3355,7 +3358,7 @@ function addMapLayers(map: maplibregl.Map) {
     minzoom: 3,
     filter: ["==", ["get", "isNested"], true],
     layout: {
-      "icon-image": POI_DIAMOND_ICON_IMAGE_MATCH,
+      "icon-image": ["get", "markerImage"],
       "icon-size": ["interpolate", ["linear"], ["zoom"], 3, 1.04, 8, 1.12],
       "symbol-sort-key": ["*", -1, ["get", "rank"]],
       "icon-allow-overlap": true,
@@ -3371,7 +3374,7 @@ function addMapLayers(map: maplibregl.Map) {
     type: "symbol",
     source: GUIDE_STOP_SOURCE_ID,
     minzoom: 3,
-    filter: ["==", ["get", "isNested"], true],
+    filter: ["==", ["get", "id"], "__none__"],
     layout: {
       "text-field": ["get", "rankLabel"],
       "text-size": ["interpolate", ["linear"], ["zoom"], 3, 10.2, 8, 11.6],
@@ -3395,7 +3398,7 @@ function addMapLayers(map: maplibregl.Map) {
     minzoom: 3,
     filter: ["==", ["get", "id"], "__none__"],
     layout: {
-      "icon-image": POI_DIAMOND_ICON_IMAGE_MATCH,
+      "icon-image": ["get", "markerImage"],
       "icon-size": ["interpolate", ["linear"], ["zoom"], 3, 1.04, 8, 1.12],
       "symbol-sort-key": ["*", -1, ["get", "rank"]],
       "icon-allow-overlap": true,
@@ -3927,10 +3930,11 @@ export function MapClient({
       zoom: 1.8,
       minZoom: 1.5,
       maxZoom: 16,
-      attributionControl: {},
+      attributionControl: false,
     });
 
-    map.addControl(new maplibregl.NavigationControl({ showCompass: false }), "top-right");
+    map.addControl(new maplibregl.AttributionControl({ compact: true }), "bottom-left");
+    map.addControl(new maplibregl.NavigationControl({ showCompass: false }), "bottom-right");
     mapRef.current = map;
     const recordRenderGap = () => {
       recordMapRenderGap();
@@ -4666,7 +4670,7 @@ export function MapClient({
       const emptyStopFilter: maplibregl.FilterSpecification = ["==", ["get", "id"], "__none__"];
       map.setFilter("guide-stop-selected-points", isActiveGuidePulseStopNested ? emptyStopFilter : activeStopFilter);
       map.setFilter("guide-stop-selected-diamonds", isActiveGuidePulseStopNested ? activeStopFilter : emptyStopFilter);
-      map.setFilter("guide-stop-selected-diamond-labels", isActiveGuidePulseStopNested ? activeStopFilter : emptyStopFilter);
+      map.setFilter("guide-stop-selected-diamond-labels", emptyStopFilter);
       map.setFilter("guide-stop-hover", emptyStopFilter);
       map.setFilter("guide-stop-burst", isActiveGuidePulseStopNested ? emptyStopFilter : activeStopFilter);
       map.setFilter("guide-stop-diamond-burst", isActiveGuidePulseStopNested ? activeStopFilter : emptyStopFilter);
@@ -4709,8 +4713,6 @@ export function MapClient({
       const selectedPointHighZoom = 0.98 + 0.18 * hoverScale;
       const selectedDiamondLowZoom = 1.04 + 0.2 * hoverScale;
       const selectedDiamondHighZoom = 1.12 + 0.22 * hoverScale;
-      const selectedDiamondLabelLowZoom = 10.2 + 1.2 * hoverScale;
-      const selectedDiamondLabelHighZoom = 11.6 + 1.4 * hoverScale;
       const shouldUpdateSymbolLayout = !map.isMoving();
 
       map.setPaintProperty("guide-stop-hover", "circle-radius", [
@@ -4758,22 +4760,7 @@ export function MapClient({
         ]);
       }
       map.setPaintProperty("guide-stop-selected-diamonds", "icon-opacity", isActiveGuidePulseStopNested ? hoverScale : 0);
-      if (shouldUpdateSymbolLayout) {
-        map.setLayoutProperty("guide-stop-selected-diamond-labels", "text-size", [
-          "interpolate",
-          ["linear"],
-          ["zoom"],
-          3,
-          selectedDiamondLabelLowZoom,
-          8,
-          selectedDiamondLabelHighZoom,
-        ]);
-      }
-      map.setPaintProperty(
-        "guide-stop-selected-diamond-labels",
-        "text-opacity",
-        isActiveGuidePulseStopNested ? hoverScale : 0,
-      );
+      map.setPaintProperty("guide-stop-selected-diamond-labels", "text-opacity", 0);
       if (shouldUpdateSymbolLayout) {
         map.setLayoutProperty("guide-stop-diamond-burst", "icon-size", [
           "interpolate",
