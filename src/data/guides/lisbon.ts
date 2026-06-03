@@ -1143,7 +1143,7 @@ export const lisbonCitywideGuides: MapList[] = [
     "list-lisbon-citywide-cocktail-bars",
     "list-lisbon-citywide-cocktail-bars",
     "best-cocktail-bars",
-    "Speakeasies, Classics, and Design-Heavy Rooms",
+    "Speakeasies & Cocktail Bars",
     "A cocktail-focused Lisbon guide that separates award-listed speakeasy energy, long-running Príncipe Real rooms, and old-school bars with strong atmosphere.",
     "Nightlife",
     cocktailStops,
