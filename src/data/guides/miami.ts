@@ -114,6 +114,7 @@ const hours = {
   zak: { mon: "7:00 AM-5:00 PM", tue: "7:00 AM-5:00 PM", wed: "7:00 AM-5:00 PM", thu: "7:00 AM-5:00 PM", fri: "7:00 AM-5:00 PM", sat: "Closed", sun: "7:00 AM-5:00 PM" },
   surfClub: { mon: "Closed", tue: "5:30 PM-10:00 PM", wed: "5:30 PM-10:00 PM", thu: "5:30 PM-10:00 PM", fri: "5:30 PM-10:00 PM", sat: "5:30 PM-10:00 PM", sun: "5:30 PM-10:00 PM" },
   garcias: daily("11:00 AM-9:00 PM"),
+  chefCreole: daily("11:00 AM-9:00 PM"),
   sanguich: daily("10:00 AM-10:00 PM"),
   laSandwicherie: { mon: "8:00 AM-5:00 AM", tue: "8:00 AM-5:00 AM", wed: "8:00 AM-5:00 AM", thu: "8:00 AM-5:00 AM", fri: "8:00 AM-6:00 AM", sat: "8:00 AM-6:00 AM", sun: "8:00 AM-5:00 AM" },
   enriquetas: { mon: "6:30 AM-3:00 PM", tue: "6:30 AM-3:00 PM", wed: "6:30 AM-3:00 PM", thu: "6:30 AM-3:00 PM", fri: "6:30 AM-3:00 PM", sat: "7:00 AM-2:00 PM", sun: "Closed" },
@@ -169,6 +170,7 @@ const hoursByName: Record<string, StopHours> = {
   "Zak the Baker": hours.zak,
   "The Surf Club Restaurant": hours.surfClub,
   "Garcia's Seafood Grille & Fish Market": hours.garcias,
+  "Chef Creole": hours.chefCreole,
   "Sanguich de Miami": hours.sanguich,
   "La Sandwicherie": hours.laSandwicherie,
   "Enriqueta's Sandwich Shop": hours.enriquetas,
@@ -230,15 +232,16 @@ function expandDefaultHours(input: StopHours): StopHours {
 
 const images = {
   joes: "https://joesstonecrab.com/cdn/shop/files/DSC01527_2_1_1024x1024.jpg?v=1758217452",
-  versailles: commons("2008-0426-FL-Versailles-EXT.jpg"),
-  mandolin: "https://images.getbento.com/accounts/46c3628b83ff859c5f0fcb6aad5825ea/media/images/27.png?w=1000&fit=max&auto=compress",
-  michaels: "https://michaelsgenuine.com/wp-content/uploads/2021/12/inside.png",
-  stubbornSeed: "https://michaelsgenuine.com/wp-content/uploads/2021/12/inside.png",
-  boiaDe: "https://framerusercontent.com/images/60FX2j6NlYUxCzi16rXAb6Ssn8.jpg",
-  macchialina: "https://framerusercontent.com/images/60FX2j6NlYUxCzi16rXAb6Ssn8.jpg",
-  zak: "https://i0.wp.com/zakthebaker.com/wp-content/uploads/2017/07/17fe77a2-b2d5-4412-ad85-f33cca43211b.jpg?resize=800%2C800&ssl=1",
+  versailles: "https://cdn.prod.website-files.com/5f9b2a13bc4f61ef6ae5347a/6075e1e31b7036407ddbe518_4C8A8705.jpg",
+  mandolin: "https://images.getbento.com/accounts/46c3628b83ff859c5f0fcb6aad5825ea/media/images/6161396G1360058%C3%82GESISCHILLING.jpg?w=1200&fit=crop&auto=compress,format&cs=origin&crop=focalpoint&fp-x=0.5&fp-y=0.5",
+  michaels: "https://michaelsgenuine.com/wp-content/uploads/2022/03/Image.png",
+  stubbornSeed: "https://popmenucloud.com/cdn-cgi/image/width=1920,height=1920,format=auto,fit=scale-down/tdyrnsco/79dcb579-b510-44fd-939d-77720f87f4d8.jpg",
+  boiaDe: "https://images.getbento.com/accounts/5194193b6aa588b67083206d393f9374/media/images/2200413-summer_601.jpg?w=1200&fit=crop&auto=compress,format&cs=origin&crop=focalpoint&fp-x=0.5&fp-y=0.5",
+  macchialina: "https://framerusercontent.com/images/ya9Ua9mkOew2FtLuGQyOaBityw.jpg",
+  zak: "https://i0.wp.com/zakthebaker.com/wp-content/uploads/2018/09/22F7092C-F158-4D4A-85B7-4828F7B7E5AA.jpg?resize=2000%2C1200&ssl=1",
   surfClub: "https://www.surfclubrestaurant.com/assets/intro.png",
   garcias: "https://garciasseafoodgrill.com/images/crab-legs-red-wine(1).png",
+  chefCreole: "https://chefcreole.com/store/wp-content/uploads/2022/02/JMV-106.jpg",
   sanguich: "https://sanguich.com/wp-content/uploads/2026/03/hero-burger-img-1-scaled-1.webp",
   laSandwicherie: "https://lasandwicherie.com/wp-content/uploads/2025/12/MIAMI-BEACH-1988-1024x791-1-1.jpg",
   enriquetas: "https://i0.wp.com/thejoyoffood.life/wp-content/uploads/2021/05/IMG_1538.jpg?w=960&ssl=1",
@@ -362,7 +365,7 @@ const diningStops = [
   stop({ id: "miami-dining-macchialina", name: "Macchialina", coordinates: [25.785317, -80.141582], description: "Macchialina is the South Beach Italian room to use when you want pasta, wine, and a little neighborhood friction instead of another hotel dining room. The hand-made pasta and compact room make it feel intimate quickly; reserve, especially if the plan depends on a pre-nightlife dinner.", officialUrl: "https://macchialina.com/", photo: images.macchialina, hours: { default: "Dinner hours and weekly specials are posted by day on the official site; verify same-week service before going." }, price: "$$$", priceSource: "Official menu / Google Maps", venueKind: "food_drink", foodServiceType: "restaurant", cuisineTypes: ["italian", "pasta", "wine"], attributeTags: ["reservation_recommended", "date_night", "wine", "south_beach", "local_favorite"], editorialUrls: ["https://miami.eater.com/maps/miami-best-restaurants-38", "https://www.theinfatuation.com/miami/reviews/macchialina"] }),
   stop({ id: "miami-dining-zak", name: "Zak the Baker", coordinates: [25.801434, -80.201995], description: "Zak the Baker is the Wynwood breakfast and lunch stop that proves Miami food is not only late nights and hotel tabs: sourdough, babka, sandwiches, salads, and a bakery line with real turnover. Go earlier in the day, expect crowds, and use it before galleries rather than after a heavy beach afternoon.", officialUrl: "https://www.zakthebaker.com/", photo: images.zak, hours: { default: "Official bakery hours vary by weekday and weekend service; verify current hours before routing a morning around it." }, price: "$$", priceSource: "Official menu / Google Maps", venueKind: "food_drink", foodServiceType: "bakery", cuisineTypes: ["bakery", "jewish", "breakfast"], attributeTags: ["breakfast", "bakery", "vegetarian_friendly", "walk_in_friendly", "wynwood"], editorialUrls: ["https://miami.eater.com/maps/miami-best-restaurants-38", "https://www.timeout.com/miami/restaurants/zak-the-baker"] }),
   stop({ id: "miami-dining-surf-club", name: "The Surf Club Restaurant", coordinates: [25.878094, -80.121645], description: "The Surf Club Restaurant is Thomas Keller doing old Florida glamour with restraint: polished service, Continental references, and a dining room that feels built for occasion travel. It is not the place to chase bargains; book it when the night needs ceremony and the dress code can match the room.", officialUrl: "https://www.surfclubrestaurant.com/", photo: images.surfClub, hours: { default: "Lunch, dinner, and lounge hours vary by day and reservation availability; verify the official booking calendar." }, price: "$$$$", priceSource: "Official menu / MICHELIN Guide", venueKind: "food_drink", foodServiceType: "restaurant", cuisineTypes: ["american", "continental", "fine_dining"], attributeTags: ["fine_dining", "romantic_food", "reservation_recommended", "splurge_food", "historic"], editorialUrls: ["https://guide.michelin.com/us/en/florida/surfside/restaurant/the-surf-club-restaurant", "https://miami.eater.com/maps/miami-best-restaurants-38"] }),
-  stop({ id: "miami-dining-garcias", name: "Garcia's Seafood Grille & Fish Market", coordinates: [25.775561, -80.198198], description: "Garcia's is the Miami River seafood stop for people who would rather watch boats and eat fish than sit inside a concept. It belongs in the citywide dining guide because the market, dockside mood, and simple seafood speak to Miami's working waterfront better than another glossy room.", officialUrl: "https://www.garciasseafoodgrill.com/", photo: images.garcias, hours: daily("lunch and dinner service; waterfront seating and holiday hours should be checked before going."), price: "$$", priceSource: "Official menu / Google Maps", venueKind: "food_drink", foodServiceType: "restaurant", cuisineTypes: ["seafood", "fish_market", "latin_american"], attributeTags: ["seafood", "scenic_food", "casual", "family_friendly_food", "waterfront"], editorialUrls: ["https://miami.eater.com/maps/best-seafood-restaurants-miami", "https://www.timeout.com/miami/restaurants/garcias-seafood-grille-fish-market"] }),
+  stop({ id: "miami-dining-chef-creole", name: "Chef Creole", coordinates: [25.835787, -80.190638], description: "Chef Creole brings Haitian seafood, griot, conch, snapper, pikliz, rice, and Creole heat into the citywide dining guide, giving Miami's Caribbean food culture a clearer place beside Cuban, seafood, and chef-driven rooms. Use it when the plan needs a casual, flavor-heavy meal that feels local to Little Haiti rather than beach-polished.", officialUrl: "https://chefcreole.com/", photo: images.chefCreole, hours: daily("lunch and dinner service; verify current location hours before going."), price: "$$", priceSource: "Official menu / Google Maps", venueKind: "food_drink", foodServiceType: "restaurant", cuisineTypes: ["haitian", "caribbean", "seafood"], attributeTags: ["caribbean_food", "seafood", "casual", "local_favorite", "little_haiti"], editorialUrls: ["https://miami.eater.com/maps/best-haitian-restaurants-miami", "https://www.miamiandbeaches.com/l/eat-and-drink/chef-creole/2616"] }),
 ];
 
 const cheapEatStops = [
