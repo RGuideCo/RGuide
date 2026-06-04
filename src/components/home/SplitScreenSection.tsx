@@ -414,6 +414,7 @@ export function SplitScreenSection({
   const favoriteLocations = useAppStore((state) => state.favoriteLocations);
   const toggleFavoriteLocation = useAppStore((state) => state.toggleFavoriteLocation);
   const votedIds = useAppStore((state) => state.votedIds);
+  const savedGuideIds = useMemo(() => new Set([...favoriteIds, ...votedIds]), [favoriteIds, votedIds]);
   const itineraryIds = useAppStore((state) => state.itineraryIds);
   const itineraryPlaylists = useAppStore((state) => state.itineraryPlaylists);
   const editorialLists = useAppStore((state) => state.editorialLists);
@@ -2326,7 +2327,7 @@ export function SplitScreenSection({
     const profileVisibleLists = [...profileLists, ...globalMergedLists].filter(
       (list, index, listSet) => listSet.findIndex((candidate) => candidate.id === list.id) === index,
     );
-    const favoriteLists = profileVisibleLists.filter((list) => favoriteIds.includes(list.id));
+    const favoriteLists = profileVisibleLists.filter((list) => savedGuideIds.has(list.id));
     const sourceLists =
       activeGuideSource === "favorites"
         ? favoriteLists
@@ -2371,10 +2372,10 @@ export function SplitScreenSection({
     activeGuideRail,
     activeGuideSource,
     activeSubcategory,
-    favoriteIds,
     globalMergedLists,
     noKnownItineraryIds,
     profileLists,
+    savedGuideIds,
   ]);
   const profileFavoriteGuideLists = useMemo(
     () =>
@@ -2382,12 +2383,12 @@ export function SplitScreenSection({
         .filter((list, index, listSet) => listSet.findIndex((candidate) => candidate.id === list.id) === index)
         .filter(
         (list) =>
-          favoriteIds.includes(list.id) &&
+          savedGuideIds.has(list.id) &&
           !list.id.startsWith("event-") &&
           list.submissionType !== "journal" &&
           !isItineraryList(list, noKnownItineraryIds),
       ),
-    [favoriteIds, globalMergedLists, noKnownItineraryIds, profileLists],
+    [globalMergedLists, noKnownItineraryIds, profileLists, savedGuideIds],
   );
   const profileUserGuideLists = useMemo(
     () =>
@@ -2636,7 +2637,7 @@ export function SplitScreenSection({
     const isRGuideList = (list: MapList) => list.creator.name.startsWith("R ");
     const matchesActiveGuideSource = (list: MapList) => {
       if (activeGuideSource === "favorites") {
-        return favoriteIds.includes(list.id);
+        return savedGuideIds.has(list.id);
       }
       if (activeGuideSource === "r-guides") {
         return isRGuideList(list);
@@ -2749,7 +2750,6 @@ export function SplitScreenSection({
     activeGuideSource,
     activeSubcategory,
     activeFoodPrice,
-    favoriteIds,
     filteredLists,
     globalMergedLists,
     isGlobalSelection,
@@ -2759,8 +2759,8 @@ export function SplitScreenSection({
     publicProfileGuideLists,
     profileFavoriteGuideLists,
     profileUserGuideLists,
+    savedGuideIds,
     isProfileMode,
-    votedIds,
     activeCategory,
     activeLists,
     activeLocation.city,
