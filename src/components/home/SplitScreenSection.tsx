@@ -4987,6 +4987,7 @@ export function SplitScreenSection({
                   <StateShapeIcon
                     countryId={displayedStateRailIcon.countryId}
                     stateId={displayedStateRailIcon.id}
+                    tone="dark"
                     className="h-5 w-6"
                   />
                 </span>
