@@ -71,7 +71,7 @@ export function StateShapeIcon({ countryId, stateId, className }: StateShapeIcon
   const isUsState = US_STATE_IDS.has(stateId) && isUsCountry;
 
   if (!isUsState || fallbackToPin) {
-    return <MapPin className={cn("h-4 w-4", className)} />;
+    return <MapPin className={cn("h-4 w-4 text-white", className)} />;
   }
 
   return (
@@ -80,8 +80,8 @@ export function StateShapeIcon({ countryId, stateId, className }: StateShapeIcon
         aria-hidden="true"
         className={cn("h-4 w-5 shrink-0", className)}
         style={{
-          backgroundColor: "#334155",
-          opacity: 0.85,
+          backgroundColor: "#ffffff",
+          opacity: 0.92,
           WebkitMaskImage: `url(/assets/us-states/${stateId}.svg)`,
           maskImage: `url(/assets/us-states/${stateId}.svg)`,
           WebkitMaskRepeat: "no-repeat",
