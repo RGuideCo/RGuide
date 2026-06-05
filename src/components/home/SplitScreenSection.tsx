@@ -4489,10 +4489,10 @@ export function SplitScreenSection({
   const publicProfileRailTransitionClass = isPublicProfileEntering ? "rail-switch-enter" : "";
   const darkPaneHeadingClass = "text-sm font-semibold text-[rgba(255,255,255,0.76)]";
   const darkPaneToggleClass = (active: boolean, enabled = true) =>
-    `flex h-8 w-8 items-center justify-center rounded-full border transition ${
+    `flex h-8 w-8 items-center justify-center rounded-full transition ${
       active
-        ? "border-white bg-white text-slate-950 shadow-sm"
-        : "border-[rgba(255,255,255,0.16)] bg-[rgba(255,255,255,0.08)] text-[rgba(255,255,255,0.72)] hover:border-[rgba(255,255,255,0.34)] hover:bg-[rgba(255,255,255,0.13)] hover:text-white"
+        ? "border-2 border-white bg-transparent text-white shadow-sm"
+        : "border border-[rgba(255,255,255,0.18)] bg-[rgba(255,255,255,0.08)] text-[rgba(255,255,255,0.68)] hover:border-[rgba(255,255,255,0.5)] hover:bg-[rgba(255,255,255,0.13)] hover:text-white"
     } ${enabled ? "" : "cursor-not-allowed opacity-45"}`;
   const darkPaneRowClass = (active: boolean) =>
     `group flex w-full items-center gap-2 rounded-2xl border px-3 py-2 text-left text-sm transition ${
