@@ -70,18 +70,18 @@ export function StateShapeIcon({ countryId, stateId, className, tone = "light" }
   const isUsCountry =
     !countryId || normalizedCountryId === "usa" || normalizedCountryId === "united-states" || normalizedCountryId === "unitedstates";
   const isUsState = US_STATE_IDS.has(stateId) && isUsCountry;
-  const iconColor = tone === "dark" ? "#334155" : "#ffffff";
+  const iconColor = "currentColor";
   const iconOpacity = tone === "dark" ? 0.85 : 0.92;
 
   if (!isUsState || fallbackToPin) {
-    return <MapPin className={cn("h-4 w-4", tone === "dark" ? "text-slate-700" : "text-white", className)} />;
+    return <MapPin className={cn("h-4 w-4", tone === "dark" ? "text-slate-600" : "text-white", className)} />;
   }
 
   return (
     <>
       <span
         aria-hidden="true"
-        className={cn("h-4 w-5 shrink-0", className)}
+        className={cn("h-4 w-5 shrink-0", tone === "dark" ? "text-slate-600" : "text-white", className)}
         style={{
           backgroundColor: iconColor,
           opacity: iconOpacity,

@@ -4988,7 +4988,7 @@ export function SplitScreenSection({
                     countryId={displayedStateRailIcon.countryId}
                     stateId={displayedStateRailIcon.id}
                     tone="dark"
-                    className="h-5 w-6"
+                    className="h-5 w-6 text-slate-600"
                   />
                 </span>
               </button>
