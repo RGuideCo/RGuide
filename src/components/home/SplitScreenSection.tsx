@@ -4983,22 +4983,12 @@ export function SplitScreenSection({
                 aria-label={`Back to ${displayedStateRailIcon.name}`}
                 title={`Back to ${displayedStateRailIcon.name}`}
               >
-                <span
+                <img
                   key={displayedStateRailIcon.id || "state-preview"}
+                  src={`/assets/us-states/${displayedStateRailIcon.id}.svg`}
+                  alt=""
                   aria-hidden="true"
-                  className="inline-flex h-5 w-6 shrink-0 items-center justify-center"
-                  style={{
-                    backgroundColor: "#475569",
-                    opacity: 0.85,
-                    WebkitMaskImage: `url(/assets/us-states/${displayedStateRailIcon.id}.svg)`,
-                    maskImage: `url(/assets/us-states/${displayedStateRailIcon.id}.svg)`,
-                    WebkitMaskRepeat: "no-repeat",
-                    maskRepeat: "no-repeat",
-                    WebkitMaskPosition: "center",
-                    maskPosition: "center",
-                    WebkitMaskSize: "contain",
-                    maskSize: "contain",
-                  }}
+                  className="h-5 w-6 opacity-85"
                 />
               </button>
             ) : null}
