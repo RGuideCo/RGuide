@@ -4983,13 +4983,7 @@ export function SplitScreenSection({
                 aria-label={`Back to ${displayedStateRailIcon.name}`}
                 title={`Back to ${displayedStateRailIcon.name}`}
               >
-                <img
-                  key={displayedStateRailIcon.id || "state-preview"}
-                  src={`/assets/us-states/${displayedStateRailIcon.id}.svg`}
-                  alt=""
-                  aria-hidden="true"
-                  className="h-5 w-6 opacity-85"
-                />
+
               </button>
             ) : null}
             {displayedCityRailIcon?.kind === "city" ? (

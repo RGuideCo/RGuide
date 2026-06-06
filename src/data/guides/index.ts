@@ -20,8 +20,10 @@ import {
   amsterdamItineraryGuides,
   amsterdamNeighborhoodGuides,
 } from "@/data/guides/amsterdam";
+import { athensCitywideGuides } from "@/data/guides/athens";
 import { bangkokCitywideGuides } from "@/data/guides/bangkok";
 import { berlinCitywideGuides } from "@/data/guides/berlin";
+import { hanoiCitywideGuides } from "@/data/guides/hanoi";
 import { istanbulCitywideGuides } from "@/data/guides/istanbul";
 import { lisbonCitywideGuides } from "@/data/guides/lisbon";
 import { losAngelesCitywideGuides } from "@/data/guides/los-angeles";
@@ -50,6 +52,8 @@ export const editorialGuideLists: MapList[] = enrichGuidesCuisineTypes([
   ...tokyoCitywideGuides,
   ...barcelonaCoreGuides,
   ...bangkokCitywideGuides,
+  ...athensCitywideGuides,
+  ...hanoiCitywideGuides,
   ...berlinCitywideGuides,
   ...amsterdamNeighborhoodGuides,
   ...amsterdamCitywideGuides,
