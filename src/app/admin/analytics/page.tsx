@@ -503,7 +503,7 @@ async function loadAnalyticsDashboardData(query: AnalyticsQuery): Promise<Analyt
       recentTotal: toNumber(recentTotal.rows[0]?.count),
     };
   } catch (error) {
-    console.error("Failed to load analytics from direct Postgres. Falling back to Supabase API.", error);
+    console.warn("Failed to load analytics from direct Postgres. Falling back to Supabase API.", error);
     return loadSupabaseDashboardData(query);
   } finally {
     if (connected) {
