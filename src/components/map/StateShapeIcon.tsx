@@ -61,30 +61,27 @@ interface StateShapeIconProps {
   countryId?: string;
   stateId: string;
   className?: string;
-  tone?: "dark" | "light";
 }
 
-export function StateShapeIcon({ countryId, stateId, className, tone = "light" }: StateShapeIconProps) {
+export function StateShapeIcon({ countryId, stateId, className }: StateShapeIconProps) {
   const [fallbackToPin, setFallbackToPin] = useState(false);
   const normalizedCountryId = (countryId ?? "").toLowerCase();
   const isUsCountry =
     !countryId || normalizedCountryId === "usa" || normalizedCountryId === "united-states" || normalizedCountryId === "unitedstates";
   const isUsState = US_STATE_IDS.has(stateId) && isUsCountry;
-  const iconColor = "currentColor";
-  const iconOpacity = tone === "dark" ? 0.85 : 0.92;
 
   if (!isUsState || fallbackToPin) {
-    return <MapPin className={cn("h-4 w-4", tone === "dark" ? "text-slate-600" : "text-white", className)} />;
+    return <MapPin className={cn("h-4 w-4 text-white", className)} />;
   }
 
   return (
     <>
       <span
         aria-hidden="true"
-        className={cn("h-4 w-5 shrink-0", tone === "dark" ? "text-slate-600" : "text-white", className)}
+        className={cn("h-4 w-5 shrink-0", className)}
         style={{
-          backgroundColor: iconColor,
-          opacity: iconOpacity,
+          backgroundColor: "#ffffff",
+          opacity: 0.92,
           WebkitMaskImage: `url(/assets/us-states/${stateId}.svg)`,
           maskImage: `url(/assets/us-states/${stateId}.svg)`,
           WebkitMaskRepeat: "no-repeat",

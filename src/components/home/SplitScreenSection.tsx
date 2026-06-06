@@ -4984,12 +4984,26 @@ export function SplitScreenSection({
                 title={`Back to ${displayedStateRailIcon.name}`}
               >
                 <span key={displayedStateRailIcon.id || "state-preview"} className="inline-flex items-center justify-center">
-                  <StateShapeIcon
-                    countryId={displayedStateRailIcon.countryId}
-                    stateId={displayedStateRailIcon.id}
-                    tone="dark"
-                    className="h-5 w-6 text-slate-600"
-                  />
+                  {displayedStateRailIcon.countryId === "usa" ? (
+                    <span
+                      aria-hidden="true"
+                      className="h-5 w-6 shrink-0"
+                      style={{
+                        backgroundColor: "#475569",
+                        opacity: 0.85,
+                        WebkitMaskImage: `url(/assets/us-states/${displayedStateRailIcon.id}.svg)`,
+                        maskImage: `url(/assets/us-states/${displayedStateRailIcon.id}.svg)`,
+                        WebkitMaskRepeat: "no-repeat",
+                        maskRepeat: "no-repeat",
+                        WebkitMaskPosition: "center",
+                        maskPosition: "center",
+                        WebkitMaskSize: "contain",
+                        maskSize: "contain",
+                      }}
+                    />
+                  ) : (
+                    <MapPin className="h-4 w-4 text-slate-600 opacity-85" />
+                  )}
                 </span>
               </button>
             ) : null}
