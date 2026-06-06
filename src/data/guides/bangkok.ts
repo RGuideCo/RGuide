@@ -181,7 +181,7 @@ type StopInput = Partial<GuideStop> & {
   coordinates: [number, number];
   description: string;
   sourcePhoto?: string;
-  officialUrl: string;
+  officialUrl?: string;
   mapQuery?: string;
   editorialUrls?: string[];
   platformUrls?: string[];
@@ -665,36 +665,42 @@ const activityStops = [
   stop({
     ...cultureStops[0],
     id: "bangkok-activity-grand-palace",
+    poiId: cultureStops[0].poiId ?? "bangkok-venue-grand-palace",
     description:
       "Start with the Grand Palace when the day is still cooler, because this compound punishes casual pacing. The official visitor page makes the rules plain: dress correctly, buy through the official channel or gate, and build the morning around the ticket window instead of listening to sidewalk closure stories.",
   }),
   stop({
     ...cultureStops[1],
     id: "bangkok-activity-wat-pho",
+    poiId: cultureStops[1].poiId ?? "bangkok-venue-wat-pho",
     description:
       "Wat Pho is the best second old-city stop because it gives the route a lower, more human pulse after the palace. The reclining Buddha is only one part of the case; the courtyards, inscriptions, and massage-school context make it worth lingering before crossing toward the river.",
   }),
   stop({
     ...cultureStops[2],
     id: "bangkok-activity-wat-arun",
+    poiId: cultureStops[2].poiId ?? "bangkok-venue-wat-arun",
     description:
       "Crossing to Wat Arun turns sightseeing into geography: ferry, river, porcelain tower, and the old city seen from another bank. Use the official daytime hours and dress guidance, then time the visit for morning clarity or late light rather than baking on the steps at noon.",
   }),
   stop({
     ...cheapEatsStops[0],
     id: "bangkok-activity-thipsamai",
+    poiId: cheapEatsStops[0].poiId ?? "bangkok-venue-thipsamai",
     description:
       "Thipsamai is useful in a top-things route because it gives the old-city evening a food anchor with clear official hours and a known dish. It is famous, crowded, and no longer cheap in the romantic street-food sense, but the shrimp-oil pad thai still makes sense after temples.",
   }),
   stop({
     ...cultureStops[3],
     id: "bangkok-activity-jim-thompson-house",
+    poiId: cultureStops[3].poiId ?? "bangkok-venue-jim-thompson-house",
     description:
       "Jim Thompson House belongs in the ten because it changes the texture of a Bangkok day: shade, teak, silk history, and a guided museum rhythm near Siam. Use it between shopping or transit-heavy stops, and do not expect to self-wander the main house without the official tour structure.",
   }),
   stop({
     ...cultureStops[4],
     id: "bangkok-activity-moca",
+    poiId: cultureStops[4].poiId ?? "bangkok-venue-moca-bangkok",
     description:
       "MOCA Bangkok is the art stop for travelers who have already seen the obvious temple loop or need an indoor reset. It sits away from the easiest tourist corridors, so treat it as a planned half-day with the official Tuesday-Sunday hours rather than a quick detour.",
   }),
@@ -746,6 +752,7 @@ const activityStops = [
   stop({
     ...cocktailStops[0],
     id: "bangkok-activity-bkk-social-club",
+    poiId: cocktailStops[0].poiId ?? "bangkok-venue-bkk-social-club",
     description:
       "End one Bangkok day at BKK Social Club when the route deserves a polished landing instead of another anonymous rooftop. The official dress and age rules are part of the planning, not trivia; change after sightseeing, reserve if the night matters, and let the river hotel setting do its work.",
   }),
@@ -875,7 +882,7 @@ const expandedDiningStops = [
     description:
       "Jay Fai is street food with a Michelin-star mythology, and that contradiction is exactly why it belongs at the edge of this fine-dining list. The crab omelet, goggles, queue, and price are all part of the decision; go only if waiting is part of the story you want.",
     venueKind: "food_drink",
-    foodServiceType: "street_food",
+    foodServiceType: "stall",
     cuisineTypes: ["thai", "seafood", "street_food"],
     price: "$$$",
     priceSource: "MICHELIN Guide / Google Maps",
@@ -915,7 +922,7 @@ const expandedCheapEatsStops = [
     description:
       "Nhong Rim Klong is the canal-side wok stop to use when Bangkok lunch should feel fast, hot, and local without pretending comfort is the point. The seafood stir-fries are the reason to go, but the practical move is arriving early and checking the same-day map status.",
     venueKind: "food_drink",
-    foodServiceType: "street_food",
+    foodServiceType: "stall",
     cuisineTypes: ["thai", "seafood", "stir_fry"],
     price: "$$",
     priceSource: "MICHELIN Guide / Google Maps",
@@ -1323,7 +1330,7 @@ const expandedCasualBarStops = [
     description:
       "Smalls is the Suan Phlu townhouse bar for jazz-leaning nights, low light, balconies, and the kind of Bangkok crowd that looks like it actually chose the room. It is better for a lingering drink than a checklist crawl, so time it after dinner nearby.",
     venueKind: "nightlife",
-    nightlifeType: "bar",
+    nightlifeType: "lounge",
     musicGenres: ["jazz", "dj"],
     price: "$$",
     priceSource: "Official social / Time Out",
@@ -1341,7 +1348,7 @@ const expandedCasualBarStops = [
     description:
       "12 x 12 is the Ekkamai music-room pick when the night wants vinyl, selectors, and a crowd that came to listen. It belongs here because Bangkok nightlife is not only rooftops; verify the event calendar because the booking shapes the whole room.",
     venueKind: "nightlife",
-    nightlifeType: "bar",
+    nightlifeType: "live_music_venue",
     musicGenres: ["dj", "vinyl", "electronic"],
     price: "$$",
     priceSource: "Official social / Google Maps",
