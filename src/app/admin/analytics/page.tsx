@@ -367,9 +367,12 @@ async function loadAnalyticsDashboardData(query: AnalyticsQuery): Promise<Analyt
     ssl: getPgSslConfig(databaseUrl),
   });
 
-  await client.connect();
+  let connected = false;
 
   try {
+    await client.connect();
+    connected = true;
+
     const rangeWhere = query.range.days > 0 ? "where created_at >= now() - ($1::int * interval '1 day')" : "";
     const affiliateRangeWhere =
       query.range.days > 0
@@ -499,8 +502,13 @@ async function loadAnalyticsDashboardData(query: AnalyticsQuery): Promise<Analyt
       recent: recent.rows,
       recentTotal: toNumber(recentTotal.rows[0]?.count),
     };
+  } catch (error) {
+    console.error("Failed to load analytics from direct Postgres. Falling back to Supabase API.", error);
+    return loadSupabaseDashboardData(query);
   } finally {
-    await client.end().catch(() => {});
+    if (connected) {
+      await client.end().catch(() => {});
+    }
   }
 }
 
@@ -712,7 +720,13 @@ export default async function AnalyticsDashboardPage({
   }
 
   const query = getAnalyticsQuery((await searchParams) ?? {});
-  const data = await loadAnalyticsDashboardData(query);
+  let data: AnalyticsDashboardData | null = null;
+
+  try {
+    data = await loadAnalyticsDashboardData(query);
+  } catch (error) {
+    console.error("Failed to load analytics dashboard data.", error);
+  }
 
   if (!data) {
     return (
