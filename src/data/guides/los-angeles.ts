@@ -337,6 +337,14 @@ const sources = {
 };
 
 function guide(category: ListCategory, id: string, slug: string, seoSlug: string, title: string, description: string, stops: GuideStop[], guideSources: ListSource[], seoTitle: string, seoDescription: string): MapList {
+  const isDiveBarGuide = seoSlug === "best-dive-bars" || /\bdive bars?\b/i.test(`${title} ${seoTitle}`);
+  const guideStops = isDiveBarGuide
+    ? stops.map((stop) => ({
+        ...stop,
+        attributeTags: ["dive_bars", ...(stop.attributeTags ?? []).filter((tag) => tag !== "dive_bars")],
+      }))
+    : stops;
+
   return {
     id,
     slug,
@@ -355,7 +363,7 @@ function guide(category: ListCategory, id: string, slug: string, seoSlug: string
     },
     upvotes: 0,
     createdAt,
-    stops,
+    stops: guideStops,
     sources: guideSources,
   };
 }
