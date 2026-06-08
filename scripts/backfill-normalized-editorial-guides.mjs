@@ -1201,8 +1201,8 @@ async function upsertVenueHoursBatch(client, hoursRows, venueIdByKey) {
          )
        )
        update public.venues venue
-       set hours_note = coalesce(venue.hours_note, incoming.raw_text),
-           hours_last_verified_at = coalesce(venue.hours_last_verified_at, now())
+       set hours_note = incoming.raw_text,
+           hours_last_verified_at = now()
        from incoming
        where venue.id = incoming.venue_id`,
       [JSON.stringify(noteRows)],
@@ -1676,8 +1676,8 @@ async function upsertVenueHoursFromStop(client, venueId, stop) {
     }
     await client.query(
       `update public.venues
-       set hours_note = coalesce(hours_note, $2),
-           hours_last_verified_at = coalesce(hours_last_verified_at, now())
+       set hours_note = $2,
+           hours_last_verified_at = now()
        where id = $1`,
       [venueId, rawText],
     );
@@ -1692,8 +1692,8 @@ async function upsertVenueHoursFromStop(client, venueId, stop) {
   if (defaultRawText) {
     await client.query(
       `update public.venues
-       set hours_note = coalesce(hours_note, $2),
-           hours_last_verified_at = coalesce(hours_last_verified_at, now())
+       set hours_note = $2,
+           hours_last_verified_at = now()
        where id = $1`,
       [venueId, defaultRawText],
     );
@@ -1757,7 +1757,7 @@ async function upsertVenueHoursFromStop(client, venueId, stop) {
   }
 
   await client.query(
-    "update public.venues set hours_last_verified_at = coalesce(hours_last_verified_at, now()) where id = $1",
+    "update public.venues set hours_last_verified_at = now() where id = $1",
     [venueId],
   );
 }

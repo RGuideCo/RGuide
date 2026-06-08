@@ -13,6 +13,14 @@ interface VenueRow {
   id: string;
   name: string;
   official_url: string | null;
+  hours_note: string | null;
+}
+
+interface VenueHourRow {
+  day_of_week: number;
+  raw_text: string;
+  is_closed: boolean;
+  is_24_hours: boolean;
 }
 
 function getSupabaseDataApiConfig() {
@@ -36,10 +44,10 @@ async function getVenuePageData(venueId: string) {
   const supabase = createClient(config.url, config.key, {
     auth: { persistSession: false, autoRefreshToken: false },
   });
-  const [{ data: venues }, { data: events }] = await Promise.all([
+  const [{ data: venues }, { data: events }, { data: hours }] = await Promise.all([
     supabase
       .from("venues")
-      .select("id,name,official_url")
+      .select("id,name,official_url,hours_note")
       .eq("id", venueId)
       .limit(1)
       .returns<VenueRow[]>(),
@@ -50,6 +58,13 @@ async function getVenuePageData(venueId: string) {
       .gte("latest_occurrence_at_venue", new Date().toISOString())
       .order("next_occurrence_at_venue", { ascending: true, nullsFirst: false })
       .returns<VenueEvent[]>(),
+    supabase
+      .from("venue_hours")
+      .select("day_of_week,raw_text,is_closed,is_24_hours")
+      .eq("venue_id", venueId)
+      .order("day_of_week", { ascending: true })
+      .order("interval_order", { ascending: true })
+      .returns<VenueHourRow[]>(),
   ]);
 
   const venue = venues?.[0] ?? null;
@@ -57,7 +72,7 @@ async function getVenuePageData(venueId: string) {
     return null;
   }
 
-  return { venue, events: events ?? [] };
+  return { venue, events: events ?? [], hours: hours ?? [] };
 }
 
 export async function generateMetadata({ params }: VenuePageProps): Promise<Metadata> {
@@ -93,6 +108,14 @@ function formatVenueEventDate(event: VenueEvent) {
   }).format(new Date(value));
 }
 
+const dayLabels = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+
+function formatVenueHour(row: VenueHourRow) {
+  if (row.is_24_hours) return "Open 24 hours";
+  if (row.is_closed) return "Closed";
+  return row.raw_text;
+}
+
 export default async function VenueEventsPage({ params }: VenuePageProps) {
   const { venueId } = await params;
   const data = await getVenuePageData(venueId);
@@ -117,6 +140,28 @@ export default async function VenueEventsPage({ params }: VenuePageProps) {
           </Link>
         ) : null}
       </section>
+
+      {data.hours.length || data.venue.hours_note ? (
+        <section className="mt-8 surface p-6 sm:p-8" aria-labelledby="venue-hours-heading">
+          <p className="text-sm font-medium uppercase tracking-[0.24em] text-orange-600">Hours</p>
+          <h2 id="venue-hours-heading" className="mt-2 text-2xl font-semibold text-slate-900">
+            Opening Hours
+          </h2>
+          {data.hours.length ? (
+            <dl className="mt-5 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+              {data.hours.map((row) => (
+                <div key={`${row.day_of_week}-${row.raw_text}`} className="rounded border border-slate-200 px-3 py-2">
+                  <dt className="text-xs font-semibold uppercase tracking-[0.14em] text-slate-500">
+                    {dayLabels[row.day_of_week] ?? "Day"}
+                  </dt>
+                  <dd className="mt-1 text-sm font-medium text-slate-900">{formatVenueHour(row)}</dd>
+                </div>
+              ))}
+            </dl>
+          ) : null}
+          {data.venue.hours_note ? <p className="mt-4 text-sm text-slate-600">{data.venue.hours_note}</p> : null}
+        </section>
+      ) : null}
 
       <section className="mt-8 space-y-4" aria-labelledby="venue-events-heading">
         <div>
