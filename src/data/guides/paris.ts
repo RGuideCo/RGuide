@@ -1665,15 +1665,15 @@ export const parisCitywideGuides = [
   }),
   guide({
     id: "list-paris-citywide-low-key-late-night-bars",
-    slug: "paris-low-key-late-night-dive-bars",
-    seoSlug: "low-key-bars",
-    seoTitle: "Best Low-Key Late Night Bars in Paris",
+    slug: "paris-best-dive-bars",
+    seoSlug: "best-dive-bars",
+    seoTitle: "Best Dive Bars in Paris",
     seoDescription:
-      "Best low-key late night bars in Paris for dive bars, student pubs, Montmartre happy hour, Marais sidewalk crowds, and casual Latin Quarter drinks.",
-    title: "Low-Key Late Nights and Dive Bars",
+      "Best dive bars in Paris for low-key late nights, student pubs, Montmartre happy hour, Marais sidewalk crowds, and casual Latin Quarter drinks.",
+    title: "Low-Key Dive Bars and Late-Night Pubs",
     description:
       "For nights that should feel loose, cheap-ish, and social, this guide skips the bougie reservation mood and leans into dive bars, low-key terraces, student pubs, happy hours, and neighborhood rooms with a bit of personality.",
-    url: "https://www.google.com/maps/search/low+key+dive+bars+paris",
+    url: "https://www.google.com/maps/search/best+dive+bars+paris",
     category: "Nightlife",
     stops: citywideLowKeyNightlife,
     sources: parisLowKeyNightlifeSources,
