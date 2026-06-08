@@ -4431,6 +4431,35 @@ export function MapClient({
           return;
         }
 
+        const countryFeature = features.find((feature) => feature.layer.id === "country-fills");
+        const countryFeatureCountryId =
+          typeof countryFeature?.properties?.id === "string" ? countryFeature.properties.id : undefined;
+        const countryFeatureContinentId =
+          typeof countryFeature?.properties?.continentId === "string"
+            ? countryFeature.properties.continentId
+            : undefined;
+
+        if (
+          countryFeatureCountryId &&
+          countryFeatureContinentId &&
+          (countryFeatureCountryId !== currentSelection.countryId ||
+            countryFeatureContinentId !== currentSelection.continentId)
+        ) {
+          const continent = handlersRef.current.continents.find((item) => item.id === countryFeatureContinentId);
+          const country = continent?.countries.find((item) => item.id === countryFeatureCountryId);
+          if (country) {
+            fitMapToCountry(
+              map,
+              countryFeatureCountryId,
+              country.bounds,
+              getViewportInsets(map, viewportModeRef.current, viewportInsetsRef.current),
+              { duration: 2200 },
+            );
+          }
+          handlersRef.current.onSelectCountry(countryFeatureContinentId, countryFeatureCountryId);
+          return;
+        }
+
         const nearestCityClickTarget = getNearestRealCityClickTarget(
           map,
           event.point,
@@ -4448,16 +4477,9 @@ export function MapClient({
           return;
         }
 
-        const countryFeature = features.find((feature) => feature.layer.id === "country-fills");
         if (countryFeature) {
-          const countryId =
-            typeof countryFeature.properties?.id === "string"
-              ? countryFeature.properties.id
-              : undefined;
-          const continentId =
-            typeof countryFeature.properties?.continentId === "string"
-              ? countryFeature.properties.continentId
-              : undefined;
+          const countryId = countryFeatureCountryId;
+          const continentId = countryFeatureContinentId;
 
           if (countryId && continentId) {
             const currentSelection = handlersRef.current.selection;
@@ -4471,12 +4493,9 @@ export function MapClient({
                 currentSelection.subareaId ||
                 currentSelection.nestedSubareaId,
             );
-            if (
-              clickZoom > 7.2 ||
-              isSameCountryAsCurrent &&
-              hasLocalSelection
-            ) {
-              // At local zoom, broad country polygons sit behind every click. Ignore them so city/POI intent wins.
+            if (isSameCountryAsCurrent && (clickZoom > 7.2 || hasLocalSelection)) {
+              // At local zoom, the active country's broad polygon sits behind every click. Ignore only
+              // that current country so nearby/different country polygons can still be selected.
               return;
             } else {
               const continent = handlersRef.current.continents.find((item) => item.id === continentId);
