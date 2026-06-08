@@ -4,6 +4,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import type { Feature, FeatureCollection, Geometry, LineString, Point } from "geojson";
 import type { ExpressionSpecification } from "@maplibre/maplibre-gl-style-spec";
 import maplibregl, { GeoJSONSource, LngLatBounds } from "maplibre-gl";
+import { LocateFixed } from "lucide-react";
 
 import { mapLists } from "@/data/lists";
 import {
@@ -3474,6 +3475,7 @@ export function MapClient({
 }: MapClientProps) {
   const containerRef = useRef<HTMLDivElement | null>(null);
   const mapRef = useRef<maplibregl.Map | null>(null);
+  const userLocationMarkerRef = useRef<maplibregl.Marker | null>(null);
   const isStyleReadyRef = useRef(false);
   const [styleReadyTick, setStyleReadyTick] = useState(0);
   const [countryBoundaryDataVersion, setCountryBoundaryDataVersion] = useState(0);
@@ -3530,8 +3532,61 @@ export function MapClient({
   const visibleGuideMarkerDirectHoverIdRef = useRef<string | null>(null);
   const visibleGuideMarkerNotifiedHoverIdRef = useRef<string | null>(null);
   const [visibleGuideMarkerAnimationTick, setVisibleGuideMarkerAnimationTick] = useState(0);
+  const [locationStatus, setLocationStatus] = useState<"idle" | "locating" | "located" | "error">("idle");
+  const [locationMessage, setLocationMessage] = useState("Find my location");
   activeGuideIdRef.current = activeGuide?.id ?? null;
   selectedStopIdRef.current = selectedStopId;
+
+  const focusUserLocation = () => {
+    const map = mapRef.current;
+    if (!map || typeof navigator === "undefined" || !navigator.geolocation) {
+      setLocationStatus("error");
+      setLocationMessage("Location unavailable");
+      return;
+    }
+
+    setLocationStatus("locating");
+    setLocationMessage("Finding location");
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        const coordinates: [number, number] = [
+          position.coords.longitude,
+          position.coords.latitude,
+        ];
+
+        if (!userLocationMarkerRef.current) {
+          const markerElement = document.createElement("div");
+          markerElement.className = "rguide-user-location-marker";
+          userLocationMarkerRef.current = new maplibregl.Marker({
+            element: markerElement,
+            anchor: "center",
+          })
+            .setLngLat(coordinates)
+            .addTo(map);
+        }
+
+        userLocationMarkerRef.current.setLngLat(coordinates);
+        map.easeTo({
+          center: coordinates,
+          zoom: Math.max(map.getZoom(), 14.2),
+          duration: 850,
+          easing: smoothCameraEasing,
+          essential: true,
+        });
+        setLocationStatus("located");
+        setLocationMessage("Centered on your location");
+      },
+      (error) => {
+        setLocationStatus("error");
+        setLocationMessage(error.code === error.PERMISSION_DENIED ? "Location blocked" : "Could not find location");
+      },
+      {
+        enableHighAccuracy: true,
+        maximumAge: 60_000,
+        timeout: 12_000,
+      },
+    );
+  };
 
   useEffect(() => {
     const cityId = selection.cityId;
@@ -4479,6 +4534,8 @@ export function MapClient({
       activeGuideCameraPendingKeyRef.current = null;
       isStyleReadyRef.current = false;
       map.off("render", recordRenderGap);
+      userLocationMarkerRef.current?.remove();
+      userLocationMarkerRef.current = null;
       map.remove();
       mapRef.current = null;
     };
@@ -5467,9 +5524,27 @@ export function MapClient({
   ]);
 
   return (
-    <div
-      ref={containerRef}
-      className="rguide-map-layer min-h-[60vh] overflow-hidden bg-slate-100 lg:min-h-[calc(100vh-15rem)]"
-    />
+    <div className="relative h-full min-h-[60vh] lg:min-h-[calc(100vh-15rem)]">
+      <div
+        ref={containerRef}
+        className="rguide-map-layer h-full min-h-[60vh] overflow-hidden bg-slate-100 lg:min-h-[calc(100vh-15rem)]"
+      />
+      <button
+        type="button"
+        onClick={focusUserLocation}
+        disabled={locationStatus === "locating"}
+        className={`absolute right-3 top-[18.25rem] z-[70] flex h-8 w-8 items-center justify-center rounded-lg border bg-white text-slate-700 shadow-sm transition hover:border-slate-300 hover:text-slate-950 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky-400/70 disabled:cursor-wait disabled:opacity-80 lg:bottom-16 lg:right-3 lg:top-auto ${
+          locationStatus === "located"
+            ? "border-sky-300 text-sky-700 ring-2 ring-sky-200/80"
+            : locationStatus === "error"
+              ? "border-rose-300 text-rose-700"
+              : "border-slate-200"
+        }`}
+        aria-label={locationMessage}
+        title={locationMessage}
+      >
+        <LocateFixed className={`h-3.5 w-3.5 ${locationStatus === "locating" ? "animate-pulse" : ""}`} />
+      </button>
+    </div>
   );
 }
