@@ -1105,6 +1105,7 @@ const guideDescriptions: Record<string, string> = {
 
 function guide(spec: GuideSpec): MapList {
   const isItinerary = spec.submissionType === "itinerary";
+  const isDiveBarGuide = spec.seoSlug === "best-dive-bars";
 
   return {
     id: `list-london-${spec.id}`,
@@ -1130,6 +1131,9 @@ function guide(spec: GuideSpec): MapList {
     createdAt,
     stops: spec.stopIds.map((id, index) => ({
       ...stops[id],
+      ...(isDiveBarGuide
+        ? { attributeTags: ["dive_bars", ...(stops[id]?.attributeTags ?? [])] }
+        : {}),
       ...(isItinerary ? { itineraryDay: spec.stopDays?.[index] ?? 1 } : {}),
     })),
     sources: sources[spec.sourceKey],

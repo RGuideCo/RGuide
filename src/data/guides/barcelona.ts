@@ -169,7 +169,7 @@ const BARCELONA_AIRPORT_R2_NORD_ROUTE: [number, number][] = [
   [41.4104445, 2.1891948],
 ];
 
-export const barcelonaCoreGuides = [
+export const barcelonaCoreGuides = withDiveBarChips([
   {
     "id": "list-barcelona-top-parks",
     "slug": "barcelona-top-parks-in-the-city",
@@ -6591,6 +6591,12 @@ export const barcelonaCoreGuides = [
           "sat": "6:00 PM-2:30 AM",
           "sun": "6:00 PM-12:00 AM"
         },
+        "attributeTags": [
+          "dive_bars",
+          "old_school",
+          "local_bar",
+          "casual_nightlife"
+        ],
         "photo": "https://bodegasalto.net/wp-content/uploads/2023/05/milkers-bodega-vinos-salto-barcelona-poble-sec.jpeg"
       },
             {
@@ -6610,6 +6616,12 @@ export const barcelonaCoreGuides = [
           "sat": "6:00 PM-2:30 AM",
           "sun": "6:00 PM-12:00 AM"
         },
+        "attributeTags": [
+          "dive_bars",
+          "pintxos",
+          "crawl_stop",
+          "casual_nightlife"
+        ],
         "photo": "https://cdn.prod.website-files.com/5ebbeb680f69fd550e86ffe0/646b2281b0cb4aa3d71740c5__DSC8523.jpg"
       },
       {
@@ -6629,6 +6641,12 @@ export const barcelonaCoreGuides = [
           "sat": "12:00 PM-12:00 AM",
           "sun": "12:00 PM-10:30 PM"
         },
+        "attributeTags": [
+          "dive_bars",
+          "standing_room",
+          "montaditos",
+          "local_bar"
+        ],
         "photo": "https://quimetiquimet.com/wp-content/uploads/tapbg.jpg"
       },
       {
@@ -6648,6 +6666,12 @@ export const barcelonaCoreGuides = [
           "sat": "12:00 PM-2:00 AM",
           "sun": "12:00 PM-12:00 AM"
         },
+        "attributeTags": [
+          "dive_bars",
+          "craft_beer",
+          "taproom",
+          "casual_nightlife"
+        ],
         "photo": "http://static1.squarespace.com/static/612df270cb5b2832a82ac1c4/t/612df30039503c777eeea6c1/1630401280673/Abirradero+White.png?format=1500w"
       },
       {
@@ -6667,6 +6691,12 @@ export const barcelonaCoreGuides = [
           "sat": "6:00 PM-2:30 AM",
           "sun": "6:00 PM-12:00 AM"
         },
+        "attributeTags": [
+          "dive_bars",
+          "small_plates",
+          "local_bar",
+          "casual_nightlife"
+        ],
         "photo": "https://media-cdn.tripadvisor.com/media/photo-o/09/24/e4/7a/la-platilleria.jpg"
       }
     ],
@@ -6922,6 +6952,12 @@ export const barcelonaCoreGuides = [
           "sat": "6:00 PM-2:30 AM",
           "sun": "6:00 PM-12:00 AM"
         },
+        "attributeTags": [
+          "dive_bars",
+          "historic",
+          "absinthe",
+          "late_night"
+        ],
         "photo": "https://www.barcelona-life.com/wp-content/uploads/2018/02/marsella-barcelona.jpg"
       },
       {
@@ -6941,6 +6977,12 @@ export const barcelonaCoreGuides = [
           "sat": "12:00 PM-3:30 PM",
           "sun": "Closed"
         },
+        "attributeTags": [
+          "dive_bars",
+          "cava_counter",
+          "standing_room",
+          "old_school"
+        ],
         "photo": "https://www.elxampanyet.com/wp-content/uploads/2024/10/Iriarte_0117-2048x1352.jpg"
       },
       {
@@ -6960,6 +7002,12 @@ export const barcelonaCoreGuides = [
           "sat": "12:00 PM-2:00 AM",
           "sun": "12:00 PM-12:00 AM"
         },
+        "attributeTags": [
+          "dive_bars",
+          "historic",
+          "vermouth",
+          "local_bar"
+        ],
         "photo": "https://barlaplata.com/wp-content/uploads/2025/11/ferran-nadeu4.png?w=4000&h="
       },
       {
@@ -6979,6 +7027,12 @@ export const barcelonaCoreGuides = [
           "sat": "12:00 PM-12:00 AM",
           "sun": "12:00 PM-10:30 PM"
         },
+        "attributeTags": [
+          "dive_bars",
+          "neighborhood_bar",
+          "vermouth",
+          "casual_nightlife"
+        ],
         "photo": "https://www.barcanigo.com/assets/img/bar/BarCanigo_1.jpg"
       },
       {
@@ -6998,6 +7052,12 @@ export const barcelonaCoreGuides = [
           "sat": "12:00 PM-12:00 AM",
           "sun": "12:00 PM-10:30 PM"
         },
+        "attributeTags": [
+          "dive_bars",
+          "standing_room",
+          "montaditos",
+          "local_bar"
+        ],
         "photo": "https://quimetiquimet.com/wp-content/uploads/tapbg.jpg"
       }
     ],
@@ -7334,9 +7394,9 @@ export const barcelonaCoreGuides = [
       }
     ]
   }
-] satisfies MapList[];
+] satisfies MapList[]);
 
-export const barcelonaItineraryGuides = [
+export const barcelonaItineraryGuides = withDiveBarChips([
   {
     "id": "list-barcelona-one-day-activities",
     "slug": "barcelona-one-day-itinerary",
@@ -7985,9 +8045,23 @@ export const barcelonaItineraryGuides = [
       }
     ]
   }
-] satisfies MapList[];
+] satisfies MapList[]);
 
-export const barcelonaGuides = [
+function withDiveBarChips(guides: MapList[]): MapList[] {
+  return guides.map((guide) => {
+    if (guide.seoSlug !== "best-dive-bars") return guide;
+
+    return {
+      ...guide,
+      stops: guide.stops.map((stop) => ({
+        ...stop,
+        attributeTags: ["dive_bars", ...(stop.attributeTags ?? []).filter((tag) => tag !== "dive_bars")],
+      })),
+    };
+  });
+}
+
+export const barcelonaGuides = withDiveBarChips([
   ...barcelonaCoreGuides,
   ...barcelonaItineraryGuides,
-] satisfies MapList[];
+] satisfies MapList[]);

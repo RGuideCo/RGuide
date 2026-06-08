@@ -1754,6 +1754,8 @@ type GuideSpec = {
 };
 
 function guide(spec: GuideSpec): MapList {
+  const isDiveBarGuide = spec.seoSlug === "best-dive-bars";
+
   return {
     id: spec.id,
     slug: spec.slug,
@@ -1775,6 +1777,9 @@ function guide(spec: GuideSpec): MapList {
     createdAt,
     stops: spec.stopIds.map((id) => ({
       ...stops[id],
+      ...(isDiveBarGuide
+        ? { attributeTags: ["dive_bars", ...(stops[id]?.attributeTags ?? []).filter((tag) => tag !== "dive_bars")] }
+        : {}),
       ...(berlinHoursByStop[id] ? { hours: berlinHoursByStop[id] } : {}),
     })),
     sources: sources[spec.sourceKey],
