@@ -1174,6 +1174,51 @@ const citywideLowKeyNightlife: StopSeed[] = [
     price: "$$",
     priceSource: "Google Maps / local nightlife guides",
   },
+  {
+    id: "paris-nightlife-low-key-cambridge",
+    name: "The Cambridge Public House",
+    coordinates: [48.8618, 2.3632],
+    description:
+      "The Cambridge Public House is the Marais pub pick for a dive-bar-adjacent Paris night: relaxed service, craft beers, Guinness, rotating cocktails, and enough food to keep the group moving without making the stop precious.",
+    price: "$$",
+    priceSource: "World's 50 Best Bars / Time Out",
+  },
+  {
+    id: "paris-nightlife-low-key-bar-marche",
+    name: "Le Bar du Marche",
+    coordinates: [48.8532, 2.3362],
+    description:
+      "Le Bar du Marche gives Saint-Germain a loud, social Rue de Buci terrace that works better for casual drinks and people-watching than for a polished cocktail plan. It is useful when the Left Bank night needs momentum.",
+    price: "$$",
+    priceSource: "Google Maps / local nightlife guides",
+  },
+  {
+    id: "paris-nightlife-low-key-caveau-huchette",
+    name: "Le Caveau de la Huchette",
+    coordinates: [48.8525, 2.3468],
+    description:
+      "Le Caveau de la Huchette adds the Latin Quarter cellar lane: old stone, live music, dancing, and late-night atmosphere with more personality than a standard pub stop. Check the program before building the night around it.",
+    price: "$$",
+    priceSource: "Official venue site / Google Maps",
+  },
+  {
+    id: "paris-nightlife-low-key-point-ephemere",
+    name: "Point Ephemere",
+    coordinates: [48.8819, 2.3686],
+    description:
+      "Point Ephemere is the Canal Saint-Martin wildcard: music, terrace energy, art-space programming, and a looser crowd farther north. It fits the guide because it gives the citywide route a less manicured late-night option.",
+    price: "$$",
+    priceSource: "Time Out / Google Maps",
+  },
+  {
+    id: "paris-nightlife-low-key-recrutement",
+    name: "Le Recrutement Cafe",
+    coordinates: [48.8568, 2.304],
+    description:
+      "Le Recrutement Cafe is the casual Rue Saint-Dominique stop for simple drinks, people-watching, and almost no planning pressure after Eiffel or Invalides walking. It is not hidden, but it gives the route an easy neighborhood reset.",
+    price: "$$",
+    priceSource: "Google Maps / local nightlife guides",
+  },
 ];
 
 const citywideCulture: StopSeed[] = [
@@ -1669,10 +1714,10 @@ export const parisCitywideGuides = [
     seoSlug: "best-dive-bars",
     seoTitle: "Best Dive Bars in Paris",
     seoDescription:
-      "Best dive bars in Paris for low-key late nights, student pubs, Montmartre happy hour, Marais sidewalk crowds, and casual Latin Quarter drinks.",
+      "Best dive bars in Paris for low-key late nights, student pubs, Montmartre happy hour, Marais sidewalk crowds, canal music rooms, and casual Left Bank drinks.",
     title: "Low-Key Dive Bars and Late-Night Pubs",
     description:
-      "For nights that should feel loose, cheap-ish, and social, this guide skips the bougie reservation mood and leans into dive bars, low-key terraces, student pubs, happy hours, and neighborhood rooms with a bit of personality.",
+      "For nights that should feel loose, cheap-ish, and social, this guide skips the bougie reservation mood and leans into dive bars, low-key terraces, student pubs, happy hours, music cellars, canal rooms, and neighborhood stops with a bit of personality.",
     url: "https://www.google.com/maps/search/best+dive+bars+paris",
     category: "Nightlife",
     stops: citywideLowKeyNightlife,

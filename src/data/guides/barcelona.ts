@@ -6916,9 +6916,9 @@ export const barcelonaCoreGuides = withDiveBarChips([
     "slug": "barcelona-best-dive-bars-citywide",
     "seoSlug": "best-dive-bars",
     "seoTitle": "Best Dive Bars in Barcelona",
-    "seoDescription": "Best dive bars in Barcelona, pulling the strongest smaller bar picks from Eixample, El Born, the Gothic Quarter, Gràcia, and Poble-sec.",
+    "seoDescription": "Best dive bars in Barcelona, pulling 10 smaller bar picks from Eixample, El Born, the Gothic Quarter, Gràcia, Raval, and Poble-sec.",
     "title": "Cellars, Counters, and Late-Night Regulars",
-    "description": "This is the Barcelona bar crawl for people who care more about character than polish. Bar Marsella brings absinthe history and old-room decay, El Xampanyet and Bar La Plata keep the counters salty and fast, and Bar Canigo gives the route a Gracia regular's pulse. Quimet & Quimet closes the circle with bottles, montaditos, and the beautiful inconvenience of standing up.",
+    "description": "This is the Barcelona bar crawl for people who care more about character than polish. Bar Marsella brings absinthe history and old-room decay, Bar La Plata, El Xampanyet, and Quimet & Quimet keep the counters salty and fast, and Manchester, Nevermind, Bar Malasang, Bodega Quimet, Bar Canigo, and Bodega Salto add the neighborhood rooms that make the route feel lived-in.",
     "url": "https://www.google.com/maps/search/best+dive+bars+barcelona",
     "category": "Nightlife",
     "location": {
@@ -7059,6 +7059,131 @@ export const barcelonaCoreGuides = withDiveBarChips([
           "local_bar"
         ],
         "photo": "https://quimetiquimet.com/wp-content/uploads/tapbg.jpg"
+      },
+      {
+        "id": "citywide-dive-bodega-salto",
+        "name": "Bodega Saltó",
+        "coordinates": [
+          41.3726,
+          2.1673
+        ],
+        "description": "Bodega Saltó is the Poble-sec character pick: eccentric decor, old-bodega energy, and a room that feels bohemian instead of polished. It belongs in the citywide set because it gives the crawl a true neighborhood-bar stop after the better-known counters.",
+        "hours": {
+          "mon": "6:00 PM-12:30 AM",
+          "tue": "6:00 PM-12:30 AM",
+          "wed": "6:00 PM-1:00 AM",
+          "thu": "6:00 PM-1:30 AM",
+          "fri": "6:00 PM-2:30 AM",
+          "sat": "6:00 PM-2:30 AM",
+          "sun": "6:00 PM-12:00 AM"
+        },
+        "attributeTags": [
+          "dive_bars",
+          "old_school",
+          "local_bar",
+          "casual_nightlife"
+        ],
+        "photo": "https://bodegasalto.net/wp-content/uploads/2023/05/milkers-bodega-vinos-salto-barcelona-poble-sec.jpeg"
+      },
+      {
+        "id": "citywide-dive-manchester",
+        "name": "Manchester Bar",
+        "coordinates": [
+          41.3828,
+          2.1736
+        ],
+        "description": "Manchester Bar is the Gothic Quarter pick for indie-rock atmosphere, dark-room drinking, and a less polished old-city crowd. It gives the route a music-bar edge when the night needs texture rather than another cocktail-room performance.",
+        "hours": {
+          "mon": "6:00 PM-12:30 AM",
+          "tue": "6:00 PM-12:30 AM",
+          "wed": "6:00 PM-1:00 AM",
+          "thu": "6:00 PM-1:30 AM",
+          "fri": "6:00 PM-2:30 AM",
+          "sat": "6:00 PM-2:30 AM",
+          "sun": "6:00 PM-12:00 AM"
+        },
+        "attributeTags": [
+          "dive_bars",
+          "indie_bar",
+          "late_night",
+          "casual_nightlife"
+        ],
+        "photo": "https://a1.elespanol.com/metropoliabierta/2024/06/03/el-pulso-de-la-ciudad/860174022_13031835_1706x960.jpg"
+      },
+      {
+        "id": "citywide-dive-nevermind",
+        "name": "Nevermind",
+        "coordinates": [
+          41.3814,
+          2.1744
+        ],
+        "description": "Nevermind is the skate-and-grunge late stop, with loud music, casual drinks, and a rougher visual identity than the polished Barcelona bar circuit. It is the right citywide pick when the search intent is actually dive-bar energy.",
+        "hours": {
+          "mon": "6:00 PM-12:30 AM",
+          "tue": "6:00 PM-12:30 AM",
+          "wed": "6:00 PM-1:00 AM",
+          "thu": "6:00 PM-1:30 AM",
+          "fri": "6:00 PM-2:30 AM",
+          "sat": "6:00 PM-2:30 AM",
+          "sun": "6:00 PM-12:00 AM"
+        },
+        "attributeTags": [
+          "dive_bars",
+          "grunge_bar",
+          "late_night",
+          "casual_nightlife"
+        ],
+        "photo": "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/2a/72/76/ea/la-barra-mas-larga-de.jpg?w=1200&h=-1&s=1"
+      },
+      {
+        "id": "citywide-dive-bodega-quimet",
+        "name": "Bodega Quimet",
+        "coordinates": [
+          41.4041,
+          2.156
+        ],
+        "description": "Bodega Quimet brings the Gràcia bodega lane into the citywide guide: house vermouth, shelves of bottles, conservas, cheese, and early-evening grazing without destination-bar polish. It is quieter than the late stops, but very useful for the crawl's neighborhood credibility.",
+        "hours": {
+          "mon": "12:00 PM-11:00 PM",
+          "tue": "12:00 PM-11:00 PM",
+          "wed": "12:00 PM-11:00 PM",
+          "thu": "12:00 PM-11:30 PM",
+          "fri": "12:00 PM-12:00 AM",
+          "sat": "12:00 PM-12:00 AM",
+          "sun": "12:00 PM-10:30 PM"
+        },
+        "attributeTags": [
+          "dive_bars",
+          "bodega",
+          "vermouth",
+          "local_bar"
+        ],
+        "photo": "https://www.bodegaquimet.com/img-trans/productos/24272/fotos/1024-67ac8f5bebe2f-bar-bodega-quimet.png"
+      },
+      {
+        "id": "citywide-dive-bar-malasang",
+        "name": "Bar Malasang",
+        "coordinates": [
+          41.3891,
+          2.1591
+        ],
+        "description": "Bar Malasang gives Eixample a low-lit, vinyl-leaning neighborhood hangout that behaves more like a regulars' room than a destination cocktail bar. It is a strong middle stop when the citywide route needs something loose, social, and unfussy.",
+        "hours": {
+          "mon": "6:00 PM-12:30 AM",
+          "tue": "6:00 PM-12:30 AM",
+          "wed": "6:00 PM-1:00 AM",
+          "thu": "6:00 PM-1:30 AM",
+          "fri": "6:00 PM-2:30 AM",
+          "sat": "6:00 PM-2:30 AM",
+          "sun": "6:00 PM-12:00 AM"
+        },
+        "attributeTags": [
+          "dive_bars",
+          "neighborhood_bar",
+          "vinyl_bar",
+          "casual_nightlife"
+        ],
+        "photo": "https://barmalasang.com/wp-content/uploads/2020/11/bar-malasang-f.jpg"
       }
     ],
     "sources": [
