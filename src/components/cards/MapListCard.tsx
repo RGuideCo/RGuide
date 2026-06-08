@@ -5,7 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { createPortal } from "react-dom";
-import { Check, ChevronDown, GripVertical, Heart, Minus, Plus, Upload, X } from "lucide-react";
+import { Check, ChevronDown, GripVertical, Heart, Minus, Plus, Trash2, Upload, X } from "lucide-react";
 
 import { getPoiAttributeTags } from "@/lib/poi-tags";
 import { getCreatorHref, getGuideHref, getVenueHref } from "@/lib/routes";
@@ -827,6 +827,7 @@ export function MapListCard({
   const createItineraryPlaylist = useAppStore((state) => state.createItineraryPlaylist);
   const submitList = useAppStore((state) => state.submitList);
   const updateSubmittedList = useAppStore((state) => state.updateSubmittedList);
+  const deleteSubmittedList = useAppStore((state) => state.deleteSubmittedList);
 
   const isFavorited = favoriteIds.includes(list.id) || votedIds.includes(list.id);
   const isInItinerary = itineraryPlaylists.some((playlist) => playlist.listIds.includes(list.id));
@@ -976,6 +977,18 @@ export function MapListCard({
       return;
     }
     persistInlineGuideChange({ publishPublic: list.visibility !== "public" });
+  };
+
+  const handleInlineGuideDelete = () => {
+    if (!canInlineEditGuide) {
+      return;
+    }
+    const confirmed = window.confirm(`Delete "${list.title}"? This cannot be undone.`);
+    if (!confirmed) {
+      return;
+    }
+    const response = deleteSubmittedList(list.id);
+    setInlineEditMessage(response.ok ? null : response.message);
   };
 
   const updateInlineGuideDescription = (description: string) => {
@@ -1873,6 +1886,20 @@ export function MapListCard({
             >
               {inlineEditing ? <Check className="h-3 w-3" /> : null}
               <span>{inlineEditing ? "Done" : "Edit"}</span>
+            </button>
+          ) : null}
+          {canInlineEditGuide && inlineEditing ? (
+            <button
+              type="button"
+              onClick={(event) => {
+                event.stopPropagation();
+                handleInlineGuideDelete();
+              }}
+              className="inline-flex h-7 w-7 items-center justify-center rounded-full border border-rose-200 bg-white text-rose-700 transition hover:border-rose-400 hover:bg-rose-50 hover:text-rose-800"
+              aria-label="Delete guide"
+              title="Delete guide"
+            >
+              <Trash2 className="h-3.5 w-3.5" />
             </button>
           ) : null}
           {usesGuideActions ? (
