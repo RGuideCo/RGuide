@@ -10,8 +10,9 @@ import { Check, ChevronDown, GripVertical, Heart, Minus, Plus, Trash2, Upload, X
 import { getPoiAttributeTags } from "@/lib/poi-tags";
 import { getCreatorHref, getGuideHref, getVenueHref } from "@/lib/routes";
 import { resolveStopHours } from "@/lib/seasonal-hours";
-import { buildStay22StopUrl, isStay22Url } from "@/lib/stay22";
+import { buildStay22DestinationUrl, buildStay22StopUrl, isStay22Url } from "@/lib/stay22";
 import { CATEGORIES, CATEGORY_STYLES } from "@/lib/constants";
+import { cities } from "@/data/geography";
 import {
   EventCardBody,
   GuideCardBody,
@@ -796,6 +797,80 @@ function getStayBookingDetails(list: MapList, stop: MapList["stops"][number], re
       campaign: `guide_stop_${list.location.city ?? "destination"}_${list.id}`,
     }),
     platformLabel: "Stay22",
+  };
+}
+
+function normalizePlaceName(value?: string | null) {
+  return (value ?? "")
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/[^a-z0-9]+/gi, " ")
+    .trim()
+    .toLowerCase();
+}
+
+function distanceKm([latA, lonA]: [number, number], [latB, lonB]: [number, number]) {
+  const earthRadiusKm = 6371;
+  const toRadians = (value: number) => (value * Math.PI) / 180;
+  const deltaLat = toRadians(latB - latA);
+  const deltaLon = toRadians(lonB - lonA);
+  const a =
+    Math.sin(deltaLat / 2) ** 2 +
+    Math.cos(toRadians(latA)) * Math.cos(toRadians(latB)) * Math.sin(deltaLon / 2) ** 2;
+
+  return 2 * earthRadiusKm * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+}
+
+function getClosestNeighborhoodName(list: MapList, stop: MapList["stops"][number]) {
+  if (list.location.neighborhood?.trim()) {
+    return list.location.neighborhood.trim();
+  }
+
+  const cityKey = normalizePlaceName(list.location.city);
+  const countryKey = normalizePlaceName(list.location.country);
+  const city = cities.find(
+    (candidate) =>
+      normalizePlaceName(candidate.name) === cityKey &&
+      (!countryKey || normalizePlaceName(candidate.country) === countryKey),
+  );
+
+  const neighborhoods = (city?.subareas ?? []).flatMap((subarea) => [
+    subarea,
+    ...(subarea.subareas ?? []),
+  ]);
+
+  if (!neighborhoods.length) {
+    return null;
+  }
+
+  return neighborhoods.reduce<{
+    name: string;
+    distance: number;
+  } | null>((best, neighborhood) => {
+    const distance = distanceKm(stop.coordinates, neighborhood.coordinates);
+    if (!best || distance < best.distance) {
+      return { name: neighborhood.name, distance };
+    }
+
+    return best;
+  }, null)?.name ?? null;
+}
+
+function getNearbyStayDetails(list: MapList, stop: MapList["stops"][number]) {
+  if (!list.location.city || !list.location.country) {
+    return null;
+  }
+
+  const neighborhood = getClosestNeighborhoodName(list, stop);
+
+  return {
+    href: buildStay22DestinationUrl({
+      city: list.location.city,
+      country: list.location.country,
+      neighborhood,
+      campaign: `poi_nearby_stay_${list.location.city}_${neighborhood ?? stop.id}`,
+    }),
+    label: `Stay near ${stop.name}`,
   };
 }
 
@@ -2138,6 +2213,7 @@ export function MapListCard({
                         const stopAttributeTags = getPoiAttributeTags(stop, stopCategory);
                         const hasStopCopy = stopContent.summary.trim().length > 0 || stopAttributeTags.length > 0;
                         const stayBookingDetails = getStayBookingDetails(list, stop, stopCategory);
+                        const nearbyStayDetails = getNearbyStayDetails(list, stop);
                         const timetableUrl = stop.timetableUrl;
                         const officialStopUrl = list.id.startsWith("event-")
                           ? stop.officialUrl ?? stop.bookingUrl
@@ -2376,6 +2452,7 @@ export function MapListCard({
                                 timetableUrl={timetableUrl}
                                 directionsPickerOpen={directionsPickerStopId === stop.id}
                                 stayBookingDetails={stayBookingDetails}
+                                nearbyStayDetails={nearbyStayDetails}
                                 getDirectionsHref={getDirectionsHref}
                                 onToggleDirectionsPicker={() =>
                                   setDirectionsPickerStopId((current) => (current === stop.id ? null : stop.id))
