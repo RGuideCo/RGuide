@@ -430,7 +430,18 @@ function inferGuideSubcategory(list: MapList) {
 }
 
 function inferGuideChipDetail(list: MapList) {
-  const text = `${list.title} ${list.description} ${getAllGuideStops(list)
+  const guideIntentText = [
+    list.title,
+    list.slug,
+    list.seoSlug,
+    list.seoTitle,
+    list.seoDescription,
+    list.url,
+    list.description,
+  ]
+    .filter((value): value is string => Boolean(value))
+    .join(" ");
+  const text = `${guideIntentText} ${getAllGuideStops(list)
     .map((stop) => `${stop.name} ${stop.description}`)
     .join(" ")}`.toLowerCase();
 
@@ -450,11 +461,14 @@ function inferGuideChipDetail(list: MapList) {
   }
 
   if (list.category === "Nightlife") {
+    if (/\b(best[-\s+]*dive[-\s+]*bars?|dive[-\s+]*bars?)\b/i.test(guideIntentText)) {
+      return "Dive Bars";
+    }
     const nightlifeType = getMostCommonValue(getAllGuideStops(list).map((stop) => stop.nightlifeType));
     if (nightlifeType) {
-      return nightlifeType;
+      return nightlifeType === "Dive Bar" ? "Dive Bars" : nightlifeType;
     }
-    if (/\bdive\b/i.test(text)) return "Dive Bar";
+    if (/\bdive\b/i.test(text)) return "Dive Bars";
     if (/\bpub|pints?\b/i.test(text)) return "Pub";
     if (/\brooftop|skyline\b/i.test(text)) return "Rooftop";
     if (/\blive music|jazz|venue\b/i.test(text)) return "Live Music";
@@ -465,7 +479,7 @@ function inferGuideChipDetail(list: MapList) {
 }
 
 function buildCollapsedCategoryChip(list: MapList) {
-  const headingText = `${list.title} ${list.seoTitle ?? ""} ${list.seoSlug ?? ""}`.toLowerCase();
+  const headingText = `${list.title} ${list.slug ?? ""} ${list.seoTitle ?? ""} ${list.seoSlug ?? ""} ${list.url ?? ""}`.toLowerCase();
   const titleText = `${headingText} ${list.description}`.toLowerCase();
 
   if (list.category === "Stay") {
@@ -542,12 +556,13 @@ function buildCollapsedCategoryChip(list: MapList) {
   }
 
   if (list.category === "Nightlife") {
+    if (/\b(best[-\s+]*dive[-\s+]*bars?|dive[-\s+]*bars?)\b/i.test(headingText)) return { label: "Dive Bars" };
     if (/\b(lgbtq|queer)\b/i.test(titleText)) return { label: "LGBTQ+" };
     if (/\b(pub|pubs|pints?)\b/i.test(titleText)) return { label: "Pubs" };
     if (/\b(rooftop|skyline)\b/i.test(titleText)) return { label: "Rooftops" };
     if (/\b(cocktail|cocktails)\b/i.test(titleText)) return { label: "Cocktails" };
     const nightlifeType = getMostCommonValue(getAllGuideStops(list).map((stop) => stop.nightlifeType));
-    return { label: nightlifeType ?? "Bars" };
+    return { label: nightlifeType === "Dive Bar" ? "Dive Bars" : nightlifeType ?? "Bars" };
   }
 
   if (list.category === "Culture") {

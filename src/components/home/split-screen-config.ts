@@ -360,7 +360,8 @@ function getSubcategoryFilterAliases(subcategory: string) {
     case "Vacation Rentals":
       return ["Vacation Rentals", "Vacation Rental", "airbnb", "short term rental"];
     case "Dive Bar":
-      return ["Dive Bar", "dive_bar"];
+    case "Dive Bars":
+      return ["Dive Bar", "Dive Bars", "dive_bar", "dive_bars"];
     case "Live Music":
       return ["Live Music", "live_music_venue", "concert_hall"];
     case "Late Night":
@@ -437,6 +438,24 @@ export function inferNightlifeBarType(list: MapList): (typeof NIGHTLIFE_BAR_TYPE
 }
 
 export function doesListMatchSubcategory(list: MapList, subcategory: string): boolean {
+  const text = [
+    list.title,
+    list.slug,
+    list.seoSlug,
+    list.seoTitle,
+    list.seoDescription,
+    list.url,
+    list.description,
+    ...list.stops.map((stop) => `${stop.name} ${stop.description}`),
+  ]
+    .filter((value): value is string => Boolean(value))
+    .join(" ")
+    .toLowerCase();
+  const isDiveBarFilter = subcategory === "Dive Bar" || subcategory === "Dive Bars";
+  if (isDiveBarFilter && /(best[-\s+]*dive[-\s+]*bars?|dive[-\s+]*bars?|dive bar|dive|no-frills|grunge|cheap pours|neighborhood bar)/.test(text)) {
+    return true;
+  }
+
   const structuredSubcategories = getStructuredSubcategories(list);
 
   if (structuredSubcategories.length) {
@@ -446,9 +465,6 @@ export function doesListMatchSubcategory(list: MapList, subcategory: string): bo
     );
   }
 
-  const text = `${list.title} ${list.description} ${list.stops
-    .map((stop) => `${stop.name} ${stop.description}`)
-    .join(" ")}`.toLowerCase();
   switch (subcategory) {
     case "Hotels": {
       const hasHostelLanguage = /\b(hostels?|dorms?|backpackers?|hostelworld|social-hostel)\b/.test(text);
@@ -465,6 +481,7 @@ export function doesListMatchSubcategory(list: MapList, subcategory: string): bo
     case "Vacation Rentals":
       return /\b(vacation rentals?|apartments?|airbnb|short-term rental|self-catering)\b/.test(text);
     case "Dive Bar":
+    case "Dive Bars":
       return /(dive bar|dive|no-frills|grunge|cheap pours|neighborhood bar)/.test(text);
     case "Live Music":
       return /(live music|jazz|concert|dj|dance|club|venue)/.test(text);

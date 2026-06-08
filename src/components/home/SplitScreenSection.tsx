@@ -2186,6 +2186,56 @@ export function SplitScreenSection({
     activeNestedCitySubareas,
     cityUsesNestedDistricts,
   ]);
+  const activeCityNeighborhoodOrder = useMemo(() => {
+    const order = new Map<string, number>();
+    cityListItems.forEach((item, index) => {
+      order.set(normalizeNeighborhoodName(item.name), index);
+    });
+    return order;
+  }, [cityListItems]);
+  const categorySortOrder = useMemo(() => {
+    const order = new Map<ListCategory, number>();
+    categoryOptions.forEach((option, index) => {
+      order.set(option.category, index);
+    });
+    return order;
+  }, []);
+  const getCityGuideSortParts = (list: MapList) => {
+    const neighborhoodName = inferListNeighborhoodName(list);
+    const normalizedNeighborhood = normalizeNeighborhoodName(neighborhoodName);
+    const isNeighborhoodGuide = Boolean(
+      activeLocation.city &&
+        normalizedNeighborhood &&
+        !locationsMatch(neighborhoodName, activeLocation.city.name),
+    );
+    const neighborhoodRank = isNeighborhoodGuide
+      ? activeCityNeighborhoodOrder.get(normalizedNeighborhood) ?? Number.MAX_SAFE_INTEGER
+      : -1;
+    return {
+      scopeRank: isNeighborhoodGuide ? 1 : 0,
+      neighborhoodRank,
+      neighborhoodName: neighborhoodName ?? "",
+      categoryRank: categorySortOrder.get(list.category) ?? Number.MAX_SAFE_INTEGER,
+    };
+  };
+  const compareActiveCityGuideOrder = (left: MapList, right: MapList) => {
+    const leftParts = getCityGuideSortParts(left);
+    const rightParts = getCityGuideSortParts(right);
+    const rightCreatedAt = Date.parse(right.createdAt);
+    const leftCreatedAt = Date.parse(left.createdAt);
+    const rightCreatedTime = Number.isFinite(rightCreatedAt) ? rightCreatedAt : 0;
+    const leftCreatedTime = Number.isFinite(leftCreatedAt) ? leftCreatedAt : 0;
+
+    return (
+      leftParts.scopeRank - rightParts.scopeRank ||
+      leftParts.neighborhoodRank - rightParts.neighborhoodRank ||
+      leftParts.neighborhoodName.localeCompare(rightParts.neighborhoodName) ||
+      leftParts.categoryRank - rightParts.categoryRank ||
+      right.upvotes - left.upvotes ||
+      rightCreatedTime - leftCreatedTime ||
+      left.title.localeCompare(right.title)
+    );
+  };
 
   const selectedCityLists = useMemo(
     () =>
@@ -2585,6 +2635,10 @@ export function SplitScreenSection({
   )
     .slice()
     .sort((left, right) => {
+      if (activeLocation.city && !activeNeighborhoodKey) {
+        return compareActiveCityGuideOrder(left, right);
+      }
+
       const leftNeighborhoodRank =
         activeLocation.city && !activeNeighborhoodKey && isListNeighborhoodGuideForActiveCity(left)
           ? 1
@@ -2768,6 +2822,10 @@ export function SplitScreenSection({
   const orderedRailFilteredLists = useMemo(
     () =>
       railFilteredLists.slice().sort((left, right) => {
+        if (activeLocation.city && !activeNeighborhoodKey) {
+          return compareActiveCityGuideOrder(left, right);
+        }
+
         const leftNeighborhoodRank =
           activeLocation.city && !activeNeighborhoodKey && isListNeighborhoodGuideForActiveCity(left) ? 1 : 0;
         const rightNeighborhoodRank =

@@ -150,6 +150,12 @@ type VisibleGuideMarkerFeatureProperties = {
   name: string;
   category: MapList["category"];
   markerImage: string;
+  markerDotImage: string;
+  markerPreview: boolean;
+  markerOffset: [number, number];
+  markerOffsetX: number;
+  markerOffsetY: number;
+  renderPriority: number;
   enteredAt: number;
   popProgress: number;
   hoverProgress: number;
@@ -1077,6 +1083,10 @@ function getVisibleGuideMarkerImageName(category: string) {
   return `${VISIBLE_GUIDE_MARKER_IMAGE_PREFIX}-${category.toLowerCase()}`;
 }
 
+function getVisibleGuideMarkerDotImageName(category: string) {
+  return `${VISIBLE_GUIDE_MARKER_IMAGE_PREFIX}-dot-${category.toLowerCase()}`;
+}
+
 function getVisibleGuideCityMarkerImageName(guideCount: number, categories: MapList["category"][]) {
   const categoryKey = [...new Set(categories)].sort().join("-").toLowerCase() || "mixed";
   return `${VISIBLE_GUIDE_CITY_MARKER_IMAGE_PREFIX}-${Math.min(guideCount, 99)}-${categoryKey}`;
@@ -1197,6 +1207,30 @@ function createVisibleGuideMarkerImage(category: MapList["category"]) {
   return ctx.getImageData(0, 0, size, size);
 }
 
+function createVisibleGuideMarkerDotImage(category: MapList["category"]) {
+  const size = 64;
+  const canvas = document.createElement("canvas");
+  canvas.width = size;
+  canvas.height = size;
+  const ctx = canvas.getContext("2d");
+  if (!ctx) {
+    return { width: size, height: size, data: new Uint8Array(size * size * 4) };
+  }
+
+  ctx.save();
+  ctx.translate(size / 2, size / 2);
+  ctx.fillStyle = CATEGORY_STYLES[category].mapColor;
+  ctx.strokeStyle = "#ffffff";
+  ctx.lineWidth = 3;
+  ctx.beginPath();
+  ctx.arc(0, 0, 9.5, 0, Math.PI * 2);
+  ctx.fill();
+  ctx.stroke();
+  ctx.restore();
+
+  return ctx.getImageData(0, 0, size, size);
+}
+
 function addVisibleGuideMarkerImages(map: maplibregl.Map) {
   Object.keys(CATEGORY_STYLES).forEach((category) => {
     const typedCategory = category as MapList["category"];
@@ -1206,6 +1240,14 @@ function addVisibleGuideMarkerImages(map: maplibregl.Map) {
       map.updateImage(imageName, imageData);
     } else {
       map.addImage(imageName, imageData, { pixelRatio: 2 });
+    }
+
+    const dotImageName = getVisibleGuideMarkerDotImageName(category);
+    const dotImageData = createVisibleGuideMarkerDotImage(typedCategory);
+    if (map.hasImage(dotImageName)) {
+      map.updateImage(dotImageName, dotImageData);
+    } else {
+      map.addImage(dotImageName, dotImageData, { pixelRatio: 2 });
     }
   });
 }
@@ -1609,17 +1651,21 @@ function createVisibleGuideMarkerData(
   guideLists: MapList[],
   visibleGuideMarkerIds: string[] = [],
   activeGuide?: MapList | null,
+  selection?: SelectionState,
   markerEnteredAt?: Map<string, number>,
   markerHoverProgress?: Map<string, number>,
 ): FeatureCollection<Point, VisibleGuideMarkerFeatureProperties> {
   const visibleGuideIdSet = new Set(visibleGuideMarkerIds);
   const activeGuideId = activeGuide?.id ?? null;
   const now = typeof performance !== "undefined" ? performance.now() : Date.now();
+  const isCitywideView = Boolean(selection?.cityId && !selection.subareaId && !selection.nestedSubareaId);
   const features = guideLists.flatMap((guide) => {
     const firstStop = guide.stops[0];
     if (!firstStop || !visibleGuideIdSet.has(guide.id) || guide.id === activeGuideId) {
       return [];
     }
+
+    const isNeighborhoodGuide = guide.location.scope === "neighborhood" || Boolean(guide.location.neighborhood);
 
     return [{
       type: "Feature" as const,
@@ -1628,6 +1674,12 @@ function createVisibleGuideMarkerData(
         name: guide.title,
         category: guide.category,
         markerImage: getVisibleGuideMarkerImageName(guide.category),
+        markerDotImage: getVisibleGuideMarkerDotImageName(guide.category),
+        markerPreview: isCitywideView && isNeighborhoodGuide,
+        markerOffset: [0, 0] as [number, number],
+        markerOffsetX: 0,
+        markerOffsetY: 0,
+        renderPriority: isNeighborhoodGuide ? 10 : 20,
         enteredAt: markerEnteredAt?.get(guide.id) ?? 0,
         popProgress: Math.min(1, Math.max(0, (now - (markerEnteredAt?.get(guide.id) ?? now)) / 320)),
         hoverProgress: markerHoverProgress?.get(guide.id) ?? 0,
@@ -1637,6 +1689,49 @@ function createVisibleGuideMarkerData(
         coordinates: [firstStop.coordinates[1], firstStop.coordinates[0]],
       },
     }];
+  });
+
+  const collisionGroups = new Map<string, Feature<Point, VisibleGuideMarkerFeatureProperties>[]>();
+  features.forEach((feature) => {
+    const [lng, lat] = feature.geometry.coordinates;
+    const key = `${lng.toFixed(6)}|${lat.toFixed(6)}`;
+    const group = collisionGroups.get(key);
+    if (group) {
+      group.push(feature);
+    } else {
+      collisionGroups.set(key, [feature]);
+    }
+  });
+
+  collisionGroups.forEach((group) => {
+    if (group.length <= 1) {
+      return;
+    }
+
+    const orderedGroup = group
+      .slice()
+      .sort((left, right) => right.properties.renderPriority - left.properties.renderPriority);
+    const hasCitywideGuide = orderedGroup.some((feature) => feature.properties.renderPriority >= 20);
+    const ringCount = hasCitywideGuide ? orderedGroup.length - 1 : orderedGroup.length;
+    const ringRadius = orderedGroup.length > 4 ? 20 : 16;
+
+    orderedGroup.forEach((feature, index) => {
+      const shouldCenter = hasCitywideGuide && index === 0;
+      if (shouldCenter) {
+        feature.properties.markerOffsetX = 0;
+        feature.properties.markerOffsetY = 0;
+        feature.properties.markerOffset = [0, 0];
+        feature.properties.renderPriority = 100;
+        return;
+      }
+
+      const ringIndex = hasCitywideGuide ? index - 1 : index;
+      const angle = -Math.PI / 2 + (Math.PI * 2 * ringIndex) / Math.max(1, ringCount);
+      feature.properties.markerOffsetX = Math.round(Math.cos(angle) * ringRadius);
+      feature.properties.markerOffsetY = Math.round(Math.sin(angle) * ringRadius);
+      feature.properties.markerOffset = [feature.properties.markerOffsetX, feature.properties.markerOffsetY];
+      feature.properties.renderPriority += Math.max(0, 20 - ringIndex);
+    });
   });
 
   return {
@@ -2521,6 +2616,26 @@ function getVisibleGuideMarkerIconSizeExpression(directHoverGuideId: string | nu
   return ["+", baseSize, hoverBoost];
 }
 
+function getVisibleGuideMarkerIconImageExpression(directHoverGuideId: string | null = null): ExpressionSpecification {
+  const defaultImage: ExpressionSpecification = [
+    "case",
+    ["get", "markerPreview"],
+    ["get", "markerDotImage"],
+    ["get", "markerImage"],
+  ];
+
+  if (!directHoverGuideId) {
+    return defaultImage;
+  }
+
+  return [
+    "case",
+    ["==", ["get", "id"], directHoverGuideId],
+    ["get", "markerImage"],
+    defaultImage,
+  ];
+}
+
 function getVisibleGuideCityMarkerIconSizeExpression(hoveredCityMarkerId: string | null = null): ExpressionSpecification {
   const baseSize: ExpressionSpecification = ["interpolate", ["linear"], ["zoom"], 1, 0.94, 8.7, 1.12];
   if (!hoveredCityMarkerId) {
@@ -2544,6 +2659,11 @@ function setVisibleGuideMarkerHoverLayout(map: maplibregl.Map, guideId: string |
     VISIBLE_GUIDE_MARKER_POINT_LAYER_ID,
     "icon-size",
     getVisibleGuideMarkerIconSizeExpression(guideId),
+  );
+  map.setLayoutProperty(
+    VISIBLE_GUIDE_MARKER_POINT_LAYER_ID,
+    "icon-image",
+    getVisibleGuideMarkerIconImageExpression(guideId),
   );
 }
 
@@ -2673,10 +2793,12 @@ function addVisibleGuideMarkerLayers(map: maplibregl.Map) {
       source: VISIBLE_GUIDE_MARKER_SOURCE_ID,
       minzoom: 8.15,
       layout: {
-        "icon-image": ["get", "markerImage"],
+        "icon-image": getVisibleGuideMarkerIconImageExpression(),
         "icon-size": getVisibleGuideMarkerIconSizeExpression(),
+        "icon-offset": ["get", "markerOffset"] as unknown as [number, number],
         "icon-allow-overlap": true,
         "icon-ignore-placement": true,
+        "symbol-sort-key": ["get", "renderPriority"],
       },
       paint: {
         "icon-opacity": 1,
@@ -3643,10 +3765,11 @@ export function MapClient({
         guideLists,
         visibleGuideMarkerIds,
         activeGuide,
+        selection,
         visibleGuideMarkerEnteredAtRef.current,
         visibleGuideMarkerHoverProgressRef.current,
       ),
-    [activeGuide, guideLists, visibleGuideMarkerAnimationTick, visibleGuideMarkerIds],
+    [activeGuide, guideLists, selection, visibleGuideMarkerAnimationTick, visibleGuideMarkerIds],
   );
   const visibleGuideCityMarkerData = useMemo(
     () => createVisibleGuideCityMarkerData(continents, guideLists, selection),
