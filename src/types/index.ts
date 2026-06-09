@@ -211,6 +211,8 @@ export interface MapList {
   category: ListCategory;
   submissionType?: SubmissionType;
   eventVenueId?: string;
+  eventStartsAt?: string;
+  eventEndsAt?: string;
   itinerary?: {
     startDate?: string;
     endDate?: string;
