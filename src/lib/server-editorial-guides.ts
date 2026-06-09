@@ -43,6 +43,48 @@ function getLocalWeeklyEventGuides() {
   );
 }
 
+function getEndOfDateTimestamp(dateKey: string) {
+  return Date.parse(`${dateKey}T23:59:59.999Z`);
+}
+
+function getEventGuideEndTimestamp(guide: MapList) {
+  if (guide.eventEndsAt) {
+    return Date.parse(guide.eventEndsAt);
+  }
+  if (guide.eventStartsAt) {
+    return Date.parse(guide.eventStartsAt);
+  }
+  if (guide.itinerary?.endDate) {
+    return getEndOfDateTimestamp(guide.itinerary.endDate);
+  }
+  if (guide.itinerary?.startDate) {
+    return getEndOfDateTimestamp(guide.itinerary.startDate);
+  }
+
+  const itineraryDates = guide.stops
+    .map((stop) => stop.itineraryDate)
+    .filter((date): date is string => Boolean(date));
+
+  if (itineraryDates.length) {
+    return Math.max(...itineraryDates.map(getEndOfDateTimestamp));
+  }
+
+  return null;
+}
+
+function isCurrentOrUpcomingEventGuide(guide: MapList, now = new Date()) {
+  if (!guide.id.startsWith("event-")) {
+    return true;
+  }
+
+  const endTimestamp = getEventGuideEndTimestamp(guide);
+  return endTimestamp === null || endTimestamp >= now.getTime();
+}
+
+function filterCurrentEventGuides(guides: MapList[]) {
+  return guides.filter((guide) => isCurrentOrUpcomingEventGuide(guide));
+}
+
 function filterGuidesByScope(guides: MapList[], scope: EditorialGuideScope = {}) {
   if (!scope.cityName) {
     return guides;
@@ -197,10 +239,10 @@ async function loadEditorialGuidesFromDataApi(scope: EditorialGuideScope = {}): 
   const { data, error } = await query.returns<DataApiGuideRow[]>();
 
   if (!error && data?.length) {
-    return [
+    return filterCurrentEventGuides([
       ...data.map((row) => normalizeWeeklyEventGuide(row.list)),
       ...(await loadWeeklyEventsFromDataApi(supabase, scope)),
-    ];
+    ]);
   }
 
   return loadRenderCacheGuidesFromDataApi(supabase, scope);
@@ -211,10 +253,13 @@ async function loadWeeklyEventsFromDataApi(
   scope: EditorialGuideScope = {},
 ): Promise<MapList[]> {
   const cityId = await getCityIdFromDataApi(supabase, scope.cityName);
+  const nowIso = new Date().toISOString();
+  const currentEventFilter = `ends_at.gte.${nowIso},and(ends_at.is.null,starts_at.gte.${nowIso})`;
   let normalizedQuery = supabase
     .from("weekly_events_maplist")
     .select("guide")
-    .gte("sourced_at", new Date(Date.now() - 14 * 86400000).toISOString());
+    .gte("sourced_at", new Date(Date.now() - 14 * 86400000).toISOString())
+    .or(currentEventFilter);
 
   if (scope.cityName) {
     if (!cityId) {
@@ -228,13 +273,14 @@ async function loadWeeklyEventsFromDataApi(
     .returns<DataApiWeeklyEventGuideRow[]>();
 
   if (!normalized.error && normalized.data?.length) {
-    return normalized.data.map((row) => normalizeWeeklyEventGuide(row.guide));
+    return filterCurrentEventGuides(normalized.data.map((row) => normalizeWeeklyEventGuide(row.guide)));
   }
 
   let publicationQuery = supabase
     .from("weekly_event_publications")
     .select("guide:rendered_map_list")
-    .gte("sourced_at", new Date(Date.now() - 14 * 86400000).toISOString());
+    .gte("sourced_at", new Date(Date.now() - 14 * 86400000).toISOString())
+    .or(currentEventFilter);
 
   if (scope.cityName) {
     publicationQuery = publicationQuery.eq("city_id", cityId);
@@ -245,13 +291,14 @@ async function loadWeeklyEventsFromDataApi(
     .returns<DataApiWeeklyEventGuideRow[]>();
 
   if (!publication.error && publication.data?.length) {
-    return publication.data.map((row) => normalizeWeeklyEventGuide(row.guide));
+    return filterCurrentEventGuides(publication.data.map((row) => normalizeWeeklyEventGuide(row.guide)));
   }
 
   let legacyQuery = supabase
     .from("weekly_event_guides")
     .select("guide")
-    .gte("sourced_at", new Date(Date.now() - 14 * 86400000).toISOString());
+    .gte("sourced_at", new Date(Date.now() - 14 * 86400000).toISOString())
+    .or(currentEventFilter);
 
   if (scope.cityName) {
     legacyQuery = legacyQuery.eq("city_id", cityId);
@@ -260,7 +307,7 @@ async function loadWeeklyEventsFromDataApi(
   const legacy = await legacyQuery.returns<DataApiWeeklyEventGuideRow[]>();
 
   if (!legacy.error && legacy.data?.length) {
-    return legacy.data.map((row) => normalizeWeeklyEventGuide(row.guide));
+    return filterCurrentEventGuides(legacy.data.map((row) => normalizeWeeklyEventGuide(row.guide)));
   }
 
   return filterGuidesByScope(getLocalWeeklyEventGuides(), scope);
@@ -291,10 +338,10 @@ async function loadRenderCacheGuidesFromDataApi(
     return null;
   }
 
-  return [
+  return filterCurrentEventGuides([
     ...data.map((row) => normalizeWeeklyEventGuide(row.rendered_payload)),
     ...(await loadWeeklyEventsFromDataApi(supabase, scope)),
-  ];
+  ]);
 }
 
 async function loadNormalizedGuides(client: Client, scope: EditorialGuideScope = {}): Promise<MapList[] | null> {
@@ -330,7 +377,7 @@ async function loadNormalizedGuides(client: Client, scope: EditorialGuideScope =
       ? weeklyEventRows.map((row) => normalizeWeeklyEventGuide(row.guide))
       : filterGuidesByScope(getLocalWeeklyEventGuides(), scope);
 
-    return [...rows.map((row) => normalizeWeeklyEventGuide(row.list)), ...weeklyEventGuides];
+    return filterCurrentEventGuides([...rows.map((row) => normalizeWeeklyEventGuide(row.list)), ...weeklyEventGuides]);
   } catch {
     return null;
   }
@@ -368,7 +415,7 @@ async function loadRenderCacheGuides(client: Client, scope: EditorialGuideScope 
     ? weeklyEventRows.map((row) => normalizeWeeklyEventGuide(row.guide))
     : filterGuidesByScope(getLocalWeeklyEventGuides(), scope);
 
-  return [...rows.map((row) => normalizeWeeklyEventGuide(row.rendered_payload)), ...weeklyEventGuides];
+  return filterCurrentEventGuides([...rows.map((row) => normalizeWeeklyEventGuide(row.rendered_payload)), ...weeklyEventGuides]);
 }
 
 async function loadWeeklyEventsFromDatabase(client: Client, scope: EditorialGuideScope = {}) {
@@ -399,6 +446,7 @@ async function loadNormalizedWeeklyEvents(client: Client, scope: EditorialGuideS
         "from public.weekly_events_maplist event",
         "left join public.destinations city on city.id = event.city_id",
         "where sourced_at >= current_date - interval '14 days'",
+        "  and coalesce(ends_at, starts_at) >= now()",
         cityFilter,
         "order by guide->'location'->>'city' asc, starts_at asc, guide->>'title' asc",
       ].join(" "),
@@ -424,6 +472,7 @@ async function loadWeeklyEventPublicationCache(client: Client, scope: EditorialG
         "from public.weekly_event_publications publication",
         "left join public.destinations city on city.id = publication.city_id",
         "where sourced_at >= current_date - interval '14 days'",
+        "  and coalesce(ends_at, starts_at) >= now()",
         cityFilter,
         "order by rendered_map_list->'location'->>'city' asc, starts_at asc, rendered_map_list->>'title' asc",
       ].join(" "),
@@ -449,6 +498,7 @@ async function loadLegacyWeeklyEventGuides(client: Client, scope: EditorialGuide
         "from public.weekly_event_guides guide",
         "left join public.destinations city on city.id = guide.city_id",
         "where sourced_at >= current_date - interval '14 days'",
+        "  and coalesce(ends_at, starts_at) >= now()",
         cityFilter,
         "order by guide->'location'->>'city' asc, guide->>'title' asc",
       ].join(" "),
@@ -487,8 +537,8 @@ export async function getServerEditorialGuides(scope: EditorialGuideScope = {}) 
     return supabaseGuides;
   }
 
-  return filterGuidesByScope(
+  return filterCurrentEventGuides(filterGuidesByScope(
     [...mapLists.map(normalizeWeeklyEventGuide), ...getLocalWeeklyEventGuides()],
     scope,
-  );
+  ));
 }
