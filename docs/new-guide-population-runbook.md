@@ -16,6 +16,7 @@ Populate {City}, {Country} guides by following docs/new-guide-population-runbook
 Do not edit guide files until Stage 1 and Stage 2 are complete.
 Do not publish until the local guide data passes verification.
 Do not call the task complete until R2 ingestion and rendered payload verification pass.
+Citywide guides must have at least 10 top-level stops, and every real stop must have real source-backed hours or a named schedule caveat.
 
 Target scope:
 - {describe city/category/neighborhood/guide set}
@@ -70,6 +71,7 @@ Every candidate needs:
 - neighborhood fit;
 - coordinates in `[latitude, longitude]`;
 - current open-status evidence;
+- verified hours source and the exact `hours` value to write, either structured day/time hours or a source-backed caveat naming the schedule dependency;
 - official URL where available;
 - map/current-status URL;
 - image source candidate URL;
@@ -99,6 +101,13 @@ Each guide needs:
 - correct `category`;
 - `sources` with at least 10 meaningful URLs for new guide work;
 - stops with stable ids, coordinates, descriptions, hours, source evidence, category-specific classification fields, and image source fields.
+
+Citywide stop minimum:
+
+- every citywide guide must contain at least 10 top-level stops;
+- this applies to Food, Stay, Nightlife, Culture, and Activities citywide guides;
+- do not pad with weak duplicate stops, bundled multi-location stops, permanently closed places, or POIs that belong in another category;
+- use fewer than 10 only when the user explicitly requested a smaller scoped guide, such as one neighborhood, one micro-category, or a repair to an existing guide.
 
 Canonical SEO URL rules:
 
@@ -148,7 +157,8 @@ Hours rules:
 - use structured day keys where possible;
 - use `{ default: "..." }` when the source gives summary hours or when the venue is schedule-driven;
 - use a schedule caveat only when hours are genuinely event-dependent, seasonal, weather-dependent, or unavailable from reliable sources, and make the caveat source-backed;
-- do not use vague placeholders like `Hours vary` unless the caveat names what varies and where to verify it;
+- do not use vague placeholders like `Hours vary`, `verify current hours`, `confirm before going`, `current-status evidence is map-based`, or `open and active in the current source set`;
+- if hours truly vary, the caveat must name the exact dependency and source, such as the official calendar, booking page, show schedule, market-day schedule, weather policy, seasonal opening, or property page;
 - do not publish if any stop is missing `hours`; fix the guide data first;
 - persist venue-level hours through the normalized publisher into `venue_hours`/`venue_special_hours` or `venues.hours_note`;
 - use `entry_stops.hours` only for guide-specific display notes or overrides.
@@ -168,7 +178,7 @@ Run the local gate before publishing:
 npm run verify:guide-publish -- --city {City} --strict --local-only
 ```
 
-If the local gate reports missing hours or weak schedule caveats, stop and repair the local guide file. Do not publish first and repair later.
+If the local gate reports a citywide guide with fewer than 10 top-level stops, missing hours, placeholder hours, or weak schedule caveats, stop and repair the local guide file. Do not publish first and repair later.
 
 For a single guide:
 

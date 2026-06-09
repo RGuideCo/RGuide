@@ -14,6 +14,7 @@ import {
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const DEFAULT_R2_BASE_URL = "https://media.rguide.co";
+const MIN_CITYWIDE_STOPS = 10;
 const PAID_CATEGORIES = new Set(["Food", "Nightlife", "Stay"]);
 const SOURCE_HEAVY_CATEGORIES = new Set(["Food", "Nightlife", "Stay", "Activities", "Culture"]);
 const GENERIC_DESCRIPTION_PATTERNS = [
@@ -226,6 +227,58 @@ function topLevelStopCount(list) {
   return Array.isArray(list.stops) ? list.stops.length : 0;
 }
 
+function isCitywideGuide(list) {
+  const location = list.location ?? {};
+  return Boolean(location.city) && !String(location.neighborhood ?? "").trim();
+}
+
+function hoursToText(value) {
+  if (!value) return "";
+  if (typeof value === "string") return value;
+  if (Array.isArray(value)) return value.map(hoursToText).join(" ");
+  if (typeof value === "object") {
+    return Object.entries(value)
+      .map(([key, item]) => `${key} ${hoursToText(item)}`)
+      .join(" ");
+  }
+  return String(value);
+}
+
+function hasConcreteHours(value) {
+  const text = hoursToText(value);
+  const hasDayContext = /\b(mon|monday|tue|tues|tuesday|wed|wednesday|thu|thur|thurs|thursday|fri|friday|sat|saturday|sun|sunday|daily|weekday|weekdays|weekend|weekends)\b/i.test(text);
+  const hasTime = /\b\d{1,2}(?::\d{2})?\s*(?:am|pm)\b/i.test(text) || /\b\d{1,2}:\d{2}\b/.test(text);
+  const hasClosed = /\bclosed\b/i.test(text);
+  const hasTwentyFourHours = /\b(?:24\s*hours?|open\s+24)\b/i.test(text);
+  return hasTwentyFourHours || (hasDayContext && (hasTime || hasClosed));
+}
+
+function hasNamedScheduleDependency(value) {
+  return /\b(official calendar|booking calendar|reservation page|booking page|property page|official site|official page|show calendar|event calendar|timetable|market day|market days|seasonal|season|weather|vendor|stall|performance schedule|exhibition page|timed ticket|last admission)\b/i.test(
+    hoursToText(value),
+  );
+}
+
+function looksLikePlaceholderHours(value) {
+  const text = hoursToText(value);
+  const normalized = normalizeText(text);
+  if (!normalized) return true;
+
+  if (
+    /\b(current-status evidence is map-based|open and active in the current source set|open and active|hours should be confirmed|verify current hours|verify official hours|confirm current hours|confirm before going|check current hours)\b/i.test(
+      normalized,
+    )
+  ) {
+    return true;
+  }
+
+  const hasVagueCaveat = /\b(hours?\s+var(?:y|ies)|varies by|variable|subject to change|may change|can change|verify|confirm|check before|check current|current hours|same-day|generally|usually|typically)\b/i.test(
+    text,
+  );
+
+  return hasVagueCaveat && !hasConcreteHours(value) && !hasNamedScheduleDependency(value);
+}
+
 function evidenceUrlsFromValue(value, urls = []) {
   if (!value) return urls;
   if (typeof value === "string") {
@@ -334,6 +387,17 @@ function checkGuideBasics(list, report, options) {
     addIssue(report, "error", label, "Guide has no stops.");
   }
 
+  const stopCount = topLevelStopCount(list);
+  if (isCitywideGuide(list) && stopCount > 0 && stopCount < MIN_CITYWIDE_STOPS) {
+    addIssue(
+      report,
+      severityForStrict(options),
+      label,
+      `Citywide guide has ${stopCount} top-level stops; expected at least ${MIN_CITYWIDE_STOPS}.`,
+      { stopCount, expected: MIN_CITYWIDE_STOPS },
+    );
+  }
+
   if (sources.length < options.minSources && SOURCE_HEAVY_CATEGORIES.has(list.category)) {
     addIssue(
       report,
@@ -386,6 +450,13 @@ function checkStopBasics(list, stop, pathParts, report, options) {
 
   if (!stop.hours) {
     addIssue(report, severityForStrict(options), label, "Missing hours or a clear hours caveat.");
+  } else if (looksLikePlaceholderHours(stop.hours)) {
+    addIssue(
+      report,
+      severityForStrict(options),
+      label,
+      "Hours look like a placeholder. Use real day/time hours, or a source-backed caveat naming the official calendar, booking page, season, weather, market days, or other exact dependency.",
+    );
   }
 
   if (evidenceUrls.length < options.minStopSources) {

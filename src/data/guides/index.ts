@@ -23,11 +23,13 @@ import {
 import { athensCitywideGuides } from "@/data/guides/athens";
 import { bangkokCitywideGuides } from "@/data/guides/bangkok";
 import { berlinCitywideGuides } from "@/data/guides/berlin";
+import { copenhagenCitywideGuides } from "@/data/guides/copenhagen";
 import { hanoiCitywideGuides } from "@/data/guides/hanoi";
 import { istanbulCitywideGuides } from "@/data/guides/istanbul";
 import { lisbonCitywideGuides } from "@/data/guides/lisbon";
 import { losAngelesCitywideGuides } from "@/data/guides/los-angeles";
 import { miamiCitywideGuides } from "@/data/guides/miami";
+import { mexicoCityCitywideGuides } from "@/data/guides/mexico-city";
 import { newYorkCityCitywideGuides } from "@/data/guides/new-york-city";
 import { pragueCitywideGuides } from "@/data/guides/prague";
 import { romeGuides } from "@/data/guides/rome";
@@ -44,6 +46,7 @@ export const editorialGuideLists: MapList[] = enrichGuidesCuisineTypes([
   ...newYorkCityCitywideGuides,
   ...losAngelesCitywideGuides,
   ...miamiCitywideGuides,
+  ...mexicoCityCitywideGuides,
   ...madridNeighborhoodGuides,
   ...globalGuides,
   ...istanbulCitywideGuides,
@@ -55,6 +58,7 @@ export const editorialGuideLists: MapList[] = enrichGuidesCuisineTypes([
   ...athensCitywideGuides,
   ...hanoiCitywideGuides,
   ...berlinCitywideGuides,
+  ...copenhagenCitywideGuides,
   ...amsterdamNeighborhoodGuides,
   ...amsterdamCitywideGuides,
   ...amsterdamItineraryGuides,
