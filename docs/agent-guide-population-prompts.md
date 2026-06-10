@@ -16,6 +16,7 @@ Use the Reusable City Prompt Template in this file. Fill in the city name, count
 Do not pause to ask where guide modules live. Stage 0 tells you how to create/register missing city modules.
 Do not edit guide data beyond Stage 0 scaffolding until the source ledger and candidate selection are complete.
 Do not write, publish, or verify a guide until every selected stop has a concrete hours plan: structured hours when available, or a source-backed schedule caveat when hours are genuinely variable.
+Do not write a citywide guide with fewer than 10 top-level stops unless Brandon explicitly requested a smaller scoped guide.
 Do not call the task done until strict local verification, normalized publish, R2 ingestion, and strict live verification have passed.
 ```
 
@@ -49,11 +50,11 @@ Use one existing city file as the structural pattern only:
 - Do not broadly audit the registry unless the import/export fails.
 
 Target guide set:
-- Food: 1 citywide dining guide and 1 medium-to-cheap eats guide.
-- Stay: 1 hotel guide and 1 hostel guide. Do not mix hotels and hostels.
-- Nightlife: 1 dive bar/pub/casual bar guide and 1 cocktail bar guide.
-- Culture: 1 citywide culture guide.
-- Activities: 1 "top things to do" guide with 10 strong stops.
+- Food: 1 citywide dining guide and 1 medium-to-cheap eats guide. Each citywide guide needs at least 10 top-level stops.
+- Stay: 1 hotel guide and 1 hostel guide, each with at least 10 top-level stops. Do not mix hotels and hostels.
+- Nightlife: 1 dive bar/pub/casual bar guide and 1 cocktail bar guide. Each citywide guide needs at least 10 top-level stops.
+- Culture: 1 citywide culture guide with at least 10 top-level stops.
+- Activities: 1 "top things to do" guide with at least 10 strong top-level stops.
 
 If the user requested only one category or neighborhood, keep the same process but narrow the guide set to that requested scope.
 
@@ -69,8 +70,9 @@ Hard gates before any guide data is considered publishable:
 - If two guides in the same city, neighborhood, and category would share a `seoSlug`, make the newer one more specific, such as `best-cocktail-bars`, `best-dive-bars`, or `best-rooftop-bars`.
 - Direct canonical guide URLs must expand that exact guide. Legacy/internal URLs should redirect to the clean canonical URL when possible.
 - Sitemap entries must use only canonical SEO URLs.
-- Every real venue stop must have a non-empty `hours` field. Verify hours from Google Maps, the official site, a booking/platform page, or another current-status source. Write the hours into the local stop data so the normalized publisher can persist them to `venue_hours`/`venue_special_hours` and preserve any guide-specific display override in `entry_stops.hours`.
-- Do not publish with missing hours. If exact hours are variable, event-dependent, seasonal, or unavailable, write a clear source-backed caveat such as `hours: { default: "Hours vary by show; verify the official calendar before going." }`. Do not leave `hours` blank.
+- Every citywide guide must have at least 10 top-level stops.
+- Every real venue stop must have a non-empty `hours` field. Verify hours from Google Maps, the official site, a booking/platform page, an official calendar, or another current-status source. Write the hours into the local stop data so the normalized publisher can persist them to `venue_hours`/`venue_special_hours` and preserve any guide-specific display override in `entry_stops.hours`.
+- Do not publish with missing or placeholder hours. Banned placeholder-only values include `Hours vary`, `verify current hours`, `confirm before going`, `current-status evidence is map-based`, `open and active in the current source set`, and similar generic caveats. If exact hours are variable, event-dependent, seasonal, or unavailable, write a clear source-backed caveat that names the dependency, such as `hours: { default: "Hours vary by show; verify the official calendar before going." }`.
 - Descriptions must have editorial bite and practical truth: Anthony Bourdain curiosity, TripAdvisor usefulness, actual source facts, one useful caveat, and no generic review filler.
 
 Stage 1: Source ledger
@@ -87,7 +89,7 @@ Before writing guide data, propose candidate stops. For each stop include:
 - neighborhood,
 - coordinates in [latitude, longitude],
 - current open-status evidence,
-- verified hours or the exact source-backed schedule caveat that will be written into `hours`,
+- verified hours source and the exact structured hours or source-backed schedule caveat that will be written into `hours`,
 - official URL,
 - map URL,
 - image source candidate URL,
@@ -112,6 +114,7 @@ Every stop must include `hours` before publish:
 - Use `{ default: "..." }` for reliable summary hours or source-backed variable schedules.
 - Use `"24 hours"` only when the source explicitly supports it.
 - For neighborhoods, districts, beaches, parks, markets, museums, restaurants, hotels, bars, clubs, galleries, transport hubs, and attractions, either write real hours or a caveat naming the schedule dependency.
+- Do not use `current-status evidence is map-based`, `open and active in the current source set`, `verify current hours`, `confirm before going`, or bare `Hours vary` as the actual `hours` value.
 - After normalized publish, the stop-level `hours` must be visible in `entry_stops.hours`, and venue-level hours/caveats must be available through `venue_hours`, `venue_special_hours`, or `venues.hours_note`.
 
 Category fields are required:
