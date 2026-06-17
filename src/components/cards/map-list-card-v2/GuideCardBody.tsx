@@ -43,7 +43,7 @@ export function GuideCardBody({
         fallbackCategory={list.category}
         handlers={stopHandlers}
       />
-      <GuideSourceRow sources={list.sources ?? []} />
+      <GuideSourceRow listId={list.id} sources={list.sources ?? []} />
       {!deferStops ? (
         <ol className="relative z-10 mt-2 grid gap-2">
           {list.stops.map((stop, index) => {

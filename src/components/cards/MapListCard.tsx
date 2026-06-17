@@ -25,6 +25,7 @@ import {
   JourneyCardBody,
   MapListCardRoot,
   NestedPoiCard,
+  getVariedGuideSources,
 } from "@/components/cards/map-list-card-v2";
 import { useAppStore } from "@/store/app-store";
 import { ListCategory, MapList } from "@/types";
@@ -1011,8 +1012,12 @@ export function MapListCard({
   const showStopNumbers = true;
   const isRGuide = list.creator.name.startsWith("R ");
   const allSources = isRGuide ? list.sources ?? EMPTY_SOURCES : EMPTY_SOURCES;
-  const sourcePreview = useMemo(() => allSources.slice(0, 5), [allSources]);
-  const sourceSummary = useMemo(() => (allSources.length ? buildSourceSummary(allSources) : null), [allSources]);
+  const orderedSources = useMemo(
+    () => getVariedGuideSources(allSources, list.id),
+    [allSources, list.id],
+  );
+  const sourcePreview = useMemo(() => orderedSources.slice(0, 5), [orderedSources]);
+  const sourceSummary = useMemo(() => (orderedSources.length ? buildSourceSummary(orderedSources) : null), [orderedSources]);
   const [sourcesPinnedOpen, setSourcesPinnedOpen] = useState(false);
   const sourcesOpen = Boolean(allSources.length) && sourcesPinnedOpen;
   const itineraryStopGroups = useMemo(

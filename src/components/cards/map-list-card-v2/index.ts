@@ -33,6 +33,7 @@ export {
   getPoiPhoto,
   getSourceDisplayName,
   getSourceSummary,
+  getVariedGuideSources,
   inferJourneyStopCategory,
   isEventList,
   isJourneyList,

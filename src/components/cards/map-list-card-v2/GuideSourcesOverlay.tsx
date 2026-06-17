@@ -4,6 +4,7 @@ import Link from "next/link";
 import { ChevronDown } from "lucide-react";
 
 import type { GuideSource } from "./types";
+import { getVariedGuideSources } from "./utils";
 
 interface GuideSourcesOverlayProps {
   listId: string;
@@ -20,6 +21,8 @@ export function GuideSourcesOverlay({
   getSourceIconUrl,
   onClose,
 }: GuideSourcesOverlayProps) {
+  const orderedSources = getVariedGuideSources(sources, listId);
+
   return (
     <div
       className={`absolute inset-0 z-30 flex flex-col bg-white/95 p-3 backdrop-blur-sm transition-[transform,opacity] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] ${
@@ -46,7 +49,7 @@ export function GuideSourcesOverlay({
         </span>
       </button>
       <div className="min-h-0 flex-1 space-y-1 overflow-y-auto pr-1">
-        {sources.map((source) => (
+        {orderedSources.map((source) => (
           <Link
             key={`${listId}-source-${source.name}`}
             href={source.url}
