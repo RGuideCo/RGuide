@@ -4,6 +4,7 @@ import type { MouseEvent } from "react";
 import { ChevronDown } from "lucide-react";
 
 import type { GuideSource } from "./types";
+import { getVariedGuideSources } from "./utils";
 
 interface GuideSourceSummaryProps {
   listId: string;
@@ -24,7 +25,8 @@ export function GuideSourceSummary({
   open = false,
   onToggle,
 }: GuideSourceSummaryProps) {
-  const sourcePreview = variant === "collapsed" ? sources.slice(0, 3) : sources.slice(0, 3);
+  const orderedSources = getVariedGuideSources(sources, listId);
+  const sourcePreview = orderedSources.slice(0, 3);
   const collapsedRemainingSourceCount = Math.max(0, sources.length - sourcePreview.length);
   const collapsedSourceLabel =
     collapsedRemainingSourceCount > 0

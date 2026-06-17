@@ -72,6 +72,27 @@ export function getSourceSummary(sources: GuideSource[]) {
   return `${visibleNames.join(", ")}${extraCount > 0 ? ` +${extraCount}` : ""}`;
 }
 
+function getStableSourceOffset(seed: string, length: number) {
+  if (length <= 1) {
+    return 0;
+  }
+
+  let hash = 0;
+  for (let index = 0; index < seed.length; index += 1) {
+    hash = (hash * 31 + seed.charCodeAt(index)) >>> 0;
+  }
+  return hash % length;
+}
+
+export function getVariedGuideSources(sources: GuideSource[], seed: string) {
+  if (sources.length <= 1) {
+    return sources;
+  }
+
+  const offset = getStableSourceOffset(seed, sources.length);
+  return [...sources.slice(offset), ...sources.slice(0, offset)];
+}
+
 export function getPoiPhoto(photo?: string) {
   return photo?.trim() || null;
 }

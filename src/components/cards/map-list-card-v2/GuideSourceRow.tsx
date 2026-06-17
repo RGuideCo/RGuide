@@ -2,19 +2,22 @@
 
 import { ChevronDown } from "lucide-react";
 
-import { getSourceSummary } from "./utils";
+import { getSourceSummary, getVariedGuideSources } from "./utils";
 import type { GuideSource } from "./types";
 
 interface GuideSourceRowProps {
+  listId?: string;
   sources: GuideSource[];
   open?: boolean;
   onToggle?: () => void;
 }
 
-export function GuideSourceRow({ sources, open = false, onToggle }: GuideSourceRowProps) {
+export function GuideSourceRow({ listId = "", sources, open = false, onToggle }: GuideSourceRowProps) {
   if (!sources.length) {
     return null;
   }
+
+  const orderedSources = getVariedGuideSources(sources, listId);
 
   return (
     <div className="guide-content-cascade-item relative z-10 mt-3 border-t border-slate-200 px-4 pt-3">
@@ -29,13 +32,13 @@ export function GuideSourceRow({ sources, open = false, onToggle }: GuideSourceR
         </span>
         <span className="h-px w-8 bg-slate-200" aria-hidden="true" />
         <span className="min-w-0 flex-1 truncate text-sm font-semibold text-slate-700">
-          {getSourceSummary(sources)}
+          {getSourceSummary(orderedSources)}
         </span>
         <ChevronDown className={`h-4 w-4 text-slate-400 transition-transform ${open ? "rotate-180" : ""}`} />
       </button>
       {open ? (
         <ul className="mt-3 grid gap-2">
-          {sources.map((source) => (
+          {orderedSources.map((source) => (
             <li key={`${source.name}-${source.url}`}>
               <a
                 href={source.url}
