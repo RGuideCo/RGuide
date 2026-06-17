@@ -274,6 +274,58 @@ export const barcelonaCoreGuides = withDiveBarChips([
           "default": "Park 24h; Bunkers ~8:30 AM-7:30 PM (night-restricted)."
         },
         "photo": "https://thirdeyetraveller.com/wp-content/uploads/Carmel-del-Bunkers-Barcelona-6.jpg"
+      },
+      {
+        "id": "barcelona-parks-placa-del-sol",
+        "name": "Plaça del Sol",
+        "coordinates": [
+          41.401,
+          2.1574
+        ],
+        "description": "Plaça del Sol adds the Gràcia neighborhood-plaza version of open air to the citywide parks guide: terraces, musicians, evening gatherings, and the local social rhythm that makes the district feel village-like rather than monumental.",
+        "hours": {
+          "default": "Open public space."
+        },
+        "photo": "https://estatics-nasia.dtibcn.cat/nasia-pro/media/201601PlaC3A7a-del-Sol-1-web.optimized.948b1120.jpg"
+      },
+      {
+        "id": "barcelona-parks-teatre-grec",
+        "name": "Teatre Grec",
+        "coordinates": [
+          41.3704,
+          2.1598
+        ],
+        "description": "Teatre Grec brings a garden-and-amphitheater stop into the Montjuïc side of the guide. Built into a former quarry, it works as a leafy cultural detour during the day and becomes more important when summer performance programming is active.",
+        "hours": {
+          "default": "Open public gardens; performances by schedule."
+        },
+        "photo": "https://www.teatrebarcelona.com/wp-content/uploads/2020/04/teatre_grec-scaled.jpg"
+      },
+      {
+        "id": "barcelona-parks-montjuic-castle",
+        "name": "Montjuïc Castle",
+        "coordinates": [
+          41.3634,
+          2.1661
+        ],
+        "description": "Montjuïc Castle extends the hilltop-view thread with port panoramas, defensive history, and a clear endpoint for a Montjuïc walk. It belongs here when the goal is open air with more structure than another lawn or garden.",
+        "hours": {
+          "default": "Daily ~9:00 AM-8:00 PM."
+        },
+        "photo": "https://www.barcelonaturisme.com/files/5445-7616-Imagen/castillo-montjuic-barcelona-pf-c1.jpg"
+      },
+      {
+        "id": "barcelona-parks-poble-espanyol",
+        "name": "Poble Espanyol",
+        "coordinates": [
+          41.3687,
+          2.1475
+        ],
+        "description": "Poble Espanyol rounds out the guide as an open-air Montjuïc stop with plazas, workshops, event programming, and staged Spanish regional architecture. Use it when the walk needs a contained outdoor attraction rather than another viewpoint.",
+        "hours": {
+          "default": "Daily ~9:00 AM-8:00 PM."
+        },
+        "photo": "https://cdn.getyourguide.com/img/tour/cc7791c0d9865ff9.jpeg/68.jpg"
       }
     ],
     "sources": [
@@ -2622,6 +2674,109 @@ export const barcelonaCoreGuides = withDiveBarChips([
           "sun": "12:00 PM-12:00 AM"
         },
         "photo": "https://media.timeout.com/images/100628653/image.jpg"
+      },
+      {
+        "id": "barcelona-seafood-casa-delfin",
+        "name": "Casa Delfín",
+        "coordinates": [
+          41.3834,
+          2.1824
+        ],
+        "description": "Casa Delfín broadens the seafood guide with a Born tavern classic for tapas, rice, vermouth, and market-adjacent people-watching. It is the easy central option when the meal should feel old-neighborhood rather than formal.",
+        "price": "$$",
+        "priceSource": "Google Maps / Tripadvisor",
+        "hours": {
+          "mon": "12:00 PM-12:30 AM",
+          "tue": "12:00 PM-12:30 AM",
+          "wed": "12:00 PM-12:30 AM",
+          "thu": "12:00 PM-1:30 AM",
+          "fri": "12:00 PM-2:00 AM",
+          "sat": "12:00 PM-2:00 AM",
+          "sun": "12:00 PM-12:00 AM"
+        },
+        "photo": "https://casadelfinrestaurant.com/wp-content/uploads/2022/06/galeria-home-02.jpg",
+        "foodServiceType": "restaurant",
+        "cuisineTypes": [
+          "tapas",
+          "catalan"
+        ]
+      },
+      {
+        "id": "barcelona-seafood-cuines-santa-caterina",
+        "name": "Cuines Santa Caterina",
+        "coordinates": [
+          41.3867,
+          2.1788
+        ],
+        "description": "Cuines Santa Caterina is the practical market-side seafood and Catalan-food stop for groups, odd meal times, and mixed cravings under the Santa Caterina roof. It is useful, broad, central, and easier than forcing everyone into one narrow counter format.",
+        "price": "$$",
+        "priceSource": "The Infatuation / Google Maps",
+        "hours": {
+          "mon": "12:00 PM-12:00 AM",
+          "tue": "12:00 PM-12:00 AM",
+          "wed": "12:00 PM-12:00 AM",
+          "thu": "12:00 PM-12:00 AM",
+          "fri": "12:00 PM-1:00 AM",
+          "sat": "12:00 PM-1:00 AM",
+          "sun": "12:00 PM-12:00 AM"
+        },
+        "photo": "https://966e7448.delivery.rocketcdn.me/wp-content/uploads/thumb-CUINES-DE-SANTA-CATERINA.jpg",
+        "foodServiceType": "restaurant",
+        "cuisineTypes": [
+          "tapas",
+          "catalan"
+        ]
+      },
+      {
+        "id": "barcelona-seafood-la-platilleria",
+        "name": "La Platilleria",
+        "coordinates": [
+          41.3746,
+          2.1658
+        ],
+        "description": "La Platilleria adds a warmer Poble-sec small-plates room to the seafood guide, useful before theater, after Montjuïc, or when the group wants dinner that stays local and relaxed.",
+        "price": "$$",
+        "priceSource": "Google Maps / Tripadvisor",
+        "hours": {
+          "mon": "Closed",
+          "tue": "1:00 PM-3:30 PM, 8:00 PM-11:00 PM",
+          "wed": "1:00 PM-3:30 PM, 8:00 PM-11:00 PM",
+          "thu": "1:00 PM-3:30 PM, 8:00 PM-11:00 PM",
+          "fri": "1:00 PM-3:30 PM, 8:00 PM-11:30 PM",
+          "sat": "1:00 PM-3:30 PM, 8:00 PM-11:30 PM",
+          "sun": "Closed"
+        },
+        "photo": "https://media-cdn.tripadvisor.com/media/photo-o/09/24/e4/7a/la-platilleria.jpg",
+        "foodServiceType": "restaurant",
+        "cuisineTypes": [
+          "catalan"
+        ]
+      },
+      {
+        "id": "barcelona-seafood-bistrot-levante",
+        "name": "Bistrot Levante",
+        "coordinates": [
+          41.3833,
+          2.1769
+        ],
+        "description": "Bistrot Levante is the Gothic Quarter counterpoint to Barcelona's seafood-and-tapas staples: Eastern Mediterranean flavors, vegetable-forward plates, and a compact room that works when nearby old-city streets are packed.",
+        "price": "$$",
+        "priceSource": "Eater / Google Maps",
+        "hours": {
+          "mon": "12:30 PM-4:00 PM, 7:30 PM-11:00 PM",
+          "tue": "12:30 PM-4:00 PM, 7:30 PM-11:00 PM",
+          "wed": "12:30 PM-4:00 PM, 7:30 PM-11:00 PM",
+          "thu": "12:30 PM-4:00 PM, 7:30 PM-11:00 PM",
+          "fri": "12:30 PM-4:00 PM, 7:30 PM-11:30 PM",
+          "sat": "12:30 PM-4:00 PM, 7:30 PM-11:30 PM",
+          "sun": "12:30 PM-4:00 PM, 7:30 PM-11:00 PM"
+        },
+        "photo": "https://images.unsplash.com/photo-1552566626-52f8b828add9?auto=format&fit=crop&w=900&q=80",
+        "foodServiceType": "restaurant",
+        "cuisineTypes": [
+          "bistro",
+          "mediterranean"
+        ]
       }
     ],
     "sources": [
@@ -2828,6 +2983,85 @@ export const barcelonaCoreGuides = withDiveBarChips([
           "sun": "12:30 PM-4:00 PM, 7:30 PM-11:00 PM"
         },
         "photo": "https://cdn-hhbfohb.nitrocdn.com/MWVuFFQrOubRCgucqTrIdzQgXRECTcge/assets/images/optimized/rev-41ae578/casabonay.com/wp-content/uploads/2020/12/ATP9564@antp-900x1196.jpg"
+      },
+      {
+        "id": "barcelona-catalan-cerveceria-catalana",
+        "name": "Cervecería Catalana",
+        "coordinates": [
+          41.3921,
+          2.1602
+        ],
+        "description": "Cervecería Catalana is a high-volume Eixample tapas room that still works when speed, choice, and counter energy matter. Go for montaditos, tortillas, seafood, and the busy-room rhythm when the group needs a reliable Catalan meal.",
+        "price": "$$",
+        "priceSource": "Google Maps / Tripadvisor",
+        "hours": {
+          "mon": "12:00 PM-12:00 AM",
+          "tue": "12:00 PM-12:00 AM",
+          "wed": "12:00 PM-12:00 AM",
+          "thu": "12:00 PM-12:00 AM",
+          "fri": "12:00 PM-1:00 AM",
+          "sat": "12:00 PM-1:00 AM",
+          "sun": "12:00 PM-12:00 AM"
+        },
+        "photo": "https://lh3.googleusercontent.com/p/AF1QipP14Wt5ejOwRKMNMFlYcbWhtdDHLmufLjj3SFc=s1360-w1360-h1020-rw",
+        "foodServiceType": "counter_service",
+        "cuisineTypes": [
+          "tapas",
+          "seafood",
+          "catalan"
+        ]
+      },
+      {
+        "id": "barcelona-catalan-bodega-joan",
+        "name": "Bodega Joan",
+        "coordinates": [
+          41.396,
+          2.1684
+        ],
+        "description": "Bodega Joan adds a straightforward Eixample dining-room option for homestyle Catalan tapas, charcuterie, paella, sangria, and filling group meals. It keeps the guide useful when the brief is comfort and logistics, not only trophy meals.",
+        "price": "$$",
+        "priceSource": "Google Maps / Tripadvisor",
+        "hours": {
+          "mon": "12:00 PM-12:30 AM",
+          "tue": "12:00 PM-12:30 AM",
+          "wed": "12:00 PM-12:30 AM",
+          "thu": "12:00 PM-1:30 AM",
+          "fri": "12:00 PM-2:00 AM",
+          "sat": "12:00 PM-2:00 AM",
+          "sun": "12:00 PM-12:00 AM"
+        },
+        "photo": "https://cdn.prod.website-files.com/649bffef1ea0320a4ff37c9f/649c01ab052368397680fa21_5_b.jpg",
+        "foodServiceType": "restaurant",
+        "cuisineTypes": [
+          "tapas",
+          "catalan"
+        ]
+      },
+      {
+        "id": "barcelona-catalan-quimet-quimet",
+        "name": "Quimet & Quimet",
+        "coordinates": [
+          41.3738,
+          2.1635
+        ],
+        "description": "Quimet & Quimet gives the Catalan guide a Poble-sec institution built around standing montaditos, conservas, smoked ingredients, and bottles stacked to the ceiling. Go early and treat it as a focused stop rather than a long sit-down meal.",
+        "price": "$$",
+        "priceSource": "Official site / Tripadvisor",
+        "hours": {
+          "mon": "12:00 PM-4:00 PM, 6:00 PM-10:30 PM",
+          "tue": "12:00 PM-4:00 PM, 6:00 PM-10:30 PM",
+          "wed": "12:00 PM-4:00 PM, 6:00 PM-10:30 PM",
+          "thu": "12:00 PM-4:00 PM, 6:00 PM-10:30 PM",
+          "fri": "12:00 PM-4:00 PM, 6:00 PM-10:30 PM",
+          "sat": "Closed",
+          "sun": "Closed"
+        },
+        "photo": "https://quimetiquimet.com/wp-content/uploads/tapbg.jpg",
+        "foodServiceType": "counter_service",
+        "cuisineTypes": [
+          "street_food",
+          "catalan"
+        ]
       }
     ],
     "sources": [
@@ -3010,6 +3244,115 @@ export const barcelonaCoreGuides = withDiveBarChips([
           "sun": "12:30 PM-4:00 PM, 7:30 PM-11:00 PM"
         },
         "photo": "https://barmut.com/wp-content/uploads/2026/02/Txuleton-010-15102025-4672-x-7008-Bar-Mut.jpg"
+      },
+      {
+        "id": "barcelona-fine-fismuler",
+        "name": "Fismuler",
+        "coordinates": [
+          41.3867,
+          2.1846
+        ],
+        "description": "Fismuler adds a stylish Born dinner to the destination-dining guide: seasonal Mediterranean cooking, raw seafood, serious wine, and a room that feels special without tasting-menu formality.",
+        "price": "$$$",
+        "priceSource": "The Infatuation / Google Maps",
+        "hours": {
+          "mon": "12:30 PM-4:00 PM, 7:30 PM-11:00 PM",
+          "tue": "12:30 PM-4:00 PM, 7:30 PM-11:00 PM",
+          "wed": "12:30 PM-4:00 PM, 7:30 PM-11:00 PM",
+          "thu": "12:30 PM-4:00 PM, 7:30 PM-11:00 PM",
+          "fri": "12:30 PM-4:00 PM, 7:30 PM-11:30 PM",
+          "sat": "12:30 PM-4:00 PM, 7:30 PM-11:30 PM",
+          "sun": "12:30 PM-4:00 PM, 7:30 PM-11:00 PM"
+        },
+        "photo": "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/2c/6c/5a/92/tartar-de-dorada-y-uva.jpg?w=1400&h=800&s=1",
+        "foodServiceType": "restaurant",
+        "cuisineTypes": [
+          "fine_dining",
+          "seafood",
+          "mediterranean"
+        ]
+      },
+      {
+        "id": "barcelona-fine-bodega-bonay",
+        "name": "Bodega Bonay",
+        "coordinates": [
+          41.3918,
+          2.1746
+        ],
+        "description": "Bodega Bonay gives the destination-dining guide a modern food-and-wine room without turning the night into a formal splurge. Natural wine, anchovies, cured meats, pastas, and a stylish Eixample setting make it a strong long-lunch or dinner pick.",
+        "category": "Food",
+        "venueKind": "food_drink",
+        "foodServiceType": "restaurant",
+        "price": "$$",
+        "priceSource": "The Infatuation / Resy",
+        "hours": {
+          "mon": "12:30 PM-4:00 PM, 7:30 PM-11:00 PM",
+          "tue": "12:30 PM-4:00 PM, 7:30 PM-11:00 PM",
+          "wed": "12:30 PM-4:00 PM, 7:30 PM-11:00 PM",
+          "thu": "12:30 PM-4:00 PM, 7:30 PM-11:00 PM",
+          "fri": "12:30 PM-4:00 PM, 7:30 PM-11:30 PM",
+          "sat": "12:30 PM-4:00 PM, 7:30 PM-11:30 PM",
+          "sun": "12:30 PM-4:00 PM, 7:30 PM-11:00 PM"
+        },
+        "photo": "https://cdn-hhbfohb.nitrocdn.com/MWVuFFQrOubRCgucqTrIdzQgXRECTcge/assets/images/optimized/rev-41ae578/casabonay.com/wp-content/uploads/2020/12/ATP9564@antp-900x1196.jpg",
+        "cuisineTypes": [
+          "fine_dining",
+          "bistro",
+          "catalan"
+        ]
+      },
+      {
+        "id": "barcelona-fine-sensi-bistro",
+        "name": "Sensi Bistro",
+        "coordinates": [
+          41.3803,
+          2.1771
+        ],
+        "description": "Sensi Bistro gives the guide a polished Gothic Quarter creative-tapas room for groups that want composed sharing plates without gambling on the old-city lanes. It is an easy dinner choice when accessibility matters as much as novelty.",
+        "price": "$$",
+        "priceSource": "Tripadvisor / Google Maps",
+        "hours": {
+          "mon": "12:30 PM-4:00 PM, 7:30 PM-11:00 PM",
+          "tue": "12:30 PM-4:00 PM, 7:30 PM-11:00 PM",
+          "wed": "12:30 PM-4:00 PM, 7:30 PM-11:00 PM",
+          "thu": "12:30 PM-4:00 PM, 7:30 PM-11:00 PM",
+          "fri": "12:30 PM-4:00 PM, 7:30 PM-11:30 PM",
+          "sat": "12:30 PM-4:00 PM, 7:30 PM-11:30 PM",
+          "sun": "12:30 PM-4:00 PM, 7:30 PM-11:00 PM"
+        },
+        "photo": "https://sensi.es/bistro/core/uploads/2022/12/events.jpg",
+        "foodServiceType": "restaurant",
+        "cuisineTypes": [
+          "tapas",
+          "bistro"
+        ]
+      },
+      {
+        "id": "barcelona-fine-xemei",
+        "name": "Xemei",
+        "coordinates": [
+          41.3718,
+          2.1668
+        ],
+        "description": "Xemei adds a Poble-sec change of register to the destination list: Venetian-Adriatic seafood, handmade pasta, offbeat Italian bottles, and a lively dining room that still feels specific to Barcelona.",
+        "price": "$$",
+        "priceSource": "Eater / El País",
+        "hours": {
+          "mon": "Closed",
+          "tue": "1:00 PM-3:30 PM, 8:00 PM-11:00 PM",
+          "wed": "1:00 PM-3:30 PM, 8:00 PM-11:00 PM",
+          "thu": "1:00 PM-3:30 PM, 8:00 PM-11:00 PM",
+          "fri": "1:00 PM-3:30 PM, 8:00 PM-11:30 PM",
+          "sat": "1:00 PM-3:30 PM, 8:00 PM-11:30 PM",
+          "sun": "Closed"
+        },
+        "photo": "https://images.squarespace-cdn.com/content/v1/642bdd5c8f26792d3234f41f/4622d6bd-e3f6-48bf-8a20-21930382ec44/L1001642.jpg?format=1000w",
+        "foodServiceType": "restaurant",
+        "cuisineTypes": [
+          "fine_dining",
+          "seafood",
+          "italian"
+        ]
       }
     ],
     "sources": [
@@ -4452,6 +4795,101 @@ export const barcelonaCoreGuides = withDiveBarChips([
           "sun": "24 hours"
         },
         "photo": "https://hotelbrummell.brummellprojects.com/wp-content/uploads/sites/2/2023/03/1440x1480px_0001_2880x1600px_0019_BRUMMELL_EXT_H-12.jpg"
+      },
+      {
+        "id": "barcelona-hotel-shortlist-edition",
+        "name": "The Barcelona EDITION",
+        "coordinates": [
+          41.3869,
+          2.1763
+        ],
+        "description": "The Barcelona EDITION adds a luxury El Born base beside Santa Caterina Market, with rooftop scene, restaurants, and high-design service. It suits travelers who want old-town energy but prefer a five-star contemporary hotel ecosystem.",
+        "hours": {
+          "mon": "24 hours",
+          "tue": "24 hours",
+          "wed": "24 hours",
+          "thu": "24 hours",
+          "fri": "24 hours",
+          "sat": "24 hours",
+          "sun": "24 hours"
+        },
+        "photo": "https://cache.marriott.com/content/dam/marriott-renditions/BCNEB/bcneb-terrace-2734-hor-wide.jpg?output-quality=70&interpolation=progressive-bilinear&downsize=1336px:*"
+      },
+      {
+        "id": "barcelona-hotel-shortlist-mercer",
+        "name": "Mercer Hotel Barcelona",
+        "coordinates": [
+          41.3826,
+          2.1784
+        ],
+        "description": "Mercer Hotel Barcelona is the luxury heritage stay in the Gothic core, with Roman wall fragments, medieval fabric, courtyard calm, and high-service positioning built into the property itself.",
+        "hours": {
+          "mon": "24 hours",
+          "tue": "24 hours",
+          "wed": "24 hours",
+          "thu": "24 hours",
+          "fri": "24 hours",
+          "sat": "24 hours",
+          "sun": "24 hours"
+        },
+        "photo": "https://www.mercerhoteles.com/imagenes/logo-og.jpg"
+      },
+      {
+        "id": "barcelona-hotel-shortlist-kimpton-vividora",
+        "name": "Kimpton Vividora Hotel",
+        "coordinates": [
+          41.3843,
+          2.1741
+        ],
+        "description": "Kimpton Vividora is the polished lifestyle-hotel option near the cathedral, useful for central logistics, rooftop views, contemporary rooms, and a Gothic Quarter stay that does not feel like a small historic inn.",
+        "hours": {
+          "mon": "24 hours",
+          "tue": "24 hours",
+          "wed": "24 hours",
+          "thu": "24 hours",
+          "fri": "24 hours",
+          "sat": "24 hours",
+          "sun": "24 hours"
+        },
+        "photo": "https://kimptonvividorahotel.com/content/thumbs/800_450/content/imgsxml/galerias/panel_herohome/1/1.2home-modulo2-2-48281b2464805dda29f360f127321c7c.jpg"
+      },
+      {
+        "id": "barcelona-hotel-shortlist-casa-bonay",
+        "name": "Casa Bonay",
+        "coordinates": [
+          41.3918,
+          2.1746
+        ],
+        "description": "Casa Bonay is the Eixample design-hotel anchor for travelers who want coffee, natural wine, rooftop space, dining, and neighborhood life inside the hotel rather than a purely corporate base.",
+        "hours": {
+          "mon": "24 hours",
+          "tue": "24 hours",
+          "wed": "24 hours",
+          "thu": "24 hours",
+          "fri": "24 hours",
+          "sat": "24 hours",
+          "sun": "24 hours"
+        },
+        "photo": "https://cdn-hhbfohb.nitrocdn.com/MWVuFFQrOubRCgucqTrIdzQgXRECTcge/assets/images/optimized/rev-41ae578/casabonay.com/wp-content/uploads/2020/12/ATP9564@antp-900x1196.jpg"
+      },
+      {
+        "id": "barcelona-hotel-shortlist-the-one",
+        "name": "The One Barcelona",
+        "coordinates": [
+          41.3958,
+          2.1624
+        ],
+        "description": "The One Barcelona is the higher-end Eixample stay near La Pedrera, chosen for rooftop pool appeal, quiet luxury positioning, and proximity to Passeig de Gràcia.",
+        "hours": {
+          "mon": "24 hours",
+          "tue": "24 hours",
+          "wed": "24 hours",
+          "thu": "24 hours",
+          "fri": "24 hours",
+          "sat": "24 hours",
+          "sun": "24 hours"
+        },
+        "photo": "https://static.hoteltreats.com/site/styles/hero/s3/2019-12/9-2-17_Terraza-piscina-de-dia_0056.jpg?itok=KLPQ2WKO"
       }
     ],
     "sources": [
@@ -4598,6 +5036,101 @@ export const barcelonaCoreGuides = withDiveBarChips([
           "sun": "24 hours"
         },
         "photo": "https://onefamhostels.com/wp-content/uploads/2025/09/01entrance-onefam-paralelo-barcelona.jpg"
+      },
+      {
+        "id": "barcelona-hostel-shortlist-born-barcelona",
+        "name": "Born Barcelona Hostel",
+        "coordinates": [
+          41.3903,
+          2.1811
+        ],
+        "description": "Born Barcelona Hostel is the quieter, smaller-format pick near Arc de Triomf and the upper edge of El Born. It suits travelers who want museum and park access with a practical bed-and-base setup rather than a party-hostel identity.",
+        "hours": {
+          "mon": "24 hours",
+          "tue": "24 hours",
+          "wed": "24 hours",
+          "thu": "24 hours",
+          "fri": "24 hours",
+          "sat": "24 hours",
+          "sun": "24 hours"
+        },
+        "photo": "https://www.bornbarcelonahostel.com/wp-content/uploads/2012/12/nuestras-habitaciones.jpg"
+      },
+      {
+        "id": "barcelona-hostel-shortlist-arc-house",
+        "name": "Arc House Barcelona",
+        "coordinates": [
+          41.3908,
+          2.1867
+        ],
+        "description": "Arc House Barcelona is the practical budget choice for Parc de la Ciutadella, Estació del Nord, and fast walks into El Born. It belongs as a low-cost option driven by location and value.",
+        "hours": {
+          "mon": "24 hours",
+          "tue": "24 hours",
+          "wed": "24 hours",
+          "thu": "24 hours",
+          "fri": "24 hours",
+          "sat": "24 hours",
+          "sun": "24 hours"
+        },
+        "photo": "https://images.unsplash.com/photo-1555854877-bab0e564b8d5?auto=format&fit=crop&w=900&q=80"
+      },
+      {
+        "id": "barcelona-hostel-shortlist-black-swan",
+        "name": "Black Swan Hostel",
+        "coordinates": [
+          41.3907,
+          2.1773
+        ],
+        "description": "Black Swan sits just west of El Born near Arc de Triomf and works for solo travelers who want tours, shared meals, social programming, and central transit reach without old-town noise directly at the door.",
+        "hours": {
+          "mon": "24 hours",
+          "tue": "24 hours",
+          "wed": "24 hours",
+          "thu": "24 hours",
+          "fri": "24 hours",
+          "sat": "24 hours",
+          "sun": "24 hours"
+        },
+        "photo": "https://blackswanhostels.com/wp-content/uploads/2024/07/IMG-20240701-WA0164.jpg"
+      },
+      {
+        "id": "barcelona-hostel-shortlist-rock-palace",
+        "name": "Sant Jordi Hostels Rock Palace",
+        "coordinates": [
+          41.3897,
+          2.1608
+        ],
+        "description": "Sant Jordi Rock Palace is the music-themed Eixample option with stronger group energy, rooftop pool appeal, and easy reach to Passeig de Gràcia and late-night central bars.",
+        "hours": {
+          "mon": "24 hours",
+          "tue": "24 hours",
+          "wed": "24 hours",
+          "thu": "24 hours",
+          "fri": "24 hours",
+          "sat": "24 hours",
+          "sun": "24 hours"
+        },
+        "photo": "https://www.santjordihostels.com/wp-content/uploads/Terraza_Rock3-scaled.jpg"
+      },
+      {
+        "id": "barcelona-hostel-shortlist-onefam-batllo",
+        "name": "Onefam Batllo",
+        "coordinates": [
+          41.386,
+          2.1604
+        ],
+        "description": "Onefam Batllo is the central Eixample social-hostel pick for solo travelers who want structured programming, staff-led activities, and easy walks to Casa Batlló and Passeig de Gràcia.",
+        "hours": {
+          "mon": "24 hours",
+          "tue": "24 hours",
+          "wed": "24 hours",
+          "thu": "24 hours",
+          "fri": "24 hours",
+          "sat": "24 hours",
+          "sun": "24 hours"
+        },
+        "photo": "https://onefamhostels.com/wp-content/uploads/2025/09/01entrance-onefam-batllo-hostel-barcelona-scaled.jpg"
       }
     ],
     "sources": [
@@ -7331,6 +7864,101 @@ export const barcelonaCoreGuides = withDiveBarChips([
           "sun": "10:00 PM-2:30 AM"
         },
         "photo": "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/08/16/c1/df/sala-apolo.jpg?w=900&h=500&s=1"
+      },
+      {
+        "id": "citywide-popular-dry-martini",
+        "name": "Dry Martini",
+        "coordinates": [
+          41.3902,
+          2.1552
+        ],
+        "description": "Dry Martini adds old-school cocktail tradition to the citywide nightlife guide: polished service, a proper martini, and a room that works when the night should feel classic rather than theatrical.",
+        "hours": {
+          "mon": "1:00 PM-2:30 AM",
+          "tue": "1:00 PM-2:30 AM",
+          "wed": "1:00 PM-2:30 AM",
+          "thu": "1:00 PM-2:30 AM",
+          "fri": "1:00 PM-3:00 AM",
+          "sat": "1:00 PM-3:00 AM",
+          "sun": "4:30 PM-1:00 AM"
+        },
+        "photo": "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/0e/3b/d9/39/dry-martini-by-javier.jpg?w=900&h=500&s=1"
+      },
+      {
+        "id": "citywide-popular-dr-stravinsky",
+        "name": "Dr. Stravinsky",
+        "coordinates": [
+          41.3858,
+          2.1804
+        ],
+        "description": "Dr. Stravinsky brings a serious experimental-cocktail lane to the Born side of the guide, with in-house infusions, distillations, and signatures for drinkers who want technique and flavor exploration.",
+        "hours": {
+          "mon": "5:00 PM-2:00 AM",
+          "tue": "5:00 PM-2:00 AM",
+          "wed": "5:00 PM-2:00 AM",
+          "thu": "5:00 PM-2:00 AM",
+          "fri": "12:00 PM-4:30 PM, 5:00 PM-3:00 AM",
+          "sat": "12:00 PM-4:30 PM, 5:00 PM-3:00 AM",
+          "sun": "12:00 PM-4:30 PM, 5:00 PM-2:00 AM"
+        },
+        "photo": "https://drstravinsky.cat/wp-content/uploads/2022/10/08.jpg"
+      },
+      {
+        "id": "citywide-popular-bobbys-free",
+        "name": "Bobby's Free",
+        "coordinates": [
+          41.3942,
+          2.1595
+        ],
+        "description": "Bobby's Free gives the guide a playful speakeasy slot, with the barbershop entrance and premium cocktails doing more than simple neighborhood-bar work.",
+        "hours": {
+          "mon": "6:00 PM-12:30 AM",
+          "tue": "6:00 PM-12:30 AM",
+          "wed": "6:00 PM-1:00 AM",
+          "thu": "6:00 PM-1:30 AM",
+          "fri": "6:00 PM-2:30 AM",
+          "sat": "6:00 PM-2:30 AM",
+          "sun": "6:00 PM-12:00 AM"
+        },
+        "photo": "https://www.bobbysfree.com/wp-content/uploads/2016/10/Bobbydrink-9-683x1024.jpg"
+      },
+      {
+        "id": "citywide-popular-collage",
+        "name": "Collage Cocktail Bar",
+        "coordinates": [
+          41.385,
+          2.182
+        ],
+        "description": "Collage Cocktail Bar is a colorful Born craft-cocktail room that is easier to use with groups than the most in-demand trophy bars. It works when the night wants polish without depending on one door.",
+        "hours": {
+          "mon": "6:00 PM-12:30 AM",
+          "tue": "6:00 PM-12:30 AM",
+          "wed": "6:00 PM-1:00 AM",
+          "thu": "6:00 PM-1:30 AM",
+          "fri": "6:00 PM-2:30 AM",
+          "sat": "6:00 PM-2:30 AM",
+          "sun": "6:00 PM-12:00 AM"
+        },
+        "photo": "https://privateaser-media.s3.eu-west-1.amazonaws.com/etab_photos/49629/1500x750/462803.jpg"
+      },
+      {
+        "id": "citywide-popular-laut",
+        "name": "LAUT",
+        "coordinates": [
+          41.3734,
+          2.1686
+        ],
+        "description": "LAUT adds a smaller electronic-club option for focused late sessions and local programming, useful when Apolo feels too massive but the night still needs a proper dance-floor endpoint.",
+        "hours": {
+          "mon": "10:00 PM-2:30 AM",
+          "tue": "10:00 PM-2:30 AM",
+          "wed": "10:00 PM-3:30 AM",
+          "thu": "10:00 PM-4:30 AM",
+          "fri": "10:00 PM-5:00 AM",
+          "sat": "10:00 PM-5:00 AM",
+          "sun": "10:00 PM-2:30 AM"
+        },
+        "photo": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ3bjhFJWGM2XXZ8F-6JTgeCj11Br6jdyaTkw&s"
       }
     ],
     "sources": [
@@ -7494,6 +8122,101 @@ export const barcelonaCoreGuides = withDiveBarChips([
           "sun": "10:00 AM-7:00 PM"
         },
         "photo": "https://www.barcelonaturisme.com/files/5531-4959-imagenCAT/tickets-for-fundacio-miro-museum-barcelona-c.jpg"
+      },
+      {
+        "id": "citywide-culture-sagrada-familia",
+        "name": "Sagrada Família",
+        "coordinates": [
+          41.4036,
+          2.1744
+        ],
+        "description": "Sagrada Família is the Eixample landmark every source converges on: Gaudí's unfinished masterwork, symbolic towers, branching columns, colored glass, and the visible story of construction still unfolding.",
+        "hours": {
+          "mon": "9:00 AM-8:00 PM",
+          "tue": "9:00 AM-8:00 PM",
+          "wed": "9:00 AM-8:00 PM",
+          "thu": "9:00 AM-8:00 PM",
+          "fri": "9:00 AM-8:00 PM",
+          "sat": "9:00 AM-8:00 PM",
+          "sun": "9:00 AM-8:00 PM"
+        },
+        "photo": "https://www.barcelonaturisme.com/files/5445-18893-Imagen/Sagrada_Familia_Unesco_Transparent_c1.jpg"
+      },
+      {
+        "id": "citywide-culture-la-pedrera",
+        "name": "Casa Milà / La Pedrera",
+        "coordinates": [
+          41.3954,
+          2.1619
+        ],
+        "description": "Casa Milà / La Pedrera adds Gaudí's domestic-architecture lesson: undulating stone, attic structure, apartment design, and rooftop chimneys that show how natural forms became an inhabited building.",
+        "hours": {
+          "mon": "9:00 AM-8:00 PM",
+          "tue": "9:00 AM-8:00 PM",
+          "wed": "9:00 AM-8:00 PM",
+          "thu": "9:00 AM-8:00 PM",
+          "fri": "9:00 AM-8:00 PM",
+          "sat": "9:00 AM-8:00 PM",
+          "sun": "9:00 AM-8:00 PM"
+        },
+        "photo": "https://estatics-nasia.dtibcn.cat/nasia-pro/media/2015%2C05%2C1-2-2-2-8-DISE-La-Pedrera-29-4-9-AL-01-760x428.jpg"
+      },
+      {
+        "id": "citywide-culture-picasso-museum",
+        "name": "Museu Picasso",
+        "coordinates": [
+          41.3853,
+          2.1815
+        ],
+        "description": "Museu Picasso anchors the Born side of the culture guide with Picasso's formative Barcelona years, medieval-palace rooms, early work, Blue Period context, and the Las Meninas series.",
+        "hours": {
+          "mon": "Closed",
+          "tue": "9:00 AM-8:00 PM",
+          "wed": "9:00 AM-8:00 PM",
+          "thu": "9:00 AM-9:00 PM",
+          "fri": "9:00 AM-9:00 PM",
+          "sat": "9:00 AM-9:00 PM",
+          "sun": "9:00 AM-8:00 PM"
+        },
+        "photo": "https://www.barcelonaturisme.com/files/5531-4970-imagenCAT/museu_picasso_barcelona_c1.jpg"
+      },
+      {
+        "id": "citywide-culture-mnac",
+        "name": "MNAC",
+        "coordinates": [
+          41.3688,
+          2.1536
+        ],
+        "description": "MNAC is the Montjuïc heavyweight for Catalan visual culture at scale, from Romanesque frescoes and Gothic work to modernisme, photography, and terrace views from the Palau Nacional.",
+        "hours": {
+          "mon": "Closed",
+          "tue": "10:00 AM-8:00 PM",
+          "wed": "10:00 AM-8:00 PM",
+          "thu": "10:00 AM-8:00 PM",
+          "fri": "10:00 AM-8:00 PM",
+          "sat": "10:00 AM-8:00 PM",
+          "sun": "10:00 AM-3:00 PM"
+        },
+        "photo": "https://www.barcelonaturisme.com/files/5531-4863-imagenCAT/Museu_Art_Nacional_Catalunya_Barcelona_c1.jpg"
+      },
+      {
+        "id": "citywide-culture-palau-musica",
+        "name": "Palau de la Música Catalana",
+        "coordinates": [
+          41.3876,
+          2.1753
+        ],
+        "description": "Palau de la Música Catalana adds one of Barcelona's great Modernista interiors: stained-glass skylight, ceramic columns, sculptural facade, and a concert hall best understood by tour or performance.",
+        "hours": {
+          "mon": "9:00 AM-9:00 PM",
+          "tue": "9:00 AM-9:00 PM",
+          "wed": "9:00 AM-9:00 PM",
+          "thu": "9:00 AM-9:00 PM",
+          "fri": "9:00 AM-9:00 PM",
+          "sat": "9:00 AM-9:00 PM",
+          "sun": "9:00 AM-3:30 PM"
+        },
+        "photo": "https://www.barcelonaturisme.com/files/5445-7519-Imagen/Palau_Musica_Catalana_Transparent_c1.jpg"
       }
     ],
     "sources": [
@@ -7649,6 +8372,106 @@ export const barcelonaItineraryGuides = withDiveBarChips([
           "sun": "6:00 PM-12:00 AM"
         },
         "photo": "https://paradiso.cat/wp-content/uploads/2020/06/bck_premios-scaled_op.jpg"
+      },
+      {
+        "id": "barcelona-day-sagrada-familia",
+        "name": "Sagrada Família",
+        "coordinates": [
+          41.4036,
+          2.1744
+        ],
+        "itineraryDay": 1,
+        "description": "Sagrada Família gives the one-day route Barcelona's clearest architectural anchor: Gaudí's unfinished basilica, colored glass, branching columns, symbolic towers, and a visit that needs a timed booking rather than a casual walk-by.",
+        "hours": {
+          "mon": "9:00 AM-8:00 PM",
+          "tue": "9:00 AM-8:00 PM",
+          "wed": "9:00 AM-8:00 PM",
+          "thu": "9:00 AM-8:00 PM",
+          "fri": "9:00 AM-8:00 PM",
+          "sat": "9:00 AM-8:00 PM",
+          "sun": "9:00 AM-8:00 PM"
+        },
+        "photo": "https://www.barcelonaturisme.com/files/5445-18893-Imagen/Sagrada_Familia_Unesco_Transparent_c1.jpg"
+      },
+      {
+        "id": "barcelona-day-picasso-museum",
+        "name": "Museu Picasso",
+        "coordinates": [
+          41.3853,
+          2.1815
+        ],
+        "itineraryDay": 1,
+        "description": "Museu Picasso fills out the old-city culture thread with Picasso's formative Barcelona years, early work, Blue Period context, and the Las Meninas series inside linked medieval palaces.",
+        "hours": {
+          "mon": "Closed",
+          "tue": "9:00 AM-8:00 PM",
+          "wed": "9:00 AM-8:00 PM",
+          "thu": "9:00 AM-9:00 PM",
+          "fri": "9:00 AM-9:00 PM",
+          "sat": "9:00 AM-9:00 PM",
+          "sun": "9:00 AM-8:00 PM"
+        },
+        "photo": "https://www.barcelonaturisme.com/files/5531-4970-imagenCAT/museu_picasso_barcelona_c1.jpg"
+      },
+      {
+        "id": "barcelona-day-park-guell",
+        "name": "Park Güell",
+        "coordinates": [
+          41.4145,
+          2.1527
+        ],
+        "itineraryDay": 1,
+        "description": "Park Güell adds the open-air Gaudí stop if the day needs views, mosaics, and a less museum-like stretch. Book the monumental zone and treat the hill climb as part of the experience.",
+        "hours": {
+          "mon": "9:30 AM-7:30 PM",
+          "tue": "9:30 AM-7:30 PM",
+          "wed": "9:30 AM-7:30 PM",
+          "thu": "9:30 AM-7:30 PM",
+          "fri": "9:30 AM-7:30 PM",
+          "sat": "9:30 AM-7:30 PM",
+          "sun": "9:30 AM-7:30 PM"
+        },
+        "photo": "https://parkguell.barcelona/sites/default/files/2023-02/01_Benvinguts_al_Parc_Guell_v2_2.jpg"
+      },
+      {
+        "id": "barcelona-day-mnac",
+        "name": "MNAC",
+        "coordinates": [
+          41.3688,
+          2.1536
+        ],
+        "itineraryDay": 1,
+        "description": "MNAC gives the day a Montjuïc option with Catalan art at scale, from Romanesque frescoes and Gothic work to modernisme, photography, and terrace views from the Palau Nacional.",
+        "hours": {
+          "mon": "Closed",
+          "tue": "10:00 AM-8:00 PM",
+          "wed": "10:00 AM-8:00 PM",
+          "thu": "10:00 AM-8:00 PM",
+          "fri": "10:00 AM-8:00 PM",
+          "sat": "10:00 AM-8:00 PM",
+          "sun": "10:00 AM-3:00 PM"
+        },
+        "photo": "https://www.barcelonaturisme.com/files/5531-4863-imagenCAT/Museu_Art_Nacional_Catalunya_Barcelona_c1.jpg"
+      },
+      {
+        "id": "barcelona-day-sala-apolo",
+        "name": "Sala Apolo",
+        "coordinates": [
+          41.3752,
+          2.1696
+        ],
+        "itineraryDay": 1,
+        "description": "Sala Apolo is the larger nightlife endpoint when the one-day route should finish with a real Barcelona room rather than another quiet cocktail stop. Check the programming before committing the night to it.",
+        "hours": {
+          "mon": "10:00 PM-2:30 AM",
+          "tue": "10:00 PM-2:30 AM",
+          "wed": "10:00 PM-3:30 AM",
+          "thu": "10:00 PM-4:30 AM",
+          "fri": "10:00 PM-5:00 AM",
+          "sat": "10:00 PM-5:00 AM",
+          "sun": "10:00 PM-2:30 AM"
+        },
+        "photo": "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/08/16/c1/df/sala-apolo.jpg?w=900&h=500&s=1"
       }
     ],
     "sources": [
@@ -7840,6 +8663,68 @@ export const barcelonaItineraryGuides = withDiveBarChips([
           "sun": "10:00 PM-2:30 AM"
         },
         "photo": "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/08/16/c1/df/sala-apolo.jpg?w=900&h=500&s=1"
+      },
+      {
+        "id": "barcelona-weekend-sagrada-familia",
+        "name": "Sagrada Família",
+        "coordinates": [
+          41.4036,
+          2.1744
+        ],
+        "itineraryDay": 1,
+        "description": "Sagrada Família gives the weekend route its unavoidable architecture moment: Gaudí's unfinished basilica, symbolic towers, branching columns, stained glass, and a visit that rewards booking ahead.",
+        "hours": {
+          "mon": "9:00 AM-8:00 PM",
+          "tue": "9:00 AM-8:00 PM",
+          "wed": "9:00 AM-8:00 PM",
+          "thu": "9:00 AM-8:00 PM",
+          "fri": "9:00 AM-8:00 PM",
+          "sat": "9:00 AM-8:00 PM",
+          "sun": "9:00 AM-8:00 PM"
+        },
+        "photo": "https://www.barcelonaturisme.com/files/5445-18893-Imagen/Sagrada_Familia_Unesco_Transparent_c1.jpg"
+      },
+      {
+        "id": "barcelona-weekend-picasso-museum",
+        "name": "Museu Picasso",
+        "coordinates": [
+          41.3853,
+          2.1815
+        ],
+        "itineraryDay": 1,
+        "description": "Museu Picasso adds a compact Born museum stop that fits naturally between old-city walks and food. The draw is Picasso's early Barcelona work, Blue Period context, and the Las Meninas series in medieval palace rooms.",
+        "hours": {
+          "mon": "Closed",
+          "tue": "9:00 AM-8:00 PM",
+          "wed": "9:00 AM-8:00 PM",
+          "thu": "9:00 AM-9:00 PM",
+          "fri": "9:00 AM-9:00 PM",
+          "sat": "9:00 AM-9:00 PM",
+          "sun": "9:00 AM-8:00 PM"
+        },
+        "photo": "https://www.barcelonaturisme.com/files/5531-4970-imagenCAT/museu_picasso_barcelona_c1.jpg"
+      },
+      {
+        "id": "barcelona-weekend-cal-pep",
+        "name": "Cal Pep",
+        "coordinates": [
+          41.3835,
+          2.1839
+        ],
+        "itineraryDay": 2,
+        "description": "Cal Pep adds the Born counter lunch or dinner that makes the weekend route feel food-led rather than only architecture-and-bars: seafood tapas, quick pacing, and a room that turns the meal into part of the itinerary.",
+        "price": "$$$",
+        "priceSource": "The Infatuation / Google Maps",
+        "hours": {
+          "mon": "Closed",
+          "tue": "1:00 PM-3:30 PM, 8:00 PM-11:00 PM",
+          "wed": "1:00 PM-3:30 PM, 8:00 PM-11:00 PM",
+          "thu": "1:00 PM-3:30 PM, 8:00 PM-11:00 PM",
+          "fri": "1:00 PM-3:30 PM, 8:00 PM-11:30 PM",
+          "sat": "1:00 PM-3:30 PM, 8:00 PM-11:30 PM",
+          "sun": "Closed"
+        },
+        "photo": "https://lh3.googleusercontent.com/p/AF1QipMAfpnNAXVl4nrBreCG9RCwlKezMqgrs6IiObfb=s1360-w1360-h1020-rw"
       }
     ],
     "sources": [

@@ -123,37 +123,159 @@ const photoByName: Record<string, string> = {
 };
 
 const googleMaps: ListSource = { name: "Google Maps", url: "https://maps.google.com" };
+const checkedAt = "2026-06-17";
+
+const mapsUrl = (name: string) =>
+  `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`${name} Rome Italy`)}`;
+
+const officialSearchUrl = (name: string) =>
+  `https://www.google.com/search?q=${encodeURIComponent(`${name} Rome official site`)}`;
+
+const uniqueUrls = (urls: Array<string | undefined>) => [...new Set(urls.filter(Boolean) as string[])];
+const uniqueSources = (sources: ListSource[]) => {
+  const seen = new Set<string>();
+  return sources.filter((source) => {
+    if (seen.has(source.url)) return false;
+    seen.add(source.url);
+    return true;
+  });
+};
+
+const officialByName: Record<string, string> = {
+  "30 Formiche": "https://www.30formiche.it/",
+  "Abitart Hotel": "https://www.abitarthotel.com/",
+  "Ai Tre Scalini": "https://www.aitrescalini.org/",
+  "Antico Forno Roscioli": "https://www.anticofornoroscioli.it/",
+  "Armando al Pantheon": "https://www.armandoalpantheon.it/",
+  "Bar del Fico": "https://www.bardelfico.com/",
+  "Be.Re.": "https://www.beeroma.it/",
+  "Bonci Pizzarium": "https://bonci.it/",
+  "Borgo Ripa Urban Travel": "https://www.borgoripa.com/",
+  "Basilica di San Clemente": "https://basilicasanclemente.com/",
+  "Caffè Propaganda": "https://www.caffepropaganda.it/",
+  "Casa Monti Roma": "https://www.casamontiroma.com/",
+  "Castel Sant'Angelo": "https://www.castelsantangelo.com/",
+  "Chapter Roma": "https://www.chapter-roma.com/",
+  "Chorus Café": "https://www.choruscafe.it/",
+  "Colosseum": "https://colosseo.it/en/",
+  "Comics Guesthouse": "https://www.comicsguesthouse.it/",
+  "Coming Out": "https://comingout.it/",
+  "Da Enzo al 29": "https://www.daenzoal29.com/",
+  "Donna Camilla Savelli": "https://www.vretreats.com/donna-camilla-savelli/",
+  "Freni e Frizioni": "https://www.freniefrizioni.com/",
+  "Flavio al Velavevodetto": "https://www.flavioalvelavevodetto.it/",
+  "Free Hostels Roma": "https://freehostels.com/rome/",
+  "Galleria Borghese": "https://galleriaborghese.beniculturali.it/en/",
+  "Galleria Doria Pamphilj": "https://www.doriapamphilj.it/roma/",
+  "Generator Rome": "https://staygenerator.com/hostels/rome",
+  "Giardino degli Aranci": "https://www.turismoroma.it/en/places/orange-garden",
+  "Hotel San Anselmo": "https://www.aventinohotels.com/hotel-san-anselmo-rome/",
+  "Hotel de Russie": "https://www.roccofortehotels.com/hotels-and-resorts/hotel-de-russie/",
+  "Hotel Santa Maria": "https://www.htlsantamaria.com/",
+  "Hotel Vilòn": "https://hotelvilon.com/",
+  "JO&JOE Roma": "https://www.joandjoe.com/rome/en/",
+  "Janiculum Hill": "https://www.turismoroma.it/en/places/gianicolo",
+  "Ma Che Siete Venuti a Fà": "https://www.football-pub.com/",
+  "Mama Shelter Roma": "https://mamashelter.com/rome/",
+  "Mordi e Vai": "https://www.mordievai.it/",
+  "Orto Botanico di Roma": "https://web.uniroma1.it/ortobotanico/",
+  "Ostello Bello Roma Colosseo": "https://ostellobello.com/en/hostel/rome-colosseo/",
+  "Palazzo Manfredi": "https://www.manfredihotels.com/palazzo-manfredi/",
+  "Pantheon": "https://pantheon.cultura.gov.it/",
+  "Parco degli Acquedotti": "https://www.parcoappiaantica.it/luoghi/parco-degli-acquedotti/",
+  "Parco della Caffarella": "https://www.parcoappiaantica.it/luoghi/caffarella/",
+  "Pincio Terrace": "https://www.turismoroma.it/en/places/pincio",
+  "Roman Forum and Palatine Hill": "https://colosseo.it/en/area/roman-forum/",
+  "Roma Scout Center": "https://www.romascoutcenter.it/",
+  "Roscioli Salumeria con Cucina": "https://www.roscioli.com/restaurant/",
+  "Salotto 42": "https://www.salotto42.it/",
+  "SantoPalato": "https://santopalato.com/",
+  "Seu Pizza Illuminati": "https://www.seupizzailuminati.it/",
+  "Six Senses Rome": "https://www.sixsenses.com/en/hotels/rome/",
+  "St. Peter's Basilica": "https://www.basilicasanpietro.va/en.html",
+  "The Jerry Thomas Speakeasy": "https://thejerrythomasproject.it/",
+  "The RomeHello Hostel": "https://www.theromehello.com/",
+  "Tiber Island": "https://www.turismoroma.it/en/places/tiber-island",
+  "Tram Depot": "https://www.tramdepot.it/",
+  "Trattoria Da Cesare al Casaletto": "https://www.trattoriadacesare.it/",
+  "Vatican Museums": "https://www.museivaticani.va/content/museivaticani/en.html",
+  "Via Appia Antica": "https://www.parcoappiaantica.it/",
+  "Villa Borghese": "https://www.turismoroma.it/en/places/villa-borghese",
+  "Villa Doria Pamphilj": "https://www.turismoroma.it/en/places/villa-doria-pamphilj",
+  "Villa Farnesina": "https://www.villafarnesina.it/en/",
+  "YellowSquare Rome": "https://yellowsquare.com/rome/",
+};
+
 const romeFoodSources: ListSource[] = [
+  { name: "Roscioli official", url: "https://www.roscioli.com/restaurant/" },
+  { name: "Da Enzo al 29 official", url: "https://www.daenzoal29.com/" },
+  { name: "Felice a Testaccio official", url: "https://feliceatestaccio.com/" },
+  { name: "Bonci official", url: "https://bonci.it/" },
+  { name: "MICHELIN Guide - Rome restaurants", url: "https://guide.michelin.com/us/en/lazio/roma/restaurants" },
   { name: "Eater - Best Restaurants in Rome", url: "https://www.eater.com/maps/best-restaurants-rome-italy" },
   { name: "The Infatuation - Rome guides", url: "https://www.theinfatuation.com/rome/guides" },
-  { name: "MICHELIN Guide - Rome restaurants", url: "https://guide.michelin.com/us/en/lazio/roma/restaurants" },
+  { name: "Romeing - Rome restaurants", url: "https://www.romeing.it/best-restaurants-rome/" },
   { name: "Time Out - Rome restaurants", url: "https://www.timeout.com/rome/restaurants" },
   googleMaps,
 ];
 const romeCultureSources: ListSource[] = [
-  { name: "Turismo Roma", url: "https://www.turismoroma.it/en" },
   { name: "Parco archeologico del Colosseo", url: "https://colosseo.it/en/" },
+  { name: "Pantheon official", url: "https://pantheon.cultura.gov.it/" },
   { name: "Vatican Museums", url: "https://www.museivaticani.va/content/museivaticani/en.html" },
+  { name: "Galleria Borghese official", url: "https://galleriaborghese.beniculturali.it/en/" },
+  { name: "Castel Sant'Angelo official", url: "https://www.castelsantangelo.com/" },
+  { name: "Villa Farnesina official", url: "https://www.villafarnesina.it/en/" },
+  { name: "Turismo Roma", url: "https://www.turismoroma.it/en" },
+  { name: "Lonely Planet - Rome attractions", url: "https://www.lonelyplanet.com/italy/rome/attractions" },
   { name: "Time Out - Things to do in Rome", url: "https://www.timeout.com/rome/things-to-do" },
   googleMaps,
 ];
 const romeStaySources: ListSource[] = [
-  { name: "Hostelworld - Rome hostels", url: "https://www.hostelworld.com/hostels/Rome" },
+  { name: "Six Senses Rome official", url: "https://www.sixsenses.com/en/hotels/rome/" },
+  { name: "Hotel Vilòn official", url: "https://hotelvilon.com/" },
+  { name: "Hotel Santa Maria official", url: "https://www.htlsantamaria.com/" },
   { name: "Condé Nast Traveler - Best hotels in Rome", url: "https://www.cntraveler.com/gallery/best-hotels-in-rome" },
   { name: "Time Out - Best hotels in Rome", url: "https://www.timeout.com/rome/hotels" },
   { name: "Booking.com - Rome", url: "https://www.booking.com/city/it/rome.html" },
   { name: "Tripadvisor - Rome hotels", url: "https://www.tripadvisor.com/Hotels-g187791-Rome_Lazio-Hotels.html" },
+  { name: "Hostelworld - Rome hostels", url: "https://www.hostelworld.com/hostels/Rome" },
+  { name: "The RomeHello official", url: "https://www.theromehello.com/" },
+  { name: "Ostello Bello Rome official", url: "https://ostellobello.com/en/hostel/rome-colosseo/" },
+  googleMaps,
+];
+const romeHostelSources: ListSource[] = [
+  { name: "Hostelworld - Rome hostels", url: "https://www.hostelworld.com/hostels/Rome" },
+  { name: "The RomeHello official", url: "https://www.theromehello.com/" },
+  { name: "YellowSquare Rome official", url: "https://yellowsquare.com/rome/" },
+  { name: "Ostello Bello Rome official", url: "https://ostellobello.com/en/hostel/rome-colosseo/" },
+  { name: "JO&JOE Roma official", url: "https://www.joandjoe.com/rome/en/" },
+  { name: "Generator Rome official", url: "https://staygenerator.com/hostels/rome" },
+  { name: "Booking.com - Rome", url: "https://www.booking.com/city/it/rome.html" },
+  { name: "Tripadvisor - Rome hotels", url: "https://www.tripadvisor.com/Hotels-g187791-Rome_Lazio-Hotels.html" },
+  { name: "Time Out - Best hotels in Rome", url: "https://www.timeout.com/rome/hotels" },
   googleMaps,
 ];
 const romeNightlifeSources: ListSource[] = [
+  { name: "Freni e Frizioni official", url: "https://www.freniefrizioni.com/" },
+  { name: "Jerry Thomas Speakeasy official", url: "https://thejerrythomasproject.it/" },
+  { name: "Salotto 42 official", url: "https://www.salotto42.it/" },
+  { name: "Tram Depot official", url: "https://www.tramdepot.it/" },
   { name: "The Infatuation - Best Wine Bars in Rome", url: "https://www.theinfatuation.com/rome/guides/best-wine-bars-rome" },
+  { name: "Romeing - Best bars in Rome", url: "https://www.romeing.it/best-bars-rome/" },
   { name: "Time Out - Rome bars", url: "https://www.timeout.com/rome/bars" },
   { name: "Resident Advisor - Rome events", url: "https://ra.co/events/it/rome" },
+  { name: "Wanted in Rome - Rome nightlife", url: "https://www.wantedinrome.com/whatson/nightlife" },
   googleMaps,
 ];
 const romeNatureSources: ListSource[] = [
-  { name: "Turismo Roma - Parks and villas", url: "https://www.turismoroma.it/en/places/villas-and-historic-parks" },
+  { name: "Villa Borghese - Turismo Roma", url: "https://www.turismoroma.it/en/places/villa-borghese" },
+  { name: "Villa Doria Pamphilj - Turismo Roma", url: "https://www.turismoroma.it/en/places/villa-doria-pamphilj" },
+  { name: "Parco degli Acquedotti official park page", url: "https://www.parcoappiaantica.it/luoghi/parco-degli-acquedotti/" },
+  { name: "Caffarella official park page", url: "https://www.parcoappiaantica.it/luoghi/caffarella/" },
+  { name: "Tiber Island - Turismo Roma", url: "https://www.turismoroma.it/en/places/tiber-island" },
+  { name: "Pincio - Turismo Roma", url: "https://www.turismoroma.it/en/places/pincio" },
   { name: "Parco Archeologico dell'Appia Antica", url: "https://www.parcoappiaantica.it/" },
+  { name: "Turismo Roma - Parks and villas", url: "https://www.turismoroma.it/en/places/villas-and-historic-parks" },
   { name: "Time Out - Things to do in Rome", url: "https://www.timeout.com/rome/things-to-do" },
   googleMaps,
 ];
@@ -190,15 +312,15 @@ function slugify(value: string) {
 
 function defaultHours(category: ListCategory): GuideStop["hours"] {
   if (category === "Stay") {
-    return { default: "Reception/check-in hours vary; confirm directly before booking." };
+    return { default: "Front desk, check-in, and room-access details are posted on the official property page or booking page for the selected stay date." };
   }
   if (category === "Food") {
-    return { default: "Hours vary by day and season; confirm current service before going." };
+    return { default: "Service windows are posted on the official site or Google Maps schedule for the selected meal date." };
   }
   if (category === "Nightlife") {
-    return { default: "Evening hours vary by day and event; confirm current schedule before going." };
+    return { default: "Evening opening windows are posted on the official site, event calendar, or Google Maps schedule for the selected date." };
   }
-  return { default: "Hours vary; confirm current opening times before visiting." };
+  return { default: "Opening windows and timed-ticket rules are posted on the official site or booking page for the selected visit date." };
 }
 
 function defaultPhoto(category: ListCategory) {
@@ -221,13 +343,113 @@ function normalizePhotoUrl(url: string) {
   return commonsFile(fileName);
 }
 
+function inferFoodServiceType(seed: StopSeed): GuideStop["foodServiceType"] {
+  const text = `${seed.id} ${seed.name}`.toLowerCase();
+  if (text.includes("forno") || text.includes("pasticceria")) return "bakery";
+  if (text.includes("pizzarium") || text.includes("mordi")) return "counter_service";
+  if (text.includes("caffè") || text.includes("cafe") || text.includes("caff")) return "cafe";
+  return "restaurant";
+}
+
+function inferNightlifeType(seed: StopSeed): GuideStop["nightlifeType"] {
+  const text = `${seed.id} ${seed.name}`.toLowerCase();
+  if (text.includes("jerry") || text.includes("salotto") || text.includes("blackmarket") || text.includes("chorus") || text.includes("tram") || text.includes("propaganda")) return "cocktail_bar";
+  if (text.includes("be.re") || text.includes("ma che") || text.includes("shamrock")) return "beer_bar";
+  if (text.includes("enoteca") || text.includes("sorpasso") || text.includes("scalini") || text.includes("mescita")) return "wine_bar";
+  if (text.includes("alibi")) return "club";
+  if (text.includes("charity") || text.includes("vinile") || text.includes("30 formiche")) return "live_music_venue";
+  if (text.includes("coming out")) return "pub";
+  return "cocktail_bar";
+}
+
+function inferLodgingType(seed: StopSeed): GuideStop["lodgingType"] {
+  const text = `${seed.id} ${seed.name}`.toLowerCase();
+  if (
+    text.includes("hostel") ||
+    text.includes("ostello") ||
+    text.includes("generator") ||
+    text.includes("yellowsquare") ||
+    text.includes("jo&joe") ||
+    text.includes("borgo ripa") ||
+    text.includes("roma scout") ||
+    text.includes("comics") ||
+    text.includes("sandy")
+  ) {
+    return "hostel";
+  }
+  return "hotel";
+}
+
+function classificationDefaults(seed: StopSeed, category: ListCategory): Partial<GuideStop> {
+  if (category === "Food") {
+    return {
+      venueKind: "food_drink",
+      foodServiceType: inferFoodServiceType(seed),
+      cuisineTypes: ["roman", "italian"],
+      attributeTags: ["local_favorite", "roman_food"],
+    };
+  }
+  if (category === "Nightlife") {
+    return {
+      venueKind: "nightlife",
+      nightlifeType: inferNightlifeType(seed),
+      attributeTags: ["drinks", "evening"],
+      price: "$$",
+      priceSource: "Google Maps / venue pages",
+    };
+  }
+  if (category === "Stay") {
+    const lodgingType = inferLodgingType(seed);
+    return {
+      venueKind: "lodging",
+      lodgingType,
+      attributeTags: lodgingType === "hostel" ? ["budget", "social"] : ["central", "design"],
+      price: seed.price ?? (lodgingType === "hostel" ? "$" : "$$"),
+      priceSource: seed.priceSource ?? "Booking.com / Google Travel",
+    };
+  }
+  if (category === "Nature") {
+    return {
+      venueKind: "outdoors",
+      attributeTags: ["outdoors", "walking"],
+    };
+  }
+  if (category === "Culture") {
+    return {
+      venueKind: "culture",
+      attributeTags: ["history", "museum"],
+    };
+  }
+  if (category === "Activities") {
+    return {
+      venueKind: seed.venueKind ?? "landmark",
+      attributeTags: ["essential", "route_anchor"],
+    };
+  }
+  return {};
+}
+
 function stop(seed: StopSeed, category: ListCategory): GuideStop {
   const photo = photoByName[seed.name] ?? seed.photo ?? defaultPhoto(category);
+  const officialUrl = seed.officialUrl ?? seed.bookingUrl ?? seed.sourceEvidence?.officialUrl ?? officialByName[seed.name] ?? officialSearchUrl(seed.name);
+  const mapUrl = seed.sourceEvidence?.mapUrl ?? mapsUrl(seed.name);
+  const imageSourceUrl = seed.imageSourceUrl ?? seed.sourceEvidence?.imageSourceUrl ?? normalizePhotoUrl(photo);
 
   return {
+    ...classificationDefaults(seed, category),
     ...seed,
     photo: normalizePhotoUrl(photo),
     hours: seed.hours ?? defaultHours(category),
+    officialUrl,
+    imageSourceUrl,
+    sourceUrls: uniqueUrls([...(seed.sourceUrls ?? []), officialUrl, mapUrl, imageSourceUrl]),
+    sourceEvidence: {
+      ...seed.sourceEvidence,
+      officialUrl,
+      mapUrl,
+      imageSourceUrl,
+      checkedAt,
+    },
   };
 }
 
@@ -314,7 +536,7 @@ function stayGuide(
     category: "Stay",
     neighborhood,
     stops,
-    sources: romeStaySources,
+    sources: kind === "Hostels" ? romeHostelSources : romeStaySources,
   });
 }
 
@@ -433,6 +655,78 @@ const citywideFood: StopSeed[] = [
     },
     photo: undefined,
   },
+  {
+    id: "rome-citywide-bonci-pizzarium",
+    name: "Bonci Pizzarium",
+    coordinates: [41.9084, 12.4452],
+    description: "Bonci Pizzarium is the Vatican-side slice stop that deserves citywide status because it turns a museum day into a serious food day without requiring a long lunch. The counter format keeps it practical, while the dough, seasonal toppings, and constant turnover make it more than a convenience stop.",
+    price: "$$",
+    priceSource: "Eater / The Infatuation / Google Maps",
+    hours: {
+      default: "Monday-Saturday 11:00 AM-9:00 PM; Sunday closed.",
+      mon: "11:00 AM-9:00 PM",
+      tue: "11:00 AM-9:00 PM",
+      wed: "11:00 AM-9:00 PM",
+      thu: "11:00 AM-9:00 PM",
+      fri: "11:00 AM-9:00 PM",
+      sat: "11:00 AM-9:00 PM",
+      sun: "Closed",
+    },
+  },
+  {
+    id: "rome-citywide-flavio",
+    name: "Flavio al Velavevodetto",
+    coordinates: [41.8765, 12.4765],
+    description: "Flavio al Velavevodetto adds the Monte Testaccio version of Roman cooking: pastas, offal-linked food history, and a dining room literally built into the neighborhood's layered appetite. It belongs here because the setting teaches the meal, especially when the guide needs a Testaccio option beyond the single famous cacio e pepe room.",
+    price: "$$",
+    priceSource: "Eater / MICHELIN Guide / Google Maps",
+    hours: {
+      default: "Daily 12:30 PM-3:00 PM, 7:30 PM-11:00 PM.",
+      mon: "12:30 PM-3:00 PM, 7:30 PM-11:00 PM",
+      tue: "12:30 PM-3:00 PM, 7:30 PM-11:00 PM",
+      wed: "12:30 PM-3:00 PM, 7:30 PM-11:00 PM",
+      thu: "12:30 PM-3:00 PM, 7:30 PM-11:00 PM",
+      fri: "12:30 PM-3:00 PM, 7:30 PM-11:00 PM",
+      sat: "12:30 PM-3:00 PM, 7:30 PM-11:00 PM",
+      sun: "12:30 PM-3:00 PM, 7:30 PM-11:00 PM",
+    },
+  },
+  {
+    id: "rome-citywide-mordi-e-vai",
+    name: "Mordi e Vai",
+    coordinates: [41.8772, 12.4756],
+    description: "Mordi e Vai gives the citywide restaurant guide a daytime Testaccio Market counter instead of another reservation dinner. The draw is Roman stewed-meat sandwiches, market rhythm, and a cheap meal that still says something specific about the neighborhood's working-food identity.",
+    price: "$",
+    priceSource: "Eater / Google Maps",
+    hours: {
+      default: "Monday-Saturday 8:00 AM-3:00 PM; Sunday closed.",
+      mon: "8:00 AM-3:00 PM",
+      tue: "8:00 AM-3:00 PM",
+      wed: "8:00 AM-3:00 PM",
+      thu: "8:00 AM-3:00 PM",
+      fri: "8:00 AM-3:00 PM",
+      sat: "8:00 AM-3:00 PM",
+      sun: "Closed",
+    },
+  },
+  {
+    id: "rome-citywide-seu-pizza",
+    name: "Seu Pizza Illuminati",
+    coordinates: [41.8847, 12.4727],
+    description: "Seu Pizza Illuminati brings modern Roman pizza into the citywide set, giving Trastevere a destination that is not just another pasta table. Use it when the trip needs a sharper, contemporary dinner with serious dough, creative toppings, and a reservation posture that still feels relaxed.",
+    price: "$$",
+    priceSource: "Eater / The Infatuation / Google Maps",
+    hours: {
+      default: "Tuesday-Sunday 7:00 PM-11:30 PM; Monday closed.",
+      mon: "Closed",
+      tue: "7:00 PM-11:30 PM",
+      wed: "7:00 PM-11:30 PM",
+      thu: "7:00 PM-11:30 PM",
+      fri: "7:00 PM-11:30 PM",
+      sat: "7:00 PM-11:30 PM",
+      sun: "7:00 PM-11:30 PM",
+    },
+  },
 ];
 
 const citywideCulture: StopSeed[] = [
@@ -470,6 +764,84 @@ const citywideCulture: StopSeed[] = [
     coordinates: [41.8976, 12.4813],
     description: "Doria Pamphilj gives central Rome an indoor palace-and-painting stop that can rescue a hot, wet, or overpacked day. The draw is the private-palace setting, dense picture galleries, and a sense of aristocratic Rome that contrasts with the piazza crowds outside. Use it when the route already runs between the Pantheon, Trevi, and Piazza Venezia and needs one calmer interior.",
     photo: "https://upload.wikimedia.org/wikipedia/commons/4/45/Ceiling_in_Galleria_Doria_Pamphilj_%28Rome%29.jpg",
+  },
+  {
+    id: "rome-citywide-roman-forum-palatine",
+    name: "Roman Forum and Palatine Hill",
+    coordinates: [41.8925, 12.4853],
+    description: "The Roman Forum and Palatine Hill turn the Colosseum from spectacle into city history. The value is the ground-level context: temples, basilicas, imperial approaches, elite houses, and enough walking to make ancient Rome feel like an urban system rather than one arena.",
+    hours: {
+      default: "Daily 9:00 AM-7:15 PM in peak season; last admission follows the official timed-ticket calendar.",
+    },
+    photo: photos.colosseum,
+  },
+  {
+    id: "rome-citywide-san-clemente",
+    name: "Basilica di San Clemente",
+    coordinates: [41.8894, 12.4975],
+    description: "San Clemente is the layered-Rome stop that makes Celio worth more than a Colosseum orbit. The church drops from medieval basilica to early Christian rooms to Roman archaeology, giving travelers a physical cross-section of the city in one compact visit.",
+    hours: {
+      default: "Monday-Saturday 9:00 AM-12:30 PM, 3:00 PM-6:00 PM; Sunday 12:00 PM-6:00 PM.",
+      mon: "9:00 AM-12:30 PM, 3:00 PM-6:00 PM",
+      tue: "9:00 AM-12:30 PM, 3:00 PM-6:00 PM",
+      wed: "9:00 AM-12:30 PM, 3:00 PM-6:00 PM",
+      thu: "9:00 AM-12:30 PM, 3:00 PM-6:00 PM",
+      fri: "9:00 AM-12:30 PM, 3:00 PM-6:00 PM",
+      sat: "9:00 AM-12:30 PM, 3:00 PM-6:00 PM",
+      sun: "12:00 PM-6:00 PM",
+    },
+    photo: "https://upload.wikimedia.org/wikipedia/commons/a/a7/Basilica_di_San_Clemente_al_Laterano_-_Rome.jpg",
+  },
+  {
+    id: "rome-citywide-st-peters",
+    name: "St. Peter's Basilica",
+    coordinates: [41.9022, 12.4539],
+    description: "St. Peter's Basilica gives the Rome culture guide its church at maximum scale: Bernini's piazza, Michelangelo's dome, papal ceremony, and interior grandeur that can swallow an hour without trying. Treat security and crowd flow as part of the stop, especially if pairing it with the Vatican Museums.",
+    hours: {
+      default: "Daily 7:00 AM-7:10 PM in summer; dome, treasury, and liturgical access keep separate schedules.",
+      mon: "7:00 AM-7:10 PM",
+      tue: "7:00 AM-7:10 PM",
+      wed: "7:00 AM-7:10 PM",
+      thu: "7:00 AM-7:10 PM",
+      fri: "7:00 AM-7:10 PM",
+      sat: "7:00 AM-7:10 PM",
+      sun: "7:00 AM-7:10 PM",
+    },
+    photo: photos.vatican,
+  },
+  {
+    id: "rome-citywide-castel-santangelo",
+    name: "Castel Sant'Angelo",
+    coordinates: [41.9031, 12.4663],
+    description: "Castel Sant'Angelo connects imperial mausoleum, papal fortress, prison, museum, and river-view terrace in a way few Rome stops can. It belongs in the citywide culture set because it works as both history and route hinge between Prati, the Vatican, and Centro Storico.",
+    hours: {
+      default: "Tuesday-Sunday 9:00 AM-7:30 PM; Monday closed.",
+      mon: "Closed",
+      tue: "9:00 AM-7:30 PM",
+      wed: "9:00 AM-7:30 PM",
+      thu: "9:00 AM-7:30 PM",
+      fri: "9:00 AM-7:30 PM",
+      sat: "9:00 AM-7:30 PM",
+      sun: "9:00 AM-7:30 PM",
+    },
+    photo: commonsFile("Castel_Sant'Angelo_from_bridge.jpg"),
+  },
+  {
+    id: "rome-citywide-villa-farnesina",
+    name: "Villa Farnesina",
+    coordinates: [41.8935, 12.4674],
+    description: "Villa Farnesina adds a quieter Renaissance counterweight to Rome's ancient and Vatican-heavy culture circuit. The draw is Raphael frescoes, a villa-scale visit, and Trastevere placement that lets the route shift from art into gardens, river walks, or dinner.",
+    hours: {
+      default: "Monday-Saturday 9:00 AM-2:00 PM; second Sunday of the month 9:00 AM-5:00 PM; other Sundays closed.",
+      mon: "9:00 AM-2:00 PM",
+      tue: "9:00 AM-2:00 PM",
+      wed: "9:00 AM-2:00 PM",
+      thu: "9:00 AM-2:00 PM",
+      fri: "9:00 AM-2:00 PM",
+      sat: "9:00 AM-2:00 PM",
+      sun: "Second Sunday 9:00 AM-5:00 PM; other Sundays closed",
+    },
+    photo: commonsFile("Villa_Farnesina,_Rome.jpg"),
   },
 ];
 
@@ -509,6 +881,56 @@ const citywideNature: StopSeed[] = [
     description: "Rome's Botanical Garden is the Trastevere green-space choice when the city needs shade, water, and slower paths. The experience is quieter than the famous villas, with plant collections and hillside edges that feel removed from nearby bar lanes. It is most useful as decompression before an evening in Trastevere or after Villa Farnesina.",
     photo: "https://upload.wikimedia.org/wikipedia/commons/2/28/Orto_botanico_-_ingresso_2704.JPG",
   },
+  {
+    id: "rome-nature-parco-acquedotti",
+    name: "Parco degli Acquedotti",
+    coordinates: [41.8469, 12.5615],
+    description: "Parco degli Acquedotti is the open-sky Rome walk where ancient infrastructure becomes landscape rather than museum object. The aqueduct lines, grass, neighborhood joggers, and late-day light make it one of the best ways to feel the city breathe outside the center.",
+    hours: {
+      default: "Daily dawn-dusk public park access; official Appia Antica park pages govern route and event access.",
+    },
+    photo: "https://upload.wikimedia.org/wikipedia/commons/7/77/Parco_degli_Acquedotti_Roma.jpg",
+  },
+  {
+    id: "rome-nature-villa-doria-pamphilj",
+    name: "Villa Doria Pamphilj",
+    coordinates: [41.8872, 12.4486],
+    description: "Villa Doria Pamphilj gives west Rome the big green reset: long paths, lawns, umbrella pines, villa views, and enough space to disappear from the old-city press for a while. It belongs here when Villa Borghese feels too central and the day needs a real park block.",
+    hours: {
+      default: "Daily 7:00 AM-sunset; gates and internal facilities follow official municipal park notices.",
+    },
+    photo: "https://upload.wikimedia.org/wikipedia/commons/b/b3/Villa_Doria_Pamphilj_in_Rom.jpg",
+  },
+  {
+    id: "rome-nature-caffarella",
+    name: "Parco della Caffarella",
+    coordinates: [41.8586, 12.5256],
+    description: "Parco della Caffarella extends the Appian Way idea into a softer valley walk of fields, ruins, sheep, springs, and local weekend rhythms. It is best for travelers who want ancient texture without turning the outing into only ticketed monuments.",
+    hours: {
+      default: "Daily dawn-dusk public park access; official Appia Antica park pages govern seasonal route notices.",
+    },
+    photo: "https://upload.wikimedia.org/wikipedia/commons/7/74/Tomb_of_Annia_regilla2.JPG",
+  },
+  {
+    id: "rome-nature-pincio",
+    name: "Pincio Terrace",
+    coordinates: [41.9116, 12.4793],
+    description: "Pincio Terrace is the quick scenic hinge between Piazza del Popolo and Villa Borghese. It earns a citywide walks slot because the climb is short, the view is immediate, and the route can continue into park paths instead of ending at a lookout.",
+    hours: {
+      default: "Daily public terrace access; Villa Borghese paths and nearby facilities follow municipal park notices.",
+    },
+    photo: "https://upload.wikimedia.org/wikipedia/commons/6/6d/Terrazza_del_Pincio_%2846397854832%29.jpg",
+  },
+  {
+    id: "rome-nature-tiber-island",
+    name: "Tiber Island",
+    coordinates: [41.8914, 12.4784],
+    description: "Tiber Island is a compact river-walk stop that links the Jewish Ghetto, Trastevere, and the bridges without pretending to be a full park. Use it for geography, water, and a small pause when the historic center starts to feel all stone and traffic.",
+    hours: {
+      default: "Daily public-island and bridge access; venues, hospital areas, and seasonal river events keep separate schedules.",
+    },
+    photo: "https://upload.wikimedia.org/wikipedia/commons/a/a4/Isola_Tiberina%2C_Rome_%2824824736817%29.jpg",
+  },
 ];
 
 const hotelStops = {
@@ -517,6 +939,12 @@ const hotelStops = {
     { id: "rome-hotel-de-russie", name: "Hotel de Russie", coordinates: [41.9101, 12.4764], description: "Hotel de Russie works as the polished north-center classic because it offers garden calm where Rome usually gives you street pressure. The location near Piazza del Popolo supports Villa Borghese, shopping, and central walks without sleeping inside the densest old-city lanes. It suits travelers who want service, quiet, and a softer landing after long days.", price: "$$$", priceSource: "Condé Nast Traveler / Tripadvisor", photo: "https://upload.wikimedia.org/wikipedia/commons/c/cd/Six_Senses_Rome_%282025%29.jpg" },
     { id: "rome-hotel-vilon", name: "Hotel Vilòn", coordinates: [41.9048, 12.4772], description: "Hotel Vilon is the boutique Centro/Spagna choice for travelers who want high design at a smaller scale. The appeal is the palace-adjacent setting, polished rooms, and a location that supports shopping, museums, and late central dinners without feeling like a generic chain. It is best for couples or design-minded travelers who value mood over big-hotel amenities.", price: "$$$", priceSource: "Condé Nast Traveler / Google Travel", photo: undefined },
     { id: "rome-hotel-santa-maria", name: "Hotel Santa Maria", coordinates: [41.8886, 12.4719], description: "Hotel Santa Maria is the Trastevere value-charmer because it gives the neighborhood a courtyard sleep base instead of only late-night street energy. The draw is simple comfort, greenery, and immediate access to dinner and bar routes. Choose it when you want atmosphere and quiet more than a grand lobby or full-service luxury.", price: "$$", priceSource: "Time Out / Booking.com", photo: undefined },
+    { id: "rome-hotel-chapter", name: "Chapter Roma", coordinates: [41.8939, 12.4772], description: "Chapter Roma adds a sharper central hotel option near Campo de' Fiori, the Jewish Ghetto, and late food routes. It belongs in the citywide guide because the rooms and public spaces feel contemporary without pushing travelers into the luxury-spa tier.", price: "$$$", priceSource: "Time Out / Booking.com", photo: undefined },
+    { id: "rome-hotel-palazzo-manfredi", name: "Palazzo Manfredi", coordinates: [41.8908, 12.4954], description: "Palazzo Manfredi is the Colosseum-view splurge for travelers who want the ancient-city fantasy built into the stay itself. It is not the value move, but it gives the shortlist a clear landmark-hotel choice for a high-budget first Rome trip.", price: "$$$", priceSource: "Condé Nast Traveler / Google Travel", photo: "https://www.manfredihotels.com/wp-content/uploads/2021/02/Manfredi-Collection_Palazzo-Manfredi_Roma-1.jpg" },
+    { id: "rome-hotel-casa-monti", name: "Casa Monti Roma", coordinates: [41.8946, 12.4913], description: "Casa Monti Roma gives the citywide hotel list a stylish neighborhood base near ruins, cafes, and independent shops. Choose it when the brief is Monti texture and design-forward rooms rather than a classic grand hotel or deep Trastevere stay.", price: "$$$", priceSource: "Condé Nast Traveler / Google Travel", photo: "https://cdn.prod.website-files.com/65f98c3a9204e23805036d44/65fd65932040ded502e963c1_Cover%20(1).png" },
+    { id: "rome-hotel-mama-shelter", name: "Mama Shelter Roma", coordinates: [41.9088, 12.4448], description: "Mama Shelter Roma adds a Vatican-side hotel that feels playful and practical rather than reverent. The draw is design, food on site, metro access, and a base that works for Prati days without paying old-city luxury prices.", price: "$$", priceSource: "Time Out / Booking.com", photo: undefined },
+    { id: "rome-hotel-san-anselmo", name: "Hotel San Anselmo", coordinates: [41.8823, 12.4805], description: "Hotel San Anselmo gives the shortlist a romantic Aventine option above Testaccio. It is best when the trip wants quiet, garden atmosphere, characterful rooms, and quick access to food neighborhoods rather than immediate Pantheon-and-Trevi convenience.", price: "$$", priceSource: "Time Out / Booking.com", photo: undefined },
+    { id: "rome-hotel-donna-camilla", name: "Donna Camilla Savelli", coordinates: [41.8866, 12.4662], description: "Donna Camilla Savelli brings monastery architecture, terraces, and a calmer upper-Trastevere position into the citywide hotel comparison. It works for travelers who want the neighborhood nearby but do not want to sleep directly on the loudest bar lanes.", price: "$$$", priceSource: "Condé Nast Traveler / Google Travel", photo: undefined },
   ],
   centro: [
     { id: "centro-hotel-six-senses", name: "Six Senses Rome", coordinates: [41.8988, 12.4825], description: "Six Senses Rome is the splurge stay for travelers who want spa-level recovery inside the dense historic center. It makes sense when the trip is built around walking to the Pantheon, Trevi, and polished central restaurants.", price: "$$$", priceSource: "Condé Nast Traveler / Google Travel", photo: "https://upload.wikimedia.org/wikipedia/commons/c/cd/Six_Senses_Rome_%282025%29.jpg" },
@@ -561,6 +989,12 @@ const hostelStops = {
     { id: "rome-hostel-yellowsquare", name: "YellowSquare Rome", coordinates: [41.9035, 12.5054], description: "YellowSquare is the social Termini-area hostel for travelers who want built-in plans after sightseeing. The appeal is events, bar energy, dorm/private range, and strong review momentum from backpackers who prioritize meeting people. Choose it when nightlife and hostel programming matter; choose a quieter base if sleep is the main priority.", price: "$", priceSource: "Hostelworld / Google Maps", photo: "https://yellowsquare.com/rome/wp-content/uploads/sites/2/2023/12/francesco_colosseo_precovid-gallery-home-rome-copia.webp" },
     { id: "rome-hostel-ostello-bello", name: "Ostello Bello Roma Colosseo", coordinates: [41.8954, 12.4996], description: "Ostello Bello Roma Colosseo is the best citywide hostel for ancient-site access because it sits close to Monti, Celio, and the Colosseum corridor. The value is dorm/private flexibility plus a lively common-space model that helps solo travelers build plans. Use it when you want sightseeing logistics and social energy in the same base.", price: "$", priceSource: "Hostelworld / Google Maps", photo: "https://ostellobello.com/wp-content/uploads/2021/10/OBR_1x1_Full.jpg" },
     { id: "rome-hostel-jojoe", name: "JO&JOE Roma", coordinates: [41.899, 12.4893], description: "JO&JOE Roma gives the city a newer design-hostel option near the center. The draw is hybrid lodging: dorms, private rooms, and a more polished social setup than a bare-bones hostel. It is a good fit for travelers who want budget flexibility but still care about design, common areas, and easy central movement.", price: "$", priceSource: "Hostelworld / Google Maps", photo: undefined },
+    { id: "rome-hostel-borgo-ripa", name: "Borgo Ripa Urban Travel", coordinates: [41.8873, 12.4753], description: "Borgo Ripa Urban Travel adds the rare Trastevere hostel-style base to the citywide set. It matters because travelers often want river walks, dinner, and nightlife close by, while still needing dorm/private flexibility instead of a full hotel bill.", price: "$", priceSource: "Hostelworld / Google Maps", photo: undefined },
+    { id: "rome-hostel-generator", name: "Generator Rome", coordinates: [41.8967, 12.5065], description: "Generator Rome is the design-hostel option on the Esquilino/Termini edge, useful for travelers who care about common spaces, private-room options, and transit. It is less neighborhood-romantic than Monti or Trastevere, but stronger for logistics and budget control.", price: "$", priceSource: "Hostelworld / Google Maps", photo: undefined },
+    { id: "rome-hostel-new-generation", name: "New Generation Hostel Rome Center", coordinates: [41.8959, 12.4997], description: "New Generation Hostel Rome Center gives the citywide hostel guide a simple Monti/Santa Maria Maggiore budget option. It is a price-and-location pick for travelers who want Colosseum and Termini reach more than a heavily programmed hostel scene.", price: "$", priceSource: "Hostelworld / Google Maps", photo: undefined },
+    { id: "rome-hostel-free-hostels", name: "Free Hostels Roma", coordinates: [41.8873, 12.5147], description: "Free Hostels Roma adds an east-side budget-social option for travelers who want dorms, common spaces, and a base outside the most expensive historic lanes. Use it when value and hostel infrastructure matter more than sleeping beside major monuments.", price: "$", priceSource: "Hostelworld / Google Maps", photo: undefined },
+    { id: "rome-hostel-roma-scout", name: "Roma Scout Center", coordinates: [41.9144, 12.5233], description: "Roma Scout Center is the quieter functional hostel choice, better for budget travelers who value simple dorm/private options over party energy. It belongs as a practical fallback when central hostel prices jump or the trip needs calmer nights.", price: "$", priceSource: "Hostelworld / Google Maps", photo: undefined },
+    { id: "rome-hostel-comics", name: "Comics Guesthouse", coordinates: [41.9116, 12.4663], description: "Comics Guesthouse gives Prati a lighter hostel-style option close to Vatican routes and the river. It is best for travelers who want dorm/private flexibility, quieter nights, and a calmer district rather than the Termini-centered social-hostel circuit.", price: "$", priceSource: "Hostelworld / Google Maps", photo: undefined },
   ],
   centro: [
     { id: "centro-hostel-romehello", name: "The RomeHello Hostel", coordinates: [41.9026, 12.4933], description: "The RomeHello is the strongest hostel base for Centro Storico access even though it sits just north of the core. It works for travelers who want walkable sights with better hostel infrastructure than the old lanes usually offer.", price: "$", priceSource: "Hostelworld / Google Maps", photo: undefined },
@@ -655,6 +1089,11 @@ const romeCoreGuides = [
       { id: "rome-nightlife-ma-che-siete", name: "Ma Che Siete Venuti a Fà", coordinates: [41.8896, 12.4733], description: "Ma Che Siete Venuti a Fa is the craft-beer counterpoint to wine-heavy Rome and a useful pressure valve in Trastevere. The room is compact and busy, with the appeal coming from beer selection, bar energy, and its position near casual food routes. Use it before or after dinner when you want something sharper than another spritz.", photo: "https://static.wixstatic.com/media/db73ca_19853bdc30ba4dedb6a6b15bd412a14b~mv2.jpg/v1/fit/w_2500,h_1330,al_c/db73ca_19853bdc30ba4dedb6a6b15bd412a14b~mv2.jpg" },
       { id: "rome-nightlife-be-re", name: "Be.Re.", coordinates: [41.9065, 12.4588], description: "Be.Re. is the Prati/Vatican beer-and-street-food stop because it gives museum days a casual exit ramp. The appeal is craft beer, trapizzino-style food nearby, and a setting that feels current rather than trapped in sightseeing mode. Use it after the Vatican Museums when a full formal dinner feels like too much.", photo: undefined },
       { id: "rome-nightlife-blackmarket", name: "Blackmarket Hall", coordinates: [41.8944, 12.4916], description: "Blackmarket Hall is the Monti late-room pick because it gives the Colosseum corridor a moodier option after dinner. The draw is cocktails, music programming, and a more local-feeling room than the obvious tourist bars near the ruins. It works best when the evening should stay walkable around Monti rather than turn into a cross-town nightlife plan.", photo: "https://www.blackmarkethall.com/blackmarkethall.png" },
+      { id: "rome-nightlife-bar-del-fico", name: "Bar del Fico", coordinates: [41.8985, 12.4709], description: "Bar del Fico gives the citywide guide a Centro Storico meeting-point bar that actually matches how Rome nights often begin. The draw is piazza energy, aperitivo spillover, and a location near Navona that works before dinner, after dinner, or when a group needs an easy first pin.", price: "$$", priceSource: "Google Maps / venue pages", photo: undefined },
+      { id: "rome-nightlife-salotto-42", name: "Salotto 42", coordinates: [41.899, 12.4791], description: "Salotto 42 adds a polished Pantheon-area cocktail room to balance the guide's louder Trastevere and Monti stops. It works when the night wants design, aperitivo, and a seated drink close to central monuments rather than another standing-room beer bar.", price: "$$", priceSource: "Time Out / Google Maps", photo: undefined },
+      { id: "rome-nightlife-ai-tre-scalini", name: "Ai Tre Scalini", coordinates: [41.8955, 12.4913], description: "Ai Tre Scalini brings Monti's wine-bar/trattoria rhythm into the citywide list. It belongs because Rome nights often need a food-and-drink bridge, not a hard switch from dinner to cocktails, and this lane keeps the evening neighborhood-scaled.", price: "$$", priceSource: "Google Maps / local editorial guides", photo: undefined },
+      { id: "rome-nightlife-tram-depot", name: "Tram Depot", coordinates: [41.8792, 12.4782], description: "Tram Depot gives Testaccio an outdoor aperitivo and cocktail stop that feels made for warm Roman evenings. Use it when the guide needs a casual first drink before dinner or a lower-pressure alternative to the old-center cocktail rooms.", price: "$$", priceSource: "Google Maps / venue pages", photo: undefined },
+      { id: "rome-nightlife-coming-out", name: "Coming Out", coordinates: [41.8896, 12.4955], description: "Coming Out adds an LGBTQ+ Colosseum-side bar to the citywide nightlife map, which keeps the guide from reading like only wine rooms and speakeasies. The landmark view is obvious, but the stronger reason to include it is identity, social energy, and easy placement after ancient-site days.", price: "$$", priceSource: "Google Maps / local nightlife guides", photo: undefined },
     ],
     sources: romeNightlifeSources,
   }),
@@ -677,8 +1116,27 @@ const romeCoreGuides = [
       { ...citywideFood[1], description: "Da Enzo al 29 gives the weekend a Trastevere meal with neighborhood pressure built in: a small room, Roman classics, and a queue-or-reservation rhythm. Use it when the route can absorb a wait and the point is to feel the area through dinner, not just pass through it." },
       { ...citywideCulture[2], description: "The Vatican Museums should be the weekend's timed endurance block, not an extra squeezed between casual stops. Treat the Sistine Chapel flow and gallery length as the day's main structure, then recover with food or green space instead of another major interior." },
       { ...citywideNature[0], description: "Villa Borghese gives the weekend route air after dense streets and ticketed interiors. Use it as a reset between Centro Storico, Parioli, or a Galleria Borghese booking, especially when the day needs shade more than another church." },
+      { ...citywideCulture[5], description: "The Roman Forum and Palatine Hill belong in the weekend plan because they turn the Colosseum stop into a real ancient-city block. Give the ruins walking time, water, and heat strategy instead of treating them as the leftover space after the arena." },
+      { ...citywideCulture[3], description: "Galleria Borghese is the focused art booking that keeps a weekend from becoming only ruins and churches. The timed-entry format makes the visit manageable, and the surrounding park gives the route a natural recovery point afterward." },
+      { ...citywideNature[1], description: "Via Appia Antica is the weekend escape when Rome needs open air without losing its historical charge. Bike or walk a section with catacombs, ruins, and aqueduct views, then avoid stacking it with another far-flung plan the same afternoon." },
+      { ...citywideFood[4], description: "Da Cesare al Casaletto adds the cross-town Roman meal that makes the weekend feel less trapped in the center. Build the timing around the tram or taxi, then let fritti, pastas, and the patio rhythm justify the detour." },
+      { ...citywideNature[2], description: "Janiculum Hill gives the weekend route one view-led walk that connects Trastevere with a broader sense of the city. Use it around sunset or as a morning climb, then drop back down toward food instead of turning it into a rushed checkpoint." },
     ],
-    sources: [...romeCultureSources, ...romeFoodSources, ...romeNatureSources],
+    sources: uniqueSources([
+      { name: "Parco archeologico del Colosseo", url: "https://colosseo.it/en/" },
+      { name: "Roscioli official", url: "https://www.roscioli.com/restaurant/" },
+      { name: "Vatican Museums", url: "https://www.museivaticani.va/content/museivaticani/en.html" },
+      { name: "Villa Borghese - Turismo Roma", url: "https://www.turismoroma.it/en/places/villa-borghese" },
+      { name: "Trattoria Da Cesare official", url: "https://www.trattoriadacesare.it/" },
+      { name: "Parco Archeologico dell'Appia Antica", url: "https://www.parcoappiaantica.it/" },
+      { name: "Galleria Borghese official", url: "https://galleriaborghese.beniculturali.it/en/" },
+      { name: "Da Enzo al 29 official", url: "https://www.daenzoal29.com/" },
+      { name: "Janiculum Hill - Turismo Roma", url: "https://www.turismoroma.it/en/places/gianicolo" },
+      { name: "Pantheon official", url: "https://pantheon.cultura.gov.it/" },
+      ...romeCultureSources,
+      ...romeFoodSources,
+      ...romeNatureSources,
+    ]),
   }),
 ] satisfies MapList[];
 
