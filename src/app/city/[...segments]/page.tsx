@@ -95,7 +95,7 @@ export default async function CityDeepLinkPage({ params }: CityDeepLinkPageProps
   }
 
   const requestedPath = `/city/${segments.join("/")}`;
-  if (route.guide && requestedPath !== route.canonicalPath) {
+  if (requestedPath !== route.canonicalPath) {
     permanentRedirect(route.canonicalPath);
   }
 

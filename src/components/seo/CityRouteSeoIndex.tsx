@@ -22,6 +22,8 @@ type CityRouteSeoIndexProps = {
   guides: MapList[];
 };
 
+const PARIS_ARRONDISSEMENT_RE = /^(\d+)(?:st|nd|rd|th) Arrondissement$/i;
+
 function pluralize(count: number, singular: string, plural = `${singular}s`) {
   return `${count} ${count === 1 ? singular : plural}`;
 }
@@ -136,6 +138,24 @@ export function CityRouteSeoIndex({ route, guides }: CityRouteSeoIndexProps) {
   const neighborhoods = getNeighborhoodsForCityRoute(route.city)
     .filter(({ neighborhood }) => getListsForCityRoute(route.city, neighborhood, undefined, guides).length > 0)
     .slice(0, 18);
+  const parisDistrictLinks =
+    route.city.name === "Paris"
+      ? neighborhoods
+          .map(({ neighborhood }) => {
+            const match = neighborhood.name.match(PARIS_ARRONDISSEMENT_RE);
+            if (!match) {
+              return null;
+            }
+
+            const ordinal = neighborhood.name.split(" ")[0];
+            return {
+              id: neighborhood.id,
+              label: `Paris ${ordinal} district guides`,
+              href: getCanonicalCityNeighborhoodPath(route.city, neighborhood),
+            };
+          })
+          .filter((item): item is { id: string; label: string; href: string } => Boolean(item))
+      : [];
   const categories = route.neighborhood
     ? getCategoriesForCityRoute(route.city, route.neighborhood, guides)
     : CATEGORIES.filter((category) => getIndexableListsForCityRoute(route.city, undefined, category, undefined, guides).length > 0);
@@ -212,6 +232,23 @@ export function CityRouteSeoIndex({ route, guides }: CityRouteSeoIndexProps) {
                   className="rounded-full border border-slate-200 bg-white px-3 py-1.5 text-sm text-slate-700 hover:border-orange-200 hover:text-orange-700"
                 >
                   {neighborhood.name}
+                </Link>
+              ))}
+            </div>
+          </div>
+        ) : null}
+
+        {!route.guide && parisDistrictLinks.length ? (
+          <div className="mt-8 border-t border-slate-200 pt-6">
+            <h3 className="text-base font-semibold text-slate-950">Paris districts</h3>
+            <div className="mt-3 flex flex-wrap gap-2">
+              {parisDistrictLinks.map((link) => (
+                <Link
+                  key={link.id}
+                  href={link.href}
+                  className="rounded-full border border-slate-200 bg-white px-3 py-1.5 text-sm text-slate-700 hover:border-orange-200 hover:text-orange-700"
+                >
+                  {link.label}
                 </Link>
               ))}
             </div>

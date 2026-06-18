@@ -42,6 +42,7 @@ type NeighborhoodMatch = {
 };
 
 const categoryBySlug = new Map(CATEGORIES.map((category) => [slugify(category), category] as const));
+const PARIS_ARRONDISSEMENT_RE = /^(\d+)(?:st|nd|rd|th) Arrondissement$/i;
 
 function cleanSegments(segments: string[]) {
   return segments.map((segment) => decodeURIComponent(segment).trim()).filter(Boolean);
@@ -78,6 +79,54 @@ function normalizeRouteText(value?: string | null) {
     .replace(/\s{2,}/g, " ")
     .trim()
     .toLowerCase();
+}
+
+function getParisDistrictNumber(city: Pick<City, "name">, neighborhood?: Pick<SubArea, "name"> | null) {
+  if (slugify(city.name) !== "paris" || !neighborhood?.name) {
+    return null;
+  }
+
+  const match = neighborhood.name.match(PARIS_ARRONDISSEMENT_RE);
+  return match ? Number.parseInt(match[1], 10) : null;
+}
+
+function getParisDistrictRouteSlugs(city: Pick<City, "name">, neighborhood: Pick<SubArea, "name">) {
+  const districtNumber = getParisDistrictNumber(city, neighborhood);
+  if (!districtNumber) {
+    return [];
+  }
+
+  const ordinal = neighborhood.name.split(" ")[0];
+  const frenchOrdinal = districtNumber === 1 ? "1er" : `${districtNumber}e`;
+
+  return [
+    `${ordinal} district`,
+    `paris ${ordinal} district`,
+    `district ${districtNumber}`,
+    `paris district ${districtNumber}`,
+    `${districtNumber} district`,
+    `paris ${districtNumber} district`,
+    `${frenchOrdinal} arrondissement`,
+    `paris ${frenchOrdinal} arrondissement`,
+  ].map(slugify);
+}
+
+function getNeighborhoodRouteSlugs(city: City, subarea: SubArea) {
+  return new Set([subarea.id, slugify(subarea.name), ...getParisDistrictRouteSlugs(city, subarea)]);
+}
+
+function getParisDistrictSeoLabel(city: Pick<City, "name">, neighborhood?: Pick<SubArea, "name"> | null) {
+  const districtNumber = getParisDistrictNumber(city, neighborhood);
+  if (!districtNumber || !neighborhood?.name) {
+    return null;
+  }
+
+  const ordinal = neighborhood.name.split(" ")[0];
+  return {
+    ordinal,
+    district: `${ordinal} district`,
+    place: `${neighborhood.name}, ${city.name} (${ordinal} district)`,
+  };
 }
 
 type GuideSeoSeed = Pick<MapList, "category" | "title" | "slug" | "description" | "seoSlug" | "seoTitle" | "seoDescription">;
@@ -274,13 +323,15 @@ function findNeighborhood(city: City, neighborhoodSlug?: string): NeighborhoodMa
     return undefined;
   }
 
+  const normalizedNeighborhoodSlug = slugify(neighborhoodSlug);
+
   for (const subarea of city.subareas ?? []) {
-    if (slugify(subarea.name) === neighborhoodSlug || subarea.id === neighborhoodSlug) {
+    if (getNeighborhoodRouteSlugs(city, subarea).has(normalizedNeighborhoodSlug)) {
       return { subarea };
     }
 
     const nested = subarea.subareas?.find(
-      (nestedSubarea) => slugify(nestedSubarea.name) === neighborhoodSlug || nestedSubarea.id === neighborhoodSlug,
+      (nestedSubarea) => getNeighborhoodRouteSlugs(city, nestedSubarea).has(normalizedNeighborhoodSlug),
     );
     if (nested) {
       return { subarea: nested, parent: subarea };
@@ -659,6 +710,8 @@ export function resolveCityDeepLink(
         : getCanonicalCityPath(city);
 
   const placeLabel = neighborhood ? `${neighborhood.name}, ${city.name}` : city.name;
+  const parisDistrictSeo = getParisDistrictSeoLabel(city, neighborhood);
+  const seoPlaceLabel = parisDistrictSeo?.place ?? placeLabel;
   const guideSeoTitle = guide ? getGuideSeoTitle(guide, city, neighborhood) : null;
   const h1 = guide
     ? guideSeoTitle!
@@ -670,22 +723,32 @@ export function resolveCityDeepLink(
   const title = guide
     ? guideSeoTitle!
     : category
-      ? `${category} guides in ${placeLabel}`
+      ? `${category} guides in ${seoPlaceLabel}`
       : neighborhood
-        ? `${neighborhood.name}, ${city.name} guides`
+        ? parisDistrictSeo
+          ? `${neighborhood.name}, ${city.name} district guides`
+          : `${neighborhood.name}, ${city.name} guides`
         : `${city.name} travel guides`;
   const description = guide
     ? getGuideSeoDescription(guide, city, neighborhood)
     : category
-      ? `Curated ${category.toLowerCase()} travel guides for ${placeLabel}, including local favorites and places worth saving.`
+      ? parisDistrictSeo
+        ? `Curated ${category.toLowerCase()} travel guides for ${placeLabel}, the ${parisDistrictSeo.district} of Paris, including local favorites and places worth saving.`
+        : `Curated ${category.toLowerCase()} travel guides for ${placeLabel}, including local favorites and places worth saving.`
       : neighborhood?.description
-        ? `${neighborhood.description} Browse curated travel guides for ${placeLabel}.`
+        ? parisDistrictSeo
+          ? `${neighborhood.description} Browse curated travel guides for the ${parisDistrictSeo.district} of Paris, also known as ${neighborhood.name}.`
+          : `${neighborhood.description} Browse curated travel guides for ${placeLabel}.`
         : `Browse curated travel guides for ${placeLabel}, with picks for food, nightlife, culture, nature, stays, and activities.`;
   const intro = guide
     ? getGuideSeoDescription(guide, city, neighborhood)
     : category
-      ? `Explore ${category.toLowerCase()} guides for ${placeLabel}, ranked and mapped so you can choose where to go next.`
-      : neighborhood?.description ?? city.description;
+      ? parisDistrictSeo
+        ? `Explore ${category.toLowerCase()} guides for ${placeLabel}, the ${parisDistrictSeo.district} of Paris, ranked and mapped so you can choose where to go next.`
+        : `Explore ${category.toLowerCase()} guides for ${placeLabel}, ranked and mapped so you can choose where to go next.`
+      : parisDistrictSeo
+        ? `${neighborhood?.description ?? ""} Use this as the ${parisDistrictSeo.district} of Paris guide, with food, hotels, culture, parks, and routes tied to the arrondissement.`.trim()
+        : neighborhood?.description ?? city.description;
 
   return {
     city,
