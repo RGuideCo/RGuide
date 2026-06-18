@@ -623,6 +623,23 @@ function buildGuideContexts(maps, selectedGuides) {
   return contexts;
 }
 
+function getGuideCoverPhoto(list) {
+  const explicitPhoto = list.photo?.trim();
+  if (explicitPhoto) return explicitPhoto;
+
+  for (const stop of list.stops ?? []) {
+    const stopPhoto = stop.photo?.trim();
+    if (stopPhoto) return stopPhoto;
+
+    for (const place of stop.places ?? []) {
+      const placePhoto = place.photo?.trim();
+      if (placePhoto) return placePhoto;
+    }
+  }
+
+  return null;
+}
+
 function buildEntryRows(selectedGuides, contexts) {
   return selectedGuides.map((list) => {
     const context = contexts.get(list.id);
@@ -635,7 +652,7 @@ function buildEntryRows(selectedGuides, contexts) {
       title: list.title,
       description: list.description,
       highlights: list.highlights ?? [],
-      photo_url: list.photo ?? null,
+      photo_url: getGuideCoverPhoto(list),
       canonical_url: list.url ?? null,
       category: list.category,
       submission_type: toSchemaSubmissionType(list.submissionType),
@@ -1807,7 +1824,7 @@ async function upsertEntry(client, list, context, stats) {
       list.title,
       list.description,
       list.highlights ?? [],
-      list.photo ?? null,
+      getGuideCoverPhoto(list),
       list.url ?? null,
       list.category,
       toSchemaSubmissionType(list.submissionType),

@@ -76,6 +76,15 @@ function scopedWhereClause(options, values) {
   return conditions.join(" and ");
 }
 
+const PLACEHOLDER_SOURCE_ORDER = [
+  "case when (",
+  "  media.source_url ilike '%Bellas_Artes_01%'",
+  "  or media.source_url ilike '%Palacio_de_Bellas_Artes%'",
+  "  or media.raw_metadata::text ilike '%Bellas_Artes_01%'",
+  "  or media.raw_metadata::text ilike '%Palacio_de_Bellas_Artes%'",
+  ") then 1 else 0 end asc",
+].join(" ");
+
 async function promoteR2PrimaryPhotos(client, options, publicBaseUrl) {
   const values = [];
   const where = scopedWhereClause(options, values);
@@ -98,8 +107,10 @@ async function promoteR2PrimaryPhotos(client, options, publicBaseUrl) {
          row_number() over (
            partition by media.venue_id
            order by
+             ${PLACEHOLDER_SOURCE_ORDER},
              (media.role = 'primary') desc,
              media.sort_order nulls last,
+             media.ingested_at desc nulls last,
              media.updated_at desc nulls last,
              media.id
          ) as rank
@@ -139,6 +150,62 @@ async function findEntriesForVenues(client, venueIds) {
     [venueIds],
   );
   return rows.map((row) => row.entry_id);
+}
+
+async function promoteEntryCoverPhotos(client, options, publicBaseUrl) {
+  const values = [];
+  const where = scopedWhereClause(options, values);
+  values.push(`${publicBaseUrl.replace(/\/$/, "")}/%`);
+  const r2PatternIndex = values.length;
+
+  const { rows } = await client.query(
+    `with scoped_entries as (
+       select entry.id
+       from public.entries entry
+       left join public.destinations city on city.id = entry.city_id
+       where ${where}
+         and entry.status = 'published'::public.rguide_entry_status
+     ),
+     ranked_photos as (
+       select
+         entry.id as entry_id,
+         coalesce(media.public_url, media.url) as photo_url,
+         row_number() over (
+           partition by entry.id
+           order by
+             stop.stop_order asc,
+             ${PLACEHOLDER_SOURCE_ORDER},
+             (media.role = 'primary') desc,
+             media.sort_order nulls last,
+             media.ingested_at desc nulls last,
+             media.updated_at desc nulls last,
+             media.id
+         ) as rank
+       from scoped_entries entry
+       join public.entry_stops stop on stop.entry_id = entry.id
+       join public.venues venue on venue.id = stop.venue_id
+       join public.venue_media media
+         on media.venue_id = venue.id
+        and media.is_active = true
+        and media.media_type = 'image'
+        and media.storage_provider = 'cloudflare_r2'
+        and media.ingestion_status = 'stored'
+        and coalesce(media.public_url, media.url) like $${r2PatternIndex}
+     ),
+     updated as (
+       update public.entries entry
+       set photo_url = ranked_photos.photo_url
+       from ranked_photos
+       where entry.id = ranked_photos.entry_id
+         and ranked_photos.rank = 1
+         and entry.photo_url is distinct from ranked_photos.photo_url
+       returning entry.id
+     )
+     select id from updated`,
+    values,
+  );
+
+  return rows.map((row) => row.id);
 }
 
 async function refreshRenderCaches(client, entryIds) {
@@ -223,7 +290,9 @@ async function main() {
     await client.query("begin");
     const promotedVenueIds = await promoteR2PrimaryPhotos(client, options, publicBaseUrl);
     const entryIds = await findEntriesForVenues(client, promotedVenueIds);
-    const cacheRefreshed = await refreshRenderCaches(client, entryIds);
+    const coverEntryIds = await promoteEntryCoverPhotos(client, options, publicBaseUrl);
+    const affectedEntryIds = [...new Set([...entryIds, ...coverEntryIds])];
+    const cacheRefreshed = await refreshRenderCaches(client, affectedEntryIds);
     const failures = await verifyR2Rendering(client, promotedVenueIds, publicBaseUrl);
 
     if (options.dryRun) {
@@ -240,7 +309,8 @@ async function main() {
       ok: true,
       dryRun: options.dryRun,
       promotedVenues: promotedVenueIds.length,
-      affectedEntries: entryIds.length,
+      promotedEntryCovers: coverEntryIds.length,
+      affectedEntries: affectedEntryIds.length,
       cacheRefreshed,
     }, null, 2));
   } catch (error) {
