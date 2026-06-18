@@ -25,6 +25,7 @@
     "sync:destinations": "node scripts/backfill-normalized-schema.mjs && node scripts/ingest-destination-images-r2.mjs --scope city --published-entries-only --limit 200",
     "generate:static-assets": "node scripts/generate-static-assets.mjs",
     "sync:editorial-poi-photos": "node scripts/sync-editorial-poi-photos.mjs",
+    "ingest:venue-hours-geoapify": "node scripts/ingest-venue-hours-geoapify.mjs",
     "ingest:venue-media-r2": "node scripts/ingest-venue-media-r2-pipeline.mjs"
   },
   "dependencies": {
