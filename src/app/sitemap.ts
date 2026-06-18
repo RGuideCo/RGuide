@@ -1,6 +1,6 @@
 import type { MetadataRoute } from "next";
 
-import { getCanonicalCountryPath, getCityDeepLinkStaticParams } from "@/lib/deep-link-routes";
+import { getCanonicalContinentPath, getCanonicalCountryPath, getCityDeepLinkStaticParams } from "@/lib/deep-link-routes";
 import { getAbsoluteHref, getCategoryHref, getCreatorHref } from "@/lib/routes";
 import { CATEGORIES } from "@/lib/constants";
 import { users } from "@/data";
@@ -63,6 +63,13 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: segments.length >= 4 ? 0.75 : segments.length >= 3 ? 0.8 : 0.85,
   }));
 
+  const continentRoutes = continents.map((continent) => ({
+    url: getAbsoluteHref(getCanonicalContinentPath(continent)),
+    lastModified: now,
+    changeFrequency: "weekly" as const,
+    priority: 0.82,
+  }));
+
   const countryRoutes = continents.flatMap((continent) =>
     continent.countries.map((country) => ({
       url: getAbsoluteHref(getCanonicalCountryPath(country)),
@@ -86,5 +93,5 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: 0.45,
   }));
 
-  return [...staticRoutes, ...countryRoutes, ...cityRoutes, ...categoryRoutes, ...creatorRoutes];
+  return [...staticRoutes, ...continentRoutes, ...countryRoutes, ...cityRoutes, ...categoryRoutes, ...creatorRoutes];
 }

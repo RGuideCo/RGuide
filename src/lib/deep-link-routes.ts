@@ -36,6 +36,16 @@ export type CountryDeepLinkResolution = CityDeepLinkState & {
   structuredData: object[];
 };
 
+export type ContinentDeepLinkResolution = CityDeepLinkState & {
+  continent: Continent;
+  canonicalPath: string;
+  title: string;
+  description: string;
+  h1: string;
+  intro: string;
+  structuredData: object[];
+};
+
 type NeighborhoodMatch = {
   subarea: SubArea;
   parent?: SubArea;
@@ -54,6 +64,10 @@ export function getCanonicalCityPath(city: Pick<City, "name">) {
 
 export function getCanonicalCountryPath(country: Pick<Country, "name">) {
   return `/country/${slugify(country.name)}`;
+}
+
+export function getCanonicalContinentPath(continent: Pick<Continent, "name">) {
+  return `/continent/${slugify(continent.name)}`;
 }
 
 export function getCanonicalCityNeighborhoodPath(city: Pick<City, "name">, neighborhood: Pick<SubArea, "name">) {
@@ -504,6 +518,94 @@ function buildCountryItemListData(country: Country, canonicalPath: string) {
   };
 }
 
+function buildContinentBreadcrumbData(continent: Continent, canonicalPath: string) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      {
+        "@type": "ListItem",
+        position: 1,
+        name: "Home",
+        item: getAbsoluteHref("/"),
+      },
+      {
+        "@type": "ListItem",
+        position: 2,
+        name: continent.name,
+        item: getAbsoluteHref(canonicalPath),
+      },
+    ],
+  };
+}
+
+function buildContinentItemListData(continent: Continent, canonicalPath: string) {
+  const countryItems = continent.countries.map((country, index) => ({
+    "@type": "ListItem",
+    position: index + 1,
+    name: country.name,
+    url: getAbsoluteHref(getCanonicalCountryPath(country)),
+  }));
+
+  return {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    name: `RGuide ${continent.name} travel guides`,
+    url: getAbsoluteHref(canonicalPath),
+    itemListElement: countryItems,
+  };
+}
+
+export function resolveContinentDeepLink(
+  rawSegments: string[],
+  routeData: {
+    continents?: Continent[];
+  } = {},
+): ContinentDeepLinkResolution | null {
+  const continentSource = routeData.continents ?? continents;
+  const segments = cleanSegments(rawSegments);
+  const [continentSlug, ...rest] = segments;
+
+  if (!continentSlug || rest.length > 0) {
+    return null;
+  }
+
+  const continent = continentSource.find((item) => slugify(item.name) === continentSlug || item.id === continentSlug);
+  if (!continent) {
+    return null;
+  }
+
+  const canonicalPath = getCanonicalContinentPath(continent);
+  const countryCount = continent.countries.length;
+  const cityCount = continent.countries.reduce(
+    (total, country) => total + country.cities.filter((city) => !city.isPlaceholderRegion).length,
+    0,
+  );
+  const guideCount = mapLists.filter(
+    (list) => list.location.scope === "continent" && list.location.continent === continent.name,
+  ).length;
+  const title = `RGuide ${continent.name} Travel Guide`;
+  const description = `Explore RGuide travel guides across ${continent.name}, including countries, cities, neighborhoods, hotels, restaurants, bars, culture, nature, and things to do.`;
+  const h1 = continent.name;
+  const intro = `Browse ${countryCount} countries, ${cityCount} cities, and ${guideCount} continent guides across ${continent.name}.`;
+
+  return {
+    selection: {
+      continentId: continent.id,
+    },
+    continent,
+    canonicalPath,
+    title,
+    description,
+    h1,
+    intro,
+    structuredData: [
+      buildContinentBreadcrumbData(continent, canonicalPath),
+      buildContinentItemListData(continent, canonicalPath),
+    ],
+  };
+}
+
 export function resolveCountryDeepLink(
   rawSegments: string[],
   routeData: {
@@ -833,4 +935,10 @@ export function getCountryDeepLinkStaticParams(continentSource: Continent[] = co
       segments: [slugify(country.name)],
     })),
   );
+}
+
+export function getContinentDeepLinkStaticParams(continentSource: Continent[] = continents) {
+  return continentSource.map((continent) => ({
+    segments: [slugify(continent.name)],
+  }));
 }

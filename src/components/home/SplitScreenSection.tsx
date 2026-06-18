@@ -120,8 +120,10 @@ import {
   getCanonicalCityCategoryPath,
   getCanonicalCityNeighborhoodPath,
   getCanonicalCityPath,
+  getCanonicalContinentPath,
   getCanonicalCountryPath,
   getCanonicalGuidePath,
+  resolveContinentDeepLink,
   resolveCountryDeepLink,
   resolveCityDeepLink,
 } from "@/lib/deep-link-routes";
@@ -777,6 +779,37 @@ export function SplitScreenSection({
   useEffect(() => {
     const handlePopState = () => {
       const routeSegments = window.location.pathname.split("/").filter(Boolean);
+      if (!routeSegments.length) {
+        setIsLocationFavoritesRailActive(false);
+        setSelection({});
+        setActiveCategory(null);
+        setActiveSubcategory(null);
+        clearCategoryBeforeGuideExpand();
+        setExpandedGuideId(null);
+        setClosingGuide(null);
+        setVisibleNestedStopParentIds([]);
+        return;
+      }
+
+      if (routeSegments[0] === "continent") {
+        const route = resolveContinentDeepLink(routeSegments.slice(1), {
+          continents,
+        });
+        if (!route) {
+          return;
+        }
+
+        setIsLocationFavoritesRailActive(false);
+        setSelection(route.selection);
+        setActiveCategory(null);
+        setActiveSubcategory(null);
+        clearCategoryBeforeGuideExpand();
+        setExpandedGuideId(null);
+        setClosingGuide(null);
+        setVisibleNestedStopParentIds([]);
+        return;
+      }
+
       if (routeSegments[0] === "country") {
         const route = resolveCountryDeepLink(routeSegments.slice(1), {
           continents,
@@ -1111,6 +1144,10 @@ export function SplitScreenSection({
     setFocusedCountrySignal(null);
     setIsLocationFavoritesRailActive(false);
     setSelection(() => ({ continentId }));
+    const continent = continents.find((item) => item.id === continentId);
+    if (continent) {
+      pushExplorerPath(getCanonicalContinentPath(continent));
+    }
   };
   const handleResetToGlobalView = () => {
     if (closingGuideTimeoutRef.current) {
@@ -1135,6 +1172,7 @@ export function SplitScreenSection({
     setHoveredStopId(null);
     setSelectedGuideStopId(null);
     setSelection({});
+    pushExplorerPath("/");
   };
   const handleSelectContinentSubarea = (continentId: string, continentSubareaId: string) => {
     setFocusedCountrySignal(null);
