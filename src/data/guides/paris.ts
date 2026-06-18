@@ -731,19 +731,6 @@ function slugify(value: string) {
     .replace(/^-+|-+$/g, "");
 }
 
-function defaultHours(category: EditorialCategory): GuideStop["hours"] {
-  if (category === "Stay") {
-    return { default: "Reception and check-in details vary; confirm directly before booking." };
-  }
-  if (category === "Food") {
-    return { default: "Hours and booking rules vary; confirm current service before going." };
-  }
-  if (category === "Nightlife") {
-    return { default: "Evening hours and event schedules vary; confirm before going." };
-  }
-  return { default: "Hours, tickets, and access rules vary; confirm current details before visiting." };
-}
-
 function defaultPhoto(category: EditorialCategory) {
   if (category === "Food") return photos.food;
   if (category === "Nightlife") return photos.nightlife;
@@ -761,7 +748,7 @@ function stop(seed: StopSeed, category: EditorialCategory): GuideStop {
   return {
     ...seed,
     photo: seed.photo ?? poiPhotoFor(seed.name) ?? defaultPhoto(category),
-    hours: seed.hours ?? defaultHours(category),
+    ...(seed.hours ? { hours: seed.hours } : {}),
   };
 }
 
