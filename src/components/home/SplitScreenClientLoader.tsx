@@ -1,6 +1,7 @@
 "use client";
 
 import dynamic from "next/dynamic";
+import { useCallback, useEffect, useState } from "react";
 
 import { useAppData } from "@/components/shared/useAppData";
 import type { AppData, AppDataScope } from "@/components/shared/useAppData";
@@ -23,7 +24,30 @@ type SplitScreenClientLoaderProps = Omit<
 };
 
 export function SplitScreenClientLoader({ initialAppData, appDataScope, ...props }: SplitScreenClientLoaderProps) {
-  const { data } = useAppData(initialAppData, appDataScope);
+  const [requestedScope, setRequestedScope] = useState<AppDataScope | undefined>(appDataScope);
+  const requestedCityName = requestedScope?.cityName ?? null;
+  const initialCityName = appDataScope?.cityName ?? null;
+  const initialDataForScope = requestedCityName === initialCityName ? initialAppData : undefined;
+  const { data } = useAppData(initialDataForScope, requestedScope);
+
+  useEffect(() => {
+    setRequestedScope(appDataScope);
+  }, [appDataScope?.cityName]);
+
+  const handleCityDataRequested = useCallback((cityName: string) => {
+    const normalizedCityName = cityName.trim();
+    if (!normalizedCityName) {
+      return;
+    }
+
+    setRequestedScope((current) => {
+      if (current?.cityName === normalizedCityName) {
+        return current;
+      }
+
+      return { cityName: normalizedCityName };
+    });
+  }, []);
 
   if (!data) {
     return null;
@@ -34,6 +58,7 @@ export function SplitScreenClientLoader({ initialAppData, appDataScope, ...props
       {...props}
       continents={data.continents}
       initialEditorialGuides={data.guides}
+      onCityDataRequested={handleCityDataRequested}
     />
   );
 }

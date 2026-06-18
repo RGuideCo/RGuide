@@ -156,6 +156,7 @@ export interface SplitScreenSectionProps {
       placesBeenCount: number;
     };
   };
+  onCityDataRequested?: (cityName: string) => void;
 }
 
 function areGuideCollectionsEquivalent(left: MapList[], right: MapList[]) {
@@ -397,6 +398,7 @@ export function SplitScreenSection({
   initialRouteState,
   seoContent,
   publicProfile,
+  onCityDataRequested,
 }: SplitScreenSectionProps) {
   useEffect(() => {
     document.documentElement.classList.add("rguide-split-screen-ready");
@@ -840,6 +842,7 @@ export function SplitScreenSection({
         return;
       }
 
+      onCityDataRequested?.(route.city.name);
       const currentGuideId = expandedGuideIdRef.current;
       setIsLocationFavoritesRailActive(false);
       setSelection(route.selection);
@@ -1418,6 +1421,7 @@ export function SplitScreenSection({
     });
 
     if (city) {
+      onCityDataRequested?.(city.name);
       setActiveCategory(null);
       setActiveSubcategory(null);
       setExpandedGuideId(null);
@@ -1533,6 +1537,9 @@ export function SplitScreenSection({
           subareaId,
         };
     const context = getCityRouteContext(nextSelection);
+    if (context?.city) {
+      onCityDataRequested?.(context.city.name);
+    }
     setSelection(nextSelection);
     setExpandedGuideId(null);
     setClosingGuide(null);
@@ -1580,6 +1587,9 @@ export function SplitScreenSection({
           nestedSubareaId,
         };
     const context = getCityRouteContext(nextSelection);
+    if (context?.city) {
+      onCityDataRequested?.(context.city.name);
+    }
     setSelection(nextSelection);
     setExpandedGuideId(null);
     setClosingGuide(null);
