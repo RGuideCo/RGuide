@@ -173,24 +173,18 @@ async function upsertVenueMedia(client, venueId, candidate) {
     return null;
   }
 
-  const { rows } = await client.query(
-    `insert into public.venue_media (
-       venue_id, url, role, source_type, source_entity_type, source_legacy_id,
-       raw_metadata, sort_order
-     )
-     values ($1,$2,'primary','editorial_guides','entry_stop',$3,$4,0)
-     on conflict (venue_id, url) do update set
-       role = case
-         when public.venue_media.role = 'gallery' then excluded.role
-         else public.venue_media.role
-       end,
-       source_type = coalesce(public.venue_media.source_type, excluded.source_type),
-       source_entity_type = coalesce(public.venue_media.source_entity_type, excluded.source_entity_type),
-       source_legacy_id = coalesce(public.venue_media.source_legacy_id, excluded.source_legacy_id),
-       raw_metadata = public.venue_media.raw_metadata || excluded.raw_metadata,
-       is_active = true,
-       updated_at = now()
-     returning id`,
+  let { rows } = await client.query(
+    `update public.venue_media
+     set role = 'primary',
+         source_type = coalesce(source_type, 'editorial_guides'),
+         source_entity_type = coalesce(source_entity_type, 'entry_stop'),
+         source_legacy_id = coalesce(source_legacy_id, $3),
+         raw_metadata = raw_metadata || $4,
+         is_active = true,
+         updated_at = now()
+     where venue_id = $1
+       and source_url = $2
+     returning id, storage_provider, public_url, ingestion_status`,
     [
       venueId,
       candidate.photo,
@@ -204,13 +198,53 @@ async function upsertVenueMedia(client, venueId, candidate) {
     ],
   );
 
-  await client.query(
-    `update public.venues
-     set primary_photo_id = $2
-     where id = $1
-       and primary_photo_id is distinct from $2`,
-    [venueId, rows[0].id],
-  );
+  if (!rows.length) {
+    ({ rows } = await client.query(
+    `insert into public.venue_media (
+       venue_id, url, source_url, role, source_type, source_entity_type, source_legacy_id,
+       raw_metadata, sort_order
+     )
+     values ($1,$2,$2,'primary','editorial_guides','entry_stop',$3,$4,0)
+     on conflict (venue_id, url) do update set
+       role = case
+         when public.venue_media.role = 'gallery' then excluded.role
+         else public.venue_media.role
+       end,
+       source_url = coalesce(public.venue_media.source_url, excluded.source_url),
+       source_type = coalesce(public.venue_media.source_type, excluded.source_type),
+       source_entity_type = coalesce(public.venue_media.source_entity_type, excluded.source_entity_type),
+       source_legacy_id = coalesce(public.venue_media.source_legacy_id, excluded.source_legacy_id),
+       raw_metadata = public.venue_media.raw_metadata || excluded.raw_metadata,
+       is_active = true,
+       updated_at = now()
+     returning id, storage_provider, public_url, ingestion_status`,
+    [
+      venueId,
+      candidate.photo,
+      candidate.stopId ?? null,
+      JSON.stringify({
+        source: "sync-editorial-poi-photos",
+        guideId: candidate.guideId,
+        stopId: candidate.stopId,
+        poiId: candidate.poiId,
+      }),
+    ],
+    ));
+  }
+
+  if (
+    rows[0]?.storage_provider === "cloudflare_r2" &&
+    rows[0]?.ingestion_status === "stored" &&
+    rows[0]?.public_url
+  ) {
+    await client.query(
+      `update public.venues
+       set primary_photo_id = $2
+       where id = $1
+         and primary_photo_id is distinct from $2`,
+      [venueId, rows[0].id],
+    );
+  }
 
   return rows[0].id;
 }

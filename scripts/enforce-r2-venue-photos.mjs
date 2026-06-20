@@ -93,7 +93,7 @@ async function promoteR2PrimaryPhotos(client, options, publicBaseUrl) {
 
   const { rows } = await client.query(
     `with scoped_venues as (
-       select distinct venue.id
+       select distinct venue.id, venue.primary_photo_id
        from public.venues venue
        left join public.destinations city on city.id = venue.city_id
        left join public.entry_stops stop on stop.venue_id = venue.id
@@ -107,6 +107,7 @@ async function promoteR2PrimaryPhotos(client, options, publicBaseUrl) {
          row_number() over (
            partition by media.venue_id
            order by
+             (media.id = venue.primary_photo_id) desc,
              ${PLACEHOLDER_SOURCE_ORDER},
              (media.role = 'primary') desc,
              media.sort_order nulls last,
@@ -174,6 +175,7 @@ async function promoteEntryCoverPhotos(client, options, publicBaseUrl) {
            partition by entry.id
            order by
              stop.stop_order asc,
+             (media.id = venue.primary_photo_id) desc,
              ${PLACEHOLDER_SOURCE_ORDER},
              (media.role = 'primary') desc,
              media.sort_order nulls last,

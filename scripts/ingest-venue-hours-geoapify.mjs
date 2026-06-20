@@ -7,6 +7,9 @@ import pg from "pg";
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const DAY_CODES = ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"];
+const CITY_TIMEZONE_FALLBACKS = new Map([
+  ["tokyo", "Asia/Tokyo"],
+]);
 const DAY_INDEX = new Map([
   ["Su", 0],
   ["Mo", 1],
@@ -50,6 +53,10 @@ function slugify(value) {
     .replace(/&/g, " and ")
     .replace(/[^a-z0-9]+/g, "-")
     .replace(/^-+|-+$/g, "");
+}
+
+function fallbackCityTimezone(citySlug) {
+  return CITY_TIMEZONE_FALLBACKS.get(slugify(citySlug)) ?? null;
 }
 
 function normalizeName(value) {
@@ -157,6 +164,7 @@ function getDatabaseUrl() {
 }
 
 async function getParisVenues(client, citySlug, limit) {
+  const fallbackTimezone = fallbackCityTimezone(citySlug);
   const { rows } = await client.query(
     `
       with city as (
@@ -179,6 +187,7 @@ async function getParisVenues(client, citySlug, limit) {
         venue.coordinates,
         venue.official_url,
         venue.venue_kind,
+        coalesce((select timezone from city), $${limit ? "3" : "2"}) as city_timezone,
         count(distinct stop.entry_id)::int as guide_count
       from public.entry_stops stop
       join city_entries entry on entry.id = stop.entry_id
@@ -188,7 +197,7 @@ async function getParisVenues(client, citySlug, limit) {
       order by guide_count desc, venue.name
       ${limit ? "limit $2" : ""}
     `,
-    limit ? [citySlug, limit] : [citySlug],
+    limit ? [citySlug, limit, fallbackTimezone] : [citySlug, fallbackTimezone],
   );
   return rows;
 }
@@ -264,12 +273,12 @@ async function upsertVenueHours(client, sourceId, venue, candidate) {
       update public.venues
       set hours_note = $2,
           hours_last_verified_at = now(),
-          timezone = coalesce(timezone, 'Europe/Paris'),
+          timezone = coalesce($3, timezone, 'UTC'),
           operating_status = case when operating_status = 'unknown'::public.venue_operating_status then 'open'::public.venue_operating_status else operating_status end,
           updated_at = now()
       where id = $1
     `,
-    [venue.id, parsed.note],
+    [venue.id, parsed.note, venue.city_timezone],
   );
 
   const rows = parsed.intervals.map((interval, index) => ({

@@ -35,6 +35,7 @@ interface DataApiWeeklyEventGuideRow {
 
 interface EditorialGuideScope {
   cityName?: string;
+  bypassCache?: boolean;
 }
 
 function getLocalWeeklyEventGuides() {
@@ -524,7 +525,7 @@ const getCachedCityEditorialGuidesFromSupabase = unstable_cache(
 );
 
 export async function getServerEditorialGuides(scope: EditorialGuideScope = {}) {
-  const supabaseGuideLoader = scope.cityName
+  const supabaseGuideLoader = scope.cityName && !scope.bypassCache
     ? getCachedCityEditorialGuidesFromSupabase(scope.cityName)
     : loadEditorialGuidesFromSupabase(scope);
 
