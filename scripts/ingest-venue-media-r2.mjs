@@ -720,7 +720,6 @@ async function reuseStoredMediaRow(client, row, storedMedia, resolvedSource) {
     `update public.venue_media
      set is_active = true,
          source_url = coalesce($9, source_url),
-         url = $2,
          public_url = $2,
          storage_provider = $3,
          storage_bucket = $4,
@@ -765,13 +764,49 @@ async function reuseStoredMediaRow(client, row, storedMedia, resolvedSource) {
   );
 }
 
+async function promoteStoredMediaAsPrimary(client, row) {
+  await client.query(
+    `with current_media as (
+       update public.venue_media
+       set role = 'primary',
+           is_active = true,
+           updated_at = now()
+       where id = $1
+       returning id, venue_id
+     ),
+     promoted as (
+       update public.venues venue
+       set primary_photo_id = current_media.id,
+           updated_at = now()
+       from current_media
+       where venue.id = current_media.venue_id
+         and venue.primary_photo_id is distinct from current_media.id
+       returning venue.id
+     )
+     update public.venue_media media
+     set is_active = false,
+         raw_metadata = media.raw_metadata || jsonb_build_object(
+           'retired_by_media_id', $1::text,
+           'retired_reason', 'primary_photo_replaced_by_revision',
+           'retired_at', now()
+         ),
+         updated_at = now()
+     from current_media
+     where media.venue_id = current_media.venue_id
+       and media.id <> current_media.id
+       and media.is_active = true
+       and media.media_type = 'image'
+       and media.role = 'primary'`,
+    [row.media_id],
+  );
+}
+
 async function updateMediaRow(client, row, storage, bucket, publicBaseUrl) {
   const publicUrl = `${publicBaseUrl.replace(/\/$/, "")}/${storage.key}`;
   await client.query(
     `update public.venue_media
      set is_active = true,
          source_url = coalesce($7, nullif(source_url, ''), url),
-         url = $2,
          public_url = $2,
          storage_provider = 'cloudflare_r2',
          storage_bucket = $3,
@@ -915,6 +950,7 @@ async function main() {
 
           if (!options.dryRun) {
             await reuseStoredMediaRow(client, row, storedMedia, resolvedSource);
+            await promoteStoredMediaAsPrimary(client, row);
             if (row.entry_id) touchedEntryIds.add(row.entry_id);
           }
 
@@ -953,6 +989,7 @@ async function main() {
 
             if (!options.dryRun) {
               await reuseStoredMediaRow(client, row, fallbackStoredMedia, resolvedSource);
+              await promoteStoredMediaAsPrimary(client, row);
               if (row.entry_id) touchedEntryIds.add(row.entry_id);
             }
 
@@ -982,6 +1019,7 @@ async function main() {
             CacheControl: "public, max-age=31536000, immutable",
           }));
           await updateMediaRow(client, row, { key, ...image }, bucket, publicBaseUrl);
+          await promoteStoredMediaAsPrimary(client, row);
           if (row.entry_id) touchedEntryIds.add(row.entry_id);
         }
 

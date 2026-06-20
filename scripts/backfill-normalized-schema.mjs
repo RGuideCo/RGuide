@@ -1268,24 +1268,52 @@ async function upsertVenueMedia(client, input, stats) {
     return null;
   }
 
-  const { rows } = await client.query(
+  let { rows } = await client.query(
+    `update public.venue_media
+     set role = case
+           when role = 'gallery' then $3
+           else role
+         end,
+         source_type = coalesce(source_type, $4),
+         source_entity_type = coalesce(source_entity_type, $5),
+         source_legacy_id = coalesce(source_legacy_id, $6),
+         raw_metadata = raw_metadata || $7,
+         is_active = true,
+         updated_at = now()
+     where venue_id = $1
+       and source_url = $2
+     returning id, storage_provider, public_url, ingestion_status`,
+    [
+      input.venueId,
+      url,
+      input.role ?? "primary",
+      input.sourceType ?? "editorial_guides",
+      input.sourceEntityType ?? "entry_stop",
+      input.sourceLegacyId ?? null,
+      toJsonObject(input.rawMetadata),
+    ],
+  );
+
+  if (!rows.length) {
+    ({ rows } = await client.query(
     `insert into public.venue_media (
-       venue_id, url, role, source_type, source_entity_type, source_legacy_id,
+       venue_id, url, source_url, role, source_type, source_entity_type, source_legacy_id,
        raw_metadata, sort_order
      )
-     values ($1,$2,$3,$4,$5,$6,$7,$8)
+     values ($1,$2,$2,$3,$4,$5,$6,$7,$8)
      on conflict (venue_id, url) do update set
        role = case
          when public.venue_media.role = 'gallery' then excluded.role
          else public.venue_media.role
        end,
+       source_url = coalesce(public.venue_media.source_url, excluded.source_url),
        source_type = coalesce(public.venue_media.source_type, excluded.source_type),
        source_entity_type = coalesce(public.venue_media.source_entity_type, excluded.source_entity_type),
        source_legacy_id = coalesce(public.venue_media.source_legacy_id, excluded.source_legacy_id),
        raw_metadata = public.venue_media.raw_metadata || excluded.raw_metadata,
        is_active = true,
        updated_at = now()
-     returning id`,
+     returning id, storage_provider, public_url, ingestion_status`,
     [
       input.venueId,
       url,
@@ -1296,15 +1324,22 @@ async function upsertVenueMedia(client, input, stats) {
       toJsonObject(input.rawMetadata),
       input.sortOrder ?? 0,
     ],
-  );
+    ));
+  }
 
-  await client.query(
-    `update public.venues
-     set primary_photo_id = $2
-     where id = $1
-       and primary_photo_id is distinct from $2`,
-    [input.venueId, rows[0].id],
-  );
+  if (
+    rows[0]?.storage_provider === "cloudflare_r2" &&
+    rows[0]?.ingestion_status === "stored" &&
+    rows[0]?.public_url
+  ) {
+    await client.query(
+      `update public.venues
+       set primary_photo_id = $2
+       where id = $1
+         and primary_photo_id is distinct from $2`,
+      [input.venueId, rows[0].id],
+    );
+  }
   stats.venueMedia += 1;
   return rows[0].id;
 }

@@ -16,6 +16,9 @@ import {
 } from "./editorial-guides-data.mjs";
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
+const CITY_TIMEZONE_FALLBACKS = new Map([
+  ["tokyo|japan", "Asia/Tokyo"],
+]);
 
 function loadEnvFile(filePath) {
   if (!fs.existsSync(filePath)) {
@@ -49,6 +52,14 @@ function slugify(value) {
 
 function normalizeName(value) {
   return slugify(value).replace(/-/g, " ").replace(/\s+/g, " ").trim();
+}
+
+function cityTimezoneKey(city, country) {
+  return `${normalizeName(city)}|${normalizeName(country)}`;
+}
+
+function fallbackCityTimezone(city, country) {
+  return CITY_TIMEZONE_FALLBACKS.get(cityTimezoneKey(city, country)) ?? null;
 }
 
 function normalizeCoordinates(coordinates) {
@@ -552,9 +563,10 @@ function requireScopedFilters(filters) {
 
 async function loadDestinationMaps(client) {
   const { rows } = await client.query(
-    "select id, scope, name, slug, parent_id, country_name, city_name, legacy_id from public.destinations",
+    "select id, scope, name, slug, parent_id, country_name, city_name, legacy_id, timezone from public.destinations",
   );
   const cityByName = new Map();
+  const cityTimezoneById = new Map();
   const countryByName = new Map();
   const neighborhoodsByCity = new Map();
 
@@ -564,6 +576,7 @@ async function loadDestinationMaps(client) {
     }
     if (row.scope === "city") {
       cityByName.set(`${normalizeName(row.name)}|${normalizeName(row.country_name)}`, row.id);
+      cityTimezoneById.set(row.id, row.timezone ?? fallbackCityTimezone(row.name, row.country_name));
     }
     if (row.scope === "neighborhood" && row.parent_id) {
       const items = neighborhoodsByCity.get(row.parent_id) ?? new Map();
@@ -575,7 +588,7 @@ async function loadDestinationMaps(client) {
     }
   }
 
-  return { cityByName, countryByName, neighborhoodsByCity };
+  return { cityByName, cityTimezoneById, countryByName, neighborhoodsByCity };
 }
 
 function resolveCityId(maps, city, country) {
@@ -618,9 +631,54 @@ function buildGuideContexts(maps, selectedGuides) {
     if (!destinationId) {
       throw new Error(`Could not resolve destination for ${list.id}`);
     }
-    contexts.set(list.id, { cityId, countryId, neighborhoodId, destinationId });
+    const timezone =
+      maps.cityTimezoneById.get(cityId) ??
+      fallbackCityTimezone(list.location?.city, list.location?.country);
+    contexts.set(list.id, { cityId, countryId, neighborhoodId, destinationId, timezone });
   }
   return contexts;
+}
+
+async function ensureSelectedDestinationTimezones(client, selectedGuides) {
+  const rowsByKey = new Map();
+  for (const list of selectedGuides) {
+    const city = list.location?.city;
+    const country = list.location?.country;
+    const timezone = fallbackCityTimezone(city, country);
+    if (!city || !country || !timezone) {
+      continue;
+    }
+    rowsByKey.set(cityTimezoneKey(city, country), {
+      city_slug: slugify(city),
+      country_name: country,
+      timezone,
+    });
+  }
+
+  const rows = [...rowsByKey.values()];
+  if (!rows.length) {
+    return 0;
+  }
+
+  const result = await client.query(
+    `with incoming as (
+       select *
+       from jsonb_to_recordset($1::jsonb) as row(
+         city_slug text,
+         country_name text,
+         timezone text
+       )
+     )
+     update public.destinations destination
+     set timezone = incoming.timezone
+     from incoming
+     where destination.scope = 'city'::public.destination_scope
+       and destination.slug = incoming.city_slug
+       and destination.country_name = incoming.country_name
+       and destination.timezone is distinct from incoming.timezone`,
+    [JSON.stringify(rows)],
+  );
+  return result.rowCount ?? 0;
 }
 
 function getGuideCoverPhoto(list) {
@@ -694,6 +752,7 @@ function mergeVenueRows(existing, incoming) {
     city_id: incoming.city_id ?? existing.city_id,
     neighborhood_id: incoming.neighborhood_id ?? existing.neighborhood_id,
     country: incoming.country ?? existing.country,
+    timezone: incoming.timezone ?? existing.timezone,
     coordinates: incoming.coordinates ?? existing.coordinates,
     official_url: incoming.official_url ?? existing.official_url,
     venue_kind: incoming.venue_kind !== "other" ? incoming.venue_kind : existing.venue_kind,
@@ -736,6 +795,7 @@ function buildStopPayload(selectedGuides, contexts) {
         city_id: context.cityId,
         neighborhood_id: context.neighborhoodId,
         country: list.location?.country ?? null,
+        timezone: context.timezone ?? null,
         coordinates: normalizeCoordinates(stop.coordinates),
         official_url: stop.officialUrl ?? stop.bookingUrl ?? null,
         venue_kind: classification.venueKind ?? "other",
@@ -956,6 +1016,7 @@ async function upsertVenuesBatch(client, venueRows) {
          city_id uuid,
          neighborhood_id uuid,
          country text,
+         timezone text,
          coordinates jsonb,
          official_url text,
          venue_kind public.venue_kind,
@@ -973,13 +1034,13 @@ async function upsertVenuesBatch(client, venueRows) {
      upserted as (
        insert into public.venues (
          legacy_id, slug, name, normalized_name, aliases, destination_id, city_id,
-         neighborhood_id, country, coordinates, official_url, venue_kind,
+         neighborhood_id, country, timezone, coordinates, official_url, venue_kind,
          venue_kinds, lodging_type, food_service_type, cuisine_types, price_tier,
          nightlife_type, music_genres, attribute_tags, source_metadata
        )
        select
          legacy_id, slug, name, normalized_name, coalesce(aliases, '{}'), destination_id, city_id,
-         neighborhood_id, country, coordinates, official_url, coalesce(venue_kind, 'other'),
+         neighborhood_id, country, timezone, coordinates, official_url, coalesce(venue_kind, 'other'),
          coalesce(venue_kinds, '{}'), lodging_type, food_service_type, coalesce(cuisine_types, '{}'), price_tier,
          nightlife_type, coalesce(music_genres, '{}'), coalesce(attribute_tags, '{}'), coalesce(source_metadata, '{}'::jsonb)
        from incoming
@@ -992,6 +1053,7 @@ async function upsertVenuesBatch(client, venueRows) {
          destination_id = coalesce(excluded.destination_id, public.venues.destination_id),
          neighborhood_id = coalesce(excluded.neighborhood_id, public.venues.neighborhood_id),
          country = coalesce(excluded.country, public.venues.country),
+         timezone = coalesce(excluded.timezone, public.venues.timezone),
          coordinates = coalesce(excluded.coordinates, public.venues.coordinates),
          official_url = coalesce(excluded.official_url, public.venues.official_url),
          venue_kind = case
@@ -1098,31 +1160,63 @@ async function upsertVenueMediaBatch(client, mediaRows, venueIdByKey) {
          sort_order integer
        )
      ),
-     upserted as (
+     source_matched as (
+       update public.venue_media media
+       set role = case
+             when media.role = 'gallery' then incoming.role
+             else media.role
+           end,
+           source_type = coalesce(media.source_type, incoming.source_type),
+           source_entity_type = coalesce(media.source_entity_type, incoming.source_entity_type),
+           source_legacy_id = coalesce(media.source_legacy_id, incoming.source_legacy_id),
+           raw_metadata = media.raw_metadata || coalesce(incoming.raw_metadata, '{}'::jsonb),
+           is_active = true,
+           updated_at = now()
+       from incoming
+       where media.venue_id = incoming.venue_id
+         and media.source_url = incoming.url
+       returning media.id, media.venue_id, media.storage_provider, media.public_url, media.ingestion_status
+     ),
+     inserted as (
        insert into public.venue_media (
-         venue_id, url, role, source_type, source_entity_type, source_legacy_id,
+         venue_id, url, source_url, role, source_type, source_entity_type, source_legacy_id,
          raw_metadata, sort_order
        )
        select
-         venue_id, url, role, source_type, source_entity_type, source_legacy_id,
+         venue_id, url, url, role, source_type, source_entity_type, source_legacy_id,
          coalesce(raw_metadata, '{}'::jsonb), coalesce(sort_order, 0)
        from incoming
+       where not exists (
+         select 1
+         from public.venue_media existing
+         where existing.venue_id = incoming.venue_id
+           and (existing.url = incoming.url or existing.source_url = incoming.url)
+       )
        on conflict (venue_id, url) do update set
          role = case
            when public.venue_media.role = 'gallery' then excluded.role
            else public.venue_media.role
          end,
+         source_url = coalesce(public.venue_media.source_url, excluded.source_url),
          source_type = coalesce(public.venue_media.source_type, excluded.source_type),
          source_entity_type = coalesce(public.venue_media.source_entity_type, excluded.source_entity_type),
          source_legacy_id = coalesce(public.venue_media.source_legacy_id, excluded.source_legacy_id),
          raw_metadata = public.venue_media.raw_metadata || excluded.raw_metadata,
          is_active = true,
          updated_at = now()
-       returning id, venue_id
+       returning id, venue_id, storage_provider, public_url, ingestion_status
+     ),
+     upserted as (
+       select * from source_matched
+       union all
+       select * from inserted
      ),
      ranked as (
        select id, venue_id, row_number() over (partition by venue_id order by id) as rank
        from upserted
+       where storage_provider = 'cloudflare_r2'
+         and ingestion_status = 'stored'
+         and public_url is not null
      ),
      updated as (
        update public.venues venue
@@ -1132,6 +1226,24 @@ async function upsertVenueMediaBatch(client, mediaRows, venueIdByKey) {
          and ranked.rank = 1
          and venue.primary_photo_id is distinct from ranked.id
        returning venue.id
+     ),
+     retired as (
+       update public.venue_media media
+       set is_active = false,
+           raw_metadata = media.raw_metadata || jsonb_build_object(
+             'retired_by_media_id', ranked.id::text,
+             'retired_reason', 'primary_photo_replaced_by_revision',
+             'retired_at', now()
+           ),
+           updated_at = now()
+       from ranked
+       where ranked.rank = 1
+         and media.venue_id = ranked.venue_id
+         and media.id <> ranked.id
+         and media.is_active = true
+         and media.media_type = 'image'
+         and media.role = 'primary'
+       returning media.id
      )
      select count(*)::int as affected from upserted`,
     [JSON.stringify(rows)],
@@ -1584,24 +1696,52 @@ async function upsertVenueMedia(client, input, stats) {
     return null;
   }
 
-  const { rows } = await client.query(
+  let { rows } = await client.query(
+    `update public.venue_media
+     set role = case
+           when role = 'gallery' then $3
+           else role
+         end,
+         source_type = coalesce(source_type, $4),
+         source_entity_type = coalesce(source_entity_type, $5),
+         source_legacy_id = coalesce(source_legacy_id, $6),
+         raw_metadata = raw_metadata || $7,
+         is_active = true,
+         updated_at = now()
+     where venue_id = $1
+       and source_url = $2
+     returning id, storage_provider, public_url, ingestion_status`,
+    [
+      input.venueId,
+      url,
+      input.role ?? "primary",
+      input.sourceType ?? "editorial_guides",
+      input.sourceEntityType ?? "entry_stop",
+      input.sourceLegacyId ?? null,
+      toJsonObject(input.rawMetadata),
+    ],
+  );
+
+  if (!rows.length) {
+    ({ rows } = await client.query(
     `insert into public.venue_media (
-       venue_id, url, role, source_type, source_entity_type, source_legacy_id,
+       venue_id, url, source_url, role, source_type, source_entity_type, source_legacy_id,
        raw_metadata, sort_order
      )
-     values ($1,$2,$3,$4,$5,$6,$7,$8)
+     values ($1,$2,$2,$3,$4,$5,$6,$7,$8)
      on conflict (venue_id, url) do update set
        role = case
          when public.venue_media.role = 'gallery' then excluded.role
          else public.venue_media.role
        end,
+       source_url = coalesce(public.venue_media.source_url, excluded.source_url),
        source_type = coalesce(public.venue_media.source_type, excluded.source_type),
        source_entity_type = coalesce(public.venue_media.source_entity_type, excluded.source_entity_type),
        source_legacy_id = coalesce(public.venue_media.source_legacy_id, excluded.source_legacy_id),
        raw_metadata = public.venue_media.raw_metadata || excluded.raw_metadata,
        is_active = true,
        updated_at = now()
-     returning id`,
+     returning id, storage_provider, public_url, ingestion_status`,
     [
       input.venueId,
       url,
@@ -1612,15 +1752,22 @@ async function upsertVenueMedia(client, input, stats) {
       toJsonObject(input.rawMetadata),
       input.sortOrder ?? 0,
     ],
-  );
+    ));
+  }
 
-  await client.query(
-    `update public.venues
-     set primary_photo_id = $2
-     where id = $1
-       and primary_photo_id is distinct from $2`,
-    [input.venueId, rows[0].id],
-  );
+  if (
+    rows[0]?.storage_provider === "cloudflare_r2" &&
+    rows[0]?.ingestion_status === "stored" &&
+    rows[0]?.public_url
+  ) {
+    await client.query(
+      `update public.venues
+       set primary_photo_id = $2
+       where id = $1
+         and primary_photo_id is distinct from $2`,
+      [input.venueId, rows[0].id],
+    );
+  }
   stats.venueMedia += 1;
   return rows[0].id;
 }
@@ -2050,6 +2197,10 @@ async function main() {
   await client.connect();
   try {
     await client.query("begin");
+    const timezoneUpdates = await ensureSelectedDestinationTimezones(client, selectedGuides);
+    if (timezoneUpdates) {
+      logPhase("phase destination_timezones:done", { affected: timezoneUpdates });
+    }
     logPhase("phase destination_maps:start");
     const maps = await loadDestinationMaps(client);
     logPhase("phase destination_maps:done");

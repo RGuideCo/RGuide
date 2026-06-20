@@ -28,15 +28,19 @@ export async function GET(request: Request) {
 
     const [continents, guides] = await Promise.all([
       getContinentsWithDestinationDescriptions({ forceDatabase: true }),
-      getServerEditorialGuides({ cityName }),
+      getServerEditorialGuides({ cityName, bypassCache: Boolean(cityName) }),
     ]);
+
+    const cacheControl = cityName
+      ? "no-store, max-age=0"
+      : `public, s-maxage=${cacheSeconds}, stale-while-revalidate=${cacheSeconds * 4}`;
 
     return withRateLimitHeaders(
       NextResponse.json(
         { continents, guides },
         {
           headers: {
-            "Cache-Control": `public, s-maxage=${cacheSeconds}, stale-while-revalidate=${cacheSeconds * 4}`,
+            "Cache-Control": cacheControl,
           },
         },
       ),

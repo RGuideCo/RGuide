@@ -30,12 +30,16 @@ export async function GET(request: Request) {
       return rateLimitResponse(rateLimit);
     }
 
+    const cacheControl = cityName
+      ? "no-store, max-age=0"
+      : `public, s-maxage=${cacheSeconds}, stale-while-revalidate=${cacheSeconds * 4}`;
+
     return withRateLimitHeaders(
       NextResponse.json(
-        { guides: await getServerEditorialGuides({ cityName }) },
+        { guides: await getServerEditorialGuides({ cityName, bypassCache: Boolean(cityName) }) },
         {
           headers: {
-            "Cache-Control": `public, s-maxage=${cacheSeconds}, stale-while-revalidate=${cacheSeconds * 4}`,
+            "Cache-Control": cacheControl,
           },
         },
       ),
