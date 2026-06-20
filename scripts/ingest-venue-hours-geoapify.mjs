@@ -75,8 +75,15 @@ function scoreCandidate(venueName, candidateName, distance) {
   const venueNorm = normalizeName(venueName);
   const candidateNorm = normalizeName(candidateName);
   if (!venueNorm || !candidateNorm) return 0;
+  if (venueNorm.length < 3 || candidateNorm.length < 3) return 0;
   if (candidateNorm === venueNorm) return 1;
-  if (candidateNorm.includes(venueNorm) || venueNorm.includes(candidateNorm)) return distance <= 120 ? 0.92 : 0.75;
+  if (
+    venueNorm.length >= 4 &&
+    candidateNorm.length >= 4 &&
+    (candidateNorm.includes(venueNorm) || venueNorm.includes(candidateNorm))
+  ) {
+    return distance <= 120 ? 0.92 : 0.75;
+  }
 
   const venueTokens = tokenSet(venueName);
   const candidateTokens = tokenSet(candidateName);
@@ -216,6 +223,7 @@ async function findOpeningHours(apiKey, venue) {
   if (!Number.isFinite(lat) || !Number.isFinite(lng)) return null;
   const url = new URL("https://api.geoapify.com/v2/places");
   url.searchParams.set("categories", categoriesForVenue(venue));
+  url.searchParams.set("name", venue.name);
   url.searchParams.set("filter", `circle:${lng},${lat},180`);
   url.searchParams.set("bias", `proximity:${lng},${lat}`);
   url.searchParams.set("limit", "20");

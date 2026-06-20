@@ -697,6 +697,11 @@ async function runLiveChecks(guides, options) {
         report.checkedStops += 1;
         const photo = poi?.photo;
         const poiLabel = `${label} > ${poi?.name || poi?.poiId || "<rendered poi>"}`;
+        if (row.submission_type !== "event" && !hoursToText(poi?.hours).trim()) {
+          addIssue(report, severityForStrict(options), poiLabel, "Rendered POI is missing hours.");
+        } else if (row.submission_type !== "event" && looksLikePlaceholderHours(poi.hours)) {
+          addIssue(report, severityForStrict(options), poiLabel, "Rendered POI hours look like a placeholder.");
+        }
         if (!photo) {
           addIssue(report, severityForStrict(options), poiLabel, "Rendered POI is missing photo.");
         } else if (options.requireR2 && !String(photo).startsWith(`${options.r2BaseUrl}/`)) {
@@ -709,8 +714,24 @@ async function runLiveChecks(guides, options) {
       const primaryResult = await client.query(
         `select
            entry.slug,
+           entry.submission_type,
            stop.name as stop_name,
+           stop.hours as stop_hours,
            venue.id as venue_id,
+           venue.hours_note,
+           exists (
+             select 1
+             from public.venue_hours hour
+             where hour.venue_id = venue.id
+               and hour.valid_from <= current_date
+               and (hour.valid_to is null or hour.valid_to >= current_date)
+           ) as has_venue_hours,
+           exists (
+             select 1
+             from public.venue_special_hours special_hour
+             where special_hour.venue_id = venue.id
+               and special_hour.special_date >= current_date
+           ) as has_special_hours,
            coalesce(media.public_url, media.url) as primary_photo_url,
            media.storage_provider,
            media.ingestion_status
@@ -728,6 +749,22 @@ async function runLiveChecks(guides, options) {
         if (!row.venue_id) {
           addIssue(report, severityForStrict(options), label, "Published stop is not linked to a venue.");
           continue;
+        }
+        if (row.submission_type === "event") {
+          continue;
+        }
+        const hasCanonicalHours = Boolean(
+          row.has_venue_hours ||
+            row.has_special_hours ||
+            String(row.hours_note ?? "").trim(),
+        );
+        if (!hasCanonicalHours) {
+          addIssue(report, severityForStrict(options), label, "Venue is missing canonical hours in venue_hours, venue_special_hours, or venues.hours_note.");
+        } else if (String(row.hours_note ?? "").trim() && looksLikePlaceholderHours(row.hours_note)) {
+          addIssue(report, severityForStrict(options), label, "Venue canonical hours_note looks like a placeholder.");
+        }
+        if (!hoursToText(row.stop_hours).trim() && !hasCanonicalHours) {
+          addIssue(report, severityForStrict(options), label, "Published stop has no stop hours and no canonical venue hours fallback.");
         }
         if (!row.primary_photo_url) {
           addIssue(report, severityForStrict(options), label, "Venue is missing primary_photo_id/media.");
