@@ -697,6 +697,10 @@ type StopSeed = Omit<GuideStop, "photo" | "hours"> & {
 
 const hotelStay = { venueKind: "lodging", lodgingType: "hotel" } as const;
 const hostelStay = { venueKind: "lodging", lodgingType: "hostel" } as const;
+const lodgingHours = {
+  default:
+    "24-hour guest operation; check-in, front-desk, late-arrival, and amenity schedules are controlled by the official property or booking page.",
+} satisfies GuideStop["hours"];
 
 type GuideSeed = {
   id: string;
@@ -744,11 +748,17 @@ function poiPhotoFor(name: string) {
   return poiPhotoSources[name]?.photo;
 }
 
+function inferredHoursForStop(seed: StopSeed): GuideStop["hours"] | undefined {
+  if (seed.venueKind === "lodging") return lodgingHours;
+  return undefined;
+}
+
 function stop(seed: StopSeed, category: EditorialCategory): GuideStop {
+  const hours = seed.hours ?? inferredHoursForStop(seed);
   return {
     ...seed,
     photo: seed.photo ?? poiPhotoFor(seed.name) ?? defaultPhoto(category),
-    ...(seed.hours ? { hours: seed.hours } : {}),
+    ...(hours ? { hours } : {}),
   };
 }
 
