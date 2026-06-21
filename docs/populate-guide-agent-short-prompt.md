@@ -52,7 +52,8 @@ When you receive one of the short prompts above:
    - every citywide guide needs at least 10 top-level stops; this applies to food, stay, nightlife, culture, and activities unless the user explicitly requested a smaller scoped guide;
    - every stop needs a non-empty `hours` field backed by Google Maps, the official site, a booking/platform page, an official calendar, or a clearly sourced seasonal/event caveat;
    - do not use placeholder hours such as `Hours vary`, `verify current hours`, `confirm before going`, `current-status evidence is map-based`, or `open and active in the current source set`; use real day/time hours when available, or a source-backed caveat that names the exact dependency such as the official calendar, reservation page, show schedule, market days, weather, season, or property page;
-   - do not publish if any real venue stop is missing real hours or a source-backed schedule caveat; fix the stop data first so the normalized publisher can write `entry_stops.hours` and canonical `venue_hours`/`venue_special_hours`;
+   - do not publish if any real venue stop is missing real hours or a source-backed schedule caveat; fix the stop data first so the normalized publisher can write canonical `venue_hours`/`venue_special_hours` or `venues.hours_note`;
+   - after publish, canonical venue hours are the live source of truth; `entry_stops.hours` is only an import/display fallback and must not be treated as the final place to maintain venue facts;
    - every stop description needs source-grounded editorial texture: Anthony Bourdain curiosity with TripAdvisor usefulness, not keyword chains.
 6. Do not call the task done until strict local verification, normalized publish, R2 ingestion, and strict live verification have passed.
 
@@ -62,6 +63,7 @@ Required final commands:
 npm run verify:guide-publish -- --city {City} --strict --local-only
 npm run push:editorial-guides -- --city {City}
 npm run ingest:venue-media-r2 -- --city {City}
+npm run report:venue-hours -- {city-slug} --rendered-summary
 npm run verify:guide-publish -- --city {City} --strict --live
 ```
 

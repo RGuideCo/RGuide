@@ -161,7 +161,8 @@ Hours rules:
 - if hours truly vary, the caveat must name the exact dependency and source, such as the official calendar, booking page, show schedule, market-day schedule, weather policy, seasonal opening, or property page;
 - do not publish if any stop is missing `hours`; fix the guide data first;
 - persist venue-level hours through the normalized publisher into `venue_hours`/`venue_special_hours` or `venues.hours_note`;
-- use `entry_stops.hours` only for guide-specific display notes or overrides.
+- treat `venue_hours`/`venue_special_hours`/`venues.hours_note` as the live source of truth after publish;
+- use `entry_stops.hours` only as an import/display fallback, not as the final place to maintain shared venue facts.
 
 Category requirements:
 

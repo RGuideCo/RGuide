@@ -69,7 +69,7 @@ Nightlife places use `venue_kind = 'nightlife'`. `nightlife_type` supports `dive
 
 `venue_hours` and `venue_special_hours`
 
-Canonical operating hours for real venues. `venue_hours` stores reusable weekly hours by day of week and interval order, supporting split service windows, closed days, 24-hour venues, seasonal validity, source links, raw source text, and last verification timestamps. `venue_special_hours` stores holiday closures, one-off hours, seasonal exceptions, and temporary changes by date. `entry_stops.hours` remains available as a guide-specific display override, but the venue tables are the source of truth for search and filtering.
+Canonical operating hours for real venues. `venue_hours` stores reusable weekly hours by day of week and interval order, supporting split service windows, closed days, 24-hour venues, seasonal validity, source links, raw source text, and last verification timestamps. `venue_special_hours` stores holiday closures, one-off hours, seasonal exceptions, and temporary changes by date. `venues.hours_note` stores source-backed schedule caveats when exact structured hours are not available. `entry_stops.hours` remains available as an import/display fallback, but the venue tables and columns are the source of truth for live guide rendering, search, and filtering.
 
 `venue_tags` and `venue_taggings`
 
