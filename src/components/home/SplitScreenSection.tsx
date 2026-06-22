@@ -3583,6 +3583,9 @@ export function SplitScreenSection({
           city: activeLocation.city.name,
           country: activeLocation.country?.name ?? activeLocation.city.country,
           neighborhood: activeStayBookingNeighborhood,
+          campaign: activeStayBookingNeighborhood
+            ? `neighborhood_left_panel_agoda_${activeLocation.city.id}_${activeStayBookingNeighborhood}`
+            : `city_left_panel_agoda_${activeLocation.city.id}`,
         })
       : activeStayBookingNeighborhood
       ? buildStay22DestinationUrl({

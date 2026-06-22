@@ -91,10 +91,13 @@ function getRouteParts(pathname: string) {
 }
 
 function getStay22Params(url: URL) {
+  const linkedUrl = getLinkedUrl(url);
+
   return {
     aid: url.searchParams.get("aid") ?? undefined,
     campaign: url.searchParams.getAll("campaign").join(",") || undefined,
-    hotelName: url.searchParams.get("hotelname") ?? undefined,
+    hotelName: url.searchParams.get("hotelname") ?? linkedUrl?.searchParams.get("text") ?? undefined,
+    partner: getStay22Partner(url),
   };
 }
 
@@ -103,6 +106,31 @@ function getAgodaParams(url: URL) {
     campaign: "agoda_asia_stay",
     hotelName: url.searchParams.get("text") ?? undefined,
   };
+}
+
+function getLinkedUrl(url: URL) {
+  const link = url.searchParams.get("link");
+
+  if (!link) {
+    return null;
+  }
+
+  try {
+    return new URL(link);
+  } catch {
+    return null;
+  }
+}
+
+function getStay22Partner(url: URL) {
+  const partner = url.pathname.split("/").filter(Boolean)[1];
+  const linkedHost = getLinkedUrl(url)?.hostname.toLowerCase() ?? "";
+
+  if (partner === "agoda" || linkedHost === "agoda.com" || linkedHost.endsWith(".agoda.com")) {
+    return "agoda";
+  }
+
+  return partner || undefined;
 }
 
 function isMeaningfulButton(text: string) {
@@ -172,11 +200,13 @@ function getEventForAnchor(anchor: HTMLAnchorElement) {
   }
 
   if (isStay22) {
+    const partner = getStay22Partner(url);
+
     return {
       eventType: "affiliate_click",
       properties: {
         ...baseProperties,
-        affiliate: "stay22",
+        affiliate: partner === "agoda" ? "stay22_agoda" : "stay22",
         ...getStay22Params(url),
       },
     } satisfies AnalyticsEvent;

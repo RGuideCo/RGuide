@@ -56,6 +56,7 @@ function getStayBookingDetails(guide: MapList, stop: MapList["stops"][number]) {
         city: guide.location.city,
         country: guide.location.country,
         neighborhood: guide.location.neighborhood,
+        campaign: `seo_stay_agoda_${guide.location.city ?? "destination"}_${guide.id}`,
       }),
       platformLabel: "Agoda",
     };

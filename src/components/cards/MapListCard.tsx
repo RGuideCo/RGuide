@@ -817,6 +817,7 @@ function getStayBookingDetails(list: MapList, stop: MapList["stops"][number], re
         city: list.location.city,
         country: list.location.country,
         neighborhood: list.location.neighborhood,
+        campaign: `guide_stop_agoda_${list.location.city ?? "destination"}_${list.id}`,
       }),
       platformLabel: "Agoda",
     };
@@ -917,6 +918,7 @@ function getNearbyStayDetails(list: MapList, stop: MapList["stops"][number]) {
           city: list.location.city,
           country: list.location.country,
           neighborhood,
+          campaign: `poi_nearby_agoda_${list.location.city}_${neighborhood ?? stop.id}`,
         })
       : buildStay22DestinationUrl({
           city: list.location.city,

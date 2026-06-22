@@ -1,8 +1,10 @@
 import type { GuideStop } from "@/types";
 
 export const STAY22_AID = process.env.NEXT_PUBLIC_STAY22_AID ?? "rguide";
+export const STAY22_LMA_ID = process.env.NEXT_PUBLIC_STAY22_LMA_ID?.trim() || "6a16094744a8f50eb135b857";
 
 const STAY22_ALLEZ_BASE_URL = "https://www.stay22.com/allez/roam";
+const STAY22_AGODA_BASE_URL = "https://www.stay22.com/allez/agoda";
 
 type Stay22AllezUrlInput = {
   campaign: string;
@@ -36,6 +38,7 @@ type AgodaStaySearchUrlInput = {
   city?: string | null;
   country?: string | null;
   neighborhood?: string | null;
+  campaign?: string | null;
 };
 
 type StayAffiliatePreferenceInput = {
@@ -121,7 +124,7 @@ export function shouldUseAgodaForStay(input: StayAffiliatePreferenceInput) {
   );
 }
 
-export function buildAgodaStaySearchUrl({ stop, city, country, neighborhood }: AgodaStaySearchUrlInput) {
+function buildRawAgodaStaySearchUrl({ stop, city, country, neighborhood }: AgodaStaySearchUrlInput) {
   const url = new URL(AGODA_SEARCH_BASE_URL);
   const cityId = getAgodaCityId(city, country);
   const searchText = [stop?.name, neighborhood, city, country].filter(hasText).join(", ");
@@ -130,6 +133,25 @@ export function buildAgodaStaySearchUrl({ stop, city, country, neighborhood }: A
     url.searchParams.set("city", cityId);
   }
   appendTextParam(url, "text", searchText || [neighborhood, city, country].filter(hasText).join(", "));
+
+  return url.toString();
+}
+
+export function buildAgodaStaySearchUrl(input: AgodaStaySearchUrlInput) {
+  const { stop, city, country, neighborhood, campaign } = input;
+  const agodaUrl = buildRawAgodaStaySearchUrl(input);
+  const url = new URL(STAY22_AGODA_BASE_URL);
+  const address = [neighborhood, city, country].filter(hasText).join(", ");
+
+  url.searchParams.set("aid", STAY22_AID);
+  url.searchParams.set("campaign", normalizeCampaign(campaign || `agoda_asia_stay_${city ?? "destination"}`));
+  url.searchParams.set("product", "lma");
+  url.searchParams.set("source", "direct");
+  url.searchParams.set("medium", "deeplink");
+  appendTextParam(url, "lmaID", STAY22_LMA_ID);
+  appendTextParam(url, "address", address);
+  appendTextParam(url, "hotelname", stop?.name);
+  url.searchParams.set("link", agodaUrl);
 
   return url.toString();
 }
