@@ -14,6 +14,7 @@ import {
   buildAgodaStaySearchUrl,
   buildStay22DestinationUrl,
   buildStay22StopUrl,
+  isCommercialLodgingSourceUrl,
   isStay22Url,
   shouldUseAgodaForStay,
 } from "@/lib/stay22";
@@ -689,6 +690,21 @@ const ITINERARY_DAY_DATE_FORMATTER = new Intl.DateTimeFormat(undefined, {
 const EMPTY_HIDDEN_LOCATION_PARTS: string[] = [];
 const EMPTY_SOURCES: GuideSource[] = [];
 
+function getVisibleGuideSources(list: MapList, sources: GuideSource[]) {
+  if (
+    shouldUseAgodaForStay({
+      category: list.category,
+      city: list.location.city,
+      country: list.location.country,
+      continent: list.location.continent,
+    })
+  ) {
+    return sources.filter((source) => !isCommercialLodgingSourceUrl(source.url));
+  }
+
+  return sources;
+}
+
 function getSourceDisplayName(source: GuideSource) {
   return source.name
     .replace(/\s+[-–|].*$/, "")
@@ -1049,14 +1065,15 @@ export function MapListCard({
   const showStopNumbers = true;
   const isRGuide = list.creator.name.startsWith("R ");
   const allSources = isRGuide ? list.sources ?? EMPTY_SOURCES : EMPTY_SOURCES;
+  const visibleSources = useMemo(() => getVisibleGuideSources(list, allSources), [allSources, list]);
   const orderedSources = useMemo(
-    () => getVariedGuideSources(allSources, list.id),
-    [allSources, list.id],
+    () => getVariedGuideSources(visibleSources, list.id),
+    [visibleSources, list.id],
   );
   const sourcePreview = useMemo(() => orderedSources.slice(0, 5), [orderedSources]);
   const sourceSummary = useMemo(() => (orderedSources.length ? buildSourceSummary(orderedSources) : null), [orderedSources]);
   const [sourcesPinnedOpen, setSourcesPinnedOpen] = useState(false);
-  const sourcesOpen = Boolean(allSources.length) && sourcesPinnedOpen;
+  const sourcesOpen = Boolean(visibleSources.length) && sourcesPinnedOpen;
   const itineraryStopGroups = useMemo(
     () => isItineraryGuide && !deferHeavyExpandedContent
     ? list.stops.reduce<Array<{ dateKey: string; stops: Array<{ stop: MapList["stops"][number]; index: number }> }>>(
@@ -2115,7 +2132,7 @@ export function MapListCard({
       {expandable && !expanded && sourceSummary ? (
         <GuideSourceSummary
           listId={list.id}
-          sources={allSources}
+          sources={visibleSources}
           sourceSummary={sourceSummary}
           getSourceIconUrl={getSourceIconUrl}
           variant="collapsed"
@@ -2182,7 +2199,7 @@ export function MapListCard({
                   sourceSummary ? (
                   <GuideSourceSummary
                     listId={list.id}
-                    sources={allSources}
+                    sources={visibleSources}
                     sourceSummary={sourceSummary}
                     getSourceIconUrl={getSourceIconUrl}
                     variant="expanded-top"
@@ -2537,7 +2554,7 @@ export function MapListCard({
       {renderExpandedFooter(fillPane ? "hidden lg:block" : "")}
       <GuideSourcesOverlay
         listId={list.id}
-        sources={allSources}
+        sources={visibleSources}
         open={sourcesOpen}
         getSourceIconUrl={getSourceIconUrl}
         onClose={() => setSourcesPinnedOpen(false)}

@@ -97,6 +97,11 @@ const AGODA_ASIA_COUNTRIES = new Set([
   "vietnam",
 ]);
 
+const COMMERCIAL_LODGING_SOURCE_HOSTS = new Set([
+  "booking.com",
+  "hostelworld.com",
+]);
+
 function getAgodaCityId(city?: string | null, country?: string | null) {
   return AGODA_CITY_IDS[[normalizeKey(city), normalizeKey(country)].filter(Boolean).join("-")];
 }
@@ -127,6 +132,22 @@ export function buildAgodaStaySearchUrl({ stop, city, country, neighborhood }: A
   appendTextParam(url, "text", searchText || [neighborhood, city, country].filter(hasText).join(", "));
 
   return url.toString();
+}
+
+export function isCommercialLodgingSourceUrl(url?: string | null) {
+  if (!url) {
+    return false;
+  }
+
+  try {
+    const hostname = new URL(url).hostname.toLowerCase().replace(/^www\./, "");
+    return (
+      COMMERCIAL_LODGING_SOURCE_HOSTS.has(hostname) ||
+      Array.from(COMMERCIAL_LODGING_SOURCE_HOSTS).some((host) => hostname.endsWith(`.${host}`))
+    );
+  } catch {
+    return false;
+  }
 }
 
 export function buildStay22AllezUrl(input: Stay22AllezUrlInput) {

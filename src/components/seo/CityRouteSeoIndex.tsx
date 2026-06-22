@@ -14,7 +14,13 @@ import {
   getRelatedCityRouteGuides,
 } from "@/lib/deep-link-routes";
 import { CATEGORIES } from "@/lib/constants";
-import { buildAgodaStaySearchUrl, buildStay22StopUrl, isStay22Url, shouldUseAgodaForStay } from "@/lib/stay22";
+import {
+  buildAgodaStaySearchUrl,
+  buildStay22StopUrl,
+  isCommercialLodgingSourceUrl,
+  isStay22Url,
+  shouldUseAgodaForStay,
+} from "@/lib/stay22";
 import { MapList } from "@/types";
 
 type CityRouteSeoIndexProps = {
@@ -74,6 +80,23 @@ function getStayBookingDetails(guide: MapList, stop: MapList["stops"][number]) {
   };
 }
 
+function getVisibleGuideSources(guide: MapList) {
+  const sources = guide.sources ?? [];
+
+  if (
+    shouldUseAgodaForStay({
+      category: guide.category,
+      city: guide.location.city,
+      country: guide.location.country,
+      continent: guide.location.continent,
+    })
+  ) {
+    return sources.filter((source) => !isCommercialLodgingSourceUrl(source.url));
+  }
+
+  return sources;
+}
+
 function GuidePreviewCard({
   guide,
   guides,
@@ -87,6 +110,7 @@ function GuidePreviewCard({
   const href = getCanonicalGuidePath({ name: guide.location.city ?? "" }, guide, neighborhood, guides);
   const seoTitle = getGuideSeoTitle({ ...guide }, { name: guide.location.city ?? "" }, neighborhood);
   const stops = guide.stops.slice(0, priority ? 6 : 3);
+  const visibleSources = getVisibleGuideSources(guide);
 
   return (
     <article className="rounded-lg border border-slate-200 bg-white p-4">
@@ -132,9 +156,9 @@ function GuidePreviewCard({
           })}
         </ul>
       ) : null}
-      {guide.sources?.length ? (
+      {visibleSources.length ? (
         <div className="mt-3 flex flex-wrap gap-2 text-xs">
-          {guide.sources.slice(0, 4).map((source) => (
+          {visibleSources.slice(0, 4).map((source) => (
             <a
               key={`${guide.id}-${source.url}`}
               href={source.url}
