@@ -14,7 +14,7 @@ import {
   getRelatedCityRouteGuides,
 } from "@/lib/deep-link-routes";
 import { CATEGORIES } from "@/lib/constants";
-import { buildStay22StopUrl, isStay22Url } from "@/lib/stay22";
+import { buildAgodaStaySearchUrl, buildStay22StopUrl, isStay22Url, shouldUseAgodaForStay } from "@/lib/stay22";
 import { MapList } from "@/types";
 
 type CityRouteSeoIndexProps = {
@@ -34,6 +34,26 @@ function getStayBookingDetails(guide: MapList, stop: MapList["stops"][number]) {
   }
 
   const existingBookingUrl = stop.bookingUrl;
+
+  if (
+    shouldUseAgodaForStay({
+      stop,
+      category: guide.category,
+      city: guide.location.city,
+      country: guide.location.country,
+      continent: guide.location.continent,
+    })
+  ) {
+    return {
+      href: buildAgodaStaySearchUrl({
+        stop,
+        city: guide.location.city,
+        country: guide.location.country,
+        neighborhood: guide.location.neighborhood,
+      }),
+      platformLabel: "Agoda",
+    };
+  }
 
   if (isStay22Url(existingBookingUrl)) {
     return {

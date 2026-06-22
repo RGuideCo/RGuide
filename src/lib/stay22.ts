@@ -31,8 +31,32 @@ type Stay22StopUrlInput = {
   campaign: string;
 };
 
+type AgodaStaySearchUrlInput = {
+  stop?: GuideStop | null;
+  city?: string | null;
+  country?: string | null;
+  neighborhood?: string | null;
+};
+
+type StayAffiliatePreferenceInput = {
+  stop?: Pick<GuideStop, "venueKind" | "lodgingType"> | null;
+  category?: string | null;
+  city?: string | null;
+  country?: string | null;
+  continent?: string | null;
+};
+
 function hasText(value?: string | null): value is string {
   return Boolean(value?.trim());
+}
+
+function normalizeKey(value?: string | null) {
+  return (value ?? "")
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/[^a-z0-9]+/gi, "-")
+    .replace(/^-+|-+$/g, "")
+    .toLowerCase();
 }
 
 function normalizeCampaign(value: string) {
@@ -55,6 +79,54 @@ function appendNumberParam(url: URL, key: string, value?: number | null) {
   if (typeof value === "number" && Number.isFinite(value)) {
     url.searchParams.set(key, String(value));
   }
+}
+
+const AGODA_SEARCH_BASE_URL = "https://www.agoda.com/search";
+const AGODA_CITY_IDS: Record<string, string> = {
+  "bangkok-thailand": "9395",
+  "hanoi-vietnam": "2758",
+  "hong-kong-hong-kong": "16808",
+  "tokyo-japan": "5085",
+};
+
+const AGODA_ASIA_COUNTRIES = new Set([
+  "hong-kong",
+  "japan",
+  "south-korea",
+  "thailand",
+  "vietnam",
+]);
+
+function getAgodaCityId(city?: string | null, country?: string | null) {
+  return AGODA_CITY_IDS[[normalizeKey(city), normalizeKey(country)].filter(Boolean).join("-")];
+}
+
+function isAgodaAsiaDestination({ continent, country }: Pick<StayAffiliatePreferenceInput, "continent" | "country">) {
+  return normalizeKey(continent) === "asia" || AGODA_ASIA_COUNTRIES.has(normalizeKey(country));
+}
+
+export function shouldUseAgodaForStay(input: StayAffiliatePreferenceInput) {
+  const isStayCategory = input.category === "Stay";
+  const isLodgingStop = input.stop?.venueKind === "lodging" || Boolean(input.stop?.lodgingType);
+
+  return (
+    (isStayCategory || isLodgingStop) &&
+    isAgodaAsiaDestination(input) &&
+    Boolean(getAgodaCityId(input.city, input.country))
+  );
+}
+
+export function buildAgodaStaySearchUrl({ stop, city, country, neighborhood }: AgodaStaySearchUrlInput) {
+  const url = new URL(AGODA_SEARCH_BASE_URL);
+  const cityId = getAgodaCityId(city, country);
+  const searchText = [stop?.name, neighborhood, city, country].filter(hasText).join(", ");
+
+  if (cityId) {
+    url.searchParams.set("city", cityId);
+  }
+  appendTextParam(url, "text", searchText || [neighborhood, city, country].filter(hasText).join(", "));
+
+  return url.toString();
 }
 
 export function buildStay22AllezUrl(input: Stay22AllezUrlInput) {
