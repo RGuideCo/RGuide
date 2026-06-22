@@ -114,7 +114,7 @@ import { useRouteState } from "@/components/home/split-screen/route-state";
 import { usePlacesBeenDirectory } from "@/components/home/use-places-been-directory";
 import { getCountryFlagEmoji } from "@/lib/country-flag";
 import { CATEGORY_STYLES } from "@/lib/constants";
-import { buildStay22DestinationUrl } from "@/lib/stay22";
+import { buildAgodaStaySearchUrl, buildStay22DestinationUrl, shouldUseAgodaForStay } from "@/lib/stay22";
 import {
   CityDeepLinkState,
   getCanonicalCityCategoryPath,
@@ -424,7 +424,12 @@ export function SplitScreenSection({
   const editorialLists = useAppStore((state) => state.editorialLists);
   const submittedLists = useAppStore((state) => state.submittedLists);
   const submitList = useAppStore((state) => state.submitList);
-  const hydratedEditorialLists = editorialLists.length ? editorialLists : initialEditorialGuides;
+  const hydratedEditorialLists =
+    initialEditorialGuides.length && !areGuideCollectionsEquivalent(editorialLists, initialEditorialGuides)
+      ? initialEditorialGuides
+      : editorialLists.length
+        ? editorialLists
+        : initialEditorialGuides;
   const activeEditorialLists = useMemo(
     () => getEditorialLists(hydratedEditorialLists),
     [hydratedEditorialLists],
@@ -3564,8 +3569,22 @@ export function SplitScreenSection({
         .join(", ")
     : null;
   const activeStayBookingNeighborhood = activeLocation.nestedSubarea?.name ?? activeLocation.subarea?.name;
+  const shouldUseAgodaStayBooking = activeLocation.city
+    ? shouldUseAgodaForStay({
+        category: "Stay",
+        city: activeLocation.city.name,
+        country: activeLocation.country?.name ?? activeLocation.city.country,
+        continent: activeLocation.city.continent,
+      })
+    : false;
   const activeStayBookingHref = activeStayBookingQuery && activeLocation.city
-    ? activeStayBookingNeighborhood
+    ? shouldUseAgodaStayBooking
+      ? buildAgodaStaySearchUrl({
+          city: activeLocation.city.name,
+          country: activeLocation.country?.name ?? activeLocation.city.country,
+          neighborhood: activeStayBookingNeighborhood,
+        })
+      : activeStayBookingNeighborhood
       ? buildStay22DestinationUrl({
           city: activeLocation.city.name,
           country: activeLocation.country?.name ?? activeLocation.city.country,

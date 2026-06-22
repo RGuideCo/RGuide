@@ -98,6 +98,13 @@ function getStay22Params(url: URL) {
   };
 }
 
+function getAgodaParams(url: URL) {
+  return {
+    campaign: "agoda_asia_stay",
+    hotelName: url.searchParams.get("text") ?? undefined,
+  };
+}
+
 function isMeaningfulButton(text: string) {
   return /book|reserve|hotel|stay|open|submit|save|share|favorite|view|map|directions/i.test(text);
 }
@@ -147,6 +154,7 @@ function getEventForAnchor(anchor: HTMLAnchorElement) {
   const url = new URL(rawHref, window.location.href);
   const isInternal = url.hostname === window.location.hostname;
   const isStay22 = url.hostname === "stay22.com" || url.hostname.endsWith(".stay22.com");
+  const isAgoda = url.hostname === "agoda.com" || url.hostname.endsWith(".agoda.com");
   const currentPath = getCurrentPath();
   const destinationPath = `${url.pathname}${url.search}`;
   const routeParts = getRouteParts(url.pathname);
@@ -159,7 +167,7 @@ function getEventForAnchor(anchor: HTMLAnchorElement) {
     ...routeParts,
   };
 
-  if (!linkText && !isStay22) {
+  if (!linkText && !isStay22 && !isAgoda) {
     return null;
   }
 
@@ -170,6 +178,17 @@ function getEventForAnchor(anchor: HTMLAnchorElement) {
         ...baseProperties,
         affiliate: "stay22",
         ...getStay22Params(url),
+      },
+    } satisfies AnalyticsEvent;
+  }
+
+  if (isAgoda) {
+    return {
+      eventType: "affiliate_click",
+      properties: {
+        ...baseProperties,
+        affiliate: "stay22_agoda",
+        ...getAgodaParams(url),
       },
     } satisfies AnalyticsEvent;
   }

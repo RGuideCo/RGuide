@@ -10,7 +10,13 @@ import { Check, ChevronDown, GripVertical, Heart, Minus, Plus, Trash2, Upload, X
 import { getPoiAttributeTags } from "@/lib/poi-tags";
 import { getCreatorHref, getGuideHref, getVenueHref } from "@/lib/routes";
 import { resolveStopHours } from "@/lib/seasonal-hours";
-import { buildStay22DestinationUrl, buildStay22StopUrl, isStay22Url } from "@/lib/stay22";
+import {
+  buildAgodaStaySearchUrl,
+  buildStay22DestinationUrl,
+  buildStay22StopUrl,
+  isStay22Url,
+  shouldUseAgodaForStay,
+} from "@/lib/stay22";
 import { CATEGORIES, CATEGORY_STYLES } from "@/lib/constants";
 import { cities } from "@/data/geography";
 import {
@@ -780,6 +786,26 @@ function getStayBookingDetails(list: MapList, stop: MapList["stops"][number], re
     return null;
   }
 
+  if (
+    shouldUseAgodaForStay({
+      stop,
+      category: resolvedCategory,
+      city: list.location.city,
+      country: list.location.country,
+      continent: list.location.continent,
+    })
+  ) {
+    return {
+      href: buildAgodaStaySearchUrl({
+        stop,
+        city: list.location.city,
+        country: list.location.country,
+        neighborhood: list.location.neighborhood,
+      }),
+      platformLabel: "Agoda",
+    };
+  }
+
   const existingBookingUrl = stop.bookingUrl;
 
   if (isStay22Url(existingBookingUrl)) {
@@ -865,12 +891,23 @@ function getNearbyStayDetails(list: MapList, stop: MapList["stops"][number]) {
   const neighborhood = getClosestNeighborhoodName(list, stop);
 
   return {
-    href: buildStay22DestinationUrl({
+    href: shouldUseAgodaForStay({
+      category: "Stay",
       city: list.location.city,
       country: list.location.country,
-      neighborhood,
-      campaign: `poi_nearby_stay_${list.location.city}_${neighborhood ?? stop.id}`,
-    }),
+      continent: list.location.continent,
+    })
+      ? buildAgodaStaySearchUrl({
+          city: list.location.city,
+          country: list.location.country,
+          neighborhood,
+        })
+      : buildStay22DestinationUrl({
+          city: list.location.city,
+          country: list.location.country,
+          neighborhood,
+          campaign: `poi_nearby_stay_${list.location.city}_${neighborhood ?? stop.id}`,
+        }),
     label: `Stay near ${stop.name}`,
   };
 }
