@@ -12,6 +12,7 @@ interface GuidePhotoStripProps {
   stops: GuideStopItem[];
   title?: string;
   activeStopId?: string | null;
+  hoveredStopId?: string | null;
   fallbackCategory: ListCategory;
   getStopCategory?: (stop: GuideStopItem, index: number) => ListCategory;
   handlers: GuideStopHandlers;
@@ -22,6 +23,7 @@ export function GuidePhotoStrip({
   stops,
   title = "Places of Interest",
   activeStopId,
+  hoveredStopId,
   fallbackCategory,
   getStopCategory,
   handlers,
@@ -43,6 +45,7 @@ export function GuidePhotoStrip({
           const stopCategory = getStopCategory?.(stop, index) ?? stop.category ?? fallbackCategory;
           const categoryStyle = CATEGORY_STYLES[stopCategory];
           const isActive = activeStopId === stop.id || Boolean(stop.places?.some((place) => place.id === activeStopId));
+          const isHovered = hoveredStopId === stop.id || Boolean(stop.places?.some((place) => place.id === hoveredStopId));
 
           return (
             <button
@@ -51,7 +54,9 @@ export function GuidePhotoStrip({
               onClick={() => handlers.onStopSelect?.(stop.id)}
               onMouseEnter={() => handlers.onStopHoverChange?.(stop.id)}
               onMouseLeave={() => handlers.onStopHoverChange?.(null)}
-              className={`ordered-poi-photo ${isActive ? "ordered-poi-photo-active" : ""}`}
+              className={`ordered-poi-photo ${isActive ? "ordered-poi-photo-active" : ""} ${
+                isHovered ? "ordered-poi-photo-hovered" : ""
+              }`}
               style={{ "--guide-accent": categoryStyle.mapColor } as GuideCardStyle}
               aria-label={`Open ${stop.name}`}
               title={stop.name}

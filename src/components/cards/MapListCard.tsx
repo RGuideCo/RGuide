@@ -2226,6 +2226,7 @@ export function MapListCard({
                       stops={list.stops}
                       title={isEventGuide ? "Schedule" : "Places of Interest"}
                       activeStopId={forceExpandStopId}
+                      hoveredStopId={hoveredStopId}
                       fallbackCategory={list.category}
                       getStopCategory={(stop) =>
                         isItineraryGuide ? inferJourneyStopCategory(stop, list.category) : stop.category ?? list.category

@@ -40,6 +40,7 @@ export function GuideCardBody({
       <GuidePhotoStrip
         stops={list.stops}
         activeStopId={activeStopId}
+        hoveredStopId={stopSelection.hoveredStopId}
         fallbackCategory={list.category}
         handlers={stopHandlers}
       />

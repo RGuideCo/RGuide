@@ -3598,6 +3598,7 @@ export function MapClient({
   const containerRef = useRef<HTMLDivElement | null>(null);
   const mapRef = useRef<maplibregl.Map | null>(null);
   const userLocationMarkerRef = useRef<maplibregl.Marker | null>(null);
+  const guideStopHoverPopupRef = useRef<maplibregl.Popup | null>(null);
   const isStyleReadyRef = useRef(false);
   const [styleReadyTick, setStyleReadyTick] = useState(0);
   const [countryBoundaryDataVersion, setCountryBoundaryDataVersion] = useState(0);
@@ -4675,6 +4676,8 @@ export function MapClient({
       }
       activeGuideCameraPendingKeyRef.current = null;
       isStyleReadyRef.current = false;
+      guideStopHoverPopupRef.current?.remove();
+      guideStopHoverPopupRef.current = null;
       map.off("render", recordRenderGap);
       userLocationMarkerRef.current?.remove();
       userLocationMarkerRef.current = null;
@@ -4824,12 +4827,57 @@ export function MapClient({
     setGeoJsonSourceData(map, GUIDE_STOP_SOURCE_ID, guideStopData);
   }, [guideStopData]);
 
+  useEffect(() => {
+    const map = mapRef.current;
+    if (!map || !isStyleReadyRef.current) {
+      guideStopHoverPopupRef.current?.remove();
+      guideStopHoverPopupRef.current = null;
+      return;
+    }
+
+    const hoveredFeature = hoveredStopId
+      ? guideStopData.features.find(
+          (feature) => feature.properties.id === hoveredStopId && feature.geometry.type === "Point",
+        )
+      : null;
+
+    if (!hoveredFeature || hoveredFeature.geometry.type !== "Point") {
+      guideStopHoverPopupRef.current?.remove();
+      guideStopHoverPopupRef.current = null;
+      return;
+    }
+
+    const popupContent = document.createElement("div");
+    popupContent.className = "rguide-guide-stop-callout";
+    popupContent.textContent = hoveredFeature.properties.name;
+    const calloutColor = CATEGORY_STYLES[hoveredFeature.properties.category]?.mapColor ?? "#0f172a";
+    popupContent.style.setProperty("--guide-stop-callout-color", calloutColor);
+
+    if (!guideStopHoverPopupRef.current) {
+      guideStopHoverPopupRef.current = new maplibregl.Popup({
+        anchor: "bottom",
+        closeButton: false,
+        closeOnClick: false,
+        className: "rguide-guide-stop-popup",
+        offset: [0, -18],
+      });
+    }
+
+    guideStopHoverPopupRef.current
+      .setLngLat(hoveredFeature.geometry.coordinates as [number, number])
+      .setDOMContent(popupContent)
+      .addTo(map);
+    guideStopHoverPopupRef.current
+      .getElement()
+      .style.setProperty("--guide-stop-callout-color", calloutColor);
+  }, [guideStopData, hoveredStopId]);
+
   const activeGuidePulseStopId = useMemo(() => {
     const renderedStopIds = new Set(guideStopData.features.map((feature) => feature.properties.id));
-    const candidateStopIds = [selectedStopId];
+    const candidateStopIds = [hoveredStopId, selectedStopId];
 
     return candidateStopIds.find((stopId): stopId is string => Boolean(stopId && renderedStopIds.has(stopId))) ?? null;
-  }, [guideStopData, selectedStopId]);
+  }, [guideStopData, hoveredStopId, selectedStopId]);
   const isActiveGuidePulseStopNested = useMemo(
     () =>
       activeGuidePulseStopId

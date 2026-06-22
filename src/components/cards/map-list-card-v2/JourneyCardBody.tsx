@@ -39,6 +39,7 @@ export function JourneyCardBody({
       <GuidePhotoStrip
         stops={list.stops}
         activeStopId={activeStopId}
+        hoveredStopId={stopSelection.hoveredStopId}
         fallbackCategory={list.category}
         handlers={stopHandlers}
       />
