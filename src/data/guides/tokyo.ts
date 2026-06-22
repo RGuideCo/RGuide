@@ -120,6 +120,16 @@ const imageSources = {
   torayaAkasaka: "https://cdn.shopify.com/s/files/1/0641/4503/1410/files/5_4.jpg?v=1674195746",
   kosoan: "http://kosoan.co.jp/_src/sc510/DSCF0601.JPG",
   saryoTsujiriDaimaru: "https://www.giontsujiri.co.jp/assets/img/store/tokyo-daimaru/mv_01_pc.jpg",
+  thermaeYu: "https://thermae-yu.jp/wp-content/uploads/top01-1.png",
+  spaLaQua: "https://www.laqua.jp/files/20231019/roten_mv.jpg",
+  sayaNoYudokoro: "https://www.sayanoyudokoro.co.jp/wp-content/themes/sayanoyudokoro/files/images/home/img_int1.jpg",
+  niwaNoYu: "https://www.seibu-leisure.co.jp/niwanoyu/img/img-introduction.png",
+  shimizuyu: "https://www.shimizuyu.com/img/slider/img02.jpg",
+  tokyoSomeiSakura: "https://tokyosomeionsensakura.com/wp-content/uploads/2025/07/0J5A5155-scaled.jpg",
+  koganeyu: "https://storage.googleapis.com/production-os-assets/assets/b7513cbf-5b6f-4bd7-96db-f867e7d8fc70",
+  daikokuyu: "https://www.daikokuyu.com/images/main1.jpg",
+  haginoyu: "https://haginoyu.jp/wp-content/uploads/2021/04/24_0085.jpg",
+  kairyoYu: "https://kairyou-yu.com/wp-content/themes/kairyou-yu2018/images/main_01.jpg",
   sazenka: "https://sazenka.com/wp-content/themes/sazenka/img/movie.jpg",
   kikanbo: "https://kikanbo.co.jp/wp-content/themes/standard_black_cmspro/img/main1.png",
   afuri: "https://afuri.com/img/index/photo03.jpg",
@@ -350,6 +360,23 @@ const sources = {
     source("Yoyogi Park official", "https://www.tokyo-park.or.jp/park/yoyogi/"),
     source("Google Maps - things to do Tokyo", maps("best things to do Tokyo")),
   ],
+  onsenSento: [
+    source("Top organic result: Time Out - The best onsen and sento bathhouses in Tokyo", "https://www.timeout.com/tokyo/health-and-beauty/onsen-tokyo-guide"),
+    source("Time Out - Best super sento in Tokyo", "https://www.timeout.com/tokyo/things-to-do/best-super-sento-in-tokyo-with-multiple-baths-saunas-cafes-and-more"),
+    source("Sakura Mobile - 12 Best Natural Onsen in Tokyo", "https://www.sakuramobile.jp/blog/japan-travel-guide/onsen-in-tokyo/"),
+    source("tsunagu Japan - Best sento bathhouses in Tokyo", "https://www.tsunagujapan.com/top-10-sentos-bathhouse-in-tokyo/"),
+    source("Thermae-Yu Shinjuku official", "https://thermae-yu.jp/"),
+    source("Spa LaQua official", "https://www.laqua.jp/spa/"),
+    source("Maenohara Onsen Saya-no-Yudokoro official", "https://www.sayanoyudokoro.co.jp/guide-2/"),
+    source("Toshimaen Niwa-no-Yu official", "https://www.seibu-leisure.co.jp/niwanoyu/"),
+    source("Musashi-Koyama Onsen Shimizu-yu official", "https://www.shimizuyu.com/"),
+    source("Tokyo Somei Onsen Sakura official", "https://tokyosomeionsensakura.com/"),
+    source("Koganeyu official", "https://koganeyu.com/english"),
+    source("Daikokuyu official", "https://www.daikokuyu.com/"),
+    source("Haginoyu official", "https://haginoyu.jp/"),
+    source("Kairyo-yu official", "https://kairyou-yu.com/"),
+    source("Google Maps - Tokyo onsen and sento", maps("best onsen sento Tokyo")),
+  ],
 };
 
 type StopHours = NonNullable<GuideStop["hours"]>;
@@ -415,7 +442,7 @@ const hours: Record<string, GuideStop["hours"]> = {
     sun: "11:00 AM-9:00 PM",
   }),
   hotel: daily("24 hours", "Hotel reception/property access operates 24 hours; check-in, check-out, spa, dining, and lounge hours vary by official property page and booking channel."),
-  hostel: { default: "Reception, cafe/bar, check-in, late-arrival, and luggage-storage hours are property-specific and controlled by the official property page or booking channel." },
+  hostel: { default: "Official property or booking page controls this stay's check-in, check-out, late-arrival, and luggage-storage schedule." },
   goldenGai: daily("Public lanes 24 hours; bar listings control evening-late night service", "Public lanes are accessible daily; official/bar-specific listings control evening-to-late-night schedules and cover rules."),
   omoide: daily("Late afternoon-late night by official stall listings", "Omoide Yokocho's official shop listings control stall-by-stall late-afternoon-to-late-night service and closed days."),
   nonbei: daily("Evening-late night service by bar listing", "Nonbei Yokocho bar listings control evening-to-late-night service, covers, and closed days."),
@@ -620,6 +647,51 @@ const hours: Record<string, GuideStop["hours"]> = {
   }),
   tokyoCityView: daily("Observation deck access by official ticket calendar", "Observation deck hours vary by exhibition and event; official ticket calendar controls exact access and last admission."),
   yoyogiPark: daily("24 hours", "Park grounds open daily 24 hours; facilities, event areas, and gardens keep separate posted hours."),
+};
+
+const hostelCheckedAt = "2026-06-23";
+
+const hostelHours: Record<string, StopHours> = {
+  nui: daily(
+    "Check-in 4:00 PM-11:00 PM; checkout by 11:00 AM; cafe 8:00 AM-6:00 PM",
+    "Official Nui hostel/cafe pages list check-in 4:00 PM-11:00 PM, checkout by 11:00 AM, check-in/out-day luggage storage during reception hours 8:00 AM-11:00 PM, and cafe time 8:00 AM-6:00 PM.",
+  ),
+  citan: daily(
+    "Check-in 4:00 PM-11:00 PM; checkout by 11:00 AM",
+    "Official CITAN property page lists check-in reception 4:00 PM-11:00 PM, no check-in after 11:00 PM, checkout by 11:00 AM, and free luggage storage before check-in and after checkout on arrival/departure dates.",
+  ),
+  unplanShinjuku: daily(
+    "Front desk 8:00 AM-11:00 PM; restaurant/bar 4:00 PM-11:00 PM",
+    "Official UNPLAN Shinjuku access page lists front-desk reception 8:00 AM-11:00 PM, and the official restaurant page lists encounter by UNPLAN daily 4:00 PM-11:00 PM.",
+  ),
+  imanoShinjuku: daily(
+    "24-hour reception; breakfast 7:00 AM-10:00 AM; cafe 11:00 AM-4:00 PM; bar 5:00 PM-10:00 PM",
+    "Official IMANO Tokyo Hostel page lists 24-hour reception, no curfew, luggage storage only on check-in/check-out days, breakfast 7:00 AM-10:00 AM, cafe 11:00 AM-4:00 PM, and bar 5:00 PM-10:00 PM with food last order 9:00 PM.",
+  ),
+  wiseOwlShibuya: daily(
+    "Check-in 4:00 PM-11:00 PM; checkout by 11:00 AM; restaurant/bar 11:00 AM-10:00 PM",
+    "Hostelworld/Trip.com property listings list Wise Owl Shibuya check-in 4:00 PM-11:00 PM and checkout by 11:00 AM; the official site lists Burger Lounge B.C Tokyo 11:00 AM-10:00 PM and the official FAQ says the entrance is shut midnight-7:00 AM except for checked-in guests with card keys.",
+  ),
+  sakuraAsakusa: daily(
+    "24-hour reception and cafe; breakfast 5:00 AM-11:00 AM",
+    "Official Sakura Hostel Asakusa page lists 24-hour multilingual reception, free luggage storage, shared kitchen, 24-hour open cafe, and breakfast 5:00 AM-11:00 AM; official FAQ says check-in after midnight is possible with advance contact after 9:00 PM.",
+  ),
+  platAsakusa: daily(
+    "Reception 8:00 AM-11:00 PM; check-in 4:00 PM-10:30 PM; checkout by 11:00 AM",
+    "Official plat hostel keikyu Asakusa Station page lists reception opening hours 8:00 AM-11:00 PM, check-in 4:00 PM-10:30 PM, checkout by 11:00 AM, and paid luggage storage; the footer contact block may show shorter phone reception.",
+  ),
+  toco: daily(
+    "Check-in 4:00 PM-10:00 PM; checkout by 11:00 AM; bar 6:00 PM-10:00 PM",
+    "Official toco. page lists check-in 4:00 PM-10:00 PM, checkout by 11:00 AM, luggage storage from 10:00 AM on check-in day and until 7:00 PM on checkout day, no curfew after check-in, and Living & Bar 6:00 PM-10:00 PM.",
+  ),
+  sakuraJimbocho: daily(
+    "24-hour reception and cafe; breakfast 4:30 AM-11:00 AM",
+    "Official Sakura Hotel Jimbocho page lists 24-hour multilingual reception, free luggage storage, 24-hour open cafe, and breakfast 4:30 AM-11:00 AM; official FAQ says check-in after midnight is possible with advance contact after 9:00 PM.",
+  ),
+  sakuraNippori: daily(
+    "24-hour reception and cafe; breakfast 3:30 AM-11:00 AM",
+    "Official Sakura Hotel Nippori page lists 24-hour multilingual reception, free luggage storage, shared kitchen, 24-hour open cafe, and breakfast 3:30 AM-11:00 AM; official FAQ says check-in after midnight is possible with advance contact after 9:00 PM.",
+  ),
 };
 
 type StopOptions = Partial<GuideStop> & {
@@ -2210,7 +2282,7 @@ const hostelStops = [
       price: "$",
       priceSource: "Official hostel site / Hostelworld",
       attributeTags: ["hostel", "social", "bar", "kuramae", "budget"],
-      hours: hours.hostel,
+      hours: hostelHours.nui,
       officialUrl: "https://backpackersjapan.co.jp/nuihostel/",
       bookingUrl: "https://backpackersjapan.co.jp/nuihostel/",
       sourcePhoto: imageSources.nui,
@@ -2218,6 +2290,10 @@ const hostelStops = [
         "https://www.hostelworld.com/hostels/p/81216/nui-hostel-and-bar-lounge/",
         "https://hostelgeeks.com/best-hostels-in-tokyo-japan/",
       ],
+      sourceEvidence: {
+        checkedAt: hostelCheckedAt,
+        notes: "Official Nui hostel and cafe pages list check-in, checkout, luggage-storage, and cafe hours.",
+      },
     },
   ),
   stop(
@@ -2231,7 +2307,7 @@ const hostelStops = [
       price: "$",
       priceSource: "Official hostel site / Hostelworld",
       attributeTags: ["hostel", "design", "social", "bar", "budget"],
-      hours: hours.hostel,
+      hours: hostelHours.citan,
       officialUrl: "https://backpackersjapan.co.jp/citan/",
       bookingUrl: "https://backpackersjapan.co.jp/citan/",
       sourcePhoto: imageSources.citan,
@@ -2239,6 +2315,10 @@ const hostelStops = [
         "https://www.hostelworld.com/hostels/p/276420/citan-hostel/",
         "https://hostelgeeks.com/best-hostels-in-tokyo-japan/",
       ],
+      sourceEvidence: {
+        checkedAt: hostelCheckedAt,
+        notes: "Official CITAN property page lists check-in reception, checkout, no-late-check-in, and arrival/departure luggage-storage rules.",
+      },
     },
   ),
   stop(
@@ -2252,7 +2332,7 @@ const hostelStops = [
       price: "$",
       priceSource: "Official hostel site / Hostelworld",
       attributeTags: ["hostel", "shinjuku", "social", "central", "budget"],
-      hours: hours.hostel,
+      hours: hostelHours.unplanShinjuku,
       officialUrl: "https://unplan.jp/shinjuku",
       bookingUrl: "https://unplan.jp/shinjuku",
       sourcePhoto: imageSources.unplan,
@@ -2260,6 +2340,10 @@ const hostelStops = [
         "https://www.hostelworld.com/hostels/p/300522/unplan-shinjuku/",
         "https://www.thebrokebackpacker.com/best-hostels-in-tokyo-japan/",
       ],
+      sourceEvidence: {
+        checkedAt: hostelCheckedAt,
+        notes: "Official UNPLAN Shinjuku access and restaurant pages list front-desk reception and cafe/bar hours.",
+      },
     },
   ),
   stop(
@@ -2273,7 +2357,7 @@ const hostelStops = [
       price: "$",
       priceSource: "Official hostel site / Booking.com-style sources",
       attributeTags: ["hostel", "shinjuku", "central", "solo_travel", "budget"],
-      hours: hours.hostel,
+      hours: hostelHours.imanoShinjuku,
       officialUrl: "https://imano.jp/shinjuku/en/",
       bookingUrl: "https://imano.jp/shinjuku/en/",
       sourcePhoto: imageSources.imano,
@@ -2281,6 +2365,10 @@ const hostelStops = [
         "https://www.hostelworld.com/hostels/p/100162/imano-tokyo-hostel/",
         "https://www.thebrokebackpacker.com/best-hostels-in-tokyo-japan/",
       ],
+      sourceEvidence: {
+        checkedAt: hostelCheckedAt,
+        notes: "Official IMANO Tokyo Hostel page lists 24-hour reception, no curfew, check-in/out-day luggage storage, breakfast, cafe, and bar hours.",
+      },
     },
   ),
   stop(
@@ -2294,7 +2382,7 @@ const hostelStops = [
       price: "$",
       priceSource: "Official hostel site / Hostelworld",
       attributeTags: ["hostel", "shibuya", "budget", "social", "nightlife_base"],
-      hours: hours.hostel,
+      hours: hostelHours.wiseOwlShibuya,
       officialUrl: "https://wiseowlhostels.com/shibuya/",
       bookingUrl: "https://wiseowlhostels.com/shibuya/",
       sourcePhoto: imageSources.wiseOwl,
@@ -2302,6 +2390,10 @@ const hostelStops = [
         "https://www.hostelworld.com/hostels/p/277225/wise-owl-hostels-shibuya/",
         "https://www.thebrokebackpacker.com/best-hostels-in-tokyo-japan/",
       ],
+      sourceEvidence: {
+        checkedAt: hostelCheckedAt,
+        notes: "Official Wise Owl Shibuya site/FAQ and Hostelworld/Trip.com property listings support check-in, checkout, restaurant/bar, entrance, and luggage rules.",
+      },
     },
   ),
   stop(
@@ -2315,7 +2407,7 @@ const hostelStops = [
       price: "$",
       priceSource: "Official hostel site / Hostelworld-style sources",
       attributeTags: ["hostel", "asakusa", "budget", "social", "family_friendly"],
-      hours: hours.hostel,
+      hours: hostelHours.sakuraAsakusa,
       officialUrl: "https://www.sakura-hotel.co.jp/asakusa/",
       bookingUrl: "https://www.sakura-hotel.co.jp/asakusa/",
       sourcePhoto: imageSources.sakuraAsakusa,
@@ -2323,6 +2415,10 @@ const hostelStops = [
         "https://www.hostelworld.com/hostels/p/14976/sakura-hostel-asakusa/",
         "https://hostelgeeks.com/best-hostels-in-tokyo-japan/",
       ],
+      sourceEvidence: {
+        checkedAt: hostelCheckedAt,
+        notes: "Official Sakura Hostel Asakusa page and Sakura FAQ list 24-hour reception/cafe, breakfast, luggage storage, and after-midnight check-in policy.",
+      },
     },
   ),
   stop(
@@ -2336,7 +2432,7 @@ const hostelStops = [
       price: "$",
       priceSource: "Official hostel site / Google Travel",
       attributeTags: ["hostel", "asakusa", "rail_access", "budget", "quiet"],
-      hours: hours.hostel,
+      hours: hostelHours.platAsakusa,
       officialUrl: "https://plat-hostel-keikyu.com/en/hostel/asakusa-station/",
       bookingUrl: "https://plat-hostel-keikyu.com/en/hostel/asakusa-station/",
       sourcePhoto: imageSources.platAsakusa,
@@ -2344,6 +2440,10 @@ const hostelStops = [
         "https://www.google.com/travel/hotels/Tokyo?q=plat%20hostel%20keikyu%20Asakusa%20Station",
         "https://www.booking.com/hotel/jp/plat-hostel-keikyu-asakusa-station.html",
       ],
+      sourceEvidence: {
+        checkedAt: hostelCheckedAt,
+        notes: "Official plat hostel keikyu Asakusa Station page lists reception, check-in, checkout, and luggage-storage details.",
+      },
     },
   ),
   stop(
@@ -2357,7 +2457,7 @@ const hostelStops = [
       price: "$",
       priceSource: "Official guesthouse site / Google Travel",
       attributeTags: ["guesthouse", "social", "historic_building", "budget", "ueno"],
-      hours: hours.hostel,
+      hours: hostelHours.toco,
       officialUrl: "https://backpackersjapan.co.jp/toco/",
       bookingUrl: "https://backpackersjapan.co.jp/toco/",
       sourcePhoto: imageSources.toco,
@@ -2365,6 +2465,10 @@ const hostelStops = [
         "https://www.google.com/travel/hotels/Tokyo?q=Tokyo%20Guest%20House%20toco",
         "https://hostelgeeks.com/best-hostels-in-tokyo-japan/",
       ],
+      sourceEvidence: {
+        checkedAt: hostelCheckedAt,
+        notes: "Official Tokyo Guest House toco. page lists check-in, checkout, luggage-storage, no-curfew, and Living & Bar hours.",
+      },
     },
   ),
   stop(
@@ -2378,7 +2482,7 @@ const hostelStops = [
       price: "$",
       priceSource: "Official property site / Google Travel",
       attributeTags: ["guesthouse", "jimbocho", "budget", "social", "central"],
-      hours: hours.hostel,
+      hours: hostelHours.sakuraJimbocho,
       officialUrl: "https://www.sakura-hotel.co.jp/jimbocho/",
       bookingUrl: "https://www.sakura-hotel.co.jp/jimbocho/",
       sourcePhoto: imageSources.sakuraJimbocho,
@@ -2386,6 +2490,10 @@ const hostelStops = [
         "https://www.google.com/travel/hotels/Tokyo?q=Sakura%20Hotel%20Jimbocho",
         "https://www.booking.com/hotel/jp/sakura-jimbocho.html",
       ],
+      sourceEvidence: {
+        checkedAt: hostelCheckedAt,
+        notes: "Official Sakura Hotel Jimbocho page and Sakura FAQ list 24-hour reception/cafe, breakfast, luggage storage, and after-midnight check-in policy.",
+      },
     },
   ),
   stop(
@@ -2399,7 +2507,7 @@ const hostelStops = [
       price: "$",
       priceSource: "Official property site / Google Travel",
       attributeTags: ["guesthouse", "nippori", "budget", "quiet", "local_neighborhood"],
-      hours: hours.hostel,
+      hours: hostelHours.sakuraNippori,
       officialUrl: "https://www.sakura-hotel.co.jp/nippori/",
       bookingUrl: "https://www.sakura-hotel.co.jp/nippori/",
       sourcePhoto: imageSources.sakuraNippori,
@@ -2407,6 +2515,10 @@ const hostelStops = [
         "https://www.google.com/travel/hotels/Tokyo?q=Sakura%20Hotel%20Nippori",
         "https://www.booking.com/hotel/jp/sakura-nippori.html",
       ],
+      sourceEvidence: {
+        checkedAt: hostelCheckedAt,
+        notes: "Official Sakura Hotel Nippori page and Sakura FAQ list 24-hour reception/cafe, breakfast, luggage storage, and after-midnight check-in policy.",
+      },
     },
   ),
 ];
@@ -3315,6 +3427,312 @@ const activityStops = [
   ),
 ];
 
+const onsenCheckedAt = "2026-06-23";
+
+const onsenSentoHours: Record<string, StopHours> = {
+  thermaeYu: daily(
+    "24 hours",
+    "Official Thermae-Yu Shinjuku page lists 24-hour, year-round operation; posted maintenance notices can change bath opening times.",
+  ),
+  spaLaQua: daily(
+    "11:00 AM-9:00 AM next day",
+    "Official Spa LaQua page lists today's business hours as 11:00 AM-next-day 9:00 AM; facility notices control maintenance or changed days.",
+  ),
+  sayaNoYudokoro: daily(
+    "9:00 AM-12:00 AM; final entry 11:00 PM",
+    "Official Saya-no-Yudokoro hours page lists daily 9:00 AM-midnight with final entry 11:00 PM; it also notes one or two annual equipment-inspection closures announced on-site and online.",
+  ),
+  niwaNoYu: daily(
+    "10:00 AM-11:00 PM; final reception 10:00 PM",
+    "Official Niwa-no-Yu page lists today's opening as 10:00 AM-11:00 PM with final reception at 10:00 PM; official operating notices control maintenance days and special-event schedules.",
+  ),
+  shimizuyu: weekly("Official Shimizu-yu page lists Tue-Sat and holidays noon-midnight, Sunday 8:00 AM-midnight, and non-holiday Mondays closed.", {
+    mon: "Closed except public-holiday Mondays; public holidays 12:00 PM-12:00 AM",
+    tue: "12:00 PM-12:00 AM",
+    wed: "12:00 PM-12:00 AM",
+    thu: "12:00 PM-12:00 AM",
+    fri: "12:00 PM-12:00 AM",
+    sat: "12:00 PM-12:00 AM",
+    sun: "8:00 AM-12:00 AM",
+  }),
+  tokyoSomeiSakura: daily(
+    "10:00 AM-11:00 PM",
+    "Official Tokyo Somei Onsen Sakura site lists 10:00 AM-11:00 PM contact/opening hours; event calendars and facility notices control temporary changes.",
+  ),
+  koganeyu: weekly("Official Koganeyu page lists 6:00 AM-9:00 AM and 11:00 AM-12:30 AM, closed every second and fourth Monday; Wednesday swaps men's and women's baths.", {
+    mon: "6:00 AM-9:00 AM; 11:00 AM-12:30 AM except 2nd/4th Mondays closed",
+    tue: "6:00 AM-9:00 AM; 11:00 AM-12:30 AM",
+    wed: "6:00 AM-9:00 AM; 11:00 AM-12:30 AM; men's/women's baths swapped",
+    thu: "6:00 AM-9:00 AM; 11:00 AM-12:30 AM",
+    fri: "6:00 AM-9:00 AM; 11:00 AM-12:30 AM",
+    sat: "6:00 AM-9:00 AM; 11:00 AM-12:30 AM",
+    sun: "6:00 AM-9:00 AM; 11:00 AM-12:30 AM",
+  }),
+  daikokuyu: weekly("Official Daikokuyu page lists weekday 3:00 PM-next-day 10:00 AM, Saturday 2:00 PM-next-day 10:00 AM, Sunday/holiday 1:00 PM-next-day 10:00 AM, Tuesday closed except holidays with following Wednesday closed.", {
+    mon: "3:00 PM-10:00 AM next day",
+    tue: "Closed except public holidays; holiday Tuesdays open 3:00 PM-10:00 AM next day",
+    wed: "3:00 PM-10:00 AM next day; closed if previous Tuesday was a public holiday",
+    thu: "3:00 PM-10:00 AM next day",
+    fri: "3:00 PM-10:00 AM next day",
+    sat: "2:00 PM-10:00 AM next day",
+    sun: "1:00 PM-10:00 AM next day",
+  }),
+  haginoyu: daily(
+    "6:00 AM-9:00 AM; 11:00 AM-1:00 AM next day",
+    "Official Haginoyu page lists morning bath 6:00 AM-9:00 AM, final reception 8:30 AM, and day/night bath 11:00 AM-1:00 AM, final reception 12:30 AM.",
+  ),
+  kairyoYu: weekly("Official Kairyo-yu footer lists 12:00 PM-11:30 PM and Saturday closed; posted blog/schedule notices control temporary closures and special days.", {
+    mon: "12:00 PM-11:30 PM",
+    tue: "12:00 PM-11:30 PM",
+    wed: "12:00 PM-11:30 PM",
+    thu: "12:00 PM-11:30 PM",
+    fri: "12:00 PM-11:30 PM",
+    sat: "Closed",
+    sun: "12:00 PM-11:30 PM",
+  }),
+};
+
+const onsenSentoStops = [
+  stop(
+    "tokyo-onsen-sento-thermae-yu",
+    "Thermae-Yu Shinjuku",
+    [35.694603, 139.705322],
+    "Thermae-Yu is the Kabukicho answer to jet lag, late trains, and the need to disappear into steam without leaving central Shinjuku. The official site leans into 24-hour, year-round operation and natural hot-spring water brought from Naka-Izu, so it is the most practical city-center spa on this list. Check posted bath-opening notices before banking on a specific tub after maintenance.",
+    {
+      venueKind: "service",
+      subcategory: "urban_onsen_spa",
+      price: "$$$",
+      priceSource: "Official Thermae-Yu Shinjuku use/fee page",
+      attributeTags: ["onsen", "spa", "sauna", "late_night", "shinjuku", "wellness"],
+      hours: onsenSentoHours.thermaeYu,
+      officialUrl: "https://thermae-yu.jp/",
+      sourcePhoto: imageSources.thermaeYu,
+      mapQuery: "Thermae-Yu Shinjuku Tokyo",
+      editorialUrls: [
+        "https://www.timeout.com/tokyo/health-and-beauty/onsen-tokyo-guide",
+        "https://www.sakuramobile.jp/blog/japan-travel-guide/onsen-in-tokyo/",
+      ],
+      sourceEvidence: {
+        checkedAt: onsenCheckedAt,
+        notes: "Official page lists 24-hour, year-round operation and natural hot spring water from Naka-Izu; posted maintenance notices can alter bath access.",
+      },
+    },
+  ),
+  stop(
+    "tokyo-onsen-sento-spa-laqua",
+    "Spa LaQua",
+    [35.705814, 139.753983],
+    "Spa LaQua is the polished Tokyo Dome City soak: natural hot spring, saunas, treatment rooms, restaurants, and enough relaxation space to make a rainy afternoon feel planned. Its official page posts a long 11:00 AM to next-morning schedule, which makes it useful after baseball, concerts, or a Bunkyo/Ueno day. It is more resort-spa than neighborhood sento, so budget and crowds accordingly.",
+    {
+      venueKind: "service",
+      subcategory: "super_sento",
+      price: "$$$",
+      priceSource: "Official Spa LaQua business-hours/fee page",
+      attributeTags: ["onsen", "spa", "sauna", "tokyo_dome", "late_night", "wellness"],
+      hours: onsenSentoHours.spaLaQua,
+      officialUrl: "https://www.laqua.jp/spa/",
+      sourcePhoto: imageSources.spaLaQua,
+      mapQuery: "Spa LaQua Tokyo",
+      editorialUrls: [
+        "https://www.timeout.com/tokyo/things-to-do/best-super-sento-in-tokyo-with-multiple-baths-saunas-cafes-and-more",
+        "https://www.sakuramobile.jp/blog/japan-travel-guide/onsen-in-tokyo/",
+      ],
+      sourceEvidence: {
+        checkedAt: onsenCheckedAt,
+        notes: "Official Spa LaQua page lists the current 11:00 AM-next-day 9:00 AM operating window and describes natural hot spring, saunas, salons, restaurants, cafes, and relaxation space.",
+      },
+    },
+  ),
+  stop(
+    "tokyo-onsen-sento-saya-no-yudokoro",
+    "Maenohara Onsen Saya-no-Yudokoro",
+    [35.770798, 139.692139],
+    "Saya-no-Yudokoro is the residential Itabashi day-spa pick, with source-fed baths, a garden mood, ganbanyoku, private bath options, and a proper dining room on the official facility map. It belongs here because it gives Tokyo visitors a convincing onsen day without the Hakone train math. The official page also names inspection closures and tattoo-cover limits, so plan it as a deliberate half-day rather than a casual drop-in.",
+    {
+      venueKind: "service",
+      subcategory: "day_onsen",
+      price: "$$",
+      priceSource: "Official Saya-no-Yudokoro hours/fee page",
+      attributeTags: ["onsen", "day_spa", "garden", "ganbanyoku", "itabashi", "wellness"],
+      hours: onsenSentoHours.sayaNoYudokoro,
+      officialUrl: "https://www.sayanoyudokoro.co.jp/guide-2/",
+      sourcePhoto: imageSources.sayaNoYudokoro,
+      mapQuery: "Maenohara Onsen Saya-no-Yudokoro Tokyo",
+      editorialUrls: [
+        "https://www.timeout.com/tokyo/health-and-beauty/onsen-tokyo-guide",
+        "https://www.sakuramobile.jp/blog/japan-travel-guide/onsen-in-tokyo/",
+      ],
+      sourceEvidence: {
+        checkedAt: onsenCheckedAt,
+        notes: "Official hours/fee page lists 9:00 AM-midnight, final entry 11:00 PM, annual inspection-closure notices, and tattoo-cover restrictions.",
+      },
+    },
+  ),
+  stop(
+    "tokyo-onsen-sento-niwa-no-yu",
+    "Toshimaen Niwa-no-Yu",
+    [35.74403, 139.644913],
+    "Niwa-no-Yu is the grown-up spa next to Toshimaen, built around natural hot spring baths, a bade pool zone, sauna, food, relaxation areas, and a 1,200-tsubo Japanese garden. It is especially good when the trip needs a quieter west/northwest recovery block rather than another Shinjuku night. The official page posts same-day opening and final reception, so check operating notices before making the train ride.",
+    {
+      venueKind: "service",
+      subcategory: "garden_onsen_spa",
+      price: "$$$",
+      priceSource: "Official Niwa-no-Yu rate and business-hours page",
+      attributeTags: ["onsen", "spa", "sauna", "garden", "toshimaen", "wellness"],
+      hours: onsenSentoHours.niwaNoYu,
+      officialUrl: "https://www.seibu-leisure.co.jp/niwanoyu/",
+      sourcePhoto: imageSources.niwaNoYu,
+      mapQuery: "Toshimaen Niwa-no-Yu Tokyo",
+      editorialUrls: ["https://www.sakuramobile.jp/blog/japan-travel-guide/onsen-in-tokyo/"],
+      sourceEvidence: {
+        checkedAt: onsenCheckedAt,
+        notes: "Official Niwa-no-Yu page lists today's 10:00 AM-11:00 PM operation, 10:00 PM final reception, natural hot spring, bade zone, sauna, dining, relaxation, and Japanese garden features.",
+      },
+    },
+  ),
+  stop(
+    "tokyo-onsen-sento-shimizuyu",
+    "Musashi-Koyama Onsen Shimizu-yu",
+    [35.620247, 139.707809],
+    "Shimizu-yu is the serious sento-price onsen stop in Shinagawa, with both golden hot spring water and black-water onsen called out on the official site. The hours are unusually useful for tourists: noon to midnight most days, Sunday from 8:00 AM, and only non-holiday Mondays closed. Go for a neighborhood soak with real mineral character, not for hotel-spa polish.",
+    {
+      venueKind: "service",
+      subcategory: "onsen_sento",
+      price: "$",
+      priceSource: "Official Shimizu-yu fee and hours listing",
+      attributeTags: ["onsen", "sento", "black_water", "sauna", "musashi_koyama", "budget"],
+      hours: onsenSentoHours.shimizuyu,
+      officialUrl: "https://www.shimizuyu.com/",
+      sourcePhoto: imageSources.shimizuyu,
+      mapQuery: "Musashi-Koyama Onsen Shimizu-yu Tokyo",
+      editorialUrls: ["https://www.sakuramobile.jp/blog/japan-travel-guide/onsen-in-tokyo/"],
+      sourceEvidence: {
+        checkedAt: onsenCheckedAt,
+        notes: "Official Shimizu-yu page lists address, public-bath pricing, golden onsen and black-water onsen, sauna/ganbanyoku fees, hours, and Monday closure rules.",
+      },
+    },
+  ),
+  stop(
+    "tokyo-onsen-sento-somei-sakura",
+    "Tokyo Somei Onsen Sakura",
+    [35.738293, 139.739655],
+    "Tokyo Somei Onsen Sakura gives the north side a calm, full-service onsen near Sugamo and Komagome, with official copy pointing to mineral-rich water drawn from deep underground and hourly bath checks. It is a good middle ground between big commercial spa and tiny neighborhood sento: restaurant, facilities, and enough polish for first-timers. The official site ties operations to its event calendar and facility notices, so scan those before a special trip.",
+    {
+      venueKind: "service",
+      subcategory: "day_onsen",
+      price: "$$",
+      priceSource: "Official Tokyo Somei Onsen Sakura hours/fee page",
+      attributeTags: ["onsen", "spa", "sugamo", "komagome", "restaurant", "wellness"],
+      hours: onsenSentoHours.tokyoSomeiSakura,
+      officialUrl: "https://tokyosomeionsensakura.com/",
+      sourcePhoto: imageSources.tokyoSomeiSakura,
+      mapQuery: "Tokyo Somei Onsen Sakura",
+      editorialUrls: [
+        "https://www.timeout.com/tokyo/things-to-do/best-super-sento-in-tokyo-with-multiple-baths-saunas-cafes-and-more",
+        "https://www.sakuramobile.jp/blog/japan-travel-guide/onsen-in-tokyo/",
+      ],
+      sourceEvidence: {
+        checkedAt: onsenCheckedAt,
+        notes: "Official Tokyo Somei Onsen Sakura site lists 10:00 AM-11:00 PM, Komagome address, natural hot spring features, bath safety checks, and current event notices.",
+      },
+    },
+  ),
+  stop(
+    "tokyo-onsen-sento-koganeyu",
+    "Koganeyu",
+    [35.702477, 139.815292],
+    "Koganeyu is the renovated Kinshicho sento that makes public bathing feel design-conscious without sanding off the neighborhood edge. The official English page calls out original beer, a Bandai bar, DJ booth, sauna, large cold bath, outside-air bath space, lodging upstairs, and tattoo-friendly access. It is best for travelers who want a sento plus sauna culture stop, with the second/fourth Monday closure and Wednesday bath swap in mind.",
+    {
+      venueKind: "service",
+      subcategory: "renovated_sento_sauna",
+      price: "$",
+      priceSource: "Official Koganeyu opening-hours and bath information",
+      attributeTags: ["sento", "sauna", "design", "beer", "kinshicho", "tattoo_friendly"],
+      hours: onsenSentoHours.koganeyu,
+      officialUrl: "https://koganeyu.com/english",
+      sourcePhoto: imageSources.koganeyu,
+      mapQuery: "Koganeyu Kinshicho Tokyo",
+      editorialUrls: [
+        "https://www.timeout.com/tokyo/health-and-beauty/koganeyu",
+        "https://www.gltjp.com/en/directory/item/18498/",
+      ],
+      sourceEvidence: {
+        checkedAt: onsenCheckedAt,
+        notes: "Official Koganeyu page-view data lists 6:00 AM-9:00 AM and 11:00 AM-12:30 AM, second/fourth Monday closures, Wednesday bath swap, tattoo-friendly access, address, and facility features.",
+      },
+    },
+  ),
+  stop(
+    "tokyo-onsen-sento-daikokuyu",
+    "Daikokuyu",
+    [35.70509, 139.813751],
+    "Daikokuyu is the Oshiage/Sumida classic: weak alkaline hot spring water, a Skytree-adjacent location, and a bathhouse personality that still feels like a neighborhood room. The official site says it was founded in 1949 and lists late-to-next-morning hours, making it unusually flexible after Asakusa or Skytree. Watch the Tuesday closure rule, because public-holiday Tuesdays push the closure to Wednesday.",
+    {
+      venueKind: "service",
+      subcategory: "classic_sento_onsen",
+      price: "$",
+      priceSource: "Official Daikokuyu hours/fee page",
+      attributeTags: ["sento", "onsen", "skytree", "oshiage", "late_night", "budget"],
+      hours: onsenSentoHours.daikokuyu,
+      officialUrl: "https://www.daikokuyu.com/",
+      sourcePhoto: imageSources.daikokuyu,
+      mapQuery: "Daikokuyu Oshiage Tokyo",
+      editorialUrls: [
+        "https://www.timeout.com/tokyo/health-and-beauty/onsen-tokyo-guide",
+        "https://www.tsunagujapan.com/top-10-sentos-bathhouse-in-tokyo/",
+      ],
+      sourceEvidence: {
+        checkedAt: onsenCheckedAt,
+        notes: "Official Daikokuyu page lists weekday/Saturday/Sunday hours, Tuesday closure with holiday adjustment, weak alkaline hot spring, 1949 founding, and Skytree/Oshiage access.",
+      },
+    },
+  ),
+  stop(
+    "tokyo-onsen-sento-haginoyu",
+    "Haginoyu",
+    [35.724251, 139.777832],
+    "Haginoyu is the big, practical public bath near Uguisudani and Ueno, the kind of place that can rescue a museum day without requiring a spa budget. The official page lists both morning bath and late-night day/evening hours, plus a dining room that stays useful after the soak. It is less boutique than Koganeyu and less polished than LaQua, which is exactly why it deserves a citywide slot.",
+    {
+      venueKind: "service",
+      subcategory: "large_sento",
+      price: "$",
+      priceSource: "Official Haginoyu hours and fee pages",
+      attributeTags: ["sento", "sauna", "ueno", "uguisudani", "morning_bath", "budget"],
+      hours: onsenSentoHours.haginoyu,
+      officialUrl: "https://haginoyu.jp/",
+      sourcePhoto: imageSources.haginoyu,
+      mapQuery: "Haginoyu Uguisudani Tokyo",
+      editorialUrls: ["https://www.supersento.com/kanto/tokyo/haginoyu.html"],
+      sourceEvidence: {
+        checkedAt: onsenCheckedAt,
+        notes: "Official Haginoyu page lists morning bath, day/night bath, final reception times, restaurant last order, and JR Uguisudani north-exit access.",
+      },
+    },
+  ),
+  stop(
+    "tokyo-onsen-sento-kairyo-yu",
+    "Kairyo-yu",
+    [35.65316, 139.709366],
+    "Kairyo-yu is the Shibuya/Ebisu sento for travelers who want the city to stay close after the bath. The official site highlights soft water with a mineral balance close to sodium hot springs, carbonated bath, sauna, and a renovated Shibuya-crossing identity rather than old-town nostalgia. It closes Saturdays and posts schedule changes on the official blog, so it rewards a quick source check before you head over.",
+    {
+      venueKind: "service",
+      subcategory: "renovated_sento",
+      price: "$",
+      priceSource: "Official Kairyo-yu page and schedule notices",
+      attributeTags: ["sento", "sauna", "shibuya", "ebisu", "design", "budget"],
+      hours: onsenSentoHours.kairyoYu,
+      officialUrl: "https://kairyou-yu.com/",
+      sourcePhoto: imageSources.kairyoYu,
+      mapQuery: "Kairyo-yu Shibuya Tokyo",
+      editorialUrls: ["https://tokyocheapo.com/place/kairyo-yu/"],
+      sourceEvidence: {
+        checkedAt: onsenCheckedAt,
+        notes: "Official Kairyo-yu site lists address, Saturday closure, 12:00 PM-11:30 PM hours, soft-water/carbonated-bath/sauna features, and blog notices for temporary closures or special days.",
+      },
+    },
+  ),
+];
+
 function guide(
   id: string,
   title: string,
@@ -3472,6 +3890,17 @@ export const tokyoCitywideGuides: MapList[] = [
     "Tokyo punishes random crisscrossing and rewards station-clustered days. This top-things guide mixes famous sights with practical timing notes so a first trip can move from shrine to market to museum to night view without wasting the day underground.",
     activityStops,
     sources.activities,
+  ),
+  guide(
+    "list-tokyo-citywide-onsen-sento",
+    "Best Onsen & Sento",
+    "Activities",
+    "best-onsen-sento",
+    "Best Onsen and Sento in Tokyo",
+    "Best onsen and sento in Tokyo for natural hot springs, renovated bathhouses, sauna culture, late-night soaks, and route-friendly recovery.",
+    "Tokyo bathing is split between polished spa complexes, neighborhood sento, and natural-hot-spring facilities tucked into the rail map. This guide keeps the route logic practical: late-night Shinjuku, Tokyo Dome, Sumida, Ueno, Shibuya/Ebisu, and quieter residential baths that are worth planning around.",
+    onsenSentoStops,
+    sources.onsenSento,
   ),
 ];
 
