@@ -811,6 +811,7 @@ function buildStopPayload(selectedGuides, contexts) {
       };
       venueRowsByKey.set(venueKey, mergeVenueRows(venueRowsByKey.get(venueKey), venueRow));
 
+      const stopHours = isPublishableVenueHours(stop.hours) ? stop.hours : null;
       stopRows.push({
         entry_legacy_id: list.id,
         legacy_id: stop.id,
@@ -830,7 +831,7 @@ function buildStopPayload(selectedGuides, contexts) {
         official_url: stop.officialUrl ?? null,
         journey_date: stop.journeyDate ?? stop.itineraryDate ?? null,
         journey_day: stop.journeyDay ?? stop.itineraryDay ?? null,
-        hours: stop.hours ?? null,
+        hours: stopHours,
         places: stop.places ?? [],
         metadata: {
           source: "editorial_guides",
@@ -851,7 +852,7 @@ function buildStopPayload(selectedGuides, contexts) {
         });
       }
 
-      if (stop.hours) {
+      if (stopHours) {
         hoursRows.push({ venue_key: venueKey, stop });
       }
     }
@@ -1257,7 +1258,7 @@ function buildVenueHoursPayload(hoursRows, venueIdByKey) {
 
   const addNote = (venueId, rawText) => {
     const normalized = normalizeHoursText(rawText);
-    if (venueId && normalized && !noteRowsByVenue.has(venueId)) {
+    if (venueId && normalized && isPublishableVenueHours(normalized) && !noteRowsByVenue.has(venueId)) {
       noteRowsByVenue.set(venueId, { venue_id: venueId, raw_text: normalized });
     }
     return normalized;
@@ -1265,7 +1266,7 @@ function buildVenueHoursPayload(hoursRows, venueIdByKey) {
 
   const addInterval = (venueId, dayOfWeek, rawText, source) => {
     const normalized = normalizeHoursText(rawText);
-    if (!venueId || dayOfWeek === undefined || !normalized) {
+    if (!venueId || dayOfWeek === undefined || !normalized || !isPublishableVenueHours(normalized)) {
       return;
     }
     const lowered = normalized.toLowerCase();
@@ -1828,14 +1829,65 @@ function normalizeHoursText(value) {
   return String(value).trim() || null;
 }
 
+function hoursValueToText(value) {
+  if (!value) return "";
+  if (typeof value === "string") return value;
+  if (Array.isArray(value)) return value.map(hoursValueToText).join(" ");
+  if (typeof value === "object") {
+    return Object.entries(value)
+      .map(([key, item]) => `${key} ${hoursValueToText(item)}`)
+      .join(" ");
+  }
+  return String(value);
+}
+
+function hasConcreteHours(value) {
+  const text = hoursValueToText(value);
+  const hasDayContext = /\b(mon|monday|tue|tues|tuesday|wed|wednesday|thu|thur|thurs|thursday|fri|friday|sat|saturday|sun|sunday|daily|weekday|weekdays|weekend|weekends)\b/i.test(text);
+  const hasTime = /\b\d{1,2}(?::\d{2})?\s*(?:am|pm)\b/i.test(text) || /\b\d{1,2}:\d{2}\b/.test(text);
+  const hasClosed = /\bclosed\b/i.test(text);
+  const hasTwentyFourHours = /\b(?:24\s*hours?|open\s+24)\b/i.test(text);
+  return hasTwentyFourHours || (hasDayContext && (hasTime || hasClosed));
+}
+
+function hasNamedScheduleDependency(value) {
+  return /\b(official calendar|booking calendar|reservation page|booking page|property page|official site|official page|show calendar|event calendar|timetable|market day|market days|seasonal|season|weather|vendor|stall|performance schedule|exhibition page|timed ticket|last admission)\b/i.test(
+    hoursValueToText(value),
+  );
+}
+
+function looksLikePlaceholderHours(value) {
+  const text = hoursValueToText(value);
+  const normalized = text.toLowerCase().replace(/\s+/g, " ").trim();
+  if (!normalized) return true;
+
+  if (
+    /\b(current-status evidence is map-based|open and active in the current source set|open and active|hours should be confirmed|verify current hours|verify official hours|confirm current hours|confirm before going|check current hours)\b/i.test(
+      normalized,
+    )
+  ) {
+    return true;
+  }
+
+  const hasVagueCaveat = /\b(hours?\s+var(?:y|ies)|varies by|variable|subject to change|may change|can change|verify|confirm|check before|check current|current hours|same-day|generally|usually|typically)\b/i.test(
+    text,
+  );
+
+  return hasVagueCaveat && !hasConcreteHours(value) && !hasNamedScheduleDependency(value);
+}
+
+function isPublishableVenueHours(value) {
+  return Boolean(hoursValueToText(value).trim()) && !looksLikePlaceholderHours(value);
+}
+
 async function upsertVenueHoursFromStop(client, venueId, stop) {
-  if (!venueId || !stop?.hours) {
+  if (!venueId || !isPublishableVenueHours(stop?.hours)) {
     return;
   }
 
   if (typeof stop.hours === "string") {
     const rawText = normalizeHoursText(stop.hours);
-    if (!rawText) {
+    if (!rawText || !isPublishableVenueHours(rawText)) {
       return;
     }
     await client.query(
@@ -1853,7 +1905,7 @@ async function upsertVenueHoursFromStop(client, venueId, stop) {
   }
 
   const defaultRawText = normalizeHoursText(stop.hours.default);
-  if (defaultRawText) {
+  if (defaultRawText && isPublishableVenueHours(defaultRawText)) {
     await client.query(
       `update public.venues
        set hours_note = $2,
@@ -1892,7 +1944,7 @@ async function upsertVenueHoursFromStop(client, venueId, stop) {
   for (const [dayKey, value] of Object.entries(stop.hours)) {
     const dayOfWeek = HOURS_DAY_MAP.get(String(dayKey).toLowerCase());
     const rawText = normalizeHoursText(value);
-    if (dayOfWeek === undefined || !rawText) {
+    if (dayOfWeek === undefined || !rawText || !isPublishableVenueHours(rawText)) {
       continue;
     }
     const normalized = rawText.toLowerCase();
