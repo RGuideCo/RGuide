@@ -1886,6 +1886,25 @@ textarea:focus-visible {
   animation: profile-submit-right-expand-in 640ms cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
+.category-insight-draw-in {
+  animation: category-insight-draw-in 360ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  transform-origin: top center;
+}
+
+@keyframes category-insight-draw-in {
+  0% {
+    clip-path: inset(0 0 100% 0 round 10px);
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+
+  100% {
+    clip-path: inset(0 0 0 0 round 10px);
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 .neighborhood-selection-swipe {
   transform: translateX(-104%);
   animation: neighborhood-selection-swipe-in 360ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
