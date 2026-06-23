@@ -3869,6 +3869,8 @@ export function SplitScreenSection({
       }),
     [activeCategoryInsight, activeFoodCuisine, activeSeoPlaceLabel],
   );
+  const isCategoryInsightMode = !expandedGuide && Boolean(activeCategoryInsight);
+  const shouldShowVisibleIntroCopy = Boolean(visibleIntroCopyDisplay && !isCategoryInsightMode);
   const handleCategoryInsightChipSelect = (chip: string) => {
     if (!activeCategoryInsight) {
       return;
@@ -6369,7 +6371,7 @@ export function SplitScreenSection({
                               : "translateY(-8px)",
                         }}
                       >
-                        {visibleIntroCopyDisplay ? (
+                        {shouldShowVisibleIntroCopy ? (
                           <p
                             className={`ml-3 min-h-[9rem] border-l pl-3 text-sm leading-5 ${
                               activeDestinationImage
@@ -6381,7 +6383,7 @@ export function SplitScreenSection({
                           </p>
                         ) : null}
                         {!expandedGuide ? (
-                          <div className="mt-3 flex items-center gap-2">
+                          <div className={`${isCategoryInsightMode ? "mt-1" : "mt-3"} flex items-center gap-2`}>
                             {activeStayBookingHref ? (
                               <div className="inline-flex h-9 overflow-hidden rounded-full border border-cyan-600/45 bg-white shadow-sm">
                                 <button
@@ -6442,7 +6444,7 @@ export function SplitScreenSection({
                         ) : null}
                         {!expandedGuide && activeCategoryInsight ? (
                           <div
-                            className={`mt-3 rounded-[10px] border p-3 ${
+                            className={`category-insight-draw-in mt-3 rounded-[10px] border p-3 ${
                               activeDestinationImage
                                 ? "border-white/18 bg-black/24 text-white shadow-[0_12px_34px_rgba(0,0,0,0.18)]"
                                 : "border-slate-200/80 bg-white/75 text-slate-800 shadow-sm"

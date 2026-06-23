@@ -130,7 +130,11 @@ const topCityDescriptionOverrides = new Map<string, string>([
   ],
   [
     "rome",
-    "Rome is a layered capital where ancient sites, piazzas, trattorias, churches, wine bars, boutique stays, and walkable neighborhoods overlap constantly. It works best when monuments are spaced with meals, quiet streets, and evening routes through places like Monti or Trastevere.",
+    "Rome is stone, heat, appetite, and argument layered on top of empire. Give the monuments room, then let the city become human again: Monti for old streets, Trastevere for late tables, Testaccio for the stomach, and Prati when Vatican days need a softer landing.",
+  ],
+  [
+    "milan",
+    "Milan is a design and fashion city that does not try to charm you first; it makes you notice cut, surface, ritual, and work. Use it through neighborhood logic: Brera for galleries, Navigli for aperitivo, Porta Garibaldi for the new city, Quadrilatero for fashion, and dinner when the polish finally loosens.",
   ],
   [
     "barcelona",
@@ -158,47 +162,47 @@ const topCityDescriptionOverrides = new Map<string, string>([
   ],
   [
     "new-york-city",
-    "New York City is a dense five-borough city where neighborhood food, museums, theater, parks, cocktail rooms, hotels, and late transit make every guide choice about geography and pace. It works best on foot, with landmarks as anchors and meals or detours carrying the route.",
+    "New York is hunger, speed, and neighborhood weather. Use it by borough and by appetite: Manhattan for vertical pressure, Brooklyn for long walks and dinner plans, Queens when food is the reason, Harlem for rhythm and history, and the ferry or park when the city needs distance.",
   ],
   [
     "miami",
-    "Miami is a high-energy coastal city where beaches, Cuban and Caribbean food, art districts, design hotels, rooftop bars, late clubs, waterfront walks, and Keys or Everglades side routes define the trip. It works best when beach time, nightlife, and car logistics are planned together.",
+    "Miami runs on heat, salt, cafecito, and the feeling that the night is always about to start. Use it by temperature: South Beach for spectacle, Little Havana for pulse, Wynwood for color and churn, Coconut Grove for shade, and the Everglades when the city needs to feel less certain.",
   ],
   [
     "los-angeles",
-    "Los Angeles is sunlit sprawl where beach mornings, studio history, taco routes, design hotels, museums, canyon drives, shopping streets, and destination dining coexist by neighborhood. It works best with tight geography and a few anchors worth crossing town for.",
+    "Los Angeles rewards discipline more than ambition. Pick a side of town and let it breathe: tacos before traffic, canyons before heat, Koreatown after dark, Venice when the ocean is the point, and a museum or studio stop only when the drive does not eat the day alive.",
   ],
   [
     "orlando",
-    "Orlando is more than park logistics: resort stays, convention days, lakes, Winter Park afternoons, Mills 50 meals, outlet runs, food halls, and cocktail stops all change how the trip works. The useful route gives visitors something good before, between, and after ticketed days.",
+    "Orlando is built around anticipation, but the trip gets better when the ticketed day is not the whole story. Use the parks with strategy, then let Winter Park, Mills 50, lakes, resort bars, and late group dinners give the city a life before and after the gates.",
   ],
   [
     "san-francisco",
-    "San Francisco is a compact bay city where steep neighborhoods, ferry views, parks, museums, restaurants, cocktail rooms, waterfronts, and quick Marin or wine-country routes fit into tight days. It works best with realistic hills, transit, and a few strong neighborhood anchors.",
+    "San Francisco looks small until the hills start charging interest. Build it by slope and weather: the Mission for appetite, North Beach and Chinatown for old rooms, the Presidio for air, the ferry for perspective, and a bar or bakery when the fog makes the city feel private.",
   ],
   [
     "las-vegas",
-    "Las Vegas is a destination-scale city where resorts, dining rooms, shows, clubs, spas, pools, downtown bars, Chinatown food, and desert day trips turn one map into very different trips. It works best when reservations, distance, budget, and recovery time are part of the plan.",
+    "Las Vegas is honest about appetite: money, spectacle, air-conditioning, late rooms, and the desert waiting outside the glass. Choose your version early: Strip ceremony, Downtown neon, Chinatown dinner, pool recovery, or Red Rock when the whole machine starts to feel too loud.",
   ],
   [
     "washington-dc",
-    "Washington, DC is a monument-and-museum capital where federal landmarks, parks, embassies, restaurants, cocktail corridors, hotel bases, and transit-linked neighborhoods make culture-heavy trips efficient. It works best when free museums are paced with meals and local districts.",
+    "Washington, DC can feel ceremonial until you leave the marble and find the neighborhoods doing the living. Use the Mall for scale, then move toward Shaw, Dupont, U Street, Georgetown, or Capitol Hill, where museums give way to restaurants, row houses, parks, and a less official pulse.",
   ],
   [
     "chicago",
-    "Chicago is a lakefront city where architecture, museums, neighborhood taverns, deep food traditions, sports, hotels, river walks, and summer beaches make routes work by season and train line. It works best when the lake, Loop, and neighborhood meals each get room.",
+    "Chicago is a city of lake wind, steel, brick, taverns, and neighborhoods that do not need to flatter you. Give the Loop its architecture, then get out for the meal: West Loop for polish, Logan Square for the night, Pilsen for color and masa, and the lakefront when the weather allows mercy.",
   ],
   [
     "boston",
-    "Boston is a compact historic city where harbor walks, universities, sports nights, seafood, Italian dinners, museums, pubs, and Cambridge or North Shore side routes fit cleanly into walkable days. It works best when old streets, transit, and meal anchors stay close.",
+    "Boston is compact, opinionated, and better when history is allowed to share the table with seafood, pubs, bookstores, campuses, and the harbor. Walk the old streets, then choose your edge: North End for dinner, Cambridge for brains and bars, Fenway for noise, and the water when the city tightens up.",
   ],
   [
     "honolulu",
-    "Honolulu is an island-city base where Waikiki stays, beaches, surf breaks, plate lunches, Chinatown bars, palace history, hikes, and windward or North Shore routes connect city browsing with Oahu days. It works best when weather, drive time, and beach recovery are built in.",
+    "Honolulu is not just the beach below the hotel balcony. It is plate lunch, surf light, palace history, Chinatown drinks, ridge hikes, and the constant negotiation between city time and island weather. Use Waikiki for ease, then earn the wider Oahu day with an early start and a realistic drive.",
   ],
   [
     "bangkok",
-    "Bangkok is a high-energy capital where street food, temples, malls, river routes, rooftop bars, design hotels, markets, and late-night neighborhoods make planning about heat and pacing. It works best when transit, traffic, shade, and meals shape the order of the day.",
+    "Bangkok is heat, incense, traffic, river light, and food smoke curling out before you know where it starts. Plan by energy, not ambition: temples early, Chinatown after dark, Sukhumvit when the night stretches, the river when traffic wins, and the arctic chill of a 7-Eleven when the city gets too hot to argue with.",
   ],
   [
     "hong-kong",
@@ -210,11 +214,15 @@ const topCityDescriptionOverrides = new Map<string, string>([
   ],
   [
     "dubai",
-    "Dubai is a high-gloss desert city where skyline hotels, malls, beaches, destination restaurants, rooftop bars, heritage quarters, marina life, and desert experiences define planning. It works best when heat, bookings, drive time, and neighborhood purpose are decided early.",
+    "Dubai is heat, glass, ambition, and desert always waiting beyond the skyline. Decide the trip before the city decides for you: Deira for trade and texture, Jumeirah for beach light, Downtown for height, the Marina for spectacle, and the desert when the gloss needs silence.",
   ],
   [
     "singapore",
-    "Singapore is an efficient city-state where hawker centers, gardens, malls, hotels, cocktail bars, heritage districts, transit, and waterfront spectacle make compact routes easy. It works best when heat, MRT access, food stops, and indoor-outdoor pacing are planned together.",
+    "Singapore is order with steam rising through it. Move between hawker centers, gardens, temples, malls, and cocktail rooms by heat and hunger: Chinatown for layers, Little India for color, Marina Bay for spectacle, and a food court when the city's precision needs soul.",
+  ],
+  [
+    "taipei",
+    "Taipei is a city of rain, scooters, night markets, mountain edges, temple smoke, and meals that happen in small, bright rooms. Use it by appetite and weather: Dadaocheng for old streets, Ximending for youth and neon, Da'an for cafes, and a night market when the day needs a louder ending.",
   ],
   [
     "kuala-lumpur",
@@ -222,11 +230,23 @@ const topCityDescriptionOverrides = new Map<string, string>([
   ],
   [
     "tokyo",
-    "Tokyo is a vast rail-connected city where ramen counters, sushi rooms, cocktail bars, shopping streets, design hotels, museums, gardens, and neighborhood micro-routes reward precision. It works best when each day is clustered by station, meal timing, and evening energy.",
+    "Tokyo is a rail-connected city of exact rituals and private worlds stacked in public view. Build it by neighborhood and timing: Ginza for polish, Shinjuku after dark, Ueno for museums and market energy, Ebisu for dinner, and Nakameguro or Daikanyama when the city needs to soften around the edges.",
+  ],
+  [
+    "osaka",
+    "Osaka is where Japan loosens its collar and orders another plate. Build it around food and proximity: Dotonbori for takoyaki and late neon, Kuromon for market grazing, Shinsekai for kushikatsu and old color, Umeda for vertical city life, and Namba when dinner should turn into another stop.",
   ],
   [
     "seoul",
-    "Seoul is a fast, stylish city where palace grounds, barbecue nights, markets, cafes, design hotels, shopping districts, museums, mountains, and all-night food routes shift by subway stop. It works best when each cluster has a meal, a walk, and a late option.",
+    "Seoul moves fast, eats late, and rarely lets one mood hold the day. Build it by subway stop and hunger: Jongno for palaces, Hongdae for youth and noise, Itaewon for the night's mixed signals, Gangnam for polish, and barbecue when the city needs heat at the table.",
+  ],
+  [
+    "sydney",
+    "Sydney is a city built around water, but the trip only works when the harbor is more than a photograph. Use it by edge and appetite: Circular Quay for the icons, Surry Hills for dinner, Bondi for the beach ritual, Newtown for a rougher night out, and the ferry when the city needs to open up.",
+  ],
+  [
+    "melbourne",
+    "Melbourne is a city that reveals itself slowly, usually over coffee, weather, and a table you almost walked past. Use the center for lanes and bars, Fitzroy for the sharper edge, Carlton for Italian old bones, St Kilda when the bay matters, and dinner when the day turns inward.",
   ],
   [
     "phuket",

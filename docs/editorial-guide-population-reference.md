@@ -28,45 +28,45 @@ The push command validates local duplicate `id` and `slug` values, checks the re
 When a prompt mentions `top 40`, use this as the working city queue for editorial guide population. Treat the spelling below as canonical for data entry, route naming, source searches, and progress tracking.
 
 1. Paris, France
-2. London, United Kingdom
-3. Istanbul, Turkey
+2. Madrid, Spain
+3. Tokyo, Japan
 4. Rome, Italy
-5. Barcelona, Spain
-6. Lisbon, Portugal
+5. Milan, Italy
+6. New York City, United States
 7. Amsterdam, Netherlands
-8. Madrid, Spain
-9. Prague, Czech Republic
-10. Berlin, Germany
-11. New York City, United States
-12. Miami, United States
-13. Los Angeles, United States
-14. Orlando, United States
-15. San Francisco, United States
-16. Las Vegas, United States
-17. Washington, D.C., United States
-18. Chicago, United States
-19. Boston, United States
-20. Honolulu, United States
-21. Bangkok, Thailand
-22. Hong Kong
-23. Macau
-24. Dubai, United Arab Emirates
-25. Singapore
-26. Kuala Lumpur, Malaysia
-27. Tokyo, Japan
-28. Seoul, South Korea
-29. Phuket, Thailand
-30. Mecca, Saudi Arabia
-31. Cancun, Mexico
-32. Cusco, Peru
-33. Mexico City, Mexico
-34. Buenos Aires, Argentina
-35. Rio de Janeiro, Brazil
-36. Lima, Peru
-37. Medellin, Colombia
-38. Quito, Ecuador
-39. Antigua Guatemala, Guatemala
-40. Bogota, Colombia
+8. Sydney, Australia
+9. Singapore
+10. Barcelona, Spain
+11. Taipei, Taiwan
+12. Seoul, South Korea
+13. London, United Kingdom
+14. Dubai, United Arab Emirates
+15. Berlin, Germany
+16. Osaka, Japan
+17. Bangkok, Thailand
+18. Los Angeles, United States
+19. Istanbul, Turkey
+20. Melbourne, Australia
+21. Hong Kong
+22. Munich, Germany
+23. Las Vegas, United States
+24. Florence, Italy
+25. Prague, Czech Republic
+26. Dublin, Ireland
+27. Kyoto, Japan
+28. Vienna, Austria
+29. Lisbon, Portugal
+30. Venice, Italy
+31. Kuala Lumpur, Malaysia
+32. Athens, Greece
+33. Orlando, United States
+34. Toronto, Canada
+35. Miami, United States
+36. San Francisco, United States
+37. Shanghai, China
+38. Frankfurt, Germany
+39. Copenhagen, Denmark
+40. Zurich, Switzerland
 
 Accepted aliases from planning notes:
 
@@ -76,16 +76,14 @@ Accepted aliases from planning notes:
 - Orlando, FL -> Orlando, United States
 - San Francisco, CA -> San Francisco, United States
 - Las Vegas, NV -> Las Vegas, United States
-- Washington, D.C. -> Washington, D.C., United States
-- Chicago, IL -> Chicago, United States
-- Boston, MA -> Boston, United States
-- Honolulu, HI -> Honolulu, United States
 - Dubai, UAE -> Dubai, United Arab Emirates
-- Cancún, Mexico -> Cancun, Mexico
-- Cuzco, Peru -> Cusco, Peru
-- Medillin, Colombia -> Medellin, Colombia
-- Antigua, Guatemala -> Antigua Guatemala, Guatemala
-- Bogotá, Colombia -> Bogota, Colombia
+- NYC -> New York City, United States
+- LA -> Los Angeles, United States
+- SF -> San Francisco, United States
+- Zürich, Switzerland -> Zurich, Switzerland
+- Frankfurt am Main, Germany -> Frankfurt, Germany
+- Firenze, Italy -> Florence, Italy
+- München, Germany -> Munich, Germany
 
 ## Top 40 Description Briefs
 
