@@ -32,6 +32,7 @@ export function getCityHighlightThemes(category: ListCategory, contextualFoodCui
 type CategoryDescriptionProfile = {
   city: string;
   food: string;
+  foodDescription?: string;
   nightlife: string;
   culture: string;
   stay: string;
@@ -43,7 +44,9 @@ type CategoryDescriptionProfile = {
 
 function buildCategoryDescriptionOverride(profile: CategoryDescriptionProfile): Partial<Record<ListCategory, string>> {
   return {
-    Food: `${profile.city} food works best when it is mapped by neighborhood and meal rhythm: ${profile.food}. Use it to choose a meal that fits the route instead of chasing a generic best-of list across town.`,
+    Food:
+      profile.foodDescription ??
+      `${profile.city} food works best when it is mapped by neighborhood and meal rhythm: ${profile.food}. Use it to choose a meal that fits the route instead of chasing a generic best-of list across town.`,
     Nightlife: `${profile.city} nightlife needs the right room for the night: ${profile.nightlife}. Use it to pick the energy level, crowd, and timing before the plan turns into a long transfer or queue.`,
     Culture: `${profile.city} culture is strongest when the route connects its layers: ${profile.culture}. Use it to build days around a few anchors, with streets, meals, and quieter stops carrying the gaps.`,
     Stay: `${profile.city} stays should match the trip shape: ${profile.stay}. Use it to choose a base by transit, sleep style, nightlife reach, and the neighborhoods you will actually revisit.`,
@@ -292,6 +295,8 @@ export const categoryCityDescriptionProfiles: Record<string, CategoryDescription
   tokyo: {
     city: "Tokyo",
     food: "ramen counters, sushi rooms, izakaya, department-store food, neighborhood specialties, bakeries, and reservation meals",
+    foodDescription:
+      "Tokyo eating is station-by-station: ramen counters, sushi rooms, izakaya, depachika halls, bakeries, and reservation meals each fit a different moment. Pick the meal first, then the neighborhood.",
     nightlife: "cocktail bars, izakaya lanes, clubs, jazz rooms, karaoke, hotel bars, and late districts by train line",
     culture: "temples, museums, design, anime and game culture, gardens, craft streets, and traditional-modern contrasts",
     stay: "rail-line convenience, Shinjuku energy, Ginza polish, Asakusa texture, Shibuya shopping, or quieter neighborhood bases",

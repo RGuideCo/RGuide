@@ -374,7 +374,35 @@ function getSubcategoryFilterAliases(subcategory: string) {
 }
 
 export function inferFoodCuisine(list: MapList, cuisineOptions: string[]): string {
-  const text = `${list.title} ${list.description}`.toLowerCase();
+  const stops = getListPoiStops(list);
+  const structuredCuisineValues = stops.flatMap((stop) => [
+    ...valuesFromMaybeArray(stop.cuisineTypes),
+    ...valuesFromMaybeArray(stop.subcategory),
+    ...valuesFromMaybeArray(stop.subcategories),
+    ...valuesFromMaybeArray(stop.attributeTags),
+    ...valuesFromMaybeArray(stop.tags),
+  ]);
+  const structuredMatch = cuisineOptions.find((cuisine) =>
+    structuredCuisineValues.some((value) => filterValuesMatch(value, cuisine)),
+  );
+
+  if (structuredMatch) {
+    return structuredMatch;
+  }
+
+  const text = `${list.title} ${list.description} ${stops
+    .map((stop) =>
+      [
+        stop.name,
+        stop.description,
+        stop.subcategory,
+        ...(stop.subcategories ?? []),
+        ...(stop.cuisineTypes ?? []),
+        ...(stop.attributeTags ?? []),
+        ...(stop.tags ?? []),
+      ].join(" "),
+    )
+    .join(" ")}`.toLowerCase();
   const has = (pattern: RegExp) => pattern.test(text);
   const matchers: Array<{ cuisine: string; pattern: RegExp }> = [
     { cuisine: "Street Food", pattern: /street|food truck|market|stall|night market/ },
@@ -415,7 +443,7 @@ export function inferFoodCuisine(list: MapList, cuisineOptions: string[]): strin
     }
   }
 
-  return cuisineOptions[0] ?? FOOD_CUISINE_ANY;
+  return FOOD_CUISINE_ANY;
 }
 
 function getFoodCuisineFilterAliases(cuisine: string) {

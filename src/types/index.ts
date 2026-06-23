@@ -72,6 +72,37 @@ export type PriceTier = "$" | "$$" | "$$$" | "$$$$";
 
 export type VenueOperatingStatus = "open" | "temporarily_closed" | "permanently_closed" | "seasonal" | "unknown";
 
+export interface DestinationCategoryInsightChip {
+  slug: string;
+  label: string;
+  filterKind: "subcategory" | "cuisine" | "attribute" | "freeform";
+  filterValue: string;
+}
+
+export interface DestinationCategoryInsightNote {
+  key?: string;
+  label?: string;
+  body: string;
+}
+
+export interface DestinationCategoryInsight {
+  category: ListCategory;
+  label?: string;
+  summary?: string;
+  chips: DestinationCategoryInsightChip[];
+  notes: DestinationCategoryInsightNote[];
+}
+
+export interface DestinationCategoryNeighborhoodStrength {
+  neighborhoodId: string;
+  neighborhoodName?: string;
+  category: ListCategory;
+  fieldKey: string;
+  score: number;
+  rationale?: string;
+  sourceUrls?: string[];
+}
+
 export interface VenueHoursInterval {
   dayOfWeek: 0 | 1 | 2 | 3 | 4 | 5 | 6;
   intervalOrder?: number;
@@ -382,6 +413,8 @@ export interface SubArea {
   coordinates: [number, number];
   description?: string;
   subareas?: SubArea[];
+  categoryInsights?: DestinationCategoryInsight[];
+  categoryNeighborhoodStrengths?: DestinationCategoryNeighborhoodStrength[];
 }
 
 export interface CountryState extends SubArea {
@@ -406,6 +439,8 @@ export interface City {
     cityLeftPanelStayUrl?: string;
   };
   popularFoodCuisines?: string[];
+  categoryInsights?: DestinationCategoryInsight[];
+  categoryNeighborhoodStrengths?: DestinationCategoryNeighborhoodStrength[];
 }
 
 export interface Country {

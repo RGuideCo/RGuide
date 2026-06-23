@@ -4,7 +4,18 @@ import { unstable_cache } from "next/cache";
 import { createClient } from "@supabase/supabase-js";
 
 import { getContinents } from "@/lib/mock-data";
-import type { City, Continent, Country, CountryState, SubArea } from "@/types";
+import type {
+  City,
+  Continent,
+  Country,
+  CountryState,
+  DestinationCategoryInsight,
+  DestinationCategoryInsightChip,
+  DestinationCategoryInsightNote,
+  DestinationCategoryNeighborhoodStrength,
+  ListCategory,
+  SubArea,
+} from "@/types";
 
 export type DestinationDescriptionEntityType =
   | "continent"
@@ -47,6 +58,26 @@ interface DestinationImageRow {
   imageUpdatedAt: string | null;
 }
 
+interface DestinationCategoryInsightRow {
+  id: string;
+  category: ListCategory;
+  label: string | null;
+  summary: string | null;
+  chips: unknown;
+  notes: unknown;
+}
+
+interface DestinationCategoryNeighborhoodStrengthRow {
+  parentId: string;
+  neighborhoodId: string;
+  neighborhoodName: string | null;
+  category: ListCategory;
+  fieldKey: string;
+  score: number;
+  rationale: string | null;
+  sourceUrls: string[] | null;
+}
+
 interface DestinationDataApiImageRow {
   legacy_id: string | null;
   image_url: string | null;
@@ -63,6 +94,8 @@ interface DestinationContentRows {
   cityAffiliateLinks: CityAffiliateLinkRow[];
   cityFoodCuisines: CityFoodCuisineRow[];
   destinationImages: DestinationImageRow[];
+  categoryInsights: DestinationCategoryInsightRow[];
+  neighborhoodStrengths: DestinationCategoryNeighborhoodStrengthRow[];
 }
 
 interface DestinationContentLoadOptions {
@@ -86,6 +119,115 @@ function versionedImageUrl(imageUrl: string | undefined, imageUpdatedAt: string 
   const separator = imageUrl.includes("?") ? "&" : "?";
   const version = encodeURIComponent(imageUpdatedAt);
   return `${imageUrl}${separator}v=${version}`;
+}
+
+function emptyDestinationContentRows(): DestinationContentRows {
+  return {
+    descriptions: [],
+    cityAffiliateLinks: [],
+    cityFoodCuisines: [],
+    destinationImages: [],
+    categoryInsights: [],
+    neighborhoodStrengths: [],
+  };
+}
+
+function isListCategory(value: unknown): value is ListCategory {
+  return (
+    value === "Food" ||
+    value === "Nightlife" ||
+    value === "Nature" ||
+    value === "Culture" ||
+    value === "Stay" ||
+    value === "Activities" ||
+    value === "Routes" ||
+    value === "Essentials"
+  );
+}
+
+function isPlainObject(value: unknown): value is Record<string, unknown> {
+  return Boolean(value && typeof value === "object" && !Array.isArray(value));
+}
+
+function normalizeInsightChips(value: unknown): DestinationCategoryInsightChip[] {
+  if (!Array.isArray(value)) {
+    return [];
+  }
+
+  return value.flatMap((item) => {
+    if (!isPlainObject(item)) {
+      return [];
+    }
+
+    const label = typeof item.label === "string" ? item.label.trim() : "";
+    const filterValue = typeof item.filterValue === "string" ? item.filterValue.trim() : label;
+    const filterKind = item.filterKind;
+
+    if (!label || !filterValue) {
+      return [];
+    }
+
+    return [
+      {
+        slug: typeof item.slug === "string" && item.slug.trim() ? item.slug.trim() : label.toLowerCase(),
+        label,
+        filterKind:
+          filterKind === "subcategory" ||
+          filterKind === "cuisine" ||
+          filterKind === "attribute" ||
+          filterKind === "freeform"
+            ? filterKind
+            : "subcategory",
+        filterValue,
+      },
+    ];
+  });
+}
+
+function normalizeInsightNotes(value: unknown): DestinationCategoryInsightNote[] {
+  if (!Array.isArray(value)) {
+    return [];
+  }
+
+  return value.flatMap((item) => {
+    if (!isPlainObject(item)) {
+      return [];
+    }
+
+    const body = typeof item.body === "string" ? item.body.trim() : "";
+
+    if (!body) {
+      return [];
+    }
+
+    return [
+      {
+        key: typeof item.key === "string" && item.key.trim() ? item.key.trim() : undefined,
+        label: typeof item.label === "string" && item.label.trim() ? item.label.trim() : undefined,
+        body,
+      },
+    ];
+  });
+}
+
+function normalizeCategoryInsightRow(row: DestinationCategoryInsightRow): DestinationCategoryInsight | null {
+  if (!isListCategory(row.category)) {
+    return null;
+  }
+
+  const notes = normalizeInsightNotes(row.notes);
+
+  if (!notes.length) {
+    return null;
+  }
+
+  return {
+    category: row.category,
+    label: row.label?.trim() || undefined,
+    summary: row.summary?.trim() || undefined,
+    chips: normalizeInsightChips(row.chips),
+    notes,
+  };
 }
 
 function collectSubareaDescriptions(
@@ -245,8 +387,17 @@ async function loadDestinationContentRows(options: DestinationContentLoadOptions
     const cityAffiliateLinks = await loadCityLeftPanelAffiliateLinkRows(client);
     const cityFoodCuisines = await loadCityFoodCuisineRows(client);
     const destinationImages = await loadDestinationImageRows(client);
+    const categoryInsights = await loadDestinationCategoryInsightRows(client);
+    const neighborhoodStrengths = await loadDestinationCategoryNeighborhoodStrengthRows(client);
 
-    return { descriptions, cityAffiliateLinks, cityFoodCuisines, destinationImages };
+    return {
+      descriptions,
+      cityAffiliateLinks,
+      cityFoodCuisines,
+      destinationImages,
+      categoryInsights,
+      neighborhoodStrengths,
+    };
   } catch (error) {
     console.error("Failed to load destination content", error);
     return loadDestinationContentRowsFromDataApi();
@@ -259,7 +410,7 @@ async function loadDestinationContentRowsFromDataApi(): Promise<DestinationConte
   const config = getSupabaseDataApiConfig();
 
   if (!config) {
-    return { descriptions: [], cityAffiliateLinks: [], cityFoodCuisines: [], destinationImages: [] };
+    return emptyDestinationContentRows();
   }
 
   const supabase = createClient(config.url, config.key, {
@@ -291,7 +442,75 @@ async function loadDestinationContentRowsFromDataApi(): Promise<DestinationConte
         ];
       });
 
-  return { descriptions: [], cityAffiliateLinks: [], cityFoodCuisines: [], destinationImages };
+  const [{ data: insightData }, { data: strengthData }] = await Promise.all([
+    supabase
+      .from("active_destination_category_insights")
+      .select("destination_legacy_id,category,label,summary,chips,notes")
+      .eq("locale", "en")
+      .not("destination_legacy_id", "is", null),
+    supabase
+      .from("active_destination_category_neighborhood_strengths")
+      .select(
+        "parent_destination_legacy_id,neighborhood_destination_legacy_id,neighborhood_destination_name,category,field_key,score,rationale,source_urls",
+      )
+      .not("parent_destination_legacy_id", "is", null)
+      .not("neighborhood_destination_legacy_id", "is", null),
+  ]);
+
+  const categoryInsights: DestinationCategoryInsightRow[] = (insightData ?? []).flatMap((row) => {
+    const id = typeof row.destination_legacy_id === "string" ? row.destination_legacy_id : "";
+    const category = row.category;
+
+    if (!id || !isListCategory(category)) {
+      return [];
+    }
+
+    return [
+      {
+        id,
+        category,
+        label: typeof row.label === "string" ? row.label : null,
+        summary: typeof row.summary === "string" ? row.summary : null,
+        chips: row.chips,
+        notes: row.notes,
+      },
+    ];
+  });
+
+  const neighborhoodStrengths: DestinationCategoryNeighborhoodStrengthRow[] = (strengthData ?? []).flatMap((row) => {
+    const parentId = typeof row.parent_destination_legacy_id === "string" ? row.parent_destination_legacy_id : "";
+    const neighborhoodId =
+      typeof row.neighborhood_destination_legacy_id === "string" ? row.neighborhood_destination_legacy_id : "";
+    const category = row.category;
+    const score = typeof row.score === "number" ? row.score : Number(row.score);
+
+    if (!parentId || !neighborhoodId || !isListCategory(category) || !Number.isFinite(score)) {
+      return [];
+    }
+
+    return [
+      {
+        parentId,
+        neighborhoodId,
+        neighborhoodName:
+          typeof row.neighborhood_destination_name === "string" ? row.neighborhood_destination_name : null,
+        category,
+        fieldKey: typeof row.field_key === "string" ? row.field_key : "default",
+        score,
+        rationale: typeof row.rationale === "string" ? row.rationale : null,
+        sourceUrls: Array.isArray(row.source_urls) ? row.source_urls.filter((url): url is string => typeof url === "string") : null,
+      },
+    ];
+  });
+
+  return {
+    descriptions: [],
+    cityAffiliateLinks: [],
+    cityFoodCuisines: [],
+    destinationImages,
+    categoryInsights,
+    neighborhoodStrengths,
+  };
 }
 
 async function loadNormalizedDestinationDescriptionRows(client: Client) {
@@ -378,6 +597,52 @@ async function loadDestinationImageRows(client: Client) {
   }
 }
 
+async function loadDestinationCategoryInsightRows(client: Client) {
+  try {
+    const { rows } = await client.query<DestinationCategoryInsightRow>(
+      [
+        "select destination_legacy_id as id,",
+        "       category,",
+        "       label,",
+        "       summary,",
+        "       chips,",
+        "       notes",
+        "from public.active_destination_category_insights",
+        "where locale = 'en'",
+        "  and destination_legacy_id is not null",
+        "order by destination_legacy_id, sort_order, category",
+      ].join(" "),
+    );
+    return rows;
+  } catch {
+    return [];
+  }
+}
+
+async function loadDestinationCategoryNeighborhoodStrengthRows(client: Client) {
+  try {
+    const { rows } = await client.query<DestinationCategoryNeighborhoodStrengthRow>(
+      [
+        "select parent_destination_legacy_id as \"parentId\",",
+        "       neighborhood_destination_legacy_id as \"neighborhoodId\",",
+        "       neighborhood_destination_name as \"neighborhoodName\",",
+        "       category,",
+        "       field_key as \"fieldKey\",",
+        "       score::float8 as score,",
+        "       rationale,",
+        "       source_urls as \"sourceUrls\"",
+        "from public.active_destination_category_neighborhood_strengths",
+        "where parent_destination_legacy_id is not null",
+        "  and neighborhood_destination_legacy_id is not null",
+        "order by parent_destination_legacy_id, category, field_key, score desc",
+      ].join(" "),
+    );
+    return rows;
+  } catch {
+    return [];
+  }
+}
+
 const getCachedDestinationContentRows = unstable_cache(
   async () => {
     return loadDestinationContentRows();
@@ -407,6 +672,8 @@ const getCachedRuntimeDestinationContentRows = unstable_cache(
 function cloneSubareasWithDescriptions(
   subareas: SubArea[] | undefined,
   descriptions: Map<string, string>,
+  categoryInsights: Map<string, DestinationCategoryInsight[]>,
+  neighborhoodStrengths: Map<string, DestinationCategoryNeighborhoodStrength[]>,
   context: {
     type: "region" | "neighborhood";
     parentId: string;
@@ -423,10 +690,18 @@ function cloneSubareasWithDescriptions(
     return {
       ...subarea,
       description: descriptions.get(id) ?? subarea.description,
-      subareas: cloneSubareasWithDescriptions(subarea.subareas, descriptions, {
-        ...context,
-        parentId: subarea.id,
-      }),
+      categoryInsights: categoryInsights.get(id) ?? subarea.categoryInsights,
+      categoryNeighborhoodStrengths: neighborhoodStrengths.get(id) ?? subarea.categoryNeighborhoodStrengths,
+      subareas: cloneSubareasWithDescriptions(
+        subarea.subareas,
+        descriptions,
+        categoryInsights,
+        neighborhoodStrengths,
+        {
+          ...context,
+          parentId: subarea.id,
+        },
+      ),
     };
   });
 }
@@ -445,6 +720,8 @@ function cloneCityWithDescription(
   cityAffiliateLinks: Map<string, CityAffiliateLinkRow>,
   cityFoodCuisines: Map<string, CityFoodCuisineRow>,
   destinationImages: Map<string, DestinationImageRow>,
+  categoryInsights: Map<string, DestinationCategoryInsight[]>,
+  neighborhoodStrengths: Map<string, DestinationCategoryNeighborhoodStrength[]>,
 ) {
   const cityDescriptionId = descriptionId("city", countryId, city.id);
   const affiliateLink = cityAffiliateLinks.get(cityDescriptionId);
@@ -464,12 +741,20 @@ function cloneCityWithDescription(
         }
       : city.affiliateLinks,
     popularFoodCuisines: foodCuisines?.length ? foodCuisines : city.popularFoodCuisines,
-    subareas: cloneSubareasWithDescriptions(city.subareas, descriptions, {
-      type: "neighborhood",
-      parentId: city.id,
-      countryId,
-      cityId: city.id,
-    }),
+    categoryInsights: categoryInsights.get(cityDescriptionId) ?? city.categoryInsights,
+    categoryNeighborhoodStrengths: neighborhoodStrengths.get(cityDescriptionId) ?? city.categoryNeighborhoodStrengths,
+    subareas: cloneSubareasWithDescriptions(
+      city.subareas,
+      descriptions,
+      categoryInsights,
+      neighborhoodStrengths,
+      {
+        type: "neighborhood",
+        parentId: city.id,
+        countryId,
+        cityId: city.id,
+      },
+    ),
   };
 }
 
@@ -479,6 +764,8 @@ function cloneCountryWithDescription(
   cityAffiliateLinks: Map<string, CityAffiliateLinkRow>,
   cityFoodCuisines: Map<string, CityFoodCuisineRow>,
   destinationImages: Map<string, DestinationImageRow>,
+  categoryInsights: Map<string, DestinationCategoryInsight[]>,
+  neighborhoodStrengths: Map<string, DestinationCategoryNeighborhoodStrength[]>,
 ) {
   const countryImage = destinationImages.get(descriptionId("country", country.id));
   const imageUrl = versionedImageUrl(countryImage?.imageUrl, countryImage?.imageUpdatedAt);
@@ -487,14 +774,29 @@ function cloneCountryWithDescription(
     ...country,
     description: descriptions.get(descriptionId("country", country.id)) ?? country.description,
     image: imageUrl ?? country.image,
-    subareas: cloneSubareasWithDescriptions(country.subareas, descriptions, {
-      type: "region",
-      parentId: country.id,
-      countryId: country.id,
-    }),
+    subareas: cloneSubareasWithDescriptions(
+      country.subareas,
+      descriptions,
+      categoryInsights,
+      neighborhoodStrengths,
+      {
+        type: "region",
+        parentId: country.id,
+        countryId: country.id,
+      },
+    ),
     states: country.states?.map((state) => cloneStateWithDescription(country.id, state, descriptions)),
     cities: country.cities.map((city) =>
-      cloneCityWithDescription(country.id, city, descriptions, cityAffiliateLinks, cityFoodCuisines, destinationImages),
+      cloneCityWithDescription(
+        country.id,
+        city,
+        descriptions,
+        cityAffiliateLinks,
+        cityFoodCuisines,
+        destinationImages,
+        categoryInsights,
+        neighborhoodStrengths,
+      ),
     ),
   };
 }
@@ -505,16 +807,57 @@ export function applyDestinationDescriptions(
   cityAffiliateRows: CityAffiliateLinkRow[] = [],
   cityFoodCuisineRows: CityFoodCuisineRow[] = [],
   destinationImageRows: DestinationImageRow[] = [],
+  categoryInsightRows: DestinationCategoryInsightRow[] = [],
+  neighborhoodStrengthRows: DestinationCategoryNeighborhoodStrengthRow[] = [],
 ) {
   const descriptions = new Map(rows.map((row) => [row.id, row.description.trim()]));
   const cityAffiliateLinks = new Map(cityAffiliateRows.map((row) => [row.id, row]));
   const cityFoodCuisines = new Map(cityFoodCuisineRows.map((row) => [row.id, row]));
   const destinationImages = new Map(destinationImageRows.map((row) => [row.id, row]));
+  const categoryInsights = new Map<string, DestinationCategoryInsight[]>();
+  const neighborhoodStrengths = new Map<string, DestinationCategoryNeighborhoodStrength[]>();
+
+  for (const row of categoryInsightRows) {
+    const insight = normalizeCategoryInsightRow(row);
+
+    if (!insight) {
+      continue;
+    }
+
+    categoryInsights.set(row.id, [...(categoryInsights.get(row.id) ?? []), insight]);
+  }
+
+  for (const row of neighborhoodStrengthRows) {
+    if (!isListCategory(row.category) || !Number.isFinite(row.score)) {
+      continue;
+    }
+
+    neighborhoodStrengths.set(row.parentId, [
+      ...(neighborhoodStrengths.get(row.parentId) ?? []),
+      {
+        neighborhoodId: row.neighborhoodId,
+        neighborhoodName: row.neighborhoodName ?? undefined,
+        category: row.category,
+        fieldKey: row.fieldKey,
+        score: row.score,
+        rationale: row.rationale ?? undefined,
+        sourceUrls: row.sourceUrls ?? undefined,
+      },
+    ]);
+  }
 
   return continents.map((continent) => ({
     ...continent,
     countries: continent.countries.map((country) =>
-      cloneCountryWithDescription(country, descriptions, cityAffiliateLinks, cityFoodCuisines, destinationImages),
+      cloneCountryWithDescription(
+        country,
+        descriptions,
+        cityAffiliateLinks,
+        cityFoodCuisines,
+        destinationImages,
+        categoryInsights,
+        neighborhoodStrengths,
+      ),
     ),
   }));
 }
@@ -529,7 +872,7 @@ export async function getContinentsWithDestinationDescriptions(options: Destinat
       : getCachedDestinationContentRows;
   const rows = await loadRows().catch((error) => {
     console.error("Failed to load cached destination content", error);
-    return { descriptions: [], cityAffiliateLinks: [], cityFoodCuisines: [], destinationImages: [] };
+    return emptyDestinationContentRows();
   });
   return applyDestinationDescriptions(
     continents,
@@ -537,5 +880,7 @@ export async function getContinentsWithDestinationDescriptions(options: Destinat
     rows.cityAffiliateLinks,
     rows.cityFoodCuisines,
     rows.destinationImages,
+    rows.categoryInsights,
+    rows.neighborhoodStrengths,
   );
 }

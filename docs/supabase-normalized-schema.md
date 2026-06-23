@@ -23,6 +23,8 @@ Source-of-truth tables:
 
 - `destinations`: canonical continent, continent-region, country, country-region/state, city, and neighborhood entities.
 - `destination_descriptions_v2`: destination copy keyed by `destination_id`.
+- `destination_category_insights`, `destination_category_insight_chips`, `destination_category_insight_notes`: category-specific city and neighborhood notes for the left pane.
+- `destination_category_neighborhood_strengths`: researched category/subcategory strength scores from a parent destination to child neighborhoods.
 - `venues`: reusable places where events happen and entry stops can point.
 - `venue_hours`, `venue_special_hours`: canonical weekly and date-specific venue hours.
 - `venue_tags`, `venue_taggings`: normalized, filterable venue attributes.
@@ -56,6 +58,14 @@ Canonical destination hierarchy. `scope` supports `continent`, `country`, `regio
 `destination_descriptions_v2`
 
 Normalized descriptions keyed by `destination_id`. Runtime reads prefer this table only. Build-time HTML may use local static descriptions so Awin and other crawlers still see stable readable pages if the database is unavailable during build.
+
+`destination_category_insights`, `destination_category_insight_chips`, `destination_category_insight_notes`
+
+Source-of-truth category guidance for destinations. Use these for the left-pane notes shown after a category is selected. `destination_category_insights.destination_id` can point to a city or a neighborhood, so neighborhood-specific notes can override city-level notes without changing guide render caches. Chips are child rows with an explicit `filter_kind` (`cuisine`, `subcategory`, `attribute`, or `freeform`) and `filter_value` so UI chips can become filters without guessing from display text. Notes are child rows with a short label and body, ordered by `sort_order`.
+
+`destination_category_neighborhood_strengths`
+
+Researched category strength from a parent destination, usually a city, to child neighborhood destinations. Use `field_key = 'default'` for general category strength and filter-specific field keys such as `sushi`, `cocktail bar`, `dive bar`, `hotels`, or `museums` for more specific ranking. Scores are `0-10`, with researched rationale and source URLs. Guide coverage can still be used as a secondary signal in the app, but the DB score is the editorial source of truth.
 
 `venues`
 
@@ -132,6 +142,8 @@ Rendered weekly event publishing cache. It has explicit query columns: `submissi
 Common query paths are indexed:
 
 - Destination lookup: `(scope, slug)`, `(parent_id, scope)`, `(country_name, city_name)`.
+- Destination category notes: `destination_category_insights(destination_id, is_active, category, locale, sort_order)` plus child note/chip indexes by `insight_id`.
+- Destination category neighborhood strengths: `(parent_destination_id, category, field_key, is_active)` and `(neighborhood_destination_id, category, is_active)`.
 - City entry pages: `entries(city_id, category, status)`, `entries(submission_type, status)`.
 - Entry rendering: `entry_stops(entry_id, stop_order)`.
 - Stay search: `venues(city_id, lodging_type)` for lodging venues, `venues(city_id, venue_kind)`, and GIN on `venues.attribute_tags`.
@@ -163,7 +175,7 @@ The migration enables RLS on new tables and adds public read policies because rG
 
 Recommended write model:
 
-- Service role only for `destinations`, `destination_descriptions_v2`, `venues`, `venue_hours`, `venue_special_hours`, `venue_tags`, `venue_taggings`, `events`, `event_occurrences`, `sources`, source joins, event city publishing settings, source runs, render caches, and weekly publications.
+- Service role only for `destinations`, `destination_descriptions_v2`, destination category insight tables, destination category neighborhood strengths, `venues`, `venue_hours`, `venue_special_hours`, `venue_tags`, `venue_taggings`, `events`, `event_occurrences`, `sources`, source joins, event city publishing settings, source runs, render caches, and weekly publications.
 - Authenticated users may insert/update/delete only their own rows in `entries`.
 - Authenticated users may insert/update/delete `entry_stops` only when the parent `entries.user_id = auth.uid()`.
 - Browser/user submission writes should go directly to normalized `entries` and `entry_stops`; `submitted_guides` should not remain the active write path.
@@ -175,10 +187,12 @@ Backfill order:
 
 1. Populate `destinations` from local geography, then run `npm run ingest:destination-images-r2 -- --scope city --published-entries-only` or use `npm run sync:destinations` so populated city rows get a real Openverse/Wikimedia image copied into R2.
 2. Link and copy descriptions into `destination_descriptions_v2`.
-3. Insert editorial content into `entries` and `entry_stops`.
-4. Link venues, classifications, hours, tags, and sources.
-5. Generate `entry_render_cache` from `entries_maplist`.
-6. Insert event city settings, source runs, canonical events, venues, occurrences, sources, and weekly publications.
+3. Insert destination category notes into `destination_category_insights`, `destination_category_insight_chips`, and `destination_category_insight_notes`.
+4. Insert researched category/neighborhood scores into `destination_category_neighborhood_strengths`.
+5. Insert editorial content into `entries` and `entry_stops`.
+6. Link venues, classifications, hours, tags, and sources.
+7. Generate `entry_render_cache` from `entries_maplist`.
+8. Insert event city settings, source runs, canonical events, venues, occurrences, sources, and weekly publications.
 
 Ongoing publishing should write normalized tables first, then refresh render caches:
 
@@ -191,7 +205,7 @@ Ongoing publishing should write normalized tables first, then refresh render cac
 Current runtime reads:
 
 - [src/lib/server-editorial-guides.ts](/Users/brodriguez/Projects/rGuide/src/lib/server-editorial-guides.ts): reads `entries_maplist` and `weekly_events_maplist`, with schema-owned fallback to `entry_render_cache` and `weekly_event_publications`.
-- [src/lib/destination-descriptions.ts](/Users/brodriguez/Projects/rGuide/src/lib/destination-descriptions.ts): reads `destination_descriptions_v2`.
+- [src/lib/destination-descriptions.ts](/Users/brodriguez/Projects/rGuide/src/lib/destination-descriptions.ts): reads `destination_descriptions_v2`, destination category insights, destination category neighborhood strengths, city affiliate links, food cuisine chips, and destination images.
 - [src/lib/supabase/editorial-guides.ts](/Users/brodriguez/Projects/rGuide/src/lib/supabase/editorial-guides.ts): browser fallback reads `entries_maplist`, then `entry_render_cache`.
 - [src/lib/supabase/submitted-guides.ts](/Users/brodriguez/Projects/rGuide/src/lib/supabase/submitted-guides.ts): should be migrated to normalized writes before user submissions are enabled.
 

@@ -19,6 +19,7 @@ import {
   Route,
   Search,
   SquareArrowOutUpRight,
+  Star,
   UserRound,
   X,
 } from "lucide-react";
@@ -109,6 +110,11 @@ import {
   doesGuideMatchHighlightTheme,
   getLightCategoryTextColor,
 } from "@/components/home/split-screen/guide-rail";
+import {
+  buildCategoryInsight,
+  buildCategoryInsightNotes,
+} from "@/components/home/split-screen/category-insights";
+import { getNeighborhoodResearchStrength } from "@/components/home/split-screen/neighborhood-strength";
 import { useProfilePlacesBeenState } from "@/components/home/split-screen/profile-places-been-state";
 import { useRouteState } from "@/components/home/split-screen/route-state";
 import { usePlacesBeenDirectory } from "@/components/home/use-places-been-directory";
@@ -2903,6 +2909,126 @@ export function SplitScreenSection({
   const activeSubcategoryOptions = activeCategory
     ? categorySubcategoriesByScope[subcategoryScope][activeCategory]
     : [];
+  const rankedCityListItems = useMemo(() => {
+    if (!activeCategory || !activeLocation.city || !cityListItems.length) {
+      return cityListItems.map((item) => ({
+        ...item,
+        categoryStrengthScore: 0,
+        categoryStrengthStars: 0,
+      }));
+    }
+
+    const listMatchesActiveField = (list: MapList) => {
+      if (!doesListMatchCategory(list, activeCategory)) {
+        return false;
+      }
+      if (activeCategory === "Food") {
+        if (activeFoodPrice && !doesListMatchFoodPrice(list, activeFoodPrice)) {
+          return false;
+        }
+        if (activeFoodCuisine !== FOOD_CUISINE_ANY && !doesListMatchFoodCuisine(list, activeFoodCuisine)) {
+          return false;
+        }
+      }
+      if (activeSubcategory && !doesListMatchSubcategory(list, activeSubcategory)) {
+        return false;
+      }
+      if (
+        activeCategory === "Nightlife" &&
+        activeNightlifeBarType !== NIGHTLIFE_BAR_TYPE_ANY &&
+        inferNightlifeBarType(list) !== activeNightlifeBarType
+      ) {
+        return false;
+      }
+      return true;
+    };
+
+    const cityCategoryLists = allActiveLists.filter((list) => isListInActiveCity(list) && listMatchesActiveField(list));
+    const getStrengthStars = (score: number, hasResearchScore: boolean) => {
+      if (hasResearchScore) {
+        if (score >= 25) {
+          return 3;
+        }
+        if (score >= 17) {
+          return 2;
+        }
+        return score > 0 ? 1 : 0;
+      }
+
+      if (score >= 10) {
+        return 3;
+      }
+      if (score >= 6) {
+        return 2;
+      }
+      return score > 0 ? 1 : 0;
+    };
+    const scoredItems = cityListItems.map((item) => {
+      const normalizedItemName = normalizeNeighborhoodName(item.name);
+      const guideCoverageScore = cityCategoryLists.reduce((total, list) => {
+        const listNeighborhood = normalizeNeighborhoodName(inferListNeighborhoodName(list) ?? list.location.neighborhood);
+        const isNeighborhoodList = listNeighborhood === normalizedItemName;
+        const listTextSignal = normalizeNeighborhoodName([list.title, list.description, list.seoTitle, list.seoDescription].join(" "))
+          .includes(normalizedItemName)
+          ? 2
+          : 0;
+        const stopSignals = list.stops
+          .flatMap((stop) => [stop, ...(stop.places ?? [])])
+          .filter((stop) => {
+            const stopText = normalizeNeighborhoodName(
+              [
+                stop.name,
+                stop.description,
+                stop.subcategory,
+                ...(stop.subcategories ?? []),
+                ...(stop.attributeTags ?? []),
+                ...(stop.tags ?? []),
+              ].join(" "),
+            );
+            return stopText.includes(normalizedItemName);
+          }).length;
+
+        if (isNeighborhoodList) {
+          return total + 3;
+        }
+
+        return total + listTextSignal + Math.min(stopSignals, 4);
+      }, 0);
+      const researchStrength = getNeighborhoodResearchStrength({
+        activeSubcategory,
+        cityId: activeLocation.city?.id,
+        category: activeCategory,
+        neighborhoodId: item.id,
+        neighborhoodName: item.name,
+        nightlifeBarType: activeNightlifeBarType,
+        researchStrengths: activeLocation.city?.categoryNeighborhoodStrengths,
+      });
+      const score = researchStrength ? researchStrength.score * 3 + guideCoverageScore : guideCoverageScore;
+
+      return {
+        ...item,
+        categoryStrengthScore: score,
+        categoryStrengthStars: getStrengthStars(score, Boolean(researchStrength)),
+      };
+    });
+
+    return scoredItems
+      .sort((left, right) => {
+        if (right.categoryStrengthScore !== left.categoryStrengthScore) {
+          return right.categoryStrengthScore - left.categoryStrengthScore;
+        }
+        return left.name.localeCompare(right.name);
+      });
+  }, [
+    activeCategory,
+    activeFoodCuisine,
+    activeFoodPrice,
+    activeLocation.city,
+    activeNightlifeBarType,
+    activeSubcategory,
+    allActiveLists,
+    cityListItems,
+  ]);
   const visibleSubcategoryOptions = visibleSubcategoryCategory
     ? categorySubcategoriesByScope[subcategoryScope][visibleSubcategoryCategory]
     : [];
@@ -3702,6 +3828,81 @@ export function SplitScreenSection({
       ];
     });
   }, [activeLocation.city, activeNeighborhoodKey, allActiveLists, contextualFoodCuisineOptions]);
+  const activeCategoryInsight = useMemo(
+    () => {
+      if (!activeCategory || !activeLocation.city) {
+        return null;
+      }
+
+      const destinationInsights =
+        activeLocation.nestedSubarea?.categoryInsights?.length
+          ? activeLocation.nestedSubarea.categoryInsights
+          : activeLocation.subarea?.categoryInsights?.length
+            ? activeLocation.subarea.categoryInsights
+            : activeLocation.city.categoryInsights;
+
+      return buildCategoryInsight({
+        category: activeCategory,
+        cityId: activeLocation.city.id,
+        placeLabel: activeSeoPlaceLabel,
+        cuisines: contextualFoodCuisineOptions,
+        subcategories: activeSubcategoryOptions,
+        categoryInsights: destinationInsights,
+      });
+    },
+    [
+      activeCategory,
+      activeLocation.city,
+      activeLocation.nestedSubarea,
+      activeLocation.subarea,
+      activeSeoPlaceLabel,
+      contextualFoodCuisineOptions,
+      activeSubcategoryOptions,
+    ],
+  );
+  const activeCategoryInsightNotes = useMemo(
+    () =>
+      buildCategoryInsightNotes({
+        categoryInsight: activeCategoryInsight,
+        activeFoodCuisine,
+        placeLabel: activeSeoPlaceLabel,
+      }),
+    [activeCategoryInsight, activeFoodCuisine, activeSeoPlaceLabel],
+  );
+  const handleCategoryInsightChipSelect = (chip: string) => {
+    if (!activeCategoryInsight) {
+      return;
+    }
+
+    if (activeCategoryInsight.category === "Food") {
+      const cuisine = activeFoodCuisineOptions.find((option) => option.toLowerCase() === chip.toLowerCase());
+      if (!cuisine) {
+        return;
+      }
+
+      setActiveFoodCuisine((current) => (current.toLowerCase() === cuisine.toLowerCase() ? FOOD_CUISINE_ANY : cuisine));
+      setActiveSubcategory(null);
+      setActiveFoodPrice(null);
+      setActiveFoodOpenTime("Now");
+      setIsFoodCuisineMenuOpen(false);
+      setIsFoodOpenTimeMenuOpen(false);
+      return;
+    }
+
+    const subcategory = activeSubcategoryOptions.find((option) => option.toLowerCase() === chip.toLowerCase());
+    if (!subcategory) {
+      return;
+    }
+
+    setActiveSubcategory((current) => (current?.toLowerCase() === subcategory.toLowerCase() ? null : subcategory));
+    setActiveFoodCuisine(FOOD_CUISINE_ANY);
+    setActiveFoodPrice(null);
+    setActiveFoodOpenTime("Now");
+    setIsFoodCuisineMenuOpen(false);
+    setIsFoodOpenTimeMenuOpen(false);
+    setActiveNightlifeBarType(NIGHTLIFE_BAR_TYPE_ANY);
+    setIsNightlifeBarMenuOpen(false);
+  };
   useEffect(() => {
     if (!isGuidePaneTakingFullListPane) {
       return;
@@ -5652,7 +5853,7 @@ export function SplitScreenSection({
 		                    showPlaceholderOption={false}
 		                    options={[
 		                      { value: MOBILE_ALL_NEIGHBORHOODS_VALUE, label: "All neighborhoods" },
-		                      ...cityListItems.map((item) => ({
+		                      ...rankedCityListItems.map((item) => ({
 			                        value: item.id,
 			                        label: formatBreadcrumbName(item.name),
 			                      })),
@@ -6239,7 +6440,116 @@ export function SplitScreenSection({
                             </div>
                           </div>
                         ) : null}
-                        {!expandedGuide && cityHighlightRows.length ? (
+                        {!expandedGuide && activeCategoryInsight ? (
+                          <div
+                            className={`mt-3 rounded-[10px] border p-3 ${
+                              activeDestinationImage
+                                ? "border-white/18 bg-black/24 text-white shadow-[0_12px_34px_rgba(0,0,0,0.18)]"
+                                : "border-slate-200/80 bg-white/75 text-slate-800 shadow-sm"
+                            }`}
+                          >
+                            <div className="mb-2 flex items-center gap-2">
+                              <span
+                                className="h-2 w-2 rounded-full"
+                                style={{ backgroundColor: CATEGORY_STYLES[activeCategoryInsight.category].mapColor }}
+                                aria-hidden="true"
+                              />
+                              <p
+                                className={`text-[10px] font-semibold uppercase tracking-[0.2em] ${
+                                  activeDestinationImage ? "text-white/58" : "text-slate-500"
+                                }`}
+                              >
+                                {activeCategoryInsight.label}
+                              </p>
+                            </div>
+                            <div className="flex flex-wrap gap-1.5">
+                              {activeCategoryInsight.chips.map((chip) => {
+                                const isFoodCuisineChip =
+                                  activeCategoryInsight.category === "Food" &&
+                                  activeFoodCuisineOptions.some((option) => option.toLowerCase() === chip.toLowerCase());
+                                const isSubcategoryChip =
+                                  activeCategoryInsight.category !== "Food" &&
+                                  activeSubcategoryOptions.some((option) => option.toLowerCase() === chip.toLowerCase());
+                                const isActiveCuisine =
+                                  isFoodCuisineChip && activeFoodCuisine.toLowerCase() === chip.toLowerCase();
+                                const isActiveSubcategory =
+                                  isSubcategoryChip && activeSubcategory?.toLowerCase() === chip.toLowerCase();
+                                const isActiveChip = isActiveCuisine || isActiveSubcategory;
+                                const isFilterChip = isFoodCuisineChip || isSubcategoryChip;
+
+                                return (
+                                  <button
+                                    key={chip}
+                                    type="button"
+                                    onClick={() => handleCategoryInsightChipSelect(chip)}
+                                    disabled={!isFilterChip}
+                                    className={`rounded-full border px-2 py-1 text-[11px] font-semibold leading-none transition ${
+                                      isFilterChip
+                                        ? "cursor-pointer hover:-translate-y-0.5"
+                                        : "cursor-default"
+                                    }`}
+                                    style={{
+                                      backgroundColor: isActiveChip
+                                        ? CATEGORY_STYLES[activeCategoryInsight.category].mapColor
+                                        : `${CATEGORY_STYLES[activeCategoryInsight.category].mapColor}24`,
+                                      borderColor: isActiveChip
+                                        ? CATEGORY_STYLES[activeCategoryInsight.category].mapColor
+                                        : `${CATEGORY_STYLES[activeCategoryInsight.category].mapColor}33`,
+                                      color: isActiveChip || activeDestinationImage
+                                        ? "rgba(255,255,255,0.92)"
+                                        : CATEGORY_STYLES[activeCategoryInsight.category].mapColor,
+                                    }}
+                                    aria-pressed={isActiveChip}
+                                    aria-label={
+                                      isFoodCuisineChip
+                                        ? `${isActiveCuisine ? "Clear" : "Filter"} ${activeSeoPlaceLabel} food by ${chip}`
+                                        : isSubcategoryChip
+                                          ? `${isActiveSubcategory ? "Clear" : "Filter"} ${activeSeoPlaceLabel} ${activeCategoryInsight.category.toLowerCase()} by ${chip}`
+                                          : undefined
+                                    }
+                                  >
+                                    {chip}
+                                  </button>
+                                );
+                              })}
+                            </div>
+                            <div className="mt-2 space-y-1.5">
+                              {activeCategoryInsight.category === "Food" && activeFoodCuisine !== FOOD_CUISINE_ANY ? (
+                                <p
+                                  className={`text-[10px] font-semibold uppercase tracking-[0.18em] ${
+                                    activeDestinationImage ? "text-white/54" : "text-slate-500"
+                                  }`}
+                                >
+                                  {activeFoodCuisine} need to knows
+                                </p>
+                              ) : null}
+                              {activeCategoryInsightNotes.map((note) => (
+                                <div
+                                  key={`${note.label ?? activeCategoryInsight.label}-${note.body}`}
+                                  className={`border-l pl-2 text-[12px] leading-5 ${
+                                    activeDestinationImage
+                                      ? "border-white/24 text-white/76"
+                                      : "border-slate-200 text-slate-600"
+                                  }`}
+                                >
+                                  {note.label ? (
+                                    <span
+                                      className="mr-1.5 font-semibold uppercase tracking-[0.12em]"
+                                      style={{
+                                        color: activeDestinationImage
+                                          ? "rgba(255,255,255,0.92)"
+                                          : CATEGORY_STYLES[activeCategoryInsight.category].mapColor,
+                                      }}
+                                    >
+                                      {note.label}
+                                    </span>
+                                  ) : null}
+                                  <span>{note.body}</span>
+                                </div>
+                              ))}
+                            </div>
+                          </div>
+                        ) : !expandedGuide && cityHighlightRows.length ? (
                           <div className="mt-3 space-y-1.5 overflow-hidden text-sm leading-5">
                             {cityHighlightRows.map((row) => {
                               const isActiveRow = activeCategory === row.category;
@@ -6632,7 +6942,7 @@ export function SplitScreenSection({
                       label="Select neighborhood"
                       value={selection.nestedSubareaId ?? selection.subareaId ?? ""}
                       placeholder="All neighborhoods"
-                      options={cityListItems.map((item) => ({
+                      options={rankedCityListItems.map((item) => ({
                         value: item.id,
                         label: formatBreadcrumbName(item.name),
                       }))}
@@ -6697,11 +7007,12 @@ export function SplitScreenSection({
                       <div className="h-8" aria-hidden="true" />
                     </div>
                     <div className="min-h-0 flex-1 overflow-y-auto">
-                      {cityListItems.length ? (
+                      {rankedCityListItems.length ? (
                         <div className="space-y-2">
-                          {cityListItems.map((item) => (
+                          {rankedCityListItems.map((item) => (
                             (() => {
                               const isSelected = (item.isNested ? selection.nestedSubareaId : selection.subareaId) === item.id;
+                              const strengthStars = activeCategory ? item.categoryStrengthStars : 0;
 
                               return (
                                 <button
@@ -6750,7 +7061,21 @@ export function SplitScreenSection({
                                       }`}
                                     />
                                   </span>
-                                  {formatBreadcrumbName(item.name)}
+                                  <span className="min-w-0 flex-1 truncate">
+                                    {formatBreadcrumbName(item.name)}
+                                  </span>
+                                  {strengthStars ? (
+                                    <span
+                                      className="relative ml-auto flex shrink-0 items-center gap-0.5"
+                                      aria-label={`${strengthStars} ${strengthStars === 1 ? "star" : "stars"} for ${activeCategory}`}
+                                      title={`${activeCategory} strength: ${strengthStars}/3`}
+                                      style={{ color: CATEGORY_STYLES[activeCategory!].mapColor }}
+                                    >
+                                      {Array.from({ length: strengthStars }).map((_, index) => (
+                                        <Star key={`${item.id}-strength-${index}`} className="h-3 w-3 fill-current" />
+                                      ))}
+                                    </span>
+                                  ) : null}
                                 </button>
                               );
                             })()
