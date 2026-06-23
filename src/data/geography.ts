@@ -118,15 +118,15 @@ const cityImage = (query: string) => {
 const topCityDescriptionOverrides = new Map<string, string>([
   [
     "paris",
-    "Paris is a dense city where museums, bistros, wine bars, fashion streets, parks, hotels, and river walks change character by arrondissement. It works best as a set of neighborhood routes, with landmarks as anchors and meals, gardens, or side streets keeping the day from becoming a checklist.",
+    "Paris rewards the traveler who stops counting monuments and starts reading districts (arrondissements). Use the city by appetite and angle: the Louvre for scale, the Marais for old streets and late rooms, Saint-Germain for cafe ritual, and canal edges when the polished postcard needs air.",
   ],
   [
     "london",
-    "London is a multi-center city where museums, pubs, markets, theater, parks, hotels, and rail-linked neighborhoods make every plan depend on area and transit line. It works best in focused clusters, letting meals, parks, and evening anchors keep the sprawl practical.",
+    "London is not one city but a set of villages stitched together by rail, weather, and appetite. Build days around a line and a mood: Soho for the night's first spark, South Bank for river culture, Shoreditch for warehouse rooms, and a pub when the city gets too grand.",
   ],
   [
     "istanbul",
-    "Istanbul is a Bosphorus city where imperial landmarks, ferries, mosques, markets, meyhanes, rooftop views, and Asian-European neighborhood shifts shape the trip. It works best when each day has a crossing, a meal rhythm, and enough room for streets between major sights.",
+    "Istanbul is a city of crossings: water, empire, prayer, smoke, ferry decks, and dinner tables that stretch late. Let each day earn its movement: Sultanahmet for imperial weight, Karakoy for the edge, Kadikoy for appetite, and a meyhane when the day needs to end at a table instead of another monument.",
   ],
   [
     "rome",
@@ -134,19 +134,19 @@ const topCityDescriptionOverrides = new Map<string, string>([
   ],
   [
     "barcelona",
-    "Barcelona is a dense Mediterranean city where Gothic lanes, Eixample architecture, tapas timing, natural-wine bars, design stays, hostels, hill parks, and beach edges sit close together. The useful route turns that abundance into a few clear neighborhoods instead of a checklist.",
+    "Barcelona is a city that rewards appetite but punishes autopilot. Mornings belong to Modernista facades and hill views, afternoons to market counters, shaded plazas, and the sea's pull, and nights to vermouth, natural wine, cava, and narrow rooms that fill quickly. Build it by neighborhood: Eixample for architecture and serious dining, Gracia for village rhythm, Poble-sec for tapas before the hill, and the Gothic Quarter only when you know where the old stones still lead somewhere real.",
   ],
   [
     "lisbon",
-    "Lisbon is a hillside Atlantic capital where miradouros, tiled lanes, seafood, wine bars, trams, fado rooms, design stays, and river-facing neighborhoods shape the visit. It works best with climbs, meals, views, and transit planned together so the hills feel rewarding.",
+    "Lisbon is built on appetite and incline: tiled alleys, river glare, grilled fish, fado rooms, and viewpoints that make you earn the view. Plan it by climb and recovery: Alfama for old stone, Cais do Sodre for late movement, Belem for ceremony, and a wine bar when the hills win.",
   ],
   [
     "amsterdam",
-    "Amsterdam is a canal city where cycling streets, museums, brown cafes, design hotels, Indonesian meals, markets, parks, and ferries keep browsing practical. It works best when the old center is balanced with quieter neighborhoods, parks, and water-level routes.",
+    "Amsterdam is best seen at water level, where canal houses, brown cafes, bicycles, and museum crowds all reveal different versions of order. Balance the old center with Jordaan, De Pijp, Noord, and park time; the city gets better when you stop chasing the busiest bridge.",
   ],
   [
     "madrid",
-    "Madrid is a late-running capital where major museums, tapas streets, market halls, vermouth bars, Retiro walks, galleries, and generous plazas set the rhythm. It works best when daytime culture loosens into La Latina, Chueca, Malasana, or a late dinner nearby.",
+    "Madrid is a city that keeps its best hours late. Mornings belong to museum light and quiet stone, afternoons to market counters and long lunches, and nights to vermouth, sherry, crowded plazas, and rooms that feel older than the conversation inside them. Build the trip by neighborhood, not by checklist: Retiro for air after the Prado, La Latina for tavern life, Chueca for stylish late energy, and Sol only when you know which old doors are still worth opening.",
   ],
   [
     "prague",
@@ -154,7 +154,7 @@ const topCityDescriptionOverrides = new Map<string, string>([
   ],
   [
     "berlin",
-    "Berlin is a spread-out capital where Cold War memory, museum corridors, canal neighborhoods, and club culture sit beside practical transit choices. It works best when the route is split by district, with parks, lakes, late rooms, and quiet wine bars giving each day its own temperature.",
+    "Berlin is a city of scars, space, and late decisions. Split it by district: Mitte for memory, Kreuzberg for canals and counterweight, Charlottenburg for old-west polish, Friedrichshain when the night gets louder, and parks or lakes when the concrete needs a pulse.",
   ],
   [
     "new-york-city",
