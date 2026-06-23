@@ -418,6 +418,65 @@ export function inferFoodCuisine(list: MapList, cuisineOptions: string[]): strin
   return cuisineOptions[0] ?? FOOD_CUISINE_ANY;
 }
 
+function getFoodCuisineFilterAliases(cuisine: string) {
+  switch (cuisine) {
+    case "Sushi":
+      return ["sushi", "omakase", "nigiri", "sashimi", "edomae", "conveyor_sushi", "kaitenzushi", "standing_sushi"];
+    case "Ramen":
+      return ["ramen", "tonkotsu", "shoyu", "shio", "miso", "tsukemen", "noodle soup"];
+    case "Izakaya":
+      return ["izakaya", "yakitori", "small plates", "drinking food"];
+    case "Street Food":
+      return ["street_food", "street food", "stall", "market", "food_truck", "food_cart", "night market"];
+    case "Seafood":
+      return ["seafood", "fish", "oyster", "sushi"];
+    case "Matcha":
+      return ["matcha", "green_tea", "green tea", "wagashi", "tea_room", "tea_salon"];
+    case "Japanese":
+      return ["japanese", "washoku", "kaiseki", "tempura", "tonkatsu", "soba", "udon", "curry", "set_meal"];
+    default:
+      return [cuisine];
+  }
+}
+
+export function doesListMatchFoodCuisine(list: MapList, cuisine: string): boolean {
+  if (cuisine === FOOD_CUISINE_ANY) {
+    return true;
+  }
+
+  const aliases = getFoodCuisineFilterAliases(cuisine);
+  const stops = getListPoiStops(list);
+  const structuredCuisineValues = stops.flatMap((stop) => [
+    ...valuesFromMaybeArray(stop.cuisineTypes),
+    ...valuesFromMaybeArray(stop.subcategory),
+    ...valuesFromMaybeArray(stop.subcategories),
+    ...valuesFromMaybeArray(stop.attributeTags),
+    ...valuesFromMaybeArray(stop.tags),
+  ]);
+
+  if (
+    structuredCuisineValues.some((value) =>
+      aliases.some((alias) => filterValuesMatch(value, alias)),
+    )
+  ) {
+    return true;
+  }
+
+  const text = `${list.title} ${list.seoTitle ?? ""} ${list.seoDescription ?? ""} ${list.description} ${stops
+    .map((stop) => `${stop.name} ${stop.description}`)
+    .join(" ")}`.toLowerCase();
+  const fallbackMatchers: Record<string, RegExp> = {
+    Sushi: /\b(sushi|omakase|nigiri|sashimi|edomae|conveyor sushi|kaitenzushi)\b/,
+    Ramen: /\b(ramen|tonkotsu|shoyu|shio|miso|tsukemen|noodle soup)\b/,
+    Izakaya: /\b(izakaya|yakitori|drinking food|small plates)\b/,
+    "Street Food": /\b(street food|food truck|market|stall|night market)\b/,
+    Seafood: /\b(seafood|fish|oyster|coastal catch)\b/,
+    Matcha: /\b(matcha|green tea|wagashi|tea room|tea salon)\b/,
+  };
+
+  return fallbackMatchers[cuisine]?.test(text) ?? text.includes(cuisine.toLowerCase());
+}
+
 export function inferNightlifeBarType(list: MapList): (typeof NIGHTLIFE_BAR_TYPE_OPTIONS)[number] {
   const text = `${list.title} ${list.description} ${list.stops
     .map((stop) => `${stop.name} ${stop.description}`)

@@ -58,13 +58,13 @@ import {
   contextualFoodCuisinesByCity,
   contextualFoodCuisinesByCountry,
   contextualFoodCuisinesByScope,
+  doesListMatchFoodCuisine,
   doesListMatchFoodPrice,
   doesListMatchCategory,
   doesListMatchSubcategory,
   filterListStopsByFoodPrice,
   generalFoodCuisines,
   guideRailOptions,
-  inferFoodCuisine,
   inferNightlifeBarType,
   isItineraryList,
   isPrivateJournalExperience,
@@ -2669,7 +2669,7 @@ export function SplitScreenSection({
           const matchesCuisine =
             activeFoodCuisine === FOOD_CUISINE_ANY
               ? true
-              : inferFoodCuisine(list, activeFoodCuisineOptions) === activeFoodCuisine;
+              : doesListMatchFoodCuisine(list, activeFoodCuisine);
           const matchesSubcategory = activeSubcategory ? doesListMatchSubcategory(list, activeSubcategory) : true;
           return matchesPrice && matchesCuisine && matchesSubcategory;
         }).map((list) => filterListStopsByFoodPrice(list, activeFoodPrice))
