@@ -23,50 +23,61 @@ npm run push:editorial-guides -- --city Madrid --city Barcelona
 
 The push command validates local duplicate `id` and `slug` values, checks the remote table for slug ownership conflicts, and only upserts the selected guides. Keep `npm run export:editorial-guides` for regenerating the full canonical SQL seed before a release or migration review.
 
-## Top 40 City Population Queue
+## Top 40 Editorial Travel Queue
 
-When a prompt mentions `top 40`, use this as the working city queue for editorial guide population. Treat the spelling below as canonical for data entry, route naming, source searches, and progress tracking.
+When a prompt mentions `top 40`, use this as the working city queue for editorial guide population. This is not a raw population list and not a pure international-arrivals table. It is an rGuide editorial travel-demand queue that starts from Euromonitor's overall City Destinations Index, then corrects for high-arrival demand where the index order undersells the way travelers actually move.
 
-1. Paris, France
-2. Madrid, Spain
-3. Tokyo, Japan
-4. Rome, Italy
-5. Milan, Italy
-6. New York City, United States
-7. Amsterdam, Netherlands
-8. Sydney, Australia
-9. Singapore
-10. Barcelona, Spain
-11. Taipei, Taiwan
-12. Seoul, South Korea
-13. London, United Kingdom
-14. Dubai, United Arab Emirates
-15. Berlin, Germany
-16. Osaka, Japan
-17. Bangkok, Thailand
-18. Los Angeles, United States
-19. Istanbul, Turkey
-20. Melbourne, Australia
-21. Hong Kong
-22. Munich, Germany
-23. Las Vegas, United States
-24. Florence, Italy
-25. Prague, Czech Republic
-26. Dublin, Ireland
-27. Kyoto, Japan
-28. Vienna, Austria
-29. Lisbon, Portugal
-30. Venice, Italy
-31. Kuala Lumpur, Malaysia
-32. Athens, Greece
-33. Orlando, United States
-34. Toronto, Canada
-35. Miami, United States
-36. San Francisco, United States
-37. Shanghai, China
-38. Frankfurt, Germany
-39. Copenhagen, Denmark
-40. Zurich, Switzerland
+Ranking notes:
+
+- Bangkok is promoted because recent international-arrivals tables put it at or near the top worldwide.
+- Frankfurt is removed from the first 40 because its index placement is not as strong an rGuide editorial signal as leisure/culture demand.
+- Mexico City replaces Frankfurt as the high-priority Americas correction, even though it sits just outside the Euromonitor overall top 40.
+- If a task asks for a strict source ranking, name the source and metric first, then do not treat this queue as that ranking.
+
+Treat the spelling below as canonical for data entry, route naming, source searches, and progress tracking.
+
+| Priority | City | Queue signal |
+| --- | --- | --- |
+| 1 | Bangkok, Thailand | International-arrivals leader; high guide demand |
+| 2 | Paris, France | Overall index leader and top-arrivals city |
+| 3 | Madrid, Spain | Overall index top tier |
+| 4 | Tokyo, Japan | Overall index top tier |
+| 5 | London, United Kingdom | Top-arrivals city and overall-index anchor |
+| 6 | Istanbul, Turkey | Top-arrivals city and high cultural demand |
+| 7 | Hong Kong | Top-arrivals city and dense city-guide demand |
+| 8 | Dubai, United Arab Emirates | Top-arrivals city and high spend/logistics demand |
+| 9 | Rome, Italy | Overall index top tier |
+| 10 | Milan, Italy | Overall index top tier |
+| 11 | New York City, United States | Overall index top tier and durable travel demand |
+| 12 | Amsterdam, Netherlands | Overall index top tier |
+| 13 | Sydney, Australia | Overall index top tier |
+| 14 | Singapore | Overall index top tier and major arrival hub |
+| 15 | Barcelona, Spain | Overall index top tier |
+| 16 | Taipei, Taiwan | Overall index top tier |
+| 17 | Seoul, South Korea | Overall index top tier |
+| 18 | Berlin, Germany | Overall index top 20 |
+| 19 | Osaka, Japan | Overall index top 20 |
+| 20 | Los Angeles, United States | Overall index top 20 |
+| 21 | Melbourne, Australia | Overall index top 20 |
+| 22 | Munich, Germany | Overall index top 25 |
+| 23 | Las Vegas, United States | Overall index top 25 |
+| 24 | Florence, Italy | Overall index top 25 |
+| 25 | Prague, Czech Republic | Overall index top 25 |
+| 26 | Dublin, Ireland | Overall index top 30 |
+| 27 | Kyoto, Japan | Overall index top 30 |
+| 28 | Vienna, Austria | Overall index top 30 |
+| 29 | Lisbon, Portugal | Overall index top 30 |
+| 30 | Venice, Italy | Overall index top 30 |
+| 31 | Kuala Lumpur, Malaysia | Top-arrivals city and overall-index top 40 |
+| 32 | Athens, Greece | Overall index top 40 |
+| 33 | Orlando, United States | Overall index top 40 |
+| 34 | Toronto, Canada | Overall index top 40 |
+| 35 | Miami, United States | Overall index top 40 |
+| 36 | San Francisco, United States | Overall index top 40 |
+| 37 | Shanghai, China | Overall index top 40 |
+| 38 | Copenhagen, Denmark | Overall index top 40 |
+| 39 | Zurich, Switzerland | Overall index top 40 |
+| 40 | Mexico City, Mexico | Americas correction; replaces Frankfurt |
 
 Accepted aliases from planning notes:
 
@@ -81,13 +92,15 @@ Accepted aliases from planning notes:
 - LA -> Los Angeles, United States
 - SF -> San Francisco, United States
 - Zürich, Switzerland -> Zurich, Switzerland
-- Frankfurt am Main, Germany -> Frankfurt, Germany
+- CDMX -> Mexico City, Mexico
 - Firenze, Italy -> Florence, Italy
 - München, Germany -> Munich, Germany
 
 ## Top 40 Description Briefs
 
-Use these briefs when writing city descriptions, neighborhood descriptions, and city/category intro copy for the top 40. Keep each final app-facing description within the explorer cap: 270-320 characters is the target for city, neighborhood, and category intro copy. The brief is directional; do not paste it verbatim if it makes the output sound like a keyword chain.
+Use these briefs when writing city descriptions, neighborhood descriptions, and city/category intro copy for the editorial queue. Keep each final app-facing description within the explorer cap: 270-320 characters is the target for city, neighborhood, and category intro copy. The brief is directional; do not paste it verbatim if it makes the output sound like a keyword chain.
+
+The brief inventory can include queue-adjacent cities from active editorial work. If a current top-40 queue city is missing here, add its brief before populating a full guide batch.
 
 For each city:
 

@@ -137,6 +137,10 @@ const topCityDescriptionOverrides = new Map<string, string>([
     "Milan is a design and fashion city that does not try to charm you first; it makes you notice cut, surface, ritual, and work. Use it through neighborhood logic: Brera for galleries, Navigli for aperitivo, Porta Garibaldi for the new city, Quadrilatero for fashion, and dinner when the polish finally loosens.",
   ],
   [
+    "florence",
+    "Florence is a small city carrying an impossible amount of beauty: chapel light, stone streets, market stalls, leather shops, and Renaissance rooms that can overwhelm if you rush them. Give the art space, then let the city breathe through Oltrarno, aperitivo, a trattoria table, and a walk across the Arno after dark.",
+  ],
+  [
     "barcelona",
     "Barcelona is a city that rewards appetite but punishes autopilot. Mornings belong to Modernista facades and hill views, afternoons to market counters, shaded plazas, and the sea's pull, and nights to vermouth, natural wine, cava, and narrow rooms that fill quickly. Build it by neighborhood: Eixample for architecture and serious dining, Gracia for village rhythm, Poble-sec for tapas before the hill, and the Gothic Quarter only when you know where the old stones still lead somewhere real.",
   ],
@@ -155,6 +159,10 @@ const topCityDescriptionOverrides = new Map<string, string>([
   [
     "prague",
     "Prague is a compact river city where castle routes, old-town lanes, beer halls, cafes, design stays, galleries, and Vltava walks can crowd the same day. It works best when the busiest squares become a starting point, not the whole plan.",
+  ],
+  [
+    "munich",
+    "Munich is polished until the beer garden reminds you it still belongs to Bavaria. Use it by ritual: Altstadt for royal rooms, Glockenbach for a softer night out, Schwabing for cafes and galleries, the English Garden for air, and a beer hall when the city needs less restraint.",
   ],
   [
     "berlin",
@@ -206,7 +214,7 @@ const topCityDescriptionOverrides = new Map<string, string>([
   ],
   [
     "hong-kong",
-    "Hong Kong is a vertical harbor city where Cantonese dining, markets, ferries, hikes, cocktail bars, hotels, and island-Kowloon contrasts compress huge variety into short distances. It works best by MTR, tram, ferry, and escalator, with food and views guiding the route.",
+    "Hong Kong is a city of vertical pressure and sudden escape: roast meat windows, harbor crossings, wet markets, glass towers, ridge trails, and neon stacked into the same day. Move by ferry, tram, MTR, and appetite; the city works best when dinner, view, and elevation all argue with each other.",
   ],
   [
     "macau",
@@ -226,7 +234,11 @@ const topCityDescriptionOverrides = new Map<string, string>([
   ],
   [
     "kuala-lumpur",
-    "Kuala Lumpur is a tower-and-market capital where malls, hawker streets, Malay, Chinese, and Indian food, hotels, rooftop bars, Batu Caves, and traffic tradeoffs shape the visit. It works best when transit, taxis, heat, and meal neighborhoods are part of the route.",
+    "Kuala Lumpur is a city of towers, rain heat, malls, mosques, and meals that move between Malay, Chinese, and Indian traditions. Explore it by shade and neighborhood: Bukit Bintang for the polished rush, Chinatown for market lanes, Kampung Baru for Malay cooking, and Batu Caves when the skyline needs a different kind of scale.",
+  ],
+  [
+    "athens",
+    "Athens is ancient stone with a loud modern city wrapped around it: ruins, rooftops, tavernas, galleries, and streets that hold the heat. Start with the Acropolis and Plaka, let Psyrri carry the night, then head for the coast when you need a fresh breeze, turquoise water, and space.",
   ],
   [
     "tokyo",
@@ -235,6 +247,10 @@ const topCityDescriptionOverrides = new Map<string, string>([
   [
     "osaka",
     "Osaka is where Japan loosens its collar and orders another plate. Build it around food and proximity: Dotonbori for takoyaki and late neon, Kuromon for market grazing, Shinsekai for kushikatsu and old color, Umeda for vertical city life, and Namba when dinner should turn into another stop.",
+  ],
+  [
+    "kyoto",
+    "Kyoto is a city of restraint, ritual, and beauty that needs slower timing than its reputation suggests. Move carefully: Higashiyama for early stone lanes, Nishiki for appetite, Arashiyama when the day needs trees and distance, Gion at dusk, and one quiet garden where silence gets more time than the camera.",
   ],
   [
     "seoul",
@@ -247,6 +263,34 @@ const topCityDescriptionOverrides = new Map<string, string>([
   [
     "melbourne",
     "Melbourne is a city that reveals itself slowly, usually over coffee, weather, and a table you almost walked past. Use the center for lanes and bars, Fitzroy for the sharper edge, Carlton for Italian old bones, St Kilda when the bay matters, and dinner when the day turns inward.",
+  ],
+  [
+    "dublin",
+    "Dublin is a compact capital where the day gets better as it moves from books and brick into whiskey, music, and pub light. Start with Trinity, the Liffey, and Georgian squares, then let the route bend toward the Liberties, live rooms, and pubs where the conversation carries the night.",
+  ],
+  [
+    "vienna",
+    "Vienna carries itself like a city that knows the room is listening. Use the Ring for imperial scale, coffeehouses for pause, Naschmarkt for appetite, Leopoldstadt when the center gets too formal, and a wine tavern when the polish needs a little looseness.",
+  ],
+  [
+    "venice",
+    "Venice is history, beauty, and spectacle compressed onto water, which is why the crowds can feel as much a part of the city as the palaces. Use San Marco for ceremony, Cannaregio for breathing room, Rialto for market life, and cicchetti bars when the day needs to come back down to earth.",
+  ],
+  [
+    "toronto",
+    "Toronto is a city you explore in layers: lakefront light, museum days, long food corridors, sports noise, and neighborhoods that change the language of dinner block by block. Start central, then follow the city outward: Kensington for market energy, Ossington for dinner and bars, Yorkville for polish, and Scarborough when the meal should be the reason.",
+  ],
+  [
+    "shanghai",
+    "Shanghai is a city of speed and surface, but the older rhythm is still there if you give the lanes time. Start with the Bund for the full theatrical skyline, move through the Former French Concession for trees and long meals, Jing'an for polish, and Huangpu after dark when the river turns ambition into light.",
+  ],
+  [
+    "copenhagen",
+    "Copenhagen is a city where good taste becomes infrastructure: bikes, bakeries, harbor baths, candlelit dining rooms, and design that makes daily life feel edited. Explore Indre By for first bearings, Vesterbro for dinner, Norrebro for edge, Christianshavn for canals, and the harbor when the day needs air.",
+  ],
+  [
+    "zurich",
+    "Zurich is precise, expensive, and quietly dramatic: lake light, clean trams, old guild houses, galleries, chocolate, and mountains close enough to keep the city honest. Explore Altstadt for old stone, Kreis 4 for a sharper night, the lake for pause, and the hills when the polish needs air.",
   ],
   [
     "phuket",
@@ -1065,6 +1109,100 @@ const citySubareaSeeds = new Map<string, SubArea[]>([
         coordinates: [29.9685, -90.0745],
         description:
           "One of the country's most important Black cultural neighborhoods, celebrated for deep musical roots, Creole history, and landmarks around Armstrong Park and Congo Square.",
+      },
+    ],
+  ],
+  [
+    "Bangkok|Thailand",
+    [
+      {
+        id: "rattanakosin",
+        name: "Rattanakosin",
+        coordinates: [13.751, 100.492],
+        description:
+          "Bangkok's old royal island, where the Grand Palace, Wat Pho, Wat Phra Kaew, river piers, and Khao San edges make temple-heavy days feel coherent. It works best early, before heat and crowds turn every golden surface into a test of patience.",
+      },
+      {
+        id: "chinatown-yaowarat",
+        name: "Chinatown & Yaowarat",
+        coordinates: [13.739, 100.509],
+        description:
+          "Bangkok's night-food furnace, built around Yaowarat Road, market lanes, gold shops, seafood counters, noodle stops, and cocktail rooms that keep the area alive after dark. It works best as a focused evening route, not a quick detour between temples.",
+      },
+      {
+        id: "sukhumvit",
+        name: "Sukhumvit",
+        coordinates: [13.737, 100.561],
+        description:
+          "Bangkok's long hotel, mall, restaurant, and nightlife corridor, held together by the BTS and a habit of stretching plans later than expected. It works best when convenience matters: dinner, bars, shopping, and a reliable route home.",
+      },
+      {
+        id: "silom-sathorn",
+        name: "Silom & Sathorn",
+        coordinates: [13.724, 100.529],
+        description:
+          "A business-district pair with serious restaurants, cocktail rooms, old Bangkok lanes, Lumphini Park access, and enough polish to slow the city down. It works best for dinner-led nights, hotel bases, and heat breaks that still keep you central.",
+      },
+      {
+        id: "riverside",
+        name: "Riverside",
+        coordinates: [13.728, 100.512],
+        description:
+          "The Chao Phraya side of Bangkok, where ferries, temple approaches, historic hotels, warehouse districts, and skyline bars make the city feel older and more theatrical. It works best when the boat is part of the plan, not just the view.",
+      },
+      {
+        id: "ari",
+        name: "Ari",
+        coordinates: [13.78, 100.544],
+        description:
+          "Ari gives Bangkok a calmer neighborhood register: cafes, small restaurants, social hostels, local bars, and leafy side streets close enough to the BTS to stay useful. It works best when the day needs air without leaving the city.",
+      },
+    ],
+  ],
+  [
+    "Istanbul|Turkey",
+    [
+      {
+        id: "sultanahmet",
+        name: "Sultanahmet",
+        coordinates: [41.0085, 28.9802],
+        description:
+          "Istanbul's imperial core, where Hagia Sophia, the Blue Mosque, Topkapi, the cisterns, and old stone streets carry the city's heaviest history. It works best early, then needs a ferry, garden, or table before monument fatigue takes over.",
+      },
+      {
+        id: "beyoglu",
+        name: "Beyoglu",
+        coordinates: [41.0369, 28.9847],
+        description:
+          "Beyoglu is Istanbul after dark and between eras: Istiklal, Pera hotels, music rooms, meyhanes, passages, galleries, and late bars all pulling in different directions. It works best when dinner, drinks, and a second room can stay close.",
+      },
+      {
+        id: "karakoy-galata",
+        name: "Karakoy & Galata",
+        coordinates: [41.0257, 28.9745],
+        description:
+          "A steep harbor edge of ferries, banks, churches, boutiques, coffee, fish, cocktail rooms, and Galata Tower views. It works best as a hinge between old Istanbul, Beyoglu nights, and Bosphorus movement.",
+      },
+      {
+        id: "kadikoy",
+        name: "Kadikoy",
+        coordinates: [40.9903, 29.0275],
+        description:
+          "The Asian-side answer to tourist Istanbul, with market streets, casual bars, rock rooms, ferries, meze tables, Moda walks, and a younger local rhythm. It works best when crossing the water is part of the pleasure.",
+      },
+      {
+        id: "cihangir-cukurcuma",
+        name: "Cihangir & Cukurcuma",
+        coordinates: [41.031, 28.986],
+        description:
+          "A hillside pocket of cafes, antique shops, small galleries, cats on steps, wine bars, and apartment-window Istanbul. It works best for slower second drinks, daytime wandering, and a softer landing after Beyoglu.",
+      },
+      {
+        id: "besiktas-ortakoy",
+        name: "Besiktas & Ortakoy",
+        coordinates: [41.043, 29.005],
+        description:
+          "A Bosphorus-facing stretch where ferry traffic, palace edges, university energy, breakfast streets, waterfront bars, and Ortakoy spectacle keep Istanbul social. It works best when the water is the route.",
       },
     ],
   ],
@@ -2685,8 +2823,7 @@ const curatedCitySeeds: Record<string, Omit<City, "listCount">[]> = {
       continent: "North America",
       coordinates: [43.6532, -79.3832],
       image: cityImage("toronto"),
-      description:
-        "Toronto is a dense multicultural city where neighborhood food, design hotels, coffee, museums, sports, Lake Ontario walks, and late-night districts make practical routes by area. The payoff is pairing the view with a real plan: a useful base, a few strong anchors, and room for the weather.",
+      description: topCityDescriptionOverrides.get("toronto")!,
     },
     {
       id: "vancouver",
@@ -2884,6 +3021,24 @@ const curatedCitySeeds: Record<string, Omit<City, "listCount">[]> = {
       description:
         "Milan is a design and fashion city where aperitivo, contemporary art, shopping streets, polished hotels, restaurants, canals, and rail links make a sharp northern Italy base. The eating and drinking land best when they feel rooted in place, with enough neighborhood logic to carry a full day.",
     },
+    {
+      id: "florence",
+      name: "Florence",
+      country: "Italy",
+      continent: "Europe",
+      coordinates: [43.7696, 11.2558],
+      image: cityImage("florence"),
+      description: topCityDescriptionOverrides.get("florence")!,
+    },
+    {
+      id: "venice",
+      name: "Venice",
+      country: "Italy",
+      continent: "Europe",
+      coordinates: [45.4408, 12.3155],
+      image: cityImage("venice"),
+      description: topCityDescriptionOverrides.get("venice")!,
+    },
   ],
   greece: [
     {
@@ -2893,8 +3048,7 @@ const curatedCitySeeds: Record<string, Omit<City, "listCount">[]> = {
       continent: "Europe",
       coordinates: [37.9838, 23.7275],
       image: cityImage("athens"),
-      description:
-        "Athens is a compact capital where ancient sites, rooftop bars, tavernas, galleries, markets, boutique stays, and beach or island routes meet in lively central neighborhoods. The payoff is pairing the view with a real plan: a useful base, a few strong anchors, and room for the weather.",
+      description: topCityDescriptionOverrides.get("athens")!,
     },
   ],
   turkey: [
@@ -3014,6 +3168,17 @@ const curatedCitySeeds: Record<string, Omit<City, "listCount">[]> = {
         "Amsterdam is a canal city where cycling streets, museums, brown cafes, design hotels, Indonesian meals, markets, parks, and neighborhood routes keep high-demand browsing practical. It works best on foot, with landmarks as the spine and meals or neighborhood detours keeping it from feeling dutiful.",
     },
   ],
+  denmark: [
+    {
+      id: "copenhagen",
+      name: "Copenhagen",
+      country: "Denmark",
+      continent: "Europe",
+      coordinates: [55.6761, 12.5683],
+      image: cityImage("copenhagen"),
+      description: topCityDescriptionOverrides.get("copenhagen")!,
+    },
+  ],
   germany: [
     {
       id: "berlin",
@@ -3024,6 +3189,15 @@ const curatedCitySeeds: Record<string, Omit<City, "listCount">[]> = {
       image: cityImage("berlin"),
       description:
         "Berlin is a spread-out capital where Cold War memory, museum corridors, canal neighborhoods, and club culture sit beside practical transit choices. It works best when the route is split by district, with parks, lakes, late rooms, and quiet wine bars giving each day its own temperature.",
+    },
+    {
+      id: "munich",
+      name: "Munich",
+      country: "Germany",
+      continent: "Europe",
+      coordinates: [48.1351, 11.582],
+      image: cityImage("munich"),
+      description: topCityDescriptionOverrides.get("munich")!,
     },
   ],
   "czech-republic": [
@@ -3046,8 +3220,29 @@ const curatedCitySeeds: Record<string, Omit<City, "listCount">[]> = {
       continent: "Europe",
       coordinates: [48.2082, 16.3738],
       image: cityImage("vienna"),
-      description:
-        "Vienna is a polished cultural capital where imperial museums, coffeehouses, wine taverns, concert halls, design hotels, markets, and ring-road walks make a refined city break. It works best on foot, with landmarks as the spine and meals or neighborhood detours keeping it from feeling dutiful.",
+      description: topCityDescriptionOverrides.get("vienna")!,
+    },
+  ],
+  switzerland: [
+    {
+      id: "zurich",
+      name: "Zurich",
+      country: "Switzerland",
+      continent: "Europe",
+      coordinates: [47.3769, 8.5417],
+      image: cityImage("zurich"),
+      description: topCityDescriptionOverrides.get("zurich")!,
+    },
+  ],
+  ireland: [
+    {
+      id: "dublin",
+      name: "Dublin",
+      country: "Ireland",
+      continent: "Europe",
+      coordinates: [53.3498, -6.2603],
+      image: cityImage("dublin"),
+      description: topCityDescriptionOverrides.get("dublin")!,
     },
   ],
   morocco: [
@@ -3118,14 +3313,22 @@ const curatedCitySeeds: Record<string, Omit<City, "listCount">[]> = {
         "Tokyo is a vast rail-connected city where ramen counters, sushi rooms, cocktail bars, shopping streets, design hotels, museums, gardens, and neighborhood micro-routes reward precision. It works best on foot, with landmarks as the spine and meals or neighborhood detours keeping it from feeling dutiful.",
     },
     {
+      id: "osaka",
+      name: "Osaka",
+      country: "Japan",
+      continent: "Asia",
+      coordinates: [34.6937, 135.5023],
+      image: cityImage("osaka"),
+      description: topCityDescriptionOverrides.get("osaka")!,
+    },
+    {
       id: "kyoto",
       name: "Kyoto",
       country: "Japan",
       continent: "Asia",
       coordinates: [35.0116, 135.7681],
       image: cityImage("kyoto"),
-      description:
-        "Kyoto is a temple-and-neighborhood city where shrines, tea houses, ryokan stays, gardens, markets, craft shops, and quiet evening routes need slower timing and careful geography. It works best on foot, with landmarks as the spine and meals or neighborhood detours keeping it from feeling dutiful.",
+      description: topCityDescriptionOverrides.get("kyoto")!,
     },
   ],
   thailand: [
@@ -3136,8 +3339,7 @@ const curatedCitySeeds: Record<string, Omit<City, "listCount">[]> = {
       continent: "Asia",
       coordinates: [13.7563, 100.5018],
       image: cityImage("bangkok"),
-      description:
-        "Bangkok is a high-energy capital where street food, temples, malls, river routes, rooftop bars, design hotels, markets, and late-night neighborhoods make planning about heat and pacing. It rewards a firm point of view: tight geography, realistic pacing, and a few anchors worth crossing town for.",
+      description: topCityDescriptionOverrides.get("bangkok")!,
     },
     {
       id: "chiang-mai",
@@ -3246,6 +3448,28 @@ const curatedCitySeeds: Record<string, Omit<City, "listCount">[]> = {
       coordinates: [1.3521, 103.8198],
       image: cityImage("singapore"),
       description: topCityDescriptionOverrides.get("singapore")!,
+    },
+  ],
+  taiwan: [
+    {
+      id: "taipei",
+      name: "Taipei",
+      country: "Taiwan",
+      continent: "Asia",
+      coordinates: [25.033, 121.5654],
+      image: cityImage("taipei"),
+      description: topCityDescriptionOverrides.get("taipei")!,
+    },
+  ],
+  china: [
+    {
+      id: "shanghai",
+      name: "Shanghai",
+      country: "China",
+      continent: "Asia",
+      coordinates: [31.2304, 121.4737],
+      image: cityImage("shanghai"),
+      description: topCityDescriptionOverrides.get("shanghai")!,
     },
   ],
   australia: [

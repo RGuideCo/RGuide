@@ -253,6 +253,45 @@ function capExplorerDescription(description: string, limit = explorerDescription
   return `${capped.replace(/[.,;:!?-]+$/, "")}...`;
 }
 
+type DescriptionNeighborhoodMention = {
+  id: string;
+  name: string;
+  isNested: boolean;
+  start: number;
+  end: number;
+};
+
+function foldSearchText(value: string) {
+  return value
+    .replace(/[øØ]/g, "o")
+    .replace(/[æÆ]/g, "ae")
+    .replace(/[œŒ]/g, "oe")
+    .replace(/[ß]/g, "ss")
+    .replace(/[łŁ]/g, "l")
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .toLowerCase();
+}
+
+function foldSearchTextWithIndexMap(value: string) {
+  let folded = "";
+  const indexMap: number[] = [];
+
+  for (let index = 0; index < value.length; index += 1) {
+    const foldedCharacter = foldSearchText(value[index]);
+    for (const character of foldedCharacter) {
+      folded += character;
+      indexMap.push(index);
+    }
+  }
+
+  return { folded, indexMap };
+}
+
+function isFoldedWordCharacter(value?: string) {
+  return Boolean(value && /[a-z0-9]/.test(value));
+}
+
 function FavoriteLocationRow({
   location,
   active,
@@ -677,6 +716,7 @@ export function SplitScreenSection({
   const [profileCreateCityId, setProfileCreateCityId] = useState("");
   const [profileCreateSubareaId, setProfileCreateSubareaId] = useState("");
   const [profileCreateNestedSubareaId, setProfileCreateNestedSubareaId] = useState("");
+  const [hoveredDescriptionNeighborhoodId, setHoveredDescriptionNeighborhoodId] = useState<string | null>(null);
   const [exitingCategoryInsight, setExitingCategoryInsight] = useState<ReturnType<typeof buildCategoryInsight> | null>(null);
   const [exitingCategoryInsightNotes, setExitingCategoryInsightNotes] = useState<ReturnType<typeof buildCategoryInsightNotes>>([]);
   const lastCategoryInsightRef = useRef<ReturnType<typeof buildCategoryInsight> | null>(null);
@@ -3000,7 +3040,10 @@ export function SplitScreenSection({
         return total + listTextSignal + Math.min(stopSignals, 4);
       }, 0);
       const researchStrength = getNeighborhoodResearchStrength({
-        activeSubcategory,
+        activeSubcategory:
+          activeCategory === "Food" && activeFoodCuisine !== FOOD_CUISINE_ANY
+            ? activeFoodCuisine
+            : activeSubcategory,
         cityId: activeLocation.city?.id,
         category: activeCategory,
         neighborhoodId: item.id,
@@ -3788,6 +3831,83 @@ export function SplitScreenSection({
       ? visibleSeoIntroCopy
       : visibleSeoIntroCopy ?? activeLocationDescription;
   const visibleIntroCopyDisplay = visibleIntroCopy ? capExplorerDescription(visibleIntroCopy) : null;
+  const descriptionNeighborhoodMentions = useMemo<DescriptionNeighborhoodMention[]>(() => {
+    if (!visibleIntroCopyDisplay || !activeLocation.city || !cityListItems.length || expandedGuide || isSavedPlacesRailActive) {
+      return [];
+    }
+
+    const { folded, indexMap } = foldSearchTextWithIndexMap(visibleIntroCopyDisplay);
+    const occupied = Array.from({ length: visibleIntroCopyDisplay.length }, () => false);
+    const candidates = cityListItems
+      .map((item) => ({
+        id: item.id,
+        name: item.name,
+        isNested: item.isNested,
+        foldedName: foldSearchText(formatBreadcrumbName(item.name)),
+      }))
+      .filter((item) => item.foldedName.length >= 3)
+      .sort((left, right) => right.foldedName.length - left.foldedName.length || left.name.localeCompare(right.name));
+    const mentions: DescriptionNeighborhoodMention[] = [];
+
+    for (const candidate of candidates) {
+      let searchFrom = 0;
+      while (searchFrom < folded.length) {
+        const foldedStart = folded.indexOf(candidate.foldedName, searchFrom);
+        if (foldedStart === -1) {
+          break;
+        }
+
+        const foldedEnd = foldedStart + candidate.foldedName.length;
+        const hasWordBefore = isFoldedWordCharacter(folded[foldedStart - 1]);
+        const hasWordAfter = isFoldedWordCharacter(folded[foldedEnd]);
+        const start = indexMap[foldedStart];
+        const end = (indexMap[foldedEnd - 1] ?? start) + 1;
+        const overlaps = occupied.slice(start, end).some(Boolean);
+
+        if (!hasWordBefore && !hasWordAfter && !overlaps) {
+          mentions.push({
+            id: candidate.id,
+            name: candidate.name,
+            isNested: candidate.isNested,
+            start,
+            end,
+          });
+          for (let index = start; index < end; index += 1) {
+            occupied[index] = true;
+          }
+        }
+
+        searchFrom = foldedEnd;
+      }
+    }
+
+    return mentions.sort((left, right) => left.start - right.start);
+  }, [activeLocation.city, cityListItems, expandedGuide, formatBreadcrumbName, isSavedPlacesRailActive, visibleIntroCopyDisplay]);
+  const handleDescriptionNeighborhoodSelect = (mention: DescriptionNeighborhoodMention) => {
+    if (!activeLocation.continent || !activeLocation.country || !activeLocation.city) {
+      return;
+    }
+
+    setHoveredDescriptionNeighborhoodId(null);
+
+    if (mention.isNested && activeLocation.subarea) {
+      handleSelectNestedSubarea(
+        activeLocation.continent.id,
+        activeLocation.country.id,
+        activeLocation.city.id,
+        activeLocation.subarea.id,
+        mention.id,
+      );
+      return;
+    }
+
+    handleSelectSubarea(
+      activeLocation.continent.id,
+      activeLocation.country.id,
+      activeLocation.city.id,
+      mention.id,
+    );
+  };
   const cityHighlightRows = useMemo(() => {
     if (!activeLocation.city || !allActiveLists.length) {
       return [];
@@ -6454,7 +6574,45 @@ export function SplitScreenSection({
                                   : "border-slate-200 text-slate-600"
                               }`}
                             >
-                              {visibleIntroCopyDisplay}
+                              {descriptionNeighborhoodMentions.length
+                                ? (() => {
+                                    let cursor = 0;
+                                    return descriptionNeighborhoodMentions.flatMap((mention) => {
+                                      const before = visibleIntroCopyDisplay.slice(cursor, mention.start);
+                                      const label = visibleIntroCopyDisplay.slice(mention.start, mention.end);
+                                      cursor = mention.end;
+                                      return [
+                                        before,
+                                        <button
+                                          key={`${mention.id}-${mention.start}`}
+                                          type="button"
+                                          onClick={() => handleDescriptionNeighborhoodSelect(mention)}
+                                          onMouseEnter={() => setHoveredDescriptionNeighborhoodId(mention.id)}
+                                          onMouseLeave={() =>
+                                            setHoveredDescriptionNeighborhoodId((current) =>
+                                              current === mention.id ? null : current,
+                                            )
+                                          }
+                                          onFocus={() => setHoveredDescriptionNeighborhoodId(mention.id)}
+                                          onBlur={() =>
+                                            setHoveredDescriptionNeighborhoodId((current) =>
+                                              current === mention.id ? null : current,
+                                            )
+                                          }
+                                          className={`rounded-sm underline decoration-current underline-offset-[3px] transition ${
+                                            activeDestinationImage
+                                              ? "text-white/95 hover:text-white"
+                                              : "text-slate-700 hover:text-slate-950"
+                                          }`}
+                                          aria-label={`Open ${formatBreadcrumbName(mention.name)}`}
+                                          title={`Open ${formatBreadcrumbName(mention.name)}`}
+                                        >
+                                          {label}
+                                        </button>,
+                                      ];
+                                    }).concat(visibleIntroCopyDisplay.slice(cursor));
+                                  })()
+                                : visibleIntroCopyDisplay}
                             </p>
                           </div>
                         ) : null}
@@ -6739,44 +6897,50 @@ export function SplitScreenSection({
                           : "Cities"}
                     </p>
                     <div className="flex flex-wrap gap-2">
-                    {cityUsesNestedDistricts && activeLocation.city && activeNestedCitySubareas.length
-                      ? activeNestedCitySubareas.map((nestedSubarea) => (
-                          <button
-                            key={nestedSubarea.id}
-                            type="button"
-                            onClick={() =>
-                              handleSelectNestedSubarea(
-                                activeLocation.continent!.id,
-                                activeLocation.country!.id,
-                                activeLocation.city!.id,
-                                activeLocation.subarea!.id,
-                                nestedSubarea.id,
-                              )
-                            }
-                            className={darkPanePillClass(selection.nestedSubareaId === nestedSubarea.id)}
-                          >
-                            {nestedSubarea.name}
-                          </button>
-                        ))
-                      : activeLocation.city && activeCitySubareas.length
-                        ? activeCitySubareas.map((subarea) => (
-                          <button
-                            key={subarea.id}
-                            type="button"
-                            title={subarea.name}
-                            onClick={() =>
-                              handleSelectSubarea(
-                                activeLocation.continent!.id,
-                                activeLocation.country!.id,
-                                activeLocation.city!.id,
-                                subarea.id,
-                              )
-                            }
-                            className={darkPanePillClass(selection.subareaId === subarea.id)}
-                          >
-                            {formatBreadcrumbName(subarea.name)}
-                          </button>
-                        ))
+                      {cityUsesNestedDistricts && activeLocation.city && activeNestedCitySubareas.length
+                        ? activeNestedCitySubareas.map((nestedSubarea) => {
+                            const isDescriptionHovered = hoveredDescriptionNeighborhoodId === nestedSubarea.id;
+                            return (
+                              <button
+                                key={nestedSubarea.id}
+                                type="button"
+                                onClick={() =>
+                                  handleSelectNestedSubarea(
+                                    activeLocation.continent!.id,
+                                    activeLocation.country!.id,
+                                    activeLocation.city!.id,
+                                    activeLocation.subarea!.id,
+                                    nestedSubarea.id,
+                                  )
+                                }
+                                className={darkPanePillClass(selection.nestedSubareaId === nestedSubarea.id || isDescriptionHovered)}
+                              >
+                                {nestedSubarea.name}
+                              </button>
+                            );
+                          })
+                        : activeLocation.city && activeCitySubareas.length
+                          ? activeCitySubareas.map((subarea) => {
+                              const isDescriptionHovered = hoveredDescriptionNeighborhoodId === subarea.id;
+                              return (
+                                <button
+                                  key={subarea.id}
+                                  type="button"
+                                  title={subarea.name}
+                                  onClick={() =>
+                                    handleSelectSubarea(
+                                      activeLocation.continent!.id,
+                                      activeLocation.country!.id,
+                                      activeLocation.city!.id,
+                                      subarea.id,
+                                    )
+                                  }
+                                  className={darkPanePillClass(selection.subareaId === subarea.id || isDescriptionHovered)}
+                                >
+                                  {formatBreadcrumbName(subarea.name)}
+                                </button>
+                              );
+                            })
                       : showCountryFilterToggle && displayCountryRegions
                         ? activeCountrySubareas.map((subarea) => (
                             <button
@@ -7093,77 +7257,76 @@ export function SplitScreenSection({
                     <div className="min-h-0 flex-1 overflow-y-auto">
                       {rankedCityListItems.length ? (
                         <div className="space-y-2">
-                          {rankedCityListItems.map((item) => (
-                            (() => {
-                              const isSelected = (item.isNested ? selection.nestedSubareaId : selection.subareaId) === item.id;
-                              const strengthStars = activeCategory ? item.categoryStrengthStars : 0;
+                          {rankedCityListItems.map((item) => {
+                            const isSelected = (item.isNested ? selection.nestedSubareaId : selection.subareaId) === item.id;
+                            const isDescriptionHovered = hoveredDescriptionNeighborhoodId === item.id;
+                            const strengthStars = activeCategory ? item.categoryStrengthStars : 0;
 
-                              return (
-                                <button
-                                  key={item.id}
-                                  type="button"
-                                  title={item.name}
-                                  className={`group relative flex w-full items-center gap-2 overflow-hidden rounded-2xl border border-transparent px-3 py-2 text-left text-sm transition ${
-                                    isSelected
-                                      ? "text-white"
-                                      : "border-transparent text-slate-200 hover:text-white"
-                                  }`}
-                                  onClick={() =>
-                                    item.isNested
-                                      ? handleSelectNestedSubarea(
-                                          activeLocation.continent!.id,
-                                          activeLocation.country!.id,
-                                          activeLocation.city!.id,
-                                          activeLocation.subarea!.id,
-                                          item.id,
-                                        )
-                                      : handleSelectSubarea(
-                                          activeLocation.continent!.id,
-                                          activeLocation.country!.id,
-                                          activeLocation.city!.id,
-                                          item.id,
-                                        )
-                                  }
-                                >
-                                  {isSelected ? (
-                                    <span
-                                      className="pointer-events-none absolute inset-0 overflow-hidden rounded-2xl"
-                                      aria-hidden="true"
-                                    >
-                                      <span className="neighborhood-selection-swipe absolute inset-0 rounded-2xl border border-white/80" />
-                                    </span>
-                                  ) : null}
-                                  <span className="relative h-4 w-4 shrink-0" aria-hidden="true">
-                                    <MapPin
-                                      className={`absolute inset-0 h-4 w-4 text-red-500 transition-colors ${
-                                        isSelected ? "fill-red-500" : "fill-transparent group-hover:fill-red-500"
-                                      }`}
-                                    />
-                                    <span
-                                      className={`absolute left-1/2 top-[4px] h-1.5 w-1.5 -translate-x-1/2 rounded-full bg-[#1a1a1a] transition-opacity ${
-                                        isSelected ? "opacity-100" : "opacity-0 group-hover:opacity-100"
-                                      }`}
-                                    />
+                            return (
+                              <button
+                                key={item.id}
+                                type="button"
+                                title={item.name}
+                                className={`group relative flex w-full items-center gap-2 overflow-hidden rounded-2xl border border-transparent px-3 py-2 text-left text-sm transition ${
+                                  isSelected || isDescriptionHovered
+                                    ? "text-white"
+                                    : "border-transparent text-slate-200 hover:text-white"
+                                }`}
+                                onClick={() =>
+                                  item.isNested
+                                    ? handleSelectNestedSubarea(
+                                        activeLocation.continent!.id,
+                                        activeLocation.country!.id,
+                                        activeLocation.city!.id,
+                                        activeLocation.subarea!.id,
+                                        item.id,
+                                      )
+                                    : handleSelectSubarea(
+                                        activeLocation.continent!.id,
+                                        activeLocation.country!.id,
+                                        activeLocation.city!.id,
+                                        item.id,
+                                      )
+                                }
+                              >
+                                {isSelected ? (
+                                  <span
+                                    className="pointer-events-none absolute inset-0 overflow-hidden rounded-2xl"
+                                    aria-hidden="true"
+                                  >
+                                    <span className="neighborhood-selection-swipe absolute inset-0 rounded-2xl border border-white/80" />
                                   </span>
-                                  <span className="min-w-0 flex-1 truncate">
-                                    {formatBreadcrumbName(item.name)}
+                                ) : null}
+                                <span className="relative h-4 w-4 shrink-0" aria-hidden="true">
+                                  <MapPin
+                                    className={`absolute inset-0 h-4 w-4 text-red-500 transition-colors ${
+                                      isSelected || isDescriptionHovered ? "fill-red-500" : "fill-transparent group-hover:fill-red-500"
+                                    }`}
+                                  />
+                                  <span
+                                    className={`absolute left-1/2 top-[4px] h-1.5 w-1.5 -translate-x-1/2 rounded-full bg-[#1a1a1a] transition-opacity ${
+                                      isSelected || isDescriptionHovered ? "opacity-100" : "opacity-0 group-hover:opacity-100"
+                                    }`}
+                                  />
+                                </span>
+                                <span className="min-w-0 flex-1 truncate">
+                                  {formatBreadcrumbName(item.name)}
+                                </span>
+                                {strengthStars ? (
+                                  <span
+                                    className="relative ml-auto flex shrink-0 items-center gap-0.5"
+                                    aria-label={`${strengthStars} ${strengthStars === 1 ? "star" : "stars"} for ${activeCategory}`}
+                                    title={`${activeCategory} strength: ${strengthStars}/3`}
+                                    style={{ color: CATEGORY_STYLES[activeCategory!].mapColor }}
+                                  >
+                                    {Array.from({ length: strengthStars }).map((_, index) => (
+                                      <Star key={`${item.id}-strength-${index}`} className="h-3 w-3 fill-current" />
+                                    ))}
                                   </span>
-                                  {strengthStars ? (
-                                    <span
-                                      className="relative ml-auto flex shrink-0 items-center gap-0.5"
-                                      aria-label={`${strengthStars} ${strengthStars === 1 ? "star" : "stars"} for ${activeCategory}`}
-                                      title={`${activeCategory} strength: ${strengthStars}/3`}
-                                      style={{ color: CATEGORY_STYLES[activeCategory!].mapColor }}
-                                    >
-                                      {Array.from({ length: strengthStars }).map((_, index) => (
-                                        <Star key={`${item.id}-strength-${index}`} className="h-3 w-3 fill-current" />
-                                      ))}
-                                    </span>
-                                  ) : null}
-                                </button>
-                              );
-                            })()
-                          ))}
+                                ) : null}
+                              </button>
+                            );
+                            })}
                         </div>
                       ) : (
                         <p className="px-3 py-2 text-sm text-slate-500">No neighborhoods available yet.</p>

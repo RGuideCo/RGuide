@@ -33,6 +33,9 @@ const normalizeStrengthKey = (value?: string | null) =>
     .replace(/[^a-z0-9]+/g, " ")
     .trim();
 
+const matchesNeighborhoodId = (strengthNeighborhoodId: string, neighborhoodId: string) =>
+  strengthNeighborhoodId === neighborhoodId || strengthNeighborhoodId.endsWith(`:${neighborhoodId}`);
+
 const tokyoNightlifeStrength: NeighborhoodStrengthConfig = {
   methodology:
     "Scores use researched neighborhood reputation first, then the app adds guide coverage as a secondary signal. Use 0-10 scores where 9+ means city-defining, 7-8 means strong for the field, 5-6 means useful but narrower, and below 5 means secondary.",
@@ -159,7 +162,7 @@ export function getNeighborhoodResearchStrength({
       return false;
     }
 
-    if (neighborhoodId && strength.neighborhoodId === neighborhoodId) {
+    if (neighborhoodId && matchesNeighborhoodId(strength.neighborhoodId, neighborhoodId)) {
       return true;
     }
 
