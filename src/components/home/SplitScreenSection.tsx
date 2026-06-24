@@ -3540,13 +3540,13 @@ export function SplitScreenSection({
 
   useEffect(() => {
     if (typeof window === "undefined" || isProfileSubmitLayout || isGuidePaneTakingFullListPane) {
-      setVisibleGuideMarkerIds([]);
+      setVisibleGuideMarkerIds((current) => (current.length ? [] : current));
       return;
     }
 
     const rightPane = rightPaneRef.current;
     if (!rightPane) {
-      setVisibleGuideMarkerIds([]);
+      setVisibleGuideMarkerIds((current) => (current.length ? [] : current));
       return;
     }
 
