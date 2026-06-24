@@ -677,6 +677,11 @@ export function SplitScreenSection({
   const [profileCreateCityId, setProfileCreateCityId] = useState("");
   const [profileCreateSubareaId, setProfileCreateSubareaId] = useState("");
   const [profileCreateNestedSubareaId, setProfileCreateNestedSubareaId] = useState("");
+  const [exitingCategoryInsight, setExitingCategoryInsight] = useState<ReturnType<typeof buildCategoryInsight> | null>(null);
+  const [exitingCategoryInsightNotes, setExitingCategoryInsightNotes] = useState<ReturnType<typeof buildCategoryInsightNotes>>([]);
+  const lastCategoryInsightRef = useRef<ReturnType<typeof buildCategoryInsight> | null>(null);
+  const lastCategoryInsightNotesRef = useRef<ReturnType<typeof buildCategoryInsightNotes>>([]);
+  const categoryInsightExitTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const captureCategoryBeforeGuideExpand = (category: ListCategory | null = activeCategoryRef.current) => {
     captureCategoryBeforeGuideExpandBase(category);
   };
@@ -3869,8 +3874,53 @@ export function SplitScreenSection({
       }),
     [activeCategoryInsight, activeFoodCuisine, activeSeoPlaceLabel],
   );
+  useEffect(() => {
+    if (activeCategoryInsight) {
+      lastCategoryInsightRef.current = activeCategoryInsight;
+      lastCategoryInsightNotesRef.current = activeCategoryInsightNotes;
+      if (categoryInsightExitTimeoutRef.current) {
+        clearTimeout(categoryInsightExitTimeoutRef.current);
+        categoryInsightExitTimeoutRef.current = null;
+      }
+      setExitingCategoryInsight(null);
+      setExitingCategoryInsightNotes([]);
+      return;
+    }
+
+    const previousInsight = lastCategoryInsightRef.current;
+    if (!previousInsight || expandedGuide) {
+      lastCategoryInsightRef.current = null;
+      lastCategoryInsightNotesRef.current = [];
+      setExitingCategoryInsight(null);
+      setExitingCategoryInsightNotes([]);
+      return;
+    }
+
+    setExitingCategoryInsight(previousInsight);
+    setExitingCategoryInsightNotes(lastCategoryInsightNotesRef.current);
+    lastCategoryInsightRef.current = null;
+    lastCategoryInsightNotesRef.current = [];
+    if (categoryInsightExitTimeoutRef.current) {
+      clearTimeout(categoryInsightExitTimeoutRef.current);
+    }
+    categoryInsightExitTimeoutRef.current = setTimeout(() => {
+      categoryInsightExitTimeoutRef.current = null;
+      setExitingCategoryInsight(null);
+      setExitingCategoryInsightNotes([]);
+    }, 340);
+  }, [activeCategoryInsight, activeCategoryInsightNotes, expandedGuide]);
+  useEffect(
+    () => () => {
+      if (categoryInsightExitTimeoutRef.current) {
+        clearTimeout(categoryInsightExitTimeoutRef.current);
+      }
+    },
+    [],
+  );
   const isCategoryInsightMode = !expandedGuide && Boolean(activeCategoryInsight);
-  const shouldShowVisibleIntroCopy = Boolean(visibleIntroCopyDisplay && !isCategoryInsightMode);
+  const isCategoryInsightExiting = !expandedGuide && !activeCategoryInsight && Boolean(exitingCategoryInsight);
+  const displayCategoryInsight = activeCategoryInsight ?? exitingCategoryInsight;
+  const displayCategoryInsightNotes = activeCategoryInsight ? activeCategoryInsightNotes : exitingCategoryInsightNotes;
   const handleCategoryInsightChipSelect = (chip: string) => {
     if (!activeCategoryInsight) {
       return;
@@ -5940,10 +5990,13 @@ export function SplitScreenSection({
                   />
                   <div className="absolute inset-0" style={{ backgroundColor: "rgba(0, 0, 0, 0.34)" }} />
                   <div
-                    className="absolute inset-0"
+                    className="absolute inset-x-0 top-0"
                     style={{
+                      height: "calc(100% + 3.5rem)",
                       background:
                         "linear-gradient(to bottom, rgba(0, 0, 0, 0.18) 0%, rgba(0, 0, 0, 0.24) 55%, rgba(0, 0, 0, 0.62) 100%)",
+                      transform: isCategoryInsightMode ? "translateY(-3.5rem)" : "translateY(0)",
+                      transition: "transform 420ms cubic-bezier(0.22, 1, 0.36, 1)",
                     }}
                   />
                 </div>
@@ -6056,9 +6109,23 @@ export function SplitScreenSection({
                       ref={titleRef}
                       className={`max-w-[calc(100%-8rem)] text-2xl font-semibold ${activeDestinationImage ? "text-white drop-shadow-sm" : "text-slate-900"}`}
                     >
-                      <span ref={titleTextRef} className="inline-block">
-                        {visibleSeoHeading}
-                      </span>
+                      {activeCategory && activeLocation.city && !expandedGuide ? (
+                        <button
+                          type="button"
+                          onClick={() => handleCategoryToggle(activeCategory)}
+                          className="inline-block max-w-full text-left [font:inherit] leading-[inherit] transition hover:opacity-80"
+                          aria-label={`Show all ${activeSeoPlaceLabel} guides`}
+                          title={`Show all ${activeSeoPlaceLabel} guides`}
+                        >
+                          <span ref={titleTextRef} className="inline-block">
+                            {visibleSeoHeading}
+                          </span>
+                        </button>
+                      ) : (
+                        <span ref={titleTextRef} className="inline-block">
+                          {visibleSeoHeading}
+                        </span>
+                      )}
                     </h1>
                     {!isSavedPlacesRailActive ? (
                       <div
@@ -6362,7 +6429,7 @@ export function SplitScreenSection({
                       </div>
                     ) : activeLocation.city || visibleIntroCopyDisplay ? (
                       <div
-                        className="mt-2 transition-all duration-300"
+                        className={`${isCategoryInsightMode ? "mt-1" : "mt-2"} transition-all duration-300`}
                         style={{
                           opacity: postMorphRevealPhase >= 2 ? 1 : 0,
                           transform:
@@ -6371,19 +6438,32 @@ export function SplitScreenSection({
                               : "translateY(-8px)",
                         }}
                       >
-                        {shouldShowVisibleIntroCopy ? (
-                          <p
-                            className={`ml-3 min-h-[9rem] border-l pl-3 text-sm leading-5 ${
-                              activeDestinationImage
-                                ? "border-white/35 text-white drop-shadow-sm"
-                                : "border-slate-200 text-slate-600"
+                        {visibleIntroCopyDisplay ? (
+                          <div
+                            className={`overflow-hidden transition-[max-height,opacity,transform] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] ${
+                              isCategoryInsightMode
+                                ? "max-h-0 -translate-y-2 opacity-0"
+                                : "max-h-40 translate-y-0 opacity-100"
                             }`}
+                            aria-hidden={isCategoryInsightMode}
                           >
-                            {visibleIntroCopyDisplay}
-                          </p>
+                            <p
+                              className={`ml-3 min-h-[9rem] border-l pl-3 text-sm leading-5 ${
+                                activeDestinationImage
+                                  ? "border-white/35 text-white drop-shadow-sm"
+                                  : "border-slate-200 text-slate-600"
+                              }`}
+                            >
+                              {visibleIntroCopyDisplay}
+                            </p>
+                          </div>
                         ) : null}
                         {!expandedGuide ? (
-                          <div className={`${isCategoryInsightMode ? "mt-1" : "mt-3"} flex items-center gap-2`}>
+                          <div
+                            className={`${
+                              isCategoryInsightMode ? "mt-0 -translate-y-0.5" : "mt-3 translate-y-0"
+                            } flex items-center gap-2 transition-[margin,transform] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)]`}
+                          >
                             {activeStayBookingHref ? (
                               <div className="inline-flex h-9 overflow-hidden rounded-full border border-cyan-600/45 bg-white shadow-sm">
                                 <button
@@ -6442,9 +6522,11 @@ export function SplitScreenSection({
                             </div>
                           </div>
                         ) : null}
-                        {!expandedGuide && activeCategoryInsight ? (
+                        {!expandedGuide && displayCategoryInsight ? (
                           <div
-                            className={`category-insight-draw-in mt-3 rounded-[10px] border p-3 ${
+                            className={`${
+                              isCategoryInsightExiting ? "category-insight-draw-out" : "category-insight-draw-in"
+                            } mt-2 rounded-[10px] border p-3 ${
                               activeDestinationImage
                                 ? "border-white/18 bg-black/24 text-white shadow-[0_12px_34px_rgba(0,0,0,0.18)]"
                                 : "border-slate-200/80 bg-white/75 text-slate-800 shadow-sm"
@@ -6453,7 +6535,7 @@ export function SplitScreenSection({
                             <div className="mb-2 flex items-center gap-2">
                               <span
                                 className="h-2 w-2 rounded-full"
-                                style={{ backgroundColor: CATEGORY_STYLES[activeCategoryInsight.category].mapColor }}
+                                style={{ backgroundColor: CATEGORY_STYLES[displayCategoryInsight.category].mapColor }}
                                 aria-hidden="true"
                               />
                               <p
@@ -6461,16 +6543,16 @@ export function SplitScreenSection({
                                   activeDestinationImage ? "text-white/58" : "text-slate-500"
                                 }`}
                               >
-                                {activeCategoryInsight.label}
+                                {displayCategoryInsight.label}
                               </p>
                             </div>
                             <div className="flex flex-wrap gap-1.5">
-                              {activeCategoryInsight.chips.map((chip) => {
+                              {displayCategoryInsight.chips.map((chip) => {
                                 const isFoodCuisineChip =
-                                  activeCategoryInsight.category === "Food" &&
+                                  displayCategoryInsight.category === "Food" &&
                                   activeFoodCuisineOptions.some((option) => option.toLowerCase() === chip.toLowerCase());
                                 const isSubcategoryChip =
-                                  activeCategoryInsight.category !== "Food" &&
+                                  displayCategoryInsight.category !== "Food" &&
                                   activeSubcategoryOptions.some((option) => option.toLowerCase() === chip.toLowerCase());
                                 const isActiveCuisine =
                                   isFoodCuisineChip && activeFoodCuisine.toLowerCase() === chip.toLowerCase();
@@ -6492,21 +6574,21 @@ export function SplitScreenSection({
                                     }`}
                                     style={{
                                       backgroundColor: isActiveChip
-                                        ? CATEGORY_STYLES[activeCategoryInsight.category].mapColor
-                                        : `${CATEGORY_STYLES[activeCategoryInsight.category].mapColor}24`,
+                                        ? CATEGORY_STYLES[displayCategoryInsight.category].mapColor
+                                        : `${CATEGORY_STYLES[displayCategoryInsight.category].mapColor}24`,
                                       borderColor: isActiveChip
-                                        ? CATEGORY_STYLES[activeCategoryInsight.category].mapColor
-                                        : `${CATEGORY_STYLES[activeCategoryInsight.category].mapColor}33`,
+                                        ? CATEGORY_STYLES[displayCategoryInsight.category].mapColor
+                                        : `${CATEGORY_STYLES[displayCategoryInsight.category].mapColor}33`,
                                       color: isActiveChip || activeDestinationImage
                                         ? "rgba(255,255,255,0.92)"
-                                        : CATEGORY_STYLES[activeCategoryInsight.category].mapColor,
+                                        : CATEGORY_STYLES[displayCategoryInsight.category].mapColor,
                                     }}
                                     aria-pressed={isActiveChip}
                                     aria-label={
                                       isFoodCuisineChip
                                         ? `${isActiveCuisine ? "Clear" : "Filter"} ${activeSeoPlaceLabel} food by ${chip}`
                                         : isSubcategoryChip
-                                          ? `${isActiveSubcategory ? "Clear" : "Filter"} ${activeSeoPlaceLabel} ${activeCategoryInsight.category.toLowerCase()} by ${chip}`
+                                          ? `${isActiveSubcategory ? "Clear" : "Filter"} ${activeSeoPlaceLabel} ${displayCategoryInsight.category.toLowerCase()} by ${chip}`
                                           : undefined
                                     }
                                   >
@@ -6516,7 +6598,7 @@ export function SplitScreenSection({
                               })}
                             </div>
                             <div className="mt-2 space-y-1.5">
-                              {activeCategoryInsight.category === "Food" && activeFoodCuisine !== FOOD_CUISINE_ANY ? (
+                              {displayCategoryInsight.category === "Food" && activeFoodCuisine !== FOOD_CUISINE_ANY ? (
                                 <p
                                   className={`text-[10px] font-semibold uppercase tracking-[0.18em] ${
                                     activeDestinationImage ? "text-white/54" : "text-slate-500"
@@ -6525,9 +6607,9 @@ export function SplitScreenSection({
                                   {activeFoodCuisine} need to knows
                                 </p>
                               ) : null}
-                              {activeCategoryInsightNotes.map((note) => (
+                              {displayCategoryInsightNotes.map((note) => (
                                 <div
-                                  key={`${note.label ?? activeCategoryInsight.label}-${note.body}`}
+                                  key={`${note.label ?? displayCategoryInsight.label}-${note.body}`}
                                   className={`border-l pl-2 text-[12px] leading-5 ${
                                     activeDestinationImage
                                       ? "border-white/24 text-white/76"
@@ -6540,7 +6622,7 @@ export function SplitScreenSection({
                                       style={{
                                         color: activeDestinationImage
                                           ? "rgba(255,255,255,0.92)"
-                                          : CATEGORY_STYLES[activeCategoryInsight.category].mapColor,
+                                          : CATEGORY_STYLES[displayCategoryInsight.category].mapColor,
                                       }}
                                     >
                                       {note.label}
@@ -6551,8 +6633,8 @@ export function SplitScreenSection({
                               ))}
                             </div>
                           </div>
-                        ) : !expandedGuide && cityHighlightRows.length ? (
-                          <div className="mt-3 space-y-1.5 overflow-hidden text-sm leading-5">
+                        ) : !expandedGuide && cityHighlightRows.length && !isCategoryInsightExiting ? (
+                          <div className="city-summary-draw-in mt-3 space-y-1.5 overflow-hidden text-sm leading-5">
                             {cityHighlightRows.map((row) => {
                               const isActiveRow = activeCategory === row.category;
                               const rowColor = getLightCategoryTextColor(row.category, 0.48);
