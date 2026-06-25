@@ -12,9 +12,9 @@ const contactLinks = [
 
 const aboutFaqs = [
   {
-    question: "What is RGuide?",
+    question: "What is RGuide Travel?",
     answer:
-      "RGuide is a curated travel guide index built around useful city planning: where to eat, stay, go out, explore, and spend time.",
+      "RGuide Travel is a curated travel guide index built around useful city planning: where to eat, stay, go out, explore, and spend time.",
   },
   {
     question: "Who makes the guides?",
@@ -150,7 +150,7 @@ export function Footer() {
             {activeModal === "about" ? (
               <div className="mx-auto mt-4 max-w-md text-left">
                 <p className="text-center text-sm leading-6 text-slate-600">
-                  RGuide is a travel-planning index for opinionated city guides: restaurants, stays,
+                  RGuide Travel is a travel-planning index for opinionated city guides: restaurants, stays,
                   bars, culture, nature, and activities organized around the way people actually move
                   through a place.
                 </p>

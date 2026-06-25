@@ -48,6 +48,8 @@ import {
   MORPH_UP_START_MS,
   NIGHTLIFE_BAR_TYPE_ANY,
   NIGHTLIFE_BAR_TYPE_OPTIONS,
+  NIGHTLIFE_MUSIC_TYPE_ANY,
+  NIGHTLIFE_MUSIC_TYPE_OPTIONS,
   PlacesBeenEntry,
   PlacesBeenFilter,
   REVEAL_BODY_MS,
@@ -62,6 +64,7 @@ import {
   doesListMatchFoodCuisine,
   doesListMatchFoodPrice,
   doesListMatchCategory,
+  doesListMatchNightlifeMusicType,
   doesListMatchSubcategory,
   filterListStopsByFoodPrice,
   generalFoodCuisines,
@@ -524,6 +527,10 @@ export function SplitScreenSection({
     setActiveNightlifeBarType,
     isNightlifeBarMenuOpen,
     setIsNightlifeBarMenuOpen,
+    activeNightlifeMusicType,
+    setActiveNightlifeMusicType,
+    isNightlifeMusicMenuOpen,
+    setIsNightlifeMusicMenuOpen,
   } = useFilterState();
   const {
     hoveredGuide,
@@ -2515,6 +2522,20 @@ export function SplitScreenSection({
       if (activeSubcategory && !doesListMatchSubcategory(list, activeSubcategory)) {
         return false;
       }
+      if (
+        activeCategory === "Nightlife" &&
+        activeNightlifeBarType !== NIGHTLIFE_BAR_TYPE_ANY &&
+        inferNightlifeBarType(list) !== activeNightlifeBarType
+      ) {
+        return false;
+      }
+      if (
+        activeCategory === "Nightlife" &&
+        activeNightlifeMusicType !== NIGHTLIFE_MUSIC_TYPE_ANY &&
+        !doesListMatchNightlifeMusicType(list, activeNightlifeMusicType)
+      ) {
+        return false;
+      }
       if (activeFoodPrice && !doesListMatchFoodPrice(list, activeFoodPrice)) {
         return false;
       }
@@ -2525,6 +2546,8 @@ export function SplitScreenSection({
     activeFoodPrice,
     activeGuideRail,
     activeGuideSource,
+    activeNightlifeBarType,
+    activeNightlifeMusicType,
     activeSubcategory,
     globalMergedLists,
     noKnownItineraryIds,
@@ -2731,7 +2754,11 @@ export function SplitScreenSection({
               activeNightlifeBarType === NIGHTLIFE_BAR_TYPE_ANY
                 ? true
                 : inferNightlifeBarType(list) === activeNightlifeBarType;
-            return matchesSubcategory && matchesBarType;
+            const matchesMusicType =
+              activeNightlifeMusicType === NIGHTLIFE_MUSIC_TYPE_ANY
+                ? true
+                : doesListMatchNightlifeMusicType(list, activeNightlifeMusicType);
+            return matchesSubcategory && matchesBarType && matchesMusicType;
           })
         : categoryFilteredLists.filter((list) =>
             activeSubcategory ? doesListMatchSubcategory(list, activeSubcategory) : true,
@@ -2985,6 +3012,13 @@ export function SplitScreenSection({
       ) {
         return false;
       }
+      if (
+        activeCategory === "Nightlife" &&
+        activeNightlifeMusicType !== NIGHTLIFE_MUSIC_TYPE_ANY &&
+        !doesListMatchNightlifeMusicType(list, activeNightlifeMusicType)
+      ) {
+        return false;
+      }
       return true;
     };
 
@@ -3043,6 +3077,10 @@ export function SplitScreenSection({
         activeSubcategory:
           activeCategory === "Food" && activeFoodCuisine !== FOOD_CUISINE_ANY
             ? activeFoodCuisine
+            : activeCategory === "Nightlife" &&
+                activeSubcategory === NIGHTLIFE_MUSIC_TYPE_ANY &&
+                activeNightlifeMusicType !== NIGHTLIFE_MUSIC_TYPE_ANY
+              ? activeNightlifeMusicType
             : activeSubcategory,
         cityId: activeLocation.city?.id,
         category: activeCategory,
@@ -3073,6 +3111,7 @@ export function SplitScreenSection({
     activeFoodPrice,
     activeLocation.city,
     activeNightlifeBarType,
+    activeNightlifeMusicType,
     activeSubcategory,
     allActiveLists,
     cityListItems,
@@ -3144,6 +3183,8 @@ export function SplitScreenSection({
     setIsFoodCuisineMenuOpen(false);
     setActiveNightlifeBarType(NIGHTLIFE_BAR_TYPE_ANY);
     setIsNightlifeBarMenuOpen(false);
+    setActiveNightlifeMusicType(NIGHTLIFE_MUSIC_TYPE_ANY);
+    setIsNightlifeMusicMenuOpen(false);
     clearCategoryBeforeGuideExpand();
   };
   const handleLocationFavoritesRailToggle = () => {
@@ -3264,6 +3305,8 @@ export function SplitScreenSection({
     setIsFoodCuisineMenuOpen(false);
     setActiveNightlifeBarType(NIGHTLIFE_BAR_TYPE_ANY);
     setIsNightlifeBarMenuOpen(false);
+    setActiveNightlifeMusicType(NIGHTLIFE_MUSIC_TYPE_ANY);
+    setIsNightlifeMusicMenuOpen(false);
     setExpandedGuideId(null);
     clearCategoryBeforeGuideExpand();
     setClosingGuide(null);
@@ -3327,6 +3370,8 @@ export function SplitScreenSection({
     setIsFoodCuisineMenuOpen(false);
     setActiveNightlifeBarType(NIGHTLIFE_BAR_TYPE_ANY);
     setIsNightlifeBarMenuOpen(false);
+    setActiveNightlifeMusicType(NIGHTLIFE_MUSIC_TYPE_ANY);
+    setIsNightlifeMusicMenuOpen(false);
     setHoveredGuide(null);
     setHoveredStopId(null);
     setVisibleNestedStopParentIds([]);
@@ -3372,7 +3417,19 @@ export function SplitScreenSection({
     if (isNightlifeBarMenuOpen) {
       setIsNightlifeBarMenuOpen(false);
     }
-  }, [activeCategory, activeNightlifeBarType, isNightlifeBarMenuOpen]);
+    if (activeNightlifeMusicType !== NIGHTLIFE_MUSIC_TYPE_ANY) {
+      setActiveNightlifeMusicType(NIGHTLIFE_MUSIC_TYPE_ANY);
+    }
+    if (isNightlifeMusicMenuOpen) {
+      setIsNightlifeMusicMenuOpen(false);
+    }
+  }, [
+    activeCategory,
+    activeNightlifeBarType,
+    activeNightlifeMusicType,
+    isNightlifeBarMenuOpen,
+    isNightlifeMusicMenuOpen,
+  ]);
 
   useEffect(() => {
     setContinentBrowseView("countries");
@@ -3469,7 +3526,7 @@ export function SplitScreenSection({
   const isGuidePaneTakingFullListPane = isGuideTakingFullListPane || isGuideReturningToListPane;
   const isLeftPaneCollapsed = isProfileSubmitLayout || isGuidePaneTakingFullListPane;
   const isSubcategoryMenuOpen =
-    isFoodOpenTimeMenuOpen || isFoodCuisineMenuOpen || isNightlifeBarMenuOpen;
+    isFoodOpenTimeMenuOpen || isFoodCuisineMenuOpen || isNightlifeBarMenuOpen || isNightlifeMusicMenuOpen;
   const isSavedPlacesRailActive = isLocationFavoritesRailActive && !expandedGuide;
   const remainingGuides = displayedGuide
     ? orderedRailFilteredLists.filter((list) => list.id !== displayedGuide.id)
@@ -4061,7 +4118,7 @@ export function SplitScreenSection({
       return;
     }
 
-    const subcategory = activeSubcategoryOptions.find((option) => option.toLowerCase() === chip.toLowerCase());
+    const subcategory = activeSubcategoryOptions.find((option) => option.toLowerCase() === chip.toLowerCase()) ?? chip;
     if (!subcategory) {
       return;
     }
@@ -4074,6 +4131,8 @@ export function SplitScreenSection({
     setIsFoodOpenTimeMenuOpen(false);
     setActiveNightlifeBarType(NIGHTLIFE_BAR_TYPE_ANY);
     setIsNightlifeBarMenuOpen(false);
+    setActiveNightlifeMusicType(NIGHTLIFE_MUSIC_TYPE_ANY);
+    setIsNightlifeMusicMenuOpen(false);
   };
   useEffect(() => {
     if (!isGuidePaneTakingFullListPane) {
@@ -4082,6 +4141,7 @@ export function SplitScreenSection({
     setIsFoodOpenTimeMenuOpen(false);
     setIsFoodCuisineMenuOpen(false);
     setIsNightlifeBarMenuOpen(false);
+    setIsNightlifeMusicMenuOpen(false);
     setHoveredCategoryLabel(null);
     setIsMobileListSheetExpanded(true);
   }, [isGuidePaneTakingFullListPane]);
@@ -4766,6 +4826,8 @@ export function SplitScreenSection({
     setIsFoodCuisineMenuOpen(false);
     setActiveNightlifeBarType(NIGHTLIFE_BAR_TYPE_ANY);
     setIsNightlifeBarMenuOpen(false);
+    setActiveNightlifeMusicType(NIGHTLIFE_MUSIC_TYPE_ANY);
+    setIsNightlifeMusicMenuOpen(false);
 
     if (expandedGuideId === nextList.id) {
       scrollGuideIntoView(nextList.id);
@@ -6709,9 +6771,7 @@ export function SplitScreenSection({
                                 const isFoodCuisineChip =
                                   displayCategoryInsight.category === "Food" &&
                                   activeFoodCuisineOptions.some((option) => option.toLowerCase() === chip.toLowerCase());
-                                const isSubcategoryChip =
-                                  displayCategoryInsight.category !== "Food" &&
-                                  activeSubcategoryOptions.some((option) => option.toLowerCase() === chip.toLowerCase());
+                                const isSubcategoryChip = displayCategoryInsight.category !== "Food";
                                 const isActiveCuisine =
                                   isFoodCuisineChip && activeFoodCuisine.toLowerCase() === chip.toLowerCase();
                                 const isActiveSubcategory =
@@ -8295,6 +8355,7 @@ export function SplitScreenSection({
                             setIsFoodOpenTimeMenuOpen(false);
                             setIsFoodCuisineMenuOpen(false);
                             setIsNightlifeBarMenuOpen(false);
+                            setIsNightlifeMusicMenuOpen(false);
                             setIsDesktopSearchOpen((current) => !current);
                           }}
                           className={`inline-flex shrink-0 items-center justify-center rounded-lg text-white transition hover:text-white ${
@@ -8542,34 +8603,124 @@ export function SplitScreenSection({
                       </div>
                     ) : visibleSubcategoryCategory === "Nightlife" ? (
                       <div className="flex flex-wrap items-center justify-center gap-2 pt-1">
-                        {visibleSubcategoryOptions.map((subcategory, index) => (
-                          <button
-                            key={`${visibleSubcategoryCategory}-${subcategory}`}
-                            type="button"
-                            onClick={() =>
-                              setActiveSubcategory((current) =>
-                                current === subcategory ? null : subcategory,
-                              )
-                            }
-                            className={`subcategory-cascade-item rounded-full border px-2 py-0.5 text-[10px] font-medium uppercase tracking-[0.08em] transition ${
-                              activeSubcategory === subcategory
-                                ? "text-white"
-                                : "border-slate-200 bg-white text-slate-600 hover:border-slate-300 hover:text-slate-900"
-                            }`}
-                            style={{
-                              animationDelay: `${(isSubcategoryClosing ? visibleSubcategoryOptions.length - index : index) * 55}ms`,
-                              animationDirection: isSubcategoryClosing ? "reverse" : "normal",
-                              ...(activeSubcategory === subcategory
-                                ? {
-                                    backgroundColor: CATEGORY_STYLES[visibleSubcategoryCategory].mapColor,
-                                    borderColor: CATEGORY_STYLES[visibleSubcategoryCategory].mapColor,
-                                  }
-                                : {}),
-                            }}
-                          >
-                            {subcategory}
-                          </button>
-                        ))}
+                        {visibleSubcategoryOptions.map((subcategory, index) =>
+                          subcategory === NIGHTLIFE_MUSIC_TYPE_ANY ? (
+                            <div
+                              key={`${visibleSubcategoryCategory}-${subcategory}`}
+                              className="subcategory-cascade-item relative w-[8.2rem] shrink-0"
+                              style={{
+                                animationDelay: `${(isSubcategoryClosing ? visibleSubcategoryOptions.length - index : index) * 55}ms`,
+                                animationDirection: isSubcategoryClosing ? "reverse" : "normal",
+                              }}
+                            >
+                              <button
+                                type="button"
+                                onClick={() => {
+                                  setActiveSubcategory(NIGHTLIFE_MUSIC_TYPE_ANY);
+                                  setIsNightlifeMusicMenuOpen((current) => !current);
+                                  setIsNightlifeBarMenuOpen(false);
+                                  setIsFoodOpenTimeMenuOpen(false);
+                                  setIsFoodCuisineMenuOpen(false);
+                                }}
+                                className={`w-full rounded-full border px-2 py-0.5 pr-5 text-center text-[10px] font-medium uppercase tracking-[0.08em] shadow-sm outline-none transition focus-visible:ring-2 focus-visible:ring-slate-400/50 ${
+                                  activeSubcategory === NIGHTLIFE_MUSIC_TYPE_ANY
+                                    ? "text-white"
+                                    : "border-slate-200 bg-white/95 text-slate-600 hover:border-slate-300 hover:text-slate-900"
+                                }`}
+                                style={
+                                  activeSubcategory === NIGHTLIFE_MUSIC_TYPE_ANY
+                                    ? {
+                                        backgroundColor: CATEGORY_STYLES[visibleSubcategoryCategory].mapColor,
+                                        borderColor: CATEGORY_STYLES[visibleSubcategoryCategory].mapColor,
+                                      }
+                                    : undefined
+                                }
+                                aria-haspopup="listbox"
+                                aria-expanded={isNightlifeMusicMenuOpen}
+                                aria-label="Music filter"
+                              >
+                                {activeNightlifeMusicType}
+                              </button>
+                              <ChevronDown
+                                className={`pointer-events-none absolute right-1 top-1/2 h-3 w-3 -translate-y-1/2 transition-transform ${
+                                  activeSubcategory === NIGHTLIFE_MUSIC_TYPE_ANY ? "text-white/80" : "text-slate-400"
+                                } ${isNightlifeMusicMenuOpen ? "rotate-180" : ""}`}
+                                aria-hidden="true"
+                              />
+                              {isNightlifeMusicMenuOpen ? (
+                                <div className="absolute left-1/2 top-[calc(100%+6px)] z-[120] w-full -translate-x-1/2 overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-lg">
+                                  <button
+                                    key="nightlife-music-any"
+                                    type="button"
+                                    onClick={() => {
+                                      const shouldClear =
+                                        activeSubcategory === NIGHTLIFE_MUSIC_TYPE_ANY &&
+                                        activeNightlifeMusicType === NIGHTLIFE_MUSIC_TYPE_ANY;
+                                      setActiveSubcategory(shouldClear ? null : NIGHTLIFE_MUSIC_TYPE_ANY);
+                                      setActiveNightlifeMusicType(NIGHTLIFE_MUSIC_TYPE_ANY);
+                                      setIsNightlifeMusicMenuOpen(false);
+                                    }}
+                                    className={`block w-full px-3 py-2 text-left text-[11px] font-medium uppercase tracking-[0.08em] transition ${
+                                      activeSubcategory === NIGHTLIFE_MUSIC_TYPE_ANY &&
+                                      activeNightlifeMusicType === NIGHTLIFE_MUSIC_TYPE_ANY
+                                        ? "bg-slate-100 text-slate-900"
+                                        : "text-slate-600 hover:bg-slate-50 hover:text-slate-900"
+                                    }`}
+                                  >
+                                    {NIGHTLIFE_MUSIC_TYPE_ANY}
+                                  </button>
+                                  {NIGHTLIFE_MUSIC_TYPE_OPTIONS.map((musicType) => (
+                                    <button
+                                      key={`nightlife-music-${musicType}`}
+                                      type="button"
+                                      onClick={() => {
+                                        setActiveSubcategory(NIGHTLIFE_MUSIC_TYPE_ANY);
+                                        setActiveNightlifeMusicType(musicType);
+                                        setIsNightlifeMusicMenuOpen(false);
+                                      }}
+                                      className={`block w-full px-3 py-2 text-left text-[11px] font-medium uppercase tracking-[0.08em] transition ${
+                                        activeNightlifeMusicType === musicType
+                                          ? "bg-slate-100 text-slate-900"
+                                          : "text-slate-600 hover:bg-slate-50 hover:text-slate-900"
+                                      }`}
+                                    >
+                                      {musicType}
+                                    </button>
+                                  ))}
+                                </div>
+                              ) : null}
+                            </div>
+                          ) : (
+                            <button
+                              key={`${visibleSubcategoryCategory}-${subcategory}`}
+                              type="button"
+                              onClick={() => {
+                                setActiveSubcategory((current) =>
+                                  current === subcategory ? null : subcategory,
+                                );
+                                setActiveNightlifeMusicType(NIGHTLIFE_MUSIC_TYPE_ANY);
+                                setIsNightlifeMusicMenuOpen(false);
+                              }}
+                              className={`subcategory-cascade-item rounded-full border px-2 py-0.5 text-[10px] font-medium uppercase tracking-[0.08em] transition ${
+                                activeSubcategory === subcategory
+                                  ? "text-white"
+                                  : "border-slate-200 bg-white text-slate-600 hover:border-slate-300 hover:text-slate-900"
+                              }`}
+                              style={{
+                                animationDelay: `${(isSubcategoryClosing ? visibleSubcategoryOptions.length - index : index) * 55}ms`,
+                                animationDirection: isSubcategoryClosing ? "reverse" : "normal",
+                                ...(activeSubcategory === subcategory
+                                  ? {
+                                      backgroundColor: CATEGORY_STYLES[visibleSubcategoryCategory].mapColor,
+                                      borderColor: CATEGORY_STYLES[visibleSubcategoryCategory].mapColor,
+                                    }
+                                  : {}),
+                              }}
+                            >
+                              {subcategory}
+                            </button>
+                          )
+                        )}
                         <div
                           className="subcategory-cascade-item relative w-[8.2rem] shrink-0"
                           style={{
@@ -8581,6 +8732,7 @@ export function SplitScreenSection({
                             type="button"
                             onClick={() => {
                               setIsNightlifeBarMenuOpen((current) => !current);
+                              setIsNightlifeMusicMenuOpen(false);
                               setIsFoodOpenTimeMenuOpen(false);
                               setIsFoodCuisineMenuOpen(false);
                             }}

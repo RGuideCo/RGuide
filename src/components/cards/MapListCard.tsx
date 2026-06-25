@@ -406,8 +406,14 @@ function inferGuideSubcategory(list: MapList) {
   }
 
   if (list.category === "Nightlife") {
+    const nightlifeText = `${list.title} ${list.description} ${stops
+      .map((stop) => `${stop.name} ${stop.description} ${(stop.musicGenres ?? []).join(" ")}`)
+      .join(" ")}`;
     if (/\b(pub|pubs|pints?)\b/i.test(`${list.title} ${list.description}`)) {
       return "Pubs";
+    }
+    if (/\b(live music|music rooms?|music venues?|jazz|blues|concerts?|gigs?|dj|dance floors?|nightclubs?|karaoke)\b/i.test(nightlifeText)) {
+      return "Music";
     }
     return "Bars";
   }
@@ -434,6 +440,58 @@ function inferGuideSubcategory(list: MapList) {
   if (list.category === "Essentials") {
     return "Essentials";
   }
+
+  return null;
+}
+
+function inferNightlifeMusicChip(list: MapList, text: string) {
+  const stops = getAllGuideStops(list);
+  const commonNightlifeSignal = getMostCommonValue(
+    stops.flatMap((stop) => [
+      stop.nightlifeType,
+      ...(stop.musicGenres ?? []),
+      ...valuesFromMaybeArray(stop.subcategory),
+      ...valuesFromMaybeArray(stop.subcategories),
+    ]),
+  );
+
+  switch (commonNightlifeSignal) {
+    case "Live Music Venue":
+    case "Live Music":
+    case "Music Venue":
+      return "Live Music";
+    case "Concert Hall":
+    case "Concert Venue":
+    case "Theatre":
+    case "Theater":
+      return "Concert Venues";
+    case "Club":
+    case "Nightclub":
+    case "Dance Club":
+      return "Dance Clubs";
+    case "Jazz":
+    case "Blues":
+    case "Jazz Club":
+      return "Jazz Clubs";
+    case "Dj":
+    case "DJ":
+    case "Electronic":
+    case "Techno":
+    case "House":
+      return "DJ Nights";
+    case "Karaoke Bar":
+    case "Karaoke":
+      return "Karaoke";
+    default:
+      break;
+  }
+
+  if (/\bkaraoke|noraebang\b/i.test(text)) return "Karaoke";
+  if (/\bjazz|blues\b/i.test(text)) return "Jazz Clubs";
+  if (/\b(concert venues?|concert halls?|concerts?|gigs?|theatres?|theaters?)\b/i.test(text)) return "Concert Venues";
+  if (/\b(dj|resident dj|techno|house|electronic)\b/i.test(text)) return "DJ Nights";
+  if (/\b(dance clubs?|nightclubs?|clubs?|dance floors?)\b/i.test(text)) return "Dance Clubs";
+  if (/\b(live music|music rooms?|music venues?|bands?)\b/i.test(text)) return "Live Music";
 
   return null;
 }
@@ -472,6 +530,10 @@ function inferGuideChipDetail(list: MapList) {
   if (list.category === "Nightlife") {
     if (/\b(best[-\s+]*dive[-\s+]*bars?|dive[-\s+]*bars?)\b/i.test(guideIntentText)) {
       return "Dive Bars";
+    }
+    const musicChip = inferNightlifeMusicChip(list, text);
+    if (musicChip) {
+      return musicChip;
     }
     const nightlifeType = getMostCommonValue(getAllGuideStops(list).map((stop) => stop.nightlifeType));
     if (nightlifeType) {

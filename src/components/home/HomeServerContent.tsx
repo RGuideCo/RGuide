@@ -283,12 +283,12 @@ export function HomeServerContent({ continents, editorialGuides }: HomeServerCon
     <section className="page-shell py-8 sm:py-10" aria-labelledby="home-server-content-heading">
       <div className="surface overflow-hidden p-4 sm:p-6">
         <div className="max-w-3xl">
-          <p className="text-xs font-semibold uppercase tracking-[0.2em] text-orange-700">RGuide</p>
+          <p className="text-xs font-semibold uppercase tracking-[0.2em] text-orange-700">RGuide Travel</p>
           <h1 id="home-server-content-heading" className="mt-2 text-3xl font-semibold tracking-tight text-slate-950 sm:text-4xl">
-            City travel guides with hotel and neighborhood stay advice
+            RGuide Travel city guides for hotels, neighborhoods, food, and nightlife
           </h1>
           <p className="mt-3 text-sm leading-6 text-slate-600">
-            RGuide publishes independent destination guides for travelers choosing where to stay, where to eat, what to do, and which neighborhoods fit the trip. Start with accommodation-led guides for hotels, hostels, and practical city bases, then build the rest of the route around food, culture, nightlife, nature, and essentials.
+            RGuide Travel publishes independent destination guides for travelers choosing where to stay, where to eat, what to do, and which neighborhoods fit the trip. Start with accommodation-led guides for hotels, hostels, and practical city bases, then build the rest of the route around food, culture, nightlife, nature, and essentials.
           </p>
           <div className="mt-5 flex flex-wrap gap-3 text-sm font-semibold">
             <Link href="/category/stay" className="rounded-md bg-cyan-800 px-3 py-2 text-white hover:bg-cyan-900">

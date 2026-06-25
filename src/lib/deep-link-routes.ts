@@ -1,5 +1,5 @@
 import { cities, continents, mapLists } from "@/data";
-import { CATEGORIES } from "@/lib/constants";
+import { CATEGORIES, SITE_DESCRIPTION, SITE_SEARCH_NAME } from "@/lib/constants";
 import { getCitiesFromContinents } from "@/lib/geography-tree";
 import { getAbsoluteHref } from "@/lib/routes";
 import { slugify } from "@/lib/utils";
@@ -53,6 +53,19 @@ type NeighborhoodMatch = {
 
 const categoryBySlug = new Map(CATEGORIES.map((category) => [slugify(category), category] as const));
 const PARIS_ARRONDISSEMENT_RE = /^(\d+)(?:st|nd|rd|th) Arrondissement$/i;
+const websiteReference = {
+  "@type": "WebSite",
+  "@id": getAbsoluteHref("/#website"),
+  name: SITE_SEARCH_NAME,
+  url: getAbsoluteHref("/"),
+  description: SITE_DESCRIPTION,
+};
+const organizationReference = {
+  "@type": "Organization",
+  "@id": getAbsoluteHref("/#organization"),
+  name: SITE_SEARCH_NAME,
+  url: getAbsoluteHref("/"),
+};
 
 function cleanSegments(segments: string[]) {
   return segments.map((segment) => decodeURIComponent(segment).trim()).filter(Boolean);
@@ -483,7 +496,7 @@ function buildSelection(city: City, neighborhood?: NeighborhoodMatch, continentS
 
 function buildCountryBreadcrumbData(country: Country, canonicalPath: string) {
   const items = [
-    { name: "Home", item: "/" },
+    { name: SITE_SEARCH_NAME, item: "/" },
     { name: country.name, item: canonicalPath },
   ];
 
@@ -514,6 +527,8 @@ function buildCountryItemListData(country: Country, canonicalPath: string) {
     "@type": "ItemList",
     name: `RGuide ${country.name} travel guides`,
     url: getAbsoluteHref(canonicalPath),
+    isPartOf: websiteReference,
+    publisher: organizationReference,
     itemListElement: cityItems,
   };
 }
@@ -526,7 +541,7 @@ function buildContinentBreadcrumbData(continent: Continent, canonicalPath: strin
       {
         "@type": "ListItem",
         position: 1,
-        name: "Home",
+        name: SITE_SEARCH_NAME,
         item: getAbsoluteHref("/"),
       },
       {
@@ -552,6 +567,8 @@ function buildContinentItemListData(continent: Continent, canonicalPath: string)
     "@type": "ItemList",
     name: `RGuide ${continent.name} travel guides`,
     url: getAbsoluteHref(canonicalPath),
+    isPartOf: websiteReference,
+    publisher: organizationReference,
     itemListElement: countryItems,
   };
 }
@@ -659,7 +676,7 @@ export function resolveCountryDeepLink(
 
 function buildBreadcrumbData(city: City, canonicalPath: string, neighborhood?: SubArea, category?: ListCategory, guide?: MapList) {
   const items = [
-    { name: "Home", item: "/" },
+    { name: SITE_SEARCH_NAME, item: "/" },
     { name: city.name, item: getCanonicalCityPath(city) },
     neighborhood ? { name: neighborhood.name, item: getCanonicalCityNeighborhoodPath(city, neighborhood) } : null,
     category ? { name: category, item: getCanonicalCityCategoryPath(city, category, neighborhood) } : null,
@@ -690,6 +707,8 @@ function buildItemListData(
     name,
     url: getAbsoluteHref(canonicalPath),
     numberOfItems: lists.length,
+    isPartOf: websiteReference,
+    publisher: organizationReference,
     itemListElement: lists.slice(0, 20).map((list, index) => ({
       "@type": "ListItem",
       position: index + 1,
@@ -724,6 +743,8 @@ function buildGuideData(guide: MapList, canonicalPath: string) {
     url: getAbsoluteHref(canonicalPath),
     image: guide.photo,
     about: guide.category,
+    isPartOf: websiteReference,
+    publisher: organizationReference,
     author: {
       "@type": "Person",
       name: guide.creator.name,

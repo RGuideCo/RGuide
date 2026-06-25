@@ -34,7 +34,7 @@ type CityCategoryInsightConfig = Partial<
 
 const defaultCategoryInsightChips: Record<ListCategory, string[]> = {
   Food: ["Restaurants", "Markets", "Local staples", "Reservations"],
-  Nightlife: ["Cocktails", "Live rooms", "Late streets", "Wine bars"],
+  Nightlife: ["Cocktails", "Music", "Late streets", "Wine bars"],
   Nature: ["Viewpoints", "Parks", "Waterfront", "Easy walks"],
   Culture: ["Museums", "Architecture", "Galleries", "Historic streets"],
   Stay: ["Hotels", "Hostels", "Design stays", "Transit bases"],
@@ -276,7 +276,7 @@ export function buildCategoryInsight({
   categoryInsights,
 }: CategoryInsightRequest): CategoryInsight {
   const destinationInsight = categoryInsights?.find((insight) => insight.category === category);
-  const destinationChips = destinationInsight?.chips.map((chip) => chip.label).filter(Boolean).slice(0, 4) ?? [];
+  const destinationChips = destinationInsight?.chips.map((chip) => chip.label).filter(Boolean).slice(0, 5) ?? [];
   const destinationNotes =
     destinationInsight?.notes
       .map((note) => ({

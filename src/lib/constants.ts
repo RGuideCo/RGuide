@@ -2,6 +2,8 @@ import { ListCategory } from "@/types";
 
 export const SITE_NAME = "RGuide";
 export const SITE_SEARCH_NAME = "RGuide Travel";
+export const SITE_EMAIL = "hello@rguide.co";
+export const SITE_EDITORIAL_EMAIL = "editorial@rguide.co";
 export const SITE_ALTERNATE_NAMES = [
   "RGuide",
   "R Guide",
@@ -13,7 +15,17 @@ export const SITE_ALTERNATE_NAMES = [
 ];
 export const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.rguide.co";
 export const SITE_DESCRIPTION =
-  "RGuide Travel publishes independent city travel guides for hotels, restaurants, bars, culture, itineraries, and neighborhood-led trips.";
+  "RGuide Travel is an independent city travel guide platform for hotels, hostels, restaurants, bars, culture, itineraries, and neighborhood-led trips.";
+export const SITE_KNOWS_ABOUT = [
+  "city travel guides",
+  "hotel guides",
+  "hostel guides",
+  "restaurant guides",
+  "bar guides",
+  "neighborhood travel planning",
+  "culture guides",
+  "travel itineraries",
+];
 
 export const CATEGORIES: ListCategory[] = [
   "Food",

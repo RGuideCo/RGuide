@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Contact RGuide",
-  description: "Contact RGuide for editorial corrections, partnerships, and general questions.",
+  title: "Contact RGuide Travel",
+  description: "Contact RGuide Travel for editorial corrections, partnerships, and general questions.",
   alternates: {
     canonical: "/contact",
   },
@@ -14,7 +14,7 @@ export default function ContactPage() {
       <section className="surface p-6 sm:p-8" aria-labelledby="contact-heading">
         <p className="text-sm font-semibold uppercase tracking-[0.24em] text-orange-600">Contact</p>
         <h1 id="contact-heading" className="mt-2 text-4xl font-semibold text-slate-900">
-          Contact RGuide
+          Contact RGuide Travel
         </h1>
         <p className="mt-4 max-w-3xl text-base leading-7 text-slate-600">
           Send general questions, partnership notes, source updates, and correction requests to the
