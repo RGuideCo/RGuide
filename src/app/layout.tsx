@@ -9,7 +9,15 @@ import { AuthModal } from "@/components/auth/AuthModal";
 import { AuthSync } from "@/components/auth/AuthSync";
 import { SubmittedGuidesSync } from "@/components/auth/SubmittedGuidesSync";
 import { Footer } from "@/components/layout/Footer";
-import { SITE_ALTERNATE_NAMES, SITE_DESCRIPTION, SITE_NAME, SITE_SEARCH_NAME, SITE_URL } from "@/lib/constants";
+import {
+  SITE_ALTERNATE_NAMES,
+  SITE_DESCRIPTION,
+  SITE_EDITORIAL_EMAIL,
+  SITE_EMAIL,
+  SITE_KNOWS_ABOUT,
+  SITE_SEARCH_NAME,
+  SITE_URL,
+} from "@/lib/constants";
 import { getAbsoluteHref } from "@/lib/routes";
 
 import "@/app/globals.css";
@@ -31,18 +39,18 @@ export const metadata: Metadata = {
   applicationName: SITE_SEARCH_NAME,
   title: {
     default: `${SITE_SEARCH_NAME} | Curated City Travel Guides`,
-    template: `%s | ${SITE_NAME}`,
+    template: `%s | ${SITE_SEARCH_NAME}`,
   },
   description: SITE_DESCRIPTION,
-  authors: [{ name: SITE_NAME, url: SITE_URL }],
-  creator: SITE_NAME,
+  authors: [{ name: SITE_SEARCH_NAME, url: SITE_URL }],
+  creator: SITE_SEARCH_NAME,
   publisher: SITE_SEARCH_NAME,
   category: "travel",
   alternates: {
     canonical: "/",
   },
   openGraph: {
-    title: SITE_SEARCH_NAME,
+    title: `${SITE_SEARCH_NAME} | Curated City Travel Guides`,
     description: SITE_DESCRIPTION,
     url: "/",
     siteName: SITE_SEARCH_NAME,
@@ -62,12 +70,30 @@ const websiteJsonLd = {
   "@context": "https://schema.org",
   "@graph": [
     {
+      "@type": "WebPage",
+      "@id": getAbsoluteHref("/#webpage"),
+      name: `${SITE_SEARCH_NAME} - Curated City Travel Guides`,
+      url: getAbsoluteHref("/"),
+      description: SITE_DESCRIPTION,
+      inLanguage: "en",
+      isPartOf: {
+        "@id": getAbsoluteHref("/#website"),
+      },
+      about: {
+        "@id": getAbsoluteHref("/#organization"),
+      },
+      publisher: {
+        "@id": getAbsoluteHref("/#organization"),
+      },
+    },
+    {
       "@type": "WebSite",
       "@id": getAbsoluteHref("/#website"),
       name: SITE_SEARCH_NAME,
       alternateName: SITE_ALTERNATE_NAMES,
       url: getAbsoluteHref("/"),
       description: SITE_DESCRIPTION,
+      inLanguage: "en",
       publisher: {
         "@id": getAbsoluteHref("/#organization"),
       },
@@ -79,6 +105,20 @@ const websiteJsonLd = {
       alternateName: SITE_ALTERNATE_NAMES,
       url: getAbsoluteHref("/"),
       description: SITE_DESCRIPTION,
+      email: SITE_EMAIL,
+      contactPoint: [
+        {
+          "@type": "ContactPoint",
+          contactType: "general inquiries",
+          email: SITE_EMAIL,
+        },
+        {
+          "@type": "ContactPoint",
+          contactType: "editorial corrections",
+          email: SITE_EDITORIAL_EMAIL,
+        },
+      ],
+      knowsAbout: SITE_KNOWS_ABOUT,
     },
   ],
 };

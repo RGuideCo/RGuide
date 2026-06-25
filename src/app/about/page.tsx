@@ -2,8 +2,8 @@ import type { Metadata } from "next";
 import Link from "next/link";
 
 export const metadata: Metadata = {
-  title: "About RGuide",
-  description: "Learn how RGuide organizes curated travel guides by city, neighborhood, and trip context.",
+  title: "About RGuide Travel",
+  description: "Learn how RGuide Travel organizes curated city travel guides by city, neighborhood, and trip context.",
   alternates: {
     canonical: "/about",
   },
@@ -15,10 +15,10 @@ export default function AboutPage() {
       <section className="surface p-6 sm:p-8" aria-labelledby="about-heading">
         <p className="text-sm font-semibold uppercase tracking-[0.24em] text-orange-600">About</p>
         <h1 id="about-heading" className="mt-2 text-4xl font-semibold text-slate-900">
-          RGuide
+          RGuide Travel
         </h1>
         <p className="mt-4 max-w-3xl text-base leading-7 text-slate-600">
-          RGuide is a travel-planning index for opinionated city guides. It organizes restaurants, stays,
+          RGuide Travel is a travel-planning index for opinionated city guides. It organizes restaurants, stays,
           bars, culture, nature, activities, and routes around how people actually move through a place:
           by city, neighborhood, category, and trip purpose.
         </p>

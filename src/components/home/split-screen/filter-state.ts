@@ -5,6 +5,7 @@ import {
   FOOD_OPEN_TIME_OPTIONS,
   FoodPriceTier,
   NIGHTLIFE_BAR_TYPE_ANY,
+  NIGHTLIFE_MUSIC_TYPE_ANY,
 } from "@/components/home/split-screen-config";
 import type { ListCategory } from "@/types";
 
@@ -21,6 +22,8 @@ export function useFilterState() {
   const [isFoodCuisineMenuOpen, setIsFoodCuisineMenuOpen] = useState(false);
   const [activeNightlifeBarType, setActiveNightlifeBarType] = useState<string>(NIGHTLIFE_BAR_TYPE_ANY);
   const [isNightlifeBarMenuOpen, setIsNightlifeBarMenuOpen] = useState(false);
+  const [activeNightlifeMusicType, setActiveNightlifeMusicType] = useState<string>(NIGHTLIFE_MUSIC_TYPE_ANY);
+  const [isNightlifeMusicMenuOpen, setIsNightlifeMusicMenuOpen] = useState(false);
 
   return {
     visibleSubcategoryCategory,
@@ -47,5 +50,9 @@ export function useFilterState() {
     setActiveNightlifeBarType,
     isNightlifeBarMenuOpen,
     setIsNightlifeBarMenuOpen,
+    activeNightlifeMusicType,
+    setActiveNightlifeMusicType,
+    isNightlifeMusicMenuOpen,
+    setIsNightlifeMusicMenuOpen,
   };
 }

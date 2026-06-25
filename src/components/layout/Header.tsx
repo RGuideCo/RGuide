@@ -100,7 +100,7 @@ export function Header() {
           ) : null}
         </div>
         <div className="absolute left-3 top-3 w-auto shrink-0 drop-shadow-[0_1px_2px_rgba(255,255,255,0.8)] lg:static lg:w-14 lg:translate-x-3 lg:drop-shadow-none">
-          <Link href="/" onClick={() => setProfileShellActive(false)} className="shrink-0">
+          <Link href="/" onClick={() => setProfileShellActive(false)} className="shrink-0" aria-label="RGuide Travel home" title="RGuide Travel">
             <span className="hidden font-mono text-[1.05rem] font-semibold uppercase tracking-[0.16em] text-slate-950 lg:inline">RGuide</span>
             <span className="inline-flex h-8 w-8 items-center justify-center rounded-lg bg-slate-950 font-mono text-sm font-semibold text-white shadow-sm lg:hidden">
               R

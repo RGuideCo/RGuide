@@ -109,6 +109,15 @@ export const FOOD_OPEN_TIME_OPTIONS = ["Now", "Morning", "Afternoon", "Evening",
 export const FOOD_CUISINE_ANY = "Cuisine";
 export const NIGHTLIFE_BAR_TYPE_ANY = "Bars";
 export const NIGHTLIFE_BAR_TYPE_OPTIONS = ["Dive Bar", "Cocktail Bar", "Sports Bar", "Pub", "Uni Bar"] as const;
+export const NIGHTLIFE_MUSIC_TYPE_ANY = "Music";
+export const NIGHTLIFE_MUSIC_TYPE_OPTIONS = [
+  "Live Music",
+  "Dance Clubs",
+  "Concert Venues",
+  "Jazz Clubs",
+  "DJ Nights",
+  "Karaoke",
+] as const;
 
 export const contextualFoodCuisinesByScope: Record<SubcategoryScope, string[]> = {
   country: ["Regional", "Local", "Seafood", "Street Food"],
@@ -180,6 +189,13 @@ export const contextualFoodCuisinesByCity: Record<string, string[]> = {
   Miami: ["Cuban", "Latin", "Seafood", "Steakhouse"],
   Tokyo: ["Sushi", "Ramen", "Izakaya", "Japanese"],
   Bangkok: ["Thai", "Street Food", "Seafood", "Noodles"],
+  "Hong Kong": ["Chinese", "Seafood", "Street Food", "Noodles"],
+  Amsterdam: ["Dutch", "Indonesian", "Brown Cafes", "Surinamese", "Street Food"],
+  Athens: ["Souvlaki", "Tavernas", "Meze", "Bakeries", "Rooftop Dining"],
+  Berlin: ["Döner", "Currywurst", "Vegan", "Third-Wave Coffee", "Street Food"],
+  Copenhagen: ["Smørrebrød", "New Nordic", "Bakeries", "Hot Dogs", "Street Food"],
+  Hanoi: ["Pho", "Bun Cha", "Street Food", "Cafes", "Bia Hoi"],
+  Lisbon: ["Seafood", "Petiscos", "Pastelarias", "Fado Dining", "Bifanas"],
   Rome: ["Pasta", "Italian", "Pizza", "Gelato"],
 };
 
@@ -204,7 +220,7 @@ export const generalFoodCuisines = [
 export const categorySubcategoriesByScope: Record<SubcategoryScope, Record<ListCategory, string[]>> = {
   country: {
     Food: [],
-    Nightlife: ["Live Music", "Late Night", "Rooftops"],
+    Nightlife: ["Music", "Late Night", "Rooftops"],
     Culture: ["UNESCO Sites", "National Museums", "Historic Centers", "Festivals"],
     Stay: ["Hostels", "Hotels", "Resorts", "Vacation Rentals"],
     Nature: ["Hikes", "Coastal Walks", "National Parks", "Scenic Drives"],
@@ -214,7 +230,7 @@ export const categorySubcategoriesByScope: Record<SubcategoryScope, Record<ListC
   },
   region: {
     Food: [],
-    Nightlife: ["Live Music", "Late Night", "Rooftops"],
+    Nightlife: ["Music", "Late Night", "Rooftops"],
     Culture: ["Heritage Towns", "Craft Districts", "Landmarks", "Local Museums"],
     Stay: ["Hostels", "Hotels", "Resorts", "Vacation Rentals"],
     Nature: ["Hikes", "Coastal Walks", "Waterfalls", "Viewpoints"],
@@ -224,7 +240,7 @@ export const categorySubcategoriesByScope: Record<SubcategoryScope, Record<ListC
   },
   city: {
     Food: [],
-    Nightlife: ["Live Music", "Late Night", "Rooftops"],
+    Nightlife: ["Music", "Late Night", "Rooftops"],
     Culture: ["Architecture", "Museums", "Galleries", "Historic Streets"],
     Stay: ["Hostels", "Hotels", "Resorts", "Vacation Rentals"],
     Nature: ["Views", "Urban Parks", "Waterfront", "Gardens"],
@@ -329,6 +345,7 @@ function getPoiSubcategories(stop: MapList["stops"][number]) {
     ...valuesFromMaybeArray(stop.lodgingType),
     ...valuesFromMaybeArray(stop.foodServiceType),
     ...valuesFromMaybeArray(stop.nightlifeType),
+    ...valuesFromMaybeArray(stop.musicGenres),
     ...valuesFromMaybeArray(stop.venueKind),
   ];
 }
@@ -364,6 +381,32 @@ function getSubcategoryFilterAliases(subcategory: string) {
       return ["Dive Bar", "Dive Bars", "dive_bar", "dive_bars"];
     case "Live Music":
       return ["Live Music", "live_music_venue", "concert_hall"];
+    case "Music":
+      return [
+        "Music",
+        "Live Music",
+        "live_music_venue",
+        "concert_hall",
+        "club",
+        "nightclub",
+        "dance club",
+        "jazz",
+        "blues",
+        "dj",
+        "karaoke_bar",
+        "music venue",
+        "music room",
+      ];
+    case "Dance Clubs":
+      return ["Dance Clubs", "Dance Club", "club", "nightclub", "dance floor"];
+    case "Concert Venues":
+      return ["Concert Venues", "Concert Venue", "concert_hall", "theatre", "theater", "music venue"];
+    case "Jazz Clubs":
+      return ["Jazz Clubs", "Jazz Club", "jazz", "blues"];
+    case "DJ Nights":
+      return ["DJ Nights", "DJ", "dj", "club", "nightclub", "electronic", "techno", "house"];
+    case "Karaoke":
+      return ["Karaoke", "karaoke_bar", "karaoke"];
     case "Late Night":
       return ["Late Night", "club", "lounge"];
     case "Rooftops":
@@ -505,6 +548,84 @@ export function doesListMatchFoodCuisine(list: MapList, cuisine: string): boolea
   return fallbackMatchers[cuisine]?.test(text) ?? text.includes(cuisine.toLowerCase());
 }
 
+function getNightlifeMusicFilterAliases(musicType: string) {
+  switch (musicType) {
+    case "Live Music":
+      return ["live music", "live_music_venue", "music venue", "music room", "band", "gig"];
+    case "Dance Clubs":
+      return ["dance club", "club", "nightclub", "dance floor", "night club"];
+    case "Concert Venues":
+      return ["concert venue", "concert_hall", "concert hall", "concert", "venue", "theatre", "theater", "show"];
+    case "Jazz Clubs":
+      return ["jazz club", "jazz", "blues club", "blues"];
+    case "DJ Nights":
+      return ["dj", "dj night", "resident dj", "electronic", "techno", "house", "dance floor"];
+    case "Karaoke":
+      return ["karaoke", "karaoke_bar", "noraebang"];
+    default:
+      return getSubcategoryFilterAliases("Music");
+  }
+}
+
+export function doesListMatchNightlifeMusicType(list: MapList, musicType: string): boolean {
+  if (musicType === NIGHTLIFE_MUSIC_TYPE_ANY) {
+    return true;
+  }
+
+  const aliases = getNightlifeMusicFilterAliases(musicType);
+  const stops = getListPoiStops(list);
+  const structuredMusicValues = stops.flatMap((stop) => [
+    ...valuesFromMaybeArray(stop.nightlifeType),
+    ...valuesFromMaybeArray(stop.musicGenres),
+    ...valuesFromMaybeArray(stop.subcategory),
+    ...valuesFromMaybeArray(stop.subcategories),
+    ...valuesFromMaybeArray(stop.attributeTags),
+    ...valuesFromMaybeArray(stop.tags),
+  ]);
+
+  if (
+    structuredMusicValues.some((value) =>
+      aliases.some((alias) => filterValuesMatch(value, alias)),
+    )
+  ) {
+    return true;
+  }
+
+  const text = [
+    list.title,
+    list.slug,
+    list.seoSlug,
+    list.seoTitle,
+    list.seoDescription,
+    list.url,
+    list.description,
+    ...stops.map((stop) =>
+      [
+        stop.name,
+        stop.description,
+        stop.subcategory,
+        ...(stop.subcategories ?? []),
+        ...(stop.musicGenres ?? []),
+        ...(stop.attributeTags ?? []),
+        ...(stop.tags ?? []),
+      ].join(" "),
+    ),
+  ]
+    .filter((value): value is string => Boolean(value))
+    .join(" ")
+    .toLowerCase();
+  const fallbackMatchers: Record<string, RegExp> = {
+    "Live Music": /\b(live music|music rooms?|music venues?|bands?|gigs?)\b/,
+    "Dance Clubs": /\b(dance clubs?|nightclubs?|clubs?|dance floors?)\b/,
+    "Concert Venues": /\b(concert venues?|concert halls?|concerts?|gigs?|theatres?|theaters?|show rooms?)\b/,
+    "Jazz Clubs": /\b(jazz|blues)\b/,
+    "DJ Nights": /\b(dj|resident dj|techno|house|electronic|dance floor)\b/,
+    Karaoke: /\b(karaoke|noraebang)\b/,
+  };
+
+  return fallbackMatchers[musicType]?.test(text) ?? false;
+}
+
 export function inferNightlifeBarType(list: MapList): (typeof NIGHTLIFE_BAR_TYPE_OPTIONS)[number] {
   const text = `${list.title} ${list.description} ${list.stops
     .map((stop) => `${stop.name} ${stop.description}`)
@@ -570,8 +691,20 @@ export function doesListMatchSubcategory(list: MapList, subcategory: string): bo
     case "Dive Bar":
     case "Dive Bars":
       return /(dive bar|dive|no-frills|grunge|cheap pours|neighborhood bar)/.test(text);
+    case "Music":
+      return /(live music|music room|music venue|jazz|blues|concert|gig|dj|dance|nightclub|club|karaoke|listening bar|band)/.test(text);
     case "Live Music":
       return /(live music|jazz|concert|dj|dance|club|venue)/.test(text);
+    case "Dance Clubs":
+      return /(dance club|nightclub|club|dance floor|dj)/.test(text);
+    case "Concert Venues":
+      return /(concert venue|concert hall|concert|gig|theatre|theater|show room|music venue)/.test(text);
+    case "Jazz Clubs":
+      return /(jazz|blues)/.test(text);
+    case "DJ Nights":
+      return /(dj|resident dj|techno|house|electronic|dance floor)/.test(text);
+    case "Karaoke":
+      return /(karaoke|noraebang)/.test(text);
     case "Late Night":
       return /(late night|nightlife|after-hours|party|club)/.test(text);
     case "Rooftops":

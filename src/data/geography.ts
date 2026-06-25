@@ -1328,6 +1328,60 @@ const citySubareaSeeds = new Map<string, SubArea[]>([
     ],
   ],
   [
+    "Hong Kong|Hong Kong",
+    [
+      {
+        id: "central",
+        name: "Central",
+        coordinates: [22.2819, 114.1589],
+        description:
+          "Hong Kong's finance-tower core, where polished Cantonese rooms, hotel dining, cocktail bars, escalators, ferries, and colonial fragments sit in compressed vertical layers. It works best when food, bars, galleries, and harbor movement need to stay close.",
+      },
+      {
+        id: "sheung-wan",
+        name: "Sheung Wan",
+        coordinates: [22.2854, 114.1501],
+        description:
+          "A textured west-of-Central district of dried seafood shops, temples, roast meat, tea, small restaurants, galleries, and quieter bars. It works best for food-led walks and second drinks that feel less glossy than Central.",
+      },
+      {
+        id: "tsim-sha-tsui",
+        name: "Tsim Sha Tsui",
+        coordinates: [22.2976, 114.1722],
+        description:
+          "Kowloon's harbor-front showpiece, with classic hotels, museums, shopping streets, Cantonese dining, and skyline views facing Hong Kong Island. It works best when the harbor view is part of the plan, not the whole plan.",
+      },
+      {
+        id: "wan-chai",
+        name: "Wan Chai",
+        coordinates: [22.277, 114.1733],
+        description:
+          "A dense island district where old streets, convention-center polish, bars, live music, noodles, and late practical meals overlap. It works best for nights that want to get louder without losing transit logic.",
+      },
+      {
+        id: "causeway-bay",
+        name: "Causeway Bay",
+        coordinates: [22.2797, 114.185],
+        description:
+          "A retail-heavy district of malls, street food, bakeries, late dining, tram movement, and constant foot traffic. It works best when shopping, quick meals, and transport convenience matter more than calm.",
+      },
+      {
+        id: "west-kowloon",
+        name: "West Kowloon",
+        coordinates: [22.3027, 114.1599],
+        description:
+          "Hong Kong's major cultural waterfront, anchored by M+, the Hong Kong Palace Museum, performance spaces, harbor lawns, and a wider Kowloon view. It works best as a museum-and-waterfront counterweight to Central.",
+      },
+      {
+        id: "peak-mid-levels",
+        name: "The Peak & Mid-Levels",
+        coordinates: [22.2708, 114.1498],
+        description:
+          "The steep, view-driven Hong Kong above Central, shaped by escalators, hillside streets, tram routes, gardens, and skyline overlooks. It works best when the day needs elevation, air, and a sense of the city stacked below.",
+      },
+    ],
+  ],
+  [
     "Amsterdam|Netherlands",
     [
       {
