@@ -1079,9 +1079,9 @@ const hostelStops = {
     { id: "trastevere-hostel-yellow", name: "YellowSquare Rome", coordinates: [41.9035, 12.5054], description: "YellowSquare is not in Trastevere, but it honestly serves travelers who want the social hostel scene first and Trastevere as a dinner/night route. The tradeoff is transit or taxi time.", price: "$", priceSource: "Hostelworld / Google Maps", photo: "https://yellowsquare.com/rome/wp-content/uploads/sites/2/2023/12/francesco_colosseo_precovid-gallery-home-rome-copia.webp" },
   ],
   monti: [
-    { id: "monti-hostel-ostello-bello", name: "Ostello Bello Roma Colosseo", coordinates: [41.8954, 12.4996], description: "Ostello Bello Roma Colosseo is the best hostel match for Monti: close to the neighborhood's bars, cafes, and ancient sites, with a social setup that still works for private-room travelers. Ostello Bello Roma Colosseo's hostel tradeoff is dorm and private-room flexibility, common-space energy, price, and whether the location honestly serves the neighborhood route. Confirm Ostello Bello Roma Colosseo's current ratings, check-in rules, lockers, and late-arrival details before booking.", price: "$", priceSource: "Hostelworld / Google Maps", photo: "https://ostellobello.com/wp-content/uploads/2021/10/OBR_1x1_Full.jpg" },
-    { id: "monti-hostel-new-generation", name: "New Generation Hostel Rome Center", coordinates: [41.8959, 12.4997], description: "New Generation Hostel Rome Center is the budget Monti option for travelers who want Colosseum and Termini access without paying hotel rates. It is a location-and-price pick.", price: "$", priceSource: "Hostelworld / Google Maps", photo: undefined },
-    { id: "monti-hostel-generator", name: "Generator Rome", coordinates: [41.8967, 12.5065], description: "Generator Rome sits on the Esquilino edge, but it serves Monti travelers who want a design hostel with dorms and private rooms near Termini and the Colosseum corridor. Generator Rome's value is the sleep tradeoff: location, room style, price posture, and how easily the stay supports the surrounding route. Confirm Generator Rome's current room type, check-in details, and transit fit before booking.", price: "$", priceSource: "Hostelworld / Google Maps", photo: undefined },
+    { id: "monti-hostel-ostello-bello", name: "Ostello Bello Roma Colosseo", coordinates: [41.8954, 12.4996], description: "Ostello Bello Roma Colosseo is the strongest Monti hostel match: close to the neighborhood's bars, cafes, and ancient sites, with dorms, private rooms, and common spaces that work for solo travelers.", price: "$", priceSource: "Hostelworld / Google Maps", photo: undefined },
+    { id: "monti-hostel-new-generation", name: "New Generation Hostel Rome Center", coordinates: [41.8959, 12.4997], description: "New Generation Hostel Rome Center is the budget Monti option for travelers who want Colosseum and Termini access without paying hotel rates. Use it as a location-and-price pick.", price: "$", priceSource: "Hostelworld / Google Maps", photo: undefined },
+    { id: "monti-hostel-generator", name: "Generator Rome", coordinates: [41.8967, 12.5065], description: "Generator Rome sits on the Esquilino edge, but it serves Monti travelers who want a larger design hostel with dorms, private rooms, and easy Termini logistics.", price: "$", priceSource: "Hostelworld / Google Maps", photo: undefined },
   ],
   testaccio: [
     { id: "testaccio-hostel-borgo-ripa", name: "Borgo Ripa Urban Travel", coordinates: [41.8873, 12.4753], description: "Borgo Ripa is the closest credible hostel-style choice for Testaccio routes, especially for travelers who want Trastevere access at night and Testaccio food by foot or short transit. Borgo Ripa Urban Travel's hostel tradeoff is dorm and private-room flexibility, common-space energy, price, and whether the location honestly serves the neighborhood route. Confirm Borgo Ripa Urban Travel's current ratings, check-in rules, lockers, and late-arrival details before booking.", price: "$", priceSource: "Hostelworld / Google Maps", photo: undefined },
@@ -1370,9 +1370,14 @@ const romeNeighborhoodStayGuides = [
   stayGuide("Celio", "Hostels", hostelStops.celio, "Hostels Around the Colosseum", "Celio is one of the easier Rome areas for hostel travelers because Monti, Termini, and the Colosseum corridor create a useful cluster of budget beds."),
 ] satisfies MapList[];
 
+const romePriorityStayGuides = [
+  stayGuide("Monti", "Hostels", hostelStops.monti, "Monti Hostels Near the Colosseum", "A focused Monti hostel guide for travelers who want Colosseum access, Termini logistics, and evening bars without needing a long hotel-style shortlist."),
+] satisfies MapList[];
+
 export const romeGuides = [
   ...romeCoreGuides,
   ...neighborhoodFoodGuides,
   ...neighborhoodCultureGuides,
   ...neighborhoodNightlifeGuides,
+  ...romePriorityStayGuides,
 ] satisfies MapList[];
