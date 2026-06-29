@@ -1,6 +1,6 @@
 "use client";
 
-import { X } from "lucide-react";
+import { Eye, EyeOff, X } from "lucide-react";
 import { FormEvent, useEffect, useState } from "react";
 
 import { getSupabaseBrowserClient } from "@/lib/supabase/client";
@@ -13,12 +13,14 @@ export function AuthModal() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
   const [message, setMessage] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const supabase = getSupabaseBrowserClient();
 
   useEffect(() => {
     setMessage("");
+    setShowPassword(false);
   }, [activeAuthMode]);
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
@@ -131,16 +133,27 @@ export function AuthModal() {
           </label>
           <label className="block text-sm">
             <span className="mb-2 block font-medium text-slate-700">Password</span>
-            <input
-              type="password"
-              value={password}
-              onChange={(event) => setPassword(event.target.value)}
-              placeholder="Password"
-              autoComplete={activeAuthMode === "login" ? "current-password" : "new-password"}
-              minLength={6}
-              required
-              className="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-slate-900"
-            />
+            <span className="relative block">
+              <input
+                type={showPassword ? "text" : "password"}
+                value={password}
+                onChange={(event) => setPassword(event.target.value)}
+                placeholder="Password"
+                autoComplete={activeAuthMode === "login" ? "current-password" : "new-password"}
+                minLength={6}
+                required
+                className="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 pr-12 text-slate-900"
+              />
+              <button
+                type="button"
+                onClick={() => setShowPassword((current) => !current)}
+                className="absolute right-3 top-1/2 inline-flex h-8 w-8 -translate-y-1/2 items-center justify-center rounded-full text-slate-500 hover:bg-stone-100 hover:text-slate-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-300"
+                aria-label={showPassword ? "Hide password" : "Show password"}
+                title={showPassword ? "Hide password" : "Show password"}
+              >
+                {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+              </button>
+            </span>
           </label>
 
           {message ? (

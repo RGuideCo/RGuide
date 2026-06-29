@@ -16,6 +16,7 @@ const DEFAULT_ITINERARY_PLAYLIST_ID = "itinerary-primary";
 
 interface SubmitInput {
   submissionType: SubmissionType;
+  creationSource?: "standalone" | "existing_venue";
   url: string;
   title: string;
   description: string;
@@ -358,6 +359,16 @@ export const useAppStore = create<AppState>()(
         }
 
         const isJournal = input.submissionType === "journal";
+        const isStandaloneGuideCreation =
+          input.submissionType === "guide" && input.creationSource !== "existing_venue";
+
+        if (isStandaloneGuideCreation && !currentUser.canPublishGuides) {
+          return {
+            ok: false,
+            message: "Add an existing venue to a guide to create one.",
+          };
+        }
+
         const isItinerary = input.submissionType === "itinerary";
         const trimmedDescription = input.description.trim();
         const trimmedJournalNote = (input.journalNote ?? "").trim();

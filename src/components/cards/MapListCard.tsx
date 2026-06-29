@@ -1741,6 +1741,7 @@ export function MapListCard({
     const nextStop = buildStopFromTarget(guidePickerTarget);
     const response = submitList({
       submissionType: "guide",
+      creationSource: "existing_venue",
       url: "https://www.google.com/maps",
       title: trimmedName,
       description: "Custom guide with saved locations.",

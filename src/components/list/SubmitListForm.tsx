@@ -663,6 +663,8 @@ export function SubmitListForm({
   const formTitle = title.trim() || (editingListId ? `Edit ${submissionNoun}` : `New ${submissionNoun}`);
   const formSubtitle = editingListId ? `Editing ${submissionNoun}` : `Create ${submissionNoun}`;
   const canPublishPublic = currentUser?.canPublishGuides === true;
+  const isStandaloneGuideSubmitBlocked =
+    !editingListId && effectiveSubmissionType === "guide" && !canPublishPublic;
 
   useEffect(() => {
     if (!onPreviewListChange) {
@@ -1566,6 +1568,11 @@ export function SubmitListForm({
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+
+    if (isStandaloneGuideSubmitBlocked) {
+      setMessage("Add an existing venue to a guide to create one.");
+      return;
+    }
 
     if (!title.trim()) {
       setMessage("Please add a title.");
@@ -3045,7 +3052,17 @@ export function SubmitListForm({
                 ) : null}
                 <button
                   type="submit"
-                  className="rounded-full bg-slate-900 px-5 py-3 text-sm font-medium text-white hover:bg-slate-800"
+                  disabled={isStandaloneGuideSubmitBlocked}
+                  className={`rounded-full px-5 py-3 text-sm font-medium transition ${
+                    isStandaloneGuideSubmitBlocked
+                      ? "cursor-not-allowed bg-slate-200 text-slate-500"
+                      : "bg-slate-900 text-white hover:bg-slate-800"
+                  }`}
+                  title={
+                    isStandaloneGuideSubmitBlocked
+                      ? "Add an existing venue to a guide to create one."
+                      : undefined
+                  }
                 >
                   {editingListId ? "Save changes" : `Submit ${submissionNoun}`}
                 </button>

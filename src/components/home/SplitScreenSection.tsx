@@ -2647,6 +2647,8 @@ export function SplitScreenSection({
     return DEFAULT_PROFILE_FAVORITES;
   }, [currentUser]);
   const isProfileMode = displayShellMode === "profile" && Boolean(currentUser);
+  const canCreateStandaloneProfileEntry = currentUser?.canPublishGuides === true;
+  const standaloneCreateDisabledTitle = "Add an existing venue to a guide to create one.";
   const {
     countries: profilePlacesBeenCountries,
     countryIds: profilePlacesBeenCountryIds,
@@ -2686,6 +2688,20 @@ export function SplitScreenSection({
     savedHighlightedCountryIds,
   ]);
   const isProfileSubmitLayout = isProfileMode && isProfileSubmitting;
+  useEffect(() => {
+    if (!currentUser || canCreateStandaloneProfileEntry) {
+      return;
+    }
+
+    setIsProfileCreateModalOpen(false);
+    setIsProfileSubmitting(false);
+    setProfileEditingListId(null);
+  }, [
+    canCreateStandaloneProfileEntry,
+    currentUser,
+    setIsProfileSubmitting,
+    setProfileEditingListId,
+  ]);
   const activeNeighborhoodKey = activeLocation.subarea
     ? normalizeNeighborhoodName(activeLocation.subarea.name)
     : null;
@@ -4925,6 +4941,9 @@ export function SplitScreenSection({
       openAuthModal("login");
       return;
     }
+    if (!canCreateStandaloneProfileEntry) {
+      return;
+    }
     const defaults = getProfileCreateDefaults();
     setProfileCreateName("");
     setProfileCreateType("guide");
@@ -4970,6 +4989,9 @@ export function SplitScreenSection({
   const handleCreateProfileGuide = () => {
     if (!currentUser) {
       openAuthModal("login");
+      return;
+    }
+    if (!canCreateStandaloneProfileEntry) {
       return;
     }
 
@@ -8272,9 +8294,22 @@ export function SplitScreenSection({
                               <button
                                 type="button"
                                 onClick={openProfileCreateModal}
-                                className="relative z-10 flex h-9 w-9 items-center justify-center rounded-lg border border-white bg-white text-slate-950 shadow-sm transition-[background-color,color,border-color,transform] duration-200 hover:scale-105 hover:border-white hover:text-slate-950 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-400/70"
-                                aria-label="Create guide"
-                                title="Create guide"
+                                disabled={!canCreateStandaloneProfileEntry}
+                                className={`relative z-10 flex h-9 w-9 items-center justify-center rounded-lg border shadow-sm transition-[background-color,color,border-color,transform] duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-400/70 ${
+                                  canCreateStandaloneProfileEntry
+                                    ? "border-white bg-white text-slate-950 hover:scale-105 hover:border-white hover:text-slate-950"
+                                    : "cursor-not-allowed border-white/10 bg-white/8 text-white/35 shadow-none"
+                                }`}
+                                aria-label={
+                                  canCreateStandaloneProfileEntry
+                                    ? "Create guide"
+                                    : "Create guide unavailable"
+                                }
+                                title={
+                                  canCreateStandaloneProfileEntry
+                                    ? "Create guide"
+                                    : standaloneCreateDisabledTitle
+                                }
                               >
                                 <Plus className="h-4 w-4" />
                               </button>
@@ -9047,6 +9082,7 @@ export function SplitScreenSection({
                         </span>
                         <button
                           type="button"
+                          disabled={!canCreateStandaloneProfileEntry}
                           onClick={() =>
                             setIsProfileSubmitting((current) => {
                               const next = !current;
@@ -9056,9 +9092,25 @@ export function SplitScreenSection({
                               return next;
                             })
                           }
-                          className="inline-flex h-7 w-7 items-center justify-center rounded-full border border-slate-200 bg-white text-slate-700 hover:border-slate-300 hover:text-slate-900"
-                          aria-label={isProfileSubmitting ? "Close guide submission" : "Create guide"}
-                          title={isProfileSubmitting ? "Close guide submission" : "Create guide"}
+                          className={`inline-flex h-7 w-7 items-center justify-center rounded-full border transition ${
+                            canCreateStandaloneProfileEntry
+                              ? "border-slate-200 bg-white text-slate-700 hover:border-slate-300 hover:text-slate-900"
+                              : "cursor-not-allowed border-slate-200 bg-slate-100 text-slate-400"
+                          }`}
+                          aria-label={
+                            canCreateStandaloneProfileEntry
+                              ? isProfileSubmitting
+                                ? "Close guide submission"
+                                : "Create guide"
+                              : "Create guide unavailable"
+                          }
+                          title={
+                            canCreateStandaloneProfileEntry
+                              ? isProfileSubmitting
+                                ? "Close guide submission"
+                                : "Create guide"
+                              : standaloneCreateDisabledTitle
+                          }
                         >
                           <Plus
                             className={`h-4 w-4 transition-transform duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] ${
