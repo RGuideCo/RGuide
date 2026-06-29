@@ -25,7 +25,7 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import { startTransition, useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
-import type { PointerEvent as ReactPointerEvent } from "react";
+import type { PointerEvent as ReactPointerEvent, ReactNode } from "react";
 
 import { MapListCard } from "@/components/cards/MapListCard";
 import { SubmitListForm } from "@/components/list/SubmitListForm";
@@ -260,8 +260,17 @@ type DescriptionNeighborhoodMention = {
   id: string;
   name: string;
   isNested: boolean;
+  parentSubareaId?: string;
   start: number;
   end: number;
+};
+
+type NeighborhoodMentionCandidate = {
+  id: string;
+  name: string;
+  isNested: boolean;
+  parentSubareaId?: string;
+  foldedName: string;
 };
 
 function foldSearchText(value: string) {
@@ -293,6 +302,50 @@ function foldSearchTextWithIndexMap(value: string) {
 
 function isFoldedWordCharacter(value?: string) {
   return Boolean(value && /[a-z0-9]/.test(value));
+}
+
+function findNeighborhoodMentionsInText(
+  text: string,
+  candidates: NeighborhoodMentionCandidate[],
+): DescriptionNeighborhoodMention[] {
+  const { folded, indexMap } = foldSearchTextWithIndexMap(text);
+  const occupied = Array.from({ length: text.length }, () => false);
+  const mentions: DescriptionNeighborhoodMention[] = [];
+
+  for (const candidate of candidates) {
+    let searchFrom = 0;
+    while (searchFrom < folded.length) {
+      const foldedStart = folded.indexOf(candidate.foldedName, searchFrom);
+      if (foldedStart === -1) {
+        break;
+      }
+
+      const foldedEnd = foldedStart + candidate.foldedName.length;
+      const hasWordBefore = isFoldedWordCharacter(folded[foldedStart - 1]);
+      const hasWordAfter = isFoldedWordCharacter(folded[foldedEnd]);
+      const start = indexMap[foldedStart];
+      const end = (indexMap[foldedEnd - 1] ?? start) + 1;
+      const overlaps = occupied.slice(start, end).some(Boolean);
+
+      if (!hasWordBefore && !hasWordAfter && !overlaps) {
+        mentions.push({
+          id: candidate.id,
+          name: candidate.name,
+          isNested: candidate.isNested,
+          parentSubareaId: candidate.parentSubareaId,
+          start,
+          end,
+        });
+        for (let index = start; index < end; index += 1) {
+          occupied[index] = true;
+        }
+      }
+
+      searchFrom = foldedEnd;
+    }
+  }
+
+  return mentions.sort((left, right) => left.start - right.start);
 }
 
 function FavoriteLocationRow({
@@ -2297,6 +2350,30 @@ export function SplitScreenSection({
     activeNestedCitySubareas,
     cityUsesNestedDistricts,
   ]);
+  const neighborhoodMentionCandidates = useMemo<NeighborhoodMentionCandidate[]>(
+    () =>
+      activeCitySubareas
+        .flatMap((subarea) => [
+          {
+            id: subarea.id,
+            name: subarea.name,
+            isNested: false,
+          },
+          ...(subarea.subareas ?? []).map((nestedSubarea) => ({
+            id: nestedSubarea.id,
+            name: nestedSubarea.name,
+            isNested: true,
+            parentSubareaId: subarea.id,
+          })),
+        ])
+        .map((item) => ({
+          ...item,
+          foldedName: foldSearchText(formatBreadcrumbName(item.name)),
+        }))
+        .filter((item) => item.foldedName.length >= 3)
+        .sort((left, right) => right.foldedName.length - left.foldedName.length || left.name.localeCompare(right.name)),
+    [activeCitySubareas, formatBreadcrumbName],
+  );
   const activeCityNeighborhoodOrder = useMemo(() => {
     const order = new Map<string, number>();
     cityListItems.forEach((item, index) => {
@@ -3905,57 +3982,24 @@ export function SplitScreenSection({
       : visibleSeoIntroCopy ?? activeLocationDescription;
   const visibleIntroCopyDisplay = visibleIntroCopy ? capExplorerDescription(visibleIntroCopy) : null;
   const descriptionNeighborhoodMentions = useMemo<DescriptionNeighborhoodMention[]>(() => {
-    if (!visibleIntroCopyDisplay || !activeLocation.city || !cityListItems.length || expandedGuide || isSavedPlacesRailActive) {
+    if (
+      !visibleIntroCopyDisplay ||
+      !activeLocation.city ||
+      !neighborhoodMentionCandidates.length ||
+      expandedGuide ||
+      isSavedPlacesRailActive
+    ) {
       return [];
     }
 
-    const { folded, indexMap } = foldSearchTextWithIndexMap(visibleIntroCopyDisplay);
-    const occupied = Array.from({ length: visibleIntroCopyDisplay.length }, () => false);
-    const candidates = cityListItems
-      .map((item) => ({
-        id: item.id,
-        name: item.name,
-        isNested: item.isNested,
-        foldedName: foldSearchText(formatBreadcrumbName(item.name)),
-      }))
-      .filter((item) => item.foldedName.length >= 3)
-      .sort((left, right) => right.foldedName.length - left.foldedName.length || left.name.localeCompare(right.name));
-    const mentions: DescriptionNeighborhoodMention[] = [];
-
-    for (const candidate of candidates) {
-      let searchFrom = 0;
-      while (searchFrom < folded.length) {
-        const foldedStart = folded.indexOf(candidate.foldedName, searchFrom);
-        if (foldedStart === -1) {
-          break;
-        }
-
-        const foldedEnd = foldedStart + candidate.foldedName.length;
-        const hasWordBefore = isFoldedWordCharacter(folded[foldedStart - 1]);
-        const hasWordAfter = isFoldedWordCharacter(folded[foldedEnd]);
-        const start = indexMap[foldedStart];
-        const end = (indexMap[foldedEnd - 1] ?? start) + 1;
-        const overlaps = occupied.slice(start, end).some(Boolean);
-
-        if (!hasWordBefore && !hasWordAfter && !overlaps) {
-          mentions.push({
-            id: candidate.id,
-            name: candidate.name,
-            isNested: candidate.isNested,
-            start,
-            end,
-          });
-          for (let index = start; index < end; index += 1) {
-            occupied[index] = true;
-          }
-        }
-
-        searchFrom = foldedEnd;
-      }
-    }
-
-    return mentions.sort((left, right) => left.start - right.start);
-  }, [activeLocation.city, cityListItems, expandedGuide, formatBreadcrumbName, isSavedPlacesRailActive, visibleIntroCopyDisplay]);
+    return findNeighborhoodMentionsInText(visibleIntroCopyDisplay, neighborhoodMentionCandidates);
+  }, [
+    activeLocation.city,
+    expandedGuide,
+    isSavedPlacesRailActive,
+    neighborhoodMentionCandidates,
+    visibleIntroCopyDisplay,
+  ]);
   const handleDescriptionNeighborhoodSelect = (mention: DescriptionNeighborhoodMention) => {
     if (!activeLocation.continent || !activeLocation.country || !activeLocation.city) {
       return;
@@ -3963,12 +4007,14 @@ export function SplitScreenSection({
 
     setHoveredDescriptionNeighborhoodId(null);
 
-    if (mention.isNested && activeLocation.subarea) {
+    const parentSubareaId = mention.parentSubareaId ?? activeLocation.subarea?.id;
+
+    if (mention.isNested && parentSubareaId) {
       handleSelectNestedSubarea(
         activeLocation.continent.id,
         activeLocation.country.id,
         activeLocation.city.id,
-        activeLocation.subarea.id,
+        parentSubareaId,
         mention.id,
       );
       return;
@@ -3981,6 +4027,56 @@ export function SplitScreenSection({
       mention.id,
     );
   };
+  const renderNeighborhoodMentionText = (
+    text: string,
+    mentions: DescriptionNeighborhoodMention[],
+    keyPrefix: string,
+  ): ReactNode => {
+    if (!mentions.length) {
+      return text;
+    }
+
+    let cursor = 0;
+    return mentions.flatMap((mention) => {
+      const before = text.slice(cursor, mention.start);
+      const label = text.slice(mention.start, mention.end);
+      cursor = mention.end;
+
+      return [
+        before,
+        <button
+          key={`${keyPrefix}-${mention.id}-${mention.start}`}
+          type="button"
+          onClick={() => handleDescriptionNeighborhoodSelect(mention)}
+          onMouseEnter={() => setHoveredDescriptionNeighborhoodId(mention.id)}
+          onMouseLeave={() =>
+            setHoveredDescriptionNeighborhoodId((current) =>
+              current === mention.id ? null : current,
+            )
+          }
+          onFocus={() => setHoveredDescriptionNeighborhoodId(mention.id)}
+          onBlur={() =>
+            setHoveredDescriptionNeighborhoodId((current) =>
+              current === mention.id ? null : current,
+            )
+          }
+          className={`inline rounded-sm underline decoration-current underline-offset-[3px] transition ${
+            activeDestinationImage
+              ? "text-white/95 hover:text-white"
+              : "text-slate-700 hover:text-slate-950"
+          }`}
+          aria-label={`Open ${formatBreadcrumbName(mention.name)}`}
+          title={`Open ${formatBreadcrumbName(mention.name)}`}
+        >
+          {label}
+        </button>,
+      ];
+    }).concat(text.slice(cursor));
+  };
+  const getCategoryInsightNoteNeighborhoodMentions = (text: string) =>
+    activeLocation.city && neighborhoodMentionCandidates.length
+      ? findNeighborhoodMentionsInText(text, neighborhoodMentionCandidates)
+      : [];
   const cityHighlightRows = useMemo(() => {
     if (!activeLocation.city || !allActiveLists.length) {
       return [];
@@ -5093,6 +5189,53 @@ export function SplitScreenSection({
         ? "border-white text-white"
         : "border-transparent text-[rgba(255,255,255,0.62)] hover:border-white hover:text-white"
     }`;
+  const darkRailCircleButtonClass = (active: boolean, extra = "") =>
+    `guide-rail-button ${extra} flex h-10 w-10 items-center justify-center rounded-full border bg-transparent text-white transition hover:scale-105 hover:border-2 hover:border-white hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/60 ${
+      active ? "border-2 border-white text-white" : "border-white/45 text-white/78"
+    }`;
+  const renderProfileRailIcon = (option: (typeof profileLeftRailOptions)[number], active: boolean) => {
+    if (option.id === "places-been" && active) {
+      return (
+        <svg viewBox="0 0 24 24" aria-hidden="true" className="h-[18px] w-[18px]">
+          <path
+            fill="#ef4444"
+            fillRule="evenodd"
+            clipRule="evenodd"
+            d="M12 2.25a7.25 7.25 0 0 0-7.25 7.25c0 5.2 5.15 10.25 6.72 11.66a.8.8 0 0 0 1.06 0c1.57-1.41 6.72-6.46 6.72-11.66A7.25 7.25 0 0 0 12 2.25Zm0 10.15a2.75 2.75 0 1 0 0-5.5 2.75 2.75 0 0 0 0 5.5Z"
+          />
+        </svg>
+      );
+    }
+
+    if (option.id === "settings" && active) {
+      return (
+        <svg viewBox="0 0 24 24" aria-hidden="true" className="h-[18px] w-[18px]">
+          <path
+            fill="#ffffff"
+            fillRule="evenodd"
+            clipRule="evenodd"
+            d="M9.92 2.5h4.16l.58 2.36c.45.17.88.38 1.29.64l2.11-1.26 2.94 2.94-1.26 2.11c.26.41.47.84.64 1.29l2.36.58v4.16l-2.36.58c-.17.45-.38.88-.64 1.29l1.26 2.11-2.94 2.94-2.11-1.26c-.41.26-.84.47-1.29.64l-.58 2.36H9.92l-.58-2.36a8.97 8.97 0 0 1-1.29-.64l-2.11 1.26L3 19.3l1.26-2.11a8.97 8.97 0 0 1-.64-1.29l-2.36-.58v-4.16l2.36-.58c.17-.45.38-.88.64-1.29L3 7.18l2.94-2.94L8.05 5.5c.41-.26.84-.47 1.29-.64l.58-2.36ZM12 15.15a3.15 3.15 0 1 0 0-6.3 3.15 3.15 0 0 0 0 6.3Z"
+          />
+        </svg>
+      );
+    }
+
+    if (option.id !== "edit-profile") {
+      const Icon = option.icon;
+      return <Icon className="h-4 w-4" />;
+    }
+
+    return (
+      <svg viewBox="0 0 24 24" aria-hidden="true" className="h-5 w-5">
+        <g transform="rotate(-40 12 12)">
+          <rect x="9" y="3" width="6" height="4" rx="1" fill="#ef4444" />
+          <rect x="9" y="6.4" width="6" height="11.2" rx="1" fill="#facc15" />
+          <path d="M9 17.2h6L12 22l-3-4.8Z" fill="#f8fafc" />
+          <path d="M11.05 20.48 12 22l.95-1.52h-1.9Z" fill="#111827" />
+        </g>
+      </svg>
+    );
+  };
   const railEnteringMode =
     shellTransitionPhase === "entering" ? displayShellMode : null;
   const profileRailItemStyle = (index: number) =>
@@ -5414,13 +5557,11 @@ export function SplitScreenSection({
                     <button
                       type="button"
                       onClick={() => setActiveProfileLeftRail(option.id)}
-                      className={`guide-rail-button profile-mode-rail-button relative z-10 flex h-10 w-10 items-center justify-center rounded-full border bg-transparent text-white/58 transition hover:scale-105 hover:border-white/55 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/55 ${
-                        activeProfileLeftRail === option.id ? "profile-mode-rail-button-active border-white/70 text-white" : "border-transparent"
-                      }`}
+                      className={darkRailCircleButtonClass(activeProfileLeftRail === option.id, "relative z-10")}
                       aria-label={option.label}
                       title={option.label}
                     >
-                      <option.icon className="h-4 w-4" />
+                      {renderProfileRailIcon(option, activeProfileLeftRail === option.id)}
                     </button>
 	                  </div>
 	                ))}
@@ -5504,32 +5645,34 @@ export function SplitScreenSection({
 	              <button
                 type="button"
                 onClick={() => (activeMarginContinent ? handleSelectContinent(activeMarginContinent.id) : undefined)}
-                className={`guide-rail-button rail-switch-item ${currentRailIcons.continent ? "margin-shell-pop-in margin-shell-pop-in-delayed" : "margin-shell-pop-out pointer-events-none"} flex h-10 w-10 items-center justify-center rounded-full border border-slate-200/90 bg-white/95 shadow-sm transition hover:scale-105 hover:border-slate-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-400/70 ${
-                  activeRailLevel === "continent" && !isLocationFavoritesRailActive ? "guide-rail-button-active" : ""
-                }`}
+                className={darkRailCircleButtonClass(
+                  activeRailLevel === "continent" && !isLocationFavoritesRailActive,
+                  `rail-switch-item ${currentRailIcons.continent ? "margin-shell-pop-in margin-shell-pop-in-delayed" : "margin-shell-pop-out pointer-events-none"}`,
+                )}
                 aria-label={`Back to ${displayedContinentRailIcon.name}`}
                 title={`Back to ${displayedContinentRailIcon.name}`}
               >
                 <img
                   key={displayedContinentRailIcon.id}
-                  src={`/assets/continents/${displayedContinentRailIcon.id}.svg`}
-                  alt=""
-                  aria-hidden="true"
-                  className="h-7 w-auto opacity-85"
-                />
-              </button>
+	                  src={`/assets/continents/${displayedContinentRailIcon.id}.svg`}
+	                  alt=""
+	                  aria-hidden="true"
+	                  className="h-7 w-auto opacity-95 brightness-0 invert"
+	                />
+	              </button>
             ) : null}
             {displayedCountryRailIcon?.kind === "country" ? (
-              <button
+	              <button
                 type="button"
                 onClick={() =>
                   activeMarginCountry
                     ? handleSelectCountry(activeLocation.continent!.id, activeMarginCountry.id)
                     : undefined
                 }
-                className={`guide-rail-button rail-switch-item ${currentRailIcons.country ? "margin-shell-pop-in" : "margin-shell-pop-out pointer-events-none"} flex h-10 w-10 items-center justify-center rounded-full border border-slate-200/90 bg-white/95 shadow-sm transition hover:scale-105 hover:border-slate-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-400/70 ${
-                  activeRailLevel === "country" && !isLocationFavoritesRailActive ? "guide-rail-button-active" : ""
-                }`}
+                className={darkRailCircleButtonClass(
+                  activeRailLevel === "country" && !isLocationFavoritesRailActive,
+                  `rail-switch-item ${currentRailIcons.country ? "margin-shell-pop-in" : "margin-shell-pop-out pointer-events-none"}`,
+                )}
                 aria-label={`Back to ${displayedCountryRailIcon.name}`}
                 title={`Back to ${displayedCountryRailIcon.name}`}
               >
@@ -5543,14 +5686,14 @@ export function SplitScreenSection({
                 ) : (
                   <span
                     key={marginCountryName || activeMarginCountry?.id || "country-preview-fallback"}
-                    className="inline-flex h-4 w-4 rounded-full bg-slate-300"
+                    className="inline-flex h-4 w-4 rounded-full bg-white"
                     aria-hidden="true"
                   />
                 )}
               </button>
             ) : null}
             {displayedStateRailIcon?.kind === "state" ? (
-              <button
+	              <button
                 type="button"
                 onClick={() =>
                   activeMarginState && activeMarginCountry
@@ -5562,30 +5705,37 @@ export function SplitScreenSection({
                       )
                     : undefined
                 }
-                className={`guide-rail-button rail-switch-item ${currentRailIcons.state ? "margin-shell-pop-in" : "margin-shell-pop-out pointer-events-none"} flex h-10 w-10 items-center justify-center rounded-full border border-slate-200/90 bg-white/95 shadow-sm transition hover:scale-105 hover:border-slate-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-400/70 ${
-                  activeRailLevel === "state" && !isLocationFavoritesRailActive ? "guide-rail-button-active" : ""
-                }`}
+                className={darkRailCircleButtonClass(
+                  activeRailLevel === "state" && !isLocationFavoritesRailActive,
+                  `rail-switch-item ${currentRailIcons.state ? "margin-shell-pop-in" : "margin-shell-pop-out pointer-events-none"}`,
+                )}
                 aria-label={`Back to ${displayedStateRailIcon.name}`}
                 title={`Back to ${displayedStateRailIcon.name}`}
               >
-
+                <StateShapeIcon
+                  countryId={displayedStateRailIcon.countryId}
+                  stateId={displayedStateRailIcon.id}
+                  tone="light"
+                  className="h-5 w-5"
+                />
               </button>
             ) : null}
             {displayedCityRailIcon?.kind === "city" ? (
-              <button
+	              <button
                 type="button"
                 onClick={() =>
                   displayedCityRailIcon.kind === "city"
                     ? handleSelectCity(displayedCityRailIcon.continentId, displayedCityRailIcon.countryId, displayedCityRailIcon.id)
                     : undefined
                 }
-                className={`guide-rail-button rail-switch-item ${currentRailIcons.city ? "margin-shell-pop-in" : "margin-shell-pop-out pointer-events-none"} flex h-10 w-10 items-center justify-center rounded-full border border-slate-200/90 bg-white/95 text-slate-700 shadow-sm transition hover:scale-105 hover:border-slate-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-400/70 ${
-                  activeRailLevel === "city" && !isLocationFavoritesRailActive ? "guide-rail-button-active" : ""
-                }`}
+                className={darkRailCircleButtonClass(
+                  activeRailLevel === "city" && !isLocationFavoritesRailActive,
+                  `rail-switch-item ${currentRailIcons.city ? "margin-shell-pop-in" : "margin-shell-pop-out pointer-events-none"}`,
+                )}
                 aria-label={`Back to ${displayedCityRailIcon.name}`}
                 title={`Back to ${displayedCityRailIcon.name}`}
 	              >
-	                <Building2 className="h-3.5 w-3.5" />
+	                <Building2 className="h-4 w-4 text-white" />
 	              </button>
 	            ) : null}
 	                {!publicProfile ? (
@@ -5617,7 +5767,7 @@ export function SplitScreenSection({
                           setIsLocationFavoritesRailActive(false);
                           openAuthModal("login");
                         }}
-                        className="guide-rail-button rail-switch-item flex h-10 w-10 items-center justify-center rounded-full border border-slate-200/90 bg-white/95 text-slate-700 shadow-sm transition hover:scale-105 hover:border-slate-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-400/70"
+                        className={darkRailCircleButtonClass(false, "rail-switch-item")}
                         aria-label="Log in"
                         title="Log in"
                       >
@@ -6659,43 +6809,11 @@ export function SplitScreenSection({
                               }`}
                             >
                               {descriptionNeighborhoodMentions.length
-                                ? (() => {
-                                    let cursor = 0;
-                                    return descriptionNeighborhoodMentions.flatMap((mention) => {
-                                      const before = visibleIntroCopyDisplay.slice(cursor, mention.start);
-                                      const label = visibleIntroCopyDisplay.slice(mention.start, mention.end);
-                                      cursor = mention.end;
-                                      return [
-                                        before,
-                                        <button
-                                          key={`${mention.id}-${mention.start}`}
-                                          type="button"
-                                          onClick={() => handleDescriptionNeighborhoodSelect(mention)}
-                                          onMouseEnter={() => setHoveredDescriptionNeighborhoodId(mention.id)}
-                                          onMouseLeave={() =>
-                                            setHoveredDescriptionNeighborhoodId((current) =>
-                                              current === mention.id ? null : current,
-                                            )
-                                          }
-                                          onFocus={() => setHoveredDescriptionNeighborhoodId(mention.id)}
-                                          onBlur={() =>
-                                            setHoveredDescriptionNeighborhoodId((current) =>
-                                              current === mention.id ? null : current,
-                                            )
-                                          }
-                                          className={`rounded-sm underline decoration-current underline-offset-[3px] transition ${
-                                            activeDestinationImage
-                                              ? "text-white/95 hover:text-white"
-                                              : "text-slate-700 hover:text-slate-950"
-                                          }`}
-                                          aria-label={`Open ${formatBreadcrumbName(mention.name)}`}
-                                          title={`Open ${formatBreadcrumbName(mention.name)}`}
-                                        >
-                                          {label}
-                                        </button>,
-                                      ];
-                                    }).concat(visibleIntroCopyDisplay.slice(cursor));
-                                  })()
+                                ? renderNeighborhoodMentionText(
+                                    visibleIntroCopyDisplay,
+                                    descriptionNeighborhoodMentions,
+                                    "intro-description",
+                                  )
                                 : visibleIntroCopyDisplay}
                             </p>
                           </div>
@@ -6847,30 +6965,40 @@ export function SplitScreenSection({
                                   {activeFoodCuisine} need to knows
                                 </p>
                               ) : null}
-                              {displayCategoryInsightNotes.map((note) => (
-                                <div
-                                  key={`${note.label ?? displayCategoryInsight.label}-${note.body}`}
-                                  className={`border-l pl-2 text-[12px] leading-5 ${
-                                    activeDestinationImage
-                                      ? "border-white/24 text-white/76"
-                                      : "border-slate-200 text-slate-600"
-                                  }`}
-                                >
-                                  {note.label ? (
-                                    <span
-                                      className="mr-1.5 font-semibold uppercase tracking-[0.12em]"
-                                      style={{
-                                        color: activeDestinationImage
-                                          ? "rgba(255,255,255,0.92)"
-                                          : CATEGORY_STYLES[displayCategoryInsight.category].mapColor,
-                                      }}
-                                    >
-                                      {note.label}
+                              {displayCategoryInsightNotes.map((note, noteIndex) => {
+                                const noteMentions = getCategoryInsightNoteNeighborhoodMentions(note.body);
+
+                                return (
+                                  <div
+                                    key={`${note.label ?? displayCategoryInsight.label}-${note.body}`}
+                                    className={`border-l pl-2 text-[12px] leading-5 ${
+                                      activeDestinationImage
+                                        ? "border-white/24 text-white/76"
+                                        : "border-slate-200 text-slate-600"
+                                    }`}
+                                  >
+                                    {note.label ? (
+                                      <span
+                                        className="mr-1.5 font-semibold uppercase tracking-[0.12em]"
+                                        style={{
+                                          color: activeDestinationImage
+                                            ? "rgba(255,255,255,0.92)"
+                                            : CATEGORY_STYLES[displayCategoryInsight.category].mapColor,
+                                        }}
+                                      >
+                                        {note.label}
+                                      </span>
+                                    ) : null}
+                                    <span>
+                                      {renderNeighborhoodMentionText(
+                                        note.body,
+                                        noteMentions,
+                                        `category-insight-${noteIndex}`,
+                                      )}
                                     </span>
-                                  ) : null}
-                                  <span>{note.body}</span>
-                                </div>
-                              ))}
+                                  </div>
+                                );
+                              })}
                             </div>
                           </div>
                         ) : !expandedGuide && cityHighlightRows.length && !isCategoryInsightExiting ? (
