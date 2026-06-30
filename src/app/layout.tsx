@@ -5,6 +5,7 @@ import type { ReactNode } from "react";
 
 import { Analytics } from "@vercel/analytics/next";
 import { SiteAnalyticsEvents } from "@/components/analytics/SiteAnalyticsEvents";
+import { AuthInviteRedirect } from "@/components/auth/AuthInviteRedirect";
 import { AuthModal } from "@/components/auth/AuthModal";
 import { AuthSync } from "@/components/auth/AuthSync";
 import { SubmittedGuidesSync } from "@/components/auth/SubmittedGuidesSync";
@@ -155,6 +156,7 @@ export default function RootLayout({
         ) : null}
       </head>
       <body className={`${hostGrotesk.variable} ${inter.variable}`}>
+        <AuthInviteRedirect />
         <AuthSync />
         <SubmittedGuidesSync />
         <main>{children}</main>

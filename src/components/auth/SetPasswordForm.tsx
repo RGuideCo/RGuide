@@ -24,6 +24,26 @@ function cleanAuthUrl() {
   }
 }
 
+function getAuthParams() {
+  if (typeof window === "undefined") {
+    return new URLSearchParams();
+  }
+
+  const params = new URLSearchParams(window.location.search);
+  const hash = window.location.hash.startsWith("#")
+    ? window.location.hash.slice(1)
+    : window.location.hash;
+
+  if (hash) {
+    const hashParams = new URLSearchParams(hash);
+    hashParams.forEach((value, key) => {
+      params.set(key, value);
+    });
+  }
+
+  return params;
+}
+
 export function SetPasswordForm() {
   const [status, setStatus] = useState<FormStatus>("checking");
   const [email, setEmail] = useState("");
@@ -58,8 +78,26 @@ export function SetPasswordForm() {
     }
 
     async function resolveInviteSession() {
-      const code =
-        typeof window !== "undefined" ? new URLSearchParams(window.location.search).get("code") : null;
+      const authParams = getAuthParams();
+      const accessToken = authParams.get("access_token");
+      const refreshToken = authParams.get("refresh_token");
+      const code = authParams.get("code");
+
+      if (accessToken && refreshToken) {
+        const { data, error } = await authClient.auth.setSession({
+          access_token: accessToken,
+          refresh_token: refreshToken,
+        });
+
+        if (data.session) {
+          makeReady(data.session);
+          return;
+        }
+
+        if (error) {
+          setMessage(error.message);
+        }
+      }
 
       if (code) {
         const { data } = await authClient.auth.exchangeCodeForSession(code);
