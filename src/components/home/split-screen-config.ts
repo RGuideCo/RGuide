@@ -186,7 +186,7 @@ export const contextualFoodCuisinesByCountry: Record<string, string[]> = {
 export const contextualFoodCuisinesByCity: Record<string, string[]> = {
   Barcelona: ["Tapas", "Catalan", "Seafood", "Paella"],
   Madrid: ["Tapas", "Spanish", "Steakhouse", "Seafood"],
-  Miami: ["Cuban", "Latin", "Seafood", "Steakhouse"],
+  Miami: ["Cuban", "Seafood", "Fine Dining", "Food Halls", "Latin American"],
   Tokyo: ["Sushi", "Ramen", "Izakaya", "Japanese"],
   Bangkok: ["Thai", "Street Food", "Seafood", "Noodles"],
   "Hong Kong": ["Chinese", "Seafood", "Street Food", "Noodles"],
@@ -196,6 +196,8 @@ export const contextualFoodCuisinesByCity: Record<string, string[]> = {
   Copenhagen: ["Smørrebrød", "New Nordic", "Bakeries", "Hot Dogs", "Street Food"],
   Hanoi: ["Pho", "Bun Cha", "Street Food", "Cafes", "Bia Hoi"],
   Lisbon: ["Seafood", "Petiscos", "Pastelarias", "Fado Dining", "Bifanas"],
+  "Los Angeles": ["Tacos", "K-BBQ", "Strip Malls", "Health Food", "Sushi"],
+  "Mexico City": ["Street Tacos", "Fine Dining", "Mezcal", "Panaderías", "Markets"],
   Rome: ["Pasta", "Italian", "Pizza", "Gelato"],
 };
 
