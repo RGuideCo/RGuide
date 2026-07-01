@@ -15,7 +15,7 @@ Use the Reusable City Prompt Template in this file. Fill in the city name, count
 
 Do not pause to ask where guide modules live. Stage 0 tells you how to create/register missing city modules.
 Do not edit guide data beyond Stage 0 scaffolding until the source ledger and candidate selection are complete.
-Do not write, publish, or verify a guide until every selected stop has a concrete hours plan: structured hours when available, or a source-backed schedule caveat when hours are genuinely variable.
+Do not write, publish, or verify a guide until every selected stop has a concrete hours plan: structured hours when available, or a source-backed schedule caveat when hours are genuinely variable. Google Places API is only a capped last-resort fallback after official/property/booking/calendar sources fail.
 Do not write a citywide guide with fewer than 10 top-level stops unless Brandon explicitly requested a smaller scoped guide.
 Do not call the task done until strict local verification, normalized publish, R2 ingestion, and strict live verification have passed.
 ```
@@ -71,7 +71,7 @@ Hard gates before any guide data is considered publishable:
 - Direct canonical guide URLs must expand that exact guide. Legacy/internal URLs should redirect to the clean canonical URL when possible.
 - Sitemap entries must use only canonical SEO URLs.
 - Every citywide guide must have at least 10 top-level stops.
-- Every real venue stop must have a non-empty `hours` field. Verify hours from Google Maps, the official site, a booking/platform page, an official calendar, or another current-status source. Write the hours into the local stop data so the normalized publisher can persist them to `venue_hours`/`venue_special_hours` and preserve any guide-specific display override in `entry_stops.hours`.
+- Every real venue stop must have a non-empty `hours` field. Verify hours from the official site, a booking/platform page, an official calendar, or another source-backed current-status page first. Use Google Maps/Places only as a last-resort fallback when those sources do not expose usable hours. Write the hours into the local stop data so the normalized publisher can persist them to `venue_hours`/`venue_special_hours` and preserve any guide-specific display override in `entry_stops.hours`.
 - Do not publish with missing or placeholder hours. Banned placeholder-only values include `Hours vary`, `verify current hours`, `confirm before going`, `current-status evidence is map-based`, `open and active in the current source set`, and similar generic caveats. If exact hours are variable, event-dependent, seasonal, or unavailable, write a clear source-backed caveat that names the dependency, such as `hours: { default: "Hours vary by show; verify the official calendar before going." }`.
 - Descriptions must have editorial bite and practical truth: Anthony Bourdain curiosity, TripAdvisor usefulness, actual source facts, one useful caveat, and no generic review filler.
 
@@ -138,6 +138,15 @@ Fix every error before publishing.
 
 Then publish:
 npm run push:editorial-guides -- --city {City}
+
+After publish, check the live normalized/rendered hours path:
+npm run report:venue-hours -- {city-id} --rendered-bad
+
+If that report still shows missing or placeholder canonical hours after the official/source-backed pass, run the capped Google fallback:
+npm run ingest:venue-hours-google -- --city {city-id} --plan-only
+npm run ingest:venue-hours-google -- --city {city-id} --limit 25
+
+`--plan-only` does not make Google requests; the real fallback command does. Do not run the Google fallback as a first pass. Respect `GOOGLE_PLACES_DAILY_LIMIT` and `GOOGLE_PLACES_MONTHLY_LIMIT`; do not pass `--force` for normal guide population.
 
 Then ingest images into R2:
 npm run ingest:venue-media-r2 -- --city {City}

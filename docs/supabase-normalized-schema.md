@@ -81,6 +81,14 @@ Nightlife places use `venue_kind = 'nightlife'`. `nightlife_type` supports `dive
 
 Canonical operating hours for real venues. `venue_hours` stores reusable weekly hours by day of week and interval order, supporting split service windows, closed days, 24-hour venues, seasonal validity, source links, raw source text, and last verification timestamps. `venue_special_hours` stores holiday closures, one-off hours, seasonal exceptions, and temporary changes by date. `venues.hours_note` stores source-backed schedule caveats when exact structured hours are not available. `entry_stops.hours` remains available as an import/display fallback, but the venue tables and columns are the source of truth for live guide rendering, search, and filtering.
 
+`venue_external_refs`
+
+Provider identifiers for canonical venues. Google place ids live here with `provider = 'google'`; they should be reused by hours/media/search ingestion instead of rediscovering the same place repeatedly.
+
+`external_api_usage_events`
+
+Server-side quota ledger for paid or rate-limited API calls. Google Places hours fallback writes one row per Text Search or Place Details request before calling Google, then updates the status after the response. Agents use this table to enforce shared daily/monthly caps across terminals and worktrees.
+
 `venue_tags` and `venue_taggings`
 
 Canonical filter vocabulary and sourceable tag assignments for venues. Use these for scalable filters once there are thousands of places. The `venues.attribute_tags` array is the fast query cache for common filters; `venue_taggings` is the normalized table for attribution, confidence, and future editorial review.
@@ -150,6 +158,7 @@ Common query paths are indexed:
 - Food search: `venues(city_id, food_service_type)`, `venues(city_id, price_tier)`, and GIN on `venues.cuisine_types` plus `venues.attribute_tags`.
 - Nightlife search: `venues(city_id, nightlife_type)`, `venues(city_id, price_tier)`, and GIN on `venues.music_genres` plus `venues.attribute_tags`.
 - Venue hours: `venue_hours(venue_id, day_of_week, interval_order)`, `venue_hours(day_of_week, is_closed, opens_at)`, `venue_special_hours(venue_id, special_date, interval_order)`, and `venues(operating_status)`.
+- External API quota: `external_api_usage_events(provider, sku, created_at desc)`.
 - Venue tag filters: `venue_tags(tag_group, is_active, is_filterable)` and `venue_taggings(tag_id, venue_id)`.
 - Render cache fallback: `entry_render_cache(entry_id, render_format, render_version)` and current rendered payload lookups.
 - City event feeds: `events(city_id, starts_at, status)`, `events(city_id, event_category, starts_at)`.
@@ -175,7 +184,7 @@ The migration enables RLS on new tables and adds public read policies because rG
 
 Recommended write model:
 
-- Service role only for `destinations`, `destination_descriptions_v2`, destination category insight tables, destination category neighborhood strengths, `venues`, `venue_hours`, `venue_special_hours`, `venue_tags`, `venue_taggings`, `events`, `event_occurrences`, `sources`, source joins, event city publishing settings, source runs, render caches, and weekly publications.
+- Service role only for `destinations`, `destination_descriptions_v2`, destination category insight tables, destination category neighborhood strengths, `venues`, `venue_hours`, `venue_special_hours`, `venue_external_refs`, `external_api_usage_events`, `venue_tags`, `venue_taggings`, `events`, `event_occurrences`, `sources`, source joins, event city publishing settings, source runs, render caches, and weekly publications.
 - Authenticated users may insert/update/delete only their own rows in `entries`.
 - Authenticated users may insert/update/delete `entry_stops` only when the parent `entries.user_id = auth.uid()`.
 - Browser/user submission writes should go directly to normalized `entries` and `entry_stops`; `submitted_guides` should not remain the active write path.

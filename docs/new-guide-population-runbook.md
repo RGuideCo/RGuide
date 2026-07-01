@@ -153,7 +153,8 @@ Description rules:
 Hours rules:
 
 - every real venue stop must have a non-empty `hours` field before publish;
-- verify hours from Google Maps, the official site, a booking platform, an official calendar, or another current-status source;
+- verify hours from the official site, a booking platform, an official calendar, or another source-backed current-status page first;
+- use Google Maps/Places only as a capped last-resort fallback when official/property/booking/calendar sources do not expose usable hours;
 - use structured day keys where possible;
 - use `{ default: "..." }` when the source gives summary hours or when the venue is schedule-driven;
 - use a schedule caveat only when hours are genuinely event-dependent, seasonal, weather-dependent, or unavailable from reliable sources, and make the caveat source-backed;
@@ -163,6 +164,15 @@ Hours rules:
 - persist venue-level hours through the normalized publisher into `venue_hours`/`venue_special_hours` or `venues.hours_note`;
 - treat `venue_hours`/`venue_special_hours`/`venues.hours_note` as the live source of truth after publish;
 - use `entry_stops.hours` only as an import/display fallback, not as the final place to maintain shared venue facts.
+
+Google fallback rules:
+
+- do not call Google Places while drafting if official/source-backed hours are available;
+- after publishing, run `npm run report:venue-hours -- {city-slug} --rendered-bad`;
+- use `npm run ingest:venue-hours-google -- --city {city-slug} --plan-only` to preview candidate venues without making Google requests;
+- only if the report still shows missing or placeholder canonical hours, run `npm run ingest:venue-hours-google -- --city {city-slug} --limit 25`;
+- the Google fallback writes to canonical `venue_hours`/`venues.hours_note`, records the Google place id in `venue_external_refs`, refreshes affected `entry_render_cache` rows, and logs every Google request in `external_api_usage_events`;
+- respect `GOOGLE_PLACES_DAILY_LIMIT` and `GOOGLE_PLACES_MONTHLY_LIMIT`; do not bypass them for normal population.
 
 Category requirements:
 
