@@ -1,0 +1,53 @@
+<div style="margin:0;padding:0;background:#050505;color:#171717;font-family:Host Grotesk,Inter,Arial,sans-serif;">
+  <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="border-collapse:collapse;background:#050505;">
+    <tr>
+      <td align="center" style="padding:42px 16px;">
+        <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="width:100%;max-width:560px;border-collapse:collapse;background:#fafaf7;border:1px solid #e5e7eb;border-radius:20px;overflow:hidden;">
+          <tr>
+            <td align="center" style="padding:34px 32px 10px;">
+              <div style="display:inline-block;border:1px solid #d6d3d1;border-radius:999px;padding:8px 13px;background:#ffffff;color:#171717;font-size:13px;font-weight:700;letter-spacing:0.02em;">
+                RGuide
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td align="center" style="padding:12px 32px 0;">
+              <h1 style="margin:0;color:#171717;font-size:30px;line-height:1.08;font-weight:760;letter-spacing:0;font-family:Host Grotesk,Inter,Arial,sans-serif;">
+                Create your RGuide account
+              </h1>
+            </td>
+          </tr>
+          <tr>
+            <td align="center" style="padding:16px 38px 0;">
+              <p style="margin:0;color:#475569;font-size:16px;line-height:1.55;font-weight:430;">
+                You have been invited to join RGuide. Use the secure link below to finish setting up your account and choose a password.
+              </p>
+            </td>
+          </tr>
+          <tr>
+            <td align="center" style="padding:28px 32px 8px;">
+              <a href="{{ .ConfirmationURL }}" style="display:inline-block;background:#171717;color:#ffffff;text-decoration:none;border-radius:999px;padding:14px 24px;font-size:15px;line-height:1;font-weight:760;letter-spacing:0;">
+                Create account
+              </a>
+            </td>
+          </tr>
+          <tr>
+            <td align="center" style="padding:18px 38px 0;">
+              <p style="margin:0;color:#64748b;font-size:13px;line-height:1.55;">
+                This link can only be used once and may expire. If you were not expecting this invite, you can ignore this email.
+              </p>
+            </td>
+          </tr>
+          <tr>
+            <td align="center" style="padding:18px 38px 34px;">
+              <p style="margin:0;color:#94a3b8;font-size:12px;line-height:1.5;word-break:break-word;">
+                Button not working? Paste this link into your browser:<br />
+                {{ .ConfirmationURL }}
+              </p>
+            </td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+  </table>
+</div>

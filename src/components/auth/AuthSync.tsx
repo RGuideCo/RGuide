@@ -4,6 +4,7 @@ import { useEffect } from "react";
 import type { User as SupabaseUser } from "@supabase/supabase-js";
 
 import { getSupabaseBrowserClient } from "@/lib/supabase/client";
+import { getProfileAvatarUrl } from "@/lib/profile-avatar";
 import { useAppStore } from "@/store/app-store";
 import { users } from "@/data/users";
 import type { User } from "@/types";
@@ -51,7 +52,6 @@ function canPublishGuides(user: SupabaseUser) {
 }
 
 function toAppUser(user: SupabaseUser): User {
-  const emailKey = encodeURIComponent(user.email ?? user.id);
   const userType =
     getStringAppMetadata(user, "rguide_user_type") ??
     getStringAppMetadata(user, "user_type") ??
@@ -62,9 +62,7 @@ function toAppUser(user: SupabaseUser): User {
     name: getProfileName(user),
     email: user.email,
     joinedAt: user.created_at,
-    avatar:
-      getStringMetadata(user, "avatar_url") ??
-      `https://i.pravatar.cc/150?u=${emailKey}`,
+    avatar: getProfileAvatarUrl(getStringMetadata(user, "avatar_url")),
     bio:
       getStringMetadata(user, "bio") ??
       "Building a personal city guide with RGuide.",

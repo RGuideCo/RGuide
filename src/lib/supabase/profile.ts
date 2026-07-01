@@ -1,6 +1,7 @@
 "use client";
 
 import { getSupabaseBrowserClient } from "@/lib/supabase/client";
+import { getProfileAvatarUrl, isGeneratedProfileAvatar } from "@/lib/profile-avatar";
 
 interface ProfileInput {
   name: string;
@@ -41,7 +42,7 @@ export async function updateSupabaseProfile({
     };
   }
 
-  let avatarUrl = fallbackAvatarUrl;
+  let avatarUrl = getProfileAvatarUrl(fallbackAvatarUrl);
 
   if (avatarFile) {
     const path = `${user.id}/avatar.${getAvatarExtension(avatarFile)}`;
@@ -66,7 +67,7 @@ export async function updateSupabaseProfile({
       full_name: name,
       name,
       bio,
-      avatar_url: avatarUrl,
+      avatar_url: isGeneratedProfileAvatar(avatarUrl) ? null : avatarUrl,
     },
   });
 
