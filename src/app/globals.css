@@ -1090,11 +1090,11 @@ textarea:focus-visible {
   }
 
   .expanded-guide-stop-body .expanded-poi-copy {
-    padding: 0.75rem 1rem 0;
+    padding: 0.75rem 1rem;
   }
 
   .expanded-guide-stop-body .expanded-poi-bio-no-photo {
-    padding: 0.75rem 1rem 0;
+    padding: 0.75rem 1rem;
   }
 
   .expanded-guide-stop-body .expanded-guide-stop-actions {
