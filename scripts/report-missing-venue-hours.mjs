@@ -62,10 +62,11 @@ if (renderedSummaryOnly) {
           entry.city_name,
           entry.category,
           poi ->> 'name' as name,
+          poi -> 'hours' as hours_json,
           case jsonb_typeof(poi -> 'hours')
             when 'string' then poi ->> 'hours'
             when 'object' then (
-              select string_agg(value #>> '{}', ' ')
+              select string_agg(key || ' ' || (value #>> '{}'), ' ')
               from jsonb_each(poi -> 'hours')
             )
             else ''
@@ -80,19 +81,53 @@ if (renderedSummaryOnly) {
           city_name,
           category,
           name,
+          hours_json,
           hours_text,
           nullif(btrim(hours_text), '') is null as is_missing,
           (
             hours_text ~* '(current-status evidence is map-based|open and active in the current source set|open and active|hours should be confirmed|verify current hours|verify official hours|confirm current hours|confirm before going|check current hours)'
             or (
-              hours_text ~* '(hours?\\s+var(y|ies)|varies by|variable|subject to change|may change|can change|verify|confirm|check before|check current|current hours|same-day|generally|usually|typically)'
+              hours_text ~* '(official venue page|official property|official site|property or booking page|google maps|map listing|booking page|reservation page|event calendar|official [^.]{0,40}calendar|official [^.]{0,40}(page|site)|official notices?).{0,140}controls?|follow property schedules'
               and not (
-                hours_text ~* '(official calendar|booking calendar|reservation page|booking page|property page|official site|official page|show calendar|event calendar|timetable|market day|market days|seasonal|season|weather|vendor|stall|performance schedule|exhibition page|timed ticket|last admission)'
-                or (
+                (
                   hours_text ~* '(mon|monday|tue|tues|tuesday|wed|wednesday|thu|thur|thurs|thursday|fri|friday|sat|saturday|sun|sunday|daily|weekday|weekdays|weekend|weekends)'
-                  and hours_text ~* '(\\d{1,2}(:\\d{2})?\\s*(am|pm)|\\d{1,2}:\\d{2}|closed)'
+                  and hours_text ~* '([0-9]{1,2}(:[0-9]{2})?\\s*(am|pm)|[0-9]{1,2}:[0-9]{2}|closed)'
                 )
                 or hours_text ~* '(24\\s*hours?|open\\s+24)'
+              )
+            )
+            or (
+              jsonb_typeof(hours_json) = 'object'
+              and exists (
+                select 1
+                from jsonb_each(hours_json) as day_hours(day_key, day_value)
+                where day_key ~* '^(mon|monday|tue|tues|tuesday|wed|wednesday|thu|thur|thurs|thursday|fri|friday|sat|saturday|sun|sunday)$'
+                  and nullif(btrim(day_value #>> '{}'), '') is not null
+                  and not ((day_value #>> '{}') ~* 'closed')
+                  and not ((day_value #>> '{}') ~* '([0-9]{1,2}(:[0-9]{2})?\\s*(am|pm)|[0-9]{1,2}:[0-9]{2}|24\\s*hours?|open\\s+24)')
+                  and not ((day_value #>> '{}') ~* '(official calendar|booking calendar|reservation page|booking page|property page|official site|official page|show calendar|event calendar|timetable|market day|market days|seasonal|season|weather|vendor|stall|performance schedule|exhibition page|timed ticket|last admission)')
+              )
+            )
+            or (
+              hours_text ~* '(breakfast|brunch|lunch|dinner|morning|afternoon|evening|late[- ]?night|daytime|service)'
+              and not (
+                hours_text ~* '([0-9]{1,2}(:[0-9]{2})?\\s*(am|pm)|[0-9]{1,2}:[0-9]{2}|24\\s*hours?|open\\s+24)'
+                or hours_text ~* '(official calendar|booking calendar|reservation page|booking page|property page|official site|official page|show calendar|event calendar|timetable|market day|market days|seasonal|season|weather|vendor|stall|performance schedule|exhibition page|timed ticket|last admission)'
+              )
+            )
+            or (
+              not (
+                (
+                  hours_text ~* '(mon|monday|tue|tues|tuesday|wed|wednesday|thu|thur|thurs|thursday|fri|friday|sat|saturday|sun|sunday|daily|weekday|weekdays|weekend|weekends)'
+                  and hours_text ~* '([0-9]{1,2}(:[0-9]{2})?\\s*(am|pm)|[0-9]{1,2}:[0-9]{2}|closed)'
+                )
+                or hours_text ~* '(24\\s*hours?|open\\s+24)'
+              )
+              and (
+                not (
+                  hours_text ~* '(official calendar|booking calendar|reservation page|booking page|property page|official site|official page|show calendar|event calendar|timetable|market day|market days|seasonal|season|weather|vendor|stall|performance schedule|exhibition page|timed ticket|last admission)'
+                )
+                or hours_text ~* '(hours?\\s+var(y|ies)|varies by|variable|subject to change|may change|can change|verify|confirm|check before|check current|current hours|same-day|generally|usually|typically)'
               )
             )
           ) as is_placeholder
@@ -140,10 +175,11 @@ if (renderedBadOnly) {
           entry.category,
           poi ->> 'name' as name,
           poi ->> 'venueId' as venue_id,
+          poi -> 'hours' as hours_json,
           case jsonb_typeof(poi -> 'hours')
             when 'string' then poi ->> 'hours'
             when 'object' then (
-              select string_agg(value #>> '{}', ' ')
+              select string_agg(key || ' ' || (value #>> '{}'), ' ')
               from jsonb_each(poi -> 'hours')
             )
             else ''
@@ -159,14 +195,47 @@ if (renderedBadOnly) {
           (
             hours_text ~* '(current-status evidence is map-based|open and active in the current source set|open and active|hours should be confirmed|verify current hours|verify official hours|confirm current hours|confirm before going|check current hours)'
             or (
-              hours_text ~* '(hours?\\s+var(y|ies)|varies by|variable|subject to change|may change|can change|verify|confirm|check before|check current|current hours|same-day|generally|usually|typically)'
+              hours_text ~* '(official venue page|official property|official site|property or booking page|google maps|map listing|booking page|reservation page|event calendar|official [^.]{0,40}calendar|official [^.]{0,40}(page|site)|official notices?).{0,140}controls?|follow property schedules'
               and not (
-                hours_text ~* '(official calendar|booking calendar|reservation page|booking page|property page|official site|official page|show calendar|event calendar|timetable|market day|market days|seasonal|season|weather|vendor|stall|performance schedule|exhibition page|timed ticket|last admission)'
-                or (
+                (
                   hours_text ~* '(mon|monday|tue|tues|tuesday|wed|wednesday|thu|thur|thurs|thursday|fri|friday|sat|saturday|sun|sunday|daily|weekday|weekdays|weekend|weekends)'
-                  and hours_text ~* '(\\d{1,2}(:\\d{2})?\\s*(am|pm)|\\d{1,2}:\\d{2}|closed)'
+                  and hours_text ~* '([0-9]{1,2}(:[0-9]{2})?\\s*(am|pm)|[0-9]{1,2}:[0-9]{2}|closed)'
                 )
                 or hours_text ~* '(24\\s*hours?|open\\s+24)'
+              )
+            )
+            or (
+              jsonb_typeof(hours_json) = 'object'
+              and exists (
+                select 1
+                from jsonb_each(hours_json) as day_hours(day_key, day_value)
+                where day_key ~* '^(mon|monday|tue|tues|tuesday|wed|wednesday|thu|thur|thurs|thursday|fri|friday|sat|saturday|sun|sunday)$'
+                  and nullif(btrim(day_value #>> '{}'), '') is not null
+                  and not ((day_value #>> '{}') ~* 'closed')
+                  and not ((day_value #>> '{}') ~* '([0-9]{1,2}(:[0-9]{2})?\\s*(am|pm)|[0-9]{1,2}:[0-9]{2}|24\\s*hours?|open\\s+24)')
+                  and not ((day_value #>> '{}') ~* '(official calendar|booking calendar|reservation page|booking page|property page|official site|official page|show calendar|event calendar|timetable|market day|market days|seasonal|season|weather|vendor|stall|performance schedule|exhibition page|timed ticket|last admission)')
+              )
+            )
+            or (
+              hours_text ~* '(breakfast|brunch|lunch|dinner|morning|afternoon|evening|late[- ]?night|daytime|service)'
+              and not (
+                hours_text ~* '([0-9]{1,2}(:[0-9]{2})?\\s*(am|pm)|[0-9]{1,2}:[0-9]{2}|24\\s*hours?|open\\s+24)'
+                or hours_text ~* '(official calendar|booking calendar|reservation page|booking page|property page|official site|official page|show calendar|event calendar|timetable|market day|market days|seasonal|season|weather|vendor|stall|performance schedule|exhibition page|timed ticket|last admission)'
+              )
+            )
+            or (
+              not (
+                (
+                  hours_text ~* '(mon|monday|tue|tues|tuesday|wed|wednesday|thu|thur|thurs|thursday|fri|friday|sat|saturday|sun|sunday|daily|weekday|weekdays|weekend|weekends)'
+                  and hours_text ~* '([0-9]{1,2}(:[0-9]{2})?\\s*(am|pm)|[0-9]{1,2}:[0-9]{2}|closed)'
+                )
+                or hours_text ~* '(24\\s*hours?|open\\s+24)'
+              )
+              and (
+                not (
+                  hours_text ~* '(official calendar|booking calendar|reservation page|booking page|property page|official site|official page|show calendar|event calendar|timetable|market day|market days|seasonal|season|weather|vendor|stall|performance schedule|exhibition page|timed ticket|last admission)'
+                )
+                or hours_text ~* '(hours?\\s+var(y|ies)|varies by|variable|subject to change|may change|can change|verify|confirm|check before|check current|current hours|same-day|generally|usually|typically)'
               )
             )
           ) as is_placeholder
