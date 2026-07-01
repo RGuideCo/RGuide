@@ -4695,7 +4695,10 @@ export function MapClient({
     const syncViewportChrome = () => {
       const insets = getViewportInsets(map, viewportModeRef.current, viewportInsetsRef.current);
       const controlRight = Math.max(12, insets.right + 14);
-      map.getContainer().style.setProperty("--rguide-map-controls-right", `${controlRight}px`);
+      const controlRightValue = `${controlRight}px`;
+      const mapContainer = map.getContainer();
+      mapContainer.style.setProperty("--rguide-map-controls-right", controlRightValue);
+      mapContainer.parentElement?.style.setProperty("--rguide-map-controls-right", controlRightValue);
     };
     const resizeAndSyncViewportChrome = () => {
       resizeFrame = null;
@@ -4727,7 +4730,10 @@ export function MapClient({
     const frameId = window.requestAnimationFrame(() => {
       const insets = getViewportInsets(map, viewportMode, viewportInsets);
       const controlRight = Math.max(12, insets.right + 14);
-      map.getContainer().style.setProperty("--rguide-map-controls-right", `${controlRight}px`);
+      const controlRightValue = `${controlRight}px`;
+      const mapContainer = map.getContainer();
+      mapContainer.style.setProperty("--rguide-map-controls-right", controlRightValue);
+      mapContainer.parentElement?.style.setProperty("--rguide-map-controls-right", controlRightValue);
     });
     return () => {
       window.cancelAnimationFrame(frameId);
@@ -5723,7 +5729,7 @@ export function MapClient({
         type="button"
         onClick={focusUserLocation}
         disabled={locationStatus === "locating"}
-        className={`absolute right-3 top-[18.25rem] z-[70] flex h-8 w-8 items-center justify-center rounded-lg border bg-white text-slate-700 shadow-sm transition hover:border-slate-300 hover:text-slate-950 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky-400/70 disabled:cursor-wait disabled:opacity-80 lg:bottom-16 lg:right-3 lg:top-auto ${
+        className={`rguide-locate-control absolute top-[18.25rem] z-[70] flex h-8 w-8 items-center justify-center rounded-lg border bg-white text-slate-700 shadow-sm transition hover:border-slate-300 hover:text-slate-950 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky-400/70 disabled:cursor-wait disabled:opacity-80 ${
           locationStatus === "located"
             ? "border-sky-300 text-sky-700 ring-2 ring-sky-200/80"
             : locationStatus === "error"

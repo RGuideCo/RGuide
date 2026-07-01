@@ -118,6 +118,18 @@ textarea:focus-visible {
   opacity: 0.68;
 }
 
+.rguide-locate-control {
+  right: 12px;
+}
+
+@media (min-width: 1024px) {
+  .rguide-locate-control {
+    top: auto;
+    right: var(--rguide-map-controls-right, 12px);
+    bottom: 78px;
+  }
+}
+
 .rguide-user-location-marker {
   position: relative;
   height: 1rem;
