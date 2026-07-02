@@ -8,6 +8,7 @@ import type { Session } from "@supabase/supabase-js";
 import { getSupabaseBrowserClient } from "@/lib/supabase/client";
 
 type FormStatus = "checking" | "ready" | "saving" | "done" | "missing";
+type PasswordFlow = "invite" | "recovery";
 
 function cleanAuthUrl() {
   if (typeof window === "undefined") {
@@ -46,6 +47,7 @@ function getAuthParams() {
 
 export function SetPasswordForm() {
   const [status, setStatus] = useState<FormStatus>("checking");
+  const [passwordFlow, setPasswordFlow] = useState<PasswordFlow>("invite");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -66,9 +68,13 @@ export function SetPasswordForm() {
     const authClient = supabase;
     let active = true;
 
-    function makeReady(session: Session) {
+    function makeReady(session: Session, flow?: PasswordFlow) {
       if (!active || passwordSetRef.current) {
         return;
+      }
+
+      if (flow) {
+        setPasswordFlow(flow);
       }
 
       setEmail(session.user.email ?? "");
@@ -82,6 +88,9 @@ export function SetPasswordForm() {
       const accessToken = authParams.get("access_token");
       const refreshToken = authParams.get("refresh_token");
       const code = authParams.get("code");
+      const flow: PasswordFlow = authParams.get("type") === "recovery" ? "recovery" : "invite";
+
+      setPasswordFlow(flow);
 
       if (accessToken && refreshToken) {
         const { data, error } = await authClient.auth.setSession({
@@ -90,7 +99,7 @@ export function SetPasswordForm() {
         });
 
         if (data.session) {
-          makeReady(data.session);
+          makeReady(data.session, flow);
           return;
         }
 
@@ -102,7 +111,7 @@ export function SetPasswordForm() {
       if (code) {
         const { data } = await authClient.auth.exchangeCodeForSession(code);
         if (data.session) {
-          makeReady(data.session);
+          makeReady(data.session, flow);
           return;
         }
       }
@@ -115,7 +124,7 @@ export function SetPasswordForm() {
         }
 
         if (data.session) {
-          makeReady(data.session);
+          makeReady(data.session, flow);
           return;
         }
 
@@ -132,14 +141,14 @@ export function SetPasswordForm() {
       }
 
       setStatus("missing");
-      setMessage("This invite link is missing or expired. Ask for a fresh invite and open the new link.");
+      setMessage("This password link is missing or expired. Request a fresh link and open the new email.");
     }
 
     const {
       data: { subscription },
-    } = authClient.auth.onAuthStateChange((_event, session) => {
+    } = authClient.auth.onAuthStateChange((event, session) => {
       if (session) {
-        makeReady(session);
+        makeReady(session, event === "PASSWORD_RECOVERY" ? "recovery" : undefined);
       }
     });
 
@@ -194,7 +203,7 @@ export function SetPasswordForm() {
     return (
       <div className="surface w-full max-w-md p-6">
         <p className="text-sm font-medium uppercase tracking-[0.24em] text-orange-600">
-          Account ready
+          {passwordFlow === "recovery" ? "Password updated" : "Account ready"}
         </p>
         <h1 className="mt-3 text-2xl font-semibold text-slate-900">Your password is set</h1>
         <p className="mt-3 text-sm leading-6 text-slate-600">
@@ -213,11 +222,15 @@ export function SetPasswordForm() {
   return (
     <div className="surface w-full max-w-md p-6">
       <p className="text-sm font-medium uppercase tracking-[0.24em] text-orange-600">
-        Account invite
+        {passwordFlow === "recovery" ? "Password reset" : "Account password"}
       </p>
       <h1 className="mt-3 text-2xl font-semibold text-slate-900">Set your RGuide password</h1>
       <p className="mt-3 text-sm leading-6 text-slate-600">
-        {email ? `Finish setting up ${email}.` : "Finish setting up your invited account."}
+        {email
+          ? passwordFlow === "recovery"
+            ? `Choose a new password for ${email}.`
+            : `Finish setting up ${email}.`
+          : "Choose a secure password for your RGuide account."}
       </p>
 
       <form onSubmit={handleSubmit} className="mt-6 space-y-4">
@@ -286,7 +299,7 @@ export function SetPasswordForm() {
           disabled={status !== "ready"}
           className="w-full rounded-2xl bg-slate-900 px-4 py-3 text-sm font-medium text-white hover:bg-slate-800 disabled:cursor-not-allowed disabled:bg-slate-400"
         >
-          {status === "checking" ? "Checking invite..." : status === "saving" ? "Saving..." : "Set password"}
+          {status === "checking" ? "Checking link..." : status === "saving" ? "Saving..." : "Set password"}
         </button>
       </form>
     </div>

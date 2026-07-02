@@ -6,29 +6,42 @@ import { FormEvent, useEffect, useState } from "react";
 import { getSupabaseBrowserClient } from "@/lib/supabase/client";
 import { useAppStore } from "@/store/app-store";
 
+type AuthMessageTone = "error" | "success";
+
 export function AuthModal() {
   const { authModalOpen, authMode, closeAuthModal, openAuthModal } = useAppStore();
   const allowPublicSignup = process.env.NEXT_PUBLIC_ALLOW_PUBLIC_SIGNUP === "true";
   const activeAuthMode = allowPublicSignup ? authMode : "login";
+  const [isResetPasswordView, setIsResetPasswordView] = useState(false);
+  const [resetEmailSent, setResetEmailSent] = useState(false);
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [message, setMessage] = useState("");
+  const [messageTone, setMessageTone] = useState<AuthMessageTone>("error");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const supabase = getSupabaseBrowserClient();
 
   useEffect(() => {
     setMessage("");
+    setMessageTone("error");
     setShowPassword(false);
-  }, [activeAuthMode]);
+    setIsResetPasswordView(false);
+    setResetEmailSent(false);
+  }, [activeAuthMode, authModalOpen]);
+
+  function showMessage(text: string, tone: AuthMessageTone = "error") {
+    setMessageTone(tone);
+    setMessage(text);
+  }
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     setMessage("");
 
     if (!supabase) {
-      setMessage("Supabase is not configured yet. Add the project URL and publishable key.");
+      showMessage("Supabase is not configured yet. Add the project URL and publishable key.");
       return;
     }
 
@@ -49,12 +62,12 @@ export function AuthModal() {
         });
 
         if (error) {
-          setMessage(error.message);
+          showMessage(error.message);
           return;
         }
 
         if (!data.session) {
-          setMessage("Check your email to confirm your account, then log in.");
+          showMessage("Check your email to confirm your account, then log in.", "success");
           return;
         }
 
@@ -68,7 +81,7 @@ export function AuthModal() {
       });
 
       if (error) {
-        setMessage(error.message);
+        showMessage(error.message);
         return;
       }
 
@@ -78,9 +91,53 @@ export function AuthModal() {
     }
   }
 
+  async function handlePasswordReset(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    setMessage("");
+
+    if (!supabase) {
+      showMessage("Supabase is not configured yet. Add the project URL and publishable key.");
+      return;
+    }
+
+    setIsSubmitting(true);
+
+    try {
+      const redirectTo =
+        typeof window !== "undefined" ? `${window.location.origin}/auth/set-password` : undefined;
+      const { error } = await supabase.auth.resetPasswordForEmail(email, { redirectTo });
+
+      if (error) {
+        showMessage(error.message);
+        return;
+      }
+
+      setResetEmailSent(true);
+      showMessage("Check your email for a secure link to set a new password.", "success");
+    } finally {
+      setIsSubmitting(false);
+    }
+  }
+
   if (!authModalOpen) {
     return null;
   }
+
+  const eyebrow = isResetPasswordView
+    ? "Password reset"
+    : activeAuthMode === "login"
+      ? "Welcome back"
+      : "Create account";
+  const title = isResetPasswordView
+    ? "Reset your password"
+    : activeAuthMode === "login"
+      ? "Sign in to continue"
+      : "Join RGuide";
+  const intro = isResetPasswordView
+    ? "Enter the email connected to your RGuide account and we'll send a secure reset link."
+    : allowPublicSignup
+      ? "Sign in with the email and password connected to your RGuide account."
+      : "RGuide is invite-only while the first public guides are being tested.";
 
   return (
     <div className="fixed inset-0 z-[1000] flex items-center justify-center bg-slate-950/40 p-4">
@@ -94,88 +151,151 @@ export function AuthModal() {
           <X className="h-4 w-4" />
         </button>
         <p className="text-sm font-medium uppercase tracking-[0.24em] text-orange-600">
-          {authMode === "login" ? "Welcome back" : "Create account"}
+          {eyebrow}
         </p>
-        <h2 className="mt-3 text-2xl font-semibold text-slate-900">
-          {activeAuthMode === "login" ? "Sign in to continue" : "Join RGuide"}
-        </h2>
-        <p className="mt-2 text-sm text-slate-600">
-          {allowPublicSignup
-            ? "Sign in with the email and password connected to your RGuide account."
-            : "RGuide is invite-only while the first public guides are being tested."}
-        </p>
+        <h2 className="mt-3 text-2xl font-semibold text-slate-900">{title}</h2>
+        <p className="mt-2 text-sm text-slate-600">{intro}</p>
 
-        <form onSubmit={handleSubmit} className="mt-6 space-y-4">
-          {activeAuthMode === "signup" ? (
+        {isResetPasswordView ? (
+          <form onSubmit={handlePasswordReset} className="mt-6 space-y-4">
             <label className="block text-sm">
-              <span className="mb-2 block font-medium text-slate-700">Name</span>
+              <span className="mb-2 block font-medium text-slate-700">Email</span>
               <input
-                type="text"
-                value={name}
-                onChange={(event) => setName(event.target.value)}
-                placeholder="Your name"
-                autoComplete="name"
+                type="email"
+                value={email}
+                onChange={(event) => setEmail(event.target.value)}
+                placeholder="traveler@example.com"
+                autoComplete="email"
+                required
                 className="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-slate-900"
               />
             </label>
-          ) : null}
-          <label className="block text-sm">
-            <span className="mb-2 block font-medium text-slate-700">Email</span>
-            <input
-              type="email"
-              value={email}
-              onChange={(event) => setEmail(event.target.value)}
-              placeholder="traveler@example.com"
-              autoComplete="email"
-              required
-              className="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-slate-900"
-            />
-          </label>
-          <label className="block text-sm">
-            <span className="mb-2 block font-medium text-slate-700">Password</span>
-            <span className="relative block">
-              <input
-                type={showPassword ? "text" : "password"}
-                value={password}
-                onChange={(event) => setPassword(event.target.value)}
-                placeholder="Password"
-                autoComplete={activeAuthMode === "login" ? "current-password" : "new-password"}
-                minLength={6}
-                required
-                className="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 pr-12 text-slate-900"
-              />
-              <button
-                type="button"
-                onClick={() => setShowPassword((current) => !current)}
-                className="absolute right-3 top-1/2 inline-flex h-8 w-8 -translate-y-1/2 items-center justify-center rounded-full text-slate-500 hover:bg-stone-100 hover:text-slate-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-300"
-                aria-label={showPassword ? "Hide password" : "Show password"}
-                title={showPassword ? "Hide password" : "Show password"}
+
+            {message ? (
+              <p
+                className={
+                  messageTone === "success"
+                    ? "rounded-2xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm text-emerald-800"
+                    : "rounded-2xl border border-orange-200 bg-orange-50 px-4 py-3 text-sm text-orange-800"
+                }
               >
-                {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
-              </button>
-            </span>
-          </label>
+                {message}
+              </p>
+            ) : null}
 
-          {message ? (
-            <p className="rounded-2xl border border-orange-200 bg-orange-50 px-4 py-3 text-sm text-orange-800">
-              {message}
-            </p>
-          ) : null}
+            <button
+              type="submit"
+              disabled={isSubmitting}
+              className="w-full rounded-2xl bg-slate-900 px-4 py-3 text-sm font-medium text-white hover:bg-slate-800 disabled:cursor-not-allowed disabled:bg-slate-400"
+            >
+              {isSubmitting ? "Sending..." : resetEmailSent ? "Send another link" : "Send reset email"}
+            </button>
+            <button
+              type="button"
+              onClick={() => {
+                setIsResetPasswordView(false);
+                setMessage("");
+                setMessageTone("error");
+              }}
+              className="w-full rounded-2xl border border-slate-200 px-4 py-3 text-sm font-medium text-slate-700 hover:bg-stone-100"
+            >
+              Back to login
+            </button>
+          </form>
+        ) : (
+          <form onSubmit={handleSubmit} className="mt-6 space-y-4">
+            {activeAuthMode === "signup" ? (
+              <label className="block text-sm">
+                <span className="mb-2 block font-medium text-slate-700">Name</span>
+                <input
+                  type="text"
+                  value={name}
+                  onChange={(event) => setName(event.target.value)}
+                  placeholder="Your name"
+                  autoComplete="name"
+                  className="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-slate-900"
+                />
+              </label>
+            ) : null}
+            <label className="block text-sm">
+              <span className="mb-2 block font-medium text-slate-700">Email</span>
+              <input
+                type="email"
+                value={email}
+                onChange={(event) => setEmail(event.target.value)}
+                placeholder="traveler@example.com"
+                autoComplete="email"
+                required
+                className="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-slate-900"
+              />
+            </label>
+            <label className="block text-sm">
+              <span className="mb-2 flex items-center justify-between gap-3">
+                <span className="font-medium text-slate-700">Password</span>
+                {activeAuthMode === "login" ? (
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setIsResetPasswordView(true);
+                      setMessage("");
+                      setMessageTone("error");
+                    }}
+                    className="text-xs font-medium text-orange-600 hover:text-orange-700"
+                  >
+                    Forgot password?
+                  </button>
+                ) : null}
+              </span>
+              <span className="relative block">
+                <input
+                  type={showPassword ? "text" : "password"}
+                  value={password}
+                  onChange={(event) => setPassword(event.target.value)}
+                  placeholder="Password"
+                  autoComplete={activeAuthMode === "login" ? "current-password" : "new-password"}
+                  minLength={6}
+                  required
+                  className="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 pr-12 text-slate-900"
+                />
+                <button
+                  type="button"
+                  onClick={() => setShowPassword((current) => !current)}
+                  className="absolute right-3 top-1/2 inline-flex h-8 w-8 -translate-y-1/2 items-center justify-center rounded-full text-slate-500 hover:bg-stone-100 hover:text-slate-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-300"
+                  aria-label={showPassword ? "Hide password" : "Show password"}
+                  title={showPassword ? "Hide password" : "Show password"}
+                >
+                  {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+                </button>
+              </span>
+            </label>
 
-          <button
-            type="submit"
-            disabled={isSubmitting}
-            className="w-full rounded-2xl bg-slate-900 px-4 py-3 text-sm font-medium text-white hover:bg-slate-800 disabled:cursor-not-allowed disabled:bg-slate-400"
-          >
-            {isSubmitting
-              ? "Working..."
-              : activeAuthMode === "login"
-                ? "Log in"
-                : "Create account"}
-          </button>
-        </form>
+            {message ? (
+              <p
+                className={
+                  messageTone === "success"
+                    ? "rounded-2xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm text-emerald-800"
+                    : "rounded-2xl border border-orange-200 bg-orange-50 px-4 py-3 text-sm text-orange-800"
+                }
+              >
+                {message}
+              </p>
+            ) : null}
 
-        {allowPublicSignup ? (
+            <button
+              type="submit"
+              disabled={isSubmitting}
+              className="w-full rounded-2xl bg-slate-900 px-4 py-3 text-sm font-medium text-white hover:bg-slate-800 disabled:cursor-not-allowed disabled:bg-slate-400"
+            >
+              {isSubmitting
+                ? "Working..."
+                : activeAuthMode === "login"
+                  ? "Log in"
+                  : "Create account"}
+            </button>
+          </form>
+        )}
+
+        {allowPublicSignup && !isResetPasswordView ? (
           <div className="mt-4 text-sm text-slate-600">
             {activeAuthMode === "login" ? "Need an account?" : "Already have an account?"}{" "}
             <button
