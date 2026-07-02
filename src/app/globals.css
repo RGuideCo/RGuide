@@ -124,9 +124,12 @@ textarea:focus-visible {
 
 @media (min-width: 1024px) {
   .rguide-locate-control {
+    width: 29px;
+    height: 29px;
     top: auto;
-    right: var(--rguide-map-controls-right, 12px);
-    bottom: 78px;
+    right: calc(var(--rguide-map-controls-right, 12px) + 10px);
+    bottom: 88px;
+    border-radius: 4px;
   }
 }
 
