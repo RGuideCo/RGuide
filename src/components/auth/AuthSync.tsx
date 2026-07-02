@@ -33,6 +33,14 @@ function getProfileName(user: SupabaseUser) {
   );
 }
 
+function getProfileVisibility(user: SupabaseUser) {
+  const visibility =
+    getStringMetadata(user, "profile_visibility") ??
+    getStringMetadata(user, "visibility");
+
+  return visibility === "private" ? "private" : "public";
+}
+
 function canPublishGuides(user: SupabaseUser) {
   if (
     getBooleanAppMetadata(user, "can_publish_guides") === true ||
@@ -66,6 +74,7 @@ function toAppUser(user: SupabaseUser): User {
     bio:
       getStringMetadata(user, "bio") ??
       "Building a personal city guide with RGuide.",
+    visibility: getProfileVisibility(user),
     canPublishGuides: canPublishGuides(user),
     userType,
   };

@@ -13,6 +13,8 @@ import {
   Globe2,
   Heart,
   Footprints,
+  Lock,
+  LogOut,
   Map as MapIcon,
   MapPin,
   Plus,
@@ -136,7 +138,8 @@ import {
   resolveCountryDeepLink,
   resolveCityDeepLink,
 } from "@/lib/deep-link-routes";
-import { updateSupabaseProfile } from "@/lib/supabase/profile";
+import { getSupabaseBrowserClient } from "@/lib/supabase/client";
+import { updateSupabaseProfile, updateSupabaseProfileVisibility } from "@/lib/supabase/profile";
 import { getEditorialLists, useAppStore } from "@/store/app-store";
 import type { FavoriteLocation } from "@/store/app-store";
 import { Continent, ListCategory, MapList, SelectionState } from "@/types";
@@ -513,6 +516,7 @@ export function SplitScreenSection({
   const setCurrentUser = useAppStore((state) => state.setCurrentUser);
   const isProfileShellActive = useAppStore((state) => state.isProfileShellActive);
   const openAuthModal = useAppStore((state) => state.openAuthModal);
+  const logout = useAppStore((state) => state.logout);
   const setProfileShellActive = useAppStore((state) => state.setProfileShellActive);
   const setEditorialLists = useAppStore((state) => state.setEditorialLists);
   const favoriteIds = useAppStore((state) => state.favoriteIds);
@@ -776,6 +780,9 @@ export function SplitScreenSection({
   const [profileCreateCityId, setProfileCreateCityId] = useState("");
   const [profileCreateSubareaId, setProfileCreateSubareaId] = useState("");
   const [profileCreateNestedSubareaId, setProfileCreateNestedSubareaId] = useState("");
+  const [isSavingProfileVisibility, setIsSavingProfileVisibility] = useState(false);
+  const [isSigningOutProfile, setIsSigningOutProfile] = useState(false);
+  const [profileSettingsMessage, setProfileSettingsMessage] = useState<string | null>(null);
   const [hoveredDescriptionNeighborhoodId, setHoveredDescriptionNeighborhoodId] = useState<string | null>(null);
   const [exitingCategoryInsight, setExitingCategoryInsight] = useState<ReturnType<typeof buildCategoryInsight> | null>(null);
   const [exitingCategoryInsightNotes, setExitingCategoryInsightNotes] = useState<ReturnType<typeof buildCategoryInsightNotes>>([]);
@@ -987,6 +994,7 @@ export function SplitScreenSection({
     setProfileAvatarPreview(currentUser?.avatar ?? "");
     setProfileAvatarFile(null);
     setProfileEditMessage(null);
+    setProfileSettingsMessage(null);
   }, [currentUser?.avatar, currentUser?.bio, currentUser?.id, currentUser?.name]);
 
   const handleProfileAvatarChange = (file: File | null) => {
@@ -1032,6 +1040,7 @@ export function SplitScreenSection({
       bio: nextBio || "Building a personal city guide with RGuide.",
       avatarFile: avatarFileOverride ?? profileAvatarFile,
       fallbackAvatarUrl: currentUser.avatar,
+      visibility: currentUser.visibility ?? "public",
     });
 
     setIsSavingProfile(false);
@@ -1047,8 +1056,50 @@ export function SplitScreenSection({
       name: nextName,
       bio: nextBio || "Building a personal city guide with RGuide.",
       avatar: avatarUrl,
+      visibility: currentUser.visibility ?? "public",
     });
     setProfileEditMessage("Profile updated.");
+  };
+
+  const handleProfileVisibilityChange = async (visibility: "public" | "private") => {
+    if (!currentUser || currentUser.visibility === visibility || (!currentUser.visibility && visibility === "public")) {
+      return;
+    }
+
+    const previousUser = currentUser;
+    setIsSavingProfileVisibility(true);
+    setProfileSettingsMessage(null);
+    setCurrentUser({ ...currentUser, visibility });
+
+    const { error } = await updateSupabaseProfileVisibility(visibility);
+    setIsSavingProfileVisibility(false);
+
+    if (error) {
+      setCurrentUser(previousUser);
+      setProfileSettingsMessage(error.message);
+      return;
+    }
+
+    setProfileSettingsMessage(visibility === "public" ? "Profile set to public." : "Profile set to private.");
+  };
+
+  const handleProfileSignOut = async () => {
+    setIsSigningOutProfile(true);
+    setProfileSettingsMessage(null);
+
+    const supabase = getSupabaseBrowserClient();
+    const { error } = supabase ? await supabase.auth.signOut() : { error: null };
+
+    if (error) {
+      setIsSigningOutProfile(false);
+      setProfileSettingsMessage(error.message);
+      return;
+    }
+
+    logout();
+    setProfileShellActive(false);
+    setActiveProfileLeftRail(null);
+    setIsSigningOutProfile(false);
   };
   const titleRef = useRef<HTMLHeadingElement | null>(null);
   const titleTextRef = useRef<HTMLSpanElement | null>(null);
@@ -5168,6 +5219,12 @@ export function SplitScreenSection({
         : "";
   const publicProfilePaneTransitionClass = isPublicProfileEntering ? "pane-content-enter" : "";
   const publicProfileRailTransitionClass = isPublicProfileEntering ? "rail-switch-enter" : "";
+  const isProfileSettingsPane = activeProfileLeftRail === "settings";
+  const isProfileOverviewPane =
+    activeProfileLeftRail !== "places-been" &&
+    activeProfileLeftRail !== "edit-profile" &&
+    !isProfileSettingsPane;
+  const profileVisibility = currentUser?.visibility ?? "public";
   const darkPaneHeadingClass = "text-sm font-semibold text-[rgba(255,255,255,0.76)]";
   const darkPaneToggleClass = (active: boolean, enabled = true) =>
     `flex h-8 w-8 items-center justify-center rounded-full transition ${
@@ -8260,7 +8317,90 @@ export function SplitScreenSection({
                         </div>
                       ) : null}
                     </div>
-                    {activeProfileLeftRail !== "places-been" && activeProfileLeftRail !== "edit-profile" ? (
+                    {isProfileSettingsPane ? (
+                      <div className="profile-left-stats mt-5 space-y-3 text-left">
+                        <div className="rounded-xl border border-white/[0.12] bg-white/[0.07] p-3 shadow-[inset_0_1px_0_rgba(255,255,255,0.08),0_12px_24px_rgba(0,0,0,0.14)]">
+                          <div className="flex items-start justify-between gap-3">
+                            <div>
+                              <p className="text-[10px] font-semibold uppercase tracking-[0.14em] text-white/[0.48]">
+                                Profile visibility
+                              </p>
+                              <p className="mt-1 text-sm font-medium text-white/[0.84]">
+                                {profileVisibility === "public" ? "Public profile" : "Private profile"}
+                              </p>
+                            </div>
+                            <span className="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-white/[0.16] bg-white/[0.08] text-white/[0.82]">
+                              {profileVisibility === "public" ? (
+                                <Globe2 className="h-4 w-4" />
+                              ) : (
+                                <Lock className="h-4 w-4" />
+                              )}
+                            </span>
+                          </div>
+                          <div className="mt-3 grid grid-cols-2 gap-1.5 rounded-full border border-white/[0.1] bg-black/20 p-1">
+                            {(["public", "private"] as const).map((visibility) => {
+                              const isActive = profileVisibility === visibility;
+                              return (
+                                <button
+                                  key={visibility}
+                                  type="button"
+                                  onClick={() => void handleProfileVisibilityChange(visibility)}
+                                  disabled={isSavingProfileVisibility}
+                                  className={`rounded-full px-3 py-1.5 text-xs font-semibold uppercase tracking-[0.12em] transition ${
+                                    isActive
+                                      ? "bg-white text-slate-950 shadow-sm"
+                                      : "text-white/[0.58] hover:bg-white/[0.08] hover:text-white"
+                                  } ${isSavingProfileVisibility ? "cursor-wait opacity-70" : ""}`}
+                                >
+                                  {visibility}
+                                </button>
+                              );
+                            })}
+                          </div>
+                        </div>
+
+                        <div className="rounded-xl border border-white/[0.12] bg-white/[0.07] p-3 shadow-[inset_0_1px_0_rgba(255,255,255,0.08),0_12px_24px_rgba(0,0,0,0.14)]">
+                          <p className="text-[10px] font-semibold uppercase tracking-[0.14em] text-white/[0.48]">
+                            Account
+                          </p>
+                          <div className="mt-2 space-y-2">
+                            <div className="flex items-center justify-between gap-3 rounded-lg border border-white/[0.1] bg-white/[0.06] px-3 py-2">
+                              <span className="text-xs font-semibold uppercase tracking-[0.12em] text-white/[0.42]">
+                                Email
+                              </span>
+                              <span className="min-w-0 truncate text-sm font-medium text-white/[0.84]">
+                                {currentUser.email ?? "No email"}
+                              </span>
+                            </div>
+                            <div className="flex items-center justify-between gap-3 rounded-lg border border-white/[0.1] bg-white/[0.06] px-3 py-2">
+                              <span className="text-xs font-semibold uppercase tracking-[0.12em] text-white/[0.42]">
+                                Publishing
+                              </span>
+                              <span className="text-sm font-medium text-white/[0.84]">
+                                {currentUser.canPublishGuides ? "Can publish" : "Drafts only"}
+                              </span>
+                            </div>
+                          </div>
+                        </div>
+
+                        {profileSettingsMessage ? (
+                          <p className="rounded-full border border-white/[0.12] bg-white/[0.08] px-3 py-1.5 text-xs font-medium text-white/[0.72]">
+                            {profileSettingsMessage}
+                          </p>
+                        ) : null}
+
+                        <button
+                          type="button"
+                          onClick={() => void handleProfileSignOut()}
+                          disabled={isSigningOutProfile}
+                          className="flex w-full items-center justify-center gap-2 rounded-xl border border-white/[0.18] bg-white/[0.08] px-4 py-3 text-sm font-semibold text-white/[0.82] transition hover:border-white/[0.34] hover:bg-white/[0.14] hover:text-white disabled:cursor-wait disabled:opacity-60"
+                        >
+                          <LogOut className="h-4 w-4" />
+                          {isSigningOutProfile ? "Signing out..." : "Sign out"}
+                        </button>
+                      </div>
+                    ) : null}
+                    {isProfileOverviewPane ? (
                       <div className="profile-left-stats mt-5 grid grid-cols-3 gap-2">
                       <div className="profile-left-stat-card rounded-xl border border-slate-200 bg-stone-50 px-3 py-2 text-center">
                         <p className="text-[10px] uppercase tracking-[0.12em] text-slate-500">Countries</p>
@@ -8276,7 +8416,7 @@ export function SplitScreenSection({
                       </div>
                       </div>
                     ) : null}
-                    {activeProfileLeftRail !== "places-been" && activeProfileLeftRail !== "edit-profile" ? (
+                    {isProfileOverviewPane ? (
                       <div className="mt-3 rounded-xl border border-white/[0.12] bg-white/[0.07] p-3 shadow-[inset_0_1px_0_rgba(255,255,255,0.08),0_12px_24px_rgba(0,0,0,0.14)]">
                         <p className="text-[10px] uppercase tracking-[0.14em] text-white/[0.48]">Favorites</p>
                         <div className="mt-2 space-y-1.5">

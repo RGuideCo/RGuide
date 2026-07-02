@@ -215,6 +215,7 @@ export interface User {
   joinedAt?: string;
   avatar: string;
   bio: string;
+  visibility?: "public" | "private";
   canPublishGuides?: boolean;
   userType?: string;
 }

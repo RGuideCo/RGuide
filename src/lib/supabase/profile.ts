@@ -8,6 +8,7 @@ interface ProfileInput {
   bio: string;
   avatarFile?: File | null;
   fallbackAvatarUrl: string;
+  visibility?: "public" | "private";
 }
 
 function getAvatarExtension(file: File) {
@@ -20,6 +21,7 @@ export async function updateSupabaseProfile({
   bio,
   avatarFile,
   fallbackAvatarUrl,
+  visibility,
 }: ProfileInput) {
   const supabase = getSupabaseBrowserClient();
 
@@ -68,8 +70,27 @@ export async function updateSupabaseProfile({
       name,
       bio,
       avatar_url: isGeneratedProfileAvatar(avatarUrl) ? null : avatarUrl,
+      ...(visibility ? { profile_visibility: visibility } : {}),
     },
   });
 
   return { avatarUrl, error };
+}
+
+export async function updateSupabaseProfileVisibility(visibility: "public" | "private") {
+  const supabase = getSupabaseBrowserClient();
+
+  if (!supabase) {
+    return {
+      error: new Error("Supabase is not configured yet."),
+    };
+  }
+
+  const { error } = await supabase.auth.updateUser({
+    data: {
+      profile_visibility: visibility,
+    },
+  });
+
+  return { error };
 }
