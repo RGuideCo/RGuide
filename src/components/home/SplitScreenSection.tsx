@@ -1555,6 +1555,10 @@ export function SplitScreenSection({
   };
   const handleSelectCity = (continentId: string, countryId: string, cityId: string) => {
     setFocusedCountrySignal(null);
+    if (isProfileShellActive && !isPublicProfileMode) {
+      setProfileShellActive(false);
+      setActiveProfileLeftRail(null);
+    }
     setIsLocationFavoritesRailActive(false);
     const continent = continents.find((item) => item.id === continentId);
     const country = continent?.countries.find((item) => item.id === countryId);

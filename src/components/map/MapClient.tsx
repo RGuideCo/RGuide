@@ -433,6 +433,41 @@ function nameMatches(normalizedClickedName: string, normalizedTargetName: string
   );
 }
 
+function getDistanceKmBetweenLngLat(
+  first: [number, number],
+  second: [number, number],
+) {
+  const toRadians = (value: number) => (value * Math.PI) / 180;
+  const earthRadiusKm = 6371;
+  const [firstLng, firstLat] = first;
+  const [secondLng, secondLat] = second;
+  const deltaLat = toRadians(secondLat - firstLat);
+  const deltaLng = toRadians(secondLng - firstLng);
+  const a =
+    Math.sin(deltaLat / 2) ** 2 +
+    Math.cos(toRadians(firstLat)) *
+      Math.cos(toRadians(secondLat)) *
+      Math.sin(deltaLng / 2) ** 2;
+
+  return earthRadiusKm * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+}
+
+function getGuideCityKey(countryName: string, cityName: string) {
+  return `${normalizeLabelName(countryName)}::${normalizeLabelName(cityName)}`;
+}
+
+function getGuideCityKeys(guideLists: MapList[]) {
+  return new Set(
+    guideLists
+      .map((list) => {
+        const cityName = list.location.city;
+        const countryName = list.location.country;
+        return cityName && countryName ? getGuideCityKey(countryName, cityName) : null;
+      })
+      .filter((value): value is string => Boolean(value)),
+  );
+}
+
 function getCountryFocusBounds(countryId: string, fallbackBounds: [[number, number], [number, number]]) {
   const geometry = countryBoundaryFeatures[countryId]?.geometry;
 
@@ -2594,6 +2629,73 @@ function getNearestRealCityClickTarget(
   return best;
 }
 
+function getNearestLocationCityTarget(
+  coordinates: [number, number],
+  continents: Continent[],
+  guideLists: MapList[],
+) {
+  const guideCityKeys = getGuideCityKeys(guideLists);
+  let bestGuideCity:
+    | {
+        continentId: string;
+        countryId: string;
+        cityId: string;
+        cityName: string;
+        distanceKm: number;
+      }
+    | null = null;
+  let bestKnownCity:
+    | {
+        continentId: string;
+        countryId: string;
+        cityId: string;
+        cityName: string;
+        distanceKm: number;
+      }
+    | null = null;
+
+  for (const continent of continents) {
+    for (const country of continent.countries) {
+      for (const city of country.cities) {
+        if (city.isPlaceholderRegion) {
+          continue;
+        }
+
+        const distanceKm = getDistanceKmBetweenLngLat(
+          coordinates,
+          [city.coordinates[1], city.coordinates[0]],
+        );
+        const target = {
+          continentId: continent.id,
+          countryId: country.id,
+          cityId: city.id,
+          cityName: city.name,
+          distanceKm,
+        };
+
+        if (!bestKnownCity || distanceKm < bestKnownCity.distanceKm) {
+          bestKnownCity = target;
+        }
+
+        const hasGuides = city.listCount > 0 || guideCityKeys.has(getGuideCityKey(country.name, city.name));
+        if (hasGuides && (!bestGuideCity || distanceKm < bestGuideCity.distanceKm)) {
+          bestGuideCity = target;
+        }
+      }
+    }
+  }
+
+  if (bestGuideCity && bestGuideCity.distanceKm <= 75) {
+    return bestGuideCity;
+  }
+
+  if (bestKnownCity && bestKnownCity.distanceKm <= 30) {
+    return bestKnownCity;
+  }
+
+  return null;
+}
+
 function getVisibleGuideMarkerIconSizeExpression(directHoverGuideId: string | null = null): ExpressionSpecification {
   const baseSize: ExpressionSpecification = [
     "interpolate",
@@ -3689,6 +3791,23 @@ export function MapClient({
         }
 
         userLocationMarkerRef.current.setLngLat(coordinates);
+        const locationCityTarget = getNearestLocationCityTarget(
+          coordinates,
+          handlersRef.current.continents,
+          guideLists,
+        );
+
+        if (locationCityTarget) {
+          handlersRef.current.onSelectCity(
+            locationCityTarget.continentId,
+            locationCityTarget.countryId,
+            locationCityTarget.cityId,
+          );
+          setLocationStatus("located");
+          setLocationMessage(`Showing ${locationCityTarget.cityName}`);
+          return;
+        }
+
         map.easeTo({
           center: coordinates,
           zoom: Math.max(map.getZoom(), 14.2),
