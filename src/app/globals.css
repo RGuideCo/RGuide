@@ -198,6 +198,71 @@ textarea:focus-visible {
   display: none;
 }
 
+.rguide-progressive-loading {
+  display: none;
+}
+
+.rguide-js-enabled:not(.rguide-split-screen-ready):not(.rguide-hydration-timeout) .rguide-progressive-shell {
+  min-height: 100vh;
+}
+
+.rguide-js-enabled:not(.rguide-split-screen-ready):not(.rguide-hydration-timeout) .rguide-progressive-fallback {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.rguide-js-enabled:not(.rguide-split-screen-ready):not(.rguide-hydration-timeout) .rguide-progressive-loading {
+  position: fixed;
+  inset: 0;
+  z-index: 999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  background:
+    radial-gradient(circle at 50% 42%, rgba(255, 255, 255, 0.1), transparent 34rem),
+    #0f0f0d;
+  color: #fafaf7;
+}
+
+.rguide-progressive-loading-mark {
+  display: inline-flex;
+  width: 44px;
+  height: 44px;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(250, 250, 247, 0.22);
+  border-radius: 50%;
+  background: rgba(250, 250, 247, 0.08);
+  color: #f97316;
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: 0;
+}
+
+.rguide-progressive-loading-copy {
+  display: grid;
+  gap: 2px;
+}
+
+.rguide-progressive-loading-copy span:first-child {
+  color: #fafaf7;
+  font-size: 0.95rem;
+  font-weight: 650;
+}
+
+.rguide-progressive-loading-copy span:last-child {
+  color: rgba(250, 250, 247, 0.62);
+  font-size: 0.78rem;
+  font-weight: 500;
+}
+
 .rguide-split-screen-ready .rguide-progressive-fallback {
   display: none;
 }

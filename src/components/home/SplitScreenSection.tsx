@@ -505,6 +505,7 @@ export function SplitScreenSection({
   onCityDataRequested,
 }: SplitScreenSectionProps) {
   useEffect(() => {
+    document.documentElement.classList.remove("rguide-hydration-timeout");
     document.documentElement.classList.add("rguide-split-screen-ready");
 
     return () => {

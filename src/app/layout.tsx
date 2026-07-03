@@ -134,8 +134,14 @@ export default function RootLayout({
   children: ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <head>
+        <script
+          dangerouslySetInnerHTML={{
+            __html:
+              "document.documentElement.classList.add('rguide-js-enabled');setTimeout(function(){if(!document.documentElement.classList.contains('rguide-split-screen-ready'))document.documentElement.classList.add('rguide-hydration-timeout')},8000);",
+          }}
+        />
         <meta name="agd-partner-manual-verification" />
         <link rel="preconnect" href="https://tiles.openfreemap.org" crossOrigin="anonymous" />
         {stay22LmaId ? (

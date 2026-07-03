@@ -36,6 +36,12 @@ export function AuthModal() {
     setMessage(text);
   }
 
+  function openPasswordResetView() {
+    setIsResetPasswordView(true);
+    setMessage("");
+    setMessageTone("error");
+  }
+
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     setMessage("");
@@ -230,22 +236,7 @@ export function AuthModal() {
               />
             </label>
             <label className="block text-sm">
-              <span className="mb-2 flex items-center justify-between gap-3">
-                <span className="font-medium text-slate-700">Password</span>
-                {activeAuthMode === "login" ? (
-                  <button
-                    type="button"
-                    onClick={() => {
-                      setIsResetPasswordView(true);
-                      setMessage("");
-                      setMessageTone("error");
-                    }}
-                    className="text-xs font-medium text-orange-600 hover:text-orange-700"
-                  >
-                    Forgot password?
-                  </button>
-                ) : null}
-              </span>
+              <span className="mb-2 block font-medium text-slate-700">Password</span>
               <span className="relative block">
                 <input
                   type={showPassword ? "text" : "password"}
@@ -268,6 +259,17 @@ export function AuthModal() {
                 </button>
               </span>
             </label>
+            {activeAuthMode === "login" ? (
+              <div className="-mt-1 text-right">
+                <button
+                  type="button"
+                  onClick={openPasswordResetView}
+                  className="rounded-sm text-sm font-medium text-orange-700 underline underline-offset-4 hover:text-orange-800 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-200"
+                >
+                  Forgot password?
+                </button>
+              </div>
+            ) : null}
 
             {message ? (
               <p
