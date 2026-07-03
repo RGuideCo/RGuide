@@ -400,7 +400,7 @@ const sources = {
     source("Toshimaen Niwa-no-Yu official", "https://www.seibu-leisure.co.jp/niwanoyu/"),
     source("Musashi-Koyama Onsen Shimizu-yu official", "https://www.shimizuyu.com/"),
     source("Tokyo Somei Onsen Sakura official", "https://tokyosomeionsensakura.com/"),
-    source("Koganeyu official", "https://koganeyu.com/english"),
+    source("Koganeyu official", "https://koganeyu.com/"),
     source("Daikokuyu official", "https://www.daikokuyu.com/"),
     source("Haginoyu official", "https://haginoyu.jp/"),
     source("Kairyo-yu official", "https://kairyou-yu.com/"),
@@ -4088,7 +4088,7 @@ const activityStops = [
   ),
 ];
 
-const onsenCheckedAt = "2026-06-23";
+const onsenCheckedAt = "2026-07-03";
 
 const onsenSentoHours: Record<string, StopHours> = {
   thermaeYu: daily(
@@ -4308,9 +4308,9 @@ const onsenSentoStops = [
       subcategory: "renovated_sento_sauna",
       price: "$",
       priceSource: "Official Koganeyu opening-hours and bath information",
-      attributeTags: ["sento", "sauna", "design", "beer", "kinshicho", "tattoo_friendly"],
+      attributeTags: ["tattoo_friendly", "sento", "sauna", "design", "beer", "kinshicho"],
       hours: onsenSentoHours.koganeyu,
-      officialUrl: "https://koganeyu.com/english",
+      officialUrl: "https://koganeyu.com/",
       sourcePhoto: imageSources.koganeyu,
       mapQuery: "Koganeyu Kinshicho Tokyo",
       editorialUrls: [
@@ -4319,7 +4319,7 @@ const onsenSentoStops = [
       ],
       sourceEvidence: {
         checkedAt: onsenCheckedAt,
-        notes: "Official Koganeyu page-view data lists 6:00 AM-9:00 AM and 11:00 AM-12:30 AM, second/fourth Monday closures, Wednesday bath swap, tattoo-friendly access, address, and facility features.",
+        notes: "Koganeyu official site and GOOD LUCK TRIP listing supervised by Koganeyu list hours, second/fourth Monday closures, Wednesday bath swap, address, facility features, and an official FAQ answer that tattooed bathers can use the bath.",
       },
     },
   ),
@@ -4333,7 +4333,7 @@ const onsenSentoStops = [
       subcategory: "classic_sento_onsen",
       price: "$",
       priceSource: "Official Daikokuyu hours/fee page",
-      attributeTags: ["sento", "onsen", "skytree", "oshiage", "late_night", "budget"],
+      attributeTags: ["tattoo_friendly", "sento", "onsen", "skytree", "oshiage", "late_night", "budget"],
       hours: onsenSentoHours.daikokuyu,
       officialUrl: "https://www.daikokuyu.com/",
       sourcePhoto: imageSources.daikokuyu,
@@ -4343,8 +4343,9 @@ const onsenSentoStops = [
         "https://www.tsunagujapan.com/top-10-sentos-bathhouse-in-tokyo/",
       ],
       sourceEvidence: {
+        officialUrl: "https://www.daikokuyu.com/english/index.html",
         checkedAt: onsenCheckedAt,
-        notes: "Official Daikokuyu page lists weekday/Saturday/Sunday hours, Tuesday closure with holiday adjustment, weak alkaline hot spring, 1949 founding, and Skytree/Oshiage access.",
+        notes: "Official Daikokuyu English page lists weekday/Saturday/Sunday hours, Tuesday closure with holiday adjustment, weak alkaline hot spring, 1949 founding, Skytree/Oshiage access, and FAQ/pricing text saying tattoos are OK.",
       },
     },
   ),

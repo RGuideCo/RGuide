@@ -763,7 +763,7 @@ function mergeVenueRows(existing, incoming) {
     price_tier: incoming.price_tier ?? existing.price_tier,
     nightlife_type: incoming.nightlife_type ?? existing.nightlife_type,
     music_genres: mergeUniqueValues(existing.music_genres, incoming.music_genres),
-    attribute_tags: mergeUniqueValues(existing.attribute_tags, incoming.attribute_tags),
+    attribute_tags: mergeUniqueValues(incoming.attribute_tags, existing.attribute_tags),
     source_metadata: { ...existing.source_metadata, ...incoming.source_metadata },
   };
 }
@@ -1068,7 +1068,13 @@ async function upsertVenuesBatch(client, venueRows) {
          price_tier = coalesce(excluded.price_tier, public.venues.price_tier),
          nightlife_type = coalesce(excluded.nightlife_type, public.venues.nightlife_type),
          music_genres = array(select distinct unnest(public.venues.music_genres || excluded.music_genres)),
-         attribute_tags = array(select distinct unnest(public.venues.attribute_tags || excluded.attribute_tags)),
+         attribute_tags = array(
+           select tag
+           from unnest(excluded.attribute_tags || public.venues.attribute_tags) with ordinality as merged(tag, ord)
+           where tag is not null and tag <> ''
+           group by tag
+           order by min(ord)
+         ),
          source_metadata = public.venues.source_metadata || excluded.source_metadata
        returning id, city_id, slug
      )
@@ -1688,7 +1694,13 @@ async function upsertVenue(client, input, stats) {
        price_tier = coalesce(excluded.price_tier, public.venues.price_tier),
        nightlife_type = coalesce(excluded.nightlife_type, public.venues.nightlife_type),
        music_genres = array(select distinct unnest(public.venues.music_genres || excluded.music_genres)),
-       attribute_tags = array(select distinct unnest(public.venues.attribute_tags || excluded.attribute_tags)),
+       attribute_tags = array(
+         select tag
+         from unnest(excluded.attribute_tags || public.venues.attribute_tags) with ordinality as merged(tag, ord)
+         where tag is not null and tag <> ''
+         group by tag
+         order by min(ord)
+       ),
        source_metadata = public.venues.source_metadata || excluded.source_metadata
      returning id`,
     [
