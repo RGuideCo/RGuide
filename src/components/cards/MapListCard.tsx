@@ -1571,7 +1571,17 @@ export function MapListCard({
     setSourcesPinnedOpen(true);
   };
 
-  const getDirectionsHref = (stop: { name: string }) => {
+  const getDirectionsHref = (stop: { name: string; coordinates?: [number, number] }) => {
+    const [latitude, longitude] = stop.coordinates ?? [];
+    const hasExactCoordinates =
+      Number.isFinite(latitude) &&
+      Number.isFinite(longitude) &&
+      !(latitude === 0 && longitude === 0);
+
+    if (hasExactCoordinates) {
+      return `https://www.google.com/maps/dir/?api=1&destination=${latitude},${longitude}`;
+    }
+
     const placeQuery = [
       stop.name,
       list.location.city,
