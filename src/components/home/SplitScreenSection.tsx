@@ -13,6 +13,7 @@ import {
   Globe2,
   Heart,
   Footprints,
+  Info,
   Lock,
   LogOut,
   Map as MapIcon,
@@ -398,11 +399,13 @@ function CityWeatherChip({
   cityName,
   coordinates,
   onImage = false,
+  placement = "absolute",
 }: {
   cityId?: string;
   cityName?: string;
   coordinates?: [number, number];
   onImage?: boolean;
+  placement?: "absolute" | "inline";
 }) {
   const [weather, setWeather] = useState<CityWeather | null>(null);
   const [isLoading, setIsLoading] = useState(false);
@@ -472,7 +475,7 @@ function CityWeatherChip({
 
   return (
     <div
-      className={`absolute right-4 top-4 z-20 flex max-w-[7.25rem] items-start justify-end gap-1.5 text-right text-xs ${
+      className={`${placement === "absolute" ? "absolute right-4 top-4 z-20" : "relative"} flex max-w-[7.25rem] items-start justify-end gap-1.5 text-right text-xs ${
         onImage
           ? "text-white drop-shadow-[0_1px_2px_rgba(0,0,0,0.85)]"
           : "rounded-full bg-white/80 px-2.5 py-2 text-slate-600 shadow-sm ring-1 ring-slate-200 backdrop-blur"
@@ -772,6 +775,7 @@ export function SplitScreenSection({
   });
   const globeRailVideoRef = useRef<HTMLVideoElement | null>(null);
   const [profileInlineEditNonce, setProfileInlineEditNonce] = useState(0);
+  const [isMobileInfoModalOpen, setIsMobileInfoModalOpen] = useState(false);
   const [isProfileCreateModalOpen, setIsProfileCreateModalOpen] = useState(false);
   const [profileCreateName, setProfileCreateName] = useState("");
   const [profileCreateType, setProfileCreateType] = useState<"guide" | "itinerary" | "event">("guide");
@@ -3424,14 +3428,7 @@ export function SplitScreenSection({
     const { min, max } = getMobileListSheetBounds();
     const finalHeight = mobileListSheetDragHeight ?? mobileListSheetDragStartRef.current.height;
     if (mobileListSheetTapCandidateRef.current) {
-      if (isGuideTakingFullListPane) {
-        setExpandedGuideId(null);
-        restoreCategoryAfterGuideCollapse();
-        setClosingGuide(null);
-        setIsMobileListSheetExpanded(false);
-      } else {
-        setIsMobileListSheetExpanded((current) => !current);
-      }
+      setIsMobileListSheetExpanded((current) => !current);
     } else {
       setIsMobileListSheetExpanded(finalHeight >= min + (max - min) * 0.42);
     }
@@ -5945,6 +5942,15 @@ export function SplitScreenSection({
                     <UserRound className="h-3.5 w-3.5" />
                   </button>
                 )}
+                <button
+                  type="button"
+                  onClick={() => setIsMobileInfoModalOpen(true)}
+                  className="flex h-8 w-8 items-center justify-center rounded-full border border-white/45 bg-[#1a1a1a] text-white shadow-sm ring-1 ring-[#1a1a1a] transition hover:scale-105 hover:border-white/70 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-400/70"
+                  aria-label={`Open ${visibleSeoHeading} information`}
+                  title="Info"
+                >
+                  <Info className="h-3.5 w-3.5" />
+                </button>
               </div>
 	              <div
                   className={`pointer-events-auto absolute right-3 top-3 flex flex-col items-end gap-1.5 lg:hidden ${
@@ -8488,45 +8494,51 @@ export function SplitScreenSection({
               <div className="frosted-pane-right pointer-events-none absolute inset-0 z-[82] rounded-t-lg rounded-tl-none lg:rounded-none" aria-hidden="true" />
               <div className={`relative z-[85] flex h-full flex-col ${paneTransitionClass} ${publicProfilePaneTransitionClass}`}>
                 <div
-                  className={`relative flex shrink-0 items-center transition-[height,margin-bottom] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] lg:hidden ${
-                    isGuidePaneTakingFullListPane || isPublicProfileMode ? "mb-0 h-0" : "mb-2 h-8"
+                  className={`relative shrink-0 transition-[height,margin-bottom,opacity] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] lg:hidden ${
+                    isGuidePaneTakingFullListPane || isPublicProfileMode
+                      ? "mb-0 h-0 overflow-hidden opacity-0"
+                      : "mb-2 h-[5.35rem] overflow-visible opacity-100"
                   }`}
                   onPointerDown={handleMobileListSheetDragStart}
                 >
-                  <div className={`min-w-0 pr-2 transition-opacity duration-200 ${isGuidePaneTakingFullListPane ? "opacity-0" : "opacity-100"}`}>
-                    <p className="truncate text-xs font-semibold uppercase tracking-[0.14em] text-white/62">
-                      {categoryTitleLabel}
-                    </p>
-                  </div>
                   <div
-                    className={`ml-auto flex h-8 min-w-0 items-center justify-end overflow-x-auto rounded-full transition-[opacity,transform] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] ${
+                    className={`flex h-9 items-center gap-2 transition-[opacity,transform] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] ${
                       isGuidePaneTakingFullListPane ? "pointer-events-none -translate-y-2 opacity-0" : "translate-y-0 opacity-100"
                     }`}
                   >
-                    <div
-                      className="flex min-w-max items-center gap-1.5"
-                    >
-                        {categoryOptions.map((option, index) => {
-                          const isActive = activeCategory === option.category;
-                          return (
-                            <button
-                              key={option.label}
-                              type="button"
-                              onClick={() => handleCategoryToggle(option.category)}
-                              className={`category-icon-button flex h-7 w-7 shrink-0 items-center justify-center rounded-full border border-transparent shadow-sm ${
-                                isActive ? "text-white" : "bg-white/8 text-slate-950 hover:bg-white/12 hover:text-slate-950"
-                              } ${isActive ? "category-icon-button-active" : ""}`}
-                              style={{
-                                "--category-color": CATEGORY_STYLES[option.category].mapColor,
-                                transitionDelay: `${index * 18}ms`,
-                              } as React.CSSProperties}
-                              aria-label={isActive ? `Clear ${option.label}` : option.label}
-                              aria-pressed={isActive}
-                            >
-                              <option.icon className="h-3 w-3" />
-                            </button>
-                          );
-                        })}
+                    <div className="min-w-0">
+                      <p className="truncate text-xs font-semibold uppercase tracking-[0.14em] text-white/68">
+                        {categoryTitleLabel}
+                      </p>
+                    </div>
+                  </div>
+                  <div
+                    className={`mt-1.5 w-full overflow-x-auto pb-1 transition-[opacity,transform] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] ${
+                      isGuidePaneTakingFullListPane ? "pointer-events-none -translate-y-2 opacity-0" : "translate-y-0 opacity-100"
+                    }`}
+                  >
+                    <div className="flex min-w-max items-center gap-2 px-0.5 py-0.5">
+                      {categoryOptions.map((option, index) => {
+                        const isActive = activeCategory === option.category;
+                        return (
+                          <button
+                            key={option.label}
+                            type="button"
+                            onClick={() => handleCategoryToggle(option.category)}
+                            className={`category-icon-button flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border border-transparent shadow-sm outline-none focus:outline-none focus-visible:ring-2 focus-visible:ring-white/45 ${
+                              isActive ? "category-icon-button-active text-white" : "bg-white/8 text-slate-950 hover:bg-white/12 hover:text-slate-950"
+                            }`}
+                            style={{
+                              "--category-color": CATEGORY_STYLES[option.category].mapColor,
+                              transitionDelay: `${index * 18}ms`,
+                            } as React.CSSProperties}
+                            aria-label={isActive ? `Clear ${option.label}` : option.label}
+                            aria-pressed={isActive}
+                          >
+                            <option.icon className="h-4 w-4" />
+                          </button>
+                        );
+                      })}
                     </div>
                   </div>
                 </div>
@@ -9498,6 +9510,646 @@ export function SplitScreenSection({
         </div>
         </div>
       </div>
+      {isMobileInfoModalOpen ? (
+        <div
+          className="fixed inset-0 z-[500] flex items-stretch justify-start bg-black/42 lg:hidden"
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="mobile-destination-info-title"
+          onClick={() => setIsMobileInfoModalOpen(false)}
+        >
+          <div
+            className="left-pane-solid left-pane-dark-preview relative flex h-full w-[min(22rem,calc(100vw-3.25rem))] flex-col overflow-hidden border-r border-white/14 pb-[env(safe-area-inset-bottom)] pt-[env(safe-area-inset-top)] text-white shadow-[16px_0_36px_rgba(0,0,0,0.34)]"
+            onClick={(event) => event.stopPropagation()}
+          >
+              {activeDestinationImage ? (
+                <div
+                  className="pointer-events-none absolute inset-x-0 top-0 h-[18.75rem] overflow-hidden bg-slate-950"
+                  style={{
+                    WebkitMaskImage: "linear-gradient(to bottom, black 0%, black 64%, rgba(0, 0, 0, 0.28) 86%, transparent 100%)",
+                    maskImage: "linear-gradient(to bottom, black 0%, black 64%, rgba(0, 0, 0, 0.28) 86%, transparent 100%)",
+                  }}
+                  aria-hidden="true"
+                >
+                  <img
+                    src={activeDestinationImage}
+                    alt=""
+                    className="absolute inset-0 h-full w-full object-cover opacity-80"
+                  />
+                  <div className="absolute inset-0" style={{ backgroundColor: "rgba(0, 0, 0, 0.34)" }} />
+                  <div
+                    className="absolute inset-x-0 top-0"
+                    style={{
+                      height: "calc(100% + 3.5rem)",
+                      background:
+                        "linear-gradient(to bottom, rgba(0, 0, 0, 0.18) 0%, rgba(0, 0, 0, 0.24) 55%, rgba(0, 0, 0, 0.62) 100%)",
+                      transform: isCategoryInsightMode ? "translateY(-3.5rem)" : "translateY(0)",
+                      transition: "transform 420ms cubic-bezier(0.22, 1, 0.36, 1)",
+                    }}
+                  />
+                </div>
+              ) : null}
+            <div className="relative z-10 flex h-full min-h-0 flex-col">
+              <div className="shrink-0 px-4 pb-4 pt-4">
+                <div className="mb-3 flex items-start gap-3">
+                  <div className="min-w-0 flex-1">
+                    {visibleSeoContextLabel ? (
+                      <p className={`mb-1 max-w-[calc(100%-1rem)] text-sm font-medium ${activeDestinationImage ? "text-white drop-shadow-sm" : "text-slate-600"}`}>
+                        {visibleSeoContextLabel}
+                      </p>
+                    ) : null}
+                    <h2
+                      id="mobile-destination-info-title"
+                      className={`max-w-full text-2xl font-semibold ${activeDestinationImage ? "text-white drop-shadow-sm" : "text-slate-900"}`}
+                    >
+                      {activeCategory && activeLocation.city && !expandedGuide ? (
+                        <button
+                          type="button"
+                          onClick={() => handleCategoryToggle(activeCategory)}
+                          className="inline-block max-w-full text-left [font:inherit] leading-[inherit] transition hover:opacity-80"
+                          aria-label={`Show all ${activeSeoPlaceLabel} guides`}
+                          title={`Show all ${activeSeoPlaceLabel} guides`}
+                        >
+                          {visibleSeoHeading}
+                        </button>
+                      ) : (
+                        visibleSeoHeading
+                      )}
+                    </h2>
+                    {!isSavedPlacesRailActive ? (
+                      <p className={`mt-1 text-sm ${activeDestinationImage ? "text-white drop-shadow-sm" : "text-slate-600"}`}>
+                        {formatBreadcrumbName(activeDirectoryMeta.detail)}
+                      </p>
+                    ) : null}
+                  </div>
+                  <div className="ml-auto flex shrink-0 flex-col items-end gap-2">
+                    <button
+                      type="button"
+                      onClick={() => setIsMobileInfoModalOpen(false)}
+                      className="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border border-white/12 bg-black/18 text-white/72 shadow-sm transition hover:bg-black/26 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/45"
+                      aria-label="Close information"
+                      title="Close"
+                    >
+                      <X className="h-4 w-4" />
+                    </button>
+                    <CityWeatherChip
+                      cityId={activeLocation.city?.id}
+                      cityName={activeLocation.city?.name}
+                      coordinates={activeLocation.city?.coordinates}
+                      onImage={Boolean(activeDestinationImage)}
+                      placement="inline"
+                    />
+                  </div>
+                </div>
+
+                {isSavedPlacesRailActive ? (
+                  <div className="mt-4">
+                    {favoriteLocations.length ? (
+                      <div className="space-y-4">
+                        {favoriteLocationSections.map((section) => (
+                          <section key={`mobile-info-favorites-${section.key}`}>
+                            <p className="mb-1.5 px-3 text-[11px] font-medium uppercase tracking-[0.16em] text-slate-500">
+                              {section.label}
+                            </p>
+                            <div className="space-y-1">
+                              {section.locations.map((location) => (
+                                <FavoriteLocationRow
+                                  key={`mobile-info-favorite-${location.id}`}
+                                  location={location}
+                                  active={activeFavoriteLocation?.id === location.id}
+                                  onSelect={(favoriteLocation) => {
+                                    setIsMobileInfoModalOpen(false);
+                                    handleFavoriteLocationSelect(favoriteLocation);
+                                  }}
+                                />
+                              ))}
+                            </div>
+                          </section>
+                        ))}
+                      </div>
+                    ) : (
+                      <p className="rounded-2xl border border-dashed border-slate-300 px-3 py-3 text-sm text-slate-500">
+                        No saved places yet.
+                      </p>
+                    )}
+                  </div>
+                ) : activeLocation.city || visibleIntroCopyDisplay ? (
+                  <div className={`${isCategoryInsightMode ? "mt-1" : "mt-2"}`}>
+                    {visibleIntroCopyDisplay ? (
+                      <div
+                        className={`overflow-hidden transition-[max-height,opacity,transform] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] ${
+                          isCategoryInsightMode
+                            ? "max-h-0 -translate-y-2 opacity-0"
+                            : "max-h-40 translate-y-0 opacity-100"
+                        }`}
+                        aria-hidden={isCategoryInsightMode}
+                      >
+                        <p
+                          className={`ml-3 min-h-[9rem] border-l pl-3 text-sm leading-5 ${
+                            activeDestinationImage
+                              ? "border-white/35 text-white drop-shadow-sm"
+                              : "border-slate-200 text-slate-600"
+                          }`}
+                        >
+                          {descriptionNeighborhoodMentions.length
+                            ? renderNeighborhoodMentionText(
+                                visibleIntroCopyDisplay,
+                                descriptionNeighborhoodMentions,
+                                "mobile-info-intro-description",
+                              )
+                            : visibleIntroCopyDisplay}
+                        </p>
+                      </div>
+                    ) : null}
+                    {!expandedGuide ? (
+                      <div
+                        className={`${
+                          isCategoryInsightMode ? "mt-0 -translate-y-0.5" : "mt-3 translate-y-0"
+                        } flex items-center gap-2 transition-[margin,transform] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)]`}
+                      >
+                        {activeStayBookingHref ? (
+                          <div className="inline-flex h-9 overflow-hidden rounded-full border border-cyan-600/45 bg-white shadow-sm">
+                            <button
+                              type="button"
+                              onClick={handleStayCategoryFilter}
+                              className={`inline-flex h-9 w-9 items-center justify-center transition ${
+                                activeCategory === "Stay"
+                                  ? "bg-cyan-700 text-white"
+                                  : "text-cyan-700 hover:bg-cyan-50"
+                              }`}
+                              aria-label={`Show stays in ${activeSeoPlaceLabel}`}
+                              aria-pressed={activeCategory === "Stay"}
+                              title="Show stays"
+                            >
+                              <BedDouble className="h-3.5 w-3.5" />
+                            </button>
+                            <a
+                              href={activeStayBookingHref}
+                              target="_blank"
+                              rel="noreferrer sponsored"
+                              className="inline-flex h-9 items-center gap-1 border-l border-cyan-600/25 px-2.5 text-[11px] font-semibold uppercase tracking-[0.12em] text-cyan-800 transition hover:bg-cyan-50 hover:text-cyan-950"
+                              aria-label={`Search stays in ${activeStayBookingQuery}`}
+                              title={`Book stays in ${activeStayBookingQuery}`}
+                            >
+                              <span>Book</span>
+                              <SquareArrowOutUpRight className="h-3 w-3" aria-hidden="true" />
+                            </a>
+                          </div>
+                        ) : null}
+                        <div className="ml-auto flex items-center gap-2">
+                          {activeFavoriteLocation ? (
+                            <button
+                              type="button"
+                              onClick={() => toggleFavoriteLocation(activeFavoriteLocation)}
+                              className={`inline-flex h-9 w-9 items-center justify-center rounded-full border bg-black/25 shadow-sm transition ${
+                                isActiveLocationFavorited
+                                  ? "border-teal-200/85 text-teal-50"
+                                  : "border-white/34 text-white hover:border-white/52 hover:bg-black/34"
+                              }`}
+                              aria-label={`${isActiveLocationFavorited ? "Remove" : "Save"} ${activeSeoPlaceLabel} ${isActiveLocationFavorited ? "from" : "to"} saved places`}
+                              title={isActiveLocationFavorited ? "Remove saved place" : "Save place"}
+                            >
+                              <Bookmark className={`h-3.5 w-3.5 ${isActiveLocationFavorited ? "fill-current" : ""}`} />
+                            </button>
+                          ) : null}
+                          {activeLocation.city ? (
+                            <button
+                              type="button"
+                              className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-white/34 bg-black/25 text-white shadow-sm transition hover:border-white/52 hover:bg-black/34"
+                              aria-label={`Tour ${activeSeoPlaceLabel}`}
+                              title="Neighborhood tour coming soon"
+                            >
+                              <Footprints className="h-3.5 w-3.5" />
+                            </button>
+                          ) : null}
+                        </div>
+                      </div>
+                    ) : null}
+                    {!expandedGuide && displayCategoryInsight ? (
+                      <div
+                        className={`${
+                          isCategoryInsightExiting ? "category-insight-draw-out" : "category-insight-draw-in"
+                        } mt-2 rounded-[10px] border p-3 ${
+                          activeDestinationImage
+                            ? "border-white/18 bg-black/24 text-white shadow-[0_12px_34px_rgba(0,0,0,0.18)]"
+                            : "border-slate-200/80 bg-white/75 text-slate-800 shadow-sm"
+                        }`}
+                      >
+                        <div className="mb-2 flex items-center gap-2">
+                          <span
+                            className="h-2 w-2 rounded-full"
+                            style={{ backgroundColor: CATEGORY_STYLES[displayCategoryInsight.category].mapColor }}
+                            aria-hidden="true"
+                          />
+                          <p
+                            className={`text-[10px] font-semibold uppercase tracking-[0.2em] ${
+                              activeDestinationImage ? "text-white/58" : "text-slate-500"
+                            }`}
+                          >
+                            {displayCategoryInsight.label}
+                          </p>
+                        </div>
+                        <div className="flex flex-wrap gap-1.5">
+                          {displayCategoryInsight.chips.map((chip) => {
+                            const isFoodCuisineChip =
+                              displayCategoryInsight.category === "Food" &&
+                              activeFoodCuisineOptions.some((option) => option.toLowerCase() === chip.toLowerCase());
+                            const isSubcategoryChip = displayCategoryInsight.category !== "Food";
+                            const isActiveCuisine =
+                              isFoodCuisineChip && activeFoodCuisine.toLowerCase() === chip.toLowerCase();
+                            const isActiveSubcategory =
+                              isSubcategoryChip && activeSubcategory?.toLowerCase() === chip.toLowerCase();
+                            const isActiveChip = isActiveCuisine || isActiveSubcategory;
+                            const isFilterChip = isFoodCuisineChip || isSubcategoryChip;
+
+                            return (
+                              <button
+                                key={`mobile-info-chip-${chip}`}
+                                type="button"
+                                onClick={() => handleCategoryInsightChipSelect(chip)}
+                                disabled={!isFilterChip}
+                                className={`rounded-full border px-2 py-1 text-[11px] font-semibold leading-none transition ${
+                                  isFilterChip ? "cursor-pointer hover:-translate-y-0.5" : "cursor-default"
+                                }`}
+                                style={{
+                                  backgroundColor: isActiveChip
+                                    ? CATEGORY_STYLES[displayCategoryInsight.category].mapColor
+                                    : `${CATEGORY_STYLES[displayCategoryInsight.category].mapColor}24`,
+                                  borderColor: isActiveChip
+                                    ? CATEGORY_STYLES[displayCategoryInsight.category].mapColor
+                                    : `${CATEGORY_STYLES[displayCategoryInsight.category].mapColor}33`,
+                                  color: isActiveChip || activeDestinationImage
+                                    ? "rgba(255,255,255,0.92)"
+                                    : CATEGORY_STYLES[displayCategoryInsight.category].mapColor,
+                                }}
+                                aria-pressed={isActiveChip}
+                              >
+                                {chip}
+                              </button>
+                            );
+                          })}
+                        </div>
+                        <div className="mt-2 space-y-1.5">
+                          {displayCategoryInsight.category === "Food" && activeFoodCuisine !== FOOD_CUISINE_ANY ? (
+                            <p
+                              className={`text-[10px] font-semibold uppercase tracking-[0.18em] ${
+                                activeDestinationImage ? "text-white/54" : "text-slate-500"
+                              }`}
+                            >
+                              {activeFoodCuisine} need to knows
+                            </p>
+                          ) : null}
+                          {displayCategoryInsightNotes.map((note, noteIndex) => {
+                            const noteMentions = getCategoryInsightNoteNeighborhoodMentions(note.body);
+
+                            return (
+                              <div
+                                key={`mobile-info-${note.label ?? displayCategoryInsight.label}-${note.body}`}
+                                className={`border-l pl-2 text-[12px] leading-5 ${
+                                  activeDestinationImage
+                                    ? "border-white/24 text-white/76"
+                                    : "border-slate-200 text-slate-600"
+                                }`}
+                              >
+                                {note.label ? (
+                                  <span
+                                    className="mr-1.5 font-semibold uppercase tracking-[0.12em]"
+                                    style={{
+                                      color: activeDestinationImage
+                                        ? "rgba(255,255,255,0.92)"
+                                        : CATEGORY_STYLES[displayCategoryInsight.category].mapColor,
+                                    }}
+                                  >
+                                    {note.label}
+                                  </span>
+                                ) : null}
+                                <span>
+                                  {renderNeighborhoodMentionText(
+                                    note.body,
+                                    noteMentions,
+                                    `mobile-info-category-insight-${noteIndex}`,
+                                  )}
+                                </span>
+                              </div>
+                            );
+                          })}
+                        </div>
+                      </div>
+                    ) : !expandedGuide && cityHighlightRows.length && !isCategoryInsightExiting ? (
+                      <div className="city-summary-draw-in mt-3 space-y-1.5 overflow-hidden text-sm leading-5">
+                        {cityHighlightRows.map((row) => {
+                          const isActiveRow = activeCategory === row.category;
+                          const rowColor = getLightCategoryTextColor(row.category, 0.48);
+                          const contentColor = getLightCategoryTextColor(row.category, 0.68);
+
+                          return (
+                            <div
+                              key={`mobile-info-${row.label}-${row.category}`}
+                              className="flex min-w-0 items-center gap-1.5 whitespace-nowrap"
+                            >
+                              <button
+                                type="button"
+                                onClick={() => handleCategoryToggle(row.category)}
+                                className="shrink-0 font-semibold transition hover:underline"
+                                style={{ color: rowColor }}
+                                aria-pressed={isActiveRow}
+                                aria-label={`Filter ${activeSeoPlaceLabel} guides by ${row.label}`}
+                              >
+                                {row.label}
+                              </button>
+                              <span className="shrink-0" style={{ color: contentColor }}>: </span>
+                              <span className="min-w-0 flex-1 truncate" style={{ color: contentColor }}>
+                                {row.items.map((item, index) => (
+                                  <span key={`mobile-info-highlight-${item.guide.id}-${item.label}`}>
+                                    {index > 0 ? <span>, </span> : null}
+                                    <button
+                                      type="button"
+                                      onClick={() => {
+                                        setIsMobileInfoModalOpen(false);
+                                        handleCityHighlightGuideSelect(item.guide);
+                                      }}
+                                      className="font-medium transition hover:underline"
+                                      style={{ color: contentColor }}
+                                      title={item.guide.title}
+                                    >
+                                      {item.label}
+                                    </button>
+                                  </span>
+                                ))}
+                              </span>
+                            </div>
+                          );
+                        })}
+                      </div>
+                    ) : null}
+                  </div>
+                ) : null}
+              </div>
+
+              {!isSavedPlacesRailActive ? (
+                <div className="min-h-0 flex-1 overflow-y-auto px-4 pb-4">
+                  {isCitySelection ? (
+                    <div className="flex min-h-0 flex-col">
+                      <div className="mb-2 shrink-0 flex items-center justify-between">
+                        <p className="text-sm font-semibold text-slate-700">
+                          {cityUsesNestedDistricts && activeLocation.subarea && activeNestedCitySubareas.length
+                            ? "Neighborhoods"
+                            : cityUsesNestedDistricts
+                              ? "Boroughs"
+                              : "Neighborhoods"}
+                        </p>
+                      </div>
+                      {rankedCityListItems.length ? (
+                        <div className="space-y-2">
+                          {rankedCityListItems.map((item) => {
+                            const isSelected = (item.isNested ? selection.nestedSubareaId : selection.subareaId) === item.id;
+                            const isDescriptionHovered = hoveredDescriptionNeighborhoodId === item.id;
+                            const strengthStars = activeCategory ? item.categoryStrengthStars : 0;
+
+                            return (
+                              <button
+                                key={`mobile-info-directory-${item.id}`}
+                                type="button"
+                                title={item.name}
+                                className={`group relative flex w-full items-center gap-2 overflow-hidden rounded-2xl border border-transparent px-3 py-2 text-left text-sm transition ${
+                                  isSelected || isDescriptionHovered
+                                    ? "text-white"
+                                    : "border-transparent text-slate-200 hover:text-white"
+                                }`}
+                                onClick={() => {
+                                  setIsMobileInfoModalOpen(false);
+                                  if (item.isNested) {
+                                    handleSelectNestedSubarea(
+                                      activeLocation.continent!.id,
+                                      activeLocation.country!.id,
+                                      activeLocation.city!.id,
+                                      activeLocation.subarea!.id,
+                                      item.id,
+                                    );
+                                    return;
+                                  }
+                                  handleSelectSubarea(
+                                    activeLocation.continent!.id,
+                                    activeLocation.country!.id,
+                                    activeLocation.city!.id,
+                                    item.id,
+                                  );
+                                }}
+                              >
+                                {isSelected ? (
+                                  <span
+                                    className="pointer-events-none absolute inset-0 overflow-hidden rounded-2xl"
+                                    aria-hidden="true"
+                                  >
+                                    <span className="neighborhood-selection-swipe absolute inset-0 rounded-2xl border border-white/80" />
+                                  </span>
+                                ) : null}
+                                <span className="relative h-4 w-4 shrink-0" aria-hidden="true">
+                                  <MapPin
+                                    className={`absolute inset-0 h-4 w-4 text-red-500 transition-colors ${
+                                      isSelected || isDescriptionHovered ? "fill-red-500" : "fill-transparent group-hover:fill-red-500"
+                                    }`}
+                                  />
+                                  <span
+                                    className={`absolute left-1/2 top-[4px] h-1.5 w-1.5 -translate-x-1/2 rounded-full bg-[#1a1a1a] transition-opacity ${
+                                      isSelected || isDescriptionHovered ? "opacity-100" : "opacity-0 group-hover:opacity-100"
+                                    }`}
+                                  />
+                                </span>
+                                <span className="min-w-0 flex-1 truncate">
+                                  {formatBreadcrumbName(item.name)}
+                                </span>
+                                {strengthStars ? (
+                                  <span
+                                    className="relative ml-auto flex shrink-0 items-center gap-0.5"
+                                    aria-label={`${strengthStars} ${strengthStars === 1 ? "star" : "stars"} for ${activeCategory}`}
+                                    title={`${activeCategory} strength: ${strengthStars}/3`}
+                                    style={{ color: CATEGORY_STYLES[activeCategory!].mapColor }}
+                                  >
+                                    {Array.from({ length: strengthStars }).map((_, index) => (
+                                      <Star key={`mobile-info-${item.id}-strength-${index}`} className="h-3 w-3 fill-current" />
+                                    ))}
+                                  </span>
+                                ) : null}
+                              </button>
+                            );
+                          })}
+                        </div>
+                      ) : (
+                        <p className="px-3 py-2 text-sm text-slate-500">No neighborhoods available yet.</p>
+                      )}
+                    </div>
+                  ) : activeLocation.country && hasDirectoryChips ? (
+                    <div className="space-y-3">
+                      {showCountryFilterToggle ? (
+                        <div className="flex items-center gap-2">
+                          <button
+                            type="button"
+                            onClick={() => setCountryBrowseView("cities")}
+                            className={darkPanePillClass(countryBrowseView === "cities", "xs")}
+                          >
+                            Cities
+                          </button>
+                          <button
+                            type="button"
+                            onClick={() => setCountryBrowseView("regions")}
+                            disabled={!activeCountrySubareas.length}
+                            className={`${darkPanePillClass(countryBrowseView === "regions", "xs")} ${
+                              activeCountrySubareas.length ? "" : "cursor-not-allowed opacity-45"
+                            }`}
+                          >
+                            Regions
+                          </button>
+                        </div>
+                      ) : null}
+                      <p className="text-[11px] font-medium uppercase tracking-[0.2em] text-[rgba(255,255,255,0.48)]">
+                        {showCountryFilterToggle
+                          ? displayCountryRegions
+                            ? "Regions"
+                            : "Cities"
+                          : showCountrySubareas
+                            ? "Regions"
+                          : showCountryStates
+                            ? countryStateLabel
+                          : activeLocation.state
+                            ? "Cities"
+                          : "Cities"}
+                      </p>
+                      <div className="flex flex-wrap gap-2">
+                        {showCountryFilterToggle && displayCountryRegions
+                          ? activeCountrySubareas.map((subarea) => (
+                              <button
+                                key={`mobile-info-region-${subarea.id}`}
+                                type="button"
+                                title={subarea.name}
+                                onClick={() => {
+                                  setIsMobileInfoModalOpen(false);
+                                  handleSelectCountrySubarea(
+                                    activeLocation.continent!.id,
+                                    activeLocation.country!.id,
+                                    subarea.id,
+                                  );
+                                }}
+                                className={darkPanePillClass(selection.subareaId === subarea.id)}
+                              >
+                                {formatBreadcrumbName(subarea.name)}
+                              </button>
+                            ))
+                          : showCountryFilterToggle
+                            ? activeCountryCities.map((city) => (
+                                <button
+                                  key={`mobile-info-country-city-${city.id}`}
+                                  type="button"
+                                  onClick={(event) => {
+                                    setIsMobileInfoModalOpen(false);
+                                    handleSelectCityFromList(
+                                      activeLocation.continent!.id,
+                                      activeLocation.country!.id,
+                                      city.id,
+                                      event.currentTarget,
+                                    );
+                                  }}
+                                  className={darkPanePillClass(selection.cityId === city.id)}
+                                >
+                                  <span data-morph-origin="label" className="inline-block">
+                                    {city.name}
+                                  </span>
+                                </button>
+                              ))
+                          : showCountrySubareas
+                            ? activeCountrySubareas.map((subarea) => (
+                                <button
+                                  key={`mobile-info-country-subarea-${subarea.id}`}
+                                  type="button"
+                                  title={subarea.name}
+                                  onClick={() => {
+                                    setIsMobileInfoModalOpen(false);
+                                    handleSelectCountrySubarea(
+                                      activeLocation.continent!.id,
+                                      activeLocation.country!.id,
+                                      subarea.id,
+                                    );
+                                  }}
+                                  className={darkPanePillClass(selection.subareaId === subarea.id)}
+                                >
+                                  {formatBreadcrumbName(subarea.name)}
+                                </button>
+                              ))
+                            : showCountryStates
+                              ? activeCountryStates.map((state) => (
+                                  <button
+                                    key={`mobile-info-state-${state.id}`}
+                                    type="button"
+                                    onClick={(event) => {
+                                      setIsMobileInfoModalOpen(false);
+                                      handleSelectStateFromCountryList(
+                                        activeLocation.continent!.id,
+                                        activeLocation.country!.id,
+                                        state.countrySubareaId,
+                                        state.id,
+                                        event.currentTarget,
+                                      );
+                                    }}
+                                    className={darkPanePillClass(selection.stateId === state.id)}
+                                  >
+                                    <span data-morph-origin="label" className="inline-block">
+                                      {state.name}
+                                    </span>
+                                  </button>
+                                ))
+                              : activeCountryCities.map((city) => (
+                                  <button
+                                    key={`mobile-info-city-${city.id}`}
+                                    type="button"
+                                    onClick={(event) => {
+                                      setIsMobileInfoModalOpen(false);
+                                      handleSelectCityFromList(
+                                        activeLocation.continent!.id,
+                                        activeLocation.country!.id,
+                                        city.id,
+                                        event.currentTarget,
+                                      );
+                                    }}
+                                    className={darkPanePillClass(selection.cityId === city.id)}
+                                  >
+                                    <span data-morph-origin="label" className="inline-block">
+                                      {city.name}
+                                    </span>
+                                  </button>
+                                ))}
+                      </div>
+                    </div>
+                  ) : activeLocation.continent ? (
+                    <div className="space-y-3">
+                      <p className="text-[11px] font-medium uppercase tracking-[0.2em] text-[rgba(255,255,255,0.48)]">
+                        Countries
+                      </p>
+                      <div className="flex flex-wrap gap-2">
+                        {activeLocation.continent.countries
+                          .slice()
+                          .sort((left, right) => left.name.localeCompare(right.name))
+                          .map((country) => (
+                            <button
+                              key={`mobile-info-country-${country.id}`}
+                              type="button"
+                              onClick={() => {
+                                setIsMobileInfoModalOpen(false);
+                                handleSelectCountry(activeLocation.continent!.id, country.id);
+                              }}
+                              className={darkPanePillClass(selection.countryId === country.id)}
+                            >
+                              {country.name}
+                            </button>
+                          ))}
+                      </div>
+                    </div>
+                  ) : null}
+                </div>
+              ) : null}
+            </div>
+          </div>
+        </div>
+      ) : null}
       {isProfileCreateModalOpen ? (
         <div
           className="fixed inset-0 z-[500] flex items-center justify-center bg-slate-950/55 px-4 backdrop-blur-sm"
