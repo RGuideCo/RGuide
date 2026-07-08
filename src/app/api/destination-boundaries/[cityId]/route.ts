@@ -3,6 +3,7 @@ import pg from "pg";
 import type { Feature, FeatureCollection, Geometry } from "geojson";
 
 import londonBoundaries from "@/data/boundaries/london.json";
+import tokyoBoundaries from "@/data/boundaries/tokyo.json";
 import type { NeighborhoodBoundaryProperties } from "@/data/boundary-loaders";
 
 export const revalidate = 86400;
@@ -45,13 +46,19 @@ function isPolygonFeature(
 }
 
 function localFallbackCollection(cityId: string): FeatureCollection<Geometry, NeighborhoodBoundaryProperties> {
-  if (cityId !== "london") {
+  const localBoundaryMaps: Record<string, Record<string, unknown>> = {
+    london: londonBoundaries as Record<string, unknown>,
+    tokyo: tokyoBoundaries as Record<string, unknown>,
+  };
+  const boundaryMap = localBoundaryMaps[cityId];
+
+  if (!boundaryMap) {
     return emptyCollection();
   }
 
   return {
     type: "FeatureCollection",
-    features: Object.values(londonBoundaries as Record<string, unknown>).filter(isPolygonFeature),
+    features: Object.values(boundaryMap).filter(isPolygonFeature),
   };
 }
 

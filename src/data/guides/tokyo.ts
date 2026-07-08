@@ -6913,7 +6913,7 @@ const asakusaNightlifeStops = [
 
 const hoppyStreetIzakayaStops = [
   neighborhoodNightlifeStop("tokyo-hoppy-street-izakaya-shochan", "Shochan", [35.71446855870375, 139.79417375470072], "Shochan is the first Hoppy Street pick when the goal is old Asakusa rather than a generic pub: a small, no-reservation beef-nikomi room with terrace seats on good-weather days and a Tabelog 100 izakaya selection in its history. Go early, expect a compact stay, and treat the weather note seriously because the shop operates partly like an open-front stall.", {
-    nightlifeType: "izakaya",
+    nightlifeType: "pub",
     musicGenres: ["none"],
     price: "$",
     attributeTags: ["hoppy_street", "nikomi", "classic", "small_room", "day_drinking"],
@@ -6923,7 +6923,7 @@ const hoppyStreetIzakayaStops = [
     editorialUrls: ["https://www.google.com/maps/search/?api=1&query=Shochan%20Asakusa%20Tokyo"],
   }),
   neighborhoodNightlifeStop("tokyo-hoppy-street-izakaya-suzuyoshi", "Suzuyoshi", [35.71364880870426, 139.79415665469244], "Suzuyoshi is a Hoppy Street classic for beef tendon, motsu, grilled tripe, and fresh hoppy energy, with enough seats to feel more like a full tavern than a squeeze-in counter. The no-solo and no-weekend-reservation notes matter, so use it for a small group that wants the street's rhythm without needing a late-night plan.", {
-    nightlifeType: "izakaya",
+    nightlifeType: "pub",
     musicGenres: ["none"],
     price: "$$",
     attributeTags: ["hoppy_street", "motsu", "fresh_hoppy", "group_friendly", "day_drinking"],
@@ -6933,7 +6933,7 @@ const hoppyStreetIzakayaStops = [
     editorialUrls: ["https://www.google.com/maps/search/?api=1&query=Suzuyoshi%20Asakusa%20Tokyo"],
   }),
   neighborhoodNightlifeStop("tokyo-hoppy-street-izakaya-motsukushi", "Motsukushi", [35.71336063789915, 139.79440088352757], "Motsukushi is the practical motsu-heavy stop on the lane: long daily hours, weekend morning openings, and a menu built for stew, skewers, and rounds of hoppy. It earns a place because it can carry either a daylight snack-and-drink stop or a fuller casual dinner when the older tiny rooms are full.", {
-    nightlifeType: "izakaya",
+    nightlifeType: "pub",
     musicGenres: ["none"],
     price: "$",
     attributeTags: ["hoppy_street", "motsu", "skewers", "long_hours", "casual"],
@@ -6943,7 +6943,7 @@ const hoppyStreetIzakayaStops = [
     editorialUrls: ["https://www.google.com/maps/search/?api=1&query=Motsukushi%20Asakusa%20Tokyo"],
   }),
   neighborhoodNightlifeStop("tokyo-hoppy-street-izakaya-okamoto-dori", "Asakusa Sakaba Okamoto Hoppy-dori", [35.71279092894594, 139.7942377659097], "Okamoto's Hoppy-dori branch is the big, easy, Showa-leaning stop: long hours, 100 seats, terrace energy, beef tendon motsu stew, spicy horumon, and enough structure for groups who do not want to gamble on a tiny counter. It is not the quietest pick, but it is the street's most useful anchor.", {
-    nightlifeType: "izakaya",
+    nightlifeType: "pub",
     musicGenres: ["none"],
     price: "$",
     attributeTags: ["hoppy_street", "nikomi", "terrace", "group_friendly", "showa"],
@@ -6953,7 +6953,7 @@ const hoppyStreetIzakayaStops = [
     editorialUrls: ["http://www.hoppy-st.com/okamoto/", "https://www.google.com/maps/search/?api=1&query=Asakusa%20Sakaba%20Okamoto%20Hoppy%20Street%20Tokyo"],
   }),
   neighborhoodNightlifeStop("tokyo-hoppy-street-izakaya-tonpei", "Tonpei", [35.71350195870443, 139.79439441469077], "Tonpei is a strong middle-ground Hoppy Street stop: classic izakaya hours, weekend late-morning opening, Wednesday closure, and the kind of straightforward counter-and-table setup that works for skewers, stew, and a second round. Use it when Shochan or Suzuyoshi is too tight but you still want the old lane.", {
-    nightlifeType: "izakaya",
+    nightlifeType: "pub",
     musicGenres: ["none"],
     price: "$",
     attributeTags: ["hoppy_street", "classic", "skewers", "day_drinking", "walk_in_friendly_nightlife"],
@@ -6963,7 +6963,7 @@ const hoppyStreetIzakayaStops = [
     editorialUrls: ["https://www.google.com/maps/search/?api=1&query=Tonpei%20Asakusa%20Tokyo"],
   }),
   neighborhoodNightlifeStop("tokyo-hoppy-street-izakaya-okamoto-honten", "Okamoto Asakusa Honten", [35.71367213789887, 139.7941760835309], "Okamoto Honten keeps the nikomi-and-hoppy story closer to a neighborhood original than the larger branch, with daily service and weekend 10 AM openings that suit Asakusa's daytime drinking pattern. Put it in the crawl when you want the Okamoto flavor but not necessarily the biggest room.", {
-    nightlifeType: "izakaya",
+    nightlifeType: "pub",
     musicGenres: ["none"],
     price: "$",
     attributeTags: ["hoppy_street", "nikomi", "classic", "day_drinking", "asakusa"],
@@ -6973,7 +6973,7 @@ const hoppyStreetIzakayaStops = [
     editorialUrls: ["https://www.google.com/maps/search/?api=1&query=Okamoto%20Asakusa%20Honten%20Tokyo"],
   }),
   neighborhoodNightlifeStop("tokyo-hoppy-street-izakaya-sanchan", "Asakusa Sanchan Yokocho Hoppy-dori", [35.7134252187044, 139.7941288946902], "Sanchan Yokocho is the flexible Hoppy-dori pick for groups who want late-enough hours, clear last orders, and a less precious version of the lane. It is not as storied as Shochan or Suzuyoshi, but it is useful when the crawl needs capacity and direct Hoppy Street placement.", {
-    nightlifeType: "izakaya",
+    nightlifeType: "pub",
     musicGenres: ["none"],
     price: "$",
     attributeTags: ["hoppy_street", "group_friendly", "late_evening", "casual", "walk_in_friendly_nightlife"],
@@ -6983,7 +6983,7 @@ const hoppyStreetIzakayaStops = [
     editorialUrls: ["https://www.google.com/maps/search/?api=1&query=Asakusa%20Sanchan%20Yokocho%20Hoppy%20Dori%20Tokyo"],
   }),
   neighborhoodNightlifeStop("tokyo-hoppy-street-izakaya-yamaka", "Sakaba Yamakashoten", [35.71304683789938, 139.7944420835244], "Sakaba Yamakashoten is the Yamaka swap that improves the bottom of the guide: a Hoppy Street izakaya with a stronger current Tabelog score, daily 10 AM-11 PM hours, and a tight address right on the drinking lane. It is best when the crawl needs a reliable all-day tavern for hoppy, stew, and quick shared plates rather than another filler stop.", {
-    nightlifeType: "izakaya",
+    nightlifeType: "pub",
     musicGenres: ["none"],
     price: "$",
     attributeTags: ["hoppy_street", "daily_hours", "casual", "group_friendly", "walkable"],
@@ -6993,7 +6993,7 @@ const hoppyStreetIzakayaStops = [
     editorialUrls: ["https://www.google.com/maps/search/?api=1&query=Sakaba%20Yamakashoten%20Asakusa%20Tokyo"],
   }),
   neighborhoodNightlifeStop("tokyo-hoppy-street-izakaya-ricchan", "Taishu Sakaba Ricchan Hoppy-dori", [35.71293913789929, 139.79396228352363], "Ricchan is the late-useful Hoppy-dori choice, opening later on weekdays and running past midnight on the current listing. Keep it near the end of a crawl when the classic daytime rooms have already made their point and the group still wants one more casual round.", {
-    nightlifeType: "izakaya",
+    nightlifeType: "pub",
     musicGenres: ["none"],
     price: "$",
     attributeTags: ["hoppy_street", "late_evening", "casual", "group_friendly", "last_stop"],
