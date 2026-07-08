@@ -1,6 +1,6 @@
 "use client";
 
-import { Eye, EyeOff, X } from "lucide-react";
+import { Eye, EyeOff, X } from "@/components/icons/MaterialSymbol";
 import { FormEvent, useEffect, useState } from "react";
 
 import { getSupabaseBrowserClient } from "@/lib/supabase/client";

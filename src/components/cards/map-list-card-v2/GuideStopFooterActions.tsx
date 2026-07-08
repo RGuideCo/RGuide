@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { BedDouble, CalendarCheck, Clock3, ExternalLink, Navigation } from "lucide-react";
+import { BedDouble, CalendarCheck, Clock3, ExternalLink, Navigation } from "@/components/icons/MaterialSymbol";
 
 import type { GuideStopItem } from "./types";
 

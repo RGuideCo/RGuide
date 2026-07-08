@@ -1,6 +1,6 @@
 "use client";
 
-import { ChevronDown } from "lucide-react";
+import { ChevronDown } from "@/components/icons/MaterialSymbol";
 
 import type { GuideCardChromeProps, GuideCardStyle } from "./types";
 

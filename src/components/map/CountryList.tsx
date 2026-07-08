@@ -1,7 +1,7 @@
 import {
   ChevronRight,
   MapPin,
-} from "lucide-react";
+} from "@/components/icons/MaterialSymbol";
 
 import { StateShapeIcon } from "@/components/map/StateShapeIcon";
 import { cn } from "@/lib/utils";

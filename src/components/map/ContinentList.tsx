@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { MapPin } from "lucide-react";
+import { MapPin } from "@/components/icons/MaterialSymbol";
 
 import { ContinentCard } from "@/components/map/ContinentCard";
 import { CountryFlag } from "@/components/map/CountryFlag";

@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { Search, UserRound, X } from "lucide-react";
+import { Search, UserRound, X } from "@/components/icons/MaterialSymbol";
 import { useEffect, useRef, useState } from "react";
 
 import { SearchBar } from "@/components/shared/SearchBar";

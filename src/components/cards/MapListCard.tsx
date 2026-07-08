@@ -5,7 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { createPortal } from "react-dom";
-import { Check, ChevronDown, GripVertical, Heart, Minus, Plus, Trash2, Upload, X } from "lucide-react";
+import { Check, ChevronDown, GripVertical, Heart, Minus, Plus, Trash2, Upload, X } from "@/components/icons/MaterialSymbol";
 
 import { getPoiAttributeTags } from "@/lib/poi-tags";
 import { getCreatorHref, getGuideHref, getVenueHref } from "@/lib/routes";

@@ -4,7 +4,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import type { Feature, FeatureCollection, Geometry, LineString, Point } from "geojson";
 import type { ExpressionSpecification } from "@maplibre/maplibre-gl-style-spec";
 import maplibregl, { GeoJSONSource, LngLatBounds } from "maplibre-gl";
-import { LocateFixed } from "lucide-react";
+import { LocateFixed } from "@/components/icons/MaterialSymbol";
 
 import { mapLists } from "@/data/lists";
 import {

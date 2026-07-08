@@ -4,33 +4,37 @@ import {
   BedDouble,
   Bookmark,
   Building2,
-  CalendarDays,
   Camera,
   ChevronDown,
   ChevronRight,
   CloudSun,
   Flag,
   Globe2,
-  Heart,
   Footprints,
-  Info,
   Lock,
   LogOut,
   Map as MapIcon,
   MapPin,
   Plus,
-  Route,
   Search,
   SquareArrowOutUpRight,
   Star,
   UserRound,
   X,
-} from "lucide-react";
+} from "@/components/icons/MaterialSymbol";
 import Link from "next/link";
 import { startTransition, useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 import type { PointerEvent as ReactPointerEvent, ReactNode } from "react";
 
 import { MapListCard } from "@/components/cards/MapListCard";
+import {
+  MaterialCalendarMonth,
+  MaterialFavorite,
+  MaterialInfo,
+  MaterialMap,
+  MaterialPerson,
+  MaterialRoute,
+} from "@/components/icons/MaterialSymbol";
 import { SubmitListForm } from "@/components/list/SubmitListForm";
 import { ContinentList } from "@/components/map/ContinentList";
 import { InteractiveMap } from "@/components/map/InteractiveMap";
@@ -3277,16 +3281,16 @@ export function SplitScreenSection({
   const guideSourceSelectors = [
     { id: "all-guides" as const, label: "All guides", shortLabel: "All", icon: null },
     { id: "r-guides" as const, label: "R guides", shortLabel: "R", icon: null },
-    { id: "user-guides" as const, label: "User guides", shortLabel: "User", icon: UserRound },
-    { id: "favorites" as const, label: "Favorites", shortLabel: "Fav", icon: Heart },
+    { id: "user-guides" as const, label: "User guides", shortLabel: "User", icon: MaterialPerson },
+    { id: "favorites" as const, label: "Favorites", shortLabel: "Fav", icon: MaterialFavorite },
   ];
   const visibleGuideSourceSelectors = isProfileMode
     ? guideSourceSelectors.filter((selector) => selector.id !== "r-guides")
     : guideSourceSelectors;
   const guideActionSelectors = [
-    { id: "all-guides" as const, label: "Guides", shortLabel: "Guide", icon: MapIcon },
-    { id: "week-events" as const, label: "Events", shortLabel: "Events", icon: CalendarDays },
-    { id: "itinerary" as const, label: "Journeys", shortLabel: "Journey", icon: Route },
+    { id: "all-guides" as const, label: "Guides", shortLabel: "Guide", icon: MaterialMap },
+    { id: "week-events" as const, label: "Events", shortLabel: "Events", icon: MaterialCalendarMonth },
+    { id: "itinerary" as const, label: "Journeys", shortLabel: "Journey", icon: MaterialRoute },
   ];
   const visibleGuideActionSelectors = guideActionSelectors;
   const guideActionActiveStyles = {
@@ -5519,9 +5523,9 @@ export function SplitScreenSection({
       })) ?? []),
     ]) ?? [];
   const profileCreateTypeOptions = [
-    { id: "guide" as const, label: "Guide", icon: MapIcon },
-    { id: "itinerary" as const, label: "Journey", icon: Route },
-    { id: "event" as const, label: "Event", icon: CalendarDays },
+    { id: "guide" as const, label: "Guide", icon: MaterialMap },
+    { id: "itinerary" as const, label: "Journey", icon: MaterialRoute },
+    { id: "event" as const, label: "Event", icon: MaterialCalendarMonth },
   ];
 
   return (
@@ -5949,7 +5953,7 @@ export function SplitScreenSection({
                   aria-label={`Open ${visibleSeoHeading} information`}
                   title="Info"
                 >
-                  <Info className="h-3.5 w-3.5" />
+                  <MaterialInfo className="h-3.5 w-3.5" />
                 </button>
               </div>
 	              <div

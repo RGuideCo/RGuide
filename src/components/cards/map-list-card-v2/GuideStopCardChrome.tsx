@@ -1,7 +1,7 @@
 "use client";
 
 import type { DragEvent, ReactNode } from "react";
-import { ChevronDown, Plus } from "lucide-react";
+import { ChevronDown, Plus } from "@/components/icons/MaterialSymbol";
 
 import { CATEGORY_STYLES } from "@/lib/constants";
 import type { ListCategory } from "@/types";

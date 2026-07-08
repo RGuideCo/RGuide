@@ -1,4 +1,4 @@
-import { ChevronDown } from "lucide-react";
+import { ChevronDown } from "@/components/icons/MaterialSymbol";
 import { useRef, useState } from "react";
 import type { ReactNode } from "react";
 

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { MapPin } from "lucide-react";
+import { MapPin } from "@/components/icons/MaterialSymbol";
 
 import { cn } from "@/lib/utils";
 

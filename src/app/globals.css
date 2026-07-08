@@ -414,6 +414,25 @@ textarea:focus-visible {
   box-shadow: inset 0 0 0 999px var(--category-color, rgba(255, 255, 255, 0.8));
 }
 
+.rguide-material-symbol {
+  direction: ltr;
+  font-feature-settings: "liga";
+  -webkit-font-feature-settings: "liga";
+  -webkit-font-smoothing: antialiased;
+  font-style: normal;
+  font-weight: normal;
+  letter-spacing: normal;
+  line-height: 1;
+  text-transform: none;
+  white-space: nowrap;
+  word-wrap: normal;
+}
+
+.group:hover .group-hover\:fill-red-500.rguide-material-symbol,
+.group:focus-visible .group-hover\:fill-red-500.rguide-material-symbol {
+  --rguide-symbol-fill: 1;
+}
+
 .collapsed-guide-card-with-outboard-image {
   position: relative;
   padding-top: 0.55rem;

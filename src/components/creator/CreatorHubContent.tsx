@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
-import { BookOpen, MapPin, Pencil, Plus, Route, Settings, User } from "lucide-react";
+import { BookOpen, MapPin, Pencil, Plus, Route, Settings, User } from "@/components/icons/MaterialSymbol";
 
 import { MapListCard } from "@/components/cards/MapListCard";
 import { InteractiveMap } from "@/components/map/InteractiveMap";

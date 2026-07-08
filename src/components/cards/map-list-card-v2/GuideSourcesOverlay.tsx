@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { ChevronDown } from "lucide-react";
+import { ChevronDown } from "@/components/icons/MaterialSymbol";
 
 import type { GuideSource } from "./types";
 import { getVariedGuideSources } from "./utils";

@@ -1,24 +1,24 @@
 import {
-  BadgeInfo,
-  BedDouble,
-  BookOpen,
-  CalendarDays,
-  Flame,
-  Heart,
-  Landmark,
-  LucideIcon,
-  Map as MapIcon,
-  MapPin,
-  MoonStar,
-  Pencil,
-  Road,
-  Route,
-  Settings,
-  Sparkles,
-  Trees,
-  Users,
-  UtensilsCrossed,
-} from "lucide-react";
+  MaterialAccountBalance,
+  MaterialAutoAwesome,
+  MaterialBed,
+  MaterialCalendarMonth,
+  MaterialEditSquare,
+  MaterialFavorite,
+  MaterialInfo,
+  MaterialLocalFireDepartment,
+  MaterialLocationOn,
+  MaterialMap,
+  MaterialMenuBook,
+  MaterialNightlife,
+  MaterialPark,
+  MaterialPerson,
+  MaterialRestaurant,
+  MaterialRoute,
+  MaterialSettings,
+  MaterialSignpost,
+  type MaterialSymbolIcon,
+} from "@/components/icons/MaterialSymbol";
 
 import { CATEGORY_STYLES } from "@/lib/constants";
 import { Continent, ListCategory, MapList, SelectionState } from "@/types";
@@ -34,15 +34,15 @@ export type PlacesBeenEntry = {
   coordinates?: [number, number];
 };
 
-export const categoryOptions: { label: string; category: ListCategory; icon: LucideIcon }[] = [
-  { label: "Food", category: "Food", icon: UtensilsCrossed },
-  { label: "Nightlife", category: "Nightlife", icon: MoonStar },
-  { label: "Culture", category: "Culture", icon: Landmark },
-  { label: "Stay", category: "Stay", icon: BedDouble },
-  { label: "Scenic", category: "Nature", icon: Trees },
-  { label: "Activities", category: "Activities", icon: Sparkles },
-  { label: "Routes", category: "Routes", icon: Road },
-  { label: "Essentials", category: "Essentials", icon: BadgeInfo },
+export const categoryOptions: { label: string; category: ListCategory; icon: MaterialSymbolIcon }[] = [
+  { label: "Food", category: "Food", icon: MaterialRestaurant },
+  { label: "Nightlife", category: "Nightlife", icon: MaterialNightlife },
+  { label: "Culture", category: "Culture", icon: MaterialAccountBalance },
+  { label: "Stay", category: "Stay", icon: MaterialBed },
+  { label: "Scenic", category: "Nature", icon: MaterialPark },
+  { label: "Activities", category: "Activities", icon: MaterialAutoAwesome },
+  { label: "Routes", category: "Routes", icon: MaterialSignpost },
+  { label: "Essentials", category: "Essentials", icon: MaterialInfo },
 ];
 
 export const COUNTRY_INPUT_ALIASES: Record<string, string> = {
@@ -758,14 +758,14 @@ export const REVEAL_DESCRIPTION_MS = 70;
 export const REVEAL_BODY_MS = 140;
 
 export const guideRailOptions = [
-  { id: "all-guides", label: "All Guides", shortLabel: "All", icon: MapIcon },
+  { id: "all-guides", label: "All Guides", shortLabel: "All", icon: MaterialMap },
   { id: "r-guides", label: "R Guides", shortLabel: "R", icon: null },
-  { id: "user-guides", label: "User Guides", shortLabel: "User", icon: Users },
-  { id: "itinerary", label: "Journeys", shortLabel: "Journey", icon: Route },
-  { id: "favorites", label: "Favorites", shortLabel: "Fav", icon: Heart },
-  { id: "trending", label: "Trending", shortLabel: "Trend", icon: Flame },
-  { id: "week-events", label: "This Week", shortLabel: "Week", icon: CalendarDays },
-] as const satisfies { id: string; label: string; shortLabel: string; icon: LucideIcon | null }[];
+  { id: "user-guides", label: "User Guides", shortLabel: "User", icon: MaterialPerson },
+  { id: "itinerary", label: "Journeys", shortLabel: "Journey", icon: MaterialRoute },
+  { id: "favorites", label: "Favorites", shortLabel: "Fav", icon: MaterialFavorite },
+  { id: "trending", label: "Trending", shortLabel: "Trend", icon: MaterialLocalFireDepartment },
+  { id: "week-events", label: "This Week", shortLabel: "Week", icon: MaterialCalendarMonth },
+] as const satisfies { id: string; label: string; shortLabel: string; icon: MaterialSymbolIcon | null }[];
 
 export const guideRailActiveColorById: Record<(typeof guideRailOptions)[number]["id"], string> = {
   "all-guides": "#0f172a",
@@ -784,16 +784,16 @@ export const guideRailFillOnActiveIds = new Set<(typeof guideRailOptions)[number
 ]);
 
 export const profileLeftRailOptions = [
-  { id: "places-been", label: "Places Been", icon: MapPin },
-  { id: "settings", label: "Settings", icon: Settings },
-  { id: "edit-profile", label: "Edit Profile", icon: Pencil },
+  { id: "places-been", label: "Places Been", icon: MaterialLocationOn },
+  { id: "settings", label: "Settings", icon: MaterialSettings },
+  { id: "edit-profile", label: "Edit Profile", icon: MaterialEditSquare },
 ] as const;
 
 export const profileRightRailOptions = [
-  { id: "guides", label: "Guides", icon: MapIcon },
-  { id: "experiences", label: "Experiences", icon: BookOpen },
-  { id: "itineraries", label: "Journeys", icon: Route },
-  { id: "favorites", label: "Favorites", icon: Heart },
+  { id: "guides", label: "Guides", icon: MaterialMap },
+  { id: "experiences", label: "Experiences", icon: MaterialMenuBook },
+  { id: "itineraries", label: "Journeys", icon: MaterialRoute },
+  { id: "favorites", label: "Favorites", icon: MaterialFavorite },
 ] as const;
 
 export const BRIAN_PROFILE_FAVORITES = [

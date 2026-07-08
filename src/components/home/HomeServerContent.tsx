@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import { MapPinned } from "lucide-react";
+import { MapPinned } from "@/components/icons/MaterialSymbol";
 
 import {
   getAllListsForCityRoute,

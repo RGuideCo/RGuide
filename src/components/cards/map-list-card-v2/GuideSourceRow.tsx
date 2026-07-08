@@ -1,6 +1,6 @@
 "use client";
 
-import { ChevronDown } from "lucide-react";
+import { ChevronDown } from "@/components/icons/MaterialSymbol";
 
 import { getSourceSummary, getVariedGuideSources } from "./utils";
 import type { GuideSource } from "./types";

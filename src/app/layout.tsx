@@ -21,6 +21,7 @@ import {
 } from "@/lib/constants";
 import { getAbsoluteHref } from "@/lib/routes";
 
+import "material-symbols/rounded.css";
 import "@/app/globals.css";
 
 const hostGrotesk = Host_Grotesk({

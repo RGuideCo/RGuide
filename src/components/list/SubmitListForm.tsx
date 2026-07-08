@@ -3,7 +3,7 @@
 import { useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import Link from "next/link";
-import { ChevronDown, ChevronRight, Globe2, GripVertical, Navigation, Pencil, Trash2, X } from "lucide-react";
+import { ChevronDown, ChevronRight, Globe2, GripVertical, Navigation, Pencil, Trash2, X } from "@/components/icons/MaterialSymbol";
 
 import { continents } from "@/data";
 import { CATEGORIES, CATEGORY_STYLES } from "@/lib/constants";

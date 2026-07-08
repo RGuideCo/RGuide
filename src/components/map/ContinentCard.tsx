@@ -1,4 +1,4 @@
-import { ChevronDown, Globe2 } from "lucide-react";
+import { ChevronDown, Globe2 } from "@/components/icons/MaterialSymbol";
 import type { ReactNode } from "react";
 
 import { cn } from "@/lib/utils";
