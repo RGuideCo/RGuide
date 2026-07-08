@@ -1325,6 +1325,13 @@ const citySubareaSeeds = new Map<string, SubArea[]>([
       { id: "ginza", name: "Ginza", coordinates: [35.6717, 139.765] },
       { id: "asakusa", name: "Asakusa", coordinates: [35.7148, 139.7967] },
       { id: "roppongi", name: "Roppongi", coordinates: [35.6628, 139.7314] },
+      {
+        id: "ueno",
+        name: "Ueno",
+        coordinates: [35.7138, 139.777],
+        description:
+          "Ueno is Tokyo's north-side museum, park, market, and rail hub, where Ueno Park, Ameyoko, Okachimachi, and old-school dining make a compact visitor base. It works especially well for culture-heavy days, value stays, casual food, and easy east-side routing.",
+      },
     ],
   ],
   [

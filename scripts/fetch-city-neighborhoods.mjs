@@ -206,6 +206,7 @@ const boundaryQueryOverrides = {
   "athens::exarchia": ["Exarchia, Athens, Greece"],
   "athens::pangrati": ["Συνοικία Παγκρατίου, Αθήνα, Ελλάδα", "Pangrati, Athens, Greece"],
   "athens::mets": ["Mets, Athens, Greece", "Μετς, Αθήνα, Ελλάδα"],
+  "tokyo::ueno": ["上野, 台東区, 東京都, 110-0005, 日本", "上野, 台東区, 東京都, 日本", "Ueno, Taito, Tokyo, Japan"],
 };
 
 function parseArgs(argv) {
