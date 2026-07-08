@@ -12,15 +12,15 @@ export type MaterialSymbolIconProps = Omit<MaterialSymbolProps, "name">;
 export type MaterialSymbolIcon = (props: MaterialSymbolIconProps) => ReactElement;
 
 const SIZE_FROM_CLASS: Array<[RegExp, string]> = [
-  [/\bh-2\.5\b|\bw-2\.5\b/, "0.75rem"],
-  [/\bh-3\b|\bw-3\b/, "0.875rem"],
-  [/\bh-3\.5\b|\bw-3\.5\b/, "1rem"],
-  [/\bh-4\b|\bw-4\b/, "1.125rem"],
-  [/\bh-5\b|\bw-5\b/, "1.375rem"],
-  [/\bh-6\b|\bw-6\b/, "1.625rem"],
-  [/\bh-7\b|\bw-7\b/, "1.875rem"],
-  [/\bh-8\b|\bw-8\b/, "2.25rem"],
-  [/\bh-10\b|\bw-10\b/, "2.75rem"],
+  [/\bh-2\.5\b|\bw-2\.5\b/, "0.875rem"],
+  [/\bh-3\b|\bw-3\b/, "1rem"],
+  [/\bh-3\.5\b|\bw-3\.5\b/, "1.125rem"],
+  [/\bh-4\b|\bw-4\b/, "1.25rem"],
+  [/\bh-5\b|\bw-5\b/, "1.5rem"],
+  [/\bh-6\b|\bw-6\b/, "1.75rem"],
+  [/\bh-7\b|\bw-7\b/, "2rem"],
+  [/\bh-8\b|\bw-8\b/, "2.375rem"],
+  [/\bh-10\b|\bw-10\b/, "3rem"],
 ];
 
 function inferFontSize(className?: string) {
@@ -128,7 +128,7 @@ export const MoonStar = createMaterialSymbol("nightlife");
 export const Navigation = createMaterialSymbol("near_me");
 export const Pencil = createMaterialSymbol("edit");
 export const Plus = Add;
-export const Road = createMaterialSymbol("signpost");
+export const Road = createMaterialSymbol("road");
 export const Route = createMaterialSymbol("route");
 export const Search = createMaterialSymbol("search");
 export const Settings = createMaterialSymbol("settings");

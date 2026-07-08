@@ -281,6 +281,99 @@ type NeighborhoodMentionCandidate = {
   foldedName: string;
 };
 
+type LeftPaneDefinitionTerm = {
+  term: string;
+  aliases?: string[];
+  definition: string;
+};
+
+type LeftPaneDefinitionMention = {
+  term: LeftPaneDefinitionTerm;
+  start: number;
+  end: number;
+};
+
+const TOKYO_LEFT_PANE_DEFINITION_TERMS: LeftPaneDefinitionTerm[] = [
+  {
+    term: "Izakaya",
+    aliases: ["izakaya"],
+    definition:
+      "A casual Japanese drinking spot built around small plates, snacks, beer, sake, and after-work social energy.",
+  },
+  {
+    term: "Yokocho",
+    aliases: ["yokocho"],
+    definition:
+      "A narrow alley or cluster of tiny bars and food counters, usually best for short stops and compact late-night hopping.",
+  },
+  {
+    term: "Kissaten",
+    aliases: ["kissaten"],
+    definition:
+      "An old-school Japanese coffee shop, often quieter and more nostalgic than a modern cafe.",
+  },
+  {
+    term: "Depachika",
+    aliases: ["depachika"],
+    definition:
+      "The basement food hall of a department store, useful for bento, sweets, prepared foods, gifts, and quick meals.",
+  },
+  {
+    term: "Omakase",
+    aliases: ["omakase"],
+    definition:
+      "A chef-led meal where the restaurant chooses the sequence for you, common in sushi and other counter restaurants.",
+  },
+  {
+    term: "Ramen",
+    aliases: ["ramen"],
+    definition:
+      "Japanese noodle soup where broth, tare, noodles, and toppings define the shop style. Tokyo has many highly specialized counters.",
+  },
+  {
+    term: "Sushi",
+    aliases: ["sushi"],
+    definition:
+      "Vinegared rice with seafood or other toppings. In Tokyo it can mean quick counter sets, standing shops, conveyor spots, or reservation omakase.",
+  },
+  {
+    term: "Yakitori",
+    aliases: ["yakitori"],
+    definition:
+      "Charcoal-grilled chicken skewers, ordered piece by piece and often paired with beer, sake, or highballs.",
+  },
+  {
+    term: "Tempura",
+    aliases: ["tempura"],
+    definition:
+      "Seafood and vegetables fried in a light batter, often served as a focused counter meal or set lunch.",
+  },
+  {
+    term: "Tonkatsu",
+    aliases: ["tonkatsu"],
+    definition:
+      "Breaded pork cutlet, usually served with shredded cabbage, rice, miso soup, and sauce.",
+  },
+  {
+    term: "Soba",
+    aliases: ["soba"],
+    definition:
+      "Buckwheat noodles served hot or cold; useful for quick meals, classic shops, and lighter route food.",
+  },
+  {
+    term: "Karaoke",
+    aliases: ["karaoke"],
+    definition:
+      "Singing rooms or bars that act as late-night social infrastructure, especially after dinner or drinks.",
+  },
+  {
+    term: "Hotel bars",
+    aliases: ["hotel bars", "hotel lounges"],
+    definition:
+      "Polished, view-driven, or service-led bars inside hotels. In Tokyo they can be destination rooms rather than just lobby drinks.",
+  },
+];
+
 function foldSearchText(value: string) {
   return value
     .replace(/[øØ]/g, "o")
@@ -341,6 +434,68 @@ function findNeighborhoodMentionsInText(
           name: candidate.name,
           isNested: candidate.isNested,
           parentSubareaId: candidate.parentSubareaId,
+          start,
+          end,
+        });
+        for (let index = start; index < end; index += 1) {
+          occupied[index] = true;
+        }
+      }
+
+      searchFrom = foldedEnd;
+    }
+  }
+
+  return mentions.sort((left, right) => left.start - right.start);
+}
+
+function findLeftPaneDefinitionMentionsInText(
+  text: string,
+  terms: LeftPaneDefinitionTerm[],
+  blockedMentions: Array<{ start: number; end: number }> = [],
+): LeftPaneDefinitionMention[] {
+  if (!terms.length) {
+    return [];
+  }
+
+  const { folded, indexMap } = foldSearchTextWithIndexMap(text);
+  const occupied = Array.from({ length: text.length }, () => false);
+  const mentions: LeftPaneDefinitionMention[] = [];
+
+  for (const blockedMention of blockedMentions) {
+    for (let index = blockedMention.start; index < blockedMention.end; index += 1) {
+      occupied[index] = true;
+    }
+  }
+
+  const aliases = terms
+    .flatMap((term) =>
+      (term.aliases?.length ? term.aliases : [term.term]).map((alias) => ({
+        term,
+        foldedAlias: foldSearchText(alias),
+      })),
+    )
+    .filter((item) => item.foldedAlias.length > 1)
+    .sort((left, right) => right.foldedAlias.length - left.foldedAlias.length);
+
+  for (const item of aliases) {
+    let searchFrom = 0;
+    while (searchFrom < folded.length) {
+      const foldedStart = folded.indexOf(item.foldedAlias, searchFrom);
+      if (foldedStart === -1) {
+        break;
+      }
+
+      const foldedEnd = foldedStart + item.foldedAlias.length;
+      const hasWordBefore = isFoldedWordCharacter(folded[foldedStart - 1]);
+      const hasWordAfter = isFoldedWordCharacter(folded[foldedEnd]);
+      const start = indexMap[foldedStart];
+      const end = (indexMap[foldedEnd - 1] ?? start) + 1;
+      const overlaps = occupied.slice(start, end).some(Boolean);
+
+      if (!hasWordBefore && !hasWordAfter && !overlaps) {
+        mentions.push({
+          term: item.term,
           start,
           end,
         });
@@ -793,6 +948,12 @@ export function SplitScreenSection({
   const [isSigningOutProfile, setIsSigningOutProfile] = useState(false);
   const [profileSettingsMessage, setProfileSettingsMessage] = useState<string | null>(null);
   const [hoveredDescriptionNeighborhoodId, setHoveredDescriptionNeighborhoodId] = useState<string | null>(null);
+  const [hoveredLeftPaneDefinition, setHoveredLeftPaneDefinition] = useState<{
+    term: LeftPaneDefinitionTerm;
+    x: number;
+    y: number;
+  } | null>(null);
+  const [mobileLeftPaneDefinition, setMobileLeftPaneDefinition] = useState<LeftPaneDefinitionTerm | null>(null);
   const [exitingCategoryInsight, setExitingCategoryInsight] = useState<ReturnType<typeof buildCategoryInsight> | null>(null);
   const [exitingCategoryInsightNotes, setExitingCategoryInsightNotes] = useState<ReturnType<typeof buildCategoryInsightNotes>>([]);
   const lastCategoryInsightRef = useRef<ReturnType<typeof buildCategoryInsight> | null>(null);
@@ -4084,20 +4245,94 @@ export function SplitScreenSection({
       mention.id,
     );
   };
-  const renderNeighborhoodMentionText = (
+  const activeLeftPaneDefinitionTerms =
+    activeLocation.city?.id === "tokyo" ? TOKYO_LEFT_PANE_DEFINITION_TERMS : [];
+  const handleLeftPaneDefinitionHoverStart = (term: LeftPaneDefinitionTerm, target: HTMLElement) => {
+    const rect = target.getBoundingClientRect();
+    const tooltipWidth = 256;
+    const viewportPadding = 16;
+    const x = Math.min(
+      window.innerWidth - tooltipWidth / 2 - viewportPadding,
+      Math.max(tooltipWidth / 2 + viewportPadding, rect.left + rect.width / 2),
+    );
+
+    setHoveredLeftPaneDefinition({
+      term,
+      x,
+      y: rect.bottom + 10,
+    });
+  };
+  const handleLeftPaneDefinitionHoverEnd = (term: LeftPaneDefinitionTerm) => {
+    setHoveredLeftPaneDefinition((current) =>
+      current?.term.term === term.term ? null : current,
+    );
+  };
+  const renderLeftPaneAnnotatedText = (
     text: string,
     mentions: DescriptionNeighborhoodMention[],
     keyPrefix: string,
   ): ReactNode => {
-    if (!mentions.length) {
+    const definitionMentions = findLeftPaneDefinitionMentionsInText(
+      text,
+      activeLeftPaneDefinitionTerms,
+      mentions,
+    );
+    const annotationMentions = [
+      ...mentions.map((mention) => ({
+        kind: "neighborhood" as const,
+        start: mention.start,
+        end: mention.end,
+        mention,
+      })),
+      ...definitionMentions.map((mention) => ({
+        kind: "definition" as const,
+        start: mention.start,
+        end: mention.end,
+        mention,
+      })),
+    ].sort((left, right) => left.start - right.start || right.end - left.end);
+
+    if (!annotationMentions.length) {
       return text;
     }
 
     let cursor = 0;
-    return mentions.flatMap((mention) => {
-      const before = text.slice(cursor, mention.start);
-      const label = text.slice(mention.start, mention.end);
-      cursor = mention.end;
+    return annotationMentions.flatMap((annotation) => {
+      const before = text.slice(cursor, annotation.start);
+      const label = text.slice(annotation.start, annotation.end);
+      cursor = annotation.end;
+
+      if (annotation.kind === "definition") {
+        const term = annotation.mention.term;
+
+        return [
+          before,
+          <button
+            key={`${keyPrefix}-definition-${term.term}-${annotation.start}`}
+            type="button"
+            onClick={(event) => {
+              event.stopPropagation();
+              if (window.matchMedia("(max-width: 1023px)").matches) {
+                setMobileLeftPaneDefinition(term);
+              }
+            }}
+            onMouseEnter={(event) => handleLeftPaneDefinitionHoverStart(term, event.currentTarget)}
+            onMouseLeave={() => handleLeftPaneDefinitionHoverEnd(term)}
+            onFocus={(event) => handleLeftPaneDefinitionHoverStart(term, event.currentTarget)}
+            onBlur={() => handleLeftPaneDefinitionHoverEnd(term)}
+            className={`inline rounded-sm font-semibold underline decoration-dotted underline-offset-[4px] transition ${
+              activeDestinationImage
+                ? "text-white decoration-white/75 hover:text-white"
+                : "text-slate-700 decoration-slate-400 hover:text-slate-950"
+            }`}
+            aria-label={`Define ${term.term}`}
+          >
+            {label}
+          </button>,
+        ];
+      }
+
+      const mention = annotation.mention;
 
       return [
         before,
@@ -6043,7 +6278,7 @@ export function SplitScreenSection({
                           <SelectorIcon
                             className={`relative z-10 h-3.5 w-3.5 ${
                               isActive && selector.id === "all-guides"
-                                ? "fill-sky-400 text-slate-950"
+                                ? "text-sky-400"
                                 : ""
                             }`}
                           />
@@ -6880,13 +7115,11 @@ export function SplitScreenSection({
                                   : "border-slate-200 text-slate-600"
                               }`}
                             >
-                              {descriptionNeighborhoodMentions.length
-                                ? renderNeighborhoodMentionText(
-                                    visibleIntroCopyDisplay,
-                                    descriptionNeighborhoodMentions,
-                                    "intro-description",
-                                  )
-                                : visibleIntroCopyDisplay}
+                              {renderLeftPaneAnnotatedText(
+                                visibleIntroCopyDisplay,
+                                descriptionNeighborhoodMentions,
+                                "intro-description",
+                              )}
                             </p>
                           </div>
                         ) : null}
@@ -7062,7 +7295,7 @@ export function SplitScreenSection({
                                       </span>
                                     ) : null}
                                     <span>
-                                      {renderNeighborhoodMentionText(
+                                      {renderLeftPaneAnnotatedText(
                                         note.body,
                                         noteMentions,
                                         `category-insight-${noteIndex}`,
@@ -8646,7 +8879,7 @@ export function SplitScreenSection({
                                   <SelectorIcon
                                     className={`relative z-10 h-4 w-4 ${
                                       isActive && selector.id === "all-guides"
-                                        ? "fill-sky-400 text-slate-950"
+                                        ? "text-sky-400"
                                         : ""
                                     }`}
                                   />
@@ -9655,13 +9888,11 @@ export function SplitScreenSection({
                               : "border-slate-200 text-slate-600"
                           }`}
                         >
-                          {descriptionNeighborhoodMentions.length
-                            ? renderNeighborhoodMentionText(
-                                visibleIntroCopyDisplay,
-                                descriptionNeighborhoodMentions,
-                                "mobile-info-intro-description",
-                              )
-                            : visibleIntroCopyDisplay}
+                          {renderLeftPaneAnnotatedText(
+                            visibleIntroCopyDisplay,
+                            descriptionNeighborhoodMentions,
+                            "mobile-info-intro-description",
+                          )}
                         </p>
                       </div>
                     ) : null}
@@ -9828,7 +10059,7 @@ export function SplitScreenSection({
                                   </span>
                                 ) : null}
                                 <span>
-                                  {renderNeighborhoodMentionText(
+                                  {renderLeftPaneAnnotatedText(
                                     note.body,
                                     noteMentions,
                                     `mobile-info-category-insight-${noteIndex}`,
@@ -10151,6 +10382,60 @@ export function SplitScreenSection({
                 </div>
               ) : null}
             </div>
+          </div>
+        </div>
+      ) : null}
+      {hoveredLeftPaneDefinition ? (
+        <div
+          className="pointer-events-none fixed z-[650] hidden w-64 -translate-x-1/2 rounded-[10px] border border-white/18 bg-[#161616] px-3 py-2.5 text-left text-xs leading-5 text-white/80 shadow-[0_18px_42px_rgba(0,0,0,0.34)] ring-1 ring-black/40 lg:block"
+          style={{ left: hoveredLeftPaneDefinition.x, top: hoveredLeftPaneDefinition.y }}
+          role="tooltip"
+        >
+          <p className="mb-1 font-mono text-[10px] font-semibold uppercase tracking-[0.18em] text-white/45">
+            Definition
+          </p>
+          <p className="text-sm font-semibold text-white">
+            {hoveredLeftPaneDefinition.term.term}
+          </p>
+          <p className="mt-1 text-white/80">
+            {hoveredLeftPaneDefinition.term.definition}
+          </p>
+        </div>
+      ) : null}
+      {mobileLeftPaneDefinition ? (
+        <div
+          className="fixed inset-0 z-[700] flex items-end bg-black/48 px-3 pb-4 pt-14 lg:hidden"
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="mobile-definition-title"
+          onClick={() => setMobileLeftPaneDefinition(null)}
+        >
+          <div
+            className="left-pane-solid left-pane-dark-preview w-full rounded-[18px] border border-white/14 bg-[#161616] p-4 text-white shadow-[0_22px_50px_rgba(0,0,0,0.42)]"
+            onClick={(event) => event.stopPropagation()}
+          >
+            <div className="flex items-start gap-3">
+              <div className="min-w-0 flex-1">
+                <p className="font-mono text-[10px] font-semibold uppercase tracking-[0.18em] text-white/45">
+                  Definition
+                </p>
+                <h3 id="mobile-definition-title" className="mt-1 text-lg font-semibold text-white">
+                  {mobileLeftPaneDefinition.term}
+                </h3>
+              </div>
+              <button
+                type="button"
+                onClick={() => setMobileLeftPaneDefinition(null)}
+                className="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border border-white/12 bg-black/18 text-white/72 shadow-sm transition hover:bg-black/26 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/45"
+                aria-label="Close definition"
+                title="Close"
+              >
+                <X className="h-4 w-4" />
+              </button>
+            </div>
+            <p className="mt-3 border-l border-white/18 pl-3 text-sm leading-6 !text-white/80">
+              {mobileLeftPaneDefinition.definition}
+            </p>
           </div>
         </div>
       ) : null}
