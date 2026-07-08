@@ -7,6 +7,23 @@ export function formatAttributeTagLabel(tag: string) {
     .replace(/\b\w/g, (char) => char.toUpperCase());
 }
 
+function normalizeComparableTag(value?: string | null) {
+  return (value ?? "")
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .trim()
+    .toLowerCase()
+    .replace(/&/g, " and ")
+    .replace(/[^a-z0-9]+/g, "_")
+    .replace(/^_+|_+$/g, "");
+}
+
+function isCurrentNeighborhoodTag(tag: string, neighborhood?: string | null) {
+  const tagKey = normalizeComparableTag(tag);
+  const neighborhoodKey = normalizeComparableTag(neighborhood);
+  return Boolean(neighborhoodKey && (tagKey === neighborhoodKey || tagKey.startsWith(`${neighborhoodKey}_`)));
+}
+
 function valuesFromMaybeArray(value?: string | string[]) {
   return Array.isArray(value) ? value : value ? [value] : [];
 }
@@ -62,9 +79,14 @@ function inferPoiAttributeTags(stop: MapList["stops"][number], fallbackCategory?
   return tags;
 }
 
-export function getPoiAttributeTags(stop: MapList["stops"][number], fallbackCategory?: ListCategory) {
+export function getPoiAttributeTags(
+  stop: MapList["stops"][number],
+  fallbackCategory?: ListCategory,
+  currentNeighborhood?: string | null,
+) {
   return [...(stop.attributeTags ?? []), ...(stop.tags ?? []), ...inferPoiAttributeTags(stop, fallbackCategory)]
     .filter(Boolean)
+    .filter((tag) => !isCurrentNeighborhoodTag(tag, currentNeighborhood))
     .filter((tag, index, all) => all.findIndex((item) => item.toLowerCase() === tag.toLowerCase()) === index)
     .slice(0, 4)
     .map(formatAttributeTagLabel);

@@ -2345,7 +2345,7 @@ export function MapListCard({
                         const stopCategory = isItineraryGuide ? inferJourneyStopCategory(stop, list.category) : stop.category ?? list.category;
                         const stopCategoryStyle = CATEGORY_STYLES[stopCategory];
                         const stopPhoto = getPoiPhoto(stop.photo);
-                        const stopAttributeTags = getPoiAttributeTags(stop, stopCategory);
+                        const stopAttributeTags = getPoiAttributeTags(stop, stopCategory, list.location.neighborhood);
                         const hasStopCopy = stopContent.summary.trim().length > 0 || stopAttributeTags.length > 0;
                         const stayBookingDetails = getStayBookingDetails(list, stop, stopCategory);
                         const nearbyStayDetails = getNearbyStayDetails(list, stop);
@@ -2565,7 +2565,7 @@ export function MapListCard({
                                         category={place.category ?? stopCategory}
                                         isExpanded={expandedPlaceIds.includes(place.id)}
                                         isActive={forceExpandStopId === place.id}
-                                        attributeTags={getPoiAttributeTags(place, place.category ?? stopCategory)}
+                                        attributeTags={getPoiAttributeTags(place, place.category ?? stopCategory, list.location.neighborhood)}
                                         handlers={{
                                           onNestedStopSelect: activateNestedGuideStop,
                                           onPlaceHeaderActivate: activatePlaceHeader,
