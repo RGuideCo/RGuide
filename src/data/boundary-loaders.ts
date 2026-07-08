@@ -72,6 +72,7 @@ const priorityBoundaryLoaders: Partial<Record<string, BoundaryLoader[]>> = {
 };
 
 const boundaryCache = new Map<string, Promise<NeighborhoodBoundaryMap>>();
+const STATIC_BOUNDARY_ASSET_VERSION = "20260708-ueno";
 
 function isPolygonBoundaryFeature(
   feature: unknown,
@@ -125,7 +126,7 @@ async function loadStaticNeighborhoodBoundaryMap(cityId: string) {
   }
 
   try {
-    const response = await fetch(`/data/boundaries/${encodeURIComponent(cityId)}.geojson`, {
+    const response = await fetch(`/data/boundaries/${encodeURIComponent(cityId)}.geojson?v=${STATIC_BOUNDARY_ASSET_VERSION}`, {
       cache: "force-cache",
       headers: { Accept: "application/json" },
     });
