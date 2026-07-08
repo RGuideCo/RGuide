@@ -124,6 +124,10 @@ import {
   buildCategoryInsight,
   buildCategoryInsightNotes,
 } from "@/components/home/split-screen/category-insights";
+import {
+  getLeftPaneDefinitionTerms,
+  type LeftPaneDefinitionTerm,
+} from "@/components/home/split-screen/left-pane-definitions";
 import { getNeighborhoodResearchStrength } from "@/components/home/split-screen/neighborhood-strength";
 import { useProfilePlacesBeenState } from "@/components/home/split-screen/profile-places-been-state";
 import { useRouteState } from "@/components/home/split-screen/route-state";
@@ -281,98 +285,11 @@ type NeighborhoodMentionCandidate = {
   foldedName: string;
 };
 
-type LeftPaneDefinitionTerm = {
-  term: string;
-  aliases?: string[];
-  definition: string;
-};
-
 type LeftPaneDefinitionMention = {
   term: LeftPaneDefinitionTerm;
   start: number;
   end: number;
 };
-
-const TOKYO_LEFT_PANE_DEFINITION_TERMS: LeftPaneDefinitionTerm[] = [
-  {
-    term: "Izakaya",
-    aliases: ["izakaya"],
-    definition:
-      "A casual Japanese drinking spot built around small plates, snacks, beer, sake, and after-work social energy.",
-  },
-  {
-    term: "Yokocho",
-    aliases: ["yokocho"],
-    definition:
-      "A narrow alley or cluster of tiny bars and food counters, usually best for short stops and compact late-night hopping.",
-  },
-  {
-    term: "Kissaten",
-    aliases: ["kissaten"],
-    definition:
-      "An old-school Japanese coffee shop, often quieter and more nostalgic than a modern cafe.",
-  },
-  {
-    term: "Depachika",
-    aliases: ["depachika"],
-    definition:
-      "The basement food hall of a department store, useful for bento, sweets, prepared foods, gifts, and quick meals.",
-  },
-  {
-    term: "Omakase",
-    aliases: ["omakase"],
-    definition:
-      "A chef-led meal where the restaurant chooses the sequence for you, common in sushi and other counter restaurants.",
-  },
-  {
-    term: "Ramen",
-    aliases: ["ramen"],
-    definition:
-      "Japanese noodle soup where broth, tare, noodles, and toppings define the shop style. Tokyo has many highly specialized counters.",
-  },
-  {
-    term: "Sushi",
-    aliases: ["sushi"],
-    definition:
-      "Vinegared rice with seafood or other toppings. In Tokyo it can mean quick counter sets, standing shops, conveyor spots, or reservation omakase.",
-  },
-  {
-    term: "Yakitori",
-    aliases: ["yakitori"],
-    definition:
-      "Charcoal-grilled chicken skewers, ordered piece by piece and often paired with beer, sake, or highballs.",
-  },
-  {
-    term: "Tempura",
-    aliases: ["tempura"],
-    definition:
-      "Seafood and vegetables fried in a light batter, often served as a focused counter meal or set lunch.",
-  },
-  {
-    term: "Tonkatsu",
-    aliases: ["tonkatsu"],
-    definition:
-      "Breaded pork cutlet, usually served with shredded cabbage, rice, miso soup, and sauce.",
-  },
-  {
-    term: "Soba",
-    aliases: ["soba"],
-    definition:
-      "Buckwheat noodles served hot or cold; useful for quick meals, classic shops, and lighter route food.",
-  },
-  {
-    term: "Karaoke",
-    aliases: ["karaoke"],
-    definition:
-      "Singing rooms or bars that act as late-night social infrastructure, especially after dinner or drinks.",
-  },
-  {
-    term: "Hotel bars",
-    aliases: ["hotel bars", "hotel lounges"],
-    definition:
-      "Polished, view-driven, or service-led bars inside hotels. In Tokyo they can be destination rooms rather than just lobby drinks.",
-  },
-];
 
 function foldSearchText(value: string) {
   return value
@@ -4246,7 +4163,7 @@ export function SplitScreenSection({
     );
   };
   const activeLeftPaneDefinitionTerms =
-    activeLocation.city?.id === "tokyo" ? TOKYO_LEFT_PANE_DEFINITION_TERMS : [];
+    getLeftPaneDefinitionTerms(activeLocation.city?.id);
   const handleLeftPaneDefinitionHoverStart = (term: LeftPaneDefinitionTerm, target: HTMLElement) => {
     const rect = target.getBoundingClientRect();
     const tooltipWidth = 256;
