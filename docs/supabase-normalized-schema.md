@@ -14,6 +14,14 @@ Primary migrations:
 - [supabase/20260518_backfill-nightlife-venue-classification.sql](/Users/brodriguez/Projects/rGuide/supabase/20260518_backfill-nightlife-venue-classification.sql)
 - [supabase/20260519_venue-hours.sql](/Users/brodriguez/Projects/rGuide/supabase/20260519_venue-hours.sql)
 - [supabase/20260520_backfill-venue-hours.sql](/Users/brodriguez/Projects/rGuide/supabase/20260520_backfill-venue-hours.sql)
+- [supabase/20260710_schema_hardening.sql](/Users/brodriguez/Projects/rGuide/supabase/20260710_schema_hardening.sql)
+- [supabase/20260710_event_entry_links.sql](/Users/brodriguez/Projects/rGuide/supabase/20260710_event_entry_links.sql)
+- [supabase/20260710_event_activations_media.sql](/Users/brodriguez/Projects/rGuide/supabase/20260710_event_activations_media.sql)
+- [supabase/20260710_event_fk_indexes.sql](/Users/brodriguez/Projects/rGuide/supabase/20260710_event_fk_indexes.sql)
+- [supabase/20260710_event_primary_media_backfill.sql](/Users/brodriguez/Projects/rGuide/supabase/20260710_event_primary_media_backfill.sql)
+- [supabase/20260710_entity_sources_policy_cleanup.sql](/Users/brodriguez/Projects/rGuide/supabase/20260710_entity_sources_policy_cleanup.sql)
+- [supabase/20260710_legacy_archive_constraints_cleanup.sql](/Users/brodriguez/Projects/rGuide/supabase/20260710_legacy_archive_constraints_cleanup.sql)
+- [supabase/20260710_event_activation_sources_backfill.sql](/Users/brodriguez/Projects/rGuide/supabase/20260710_event_activation_sources_backfill.sql)
 
 ## Schema Overview
 
@@ -31,14 +39,17 @@ Source-of-truth tables:
 - `entries`: normalized editorial guides, journals, journeys, and event cards.
 - `entry_stops`: ordered normalized stops.
 - `events`: canonical event records.
-- `event_occurrences`: dated schedule items, screenings, activations, and festival items.
-- `sources`, `entity_sources`: reusable attribution for destinations, entries, stops, venues, events, and occurrences.
+- `event_activations`: stable films, performances, sessions, workshops, and other nested event program items.
+- `event_occurrences`: dated times and venue assignments for activations.
+- `event_media`: canonical event, activation, and occurrence artwork.
+- `sources`, `entity_sources`: reusable attribution for destinations, entries, stops, venues, events, activations, and occurrences.
 - `event_city_publishing_settings`: per-city event populator cadence and source configuration.
 - `event_source_runs`: city-scoped monthly discovery, weekly publishing, daily refresh, and manual backfill runs.
 
 Rendered/cache compatibility surfaces:
 
 - `entries_maplist`: view that emits the frontend `MapList` shape from normalized `entries`, `entry_stops`, and source joins.
+- `event_schedule_items`: security-invoker view for expanded festival cards, with activations, occurrences, physical venues, and canonical media.
 - `entry_render_cache`: schema-owned cached `MapList` payloads for stable fallback and static HTML protection.
 - `weekly_events_maplist`: view that emits weekly event `MapList` cards.
 - `weekly_event_publications`: rendered weekly event publishing cache with explicit query columns.
@@ -54,6 +65,8 @@ The legacy blob tables `editorial_guides`, `destination_descriptions`, `weekly_e
 `destinations`
 
 Canonical destination hierarchy. `scope` supports `continent`, `country`, `region`, `state`, `city`, and `neighborhood`. A `region` can sit directly under a continent or under a country. Venue-like areas such as Waterfront, Museum District, or Old Town are modeled as neighborhoods, not venues. `legacy_id` maps old app IDs like `barcelona`, `country:usa`, or generated neighborhood IDs.
+
+Hierarchy writes are validated in the database: continents are roots, cities must sit below a country/region/state, neighborhoods must sit below a city/neighborhood, and cycles are rejected. `location` is a generated PostGIS geography point derived from the compatibility `[latitude, longitude]` JSON coordinates. `description` and `subareas` remain deprecated compatibility caches only; canonical copy and hierarchy live in `destination_descriptions_v2` and `destinations.parent_id`.
 
 `destination_descriptions_v2`
 
@@ -91,7 +104,7 @@ Server-side quota ledger for paid or rate-limited API calls. Google Places hours
 
 `venue_tags` and `venue_taggings`
 
-Canonical filter vocabulary and sourceable tag assignments for venues. Use these for scalable filters once there are thousands of places. The `venues.attribute_tags` array is the fast query cache for common filters; `venue_taggings` is the normalized table for attribution, confidence, and future editorial review.
+Curated filter vocabulary and sourceable tag assignments for venues. `venues.attribute_tags` remains the authored fast search/render cache and may contain non-filter editorial context. Any authored tag that matches an active `venue_tags.slug` is automatically mirrored into `venue_taggings`; normalized taggings hold confidence/source attribution and are the reliable vocabulary for filter construction.
 
 `stay_venues`
 
@@ -113,6 +126,8 @@ Read view for current venue hours. It emits active weekly hours and upcoming 90-
 
 First-class records for editorial guides, journals, journeys, and event cards. `submission_type` is an enum with `guide`, `journal`, `journey`, and `event`; events are a submission type, not just a category. Current card fields are preserved as normalized columns: title, slug, SEO fields, description, highlights, photo, URL, category, creator, upvotes, created date, journey dates, and journal fields.
 
+An event entry also carries `event_id`. This makes the entry an explicit render/card representation of the canonical `events` row instead of a second event identity. Its stops carry matching `event_id` and `event_occurrence_id` links when the event has schedule items.
+
 `entry_stops`
 
 Ordered normalized stops. Stops can reference a destination, venue, event, or event occurrence. It preserves stop fields including coordinates, photo, price, booking URL, official URL, event time/venue labels, journey date/day, hours, and nested `places`.
@@ -127,7 +142,11 @@ Canonical event records for weekly city publishing and future event pages. Event
 
 `event_occurrences`
 
-Schedule items and activations. Use this for festival screenings, stage times, workshops, multi-venue activations, or repeated dates. This makes “has schedule” queryable instead of inferred from rendered JSON.
+Scheduled times for an activation. Repeated screenings or performances point to one stable activation instead of duplicating its content identity.
+
+`event_activations` and `event_media`
+
+An activation is a stable nested program item inside an event: a film, performance, race session, workshop, or festival feature. One activation may have several `event_occurrences` at different times or venues. This prevents program items from being stored as fake venues. `event_media` owns event/activation/occurrence imagery, while `venue_media` remains exclusively for physical places. `event_schedule_items` exposes activation, occurrence, physical venue, and canonical photo fields for expanded festival cards.
 
 `sources`, `entity_sources`
 
@@ -150,6 +169,7 @@ Rendered weekly event publishing cache. It has explicit query columns: `submissi
 Common query paths are indexed:
 
 - Destination lookup: `(scope, slug)`, `(parent_id, scope)`, `(country_name, city_name)`.
+- Spatial lookup: GiST indexes on generated `destinations.location` and active `venues.location` geography points.
 - Destination category notes: `destination_category_insights(destination_id, is_active, category, locale, sort_order)` plus child note/chip indexes by `insight_id`.
 - Destination category neighborhood strengths: `(parent_destination_id, category, field_key, is_active)` and `(neighborhood_destination_id, category, is_active)`.
 - City entry pages: `entries(city_id, category, status)`, `entries(submission_type, status)`.
@@ -190,6 +210,10 @@ Recommended write model:
 - Browser/user submission writes should go directly to normalized `entries` and `entry_stops`; `submitted_guides` should not remain the active write path.
 - Ingestion scripts should stay server-side with the service role or direct Postgres connection.
 
+The hardening migration revokes blanket table privileges from `anon` and `authenticated`, then grants only the explicit read surfaces above plus owned `entries`/`entry_stops` mutations. Internal ingestion configuration, source-run logs, API quota ledgers, provider IDs, analytics rows, and `editorial_pois` compatibility data are service-role only. Public views use `security_invoker` so underlying RLS remains authoritative.
+
+`entity_sources` is polymorphic by design because one attribution model spans many entity tables. A validation trigger now rejects nonexistent entity IDs, and delete triggers clean source/affiliate joins so the convenience does not trade away referential integrity.
+
 ## Backfill And Publishing
 
 Backfill order:
@@ -221,6 +245,10 @@ Current runtime reads:
 Important scale rule:
 
 - Weekly event reads must be city-scoped for app views. Use `weekly_events_maplist` or `weekly_event_publications` filtered by selected `city_id`/`city_slug` and the active week instead of loading all cities at once.
+
+## Ongoing Schema Audit
+
+Run `npm run audit:schema` after migrations or publisher changes. It checks RLS, security-invoker views, foreign-key indexes, destination hierarchy, source URL duplication, normalized known tags, render-cache coverage, internal Data API grants, canonical descriptions, hours, and remaining photo hotlinks. Use `npm run audit:schema -- --strict` when warnings should also fail the run.
 
 ## Cleanup Plan
 

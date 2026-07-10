@@ -1,4 +1,5 @@
 import process from "node:process";
+import { createHash } from "node:crypto";
 
 import {
   describeWeeklyEventFilters,
@@ -82,6 +83,16 @@ function sourceRunIdSql(run) {
 
 function eventIdSql(eventId) {
   return `(select id from public.events where legacy_id = ${sqlLiteral(eventId)})`;
+}
+
+function activationLegacyId(event, activation) {
+  const identity = String(activation.title ?? event.title).trim().toLowerCase();
+  const hash = createHash("md5").update(identity).digest("hex");
+  return `${event.id}:activation:${hash}`;
+}
+
+function activationIdSql(event, activation) {
+  return `(select id from public.event_activations where event_id = ${eventIdSql(event.id)} and legacy_id = ${sqlLiteral(activationLegacyId(event, activation))})`;
 }
 
 function sourceIdSql(url) {
@@ -307,6 +318,48 @@ on conflict (legacy_id) do update set
   }
 }
 
+function printActivations(records) {
+  for (const record of records) {
+    const event = record.rawEvent;
+    const activations = event.activations?.length
+      ? event.activations
+      : [{ id: `${event.id}-venue`, title: event.title, venue: event.venue, description: event.description, url: event.url }];
+    const emitted = new Set();
+
+    activations.forEach((activation, index) => {
+      const legacyId = activationLegacyId(event, activation);
+      if (emitted.has(legacyId)) {
+        return;
+      }
+      emitted.add(legacyId);
+      const hash = legacyId.slice(legacyId.lastIndexOf(":") + 1);
+      console.log(`
+insert into public.event_activations (
+  event_id, legacy_id, slug, title, description, activation_category, venue_id,
+  official_url, booking_url, price_label, sort_order, raw_metadata
+) values (
+  ${eventIdSql(event.id)}, ${sqlLiteral(legacyId)}, ${sqlLiteral(`${slugify(activation.title) || "activation"}-${hash.slice(0, 8)}`)},
+  ${sqlLiteral(activation.title)}, ${sqlLiteral(activation.description)}, ${sqlLiteral(event.category)},
+  ${venueIdSql(record.cityId, activation.venue ?? event.venue)}, ${sqlLiteral(activation.url ?? event.url)},
+  ${sqlLiteral(activation.url ?? event.url)}, ${sqlLiteral(event.price)}, ${index + 1},
+  ${jsonLiteral({ source: "weekly_events", eventId: event.id, activationIds: [activation.id] })}
+)
+on conflict (event_id, legacy_id) do update set
+  slug = excluded.slug,
+  title = excluded.title,
+  description = excluded.description,
+  activation_category = excluded.activation_category,
+  venue_id = excluded.venue_id,
+  official_url = excluded.official_url,
+  booking_url = excluded.booking_url,
+  price_label = excluded.price_label,
+  sort_order = least(public.event_activations.sort_order, excluded.sort_order),
+  raw_metadata = public.event_activations.raw_metadata || excluded.raw_metadata,
+  updated_at = now();`);
+    });
+  }
+}
+
 function printOccurrences(records) {
   for (const record of records) {
     const event = record.rawEvent;
@@ -319,11 +372,11 @@ function printOccurrences(records) {
       const startsAt = activation.startsAt ?? event.startsAt;
       console.log(`
 insert into public.event_occurrences (
-  event_id, legacy_id, title, description, venue_id, city_id, destination_id,
+  event_id, activation_id, legacy_id, title, description, venue_id, city_id, destination_id,
   starts_at, starts_on, timezone, price_label, booking_url, official_url,
   coordinates, occurrence_order, raw_metadata, source_run_id, latest_refresh_source_run_id
 ) values (
-  ${eventIdSql(event.id)}, ${sqlLiteral(activation.id)}, ${sqlLiteral(activation.title)}, ${sqlLiteral(activation.description)},
+  ${eventIdSql(event.id)}, ${activationIdSql(event, activation)}, ${sqlLiteral(activation.id)}, ${sqlLiteral(activation.title)}, ${sqlLiteral(activation.description)},
   ${venueIdSql(record.cityId, activation.venue)}, ${cityIdSql(record.cityId)}, ${cityIdSql(record.cityId)},
   ${sqlLiteral(startsAt)}::timestamptz, ${sqlLiteral(startsAt.slice(0, 10))}::date, ${sqlLiteral(event.timezone ?? record.sourceRun.timezone)},
   ${sqlLiteral(event.price)}, ${sqlLiteral(activation.url ?? event.url)}, ${sqlLiteral(activation.url ?? event.url)},
@@ -332,6 +385,51 @@ insert into public.event_occurrences (
   ${sourceRunIdSql(record.sourceRun)}, ${sourceRunIdSql(record.sourceRun)}
 );`);
     });
+  }
+}
+
+function printEventMedia(records) {
+  const printPrimary = (event, activation, photo) => {
+    if (!photo) return;
+    const eventId = eventIdSql(event.id);
+    const activationId = activation ? activationIdSql(event, activation) : "null";
+    const isR2 = photo.startsWith("https://media.rguide.co/");
+    console.log(`
+update public.event_media
+set
+  url = case when ${Boolean(isR2)} or public_url is null then ${sqlLiteral(photo)} else url end,
+  public_url = coalesce(${isR2 ? sqlLiteral(photo) : "null"}, public_url),
+  source_url = coalesce(${sqlLiteral(photo)}, source_url),
+  storage_provider = coalesce(${isR2 ? sqlLiteral("cloudflare_r2") : "null"}, storage_provider),
+  ingestion_status = case when ${Boolean(isR2)} then 'uploaded' else ingestion_status end,
+  raw_metadata = raw_metadata || ${jsonLiteral({ source: "weekly_events_sql_export", eventId: event.id })},
+  updated_at = now()
+where event_id = ${eventId}
+  and activation_id is not distinct from ${activationId}
+  and occurrence_id is null and role = 'primary' and is_active;
+
+insert into public.event_media (
+  event_id, activation_id, url, public_url, role, source_url,
+  storage_provider, ingestion_status, raw_metadata
+)
+select
+  ${eventId}, ${activationId}, ${sqlLiteral(photo)}, ${isR2 ? sqlLiteral(photo) : "null"}, 'primary',
+  ${sqlLiteral(photo)}, ${isR2 ? sqlLiteral("cloudflare_r2") : "null"}, ${sqlLiteral(isR2 ? "uploaded" : "external")},
+  ${jsonLiteral({ source: "weekly_events_sql_export", eventId: event.id })}
+where not exists (
+  select 1 from public.event_media media
+  where media.event_id = ${eventId}
+    and media.activation_id is not distinct from ${activationId}
+    and media.occurrence_id is null and media.role = 'primary' and media.is_active
+);`);
+  };
+
+  for (const record of records) {
+    const event = record.rawEvent;
+    printPrimary(event, null, record.guide.photo);
+    for (const [index, activation] of (event.activations ?? []).entries()) {
+      printPrimary(event, activation, record.guide.stops?.[index]?.photo);
+    }
   }
 }
 
@@ -384,8 +482,21 @@ values
 on conflict (entity_type, entity_id, source_id, relationship) do update set
   sourced_at = excluded.sourced_at,
   raw_metadata = public.entity_sources.raw_metadata || excluded.raw_metadata;`);
-    for (const activation of event.activations ?? []) {
+    const sourceableActivations = event.activations?.length
+      ? event.activations
+      : [{ id: `${event.id}-venue`, title: event.title, url: event.url }];
+    for (const activation of sourceableActivations) {
       console.log(`
+insert into public.entity_sources (entity_type, entity_id, source_id, relationship, sourced_at, raw_metadata)
+values (
+  'event_activation', ${activationIdSql(event, activation)}, ${sourceIdSql(activation.url ?? event.url)}, 'official',
+  ${sqlLiteral(record.sourceRun.sourcedAt)}::timestamptz,
+  ${jsonLiteral({ source: "weekly_events", eventId: event.id, activationId: activation.id })}
+)
+on conflict (entity_type, entity_id, source_id, relationship) do update set
+  sourced_at = excluded.sourced_at,
+  raw_metadata = public.entity_sources.raw_metadata || excluded.raw_metadata;
+
 insert into public.entity_sources (entity_type, entity_id, source_id, relationship, sourced_at, raw_metadata)
 select
   'event_occurrence',
@@ -415,7 +526,9 @@ function main() {
   printVenues(records);
   printSources(records);
   printEvents(records);
+  printActivations(records);
   printOccurrences(records);
+  printEventMedia(records);
   printPublications(records);
   printSourceLinks(records);
   console.log("commit;");

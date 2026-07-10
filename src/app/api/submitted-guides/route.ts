@@ -352,11 +352,21 @@ async function getVenueByName(supabase: SupabaseClient, params: {
     .eq("city_id", params.cityId)
     .eq("normalized_name", normalizedName)
     .is("merged_into_venue_id", null)
-    .limit(1)
+    .limit(20)
     .returns<VenueRow[]>();
 
-  if (exactRows?.[0]) {
-    return exactRows[0];
+  if (exactRows?.length) {
+    if (params.coordinates) {
+      const nearbyExact = exactRows.find(
+        (candidate) => distanceMeters(toCoordinates(candidate.coordinates), params.coordinates) <= 75,
+      );
+
+      if (nearbyExact) {
+        return nearbyExact;
+      }
+    } else if (exactRows.length === 1) {
+      return exactRows[0];
+    }
   }
 
   const firstToken = normalizedName.split(" ")[0];
