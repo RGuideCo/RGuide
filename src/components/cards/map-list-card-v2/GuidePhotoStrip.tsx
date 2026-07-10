@@ -34,7 +34,7 @@ export function GuidePhotoStrip({
   }
 
   return (
-    <div className="guide-content-cascade-item relative z-10 mt-3" style={style} aria-label="POI photos">
+    <div className="guide-content-cascade-item guide-photo-strip-block relative z-10 mt-3" style={style} aria-label="POI photos">
       <div className="mb-2 flex items-center gap-3">
         <p className="text-[11px] font-medium uppercase tracking-[0.2em] text-slate-500">{title}</p>
         <div className="h-px flex-1 bg-slate-200" aria-hidden="true" />

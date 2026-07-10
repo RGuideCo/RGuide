@@ -5,7 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { createPortal } from "react-dom";
-import { Check, ChevronDown, GripVertical, Heart, Minus, Plus, Trash2, Upload, X } from "@/components/icons/MaterialSymbol";
+import { Check, ChevronDown, Heart, Plus, Trash2, X } from "@/components/icons/MaterialSymbol";
 
 import { getPoiAttributeTags } from "@/lib/poi-tags";
 import { getCreatorHref, getGuideHref, getVenueHref } from "@/lib/routes";
@@ -27,8 +27,11 @@ import {
   GuideExpandedIntro,
   GuideSourcesOverlay,
   GuideSourceSummary,
+  GuideStopBody,
   GuideStopCardChrome,
+  GuideStopEditControls,
   GuideStopFooterActions,
+  GuideStopMedia,
   JourneyCardBody,
   MapListCardRoot,
   NestedPoiCard,
@@ -1984,11 +1987,15 @@ export function MapListCard({
                         event.currentTarget.blur();
                       }
                     }}
-                    className={`-mx-0.5 block w-[calc(100%+0.25rem)] min-w-0 rounded border border-white/35 bg-transparent px-0.5 py-0 text-lg font-semibold leading-6 text-white outline-none transition placeholder:text-white/45 focus:border-white ${retractingListChrome ? "guide-chrome-title--retract" : ""} ${expandingListChrome ? "guide-chrome-title--expand" : ""}`}
+                    className={`-mx-0.5 block w-[calc(100%+0.25rem)] min-w-0 rounded border border-white/35 bg-transparent px-0.5 py-0 font-semibold text-white outline-none transition placeholder:text-white/45 focus:border-white ${
+                      expandedChrome ? "text-xl leading-7" : "text-lg leading-6"
+                    } ${retractingListChrome ? "guide-chrome-title--retract" : ""} ${expandingListChrome ? "guide-chrome-title--expand" : ""}`}
                     aria-label="Edit guide title"
                   />
                 ) : (
-                  <h3 className={`min-w-0 text-lg font-semibold leading-6 transition-colors ${expandedChrome ? "text-white" : "text-slate-900 group-hover:text-slate-950"} ${retractingListChrome ? "guide-chrome-title--retract" : ""} ${expandingListChrome ? "guide-chrome-title--expand" : ""}`}>{list.title}</h3>
+                  <h3 className={`min-w-0 font-semibold transition-colors ${
+                    expandedChrome ? "text-xl leading-7 text-white" : "text-lg leading-6 text-slate-900 group-hover:text-slate-950"
+                  } ${retractingListChrome ? "guide-chrome-title--retract" : ""} ${expandingListChrome ? "guide-chrome-title--expand" : ""}`}>{list.title}</h3>
                 )}
                 <span className="mt-0.5 flex min-w-0 items-center gap-2">
                   {eventCardDateLabel ? (
@@ -2073,7 +2080,11 @@ export function MapListCard({
             </>
           )}
         </div>
-        <div className="relative z-10 flex shrink-0 items-center gap-1.5">
+        <div
+          className={`expanded-guide-header-actions relative z-10 flex shrink-0 items-center gap-1.5 ${
+            expandedChrome ? "expanded-guide-header-actions-expanded" : ""
+          }`}
+        >
           {canInlineEditGuide && currentUser?.canPublishGuides ? (
             <button
               type="button"
@@ -2157,7 +2168,7 @@ export function MapListCard({
               aria-label={isFavorited ? "Remove favorite" : "Favorite guide"}
               title={isFavorited ? "Remove favorite" : "Favorite guide"}
             >
-              <Heart className={`h-3.5 w-3.5 ${isFavorited ? "fill-current" : ""}`} />
+              <Heart filled={isFavorited} className="h-3.5 w-3.5" />
             </button>
           ) : null}
           {expandable && expandedChrome ? (
@@ -2331,7 +2342,7 @@ export function MapListCard({
                           ? { paddingBottom: stopListEndPadding }
                           : undefined
                       }
-                      className={`relative z-10 mt-2 grid gap-2 ${
+                      className={`expanded-guide-stop-list relative z-10 mt-2 grid gap-2 ${
                         fillPane && expanded
                           ? "guide-stop-list min-h-0 touch-pan-y auto-rows-max pt-0.5 pr-1 lg:flex-1 lg:overflow-y-auto lg:overscroll-contain"
                           : ""
@@ -2426,35 +2437,12 @@ export function MapListCard({
                         }
                         editActions={
                           inlineEditing ? (
-                            <div className="flex shrink-0 items-center gap-1">
-                              <button
-                                type="button"
-                                draggable
-                                onDragStart={(event) => {
-                                  event.stopPropagation();
-                                  setDraggingInlineStopId(stop.id);
-                                  event.dataTransfer.effectAllowed = "move";
-                                }}
-                                onDragEnd={() => setDraggingInlineStopId(null)}
-                                className="inline-flex h-7 w-7 cursor-grab items-center justify-center rounded-md border border-slate-950/10 bg-white/80 text-slate-500 transition hover:border-slate-950/20 hover:text-slate-800 active:cursor-grabbing"
-                                aria-label={`Reorder ${stop.name}`}
-                                title="Drag to reorder"
-                              >
-                                <GripVertical className="h-3.5 w-3.5" />
-                              </button>
-                              <button
-                                type="button"
-                                onClick={(event) => {
-                                  event.stopPropagation();
-                                  removeInlineStop(stop.id);
-                                }}
-                                className="inline-flex h-7 w-7 items-center justify-center rounded-md border border-rose-200 bg-white/80 text-rose-600 transition hover:border-rose-300 hover:bg-rose-50"
-                                aria-label={`Remove ${stop.name}`}
-                                title={`Remove ${stop.name}`}
-                              >
-                                <Minus className="h-3.5 w-3.5" />
-                              </button>
-                            </div>
+                            <GuideStopEditControls
+                              name={stop.name}
+                              onDragStart={() => setDraggingInlineStopId(stop.id)}
+                              onDragEnd={() => setDraggingInlineStopId(null)}
+                              onRemove={() => removeInlineStop(stop.id)}
+                            />
                           ) : null
                         }
                         isEditing={inlineEditing}
@@ -2469,132 +2457,99 @@ export function MapListCard({
                           onStopHoverChange,
                         }}
                       >
-                            <div className="expanded-guide-stop-body border-t border-slate-950/10 px-4 py-3">
-                              <div className={`expanded-poi-bio ${stopPhoto || inlineEditing ? "" : "expanded-poi-bio-no-photo"}`}>
-                                {stopPhoto || inlineEditing ? (
-                                  inlineEditing ? (
-                                    <label
-                                      className="expanded-poi-bio-photo group relative cursor-pointer overflow-hidden"
-                                      onClick={(event) => event.stopPropagation()}
-                                      title={`Upload photo for ${stop.name}`}
-                                    >
-                                      <input
-                                        type="file"
-                                        accept="image/*"
-                                        className="sr-only"
-                                        onChange={(event) => uploadInlineStopPhoto(stop.id, event.currentTarget.files?.[0])}
-                                      />
-                                      {stopPhoto ? (
-                                        <img
-                                          src={stopPhoto ?? ""}
-                                          alt=""
-                                          loading="lazy"
-                                          decoding="async"
-                                          className="h-full w-full object-cover"
-                                        />
-                                      ) : (
-                                        <span className="flex h-full w-full flex-col items-center justify-center gap-1 bg-slate-100 text-[11px] font-semibold uppercase tracking-[0.12em] text-slate-500">
-                                          <Upload className="h-4 w-4" />
-                                          Photo
-                                        </span>
-                                      )}
-                                      <span className="absolute inset-x-0 bottom-0 bg-slate-950/75 px-2 py-1 text-center text-[10px] font-semibold uppercase tracking-[0.12em] text-white opacity-0 transition group-hover:opacity-100">
-                                        Upload
-                                      </span>
-                                    </label>
-                                  ) : (
-                                    <button
-                                      type="button"
-                                      onClick={(event) => {
-                                        event.stopPropagation();
-                                        openPhotoPreview({ src: stopPhoto ?? "", title: stop.name });
-                                      }}
-                                      className="expanded-poi-bio-photo"
-                                      aria-label={`Open photo of ${stop.name}`}
-                                      title={`Open photo of ${stop.name}`}
-                                    >
-                                      <img
-                                        src={stopPhoto ?? ""}
-                                        alt=""
-                                        loading="lazy"
-                                        decoding="async"
-                                        className="h-full w-full object-cover"
-                                      />
-                                    </button>
-                                  )
+                        <GuideStopBody
+                          hasMedia={Boolean(stopPhoto) || inlineEditing}
+                          media={
+                            stopPhoto || inlineEditing ? (
+                              <GuideStopMedia
+                                name={stop.name}
+                                index={index}
+                                photo={stopPhoto}
+                                accentColor={CATEGORY_STYLES[stopCategory].mapColor || guideAccentColor}
+                                isEditing={inlineEditing}
+                                onSelect={() => activateGuideStop(stop.id)}
+                                onOpenPhoto={() => openPhotoPreview({ src: stopPhoto ?? "", title: stop.name })}
+                                onUploadPhoto={(file) => uploadInlineStopPhoto(stop.id, file)}
+                              />
+                            ) : null
+                          }
+                          copy={
+                            hasStopCopy || inlineEditing ? (
+                              <div className="expanded-poi-copy min-w-0">
+                                {inlineEditing ? (
+                                  <textarea
+                                    key={`${stop.id}-description-${stop.description}`}
+                                    defaultValue={stopContent.summary}
+                                    rows={4}
+                                    onClick={(event) => event.stopPropagation()}
+                                    onBlur={(event) => updateInlineStopDescription(stop, event.currentTarget.value)}
+                                    onKeyDown={(event) => event.stopPropagation()}
+                                    className="w-full resize-y rounded-md border border-slate-950/10 bg-white/85 px-3 py-2 text-base leading-7 text-slate-700 outline-none transition focus:border-slate-400 focus:bg-white"
+                                    aria-label={`Edit ${stop.name} description`}
+                                  />
+                                ) : stopContent.summary.trim().length ? (
+                                  <p>{stopContent.summary}</p>
                                 ) : null}
-                                {hasStopCopy || inlineEditing ? (
-                                  <div className="expanded-poi-copy min-w-0">
-                                    {inlineEditing ? (
-                                      <textarea
-                                        key={`${stop.id}-description-${stop.description}`}
-                                        defaultValue={stopContent.summary}
-                                        rows={4}
-                                        onClick={(event) => event.stopPropagation()}
-                                        onBlur={(event) => updateInlineStopDescription(stop, event.currentTarget.value)}
-                                        onKeyDown={(event) => event.stopPropagation()}
-                                        className="w-full resize-y rounded-md border border-slate-950/10 bg-white/85 px-3 py-2 text-base leading-7 text-slate-700 outline-none transition focus:border-slate-400 focus:bg-white"
-                                        aria-label={`Edit ${stop.name} description`}
-                                      />
-                                    ) : stopContent.summary.trim().length ? (
-                                      <p>{stopContent.summary}</p>
-                                    ) : null}
-                                    {stopAttributeTags.length ? (
-                                      <div className="expanded-poi-tags" aria-label={`${stop.name} attributes`}>
-                                        {stopAttributeTags.map((tag) => (
-                                          <span key={`${stop.id}-tag-${tag}`}>{tag}</span>
-                                        ))}
-                                      </div>
-                                    ) : null}
+                                {stopAttributeTags.length ? (
+                                  <div className="expanded-poi-tags" aria-label={`${stop.name} attributes`}>
+                                    {stopAttributeTags.map((tag) => (
+                                      <span key={`${stop.id}-tag-${tag}`}>{tag}</span>
+                                    ))}
                                   </div>
                                 ) : null}
                               </div>
-                              {stop.places?.length ? (
-                                <div className="mt-3">
-                                  <div className="mb-2 flex items-center gap-2">
-                                    <p className="ml-[3.75rem] font-mono text-[10px] font-semibold uppercase text-slate-500">POI</p>
-                                    <div className="h-px flex-1 bg-slate-950/10" />
-                                  </div>
-                                  <div className="space-y-2">
-                                    {stop.places.map((place, placeIndex) => (
-                                      <NestedPoiCard
-                                        key={place.id}
-                                        place={place}
-                                        parentStopId={stop.id}
-                                        index={placeIndex}
-                                        category={place.category ?? stopCategory}
-                                        isExpanded={expandedPlaceIds.includes(place.id)}
-                                        isActive={forceExpandStopId === place.id}
-                                        attributeTags={getPoiAttributeTags(place, place.category ?? stopCategory, list.location.neighborhood)}
-                                        handlers={{
-                                          onNestedStopSelect: activateNestedGuideStop,
-                                          onPlaceHeaderActivate: activatePlaceHeader,
-                                          onPlaceToggle: togglePlace,
-                                          onStopHoverChange,
-                                          onOpenPhoto: openPhotoPreview,
-                                        }}
-                                      />
-                                    ))}
-                                  </div>
+                            ) : null
+                          }
+                          footer={
+                            <GuideStopFooterActions
+                              stop={stop}
+                              resolvedStopHours={resolvedStopHours}
+                              isHistoricalGuide={isHistoricalGuide}
+                              weekdayLabel={weekdayLabel}
+                              officialStopUrl={officialStopUrl}
+                              timetableUrl={timetableUrl}
+                              directionsPickerOpen={directionsPickerStopId === stop.id}
+                              stayBookingDetails={stayBookingDetails}
+                              nearbyStayDetails={nearbyStayDetails}
+                              getDirectionsHref={getDirectionsHref}
+                              onToggleDirectionsPicker={() =>
+                                setDirectionsPickerStopId((current) => (current === stop.id ? null : stop.id))
+                              }
+                              onCloseDirectionsPicker={closeDirectionsPicker}
+                            />
+                          }
+                          nestedPlaces={
+                            stop.places?.length ? (
+                              <div className="expanded-guide-stop-nested-places">
+                                <div className="expanded-guide-stop-nested-heading">
+                                  <p>POI</p>
+                                  <div aria-hidden="true" />
                                 </div>
-                              ) : null}
-                              <GuideStopFooterActions
-                                stop={stop}
-                                resolvedStopHours={resolvedStopHours}
-                                isHistoricalGuide={isHistoricalGuide}
-                                weekdayLabel={weekdayLabel}
-                                officialStopUrl={officialStopUrl}
-                                timetableUrl={timetableUrl}
-                                directionsPickerOpen={directionsPickerStopId === stop.id}
-                                stayBookingDetails={stayBookingDetails}
-                                nearbyStayDetails={nearbyStayDetails}
-                                getDirectionsHref={getDirectionsHref}
-                                onToggleDirectionsPicker={() =>
-                                  setDirectionsPickerStopId((current) => (current === stop.id ? null : stop.id))
-                                }
-                                onCloseDirectionsPicker={closeDirectionsPicker}
-                              />
-                            </div>
+                                <div className="space-y-2">
+                                  {stop.places.map((place, placeIndex) => (
+                                    <NestedPoiCard
+                                      key={place.id}
+                                      place={place}
+                                      parentStopId={stop.id}
+                                      index={placeIndex}
+                                      category={place.category ?? stopCategory}
+                                      isExpanded={expandedPlaceIds.includes(place.id)}
+                                      isActive={forceExpandStopId === place.id}
+                                      attributeTags={getPoiAttributeTags(place, place.category ?? stopCategory, list.location.neighborhood)}
+                                      handlers={{
+                                        onNestedStopSelect: activateNestedGuideStop,
+                                        onPlaceHeaderActivate: activatePlaceHeader,
+                                        onPlaceToggle: togglePlace,
+                                        onStopHoverChange,
+                                        onOpenPhoto: openPhotoPreview,
+                                      }}
+                                    />
+                                  ))}
+                                </div>
+                              </div>
+                            ) : null
+                          }
+                        />
                       </GuideStopCardChrome>
                       </Fragment>
                         );

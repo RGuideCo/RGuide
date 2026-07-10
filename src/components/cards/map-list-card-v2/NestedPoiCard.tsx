@@ -79,10 +79,8 @@ export function NestedPoiCard({
             <ChevronDown className={`h-3.5 w-3.5 text-slate-400 transition-transform ${isExpanded ? "rotate-180" : ""}`} />
           </button>
         </div>
-        <div className={`guide-stop-panel grid transition-[grid-template-rows,opacity,margin] duration-150 ease-out ${
-          isExpanded ? "mt-1 grid-rows-[1fr] opacity-100" : "mt-0 grid-rows-[0fr] opacity-0"
-        }`}>
-          <div className="overflow-hidden">
+        <div className="guide-stop-panel" data-stop-panel="nested" data-open={isExpanded ? "true" : "false"}>
+          <div className="guide-stop-panel-inner">
             <div className={`expanded-poi-bio expanded-poi-bio-place pb-1 ${placePhoto ? "" : "expanded-poi-bio-no-photo"}`}>
               {placePhoto ? (
                 <button

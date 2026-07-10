@@ -24,7 +24,7 @@ export function GuideCardBody({
 }: ProductionGuideCardBodyProps) {
   if (children) {
     return (
-      <div className="contents" data-guide-card-body="guide">
+      <div className="expanded-guide-content px-4 pb-4" data-guide-card-body="guide">
         {children}
       </div>
     );
@@ -46,7 +46,7 @@ export function GuideCardBody({
       />
       <GuideSourceRow listId={list.id} sources={list.sources ?? []} />
       {!deferStops ? (
-        <ol className="relative z-10 mt-2 grid gap-2">
+        <ol className="expanded-guide-stop-list relative z-10 mt-2 grid gap-2">
           {list.stops.map((stop, index) => {
             const stopCategory = stop.category ?? list.category;
             return (

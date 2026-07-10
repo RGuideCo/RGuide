@@ -20,7 +20,7 @@ export function GuideExpandedIntro({ list, sourceAction, isEditing = false, onDe
 
   return (
     <>
-      <div className="guide-content-cascade-item relative z-10 flex items-center gap-3">
+      <div className="guide-content-cascade-item guide-expanded-intro-row relative z-10 flex items-center gap-3">
         <p className="text-[11px] font-medium uppercase tracking-[0.2em] text-slate-500">
           Description
         </p>

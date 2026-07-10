@@ -12,7 +12,7 @@ type ProductionEventCardBodyProps = Partial<GuideBodyProps> & {
 export function EventCardBody({ children, ...props }: ProductionEventCardBodyProps) {
   if (children) {
     return (
-      <div className="contents" data-guide-card-body="event">
+      <div className="expanded-guide-content px-4 pb-4" data-guide-card-body="event">
         {children}
       </div>
     );
