@@ -363,6 +363,7 @@ function looksLikePlaceholderPhoto(url) {
 
 function looksLikeBrokenImageUrl(url) {
   if (!url) return false;
+  if (/^\/[^?#]+\.(jpg|jpeg|png|webp|avif|gif)(\?|#|$)/i.test(url)) return false;
   if (!isValidUrl(url)) return true;
   if (/\.(jpg|jpeg|png|webp|avif|gif)(\?|#|$)/i.test(url)) return false;
   if (/commons\.wikimedia\.org\/wiki\/Special:FilePath\//i.test(url)) return false;

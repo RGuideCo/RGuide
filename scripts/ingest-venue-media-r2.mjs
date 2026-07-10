@@ -210,6 +210,32 @@ function extensionFromUrl(url) {
   return null;
 }
 
+function contentTypeFromPath(filePath) {
+  const extension = path.extname(filePath).toLowerCase();
+  if (extension === ".jpg" || extension === ".jpeg") return "image/jpeg";
+  if (extension === ".png") return "image/png";
+  if (extension === ".webp") return "image/webp";
+  if (extension === ".avif") return "image/avif";
+  return null;
+}
+
+function resolveLocalImagePath(url) {
+  if (url.startsWith("file://")) {
+    const filePath = fileURLToPath(url);
+    const relative = path.relative(ROOT, filePath);
+    if (relative.startsWith("..") || path.isAbsolute(relative)) {
+      throw new Error("local source file must be inside the repository");
+    }
+    return filePath;
+  }
+
+  if (url.startsWith("/")) {
+    return path.join(ROOT, "public", url.replace(/^\/+/, ""));
+  }
+
+  return null;
+}
+
 function decodePathSegment(value) {
   try {
     return decodeURIComponent(value);
@@ -501,6 +527,19 @@ function buildStorageKey(row, contentType) {
 }
 
 async function fetchImage(url) {
+  const localPath = resolveLocalImagePath(url);
+  if (localPath) {
+    const contentType = contentTypeFromPath(localPath);
+    if (!contentType || !IMAGE_EXT_BY_TYPE.has(contentType)) {
+      throw new Error(`local source file has unsupported image extension: ${localPath}`);
+    }
+    const bytes = fs.readFileSync(localPath);
+    if (!bytes.length) {
+      throw new Error("local source file is empty");
+    }
+    return { bytes: new Uint8Array(bytes), contentType };
+  }
+
   const fetchWithUserAgent = (userAgent) => fetch(url, {
     redirect: "follow",
     headers: {
