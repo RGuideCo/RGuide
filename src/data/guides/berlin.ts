@@ -215,7 +215,7 @@ const stops: Record<string, GuideStop> = {
     "berlin-food-tim-raue",
     "Restaurant Tim Raue",
     [52.5074, 13.3906],
-    "Restaurant Tim Raue is the polished Berlin table for Asian-inflected tasting menus, sharp acidity, precise pacing, and a dining room with real confidence. It belongs for travelers who want one of the city's most recognizable fine-dining reservations. Go when precision matters more than spontaneity.",
+    "Restaurant Tim Raue serves Asian-inflected tasting menus built on sharp acidity, precise pace, and bold seasoning in a polished dining room. It remains one of Berlin's most recognizable fine-dining reservations.",
     {
       venueKind: "food_drink",
       foodServiceType: "restaurant",
@@ -232,7 +232,7 @@ const stops: Record<string, GuideStop> = {
     "berlin-food-coda",
     "CODA Dessert Dining",
     [52.4868, 13.4246],
-    "CODA is not dessert after dinner; it is dinner rebuilt through pastry technique, fermentation, and savory-sweet logic. That makes it one of Berlin's most interesting reservations, especially for travelers who already know the standard tasting-menu grammar. Go curious, and do not treat it like a cake shop.",
+    "That makes it one of Berlin's most interesting reservations, especially for travelers who already know the standard tasting-menu grammar. Go curious, and do not treat it like a cake shop.",
     {
       venueKind: "food_drink",
       foodServiceType: "restaurant",
@@ -248,7 +248,7 @@ const stops: Record<string, GuideStop> = {
     "berlin-food-nobelhart-und-schmutzig",
     "Nobelhart & Schmutzig",
     [52.5077, 13.3892],
-    "Nobelhart & Schmutzig turns Berlin-Brandenburg ingredients into a focused counter tasting menu where provenance is part of the experience. The cooking is direct, seasonal, and deliberately local rather than luxury-for-luxury's-sake. Book it when you want a meal with a strong point of view.",
+    "Nobelhart & Schmutzig turns Berlin-Brandenburg ingredients into a focused counter tasting menu where provenance is part of the experience. The direct, seasonal cooking is deliberately local rather than luxurious for its own sake, and reservations are essential.",
     {
       venueKind: "food_drink",
       foodServiceType: "restaurant",
@@ -280,7 +280,7 @@ const stops: Record<string, GuideStop> = {
     "berlin-food-horvath",
     "Restaurant Horvath",
     [52.4969, 13.4219],
-    "Horvath sits on the Kreuzberg canal with a confidence that comes from knowing its vegetable-led Austrian-Brandenburg lane. The room is refined but not icy, and the cooking rewards people who like quiet depth over loud novelty. It is best as a slower dinner after a canal walk, not a pre-club refuel.",
+    "Horvath sits on the Kreuzberg canal with a confidence that comes from knowing its vegetable-led Austrian-Brandenburg lane. The room is refined but not icy, and the cooking rewards people who like quiet depth over loud novelty.",
     {
       venueKind: "food_drink",
       foodServiceType: "restaurant",
@@ -296,7 +296,7 @@ const stops: Record<string, GuideStop> = {
     "berlin-food-cookies-cream",
     "Cookies Cream",
     [52.5152, 13.3886],
-    "Cookies Cream still works because the entrance, the vegetarian cooking, and the club-scene aftertaste feel specifically Berlin rather than politely European. It is polished enough for a special dinner but loose enough to keep the night from becoming a ceremony. Use it when you want fine dining that knows how to sneak in through the back door.",
+    "Cookies Cream hides polished vegetarian cooking behind an unmarked entrance, preserving enough club-scene aftertaste to feel specifically Berlin rather than politely European.",
     {
       venueKind: "food_drink",
       foodServiceType: "restaurant",
@@ -312,7 +312,7 @@ const stops: Record<string, GuideStop> = {
     "berlin-food-barra",
     "Barra",
     [52.4869, 13.4282],
-    "Barra is the Neukolln dinner that keeps the city honest: seasonal small plates, natural wine, and a room that feels like a neighborhood habit rather than an imported concept. It is better for people who like sharing and grazing than for anyone who needs a formal three-course arc. Book, then leave space for one more bar nearby.",
+    "Barra is the Neukolln dinner that keeps the city honest: seasonal small plates, natural wine, and a room that feels like a neighborhood habit rather than an imported concept. It is better for people who like sharing and grazing than for a formal three-course arc. Book, then leave space for one more bar nearby.",
     {
       venueKind: "food_drink",
       foodServiceType: "restaurant",
@@ -328,7 +328,7 @@ const stops: Record<string, GuideStop> = {
     "berlin-food-kink",
     "Kink Bar & Restaurant",
     [52.528, 13.4132],
-    "Kink gives Prenzlauer Berg a night that can start with dinner and slide cleanly into drinks. The cooking is modern and the industrial room has enough pulse to feel like Berlin after dark, but it is still useful for an actual meal. Pick it when a group is split between restaurant people and bar people.",
+    "Kink gives Prenzlauer Berg a night that can start with dinner and slide cleanly into drinks. Pick it when a group is split between restaurant people and bar people.",
     {
       venueKind: "food_drink",
       foodServiceType: "restaurant",
@@ -344,7 +344,7 @@ const stops: Record<string, GuideStop> = {
     "berlin-food-lokal",
     "Lokal",
     [52.5268, 13.3946],
-    "Lokal is the Mitte answer when you want German cooking without museum-district heaviness. It is seasonal, regional, and calm in a way that lets lunch or dinner do its job before the day moves on. The caveat is simple: it looks easier than it is, so reserve instead of wandering in hungry.",
+    "Lokal is the Mitte answer for German cooking without museum-district heaviness. The caveat is simple: it looks easier than it is, so reserve instead of wandering in hungry.",
     {
       venueKind: "food_drink",
       foodServiceType: "restaurant",
@@ -360,7 +360,7 @@ const stops: Record<string, GuideStop> = {
     "berlin-cheap-mustafas-gemuese-kebap",
     "Mustafa's Gemuese Kebap",
     [52.4939, 13.3889],
-    "Mustafa's is one of Berlin's best-known vegetable kebab counters, built around grilled vegetables, herbs, sauce, and a doner that became part of the city's cheap-eats mythology. It works as a Kreuzberg street-food stop when you want something fast, filling, and unmistakably Berlin.",
+    "Mustafa's is one of Berlin's best-known kebab counters, layering grilled vegetables, herbs, sauce, and doner into a fast, filling Kreuzberg street meal that became part of the city's cheap-eats mythology.",
     {
       venueKind: "food_drink",
       foodServiceType: "fast_food",
@@ -376,7 +376,7 @@ const stops: Record<string, GuideStop> = {
     "berlin-cheap-curry-36",
     "Curry 36",
     [52.4937, 13.3887],
-    "Curry 36 is the classic Mehringdamm currywurst stop: quick, inexpensive, and built for the snack-counter version of Berlin. It is useful before or after Kreuzberg plans, especially when you want the city in paper-plate form rather than a long meal.",
+    "Curry 36 is a classic Mehringdamm currywurst counter: quick, inexpensive, and built for the snack-counter version of Berlin.",
     {
       venueKind: "food_drink",
       foodServiceType: "fast_food",
@@ -392,7 +392,7 @@ const stops: Record<string, GuideStop> = {
     "berlin-cheap-ruyam-gemuese-kebab",
     "Ruyam Gemuese Kebab",
     [52.4727, 13.421],
-    "Ruyam makes a generous vegetable kebab with herbs, sauces, and enough freshness to stand apart from a routine late-night doner. It fits easily into a Neukolln or Schoeneberg day and works when you want cheap food that still feels chosen.",
+    "Ruyam makes a generous vegetable kebab with herbs, sauces, and enough freshness to stand apart from a routine late-night doner. It fits easily into a Neukolln or Schoeneberg day and works for cheap food that still feels chosen.",
     {
       venueKind: "food_drink",
       foodServiceType: "fast_food",
@@ -408,7 +408,7 @@ const stops: Record<string, GuideStop> = {
     "berlin-cheap-imren-grill",
     "Imren Grill",
     [52.492, 13.4258],
-    "Imren is Berlin's Turkish counter comfort in a form that makes sense for lunch, late dinner, or a low-cost reset. The doner, soups, lahmacun, and grilled plates have the depth that chain kebab shops flatten out. Use it when you want value with real flavor.",
+    "Imren serves doner, soups, lahmacun, and grilled Turkish plates with more depth than the city's interchangeable chain kebab shops. Counter service and low prices keep the meal direct.",
     {
       venueKind: "food_drink",
       foodServiceType: "fast_food",
@@ -424,7 +424,7 @@ const stops: Record<string, GuideStop> = {
     "berlin-cheap-wen-cheng",
     "Wen Cheng Handpulled Noodles",
     [52.5313, 13.4127],
-    "Wen Cheng is the noodle stop for wide biang biang ribbons, chile oil, chew, and a short menu that moves fast. It is not a long dinner; it is a focused bowl before you head back into the city.",
+    "Wen Cheng is a noodle restaurant for wide biang biang ribbons, chile oil, chew, and a short menu that moves fast.",
     {
       venueKind: "food_drink",
       foodServiceType: "restaurant",
@@ -440,7 +440,7 @@ const stops: Record<string, GuideStop> = {
     "berlin-cheap-burgermeister",
     "Burgermeister Schlesisches Tor",
     [52.5017, 13.4415],
-    "Burgermeister is the former-toilet burger stand that became a Berlin rite of passage and somehow stayed useful. The point is not refinement; it is a hot burger under the U-Bahn tracks after Kreuzberg has done what Kreuzberg does. Late hours make it more valuable than its price tag alone.",
+    "Burgermeister is the former-toilet burger stand that became a Berlin rite of passage and somehow stayed useful. Late hours make it more valuable than its price tag alone.",
     {
       venueKind: "food_drink",
       foodServiceType: "fast_food",
@@ -456,7 +456,7 @@ const stops: Record<string, GuideStop> = {
     "berlin-cheap-curry-baude",
     "Curry Baude",
     [52.5499, 13.3886],
-    "Curry Baude is the currywurst choice for people who would rather stand by Gesundbrunnen than chase the bigger names. It is direct, inexpensive, and better than its station-side setting suggests. Pair it with the Berlin Wall Memorial or a north-side itinerary.",
+    "Curry Baude is a currywurst counter for people who would rather stand by Gesundbrunnen than chase the bigger names. It is direct, inexpensive, and better than its station-side setting suggests.",
     {
       venueKind: "food_drink",
       foodServiceType: "fast_food",
@@ -472,7 +472,7 @@ const stops: Record<string, GuideStop> = {
     "berlin-cheap-rogacki",
     "Rogacki",
     [52.5101, 13.3059],
-    "Rogacki is a West Berlin institution hiding in plain daylight: smoked fish, sausages, salads, counters, and the feeling of a city that existed before the new Berlin story took over. It works best for lunch or picnic supplies rather than a polished sit-down meal. Come hungry and browse like you mean it.",
+    "Rogacki is a longstanding West Berlin food hall lined with counters for smoked fish, sausages, prepared salads, and hot dishes. The tiled market preserves a practical, old-school style of eating that predates the city's newer restaurant culture.",
     {
       venueKind: "food_drink",
       foodServiceType: "stall",
@@ -554,7 +554,7 @@ const stops: Record<string, GuideStop> = {
     "berlin-hotel-wilmina",
     "Wilmina",
     [52.5087, 13.3026],
-    "Wilmina is the quietest kind of Berlin surprise: a former women's prison remade into gardens, brick, calm rooms, and a serious restaurant next door. It is best for travelers who want Charlottenburg sleep and design restraint rather than Mitte convenience. The tradeoff is location; the reward is breathing room.",
+    "Wilmina is the quietest kind of Berlin surprise: a former women's prison remade into gardens, brick, calm rooms, and a serious restaurant next door. The tradeoff is location; the reward is breathing room.",
     {
       venueKind: "lodging",
       lodgingType: "hotel",
@@ -571,7 +571,7 @@ const stops: Record<string, GuideStop> = {
     "berlin-hotel-so-das-stue",
     "SO/ Berlin Das Stue",
     [52.5099, 13.3453],
-    "Das Stue is the Tiergarten stay for people who want quiet luxury with the park almost pressing against the windows. The old embassy bones, zoo-edge setting, and design-hotel polish make it feel removed without being remote. It suits museum-and-park days better than bar-hopping nights.",
+    "Das Stue is the Tiergarten stay for quiet luxury with the park almost pressing against the windows. The old embassy bones, zoo-edge setting, and design-hotel polish make it feel removed without being remote. It suits museum-and-park days better than bar-hopping nights.",
     {
       venueKind: "lodging",
       lodgingType: "hotel",
@@ -588,7 +588,7 @@ const stops: Record<string, GuideStop> = {
     "berlin-hotel-orania",
     "Orania.Berlin",
     [52.5028, 13.4168],
-    "Orania is the Kreuzberg base that understands the neighborhood's rhythm instead of using it as decoration. Rooms are warm, the bar and music programming matter, and the location puts canal walks, food, and nightlife close. Stay here when the trip wants Berlin after dark without giving up comfort.",
+    "Orania is the Kreuzberg base that understands the neighborhood's rhythm instead of using it as decoration. Rooms are warm, the bar and music programming matter, and the location puts canal walks, food, and nightlife close.",
     {
       venueKind: "lodging",
       lodgingType: "hotel",
@@ -605,7 +605,7 @@ const stops: Record<string, GuideStop> = {
     "berlin-hotel-michelberger",
     "Michelberger Hotel",
     [52.5052, 13.4482],
-    "Michelberger is the Friedrichshain stay for travelers who want the city a little louder, younger, and closer to clubs, galleries, and the East Side. It is social without being a hostel and designed without becoming precious. Light sleepers should choose rooms carefully; the location has a pulse.",
+    "Michelberger is a lively Friedrichshain hotel near clubs, galleries, the East Side Gallery, and Warschauer Strasse. Its courtyard and public rooms are social without feeling like a hostel, while the design has personality without becoming precious. Street-facing rooms can hear the neighborhood's pulse.",
     {
       venueKind: "lodging",
       lodgingType: "hotel",
@@ -622,7 +622,7 @@ const stops: Record<string, GuideStop> = {
     "berlin-hotel-25hours-bikini",
     "25hours Hotel Bikini Berlin",
     [52.5057, 13.3357],
-    "25hours Bikini Berlin is the westside choice when the trip wants design, zoo views, a rooftop bar, and easy access to Charlottenburg without feeling formal. It is playful, sometimes busy, and very useful for travelers who want Kurfurstendamm and Tiergarten in reach. Book higher-category rooms if the view is the point.",
+    "25hours Bikini Berlin is a westside hotel for design, zoo views, a rooftop bar, and easy access to Charlottenburg without feeling formal. It is playful, sometimes busy, and very useful for Kurfurstendamm and Tiergarten in reach. Book higher-category rooms if the view is the point.",
     {
       venueKind: "lodging",
       lodgingType: "hotel",
@@ -639,7 +639,7 @@ const stops: Record<string, GuideStop> = {
     "berlin-hotel-zoo",
     "Hotel Zoo Berlin",
     [52.5022, 13.3268],
-    "Hotel Zoo gives Kurfurstendamm a glamorous, city-break base without tipping into palace-hotel stiffness. It is strong for shopping, westside restaurants, and a more classic Berlin hotel night. Choose it when Charlottenburg is a feature, not a compromise.",
+    "Hotel Zoo brings glamorous interiors and a classic city-hotel atmosphere to Kurfurstendamm without palace-hotel stiffness. Charlottenburg shopping and west-side restaurants sit close to the door.",
     {
       venueKind: "lodging",
       lodgingType: "hotel",
@@ -656,7 +656,7 @@ const stops: Record<string, GuideStop> = {
     "berlin-hotel-hoxton-charlottenburg",
     "The Hoxton Charlottenburg",
     [52.5018, 13.3218],
-    "The Hoxton Charlottenburg is the practical, good-looking westside base for travelers who want bars, breakfast, and rooms that do not overcomplicate the trip. It lacks the grand history of Berlin's trophy hotels, but it is easier to use. Good for a design stay with a saner price ceiling.",
+    "The Hoxton Charlottenburg is the practical, good-looking westside base for bars, breakfast, and rooms that do not overcomplicate the trip. It lacks the grand history of Berlin's trophy hotels, but it is easier to use. Good for a design stay with a saner price ceiling.",
     {
       venueKind: "lodging",
       lodgingType: "hotel",
@@ -673,7 +673,7 @@ const stops: Record<string, GuideStop> = {
     "berlin-hotel-sir-savigny",
     "Sir Savigny Hotel",
     [52.5057, 13.3204],
-    "Sir Savigny is a smaller Charlottenburg stay with literary mood, side-street calm, and good access to Savignyplatz restaurants. It is not the flashiest hotel in the city, which is exactly the appeal. Use it for a quieter westside trip with trains, cafes, and dinner nearby.",
+    "Sir Savigny is a smaller Charlottenburg hotel with literary mood, side-street calm, and Savignyplatz restaurants, cafes, and trains nearby. The westside setting favors quiet character over city-center flash.",
     {
       venueKind: "lodging",
       lodgingType: "hotel",
@@ -690,7 +690,7 @@ const stops: Record<string, GuideStop> = {
     "berlin-hostel-circus",
     "The Circus Hostel",
     [52.5296, 13.4012],
-    "Circus is the clean first answer for Berlin hostels: central, social, organized, and close to Rosenthaler Platz without dumping you into Alexanderplatz chaos. It works for first-timers who want help, events, and a bar, but not a full party-hostel gamble. Dorms and private rooms book up, so reserve early in warm months.",
+    "Circus is the clean first answer for Berlin hostels: central, social, organized, and close to Rosenthaler Platz without dumping you into Alexanderplatz chaos. Dorms and private rooms book up, so reserve early in warm months.",
     {
       venueKind: "lodging",
       lodgingType: "hostel",
@@ -707,7 +707,7 @@ const stops: Record<string, GuideStop> = {
     "berlin-hostel-eastseven",
     "EastSeven Berlin Hostel",
     [52.5317, 13.4147],
-    "EastSeven is the social-but-grown-up Prenzlauer Berg pick, the kind of hostel people remember because the common spaces actually work. It is close enough to Mitte for sightseeing and far enough from the hardest party strip to sleep. Best for solo travelers who want conversation without chaos.",
+    "EastSeven is a social-but-grown-up Prenzlauer Berg hostel, the kind of hostel people remember because the common spaces actually work. It is close enough to Mitte for sightseeing and far enough from the hardest party strip to sleep. Best for solo travelers who want conversation without chaos.",
     {
       venueKind: "lodging",
       lodgingType: "hostel",
@@ -724,7 +724,7 @@ const stops: Record<string, GuideStop> = {
     "berlin-hostel-grand-hostel-classic",
     "Grand Hostel Berlin Classic",
     [52.4983, 13.3886],
-    "Grand Hostel Berlin Classic is the Kreuzberg option for travelers who want a hostel with old-building bones and more dignity than a pure bunk factory. The location works for Tempodrom, Hallesches Tor, and Kreuzberg nights. It is social, but not as relentlessly party-coded as the biggest chains.",
+    "Grand Hostel Berlin Classic occupies a handsome old building near Hallesches Tor, with dorms, private rooms, and a social atmosphere that stops short of full party-hostel intensity. Tempodrom, Kreuzberg nights, and central transit are close.",
     {
       venueKind: "lodging",
       lodgingType: "hostel",
@@ -741,7 +741,7 @@ const stops: Record<string, GuideStop> = {
     "berlin-hostel-pfefferbett",
     "Pfefferbett Hostel",
     [52.532, 13.4118],
-    "Pfefferbett sits in the old brewery complex by Senefelderplatz, which gives budget sleep a better setting than most dorm addresses get. It is useful for Prenzlauer Berg cafes, Kollwitzkiez, and quick U-Bahn moves into Mitte. Good for travelers who want value and a courtyard, not a nightclub disguised as lodging.",
+    "Pfefferbett sits in the old brewery complex by Senefelderplatz, which gives budget sleep a better setting than most dorm addresses get. Good for value and a courtyard, not a nightclub disguised as lodging.",
     {
       venueKind: "lodging",
       lodgingType: "hostel",
@@ -758,7 +758,7 @@ const stops: Record<string, GuideStop> = {
     "berlin-hostel-st-christophers-alexanderplatz",
     "St Christopher's Inn Berlin Alexanderplatz",
     [52.5248, 13.4115],
-    "St Christopher's is the party-leaning central hostel: easy transport, bar energy, pod-style beds in some rooms, and very little mystery about the target audience. It is strongest for younger travelers who value meeting people over quiet. If sleep is the priority, book carefully or look elsewhere.",
+    "St Christopher's is the party-leaning central hostel: easy transport, bar energy, pod-style beds in some rooms, and very little mystery about the target audience. If sleep is the priority, book carefully or look elsewhere.",
     {
       venueKind: "lodging",
       lodgingType: "hostel",
@@ -792,7 +792,7 @@ const stops: Record<string, GuideStop> = {
     "berlin-hostel-sunflower",
     "Sunflower Hostel Berlin",
     [52.5085, 13.4475],
-    "Sunflower is the Friedrichshain budget pick for travelers who want RAW, Warschauer Strasse, and late-night food close enough to stumble home. It is cheerful, scruffy around the edges, and better for nightlife than museum mornings. Bring realistic expectations and it does the job well.",
+    "Sunflower is a cheerful, rough-edged Friedrichshain hostel close to RAW, Warschauer Strasse, clubs, and late-night food. Its social dorm atmosphere favors nightlife and low prices over polished design or especially quiet mornings.",
     {
       venueKind: "lodging",
       lodgingType: "hostel",
@@ -809,7 +809,7 @@ const stops: Record<string, GuideStop> = {
     "berlin-hostel-heart-of-gold",
     "Heart of Gold Hostel",
     [52.5256, 13.3907],
-    "Heart of Gold is the central budget bed with a sci-fi wink and a location that makes Museum Island, Friedrichstrasse, and Oranienburger Strasse easy. It is not boutique, but it is useful, cheap, and social enough for solo travelers. Best for people who want Mitte access without hotel prices.",
+    "Heart of Gold is the central budget bed with a sci-fi wink and a location that makes Museum Island, Friedrichstrasse, and Oranienburger Strasse easy. It is not boutique, but it is useful, cheap, and social enough for solo travelers. Best for Mitte access without hotel prices.",
     {
       venueKind: "lodging",
       lodgingType: "hostel",
@@ -826,7 +826,7 @@ const stops: Record<string, GuideStop> = {
     "berlin-hostel-meininger-tiergarten",
     "MEININGER Berlin Tiergarten",
     [52.5246, 13.3442],
-    "MEININGER Tiergarten behaves more like a budget hotel with hostel bones, which is exactly why it belongs. Families, groups, and travelers who want private-room value get space and transit without the full dorm-party script. It is not the most atmospheric choice, but it is practical.",
+    "MEININGER Tiergarten behaves more like a budget hotel with hostel bones, offering dorms, private rooms, space for families and groups, and useful transit without a full party-hostel script. It is practical rather than atmospheric.",
     {
       venueKind: "lodging",
       lodgingType: "hostel",
@@ -843,7 +843,7 @@ const stops: Record<string, GuideStop> = {
     "berlin-hostel-three-little-pigs",
     "Three Little Pigs Hostel",
     [52.5035, 13.3856],
-    "Three Little Pigs is a hostel in a former convent near Anhalter Bahnhof, useful for travelers who want value, history, and easy access to Kreuzberg, Potsdamer Platz, and Topography of Terror. Dorms and private rooms make it flexible for solo travelers, groups, and budget stays that are more sightseeing-led than party-led.",
+    "Three Little Pigs is a hostel in a former convent near Anhalter Bahnhof, useful for value, history, and easy access to Kreuzberg, Potsdamer Platz, and Topography of Terror. Dorms and private rooms make it flexible for solo travelers, groups, and budget stays that are more sightseeing-led than party-led.",
     {
       venueKind: "lodging",
       lodgingType: "hostel",
@@ -875,7 +875,7 @@ const stops: Record<string, GuideStop> = {
     "berlin-dive-madame-claude",
     "Madame Claude",
     [52.4999, 13.4369],
-    "Madame Claude is the Kreuzberg basement bar with furniture fixed to the ceiling and a program that keeps the room moving through concerts, DJs, and late drinks. It is strange without feeling overproduced. Check the schedule before you treat it as a quiet beer stop.",
+    "Madame Claude is the Kreuzberg basement bar with furniture fixed to the ceiling and a program that keeps the room moving through concerts, DJs, and late drinks. It is strange without feeling overproduced.",
     {
       venueKind: "nightlife",
       nightlifeType: "dive_bar",
@@ -922,7 +922,7 @@ const stops: Record<string, GuideStop> = {
     "berlin-dive-kumpelnest-3000",
     "Kumpelnest 3000",
     [52.5008, 13.3541],
-    "Kumpelnest 3000 is the after-hours Berlin fever dream: red light, mixed crowd, and a sense that the night has stopped checking its watch. It is not elegant and it should not be. Use it late, with people who understand that atmosphere is the point.",
+    "Kumpelnest 3000 is a dark, kitschy late bar with an eclectic crowd, loud personality, and no interest in elegance. The atmosphere is the point, especially with friends who understand the assignment.",
     {
       venueKind: "nightlife",
       nightlifeType: "dive_bar",
@@ -954,7 +954,7 @@ const stops: Record<string, GuideStop> = {
     "berlin-dive-franken-bar",
     "Franken Bar",
     [52.5002, 13.4287],
-    "Franken is the metal-and-punk Kreuzberg bar that keeps the night deliberately unvarnished. It is a strong fit after food around Oranienstrasse when the group wants beer, noise, and a room with regulars. Not for a delicate first date, unless the date has excellent taste in distortion.",
+    "Franken Bar is a compact Kreuzberg rock bar known for loud guitars, inexpensive beer, stickers, and a crowd of regulars. Punk and metal set the tone more reliably than polished cocktail service.",
     {
       venueKind: "nightlife",
       nightlifeType: "dive_bar",
@@ -970,7 +970,7 @@ const stops: Record<string, GuideStop> = {
     "berlin-dive-silverfuture",
     "SilverFuture",
     [52.4888, 13.4266],
-    "SilverFuture is a queer Neukolln bar with a cheap-drink backbone and a welcome that feels more lived-in than branded. It is a good late stop when Weserstrasse is already pulling you along. Expect small-room energy and check cash/card details before settling in.",
+    "SilverFuture is a queer Neukolln bar with a cheap-drink backbone and a welcome that feels more lived-in than branded. It is a late bar when Weserstrasse is already pulling you along.",
     {
       venueKind: "nightlife",
       nightlifeType: "dive_bar",
@@ -985,7 +985,7 @@ const stops: Record<string, GuideStop> = {
     "berlin-dive-bohnengold",
     "Bohnengold",
     [52.4973, 13.4285],
-    "Bohnengold is a Kreuzberg bar that can look like a simple drink stop until the back room and late-night momentum take over. It is useful because it works for both one beer and a longer night. Go when Oranienstrasse is the plan and flexibility matters.",
+    "Bohnengold begins as a relaxed Kreuzberg bar, then gathers momentum in its back room later at night. Beer and conversation can turn into dancing without requiring a formal club setup.",
     {
       venueKind: "nightlife",
       nightlifeType: "dive_bar",
@@ -1001,7 +1001,7 @@ const stops: Record<string, GuideStop> = {
     "berlin-dive-a-bar",
     "Ä Bar",
     [52.4911, 13.4232],
-    "Ä Bar is a Neukolln corner-bar choice for a low-key, smoky, unshowy drink when Weserstrasse does not need another concept. It belongs because Berlin nightlife is partly made of these small rooms that do not announce themselves too loudly. Best for one or two drinks, not a destination pilgrimage.",
+    "Ä Bar is a low-key, smoky Neukolln corner bar with no elaborate concept and little interest in announcing itself. The small room and unshowy service suit a couple of drinks more than a major night out.",
     {
       venueKind: "nightlife",
       nightlifeType: "dive_bar",
@@ -1016,7 +1016,7 @@ const stops: Record<string, GuideStop> = {
     "berlin-cocktail-buck-and-breck",
     "Buck and Breck",
     [52.5276, 13.4018],
-    "Buck and Breck is Berlin cocktail discipline in miniature: a tiny Mitte room, serious technique, and the kind of door policy that makes planning part of the drink. It is not where you wander in with a crowd. Go for a controlled, focused drink and respect the room.",
+    "Buck and Breck is a tiny Mitte cocktail bar with limited seating, serious technique, and a controlled door. The intimate counter is designed for focused drinks and small parties rather than spontaneous groups.",
     {
       venueKind: "nightlife",
       nightlifeType: "cocktail_bar",
@@ -1031,7 +1031,7 @@ const stops: Record<string, GuideStop> = {
     "berlin-cocktail-becketts-kopf",
     "Becketts Kopf",
     [52.5354, 13.4163],
-    "Becketts Kopf gives Prenzlauer Berg the old speakeasy grammar without feeling like a costume. The room is small, the drinks are serious, and the no-photo mood keeps attention on the glass. It is best for two people, not a birthday swarm.",
+    "Becketts Kopf gives Prenzlauer Berg the old speakeasy grammar without feeling like a costume. The room is small, the drinks are serious, and the no-photo mood keeps attention on the glass.",
     {
       venueKind: "nightlife",
       nightlifeType: "cocktail_bar",
@@ -1076,7 +1076,7 @@ const stops: Record<string, GuideStop> = {
     "berlin-cocktail-wax-on",
     "Wax On",
     [52.4892, 13.4263],
-    "Wax On is a Neukolln cocktail room with modern drinks, upbeat energy, and enough craft to justify making it the destination. It works for a proper bar stop without the formality of a hotel lounge.",
+    "Wax On is a Neukolln cocktail room with modern drinks, upbeat energy, and enough craft to justify making it the destination.",
     {
       venueKind: "nightlife",
       nightlifeType: "cocktail_bar",
@@ -1091,7 +1091,7 @@ const stops: Record<string, GuideStop> = {
     "berlin-cocktail-mr-susan",
     "Mr Susan",
     [52.5151, 13.3845],
-    "Mr Susan brings a Korean-American imagination to Mitte cocktails and keeps the room more playful than most serious bars nearby. It is a strong pre- or post-dinner stop when the night wants flavor, design, and a little gloss. Book or arrive early if the evening has no room for drift.",
+    "Mr Susan brings a Korean-American imagination to Mitte cocktails and keeps the room more playful than most serious bars nearby. It is a strong pre- or post-dinner cocktail bar for flavor, design, and a little gloss. Book or arrive early if the evening has no room for drift.",
     {
       venueKind: "nightlife",
       nightlifeType: "cocktail_bar",
@@ -1106,7 +1106,7 @@ const stops: Record<string, GuideStop> = {
     "berlin-cocktail-ora",
     "ORA",
     [52.5021, 13.4151],
-    "ORA turns an old Kreuzberg pharmacy into a bar and restaurant where the setting does real work. Come for cocktails, stay if the food plan bends that way, and let the room slow the night down a little. It is more handsome than rowdy, so use it early or for a date.",
+    "ORA turns an old Kreuzberg pharmacy into a bar and restaurant where the setting does real work. It is more handsome than rowdy, so use it early or for a date.",
     {
       venueKind: "nightlife",
       nightlifeType: "cocktail_bar",
@@ -1166,7 +1166,7 @@ const stops: Record<string, GuideStop> = {
     "berlin-cocktail-hildegard-bar",
     "Hildegard Bar",
     [52.5191, 13.4034],
-    "Hildegard Bar brings polished Mitte cocktails to Hotel Luc, with a comfortable room, sharp service, and a central address that makes it easy before or after dinner. Use it when the group wants a proper drink without another hidden-door performance.",
+    "Hildegard Bar serves polished cocktails inside Hotel Luc in Mitte, with comfortable seating, sharp service, and a central public-facing room. It offers serious drinks without a hidden entrance or tightly controlled speakeasy ritual.",
     {
       venueKind: "nightlife",
       nightlifeType: "cocktail_bar",
@@ -1209,7 +1209,7 @@ const stops: Record<string, GuideStop> = {
     "berlin-culture-jewish-museum",
     "Jewish Museum Berlin",
     [52.502, 13.395],
-    "The Jewish Museum is as much an architectural experience as a historical one, with Daniel Libeskind's voids and axes shaping the visit before the displays do. The permanent exhibition covers Jewish life in Germany across centuries, not only catastrophe. Give it time and arrive with enough emotional space to stay present.",
+    "The permanent exhibition covers Jewish life in Germany across centuries, not only catastrophe. Give it time and arrive with enough emotional space to stay present.",
     {
       venueKind: "culture",
       subcategory: "museum",
@@ -1265,7 +1265,7 @@ const stops: Record<string, GuideStop> = {
     "berlin-culture-hamburger-bahnhof",
     "Hamburger Bahnhof",
     [52.5283, 13.3725],
-    "Hamburger Bahnhof gives Berlin its big contemporary-art station, with industrial scale and collections that feel better when you are not rushing from one old master to another. The building itself is part of the pleasure. Use it on a Moabit or government-quarter day when modern art can have room.",
+    "Hamburger Bahnhof places contemporary art inside a former railway station whose industrial scale is part of the pleasure. Large galleries and rotating installations deserve room beyond a rushed old-master circuit.",
     {
       venueKind: "culture",
       subcategory: "museum",
@@ -1279,7 +1279,7 @@ const stops: Record<string, GuideStop> = {
     "berlin-culture-gemaeldegalerie",
     "Gemaldegalerie",
     [52.5086, 13.3658],
-    "Gemaldegalerie is the quieter Kulturforum heavyweight, full of European painting without the same crush as Museum Island. It is a strong choice for travelers who want time with Rembrandt, Vermeer, Durer, and Botticelli without fighting a greatest-hits corridor. The location pairs well with the Philharmonie or Tiergarten.",
+    "Gemaldegalerie is the quieter Kulturforum heavyweight, full of European painting without the same crush as Museum Island. It is a strong museum for time with Rembrandt, Vermeer, Durer, and Botticelli without fighting a greatest-hits corridor. The location pairs well with the Philharmonie or Tiergarten.",
     {
       venueKind: "culture",
       subcategory: "museum",
@@ -1321,7 +1321,7 @@ const stops: Record<string, GuideStop> = {
     "berlin-activity-brandenburg-gate",
     "Brandenburg Gate",
     [52.5163, 13.3777],
-    "Brandenburg Gate is obvious because it has earned the right to be obvious. It carries Prussian ambition, division, reunification, protests, and tourist cameras in one open square. Go early or after dark, then move on foot toward the Reichstag, Tiergarten, or Unter den Linden.",
+    "Brandenburg Gate is obvious because it has earned the right to be obvious. It carries Prussian ambition, division, reunification, protests, and tourist cameras in one open square.",
     {
       venueKind: "landmark",
       subcategory: "landmark",
@@ -1349,7 +1349,7 @@ const stops: Record<string, GuideStop> = {
     "berlin-activity-markthalle-neun",
     "Markthalle Neun",
     [52.5022, 13.4317],
-    "Markthalle Neun is the Kreuzberg food hall that still earns a slot beyond the hype because it gives groups options without turning dinner into committee work. Street Food Thursday is the famous move, but daytime shops and market stalls are easier to navigate. Check the calendar before crossing town.",
+    "Markthalle Neun is a Kreuzberg food hall combining permanent shops, market stalls, and the well-known Street Food Thursday program. Daytime service is calmer and easier to browse than the headline evening event.",
     {
       venueKind: "food_drink",
       foodServiceType: "stall",
@@ -1366,7 +1366,7 @@ const stops: Record<string, GuideStop> = {
     "berlin-activity-tv-tower",
     "Berlin TV Tower",
     [52.5208, 13.4094],
-    "The TV Tower is touristy, expensive by Berlin standards, and still useful because the city finally makes geographic sense from above. The view explains how far apart the districts really are. Book a timed ticket if the weather is clear; skip it when the sky is milk.",
+    "The TV Tower is touristy and expensive by Berlin standards, but its observation deck makes the city's spread-out geography legible from above. A timed ticket is worthwhile in clear weather and poor value under an opaque sky.",
     {
       venueKind: "landmark",
       subcategory: "viewpoint",
@@ -1380,7 +1380,7 @@ const stops: Record<string, GuideStop> = {
     "berlin-activity-charlottenburg-palace",
     "Charlottenburg Palace",
     [52.5206, 13.2957],
-    "Charlottenburg Palace is the westside reminder that Berlin is not only Wall, club, and concrete. The rooms, gardens, and long approach give the day a slower Prussian register. It works best when paired with Savignyplatz or Kurfurstendamm instead of forced into a Mitte sprint.",
+    "Charlottenburg Palace is Berlin's major surviving Hohenzollern residence, with Baroque state rooms, porcelain, royal collections, and formal gardens. Its westside setting reveals a courtly history very different from the city's Wall and industrial narratives.",
     {
       venueKind: "culture",
       subcategory: "palace",
@@ -1794,7 +1794,7 @@ const citywideGuides: GuideSpec[] = [
     seoTitle: "Best Restaurants in Berlin",
     seoDescription: "Best restaurants in Berlin for Michelin dining, modern German cooking, natural wine, Kreuzberg dinners, vegetarian tasting menus, and neighborhood rooms worth booking.",
     title: "Fine Dining With Attitude",
-    description: "Berlin dining is strongest when it stops apologizing for not being Paris. This guide moves from Rutz, Tim Raue, and CODA to Otto, Barra, Kink, Lokal, and canal-side Horvath: reservations with point of view, not a trophy crawl with no appetite.",
+    description: "Berlin dining is strongest when it stops apologizing for not being Paris.",
     category: "Food",
     sourceKey: "restaurants",
     stopIds: ["rutz", "timRaue", "coda", "nobelhart", "otto", "horvath", "cookiesCream", "barra", "kink", "lokal"],
@@ -1830,7 +1830,7 @@ const citywideGuides: GuideSpec[] = [
     seoTitle: "Best Hostels in Berlin",
     seoDescription: "Best hostels in Berlin for solo travelers, party weekends, central dorms, private-room value, Prenzlauer Berg calm, Kreuzberg access, and budget stays.",
     title: "Hostels & Neighborhood Stays",
-    description: "A Berlin hostel should save money without wasting the city. Circus, EastSeven, Pfefferbett, Grand Hostel, Generator, and the Friedrichshain party beds all work for different travelers; the trick is matching your sleep tolerance to the district.",
+    description: "Berlin hostels range from quiet garden properties and design-led social stays to central party beds. District, transit, and sleep tolerance matter more than a famous name.",
     category: "Stay",
     sourceKey: "hostels",
     stopIds: ["circusHostel", "eastSeven", "grandHostel", "pfefferbett", "stChristophers", "generatorMitte", "sunflower", "heartOfGold", "meiningerTiergarten", "threeLittlePigs"],
@@ -1854,7 +1854,7 @@ const citywideGuides: GuideSpec[] = [
     seoTitle: "Best Cocktail Bars in Berlin",
     seoDescription: "Best cocktail bars in Berlin for speakeasy rooms, serious bartending, Neukolln botanicals, Schoeneberg classics, Mitte hotel bars, and date-night drinks.",
     title: "Intimate Cocktail Bars",
-    description: "Berlin cocktails work best when the bar has a point of view: Buck and Breck's control, Becketts Kopf's hush, Green Door's classic confidence, Velvet and Wax On's Neukolln experimentation, and ORA's old-pharmacy glow. Book where required and keep the group small.",
+    description: "Berlin's strongest cocktail bars have a defined point of view: tiny controlled counters, hushed neighborhood rooms, classic technique, Neukolln experimentation, and repurposed historic interiors. Limited seating makes small groups and reservations the practical default.",
     category: "Nightlife",
     sourceKey: "cocktailBars",
     stopIds: ["buckAndBreck", "beckettsKopf", "greenDoor", "velvet", "waxOn", "mrSusan", "ora", "staggerLee", "rumTrader", "hildegard"],
@@ -1866,7 +1866,7 @@ const citywideGuides: GuideSpec[] = [
     seoTitle: "Best Culture in Berlin",
     seoDescription: "Best culture in Berlin for Museum Island, Wall history, Jewish Museum Berlin, Topography of Terror, contemporary art, DDR history, and civic landmarks.",
     title: "Museums & Berlin's Deep History",
-    description: "Berlin culture is not one museum corridor; it is an argument across the city. Museum Island, the Wall sites, Topography of Terror, the Jewish Museum, Humboldt Forum, and the Reichstag all ask visitors to look at power, damage, and reconstruction without smoothing the edges.",
+    description: "Berlin culture is not one museum corridor; it is an argument across the city.",
     category: "Culture",
     sourceKey: "culture",
     stopIds: ["museumIsland", "topography", "jewishMuseum", "wallMemorial", "eastSideGallery", "humboldtForum", "hamburgerBahnhof", "gemaeldegalerie", "ddrMuseum", "reichstag"],
@@ -1878,7 +1878,7 @@ const citywideGuides: GuideSpec[] = [
     seoTitle: "Best Things to Do in Berlin",
     seoDescription: "Best things to do in Berlin, including Brandenburg Gate, Reichstag Dome, Museum Island, Wall sites, Tempelhofer Feld, Markthalle Neun, TV Tower, and Mauerpark.",
     title: "10 Stops to Understand Berlin",
-    description: "This is not a conquest list. Berlin makes more sense when the big icons are balanced with open space, markets, Wall memory, westside history, and one very strange former airport. Use these ten as anchors, then let the districts fill in the day.",
+    description: "Ten Berlin essentials balance major icons with open space, markets, Wall memory, westside history, and one strange former airport, allowing the districts to explain the city beyond monuments.",
     category: "Activities",
     submissionType: "guide",
     sourceKey: "activities",

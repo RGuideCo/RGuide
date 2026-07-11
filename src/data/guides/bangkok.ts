@@ -249,7 +249,7 @@ const diningStops = [
     name: "Sorn",
     coordinates: [13.7247, 100.5698],
     description:
-      "Sorn is the Bangkok dinner to plan around when you want Southern Thai cooking treated with full ceremony rather than hotel gloss. Chef Ice's menu works through the south's heat, seafood, fermented notes, and old techniques in a quiet Sukhumvit house; the caveat is brutal but useful: reservations are the trip, not an afterthought.",
+      "Chef Ice's menu works through the south's heat, seafood, fermented notes, and old techniques in a quiet Sukhumvit house; the caveat is brutal but useful: reservations are the trip, not an afterthought.",
     venueKind: "food_drink",
     foodServiceType: "restaurant",
     cuisineTypes: ["southern_thai", "thai", "tasting_menu"],
@@ -277,7 +277,7 @@ const diningStops = [
     name: "Gaggan",
     coordinates: [13.7376, 100.5679],
     description:
-      "Gaggan belongs because Bangkok fine dining is not only reverent Thai heritage; it is also performance, mischief, and technical chaos made deliberate. The official site frames it as progressive Indian food theater, so book it when the group wants a long, loud, high-concept night rather than a quiet tasting-menu whisper.",
+      "Gaggan presents progressive Indian cooking as loud, high-concept food theater, combining technical precision with performance and deliberate mischief. The long format is built for diners comfortable with a more animated experience than a hushed tasting room.",
     venueKind: "food_drink",
     foodServiceType: "restaurant",
     cuisineTypes: ["progressive_indian", "fine_dining", "tasting_menu"],
@@ -327,7 +327,7 @@ const cheapEatsStops = [
     name: "Thipsamai",
     coordinates: [13.7527, 100.5048],
     description:
-      "Thipsamai is famous enough to make cynics roll their eyes, but the original Maha Chai address still solves a real Bangkok problem: a focused pad thai stop near the old-city temple route. Order the shrimp-oil version if you want the house signature, and remember the official hours include a Tuesday closure.",
+      "Order the shrimp-oil version if you want the house signature, and remember the official hours include a Tuesday closure.",
     venueKind: "food_drink",
     foodServiceType: "restaurant",
     cuisineTypes: ["pad_thai", "thai", "street_food"],
@@ -380,7 +380,7 @@ const cheapEatsStops = [
     name: "Or Tor Kor Market",
     coordinates: [13.7986, 100.5484],
     description:
-      "Or Tor Kor is the market to use when you want Bangkok produce, curry trays, fruit, and snack stalls without the full weekend-market crush. It is cleaner and pricier than the roughest street-food lanes, but the quality and easy MRT access make it a smarter food stop than pretending every cheap meal has to be chaotic.",
+      "Or Tor Kor is the market to use for Bangkok produce, curry trays, fruit, and snack stalls without the full weekend-market crush. It is cleaner and pricier than the roughest street-food lanes, but the quality and easy MRT access make it a smarter food stop than pretending every cheap meal has to be chaotic.",
     venueKind: "food_drink",
     foodServiceType: "stall",
     cuisineTypes: ["thai", "market", "street_food"],
@@ -410,7 +410,7 @@ const hotelStops = [
     name: "Mandarin Oriental, Bangkok",
     coordinates: [13.723, 100.5142],
     description:
-      "Mandarin Oriental is the river grande dame for travelers who want Bangkok history to be part of the room, not just the lobby copy. The official hotel traces more than 150 years on the Chao Phraya, and the tradeoff is clear: you pay for ceremony, service, and river identity rather than new-build minimalism.",
+      "Mandarin Oriental has spent more than 150 years on the Chao Phraya, pairing historic rooms and the Authors' Wing with formal service, destination dining, a spa, and boat transfers. Its identity is inseparable from the river and the rituals of a grande dame.",
     venueKind: "lodging",
     lodgingType: "hotel",
     price: "$$$$",
@@ -428,7 +428,7 @@ const hotelStops = [
     name: "Capella Bangkok",
     coordinates: [13.7107, 100.5106],
     description:
-      "Capella is Bangkok luxury with a lower, quieter pulse: 101 suites and villas facing the river instead of a tower trying to dominate it. It belongs in the hotel guide for travelers who want contemporary river calm, serious dining, and culturalist-style service, but the price only makes sense if the hotel is a central part of the trip.",
+      "Capella keeps Bangkok luxury low and close to the river, with 101 suites and villas facing the Chao Phraya. Quiet grounds, serious dining, a spa, and attentive cultural programming make the property feel like a retreat rather than another city tower.",
     venueKind: "lodging",
     lodgingType: "hotel",
     price: "$$$$",
@@ -467,7 +467,7 @@ const hostelStops = [
     name: "Lub d Bangkok Siam",
     coordinates: [13.7466, 100.5297],
     description:
-      "Lub d Bangkok Siam is the hostel pick when transit and first-day orientation matter more than Khao San mythology. It sits by National Stadium and the shopping core, with private rooms, dorms, and 24-hour reception evidence on platform listings; use it for easy BTS movement rather than a quiet retreat.",
+      "Lub d Bangkok Siam sits by National Stadium and the shopping core, offering dorms, private rooms, and 24-hour reception near the BTS. Transit and first-day orientation matter more here than Khao San mythology or retreat-like quiet.",
     venueKind: "lodging",
     lodgingType: "hostel",
     price: "$$",
@@ -485,7 +485,7 @@ const hostelStops = [
     name: "The Yard Bangkok",
     coordinates: [13.7805, 100.5421],
     description:
-      "The Yard is the Ari hostel for people who want green space, bikes, coffee, and a social yard instead of a bunk bed beside a party strip. It earns the guide slot because it gives Bangkok's backpacker stay a neighborhood rhythm; confirm late arrival with the hostel if your flight lands after normal reception hours.",
+      "The Yard is the Ari hostel for green space, bikes, coffee, and a social yard instead of a bunk bed beside a party strip.",
     venueKind: "lodging",
     lodgingType: "hostel",
     price: "$$",
@@ -503,7 +503,7 @@ const hostelStops = [
     name: "Once Again Hostel",
     coordinates: [13.7526, 100.5012],
     description:
-      "Once Again Hostel works when the plan is Old City temples by day and a calmer roof or cafe reset at night. Platform evidence lists 24/7 reception and check-in from 2:00 PM to midnight, which makes it practical for late arrivals; the caveat is that the old-city location is less BTS-friendly than Siam or Sukhumvit.",
+      "Platform evidence lists 24/7 reception and check-in from 2:00 PM to midnight, which makes it practical for late arrivals; the caveat is that the old-city location is less BTS-friendly than Siam or Sukhumvit.",
     venueKind: "lodging",
     lodgingType: "hostel",
     price: "$",
@@ -524,7 +524,7 @@ const casualBarStops = [
     name: "Tep Bar",
     coordinates: [13.7394, 100.5137],
     description:
-      "Tep Bar is the casual-nightlife stop with a Thai identity rather than another imported pub template. Time Out points to Thai spirits, herbal drinks, and live semi-traditional music that turns louder after about 10:00 PM; go early for conversation or late when Chinatown wants to sing back.",
+      "Tep Bar is a casual-nightlife bar with a Thai identity rather than another imported pub template.",
     venueKind: "nightlife",
     nightlifeType: "dive_bar",
     musicGenres: ["thai_traditional", "live_music"],
@@ -550,7 +550,7 @@ const casualBarStops = [
     name: "Saxophone Pub",
     coordinates: [13.7625, 100.5376],
     description:
-      "Saxophone Pub is the Victory Monument room for live music without rooftop preening. The long-running pub has jazz, blues, Thai food, and a crowd that actually came for the stage; it is best when you want Bangkok's night to feel played by humans, not mixed by a hotel playlist.",
+      "Saxophone Pub is a long-running Victory Monument live-music room for jazz, blues, Thai food, and a crowd that comes for the stage rather than rooftop preening or a hotel playlist.",
     venueKind: "nightlife",
     nightlifeType: "live_music_venue",
     musicGenres: ["jazz", "blues", "rock"],
@@ -577,7 +577,7 @@ const casualBarStops = [
     name: "Mikkeller Bar Bangkok",
     coordinates: [13.7264, 100.5883],
     description:
-      "Mikkeller is the Ekkamai craft-beer yard when a night needs conversation, hops, and a little distance from the main Sukhumvit churn. The official location sits on a quiet side street off Ekkamai Road, so plan the ride rather than assuming a quick stumble from BTS; the reward is a more relaxed drinking session.",
+      "Mikkeller is an Ekkamai craft-beer yard pouring a deep tap list in a conversational setting removed from the main Sukhumvit churn.",
     venueKind: "nightlife",
     nightlifeType: "beer_bar",
     price: "$$",
@@ -597,7 +597,7 @@ const cocktailStops = [
     name: "BKK Social Club",
     coordinates: [13.7105, 100.5106],
     description:
-      "BKK Social Club is the polished hotel-bar benchmark, and the official Four Seasons page backs the useful details: daily evening hours, smart-casual dress, and a 20-plus age rule. It belongs here because the Mexico City-inspired menu and 50 Best recognition make the price feel intentional, not just expensive.",
+      "BKK Social Club is the polished hotel-bar benchmark, and the official Four Seasons page backs the useful details: daily evening hours, smart-casual dress, and a 20-plus age rule.",
     venueKind: "nightlife",
     nightlifeType: "cocktail_bar",
     price: "$$$$",
@@ -623,7 +623,7 @@ const cocktailStops = [
     name: "Bar Us",
     coordinates: [13.725, 100.5686],
     description:
-      "Bar Us is the cocktail room for people who want Bangkok's drinking scene to feel experimental without losing hospitality. Asia's 50 Best named it Thailand's best bar in 2025, and the official hours show a controlled evening window; reserve when you care where the night lands.",
+      "Bar Us makes Bangkok cocktails experimental without losing hospitality. Asia's 50 Best named it Thailand's best bar in 2025, and its controlled evening window rewards reservations.",
     venueKind: "nightlife",
     nightlifeType: "cocktail_bar",
     price: "$$$",
@@ -648,7 +648,7 @@ const cocktailStops = [
     name: "Vesper",
     coordinates: [13.7285, 100.5334],
     description:
-      "Vesper is the Silom cocktail staple to use when the plan needs competence, location, and less ceremony than the big hotel rooms. Current listings show daily evening service, with Sunday closing earlier than the rest of the week; it is a strong first or last drink around Convent Road and Sala Daeng.",
+      "Current listings show daily evening service, with Sunday closing earlier than the rest of the week; it is a strong first or last drink around Convent Road and Sala Daeng.",
     venueKind: "nightlife",
     nightlifeType: "cocktail_bar",
     price: "$$$",
@@ -700,7 +700,7 @@ const cultureStops = [
     name: "Wat Pho",
     coordinates: [13.7465, 100.493],
     description:
-      "Wat Pho is the old-city stop that rewards slowing down after the Grand Palace glare. The reclining Buddha is the headline, but the inscriptions, courtyards, and massage-school history make it more than a photo queue; dress respectfully and leave time for the temple to breathe.",
+      "The reclining Buddha is the headline, but the inscriptions, courtyards, and massage-school history make it more than a photo queue; dress respectfully and leave time for the temple to breathe.",
     venueKind: "culture",
     subcategory: "temple",
     attributeTags: ["temple", "historic_site", "ticketed", "old_city"],
@@ -724,7 +724,7 @@ const cultureStops = [
     name: "Wat Arun",
     coordinates: [13.7437, 100.4889],
     description:
-      "Wat Arun changes the old-city route by putting you across the river, where porcelain, steep prang lines, and Chao Phraya air cut through temple fatigue. The official visitor page lists daily daytime hours and a dress code; go by ferry and think about light, not only checklist order.",
+      "The official visitor page lists daily daytime hours and a dress code; go by ferry and think about light, not only checklist order.",
     venueKind: "culture",
     subcategory: "temple",
     attributeTags: ["temple", "riverfront", "ticketed", "viewpoint"],
@@ -772,7 +772,7 @@ const cultureStops = [
     name: "MOCA Bangkok",
     coordinates: [13.8523, 100.5631],
     description:
-      "MOCA Bangkok is the deliberate half-day museum for repeat visitors or anyone who wants Thai modern and contemporary work away from the old-city temple axis. The location is less effortless than Siam or Rattanakosin, but the official hours and quieter galleries make it a strong heat-escape culture stop.",
+      "MOCA Bangkok houses modern and contemporary Thai art in spacious galleries beyond the old-city temple axis. The location requires a dedicated trip, but the quieter rooms and Tuesday-Sunday schedule make it a substantial indoor visit.",
     venueKind: "culture",
     subcategory: "museum",
     attributeTags: ["museum", "contemporary_art", "rainy_day", "quiet"],
@@ -797,42 +797,42 @@ const activityStops = [
     id: "bangkok-activity-grand-palace",
     poiId: cultureStops[0].poiId ?? "bangkok-venue-grand-palace",
     description:
-      "Start with the Grand Palace when the day is still cooler, because this compound punishes casual pacing. The official visitor page makes the rules plain: dress correctly, buy through the official channel or gate, and build the morning around the ticket window instead of listening to sidewalk closure stories.",
+      "The Grand Palace and Wat Phra Kaew combine royal ceremonial buildings, murals, gilded roofs, and the Emerald Buddha inside Bangkok's most consequential historic compound. Visit in cooler hours, dress correctly, and buy tickets only through official channels or the gate.",
   }),
   stop({
     ...cultureStops[1],
     id: "bangkok-activity-wat-pho",
     poiId: cultureStops[1].poiId ?? "bangkok-venue-wat-pho",
     description:
-      "Wat Pho is the best second old-city stop because it gives the route a lower, more human pulse after the palace. The reclining Buddha is only one part of the case; the courtyards, inscriptions, and massage-school context make it worth lingering before crossing toward the river.",
+      "The reclining Buddha is only one part of the case; the courtyards, inscriptions, and massage-school context make it worth lingering before crossing toward the river.",
   }),
   stop({
     ...cultureStops[2],
     id: "bangkok-activity-wat-arun",
     poiId: cultureStops[2].poiId ?? "bangkok-venue-wat-arun",
     description:
-      "Crossing to Wat Arun turns sightseeing into geography: ferry, river, porcelain tower, and the old city seen from another bank. Use the official daytime hours and dress guidance, then time the visit for morning clarity or late light rather than baking on the steps at noon.",
+      "Wat Arun combines a ferry crossing, river geography, porcelain-covered towers, and the old city seen from another bank. Official daytime hours and dress rules apply; morning clarity or late light beats the exposed noon heat.",
   }),
   stop({
     ...cheapEatsStops[0],
     id: "bangkok-activity-thipsamai",
     poiId: cheapEatsStops[0].poiId ?? "bangkok-venue-thipsamai",
     description:
-      "Thipsamai is useful in a top-things route because it gives the old-city evening a food anchor with clear official hours and a known dish. It is famous, crowded, and no longer cheap in the romantic street-food sense, but the shrimp-oil pad thai still makes sense after temples.",
+      "Thipsamai is famous for pad thai cooked with shrimp oil and wrapped in a thin egg sheet, served in a busy old-city dining room with clear official hours. Crowds and higher prices have followed the reputation, but the signature dish remains specific.",
   }),
   stop({
     ...cultureStops[3],
     id: "bangkok-activity-jim-thompson-house",
     poiId: cultureStops[3].poiId ?? "bangkok-venue-jim-thompson-house",
     description:
-      "Jim Thompson House belongs in the ten because it changes the texture of a Bangkok day: shade, teak, silk history, and a guided museum rhythm near Siam. Use it between shopping or transit-heavy stops, and do not expect to self-wander the main house without the official tour structure.",
+      "Jim Thompson House gathers traditional teak buildings, Southeast Asian art, tropical gardens, and the history of Thailand's silk revival near Siam. The main house is visited by guided tour rather than independent wandering.",
   }),
   stop({
     ...cultureStops[4],
     id: "bangkok-activity-moca",
     poiId: cultureStops[4].poiId ?? "bangkok-venue-moca-bangkok",
     description:
-      "MOCA Bangkok is the art stop for travelers who have already seen the obvious temple loop or need an indoor reset. It sits away from the easiest tourist corridors, so treat it as a planned half-day with the official Tuesday-Sunday hours rather than a quick detour.",
+      "MOCA Bangkok houses modern and contemporary Thai art in spacious galleries beyond the old-city temple axis. The location requires a dedicated trip, but the quieter rooms and Tuesday-Sunday schedule make it a substantial indoor visit.",
   }),
   stop({
     id: "bangkok-activity-chatuchak",
@@ -864,7 +864,7 @@ const activityStops = [
     name: "Lumphini Park",
     coordinates: [13.7313, 100.5418],
     description:
-      "Lumphini Park is the necessary green reset in a city that can make every hour feel paved and amplified. Use it early for walkers, monitor-lizard sightings, and shade before the heat rises; facilities, events, and gates can vary, so verify current park access before a late visit.",
+      "Lumphini Park is the necessary green reset in a city that can make every hour feel paved and amplified.",
     venueKind: "outdoors",
     subcategory: "park",
     attributeTags: ["park", "morning", "walking_route", "free_entry"],
@@ -888,7 +888,7 @@ const activityStops = [
     name: "Chao Phraya Tourist Boat",
     coordinates: [13.7187, 100.5143],
     description:
-      "The Chao Phraya Tourist Boat turns Bangkok's river from backdrop into transit, linking Sathorn, ICONSIAM, Chinatown, Wat Arun, Tha Tien, Tha Chang, and Phra Arthit without fighting road traffic. Check the official timetable before building the day, because boat frequency and last departures matter more than ambition.",
+      "The Chao Phraya Tourist Boat turns Bangkok's river from backdrop into transit, linking Sathorn, ICONSIAM, Chinatown, Wat Arun, Tha Tien, Tha Chang, and Phra Arthit without fighting road traffic.",
     venueKind: "transport",
     subcategory: "river_boat",
     attributeTags: ["riverfront", "transit", "sightseeing", "ticketed_activity"],
@@ -911,7 +911,7 @@ const activityStops = [
     id: "bangkok-activity-bkk-social-club",
     poiId: cocktailStops[0].poiId ?? "bangkok-venue-bkk-social-club",
     description:
-      "End one Bangkok day at BKK Social Club when the route deserves a polished landing instead of another anonymous rooftop. The official dress and age rules are part of the planning, not trivia; change after sightseeing, reserve if the night matters, and let the river hotel setting do its work.",
+      "BKK Social Club is a polished riverfront hotel bar with Latin American references, formal service, and a smart-casual dress code. Guests must be over 20, and reservations are sensible for a serious cocktail night.",
   }),
 ];
 
@@ -923,7 +923,7 @@ const expandedDiningStops = [
     name: "Nahm",
     coordinates: [13.7245, 100.5445],
     description:
-      "Nahm is the Bangkok fine-dining room for travelers who want Thai cooking treated as research, not hotel garnish. The COMO Metropolitan setting keeps the room polished while the menu leans into layered curries, relishes, and old recipes; book it when the group wants elegance without losing the bite.",
+      "Nahm is the Bangkok fine-dining room for Thai cooking treated as research, not hotel garnish. The COMO Metropolitan setting keeps the room polished while the menu leans into layered curries, relishes, and old recipes; book it when the group wants elegance without losing the bite.",
     venueKind: "food_drink",
     foodServiceType: "restaurant",
     cuisineTypes: ["thai", "fine_dining", "heritage"],
@@ -942,7 +942,7 @@ const expandedDiningStops = [
     name: "R-Haan",
     coordinates: [13.7424, 100.5832],
     description:
-      "R-Haan is built around royal Thai technique and a tasting-menu format, which makes it useful when Bangkok dinner needs ceremony rather than improvisation. The restaurant's official positioning and MICHELIN evidence support the special-occasion role; reserve ahead and treat the meal as the evening.",
+      "R-Haan builds a formal tasting menu around royal Thai technique, regional ingredients, and ceremonial service. The Michelin-recognized meal requires an advance reservation and a full evening.",
     venueKind: "food_drink",
     foodServiceType: "restaurant",
     cuisineTypes: ["thai", "royal_thai", "tasting_menu"],
@@ -961,7 +961,7 @@ const expandedDiningStops = [
     name: "Baan Tepa",
     coordinates: [13.7018, 100.5651],
     description:
-      "Baan Tepa is the farm-to-table Bangkok dinner with a real house, garden, and chef-driven point of view behind it. It belongs in this guide because the official restaurant story and MICHELIN listing make the sourcing part of the meal; book early and plan transport instead of assuming Sukhumvit convenience.",
+      "Baan Tepa is the farm-to-table Bangkok dinner with a real house, garden, and chef-driven point of view behind it.",
     venueKind: "food_drink",
     foodServiceType: "restaurant",
     cuisineTypes: ["thai", "farm_to_table", "tasting_menu"],
@@ -980,7 +980,7 @@ const expandedDiningStops = [
     name: "Nusara",
     coordinates: [13.7464, 100.4925],
     description:
-      "Nusara gives the old-city dinner route a serious tasting-menu anchor near the river and temple core. The restaurant is tied to chef Thitid Tassanakajohn and reads as memory-driven Thai cooking rather than spectacle; reserve when you want a polished meal that still feels rooted in Bangkok geography.",
+      "The restaurant is tied to chef Thitid Tassanakajohn and reads as memory-driven Thai cooking rather than spectacle; reserve for a polished meal that still feels rooted in Bangkok geography.",
     venueKind: "food_drink",
     foodServiceType: "restaurant",
     cuisineTypes: ["thai", "fine_dining", "tasting_menu"],
@@ -999,7 +999,7 @@ const expandedDiningStops = [
     name: "Potong",
     coordinates: [13.7407, 100.5099],
     description:
-      "Potong is the Chinatown tasting-menu stop where the building matters almost as much as the food. Chef Pam's Thai-Chinese menu uses the family pharmacy setting as a frame, so the caveat is simple: this is not a casual Yaowarat snack run, it is a booked dinner with narrative.",
+      "Potong is a Chinatown tasting-menu restaurant where the building matters almost as much as the food. Chef Pam's Thai-Chinese menu uses the family pharmacy setting as a frame, so the caveat is simple: this is not a casual Yaowarat snack run, it is a booked dinner with narrative.",
     venueKind: "food_drink",
     foodServiceType: "restaurant",
     cuisineTypes: ["thai_chinese", "fine_dining", "tasting_menu"],
@@ -1018,7 +1018,7 @@ const expandedDiningStops = [
     name: "Samrub Samrub Thai",
     coordinates: [13.7273, 100.5231],
     description:
-      "Samrub Samrub Thai is the small-room answer to Bangkok fine dining: fewer hotel signals, more archival Thai cooking and chef-counter intimacy. It belongs here for diners who want research, heat, and personality; confirm the reservation schedule because this is not a walk-in safety net.",
+      "Samrub Samrub Thai is the small-room answer to Bangkok fine dining: fewer hotel signals, more archival Thai cooking and chef-counter intimacy.",
     venueKind: "food_drink",
     foodServiceType: "restaurant",
     cuisineTypes: ["thai", "chef_counter", "heritage"],
@@ -1037,7 +1037,7 @@ const expandedDiningStops = [
     name: "Jay Fai",
     coordinates: [13.7527, 100.5049],
     description:
-      "Jay Fai is street food with a Michelin-star mythology, and that contradiction is exactly why it belongs at the edge of this fine-dining list. The crab omelet, goggles, queue, and price are all part of the decision; go only if waiting is part of the story you want.",
+      "Jay Fai turns a streetside wok, signature crab omelet, and the chef's protective goggles into Michelin-starred theater. The queue and high price are part of the decision, so go only when waiting feels proportionate to the dish.",
     venueKind: "food_drink",
     foodServiceType: "stall",
     cuisineTypes: ["thai", "seafood", "street_food"],
@@ -1059,7 +1059,7 @@ const expandedCheapEatsStops = [
     name: "Here Hai",
     coordinates: [13.7284, 100.5863],
     description:
-      "Here Hai is where the cheap-eats guide gets honest about Bangkok seafood: not dirt cheap, but dramatically better value than a polite hotel lunch. The crab fried rice and mantis shrimp reputation is the draw; expect queues and plan it as a focused Ekkamai meal.",
+      "Here Hai serves generous crab fried rice and seafood in a casual room that is not dirt cheap, but offers dramatically better value than a polite hotel lunch.",
     venueKind: "food_drink",
     foodServiceType: "restaurant",
     cuisineTypes: ["thai", "seafood", "fried_rice"],
@@ -1077,7 +1077,7 @@ const expandedCheapEatsStops = [
     name: "Nhong Rim Klong",
     coordinates: [13.7283, 100.5834],
     description:
-      "Nhong Rim Klong is the canal-side wok stop to use when Bangkok lunch should feel fast, hot, and local without pretending comfort is the point. The seafood stir-fries are the reason to go, but the practical move is arriving early and checking the same-day map status.",
+      "Nhong Rim Klong is a canal-side wok stall to use when Bangkok lunch should feel fast, hot, and local without pretending comfort is the point. The seafood stir-fries are the reason to go, but the practical move is arriving early and checking the same-day map status.",
     venueKind: "food_drink",
     foodServiceType: "stall",
     cuisineTypes: ["thai", "seafood", "stir_fry"],
@@ -1113,7 +1113,7 @@ const expandedCheapEatsStops = [
     name: "Nai Mong Hoi Thod",
     coordinates: [13.7409, 100.5134],
     description:
-      "Nai Mong Hoi Thod is Chinatown comfort by way of crisp batter, oysters, mussels, smoke, and a room that does not care about your itinerary. It is useful because it gives Yaowarat a sit-down food stop before the night market crush gets theatrical.",
+      "Nai Mong Hoi Thod specializes in crisp-edged oyster and mussel omelets cooked over fierce heat. The smoky griddle, chewy shellfish, and simple sit-down room make it a Yaowarat classic.",
     venueKind: "food_drink",
     foodServiceType: "restaurant",
     cuisineTypes: ["thai_chinese", "oyster_omelet", "street_food"],
@@ -1131,7 +1131,7 @@ const expandedCheapEatsStops = [
     name: "Jok Prince",
     coordinates: [13.7217, 100.517],
     description:
-      "Jok Prince is the rice-porridge stop for a Bangkok morning or late reset that does not need ceremony to be memorable. The smoky jok is the point, and the caveat is timing: this is a humble shop with hours worth checking before you route across town.",
+      "Jok Prince is a rice-porridge restaurant for a Bangkok morning or late reset that does not need ceremony to be memorable.",
     venueKind: "food_drink",
     foodServiceType: "restaurant",
     cuisineTypes: ["thai", "jok", "breakfast"],
@@ -1149,7 +1149,7 @@ const expandedCheapEatsStops = [
     name: "Prachak Roasted Duck",
     coordinates: [13.7216, 100.5153],
     description:
-      "Prachak Roasted Duck is a practical Bang Rak classic: roasted duck, rice, noodles, and a room built for eating rather than lingering. It earns its place because it pairs easily with river and hotel routes, but go before the peak meal rush if you want the better rhythm.",
+      "Prachak Roasted Duck is a practical Bang Rak classic: roasted duck, rice, noodles, and a room built for eating rather than lingering.",
     venueKind: "food_drink",
     foodServiceType: "restaurant",
     cuisineTypes: ["thai_chinese", "roast_duck", "noodles"],
@@ -1167,7 +1167,7 @@ const expandedCheapEatsStops = [
     name: "Kuay Jab Mr. Joe",
     coordinates: [13.7119, 100.5141],
     description:
-      "Kuay Jab Mr. Joe is a pork-crackling, rolled-noodle, peppery-broth stop for people who understand that Bangkok comfort can be loud and crowded. It is best as a lunch mission near Sathon or Bang Rak, not as a delicate pre-theater meal.",
+      "Kuay Jab Mr. Joe serves rolled rice noodles in a peppery broth loaded with pork and crisp crackling. The busy room near Sathon and Bang Rak is loud, crowded, and devoted to direct comfort rather than delicate service.",
     venueKind: "food_drink",
     foodServiceType: "restaurant",
     cuisineTypes: ["thai_chinese", "kuay_jab", "pork"],
@@ -1189,7 +1189,7 @@ const expandedHotelStops = [
     name: "Four Seasons Hotel Bangkok at Chao Phraya River",
     coordinates: [13.7104, 100.5102],
     description:
-      "Four Seasons Bangkok is the riverfront hotel for travelers who want resort calm without leaving the city machine behind. The official hotel pages back the riverside setting, dining depth, and wellness posture; book it when the hotel itself is a daily destination.",
+      "Four Seasons Bangkok is a contemporary riverfront resort with broad pools, a serious spa, art-filled public rooms, and enough restaurants and bars to sustain a full day on the property. The city remains close, but the mood is deliberately unhurried.",
     venueKind: "lodging",
     lodgingType: "hotel",
     price: "$$$$",
@@ -1207,7 +1207,7 @@ const expandedHotelStops = [
     name: "The Peninsula Bangkok",
     coordinates: [13.7238, 100.5117],
     description:
-      "The Peninsula Bangkok is the classic across-the-river choice, strong when service, boat transfers, and Chao Phraya views matter more than being in the mall corridor. It is less flash than the newest luxury openings, which can be exactly the point.",
+      "The Peninsula Bangkok is a classic across-the-river hotel, strong when service, boat transfers, and Chao Phraya views matter more than being in the mall corridor. It is less flash than the newest luxury openings, which can be exactly the point.",
     venueKind: "lodging",
     lodgingType: "hotel",
     price: "$$$$",
@@ -1225,7 +1225,7 @@ const expandedHotelStops = [
     name: "Siam Kempinski Hotel Bangkok",
     coordinates: [13.7462, 100.5344],
     description:
-      "Siam Kempinski is the premium hotel for travelers who want Bangkok's shopping and transit core to be effortless rather than scenic. The pool courtyards soften the mall geography, but the real reason to book is Siam access when family, business, or first-time logistics matter.",
+      "Siam Kempinski wraps rooms around landscaped pool courtyards beside Siam Paragon, with direct access to Bangkok's shopping and transit core. Resort-style water and family-friendly service soften an otherwise intensely commercial district.",
     venueKind: "lodging",
     lodgingType: "hotel",
     price: "$$$$",
@@ -1243,7 +1243,7 @@ const expandedHotelStops = [
     name: "Rosewood Bangkok",
     coordinates: [13.7419, 100.5485],
     description:
-      "Rosewood Bangkok is the Ploenchit luxury pick when the city base needs height, design, and quick BTS access. It is polished without pretending to be a river resort, so it works for business-heavy trips or travelers who want restaurants, malls, and embassies close.",
+      "Rosewood Bangkok is a Ploenchit luxury hotel when the city base needs height, design, and quick BTS access. It is polished without pretending to be a river resort, so it works for business-heavy trips or travelers who want restaurants, malls, and embassies close.",
     venueKind: "lodging",
     lodgingType: "hotel",
     price: "$$$$",
@@ -1261,7 +1261,7 @@ const expandedHotelStops = [
     name: "COMO Metropolitan Bangkok",
     coordinates: [13.7245, 100.5442],
     description:
-      "COMO Metropolitan is the quiet Sathon hotel for travelers who want wellness, clean design, and Nahm downstairs instead of a riverfront production. It is not the flashiest stay in Bangkok, but it is useful when the trip needs calm, food, and business-district access.",
+      "COMO Metropolitan is the quiet Sathon hotel for wellness, clean design, and Nahm downstairs instead of a riverfront production. It is not the flashiest stay in Bangkok, but it is useful for calm, food, and business-district access.",
     venueKind: "lodging",
     lodgingType: "hotel",
     price: "$$$",
@@ -1279,7 +1279,7 @@ const expandedHotelStops = [
     name: "The Okura Prestige Bangkok",
     coordinates: [13.742, 100.5463],
     description:
-      "The Okura Prestige is a precise Ploenchit stay with Japanese hospitality cues, a strong breakfast posture, and direct BTS convenience. Book it when you want the city to feel orderly between meetings, meals, and shopping rather than theatrical.",
+      "The Okura Prestige is a precise Ploenchit hotel with Japanese hospitality cues, a strong breakfast, and direct BTS convenience. Orderly service and transport access matter more than theatrical design.",
     venueKind: "lodging",
     lodgingType: "hotel",
     price: "$$$$",
@@ -1297,7 +1297,7 @@ const expandedHotelStops = [
     name: "The Standard, Bangkok Mahanakhon",
     coordinates: [13.7241, 100.5288],
     description:
-      "The Standard turns the Mahanakhon tower into the hotel choice for travelers who want Bangkok vertical, social, and slightly louder than the usual luxury script. It belongs here for design and nightlife energy, with the caveat that quiet traditionalists may prefer the river.",
+      "The Standard turns the Mahanakhon tower into the hotel choice for Bangkok vertical, social, and slightly louder than the usual luxury script.",
     venueKind: "lodging",
     lodgingType: "hotel",
     price: "$$$",
@@ -1319,7 +1319,7 @@ const expandedHostelStops = [
     name: "Mad Monkey Bangkok",
     coordinates: [13.7604, 100.4974],
     description:
-      "Mad Monkey Bangkok is the Khao San-adjacent hostel for travelers who want the social switch left on. It belongs here because the brand is built around events, dorms, and first-night momentum; book elsewhere if sleep is the main fantasy.",
+      "Mad Monkey Bangkok is a lively Khao San-adjacent hostel with dorms, private rooms, a pool, a bar, and organized social events. Quiet is not the selling point; meeting other travelers is.",
     venueKind: "lodging",
     lodgingType: "hostel",
     price: "$",
@@ -1337,7 +1337,7 @@ const expandedHostelStops = [
     name: "Bed Station Khao San",
     coordinates: [13.7586, 100.4989],
     description:
-      "Bed Station Khao San is the backpacker-hub pick when you want the old-city party zone but still care about facilities and a pool reset. It is practical for first-timers who want Khao San access without making the actual street their bedroom.",
+      "Bed Station Khao San is a backpacker-hub hostel for the old-city party zone but still care about facilities and a pool reset. It is practical for first-timers who want Khao San access without making the actual street their bedroom.",
     venueKind: "lodging",
     lodgingType: "hostel",
     price: "$",
@@ -1355,7 +1355,7 @@ const expandedHostelStops = [
     name: "Here Hostel",
     coordinates: [13.7578, 100.5025],
     description:
-      "Here Hostel is the old-city stay with more character than a bunk warehouse, useful when temples, Golden Mount, and canal-side wandering matter. It is social but not only a party machine, so confirm room type and quiet expectations before booking.",
+      "Here Hostel is the old-city stay with more character than a bunk warehouse, useful when temples, Golden Mount, and canal-side wandering matter.",
     venueKind: "lodging",
     lodgingType: "hostel",
     price: "$",
@@ -1373,7 +1373,7 @@ const expandedHostelStops = [
     name: "Niras Bankoc Cultural Hostel",
     coordinates: [13.7536, 100.5061],
     description:
-      "Niras Bankoc is the hostel for travelers who want old-city architecture and quieter heritage mood instead of a beer-pong lobby. It works best for temple routes and slower mornings, with the tradeoff that BTS access is not the point.",
+      "Niras Bankoc is the hostel for old-city architecture and quieter heritage mood instead of a beer-pong lobby.",
     venueKind: "lodging",
     lodgingType: "hostel",
     price: "$",
@@ -1391,7 +1391,7 @@ const expandedHostelStops = [
     name: "Jam Hostel Bangkok",
     coordinates: [13.7623, 100.498],
     description:
-      "Jam Hostel Bangkok is a useful Khao San-area option when social travel matters but you want something smaller than the biggest party brands. Use it for meeting people and old-city access, then verify late-arrival details before the flight lands.",
+      "Jam Hostel Bangkok is a Khao San-area hostel when social travel matters but you want something smaller than the biggest party brands.",
     venueKind: "lodging",
     lodgingType: "hostel",
     price: "$",
@@ -1409,7 +1409,7 @@ const expandedHostelStops = [
     name: "Siamaze Hostel",
     coordinates: [13.7807, 100.5737],
     description:
-      "Siamaze is the hostel pick for travelers who want MRT access and a calmer north-Bangkok base rather than Khao San mythology. It is better for practical transit days than instant nightlife, which is exactly why it earns a different slot.",
+      "Siamaze is a calmer north-Bangkok hostel with MRT access and a more relaxed social profile than the Khao San circuit. Its location favors practical transit and quieter nights over instant backpacker nightlife.",
     venueKind: "lodging",
     lodgingType: "hostel",
     price: "$",
@@ -1427,7 +1427,7 @@ const expandedHostelStops = [
     name: "Diff Hostel",
     coordinates: [13.7547, 100.5351],
     description:
-      "Diff Hostel is the compact Phaya Thai/Siam-side choice when airport rail, BTS, and shopping-core access matter more than a backpacker strip. It belongs here for transit efficiency; check room size and late-arrival procedures before treating it like a hotel.",
+      "Diff Hostel is a compact Phaya Thai/Siam-side hostel when airport rail, BTS, and shopping-core access matter more than a backpacker strip.",
     venueKind: "lodging",
     lodgingType: "hostel",
     price: "$",
@@ -1449,7 +1449,7 @@ const expandedCasualBarStops = [
     name: "Studio Lam",
     coordinates: [13.735, 100.5809],
     description:
-      "Studio Lam is the Sukhumvit room for molam, vinyl, DJs, and Thai drinking culture that does not feel assembled for hotel guests. It belongs in casual nightlife because the music is the argument; check the event feed before assuming the same night twice.",
+      "Studio Lam is the Sukhumvit room for molam, vinyl, DJs, and Thai drinking culture that does not feel assembled for hotel guests.",
     venueKind: "nightlife",
     nightlifeType: "live_music_venue",
     musicGenres: ["molam", "dj", "world_music"],
@@ -1467,7 +1467,7 @@ const expandedCasualBarStops = [
     name: "Adhere the 13th Blues Bar",
     coordinates: [13.762, 100.4985],
     description:
-      "Adhere the 13th is the blues-bar answer to Khao San fatigue: small, direct, sweaty, and built around the stage rather than bottle service. Go when you want live music in the old-city orbit, but check current opening nights before building the evening around it.",
+      "Adhere the 13th is the blues-bar answer to Khao San fatigue: small, direct, sweaty, and built around the stage rather than bottle service.",
     venueKind: "nightlife",
     nightlifeType: "live_music_venue",
     musicGenres: ["blues", "rock", "live_music"],
@@ -1485,7 +1485,7 @@ const expandedCasualBarStops = [
     name: "Smalls",
     coordinates: [13.7202, 100.5299],
     description:
-      "Smalls is the Suan Phlu townhouse bar for jazz-leaning nights, low light, balconies, and the kind of Bangkok crowd that looks like it actually chose the room. It is better for a lingering drink than a checklist crawl, so time it after dinner nearby.",
+      "Smalls is the Suan Phlu townhouse bar for jazz-leaning nights, low light, balconies, and the kind of Bangkok crowd that looks like it actually chose the room.",
     venueKind: "nightlife",
     nightlifeType: "lounge",
     musicGenres: ["jazz", "dj"],
@@ -1503,7 +1503,7 @@ const expandedCasualBarStops = [
     name: "12 x 12",
     coordinates: [13.7308, 100.5862],
     description:
-      "12 x 12 is the Ekkamai music-room pick when the night wants vinyl, selectors, and a crowd that came to listen. It belongs here because Bangkok nightlife is not only rooftops; verify the event calendar because the booking shapes the whole room.",
+      "12 x 12 is an Ekkamai music-room music venue for vinyl, selectors, and a crowd that came to listen.",
     venueKind: "nightlife",
     nightlifeType: "live_music_venue",
     musicGenres: ["dj", "vinyl", "electronic"],
@@ -1521,7 +1521,7 @@ const expandedCasualBarStops = [
     name: "Jack's Bar",
     coordinates: [13.7212, 100.5135],
     description:
-      "Jack's Bar is the rough-edged river beer stop that keeps Bangkok from becoming all tasting menus and marble lobbies. Go for the Chao Phraya view and simple drinks, not mixology, and check weather because the magic is mostly outside.",
+      "Jack's Bar is a rough-edged river beer bar that keeps Bangkok from becoming all tasting menus and marble lobbies. Go for the Chao Phraya view and simple drinks, not mixology, and check weather because the magic is mostly outside.",
     venueKind: "nightlife",
     nightlifeType: "pub",
     musicGenres: ["ambient"],
@@ -1539,7 +1539,7 @@ const expandedCasualBarStops = [
     name: "Brown Sugar",
     coordinates: [13.7592, 100.4975],
     description:
-      "Brown Sugar is the long-running jazz name to know when the old-city side of Bangkok needs music with history. It works best as a planned live set rather than a random drink, so check the calendar and arrive ready to sit with the room.",
+      "Brown Sugar is a long-running Bangkok jazz club centered on live sets rather than background music. The calendar determines the performers and door time, and the room rewards an audience ready to listen.",
     venueKind: "nightlife",
     nightlifeType: "live_music_venue",
     musicGenres: ["jazz", "blues", "live_music"],
@@ -1557,7 +1557,7 @@ const expandedCasualBarStops = [
     name: "Speaker Pod",
     coordinates: [13.7372, 100.5623],
     description:
-      "Speaker Pod is a compact craft-beer and music-adjacent stop in the Sukhumvit orbit, useful when the night needs something more grounded than another hotel lounge. Verify current opening hours and taps before going, because small bars can shift quickly.",
+      "Speaker Pod is a compact Sukhumvit craft-beer bar with rotating taps and music-adjacent programming. Its small scale and beer focus make it a grounded alternative to Bangkok's formal hotel lounges.",
     venueKind: "nightlife",
     nightlifeType: "beer_bar",
     musicGenres: ["dj", "playlist"],
@@ -1579,7 +1579,7 @@ const expandedCocktailStops = [
     name: "Tropic City",
     coordinates: [13.7225, 100.5176],
     description:
-      "Tropic City is the rum-bright Bangkok cocktail bar that keeps serious drinks from becoming solemn. It belongs in the lounge guide because the room is fun, colorful, and award-backed; reserve or arrive early when Charoen Krung is busy.",
+      "Tropic City keeps serious rum cocktails from becoming solemn through bright tropical flavors, a colorful Charoen Krung room, and an award-winning bar program. Reserve or arrive early when the neighborhood is busy.",
     venueKind: "nightlife",
     nightlifeType: "cocktail_bar",
     price: "$$$",
@@ -1596,7 +1596,7 @@ const expandedCocktailStops = [
     name: "Asia Today",
     coordinates: [13.7397, 100.5129],
     description:
-      "Asia Today is the Chinatown cocktail room for Thai ingredients, honey, herbs, and a little chaos in the best sense. It is not a skyline lounge, which is why it matters; go when you want Bangkok flavor in the glass rather than another imported hotel ritual.",
+      "Asia Today is the Chinatown cocktail room for Thai ingredients, honey, herbs, and a little chaos in the best sense. It is not a skyline lounge, which is why it matters; go for Bangkok flavor in the glass rather than another imported hotel ritual.",
     venueKind: "nightlife",
     nightlifeType: "cocktail_bar",
     price: "$$",
@@ -1613,7 +1613,7 @@ const expandedCocktailStops = [
     name: "Rabbit Hole",
     coordinates: [13.7302, 100.5828],
     description:
-      "Rabbit Hole is the Thonglor cocktail standby for people who want a dark, controlled room without too much explanation. It is useful because the drinks are serious and the location fits dinner routes, but it is better for small groups than a wandering crowd.",
+      "Rabbit Hole is a dark, controlled Thonglor bar making serious cocktails in a compact room. Its scale and focused service suit small groups better than a large wandering crowd.",
     venueKind: "nightlife",
     nightlifeType: "cocktail_bar",
     price: "$$$",
@@ -1630,7 +1630,7 @@ const expandedCocktailStops = [
     name: "Find The Locker Room",
     coordinates: [13.7308, 100.5827],
     description:
-      "Find The Locker Room gives Thonglor the hidden-door ritual without losing the point of the drink. It belongs here for travelers who want a speakeasy game and a polished menu, but the trick works best when you reserve and arrive with a small group.",
+      "Find The Locker Room gives Thonglor the hidden-door ritual without losing the point of the drink.",
     venueKind: "nightlife",
     nightlifeType: "cocktail_bar",
     price: "$$$",
@@ -1647,7 +1647,7 @@ const expandedCocktailStops = [
     name: "Lennon's",
     coordinates: [13.7419, 100.5485],
     description:
-      "Lennon's is Rosewood Bangkok's vinyl-and-views cocktail room, a cleaner rooftop-adjacent option when the night wants polish without full club energy. It is best after dinner nearby, and the practical move is checking dress and reservation expectations before arriving.",
+      "Lennon's is Rosewood Bangkok's vinyl-and-views cocktail room, a cleaner rooftop-adjacent option for polish without full club energy.",
     venueKind: "nightlife",
     nightlifeType: "cocktail_bar",
     musicGenres: ["vinyl", "jazz"],
@@ -1665,7 +1665,7 @@ const expandedCocktailStops = [
     name: "The Bamboo Bar",
     coordinates: [13.7231, 100.5142],
     description:
-      "The Bamboo Bar is the Mandarin Oriental classic for jazz, leather, history, and the kind of cocktail service that still believes in room tone. It belongs here as Bangkok's heritage hotel-bar counterweight to newer awards rooms; dress and book like the room has memory.",
+      "The Bamboo Bar is the Mandarin Oriental classic for jazz, leather, history, and the kind of cocktail service that still believes in room tone.",
     venueKind: "nightlife",
     nightlifeType: "cocktail_bar",
     musicGenres: ["jazz", "live_music"],
@@ -1705,7 +1705,7 @@ const expandedCultureStops = [
     name: "Bangkok Art and Culture Centre",
     coordinates: [13.7468, 100.5301],
     description:
-      "BACC is the central art stop that makes Siam feel less like a retail weather system. The spiral interior, rotating exhibitions, and BTS access make it easy to pair with shopping or Jim Thompson, but check the official exhibition calendar before assuming what is on.",
+      "BACC is a central art arts center that makes Siam feel less like a retail weather system.",
     venueKind: "culture",
     subcategory: "art_center",
     attributeTags: ["art", "central", "indoor", "free_or_low_cost"],
@@ -1729,7 +1729,7 @@ const expandedCultureStops = [
     name: "Erawan Shrine",
     coordinates: [13.7441, 100.5403],
     description:
-      "Erawan Shrine is Bangkok compressed into one intersection: incense, dancers, office towers, traffic, and devotion continuing in public. It is a short stop, not a museum, so go respectfully, watch the rhythm, and do not treat the prayer space like a selfie set.",
+      "Erawan Shrine is Bangkok compressed into one intersection: incense, dancers, office towers, traffic, and devotion continuing in public. It is a short cultural site, not a museum, so go respectfully, watch the rhythm, and do not treat the prayer space like a selfie set.",
     venueKind: "culture",
     subcategory: "shrine",
     attributeTags: ["shrine", "central", "short_stop", "spiritual_site"],
@@ -1753,7 +1753,7 @@ const expandedCultureStops = [
     name: "Wat Saket and the Golden Mount",
     coordinates: [13.7539, 100.5066],
     description:
-      "Wat Saket gives Bangkok a climb, bells, old-city air, and a view that feels earned without needing a rooftop bar. It belongs in culture because the Golden Mount is both temple and orientation point; dress respectfully and avoid the harshest heat.",
+      "Wat Saket crowns the Golden Mount with a temple, bells, old-city air, and broad views reached by a long stair climb. It is both a religious site and an orientation point; dress respectfully and avoid the harshest heat.",
     venueKind: "culture",
     subcategory: "temple",
     attributeTags: ["temple", "view", "old_city", "walk"],
@@ -1777,7 +1777,7 @@ const expandedCultureStops = [
     name: "Museum Siam",
     coordinates: [13.7438, 100.4947],
     description:
-      "Museum Siam is the old-city indoor reset for travelers who want Thai identity, history, and air-conditioning between temples. It is more interpretive than sacred, which makes it useful after Wat Pho; check the official schedule before routing a Monday.",
+      "Museum Siam uses interactive exhibitions to examine Thai identity and history inside a restored old-city government building near the temple district.",
     venueKind: "culture",
     subcategory: "museum",
     attributeTags: ["museum", "old_city", "indoor", "history"],
@@ -1801,7 +1801,7 @@ const expandedCultureStops = [
     name: "Bangkok National Museum",
     coordinates: [13.7577, 100.4927],
     description:
-      "Bangkok National Museum is the deep-history stop near the Grand Palace, best when the city has started to feel like only temples and traffic. The collection rewards patience and context; go earlier in the day and check official opening days before arriving.",
+      "Bangkok National Museum is a deep-history museum near the Grand Palace, best when the city has started to feel like only temples and traffic.",
     venueKind: "culture",
     subcategory: "museum",
     attributeTags: ["museum", "history", "old_city", "indoor"],
@@ -1863,7 +1863,7 @@ export const bangkokCitywideGuides: MapList[] = [
     "bangkok-best-restaurants-citywide",
     "best-restaurants",
     "Fine Dining & Masterpiece Menus",
-    "A citywide Bangkok dining guide for Southern Thai ceremony, progressive Indian theater, and seasonal modern Thai cooking. Use it when reservations, budget, and one serious dinner are worth planning before the rest of the night.",
+    "Bangkok fine dining spans ceremonial Southern Thai cooking, progressive Indian theatre, and seasonal modern Thai menus. These are high-budget reservations built for one serious dinner.",
     expandedDiningStops,
     sources.dining,
     "Best Restaurants in Bangkok for Thai Fine Dining",
@@ -1875,7 +1875,7 @@ export const bangkokCitywideGuides: MapList[] = [
     "bangkok-best-cheap-eats-medium-budget",
     "best-cheap-eats",
     "Legendary Cheap Eats & Local Counters",
-    "Bangkok cheap and medium eats for old-city pad thai, an air-conditioned Sukhumvit food court, and a produce-market food crawl by Chatuchak. The guide is built for heat-aware routing, not street-food fantasy.",
+    "Bangkok cheap and medium eats for old-city pad thai, an air-conditioned Sukhumvit food court, and a produce-market food crawl by Chatuchak.",
     expandedCheapEatsStops,
     sources.cheapEats,
     "Best Cheap Eats in Bangkok",
@@ -1911,7 +1911,7 @@ export const bangkokCitywideGuides: MapList[] = [
     "bangkok-best-casual-bars-citywide",
     "best-bars",
     "Beer Gardens & Neon Nightlife",
-    "A Bangkok casual bar guide for live Thai music in Chinatown, Victory Monument jazz, and Ekkamai craft beer. Use it when the night should feel local, social, and unpolished without turning into club logistics.",
+    "Bangkok's casual bar scene runs through live Thai music in Chinatown, Victory Monument jazz, Ekkamai craft beer, and low-pressure rooms where conversation and sound matter more than club logistics.",
     expandedCasualBarStops,
     sources.casualBars,
     "Best Casual Bars in Bangkok",
@@ -1923,7 +1923,7 @@ export const bangkokCitywideGuides: MapList[] = [
     "bangkok-best-cocktail-bars-citywide",
     "best-cocktail-bars",
     "Speakeasies & Rooftop Lounges",
-    "A Bangkok cocktail guide for serious bar nights: BKK Social Club's hotel polish, Bar Us's experimental tasting-room energy, and Vesper's Silom reliability. Reserve when the night has stakes.",
+    "Bangkok's serious cocktail rooms range from polished hotel service to experimental tasting formats and precise neighborhood bars. Technique, menu identity, dress posture, and reservation demand distinguish them from generic rooftops.",
     expandedCocktailStops,
     sources.cocktails,
     "Best Cocktail Bars in Bangkok",
@@ -1947,7 +1947,7 @@ export const bangkokCitywideGuides: MapList[] = [
     "bangkok-best-things-to-do-citywide",
     "best-things-to-do",
     "The Essential Bangkok Checklist",
-    "A top-things-to-do guide for Bangkok that respects heat, ferries, temple dress codes, market timing, museums, food, and one serious cocktail landing. It is a route-useful set, not a random attraction dump.",
+    "Bangkok's essentials balance heat, ferries, temple dress codes, market hours, museums, street food, and one serious cocktail room across a city that punishes careless timing.",
     activityStops,
     sources.activities,
     "Best Things to Do in Bangkok",

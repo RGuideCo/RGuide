@@ -36,7 +36,7 @@ export const istanbulCitywideGuides = [
       "Best restaurants in Istanbul for Anatolian cooking, Ottoman palace cuisine, meyhane-style rooms, market classics, and modern Turkish tasting menus.",
     title: "Anatolia, Palace, and New Istanbul Tables",
     description:
-      "Use this guide for Istanbul meals with a real point of view: regional Anatolian cooking, Ottoman food history, classic market rooms, and contemporary Turkish restaurants that feel rooted rather than generic.",
+      "Istanbul meals with a real point of view draw on regional Anatolian cooking, Ottoman food history, classic market dining rooms, and contemporary Turkish kitchens that remain rooted in ingredients and place.",
     url: "https://www.google.com/maps/search/best+restaurants+istanbul",
     category: "Food",
     location: cityLocation,
@@ -49,7 +49,7 @@ export const istanbulCitywideGuides = [
         name: "Ciya Sofrasi",
         coordinates: [40.9895, 29.0247],
         description:
-          "Ciya Sofrasi earns its place because it shows Turkish cooking at regional scale, with dishes from Anatolia and the southeast that move far beyond the standard visitor menu. The best version of the meal is lunch or early dinner after a ferry to Kadikoy, when the crossing, market streets, and steam-table rhythm all feel connected.",
+          "Ciya Sofrasi presents Turkish cooking at regional scale, with changing dishes from Anatolia and the southeast that reach far beyond the standard visitor menu.",
         price: "$$",
         priceSource: "MICHELIN Guide / Google Maps",
         foodServiceType: "restaurant",
@@ -63,7 +63,7 @@ export const istanbulCitywideGuides = [
         name: "Karakoy Lokantasi",
         coordinates: [41.0242, 28.9787],
         description:
-          "Karakoy Lokantasi belongs because it gives Karakoy a reliable all-day restaurant with two useful personalities: a bright tiled lokanta for lunch and a more rakı-and-meze-driven room at night. Its appeal is polish without hotel stiffness, making it a strong choice when the group wants classic Istanbul food in a setting that still feels local.",
+          "Karakoy Lokantasi has two distinct personalities: a bright tiled lokanta serving lunch and a more raki-and-meze-driven restaurant at night. The room is polished without hotel stiffness, and the cooking remains grounded in classic Istanbul food.",
         price: "$$",
         priceSource: "Official site / MICHELIN Guide",
         foodServiceType: "restaurant",
@@ -108,7 +108,7 @@ export const istanbulCitywideGuides = [
         name: "Mikla",
         coordinates: [41.0315, 28.9748],
         description:
-          "Mikla is the contemporary Istanbul dinner to plan around when the trip needs a more refined register. The restaurant combines New Anatolian cooking, Turkish wine, and a high Pera view, but the reason it belongs is that the food carries enough intent to keep the skyline from becoming the whole story.",
+          "Mikla combines New Anatolian cooking, Turkish wine, and a high Pera view. The food carries enough intent, regional reference, and technique to keep the skyline from becoming the whole story.",
         price: "$$$",
         priceSource: "Official site / MICHELIN Guide",
         foodServiceType: "restaurant",
@@ -130,7 +130,7 @@ export const istanbulCitywideGuides = [
         name: "Asitane Restaurant",
         coordinates: [41.0312, 28.9392],
         description:
-          "Asitane is the Ottoman palace-cuisine stop, built around archival recipes instead of broad imperial mood. Pair it with Chora, the land walls, or a slower Fatih day so the meal feels connected to the city’s older layers.",
+          "Asitane is an Ottoman palace-cuisine restaurant, built around archival recipes instead of broad imperial mood. Pair it with Chora, the land walls, or a slower Fatih day so the meal feels connected to the city’s older layers.",
         price: "$$",
         priceSource: "Official site",
         foodServiceType: "restaurant",
@@ -158,7 +158,7 @@ export const istanbulCitywideGuides = [
       "Best bars and nightlife in Istanbul, from Bosphorus cocktails and rooftop views to Kadikoy music rooms, Galata jazz, and late Beyoglu energy.",
     title: "Rooftops, Jazz, and Late Crossings",
     description:
-      "This nightlife guide separates Istanbul by use case rather than by one late-night strip: Mikla for a controlled rooftop drink, Alexandra for Bosphorus-side cocktails, Nardis for serious live jazz, Arkaoda for Kadikoy’s indie scene, and 360 Istanbul for a bigger, visitor-friendly rooftop night.",
+      "Istanbul nightlife crosses controlled rooftops, Bosphorus-side cocktails, serious live jazz, Kadikoy's indie rooms, and bigger visitor-facing terraces rather than one late-night strip.",
     url: "https://www.google.com/maps/search/best+bars+nightlife+istanbul",
     category: "Nightlife",
     location: cityLocation,
@@ -171,7 +171,7 @@ export const istanbulCitywideGuides = [
         name: "Mikla Bar",
         coordinates: [41.0315, 28.9748],
         description:
-          "Mikla Bar is the controlled rooftop option, with polished drinks, Galata air, and old-city silhouettes without forcing the night into club mode. It is best before or after dinner, especially when the group wants a memorable view but still wants conversation to be possible.",
+          "Mikla Bar is a controlled rooftop bar, with polished drinks, Galata air, and old-city silhouettes without forcing the night into club mode.",
         price: "$$$",
         priceSource: "Official site",
         nightlifeType: "rooftop_bar",
@@ -185,7 +185,7 @@ export const istanbulCitywideGuides = [
         name: "Alexandra Cocktail Bar",
         coordinates: [41.0674, 29.0436],
         description:
-          "Alexandra is the Arnavutkoy cocktail stop for a Bosphorus-facing night away from the old-city circuit. Its appeal is the combination of serious cocktails, neighborhood energy, and waterside glamour; it makes more sense as a planned evening north on the strait than as a quick drink after Sultanahmet.",
+          "Alexandra is an Arnavutkoy cocktail bar pairing serious drinks with Bosphorus views, neighborhood energy, and the polish of a waterside room.",
         price: "$$$",
         priceSource: "Official site / Google Maps",
         nightlifeType: "cocktail_bar",
@@ -199,7 +199,7 @@ export const istanbulCitywideGuides = [
         name: "Nardis Jazz Club",
         coordinates: [41.0267, 28.9747],
         description:
-          "Nardis belongs because it makes live music the reason for the night, not background decoration. The compact Galata room, reservation culture, and focused jazz programming make it a strong choice when the plan needs an actual performance, with Tunel, Karakoy, and the tower streets close enough to frame the evening.",
+          "Nardis is a compact Galata jazz club built around attentive audiences and focused live programming. Reservations matter in the intimate room, where the performance is the point rather than background music.",
         price: "$$",
         priceSource: "Time Out / official listings",
         nightlifeType: "live_music_venue",
@@ -213,7 +213,7 @@ export const istanbulCitywideGuides = [
         name: "Arkaoda",
         coordinates: [40.9874, 29.027],
         description:
-          "Arkaoda is the Kadikoy indie bar for DJ nights, live sets, garden drinks, and a less polished social scene than the rooftop circuit. Use it after Moda dinner or market-street grazing when the night should stay Asian-side.",
+          "Arkaoda is the Kadikoy indie bar for DJ nights, live sets, garden drinks, and a less polished social scene than the rooftop circuit.",
         price: "$$",
         priceSource: "Official site / local listings",
         nightlifeType: "live_music_venue",
@@ -227,7 +227,7 @@ export const istanbulCitywideGuides = [
         name: "360 Istanbul",
         coordinates: [41.0339, 28.9772],
         description:
-          "360 Istanbul is the big-view Beyoglu option, combining restaurant, bar, club, and skyline into one high-energy venue. It is not the quiet local secret; it belongs because it solves a specific brief well: a group-friendly night with dramatic views, late programming, and less logistical friction.",
+          "360 Istanbul combines restaurant, bar, club programming, and a dramatic Beyoglu skyline view in one high-energy rooftop. It is group-friendly and conspicuous rather than a quiet local secret.",
         price: "$$$",
         priceSource: "Official site / Google Maps",
         nightlifeType: "rooftop_bar",
@@ -255,7 +255,7 @@ export const istanbulCitywideGuides = [
       "Best museums and cultural stops in Istanbul, including Hagia Sophia, Topkapi Palace, Blue Mosque, Basilica Cistern, and Istanbul Archaeological Museums.",
     title: "Imperial Layers Without the Blur",
     description:
-      "Use this route to slow the old city down: one major Byzantine-Ottoman hinge, one palace complex, one active mosque, one underground cistern, and one museum stop that adds scholarly depth.",
+      "Istanbul's old city holds Byzantine and Ottoman monuments, palace rooms, active mosques, underground engineering, and museums with the scholarship needed to read those layers properly.",
     url: "https://www.google.com/maps/search/best+museums+cultural+stops+istanbul",
     category: "Culture",
     location: cityLocation,
@@ -268,7 +268,7 @@ export const istanbulCitywideGuides = [
         name: "Hagia Sophia",
         coordinates: [41.0086, 28.98],
         description:
-          "Hagia Sophia is the cultural anchor because so many Istanbul stories pass through it: Byzantine basilica, Ottoman mosque, Republican museum chapter, and active mosque again. Give it time for scale, light, calligraphy, and surviving mosaics to land.",
+          "Hagia Sophia is a cultural site because so many Istanbul stories pass through it: Byzantine basilica, Ottoman mosque, Republican museum chapter, and active mosque again. Give it time for scale, light, calligraphy, and surviving mosaics to land.",
         venueKind: "culture",
         hours: { default: "Daily; visiting access varies around prayer times." },
         photo: "https://commons.wikimedia.org/wiki/Special:FilePath/Hagia%20Sophia%20Mars%202013.jpg",
@@ -290,7 +290,7 @@ export const istanbulCitywideGuides = [
         name: "Blue Mosque",
         coordinates: [41.0054, 28.9768],
         description:
-          "The Blue Mosque belongs beside Hagia Sophia because the two buildings shape each other’s story. The tilework and domes matter, but so does the rhythm of an active mosque in a district visitors often treat as a museum zone.",
+          "The Blue Mosque combines cascading domes, six minarets, and an interior lined with İznik tiles directly opposite Hagia Sophia. It remains an active mosque, so prayer rhythms and visitor etiquette matter in a district often treated as a museum zone.",
         venueKind: "culture",
         hours: { default: "Daily outside prayer closures; dress modestly." },
         photo: "https://commons.wikimedia.org/wiki/Special:FilePath/Blue%20mosque%2C%20Istanbul.jpg",
@@ -301,7 +301,7 @@ export const istanbulCitywideGuides = [
         name: "Basilica Cistern",
         coordinates: [41.0084, 28.9779],
         description:
-          "The Basilica Cistern is the old-city pressure valve: cool, theatrical, and useful for understanding Byzantine infrastructure below the imperial surface. It works best between mosques and palaces, when the day needs a darker, slower register.",
+          "The Basilica Cistern is the old-city pressure valve: cool, theatrical, and useful for understanding Byzantine infrastructure below the imperial surface.",
         venueKind: "culture",
         hours: { default: "Daily ~9:00 AM-10:00 PM; confirm current ticket slots." },
         photo: "https://commons.wikimedia.org/wiki/Special:FilePath/Istanbul%2C%20Basilica%20Cistern.jpg",
@@ -312,7 +312,7 @@ export const istanbulCitywideGuides = [
         name: "Istanbul Archaeological Museums",
         coordinates: [41.0117, 28.9813],
         description:
-          "Istanbul Archaeological Museums add scholarship after the monument rush, with collections spanning ancient Anatolia, the Near East, and classical archaeology. It is the best correction to an old-city day built only around mosques, palaces, and imperial views.",
+          "Istanbul Archaeological Museums bring classical antiquity, the ancient Near East, and Ottoman-era collections together across three institutions, including the Tiled Kiosk. The depth corrects any old-city visit built only around mosques and palaces.",
         venueKind: "culture",
         hours: { default: "Daily ~9:00 AM-6:30 PM; seasonal hours vary." },
         photo: "https://upload.wikimedia.org/wikipedia/commons/thumb/7/76/Istanbularcheology.jpg/3840px-Istanbularcheology.jpg",
@@ -336,7 +336,7 @@ export const istanbulCitywideGuides = [
       "Best parks and waterfronts in Istanbul for Bosphorus views, old-city gardens, Moda walks, Emirgan tulips, Yildiz shade, and car-free island air.",
     title: "Gardens, Ferries, and Breathing Room",
     description:
-      "Use this guide when Istanbul needs air: shaded palace gardens, Bosphorus greenery, Asian-side waterfront walking, and one island escape that turns the ferry ride into part of the day.",
+      "Istanbul's breathing room comes from shaded palace gardens, Bosphorus greenery, long Asian-side waterfront paths, and an island escape where the ferry crossing is part of the landscape.",
     url: "https://www.google.com/maps/search/best+parks+waterfronts+istanbul",
     category: "Nature",
     location: cityLocation,
@@ -349,7 +349,7 @@ export const istanbulCitywideGuides = [
         name: "Gulhane Park",
         coordinates: [41.0136, 28.9813],
         description:
-          "Gulhane Park is the old-city reset, useful after Topkapi or the Archaeological Museums when stone, queues, and tour groups start to blur. Its appeal is practical as much as scenic: shaded paths, benches, seasonal planting, and an easy exit toward Sirkeci or the waterfront without leaving the historic core abruptly.",
+          "Its appeal is practical as much as scenic: shaded paths, benches, seasonal planting, and an easy exit toward Sirkeci or the waterfront without leaving the historic core abruptly.",
         venueKind: "outdoors",
         hours: { default: "Daily; daylight hours best." },
         photo: "https://commons.wikimedia.org/wiki/Special:FilePath/G%C3%BClhane%20Park%20Istanbul.jpg",
@@ -359,7 +359,7 @@ export const istanbulCitywideGuides = [
         name: "Emirgan Park",
         coordinates: [41.1087, 29.0526],
         description:
-          "Emirgan Park is the Bosphorus garden for travelers who need more scale than a central pocket park can offer. Hills, pavilions, tulip-season color, and water-facing air make the northern shoreline feel calmer, especially when paired with a slow ride up the strait or a waterside meal nearby.",
+          "Emirgan Park is the Bosphorus garden for more scale than a central pocket park can offer. Hills, pavilions, tulip-season color, and water-facing air make the northern shoreline feel calmer, especially when paired with a slow ride up the strait or a waterside meal nearby.",
         venueKind: "outdoors",
         hours: { default: "Daily; daylight hours best." },
         photo: "https://commons.wikimedia.org/wiki/Special:FilePath/Istanbul%20Tulip%20Festival%20in%20Emirgan%20Park.jpg",
@@ -369,7 +369,7 @@ export const istanbulCitywideGuides = [
         name: "Yildiz Park",
         coordinates: [41.0498, 29.0139],
         description:
-          "Yildiz Park is the shaded Besiktas-Ortakoy buffer, with palace-garden history, wooded paths, pavilions, and occasional Bosphorus glimpses. It works best as a quieter hour between waterfront crowds and denser European-side neighborhoods, especially when the day has already been heavy on streets and traffic.",
+          "Yildiz Park carries palace-garden history through shaded woodland paths, pavilions, and occasional Bosphorus glimpses between Besiktas and Ortakoy. Its quiet terrain contrasts with the traffic and waterfront crowds outside the gates.",
         venueKind: "outdoors",
         hours: { default: "Daily; daylight hours best." },
         photo: "https://commons.wikimedia.org/wiki/Special:FilePath/Yildiz%20Park%2002.jpg",
@@ -379,7 +379,7 @@ export const istanbulCitywideGuides = [
         name: "Moda Coastal Park and Path",
         coordinates: [40.9821, 29.0259],
         description:
-          "Moda’s waterfront is the Asian-side exhale, with tea gardens, sunset walkers, Marmara views, and an easy link back into Kadikoy food streets. It is not wilderness, but it belongs because it shows a softer everyday Istanbul, where the nature stop is really a walk, a view, and a neighborhood rhythm.",
+          "Moda's waterfront brings tea gardens, sunset walkers, Marmara views, and long paths to the edge of Kadikoy. It is an everyday urban coast rather than wilderness, defined by walking, sitting, and neighborhood life beside the water.",
         venueKind: "outdoors",
         hours: { default: "Daily; sunset is the strongest window." },
         photo: "https://upload.wikimedia.org/wikipedia/commons/a/a9/Moda_%C4%B0skelesi_2019-08.jpg",
@@ -389,7 +389,7 @@ export const istanbulCitywideGuides = [
         name: "Buyukada",
         coordinates: [40.8567, 29.1227],
         description:
-          "Buyukada turns nature into a full ferry-day structure: sea air, pine hills, old villas, cycling or walking routes, and a clean break from central traffic. Şehir Hatları ferries from Kabatas usually take about 1 hour 30 minutes to 1 hour 45 minutes each way, depending on stops, so plan it as a half-day or full-day escape.",
+          "Buyukada turns nature into a full ferry-day structure: sea air, pine hills, old villas, cycling or walking routes, and a clean break from central traffic.",
         venueKind: "outdoors",
         hours: { default: "Island public areas daily; ferry schedules vary." },
         photo: "https://live.staticflickr.com/3489/3951334827_7325c2a771_b.jpg",
@@ -410,7 +410,7 @@ export const istanbulCitywideGuides = [
       "Best things to do in Istanbul, mixing bazaars, ferries, Galata views, Turkish bath rituals, Kadikoy markets, and old-city sightseeing rhythm.",
     title: "Markets, Crossings, and Rituals",
     description:
-      "This activities guide favors Istanbul experiences that change how the city is understood: the Grand Bazaar as a district, the Spice Bazaar as an Eminonu anchor, the ferry as orientation, Kilic Ali Pasa Hamami as a restored bathing ritual, and Galata Tower as a view that clarifies the city’s geography.",
+      "Istanbul reveals itself through the Grand Bazaar as a district, spice and waterfront trade, ferry crossings, a restored hammam ritual, and a tower view across the city's geography.",
     url: "https://www.google.com/maps/search/best+things+to+do+istanbul",
     category: "Activities",
     location: cityLocation,
@@ -443,7 +443,7 @@ export const istanbulCitywideGuides = [
         name: "Bosphorus Ferry Crossing",
         coordinates: [41.0214, 29.0156],
         description:
-          "A Bosphorus ferry crossing is the city’s clearest orientation tool, with mosques behind you, palaces and yalıs along the banks, gulls overhead, and the Asian side arriving without ceremony. It belongs here because it turns geography into experience; build at least one day around the water rather than treating the crossing as transit filler.",
+          "A Bosphorus ferry crossing is the city’s clearest orientation tool, with mosques behind you, palaces and yalıs along the banks, gulls overhead, and the Asian side arriving without ceremony.",
         venueKind: "transport",
         hours: { default: "Schedules vary by route and season." },
         photo: "https://commons.wikimedia.org/wiki/Special:FilePath/Istanbul%20Bosphorus%20ferry.jpg",
@@ -454,7 +454,7 @@ export const istanbulCitywideGuides = [
         name: "Kilic Ali Pasa Hamami",
         coordinates: [41.0253, 28.9813],
         description:
-          "Kilic Ali Pasa Hamami gives the list a ritual rather than another sight. Set in a restored Sinan complex, it offers timed bathing sessions and a central Tophane location, making it one of the easiest ways to turn an overfull walking day into something slower, quieter, and more embodied.",
+          "Kilic Ali Pasa Hamami occupies a restored Sinan complex in Tophane and offers timed bathing sessions built around a slower, quieter, physically embodied ritual.",
         venueKind: "service",
         hours: { default: "Daily by appointment; men and women use separate time windows." },
         photo: "https://kilicalipasahamami.com/storage/sliders/May2023/mtDhvGvv1s4ENIVV4sHz.jpg",
@@ -488,7 +488,7 @@ export const istanbulCitywideGuides = [
       "Best hotels in Istanbul, comparing Sultanahmet heritage stays, Pera grand hotels, Karakoy waterfront luxury, Beyoglu design rooms, and Bosphorus mansions.",
     title: "Sultanahmet, Pera, Karakoy, and the Bosphorus",
     description:
-      "This hotel guide compares bases as much as properties: Four Seasons for immediate Sultanahmet access, Pera Palace for historic grand-hotel atmosphere, Soho House for a design-led Beyoglu stay, The Peninsula for Karakoy waterfront luxury, and Kocatas Mansions for a quieter Bosphorus mansion experience north of the center.",
+      "Istanbul hotels change the trip by district: immediate monument access in Sultanahmet, grand-hotel history in Pera, design-led Beyoglu rooms, Karakoy waterfront luxury, or a quieter Bosphorus mansion north of the center.",
     url: "https://www.google.com/maps/search/best+hotels+istanbul",
     category: "Stay",
     location: cityLocation,
@@ -517,7 +517,7 @@ export const istanbulCitywideGuides = [
         name: "Pera Palace Hotel",
         coordinates: [41.0311, 28.974],
         description:
-          "Pera Palace is the grand-hotel choice for travelers who want the stay itself to carry old Pera atmosphere. Its appeal is the combination of Orient Express mythology, high-ceilinged public rooms, museum-like corridors, and easy access to Tunel, Galata, and Istiklal without sleeping inside the old-city sightseeing zone.",
+          "Pera Palace carries old Pera atmosphere through Orient Express mythology, high-ceilinged public rooms, and museum-like corridors. Tunel, Galata, and Istiklal remain close without placing the hotel inside the old-city sightseeing zone.",
         category: "Stay",
         venueKind: "lodging",
         lodgingType: "hotel",
@@ -532,7 +532,7 @@ export const istanbulCitywideGuides = [
         name: "Soho House Istanbul",
         coordinates: [41.0318, 28.9748],
         description:
-          "Set in Palazzo Corpi, Soho House Istanbul is the Beyoglu design stay for travelers who want the hotel to function as a social base. Frescoed interiors, hammam access, restaurants, work-lounge energy, and rooftop atmosphere make it strongest for guests who will use the property, not just sleep there.",
+          "Set in Palazzo Corpi, Soho House Istanbul is a social Beyoglu design hotel with frescoed interiors, hammam access, restaurants, work lounges, and rooftop atmosphere. The property rewards guests who use its shared spaces rather than only sleep there.",
         category: "Stay",
         venueKind: "lodging",
         lodgingType: "hotel",
@@ -548,7 +548,7 @@ export const istanbulCitywideGuides = [
         name: "The Peninsula Istanbul",
         coordinates: [41.0269, 28.9818],
         description:
-          "The Peninsula Istanbul is the Karakoy waterfront splurge, useful when the trip wants old-city access, Bosphorus views, Galataport polish, and a softer landing after dense sightseeing. Its strength is making a busy port-side location feel composed, with enough water and service calm to balance the surrounding movement.",
+          "Its strength is making a busy port-side location feel composed, with enough water and service calm to balance the surrounding movement.",
         category: "Stay",
         venueKind: "lodging",
         lodgingType: "hotel",
@@ -563,7 +563,7 @@ export const istanbulCitywideGuides = [
         name: "Kocatas Mansions Istanbul",
         coordinates: [41.1662, 29.0548],
         description:
-          "Kocatas Mansions Istanbul is the northern Bosphorus counterpoint to the central hotels. Set in restored Ottoman-era mansions above the water, it offers more resort mood than city-hotel efficiency, making it best for travelers who value quiet, views, and a slower return each night more than quick access to Sultanahmet.",
+          "Kocatas Mansions Istanbul is the northern Bosphorus alternative to the central hotels. Set in restored Ottoman-era mansions above the water, it offers more resort mood than city-hotel efficiency, making it best for travelers who value quiet, views, and a slower return each night more than quick access to Sultanahmet.",
         category: "Stay",
         venueKind: "lodging",
         lodgingType: "hotel",
@@ -606,7 +606,7 @@ export const istanbulCitywideGuides = [
         name: "Cheers Hostel",
         coordinates: [41.0095, 28.9781],
         description:
-          "Cheers Hostel is the Sultanahmet social-base pick for travelers who want major sights within walking distance without giving up common-room energy. It offers dorms and private rooms, which makes it useful for solo travelers, pairs, and small groups who still want easy evening plans.",
+          "Cheers Hostel is a Sultanahmet social-base hostel for major sights within walking distance without giving up common-room energy. It offers dorms and private rooms, which makes it useful for solo travelers, pairs, and small groups who still want easy evening plans.",
         category: "Stay",
         venueKind: "lodging",
         lodgingType: "hostel",
@@ -637,7 +637,7 @@ export const istanbulCitywideGuides = [
         name: "Wabi Hostels Istanbul",
         coordinates: [41.0437, 28.9868],
         description:
-          "Wabi Hostels gives the Taksim side a cleaner, more structured hostel option with private rooms, dorms, rooftop social space, and quick access to Istiklal nights. It is the practical pick when nightlife, transit, and airport-bus logistics matter more than waking within walking distance of the mosques.",
+          "Wabi Hostels offers private rooms, dorms, a rooftop social space, and quick access to Taksim transit and Istiklal nightlife. Airport-bus convenience and evening activity come at the cost of being outside walking distance of the old-city mosques.",
         category: "Stay",
         venueKind: "lodging",
         lodgingType: "hostel",
@@ -652,7 +652,7 @@ export const istanbulCitywideGuides = [
         name: "Hush Hostel Lounge",
         coordinates: [40.9927, 29.0222],
         description:
-          "Hush Hostel Lounge is the Kadikoy representative, useful for travelers who want markets, bars, ferries, and Asian-side daily life instead of old-city monument pressure. It offers dorms and private rooms, turning Kadikoy from a ferry-day add-on into a real base for longer stays or return visitors.",
+          "Hush Hostel Lounge is the Kadikoy representative, useful for markets, bars, ferries, and Asian-side daily life instead of old-city monument pressure. It offers dorms and private rooms, turning Kadikoy from a ferry-day add-on into a real base for longer stays or return visitors.",
         category: "Stay",
         venueKind: "lodging",
         lodgingType: "hostel",
@@ -668,7 +668,7 @@ export const istanbulCitywideGuides = [
         name: "Second Home Hostel",
         coordinates: [41.0144, 28.9766],
         description:
-          "Second Home Hostel is the Sirkeci-Sultanahmet bridge pick, close enough to the old-city sights but better placed for ferries, trams, and Eminonu days than hostels deeper in the tourist core. Dorms and private rooms are available; the appeal is simple, central, logistics-led value.",
+          "Second Home Hostel is a Sirkeci-Sultanahmet bridge hostel, close enough to the old-city sights but better placed for ferries, trams, and Eminonu days than hostels deeper in the tourist core. Dorms and private rooms are available; the appeal is simple, central, logistics-led value.",
         category: "Stay",
         venueKind: "lodging",
         lodgingType: "hostel",

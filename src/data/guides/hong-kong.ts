@@ -256,7 +256,7 @@ const diningStops = [
     neighborhood: "Central",
     coordinates: [22.2831, 114.1557],
     description:
-      "The Chairman anchors the modern Cantonese side of this guide because it treats local products, sauces, and old techniques like living material rather than nostalgia. Book it for a serious Central dinner where steamed crab, preserved ingredients, and quiet service carry more weight than skyline theater.",
+      "The Chairman treats local products, sauces, and old Cantonese techniques as living material rather than nostalgia. Steamed crab, preserved ingredients, and quiet service carry more weight than skyline theater in the Central dining room.",
     venueKind: "food_drink",
     foodServiceType: "restaurant",
     cuisineTypes: ["cantonese", "modern_chinese", "fine_dining"],
@@ -274,7 +274,7 @@ const diningStops = [
     neighborhood: "Central",
     coordinates: [22.2864, 114.1577],
     description:
-      "Lung King Heen belongs because Hong Kong fine dining is still fluent in Cantonese restraint, not only chef-counter experimentation. The Four Seasons room gives dim sum, seafood, and harbour views full ceremony; use it for lunch if you want the meal to read as Hong Kong before the rest of the day gets vertical.",
+      "Lung King Heen practices polished Cantonese fine dining with restrained technique, formal service, and none of the performance associated with experimental chef counters.",
     venueKind: "food_drink",
     foodServiceType: "restaurant",
     cuisineTypes: ["cantonese", "dim_sum", "seafood"],
@@ -301,7 +301,7 @@ const diningStops = [
     neighborhood: "Central",
     coordinates: [22.2864, 114.1577],
     description:
-      "Caprice is here for the other face of high-end Hong Kong: French technique, a deep cellar, and a room that turns the harbour into part of dinner. It is a splurge with a clear use case, best for travelers who want one polished Western meal without leaving the Central waterfront orbit.",
+      "Caprice shows another face of high-end Hong Kong through French technique, a deep cellar, and a room that pulls the harbour into dinner. It is a polished Western splurge within the Central waterfront orbit.",
     venueKind: "food_drink",
     foodServiceType: "restaurant",
     cuisineTypes: ["french", "fine_dining", "wine"],
@@ -320,7 +320,7 @@ const diningStops = [
     neighborhood: "Central",
     coordinates: [22.2819, 114.1579],
     description:
-      "Amber earns a place because Richard Ekkebus has turned a luxury-hotel dining room into a disciplined, produce-aware restaurant with real Hong Kong texture. The official page lists lunch and dinner windows, so plan it as a deliberate Landmark reservation rather than a casual mall detour.",
+      "Richard Ekkebus has made Amber a disciplined, produce-aware restaurant whose cooking carries real Hong Kong texture despite its luxury-hotel dining room.",
     venueKind: "food_drink",
     foodServiceType: "restaurant",
     cuisineTypes: ["french", "fine_dining", "seasonal"],
@@ -339,7 +339,7 @@ const diningStops = [
     neighborhood: "Central",
     coordinates: [22.2797, 114.1569],
     description:
-      "Ando brings a quieter, personal tasting-menu register to Central, blending Agustin Balbi's Japanese training with Spanish-Argentine memory. It belongs in the guide because Hong Kong's best dinners are not only Cantonese power rooms; book it when you want precision and warmth rather than banquet theatre.",
+      "Ando brings a quieter, personal tasting-menu register to Central, blending Agustin Balbi's Japanese training with Spanish-Argentine memory.",
     venueKind: "food_drink",
     foodServiceType: "restaurant",
     cuisineTypes: ["japanese", "spanish", "tasting_menu"],
@@ -358,7 +358,7 @@ const diningStops = [
     neighborhood: "Central",
     coordinates: [22.2815, 114.1539],
     description:
-      "MONO gives the list a Latin American tasting-menu voice without pretending Central needs another interchangeable luxury room. Ricardo Chaneton's cooking is best for diners who want corn, cacao, seafood, and French technique handled with focus; reserve it for a long dinner, not a pre-bar snack.",
+      "At MONO, Ricardo Chaneton handles corn, cacao, seafood, and French technique through a focused Latin American tasting menu. The long format and serious Central dining room demand a reservation and unhurried attention.",
     venueKind: "food_drink",
     foodServiceType: "restaurant",
     cuisineTypes: ["latin_american", "french", "tasting_menu"],
@@ -377,7 +377,7 @@ const diningStops = [
     neighborhood: "Sheung Wan",
     coordinates: [22.2857, 114.1492],
     description:
-      "Mora is the Sheung Wan pick for travelers who want Hong Kong heritage translated through soy, texture, and small-room discipline. Vicky Lau's project works especially well before or after the antique lanes around Upper Lascar Row; the caveat is that this is a planned meal, not a walk-in noodle fix.",
+      "Mora is a Sheung Wan restaurant for Hong Kong heritage translated through soy, texture, and small-room discipline.",
     venueKind: "food_drink",
     foodServiceType: "restaurant",
     cuisineTypes: ["modern_chinese", "soy", "cantonese"],
@@ -396,7 +396,7 @@ const diningStops = [
     neighborhood: "Soho",
     coordinates: [22.2822, 114.1524],
     description:
-      "Ho Lee Fook keeps the guide from becoming all hushed tasting rooms: it is Cantonese memory run through neon, music, and a modern Soho dining room. Go when the group wants char siu, seafood, and cocktails in the same night; book ahead because the room is built for energy, not lingering silence.",
+      "Ho Lee Fook runs Cantonese memory through neon, music, and a modern Soho dining room, replacing hushed tasting-room restraint with louder social energy.",
     venueKind: "food_drink",
     foodServiceType: "restaurant",
     cuisineTypes: ["modern_cantonese", "chinese", "roast_meats"],
@@ -415,7 +415,7 @@ const diningStops = [
     neighborhood: "Sheung Wan",
     coordinates: [22.286, 114.1494],
     description:
-      "Yardbird remains useful because it makes Hong Kong's Japanese-influenced drinking-and-eating culture feel easy without flattening it into a chain izakaya. The yakitori format is social, the room moves quickly, and the best play is to treat it as dinner that can become the night's first drink.",
+      "Yardbird serves yakitori in a quick-moving, social room that captures Hong Kong's Japanese-influenced drinking-and-eating culture without feeling like a chain izakaya. Skewers and drinks share equal weight.",
     venueKind: "food_drink",
     foodServiceType: "restaurant",
     cuisineTypes: ["yakitori", "japanese", "izakaya"],
@@ -434,7 +434,7 @@ const diningStops = [
     neighborhood: "Central",
     coordinates: [22.2804, 114.1578],
     description:
-      "Estro gives Central a small, detail-heavy Italian tasting-menu stop that feels more personal than hotel Italian. Use it when the trip needs one European dinner with Hong Kong precision; the official booking calendar matters because the appeal is a focused seated meal, not a casual pasta drop-in.",
+      "Estro gives Central a small, detail-heavy Italian tasting-menu stop that feels more personal than hotel Italian.",
     venueKind: "food_drink",
     foodServiceType: "restaurant",
     cuisineTypes: ["italian", "tasting_menu", "fine_dining"],
@@ -456,7 +456,7 @@ const cheapEatStops = [
     neighborhood: "Central",
     coordinates: [22.2815, 114.1551],
     description:
-      "Mak's Noodle is the classic Central wonton-noodle stop because the bowl is small, springy, and exact rather than oversized for tourists. Use it between Mid-Levels and Central errands, and order with the understanding that the point is quick Cantonese noodle craft, not a long table hang.",
+      "Mak's Noodle serves small, exact bowls of springy wonton noodles in Central. The quick Cantonese craft suits a brief meal near the Mid-Levels rather than a long table hang.",
     venueKind: "food_drink",
     foodServiceType: "restaurant",
     cuisineTypes: ["wonton_noodles", "cantonese", "noodles"],
@@ -474,7 +474,7 @@ const cheapEatStops = [
     neighborhood: "Sheung Wan",
     coordinates: [22.2848, 114.1514],
     description:
-      "Kau Kee earns the beef-brisket slot because it is fast, blunt, and deeply Hong Kong: a short queue, a shared table, and broth that justifies the lack of ceremony. It works best as a Sheung Wan lunch or early dinner, especially if you can handle tight seating and minimal lingering.",
+      "Kau Kee serves beef brisket and deeply flavored broth with a short queue, shared tables, tight seating, and almost no ceremony. The fast Sheung Wan room allows little lingering but puts the bowl first.",
     venueKind: "food_drink",
     foodServiceType: "restaurant",
     cuisineTypes: ["beef_brisket", "cantonese", "noodles"],
@@ -500,7 +500,7 @@ const cheapEatStops = [
     neighborhood: "Jordan",
     coordinates: [22.3045, 114.1706],
     description:
-      "Australia Dairy Company is not gentle, and that is why it belongs: fast scrambled eggs, milk pudding, toast, and service that moves at Jordan speed. Go for breakfast or a snack when you want cha chaan teng theater, but skip it if anyone in the group needs a soft landing.",
+      "Australia Dairy Company serves fast scrambled eggs, milk pudding, toast, and tea with service that moves at Jordan speed. The brusque efficiency is part of the cha chaan teng theater, but it will not suit anyone who needs a soft landing.",
     venueKind: "food_drink",
     foodServiceType: "cafe",
     cuisineTypes: ["cha_chaan_teng", "breakfast", "hong_kong"],
@@ -526,7 +526,7 @@ const cheapEatStops = [
     neighborhood: "Central",
     coordinates: [22.2814, 114.1556],
     description:
-      "Yat Lok is the roast-goose counter for travelers who want Central to taste less polished and more practical. The move is simple: order goose over rice or noodles, eat quickly, and let the fat and crisp skin do the talking before you head back uphill.",
+      "Yat Lok serves lacquered roast goose, char siu, and rice at a brisk Central counter with little ceremony.",
     venueKind: "food_drink",
     foodServiceType: "restaurant",
     cuisineTypes: ["roast_goose", "cantonese", "rice"],
@@ -570,7 +570,7 @@ const cheapEatStops = [
     neighborhood: "Central",
     coordinates: [22.2811, 114.1552],
     description:
-      "Tsim Chai Kee belongs beside Mak's because it gives the same Central noodle run a bigger, more generous bowl. It is the practical choice when hunger matters more than heritage purity; order wontons, fish balls, or beef slices and accept the quick-table rhythm.",
+      "Tsim Chai Kee serves generous bowls of springy noodles with wontons, fish balls, or beef slices at a quick Central table. Portions matter more here than heritage ceremony.",
     venueKind: "food_drink",
     foodServiceType: "restaurant",
     cuisineTypes: ["wonton_noodles", "fish_balls", "cantonese"],
@@ -588,7 +588,7 @@ const cheapEatStops = [
     neighborhood: "Central",
     coordinates: [22.2824, 114.1533],
     description:
-      "Tai Cheong Bakery is the egg-tart stop because it is small, fast, and tied to Central walking routes without demanding a full meal. Buy one warm tart, keep the box upright, and use it as a sweet reset between Hollywood Road, the escalator, and the next MTR ride.",
+      "Tai Cheong Bakery is an egg-tart bakery because it is small, fast, and tied to Central walking routes without demanding a full meal.",
     venueKind: "food_drink",
     foodServiceType: "bakery",
     cuisineTypes: ["bakery", "egg_tarts", "hong_kong"],
@@ -606,7 +606,7 @@ const cheapEatStops = [
     neighborhood: "Mong Kok",
     coordinates: [22.3223, 114.1698],
     description:
-      "Kam Wah Cafe is the pineapple-bun and milk-tea stop for a Mong Kok day that needs a sit-down pause without losing street momentum. The bun is the reason to go, but the bigger value is timing: morning or afternoon works better than forcing it into dinner.",
+      "Kam Wah Cafe is a pineapple-bun and milk-tea cafe for a Mong Kok day that needs a sit-down pause without losing street momentum. The bun is the reason to go, but the bigger value is timing: morning or afternoon works better than forcing it into dinner.",
     venueKind: "food_drink",
     foodServiceType: "cafe",
     cuisineTypes: ["cha_chaan_teng", "pineapple_bun", "hong_kong"],
@@ -632,7 +632,7 @@ const cheapEatStops = [
     neighborhood: "Sham Shui Po",
     coordinates: [22.3251, 114.1642],
     description:
-      "Kwan Kee Store gives the guide a Sham Shui Po noodle stop with bamboo-pressed texture and real neighborhood use. Come for wonton noodles or lo mein before electronics browsing, and remember this is a working local shop where speed and patience matter equally.",
+      "Kwan Kee Store serves bamboo-pressed noodles with distinctive chew from a Sham Shui Po shop still woven into neighborhood life.",
     venueKind: "food_drink",
     foodServiceType: "restaurant",
     cuisineTypes: ["wonton_noodles", "cantonese", "lo_mein"],
@@ -658,7 +658,7 @@ const cheapEatStops = [
     neighborhood: "Tsim Sha Tsui",
     coordinates: [22.2976, 114.1722],
     description:
-      "Mammy Pancake is the egg-waffle pick because it turns Hong Kong's snack logic into something easy to route around Tsim Sha Tsui. Get a fresh gai daan jai, eat it while the grid is still crisp, and treat it as a walk-and-harbour snack rather than dessert theater.",
+      "Mammy Pancake makes gai daan jai to order, with a crisp grid outside and soft, airy centers. The egg waffle is best eaten immediately while that texture holds.",
     venueKind: "food_drink",
     foodServiceType: "stall",
     cuisineTypes: ["egg_waffle", "street_food", "hong_kong"],
@@ -679,7 +679,7 @@ const hotelStops = [
     neighborhood: "Central",
     coordinates: [22.2819, 114.1598],
     description:
-      "Mandarin Oriental is the Central grande dame for travelers who want Hong Kong history baked into the address. It is less shiny-new than the Kowloon waterfront towers, but the location, service culture, and deep dining bench make it a practical luxury base.",
+      "Mandarin Oriental is Central's grande dame, with deep Hong Kong history, exacting service, and a formidable collection of restaurants and bars. It is less shiny-new than the Kowloon waterfront towers, but far more rooted in its address.",
     venueKind: "lodging",
     lodgingType: "hotel",
     price: "$$$$",
@@ -697,7 +697,7 @@ const hotelStops = [
     neighborhood: "Tsim Sha Tsui",
     coordinates: [22.2953, 114.1715],
     description:
-      "The Peninsula is the Kowloon heritage choice, where the lobby, afternoon tea, and harbour-side location still carry real travel logic. Book it when the stay should feel ceremonial and walkable to Tsim Sha Tsui sights; the price makes less sense if you only need a bed near the MTR.",
+      "The Peninsula is a Kowloon heritage hotel defined by its grand lobby, afternoon tea, ceremonial service, and harbour-side location within walking distance of Tsim Sha Tsui sights. The rate buys far more than an MTR-adjacent bed.",
     venueKind: "lodging",
     lodgingType: "hotel",
     price: "$$$$",
@@ -715,7 +715,7 @@ const hotelStops = [
     neighborhood: "Central",
     coordinates: [22.2864, 114.1577],
     description:
-      "Four Seasons is the luxury hotel for travelers who want IFC convenience, ferry access, big harbour views, and serious dining under one roof. It is not the quietest choice, but for business trips, first visits, and restaurant-led weekends, the Central logistics are hard to beat.",
+      "Four Seasons is the luxury hotel for IFC convenience, ferry access, big harbour views, and serious dining under one roof. It is not the quietest choice, but for business trips, first visits, and restaurant-led weekends, the Central logistics are hard to beat.",
     venueKind: "lodging",
     lodgingType: "hotel",
     price: "$$$$",
@@ -733,7 +733,7 @@ const hotelStops = [
     neighborhood: "Tsim Sha Tsui",
     coordinates: [22.2947, 114.1758],
     description:
-      "Rosewood is the contemporary Kowloon splurge, with Victoria Dockside giving the stay a polished waterfront frame. Use it when the hotel itself matters: large rooms, design detail, dining, spa time, and immediate access to the promenade instead of Central's business-district tempo.",
+      "Rosewood is the contemporary Kowloon splurge, with Victoria Dockside giving the stay a polished waterfront frame.",
     venueKind: "lodging",
     lodgingType: "hotel",
     price: "$$$$",
@@ -787,7 +787,7 @@ const hotelStops = [
     neighborhood: "Tsim Sha Tsui",
     coordinates: [22.2935, 114.1739],
     description:
-      "Regent Hong Kong is back on the Tsim Sha Tsui waterfront with the kind of view that can justify staying on Kowloon instead of the island. It is best for travelers who want polished rooms, harbour drama, and museum/promenade walks without treating Central as the only center.",
+      "Regent Hong Kong is back on the Tsim Sha Tsui waterfront with the kind of view that can justify staying on Kowloon instead of the island.",
     venueKind: "lodging",
     lodgingType: "hotel",
     price: "$$$$",
@@ -805,7 +805,7 @@ const hotelStops = [
     neighborhood: "Central",
     coordinates: [22.2797, 114.1597],
     description:
-      "The Murray is the government-building-to-luxury-hotel choice, useful for travelers who like architecture, Hong Kong Park, and a slightly removed Central base. It feels more composed than the IFC waterfront hotels, but you should be comfortable walking hills or using taxis.",
+      "The Murray is a government-building-to-luxury-hotel, useful for travelers who like architecture, Hong Kong Park, and a slightly removed Central base. It feels more composed than the IFC waterfront hotels, but you should be comfortable walking hills or using taxis.",
     venueKind: "lodging",
     lodgingType: "hotel",
     price: "$$$$",
@@ -823,7 +823,7 @@ const hotelStops = [
     neighborhood: "Admiralty",
     coordinates: [22.2773, 114.1646],
     description:
-      "Island Shangri-La is the Pacific Place workhorse with enough polish to feel special and enough transit logic to stay practical. Choose it for Admiralty access, family-friendly service, and easy movement between Central, Wan Chai, and the tram corridor rather than boutique intimacy.",
+      "Island Shangri-La is the Pacific Place workhorse with enough polish to feel special and enough transit access to stay practical. Choose it for Admiralty access, family-friendly service, and easy movement between Central, Wan Chai, and the tram corridor rather than boutique intimacy.",
     venueKind: "lodging",
     lodgingType: "hotel",
     price: "$$$$",
@@ -841,7 +841,7 @@ const hotelStops = [
     neighborhood: "Taikoo",
     coordinates: [22.2861, 114.216],
     description:
-      "EAST Hong Kong is the non-Central pick for travelers who want Taikoo Place, Quarry Bay, and an easier eastern-island rhythm. It is more business-design than heritage fantasy, but the MTR access and neighborhood food options make it a smart value when Central prices feel inflated.",
+      "EAST Hong Kong is a non-Central hotel for Taikoo Place, Quarry Bay, and an easier eastern-island rhythm. It is more business-design than heritage fantasy, but the MTR access and neighborhood food options make it a smart value when Central prices feel inflated.",
     venueKind: "lodging",
     lodgingType: "hotel",
     price: "$$$",
@@ -862,7 +862,7 @@ const hostelStops = [
     neighborhood: "Sham Shui Po",
     coordinates: [22.3345, 114.1636],
     description:
-      "YHA Mei Ho House is the strongest hostel pick because it turns a preserved public-housing block into a real Sham Shui Po base. Dorms and private rooms give budget travelers room to breathe, and the heritage setting makes it more memorable than another anonymous Kowloon bunkhouse.",
+      "YHA Mei Ho House is a hostel because it turns a preserved public-housing block into a real Sham Shui Po base. Dorms and private rooms give budget travelers room to breathe, and the heritage setting makes it more memorable than another anonymous Kowloon bunkhouse.",
     venueKind: "lodging",
     lodgingType: "hostel",
     price: "$$",
@@ -880,7 +880,7 @@ const hostelStops = [
     neighborhood: "Prince Edward",
     coordinates: [22.3245, 114.1664],
     description:
-      "Wontonmeen is the design-leaning hostel for travelers who want Kowloon street life without sleeping in the busiest Chungking Mansion orbit. Its cafe, creative-hostel personality, and Prince Edward location make it useful for markets, cheap food, and MTR movement.",
+      "Wontonmeen is a design-leaning Prince Edward hostel with a cafe and a creative, communal personality. Kowloon markets, inexpensive food, and the MTR are close, without the intensity of the Chungking Mansions orbit.",
     venueKind: "lodging",
     lodgingType: "hostel",
     price: "$$",
@@ -898,7 +898,7 @@ const hostelStops = [
     neighborhood: "Tsim Sha Tsui",
     coordinates: [22.2985, 114.1742],
     description:
-      "Hop Inn is the Tsim Sha Tsui hostel pick when the priority is harbour access, museums, food, and easy MTR lines. It is compact, as Hong Kong hostels often are, but the location makes first-night orientation and Kowloon sightseeing much simpler.",
+      "Hop Inn is a Tsim Sha Tsui hostel when the priority is harbour access, museums, food, and easy MTR lines. It is compact, as Hong Kong hostels often are, but the location makes first-night orientation and Kowloon sightseeing much simpler.",
     venueKind: "lodging",
     lodgingType: "hostel",
     price: "$$",
@@ -916,7 +916,7 @@ const hostelStops = [
     neighborhood: "Wan Chai",
     coordinates: [22.2763, 114.1752],
     description:
-      "Check Inn HK is the island-side hostel for travelers who want Wan Chai, Causeway Bay, trams, and bars without paying hotel rates. It is more practical than romantic, so choose it for transit and nightlife access rather than a quiet design retreat.",
+      "Check Inn HK is the island-side hostel for Wan Chai, Causeway Bay, trams, and bars without paying hotel rates. It is more practical than romantic, so choose it for transit and nightlife access rather than a quiet design retreat.",
     venueKind: "lodging",
     lodgingType: "hostel",
     price: "$$",
@@ -934,7 +934,7 @@ const hostelStops = [
     neighborhood: "Tsim Sha Tsui",
     coordinates: [22.297, 114.1721],
     description:
-      "Urban Pack belongs because it puts budget beds directly in the Tsim Sha Tsui transit-and-harbour zone. The rooms are simple and space-conscious, but the value is stepping outside into food, ferries, malls, and the waterfront without building a commute into every day.",
+      "Urban Pack puts simple, space-conscious budget rooms in the Tsim Sha Tsui transit-and-harbour zone. Food, ferries, malls, MTR lines, and the waterfront are immediately outside.",
     venueKind: "lodging",
     lodgingType: "hostel",
     price: "$",
@@ -952,7 +952,7 @@ const hostelStops = [
     neighborhood: "To Kwa Wan",
     coordinates: [22.3189, 114.1883],
     description:
-      "The Mahjong is useful for travelers willing to trade central address bragging rights for a more residential Kowloon stay. It fits a hostel guide because the social setup and local-food surroundings can make Hong Kong feel less like a sequence of mall basements.",
+      "The Mahjong trades a headline central address for a residential Kowloon setting, social common areas, and strong local-food surroundings. The stay makes Hong Kong feel less like a sequence of mall basements.",
     venueKind: "lodging",
     lodgingType: "hostel",
     price: "$",
@@ -970,7 +970,7 @@ const hostelStops = [
     neighborhood: "Mount Davis",
     coordinates: [22.2793, 114.1231],
     description:
-      "YHA Jockey Club Mt. Davis is the hostel for travelers who want the city at a distance: green edges, harbour views, and a quieter west-island reset. The tradeoff is transport planning, so choose it for calm and price rather than late-night Central convenience.",
+      "YHA Jockey Club Mt. Davis is the hostel for the city at a distance: green edges, harbour views, and a quieter west-island reset. The tradeoff is transport planning, so choose it for calm and price rather than late-night Central convenience.",
     venueKind: "lodging",
     lodgingType: "hostel",
     price: "$",
@@ -988,7 +988,7 @@ const hostelStops = [
     neighborhood: "Lantau Island",
     coordinates: [22.2566, 113.9079],
     description:
-      "YHA Ngong Ping is a specialist hostel, but it deserves the list because Hong Kong budget stays are not only urban bunk beds. Use it for Big Buddha, Lantau hikes, and an early quiet start; avoid it if your plan is Central bars and last trains.",
+      "YHA Ngong Ping provides simple budget beds in the highlands of Lantau, close to the Big Buddha, Po Lin Monastery, and hiking trails. The remote, green setting trades nightlife and easy late transport for quiet and mountain access.",
     venueKind: "lodging",
     lodgingType: "hostel",
     price: "$",
@@ -1006,7 +1006,7 @@ const hostelStops = [
     neighborhood: "Tai Mei Tuk",
     coordinates: [22.4763, 114.2367],
     description:
-      "YHA Tai Mei Tuk is the outdoors-oriented hostel for cycling, reservoir walks, and a very different Hong Kong morning. It is not a first-choice base for a short city break, but it is honest and useful for budget travelers building a nature-heavy route.",
+      "YHA Tai Mei Tuk is the outdoors-oriented hostel for cycling, reservoir walks, and a very different Hong Kong morning.",
     venueKind: "lodging",
     lodgingType: "hostel",
     price: "$",
@@ -1024,7 +1024,7 @@ const hostelStops = [
     neighborhood: "Mong Kok",
     coordinates: [22.3195, 114.1692],
     description:
-      "Ah Shan Hostel fills the Mong Kok budget-guesthouse role for travelers who prize location and price over social programming. It is a pragmatic pick near markets, food, and MTR lines; book it with realistic expectations about room size and building density.",
+      "Ah Shan Hostel is a pragmatic Mong Kok guesthouse near markets, food, and MTR lines. Low prices and location take priority over social programming, generous room size, or an uncrowded building.",
     venueKind: "lodging",
     lodgingType: "hostel",
     price: "$",
@@ -1045,7 +1045,7 @@ const casualBarStops = [
     neighborhood: "Central",
     coordinates: [22.282, 114.153],
     description:
-      "The Globe is the Central pub pick because it gives the city a proper beer-and-pie room instead of another velvet cocktail appointment. Use it for conversation, screens, and a low-pressure group drink before Soho; it is not trying to be mysterious, which is the relief.",
+      "The Globe is a Central pub because it gives the city a proper beer-and-pie room instead of another velvet cocktail appointment.",
     venueKind: "nightlife",
     nightlifeType: "pub",
     price: "$$",
@@ -1062,7 +1062,7 @@ const casualBarStops = [
     neighborhood: "Wan Chai",
     coordinates: [22.2775, 114.1764],
     description:
-      "The Wanch earns its spot as the live-music room where Wan Chai still feels played by actual bands. Go when the night needs guitars, a pint, and a crowd that came for sound; use the official performance schedule before choosing the evening.",
+      "The Wanch is a Wan Chai live-music pub built around guitars, pints, and a crowd that comes for the bands rather than background sound. Lineups change by night, so the official performance schedule determines the visit.",
     venueKind: "nightlife",
     nightlifeType: "live_music_venue",
     musicGenres: ["rock", "blues", "live_music"],
@@ -1080,7 +1080,7 @@ const casualBarStops = [
     neighborhood: "Wan Chai",
     coordinates: [22.2764, 114.1731],
     description:
-      "Tai Lung Fung is the Wan Chai nostalgia bar for a casual first drink that does not require a reservation script. The room leans old-Hong-Kong without turning into a museum set, making it useful before dinner or after a tram-heavy day.",
+      "Tai Lung Fung is the Wan Chai nostalgia bar for a casual first drink that does not require a reservation script.",
     venueKind: "nightlife",
     nightlifeType: "pub",
     price: "$$",
@@ -1097,7 +1097,7 @@ const casualBarStops = [
     neighborhood: "Sheung Wan",
     coordinates: [22.2847, 114.1482],
     description:
-      "Blue Supreme gives Sheung Wan a beer-focused stop with more curiosity than a standard pub tap list. It works for slower drinks near Cat Street and Upper Lascar Row; go when you want sour, Belgian, or wild-fermented bottles instead of a cocktail performance.",
+      "Blue Supreme gives Sheung Wan a beer-focused stop with more curiosity than a standard pub tap list.",
     venueKind: "nightlife",
     nightlifeType: "beer_bar",
     price: "$$",
@@ -1114,7 +1114,7 @@ const casualBarStops = [
     neighborhood: "Mong Kok",
     coordinates: [22.3191, 114.1691],
     description:
-      "TAP is the Mong Kok craft-beer stop that keeps a Kowloon night from being only markets and milk tea. It is best for local taps, snacks, and a casual table after sneakers or street food; the appeal is neighborhood energy, not hotel polish.",
+      "TAP is a Mong Kok craft-beer beer bar that keeps a Kowloon night from being only markets and milk tea.",
     venueKind: "nightlife",
     nightlifeType: "beer_bar",
     price: "$$",
@@ -1148,7 +1148,7 @@ const casualBarStops = [
     neighborhood: "Central",
     coordinates: [22.2848, 114.148],
     description:
-      "Yardley Brothers Beer Shack gives the guide a local-brewery bar that feels loose enough for a quick pint but specific enough to save. Use it for Hong Kong-made beer before dinner in Sheung Wan or Central; serious cocktail seekers should go elsewhere.",
+      "Yardley Brothers Beer Shack pours local brewery releases in a loose, unpretentious room where the tap list has more identity than a standard pub selection.",
     venueKind: "nightlife",
     nightlifeType: "beer_bar",
     price: "$$",
@@ -1165,7 +1165,7 @@ const casualBarStops = [
     neighborhood: "Soho",
     coordinates: [22.2828, 114.1522],
     description:
-      "Club 71 is the low-key Soho bar for people who want a terrace-adjacent drink without a guest-list mood. It earns the saved-map pin because it works before or after Tai Kwun, PMQ, and dinner nearby; expect simplicity and regulars, not mixology theater.",
+      "Club 71 is a low-key Soho bar known for inexpensive drinks, political history, and spillover conversation without a guest-list mood.",
     venueKind: "nightlife",
     nightlifeType: "dive_bar",
     price: "$",
@@ -1182,7 +1182,7 @@ const casualBarStops = [
     neighborhood: "Tsim Sha Tsui",
     coordinates: [22.2974, 114.1739],
     description:
-      "Ned Kelly's Last Stand is the Tsim Sha Tsui live-jazz pub that keeps Kowloon nightlife from defaulting to rooftop hotel bars. Go for a throwback room, music, and a pint after the promenade; it is best when charm matters more than sleekness.",
+      "Ned Kelly's Last Stand is the Tsim Sha Tsui live-jazz pub that keeps Kowloon nightlife from defaulting to rooftop hotel bars.",
     venueKind: "nightlife",
     nightlifeType: "live_music_venue",
     musicGenres: ["jazz", "live_music"],
@@ -1200,7 +1200,7 @@ const casualBarStops = [
     neighborhood: "Central",
     coordinates: [22.2824, 114.1537],
     description:
-      "The Pontiac sits between dive spirit and serious drinks, which is exactly why it belongs in the casual bar guide rather than only cocktails. Use it when the night wants rock-and-roll noise, bar seats, and no polished hotel manners; it can get loud fast.",
+      "The Pontiac mixes rock-and-roll dive spirit with serious cocktails, strong pours, loud music, and a room that feels more unruly than Hong Kong's polished hotel bars.",
     venueKind: "nightlife",
     nightlifeType: "dive_bar",
     price: "$$",
@@ -1220,7 +1220,7 @@ const cocktailStops = [
     neighborhood: "Central",
     coordinates: [22.2814, 114.1536],
     description:
-      "Bar Leone is the current headline cocktail stop, but the reason to save it is not ranking theatre; it is an easygoing Roman bar idea executed with Hong Kong intensity. Expect waits and a social room, then order like you are there for rhythm as much as drinks.",
+      "Bar Leone executes an easygoing Roman neighborhood-bar idea with Hong Kong intensity. The drinks and social rhythm have created substantial waits, so the room feels lively rather than hushed or ceremonial.",
     venueKind: "nightlife",
     nightlifeType: "cocktail_bar",
     price: "$$$",
@@ -1237,7 +1237,7 @@ const cocktailStops = [
     neighborhood: "Central",
     coordinates: [22.2827, 114.1516],
     description:
-      "COA remains essential because it turned agave into a Hong Kong language rather than a tequila gimmick. It is best for mezcal, serious staff guidance, and a compact Central bar crawl; arrive with patience because the room's reputation still travels faster than its floor space.",
+      "COA remains essential because it turned agave into a Hong Kong language rather than a tequila gimmick.",
     venueKind: "nightlife",
     nightlifeType: "cocktail_bar",
     price: "$$$",
@@ -1254,7 +1254,7 @@ const cocktailStops = [
     neighborhood: "Central",
     coordinates: [22.2864, 114.1577],
     description:
-      "ARGO gives the list a polished hotel-bar stop where the room, service, and IFC waterfront location make sense together. Use it for a dressier Central night, especially when you want drinks after Lung King Heen or Caprice without moving the whole group uphill.",
+      "ARGO is a polished hotel bar where attentive service, a composed room, and the Four Seasons' IFC waterfront location reinforce one another.",
     venueKind: "nightlife",
     nightlifeType: "cocktail_bar",
     price: "$$$$",
@@ -1272,7 +1272,7 @@ const cocktailStops = [
     neighborhood: "Central",
     coordinates: [22.2819, 114.1598],
     description:
-      "The Aubrey is the Mandarin Oriental cocktail choice for a Japanese-leaning room with enough food and view context to carry an entire evening. It belongs here because it solves the dressy hotel-bar night without feeling as corporate as many Central lounges.",
+      "The Aubrey is a Mandarin Oriental cocktail bar for a Japanese-leaning room with enough food and view context to carry an entire evening.",
     venueKind: "nightlife",
     nightlifeType: "cocktail_bar",
     price: "$$$$",
@@ -1290,7 +1290,7 @@ const cocktailStops = [
     neighborhood: "Tsim Sha Tsui",
     coordinates: [22.2947, 114.1758],
     description:
-      "DarkSide gives Kowloon a high-end cocktail room with live music, rare spirits, and Rosewood's waterfront gravity. It is the bar to use when a Tsim Sha Tsui night needs polish after the promenade; prices are part of the experience, not a surprise.",
+      "DarkSide gives Kowloon a high-end cocktail room with live music, rare spirits, and Rosewood's waterfront gravity.",
     venueKind: "nightlife",
     nightlifeType: "cocktail_bar",
     musicGenres: ["jazz", "live_music"],
@@ -1326,7 +1326,7 @@ const cocktailStops = [
     neighborhood: "Central",
     coordinates: [22.2829, 114.1528],
     description:
-      "Penicillin makes the list because its low-waste, fermentation-minded bar program gives Central cocktails an idea beyond luxury garnish. Go for a sharper, more experimental night, and treat it as a reservation-worthy stop if sustainability and technique matter to the group.",
+      "Penicillin builds a low-waste, fermentation-minded cocktail program around sustainability and technique rather than luxury garnish. The Central bar's sharper experiments and limited room justify reserving ahead.",
     venueKind: "nightlife",
     nightlifeType: "cocktail_bar",
     price: "$$$",
@@ -1344,7 +1344,7 @@ const cocktailStops = [
     neighborhood: "Central",
     coordinates: [22.2834, 114.1522],
     description:
-      "The Old Man still matters as a compact Hemingway-themed cocktail room with enough technique to outlive its concept. It is a strong pre- or post-dinner Central stop, but the small space means the best experience comes when you are flexible about timing.",
+      "The Old Man still matters as a compact Hemingway-themed cocktail room with enough technique to outlive its concept. It is a strong pre- or post-dinner Central cocktail bar, but the small space means the best experience comes when you are flexible about timing.",
     venueKind: "nightlife",
     nightlifeType: "cocktail_bar",
     price: "$$$",
@@ -1361,7 +1361,7 @@ const cocktailStops = [
     neighborhood: "Sai Ying Pun",
     coordinates: [22.286, 114.142],
     description:
-      "Mostly Harmless is the Sai Ying Pun pick for drinkers who like seasonal menus, conversation, and a bar that feels built by people rather than a hotel group. Use it when the night should stay west of Central; the official booking page matters because the room is intimate.",
+      "Mostly Harmless is a Sai Ying Pun cocktail bar for drinkers who like seasonal menus, conversation, and a bar that feels built by people rather than a hotel group.",
     venueKind: "nightlife",
     nightlifeType: "cocktail_bar",
     price: "$$$",
@@ -1379,7 +1379,7 @@ const cocktailStops = [
     neighborhood: "Wan Chai",
     coordinates: [22.2776, 114.1718],
     description:
-      "Mizunara gives Wan Chai a Japanese whisky-and-cocktail room that rewards slower drinking. It is useful when you want a quieter, more precise counter after dinner; the caveat is that the mood is contemplative, not a loud group launchpad.",
+      "Mizunara is a quiet Wan Chai bar devoted to Japanese whisky and precise cocktails. Its library-like room and contemplative counter service suit slow drinking more than loud group nights.",
     venueKind: "nightlife",
     nightlifeType: "cocktail_bar",
     price: "$$$",
@@ -1399,7 +1399,7 @@ const cultureStops = [
     neighborhood: "West Kowloon",
     coordinates: [22.2994, 114.1592],
     description:
-      "M+ gives Hong Kong culture a contemporary visual anchor instead of leaving the city to skyline photos and colonial fragments. Use it for design, architecture, moving image, and Hong Kong visual culture, then stay on the West Kowloon waterfront for the city to widen out.",
+      "M+ presents design, architecture, moving image, and Hong Kong visual culture in a vast West Kowloon museum. Galleries and the waterfront setting expand the city's cultural story beyond skyline photos and colonial fragments.",
     venueKind: "culture",
     price: "$$",
     priceSource: "Official museum ticket page",
@@ -1423,7 +1423,7 @@ const cultureStops = [
     neighborhood: "West Kowloon",
     coordinates: [22.3021, 114.1556],
     description:
-      "Hong Kong Palace Museum is the imperial-collection counterweight to M+, and the pairing makes West Kowloon worth a half day. It is best when you want Chinese material culture with modern museum logistics; book timed tickets for major exhibitions rather than drifting in late.",
+      "Hong Kong Palace Museum presents Chinese material culture and major imperial loans in a modern West Kowloon building. Timed tickets matter for headline exhibitions.",
     venueKind: "culture",
     price: "$$",
     priceSource: "Official museum ticket page",
@@ -1447,7 +1447,7 @@ const cultureStops = [
     neighborhood: "Central",
     coordinates: [22.2819, 114.1546],
     description:
-      "Tai Kwun is the Central culture stop that makes the old police station, prison, courtyards, galleries, and bars part of one walkable compound. Go in daylight for the heritage fabric, then stay into evening if the official arts calendar or courtyard energy gives you a reason.",
+      "Tai Kwun is a Central cultural site that makes the old police station, prison, courtyards, galleries, and bars part of one walkable compound. Go in daylight for the heritage fabric, then stay into evening if the official arts calendar or courtyard energy gives you a reason.",
     venueKind: "culture",
     price: "$",
     priceSource: "Official venue page",
@@ -1471,7 +1471,7 @@ const cultureStops = [
     neighborhood: "Tsim Sha Tsui",
     coordinates: [22.2939, 114.1724],
     description:
-      "Hong Kong Museum of Art gives the Tsim Sha Tsui waterfront an indoor cultural reason beyond the view. Its Chinese antiquities, Hong Kong art, and rotating exhibitions work especially well before a Star Ferry crossing; watch the Thursday closure when building a Kowloon museum day.",
+      "Hong Kong Museum of Art gives the Tsim Sha Tsui waterfront an indoor cultural reason beyond the view.",
     venueKind: "culture",
     price: "$",
     priceSource: "Official museum page",
@@ -1495,7 +1495,7 @@ const cultureStops = [
     neighborhood: "Central",
     coordinates: [22.2831, 114.1508],
     description:
-      "PMQ is useful because it turns a former police married quarters block into design shops, studios, small exhibitions, and food stops near Hollywood Road. It is not a single blockbuster museum; treat it as a browsing break between Man Mo, Tai Kwun, and Soho.",
+      "PMQ reuses a former police married-quarters block for design shops, studios, small exhibitions, and food near Hollywood Road. It functions as a creative compound for browsing rather than a single blockbuster museum.",
     venueKind: "retail",
     price: "$",
     priceSource: "Official venue page",
@@ -1519,7 +1519,7 @@ const cultureStops = [
     neighborhood: "Sheung Wan",
     coordinates: [22.2846, 114.1502],
     description:
-      "Man Mo Temple is the incense-thick Sheung Wan stop that gives Hollywood Road actual spiritual weight. Go respectfully, keep the visit short if smoke bothers you, and pair it with antique streets rather than treating it as a standalone pilgrimage.",
+      "Man Mo Temple is an incense-thick Sheung Wan cultural site that gives Hollywood Road actual spiritual weight. Go respectfully, keep the visit short if smoke bothers you, and pair it with antique streets rather than treating it as a standalone pilgrimage.",
     venueKind: "culture",
     price: "$",
     priceSource: "Official heritage page",
@@ -1590,7 +1590,7 @@ const cultureStops = [
     neighborhood: "Wan Chai",
     coordinates: [22.2747, 114.1728],
     description:
-      "The Blue House Cluster is the Wan Chai heritage stop that keeps old tenement life visible inside a district often reduced to bars and offices. The exterior is easy to route, while guided visits and community programmes depend on the official calendar.",
+      "The Blue House Cluster is a Wan Chai heritage cultural site that keeps old tenement life visible inside a district often reduced to bars and offices.",
     venueKind: "culture",
     price: "$",
     priceSource: "Official Viva Blue House page",
@@ -1605,7 +1605,7 @@ const cultureStops = [
     neighborhood: "Tsuen Wan",
     coordinates: [22.3701, 114.114],
     description:
-      "The Mills is the textile-history and creative-industry stop that pulls the guide beyond the harbour core. It is best for travelers curious about manufacturing memory, design shops, and CHAT's exhibitions; the trip only makes sense if you give Tsuen Wan time.",
+      "The Mills turns a former Tsuen Wan textile factory into a heritage, arts, and creative complex. Exhibitions at CHAT trace Hong Kong's textile history while studios, shops, and public programs show what the industrial site has become.",
     venueKind: "culture",
     price: "$",
     priceSource: "Official venue page",
@@ -1682,7 +1682,7 @@ const activityStops = [
     neighborhood: "Hong Kong Island",
     coordinates: [22.2792, 114.166],
     description:
-      "The tram turns Hong Kong Island into a slow, cheap moving balcony, which is exactly what a first visit needs between Central, Wan Chai, Causeway Bay, and North Point. Sit upstairs, go off-peak, and use it for texture rather than speed.",
+      "Hong Kong Tramways turns the island into a slow, cheap moving balcony between Central, Wan Chai, Causeway Bay, and North Point. Upstairs seats and off-peak rides provide street-level texture rather than speed.",
     venueKind: "transport",
     price: "$",
     priceSource: "Official tram fare page",
@@ -1707,7 +1707,7 @@ const activityStops = [
     neighborhood: "Central / Soho",
     coordinates: [22.2829, 114.1534],
     description:
-      "The Mid-Levels Escalator is infrastructure as itinerary: a practical climb through Central dining, bars, lanes, and everyday hillside movement. Use it uphill after morning commuter flow, then peel off for PMQ, Tai Kwun, Man Mo, or dinner.",
+      "The Mid-Levels Escalator is working hillside infrastructure running through Central dining, bars, lanes, PMQ, Tai Kwun, and Man Mo. It travels downhill during morning commuter flow and uphill later.",
     venueKind: "transport",
     price: "$",
     priceSource: "Official transport information / Google Maps",
@@ -1755,7 +1755,7 @@ const activityStops = [
     neighborhood: "Shek O",
     coordinates: [22.2319, 114.2425],
     description:
-      "Dragon's Back is the hike to save when you need proof that Hong Kong is not only vertical concrete. It is accessible enough for many visitors but still weather-dependent; start early, bring water, and do not treat exposed ridge walking like a mall detour.",
+      "Dragon's Back is the hike to save for proof that Hong Kong is not only vertical concrete. It is accessible enough for many visitors but still weather-dependent; start early, bring water, and do not treat exposed ridge walking like a mall detour.",
     venueKind: "outdoors",
     price: "$",
     priceSource: "Official country-park and tourism pages",
@@ -1771,7 +1771,7 @@ const activityStops = [
     neighborhood: "Yau Ma Tei",
     coordinates: [22.3068, 114.1695],
     description:
-      "Temple Street Night Market belongs because it still gives visitors an evening Kowloon street ritual, even as the market changes with the city. Go after dusk for the glow, snacks, and browsing, but keep expectations practical: this is atmosphere and routing, not luxury shopping.",
+      "Temple Street Night Market remains an evening Kowloon street ritual of stalls, food, vendors, and changing urban theater, even as the market evolves with the city.",
     venueKind: "retail",
     price: "$",
     priceSource: "Official tourism page / Google Maps",
@@ -1796,7 +1796,7 @@ const activityStops = [
     neighborhood: "Victoria Harbour",
     coordinates: [22.2939, 114.1724],
     description:
-      "A Symphony of Lights is worth saving because it forces the day to end at the harbour instead of inside another restaurant or mall. The show is short and weather-exposed, so pair it with the Tsim Sha Tsui Promenade or Star Ferry rather than making it the whole night.",
+      "A Symphony of Lights projects a short nightly harbor show across the skyline, best viewed from the weather-exposed Tsim Sha Tsui waterfront. Its scale comes from Victoria Harbour rather than the brief program itself.",
     venueKind: "landmark",
     price: "$",
     priceSource: "Official tourism page",
@@ -1820,7 +1820,7 @@ const activityStops = [
     neighborhood: "Lantau Island",
     coordinates: [22.3129, 114.0413],
     description:
-      "Hong Kong Disneyland is not the deepest local read, but it is a legitimate trip-solver for families, Disney adults, and anyone staying near Lantau. Treat it as a full planned day with date-specific tickets, not a casual add-on after city sightseeing.",
+      "Hong Kong Disneyland is not the deepest local read, but it is a legitimate trip-solver for families, Disney adults, and anyone staying near Lantau.",
     venueKind: "landmark",
     price: "$$$",
     priceSource: "Official Disney calendar and ticket page",
@@ -1837,7 +1837,7 @@ const activityStops = [
     neighborhood: "West Kowloon",
     coordinates: [22.3002, 114.158],
     description:
-      "West Kowloon Waterfront is the outdoor spacer that ties M+, the Palace Museum, harbour views, and sunset walking into one coherent half day. Use it when the city feels too compressed; the park works best before or after a timed museum visit.",
+      "West Kowloon Waterfront is the outdoor spacer that ties M+, the Palace Museum, harbour views, and sunset walking into one coherent half day.",
     venueKind: "outdoors",
     price: "$",
     priceSource: "Official West Kowloon page",
@@ -1901,7 +1901,7 @@ export const hongKongCitywideGuides: MapList[] = [
     "best-restaurants",
     "Best Restaurants in Hong Kong",
     "Best restaurants in Hong Kong for Cantonese fine dining, tasting menus, modern Chinese rooms, yakitori, and Central-Sheung Wan reservations.",
-    "Hong Kong dining is strongest when old Cantonese craft, harbour hotel rooms, and new-generation tasting menus are allowed to sit in tension. These restaurants are chosen for source-backed quality, booking reality, and neighborhood logic, not only awards.",
+    "Hong Kong dining holds old Cantonese craft, harbor hotel rooms, social Japanese-influenced tables, and new-generation tasting menus in productive tension. Cooking, service, booking pressure, and neighborhood character matter more than awards alone.",
     diningStops,
     sources.dining,
   ),
@@ -1912,7 +1912,7 @@ export const hongKongCitywideGuides: MapList[] = [
     "best-cheap-eats",
     "Best Cheap Eats in Hong Kong",
     "Best cheap eats in Hong Kong for wonton noodles, roast goose, dim sum, pineapple buns, egg tarts, egg waffles, and cha chaan teng stops.",
-    "Hong Kong's cheaper meals work best as quick, precise stops folded into MTR and walking routes. This guide favors noodles, roast meats, bakeries, and tea-cafe classics with enough source support to avoid random queue-chasing.",
+    "Hong Kong's cheaper meals arrive quickly and precisely through noodle counters, roast-meat shops, tea cafes, dumpling rooms, and market stalls close to the MTR.",
     cheapEatStops,
     sources.cheapEats,
   ),
@@ -1934,7 +1934,7 @@ export const hongKongCitywideGuides: MapList[] = [
     "best-hostels",
     "Best Hostels in Hong Kong",
     "Best hostels in Hong Kong for Sham Shui Po, Tsim Sha Tsui, Wan Chai, Mong Kok, Lantau, and nature-focused budget stays.",
-    "Hong Kong hostels are compact and tradeoff-heavy, so this guide splits urban bunkhouses from YHA nature bases instead of pretending they solve the same trip. Use it to choose between price, transit, social energy, and quiet.",
+    "Hong Kong hostels are compact and tradeoff-heavy. Urban bunkhouses prioritize price, transit, and social access, while YHA nature bases exchange central convenience for space, quiet, and access to trails or outlying landscapes.",
     hostelStops,
     sources.hostels,
   ),
@@ -1945,7 +1945,7 @@ export const hongKongCitywideGuides: MapList[] = [
     "best-bars",
     "Best Casual Bars in Hong Kong",
     "Best casual bars in Hong Kong for pubs, craft beer, live music, low-key Central drinks, Wan Chai rooms, and Kowloon beer stops.",
-    "Hong Kong casual drinking works best when you separate pubs, local beer rooms, live music, and low-pressure Soho stops from polished cocktail destinations. These are the bars for conversation, noise, and a night that can still change direction.",
+    "Hong Kong's casual drinking culture spans pubs, local beer rooms, live music, and low-pressure Soho bars outside the polished cocktail circuit. Conversation, noise, simple drinks, and flexible crowds define these rooms.",
     casualBarStops,
     sources.casualBars,
   ),
@@ -1956,7 +1956,7 @@ export const hongKongCitywideGuides: MapList[] = [
     "best-cocktail-bars",
     "Best Cocktail Bars in Hong Kong",
     "Best cocktail bars in Hong Kong for Bar Leone, COA, hotel bars, agave rooms, Japanese whisky, and Central-Sai Ying Pun nights.",
-    "Hong Kong cocktail culture rewards planning: small rooms, serious technique, hotel polish, and bars whose reputations can outrun their seats. This guide keeps the city's best cocktail stops separate from pub nights so the use case stays clear.",
+    "Hong Kong cocktail culture rewards planning: small rooms, serious technique, hotel polish, and bars whose reputations can outrun their seats.",
     cocktailStops,
     sources.cocktails,
   ),
@@ -1967,7 +1967,7 @@ export const hongKongCitywideGuides: MapList[] = [
     "best-culture",
     "Best Culture in Hong Kong",
     "Best culture in Hong Kong for M+, Palace Museum, Tai Kwun, temples, design hubs, art museums, living heritage, and Kowloon-West routes.",
-    "Hong Kong culture is a route through West Kowloon museums, Central heritage compounds, active temples, old tenements, and industrial reuse. These stops make the city's colonial, Chinese, and contemporary layers legible without turning the day into a lecture.",
+    "Hong Kong culture stretches from West Kowloon museums and Central heritage compounds to active temples, old tenements, and industrial buildings adapted for new uses.",
     cultureStops,
     sources.culture,
   ),
@@ -1978,7 +1978,7 @@ export const hongKongCitywideGuides: MapList[] = [
     "best-things-to-do",
     "Best Things to Do in Hong Kong",
     "Best things to do in Hong Kong for ferries, Victoria Peak, trams, Lantau, Dragon's Back, night markets, museums, and harbour walks.",
-    "Hong Kong works through movement: across the harbour, up the hill, along tram tracks, out to Lantau, and back to markets after dark. This top-things guide is built as a route-useful set, not a detached attraction dump.",
+    "Hong Kong reveals its scale across harbour ferries, hillside climbs, tram tracks, Lantau landscapes, ridge walks, and markets after dark.",
     activityStops,
     sources.activities,
   ),

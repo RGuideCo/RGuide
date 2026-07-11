@@ -1771,7 +1771,7 @@ const diningStops = [
     "tokyo-dining-narisawa",
     "NARISAWA",
     [35.670124, 139.715857],
-    "NARISAWA belongs in the dining guide because it turns a Tokyo tasting menu into a meditation on Japanese seasons, forest, soil, and coastal ingredients rather than a parade of luxury cliches. Book it as the evening's center of gravity, and keep the rest of the day light because the reservation rhythm is precise.",
+    "NARISAWA turns a Tokyo tasting menu into a meditation on Japanese seasons, forests, soil, and coastal ingredients rather than a parade of luxury clichés. The precise reservation rhythm and long meal deserve an otherwise light day.",
     {
       venueKind: "food_drink",
       foodServiceType: "restaurant",
@@ -1793,7 +1793,7 @@ const diningStops = [
     "tokyo-dining-den",
     "DEN",
     [35.676727, 139.711283],
-    "DEN is the warmest high-end counter in this set, famous for making modern Japanese cooking feel personal, playful, and deeply hosted. It is not a casual backup plan; use the guide to remember that the restaurant's charm depends on the exact reservation, small room, and unhurried dinner arc.",
+    "DEN is the warmest high-end counter in this set, famous for making modern Japanese cooking feel personal, playful, and deeply hosted.",
     {
       venueKind: "food_drink",
       foodServiceType: "restaurant",
@@ -1815,7 +1815,7 @@ const diningStops = [
     "tokyo-dining-florilege",
     "Florilege",
     [35.654262, 139.748853],
-    "Florilege gives Tokyo's French-Japanese conversation a theatrical room: a shared counter, seasonal produce, and dishes that make the kitchen part of the performance. It is strongest for travelers who want a contemporary Tokyo dinner without defaulting to sushi, but the reservation calendar needs respect.",
+    "Florilege gives Tokyo's French-Japanese conversation a theatrical room: a shared counter, seasonal produce, and dishes that make the kitchen part of the performance.",
     {
       venueKind: "food_drink",
       foodServiceType: "restaurant",
@@ -1837,7 +1837,7 @@ const diningStops = [
     "tokyo-dining-leffervescence",
     "L'Effervescence",
     [35.665675, 139.720164],
-    "L'Effervescence is Tokyo fine dining with a slower, pastoral intelligence: French technique, Japanese ingredients, and a sustainability posture that has made it a MICHELIN Green Star reference. Go when the trip can absorb a long lunch or dinner; this is not a quick Omotesando refuel.",
+    "L'Effervescence is Tokyo fine dining with a slower, pastoral intelligence: French technique, Japanese ingredients, and a sustainability posture that has made it a MICHELIN Green Star reference.",
     {
       venueKind: "food_drink",
       foodServiceType: "restaurant",
@@ -1859,7 +1859,7 @@ const diningStops = [
     "tokyo-dining-ginza-kojyu",
     "Ginza Kojyu",
     [35.671638, 139.763988],
-    "Ginza Kojyu keeps the guide anchored in formal kaiseki, with seasonal Japanese cooking served in the exacting quiet of a Ginza counter. It belongs because Tokyo dining is not only innovation; it is also restraint, timing, and a meal shaped by the kitchen's careful progression.",
+    "Ginza Kojyu serves formal kaiseki in the exacting quiet of a Ginza counter. Seasonal Japanese cooking unfolds through restraint, precise timing, and a progression shaped carefully by the kitchen.",
     {
       venueKind: "food_drink",
       foodServiceType: "restaurant",
@@ -1881,7 +1881,7 @@ const diningStops = [
     "tokyo-dining-quintessence",
     "Quintessence",
     [35.627182, 139.736371],
-    "Quintessence gives the dining guide a French room where the details carry the drama: fire, salt, texture, and a tasting menu tuned around the ingredients rather than the room. The Shinagawa-side location makes it feel deliberately chosen, which is exactly the point of booking it.",
+    "Quintessence is a French tasting room where fire, salt, texture, and ingredients carry the drama rather than the decor. Its Shinagawa-side location and demanding reservation make the meal deliberate.",
     {
       venueKind: "food_drink",
       foodServiceType: "restaurant",
@@ -1902,7 +1902,7 @@ const diningStops = [
     "tokyo-dining-kagurazaka-ishikawa",
     "Kagurazaka Ishikawa",
     [35.700983, 139.740712],
-    "Kagurazaka Ishikawa is the polished kaiseki counterpoint to Ginza, tucked into a quieter old-neighborhood lane rather than a luxury shopping grid. Book it when you want seasonality, ceramics, and service to feel intimate; the calendar is part of planning the meal.",
+    "Kagurazaka Ishikawa serves polished kaiseki in a quiet old-neighborhood lane rather than a luxury shopping grid. Seasonality, ceramics, and intimate service define the meal, while the difficult calendar demands advance planning.",
     {
       venueKind: "food_drink",
       foodServiceType: "restaurant",
@@ -1923,7 +1923,7 @@ const diningStops = [
     "tokyo-dining-tempura-kondo",
     "Tempura Kondo",
     [35.671894, 139.763101],
-    "Tempura Kondo belongs because Tokyo tempura is a different kind of fine dining: quick contact with oil, vegetables treated seriously, and a counter where timing is the craft. It is an elegant Ginza lunch or dinner when you want a focused meal that still feels distinctly Tokyo.",
+    "Tempura Kondo treats tempura as fine dining through quick contact with oil, serious attention to vegetables, and counter service where timing is the central craft. The focused Ginza meal remains distinctly Tokyo.",
     {
       venueKind: "food_drink",
       foodServiceType: "restaurant",
@@ -1944,7 +1944,7 @@ const diningStops = [
     "tokyo-dining-sushi-yoshitake",
     "Sushi Yoshitake",
     [35.670715, 139.762907],
-    "Sushi Yoshitake is the Ginza sushi room for travelers who want the meal to be small, quiet, and exacting rather than showy. The draw is not a checklist of famous fish; it is the disciplined counter rhythm, so build the evening around the seating and keep the group compact.",
+    "Sushi Yoshitake is a small, quiet, exacting Ginza counter where disciplined rhythm matters more than a showy checklist of famous fish. Fixed seating and limited space demand a compact group and punctual arrival.",
     {
       venueKind: "food_drink",
       foodServiceType: "restaurant",
@@ -1965,7 +1965,7 @@ const diningStops = [
     "tokyo-dining-sazenka",
     "GINZA Sazenka",
     [35.64917, 139.73053],
-    "Sazenka widens the guide beyond French-Japanese and kaiseki by making Chinese cuisine feel fully at home in Tokyo's fine-dining language. It is best for a reservation-led meal that wants tea, texture, and quiet luxury; check the official calendar because closures are not casual.",
+    "GINZA Sazenka interprets Chinese cuisine through Japanese ingredients, seasonality, and exacting fine-dining technique, producing tasting menus that feel at home in Tokyo without flattening their Chinese foundations.",
     {
       venueKind: "food_drink",
       foodServiceType: "restaurant",
@@ -1989,7 +1989,7 @@ const cheapEatStops = [
     "tokyo-cheap-onigiri-bongo",
     "Onigiri Bongo",
     [35.731263, 139.728255],
-    "Onigiri Bongo is the cheap-eats stop that makes rice, seaweed, and filling feel like an event without turning into a formal meal. The catch is the line: go with patience, consider takeout if available, and treat Otsuka as part of the route rather than a random detour.",
+    "Onigiri Bongo is a cheap-eats counter that makes rice, seaweed, and filling feel like an event without turning into a formal meal.",
     {
       venueKind: "food_drink",
       foodServiceType: "counter_service",
@@ -2010,7 +2010,7 @@ const cheapEatStops = [
     "tokyo-cheap-udon-shin",
     "Udon Shin",
     [35.684735, 139.700363],
-    "Udon Shin earns its place by making the simplest noodle lunch feel worth planning around: thick hand-cut udon, crisp tempura, and a Shinjuku/Yoyogi location that fits a west-side day. It is best as the meal you deliberately build into the route, not a throwaway noodle stop.",
+    "Udon Shin specializes in thick hand-cut noodles and crisp tempura near Shinjuku and Yoyogi. The simple format depends on texture and precision rather than an elaborate dining room.",
     {
       venueKind: "food_drink",
       foodServiceType: "restaurant",
@@ -2052,7 +2052,7 @@ const cheapEatStops = [
     "tokyo-cheap-ichiran-shibuya",
     "Ichiran Shibuya",
     [35.661492, 139.700965],
-    "Ichiran is not obscure, and that is exactly why it is useful: a reliable solo ramen booth, clear ordering system, and late-night safety net near Shibuya's busiest streets. Use it when logistics matter more than discovery, especially after bars or before a train.",
+    "Ichiran is not obscure, and that is exactly why it is useful: a reliable solo ramen booth, clear ordering system, and late-night safety net near Shibuya's busiest streets.",
     {
       venueKind: "food_drink",
       foodServiceType: "restaurant",
@@ -2073,7 +2073,7 @@ const cheapEatStops = [
     "tokyo-cheap-sushi-no-midori",
     "Sushi no Midori Ginza",
     [35.672179, 139.765671],
-    "Sushi no Midori gives the cheap-eats guide a controlled way into crowd-pleasing sushi without pretending it is an elite counter. Use the Ginza branch when the day already has shopping, galleries, or department-store browsing nearby and you want the sushi spend to stay sane.",
+    "Sushi no Midori serves crowd-pleasing sushi in generous pieces at prices well below an elite counter. The busy Ginza branch keeps the spend controlled despite its department-store surroundings.",
     {
       venueKind: "food_drink",
       foodServiceType: "restaurant",
@@ -2094,7 +2094,7 @@ const cheapEatStops = [
     "tokyo-cheap-kikanbo",
     "Kikanbo Kanda",
     [35.69554, 139.77036],
-    "Kikanbo is the cheap-eats stop for when ramen should hit back: miso broth, chile heat, Sichuan pepper numbness, and a room that makes no apology for intensity. It is the bowl to choose when the day needs spice and volume rather than another polite shoyu reset.",
+    "Kikanbo is a cheap-eats restaurant for when ramen should hit back: miso broth, chile heat, Sichuan pepper numbness, and a room that makes no apology for intensity.",
     {
       venueKind: "food_drink",
       foodServiceType: "restaurant",
@@ -2115,7 +2115,7 @@ const cheapEatStops = [
     "tokyo-cheap-afuri-harajuku",
     "AFURI Harajuku",
     [35.67085, 139.70482],
-    "AFURI is the useful Harajuku ramen reset when the neighborhood has become all shopping, sweets, and crowds. The yuzu-shio style is lighter than the heavy bowls elsewhere in this guide, so it works before Meiji Jingu or after Omotesando without flattening the day.",
+    "AFURI is the useful Harajuku ramen reset when the neighborhood has become all shopping, sweets, and crowds.",
     {
       venueKind: "food_drink",
       foodServiceType: "restaurant",
@@ -2136,7 +2136,7 @@ const cheapEatStops = [
     "tokyo-cheap-kaneko-hannosuke",
     "Kaneko Hannosuke Nihonbashi",
     [35.686136, 139.774103],
-    "Kaneko Hannosuke is the tendon stop that makes a fried lunch feel like a Tokyo ritual rather than an easy chain meal. The Nihonbashi original is cramped and queue-prone, so treat it as a focused lunch hit and avoid stacking it before a timed reservation.",
+    "Kaneko Hannosuke is a tendon restaurant that makes a fried lunch feel like a Tokyo ritual rather than an easy chain meal.",
     {
       venueKind: "food_drink",
       foodServiceType: "restaurant",
@@ -2157,7 +2157,7 @@ const cheapEatStops = [
     "tokyo-cheap-gyukatsu-motomura",
     "Gyukatsu Motomura Shibuya",
     [35.660481, 139.699533],
-    "Gyukatsu Motomura is a high-utility Shibuya meal: beef cutlet, personal stone grill, rice set, and enough ceremony to feel more fun than a fast-food stop. Lines can build quickly, so use it when the group wants one clear order and a reliable post-crossing dinner.",
+    "Gyukatsu Motomura is a high-value Shibuya meal: beef cutlet, personal stone grill, rice set, and enough ceremony to feel more fun than a fast-food stop.",
     {
       venueKind: "food_drink",
       foodServiceType: "restaurant",
@@ -2178,7 +2178,7 @@ const cheapEatStops = [
     "tokyo-cheap-maisen-aoyama",
     "Maisen Aoyama",
     [35.66917, 139.71209],
-    "Maisen Aoyama is the tonkatsu choice when you want comfort, history, and a dining room that can handle more than a solo counter. The famous katsu sandwich is useful for takeout, but the main restaurant makes more sense if the day is already in Omotesando or Aoyama.",
+    "Maisen Aoyama serves tonkatsu in a historic, full-size dining room comfortable for groups as well as solo diners. Its famous katsu sandwich travels well, while the main restaurant offers the complete meal.",
     {
       venueKind: "food_drink",
       foodServiceType: "restaurant",
@@ -2368,7 +2368,7 @@ const sushiBestStops = [
     "tokyo-sushi-best-yoshitake",
     "Sushi Yoshitake",
     [35.670715, 139.762907],
-    "Sushi Yoshitake is the polished Ginza omakase counter for travelers who want the meal to feel disciplined, quiet, and exacting rather than performative. It belongs in the best-sushi list because the technique, room size, and reservation posture make the evening feel like a deliberately protected event.",
+    "Sushi Yoshitake is a small, quiet Ginza counter where exacting technique and disciplined pace keep attention on the omakase. The intimate room and reservation-only rhythm make the meal feel protected rather than performative.",
     {
       venueKind: "food_drink",
       foodServiceType: "restaurant",
@@ -2389,7 +2389,7 @@ const sushiBestStops = [
     "tokyo-sushi-best-kyubey",
     "Ginza Kyubey",
     [35.66935, 139.76133],
-    "Ginza Kyubey is the heritage pick: famous, polished, and unusually good at making a classic counter feel approachable to visitors without turning it into a gimmick. Lunch can be the smartest way in; dinner is better when the trip wants a formal Ginza sushi memory.",
+    "Ginza Kyubey is a heritage restaurant: famous, polished, and unusually good at making a classic counter feel approachable to visitors without turning it into a gimmick. Lunch can be the smartest way in; dinner is better for a formal Ginza sushi memory.",
     {
       venueKind: "food_drink",
       foodServiceType: "restaurant",
@@ -2410,7 +2410,7 @@ const sushiBestStops = [
     "tokyo-sushi-best-ginza-onodera",
     "Sushi Ginza Onodera",
     [35.67143, 139.76268],
-    "Sushi Ginza Onodera is the high-end counter that works for travelers who want serious Edomae sushi with a clearer booking path than the most closed-door rooms. It is expensive, but the service polish and international footprint make it easier to plan around than many famous counters.",
+    "Sushi Ginza Onodera is the high-end counter that works for serious Edomae sushi with a clearer booking path than the most closed-door rooms.",
     {
       venueKind: "food_drink",
       foodServiceType: "restaurant",
@@ -2431,7 +2431,7 @@ const sushiBestStops = [
     "tokyo-sushi-best-kanesaka",
     "Sushi Kanesaka",
     [35.66922, 139.76295],
-    "Sushi Kanesaka is the Ginza counter for a refined, restrained version of omakase where the pacing matters almost as much as the fish. It belongs here because it sits in the serious sushi conversation but remains more intelligible to a visitor than the regular-only legends.",
+    "Sushi Kanesaka is the Ginza counter for a refined, restrained version of omakase where the pace matters almost as much as the fish.",
     {
       venueKind: "food_drink",
       foodServiceType: "restaurant",
@@ -2454,7 +2454,7 @@ const sushiBestStops = [
     "tokyo-sushi-best-arai",
     "Sushi Arai",
     [35.67108, 139.76217],
-    "Sushi Arai is the Ginza splurge for people who care about tuna, counter presence, and the sense that the room is operating on a very narrow frequency. It is hard to book, so the practical move is to treat the reservation as the trip anchor rather than a flexible dinner slot.",
+    "Sushi Arai is a Ginza splurge built around tuna, exacting counter work, and a room operating on a very narrow frequency. Reservations are difficult enough to determine the dinner date rather than flex around it.",
     {
       venueKind: "food_drink",
       foodServiceType: "restaurant",
@@ -2476,7 +2476,7 @@ const sushiBestStops = [
     "tokyo-sushi-best-hakkoku",
     "Hakkoku",
     [35.67028, 139.76231],
-    "Hakkoku gives Ginza sushi a dramatic, rice-forward structure, with a long nigiri progression that feels built for people who want the counter to stay focused. It is not the gentlest first omakase, but it is a memorable choice if the group wants the meal to be almost all sushi.",
+    "Hakkoku builds a dramatic, rice-forward Ginza omakase around a long, tightly focused nigiri progression. The almost-all-sushi format is memorable but not the gentlest introduction to omakase.",
     {
       venueKind: "food_drink",
       foodServiceType: "restaurant",
@@ -2499,7 +2499,7 @@ const sushiBestStops = [
     "tokyo-sushi-best-masuda",
     "Sushi Masuda",
     [35.66404, 139.71528],
-    "Sushi Masuda is the Aoyama counter for travelers who want Ginza-level seriousness without spending the whole evening in Ginza's luxury grid. The room is intimate and reservation-led, so it works best as a deliberate dinner after Omotesando, Aoyama, or museum plans.",
+    "Sushi Masuda is the Aoyama counter for Ginza-level seriousness without spending the whole evening in Ginza's luxury grid.",
     {
       venueKind: "food_drink",
       foodServiceType: "restaurant",
@@ -2521,7 +2521,7 @@ const sushiBestStops = [
     "tokyo-sushi-best-ryujiro",
     "Sushi Ryujiro",
     [35.6717, 139.72436],
-    "Sushi Ryujiro belongs in the best-sushi guide because it offers a serious omakase room with a warmer, more conversational pull than some of Ginza's severe counters. Book it for a night where technical sushi still needs to feel hosted, not simply performed.",
+    "Sushi Ryujiro offers a technically serious omakase with a warmer, more conversational style than some severe Ginza counters. Precise sushi still feels hosted rather than merely performed.",
     {
       venueKind: "food_drink",
       foodServiceType: "restaurant",
@@ -2544,7 +2544,7 @@ const sushiBestStops = [
     "tokyo-sushi-best-sushi-m",
     "GINZA SUSHI M",
     [35.66152, 139.7176],
-    "GINZA SUSHI M is the contemporary sushi pick for travelers who want omakase with a drinks program rather than a silent, old-school counter. It belongs because pairing-led sushi can make the meal easier for visitors who want context, pacing, and a little more conversation.",
+    "GINZA SUSHI M pairs contemporary omakase with a considered drinks program, context, measured pace, and more conversation than a silent old-school counter.",
     {
       venueKind: "food_drink",
       foodServiceType: "restaurant",
@@ -2565,7 +2565,7 @@ const sushiBestStops = [
     "tokyo-sushi-best-kimura",
     "Sushi Kimura",
     [35.61398, 139.62671],
-    "Sushi Kimura is the outer-neighborhood choice for people who want aged fish and a reason to leave the central luxury loop. The Futako-Tamagawa location asks for commitment, but that distance is part of why the meal feels like a specific sushi pilgrimage rather than another Ginza booking.",
+    "Sushi Kimura is an outer-neighborhood restaurant for aged fish and a reason to leave the central luxury loop. The Futako-Tamagawa location asks for commitment, but that distance is part of why the meal feels like a specific sushi pilgrimage rather than another Ginza booking.",
     {
       venueKind: "food_drink",
       foodServiceType: "restaurant",
@@ -2591,7 +2591,7 @@ const sushiValueStops = [
     "tokyo-sushi-value-midori",
     "Sushi no Midori Ginza",
     [35.672179, 139.765671],
-    "Sushi no Midori Ginza is the value sushi workhorse: generous pieces, approachable prices, and enough popularity that the queue becomes part of the calculation. It belongs because it gives visitors a satisfying sushi meal in Ginza without pretending to be an elite counter.",
+    "Sushi no Midori Ginza serves generous pieces at approachable prices, with enough popularity to make the queue part of the calculation. It delivers a satisfying Ginza sushi meal without pretending to be an elite counter.",
     {
       venueKind: "food_drink",
       foodServiceType: "restaurant",
@@ -2612,7 +2612,7 @@ const sushiValueStops = [
     "tokyo-sushi-value-hanamaru",
     "Nemuro Hanamaru KITTE Marunouchi",
     [35.67978, 139.76506],
-    "Nemuro Hanamaru is the station-side value play for Hokkaido-style conveyor sushi that still feels like a real meal. The KITTE location is convenient and queue-prone, so it is best when you can put your name down and treat Tokyo Station as part of the plan.",
+    "Nemuro Hanamaru is the station-side value play for Hokkaido-style conveyor sushi that still feels like a real meal.",
     {
       venueKind: "food_drink",
       foodServiceType: "counter_service",
@@ -2633,7 +2633,7 @@ const sushiValueStops = [
     "tokyo-sushi-value-katsu-midori",
     "Mawashizushi Katsu Midori Seibu Shibuya",
     [35.6616, 139.7017],
-    "Katsu Midori is the Shibuya conveyor-sushi pick when the group wants variety, pace, and a bill that does not punish curiosity. It is not hushed omakase; the point is dependable quality, fast ordering, and enough plates to make a casual sushi dinner feel abundant.",
+    "Katsu Midori is a Shibuya conveyor-sushi counter when the group wants variety, pace, and a bill that does not punish curiosity. It is not hushed omakase; the point is dependable quality, fast ordering, and enough plates to make a casual sushi dinner feel abundant.",
     {
       venueKind: "food_drink",
       foodServiceType: "counter_service",
@@ -2654,7 +2654,7 @@ const sushiValueStops = [
     "tokyo-sushi-value-uobei",
     "Uobei Shibuya Dogenzaka",
     [35.65978, 139.69778],
-    "Uobei is the budget sushi stop that understands travel fatigue: tablet ordering, speedy delivery lanes, and a central Shibuya address that works before or after nightlife. It belongs for value because the fun-to-yen ratio is high, even if nobody mistakes it for a chef-led counter.",
+    "Uobei Shibuya Dogenzaka sends inexpensive sushi to the table on high-speed delivery tracks ordered from a touchscreen. The fun-to-yen ratio is high, even if nobody mistakes it for a chef-led counter.",
     {
       venueKind: "food_drink",
       foodServiceType: "counter_service",
@@ -2676,7 +2676,7 @@ const sushiValueStops = [
     "tokyo-sushi-value-uogashi",
     "Standing Sushi Bar Uogashi Nihon-Ichi Shinjuku West",
     [35.6914, 139.6994],
-    "Uogashi Nihon-Ichi is the stand-up sushi move for travelers who want a quick, inexpensive counter without sacrificing the feeling of ordering piece by piece. Use it between trains, shopping, or bars; it is strongest when speed and freshness matter more than lingering.",
+    "Uogashi Nihon-Ichi serves quick, inexpensive sushi piece by piece at a standing Shinjuku counter. Speed and freshness matter more than lingering, making the format practical around trains, shopping, or bars.",
     {
       venueKind: "food_drink",
       foodServiceType: "counter_service",
@@ -2698,7 +2698,7 @@ const sushiValueStops = [
     "tokyo-sushi-value-hinatomaru-asakusa",
     "Asakusa Sushi Bar Hinatomaru Kaminarimon Yanagi-koji",
     [35.711602, 139.796062],
-    "Hinatomaru gives Asakusa a better value-sushi answer than sending everyone west after Sensoji. The Kaminarimon Yanagi-koji shop is compact, casual, and useful for travelers who want a real sushi bar near the temple crowds without turning lunch into a luxury counter booking.",
+    "The Kaminarimon Yanagi-koji shop is compact, casual, and useful for a real sushi bar near the temple crowds without turning lunch into a luxury counter booking.",
     {
       venueKind: "food_drink",
       foodServiceType: "counter_service",
@@ -2724,7 +2724,7 @@ const sushiValueStops = [
     "tokyo-sushi-value-niginigi-nakano",
     "Niginigi Ichi Nakano Honkan",
     [35.707006, 139.666427],
-    "Niginigi Ichi pulls the value guide into Nakano, where the night can stay food-first without feeling like a station-mall compromise. It is strongest as a relaxed counter dinner before or after Nakano Broadway, with later weekday hours that make it more useful than many early-closing sushi picks.",
+    "Niginigi Ichi Nakano Honkan serves affordable sushi and drinks in a lively Nakano room, keeping the evening food-first without the feel of a station-mall compromise.",
     {
       venueKind: "food_drink",
       foodServiceType: "counter_service",
@@ -2750,7 +2750,7 @@ const sushiValueStops = [
     "tokyo-sushi-value-sugitama-sangenjaya",
     "Sushi Sake Sakana Sugitama Sangenjaya",
     [35.642199, 139.671774],
-    "Sugitama makes the list because Sangenjaya needs a value sushi stop that also understands drinking-neighborhood rhythm. Come for sushi, small plates, and sake instead of a silent omakase mood; the two-hour note on crowded nights is a practical hint to keep it casual.",
+    "Sugitama serves affordable sushi, small plates, and sake with the easy rhythm of a Sangenjaya drinking spot rather than a silent omakase counter. Crowded nights may carry a two-hour limit, so the format is best kept casual.",
     {
       venueKind: "food_drink",
       foodServiceType: "restaurant",
@@ -2776,7 +2776,7 @@ const sushiValueStops = [
     "tokyo-sushi-value-ginza-fukusuke-ikebukuro",
     "Sushi Dokoro Ginza Fukusuke Sunshine 60",
     [35.729356, 139.718248],
-    "Ginza Fukusuke keeps the guide inside the practical Tokyo tourist grid while still adding a northern/western option beyond the Ginza-Shibuya core. The Sunshine 60 location is useful for Ikebukuro days, especially at lunch when the price-to-view equation is kinder than many central sushi counters.",
+    "Ginza Fukusuke inside Sunshine 60 brings approachable sushi and broad city views to Ikebukuro. Lunch offers a kinder price-to-view equation than many central counters.",
     {
       venueKind: "food_drink",
       foodServiceType: "restaurant",
@@ -2828,7 +2828,7 @@ const sushiValueStops = [
     "tokyo-sushi-value-manten",
     "Manten Sushi Marunouchi",
     [35.68072, 139.76514],
-    "Manten Sushi Marunouchi is the value omakase option for people who want a set counter progression without paying Ginza trophy prices. It is still reservation-minded and paced, but the location and format make it one of the cleaner bridges between casual sushi and serious omakase.",
+    "Manten Sushi Marunouchi is a value omakase restaurant for a set counter progression without paying Ginza trophy prices. It is still reservation-minded and paced, but the location and format make it one of the cleaner bridges between casual sushi and serious omakase.",
     {
       venueKind: "food_drink",
       foodServiceType: "restaurant",
@@ -2849,7 +2849,7 @@ const sushiValueStops = [
     "tokyo-sushi-value-tokyo-ten",
     "Sushi Tokyo Ten Shibuya",
     [35.65882, 139.70202],
-    "Sushi Tokyo Ten Shibuya is useful because it gives visitors a defined sushi course near the station without the fear of an open-ended luxury bill. It is a value pick for structure, pacing, and location rather than rock-bottom pricing.",
+    "Sushi Tokyo Ten Shibuya serves a defined sushi course near the station, replacing an open-ended luxury bill with clear structure and pace. The value comes from format and location rather than rock-bottom pricing.",
     {
       venueKind: "food_drink",
       foodServiceType: "restaurant",
@@ -2892,7 +2892,7 @@ const sushiValueStops = [
     "tokyo-sushi-value-sushiro-aune-yurakucho",
     "Sushiro aune Yurakucho",
     [35.67202, 139.76204],
-    "Sushiro aune Yurakucho is the chain pick that earns its spot because sometimes value means clean ordering, transparent pricing, and a location that saves the group from overthinking. It is best for families, first arrivals, or anyone who wants sushi near Ginza/Yurakucho without a reservation hunt.",
+    "Sushiro aune Yurakucho is a high-volume kaiten-sushi branch near Ginza and Yurakucho, with tablet ordering, a broad menu, and no reservation ritual. It is practical for families and first arrivals learning the format.",
     {
       venueKind: "food_drink",
       foodServiceType: "counter_service",
@@ -2997,7 +2997,7 @@ const matchaStops = [
     "tokyo-matcha-nakamura-tokichi-ginza",
     "Nakamura Tokichi Ginza",
     [35.669445, 139.763351],
-    "Nakamura Tokichi brings an Uji tea-house pedigree into GINZA SIX, which makes it the polished first stop for travelers who want matcha as a full dessert ritual rather than a grab-and-go latte. The cafe is known for matcha jelly, parfaits, and tea-shop retail, but the practical move is to arrive with queue tolerance because the official page warns reception can close before last order when crowded.",
+    "Nakamura Tokichi brings an Uji tea-house pedigree into GINZA SIX, which makes it the polished first stop for matcha as a full dessert ritual rather than a grab-and-go latte.",
     {
       venueKind: "food_drink",
       foodServiceType: "cafe",
@@ -3020,7 +3020,7 @@ const matchaStops = [
     "tokyo-matcha-ippodo-aoyama",
     "Ippodo Tea Aoyama",
     [35.662777, 139.717621],
-    "Ippodo Aoyama is the guide's serious-tea stop: staff are on hand, the tea room serves both thick and thin matcha, and the official page lists takeout, events, and reservations. It is best for learning how matcha behaves in the cup, not just on soft serve; plan around the Monday closure if this is the tea stop you care about.",
+    "Ippodo Aoyama treats matcha as tea rather than flavoring, with staff-guided service and both thick koicha and thin usucha in the tea room. Takeout, events, and reservations broaden the experience beyond a quick cup.",
     {
       venueKind: "food_drink",
       foodServiceType: "cafe",
@@ -3043,7 +3043,7 @@ const matchaStops = [
     "tokyo-matcha-sakurai-tea",
     "Sakurai Japanese Tea Experience",
     [35.663567, 139.711945],
-    "Sakurai is the counter for people who want Tokyo matcha to feel adult, precise, and a little theatrical. The daytime tea course explicitly includes gyokuro, blended tea, hojicha, matcha, and wagashi at an eight-seat counter, while weekdays stretch into a tea-cocktail bar; reserve for the course and use the bar hours only when the night can move slowly.",
+    "Sakurai treats Tokyo tea with adult precision and a little theatre. The daytime course serves gyokuro, blended tea, hojicha, matcha, and wagashi at an eight-seat counter; on weekdays, the room later becomes a tea-cocktail bar.",
     {
       venueKind: "food_drink",
       foodServiceType: "cafe",
@@ -3069,7 +3069,7 @@ const matchaStops = [
     "tokyo-matcha-suzukien-asakusa",
     "Suzukien Asakusa Honten",
     [35.71632, 139.796982],
-    "Suzukien is the famous Asakusa gelato counter where the matcha intensity ladder is the whole point, especially the Nanaya collaboration and premium No. 7 scoop. It is not a contemplative tea room, but it absolutely belongs in Matcha Madness because the stop turns powdered tea into a dare, a snack, and a Sensoji-area routing win.",
+    "Suzukien is the famous Asakusa gelato counter where a matcha intensity ladder culminates in the Nanaya collaboration's premium No. 7 scoop. This is powdered tea as an emphatic snack rather than a contemplative tea-room ritual.",
     {
       venueKind: "food_drink",
       foodServiceType: "counter_service",
@@ -3097,7 +3097,7 @@ const matchaStops = [
     "tokyo-matcha-atelier-matcha-ginza",
     "ATELIER MATCHA",
     [35.666161, 139.765121],
-    "ATELIER MATCHA treats matcha like an espresso-bar ingredient, with a Ginza shop built around modern drinks, sweets, and workshop energy. It is the right stop when someone wants a clean, contemporary matcha latte or seasonal dessert without giving up actual Uji tea sourcing; go before the 5:45 PM last order.",
+    "ATELIER MATCHA treats matcha like an espresso-bar ingredient, with a Ginza shop built around modern drinks, sweets, and workshop energy.",
     {
       venueKind: "food_drink",
       foodServiceType: "cafe",
@@ -3121,7 +3121,7 @@ const matchaStops = [
     "tokyo-matcha-the-matcha-tokyo-omotesando",
     "THE MATCHA TOKYO Omotesando",
     [35.666656, 139.706131],
-    "THE MATCHA TOKYO Omotesando is the fast, polished matcha-latte stop for the Harajuku and Cat Street side of the day. It belongs here because the drinks are easy, photogenic, and route-friendly without asking you to commit to a full tea-room sit-down.",
+    "THE MATCHA TOKYO Omotesando is a fast, polished matcha-latte cafe for the Harajuku and Cat Street side of the day.",
     {
       venueKind: "food_drink",
       foodServiceType: "cafe",
@@ -3144,7 +3144,7 @@ const matchaStops = [
     "tokyo-matcha-higashiya-ginza",
     "HIGASHIYA GINZA",
     [35.674309, 139.768082],
-    "HIGASHIYA GINZA is the design-forward tea salon for wagashi, composed sweets, and a quieter Ginza sit-down than the dessert queues. It belongs here because matcha feels at home beside careful confectionery and ceramics; book or arrive early if you want the Sabo rather than just retail.",
+    "HIGASHIYA GINZA is the design-forward tea salon for wagashi, composed sweets, and a quieter Ginza sit-down than the dessert queues.",
     {
       venueKind: "food_drink",
       foodServiceType: "cafe",
@@ -3168,7 +3168,7 @@ const matchaStops = [
     "tokyo-matcha-toraya-akasaka",
     "Toraya Akasaka",
     [35.675194, 139.732788],
-    "Toraya Akasaka is the heritage wagashi stop: a flagship confectionery house with Toraya Karyo upstairs, seasonal sweets, and matcha that feels tied to craft rather than trend. It is a better matcha stop for a slower Akasaka or palace-side day than for a sugar rush.",
+    "Toraya Akasaka is the flagship of a heritage confectionery house, with Toraya Karyo upstairs serving seasonal wagashi and matcha. Craft and measured tea service matter more than a quick sugar rush.",
     {
       venueKind: "food_drink",
       foodServiceType: "cafe",
@@ -3190,7 +3190,7 @@ const matchaStops = [
     "tokyo-matcha-kosoan-jiyugaoka",
     "Kosoan",
     [35.610561, 139.668472],
-    "Kosoan is the old-house Jiyugaoka tea room that gives this guide some hush: tatami-adjacent atmosphere, folk objects, garden views, matcha with wagashi, and matcha shiratama zenzai on the menu. It asks more planning than a station cafe because weekdays start at noon and Wednesday plus first/third Thursday closures are real, but the payoff is a matcha stop that feels lived-in.",
+    "Kosoan is an old-house Jiyugaoka tea room with tatami-adjacent atmosphere, folk objects, garden views, matcha with wagashi, and matcha shiratama zenzai. Weekday service starts at noon, with Wednesday and first/third Thursday closures; the lived-in quiet rewards checking the schedule.",
     {
       venueKind: "food_drink",
       foodServiceType: "cafe",
@@ -3216,7 +3216,7 @@ const matchaStops = [
     "tokyo-matcha-saryo-tsujiri-daimaru",
     "Saryo Tsujiri Daimaru Tokyo",
     [35.681252, 139.767242],
-    "Saryo Tsujiri Daimaru Tokyo is the station-side matcha parfait stop, useful because Tokyo Station days need something better than platform panic. The official branch page puts it on the 10th floor of Daimaru with a 7:30 PM last order, so it works after trains, shopping, or Marunouchi wandering when a classic green-tea dessert is the point.",
+    "Saryo Tsujiri inside Daimaru Tokyo serves matcha parfaits and tea sweets above the station, offering careful confectionery in a heavily trafficked transport hub.",
     {
       venueKind: "food_drink",
       foodServiceType: "cafe",
@@ -3243,7 +3243,7 @@ const hotelStops = [
     "tokyo-hotel-aman",
     "Aman Tokyo",
     [35.686477, 139.76516],
-    "Aman Tokyo is the high-floor Otemachi sanctuary: huge rooms, a serious spa, and views that make the city's scale feel almost calm. It is a splurge that works best when you want Tokyo Station, the Imperial Palace edge, and a hotel that can absorb jet lag gracefully.",
+    "Aman Tokyo is the high-floor Otemachi sanctuary: huge rooms, a serious spa, and views that make the city's scale feel almost calm. It is a splurge that works best for Tokyo Station, the Imperial Palace edge, and a hotel that can absorb jet lag gracefully.",
     {
       venueKind: "lodging",
       lodgingType: "hotel",
@@ -3264,7 +3264,7 @@ const hotelStops = [
     "tokyo-hotel-hoshinoya",
     "HOSHINOYA Tokyo",
     [35.687311, 139.764254],
-    "HOSHINOYA Tokyo is the ryokan idea translated vertically into Otemachi, with tatami rooms, floor lounges, and an onsen-like sense of retreat inside the business district. Choose it when you want Japanese ritual and quiet, not a lobby scene or late-night neighborhood energy.",
+    "HOSHINOYA Tokyo translates the ryokan vertically into Otemachi through tatami rooms, floor lounges, Japanese ritual, and an onsen-like retreat inside the business district. Quiet replaces both lobby theater and late-night neighborhood energy.",
     {
       venueKind: "lodging",
       lodgingType: "hotel",
@@ -3285,7 +3285,7 @@ const hotelStops = [
     "tokyo-hotel-palace",
     "Palace Hotel Tokyo",
     [35.684629, 139.761589],
-    "Palace Hotel Tokyo is the Marunouchi classic for travelers who want polish, space, and Imperial Palace-green views without leaving the rail-connected center. It is expensive, but the appeal is practical luxury: service, restaurants, spa, and Tokyo Station access in one calm base.",
+    "Palace Hotel Tokyo pairs spacious rooms and Imperial Palace views with polished service, several restaurants, a spa, and easy Tokyo Station access. It is a calm, practical expression of Marunouchi luxury rather than a nightlife hotel.",
     {
       venueKind: "lodging",
       lodgingType: "hotel",
@@ -3306,7 +3306,7 @@ const hotelStops = [
     "tokyo-hotel-mandarin-oriental",
     "Mandarin Oriental, Tokyo",
     [35.686967, 139.773313],
-    "Mandarin Oriental gives Nihonbashi a sky-level hotel with serious dining, a destination spa, and views that turn business-district convenience into romance. It is best for travelers who want polish near Ginza and Tokyo Station, with less chaos than sleeping in Shinjuku or Shibuya.",
+    "Mandarin Oriental gives Nihonbashi a sky-level hotel with serious dining, a destination spa, and views that turn business-district convenience into romance.",
     {
       venueKind: "lodging",
       lodgingType: "hotel",
@@ -3348,7 +3348,7 @@ const hotelStops = [
     "tokyo-hotel-bulgari",
     "Bulgari Hotel Tokyo",
     [35.6792, 139.7671],
-    "Bulgari Hotel Tokyo adds a Yaesu-side luxury base for travelers who want Tokyo Station access without choosing old-world railway romance. The appeal is height, design polish, dining, spa, and immediate Ginza/Marunouchi reach; it is best when the hotel is part of the itinerary, not just a bed.",
+    "Bulgari Hotel Tokyo adds a Yaesu-side luxury base for Tokyo Station access without choosing old-world railway romance.",
     {
       venueKind: "lodging",
       lodgingType: "hotel",
@@ -3369,7 +3369,7 @@ const hotelStops = [
     "tokyo-hotel-muji-ginza",
     "MUJI HOTEL GINZA",
     [35.672138, 139.766557],
-    "MUJI HOTEL GINZA is the quiet design-value counterweight to the luxury towers, with compact rooms, disciplined storage, and an address that makes Ginza errands painless. Book it when you want central access and calm materials more than spa scale or skyline drama.",
+    "MUJI HOTEL GINZA pairs compact rooms and disciplined storage with calm materials and a central Ginza address. The appeal is efficient design and access rather than spa scale or skyline drama.",
     {
       venueKind: "lodging",
       lodgingType: "hotel",
@@ -3390,7 +3390,7 @@ const hotelStops = [
     "tokyo-hotel-mitsui-jingugaien",
     "Mitsui Garden Hotel Jingugaien Tokyo Premier",
     [35.67967, 139.71364],
-    "Mitsui Garden Hotel Jingugaien Tokyo Premier works for travelers who want the west side without sleeping inside Shinjuku's noise. The stadium, Gaienmae, Sendagaya, and Shinjuku Gyoen edges make it a practical base for walks, trains, and quieter evenings.",
+    "Mitsui Garden Hotel Jingugaien Tokyo Premier works for the west side without sleeping inside Shinjuku's noise. The stadium, Gaienmae, Sendagaya, and Shinjuku Gyoen edges make it a practical base for walks, trains, and quieter evenings.",
     {
       venueKind: "lodging",
       lodgingType: "hotel",
@@ -3432,7 +3432,7 @@ const hotelStops = [
     "tokyo-hotel-sequence-miyashita",
     "sequence MIYASHITA PARK",
     [35.662045, 139.701144],
-    "sequence MIYASHITA PARK is the Shibuya choice for travelers who want the city to start downstairs: park deck, shops, food, trains, and nightlife in one compressed layer. It is a smart access play, but room size and street energy mean it suits active trips better than cocooning.",
+    "sequence MIYASHITA PARK stacks compact hotel rooms above a park deck, shops, food, trains, and Shibuya nightlife. Immediate access comes with urban street energy and less space for cocooning.",
     {
       venueKind: "lodging",
       lodgingType: "hotel",
@@ -3456,7 +3456,7 @@ const hostelStops = [
     "tokyo-hostel-nui",
     "Nui. Hostel & Bar Lounge",
     [35.703337, 139.791163],
-    "Nui is the Kuramae hostel for travelers who want a real ground-floor social life, not just a bunk near a train line. The cafe-bar lounge makes it easy to meet people or decompress after Asakusa and Ueno, though light sleepers should choose room type carefully.",
+    "Nui pairs hostel beds in Kuramae with a lively ground-floor bar and lounge where coffee, drinks, food, and conversation draw both guests and locals.",
     {
       venueKind: "lodging",
       lodgingType: "hostel",
@@ -3481,7 +3481,7 @@ const hostelStops = [
     "tokyo-hostel-citan",
     "CITAN",
     [35.691707, 139.78231],
-    "CITAN works because it treats the hostel as a small city stack: beds upstairs, coffee, bar, and dining downstairs, and Bakurocho transit within reach. It is stronger for social travelers who like design and food energy than for anyone chasing a silent capsule.",
+    "CITAN stacks hostel beds upstairs over coffee, a bar, and dining downstairs, all within reach of Bakurocho transit. The design and food energy suit social travelers better than anyone chasing a silent capsule.",
     {
       venueKind: "lodging",
       lodgingType: "hostel",
@@ -3506,7 +3506,7 @@ const hostelStops = [
     "tokyo-hostel-unplan-shinjuku",
     "UNPLAN Shinjuku",
     [35.690053, 139.713856],
-    "UNPLAN Shinjuku is the easy west-side hostel choice when nightlife, gardens, and rail connections matter. It gives budget travelers a Shinjuku address without pretending the area is quiet, so check room type and late-night expectations before booking.",
+    "UNPLAN Shinjuku is a social west-side hostel with dorms, private rooms, cafe-bar infrastructure, and access to nightlife, gardens, and rail connections. The area is active late, so room type and noise expectations matter.",
     {
       venueKind: "lodging",
       lodgingType: "hostel",
@@ -3556,7 +3556,7 @@ const hostelStops = [
     "tokyo-hostel-wise-owl-shibuya",
     "Wise Owl Hostels Shibuya",
     [35.649364, 139.692998],
-    "Wise Owl gives the hostel guide a Shibuya-side option without putting you directly on the scramble. It is useful for nightlife and shopping days, but the tradeoff is a slightly less central station walk, so pack light and check late-arrival details.",
+    "Wise Owl Hostels Shibuya offers a social budget stay on the Shibuya side without placing the dorms directly beside the scramble crossing.",
     {
       venueKind: "lodging",
       lodgingType: "hostel",
@@ -3581,7 +3581,7 @@ const hostelStops = [
     "tokyo-hostel-sakura-asakusa",
     "Sakura Hostel Asakusa",
     [35.715404, 139.79372],
-    "Sakura Hostel Asakusa is the budget social base for travelers who want Sensoji, Hoppy Street, and the Sumida side of town close by. It is not sleek, but the shared facilities and visitor mix make it useful for first-timers who want low cost and easy old-town routing.",
+    "Sakura Hostel Asakusa offers inexpensive rooms, shared facilities, and an international social atmosphere close to Sensoji, Hoppy Street, and the Sumida side of town. The emphasis is access and community rather than sleek design.",
     {
       venueKind: "lodging",
       lodgingType: "hostel",
@@ -3606,7 +3606,7 @@ const hostelStops = [
     "tokyo-hostel-plat-asakusa",
     "plat hostel keikyu Asakusa Station",
     [35.70986, 139.79336],
-    "plat hostel keikyu Asakusa Station is the clean, transit-first hostel pick for travelers who want Asakusa access without a big social bar scene. It is better for budget sleepers who value station proximity and simple rooms than for anyone seeking nightly programming.",
+    "plat hostel keikyu Asakusa Station is a clean, transit-first hostel for Asakusa access without a big social bar scene. It is better for budget sleepers who value station proximity and simple rooms than for anyone seeking nightly programming.",
     {
       venueKind: "lodging",
       lodgingType: "hostel",
@@ -3631,7 +3631,7 @@ const hostelStops = [
     "tokyo-hostel-toco",
     "Tokyo Guest House toco.",
     [35.72364, 139.78594],
-    "Tokyo Guest House toco. gives the hostel guide a domestic-house mood: old timber, a small garden, a bar, and Ueno/Asakusa access without the feel of a large dorm factory. Book it when atmosphere matters, but check room type because heritage charm also means compact spaces.",
+    "Tokyo Guest House toco. combines old timber, a small garden, a bar, and Ueno and Asakusa access in a domestic-house atmosphere rather than a large dorm factory. Heritage charm also means compact room types.",
     {
       venueKind: "lodging",
       lodgingType: "guesthouse",
@@ -3656,7 +3656,7 @@ const hostelStops = [
     "tokyo-hostel-sakura-jimbocho",
     "Sakura Hotel Jimbocho",
     [35.696, 139.7586],
-    "Sakura Hotel Jimbocho works as a social budget stay for bookshop streets, trains, and central sightseeing without Shibuya prices. The cafe and mixed room types make it feel more hostel-adjacent than a sealed business hotel, though privacy expectations should stay realistic.",
+    "Sakura Hotel Jimbocho is a social budget stay for bookshop streets, trains, and central sightseeing without Shibuya prices. The cafe and mixed room types make it feel more hostel-adjacent than a sealed business hotel, though privacy expectations should stay realistic.",
     {
       venueKind: "lodging",
       lodgingType: "guesthouse",
@@ -3681,7 +3681,7 @@ const hostelStops = [
     "tokyo-hostel-sakura-nippori",
     "Sakura Hotel Nippori",
     [35.7283, 139.7663],
-    "Sakura Hotel Nippori is the Yanaka-side social stay for travelers who want a quieter neighborhood, budget rooms, and easy access to Ueno and old Tokyo walks. It is most useful when the trip favors local streets over nightlife, and less useful if every night ends in Shibuya.",
+    "Sakura Hotel Nippori is the Yanaka-side social stay for a quieter neighborhood, budget rooms, and easy access to Ueno and old Tokyo walks. It is most useful when the trip favors local streets over nightlife, and less useful if every night ends in Shibuya.",
     {
       venueKind: "lodging",
       lodgingType: "guesthouse",
@@ -3730,7 +3730,7 @@ const casualBarStops = [
     "tokyo-bars-omoide-yokocho",
     "Omoide Yokocho",
     [35.693661, 139.699615],
-    "Omoide Yokocho is more food alley than pure bar crawl, which is why it is useful after a Shinjuku arrival or before a longer night. The yakitori smoke, tight counters, and tourist pressure are all real, so pick a stall, order simply, and keep moving if a place feels too squeezed.",
+    "The yakitori smoke, tight counters, and tourist pressure are all real, so pick a stall, order simply, and keep moving if a place feels too squeezed.",
     {
       venueKind: "nightlife",
       nightlifeType: "pub",
@@ -3751,7 +3751,7 @@ const casualBarStops = [
     "tokyo-bars-nonbei-yokocho",
     "Nonbei Yokocho",
     [35.660753, 139.701775],
-    "Nonbei Yokocho is Shibuya's older drinking counterpoint to the crossing: two narrow lanes of tiny rooms where the night slows down by a few seats at a time. It is better for patient pairs than large groups, and the best move is choosing one bar instead of wandering noisily.",
+    "Nonbei Yokocho is Shibuya's older drinking alternative to the crossing: two narrow lanes of tiny rooms where the night slows down by a few seats at a time. It is better for patient pairs than large groups, and the best move is choosing one bar instead of wandering noisily.",
     {
       venueKind: "nightlife",
       nightlifeType: "dive_bar",
@@ -3772,7 +3772,7 @@ const casualBarStops = [
     "tokyo-bars-hoppy-street",
     "Hoppy Street",
     [35.71337, 139.79359],
-    "Hoppy Street gives Asakusa a daylight-to-evening drinking lane, with stewed beef tendon, beer, hoppy, and open-front tables near the temple routes. It belongs because not every Tokyo drink needs a hidden door; come early if you want atmosphere without a late-night crush.",
+    "Hoppy Street lines Asakusa with open-front tables serving stewed beef tendon, beer, and hoppy from daylight into evening. Earlier hours preserve the lane's atmosphere with less late-night crowd pressure.",
     {
       venueKind: "nightlife",
       nightlifeType: "pub",
@@ -3793,7 +3793,7 @@ const casualBarStops = [
     "tokyo-bars-ebisu-yokocho",
     "Ebisu Yokocho",
     [35.647274, 139.710433],
-    "Ebisu Yokocho is the livelier, easier group stop in this casual guide: a covered alley of stalls where dinner and drinks blur quickly. It is useful when the group wants options in one place, but it can get loud, smoky, and crowded enough to make a backup plan sensible.",
+    "Ebisu Yokocho is a lively covered alley of compact food-and-drink stalls where groups can move quickly between skewers, small plates, beer, and conversation.",
     {
       venueKind: "nightlife",
       nightlifeType: "pub",
@@ -3814,7 +3814,7 @@ const casualBarStops = [
     "tokyo-bars-goodbeer-faucets",
     "Goodbeer Faucets",
     [35.66002, 139.6997],
-    "Goodbeer Faucets is the Shibuya craft-beer pressure valve: plenty of taps, a central address, and an easier landing than tiny counters when a group needs options. It belongs in the local-drinks guide because it solves a real night-out problem, but check current tap lists and hours before relying on it late.",
+    "Goodbeer Faucets is the Shibuya craft-beer pressure valve: plenty of taps, a central address, and an easier landing than tiny counters when a group needs options.",
     {
       venueKind: "nightlife",
       nightlifeType: "beer_bar",
@@ -3835,7 +3835,7 @@ const casualBarStops = [
     "tokyo-bars-craft-beer-market-toranomon",
     "Craft Beer Market Toranomon",
     [35.668588, 139.749948],
-    "Craft Beer Market is the no-mystique craft-beer move: rotating taps, approachable pricing, and branches that work before or after central Tokyo plans. The Toranomon location fits this guide because it pairs easily with museums, offices, or hotel bars without demanding a whole night.",
+    "Craft Beer Market Toranomon pours a broad craft-beer selection in a casual room serving the surrounding office, museum, and hotel district.",
     {
       venueKind: "nightlife",
       nightlifeType: "beer_bar",
@@ -3856,7 +3856,7 @@ const casualBarStops = [
     "tokyo-bars-tasuichi",
     "Tasuichi",
     [35.66012, 139.70063],
-    "Tasuichi gives Shibuya a casual standing-bar energy that feels more useful than another polished cocktail room. It is a meet-people, quick-drink, post-crossing stop, so go with loose expectations and move on if the room is too packed for your group.",
+    "Tasuichi is a casual Shibuya standing bar built around quick drinks, easy conversation, and a social crowd. The compact room fills quickly and may not suit a group at peak time.",
     {
       venueKind: "nightlife",
       nightlifeType: "pub",
@@ -3877,7 +3877,7 @@ const casualBarStops = [
     "tokyo-bars-yona-yona-shinjuku",
     "Yona Yona Beer Works Shinjuku",
     [35.69054, 139.70029],
-    "Yona Yona Beer Works is the brighter, easier beer-hall answer to a Shinjuku night, especially when not everyone wants izakaya smoke or a tiny counter. The draw is Japanese craft beer with food support; it is useful early in the night before the district gets heavier.",
+    "Yona Yona Beer Works is the brighter, easier beer-hall answer to a Shinjuku night, especially when not everyone wants izakaya smoke or a tiny counter.",
     {
       venueKind: "nightlife",
       nightlifeType: "beer_bar",
@@ -3898,7 +3898,7 @@ const casualBarStops = [
     "tokyo-bars-gonpachi-nishiazabu",
     "Gonpachi Nishi-Azabu",
     [35.660872, 139.724787],
-    "Gonpachi Nishi-Azabu is famous enough to be easy to dismiss, but it remains a useful group izakaya when visitors need skewers, soba, late hours, and a room with theatrical scale. Treat it as a practical crowd-pleaser, not a secret local bar, and reserve if the group is large.",
+    "Gonpachi Nishi-Azabu serves skewers and soba late in a theatrical, large-format izakaya room. It handles groups well but makes no claim to being a secret local bar; large parties should reserve.",
     {
       venueKind: "nightlife",
       nightlifeType: "pub",
@@ -3922,7 +3922,7 @@ const clubStops = [
     "tokyo-clubs-womb",
     "WOMB",
     [35.65809, 139.69542],
-    "WOMB stays in the guide because it is still the Shibuya electronic-music institution: multi-floor scale, a serious room system, and a calendar that can justify crossing town when the booking is right. Treat it as a lineup-led club, not a random after-dinner default.",
+    "WOMB is a multi-floor Shibuya electronic-music institution with a serious sound system and an event calendar spanning distinct promoters and club styles. The booking determines the night.",
     {
       venueKind: "nightlife",
       nightlifeType: "club",
@@ -3964,7 +3964,7 @@ const clubStops = [
     "tokyo-clubs-ebisu-batica",
     "EBISU BATICA",
     [35.6469, 139.7081],
-    "BATICA is the compact Ebisu two-floor pick when the night should feel intimate, mixed, and local: hip-hop, live sets, DJs, and small-room parties where the crowd is close to the artists. It is a better fit than another megaclub when you want the event to have texture.",
+    "BATICA is a compact two-floor Ebisu club for hip-hop, live sets, DJs, and small-room parties where the crowd stays close to the artists. Its intimate, mixed program offers more texture than another megaclub.",
     {
       venueKind: "nightlife",
       nightlifeType: "club",
@@ -3985,7 +3985,7 @@ const clubStops = [
     "tokyo-clubs-spread-shimokitazawa",
     "SPREAD Shimokitazawa",
     [35.661037, 139.66692],
-    "SPREAD pulls the circuit west to Shimokitazawa, where the point is a compact sound-system room near the station rather than another Shibuya basement. The official schedule moves through evening live/DJ starts and club-night windows, so it works best when the booking matches the kind of left-field or local-room night you want.",
+    "SPREAD is a compact sound-system room near Shimokitazawa Station, distinct from Shibuya's larger basements. Its schedule moves between live acts, DJ starts, and club-night windows with a left-field local focus.",
     {
       venueKind: "nightlife",
       nightlifeType: "club",
@@ -4009,7 +4009,7 @@ const clubStops = [
     "tokyo-clubs-live-haus",
     "LIVE HAUS",
     [35.659553, 139.666432],
-    "LIVE HAUS keeps Shimokitazawa in the guide as a live house/club hybrid with a 90-person underground scale, donation-minded programming, DJ nights, bands, and small-room community energy. It is the stop for travelers who want Tokyo music culture to feel local and current rather than exported through a big-room club format.",
+    "LIVE HAUS is a roughly 90-person Shimokitazawa live-house and club hybrid with bands, DJ nights, donation-minded programming, and strong small-room community energy. The experience feels local and current rather than exported through a big-room format.",
     {
       venueKind: "nightlife",
       nightlifeType: "live_music_venue",
@@ -4033,7 +4033,7 @@ const clubStops = [
     "tokyo-clubs-clubasia",
     "clubasia",
     [35.66064, 139.6954],
-    "clubasia is the Shibuya workhorse that can move from bands and rappers to hard techno, trance, bass, reggae, dancehall, and future-pop nights. It earns the slot because the calendar is broad without being faceless; pick a specific party instead of treating it as one genre.",
+    "clubasia moves from bands and rappers to hard techno, trance, bass, reggae, dancehall, and future-pop nights. Its broad calendar retains distinct promoters and parties rather than collapsing into one genre.",
     {
       venueKind: "nightlife",
       nightlifeType: "club",
@@ -4054,7 +4054,7 @@ const clubStops = [
     "tokyo-clubs-circus-tokyo",
     "CIRCUS Tokyo",
     [35.65579, 139.70458],
-    "CIRCUS Tokyo is the compact Shibuya room to check for touring DJs, bass, house, techno, left-field electronic bookings, and focused artist showcases. It belongs here as a music-first alternative to the easy open-format clubs nearby.",
+    "CIRCUS Tokyo is the compact Shibuya room to check for touring DJs, bass, house, techno, left-field electronic bookings, and focused artist showcases.",
     {
       venueKind: "nightlife",
       nightlifeType: "club",
@@ -4075,7 +4075,7 @@ const clubStops = [
     "tokyo-clubs-harlem",
     "HARLEM",
     [35.65959, 139.69508],
-    "HARLEM keeps the guide from becoming only house and techno: it is the Shibuya institution for hip-hop, R&B, dancehall, MC culture, and Black-music-focused club nights. Use the official event feed, because the right night matters more than the brand name alone.",
+    "HARLEM is a Shibuya institution for hip-hop, R&B, dancehall, MC culture, and Black-music-focused club nights. The official event feed matters because promoters and bookings determine the sound.",
     {
       venueKind: "nightlife",
       nightlifeType: "club",
@@ -4096,7 +4096,7 @@ const clubStops = [
     "tokyo-clubs-space-shinjuku",
     "SPACE Shinjuku",
     [35.6897, 139.7109],
-    "SPACE Shinjuku adds a smaller Shinjuku room to the circuit, with stage, sound, and lighting infrastructure for DJ parties, live acts, and entertainment bookings near Shinjuku-Gyoenmae. It is useful when you want Shinjuku nightlife without defaulting to Kabukicho megaclub energy.",
+    "SPACE Shinjuku is a compact room near Shinjuku-Gyoenmae with stage, sound, and lighting infrastructure for DJ parties, live acts, and entertainment bookings beyond Kabukicho's megaclubs.",
     {
       venueKind: "nightlife",
       nightlifeType: "club",
@@ -4120,7 +4120,7 @@ const clubStops = [
     "tokyo-clubs-vent",
     "VENT Tokyo",
     [35.6652, 139.7139],
-    "VENT is the Omotesando choice when the brief is sound quality, house, techno, and an international-booking sensibility rather than loose bar-hopping. It is stylish and more specialist than mainstream Shibuya clubbing, so check the lineup before committing the night.",
+    "VENT is an Omotesando club when the brief is sound quality, house, techno, and an international-booking sensibility rather than loose bar-hopping.",
     {
       venueKind: "nightlife",
       nightlifeType: "club",
@@ -4141,7 +4141,7 @@ const clubStops = [
     "tokyo-clubs-enter-shibuya",
     "ENTER Shibuya",
     [35.66617, 139.70101],
-    "ENTER Shibuya is the smaller Global Hearts room for house, techno, bass, dubstep, and local selectors, with enough edge to feel different from the Crossing-side club strip. Its official schedule makes the genre clear, which is exactly how this guide should be used.",
+    "ENTER Shibuya is the smaller Global Hearts room for house, techno, bass, dubstep, and local selectors, with enough edge to feel distinct from the Crossing-side club strip. Programming changes by night, so the event calendar matters more than the brand name.",
     {
       venueKind: "nightlife",
       nightlifeType: "club",
@@ -4204,7 +4204,7 @@ const clubStops = [
     "tokyo-clubs-bonobo",
     "bar bonobo",
     [35.6701, 139.7087],
-    "bar bonobo is the Harajuku/Jingumae oddball: more intimate DJ bar than conventional nightclub, but essential for the kind of Tokyo night where the room, selectors, and crowd matter more than production scale. It is best for curious listeners who like a small, warm, slightly surreal dance floor.",
+    "bar bonobo is the Harajuku/Jingumae oddball: more intimate DJ bar than conventional nightclub, but essential for the kind of Tokyo night where the room, selectors, and crowd matter more than production scale.",
     {
       venueKind: "nightlife",
       nightlifeType: "club",
@@ -4225,7 +4225,7 @@ const clubStops = [
     "tokyo-clubs-solfa",
     "solfa",
     [35.6492, 139.6959],
-    "solfa puts Nakameguro into the circuit with a small club that can carry hip-hop, dance music, local DJ nights, and parties away from the Shibuya/Shinjuku default. Use it when the calendar fits a dinner-to-late-night plan on the south-west side of town.",
+    "solfa puts Nakameguro into the circuit with a small club that can carry hip-hop, dance music, local DJ nights, and parties away from the Shibuya/Shinjuku default.",
     {
       venueKind: "nightlife",
       nightlifeType: "club",
@@ -4249,7 +4249,7 @@ const cocktailStops = [
     "tokyo-cocktail-bar-high-five",
     "Bar High Five",
     [35.671659, 139.762918],
-    "Bar High Five is the Ginza classic for bespoke cocktails, where the lack of a fixed menu is part of the conversation rather than a gimmick. It is best for small groups who can sit, explain preferences clearly, and let the bartender steer the night.",
+    "Bar High Five is the Ginza classic for bespoke cocktails, where the lack of a fixed menu is part of the conversation rather than a gimmick.",
     {
       venueKind: "nightlife",
       nightlifeType: "cocktail_bar",
@@ -4270,7 +4270,7 @@ const cocktailStops = [
     "tokyo-cocktail-sg-club",
     "The SG Club",
     [35.660591, 139.699417],
-    "The SG Club is Shibuya cocktail theater with enough structure to work for first-timers: distinct rooms, polished service, and drinks that nod to Tokyo's global bar exchange. Book or arrive early, because it is popular for reasons beyond Instagram lighting.",
+    "The SG Club combines distinct rooms, polished service, serious bartending, and drinks that reflect Tokyo's global cocktail exchange. Reservations or early arrival help in a bar popular for more than its theatrical design.",
     {
       venueKind: "nightlife",
       nightlifeType: "cocktail_bar",
@@ -4291,7 +4291,7 @@ const cocktailStops = [
     "tokyo-cocktail-ben-fiddich",
     "Bar BenFiddich",
     [35.690046, 139.6977],
-    "Bar BenFiddich is the alchemist stop, with herbs, bitters, and farm-linked ingredients turned into cocktails that feel closer to a lab bench than a hotel bar. It is tiny and reservation-sensitive, so plan around the official calendar instead of assuming Shinjuku proximity guarantees a seat.",
+    "Bar BenFiddich is an alchemist bar, with herbs, bitters, and farm-linked ingredients turned into cocktails that feel closer to a lab bench than a hotel bar.",
     {
       venueKind: "nightlife",
       nightlifeType: "cocktail_bar",
@@ -4334,7 +4334,7 @@ const cocktailStops = [
     "tokyo-cocktail-bar-trench",
     "Bar Trench",
     [35.646899, 139.710427],
-    "Bar Trench is the Ebisu pick for a looser cocktail night: absinthe, bitters, dim wood, and enough edge to avoid feeling too polished. It is small, so use it as a focused stop before or after dinner rather than a place to park a big group.",
+    "Bar Trench is an Ebisu bar for a looser cocktail night: absinthe, bitters, dim wood, and enough edge to avoid feeling too polished.",
     {
       venueKind: "nightlife",
       nightlifeType: "cocktail_bar",
@@ -4355,7 +4355,7 @@ const cocktailStops = [
     "tokyo-cocktail-the-bellwood",
     "The Bellwood",
     [35.66144, 139.69888],
-    "The Bellwood is Shibuya cocktail nostalgia rebuilt with modern technique, all wood, glassware, and old-cafe cues rather than hidden-door theater. It is a sharp addition when you want serious drinks without the hushed Ginza posture; book ahead if the night depends on it.",
+    "The Bellwood is Shibuya cocktail nostalgia rebuilt with modern technique, all wood, glassware, and old-cafe cues rather than hidden-door theater. It is a sharp addition for serious drinks without the hushed Ginza posture; book ahead if the night depends on it.",
     {
       venueKind: "nightlife",
       nightlifeType: "cocktail_bar",
@@ -4376,7 +4376,7 @@ const cocktailStops = [
     "tokyo-cocktail-tokyo-confidential",
     "Tokyo Confidential",
     [35.656433, 139.735109],
-    "Tokyo Confidential gives Azabu-Juban a high-floor cocktail room that feels more playful than the old Tokyo hotel-bar circuit. It is best for drinkers who want clever signatures and skyline energy, but private events and reservations can change the rhythm quickly.",
+    "Tokyo Confidential gives Azabu-Juban a high-floor cocktail room that feels more playful than the old Tokyo hotel-bar circuit.",
     {
       venueKind: "nightlife",
       nightlifeType: "cocktail_bar",
@@ -4418,7 +4418,7 @@ const cocktailStops = [
     "tokyo-cocktail-gold-bar-edition",
     "Gold Bar at EDITION",
     [35.66557, 139.7447],
-    "Gold Bar at EDITION is the moody hotel-bar pick for Toranomon, with enough design drama to make one drink feel like a planned stop. It works best when the night already leans Roppongi, Toranomon, or Kamiyacho; check the official page for events before dressing up and crossing town.",
+    "Gold Bar at EDITION is a moody hotel-bar for Toranomon, with enough design drama to make one drink feel like a planned stop.",
     {
       venueKind: "nightlife",
       nightlifeType: "cocktail_bar",
@@ -4439,7 +4439,7 @@ const cocktailStops = [
     "tokyo-cocktail-memento-mori",
     "Memento Mori",
     [35.6676, 139.7499],
-    "Memento Mori is the cacao-focused Toranomon cocktail stop, more specific than another generic hotel lounge and more relaxed than a hushed Ginza counter. The best use is a small group willing to follow the bar's concept; confirm hours because seating and events are limited.",
+    "Memento Mori is a cacao-focused Toranomon cocktail bar, more specific than another generic hotel lounge and more relaxed than a hushed Ginza counter. The best use is a small group willing to follow the bar's concept; confirm hours because seating and events are limited.",
     {
       venueKind: "nightlife",
       nightlifeType: "cocktail_bar",
@@ -4463,7 +4463,7 @@ const cultureStops = [
     "tokyo-culture-sensoji",
     "Sensoji",
     [35.714765, 139.796655],
-    "Sensoji is the old-town anchor because it lets Asakusa's temple, gate, incense, snack street, and river-side pacing sit in one walkable plan. Go early for space or late for atmosphere, and remember that Nakamise shopping hours are not the same as the temple grounds.",
+    "Go early for space or late for atmosphere, and remember that Nakamise shopping hours are not the same as the temple grounds.",
     {
       venueKind: "culture",
       subcategory: "temple",
@@ -4481,7 +4481,7 @@ const cultureStops = [
     "tokyo-culture-tokyo-national-museum",
     "Tokyo National Museum",
     [35.718835, 139.776521],
-    "Tokyo National Museum is the Ueno heavyweight, and it deserves real time because the Japanese Gallery alone can carry a first visit. Use it as a cultural spine for a Ueno day, then add park wandering or Ameyoko only if your attention has not been spent.",
+    "Tokyo National Museum is the Ueno heavyweight, and it deserves real time because the Japanese Gallery alone can carry a first visit.",
     {
       venueKind: "culture",
       subcategory: "museum",
@@ -4499,7 +4499,7 @@ const cultureStops = [
     "tokyo-culture-mori-art-museum",
     "Mori Art Museum",
     [35.660238, 139.729416],
-    "Mori Art Museum earns its place because Tokyo contemporary culture looks different from the top of Roppongi Hills: exhibitions, skyline, and late hours can work in one evening. Check the current show first, since the museum is only as strong as the exhibition you are actually seeing.",
+    "Mori Art Museum pairs changing contemporary exhibitions with skyline views and late hours at the top of Roppongi Hills. The current show matters because the museum has no single permanent display to carry every visit.",
     {
       venueKind: "culture",
       subcategory: "museum",
@@ -4517,7 +4517,7 @@ const cultureStops = [
     "tokyo-culture-nezu-museum",
     "Nezu Museum",
     [35.662836, 139.717547],
-    "Nezu Museum is the Omotesando counterweight: pre-modern Japanese and East Asian art, Kengo Kuma architecture, and a garden that slows the neighborhood down. It is best when paired with Aoyama or Harajuku, not crammed after three bigger museums.",
+    "Nezu Museum is the Omotesando counterweight: pre-modern Japanese and East Asian art, Kengo Kuma architecture, and a garden that slows the neighborhood down.",
     {
       venueKind: "culture",
       subcategory: "museum",
@@ -4535,7 +4535,7 @@ const cultureStops = [
     "tokyo-culture-edo-tokyo-open-air",
     "Edo-Tokyo Open Air Architectural Museum",
     [35.715683, 139.512143],
-    "The Edo-Tokyo Open Air Architectural Museum is the rare Tokyo culture stop that rewards leaving the center, with relocated houses, shops, bathhouses, and modern buildings arranged inside Koganei Park. It needs a half-day mindset, but the payoff is physical history instead of another glass-case museum.",
+    "The Edo-Tokyo Open Air Architectural Museum is a rare Tokyo museum that rewards leaving the center, with relocated houses, shops, bathhouses, and modern buildings arranged inside Koganei Park. It needs a half-day mindset, but the payoff is physical history instead of another glass-case museum.",
     {
       venueKind: "culture",
       subcategory: "open_air_museum",
@@ -4553,7 +4553,7 @@ const cultureStops = [
     "tokyo-culture-meiji-jingu",
     "Meiji Jingu",
     [35.676397, 139.699326],
-    "Meiji Jingu is the forested ceremonial reset between Harajuku, Yoyogi, and Shibuya, and that contrast is exactly why it belongs in the culture guide. Go at the beginning of a west-side day, when the shrine can set the tempo before shopping streets raise the volume.",
+    "Meiji Jingu places a major Shinto shrine, ceremonial spaces, and broad gravel approaches inside a deep forest between Harajuku and Yoyogi. The abrupt quiet is part of the cultural experience.",
     {
       venueKind: "culture",
       subcategory: "shrine",
@@ -4571,7 +4571,7 @@ const cultureStops = [
     "tokyo-culture-national-art-center",
     "The National Art Center, Tokyo",
     [35.665289, 139.726375],
-    "The National Art Center gives Roppongi a different museum role: no permanent collection, big rotating exhibitions, and a wave-like Kisho Kurokawa building that is part of the visit. Check the exhibition calendar first, because the stop is only as useful as the show running that week.",
+    "The National Art Center has no permanent collection, instead filling Kisho Kurokawa's wave-like Roppongi building with large rotating exhibitions. The current calendar determines the visit.",
     {
       venueKind: "culture",
       subcategory: "museum",
@@ -4589,7 +4589,7 @@ const cultureStops = [
     "tokyo-culture-momat",
     "The National Museum of Modern Art, Tokyo",
     [35.690542, 139.754693],
-    "MOMAT is the modern-art stop that pairs naturally with the Imperial Palace and Takebashi, making it easier to build a central culture day. The collection gives Japanese modernism more context than a single contemporary show, but special exhibitions can change the visit's weight.",
+    "MOMAT is a modern-art museum that pairs naturally with the Imperial Palace and Takebashi, making it easier to build a central culture day. The collection gives Japanese modernism more context than a single contemporary show, but special exhibitions can change the visit's weight.",
     {
       venueKind: "culture",
       subcategory: "museum",
@@ -4607,7 +4607,7 @@ const cultureStops = [
     "tokyo-culture-sumida-hokusai",
     "Sumida Hokusai Museum",
     [35.696068, 139.802906],
-    "Sumida Hokusai Museum is the compact east-side art stop that makes more sense when paired with Ryogoku, Skytree, or Asakusa rather than treated as a lone pilgrimage. The draw is Hokusai's local context and sharp architecture; check exhibition changes before promising yourself a full retrospective.",
+    "Sumida Hokusai Museum is a compact east-side art museum that makes more sense when paired with Ryogoku, Skytree, or Asakusa rather than treated as a lone pilgrimage.",
     {
       venueKind: "culture",
       subcategory: "museum",
@@ -4625,7 +4625,7 @@ const cultureStops = [
     "tokyo-culture-yayoi-kusama-museum",
     "Yayoi Kusama Museum",
     [35.70184, 139.72154],
-    "Yayoi Kusama Museum is small enough that timing matters more than endurance: timed tickets, rotating shows, and a focused artist foundation rather than a broad collection. It is a strong add-on for a Shinjuku/Kagurazaka day, but only if you book before the easy slots disappear.",
+    "Yayoi Kusama Museum is small enough that timing matters more than endurance: timed tickets, rotating shows, and a focused artist foundation rather than a broad collection.",
     {
       venueKind: "culture",
       subcategory: "museum",
@@ -4664,7 +4664,7 @@ const activityStops = [
     "tokyo-activities-shibuya-crossing",
     "Shibuya Crossing",
     [35.659487, 139.700558],
-    "Shibuya Crossing is a quick stop, not a whole plan, but it is still the city's easiest visual shorthand for Tokyo's human scale. Use it as the hinge between Shibuya shopping, Nonbei Yokocho, or a west-side dinner instead of standing there wondering what comes next.",
+    "Shibuya Crossing is a quick attraction, not a whole plan, but it is still the city's easiest visual shorthand for Tokyo's human scale.",
     {
       venueKind: "landmark",
       subcategory: "crossing",
@@ -4682,7 +4682,7 @@ const activityStops = [
     "tokyo-activities-sensoji",
     "Sensoji and Nakamise-dori",
     [35.714765, 139.796655],
-    "Sensoji is the activity stop that gives a first Tokyo route real old-town texture: Kaminarimon, Nakamise snacks, the main hall, and side streets that keep Asakusa from being only a postcard. Go early for photos or late for mood, then add Hoppy Street if the day wants a casual drink.",
+    "Sensoji and Nakamise-dori are quietest early and most atmospheric after dark; Hoppy Street adds casual izakaya drinking nearby.",
     {
       venueKind: "culture",
       subcategory: "temple_walk",
@@ -4700,7 +4700,7 @@ const activityStops = [
     "tokyo-activities-meiji-jingu",
     "Meiji Jingu and Harajuku",
     [35.676397, 139.699326],
-    "Meiji Jingu works best as a route opener: forest, shrine etiquette, then a controlled re-entry into Harajuku and Omotesando. The shrine's gates follow daylight, so do this before the shopping stretch rather than saving it for a late-evening afterthought.",
+    "Meiji Jingu places a Shinto shrine and broad gravel approaches inside a deep forest beside Harajuku. Its gates follow daylight hours, so visit while the grounds are open and leave the surrounding shopping streets for later.",
     {
       venueKind: "culture",
       subcategory: "shrine_walk",
@@ -4736,7 +4736,7 @@ const activityStops = [
     "tokyo-activities-teamlab-planets",
     "teamLab Planets TOKYO",
     [35.64909, 139.789998],
-    "teamLab Planets is the immersive-digital stop that can feel either magical or crowded depending on timing, so book deliberately. It belongs in the top-things guide because it shows Tokyo's spectacle side, but pair it with Toyosu or Tsukiji logistics instead of making it a lonely cross-town hop.",
+    "teamLab Planets moves barefoot visitors through water, mirrored rooms, light, flowers, and large-scale digital installations in Toyosu. Timed entry can feel magical or crowded depending on the slot, so book deliberately.",
     {
       venueKind: "culture",
       subcategory: "immersive_art",
@@ -4755,7 +4755,7 @@ const activityStops = [
     "tokyo-activities-tsukiji",
     "Tsukiji Outer Market",
     [35.665486, 139.770731],
-    "Tsukiji Outer Market is still useful when treated as a morning food walk, not a wholesale-tuna fantasy frozen in time. Go early, graze lightly, respect the working shops, and leave before the crowds and shuttered counters flatten the experience.",
+    "Tsukiji Outer Market is still useful when treated as a morning food walk, not a wholesale-tuna fantasy frozen in time.",
     {
       venueKind: "food_drink",
       subcategory: "market",
@@ -4773,7 +4773,7 @@ const activityStops = [
     "tokyo-activities-golden-gai",
     "Shinjuku Golden Gai",
     [35.693826, 139.704681],
-    "Golden Gai belongs in activities because it is a place to experience Tokyo's late-night micro-geography, not only a bar recommendation. Pick a bar with care, keep the group tiny, and remember that the best night here is quiet curiosity rather than conquest.",
+    "Golden Gai compresses hundreds of tiny bars into narrow Shinjuku alleys, each with its own music, host, cover policy, and few available seats. Pick a room with care, keep the group tiny, and approach the district with curiosity rather than conquest.",
     {
       venueKind: "nightlife",
       subcategory: "nightlife_district",
@@ -4809,7 +4809,7 @@ const activityStops = [
     "tokyo-activities-akihabara",
     "Akihabara Electric Town",
     [35.698353, 139.773114],
-    "Akihabara is the activity stop for electronics, game culture, arcades, hobby shops, and neon density, but it works best with a specific interest. Wander without a plan and it can blur fast; choose retro games, components, anime goods, or cafes before you arrive.",
+    "Akihabara concentrates electronics, game culture, arcades, hobby shops, and neon into a dense commercial district. A specific interest makes its overwhelming inventory easier to read.",
     {
       venueKind: "retail",
       subcategory: "shopping_district",
@@ -4864,7 +4864,7 @@ const activityStops = [
     "tokyo-activities-yanaka-ginza",
     "Yanaka Ginza",
     [35.72777, 139.76665],
-    "Yanaka Ginza is the station-cluster antidote to overplanned Tokyo: snack shops, cats, temples nearby, and a lived-in old-neighborhood pace north of Ueno. It is best in daylight before shops close, and it pairs neatly with Nippori or Nezu rather than a cross-city sprint.",
+    "Yanaka Ginza is the station-cluster antidote to overplanned Tokyo: snack shops, cats, temples nearby, and a lived-in old-neighborhood pace north of Ueno.",
     {
       venueKind: "retail",
       subcategory: "shopping_street",
@@ -4882,7 +4882,7 @@ const activityStops = [
     "tokyo-activities-kappabashi",
     "Kappabashi Dougu Street",
     [35.712165, 139.78761],
-    "Kappabashi is the activity stop for people who like tools, knives, ceramics, plastic food samples, and the machinery behind restaurants. It is practical, strange, and highly shoppable, but go during daytime retail hours because the street loses its point after shutters come down.",
+    "Kappabashi is an activity attraction for people who like tools, knives, ceramics, plastic food samples, and the machinery behind restaurants.",
     {
       venueKind: "retail",
       subcategory: "specialty_shopping_street",
@@ -4900,7 +4900,7 @@ const activityStops = [
     "tokyo-activities-tokyo-city-view",
     "Tokyo City View",
     [35.660238, 139.729416],
-    "Tokyo City View is the Roppongi observation-deck move for travelers who want skyline drama without going east to Skytree. Pair it with Mori Art Museum or dinner nearby, and check visibility and exhibition/event access before paying for the view.",
+    "Tokyo City View is the Roppongi observation-deck move for skyline drama without going east to Skytree.",
     {
       venueKind: "landmark",
       subcategory: "observation_deck",
@@ -4919,7 +4919,7 @@ const activityStops = [
     "tokyo-activities-yoyogi-park",
     "Yoyogi Park",
     [35.671736, 139.694944],
-    "Yoyogi Park is the flexible west-side slack space that keeps Harajuku, Meiji Jingu, and Shibuya from becoming one long commercial corridor. It is not a manicured garden like Shinjuku Gyoen, which is the point: use it for breathing room, people-watching, and route recovery.",
+    "Yoyogi Park is the flexible west-side slack space that keeps Harajuku, Meiji Jingu, and Shibuya from becoming one long commercial corridor.",
     {
       venueKind: "outdoors",
       subcategory: "park",
@@ -5107,7 +5107,7 @@ const onsenStops = [
     "tokyo-onsen-sento-thermae-yu",
     "Thermae-Yu Shinjuku",
     [35.694603, 139.705322],
-    "Thermae-Yu is the Kabukicho answer to jet lag, late trains, and the need to disappear into steam without leaving central Shinjuku. The official site leans into 24-hour, year-round operation and natural hot-spring water brought from Naka-Izu, so it is the most practical city-center spa on this list. Check posted bath-opening notices before banking on a specific tub after maintenance.",
+    "Thermae-Yu answers jet lag and late trains with 24-hour, year-round bathing in central Shinjuku. Natural hot-spring water is brought from Naka-Izu, adding real onsen credentials to an unusually practical Kabukicho spa.",
     {
       venueKind: "service",
       subcategory: "urban_onsen_spa",
@@ -5132,7 +5132,7 @@ const onsenStops = [
     "tokyo-onsen-sento-spa-laqua",
     "Spa LaQua",
     [35.705814, 139.753983],
-    "Spa LaQua is the polished Tokyo Dome City soak: natural hot spring, saunas, treatment rooms, restaurants, and enough relaxation space to make a rainy afternoon feel planned. Its official page posts a long 11:00 AM to next-morning schedule, which makes it useful after baseball, concerts, or a Bunkyo/Ueno day. It is more resort-spa than neighborhood sento, so budget and crowds accordingly.",
+    "Spa LaQua is the polished Tokyo Dome City soak: natural hot spring, saunas, treatment rooms, restaurants, and enough relaxation space to make a rainy afternoon feel planned. It is more resort-spa than neighborhood sento, so budget and crowds accordingly.",
     {
       venueKind: "service",
       subcategory: "super_sento",
@@ -5157,7 +5157,7 @@ const onsenStops = [
     "tokyo-onsen-toyosu-manyo-club",
     "Tokyo Toyosu Manyo Club",
     [35.645951, 139.782932],
-    "Tokyo Toyosu Manyo Club puts a full 24-hour hot-spring complex into the Toyosu waterfront, with official copy tying the baths to trucked-in Hakone and Yugawara source water. It earns a central onsen slot because it is attached to Senkyaku Banrai, has food, lodging, wellness, and a bay-view footbath, so it can carry a late Toyosu or Ginza-adjacent recovery plan. Tattoos are not a simple walk-in here: the official rules require checking the facility's conditions before visiting.",
+    "Tokyo Toyosu Manyo Club puts a full 24-hour hot-spring complex into the Toyosu waterfront, with official copy tying the baths to trucked-in Hakone and Yugawara source water.",
     {
       venueKind: "service",
       subcategory: "waterfront_onsen_spa",
@@ -5185,7 +5185,7 @@ const onsenStops = [
     "tokyo-onsen-izumi-tenku-ariake",
     "Izumi Tenku no Yu Ariake Garden",
     [35.638263, 139.793054],
-    "Izumi Tenku no Yu is the Ariake Garden answer for travelers staying around Odaiba, Toyosu, the convention halls, or the Tokyo Garden Theater. The official guide makes the bath schedule unusually clear: the facility is open 24 hours, but baths close overnight for cleaning, which matters if you are planning around a late event. It is polished and convenient rather than old-neighborhood charming, and the facility terms explicitly reject guests with tattoos.",
+    "Izumi Tenku no Yu is a polished Ariake spa for Odaiba, Toyosu, the convention halls, and Tokyo Garden Theater. The facility remains open 24 hours, but baths close overnight for cleaning; published terms also reject guests with tattoos.",
     {
       venueKind: "service",
       subcategory: "urban_onsen_spa",
@@ -5213,7 +5213,7 @@ const onsenStops = [
     "tokyo-onsen-sento-saya-no-yudokoro",
     "Maenohara Onsen Saya-no-Yudokoro",
     [35.770798, 139.692139],
-    "Saya-no-Yudokoro is the residential Itabashi day-spa pick, with source-fed baths, a garden mood, ganbanyoku, private bath options, and a proper dining room on the official facility map. It belongs here because it gives Tokyo visitors a convincing onsen day without the Hakone train math. The official page also names inspection closures and tattoo-cover limits, so plan it as a deliberate half-day rather than a casual drop-in.",
+    "Saya-no-Yudokoro is a residential Itabashi day-spa attraction, with source-fed baths, a garden mood, ganbanyoku, private bath options, and a proper dining room on the official facility map.",
     {
       venueKind: "service",
       subcategory: "day_onsen",
@@ -5238,7 +5238,7 @@ const onsenStops = [
     "tokyo-onsen-sento-niwa-no-yu",
     "Toshimaen Niwa-no-Yu",
     [35.74403, 139.644913],
-    "Niwa-no-Yu is the grown-up spa next to Toshimaen, built around natural hot spring baths, a bade pool zone, sauna, food, relaxation areas, and a 1,200-tsubo Japanese garden. It is especially good when the trip needs a quieter west/northwest recovery block rather than another Shinjuku night. The official page posts same-day opening and final reception, so check operating notices before making the train ride.",
+    "Niwa-no-Yu is the grown-up spa next to Toshimaen, built around natural hot spring baths, a bade pool zone, sauna, food, relaxation areas, and a 1,200-tsubo Japanese garden. It is especially good for a quieter west/northwest recovery block rather than another Shinjuku night.",
     {
       venueKind: "service",
       subcategory: "garden_onsen_spa",
@@ -5260,7 +5260,7 @@ const onsenStops = [
     "tokyo-onsen-sento-shimizuyu",
     "Musashi-Koyama Onsen Shimizu-yu",
     [35.620247, 139.707809],
-    "Shimizu-yu is the serious sento-price onsen stop in Shinagawa, with both golden hot spring water and black-water onsen called out on the official site. The hours are unusually useful for tourists: noon to midnight most days, Sunday from 8:00 AM, and only non-holiday Mondays closed. Go for a neighborhood soak with real mineral character, not for hotel-spa polish.",
+    "Shimizu-yu is a serious sento-price onsen attraction in Shinagawa, with both golden hot spring water and black-water onsen called out on the official site. The hours are unusually useful for tourists: noon to midnight most days, Sunday from 8:00 AM, and only non-holiday Mondays closed. Go for a neighborhood soak with real mineral character, not for hotel-spa polish.",
     {
       venueKind: "service",
       subcategory: "onsen_sento",
@@ -5282,7 +5282,7 @@ const onsenStops = [
     "tokyo-onsen-sento-somei-sakura",
     "Tokyo Somei Onsen Sakura",
     [35.738293, 139.739655],
-    "Tokyo Somei Onsen Sakura gives the north side a calm, full-service onsen near Sugamo and Komagome, with official copy pointing to mineral-rich water drawn from deep underground and hourly bath checks. It is a good middle ground between big commercial spa and tiny neighborhood sento: restaurant, facilities, and enough polish for first-timers. The official site ties operations to its event calendar and facility notices, so scan those before a special trip.",
+    "Tokyo Somei Onsen Sakura gives the north side a calm, full-service onsen near Sugamo and Komagome, with official copy pointing to mineral-rich water drawn from deep underground and hourly bath checks. It is a good middle ground between big commercial spa and tiny neighborhood sento: restaurant, facilities, and enough polish for first-timers.",
     {
       venueKind: "service",
       subcategory: "day_onsen",
@@ -5307,7 +5307,7 @@ const onsenStops = [
     "tokyo-onsen-hisamatsuyu",
     "Natural Onsen Hisamatsuyu",
     [35.741399, 139.661791],
-    "Hisamatsuyu is the Nerima pick that still feels city-accessible: a redesigned public bath near Sakuradai with a natural open-air hot spring, carbonated bath, sauna, and the kind of architecture that moved beyond old sento nostalgia. Tokyo Sento Association calls out the 2015 Good Design Award and the projection-mapping bath experience, which is exactly why it belongs in an onsen guide rather than a generic spa list. It closes Tuesdays, so save it for a northwest Tokyo day rather than a last-minute Tuesday bailout.",
+    "Hisamatsuyu is a redesigned public bath near Sakuradai with a natural open-air hot spring, carbonated bath, sauna, and architecture recognized with a 2015 Good Design Award. Projection mapping pushes the experience beyond old sento nostalgia. The bath closes Tuesdays.",
     {
       venueKind: "service",
       subcategory: "natural_onsen_sento",
@@ -5335,7 +5335,7 @@ const onsenStops = [
     "tokyo-onsen-mikokuyu",
     "Mikokuyu",
     [35.70145, 139.804647],
-    "Mikokuyu is a Sumida black-water onsen with a Skytree sightline, late hours, and a designer-sento mood that feels more local than resort. The Tokyo Sento Association listing names high, medium, and low-temperature natural hot spring baths plus herbal baths and massage baths, so it is a strong route pair with Kinshicho, Ryogoku, or Oshiage. The schedule is useful but specific: closed Mondays, late Tue-Sat, shorter Sundays.",
+    "Mikokuyu is a Sumida black-water onsen with a Skytree sightline, late hours, and a designer-sento mood that feels more local than resort. The schedule is useful but specific: closed Mondays, late Tue-Sat, shorter Sundays.",
     {
       venueKind: "service",
       subcategory: "black_water_onsen_sento",
@@ -5363,7 +5363,7 @@ const onsenStops = [
     "tokyo-onsen-yudonburi-sakaeyu",
     "Natural Onsen Yudonburi Sakae-yu",
     [35.724033, 139.795173],
-    "Yudonburi Sakae-yu is the Taito onsen-sento for travelers who want real hot-spring credentials without leaving the old-east side of Tokyo. The Tokyo Sento Association listing notes the 2017 renewal, hot spring certification, open-air baths, Himalayan rock-salt sauna, high-concentration carbonated bath, and later-added outdoor cold bath. It is a better Asakusa/Minowa recovery stop than another generic hotel bath, but remember the Wednesday closure.",
+    "Yudonburi Sakae-yu is the Taito onsen-sento for real hot-spring credentials without leaving the old-east side of Tokyo. The Tokyo Sento Association listing notes the 2017 renewal, hot spring certification, open-air baths, Himalayan rock-salt sauna, high-concentration carbonated bath, and later-added outdoor cold bath. It is a better Asakusa/Minowa recovery attraction than another generic hotel bath, but remember the Wednesday closure.",
     {
       venueKind: "service",
       subcategory: "natural_onsen_sento",
@@ -5391,7 +5391,7 @@ const onsenStops = [
     "tokyo-onsen-sento-daikokuyu",
     "Daikokuyu",
     [35.70509, 139.813751],
-    "Daikokuyu is the Oshiage/Sumida classic: weak alkaline hot spring water, a Skytree-adjacent location, and a bathhouse personality that still feels like a neighborhood room. The official site says it was founded in 1949 and lists late-to-next-morning hours, making it unusually flexible after Asakusa or Skytree. Watch the Tuesday closure rule, because public-holiday Tuesdays push the closure to Wednesday.",
+    "Daikokuyu is the Oshiage/Sumida classic: weak alkaline hot spring water, a Skytree-adjacent location, and a bathhouse personality that still feels like a neighborhood room. Watch the Tuesday closure rule, because public-holiday Tuesdays push the closure to Wednesday.",
     {
       venueKind: "service",
       subcategory: "classic_sento_onsen",
@@ -5448,7 +5448,7 @@ const sentoStops = [
     "tokyo-onsen-sento-daikokuyu",
     "Daikokuyu",
     [35.70509, 139.813751],
-    "Daikokuyu is a Skytree-side public bath with natural hot-spring water, long overnight hours, and the rare official English FAQ that simply says tattoos are OK. It belongs in the sento guide because it is still a neighborhood bath at public-bath pricing, not just an onsen attraction. The Tuesday closure rule has a holiday wrinkle, so do not treat it like a 24-hour fallback every night of the week.",
+    "Daikokuyu is a Skytree-side neighborhood bath with natural hot-spring water, public-bath pricing, long overnight hours, and a rare official English FAQ that simply says tattoos are OK. Tuesday closures have a holiday wrinkle, so it is not a 24-hour fallback every night of the week.",
     {
       venueKind: "service",
       subcategory: "classic_sento_onsen",
@@ -5504,7 +5504,7 @@ const sentoStops = [
     "tokyo-sento-myohoyu",
     "Myohoyu",
     [35.727267, 139.696398],
-    "Myohoyu near Shiinamachi is a better tourist pick than its small-station setting suggests: the Tokyo Sento Association listing points to a 2019 renewal, barrier-free bath area, carbonated soft-water silky bath, cold bath, electric bath, jets, and microbubble baths. It is also useful for tattooed travelers because Tattoo Friendly Japan lists it among Tokyo bathhouses where tattoos are allowed. Pair it with Ikebukuro, Mejiro, or an easy Seibu Ikebukuro Line hop.",
+    "Myohoyu near Shiinamachi is a better tourist attraction than its small-station setting suggests: the Tokyo Sento Association listing points to a 2019 renewal, barrier-free bath area, carbonated soft-water silky bath, cold bath, electric bath, jets, and microbubble baths. It is also useful for tattooed travelers because Tattoo Friendly Japan lists it among Tokyo bathhouses where tattoos are allowed. Pair it with Ikebukuro, Mejiro, or an easy Seibu Ikebukuro Line hop.",
     {
       venueKind: "service",
       subcategory: "renovated_sento",
@@ -5529,7 +5529,7 @@ const sentoStops = [
     "tokyo-sento-goshikiyu",
     "Goshikiyu",
     [35.724897, 139.695056],
-    "Goshikiyu gives the sento guide another tattoo-friendly Toshima option, but it is not just a policy pick. The association listing describes a 2022 renewal built around an old-Showa bathhouse mood, with hot, medium, silk, jet, sauna, and cold-bath elements. It is close to Shiinamachi, easy from Ikebukuro, and the schedule is simple as long as you avoid Wednesday.",
+    "Goshikiyu is a tattoo-friendly Toshima sento renewed in 2022 around an old-Showa bathhouse mood. Hot, medium, silk, jet, sauna, and cold-bath elements sit near Shiinamachi, with Wednesday closure.",
     {
       venueKind: "service",
       subcategory: "renovated_sento",
@@ -5554,7 +5554,7 @@ const sentoStops = [
     "tokyo-onsen-sento-kairyo-yu",
     "Kairyo-yu",
     [35.65316, 139.709366],
-    "Kairyo-yu is the Shibuya/Ebisu sento for travelers who want the city to stay close after the bath. The official site highlights soft water with a mineral balance close to sodium hot springs, carbonated bath, sauna, and a renovated Shibuya-crossing identity rather than old-town nostalgia. It closes Saturdays and posts schedule changes on the official blog, so it rewards a quick source check before you head over.",
+    "The official site highlights soft water with a mineral balance close to sodium hot springs, carbonated bath, sauna, and a renovated Shibuya-crossing identity rather than old-town nostalgia.",
     {
       venueKind: "service",
       subcategory: "renovated_sento",
@@ -5582,7 +5582,7 @@ const sentoStops = [
     "tokyo-onsen-sento-haginoyu",
     "Haginoyu",
     [35.724251, 139.777832],
-    "Haginoyu is the big, practical public bath near Uguisudani and Ueno, the kind of place that can rescue a museum day without requiring a spa budget. The Tokyo Sento Association listing calls it one of the largest-scale public baths in the city, with carbonated bath, open-air rock bath, electric bath, sauna, and gender-specific extras. Morning bath plus late-night hours make it one of the easiest sento stops for travelers to fit around sightseeing.",
+    "Haginoyu is a large public bath near Uguisudani and Ueno with carbonated water, an open-air rock bath, electric bath, sauna, and gender-specific extras. Morning bathing and late-night hours make the facilities unusually easy to access without paying spa prices.",
     {
       venueKind: "service",
       subcategory: "large_sento",
@@ -5610,7 +5610,7 @@ const sentoStops = [
     "tokyo-sento-kosugiyu",
     "Kosugiyu",
     [35.707633, 139.648423],
-    "Kosugiyu is the Koenji classic: founded in 1933, still wearing its heavy karahafu roof, and woven into the neighborhood's unruly creative culture. The official page gives unusually traveler-friendly hours, with weekend and holiday morning baths from 8:00 AM and late closing after 1:00 AM. Go for milk bath, daily baths, and neighborhood texture; skip Thursday.",
+    "Kosugiyu is the Koenji classic: founded in 1933, still wearing its heavy karahafu roof, and woven into the neighborhood's unruly creative culture. Go for milk bath, daily baths, and neighborhood texture; skip Thursday.",
     {
       venueKind: "service",
       subcategory: "classic_sento",
@@ -5635,7 +5635,7 @@ const sentoStops = [
     "tokyo-sento-bunka-yokusen",
     "Bunka Yokusen",
     [35.64997, 139.686177],
-    "Bunka Yokusen is the Ikejiri-Ohashi sento that feels designed without becoming sterile: renewed interiors, soft water, sauna, water bath, and a compact route from Shibuya or Nakameguro. The official page gives split weekday/weekend hours and a clear Wednesday closure. It is a smart central-west pick when Kairyo-yu is closed or you want a bath after a Meguro/Daikanyama day.",
+    "Bunka Yokusen is the Ikejiri-Ohashi sento that feels designed without becoming sterile: renewed interiors, soft water, sauna, water bath, and a compact route from Shibuya or Nakameguro. The official page gives split weekday/weekend hours and a clear Wednesday closure. It is a central-west attraction when Kairyo-yu is closed or you want a bath after a Meguro/Daikanyama day.",
     {
       venueKind: "service",
       subcategory: "renovated_sento",
@@ -5660,7 +5660,7 @@ const sentoStops = [
     "tokyo-sento-raku-spa-kanda",
     "RAKU SPA 1010 Kanda",
     [35.698136, 139.767914],
-    "RAKU SPA 1010 Kanda is the central convenience pick: Kanda/Ochanomizu/Akihabara access, baths, sauna, dining/pub, manga and relaxation space, and overnight-style hours. It is not a tattoo-friendly pick; the official rules explicitly refuse entry to people with tattoos. Keep it for groups who want amenities and a long operating window, not for traditional-sento romance.",
+    "RAKU SPA 1010 Kanda is a central convenience attraction: Kanda/Ochanomizu/Akihabara access, baths, sauna, dining/pub, manga and relaxation space, and overnight-style hours. It is not a tattoo-friendly pick; the official rules explicitly refuse entry to people with tattoos. Keep it for groups seeking amenities and a long operating window, not for traditional-sento romance.",
     {
       venueKind: "service",
       subcategory: "super_sento",
@@ -5685,7 +5685,7 @@ const sentoStops = [
     "tokyo-sento-kotobukiyu-ueno",
     "Kotobukiyu Ueno",
     [35.71222, 139.782684],
-    "Kotobukiyu is the Ueno/Inaricho sento that earns its tourist slot the old-fashioned way: easy subway access, outdoor baths, sauna, cold bath, medicinal baths, free soap/shampoo, and luggage handling for runners. The Tokyo Sento Association listing gives a long 11:00 AM to 1:30 AM window, which makes it especially useful around Ueno, Asakusa, and Kappabashi. Watch the third-Thursday and New Year closures.",
+    "Kotobukiyu is an accessible Ueno/Inaricho sento with outdoor baths, sauna, cold water, medicinal baths, free soap and shampoo, and luggage handling for runners. Its long 11:00 AM to 1:30 AM window suits the old-east side; watch the third-Thursday and New Year closures.",
     {
       venueKind: "service",
       subcategory: "classic_sento",
@@ -5710,7 +5710,7 @@ const sentoStops = [
     "tokyo-sento-konparu-ginza",
     "Konparu-yu Ginza",
     [35.668665, 139.761361],
-    "Konparu-yu is the Ginza/Shimbashi counterweight to the guide's sauna-forward picks: small, historic, tile-rich, and genuinely central. Tokyo Sento Association notes the 2014 renewal, a Taisho-era shrine, Kyushu ceramic tile work, and the short walk from both Shimbashi and Ginza. Its hours are earlier and tighter than the big baths, so use it for a pre-dinner or post-shopping reset rather than a late-night plan.",
+    "Konparu-yu is a small, historic, tile-rich sento between Ginza and Shimbashi. A 2014 renewal preserved details including a Taisho-era shrine and Kyushu ceramic tile work, keeping the bathhouse rooted in neighborhood tradition despite its central address.",
     {
       venueKind: "service",
       subcategory: "classic_sento",
@@ -5788,7 +5788,7 @@ export const tokyoCitywideGuides: MapList[] = [
     "best-cheap-eats",
     "Best Cheap Eats in Tokyo",
     "Best cheap eats in Tokyo for ramen, udon, onigiri, sushi, and station-friendly meals that still feel specific.",
-    "Tokyo's cheaper meals can be as memorable as the tasting menus if you plan around lines, stations, and closing quirks. This guide keeps the stops practical: counters, noodles, sushi, and rice shops with enough source support to justify the detour.",
+    "Tokyo's cheaper meals can match the tasting menus for craft and memory: hand-cut noodles, curry, dumplings, sandwiches, and specialist counters with lines or tight service hours.",
     cheapEatStops,
     sources.cheapEats,
   ),
@@ -5799,7 +5799,7 @@ export const tokyoCitywideGuides: MapList[] = [
     "best-sushi",
     "Best Omakase Sushi in Tokyo",
     "Best omakase sushi in Tokyo for destination counters, Ginza rooms, Aoyama sushi, aged fish, and reservation-led splurges.",
-    "Tokyo sushi can be a pilgrimage, a reservation puzzle, or a very expensive lesson in timing. This guide favors omakase counters that are still useful to travelers: serious enough to matter, source-backed enough to plan, and not included only because a name is impossible to book.",
+    "Tokyo sushi can be a pilgrimage, a reservation puzzle, or a very expensive lesson in timing.",
     sushiBestStops,
     sources.sushiBest,
   ),
@@ -5810,7 +5810,7 @@ export const tokyoCitywideGuides: MapList[] = [
     "best-value-sushi",
     "Smart-Money Sushi in Tokyo",
     "Best sushi for the price in Tokyo, from value omakase and conveyor sushi to standing counters in Ginza, Shibuya, Asakusa, Nakano, Sangenjaya, Ikebukuro, Akihabara, and beyond.",
-    "Good sushi value in Tokyo is not only the cheapest plate; it is the place where price, freshness, wait, and route convenience line up. This expanded citywide set keeps the famous central picks, then spreads into Asakusa, Nakano, Sangenjaya, Ikebukuro, and Akihabara so travelers can eat well without routing every sushi meal through the same three neighborhoods.",
+    "Good sushi value in Tokyo is where price, freshness, wait, and convenience line up. Beyond famous central counters, strong neighborhood options in Asakusa, Nakano, Sangenjaya, Ikebukuro, and Akihabara make quality sushi possible without luxury pricing.",
     sushiValueStops,
     sources.sushiValue,
   ),
@@ -5821,7 +5821,7 @@ export const tokyoCitywideGuides: MapList[] = [
     "matcha-madness",
     "Matcha Madness in Tokyo",
     "Top matcha spots in Tokyo for tea rooms, wagashi, parfaits, gelato, organic matcha lattes, and station-friendly green-tea desserts.",
-    "Tokyo matcha is not one thing: it can be a quiet bowl at a tea counter, a design-heavy Ginza salon, a parfait after a train ride, or an Asakusa gelato dare. This guide keeps the stops citywide, source-backed, and useful for travelers who want the green stuff to be worth the detour.",
+    "Tokyo matcha is not one thing: it can be a quiet bowl at a tea counter, a design-heavy Ginza salon, a parfait after a train ride, or an Asakusa gelato dare.",
     matchaStops,
     sources.matcha,
   ),
@@ -5832,7 +5832,7 @@ export const tokyoCitywideGuides: MapList[] = [
     "best-hotels",
     "Best Hotels in Tokyo",
     "Best hotels in Tokyo for luxury, rail access, skyline views, ryokan-style calm, and polished central bases.",
-    "A good Tokyo hotel is less about one glamorous address and more about how it tames the rail map. These properties are chosen for location logic, service, room quality, and a clear reason to spend more than a standard business hotel.",
+    "Tokyo hotels that justify spending beyond a standard business room through rail access, attentive service, distinctive room quality, cultural ritual, or amenities that genuinely change the stay.",
     hotelStops,
     sources.hotels,
   ),
@@ -5843,7 +5843,7 @@ export const tokyoCitywideGuides: MapList[] = [
     "best-hostels",
     "Best Hostels in Tokyo",
     "Best hostels in Tokyo for social lounges, budget beds, private rooms, rail access, and neighborhood fit.",
-    "Tokyo hostels work best when they give you more than a bunk: a cafe, a bar, a neighborhood reason, or a rail connection that saves the trip from sprawl. These stay picks separate hostel life from hotel comfort so budget travelers can choose honestly.",
+    "Tokyo's strongest hostels add a cafe, bar, social room, neighborhood character, or rail connection to the bunk. Social life and hotel-like comfort vary sharply across the city.",
     hostelStops,
     sources.hostels,
   ),
@@ -5854,7 +5854,7 @@ export const tokyoCitywideGuides: MapList[] = [
     "best-bars",
     "Best Casual Bars in Tokyo",
     "Best casual bars in Tokyo, from Golden Gai and Omoide Yokocho to Shibuya, Asakusa, and Ebisu drinking lanes.",
-    "Tokyo's casual drinking culture is often an alley, a counter, or a room so small that manners matter more than swagger. This guide favors yokocho lanes and low-key bar clusters where the night is best handled one careful stop at a time.",
+    "Tokyo's casual drinking culture is often an alley, a counter, or a room so small that manners matter more than swagger.",
     casualBarStops,
     sources.casualBars,
   ),
@@ -5865,7 +5865,7 @@ export const tokyoCitywideGuides: MapList[] = [
     "best-clubs",
     "Best Clubs in Tokyo",
     "Best clubs in Tokyo for music-first nights across Shibuya, Shimokitazawa, Shinjuku, Hatagaya, Akihabara, Omotesando, Harajuku, Ebisu, and Nakameguro.",
-    "Tokyo clubbing works best when you choose by event calendar, not by one generic nightlife district. This 15-stop circuit keeps Shibuya's real institutions, then pushes into Shimokitazawa, Shinjuku, Hatagaya, Akihabara, Omotesando, Harajuku, Ebisu, and Nakameguro for music-first rooms, selector culture, underground parties, hip-hop, house, techno, and experimental nights.",
+    "Tokyo clubbing is organized by event calendar and sound, not one nightlife district. Music-first rooms across Shibuya, Shimokitazawa, Shinjuku, Hatagaya, Akihabara, Harajuku, Ebisu, and Nakameguro cover hip-hop, house, techno, selectors, and experimental nights.",
     clubStops,
     sources.clubs,
   ),
@@ -5876,7 +5876,7 @@ export const tokyoCitywideGuides: MapList[] = [
     "best-cocktail-bars",
     "Best Cocktail Bars in Tokyo",
     "Best cocktail bars in Tokyo for Ginza classics, Shibuya rooms, Shinjuku botanicals, tasting-menu cocktails, and Ebisu nightcaps.",
-    "Tokyo's cocktail bars reward restraint: small rooms, exacting service, and reservations that matter. These stops cover the classic bespoke school, newer SG-style theater, and the ingredient-led bars that make a drink feel like a course.",
+    "Tokyo's cocktail bars reward restraint: small rooms, exacting service, and reservations that matter.",
     cocktailStops,
     sources.cocktails,
   ),
@@ -5887,7 +5887,7 @@ export const tokyoCitywideGuides: MapList[] = [
     "best-culture",
     "Best Culture in Tokyo",
     "Best culture in Tokyo for temples, shrines, museums, contemporary art, architecture, gardens, and old-new city contrasts.",
-    "Tokyo culture is not one museum corridor; it is a temple morning, a Ueno art spine, a Roppongi evening show, and a garden that changes the city's tempo. These stops are selected for context, not just postcard power.",
+    "Tokyo culture is not one museum corridor; it is a temple morning, a Ueno art spine, a Roppongi evening show, and a garden that changes the city's tempo.",
     cultureStops,
     sources.culture,
   ),
@@ -5909,7 +5909,7 @@ export const tokyoCitywideGuides: MapList[] = [
     "best-onsen",
     "Best Onsen in Tokyo",
     "Best onsen in Tokyo for natural hot springs, polished spa complexes, waterfront baths, black-water sento, late-night soaking, and practical city routes.",
-    "Tokyo's onsen scene is not just a trip out to Hakone. This guide keeps the mineral-water and full-service spa picks inside the city map, with central Shinjuku, Tokyo Dome, Toyosu, Ariake, Sumida, Taito, Shinagawa, and a few famous outer-neighborhood baths that are worth the ride.",
+    "Tokyo has a substantial in-city onsen and bathing culture, from mineral-water baths and neighborhood sento to full-service spa complexes. Central facilities and outer-neighborhood baths differ in water, scale, sauna programs, views, and tattoo policy.",
     onsenStops,
     sources.onsen,
   ),
@@ -5920,7 +5920,7 @@ export const tokyoCitywideGuides: MapList[] = [
     "best-sento",
     "Best Sento in Tokyo",
     "Best sento in Tokyo for central public baths, tattoo-friendly stops, renovated sauna culture, classic neighborhood bathhouses, and budget-friendly recovery.",
-    "Tokyo sento are neighborhood rooms as much as bathhouses: some are old tile-and-roof classics, some are design-led sauna stops, and a few make life much easier for tattooed travelers. This guide prioritizes central routing, source-backed tattoo friendliness where available, and famous public baths that are worth planning around.",
+    "Tokyo sento are neighborhood rooms as much as bathhouses: some are old tile-and-roof classics, some are design-led sauna stops, and a few make life much easier for tattooed travelers.",
     sentoStops,
     sources.sento,
   ),
@@ -5992,10 +5992,10 @@ const shibuyaHotelStops = [
   retellStop(
     findStop(hotelStops, "tokyo-hotel-sequence-miyashita"),
     "tokyo-shibuya-hotels-sequence-miyashita",
-    "sequence MIYASHITA PARK is the Shibuya hotel for travelers who want the neighborhood under their shoes immediately: park deck, shops, food, trains, and late routes sit in one stack. The tradeoff is compact urban energy, so book it for active days rather than a hush-hush retreat.",
+    "sequence MIYASHITA PARK stacks compact hotel rooms above a park deck, shops, food, trains, and Shibuya nightlife. Immediate access comes with urban street energy and less space for cocooning.",
     ["walkable", "shopping", "nightlife_base"],
   ),
-  stop("tokyo-shibuya-hotels-indigo-shibuya", "Hotel Indigo Tokyo Shibuya", [35.66164, 139.69788], "Hotel Indigo Tokyo Shibuya gives Dogenzaka a polished design base, useful when you want restaurants, clubs, shopping, and station access without sleeping in a plain business hotel. It works best for travelers who like the neighborhood's noise and neon; light sleepers should choose room category carefully.", {
+  stop("tokyo-shibuya-hotels-indigo-shibuya", "Hotel Indigo Tokyo Shibuya", [35.66164, 139.69788], "Hotel Indigo Tokyo Shibuya gives Dogenzaka a polished design base, useful for restaurants, clubs, shopping, and station access without sleeping in a plain business hotel.", {
     venueKind: "lodging",
     lodgingType: "hotel",
     price: "$$$",
@@ -6007,7 +6007,7 @@ const shibuyaHotelStops = [
     sourcePhoto: imageSources.hotelIndigoShibuya,
     editorialUrls: ["https://www.google.com/travel/hotels/Tokyo?q=Hotel%20Indigo%20Tokyo%20Shibuya", "https://www.booking.com/hotel/jp/indigo-tokyo-shibuya.html"],
   }),
-  stop("tokyo-shibuya-hotels-trunk-cat-street", "TRUNK(HOTEL) CAT STREET", [35.6663, 139.7066], "TRUNK(HOTEL) CAT STREET is the boutique Shibuya-Harajuku choice when the stay should feel like Tokyo's creative social life, not just a bed near a station. It belongs here for design, restaurants, and Cat Street access, but the small property scale means availability and price can tighten fast.", {
+  stop("tokyo-shibuya-hotels-trunk-cat-street", "TRUNK(HOTEL) CAT STREET", [35.6663, 139.7066], "TRUNK(HOTEL) CAT STREET is a boutique Shibuya-Harajuku hotel when the stay should feel like Tokyo's creative social life, not just a bed near a station.", {
     venueKind: "lodging",
     lodgingType: "hotel",
     price: "$$$$",
@@ -6022,10 +6022,10 @@ const shibuyaHotelStops = [
   retellStop(
     findStop(hotelStops, "tokyo-hotel-jr-mets-shibuya"),
     "tokyo-shibuya-hotels-jr-mets",
-    "JR-East Hotel Mets Shibuya is the practical rail-base pick, the one you choose because late trains, luggage, and quick returns matter. It lacks boutique drama, but for Shibuya-heavy itineraries that need clean rooms and station logic, that restraint is the point.",
+    "JR-East Hotel Mets Shibuya is a rail-base hotel, the one you choose because late trains, luggage, and quick returns matter. It lacks boutique drama, but for Shibuya-heavy itineraries that need clean rooms and station access, that restraint is the point.",
     ["rail_access", "practical", "midrange"],
   ),
-  stop("tokyo-shibuya-hotels-cerulean-tower", "Cerulean Tower Tokyu Hotel", [35.6567, 139.6994], "Cerulean Tower Tokyu Hotel is Shibuya with height, larger-room polish, and a calmer lobby than the streets below. Book it when you want the district's nightlife and trains close, but still need a grown-up hotel reset after the crossing, clubs, and shopping crowds.", {
+  stop("tokyo-shibuya-hotels-cerulean-tower", "Cerulean Tower Tokyu Hotel", [35.6567, 139.6994], "Cerulean Tower Tokyu Hotel is Shibuya with height, larger-room polish, and a calmer lobby than the streets below.", {
     venueKind: "lodging",
     lodgingType: "hotel",
     price: "$$$",
@@ -6046,7 +6046,7 @@ const shibuyaHostelStops = [
     "Wise Owl Hostels Shibuya is the straightforward dorm-and-private-room answer when the west side is the trip's center of gravity. It is close enough for Shibuya nights without sitting directly on the crossing, which helps if you want budget but still need sleep.",
     ["solo_friendly", "nightlife_base"],
   ),
-  stop("tokyo-shibuya-hostels-turn-table", "Turn Table Hostel", [35.6545, 139.6909], "Turn Table is the Shinsen-side hostel for travelers who want Shibuya access with a slightly more local after-hours edge. It works as a practical budget base with food-and-lounge energy, but it is better for light luggage than for travelers expecting station-door convenience.", {
+  stop("tokyo-shibuya-hostels-turn-table", "Turn Table Hostel", [35.6545, 139.6909], "Turn Table Hostel combines budget beds with a restaurant and lounge built around food from Tokushima near Shinsen. The social ground floor adds energy, while the distance from Shibuya Station favors light luggage.", {
     venueKind: "lodging",
     lodgingType: "hostel",
     price: "$",
@@ -6058,7 +6058,7 @@ const shibuyaHostelStops = [
     sourcePhoto: imageSources.turnTableHostel,
     editorialUrls: ["https://www.google.com/travel/hotels/Tokyo?q=Turn%20Table%20Hostel%20Shibuya", "https://www.booking.com/hotel/jp/turn-table.html"],
   }),
-  stop("tokyo-shibuya-hostels-nadeshiko", "NADESHIKO HOTEL SHIBUYA", [35.6555, 139.6929], "NADESHIKO HOTEL SHIBUYA gives the guide a women-focused capsule stay near Shinsen, useful when budget, security, and Shibuya nightlife all matter. It is a capsule rather than a classic backpacker hostel, so choose it for privacy and price, not a big social lounge scene.", {
+  stop("tokyo-shibuya-hostels-nadeshiko", "NADESHIKO HOTEL SHIBUYA", [35.6555, 139.6929], "NADESHIKO HOTEL SHIBUYA is a women-focused capsule property near Shinsen combining budget, privacy, security, and Shibuya nightlife access. Capsule scale replaces the social lounge of a classic backpacker hostel.", {
     venueKind: "lodging",
     lodgingType: "hostel",
     price: "$",
@@ -6070,7 +6070,7 @@ const shibuyaHostelStops = [
     sourcePhoto: imageSources.nadeshikoHotelShibuya,
     editorialUrls: ["https://www.google.com/travel/hotels/Tokyo?q=Nadeshiko%20Hotel%20Shibuya", "https://www.booking.com/hotel/jp/nadeshiko-shibuya-female-only.html"],
   }),
-  stop("tokyo-shibuya-hostels-almond", "almond hostel & cafe Shibuya", [35.6705, 139.6874], "almond hostel & cafe sits on the Yoyogi-Hachiman side of the Shibuya orbit, which makes it better for calmer mornings than for rolling out of bed onto Center Gai. It belongs here because the cafe-and-hostel format gives budget travelers a softer west-side base near parks and neighborhood food.", {
+  stop("tokyo-shibuya-hostels-almond", "almond hostel & cafe Shibuya", [35.6705, 139.6874], "almond hostel & cafe sits on the Yoyogi-Hachiman side of the Shibuya orbit, which makes it better for calmer mornings than for rolling out of bed onto Center Gai.", {
     venueKind: "lodging",
     lodgingType: "hostel",
     price: "$",
@@ -6085,7 +6085,7 @@ const shibuyaHostelStops = [
 ];
 
 const shinjukuHotelStops = [
-  stop("tokyo-shinjuku-hotels-bellustar", "BELLUSTAR TOKYO, A Pan Pacific Hotel", [35.696, 139.7005], "BELLUSTAR turns Kabukicho Tower into a high-floor luxury stay, with the district's nightlife below and big-city views doing the heavy lifting upstairs. It belongs in Shinjuku for travelers who want spectacle and convenience; choose a quieter neighborhood if late-night street energy feels exhausting.", {
+  stop("tokyo-shinjuku-hotels-bellustar", "BELLUSTAR TOKYO, A Pan Pacific Hotel", [35.696, 139.7005], "BELLUSTAR occupies the upper floors of Kabukicho Tower, placing polished rooms, restaurants, a spa, and wide city views above Shinjuku's busiest nightlife district. The setting delivers spectacle and convenience, along with late-night street energy below.", {
     venueKind: "lodging",
     lodgingType: "hotel",
     price: "$$$$",
@@ -6097,7 +6097,7 @@ const shinjukuHotelStops = [
     sourcePhoto: imageSources.bellustar,
     editorialUrls: ["https://guide.michelin.com/us/en/hotels-stays/tokyo/bellustar-tokyo-a-pan-pacific-hotel-13389", "https://www.google.com/travel/hotels/Tokyo?q=BELLUSTAR%20TOKYO"],
   }),
-  stop("tokyo-shinjuku-hotels-hotel-groove", "HOTEL GROOVE SHINJUKU, A PARKROYAL Hotel", [35.696, 139.7005], "HOTEL GROOVE is the more approachable Kabukicho Tower stay, useful for travelers who want Shinjuku nightlife, cinemas, food, and trains without paying Bellustar prices. The neighborhood is intense, so the practical move is to book it for late nights, not for monastery sleep.", {
+  stop("tokyo-shinjuku-hotels-hotel-groove", "HOTEL GROOVE SHINJUKU, A PARKROYAL Hotel", [35.696, 139.7005], "HOTEL GROOVE offers a more approachable stay inside Kabukicho Tower, close to Shinjuku nightlife, cinemas, food, and trains without Bellustar pricing. The intense neighborhood favors late nights over monastic sleep.", {
     venueKind: "lodging",
     lodgingType: "hotel",
     price: "$$$",
@@ -6109,7 +6109,7 @@ const shinjukuHotelStops = [
     sourcePhoto: imageSources.hotelGrooveShinjuku,
     editorialUrls: ["https://www.google.com/travel/hotels/Tokyo?q=Hotel%20Groove%20Shinjuku", "https://www.booking.com/hotel/jp/groove-shinjuku-a-parkroyal.html"],
   }),
-  stop("tokyo-shinjuku-hotels-kimpton", "Kimpton Shinjuku Tokyo", [35.6845, 139.6924], "Kimpton Shinjuku Tokyo is the design-forward west-Shinjuku base for travelers who want a softer landing than Kabukicho but still need the station and skyscraper district nearby. It fits couples, pet travelers, and style-conscious guests; the caveat is that it is a walk, not a doorstep, from the busiest platforms.", {
+  stop("tokyo-shinjuku-hotels-kimpton", "Kimpton Shinjuku Tokyo", [35.6845, 139.6924], "Kimpton Shinjuku Tokyo is the design-forward west-Shinjuku base for a softer landing than Kabukicho but still need the station and skyscraper district nearby. It fits couples, pet travelers, and style-conscious guests; the caveat is that it is a walk, not a doorstep, from the busiest platforms.", {
     venueKind: "lodging",
     lodgingType: "hotel",
     price: "$$$",
@@ -6121,7 +6121,7 @@ const shinjukuHotelStops = [
     sourcePhoto: imageSources.shinjukuGyoen,
     editorialUrls: ["https://www.google.com/travel/hotels/Tokyo?q=Kimpton%20Shinjuku%20Tokyo", "https://www.booking.com/hotel/jp/kimpton-shinjuku-tokyo.html"],
   }),
-  stop("tokyo-shinjuku-hotels-jr-blossom", "JR Kyushu Hotel Blossom Shinjuku", [35.6875, 139.7005], "JR Kyushu Hotel Blossom Shinjuku is the station-sane hotel for travelers who want Shinjuku access without making the hotel a project. The rooms, lobby, and location are practical rather than flashy, which is exactly why it works for rail-heavy first visits.", {
+  stop("tokyo-shinjuku-hotels-jr-blossom", "JR Kyushu Hotel Blossom Shinjuku", [35.6875, 139.7005], "JR Kyushu Hotel Blossom Shinjuku is the station-sane hotel for Shinjuku access without making the hotel a project. The rooms, lobby, and location are practical rather than flashy, which is exactly why it works for rail-heavy first visits.", {
     venueKind: "lodging",
     lodgingType: "hotel",
     price: "$$",
@@ -6133,7 +6133,7 @@ const shinjukuHotelStops = [
     sourcePhoto: imageSources.shinjukuGyoen,
     editorialUrls: ["https://www.google.com/travel/hotels/Tokyo?q=JR%20Kyushu%20Hotel%20Blossom%20Shinjuku", "https://www.booking.com/hotel/jp/jr-kyushu-blossom-shinjuku.html"],
   }),
-  stop("tokyo-shinjuku-hotels-gracery", "Hotel Gracery Shinjuku", [35.6952, 139.7011], "Hotel Gracery Shinjuku is the Godzilla-head landmark hotel in Kabukicho, and that visibility is useful when you are navigating home late. It is best for travelers who want nightlife at the front door and do not mind the district's noise, crowds, and late-night theatre.", {
+  stop("tokyo-shinjuku-hotels-gracery", "Hotel Gracery Shinjuku", [35.6952, 139.7011], "Hotel Gracery Shinjuku is the Godzilla-head landmark hotel in Kabukicho, and that visibility is useful when you are navigating home late.", {
     venueKind: "lodging",
     lodgingType: "hotel",
     price: "$$",
@@ -6148,15 +6148,15 @@ const shinjukuHotelStops = [
   retellStop(
     findStop(hotelStops, "tokyo-hotel-mitsui-jingugaien"),
     "tokyo-shinjuku-hotels-mitsui-jingugaien",
-    "Mitsui Garden Hotel Jingugaien Tokyo Premier is the quieter Shinjuku-area answer, closer to stadiums, Gaienmae, and park edges than to Kabukicho chaos. Use it when you want west-side rail access and breathing room, not a lobby that spills straight into nightlife.",
+    "Mitsui Garden Hotel Jingugaien Tokyo Premier is the quieter Shinjuku-area answer, closer to stadiums, Gaienmae, and park edges than to Kabukicho chaos.",
     ["quiet", "park_access", "west_side"],
   ),
 ];
 
 const shinjukuHostelStops = [
-  retellStop(findStop(hostelStops, "tokyo-hostel-unplan-shinjuku"), "tokyo-shinjuku-hostels-unplan", "UNPLAN Shinjuku is the cleanest answer for a social Shinjuku hostel: dorms, private rooms, cafe-bar infrastructure, and the garden/nightlife split within reach. It belongs here because it saves money without making the west side feel remote.", ["solo_friendly", "central"]),
-  retellStop(findStop(hostelStops, "tokyo-hostel-imano-shinjuku"), "tokyo-shinjuku-hostels-imano", "IMANO Tokyo Hostel is the practical Shinjuku option when late arrival, dorm pricing, and a cafe-bar landing pad matter. It is not a fantasy ryokan, but it solves budget and neighborhood access in a way that first-timers can actually use.", ["solo_friendly", "central"]),
-  stop("tokyo-shinjuku-hostels-rembrandt-cabin", "Rembrandt Cabin Shinjuku Shin-Okubo", [35.7002, 139.7003], "Rembrandt Cabin is a capsule-style budget stay on the Shin-Okubo edge, useful when the goal is to sleep near Shinjuku without paying hotel rates. It is closer to capsule logistics than hostel social life, so check gender floors, spa rules, and luggage expectations before booking.", {
+  retellStop(findStop(hostelStops, "tokyo-hostel-unplan-shinjuku"), "tokyo-shinjuku-hostels-unplan", "UNPLAN Shinjuku is the cleanest answer for a social Shinjuku hostel: dorms, private rooms, cafe-bar infrastructure, and the garden/nightlife split within reach.", ["solo_friendly", "central"]),
+  retellStop(findStop(hostelStops, "tokyo-hostel-imano-shinjuku"), "tokyo-shinjuku-hostels-imano", "IMANO Tokyo Hostel is a Shinjuku hostel when late arrival, dorm pricing, and a cafe-bar landing pad matter. It is not a fantasy ryokan, but it solves budget and neighborhood access in a way that first-timers can actually use.", ["solo_friendly", "central"]),
+  stop("tokyo-shinjuku-hostels-rembrandt-cabin", "Rembrandt Cabin Shinjuku Shin-Okubo", [35.7002, 139.7003], "Rembrandt Cabin is a capsule-style budget stay on the Shin-Okubo edge, useful when the goal is to sleep near Shinjuku without paying hotel rates.", {
     venueKind: "lodging",
     lodgingType: "hostel",
     price: "$",
@@ -6168,7 +6168,7 @@ const shinjukuHostelStops = [
     sourcePhoto: imageSources.shinjukuGyoen,
     editorialUrls: ["https://www.google.com/travel/hotels/Tokyo?q=Rembrandt%20Cabin%20Shinjuku%20Shin-Okubo", "https://www.booking.com/hotel/jp/rembrandt-cabin-shinjuku-shin-okubo.html"],
   }),
-  stop("tokyo-shinjuku-hostels-global-hotel", "The Global Hotel Tokyo", [35.7014, 139.7016], "The Global Hotel Tokyo is a Shin-Okubo capsule/budget stay for travelers who want the Korean food strip, Yamanote Line, and Shinjuku within easy reach. It belongs in the hostel guide as a low-cost sleep strategy, not because it offers a classic backpacker common room.", {
+  stop("tokyo-shinjuku-hostels-global-hotel", "The Global Hotel Tokyo", [35.7014, 139.7016], "The Global Hotel Tokyo is a low-cost capsule stay near Shin-Okubo's Korean food strip, the Yamanote Line, and Shinjuku. It prioritizes compact sleep and location over a classic backpacker common room.", {
     venueKind: "lodging",
     lodgingType: "hostel",
     price: "$",
@@ -6180,7 +6180,7 @@ const shinjukuHostelStops = [
     sourcePhoto: imageSources.goldenGai,
     editorialUrls: ["https://www.google.com/travel/hotels/Tokyo?q=The%20Global%20Hotel%20Tokyo", "https://www.booking.com/hotel/jp/the-global-hotel-tokyo.html"],
   }),
-  stop("tokyo-shinjuku-hostels-booth", "Booth Netcafe & Capsule", [35.6949, 139.7027], "Booth Netcafe & Capsule is the emergency-cheap Kabukicho sleep option: part capsule, part internet-cafe logic, and very much a city survival tool. Use it for a budget or late-night backup, not a romantic first-choice stay.", {
+  stop("tokyo-shinjuku-hostels-booth", "Booth Netcafe & Capsule", [35.6949, 139.7027], "Booth Netcafe & Capsule combines capsule beds with an internet cafe in Kabukicho. Low prices and late access make it a functional backup, not a romantic or social first-choice stay.", {
     venueKind: "lodging",
     lodgingType: "hostel",
     price: "$",
@@ -6195,8 +6195,8 @@ const shinjukuHostelStops = [
 ];
 
 const ginzaHotelStops = [
-  retellStop(findStop(hotelStops, "tokyo-hotel-muji-ginza"), "tokyo-ginza-hotels-muji", "MUJI HOTEL GINZA is the design-value anchor: central, restrained, compact, and refreshingly uninterested in fake palace theatrics. Book it when Ginza shopping, galleries, and Tokyo Station access matter more than spa scale, especially if storage and calm materials beat big-room drama.", ["ginza", "design"]),
-  stop("tokyo-ginza-hotels-mitsui-premier", "Mitsui Garden Hotel Ginza Premier", [35.6685, 139.7671], "Mitsui Garden Hotel Ginza Premier gives Ginza a skyline-view hotel that is polished without becoming a luxury-tower splurge. It is a good fit for travelers who want Tsukiji mornings, Ginza evenings, and a room that feels calmer than the shopping grid.", {
+  retellStop(findStop(hotelStops, "tokyo-hotel-muji-ginza"), "tokyo-ginza-hotels-muji", "MUJI HOTEL GINZA is a design-value hotel: central, restrained, compact, and refreshingly uninterested in fake palace theatrics. Book it when Ginza shopping, galleries, and Tokyo Station access matter more than spa scale, especially if storage and calm materials beat big-room drama.", ["ginza", "design"]),
+  stop("tokyo-ginza-hotels-mitsui-premier", "Mitsui Garden Hotel Ginza Premier", [35.6685, 139.7671], "Mitsui Garden Hotel Ginza Premier gives Ginza a skyline-view hotel that is polished without becoming a luxury-tower splurge. It is a good fit for Tsukiji mornings, Ginza evenings, and a room that feels calmer than the shopping grid.", {
     venueKind: "lodging",
     lodgingType: "hotel",
     price: "$$$",
@@ -6208,7 +6208,7 @@ const ginzaHotelStops = [
     sourcePhoto: imageSources.mitsuiGinza,
     editorialUrls: ["https://www.google.com/travel/hotels/Tokyo?q=Mitsui%20Garden%20Hotel%20Ginza%20Premier", "https://www.booking.com/hotel/jp/mitsui-garden-ginza-premier.html"],
   }),
-  stop("tokyo-ginza-hotels-hyatt-centric", "Hyatt Centric Ginza Tokyo", [35.6704, 139.7623], "Hyatt Centric Ginza Tokyo is the lifestyle-hotel version of a Ginza base: clean design, strong shopping geography, and enough polish for business or couples. It belongs here because it keeps the neighborhood walkable without forcing a formal luxury mood.", {
+  stop("tokyo-ginza-hotels-hyatt-centric", "Hyatt Centric Ginza Tokyo", [35.6704, 139.7623], "Hyatt Centric Ginza Tokyo is the lifestyle-hotel version of a Ginza base: clean design, strong shopping geography, and enough polish for business or couples.", {
     venueKind: "lodging",
     lodgingType: "hotel",
     price: "$$$",
@@ -6220,7 +6220,7 @@ const ginzaHotelStops = [
     sourcePhoto: imageSources.hyattCentricGinza,
     editorialUrls: ["https://www.google.com/travel/hotels/Tokyo?q=Hyatt%20Centric%20Ginza%20Tokyo", "https://www.booking.com/hotel/jp/hyatt-centric-ginza-tokyo.html"],
   }),
-  stop("tokyo-ginza-hotels-edition", "The Tokyo EDITION, Ginza", [35.6713, 139.7659], "The Tokyo EDITION, Ginza is the fashionable splurge for travelers who want a smaller luxury footprint in the shopping district rather than a palace near the station. It is best when the hotel bar, design, and immediate Ginza address are part of the spend.", {
+  stop("tokyo-ginza-hotels-edition", "The Tokyo EDITION, Ginza", [35.6713, 139.7659], "The Tokyo EDITION, Ginza is the fashionable splurge for a smaller luxury footprint in the shopping district rather than a palace near the station. It is best when the hotel bar, design, and immediate Ginza address are part of the spend.", {
     venueKind: "lodging",
     lodgingType: "hotel",
     price: "$$$$",
@@ -6232,7 +6232,7 @@ const ginzaHotelStops = [
     sourcePhoto: imageSources.tokyoEditionGinza,
     editorialUrls: ["https://www.google.com/travel/hotels/Tokyo?q=The%20Tokyo%20EDITION%20Ginza", "https://www.booking.com/hotel/jp/the-tokyo-edition-ginza.html"],
   }),
-  stop("tokyo-ginza-hotels-gate-tokyo", "THE GATE HOTEL TOKYO by HULIC", [35.6738, 139.7615], "THE GATE HOTEL TOKYO by HULIC sits on the Yurakucho/Ginza edge, which is excellent geography for trains, shopping, theater, and Imperial Palace walks. It belongs in this guide as a practical polished base; compare room categories if view and quiet matter.", {
+  stop("tokyo-ginza-hotels-gate-tokyo", "THE GATE HOTEL TOKYO by HULIC", [35.6738, 139.7615], "THE GATE HOTEL TOKYO by HULIC sits on the Yurakucho/Ginza edge, which is excellent geography for trains, shopping, theater, and Imperial Palace walks.", {
     venueKind: "lodging",
     lodgingType: "hotel",
     price: "$$$",
@@ -6244,7 +6244,7 @@ const ginzaHotelStops = [
     sourcePhoto: imageSources.ginzaKojyu,
     editorialUrls: ["https://www.google.com/travel/hotels/Tokyo?q=THE%20GATE%20HOTEL%20TOKYO%20by%20HULIC", "https://www.booking.com/hotel/jp/the-gate-tokyo-by-hulic.html"],
   }),
-  stop("tokyo-ginza-hotels-celestine", "Hotel The Celestine Ginza", [35.6689, 139.7608], "Hotel The Celestine Ginza is the compact polished choice on the Shinbashi side, useful when Ginza dinners and train access matter more than big-hotel facilities. It is a smart couples or business base, but not the pick if you want resort-scale amenities.", {
+  stop("tokyo-ginza-hotels-celestine", "Hotel The Celestine Ginza", [35.6689, 139.7608], "Hotel The Celestine Ginza is a compact, polished property on the Shinbashi side with strong train and restaurant access. Couples and business travelers get central convenience rather than resort-scale facilities.", {
     venueKind: "lodging",
     lodgingType: "hotel",
     price: "$$$",
@@ -6259,7 +6259,7 @@ const ginzaHotelStops = [
 ];
 
 const ginzaHostelStops = [
-  stop("tokyo-ginza-hostels-imano", "IMANO TOKYO GINZA HOSTEL", [35.6724, 139.7714], "IMANO TOKYO GINZA HOSTEL is the rare true hostel inside the Ginza/Tsukiji orbit, good for travelers who want central mornings without hotel prices. It is the neighborhood's anchor budget stay; book it for location and dorm/private flexibility, not luxury amenities.", {
+  stop("tokyo-ginza-hostels-imano", "IMANO TOKYO GINZA HOSTEL", [35.6724, 139.7714], "IMANO TOKYO GINZA HOSTEL offers dorms and private rooms inside the Ginza and Tsukiji orbit at prices below nearby hotels. Central access and room-type flexibility replace luxury amenities.", {
     venueKind: "lodging",
     lodgingType: "hostel",
     price: "$",
@@ -6271,7 +6271,7 @@ const ginzaHostelStops = [
     sourcePhoto: imageSources.mujiHotel,
     editorialUrls: ["https://www.hostelworld.com/hostels/p/294587/imano-tokyo-ginza-hostel/", "https://www.google.com/travel/hotels/Tokyo?q=IMANO%20TOKYO%20GINZA%20HOSTEL"],
   }),
-  stop("tokyo-ginza-hostels-hotel-plus", "Hotel Plus Hostel Tokyo Ginza", [35.6687, 139.7697], "Hotel Plus Hostel Tokyo Ginza is a budget sleep strategy rather than a grand social hostel, but that matters in an expensive central district. Use it when Ginza, Tsukiji, and Shinbashi access trump lounge culture; verify room type and luggage rules before booking.", {
+  stop("tokyo-ginza-hostels-hotel-plus", "Hotel Plus Hostel Tokyo Ginza", [35.6687, 139.7697], "Hotel Plus Hostel Tokyo Ginza is a budget sleep strategy rather than a grand social hostel, but that matters in an expensive central district.", {
     venueKind: "lodging",
     lodgingType: "hostel",
     price: "$",
@@ -6283,7 +6283,7 @@ const ginzaHostelStops = [
     sourcePhoto: imageSources.ginzaKojyu,
     editorialUrls: ["https://www.google.com/travel/hotels/Tokyo?q=Hotel%20Plus%20Hostel%20Tokyo%20Ginza", "https://www.booking.com/hotel/jp/hotel-plus-hostel-tokyo-ginza.html"],
   }),
-  stop("tokyo-ginza-hostels-wise-owl-tokyo", "Wise Owl Hostels Tokyo", [35.674, 139.7795], "Wise Owl Hostels Tokyo sits closer to Hatchobori than Ginza proper, but that is exactly why it works as a cheaper eastern-central base. Choose it when you want Ginza and Tokyo Station reachable without paying Ginza room rates, and accept the short transit or walk tradeoff.", {
+  stop("tokyo-ginza-hostels-wise-owl-tokyo", "Wise Owl Hostels Tokyo", [35.674, 139.7795], "Wise Owl Hostels Tokyo sits in Hatchobori rather than Ginza proper, keeping room rates lower while leaving Ginza and Tokyo Station within a short walk or transit ride.", {
     venueKind: "lodging",
     lodgingType: "hostel",
     price: "$",
@@ -6298,7 +6298,7 @@ const ginzaHostelStops = [
 ];
 
 const asakusaHotelStops = [
-  stop("tokyo-asakusa-hotels-gate-kaminarimon", "THE GATE HOTEL Kaminarimon by HULIC", [35.7109, 139.796], "THE GATE HOTEL Kaminarimon is the polished Asakusa stay with Sensoji, Nakamise, and the Sumida side of town right there. Its rooftop and location make it one of the clearest tourist-base choices here, though the neighborhood quiets earlier than Shibuya or Shinjuku.", {
+  stop("tokyo-asakusa-hotels-gate-kaminarimon", "THE GATE HOTEL", [35.7109, 139.796], "THE GATE HOTEL Kaminarimon is the polished Asakusa stay with Sensoji, Nakamise, and the Sumida side of town right there. Its rooftop and location make it one of the clearest tourist-base choices here, though the neighborhood quiets earlier than Shibuya or Shinjuku.", {
     venueKind: "lodging",
     lodgingType: "hotel",
     price: "$$$",
@@ -6310,7 +6310,7 @@ const asakusaHotelStops = [
     sourcePhoto: imageSources.sensoji,
     editorialUrls: ["https://www.google.com/travel/hotels/Tokyo?q=THE%20GATE%20HOTEL%20Kaminarimon", "https://www.booking.com/hotel/jp/the-gate-asakusa-kaminarimon-by-hulic.html"],
   }),
-  stop("tokyo-asakusa-hotels-view", "Asakusa View Hotel", [35.7131, 139.7923], "Asakusa View Hotel is the big, dependable old-town tower, useful when you want Sensoji walks, Skytree views, and more full-service scale than the smaller ryokan-style stays. It is less boutique than some picks, but the room count and views make logistics easier.", {
+  stop("tokyo-asakusa-hotels-view", "Asakusa View Hotel", [35.7131, 139.7923], "Asakusa View Hotel is the big, dependable old-town tower, useful for Sensoji walks, Skytree views, and more full-service scale than the smaller ryokan-style stays. It is less boutique than some picks, but the room count and views make logistics easier.", {
     venueKind: "lodging",
     lodgingType: "hotel",
     price: "$$",
@@ -6322,7 +6322,7 @@ const asakusaHotelStops = [
     sourcePhoto: imageSources.asakusaViewHotel,
     editorialUrls: ["https://www.google.com/travel/hotels/Tokyo?q=Asakusa%20View%20Hotel", "https://www.booking.com/hotel/jp/asakusa-view.html"],
   }),
-  stop("tokyo-asakusa-hotels-richmond-premier", "Richmond Hotel Premier Asakusa International", [35.7138, 139.7924], "Richmond Hotel Premier Asakusa International is the practical midrange pick for travelers who want clean rooms and tourist access without paying for luxury theatre. The location is excellent for Sensoji, Kappabashi, and Skytree-facing routes; book higher rooms if view matters.", {
+  stop("tokyo-asakusa-hotels-richmond-premier", "Richmond Hotel Premier Asakusa International", [35.7138, 139.7924], "Richmond Hotel Premier Asakusa International is a midrange hotel for clean rooms and tourist access without paying for luxury theatre. The location is excellent for Sensoji, Kappabashi, and Skytree-facing routes; book higher rooms if view matters.", {
     venueKind: "lodging",
     lodgingType: "hotel",
     price: "$$",
@@ -6334,7 +6334,7 @@ const asakusaHotelStops = [
     sourcePhoto: imageSources.sensoji,
     editorialUrls: ["https://www.google.com/travel/hotels/Tokyo?q=Richmond%20Hotel%20Premier%20Asakusa%20International", "https://www.booking.com/hotel/jp/richmond-premier-asakusa-international.html"],
   }),
-  stop("tokyo-asakusa-hotels-nono", "Onyado Nono Asakusa Natural Hot Spring", [35.7163, 139.7939], "Onyado Nono Asakusa brings dormy-inn practicality into a tatami-and-onsen-style package, which is useful after long walking days in old Tokyo. It belongs here because the bath ritual changes the stay; travelers who want Western hotel polish should compare room layouts first.", {
+  stop("tokyo-asakusa-hotels-nono", "Onyado", [35.7163, 139.7939], "Onyado Nono Asakusa combines practical Japanese business-hotel service with tatami-style interiors and an onsen-style public bath in old Tokyo.", {
     venueKind: "lodging",
     lodgingType: "hotel",
     price: "$$",
@@ -6346,7 +6346,7 @@ const asakusaHotelStops = [
     sourcePhoto: imageSources.onyadoNonoAsakusa,
     editorialUrls: ["https://www.google.com/travel/hotels/Tokyo?q=Onyado%20Nono%20Asakusa%20Natural%20Hot%20Spring", "https://www.booking.com/hotel/jp/onyado-nono-asakusa.html"],
   }),
-  stop("tokyo-asakusa-hotels-prostyle-ryokan", "PROSTYLE RYOKAN TOKYO ASAKUSA", [35.7141, 139.801], "PROSTYLE RYOKAN TOKYO ASAKUSA is the neighborhood pick when you want ryokan texture without leaving Tokyo for a traditional inn town. It is best for travelers who care about tatami mood and quieter river-side pacing; check room type because the charm depends on layout.", {
+  stop("tokyo-asakusa-hotels-prostyle-ryokan", "PROSTYLE RYOKAN", [35.7141, 139.801], "PROSTYLE RYOKAN TOKYO ASAKUSA is a neighborhood hotel for ryokan texture without leaving Tokyo for a traditional inn town.", {
     venueKind: "lodging",
     lodgingType: "hotel",
     price: "$$$",
@@ -6358,7 +6358,7 @@ const asakusaHotelStops = [
     sourcePhoto: imageSources.prostyleRyokanAsakusa,
     editorialUrls: ["https://www.google.com/travel/hotels/Tokyo?q=PROSTYLE%20RYOKAN%20TOKYO%20ASAKUSA", "https://www.booking.com/hotel/jp/prostyle-ryokan-tokyo-asakusa.html"],
   }),
-  stop("tokyo-asakusa-hotels-mimaru-station", "MIMARU Tokyo Asakusa Station", [35.7104, 139.7978], "MIMARU Tokyo Asakusa Station is the family-and-group answer: apartment-style rooms, kitchen space, and a station-side location that makes older Tokyo easier with luggage. It belongs here because Asakusa works brilliantly for groups when the room is not a shoebox.", {
+  stop("tokyo-asakusa-hotels-mimaru-station", "MIKARU", [35.7104, 139.7978], "MIMARU Tokyo Asakusa Station is the family-and-group answer: apartment-style rooms, kitchen space, and a station-side location that makes older Tokyo easier with luggage.", {
     venueKind: "lodging",
     lodgingType: "apartment_hotel",
     price: "$$$",
@@ -6373,9 +6373,9 @@ const asakusaHotelStops = [
 ];
 
 const asakusaHostelStops = [
-  retellStop(findStop(hostelStops, "tokyo-hostel-sakura-asakusa"), "tokyo-asakusa-hostels-sakura", "Sakura Hostel Asakusa is the old-town social anchor, close to Sensoji and the classic east-side sightseeing grid. It is not sleek, but it gives budget travelers shared facilities, easy routing, and a clearer backpacker scene than many Tokyo budget hotels.", ["solo_friendly", "family_friendly"]),
-  retellStop(findStop(hostelStops, "tokyo-hostel-plat-asakusa"), "tokyo-asakusa-hostels-plat", "plat hostel keikyu Asakusa Station is the clean transit-first pick, useful when price and station access matter more than a big common-room scene. It belongs here because Asakusa rewards simple logistics: temple mornings, Skytree routes, and cheap returns by rail.", ["rail_access", "quiet"]),
-  stop("tokyo-asakusa-hostels-tokyo-w-inn", "TOKYO-W-INN Asakusa", [35.7087, 139.7917], "TOKYO-W-INN Asakusa is a straightforward budget stay on the Tawaramachi side, good for travelers who want Ginza Line access and old-town walks without higher hotel rates. It is best as a practical base, so verify dorm/private room layout and late-arrival rules.", {
+  retellStop(findStop(hostelStops, "tokyo-hostel-sakura-asakusa"), "tokyo-asakusa-hostels-sakura", "Sakura Hostel Asakusa is an old-town social hostel, close to Sensoji and the classic east-side sightseeing grid. It is not sleek, but it gives budget travelers shared facilities, easy routing, and a clearer backpacker scene than many Tokyo budget hotels.", ["solo_friendly", "family_friendly"]),
+  retellStop(findStop(hostelStops, "tokyo-hostel-plat-asakusa"), "tokyo-asakusa-hostels-plat", "plat hostel keikyu Asakusa Station is a clean transit-first hostel, useful when price and station access matter more than a big common-room scene.", ["rail_access", "quiet"]),
+  stop("tokyo-asakusa-hostels-tokyo-w-inn", "TOKYO-W-INN Asakusa", [35.7087, 139.7917], "TOKYO-W-INN Asakusa is a straightforward budget stay on the Tawaramachi side, good for Ginza Line access and old-town walks without higher hotel rates. It is best as a practical base, so verify dorm/private room layout and late-arrival rules.", {
     venueKind: "lodging",
     lodgingType: "hostel",
     price: "$",
@@ -6387,7 +6387,7 @@ const asakusaHostelStops = [
     sourcePhoto: imageSources.sensoji,
     editorialUrls: ["https://www.google.com/travel/hotels/Tokyo?q=TOKYO-W-INN%20Asakusa", "https://www.booking.com/hotel/jp/tokyo-w-inn-asakusa.html"],
   }),
-  stop("tokyo-asakusa-hostels-ks-house-oasis", "K's House Tokyo Oasis", [35.7153, 139.7913], "K's House Tokyo Oasis is the guesthouse-style Asakusa stay for travelers who want a smaller, friendlier budget base near the temple streets. It is more mellow than party-hostel Tokyo, which makes it useful for couples and solo travelers who still want shared-travel energy.", {
+  stop("tokyo-asakusa-hostels-ks-house-oasis", "K's House Tokyo Oasis", [35.7153, 139.7913], "K's House Tokyo Oasis is the guesthouse-style Asakusa stay for a smaller, friendlier budget base near the temple streets. It is more mellow than party-hostel Tokyo, which makes it useful for couples and solo travelers who still want shared-travel energy.", {
     venueKind: "lodging",
     lodgingType: "guesthouse",
     price: "$",
@@ -6399,7 +6399,7 @@ const asakusaHostelStops = [
     sourcePhoto: imageSources.sakuraAsakusa,
     editorialUrls: ["https://www.google.com/travel/hotels/Tokyo?q=K%27s%20House%20Tokyo%20Oasis", "https://www.booking.com/hotel/jp/k-s-house-tokyo-oasis.html"],
   }),
-  stop("tokyo-asakusa-hostels-chapter-two", "Hostel Chapter Two Tokyo", [35.7083, 139.7975], "Hostel Chapter Two Tokyo is the family-run river-side hostel with a quieter personality than the biggest dorm stacks. It belongs here for Sumida views and a human scale; book it when calm and location matter more than nightly programming.", {
+  stop("tokyo-asakusa-hostels-chapter-two", "Hostel Chapter Two Tokyo", [35.7083, 139.7975], "Hostel Chapter Two Tokyo is the family-run river-side hostel with a quieter personality than the biggest dorm stacks.", {
     venueKind: "lodging",
     lodgingType: "hostel",
     price: "$",
@@ -6411,7 +6411,7 @@ const asakusaHostelStops = [
     sourcePhoto: imageSources.hostelChapterTwo,
     editorialUrls: ["https://www.google.com/travel/hotels/Tokyo?q=Hostel%20Chapter%20Two%20Tokyo", "https://www.booking.com/hotel/jp/hostel-chapter-two-tokyo.html"],
   }),
-  stop("tokyo-asakusa-hostels-resol-poshtel", "Resol Poshtel Tokyo Asakusa", [35.7131, 139.7933], "Resol Poshtel Tokyo Asakusa is capsule-like but more polished than the bare-bones tier, useful when a traveler wants price control without sacrificing the central temple-side location. It is a smart solo option; social travelers should compare it with Sakura or Nui first.", {
+  stop("tokyo-asakusa-hostels-resol-poshtel", "Resol Poshtel Tokyo Asakusa", [35.7131, 139.7933], "Resol Poshtel Tokyo Asakusa is capsule-like but more polished than the bare-bones tier, useful when a traveler wants price control without sacrificing the central temple-side location. It is a solo hostel; social travelers should compare it with Sakura or Nui first.", {
     venueKind: "lodging",
     lodgingType: "hostel",
     price: "$",
@@ -6423,12 +6423,12 @@ const asakusaHostelStops = [
     sourcePhoto: imageSources.sensoji,
     editorialUrls: ["https://www.google.com/travel/hotels/Tokyo?q=Resol%20Poshtel%20Tokyo%20Asakusa", "https://www.booking.com/hotel/jp/resol-poshtel-tokyo-asakusa.html"],
   }),
-  retellStop(findStop(hostelStops, "tokyo-hostel-nui"), "tokyo-asakusa-hostels-nui", "Nui. Hostel & Bar Lounge sits in Kuramae, but it belongs in an Asakusa hostel guide because the cafe-bar, river access, and old-east geography make the whole area easier. Pick it when meeting people and having a good ground-floor hangout matter.", ["kuramae", "bar", "social"]),
-  retellStop(findStop(hostelStops, "tokyo-hostel-toco"), "tokyo-asakusa-hostels-toco", "Tokyo Guest House toco. is north of Asakusa proper, but its old-house character gives budget travelers a softer east-side stay. It is best for people who value atmosphere, a small garden, and a bar over the fastest possible temple walk.", ["historic_building", "quiet", "social"]),
+  retellStop(findStop(hostelStops, "tokyo-hostel-nui"), "tokyo-asakusa-hostels-nui", "Nui. Hostel & Bar Lounge sits in Kuramae, where hostel beds share a building with a lively ground-floor cafe and bar near the river. Asakusa remains accessible while the social room makes meeting people unusually easy.", ["kuramae", "bar", "social"]),
+  retellStop(findStop(hostelStops, "tokyo-hostel-toco"), "tokyo-asakusa-hostels-toco", "Tokyo Guest House toco. is north of Asakusa proper, but its old-house character gives budget travelers a softer east-side stay.", ["historic_building", "quiet", "social"]),
 ];
 
 const roppongiHotelStops = [
-  stop("tokyo-roppongi-hotels-grand-hyatt", "Grand Hyatt Tokyo", [35.6605, 139.7291], "Grand Hyatt Tokyo is the Roppongi Hills hotel for travelers who want luxury services, dining, shopping, Mori Art Museum, and late-night plans bundled into one base. It is not subtle, but the logistics are extremely clean if Roppongi is the trip's evening center.", {
+  stop("tokyo-roppongi-hotels-grand-hyatt", "Grand Hyatt Tokyo", [35.6605, 139.7291], "Grand Hyatt Tokyo is the Roppongi Hills hotel for luxury services, dining, shopping, Mori Art Museum, and late-night plans bundled into one base. It is not subtle, but the logistics are extremely clean if Roppongi is the trip's evening center.", {
     venueKind: "lodging",
     lodgingType: "hotel",
     price: "$$$$",
@@ -6452,7 +6452,7 @@ const roppongiHotelStops = [
     sourcePhoto: imageSources.ritzCarltonTokyo,
     editorialUrls: ["https://guide.michelin.com/us/en/hotels-stays/tokyo/the-ritz-carlton-tokyo-13965", "https://www.google.com/travel/hotels/Tokyo?q=The%20Ritz-Carlton%20Tokyo"],
   }),
-  stop("tokyo-roppongi-hotels-mitsui-premier", "Mitsui Garden Hotel Roppongi Tokyo Premier", [35.6626, 139.7355], "Mitsui Garden Hotel Roppongi Tokyo Premier is the sensible polished hotel between Roppongi nightlife and Tokyo Tower routes. It belongs here because it gives the neighborhood a midrange-premium option that feels grown-up without Ritz-Carlton pricing.", {
+  stop("tokyo-roppongi-hotels-mitsui-premier", "Mitsui Garden Hotel Roppongi Tokyo Premier", [35.6626, 139.7355], "Mitsui Garden Hotel Roppongi Tokyo Premier is the sensible polished hotel between Roppongi nightlife and Tokyo Tower routes.", {
     venueKind: "lodging",
     lodgingType: "hotel",
     price: "$$$",
@@ -6464,7 +6464,7 @@ const roppongiHotelStops = [
     sourcePhoto: imageSources.mitsuiRoppongi,
     editorialUrls: ["https://www.google.com/travel/hotels/Tokyo?q=Mitsui%20Garden%20Hotel%20Roppongi%20Tokyo%20Premier", "https://www.booking.com/hotel/jp/mitsui-garden-roppongi-tokyo-premier.html"],
   }),
-  stop("tokyo-roppongi-hotels-candeo", "Candeo Hotels Tokyo Roppongi", [35.6625, 139.7337], "Candeo Hotels Tokyo Roppongi is the upper-midrange stay with a useful bath-and-rooftop rhythm after nights out or museum days. It is best for travelers who want Roppongi access and wellness-lite recovery without committing to a full luxury hotel.", {
+  stop("tokyo-roppongi-hotels-candeo", "Candeo Hotels Tokyo Roppongi", [35.6625, 139.7337], "Candeo Hotels Tokyo Roppongi is an upper-midrange property with a rooftop public bath and direct access to Roppongi nightlife and museums.", {
     venueKind: "lodging",
     lodgingType: "hotel",
     price: "$$",
@@ -6476,7 +6476,7 @@ const roppongiHotelStops = [
     sourcePhoto: imageSources.candeoRoppongi,
     editorialUrls: ["https://www.google.com/travel/hotels/Tokyo?q=Candeo%20Hotels%20Tokyo%20Roppongi", "https://www.booking.com/hotel/jp/candeo-hotels-tokyo-roppongi.html"],
   }),
-  stop("tokyo-roppongi-hotels-remm", "remm Roppongi", [35.6635, 139.7312], "remm Roppongi is the compact sleep-focused hotel that makes sense if the bed and location matter more than lobby drama. It belongs in this neighborhood guide because it puts Midtown, Roppongi Hills, and the late streets within easy reach at a more controlled price.", {
+  stop("tokyo-roppongi-hotels-remm", "remm Roppongi", [35.6635, 139.7312], "remm Roppongi is a compact, sleep-focused hotel that puts Midtown, Roppongi Hills, and late-night streets within easy reach at a controlled price. The bed and location matter more than lobby drama.", {
     venueKind: "lodging",
     lodgingType: "hotel",
     price: "$$",
@@ -6488,7 +6488,7 @@ const roppongiHotelStops = [
     sourcePhoto: imageSources.tokyoCityView,
     editorialUrls: ["https://www.google.com/travel/hotels/Tokyo?q=remm%20Roppongi", "https://www.booking.com/hotel/jp/remm-roppongi.html"],
   }),
-  stop("tokyo-roppongi-hotels-villa-fontaine", "Hotel Villa Fontaine Grand Tokyo-Roppongi", [35.6641, 139.7371], "Hotel Villa Fontaine Grand Tokyo-Roppongi is the Roppongi-itchome logistics pick, especially if the trip needs offices, Tokyo Tower routes, and subway access more than a bar scene. It is less glamorous than the big-name hotels, but it keeps the neighborhood easy and controlled.", {
+  stop("tokyo-roppongi-hotels-villa-fontaine", "Hotel Villa Fontaine Grand Tokyo-Roppongi", [35.6641, 139.7371], "Hotel Villa Fontaine Grand Tokyo-Roppongi is a practical Roppongi-itchome hotel with direct subway access for offices and Tokyo Tower. It is less glamorous than the big-name properties, but quieter and easier to navigate.", {
     venueKind: "lodging",
     lodgingType: "hotel",
     price: "$$",
@@ -6503,7 +6503,7 @@ const roppongiHotelStops = [
 ];
 
 const roppongiHostelStops = [
-  stop("tokyo-roppongi-hostels-nine-hours-akasaka", "9h nine hours Akasaka sleep lab", [35.6722, 139.7367], "9h nine hours Akasaka is not in Roppongi proper, but it is the honest nearby capsule option when the neighborhood's hotel prices jump. Use it for a controlled solo sleep pod near Akasaka/Roppongi nightlife, not for hostel social life.", {
+  stop("tokyo-roppongi-hostels-nine-hours-akasaka", "9h nine hours Akasaka sleep lab", [35.6722, 139.7367], "9h nine hours Akasaka is a nearby capsule property with controlled solo sleep pods and access to Akasaka and Roppongi nightlife. The format saves money but provides little hostel social life.", {
     venueKind: "lodging",
     lodgingType: "hostel",
     price: "$",
@@ -6515,7 +6515,7 @@ const roppongiHostelStops = [
     sourcePhoto: imageSources.tokyoCityView,
     editorialUrls: ["https://www.google.com/travel/hotels/Tokyo?q=9h%20nine%20hours%20Akasaka", "https://www.booking.com/hotel/jp/nine-hours-akasaka.html"],
   }),
-  stop("tokyo-roppongi-hostels-book-tea-bed-azabu", "Book Tea Bed AZABU-JUBAN", [35.6549, 139.7341], "Book Tea Bed AZABU-JUBAN is a nearby budget/social stay rather than a classic Roppongi hostel, but Azabu-Juban is close enough to make the map honest. It belongs as a thin-inventory option for travelers who want lower spend near Roppongi and can verify current room availability before booking.", {
+  stop("tokyo-roppongi-hostels-book-tea-bed-azabu", "Book Tea Bed AZABU-JUBAN", [35.6549, 139.7341], "Book Tea Bed AZABU-JUBAN is a nearby budget/social stay rather than a classic Roppongi hostel, but Azabu-Juban is close enough to make the map honest.", {
     venueKind: "lodging",
     lodgingType: "hostel",
     price: "$",
@@ -6527,7 +6527,7 @@ const roppongiHostelStops = [
     sourcePhoto: imageSources.tokyoCityView,
     editorialUrls: ["https://www.google.com/travel/hotels/Tokyo?q=Book%20Tea%20Bed%20AZABU-JUBAN", "https://www.booking.com/searchresults.html?ss=Book%20Tea%20Bed%20Azabu-Juban"],
   }),
-  stop("tokyo-roppongi-hostels-akasaka-hive", "Akasaka Guesthouse HIVE", [35.674, 139.7361], "Akasaka Guesthouse HIVE is a nearby budget fallback for travelers who want to keep Roppongi, Akasaka, and Midtown reachable without paying hotel rates. It is included because the true Roppongi hostel shelf is thin; check current booking channels and room rules before relying on it.", {
+  stop("tokyo-roppongi-hostels-akasaka-hive", "Akasaka Guesthouse HIVE", [35.674, 139.7361], "Akasaka Guesthouse HIVE is a nearby budget property that keeps Roppongi, Akasaka, and Midtown reachable without full hotel rates.", {
     venueKind: "lodging",
     lodgingType: "guesthouse",
     price: "$",
@@ -6681,7 +6681,7 @@ const uenoNightlifeHours: Record<string, StopHours> = {
 };
 
 const uenoHotelStops = [
-  stop("tokyo-ueno-hotels-nohga", "NOHGA Hotel Ueno Tokyo", [35.710227, 139.778184], "NOHGA Hotel Ueno Tokyo is the design-forward Ueno base, close enough to the station for rail days but calmer than sleeping directly in the busiest crossing paths. It belongs here because the property leans into local makers and neighborhood texture while still giving first-timers a clean east-side hotel experience.", {
+  stop("tokyo-ueno-hotels-nohga", "NOHGA Hotel Ueno Tokyo", [35.710227, 139.778184], "NOHGA Hotel Ueno Tokyo is the design-forward Ueno base, close enough to the station for rail days but calmer than sleeping directly in the busiest crossing paths.", {
     venueKind: "lodging",
     lodgingType: "hotel",
     price: "$$$",
@@ -6694,7 +6694,7 @@ const uenoHotelStops = [
     editorialUrls: ["https://www.google.com/travel/hotels/Tokyo?q=NOHGA%20Hotel%20Ueno%20Tokyo", maps("NOHGA Hotel Ueno Tokyo")],
     sourceEvidence: { checkedAt: uenoCheckedAt, notes: "Official NOHGA Hotel Ueno Tokyo page structured data lists coordinates plus check-in and checkout times." },
   }),
-  stop("tokyo-ueno-hotels-mitsui-garden", "Mitsui Garden Hotel Ueno", [35.71162, 139.77803], "Mitsui Garden Hotel Ueno is the practical station-side choice: polished enough for comfort, simple enough to keep the itinerary moving, and close to Ueno Station, the park, museums, and Ameyoko. Book it when rail access matters more than a big resort feel.", {
+  stop("tokyo-ueno-hotels-mitsui-garden", "Mitsui Garden Hotel Ueno", [35.71162, 139.77803], "Mitsui Garden Hotel Ueno is a polished, straightforward station-side property close to rail connections, Ueno Park, major museums, and Ameyoko. Convenience matters more than resort-scale amenities.", {
     venueKind: "lodging",
     lodgingType: "hotel",
     price: "$$",
@@ -6720,7 +6720,7 @@ const uenoHotelStops = [
     editorialUrls: ["https://mimaruhotels.com/en/faq/", "https://www.google.com/travel/hotels/Tokyo?q=MIMARU%20Tokyo%20Ueno%20East"],
     sourceEvidence: { checkedAt: uenoCheckedAt, notes: "Official MIMARU Ueno East structured data lists check-in, checkout, room count, coordinates, and the MIMARU FAQ lists luggage-storage hours." },
   }),
-  stop("tokyo-ueno-hotels-mimaru-north", "MIMARU Tokyo Ueno North", [35.716564, 139.780352], "MIMARU Tokyo Ueno North is the quieter apartment-hotel pick above the station, good for families who want Ueno Park and rail access without bedding down in the market crush. It is best when the room needs to function like a small base camp, not just a place to drop bags.", {
+  stop("tokyo-ueno-hotels-mimaru-north", "MIMARU Tokyo Ueno North", [35.716564, 139.780352], "MIMARU Tokyo Ueno North is a quieter apartment-hotel above the station, good for families seeking Ueno Park and rail access without bedding down in the market crush. It is best when the room needs to function like a small base camp, not just a place to drop bags.", {
     venueKind: "lodging",
     lodgingType: "hotel",
     price: "$$$",
@@ -6733,7 +6733,7 @@ const uenoHotelStops = [
     editorialUrls: ["https://mimaruhotels.com/en/faq/", "https://www.google.com/travel/hotels/Tokyo?q=MIMARU%20Tokyo%20Ueno%20North"],
     sourceEvidence: { checkedAt: uenoCheckedAt, notes: "Official MIMARU Ueno North structured data lists check-in, checkout, room count, coordinates, and the MIMARU FAQ lists luggage-storage hours." },
   }),
-  stop("tokyo-ueno-hotels-mimaru-okachimachi", "MIMARU Tokyo Ueno Okachimachi", [35.706535, 139.771608], "MIMARU Tokyo Ueno Okachimachi shifts the apartment-hotel formula toward Ameyoko, Yushima, and Okachimachi food-and-drink routes. It is the Ueno-area pick when a group wants kitchen space but also wants to be closer to evening energy than the park's museum side.", {
+  stop("tokyo-ueno-hotels-mimaru-okachimachi", "MIMARU Tokyo Ueno Okachimachi", [35.706535, 139.771608], "MIMARU Tokyo Ueno Okachimachi shifts the apartment-hotel formula toward Ameyoko, Yushima, and Okachimachi food-and-drink routes. It is an Ueno-area hotel when a group wants kitchen space but also wants to be closer to evening energy than the park's museum side.", {
     venueKind: "lodging",
     lodgingType: "hotel",
     price: "$$$",
@@ -6749,26 +6749,26 @@ const uenoHotelStops = [
 ];
 
 const uenoHostelStops = [
-  retellStop(findStop(hostelStops, "tokyo-hostel-toco"), "tokyo-ueno-hostels-toco", "Tokyo Guest House toco. is the most Ueno-specific social stay here: a converted old house near Iriya/Uguisudani, with a small garden, bar, and a softer sense of place than a capsule stack. It works best for travelers who want Ueno and Asakusa within reach and do not mind trading station-door convenience for atmosphere.", ["iriya", "historic_building", "social"], {
+  retellStop(findStop(hostelStops, "tokyo-hostel-toco"), "tokyo-ueno-hostels-toco", "Tokyo Guest House toco. is the most Ueno-specific social stay here: a converted old house near Iriya/Uguisudani, with a small garden, bar, and a softer sense of place than a capsule stack.", ["iriya", "historic_building", "social"], {
     attributeTags: ["guesthouse", "social", "historic_building", "budget", "iriya"],
   }),
-  retellStop(findStop(hostelStops, "tokyo-hostel-sakura-nippori"), "tokyo-ueno-hostels-sakura-nippori", "Sakura Hotel Nippori belongs in a Ueno hostel guide because Yanaka and Nippori are the natural quieter edge of the same old-north Tokyo route. Choose it for 24-hour reception, budget rooms, and walks toward Yanaka Ginza, Ueno Park, and museum days rather than for late-night west-side action.", ["yanaka", "nippori", "quiet"]),
-  retellStop(findStop(hostelStops, "tokyo-hostel-nui"), "tokyo-ueno-hostels-nui", "Nui. Hostel & Bar Lounge is farther south in Kuramae, but it earns a Ueno-nearby slot because true Ueno hostel inventory is thin and Nui gives travelers a real social bar/cafe base on the same east-side map. Use it when meeting people matters more than being directly beside Ueno Station.", ["kuramae", "bar", "social"]),
+  retellStop(findStop(hostelStops, "tokyo-hostel-sakura-nippori"), "tokyo-ueno-hostels-sakura-nippori", "Sakura Hotel Nippori offers budget rooms and 24-hour reception near Yanaka Ginza, with Ueno Park and its museums within easy reach. The quieter old-east setting is poorly suited to frequent late nights on the west side.", ["yanaka", "nippori", "quiet"]),
+  retellStop(findStop(hostelStops, "tokyo-hostel-nui"), "tokyo-ueno-hostels-nui", "Nui. Hostel & Bar Lounge pairs hostel beds with a lively ground-floor cafe and bar in Kuramae, south of Ueno on Tokyo's old-east side. The social room is worth the extra distance from the park and museums.", ["kuramae", "bar", "social"]),
 ];
 
 const tokyoNeighborhoodStayGuides = [
   guide("list-tokyo-shibuya-hotels", "Best Hotels in Shibuya", "Stay", "best-hotels", "Best Hotels in Shibuya, Tokyo", "Best hotels in Shibuya for rail access, boutique design, Cat Street, nightlife, shopping, and first-timer west-side routes.", "Shibuya hotels should make the west side easier, not just louder. These picks separate rail-simple stays, design hotels, and polished high-rise bases so travelers can decide how much neighborhood energy they want at the door.", shibuyaHotelStops, neighborhoodStaySources("Shibuya", "hotels", shibuyaHotelStops.map((item) => [item.name, item.officialUrl ?? item.bookingUrl ?? maps(item.name)])), "Shibuya"),
-  guide("list-tokyo-shibuya-hostels", "Best Hostels in Shibuya", "Stay", "best-hostels", "Best Hostels in Shibuya, Tokyo", "Best hostels and budget social stays in Shibuya for dorms, capsules, women-focused stays, cafes, nightlife, and west-side access.", "Shibuya hostel inventory is thinner than the hotel shelf, so this guide stays honest: a few real budget/social sleeps plus capsule-style options that keep the west side reachable. Choose by room rules and station walk, not only by nightly price.", shibuyaHostelStops, neighborhoodStaySources("Shibuya", "hostels", shibuyaHostelStops.map((item) => [item.name, item.officialUrl ?? item.bookingUrl ?? maps(item.name)])), "Shibuya"),
+  guide("list-tokyo-shibuya-hostels", "Best Hostels in Shibuya", "Stay", "best-hostels", "Best Hostels in Shibuya, Tokyo", "Best hostels and budget social stays in Shibuya for dorms, capsules, women-focused stays, cafes, nightlife, and west-side access.", "Shibuya has fewer true hostels than hotels. Its budget inventory mixes dorms, capsule-style beds, women-focused floors, cafes, and social spaces, with station distance and room rules often mattering more than a small price difference.", shibuyaHostelStops, neighborhoodStaySources("Shibuya", "hostels", shibuyaHostelStops.map((item) => [item.name, item.officialUrl ?? item.bookingUrl ?? maps(item.name)])), "Shibuya"),
   guide("list-tokyo-shinjuku-hotels", "Best Hotels in Shinjuku", "Stay", "best-hotels", "Best Hotels in Shinjuku, Tokyo", "Best hotels in Shinjuku for station access, Kabukicho nights, west-side business towers, gardens, skyline rooms, and practical first trips.", "Shinjuku hotels are a choice between convenience and intensity. These picks cover Kabukicho spectacle, station-smart midrange rooms, and quieter west-side edges so the base fits the traveler's appetite for the neighborhood.", shinjukuHotelStops, neighborhoodStaySources("Shinjuku", "hotels", shinjukuHotelStops.map((item) => [item.name, item.officialUrl ?? item.bookingUrl ?? maps(item.name)])), "Shinjuku"),
-  guide("list-tokyo-shinjuku-hostels", "Best Hostels in Shinjuku", "Stay", "best-hostels", "Best Hostels in Shinjuku, Tokyo", "Best hostels, capsules, and budget social stays in Shinjuku for nightlife, gardens, Shin-Okubo food, and rail-heavy trips.", "Shinjuku's budget stays split between true hostels and capsule-style survival tools. This guide keeps both because the neighborhood is useful for solo travelers, late arrivals, and anyone who would rather spend the money on food and trains.", shinjukuHostelStops, neighborhoodStaySources("Shinjuku", "hostels", shinjukuHostelStops.map((item) => [item.name, item.officialUrl ?? item.bookingUrl ?? maps(item.name)])), "Shinjuku"),
-  guide("list-tokyo-ginza-hotels", "Best Hotels in Ginza", "Stay", "best-hotels", "Best Hotels in Ginza, Tokyo", "Best hotels in Ginza for shopping, Tokyo Station access, Tsukiji mornings, design stays, luxury splurges, and polished central routes.", "Ginza hotels work best when the trip wants calm, central access, and a clean runway to meals, shopping, and rail days. These picks range from MUJI restraint to EDITION gloss, with midrange skyline rooms in between.", ginzaHotelStops, neighborhoodStaySources("Ginza", "hotels", ginzaHotelStops.map((item) => [item.name, item.officialUrl ?? item.bookingUrl ?? maps(item.name)])), "Ginza"),
-  guide("list-tokyo-ginza-hostels", "Best Hostels in Ginza", "Stay", "best-hostels", "Best Hostels in Ginza, Tokyo", "Best hostels and budget stays near Ginza for Tsukiji, Tokyo Station, Hatchobori, shopping, and central Tokyo access.", "Ginza is not hostel country, so this guide does not pretend otherwise. The useful budget choices sit in or just beside the district, trading social-hostel depth for central access and cheaper beds near expensive geography.", ginzaHostelStops, neighborhoodStaySources("Ginza", "hostels", ginzaHostelStops.map((item) => [item.name, item.officialUrl ?? item.bookingUrl ?? maps(item.name)])), "Ginza"),
+  guide("list-tokyo-shinjuku-hostels", "Best Hostels in Shinjuku", "Stay", "best-hostels", "Best Hostels in Shinjuku, Tokyo", "Best hostels, capsules, and budget social stays in Shinjuku for nightlife, gardens, Shin-Okubo food, and rail-heavy trips.", "Shinjuku's budget stays split between true hostels and capsule-style survival tools.", shinjukuHostelStops, neighborhoodStaySources("Shinjuku", "hostels", shinjukuHostelStops.map((item) => [item.name, item.officialUrl ?? item.bookingUrl ?? maps(item.name)])), "Shinjuku"),
+  guide("list-tokyo-ginza-hotels", "Best Hotels in Ginza", "Stay", "best-hotels", "Best Hotels in Ginza, Tokyo", "Best hotels in Ginza for shopping, Tokyo Station access, Tsukiji mornings, design stays, luxury splurges, and polished central routes.", "Ginza hotels offer calm central access to restaurants, shopping, and rail, ranging from restrained design rooms to glossy luxury and midrange skyline views.", ginzaHotelStops, neighborhoodStaySources("Ginza", "hotels", ginzaHotelStops.map((item) => [item.name, item.officialUrl ?? item.bookingUrl ?? maps(item.name)])), "Ginza"),
+  guide("list-tokyo-ginza-hostels", "Best Hostels in Ginza", "Stay", "best-hostels", "Best Hostels in Ginza, Tokyo", "Best hostels and budget stays near Ginza for Tsukiji, Tokyo Station, Hatchobori, shopping, and central Tokyo access.", "Budget beds in and beside Ginza trade deep hostel social life for central access and lower prices in an expensive district.", ginzaHostelStops, neighborhoodStaySources("Ginza", "hostels", ginzaHostelStops.map((item) => [item.name, item.officialUrl ?? item.bookingUrl ?? maps(item.name)])), "Ginza"),
   guide("list-tokyo-asakusa-hotels", "Best Hotels in Asakusa", "Stay", "best-hotels", "Best Hotels in Asakusa, Tokyo", "Best hotels in Asakusa for Sensoji, Sumida River, Skytree views, ryokan-style rooms, family stays, and old-town Tokyo routes.", "Asakusa hotels are about old-town pace: temple mornings, river walks, kitchenware streets, and easier prices than the west side. These stays favor view, room usefulness, and a clear reason to base east.", asakusaHotelStops, neighborhoodStaySources("Asakusa", "hotels", asakusaHotelStops.map((item) => [item.name, item.officialUrl ?? item.bookingUrl ?? maps(item.name)])), "Asakusa"),
   guide("list-tokyo-asakusa-hostels", "Best Hostels in Asakusa", "Stay", "best-hostels", "Best Hostels in Asakusa, Tokyo", "Best hostels in Asakusa for Sensoji, Kuramae cafes, Sumida River views, social lounges, capsules, and budget east-side routes.", "Asakusa has the deepest hostel shelf of the five featured Tokyo neighborhoods, and that shows in the mix: social hostels, guesthouses, capsules, and quieter river-side stays. It is the best featured neighborhood for budget travelers who still want a Tokyo-specific sense of place.", asakusaHostelStops, neighborhoodStaySources("Asakusa", "hostels", asakusaHostelStops.map((item) => [item.name, item.officialUrl ?? item.bookingUrl ?? maps(item.name)])), "Asakusa"),
-  guide("list-tokyo-ueno-hotels", "Best Hotels in Ueno", "Stay", "best-hotels", "Best Hotels in Ueno, Tokyo", "Best hotels in Ueno for station access, park museums, Ameyoko, apartment rooms, family stays, and east-side Tokyo routes.", "Ueno hotels are strongest when the stay solves rail access, museum mornings, and old-north Tokyo food without overcomplicating the base. These picks favor station logic, apartment-style rooms, and a clear split between park-side calm and Okachimachi evening energy.", uenoHotelStops, neighborhoodStaySources("Ueno", "hotels", uenoHotelStops.map((item) => [item.name, item.officialUrl ?? item.bookingUrl ?? maps(item.name)])), "Ueno"),
-  guide("list-tokyo-ueno-hostels", "Best Hostels Near Ueno", "Stay", "best-hostels", "Best Hostels Near Ueno, Tokyo", "Best hostels and social budget stays near Ueno for Iriya, Yanaka, Nippori, Kuramae, Ueno Park, and old-east Tokyo routes.", "Ueno does not have a deep true-hostel bench, so this guide stays intentionally short and nearby-oriented. The useful choices sit around Iriya, Nippori, and Kuramae, giving budget travelers old-east Tokyo access without pretending there are ten strong Ueno hostels.", uenoHostelStops, neighborhoodStaySources("Ueno", "hostels", uenoHostelStops.map((item) => [item.name, item.officialUrl ?? item.bookingUrl ?? maps(item.name)])), "Ueno"),
+  guide("list-tokyo-ueno-hotels", "Best Hotels in Ueno", "Stay", "best-hotels", "Best Hotels in Ueno, Tokyo", "Best hotels in Ueno for station access, park museums, Ameyoko, apartment rooms, family stays, and east-side Tokyo routes.", "Ueno hotels combine major rail access, museum mornings, and old-north Tokyo food through station-side rooms, apartment-style stays, park calm, and Okachimachi evening energy.", uenoHotelStops, neighborhoodStaySources("Ueno", "hotels", uenoHotelStops.map((item) => [item.name, item.officialUrl ?? item.bookingUrl ?? maps(item.name)])), "Ueno"),
+  guide("list-tokyo-ueno-hostels", "Best Hostels Near Ueno", "Stay", "best-hostels", "Best Hostels Near Ueno, Tokyo", "Best hostels and social budget stays near Ueno for Iriya, Yanaka, Nippori, Kuramae, Ueno Park, and old-east Tokyo routes.", "Hostels around Iriya, Nippori, and Kuramae provide old-east Tokyo access where Ueno itself has too few strong budget properties.", uenoHostelStops, neighborhoodStaySources("Ueno", "hostels", uenoHostelStops.map((item) => [item.name, item.officialUrl ?? item.bookingUrl ?? maps(item.name)])), "Ueno"),
   guide("list-tokyo-roppongi-hotels", "Best Hotels in Roppongi", "Stay", "best-hotels", "Best Hotels in Roppongi, Tokyo", "Best hotels in Roppongi for museums, Midtown, Roppongi Hills, nightlife, luxury service, Tokyo Tower routes, and grown-up central access.", "Roppongi is worth keeping because it solves a real tourist problem: museums, restaurants, late nights, Midtown, and Tokyo Tower routes in one central pocket. These hotel picks range from full luxury to sane midrange bases.", roppongiHotelStops, neighborhoodStaySources("Roppongi", "hotels", roppongiHotelStops.map((item) => [item.name, item.officialUrl ?? item.bookingUrl ?? maps(item.name)])), "Roppongi"),
-  guide("list-tokyo-roppongi-hostels", "Best Hostels Near Roppongi", "Stay", "best-hostels", "Best Hostels Near Roppongi, Tokyo", "Best hostels, capsules, and budget social stays near Roppongi for Akasaka, Azabu-Juban, Midtown, nightlife, and lower-cost central sleep.", "Roppongi does not have a strong true-hostel ecosystem, so this guide is deliberately short and nearby-oriented. It keeps the useful low-cost sleep options on the map without pretending the neighborhood can support a padded hostel top ten.", roppongiHostelStops, neighborhoodStaySources("Roppongi", "hostels", roppongiHostelStops.map((item) => [item.name, item.officialUrl ?? item.bookingUrl ?? maps(item.name)])), "Roppongi"),
+  guide("list-tokyo-roppongi-hostels", "Best Hostels Near Roppongi", "Stay", "best-hostels", "Best Hostels Near Roppongi, Tokyo", "Best hostels, capsules, and budget social stays near Roppongi for Akasaka, Azabu-Juban, Midtown, nightlife, and lower-cost central sleep.", "Roppongi has few true hostels, so the strongest low-cost sleep options sit in nearby Akasaka and other well-connected districts.", roppongiHostelStops, neighborhoodStaySources("Roppongi", "hostels", roppongiHostelStops.map((item) => [item.name, item.officialUrl ?? item.bookingUrl ?? maps(item.name)])), "Roppongi"),
 ];
 
 const neighborhoodFoodHours: StopHours = {
@@ -6850,9 +6850,9 @@ function neighborhoodNightlifeStop(id: string, name: string, coordinates: [numbe
 }
 
 const shibuyaFoodStops = [
-  retellStop(findStop(cheapEatStops, "tokyo-cheap-ichiran-shibuya"), "tokyo-shibuya-food-ichiran", "Ichiran Shibuya is the late-night utility bowl for the neighborhood: clear ordering, solo booths, and tonkotsu ramen when the station area has eaten your patience. It is not the deepest ramen story in Tokyo, but it is exactly the kind of reliable Shibuya stop travelers actually need after shopping or bars.", ["shibuya", "late_night"], { photo: imageSources.ichiranShibuya, imageSourceUrl: imageSources.ichiranShibuya }),
-  retellStop(findStop(cheapEatStops, "tokyo-cheap-gyukatsu-motomura"), "tokyo-shibuya-food-gyukatsu-motomura", "Gyukatsu Motomura works in Shibuya because the meal is direct, fun, and group-readable: beef cutlet, rice set, and a hot stone that gives everyone something to do. Expect a line and keep it as a flexible dinner, not a pre-ticketed stop before a show.", ["shibuya", "group_friendly"]),
-  neighborhoodFoodStop("tokyo-shibuya-food-uobei", "Uobei Shibuya Dogenzaka", [35.65978, 139.69778], "Uobei gives Shibuya an affordable sushi-train meal with tablet ordering, fast lanes, and enough novelty to rescue a tired group from decision fatigue. It belongs here because it is central, quick, and more useful than pretending every sushi meal needs an omakase counter.", {
+  retellStop(findStop(cheapEatStops, "tokyo-cheap-ichiran-shibuya"), "tokyo-shibuya-food-ichiran", "Ichiran Shibuya is the late-night straightforward bowl for the neighborhood: clear ordering, solo booths, and tonkotsu ramen when the station area has eaten your patience.", ["shibuya", "late_night"], { photo: imageSources.ichiranShibuya, imageSourceUrl: imageSources.ichiranShibuya }),
+  retellStop(findStop(cheapEatStops, "tokyo-cheap-gyukatsu-motomura"), "tokyo-shibuya-food-gyukatsu-motomura", "Gyukatsu Motomura works in Shibuya because the meal is direct, fun, and group-readable: beef cutlet, rice set, and a hot stone that gives everyone something to do.", ["shibuya", "group_friendly"]),
+  neighborhoodFoodStop("tokyo-shibuya-food-uobei", "Uobei Shibuya Dogenzaka", [35.65978, 139.69778], "Uobei gives Shibuya an affordable sushi-train meal with tablet ordering, fast lanes, and enough novelty to rescue a tired group from decision fatigue.", {
     foodServiceType: "counter_service",
     cuisineTypes: ["sushi", "japanese", "seafood"],
     price: "$",
@@ -6861,7 +6861,7 @@ const shibuyaFoodStops = [
     sourcePhoto: imageSources.uobeiShibuya,
     editorialUrls: ["https://www.timeout.com/tokyo/restaurants/uobei-shibuya-dogenzaka", "https://www.thetravelmentor.com/uobei-shibuya-dogenzaka-sushi-train-restaurant-in-tokyo-japan/"],
   }),
-  neighborhoodFoodStop("tokyo-shibuya-food-zuicho", "Katsudon-ya Zuicho", [35.65795, 139.70015], "Katsudon-ya Zuicho is a small Shibuya counter built around one excellent idea: crisp pork cutlet, egg, rice, and sauce served without ceremony. The room is compact and queue-prone, so treat it as a focused lunch strike rather than a leisurely restaurant plan.", {
+  neighborhoodFoodStop("tokyo-shibuya-food-zuicho", "Katsudon-ya Zuicho", [35.65795, 139.70015], "Katsudon-ya Zuicho is a small Shibuya counter built around one excellent idea: crisp pork cutlet, egg, rice, and sauce served without ceremony.", {
     foodServiceType: "counter_service",
     cuisineTypes: ["japanese", "katsudon", "set_meal"],
     price: "$",
@@ -6871,7 +6871,7 @@ const shibuyaFoodStops = [
     sourcePhoto: imageSources.katsudonZuicho,
     editorialUrls: ["https://www.timeout.com/tokyo/restaurants/katsudon-ya-zuicho", "https://tokyocheapo.com/food-and-drink/best-cheap-eats-tokyo/"],
   }),
-  neighborhoodFoodStop("tokyo-shibuya-food-nukaji", "Menya Nukaji", [35.6591, 139.6972], "Menya Nukaji is the ramen stop for travelers who want Shibuya without defaulting to a chain: a compact noodle shop, richer bowls, and a better sense of local rhythm. Use it outside peak meal crushes, because the small footprint can turn lunch into a waiting game.", {
+  neighborhoodFoodStop("tokyo-shibuya-food-nukaji", "Menya Nukaji", [35.6591, 139.6972], "Menya Nukaji is a compact independent Shibuya ramen shop serving rich bowls beyond the neighborhood's chains. Peak meal hours can turn the small counter into a waiting game.", {
     foodServiceType: "counter_service",
     cuisineTypes: ["ramen", "tsukemen", "japanese"],
     price: "$",
@@ -6891,7 +6891,7 @@ const shibuyaFoodStops = [
     sourcePhoto: imageSources.afuri,
     editorialUrls: ["https://www.timeout.com/tokyo/restaurants/hayashi", "https://www.google.com/maps/search/?api=1&query=Ramen%20Hayashi%20Shibuya%20Tokyo"],
   }),
-  neighborhoodFoodStop("tokyo-shibuya-food-sushi-tokyo-ten", "Sushi Tokyo Ten Shibuya", [35.65882, 139.70202], "Sushi Tokyo Ten is the Shibuya compromise between full omakase seriousness and traveler practicality, with a set-course rhythm that still feels planned. It is best when you want sushi near the station without chasing a tiny Ginza counter across town.", {
+  neighborhoodFoodStop("tokyo-shibuya-food-sushi-tokyo-ten", "Sushi Tokyo Ten Shibuya", [35.65882, 139.70202], "Sushi Tokyo Ten serves a structured set course near Shibuya Station, balancing omakase seriousness with clearer pricing and easier access than a tiny Ginza counter.", {
     cuisineTypes: ["sushi", "japanese", "omakase"],
     price: "$$$",
     attributeTags: ["sushi", "reservation_recommended", "date_night", "station_food", "shibuya"],
@@ -6899,7 +6899,7 @@ const shibuyaFoodStops = [
     sourcePhoto: imageSources.sushiTokyoTen,
     editorialUrls: ["https://www.timeout.com/tokyo/restaurants/sushi-tokyo-ten-shibuya", "https://www.google.com/maps/search/?api=1&query=Sushi%20Tokyo%20Ten%20Shibuya"],
   }),
-  neighborhoodFoodStop("tokyo-shibuya-food-yokocho", "Shibuya Yokocho", [35.66378, 139.70171], "Shibuya Yokocho is not old Tokyo, and that is the point: it is a modern, loud, easy food-and-drink alley under Miyashita Park for groups that need options in one place. Use it when convenience and energy matter more than subtlety.", {
+  neighborhoodFoodStop("tokyo-shibuya-food-yokocho", "Shibuya Yokocho", [35.66378, 139.70171], "Shibuya Yokocho is not old Tokyo, and that is the point: it is a modern, loud, easy food-and-drink alley under Miyashita Park for groups that need options in one place.", {
     foodServiceType: "pub",
     cuisineTypes: ["izakaya", "street_food", "japanese"],
     price: "$$",
@@ -6908,19 +6908,19 @@ const shibuyaFoodStops = [
     sourcePhoto: imageSources.nonbei,
     editorialUrls: ["https://www.timeout.com/tokyo/restaurants/shibuya-yokocho", "https://www.gotokyo.org/en/destinations/western-tokyo/shibuya/index.html"],
   }),
-  retellStop(findStop(cheapEatStops, "tokyo-cheap-afuri-harajuku"), "tokyo-shibuya-food-afuri-harajuku", "AFURI Harajuku earns a Shibuya-neighborhood slot because it is the useful ramen reset between Meiji Jingu, Cat Street, and Omotesando. The yuzu-shio profile is lighter than heavier bowls, which makes it a smart midday stop instead of a trip-ending meal.", ["harajuku", "quick_meal"]),
-  retellStop(findStop(cheapEatStops, "tokyo-cheap-maisen-aoyama"), "tokyo-shibuya-food-maisen-aoyama", "Maisen Aoyama is the tonkatsu anchor for Shibuya-side shopping days, especially when a group wants a real dining room instead of another counter queue. The katsu sandwich is the portable move, but the main restaurant is the better choice when the day has time to sit.", ["aoyama", "group_friendly"]),
+  retellStop(findStop(cheapEatStops, "tokyo-cheap-afuri-harajuku"), "tokyo-shibuya-food-afuri-harajuku", "AFURI Harajuku serves a bright yuzu-shio ramen whose citrus and clear broth feel lighter than Tokyo's richer bowls. The counter sits conveniently between Meiji Jingu, Cat Street, and Omotesando for a quick midday meal.", ["harajuku", "quick_meal"]),
+  retellStop(findStop(cheapEatStops, "tokyo-cheap-maisen-aoyama"), "tokyo-shibuya-food-maisen-aoyama", "Maisen Aoyama serves tonkatsu in a historic, full-size dining room comfortable for groups as well as solo diners. Its famous katsu sandwich travels well, while the main restaurant offers the complete meal.", ["aoyama", "group_friendly"]),
 ];
 
 const shibuyaNightlifeStops = [
   retellStop(findStop(casualBarStops, "tokyo-bars-nonbei-yokocho"), "tokyo-shibuya-nightlife-nonbei-yokocho", "Nonbei Yokocho is the Shibuya night distilled to tiny counters and narrow lanes, a better fit for two patient drinkers than a big loud group. Pick a room, follow the cover rules, and let the lane slow the neighborhood down.", ["shibuya", "small_room"]),
-  retellStop(findStop(casualBarStops, "tokyo-bars-goodbeer-faucets"), "tokyo-shibuya-nightlife-goodbeer-faucets", "Goodbeer Faucets is the practical Shibuya beer stop when a group needs taps, seats, and less ritual than a micro-bar. It is a useful first or middle stop before the night splinters into cocktail rooms, clubs, or trains.", ["shibuya", "group_friendly"]),
-  retellStop(findStop(casualBarStops, "tokyo-bars-tasuichi"), "tokyo-shibuya-nightlife-tasuichi", "Tasuichi brings standing-bar looseness to Shibuya, which makes it good for quick drinks and low-commitment social energy after the crossing. It can fill fast, so treat it as a pulse check rather than the whole night.", ["shibuya", "social"]),
-  retellStop(findStop(cocktailStops, "tokyo-cocktail-sg-club"), "tokyo-shibuya-nightlife-sg-club", "The SG Club is Shibuya's polished cocktail machine: multiple rooms, serious bartending, and enough theater to make a planned drink feel worth the detour. Book or arrive early if this is the anchor rather than an afterthought.", ["shibuya", "cocktails"]),
-  retellStop(findStop(cocktailStops, "tokyo-cocktail-the-bellwood"), "tokyo-shibuya-nightlife-the-bellwood", "The Bellwood gives Shibuya a smart cocktail room with old-cafe cues and modern precision instead of hidden-door drama. It is best for small groups that want a proper drink and a bit of Tokyo bar design without Ginza formality.", ["shibuya", "cocktails"]),
-  retellStop(findStop(cocktailStops, "tokyo-cocktail-bar-trench"), "tokyo-shibuya-nightlife-bar-trench", "Bar Trench is technically Ebisu, but it belongs in the Shibuya nightlife orbit because it is a clean west-side nightcap with absinthe, bitters, and a room that rewards small groups. It is too compact for a crowd, so keep it focused.", ["ebisu", "cocktails"]),
-  retellStop(findStop(casualBarStops, "tokyo-bars-ebisu-yokocho"), "tokyo-shibuya-nightlife-ebisu-yokocho", "Ebisu Yokocho is the covered-alley option when Shibuya proper feels too scattered and the group wants dinner and drinks to blur together. It is loud, useful, and best entered with a backup plan if the stalls are packed.", ["ebisu", "yokocho"]),
-  neighborhoodNightlifeStop("tokyo-shibuya-nightlife-oiran", "Shibuya Oiran", [35.65934, 139.69719], "Shibuya Oiran works as a small, music-forward bar when the night wants DJ energy without committing to a full club. It is best for a later stop after dinner, with the official schedule or map listing deciding whether the room is in bar mode or event mode.", {
+  retellStop(findStop(casualBarStops, "tokyo-bars-goodbeer-faucets"), "tokyo-shibuya-nightlife-goodbeer-faucets", "Goodbeer Faucets is a Shibuya beer beer bar when a group needs taps, seats, and less ritual than a micro-bar.", ["shibuya", "group_friendly"]),
+  retellStop(findStop(casualBarStops, "tokyo-bars-tasuichi"), "tokyo-shibuya-nightlife-tasuichi", "Tasuichi is a casual Shibuya standing bar built around quick drinks, easy conversation, and a social crowd. The compact room fills quickly and may not suit a group at peak time.", ["shibuya", "social"]),
+  retellStop(findStop(cocktailStops, "tokyo-cocktail-sg-club"), "tokyo-shibuya-nightlife-sg-club", "The SG Club combines distinct rooms, polished service, serious bartending, and drinks that reflect Tokyo's global cocktail exchange. Reservations or early arrival help in a bar popular for more than its theatrical design.", ["shibuya", "cocktails"]),
+  retellStop(findStop(cocktailStops, "tokyo-cocktail-the-bellwood"), "tokyo-shibuya-nightlife-the-bellwood", "The Bellwood gives Shibuya a smart cocktail room with old-cafe cues and modern precision instead of hidden-door drama.", ["shibuya", "cocktails"]),
+  retellStop(findStop(cocktailStops, "tokyo-cocktail-bar-trench"), "tokyo-shibuya-nightlife-bar-trench", "Bar Trench is a compact Ebisu cocktail room known for absinthe, bitters, and precisely built drinks. Its west-side location is a focused nightcap, but the bar is too small for a crowd.", ["ebisu", "cocktails"]),
+  retellStop(findStop(casualBarStops, "tokyo-bars-ebisu-yokocho"), "tokyo-shibuya-nightlife-ebisu-yokocho", "Ebisu Yokocho is a covered-alley pub when Shibuya proper feels too scattered and the group wants dinner and drinks to blur together.", ["ebisu", "yokocho"]),
+  neighborhoodNightlifeStop("tokyo-shibuya-nightlife-oiran", "Shibuya Oiran", [35.65934, 139.69719], "Shibuya Oiran is a small, music-forward bar for DJ energy without committing to a full club.", {
     nightlifeType: "lounge",
     musicGenres: ["dj", "electronic"],
     attributeTags: ["music_bar", "late_night", "small_room", "shibuya", "social"],
@@ -6928,7 +6928,7 @@ const shibuyaNightlifeStops = [
     sourcePhoto: imageSources.shibuyaOiran,
     editorialUrls: ["https://www.timeout.com/tokyo/bars-and-pubs/shibuya-oiran", "https://www.google.com/maps/search/?api=1&query=Shibuya%20Oiran%20Tokyo"],
   }),
-  neighborhoodNightlifeStop("tokyo-shibuya-nightlife-womb", "WOMB", [35.65809, 139.69542], "WOMB is the Shibuya club stop when the itinerary wants a real sound-system night rather than a bar crawl. Check the official event calendar first, because the value of the night depends almost entirely on the lineup.", {
+  neighborhoodNightlifeStop("tokyo-shibuya-nightlife-womb", "WOMB", [35.65809, 139.69542], "Check the official event calendar first, because the value of the night depends almost entirely on the lineup.", {
     nightlifeType: "club",
     musicGenres: ["electronic", "techno", "house"],
     price: "$$$",
@@ -6937,7 +6937,7 @@ const shibuyaNightlifeStops = [
     sourcePhoto: imageSources.womb,
     editorialUrls: ["https://www.timeout.com/tokyo/clubs/womb", "https://www.gotokyo.org/en/destinations/western-tokyo/shibuya/index.html"],
   }),
-  neighborhoodNightlifeStop("tokyo-shibuya-nightlife-dj-bar-bridge", "DJ Bar Bridge Shibuya", [35.66039, 139.69922], "DJ Bar Bridge is a compact Shibuya music-bar pick for travelers who want records, cocktails, and late movement without the scale of a club. It is better for pairs or small groups than a big birthday plan.", {
+  neighborhoodNightlifeStop("tokyo-shibuya-nightlife-dj-bar-bridge", "DJ Bar Bridge Shibuya", [35.66039, 139.69922], "DJ Bar Bridge is a compact Shibuya music-bar for records, cocktails, and late movement without the scale of a club.", {
     nightlifeType: "lounge",
     musicGenres: ["dj", "house", "disco"],
     price: "$$",
@@ -6949,8 +6949,8 @@ const shibuyaNightlifeStops = [
 ];
 
 const shinjukuFoodStops = [
-  retellStop(findStop(cheapEatStops, "tokyo-cheap-udon-shin"), "tokyo-shinjuku-food-udon-shin", "Udon Shin is the west-side noodle stop that can justify a wait: thick handmade udon, tempura, and a location that fits Shinjuku or Yoyogi routing. Go when the queue is part of the plan, not when a train deadline is breathing down your neck.", ["shinjuku", "noodles"]),
-  neighborhoodFoodStop("tokyo-shinjuku-food-fuunji", "Fuunji", [35.68772, 139.69753], "Fuunji is the Shinjuku tsukemen counter for travelers who want the line to end in something rich, quick, and memorable. The double broth and fast turnover make it a lunch or early dinner target, but the queue can chew through loose plans.", {
+  retellStop(findStop(cheapEatStops, "tokyo-cheap-udon-shin"), "tokyo-shinjuku-food-udon-shin", "Udon Shin is a west-side noodle restaurant that can justify a wait: thick handmade udon, tempura, and a location that fits Shinjuku or Yoyogi routing.", ["shinjuku", "noodles"]),
+  neighborhoodFoodStop("tokyo-shinjuku-food-fuunji", "Fuunji", [35.68772, 139.69753], "Fuunji serves rich double-broth tsukemen at a fast-moving Shinjuku counter. Lunch and early dinner draw queues that can chew through loose plans.", {
     foodServiceType: "counter_service",
     cuisineTypes: ["ramen", "tsukemen", "japanese"],
     price: "$",
@@ -6967,7 +6967,7 @@ const shinjukuFoodStops = [
     sourcePhoto: imageSources.tsunahachiShinjuku,
     editorialUrls: ["https://www.seriouseats.com/sensational-stops-for-japanese-food-ramen-udon-sushi-in-shinjuku-tokyo", "https://www.timeout.com/tokyo/restaurants/tsunahachi"],
   }),
-  neighborhoodFoodStop("tokyo-shinjuku-food-menya-musashi", "Menya Musashi Shinjuku Sohonten", [35.69359, 139.69762], "Menya Musashi is a Shinjuku ramen standby with theatrical bowls, thick noodles, and a location that makes it easy to fold into station-heavy days. It is a strong traveler pick when the group wants a recognizable ramen win without crossing town.", {
+  neighborhoodFoodStop("tokyo-shinjuku-food-menya-musashi", "Menya Musashi Shinjuku Sohonten", [35.69359, 139.69762], "Menya Musashi is a Shinjuku ramen standby with theatrical bowls, thick noodles, and a location that makes it easy to fold into station-heavy days. It is a strong traveler counter when the group wants a recognizable ramen win without crossing town.", {
     foodServiceType: "counter_service",
     cuisineTypes: ["ramen", "tsukemen", "japanese"],
     price: "$",
@@ -6976,7 +6976,7 @@ const shinjukuFoodStops = [
     sourcePhoto: imageSources.menyaMusashi,
     editorialUrls: ["https://www.timeout.com/tokyo/restaurants/menya-musashi", "https://www.google.com/maps/search/?api=1&query=Menya%20Musashi%20Shinjuku%20Sohonten"],
   }),
-  neighborhoodFoodStop("tokyo-shinjuku-food-nagi", "Ramen Nagi Golden Gai", [35.69404, 139.70465], "Ramen Nagi is the Golden Gai noodle room for a punchy niboshi broth before or after the bars. The upstairs squeeze and fish-forward soup are part of the appeal, but it is not the move for anyone seeking a gentle bowl.", {
+  neighborhoodFoodStop("tokyo-shinjuku-food-nagi", "Ramen Nagi Golden Gai", [35.69404, 139.70465], "The upstairs squeeze and fish-forward soup are part of the appeal, but it is not the choice for anyone seeking a gentle bowl.", {
     foodServiceType: "counter_service",
     cuisineTypes: ["ramen", "niboshi", "japanese"],
     price: "$",
@@ -6994,7 +6994,7 @@ const shinjukuFoodStops = [
     sourcePhoto: imageSources.shinjukuNakajima,
     editorialUrls: ["https://guide.michelin.com/us/en/tokyo-region/tokyo/restaurant/shinjuku-kappo-nakajima", "https://www.seriouseats.com/sensational-stops-for-japanese-food-ramen-udon-sushi-in-shinjuku-tokyo"],
   }),
-  neighborhoodFoodStop("tokyo-shinjuku-food-rokkasen", "Rokkasen", [35.69263, 139.6997], "Rokkasen is the Shinjuku yakiniku choice for groups that want one clear plan, reservations, and a table built around grilled beef. It is not subtle, but the convenience and menu breadth make it useful for first-timers who need dinner to work.", {
+  neighborhoodFoodStop("tokyo-shinjuku-food-rokkasen", "Rokkasen", [35.69263, 139.6997], "Rokkasen serves yakiniku and broad set or all-you-can-eat menus in central Shinjuku, with enough beef and format choices to handle first-time visitors and mixed groups. Subtlety is not the proposition; convenience is.", {
     cuisineTypes: ["yakiniku", "japanese", "beef"],
     price: "$$$",
     attributeTags: ["yakiniku", "group_friendly", "reservation_recommended", "dinner", "shinjuku"],
@@ -7002,7 +7002,7 @@ const shinjukuFoodStops = [
     sourcePhoto: imageSources.rokkasen,
     editorialUrls: ["https://www.timeout.com/tokyo/restaurants/rokkasen", "https://www.google.com/maps/search/?api=1&query=Rokkasen%20Shinjuku%20Tokyo"],
   }),
-  neighborhoodFoodStop("tokyo-shinjuku-food-sushi-tokyo-ten", "Sushi Tokyo Ten Shinjuku", [35.68706, 139.70084], "Sushi Tokyo Ten Shinjuku is the set-course sushi option for travelers who want structure without decoding a luxury counter. It is particularly useful in Shinjuku because the station area has plenty of food, but not all of it feels like a planned meal.", {
+  neighborhoodFoodStop("tokyo-shinjuku-food-sushi-tokyo-ten", "Sushi Tokyo Ten Shinjuku", [35.68706, 139.70084], "Sushi Tokyo Ten Shinjuku is a set-course sushi restaurant for structure without decoding a luxury counter. It is particularly useful in Shinjuku because the station area has plenty of food, but not all of it feels like a planned meal.", {
     cuisineTypes: ["sushi", "japanese", "omakase"],
     price: "$$$",
     attributeTags: ["sushi", "reservation_recommended", "station_food", "date_night", "shinjuku"],
@@ -7010,7 +7010,7 @@ const shinjukuFoodStops = [
     sourcePhoto: imageSources.sushiMidori,
     editorialUrls: ["https://www.google.com/maps/search/?api=1&query=Sushi%20Tokyo%20Ten%20Shinjuku", "https://www.timeout.com/tokyo/restaurants/sushi-tokyo-ten"],
   }),
-  neighborhoodFoodStop("tokyo-shinjuku-food-menya-sho", "Menya Sho", [35.69216, 139.69691], "Menya Sho gives Shinjuku a cleaner chicken-soup ramen counter near the west-side towers. It belongs because it is easier to route than many destination ramen shops, but the small room still asks for flexible timing.", {
+  neighborhoodFoodStop("tokyo-shinjuku-food-menya-sho", "Menya Sho", [35.69216, 139.69691], "Menya Sho is a focused chicken-soup ramen counter near Shinjuku's west-side towers. The small room and concentrated menu reward flexible timing around peak queues.", {
     foodServiceType: "counter_service",
     cuisineTypes: ["ramen", "chicken", "japanese"],
     price: "$",
@@ -7019,7 +7019,7 @@ const shinjukuFoodStops = [
     sourcePhoto: imageSources.menyaSho,
     editorialUrls: ["https://www.timeout.com/tokyo/restaurants/menya-sho", "https://www.google.com/maps/search/?api=1&query=Menya%20Sho%20Shinjuku%20Tokyo"],
   }),
-  neighborhoodFoodStop("tokyo-shinjuku-food-katsukura", "Katsukura Shinjuku Takashimaya", [35.68784, 139.70216], "Katsukura is the department-store tonkatsu stop when Shinjuku needs comfort, seats, and less chaos than the street-level scramble. It is especially useful for families or groups who want a dependable pork cutlet meal before getting back on the trains.", {
+  neighborhoodFoodStop("tokyo-shinjuku-food-katsukura", "Katsukura Shinjuku Takashimaya", [35.68784, 139.70216], "Katsukura is a department-store tonkatsu restaurant when Shinjuku needs comfort, seats, and less chaos than the street-level scramble.", {
     cuisineTypes: ["tonkatsu", "japanese", "set_meal"],
     price: "$$",
     attributeTags: ["tonkatsu", "family_friendly", "department_store", "group_friendly", "shinjuku"],
@@ -7031,9 +7031,9 @@ const shinjukuFoodStops = [
 
 const shinjukuNightlifeStops = [
   retellStop(findStop(casualBarStops, "tokyo-bars-golden-gai"), "tokyo-shinjuku-nightlife-golden-gai", "Golden Gai is the Shinjuku night everyone knows for a reason: tiny bars, cover rules, and lanes where one good seat can become the story of the evening. Go gently, choose a bar rather than treating the whole block like scenery, and avoid dragging a large group through the smallest rooms.", ["shinjuku", "small_room"]),
-  retellStop(findStop(casualBarStops, "tokyo-bars-omoide-yokocho"), "tokyo-shinjuku-nightlife-omoide-yokocho", "Omoide Yokocho is the food-and-drink alley that solves the first hour of a Shinjuku night. It is smoky, cramped, and useful, especially when you want skewers and beer before deciding whether the night turns into jazz, cocktails, or Kabukicho.", ["shinjuku", "yokocho"]),
+  retellStop(findStop(casualBarStops, "tokyo-bars-omoide-yokocho"), "tokyo-shinjuku-nightlife-omoide-yokocho", "Omoide Yokocho is a smoky, cramped Shinjuku alley packed with tiny counters serving skewers, offal, beer, and simple drinks. The appeal is the concentration of old-school food-and-drink stalls, not comfort.", ["shinjuku", "yokocho"]),
   retellStop(findStop(cocktailStops, "tokyo-cocktail-ben-fiddich"), "tokyo-shinjuku-nightlife-ben-fiddich", "Bar BenFiddich is the Shinjuku reservation to build around if cocktails are the point, with herbs, bitters, and a room that feels closer to an apothecary than a lounge. The official calendar matters, so do not treat it like a casual walk-in backup.", ["shinjuku", "cocktails"]),
-  retellStop(findStop(casualBarStops, "tokyo-bars-yona-yona-shinjuku"), "tokyo-shinjuku-nightlife-yona-yona", "Yona Yona Beer Works is the low-stress Shinjuku beer hall for groups that need food, Japanese craft beer, and actual seats. It is a smart first stop before the neighborhood gets louder and less predictable.", ["shinjuku", "group_friendly"]),
+  retellStop(findStop(casualBarStops, "tokyo-bars-yona-yona-shinjuku"), "tokyo-shinjuku-nightlife-yona-yona", "Yona Yona Beer Works is the low-stress Shinjuku beer hall for groups that need food, Japanese craft beer, and actual seats.", ["shinjuku", "group_friendly"]),
   neighborhoodNightlifeStop("tokyo-shinjuku-nightlife-open-book", "Open Book", [35.69364, 139.70465], "Open Book gives Golden Gai a more focused cocktail stop, built around lemon sours and a literary room rather than a generic bar crawl. It is tiny, so the best use is one careful round with a small group.", {
     nightlifeType: "cocktail_bar",
     musicGenres: ["bar_music"],
@@ -7043,7 +7043,7 @@ const shinjukuNightlifeStops = [
     sourcePhoto: imageSources.goldenGai,
     editorialUrls: ["https://www.timeout.com/tokyo/bars-and-pubs/open-book", "https://www.theworlds50best.com/discovery/Establishments/Japan/Tokyo/Open-Book.html"],
   }),
-  neighborhoodNightlifeStop("tokyo-shinjuku-nightlife-pit-inn", "Shinjuku Pit Inn", [35.69052, 139.70757], "Shinjuku Pit Inn is the live-jazz choice when the night should be about listening rather than wandering. The official show schedule controls everything, so pick the set before building dinner around it and treat it as a commitment.", {
+  neighborhoodNightlifeStop("tokyo-shinjuku-nightlife-pit-inn", "Shinjuku Pit Inn", [35.69052, 139.70757], "Shinjuku Pit Inn is a live-jazz hotel when the night should be about listening rather than wandering.", {
     nightlifeType: "live_music_venue",
     musicGenres: ["jazz"],
     price: "$$",
@@ -7052,7 +7052,7 @@ const shinjukuNightlifeStops = [
     sourcePhoto: imageSources.shinjukuPitInn,
     editorialUrls: ["https://www.timeout.com/tokyo/music/shinjuku-pit-inn", "https://www.google.com/maps/search/?api=1&query=Shinjuku%20Pit%20Inn%20Tokyo"],
   }),
-  neighborhoodNightlifeStop("tokyo-shinjuku-nightlife-bar-b-and-f", "Bar B&F", [35.69011, 139.69791], "Bar B&F is the Shinjuku cocktail companion to BenFiddich, useful when the night wants serious drinks but a slightly different tempo. It is still a small, reservation-sensitive room, so plan it instead of improvising late.", {
+  neighborhoodNightlifeStop("tokyo-shinjuku-nightlife-bar-b-and-f", "Bar B&F", [35.69011, 139.69791], "Bar B&F is the Shinjuku cocktail companion to BenFiddich, useful for serious drinks but a slightly different tempo.", {
     nightlifeType: "cocktail_bar",
     musicGenres: ["lounge"],
     price: "$$$",
@@ -7062,7 +7062,7 @@ const shinjukuNightlifeStops = [
     sourcePhoto: imageSources.benFiddich,
     editorialUrls: ["https://www.timeout.com/tokyo/bars-and-pubs/bar-b-f", "https://www.google.com/maps/search/?api=1&query=Bar%20B%26F%20Shinjuku%20Tokyo"],
   }),
-  neighborhoodNightlifeStop("tokyo-shinjuku-nightlife-warp", "WARP Shinjuku", [35.69519, 139.70198], "WARP Shinjuku is the Kabukicho club option for travelers who want a late, loud, high-production night. The official event calendar and entry rules matter more than the neighborhood hype, so check the lineup first and budget for cover.", {
+  neighborhoodNightlifeStop("tokyo-shinjuku-nightlife-warp", "WARP Shinjuku", [35.69519, 139.70198], "WARP Shinjuku is a Kabukicho club for a late, loud, high-production night. The official event calendar and entry rules matter more than the neighborhood hype, so check the lineup first and budget for cover.", {
     nightlifeType: "club",
     musicGenres: ["electronic", "hip_hop", "club"],
     price: "$$$",
@@ -7071,7 +7071,7 @@ const shinjukuNightlifeStops = [
     sourcePhoto: imageSources.warpShinjuku,
     editorialUrls: ["https://www.timeout.com/tokyo/clubs/warp-shinjuku", "https://www.gotokyo.org/en/destinations/western-tokyo/shinjuku/index.html"],
   }),
-  neighborhoodNightlifeStop("tokyo-shinjuku-nightlife-eagle-tokyo-blue", "Eagle Tokyo Blue", [35.69299, 139.70419], "Eagle Tokyo Blue keeps Shinjuku nightlife honest by including Nichome, where the bar scene is central to the district's after-dark identity. It is best approached with respect for the room and the crowd, not as a novelty stop.", {
+  neighborhoodNightlifeStop("tokyo-shinjuku-nightlife-eagle-tokyo-blue", "Eagle Tokyo Blue", [35.69299, 139.70419], "Eagle Tokyo Blue is a social LGBTQ+ bar in Shinjuku Ni-chome with music, drinks, and a crowd rooted in the district's queer nightlife. Enter with respect for the room rather than treating it as a novelty.", {
     nightlifeType: "pub",
     musicGenres: ["bar_music"],
     price: "$$",
@@ -7093,11 +7093,11 @@ const shinjukuNightlifeStops = [
 ];
 
 const ginzaFoodStops = [
-  retellStop(findStop(diningStops, "tokyo-dining-ginza-kojyu"), "tokyo-ginza-food-kojyu", "Ginza Kojyu anchors the neighborhood's formal dining story: kaiseki, quiet service, and the kind of reservation where timing is part of the meal. It belongs in Ginza because it shows the district's polish without needing a skyscraper view.", ["ginza", "kaiseki"]),
-  retellStop(findStop(diningStops, "tokyo-dining-tempura-kondo"), "tokyo-ginza-food-tempura-kondo", "Tempura Kondo is the Ginza counter where vegetables, oil, and timing feel as serious as sushi. It is a reservation-led meal, so use it for a planned lunch or dinner rather than a shopping-break impulse.", ["ginza", "tempura"]),
+  retellStop(findStop(diningStops, "tokyo-dining-ginza-kojyu"), "tokyo-ginza-food-kojyu", "Ginza Kojyu serves kaiseki with quiet service, seasonal detail, and reservation timing that is part of the meal. The intimate room expresses Ginza polish without relying on a skyscraper view.", ["ginza", "kaiseki"]),
+  retellStop(findStop(diningStops, "tokyo-dining-tempura-kondo"), "tokyo-ginza-food-tempura-kondo", "Tempura Kondo treats vegetables, oil temperature, and timing with the seriousness of a top sushi counter. The Ginza meal runs on reservations and deliberate lunch or dinner seatings, not shopping-break impulse.", ["ginza", "tempura"]),
   retellStop(findStop(diningStops, "tokyo-dining-sushi-yoshitake"), "tokyo-ginza-food-sushi-yoshitake", "Sushi Yoshitake gives Ginza the quiet omakase intensity travelers expect from the district. The room is small and exacting, which makes it wrong for casual groups and right for a disciplined sushi splurge with punctual arrivals.", ["ginza", "sushi"]),
   retellStop(findStop(cheapEatStops, "tokyo-cheap-sushi-no-midori"), "tokyo-ginza-food-sushi-no-midori", "Sushi no Midori Ginza is the pressure-release valve in an expensive neighborhood: popular sushi, approachable prices, and enough crowd energy to feel like a real Tokyo queue. It is a smart lunch or early dinner when the budget cannot take another fine-dining hit.", ["ginza", "cheap_eats"]),
-  neighborhoodFoodStop("tokyo-ginza-food-hachigou", "Ginza Hachigou", [35.66918, 139.76869], "Ginza Hachigou makes ramen feel like a small fine-dining counter, with a clear soup style and a room that runs on timing. It belongs because Ginza food is not only luxury sushi; it is also obsessive, compact craftsmanship.", {
+  neighborhoodFoodStop("tokyo-ginza-food-hachigou", "Ginza Hachigou", [35.66918, 139.76869], "Ginza Hachigou treats ramen with the timing and concentration of a small fine-dining counter. Clear soup and compact craftsmanship give Ginza an obsessive noodle room beyond luxury sushi.", {
     foodServiceType: "counter_service",
     cuisineTypes: ["ramen", "japanese", "french_influenced"],
     price: "$$",
@@ -7107,7 +7107,7 @@ const ginzaFoodStops = [
     sourcePhoto: imageSources.ginzaHachigou,
     editorialUrls: ["https://www.timeout.com/tokyo/restaurants/ginza-hachigo", "https://guide.michelin.com/us/en/tokyo-region/tokyo/restaurant/ginza-hachigo"],
   }),
-  neighborhoodFoodStop("tokyo-ginza-food-kagari", "Ginza Kagari Honten", [35.67209, 139.76479], "Ginza Kagari is the creamy chicken ramen stop that keeps a Ginza food day from becoming all reservations and dress codes. The line can be real, but the bowl is focused enough to justify a tight lunch window.", {
+  neighborhoodFoodStop("tokyo-ginza-food-kagari", "Ginza Kagari Honten", [35.67209, 139.76479], "Ginza Kagari is a creamy chicken ramen counter that keeps a Ginza food day from becoming all reservations and dress codes. The line can be real, but the bowl is focused enough to justify a tight lunch window.", {
     foodServiceType: "counter_service",
     cuisineTypes: ["ramen", "chicken", "japanese"],
     price: "$",
@@ -7116,7 +7116,7 @@ const ginzaFoodStops = [
     sourcePhoto: imageSources.ginzaKagari,
     editorialUrls: ["https://www.timeout.com/tokyo/restaurants/ginza-kagari", "https://www.google.com/maps/search/?api=1&query=Ginza%20Kagari%20Honten%20Tokyo"],
   }),
-  neighborhoodFoodStop("tokyo-ginza-food-kyubey", "Kyubey Ginza", [35.66935, 139.76133], "Kyubey is the classic Ginza sushi name for travelers who want heritage, counter service, and a restaurant built to host visitors without flattening the craft. Lunch can be the more approachable way in, while dinner asks for a clearer budget.", {
+  neighborhoodFoodStop("tokyo-ginza-food-kyubey", "Kyubey Ginza", [35.66935, 139.76133], "Kyubey is the classic Ginza sushi name for heritage, counter service, and a restaurant built to host visitors without flattening the craft. Lunch can be the more approachable way in, while dinner asks for a clearer budget.", {
     cuisineTypes: ["sushi", "japanese", "omakase"],
     price: "$$$$",
     attributeTags: ["sushi", "classic", "reservation_recommended", "counter_service", "ginza"],
@@ -7132,7 +7132,7 @@ const ginzaFoodStops = [
     sourcePhoto: imageSources.birdLandGinza,
     editorialUrls: ["https://guide.michelin.com/us/en/tokyo-region/tokyo/restaurant/bird-land", "https://www.timeout.com/tokyo/restaurants/bird-land"],
   }),
-  neighborhoodFoodStop("tokyo-ginza-food-ukai-tei", "Ginza Ukai-Tei", [35.66942, 139.7629], "Ginza Ukai-Tei is the teppanyaki splurge for travelers who want the meal to perform without becoming loud. It belongs here because Ginza handles polished service well, but the price and pacing make it a planned dinner, not a casual meat craving.", {
+  neighborhoodFoodStop("tokyo-ginza-food-ukai-tei", "Ginza Ukai-Tei", [35.66942, 139.7629], "Ginza Ukai-Tei turns premium ingredients and chef-led teppanyaki into a polished splurge without making the room loud.", {
     cuisineTypes: ["teppanyaki", "japanese", "wagyu"],
     price: "$$$$",
     attributeTags: ["teppanyaki", "luxury", "reservation_recommended", "date_night", "ginza"],
@@ -7140,7 +7140,7 @@ const ginzaFoodStops = [
     sourcePhoto: imageSources.ginzaUkaiTei,
     editorialUrls: ["https://guide.michelin.com/us/en/tokyo-region/tokyo/restaurant/ginza-ukai-tei", "https://www.google.com/maps/search/?api=1&query=Ginza%20Ukai-Tei%20Tokyo"],
   }),
-  neighborhoodFoodStop("tokyo-ginza-food-losier", "L'OSIER", [35.67068, 139.76291], "L'OSIER is Ginza's grand French dining room, useful when the trip calls for ceremony, wine service, and a slower lunch or dinner. It is not the neighborhood's everyday face, but it is one of the clearest examples of Ginza polish.", {
+  neighborhoodFoodStop("tokyo-ginza-food-losier", "L'OSIER", [35.67068, 139.76291], "L'OSIER is Ginza's grand French dining room, useful for ceremony, wine service, and a slower lunch or dinner. It is not the neighborhood's everyday face, but it is one of the clearest examples of Ginza polish.", {
     cuisineTypes: ["french", "fine_dining", "tasting_menu"],
     price: "$$$$",
     attributeTags: ["fine_dining", "french", "reservation_recommended", "date_night", "ginza"],
@@ -7151,7 +7151,7 @@ const ginzaFoodStops = [
 ];
 
 const ginzaNightlifeStops = [
-  retellStop(findStop(cocktailStops, "tokyo-cocktail-bar-high-five"), "tokyo-ginza-nightlife-high-five", "Bar High Five is the Ginza cocktail classic: bespoke, conversational, and more about reading the drinker than handing over a menu. It is best for small groups who can sit still and let the bar set the tempo.", ["ginza", "cocktails"]),
+  retellStop(findStop(cocktailStops, "tokyo-cocktail-bar-high-five"), "tokyo-ginza-nightlife-high-five", "Bar High Five is the Ginza cocktail classic: bespoke, conversational, and more about reading the drinker than handing over a menu.", ["ginza", "cocktails"]),
   neighborhoodNightlifeStop("tokyo-ginza-nightlife-star-bar", "Star Bar Ginza", [35.67122, 139.76478], "Star Bar is the Ginza school of precision in its purest form, where the point is a beautifully made classic rather than a loud room. Go for a focused cocktail and dress like the room deserves it.", {
     nightlifeType: "cocktail_bar",
     musicGenres: ["lounge"],
@@ -7161,7 +7161,7 @@ const ginzaNightlifeStops = [
     sourcePhoto: imageSources.highFive,
     editorialUrls: ["https://www.timeout.com/tokyo/bars-and-pubs/star-bar", "https://www.theworlds50best.com/discovery/Establishments/Japan/Tokyo/Star-Bar-Ginza.html"],
   }),
-  neighborhoodNightlifeStop("tokyo-ginza-nightlife-bar-orchard", "Bar Orchard Ginza", [35.67112, 139.76425], "Bar Orchard adds fruit-driven play to Ginza's serious cocktail map, which makes it useful when you want craft without too much ceremony. The fruit is the hook, and the small-room format still rewards pairs over big groups.", {
+  neighborhoodNightlifeStop("tokyo-ginza-nightlife-bar-orchard", "Bar Orchard Ginza", [35.67112, 139.76425], "Bar Orchard adds fruit-driven play to Ginza's serious cocktail map, which makes it useful for craft without too much ceremony. The fruit is the hook, and the small-room format still rewards pairs over big groups.", {
     nightlifeType: "cocktail_bar",
     musicGenres: ["lounge"],
     price: "$$$",
@@ -7170,7 +7170,7 @@ const ginzaNightlifeStops = [
     sourcePhoto: imageSources.barOrchardGinza,
     editorialUrls: ["https://www.timeout.com/tokyo/bars-and-pubs/bar-orchard-ginza", "https://barsforkings.com/tokyo/cocktail-bars/"],
   }),
-  neighborhoodNightlifeStop("tokyo-ginza-nightlife-lupin", "Bar Lupin", [35.66961, 139.76395], "Bar Lupin is Ginza history in bar form, a literary old room where one drink feels better than a checklist crawl. It is best used as a quiet interlude, not a place to arrive loud after a group dinner.", {
+  neighborhoodNightlifeStop("tokyo-ginza-nightlife-lupin", "Bar Lupin", [35.66961, 139.76395], "Bar Lupin is Ginza history in bar form, a literary old room where one drink feels better than a checklist crawl.", {
     nightlifeType: "pub",
     musicGenres: ["bar_music"],
     price: "$$",
@@ -7179,7 +7179,7 @@ const ginzaNightlifeStops = [
     sourcePhoto: imageSources.ginzaKojyu,
     editorialUrls: ["https://www.timeout.com/tokyo/bars-and-pubs/bar-lupin", "https://www.google.com/maps/search/?api=1&query=Bar%20Lupin%20Ginza%20Tokyo"],
   }),
-  neighborhoodNightlifeStop("tokyo-ginza-nightlife-bar-tender", "Bar Tender Ginza", [35.67114, 139.7649], "Bar Tender Ginza is the intimate classic-cocktail choice when the night wants quiet skill over spectacle. The room is small and the service style is deliberate, so it works best as a planned stop for two or three people.", {
+  neighborhoodNightlifeStop("tokyo-ginza-nightlife-bar-tender", "Bar Tender Ginza", [35.67114, 139.7649], "Bar Tender Ginza is an intimate classic bar devoted to quiet skill over spectacle. The small room and deliberate service suit parties of two or three.", {
     nightlifeType: "cocktail_bar",
     musicGenres: ["lounge"],
     price: "$$$",
@@ -7188,7 +7188,7 @@ const ginzaNightlifeStops = [
     sourcePhoto: imageSources.highFive,
     editorialUrls: ["https://www.timeout.com/tokyo/bars-and-pubs/bar-tender", "https://www.google.com/maps/search/?api=1&query=Bar%20Tender%20Ginza%20Tokyo"],
   }),
-  neighborhoodNightlifeStop("tokyo-ginza-nightlife-mixology-salon", "Mixology Salon", [35.67209, 139.76479], "Mixology Salon gives Ginza a tea-and-cocktail angle inside the shopping district, which makes it a sharp stop before or after dinner nearby. It is strongest when you want technique and theme rather than a standard whisky pour.", {
+  neighborhoodNightlifeStop("tokyo-ginza-nightlife-mixology-salon", "Mixology Salon", [35.67209, 139.76479], "Mixology Salon builds cocktails around Japanese tea inside Ginza's shopping district. The attraction is precise technique and a coherent theme rather than a standard whisky pour or broad highball menu.", {
     nightlifeType: "cocktail_bar",
     musicGenres: ["lounge"],
     price: "$$$",
@@ -7197,7 +7197,7 @@ const ginzaNightlifeStops = [
     sourcePhoto: imageSources.mixologySalon,
     editorialUrls: ["https://www.timeout.com/tokyo/bars-and-pubs/mixology-salon", "https://www.google.com/maps/search/?api=1&query=Mixology%20Salon%20Ginza%20Tokyo"],
   }),
-  neighborhoodNightlifeStop("tokyo-ginza-nightlife-300-bar", "Ginza 300 Bar", [35.67112, 139.76091], "Ginza 300 Bar is the useful budget-pressure release in a neighborhood that can make every drink feel expensive. It is casual, social, and better for a loose round than for a hushed date-night cocktail after dinner.", {
+  neighborhoodNightlifeStop("tokyo-ginza-nightlife-300-bar", "Ginza 300 Bar", [35.67112, 139.76091], "Ginza 300 Bar is the useful budget-pressure release in a neighborhood that can make every drink feel expensive.", {
     nightlifeType: "pub",
     musicGenres: ["bar_music"],
     price: "$",
@@ -7206,7 +7206,7 @@ const ginzaNightlifeStops = [
     sourcePhoto: imageSources.ginza300Bar,
     editorialUrls: ["https://www.timeout.com/tokyo/bars-and-pubs/300-bar", "https://www.google.com/maps/search/?api=1&query=Ginza%20300%20Bar%20Tokyo"],
   }),
-  neighborhoodNightlifeStop("tokyo-ginza-nightlife-grey-room", "The Grey Room", [35.67157, 139.7656], "The Grey Room adds a high-design terrace-bar feel to Ginza, useful when the night wants cocktails with skyline air rather than a basement counter. Check the official page for private events and weather-dependent terrace use.", {
+  neighborhoodNightlifeStop("tokyo-ginza-nightlife-grey-room", "The Grey Room", [35.67157, 139.7656], "The Grey Room adds a high-design terrace-bar feel to Ginza, useful for cocktails with skyline air rather than a basement counter. Check the official page for private events and weather-dependent terrace use.", {
     nightlifeType: "lounge",
     musicGenres: ["lounge"],
     price: "$$$",
@@ -7215,7 +7215,7 @@ const ginzaNightlifeStops = [
     sourcePhoto: imageSources.greyRoom,
     editorialUrls: ["https://www.timeout.com/tokyo/bars-and-pubs/the-grey-room", "https://www.google.com/maps/search/?api=1&query=The%20Grey%20Room%20Ginza%20Tokyo"],
   }),
-  neighborhoodNightlifeStop("tokyo-ginza-nightlife-tir-na-nog", "Tir na Nog", [35.67132, 139.76424], "Tir na Nog is Ginza fantasy-bar theater, with a room that leans whimsical rather than minimalist. It is a good contrast stop if the night already has one serious cocktail counter and needs a little visual mischief.", {
+  neighborhoodNightlifeStop("tokyo-ginza-nightlife-tir-na-nog", "Tir na Nog", [35.67132, 139.76424], "Tir na Nog is Ginza fantasy-bar theater, with a room that leans whimsical rather than minimalist. It is a contrast cocktail bar if the night already has one serious cocktail counter and needs a little visual mischief.", {
     nightlifeType: "cocktail_bar",
     musicGenres: ["lounge"],
     price: "$$$",
@@ -7224,7 +7224,7 @@ const ginzaNightlifeStops = [
     sourcePhoto: imageSources.tirNaNog,
     editorialUrls: ["https://www.timeout.com/tokyo/bars-and-pubs/tir-na-nog", "https://www.google.com/maps/search/?api=1&query=Tir%20na%20Nog%20Ginza%20Tokyo"],
   }),
-  neighborhoodNightlifeStop("tokyo-ginza-nightlife-bar-landscape", "Bar Landscape", [35.67202, 139.76367], "Bar Landscape rounds out Ginza with a quieter cocktail counter that fits a final drink after sushi, tempura, or shopping. It is small enough that timing matters, so let the official page or map listing decide the late-night bet.", {
+  neighborhoodNightlifeStop("tokyo-ginza-nightlife-bar-landscape", "Bar Landscape", [35.67202, 139.76367], "Bar Landscape is a small, quiet Ginza cocktail room focused on carefully made drinks and conversation. Limited seats make timing important, so check the official page or current listing for late-night hours.", {
     nightlifeType: "cocktail_bar",
     musicGenres: ["lounge"],
     price: "$$$",
@@ -7236,7 +7236,7 @@ const ginzaNightlifeStops = [
 ];
 
 const asakusaFoodStops = [
-  neighborhoodFoodStop("tokyo-asakusa-food-sometaro", "Furyu Okonomiyaki Sometaro", [35.71191776870434, 139.79093599467723], "Sometaro is the better Asakusa food-guide anchor because it is a real restaurant with old teppan character, okonomiyaki, monjayaki, yakisoba, tatami seating, and a reason to sit down instead of treating a whole street as one stop. It works best as a flexible lunch or early dinner near Tawaramachi, especially when the temple route needs something warmer and more local than another snack queue.", {
+  neighborhoodFoodStop("tokyo-asakusa-food-sometaro", "Furyu Okonomiyaki Sometaro", [35.71191776870434, 139.79093599467723], "Sometaro is an old-school Asakusa teppan restaurant serving okonomiyaki, monjayaki, and yakisoba in tatami rooms. The cooking and historic atmosphere reward a proper sit-down meal.", {
     cuisineTypes: ["okonomiyaki", "monjayaki", "yakisoba", "japanese"],
     price: "$$",
     attributeTags: ["okonomiyaki", "classic", "teppan", "tatami_room", "asakusa"],
@@ -7244,7 +7244,7 @@ const asakusaFoodStops = [
     sourcePhoto: imageSources.sometaro,
     editorialUrls: ["https://tabelog.com/en/tokyo/A1311/A131102/rstLst/okonomiyaki/", "https://www.google.com/maps/search/?api=1&query=Furyu%20Okonomiyaki%20Sometaro%20Asakusa"],
   }),
-  neighborhoodFoodStop("tokyo-asakusa-food-daikokuya", "Daikokuya Tempura", [35.71197, 139.79595], "Daikokuya Tempura is the old Asakusa tendon stop, famous for darker, sauced tempura that reads differently from delicate Ginza counters. It is best for travelers who want a classic neighborhood meal and can handle a line near Sensoji.", {
+  neighborhoodFoodStop("tokyo-asakusa-food-daikokuya", "Daikokuya Tempura", [35.71197, 139.79595], "Daikokuya Tempura is an old Asakusa tendon restaurant, famous for darker, sauced tempura that reads differently from delicate Ginza counters.", {
     cuisineTypes: ["tempura", "tendon", "japanese"],
     price: "$$",
     attributeTags: ["tempura", "classic", "asakusa", "lunch", "queue"],
@@ -7252,7 +7252,7 @@ const asakusaFoodStops = [
     sourcePhoto: imageSources.hoppy,
     editorialUrls: ["https://www.timeout.com/tokyo/restaurants/daikokuya-tempura", "https://www.google.com/maps/search/?api=1&query=Daikokuya%20Tempura%20Asakusa"],
   }),
-  neighborhoodFoodStop("tokyo-asakusa-food-imahan", "Asakusa Imahan", [35.71138, 139.79529], "Asakusa Imahan gives the neighborhood a sukiyaki and shabu-shabu room with history, beef, and a more formal pace than snack-street grazing. Book it when lunch or dinner should feel like the anchor of an Asakusa day.", {
+  neighborhoodFoodStop("tokyo-asakusa-food-imahan", "Asakusa Imahan", [35.71138, 139.79529], "Asakusa Imahan serves sukiyaki and shabu-shabu in a historic room with a more formal pace than snack-street grazing. Beef, tableside cooking, and reservations make it a substantial Asakusa lunch or dinner.", {
     cuisineTypes: ["sukiyaki", "shabu_shabu", "japanese"],
     price: "$$$",
     attributeTags: ["classic", "beef", "reservation_recommended", "family_friendly", "asakusa"],
@@ -7268,7 +7268,7 @@ const asakusaFoodStops = [
     sourcePhoto: imageSources.namikiYabusoba,
     editorialUrls: ["https://www.timeout.com/tokyo/restaurants/namiki-yabusoba", "https://www.google.com/maps/search/?api=1&query=Namiki%20Yabusoba%20Asakusa"],
   }),
-  neighborhoodFoodStop("tokyo-asakusa-food-yoroiya", "Yoroiya", [35.71322, 139.79632], "Yoroiya is the Asakusa ramen stop that makes sense when the temple route needs a proper bowl without leaving the neighborhood. The draw is practical: central location, clear ordering, and a meal that works between Sensoji and Kappabashi.", {
+  neighborhoodFoodStop("tokyo-asakusa-food-yoroiya", "Yoroiya", [35.71322, 139.79632], "The draw is practical: central location, clear ordering, and a meal that works between Sensoji and Kappabashi.", {
     foodServiceType: "counter_service",
     cuisineTypes: ["ramen", "japanese"],
     price: "$",
@@ -7277,7 +7277,7 @@ const asakusaFoodStops = [
     sourcePhoto: imageSources.udonShin,
     editorialUrls: ["https://www.timeout.com/tokyo/restaurants/yoroiya", "https://www.google.com/maps/search/?api=1&query=Yoroiya%20Asakusa%20Tokyo"],
   }),
-  neighborhoodFoodStop("tokyo-asakusa-food-kagetsudo", "Asakusa Kagetsudo", [35.71416, 139.79575], "Asakusa Kagetsudo is the melonpan stop that earns its place by being quick, sweet, and exactly where visitors already are. It is not a full meal, but it is one of the neighborhood snacks that makes a temple walk feel complete.", {
+  neighborhoodFoodStop("tokyo-asakusa-food-kagetsudo", "Asakusa Kagetsudo", [35.71416, 139.79575], "Asakusa Kagetsudo specializes in quick, sweet melonpan near the temple district. The large crisp-topped bun is a neighborhood snack rather than a full meal.", {
     foodServiceType: "bakery",
     cuisineTypes: ["bakery", "sweets", "japanese"],
     price: "$",
@@ -7286,7 +7286,7 @@ const asakusaFoodStops = [
     sourcePhoto: imageSources.asakusaKagetsudo,
     editorialUrls: ["https://www.timeout.com/tokyo/restaurants/asakusa-kagetsudo", "https://www.google.com/maps/search/?api=1&query=Asakusa%20Kagetsudo%20Tokyo"],
   }),
-  neighborhoodFoodStop("tokyo-asakusa-food-suzukien", "Suzukien Asakusa", [35.71542, 139.79496], "Suzukien is the matcha gelato detour for people who want intensity by number rather than another soft-serve cone. The strongest matcha level is the obvious brag, but the real usefulness is a cold break near Sensoji.", {
+  neighborhoodFoodStop("tokyo-asakusa-food-suzukien", "Suzukien Asakusa", [35.71542, 139.79496], "Suzukien is the matcha gelato detour for intensity by number rather than another soft-serve cone. The strongest matcha level is the obvious brag, but the real usefulness is a cold break near Sensoji.", {
     foodServiceType: "cafe",
     cuisineTypes: ["dessert", "matcha", "japanese"],
     price: "$",
@@ -7295,7 +7295,7 @@ const asakusaFoodStops = [
     sourcePhoto: imageSources.suzukienAsakusa,
     editorialUrls: ["https://www.timeout.com/tokyo/restaurants/suzukien", "https://www.google.com/maps/search/?api=1&query=Suzukien%20Asakusa%20Tokyo"],
   }),
-  neighborhoodFoodStop("tokyo-asakusa-food-owariya", "Owariya", [35.71184, 139.79519], "Owariya gives Asakusa another old-school soba choice, useful when Namiki is too crowded or the day calls for tempura soba rather than a heavier tendon. It belongs as a reliable classic, not a flashy discovery.", {
+  neighborhoodFoodStop("tokyo-asakusa-food-owariya", "Owariya", [35.71184, 139.79519], "Owariya is a reliable old-school Asakusa soba room, especially useful for tempura soba when Namiki is crowded or a full tendon feels too heavy. Tradition, not novelty, carries the meal.", {
     cuisineTypes: ["soba", "tempura", "japanese"],
     price: "$$",
     attributeTags: ["soba", "classic", "asakusa", "lunch", "family_friendly"],
@@ -7303,7 +7303,7 @@ const asakusaFoodStops = [
     sourcePhoto: imageSources.owariya,
     editorialUrls: ["https://www.google.com/maps/search/?api=1&query=Owariya%20Asakusa%20Tokyo", "https://www.timeout.com/tokyo/restaurants/owariya"],
   }),
-  neighborhoodFoodStop("tokyo-asakusa-food-unatoto", "Unatoto Asakusa", [35.70985, 139.79421], "Unatoto is the practical eel-rice stop for travelers who want unagi flavor without the full luxury bill. It is casual and quick, which makes it useful on an Asakusa day already crowded with snacks and temple time.", {
+  neighborhoodFoodStop("tokyo-asakusa-food-unatoto", "Unatoto Asakusa", [35.70985, 139.79421], "Unatoto is an eel-rice counter for unagi flavor without the full luxury bill. It is casual and quick, which makes it useful on an Asakusa day already crowded with snacks and temple time.", {
     foodServiceType: "fast_casual",
     cuisineTypes: ["unagi", "japanese", "rice_bowl"],
     price: "$",
@@ -7312,7 +7312,7 @@ const asakusaFoodStops = [
     sourcePhoto: imageSources.unatoto,
     editorialUrls: ["https://tokyocheapo.com/food-and-drink/best-cheap-eats-tokyo/", "https://www.google.com/maps/search/?api=1&query=Unatoto%20Asakusa%20Tokyo"],
   }),
-  neighborhoodFoodStop("tokyo-asakusa-food-menchi", "Asakusa Menchi", [35.71344, 139.79486], "Asakusa Menchi is the snack-line stop for a hot minced-meat cutlet between temple streets and side alleys. It is quick, messy, and exactly the kind of small bite that keeps an Asakusa walk from turning into a sit-down meal.", {
+  neighborhoodFoodStop("tokyo-asakusa-food-menchi", "Asakusa Menchi", [35.71344, 139.79486], "Asakusa Menchi is a snack-line stall for a hot minced-meat cutlet between temple streets and side alleys. It is quick, messy, and exactly the kind of small bite that keeps an Asakusa walk from turning into a sit-down meal.", {
     foodServiceType: "stall",
     cuisineTypes: ["street_food", "croquette", "japanese"],
     price: "$",
@@ -7324,8 +7324,8 @@ const asakusaFoodStops = [
 ];
 
 const asakusaNightlifeStops = [
-  retellStop(findStop(casualBarStops, "tokyo-bars-hoppy-street"), "tokyo-asakusa-nightlife-hoppy-street", "Hoppy Street is Asakusa's most approachable drinking lane, with open-front tables, snacks, and a daylight-to-evening rhythm that feels different from west-side bar crawls. It is strongest before the late night, when the neighborhood is still carrying temple-day momentum.", ["asakusa", "day_drinking"]),
-  neighborhoodNightlifeStop("tokyo-asakusa-nightlife-kamiya-bar", "Kamiya Bar", [35.71064, 139.79703], "Kamiya Bar is Asakusa's classic beer-hall institution, famous for Denki Bran and a room that feels more civic than secret. It is best early in the evening, when you want history, snacks, and a drink without hunting for a tiny counter.", {
+  retellStop(findStop(casualBarStops, "tokyo-bars-hoppy-street"), "tokyo-asakusa-nightlife-hoppy-street", "Hoppy Street is Asakusa's most approachable drinking lane, with open-front tables, snacks, and a daylight-to-evening rhythm that feels different from west-side bar crawls.", ["asakusa", "day_drinking"]),
+  neighborhoodNightlifeStop("tokyo-asakusa-nightlife-kamiya-bar", "Kamiya Bar", [35.71064, 139.79703], "Kamiya Bar is Asakusa's classic beer-hall institution, famous for Denki Bran and a room that feels more civic than secret. It is best early in the evening, for history, snacks, and a drink without hunting for a tiny counter.", {
     nightlifeType: "pub",
     musicGenres: ["none"],
     price: "$$",
@@ -7334,7 +7334,7 @@ const asakusaNightlifeStops = [
     sourcePhoto: imageSources.kamiyaBar,
     editorialUrls: ["https://www.timeout.com/tokyo/bars-and-pubs/kamiya-bar", "https://www.gotokyo.org/en/destinations/eastern-tokyo/asakusa/index.html"],
   }),
-  neighborhoodNightlifeStop("tokyo-asakusa-nightlife-beer-kobo", "Asakusa Beer Kobo", [35.70991, 139.79386], "Asakusa Beer Kobo gives the neighborhood a craft-beer option that is easier for groups than a tiny old bar. It belongs here because Asakusa nights can end early, and a known taproom gives travelers a practical second stop.", {
+  neighborhoodNightlifeStop("tokyo-asakusa-nightlife-beer-kobo", "Asakusa Beer Kobo", [35.70991, 139.79386], "Asakusa Beer Kobo gives the neighborhood a craft-beer option that is easier for groups than a tiny old bar.", {
     nightlifeType: "beer_bar",
     musicGenres: ["bar_music"],
     price: "$$",
@@ -7344,7 +7344,7 @@ const asakusaNightlifeStops = [
     sourcePhoto: imageSources.hoppy,
     editorialUrls: ["https://tokyocheapo.com/food-and-drink/tokyo-craft-beer-bars/", "https://www.google.com/maps/search/?api=1&query=Asakusa%20Beer%20Kobo%20Tokyo"],
   }),
-  neighborhoodNightlifeStop("tokyo-asakusa-nightlife-kurand", "KURAND Sake Market Asakusa", [35.71292, 139.79321], "KURAND Sake Market is the structured sake-tasting option when a group wants variety without decoding a tiny izakaya. The official shop page controls sessions and rules, so it works best as a planned stop rather than a random nightcap.", {
+  neighborhoodNightlifeStop("tokyo-asakusa-nightlife-kurand", "KURAND Sake Market Asakusa", [35.71292, 139.79321], "KURAND Sake Market offers structured tasting sessions with broad sake variety and clear rules, making the format accessible to groups without a tiny izakaya counter. The official shop page controls session times.", {
     nightlifeType: "pub",
     musicGenres: ["bar_music"],
     price: "$$",
@@ -7353,7 +7353,7 @@ const asakusaNightlifeStops = [
     sourcePhoto: imageSources.kurandAsakusa,
     editorialUrls: ["https://www.timeout.com/tokyo/bars-and-pubs/kurand-sake-market", "https://www.google.com/maps/search/?api=1&query=KURAND%20Sake%20Market%20Asakusa"],
   }),
-  neighborhoodNightlifeStop("tokyo-asakusa-nightlife-nui", "Nui. Bar Lounge", [35.70414, 139.79024], "Nui. Bar Lounge is technically Kuramae, but it belongs in the Asakusa nightlife orbit because it is one of the area's easiest social rooms for travelers. The hostel-cafe format keeps it relaxed, especially for solo visitors who want conversation without Kabukicho intensity.", {
+  neighborhoodNightlifeStop("tokyo-asakusa-nightlife-nui", "Nui. Bar Lounge", [35.70414, 139.79024], "Nui. Bar Lounge is a relaxed Kuramae social room where a hostel, cafe, and bar share the ground floor. Solo visitors can find conversation without the intensity of Kabukicho nightlife.", {
     nightlifeType: "lounge",
     musicGenres: ["bar_music"],
     price: "$$",
@@ -7362,7 +7362,7 @@ const asakusaNightlifeStops = [
     sourcePhoto: imageSources.nui,
     editorialUrls: ["https://www.timeout.com/tokyo/hotels/nui-hostel-bar-lounge", "https://www.google.com/maps/search/?api=1&query=Nui%20Bar%20Lounge%20Kuramae%20Tokyo"],
   }),
-  neighborhoodNightlifeStop("tokyo-asakusa-nightlife-hub", "HUB Asakusa", [35.71092, 139.79667], "HUB Asakusa is not a secret, but it is a useful English-friendly fallback when the group needs sports, pints, and a predictable room near the station. It belongs as a practical safety valve, not as the most distinctive drink in the neighborhood.", {
+  neighborhoodNightlifeStop("tokyo-asakusa-nightlife-hub", "HUB Asakusa", [35.71092, 139.79667], "HUB Asakusa offers sports screens, pints, familiar pub food, and an English-friendly room near the station. It is predictable rather than distinctive, which can help a mixed group late in the evening.", {
     nightlifeType: "pub",
     musicGenres: ["sports_audio", "bar_music"],
     price: "$",
@@ -7380,7 +7380,7 @@ const asakusaNightlifeStops = [
     sourcePhoto: imageSources.tokyoRiversideDistillery,
     editorialUrls: ["https://www.timeout.com/tokyo/bars-and-pubs/tokyo-riverside-distillery", "https://www.google.com/maps/search/?api=1&query=Tokyo%20Riverside%20Distillery"],
   }),
-  neighborhoodNightlifeStop("tokyo-asakusa-nightlife-bar-six", "Bar Six", [35.71144, 139.79458], "Bar Six rounds out Asakusa with a smaller cocktail-bar option for nights that want one quiet drink after the food lanes. The neighborhood has thinner late-night inventory than Shinjuku or Shibuya, so this is a targeted nightcap rather than a crawl anchor.", {
+  neighborhoodNightlifeStop("tokyo-asakusa-nightlife-bar-six", "Bar Six", [35.71144, 139.79458], "The neighborhood has thinner late-night inventory than Shinjuku or Shibuya, so this is a targeted nightcap rather than a crawl bar.", {
     nightlifeType: "cocktail_bar",
     musicGenres: ["lounge"],
     price: "$$",
@@ -7393,7 +7393,7 @@ const asakusaNightlifeStops = [
 ];
 
 const hoppyStreetIzakayaStops = [
-  neighborhoodNightlifeStop("tokyo-hoppy-street-izakaya-shochan", "Shochan", [35.71446855870375, 139.79417375470072], "Shochan is the first Hoppy Street pick when the goal is old Asakusa rather than a generic pub: a small, no-reservation beef-nikomi room with terrace seats on good-weather days and a Tabelog 100 izakaya selection in its history. Go early, expect a compact stay, and treat the weather note seriously because the shop operates partly like an open-front stall.", {
+  neighborhoodNightlifeStop("tokyo-hoppy-street-izakaya-shochan", "Shochan", [35.71446855870375, 139.79417375470072], "Shochan is a first Hoppy Street pub when the goal is old Asakusa rather than a generic pub: a small, no-reservation beef-nikomi room with terrace seats on good-weather days and a Tabelog 100 izakaya selection in its history. Go early, expect a compact stay, and treat the weather note seriously because the shop operates partly like an open-front stall.", {
     nightlifeType: "pub",
     musicGenres: ["none"],
     price: "$",
@@ -7403,7 +7403,7 @@ const hoppyStreetIzakayaStops = [
     sourcePhoto: imageSources.hoppyShochan,
     editorialUrls: ["https://www.google.com/maps/search/?api=1&query=Shochan%20Asakusa%20Tokyo"],
   }),
-  neighborhoodNightlifeStop("tokyo-hoppy-street-izakaya-suzuyoshi", "Suzuyoshi", [35.71364880870426, 139.79415665469244], "Suzuyoshi is a Hoppy Street classic for beef tendon, motsu, grilled tripe, and fresh hoppy energy, with enough seats to feel more like a full tavern than a squeeze-in counter. The no-solo and no-weekend-reservation notes matter, so use it for a small group that wants the street's rhythm without needing a late-night plan.", {
+  neighborhoodNightlifeStop("tokyo-hoppy-street-izakaya-suzuyoshi", "Suzuyoshi", [35.71364880870426, 139.79415665469244], "Suzuyoshi is a Hoppy Street classic for beef tendon, motsu, grilled tripe, and fresh hoppy energy, with enough seats to feel more like a full tavern than a squeeze-in counter.", {
     nightlifeType: "pub",
     musicGenres: ["none"],
     price: "$$",
@@ -7413,7 +7413,7 @@ const hoppyStreetIzakayaStops = [
     sourcePhoto: imageSources.hoppySuzuyoshi,
     editorialUrls: ["https://www.google.com/maps/search/?api=1&query=Suzuyoshi%20Asakusa%20Tokyo"],
   }),
-  neighborhoodNightlifeStop("tokyo-hoppy-street-izakaya-motsukushi", "Motsukushi", [35.71336063789915, 139.79440088352757], "Motsukushi is the practical motsu-heavy stop on the lane: long daily hours, weekend morning openings, and a menu built for stew, skewers, and rounds of hoppy. It earns a place because it can carry either a daylight snack-and-drink stop or a fuller casual dinner when the older tiny rooms are full.", {
+  neighborhoodNightlifeStop("tokyo-hoppy-street-izakaya-motsukushi", "Motsukushi", [35.71336063789915, 139.79440088352757], "Motsukushi is a motsu-heavy Hoppy Street pub with long daily hours, weekend morning openings, and a menu of stew, skewers, and rounds of hoppy. The food supports either a snack or a fuller casual meal.", {
     nightlifeType: "pub",
     musicGenres: ["none"],
     price: "$",
@@ -7423,7 +7423,7 @@ const hoppyStreetIzakayaStops = [
     sourcePhoto: imageSources.hoppyMotsukushi,
     editorialUrls: ["https://www.google.com/maps/search/?api=1&query=Motsukushi%20Asakusa%20Tokyo"],
   }),
-  neighborhoodNightlifeStop("tokyo-hoppy-street-izakaya-okamoto-dori", "Asakusa Sakaba Okamoto Hoppy-dori", [35.71279092894594, 139.7942377659097], "Okamoto's Hoppy-dori branch is the big, easy, Showa-leaning stop: long hours, 100 seats, terrace energy, beef tendon motsu stew, spicy horumon, and enough structure for groups who do not want to gamble on a tiny counter. It is not the quietest pick, but it is the street's most useful anchor.", {
+  neighborhoodNightlifeStop("tokyo-hoppy-street-izakaya-okamoto-dori", "Asakusa Sakaba Okamoto Hoppy-dori", [35.71279092894594, 139.7942377659097], "Okamoto's Showa-leaning Hoppy Street branch has long hours, roughly 100 seats, terrace energy, beef-tendon motsu stew, and spicy horumon. Its scale handles groups better than the lane's tiny counters, with more noise in return.", {
     nightlifeType: "pub",
     musicGenres: ["none"],
     price: "$",
@@ -7433,7 +7433,7 @@ const hoppyStreetIzakayaStops = [
     sourcePhoto: imageSources.hoppyOkamotoDori,
     editorialUrls: ["http://www.hoppy-st.com/okamoto/", "https://www.google.com/maps/search/?api=1&query=Asakusa%20Sakaba%20Okamoto%20Hoppy%20Street%20Tokyo"],
   }),
-  neighborhoodNightlifeStop("tokyo-hoppy-street-izakaya-tonpei", "Tonpei", [35.71350195870443, 139.79439441469077], "Tonpei is a strong middle-ground Hoppy Street stop: classic izakaya hours, weekend late-morning opening, Wednesday closure, and the kind of straightforward counter-and-table setup that works for skewers, stew, and a second round. Use it when Shochan or Suzuyoshi is too tight but you still want the old lane.", {
+  neighborhoodNightlifeStop("tokyo-hoppy-street-izakaya-tonpei", "Tonpei", [35.71350195870443, 139.79439441469077], "Tonpei is a strong middle-ground Hoppy Street pub: classic izakaya hours, weekend late-morning opening, Wednesday closure, and the kind of straightforward counter-and-table setup that works for skewers, stew, and a second round.", {
     nightlifeType: "pub",
     musicGenres: ["none"],
     price: "$",
@@ -7443,7 +7443,7 @@ const hoppyStreetIzakayaStops = [
     sourcePhoto: imageSources.hoppyTonpei,
     editorialUrls: ["https://www.google.com/maps/search/?api=1&query=Tonpei%20Asakusa%20Tokyo"],
   }),
-  neighborhoodNightlifeStop("tokyo-hoppy-street-izakaya-okamoto-honten", "Okamoto Asakusa Honten", [35.71367213789887, 139.7941760835309], "Okamoto Honten keeps the nikomi-and-hoppy story closer to a neighborhood original than the larger branch, with daily service and weekend 10 AM openings that suit Asakusa's daytime drinking pattern. Put it in the crawl when you want the Okamoto flavor but not necessarily the biggest room.", {
+  neighborhoodNightlifeStop("tokyo-hoppy-street-izakaya-okamoto-honten", "Okamoto Asakusa Honten", [35.71367213789887, 139.7941760835309], "Okamoto Honten keeps the nikomi-and-hoppy story closer to a neighborhood original than the larger branch, with daily service and weekend 10 AM openings that suit Asakusa's daytime drinking pattern. Put it in the crawl for the Okamoto flavor but not necessarily the biggest room.", {
     nightlifeType: "pub",
     musicGenres: ["none"],
     price: "$",
@@ -7453,7 +7453,7 @@ const hoppyStreetIzakayaStops = [
     sourcePhoto: imageSources.hoppyOkamotoHonten,
     editorialUrls: ["https://www.google.com/maps/search/?api=1&query=Okamoto%20Asakusa%20Honten%20Tokyo"],
   }),
-  neighborhoodNightlifeStop("tokyo-hoppy-street-izakaya-sanchan", "Asakusa Sanchan Yokocho Hoppy-dori", [35.7134252187044, 139.7941288946902], "Sanchan Yokocho is the flexible Hoppy-dori pick for groups who want late-enough hours, clear last orders, and a less precious version of the lane. It is not as storied as Shochan or Suzuyoshi, but it is useful when the crawl needs capacity and direct Hoppy Street placement.", {
+  neighborhoodNightlifeStop("tokyo-hoppy-street-izakaya-sanchan", "Asakusa Sanchan Yokocho Hoppy-dori", [35.7134252187044, 139.7941288946902], "Sanchan Yokocho is a flexible Hoppy-dori pub for groups seeking late-enough hours, clear last orders, and a less precious version of the lane. It is not as storied as Shochan or Suzuyoshi, but it is useful when the crawl needs capacity and direct Hoppy Street placement.", {
     nightlifeType: "pub",
     musicGenres: ["none"],
     price: "$",
@@ -7463,7 +7463,7 @@ const hoppyStreetIzakayaStops = [
     sourcePhoto: imageSources.hoppySanchan,
     editorialUrls: ["https://www.google.com/maps/search/?api=1&query=Asakusa%20Sanchan%20Yokocho%20Hoppy%20Dori%20Tokyo"],
   }),
-  neighborhoodNightlifeStop("tokyo-hoppy-street-izakaya-yamaka", "Sakaba Yamakashoten", [35.71304683789938, 139.7944420835244], "Sakaba Yamakashoten is the Yamaka swap that improves the bottom of the guide: a Hoppy Street izakaya with a stronger current Tabelog score, daily 10 AM-11 PM hours, and a tight address right on the drinking lane. It is best when the crawl needs a reliable all-day tavern for hoppy, stew, and quick shared plates rather than another filler stop.", {
+  neighborhoodNightlifeStop("tokyo-hoppy-street-izakaya-yamaka", "Sakaba Yamakashoten", [35.71304683789938, 139.7944420835244], "Sakaba Yamakashoten is an all-day Hoppy Street izakaya serving hoppy, simmered stew, and quick shared plates from 10 AM to 11 PM daily. Its address directly on the drinking lane makes it easy to settle in without overplanning the crawl.", {
     nightlifeType: "pub",
     musicGenres: ["none"],
     price: "$",
@@ -7473,7 +7473,7 @@ const hoppyStreetIzakayaStops = [
     sourcePhoto: imageSources.hoppyYamaka,
     editorialUrls: ["https://www.google.com/maps/search/?api=1&query=Sakaba%20Yamakashoten%20Asakusa%20Tokyo"],
   }),
-  neighborhoodNightlifeStop("tokyo-hoppy-street-izakaya-ricchan", "Taishu Sakaba Ricchan Hoppy-dori", [35.71293913789929, 139.79396228352363], "Ricchan is the late-useful Hoppy-dori choice, opening later on weekdays and running past midnight on the current listing. Keep it near the end of a crawl when the classic daytime rooms have already made their point and the group still wants one more casual round.", {
+  neighborhoodNightlifeStop("tokyo-hoppy-street-izakaya-ricchan", "Taishu Sakaba Ricchan Hoppy-dori", [35.71293913789929, 139.79396228352363], "Ricchan is a late- Hoppy-dori pub, opening later on weekdays and running past midnight on the current listing. Keep it near the end of a crawl when the classic daytime rooms have already made their point and the group still wants one more casual round.", {
     nightlifeType: "pub",
     musicGenres: ["none"],
     price: "$",
@@ -7486,7 +7486,7 @@ const hoppyStreetIzakayaStops = [
 ];
 
 const roppongiFoodStops = [
-  neighborhoodFoodStop("tokyo-roppongi-food-gonpachi", "Gonpachi Nishi-Azabu", [35.660872, 139.724787], "Gonpachi Nishi-Azabu works as a Roppongi-area food stop because it solves the visitor group dinner problem: skewers, soba, late energy, and a room big enough for people with luggage-sized expectations. Treat it as a practical crowd-pleaser rather than a secret.", {
+  neighborhoodFoodStop("tokyo-roppongi-food-gonpachi", "Gonpachi Nishi-Azabu", [35.660872, 139.724787], "Gonpachi Nishi-Azabu serves skewers and soba late in a theatrical, large-format izakaya room. It handles visitor groups well but makes no claim to being a secret local restaurant.", {
     foodServiceType: "pub",
     cuisineTypes: ["izakaya", "soba", "yakitori"],
     price: "$$",
@@ -7495,10 +7495,10 @@ const roppongiFoodStops = [
     sourcePhoto: imageSources.gonpachi,
     editorialUrls: ["https://www.timeout.com/tokyo/restaurants/gonpachi-nishi-azabu", "https://www.gotokyo.org/book/wp-content/uploads/2025/03/2503_tokyonightstory_EN_low.pdf"],
   }),
-  retellStop(findStop(diningStops, "tokyo-dining-sazenka"), "tokyo-roppongi-food-sazenka", "Sazenka belongs in the Roppongi-area food guide because Azabu's quiet luxury sits right in the district's orbit, and the Chinese-Japanese tasting menu gives the neighborhood more range than steak and hotel bars. The reservation calendar is the whole game, so plan the day around it.", ["azabu", "fine_dining"]),
-  retellStop(findStop(diningStops, "tokyo-dining-florilege"), "tokyo-roppongi-food-florilege", "Florilege is the Roppongi-side modern dining pick for travelers who want French-Japanese technique and an open-room sense of performance. It is not a casual stop, but it pairs well with museum days and central Tokyo evenings.", ["azabudai", "fine_dining"]),
-  retellStop(findStop(diningStops, "tokyo-dining-leffervescence"), "tokyo-roppongi-food-leffervescence", "L'Effervescence gives the Roppongi/Aoyama edge a slower, greener fine-dining rhythm, with French technique and Japanese ingredients leading the meal. Use it for a long lunch or dinner, not a squeezed-in pre-bar reservation with anxious timing.", ["aoyama", "fine_dining"]),
-  neighborhoodFoodStop("tokyo-roppongi-food-tsurutontan", "Tsurutontan Roppongi", [35.66313, 139.73389], "Tsurutontan Roppongi is the reliable udon-and-group-dinner stop when the neighborhood needs comfort food at odd hours. The bowls are generous and the room is easy for visitors, which makes it a useful alternative to another bar meal.", {
+  retellStop(findStop(diningStops, "tokyo-dining-sazenka"), "tokyo-roppongi-food-sazenka", "Sazenka serves a Chinese-Japanese tasting menu in Azabu's quiet luxury orbit, using Japanese seasonality and technique without erasing the cuisine's Chinese foundations. The meal offers far more range than another steakhouse or hotel bar.", ["azabu", "fine_dining"]),
+  retellStop(findStop(diningStops, "tokyo-dining-florilege"), "tokyo-roppongi-food-florilege", "Florilege is a Roppongi-side modern dining restaurant for French-Japanese technique and an open-room sense of performance. It is not a casual stop, but it pairs well with museum days and central Tokyo evenings.", ["azabudai", "fine_dining"]),
+  retellStop(findStop(diningStops, "tokyo-dining-leffervescence"), "tokyo-roppongi-food-leffervescence", "L'Effervescence applies French technique to Japanese ingredients in a slow, garden-minded fine-dining room on the Roppongi/Aoyama edge. The long lunch or dinner format cannot be squeezed into a hurried pre-bar slot.", ["aoyama", "fine_dining"]),
+  neighborhoodFoodStop("tokyo-roppongi-food-tsurutontan", "Tsurutontan Roppongi", [35.66313, 139.73389], "Tsurutontan Roppongi is a reliable udon-and-group-dinner restaurant for comfort food at odd hours. The bowls are generous and the room is easy for visitors, which makes it a useful alternative to another bar meal.", {
     cuisineTypes: ["udon", "japanese", "noodles"],
     price: "$$",
     attributeTags: ["udon", "group_friendly", "late_night", "casual", "roppongi"],
@@ -7506,7 +7506,7 @@ const roppongiFoodStops = [
     sourcePhoto: imageSources.tsurutontanRoppongi,
     editorialUrls: ["https://www.timeout.com/tokyo/restaurants/tsurutontan-roppongi", "https://www.google.com/maps/search/?api=1&query=Tsurutontan%20Roppongi%20Tokyo"],
   }),
-  neighborhoodFoodStop("tokyo-roppongi-food-inakaya", "Inakaya Roppongi", [35.66273, 139.73312], "Inakaya is the robatayaki theater pick, with grilled seafood, vegetables, and staff passing food across the counter on paddles. It is visitor-friendly in the best and worst ways, so book it when the group wants performance with dinner.", {
+  neighborhoodFoodStop("tokyo-roppongi-food-inakaya", "Inakaya Roppongi", [35.66273, 139.73312], "Inakaya is a robatayaki theater restaurant, with grilled seafood, vegetables, and staff passing food across the counter on paddles. It is visitor-friendly in the best and worst ways, so book it when the group wants performance with dinner.", {
     cuisineTypes: ["robatayaki", "seafood", "japanese"],
     price: "$$$",
     attributeTags: ["robatayaki", "group_friendly", "theatrical", "reservation_recommended", "roppongi"],
@@ -7514,7 +7514,7 @@ const roppongiFoodStops = [
     sourcePhoto: imageSources.inakayaRoppongi,
     editorialUrls: ["https://www.timeout.com/tokyo/restaurants/inakaya-roppongi", "https://www.google.com/maps/search/?api=1&query=Inakaya%20Roppongi%20Tokyo"],
   }),
-  neighborhoodFoodStop("tokyo-roppongi-food-pst", "Pizza Studio Tamaki Roppongi", [35.66392, 139.73188], "Pizza Studio Tamaki gives Roppongi a break from Japanese-only itineraries without feeling generic, with blistered pizza and a small-room chef focus. It is best for a casual dinner before drinks or a reset after several formal meals.", {
+  neighborhoodFoodStop("tokyo-roppongi-food-pst", "Pizza Studio Tamaki Roppongi", [35.66392, 139.73188], "Pizza Studio Tamaki gives Roppongi a break from Japanese-only itineraries without feeling generic, with blistered pizza and a small-room chef focus.", {
     cuisineTypes: ["pizza", "italian", "wood_fired"],
     price: "$$",
     attributeTags: ["pizza", "casual", "date_night", "small_room", "roppongi"],
@@ -7530,7 +7530,7 @@ const roppongiFoodStops = [
     sourcePhoto: imageSources.robuchonRoppongi,
     editorialUrls: ["https://guide.michelin.com/us/en/tokyo-region/tokyo/restaurant/l-atelier-de-joel-robuchon", "https://www.google.com/maps/search/?api=1&query=L%27Atelier%20de%20Joel%20Robuchon%20Roppongi"],
   }),
-  neighborhoodFoodStop("tokyo-roppongi-food-afuri", "AFURI Roppongi Crossing", [35.66356, 139.73111], "AFURI Roppongi Crossing is the light, practical ramen choice when the neighborhood's late-night options get too heavy. The yuzu-shio style works especially well before a bar stop, museum evening, or train ride back across town.", {
+  neighborhoodFoodStop("tokyo-roppongi-food-afuri", "AFURI Roppongi Crossing", [35.66356, 139.73111], "AFURI Roppongi Crossing is a light, ramen counter when the neighborhood's late-night options get too heavy.", {
     foodServiceType: "counter_service",
     cuisineTypes: ["ramen", "yuzu_shio", "japanese"],
     price: "$",
@@ -7539,7 +7539,7 @@ const roppongiFoodStops = [
     sourcePhoto: imageSources.afuriRoppongi,
     editorialUrls: ["https://www.timeout.com/tokyo/restaurants/afuri", "https://www.google.com/maps/search/?api=1&query=AFURI%20Roppongi%20Crossing"],
   }),
-  neighborhoodFoodStop("tokyo-roppongi-food-rigoletto", "Rigoletto Bar and Grill", [35.66015, 139.73021], "Rigoletto Bar and Grill is the Roppongi Hills group-dinner valve: broad menu, drinks, and enough polish to satisfy mixed appetites. It belongs because every neighborhood guide needs one place that makes an indecisive group easier.", {
+  neighborhoodFoodStop("tokyo-roppongi-food-rigoletto", "Rigoletto Bar and Grill", [35.66015, 139.73021], "Rigoletto Bar and Grill combines a broad menu, drinks, and polished service inside Roppongi Hills. Its range handles mixed appetites and indecisive groups without reducing dinner to a food court.", {
     cuisineTypes: ["italian", "spanish", "grill"],
     price: "$$",
     attributeTags: ["group_friendly", "casual", "roppongi_hills", "drinks", "tourist_friendly"],
@@ -7550,12 +7550,12 @@ const roppongiFoodStops = [
 ];
 
 const roppongiNightlifeStops = [
-  retellStop(findStop(casualBarStops, "tokyo-bars-gonpachi-nishiazabu"), "tokyo-roppongi-nightlife-gonpachi", "Gonpachi Nishi-Azabu stays in the Roppongi nightlife guide because groups often need food, drinks, and a recognizable room more than a delicate bar counter. It is tourist-famous, but it still performs a practical late-evening role.", ["roppongi", "group_friendly"]),
-  retellStop(findStop(cocktailStops, "tokyo-cocktail-tokyo-confidential"), "tokyo-roppongi-nightlife-tokyo-confidential", "Tokyo Confidential is the Azabu-Juban cocktail stop for skyline energy and modern signatures, close enough to make sense in a Roppongi night. Reserve or check event status before treating it as the guaranteed final drink.", ["azabu", "cocktails"]),
-  retellStop(findStop(cocktailStops, "tokyo-cocktail-gen-yamamoto"), "tokyo-roppongi-nightlife-gen-yamamoto", "Gen Yamamoto is the quiet counterweight to Roppongi's louder reputation, with seasonal tasting-menu cocktails and a room that asks people to listen. It is best for two drinkers who want restraint before or after dinner nearby.", ["azabu", "cocktails"]),
-  retellStop(findStop(cocktailStops, "tokyo-cocktail-gold-bar-edition"), "tokyo-roppongi-nightlife-gold-bar", "Gold Bar at EDITION sits just outside Roppongi's core, but Toranomon/Kamiyacho routing makes it a natural dressy cocktail stop for central nights. The official page controls events and openings, so plan it like a hotel bar rather than a walk-by pub.", ["toranomon", "hotel_bar"]),
-  retellStop(findStop(cocktailStops, "tokyo-cocktail-memento-mori"), "tokyo-roppongi-nightlife-memento-mori", "Memento Mori adds a cacao-focused cocktail angle to the Roppongi/Toranomon edge, useful when you want the drink itself to have a clear concept. It is better for a small, curious group than a loud crawl.", ["toranomon", "cocktails"]),
-  neighborhoodNightlifeStop("tokyo-roppongi-nightlife-geronimo", "Geronimo Shot Bar", [35.66266, 139.73276], "Geronimo Shot Bar is pure Roppongi chaos in the useful sense: loud, social, late, and built for a quick hit of nightlife rather than a contemplative drink. It belongs here because visitors often ask for exactly this version of the neighborhood.", {
+  retellStop(findStop(casualBarStops, "tokyo-bars-gonpachi-nishiazabu"), "tokyo-roppongi-nightlife-gonpachi", "Gonpachi Nishi-Azabu is a large, tourist-famous izakaya with food, drinks, and a theatrical timber room that can absorb groups late in the evening. Recognition matters less than the practical scale.", ["roppongi", "group_friendly"]),
+  retellStop(findStop(cocktailStops, "tokyo-cocktail-tokyo-confidential"), "tokyo-roppongi-nightlife-tokyo-confidential", "Tokyo Confidential is an Azabu-Juban cocktail bar for skyline energy and modern signatures, close enough to make sense in a Roppongi night.", ["azabu", "cocktails"]),
+  retellStop(findStop(cocktailStops, "tokyo-cocktail-gen-yamamoto"), "tokyo-roppongi-nightlife-gen-yamamoto", "Gen Yamamoto is the quiet counterweight to Roppongi's louder reputation, with seasonal tasting-menu cocktails and a room that asks people to listen.", ["azabu", "cocktails"]),
+  retellStop(findStop(cocktailStops, "tokyo-cocktail-gold-bar-edition"), "tokyo-roppongi-nightlife-gold-bar", "Gold Bar at EDITION sits just outside Roppongi's core, but Toranomon/Kamiyacho routing makes it a natural dressy cocktail stop for central nights.", ["toranomon", "hotel_bar"]),
+  retellStop(findStop(cocktailStops, "tokyo-cocktail-memento-mori"), "tokyo-roppongi-nightlife-memento-mori", "Memento Mori builds cocktails around cacao on the Roppongi/Toranomon edge, giving each drink a clear concept. The focused room suits a small, curious group better than a loud crawl.", ["toranomon", "cocktails"]),
+  neighborhoodNightlifeStop("tokyo-roppongi-nightlife-geronimo", "Geronimo Shot Bar", [35.66266, 139.73276], "Geronimo Shot Bar is pure Roppongi chaos in the useful sense: loud, social, late, and built for a quick hit of nightlife rather than a contemplative drink.", {
     nightlifeType: "pub",
     musicGenres: ["bar_music"],
     price: "$$",
@@ -7573,7 +7573,7 @@ const roppongiNightlifeStops = [
     sourcePhoto: imageSources.goodbeerFaucets,
     editorialUrls: ["https://tokyocheapo.com/food-and-drink/tokyo-craft-beer-bars/", "https://www.google.com/maps/search/?api=1&query=BrewDog%20Roppongi%20Tokyo"],
   }),
-  neighborhoodNightlifeStop("tokyo-roppongi-nightlife-agave", "Agave", [35.66245, 139.73267], "Agave gives Roppongi a tequila and mezcal specialist that is more interesting than another generic club-adjacent bar. It works best as a focused stop for spirits fans or a small group warming up before later noise.", {
+  neighborhoodNightlifeStop("tokyo-roppongi-nightlife-agave", "Agave", [35.66245, 139.73267], "Agave gives Roppongi a tequila and mezcal specialist that is more interesting than another generic club-adjacent bar.", {
     nightlifeType: "cocktail_bar",
     musicGenres: ["bar_music"],
     price: "$$",
@@ -7582,7 +7582,7 @@ const roppongiNightlifeStops = [
     sourcePhoto: imageSources.agaveRoppongi,
     editorialUrls: ["https://www.timeout.com/tokyo/bars-and-pubs/agave", "https://www.google.com/maps/search/?api=1&query=Agave%20Roppongi%20Tokyo"],
   }),
-  neighborhoodNightlifeStop("tokyo-roppongi-nightlife-billboard-live", "Billboard Live Tokyo", [35.66579, 139.73002], "Billboard Live Tokyo is the Midtown live-music choice when the night should have a ticket, a seat, and a real performance. The show calendar decides whether it belongs in your trip, so start there before booking dinner.", {
+  neighborhoodNightlifeStop("tokyo-roppongi-nightlife-billboard-live", "Billboard Live Tokyo", [35.66579, 139.73002], "Billboard Live Tokyo is a Midtown live-music venue when the night should have a ticket, a seat, and a real performance.", {
     nightlifeType: "live_music_venue",
     musicGenres: ["jazz", "soul", "pop"],
     price: "$$$",
@@ -7623,7 +7623,7 @@ const uenoFoodStops = [
       notes: "Official branch page lists the public branch name らーめん鴨to葱 御徒町店, address 東京都台東区上野6-4-15, 24-hour service, 19 seats, and the Okachimachi station access; Google Maps uses 6 Chome-4-15 Ueno, Taito City, Tokyo 110-0005 for this branch, and Tabelog confirms the same address and daily 24-hour service with sell-out risk.",
     },
   }),
-  neighborhoodFoodStop("tokyo-ueno-food-ponta", "Ponta Honke", [35.706351, 139.773012], "Ponta Honke gives Ueno an old-school yoshoku anchor, the kind of room that makes a park-and-museum day feel grounded instead of snacky. It is best as a planned lunch or early dinner because the Tabelog schedule has split service and a Monday closure.", {
+  neighborhoodFoodStop("tokyo-ueno-food-ponta", "Ponta Honke", [35.706351, 139.773012], "Ponta Honke is an old-school Ueno yoshoku room known for Western-influenced Japanese cooking and a more substantial meal than park snacks. Split service and a Monday closure favor planned lunch or early dinner.", {
     cuisineTypes: ["yoshoku", "cutlet", "japanese"],
     price: "$$",
     priceSource: "Tabelog English venue page / Google Maps",
@@ -7635,7 +7635,7 @@ const uenoFoodStops = [
     editorialUrls: ["https://tabelog.com/en/tokyo/A1311/A131101/13003587/", maps("Ponta Honke Ueno Tokyo")],
     sourceEvidence: { checkedAt: uenoCheckedAt, notes: "Tabelog English venue page lists Ponta Honke address, coordinates, rating, split lunch/dinner hours, last order, and Monday closure." },
   }),
-  neighborhoodFoodStop("tokyo-ueno-food-yamabe", "Tonkatsu Yamabe Ueno", [35.708682, 139.773844], "Tonkatsu Yamabe is the efficient fried-cutlet stop Ueno needs: simple, crowded, and better used as a decisive meal than a lingering restaurant plan. The daily split hours make it easy to route around Ameyoko shopping, but peak meal times can still turn into a line.", {
+  neighborhoodFoodStop("tokyo-ueno-food-yamabe", "Tonkatsu Yamabe Ueno", [35.708682, 139.773844], "Tonkatsu Yamabe is a simple, crowded Ueno counter focused on crisp fried pork cutlets and efficient set meals. Daily split hours and peak-time lines matter more than lingering service.", {
     foodServiceType: "counter_service",
     cuisineTypes: ["tonkatsu", "japanese", "set_meal"],
     price: "$",
@@ -7648,7 +7648,7 @@ const uenoFoodStops = [
     editorialUrls: ["https://tabelog.com/en/tokyo/A1311/A131101/13162760/", maps("Tonkatsu Yamabe Ueno Tokyo")],
     sourceEvidence: { checkedAt: uenoCheckedAt, notes: "Tabelog English venue page lists Tonkatsu Yamabe Ueno address, coordinates, rating, and daily lunch/dinner hours." },
   }),
-  neighborhoodFoodStop("tokyo-ueno-food-yabu-soba", "Ueno Yabu Soba", [35.710204, 139.775471], "Ueno Yabu Soba is the classic noodle room for travelers who want a quieter Ueno meal between park culture and Ameyoko energy. It belongs here for soba history and neighborhood fit, with the practical warning that Wednesdays and some Tuesdays are closed.", {
+  neighborhoodFoodStop("tokyo-ueno-food-yabu-soba", "Ueno Yabu Soba", [35.710204, 139.775471], "Ueno Yabu Soba is the classic noodle room for a quieter Ueno meal between park culture and Ameyoko energy.", {
     foodServiceType: "restaurant",
     cuisineTypes: ["soba", "japanese", "noodles"],
     price: "$$",
@@ -7661,7 +7661,7 @@ const uenoFoodStops = [
     editorialUrls: ["https://tabelog.com/en/tokyo/A1311/A131101/13003594/", maps("Ueno Yabu Soba Tokyo")],
     sourceEvidence: { checkedAt: uenoCheckedAt, notes: "Tabelog English venue page lists Ueno Yabu Soba address, coordinates, rating, lunch/dinner hours, Wednesday closure, and 2nd/4th Tuesday closure." },
   }),
-  neighborhoodFoodStop("tokyo-ueno-food-insho-tei", "Insho Tei", [35.713896, 139.772644], "Insho Tei earns its slot by sitting inside Ueno Park's cultural orbit, making it a proper meal between museum rooms rather than another station snack. It is useful for travelers who want Japanese dining without leaving the park side, but dinner should be checked against the shorter Sunday and holiday close.", {
+  neighborhoodFoodStop("tokyo-ueno-food-insho-tei", "Insho Tei", [35.713896, 139.772644], "Insho Tei serves a proper seated meal inside Ueno Park, offering measured Japanese dining within the district's museum and garden setting rather than another station snack.", {
     foodServiceType: "restaurant",
     cuisineTypes: ["japanese", "kaiseki", "park_restaurant"],
     price: "$$$",
@@ -7687,7 +7687,7 @@ const uenoFoodStops = [
     editorialUrls: ["https://tabelog.com/en/tokyo/A1311/A131101/13003586/", maps("Unagi Kappo Izuei Honten Ueno Tokyo")],
     sourceEvidence: { checkedAt: uenoCheckedAt, notes: "Tabelog English venue page lists Izuei Honten address, coordinates, rating, daily 11:00 AM-9:00 PM service, last orders, and Dec 31/Jan 1 closure." },
   }),
-  neighborhoodFoodStop("tokyo-ueno-food-kurofune", "Kurofune Tei", [35.709983, 139.773223], "Kurofune Tei is Ueno's useful yoshoku dining room for travelers who want a sit-down meal with Western-Japanese comfort instead of a counter sprint. It works especially well with mixed groups, but Monday closure rules and holiday substitutions deserve attention.", {
+  neighborhoodFoodStop("tokyo-ueno-food-kurofune", "Kurofune Tei", [35.709983, 139.773223], "Kurofune Tei is Ueno's useful yoshoku dining room for a sit-down meal with Western-Japanese comfort instead of a counter sprint. It works especially well with mixed groups, but Monday closure rules and holiday substitutions deserve attention.", {
     foodServiceType: "restaurant",
     cuisineTypes: ["yoshoku", "japanese", "western_japanese"],
     price: "$$",
@@ -7700,7 +7700,7 @@ const uenoFoodStops = [
     editorialUrls: ["https://tabelog.com/en/tokyo/A1311/A131101/13003640/", maps("Kurofune Tei Ueno Tokyo")],
     sourceEvidence: { checkedAt: uenoCheckedAt, notes: "Tabelog English venue page lists Kurofune Tei address, coordinates, rating, weekday split service, weekend continuous service, and Monday/holiday closure logic." },
   }),
-  neighborhoodFoodStop("tokyo-ueno-food-moheji", "Monja Moheji Ueno", [35.7104315, 139.774573], "Monja Moheji Ueno brings Tsukishima-style monjayaki into the Ameyoko route, with staff-cooked iron-plate food that is easier for first-timers than trying to parse the griddle alone. It belongs here because Ueno food should include loud, shared, after-shopping meals as well as counters and classics; use the main Ueno branch at 6-11-2, not the nearby annex.", {
+  neighborhoodFoodStop("tokyo-ueno-food-moheji", "Monja Moheji Ueno", [35.7104315, 139.774573], "Monja Moheji Ueno serves Tsukishima-style monjayaki near Ameyoko, with staff cooking the savory batter on the table's iron plate for first-timers.", {
     foodServiceType: "restaurant",
     cuisineTypes: ["monjayaki", "okonomiyaki", "teppanyaki", "japanese"],
     price: "$$",
@@ -7719,7 +7719,7 @@ const uenoFoodStops = [
       notes: "Google Maps confirms the main Monja Moheji Ueno branch at Ueno 6-11-2, coordinates, high review volume, popular mentaiko-mochi-cheese and squid-ink monja menu highlights, and 11:00 PM close. Tabelog's owner-published page lists the same phone/address, 58 seats, weekday 10:45 AM-11:00 PM hours, and weekend/holiday 10:30 AM-11:00 PM hours.",
     },
   }),
-  neighborhoodFoodStop("tokyo-ueno-food-minatoya", "Minatoya Shokuhin Honten", [35.708375, 139.774638], "Minatoya Shokuhin Honten is the Ameyoko seafood-counter move: casual bowls and market energy instead of a full restaurant ceremony. It belongs because Ueno food should include the street-market side, but the best use is daytime or early evening before the market winds down.", {
+  neighborhoodFoodStop("tokyo-ueno-food-minatoya", "Minatoya Shokuhin Honten", [35.708375, 139.774638], "Minatoya Shokuhin Honten is the Ameyoko seafood-counter move: casual bowls and market energy instead of a full restaurant ceremony.", {
     foodServiceType: "stall",
     cuisineTypes: ["seafood", "kaisendon", "japanese"],
     price: "$",
@@ -7761,7 +7761,7 @@ const uenoNightlifeStops = [
     editorialUrls: ["https://tabelog.com/en/tokyo/A1311/A131101/13093062/", maps("Tachinomi Kadokura Ueno Tokyo")],
     sourceEvidence: { checkedAt: uenoCheckedAt, notes: "Tabelog English venue page lists Kadokura address, coordinates, rating, Sun-Thu hours, and later Fri-Sat/day-before-holiday hours." },
   }),
-  neighborhoodNightlifeStop("tokyo-ueno-nightlife-daitoryo", "Daitoryo", [35.710373, 139.774878], "Daitoryo is the Ueno izakaya workhorse, open from late morning into the night and built for grilled things, beer, and easy turnover. It belongs in the guide because Ameyoko nightlife starts early here; go with the mood instead of expecting a quiet cocktail room.", {
+  neighborhoodNightlifeStop("tokyo-ueno-nightlife-daitoryo", "Daitoryo", [35.710373, 139.774878], "Daitoryo is the Ueno izakaya workhorse, open from late morning into the night and built for grilled things, beer, and easy turnover.", {
     nightlifeType: "pub",
     musicGenres: ["bar_music"],
     price: "$",
@@ -7774,7 +7774,7 @@ const uenoNightlifeStops = [
     editorialUrls: ["https://tabelog.com/en/tokyo/A1311/A131101/13016740/", maps("Daitoryo Ueno Tokyo")],
     sourceEvidence: { checkedAt: uenoCheckedAt, notes: "Tabelog English venue page lists Daitoryo address, coordinates, rating, daily 10:00 AM-11:30 PM hours, and open-year-round status." },
   }),
-  neighborhoodNightlifeStop("tokyo-ueno-nightlife-towa", "TOWA Bakushu to Nihonshu to Soba", [35.711545, 139.774882], "TOWA is the Ueno bridge between dinner and drinks: beer, sake, soba, and a room that can work before the crawl gets rougher. The hours are more restaurant-like than bar-only, so it is a smart first stop, especially with Tuesday closed.", {
+  neighborhoodNightlifeStop("tokyo-ueno-nightlife-towa", "TOWA Bakushu to Nihonshu to Soba", [35.711545, 139.774882], "The hours are more restaurant-like than bar-only, so it is a first pub, especially with Tuesday closed.", {
     nightlifeType: "pub",
     musicGenres: ["bar_music"],
     price: "$$",
@@ -7787,7 +7787,7 @@ const uenoNightlifeStops = [
     editorialUrls: ["https://tabelog.com/en/tokyo/A1311/A131101/13180185/", maps("TOWA Bakushu to Nihonshu to Soba Ueno Tokyo")],
     sourceEvidence: { checkedAt: uenoCheckedAt, notes: "Tabelog English venue page lists TOWA address, coordinates, rating, weekday split hours, Saturday/Sunday hours, Tuesday closure, and New Year's Day closure." },
   }),
-  neighborhoodNightlifeStop("tokyo-ueno-nightlife-tokyo-butchers", "Tokyo Butchers with OKACHI Beer Lab", [35.705145, 139.774293], "Tokyo Butchers with OKACHI Beer Lab is the Okachimachi craft-beer-and-meat stop when a group wants taps, food, and less tiny-counter pressure. It sits south of the Ueno crush, which makes it useful as a seated reset before or after Ameyoko.", {
+  neighborhoodNightlifeStop("tokyo-ueno-nightlife-tokyo-butchers", "Tokyo Butchers with OKACHI Beer Lab", [35.705145, 139.774293], "Tokyo Butchers with OKACHI Beer Lab is an Okachimachi craft-beer-and-meat beer bar when a group wants taps, food, and less tiny-counter pressure.", {
     nightlifeType: "beer_bar",
     musicGenres: ["bar_music"],
     price: "$$",
@@ -7800,7 +7800,7 @@ const uenoNightlifeStops = [
     editorialUrls: ["https://tabelog.com/en/tokyo/A1311/A131101/13229206/", maps("Tokyo Butchers with OKACHI Beer Lab Ueno Tokyo")],
     sourceEvidence: { checkedAt: uenoCheckedAt, notes: "Tabelog English venue page lists Tokyo Butchers with OKACHI Beer Lab address, coordinates, rating, weekday lunch/dinner hours, weekend continuous service, and sell-out caveat." },
   }),
-  neighborhoodNightlifeStop("tokyo-ueno-nightlife-shinobazu-brewery", "Shinobazu Brewery Hitsuji Aisu", [35.709134, 139.771756], "Shinobazu Brewery Hitsuji Aisu gives the Ueno night a local beer angle near Shinobazu Pond instead of only old-school izakaya energy. It is useful for a calmer beer stop, with Friday opening later than the rest of the week according to the Tabelog listing.", {
+  neighborhoodNightlifeStop("tokyo-ueno-nightlife-shinobazu-brewery", "Shinobazu Brewery Hitsuji Aisu", [35.709134, 139.771756], "Shinobazu Brewery Hitsuji Aisu gives the Ueno night a local beer angle near Shinobazu Pond instead of only old-school izakaya energy.", {
     nightlifeType: "brewery",
     musicGenres: ["bar_music"],
     price: "$$",
@@ -7813,7 +7813,7 @@ const uenoNightlifeStops = [
     editorialUrls: ["https://tabelog.com/en/tokyo/A1311/A131101/13265579/", maps("Shinobazu Brewery Hitsuji Aisu Ueno Tokyo")],
     sourceEvidence: { checkedAt: uenoCheckedAt, notes: "Tabelog English venue page lists Shinobazu Brewery Hitsuji Aisu address, coordinates, rating, noon openings most days, Friday 5:00 PM opening, last orders, and year-end/New Year closure caveat." },
   }),
-  neighborhoodNightlifeStop("tokyo-ueno-nightlife-gashue", "Premium Sake Pub GASHUE", [35.709441, 139.77796], "Premium Sake Pub GASHUE is the sake-focused Ueno stop for drinkers who want more direction than a crowded lager-and-skewer room. It works best for a small group, with weekday lunch/dinner hours and a Saturday evening-only schedule.", {
+  neighborhoodNightlifeStop("tokyo-ueno-nightlife-gashue", "Premium Sake Pub GASHUE", [35.709441, 139.77796], "Premium Sake Pub GASHUE is a sake-focused Ueno pub for drinkers who want more direction than a crowded lager-and-skewer room.", {
     nightlifeType: "pub",
     musicGenres: ["bar_music"],
     price: "$$",
@@ -7839,7 +7839,7 @@ const uenoNightlifeStops = [
     editorialUrls: ["https://tabelog.com/en/tokyo/A1311/A131101/13003582/", maps("EST! Yushima Ueno Tokyo")],
     sourceEvidence: { checkedAt: uenoCheckedAt, notes: "Tabelog English venue page lists EST! address, coordinates, rating, Mon-Sat 5:00 PM-midnight hours, and Sunday closure." },
   }),
-  neighborhoodNightlifeStop("tokyo-ueno-nightlife-public-stand", "The Public Stand Ueno", [35.709563, 139.772938], "The Public Stand Ueno is the late-night group fallback the guide needed more than another chain pub: darts, sports screens, VIP seating, snacks, and all-night 6 PM-to-5 AM service on the official branch page. It is built for groups that want easy drinks and games after Ameyoko without losing the exact Ueno pin.", {
+  neighborhoodNightlifeStop("tokyo-ueno-nightlife-public-stand", "The Public Stand Ueno", [35.709563, 139.772938], "The Public Stand Ueno is built for late groups, with darts, sports screens, VIP seating, snacks, and service from 6 PM to 5 AM. The room prioritizes games and sociability over intimate bar craft.", {
     nightlifeType: "gaming_bar",
     musicGenres: ["bar_music"],
     price: "$$",
@@ -7858,7 +7858,7 @@ const uenoNightlifeStops = [
       notes: "Official Public Stand Ueno page lists address at Ueno 2-12-2, darts/VIP facilities, all-day 18:00-29:00 hours, and no regular closing day; Google Maps place card confirms the same branch and 5:00 AM close.",
     },
   }),
-  neighborhoodNightlifeStop("tokyo-ueno-nightlife-grove", "Beer Pong Bar GROVE Ueno", [35.709688, 139.773813], "Beer Pong Bar GROVE Ueno moves the crawl into a proper amusement-bar lane: beer pong, darts, billiards, table games, cocktails, and enough space for a group that has outgrown tiny counter drinking. Gurunavi lists it from 7 PM to 5 AM daily with last order at 4:30 AM, so it is a real late-night Ueno option rather than a dinner-only bar.", {
+  neighborhoodNightlifeStop("tokyo-ueno-nightlife-grove", "Beer Pong Bar GROVE Ueno", [35.709688, 139.773813], "Beer Pong Bar GROVE Ueno moves the crawl into a proper amusement-bar lane: beer pong, darts, billiards, table games, cocktails, and enough space for a group that has outgrown tiny counter drinking. Gurunavi lists it from 7 PM to 5 AM daily with last order at 4:30 AM, so it is a real late-night Ueno bar rather than a dinner-only bar.", {
     nightlifeType: "gaming_bar",
     musicGenres: ["bar_music"],
     price: "$$",
@@ -7899,19 +7899,19 @@ const uenoNightlifeStops = [
 ];
 
 const tokyoNeighborhoodFoodNightlifeGuides = [
-  guide("list-tokyo-shibuya-food", "Shibuya Quick Bites & Crowd-Pleasers", "Food", "best-restaurants", "Shibuya Quick Bites and Crowd-Pleasers", "Shibuya food for ramen, sushi, katsudon, yokocho snacks, tonkatsu, group dinners, and west-side quick meals.", "Shibuya food has to solve crowds, late nights, shopping fatigue, and group indecision. This guide favors useful counters, neighborhood staples, and a few higher-quality sit-down choices that fit the west-side map.", shibuyaFoodStops, neighborhoodFoodNightlifeSources("Shibuya", "food", shibuyaFoodStops), "Shibuya"),
-  guide("list-tokyo-shibuya-nightlife", "Best Nightlife in Shibuya", "Nightlife", "best-bars", "Best Nightlife in Shibuya, Tokyo", "Best nightlife in Shibuya for yokocho counters, craft beer, cocktail bars, music bars, clubs, and late west-side drinks.", "Shibuya nightlife works best when you choose a lane: tiny counters, serious cocktails, beer with friends, or a proper club night. These stops keep the area useful without pretending every neon doorway is equally worth the hangover.", shibuyaNightlifeStops, neighborhoodFoodNightlifeSources("Shibuya", "nightlife", shibuyaNightlifeStops), "Shibuya"),
-  guide("list-tokyo-shinjuku-food", "Shinjuku Noodles, Tempura & Late Meals", "Food", "best-restaurants", "Shinjuku Noodles, Tempura and Late Meals", "Shinjuku food for ramen, udon, tempura, sushi, yakiniku, tonkatsu, lunch counters, and late-night noodles.", "Shinjuku food should help you survive the station and still eat well. This guide balances noodle counters, classic lunch rooms, group dinners, and station-smart restaurants so the neighborhood feels navigable instead of endless.", shinjukuFoodStops, neighborhoodFoodNightlifeSources("Shinjuku", "food", shinjukuFoodStops), "Shinjuku"),
-  guide("list-tokyo-shinjuku-nightlife", "Best Nightlife in Shinjuku", "Nightlife", "best-bars", "Best Nightlife in Shinjuku, Tokyo", "Best nightlife in Shinjuku for Golden Gai, Omoide Yokocho, cocktail rooms, jazz, clubs, Nichome, craft beer, and whisky.", "Shinjuku is not one night out; it is a set of choices with very different manners. This guide keeps the obvious icons but adds listening rooms, cocktail bars, and practical group stops so the night has shape.", shinjukuNightlifeStops, neighborhoodFoodNightlifeSources("Shinjuku", "nightlife", shinjukuNightlifeStops), "Shinjuku"),
-  guide("list-tokyo-ginza-food", "Ginza Counters, Kaiseki & Polished Lunches", "Food", "best-restaurants", "Ginza Counters, Kaiseki and Polished Lunches", "Ginza food for sushi, kaiseki, tempura, ramen, yakitori, French dining, teppanyaki, and polished lunches.", "Ginza can be intimidating because the neighborhood does expensive very well. This guide gives it range: elite counters, ramen queues, classic sushi, and practical meals that make a central Tokyo day feel deliberate.", ginzaFoodStops, neighborhoodFoodNightlifeSources("Ginza", "food", ginzaFoodStops), "Ginza"),
-  guide("list-tokyo-ginza-nightlife", "Best Nightlife in Ginza", "Nightlife", "best-bars", "Best Nightlife in Ginza, Tokyo", "Best nightlife in Ginza for classic cocktail bars, bespoke drinks, historic bars, budget rounds, lounges, and quiet nightcaps.", "Ginza nightlife is at its best when it is precise: small rooms, measured service, and drinks that do not need a crowd to justify them. The guide mixes iconic cocktail counters with cheaper and looser options so the neighborhood is not only a splurge.", ginzaNightlifeStops, neighborhoodFoodNightlifeSources("Ginza", "nightlife", ginzaNightlifeStops), "Ginza"),
-  guide("list-tokyo-asakusa-food", "Asakusa Classics & Temple Snacks", "Food", "best-restaurants", "Asakusa Classics and Temple Snacks", "Asakusa food for tempura, sukiyaki, soba, ramen, melonpan, matcha, street snacks, unagi, and temple-route meals.", "Asakusa food is strongest when it feels tied to the walk: temple snacks, old dining rooms, soba, tendon, and casual drinking food near the entertainment lanes. These stops keep the neighborhood's old-town pace while giving travelers enough practical meals to build a day.", asakusaFoodStops, neighborhoodFoodNightlifeSources("Asakusa", "food", asakusaFoodStops), "Asakusa"),
-  guide("list-tokyo-asakusa-nightlife", "Best Nightlife in Asakusa", "Nightlife", "best-bars", "Best Nightlife in Asakusa, Tokyo", "Best nightlife in Asakusa for Hoppy Street, classic beer halls, craft beer, sake tasting, hostel bars, pubs, distillery drinks, and quiet nightcaps.", "Asakusa nightlife is thinner than Shinjuku or Shibuya, so the guide stays honest: start earlier, drink closer to the old streets, and use nearby Kuramae when the night needs a second act. These stops are chosen for usefulness, not padded density.", asakusaNightlifeStops, neighborhoodFoodNightlifeSources("Asakusa", "nightlife", asakusaNightlifeStops), "Asakusa"),
-  guide("list-tokyo-asakusa-hoppy-street-izakayas", "Best Hoppy Street Izakayas", "Nightlife", "hoppy-street-izakayas", "Best Hoppy Street Izakayas in Asakusa, Tokyo", "Best Hoppy Street izakayas in Asakusa for shochu-and-Hoppy highballs, nikomi, motsu, yakiton, daytime drinking, exact shop pins, and casual old-town crawls.", "Hoppy Street works best when it is not treated as one blob on the map. Hoppy is the bitter, beerlike mixer poured with shochu: order more shochu as naka, more bottled Hoppy as soto, and build the drink slowly while food arrives. Start with gyusuji or motsu nikomi, add yakiton or motsuyaki skewers, then use horumon, potato salad, or ham katsu as the classic table-filler dishes. This guide separates the actual taverns worth targeting: the classic small rooms first, then the exact Hoppy-dori shops that give a crawl capacity, hours, and a useful fallback when the famous counters are full.", hoppyStreetIzakayaStops, neighborhoodFoodNightlifeSources("Asakusa", "nightlife", hoppyStreetIzakayaStops), "Asakusa"),
-  guide("list-tokyo-ueno-food", "Ueno Park, Ameyoko & Old-School Counters", "Food", "best-restaurants", "Ueno Park, Ameyoko and Old-School Counters", "Ueno food for ramen, tonkatsu, unagi, soba, yoshoku, monjayaki, seafood bowls, park lunches, and station meals.", "Ueno food works because the neighborhood has two speeds: park-and-museum meals that feel old Tokyo, and Ameyoko counters and griddles that are fast, loud, and useful. This guide keeps both on the map so travelers can build a day around Ueno Park, Okachimachi, and the station without drifting into filler.", uenoFoodStops, neighborhoodFoodNightlifeSources("Ueno", "food", uenoFoodStops), "Ueno"),
+  guide("list-tokyo-shibuya-food", "Shibuya Quick Bites & Crowd-Pleasers", "Food", "best-restaurants", "Shibuya Quick Bites and Crowd-Pleasers", "Shibuya food for ramen, sushi, katsudon, yokocho snacks, tonkatsu, group dinners, and west-side quick meals.", "Shibuya food has to solve crowds, late nights, shopping fatigue, and group indecision.", shibuyaFoodStops, neighborhoodFoodNightlifeSources("Shibuya", "food", shibuyaFoodStops), "Shibuya"),
+  guide("list-tokyo-shibuya-nightlife", "Best Nightlife in Shibuya", "Nightlife", "best-bars", "Best Nightlife in Shibuya, Tokyo", "Best nightlife in Shibuya for yokocho counters, craft beer, cocktail bars, music bars, clubs, and late west-side drinks.", "Shibuya nightlife ranges from tiny yokocho counters and serious cocktail rooms to social beer bars, music venues, and full club nights. Drinks, sound, crowd, and room scale separate the scenes.", shibuyaNightlifeStops, neighborhoodFoodNightlifeSources("Shibuya", "nightlife", shibuyaNightlifeStops), "Shibuya"),
+  guide("list-tokyo-shinjuku-food", "Shinjuku Noodles, Tempura & Late Meals", "Food", "best-restaurants", "Shinjuku Noodles, Tempura and Late Meals", "Shinjuku food for ramen, udon, tempura, sushi, yakiniku, tonkatsu, lunch counters, and late-night noodles.", "Shinjuku's vast station area rewards restaurants with a clear specialty: ramen and udon counters, tempura and tonkatsu lunches, sushi, yakiniku, and dependable late-night noodles. Service format and exit location matter almost as much as cuisine.", shinjukuFoodStops, neighborhoodFoodNightlifeSources("Shinjuku", "food", shinjukuFoodStops), "Shinjuku"),
+  guide("list-tokyo-shinjuku-nightlife", "Best Nightlife in Shinjuku", "Nightlife", "best-bars", "Best Nightlife in Shinjuku, Tokyo", "Best nightlife in Shinjuku for Golden Gai, Omoide Yokocho, cocktail rooms, jazz, clubs, Nichome, craft beer, and whisky.", "Shinjuku is not one night out; it is a set of choices with very different manners.", shinjukuNightlifeStops, neighborhoodFoodNightlifeSources("Shinjuku", "nightlife", shinjukuNightlifeStops), "Shinjuku"),
+  guide("list-tokyo-ginza-food", "Ginza Counters, Kaiseki & Polished Lunches", "Food", "best-restaurants", "Ginza Counters, Kaiseki and Polished Lunches", "Ginza food for sushi, kaiseki, tempura, ramen, yakitori, French dining, teppanyaki, and polished lunches.", "Ginza can be intimidating because the neighborhood does expensive very well.", ginzaFoodStops, neighborhoodFoodNightlifeSources("Ginza", "food", ginzaFoodStops), "Ginza"),
+  guide("list-tokyo-ginza-nightlife", "Best Nightlife in Ginza", "Nightlife", "best-bars", "Best Nightlife in Ginza, Tokyo", "Best nightlife in Ginza for classic cocktail bars, bespoke drinks, historic bars, budget rounds, lounges, and quiet nightcaps.", "Ginza nightlife is at its best when it is precise: small rooms, measured service, and drinks that do not need a crowd to justify them.", ginzaNightlifeStops, neighborhoodFoodNightlifeSources("Ginza", "nightlife", ginzaNightlifeStops), "Ginza"),
+  guide("list-tokyo-asakusa-food", "Asakusa Classics & Temple Snacks", "Food", "best-restaurants", "Asakusa Classics and Temple Snacks", "Asakusa food for tempura, sukiyaki, soba, ramen, melonpan, matcha, street snacks, unagi, and temple-route meals.", "Asakusa food is strongest when it feels tied to the walk: temple snacks, old dining rooms, soba, tendon, and casual drinking food near the entertainment lanes.", asakusaFoodStops, neighborhoodFoodNightlifeSources("Asakusa", "food", asakusaFoodStops), "Asakusa"),
+  guide("list-tokyo-asakusa-nightlife", "Best Nightlife in Asakusa", "Nightlife", "best-bars", "Best Nightlife in Asakusa, Tokyo", "Best nightlife in Asakusa for Hoppy Street, classic beer halls, craft beer, sake tasting, hostel bars, pubs, distillery drinks, and quiet nightcaps.", "Asakusa nightlife starts earlier and feels smaller than Shinjuku or Shibuya. Hoppy taverns, classic beer halls, sake tasting, craft beer, hostel bars, and nearby Kuramae cocktails give the old streets several distinct drinking formats.", asakusaNightlifeStops, neighborhoodFoodNightlifeSources("Asakusa", "nightlife", asakusaNightlifeStops), "Asakusa"),
+  guide("list-tokyo-asakusa-hoppy-street-izakayas", "Best Hoppy Street Izakayas", "Nightlife", "hoppy-street-izakayas", "Best Hoppy Street Izakayas in Asakusa, Tokyo", "Best Hoppy Street izakayas in Asakusa for shochu-and-Hoppy highballs, nikomi, motsu, yakiton, daytime drinking, exact shop pins, and casual old-town crawls.", "Asakusa's Hoppy Street is a row of distinct taverns centered on Hoppy mixed with shochu. Order more shochu as naka and more bottled Hoppy as soto; typical plates include gyusuji or motsu nikomi, yakiton, horumon, potato salad, and ham katsu. Shops differ in hours, smoke, crowd, and seating.", hoppyStreetIzakayaStops, neighborhoodFoodNightlifeSources("Asakusa", "nightlife", hoppyStreetIzakayaStops), "Asakusa"),
+  guide("list-tokyo-ueno-food", "Ueno Park, Ameyoko & Old-School Counters", "Food", "best-restaurants", "Ueno Park, Ameyoko and Old-School Counters", "Ueno food for ramen, tonkatsu, unagi, soba, yoshoku, monjayaki, seafood bowls, park lunches, and station meals.", "Ueno food moves at two speeds: old-Tokyo meals beside the park and museums, then fast, loud Ameyoko counters and griddles under the tracks.", uenoFoodStops, neighborhoodFoodNightlifeSources("Ueno", "food", uenoFoodStops), "Ueno"),
   guide("list-tokyo-ueno-nightlife", "Best Nightlife in Ueno", "Nightlife", "best-bars", "Best Nightlife in Ueno, Tokyo", "Best nightlife in Ueno for Ameyoko standing bars, izakayas, craft beer, sake pubs, cocktail bars, darts, karaoke, shisha, and late group drinks.", "Ueno nightlife starts earlier and rougher-edged than Shibuya or Ginza, which is exactly its appeal. The best night mixes Ameyoko standing bars, old-school izakayas, beer and sake stops, then late darts, karaoke, shisha, or a quieter Yushima counter when the market energy has done enough.", uenoNightlifeStops, neighborhoodFoodNightlifeSources("Ueno", "nightlife", uenoNightlifeStops), "Ueno"),
-  guide("list-tokyo-roppongi-food", "Roppongi Dinner Plans & Group Tables", "Food", "best-restaurants", "Roppongi Dinner Plans and Group Tables", "Roppongi food for izakaya dinners, fine dining, udon, robatayaki, pizza, French counters, ramen, and group meals.", "Roppongi food works best when it admits the neighborhood's split personality: museums and fine dining on one side, late group dinners and visitor-friendly rooms on the other. This guide keeps both, because that is how travelers actually use the area.", roppongiFoodStops, neighborhoodFoodNightlifeSources("Roppongi", "food", roppongiFoodStops), "Roppongi"),
-  guide("list-tokyo-roppongi-nightlife", "Best Nightlife in Roppongi", "Nightlife", "best-bars", "Best Nightlife in Roppongi, Tokyo", "Best nightlife in Roppongi for cocktail bars, hotel bars, shot bars, craft beer, tequila, live music, rock bars, and late group drinks.", "Roppongi is worth keeping because its nightlife is legible: cocktails, hotel bars, live music, late chaos, and central Tokyo routing in one pocket. This guide separates the grown-up drinks from the party rooms so travelers can choose the version of Roppongi they mean.", roppongiNightlifeStops, neighborhoodFoodNightlifeSources("Roppongi", "nightlife", roppongiNightlifeStops), "Roppongi"),
+  guide("list-tokyo-roppongi-food", "Roppongi Dinner Plans & Group Tables", "Food", "best-restaurants", "Roppongi Dinner Plans and Group Tables", "Roppongi food for izakaya dinners, fine dining, udon, robatayaki, pizza, French counters, ramen, and group meals.", "Roppongi dining reflects the neighborhood's split personality: museums and fine dining sit beside late group restaurants, broad menus, visitor-friendly rooms, and specialist counters.", roppongiFoodStops, neighborhoodFoodNightlifeSources("Roppongi", "food", roppongiFoodStops), "Roppongi"),
+  guide("list-tokyo-roppongi-nightlife", "Best Nightlife in Roppongi", "Nightlife", "best-bars", "Best Nightlife in Roppongi, Tokyo", "Best nightlife in Roppongi for cocktail bars, hotel bars, shot bars, craft beer, tequila, live music, rock bars, and late group drinks.", "Roppongi is worth keeping because its nightlife is legible: cocktails, hotel bars, live music, late chaos, and central Tokyo routing in one pocket.", roppongiNightlifeStops, neighborhoodFoodNightlifeSources("Roppongi", "nightlife", roppongiNightlifeStops), "Roppongi"),
 ];
 
 export const tokyoNeighborhoodGuides: MapList[] = [

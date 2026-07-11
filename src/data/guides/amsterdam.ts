@@ -318,7 +318,7 @@ const stops: Record<string, GuideStop> = {
     "amsterdam-food-rijks",
     "RIJKS",
     [52.36, 4.8852],
-    "RIJKS is the polished Museum Quarter reservation for Dutch ingredients, Indonesian echoes, and a room that works before or after the Rijksmuseum. Use it when the food plan should feel Amsterdam-specific without becoming heavy or old-fashioned.",
+    "RIJKS serves polished modern Dutch cooking in the Museum Quarter, using local ingredients with references to the country's Indonesian history. The dining room feels contemporary and distinctly Amsterdam without leaning on heavy traditionalism.",
     {
       venueKind: "food_drink",
       foodServiceType: "restaurant",
@@ -334,7 +334,7 @@ const stops: Record<string, GuideStop> = {
     "amsterdam-food-de-kas",
     "Restaurant De Kas",
     [52.3601, 4.9301],
-    "De Kas puts the meal inside a greenhouse in Park Frankendael, with vegetable-led menus that make the eastern park detour feel intentional. It is the Amsterdam splurge for travelers who want a calmer room, seasonal cooking, and a reason to leave the canal ring.",
+    "De Kas puts the meal inside a greenhouse in Park Frankendael, with vegetable-led menus that make the eastern park detour feel intentional. It is the Amsterdam splurge for a calmer room, seasonal cooking, and a reason to leave the canal ring.",
     {
       venueKind: "food_drink",
       foodServiceType: "restaurant",
@@ -350,7 +350,7 @@ const stops: Record<string, GuideStop> = {
     "amsterdam-food-blauw",
     "Restaurant Blauw",
     [52.3533, 4.8588],
-    "Restaurant Blauw is the useful Indonesian rijsttafel stop west of the center: shared plates, spice, and a format that explains one of Amsterdam's essential food histories better than another generic bistro meal.",
+    "Restaurant Blauw is an Indonesian rijsttafel restaurant west of the center: shared plates, spice, and a format that explains one of Amsterdam's essential food histories better than another generic bistro meal.",
     {
       venueKind: "food_drink",
       foodServiceType: "restaurant",
@@ -366,7 +366,7 @@ const stops: Record<string, GuideStop> = {
     "amsterdam-food-foodhallen",
     "Foodhallen",
     [52.3671, 4.8685],
-    "Foodhallen gives Oud-West a practical grazing hall: useful for groups, rain, first-night indecision, and a route that wants snacks, drinks, and local vendors without committing to one full table.",
+    "Foodhallen is an Oud-West grazing hall where groups can combine snacks, drinks, and local vendors without committing to one menu or full table. The indoor format is especially practical in rain.",
     {
       venueKind: "food_drink",
       foodServiceType: "stall",
@@ -377,14 +377,14 @@ const stops: Record<string, GuideStop> = {
       officialUrl: "https://foodhallen.nl/amsterdam/",
       sourcePhoto: "https://foodhallen.nl/share-image.jpg",
       places: [
-        stop("amsterdam-foodhallen-de-ballenbar", "De BallenBar", [52.3671, 4.8685], "Bitterballen make this the most Dutch first bite inside the hall.", {
+        stop("amsterdam-foodhallen-de-ballenbar", "De BallenBar", [52.3671, 4.8685], "De BallenBar specializes in bitterballen, serving one of the hall's most distinctly Dutch snacks hot and crisp.", {
           venueKind: "food_drink",
           foodServiceType: "stall",
           cuisineTypes: ["dutch", "street_food"],
           price: "$",
           officialUrl: "https://foodhallen.nl/amsterdam/",
         }),
-        stop("amsterdam-foodhallen-taqueria-lima", "Taqueria Lima", [52.3671, 4.8685], "A flexible taco counter for groups who need a lighter break from fried snacks.", {
+        stop("amsterdam-foodhallen-taqueria-lima", "Taqueria Lima", [52.3671, 4.8685], "Taqueria Lima serves flexible taco orders for groups needing a lighter alternative to the hall's fried snacks.", {
           venueKind: "food_drink",
           foodServiceType: "stall",
           cuisineTypes: ["mexican", "street_food"],
@@ -398,7 +398,7 @@ const stops: Record<string, GuideStop> = {
     "amsterdam-food-winkel43",
     "Winkel 43",
     [52.3795, 4.8866],
-    "Winkel 43 is the Jordaan apple-pie institution: crowded, simple, and still useful because it turns a market or canal walk into a very Amsterdam coffee-and-slice pause.",
+    "Winkel 43 is a crowded, straightforward Jordaan institution known for thick slices of Dutch apple pie served with coffee. The pie, not novelty or elaborate service, explains the persistent demand.",
     {
       venueKind: "food_drink",
       foodServiceType: "cafe",
@@ -414,7 +414,7 @@ const stops: Record<string, GuideStop> = {
     "amsterdam-food-cafe-klepel",
     "Cafe de Klepel",
     [52.3762, 4.885],
-    "Cafe de Klepel is the Jordaan wine-and-bistro room for travelers who want a serious but relaxed dinner near the western canals. It is strongest as a reservation after a canal walk, not as a casual drop-in with a large group.",
+    "Cafe de Klepel is the Jordaan wine-and-bistro room for a serious but relaxed dinner near the western canals.",
     {
       venueKind: "food_drink",
       foodServiceType: "restaurant",
@@ -430,7 +430,7 @@ const stops: Record<string, GuideStop> = {
     "amsterdam-food-vleminckx",
     "Vleminckx de Sausmeester",
     [52.3668, 4.8905],
-    "Vleminckx is the quick fries-and-sauce stop that belongs between shopping streets and canal wandering. It is not a full meal; it is a short, standing, Amsterdam snack with enough ritual to earn its place.",
+    "Vleminckx serves cones of hot fries with a long choice of sauces from a tiny standing counter near the shopping streets. It is a short, specific Amsterdam snack rather than a full meal.",
     {
       venueKind: "food_drink",
       foodServiceType: "fast_food",
@@ -446,7 +446,7 @@ const stops: Record<string, GuideStop> = {
     "amsterdam-food-bakers-roasters",
     "Bakers & Roasters De Pijp",
     [52.3572, 4.8909],
-    "Bakers & Roasters is the De Pijp brunch fallback that actually solves a travel problem: eggs, coffee, groups, and a post-Albert-Cuyp reset without demanding a formal lunch plan.",
+    "Bakers & Roasters is a De Pijp brunch room serving eggs, coffee, and substantial plates with enough seating for groups near Albert Cuyp Market.",
     {
       venueKind: "food_drink",
       foodServiceType: "cafe",
@@ -462,7 +462,7 @@ const stops: Record<string, GuideStop> = {
     "amsterdam-nightlife-cafe-hoppe",
     "Cafe Hoppe",
     [52.3681, 4.8892],
-    "Cafe Hoppe is the central brown-cafe classic for beer, standing space, and old Amsterdam room tone. It works best early in the evening, before the cocktail bars and clubs pull the night into sharper focus.",
+    "Cafe Hoppe is the central brown-cafe classic for beer, standing space, and old Amsterdam room tone.",
     {
       venueKind: "nightlife",
       nightlifeType: "pub",
@@ -477,7 +477,7 @@ const stops: Record<string, GuideStop> = {
     "amsterdam-nightlife-cafe-chris",
     "Cafe Chris",
     [52.3748, 4.8813],
-    "Cafe Chris gives the Jordaan a deeply local brown-cafe stop: wood, billiards, beer, and neighborhood regulars. Use it when the night should slow down instead of chasing another scene room.",
+    "Cafe Chris gives the Jordaan a deeply local brown-cafe stop: wood, billiards, beer, and neighborhood regulars.",
     {
       venueKind: "nightlife",
       nightlifeType: "dive_bar",
@@ -492,7 +492,7 @@ const stops: Record<string, GuideStop> = {
     "amsterdam-nightlife-hiding-in-plain-sight",
     "Hiding in Plain Sight",
     [52.3705, 4.904],
-    "Hiding in Plain Sight is the eastern-center cocktail room for polished drinks without hotel-bar stiffness. It is a strong bridge between canal sightseeing and a later plan in Plantage, Nieuwmarkt, or the eastern docks.",
+    "Hiding in Plain Sight is an eastern-center cocktail bar serving polished drinks in an intimate room without hotel-bar stiffness, close to Nieuwmarkt and the docks.",
     {
       venueKind: "nightlife",
       nightlifeType: "cocktail_bar",
@@ -507,7 +507,7 @@ const stops: Record<string, GuideStop> = {
     "amsterdam-nightlife-door-74",
     "Door 74",
     [52.3659, 4.8935],
-    "Door 74 is the speakeasy-style cocktail stop for a night that wants a reservation, low light, and a little ceremony. It is close enough to Rembrandtplein to be useful without feeling like the square itself.",
+    "Door 74 is a speakeasy-style cocktail cocktail bar for a night that wants a reservation, low light, and a little ceremony. It is close enough to Rembrandtplein to be useful without feeling like the square itself.",
     {
       venueKind: "nightlife",
       nightlifeType: "cocktail_bar",
@@ -522,7 +522,7 @@ const stops: Record<string, GuideStop> = {
     "amsterdam-nightlife-paradiso",
     "Paradiso",
     [52.3622, 4.8839],
-    "Paradiso turns a former church near Leidseplein into one of Amsterdam's key live-music rooms. It belongs in nightlife planning when the night should be organized around a ticket rather than another bar crawl.",
+    "Paradiso turns a former church near Leidseplein into one of Amsterdam's key live-music rooms, with concerts and club nights shaped by the event calendar. Buy for the artist or program rather than treating it as a generic bar.",
     {
       venueKind: "nightlife",
       nightlifeType: "live_music_venue",
@@ -538,7 +538,7 @@ const stops: Record<string, GuideStop> = {
     "amsterdam-nightlife-shelter",
     "Shelter Amsterdam",
     [52.3842, 4.9014],
-    "Shelter puts Amsterdam Noord on the club map with a basement dance floor under A'DAM Tower. It is a late-night choice, best paired with the ferry and a plan for the trip back.",
+    "Shelter puts Amsterdam Noord on the club map with a basement dance floor under A'DAM Tower.",
     {
       venueKind: "nightlife",
       nightlifeType: "club",
@@ -570,7 +570,7 @@ const stops: Record<string, GuideStop> = {
     "amsterdam-nightlife-brouwerij-t-ij",
     "Brouwerij 't IJ",
     [52.3664, 4.9262],
-    "Brouwerij 't IJ is the windmill-side brewery stop for daytime beers, casual groups, and an eastern route that wants something more relaxed than the center's brown cafes.",
+    "Brouwerij 't IJ is a windmill-side brewery and taproom for house beers, daytime drinking, and casual groups in Amsterdam's east.",
     {
       venueKind: "nightlife",
       nightlifeType: "brewery",
@@ -585,7 +585,7 @@ const stops: Record<string, GuideStop> = {
     "amsterdam-culture-rijksmuseum",
     "Rijksmuseum",
     [52.36, 4.8852],
-    "The Rijksmuseum is the city museum anchor: Dutch masters, maritime power, design, colonial context, and a building that makes Museumplein feel ceremonial. Give it a real morning rather than squeezing it between photo stops.",
+    "The Rijksmuseum is a city museum: Dutch masters, maritime power, design, colonial context, and a building that makes Museumplein feel ceremonial. Give it a real morning rather than squeezing it between photo stops.",
     {
       venueKind: "culture",
       subcategories: ["museum", "art", "history"],
@@ -663,7 +663,7 @@ const stops: Record<string, GuideStop> = {
     "amsterdam-culture-foam",
     "Foam Fotografiemuseum Amsterdam",
     [52.3638, 4.8932],
-    "Foam is the canal-house photography museum that makes a compact, high-quality culture stop between Rembrandtplein, the Canal Ring, and De Pijp. It is a good choice when the major museums feel too crowded.",
+    "Foam is the canal-house photography museum that makes a compact, high-quality culture stop between Rembrandtplein, the Canal Ring, and De Pijp. It is a good museum when the major museums feel too crowded.",
     {
       venueKind: "culture",
       subcategories: ["museum", "photography"],
@@ -676,7 +676,7 @@ const stops: Record<string, GuideStop> = {
     "amsterdam-nature-vondelpark",
     "Vondelpark",
     [52.3579, 4.8686],
-    "Vondelpark is Amsterdam's central green lung: bikes, lawns, ponds, cafes, and an easy link between Oud-West and Museumplein. Use it as a reset between museums, brunch, and late drinks.",
+    "Vondelpark is Amsterdam's central green lung: bikes, lawns, ponds, cafes, and an easy link between Oud-West and Museumplein.",
     {
       venueKind: "outdoors",
       subcategories: ["park", "cycling", "walk"],
@@ -689,7 +689,7 @@ const stops: Record<string, GuideStop> = {
     "amsterdam-nature-westerpark",
     "Westerpark",
     [52.386, 4.8752],
-    "Westerpark works because it combines green space with Westergas culture, markets, film, food, and event programming. It is a park day that does not collapse if the weather turns.",
+    "Westerpark combines lawns and paths with Westergas culture, markets, film, food, and event programming. Indoor venues keep the district active when the weather turns.",
     {
       venueKind: "outdoors",
       subcategories: ["park", "culture", "market"],
@@ -702,7 +702,7 @@ const stops: Record<string, GuideStop> = {
     "amsterdam-nature-hortus-botanicus",
     "Hortus Botanicus Amsterdam",
     [52.3666, 4.9075],
-    "Hortus Botanicus gives Plantage a quiet, ticketed green stop with glasshouses, old trees, and a slower rhythm than the museum belt. It is good for a softer afternoon after Rembrandt House or the zoo.",
+    "Hortus Botanicus gives Plantage a quiet, ticketed green stop with glasshouses, old trees, and a slower rhythm than the museum belt.",
     {
       venueKind: "outdoors",
       subcategories: ["garden", "botanical"],
@@ -715,7 +715,7 @@ const stops: Record<string, GuideStop> = {
     "amsterdam-nature-amsterdamse-bos",
     "Amsterdamse Bos",
     [52.3167, 4.8275],
-    "Amsterdamse Bos is the big green escape for cycling, rowing, woods, swimming spots, and long routes south of the city. It is the right pick when the canal ring starts to feel too tight.",
+    "Amsterdamse Bos is a vast southern park for cycling, rowing, woodland walks, swimming areas, and long stretches of open space beyond the canal ring.",
     {
       venueKind: "outdoors",
       subcategories: ["forest", "cycling", "water"],
@@ -728,7 +728,7 @@ const stops: Record<string, GuideStop> = {
     "amsterdam-nature-ndsm-wharf",
     "NDSM Wharf Waterfront",
     [52.4005, 4.8918],
-    "NDSM turns the free ferry into a waterfront wander: street art, industrial scale, terraces, and wide IJ views. It is best treated as a Noord route, not a single photo stop.",
+    "NDSM turns the free ferry into a waterfront wander: street art, industrial scale, terraces, and wide IJ views.",
     {
       venueKind: "outdoors",
       subcategories: ["waterfront", "street_art"],
@@ -741,7 +741,7 @@ const stops: Record<string, GuideStop> = {
     "amsterdam-nature-oosterpark",
     "Oosterpark",
     [52.3601, 4.9207],
-    "Oosterpark is the eastern park for a calmer local loop, especially when paired with Tropenmuseum, Dappermarkt, or Brouwerij 't IJ. It gives the day room without leaving the city.",
+    "Oosterpark is the eastern park for a calmer local loop, especially when paired with Tropenmuseum, Dappermarkt, or Brouwerij 't IJ.",
     {
       venueKind: "outdoors",
       subcategories: ["park", "walk"],
@@ -754,7 +754,7 @@ const stops: Record<string, GuideStop> = {
     "amsterdam-stay-pulitzer",
     "Pulitzer Amsterdam",
     [52.3717, 4.8831],
-    "Pulitzer is the Canal Ring hotel for travelers who want canal-house atmosphere without giving up service polish. It works for first-timers because the Jordaan, Nine Streets, and major sights stay walkable.",
+    "Pulitzer joins 25 historic canal houses into a polished hotel of intimate rooms, courtyards, garden spaces, and waterside character in the western Canal Ring.",
     {
       venueKind: "lodging",
       lodgingType: "hotel",
@@ -784,7 +784,7 @@ const stops: Record<string, GuideStop> = {
     "amsterdam-stay-hotel-jakarta",
     "Hotel Jakarta Amsterdam",
     [52.3778, 4.9148],
-    "Hotel Jakarta gives the eastern waterfront a resort-like greenhouse lobby, Indonesian references, and calmer rooms away from the canal-ring crowds. It is strongest for travelers who value space and tram access over old-center charm.",
+    "Hotel Jakarta gives the eastern waterfront a resort-like greenhouse lobby, Indonesian references, and calmer rooms away from the canal-ring crowds.",
     {
       venueKind: "lodging",
       lodgingType: "hotel",
@@ -799,7 +799,7 @@ const stops: Record<string, GuideStop> = {
     "amsterdam-stay-sir-adam",
     "Sir Adam Hotel",
     [52.3842, 4.9014],
-    "Sir Adam is the Noord hotel for music energy, ferry convenience, and IJ views from A'DAM Tower. Choose it when the trip includes Noord venues, not only old-center museum days.",
+    "Sir Adam occupies A'DAM Tower with music-led interiors, quick ferry access, and broad IJ views. Noord venues sit close, while the old center remains a short crossing away.",
     {
       venueKind: "lodging",
       lodgingType: "hotel",
@@ -814,7 +814,7 @@ const stops: Record<string, GuideStop> = {
     "amsterdam-stay-hoxton-lloyd",
     "The Hoxton, Lloyd Amsterdam",
     [52.3754, 4.9374],
-    "The Hoxton Lloyd gives the Eastern Docklands a design-forward base in a storied building, useful for travelers who want quieter nights, tram access, and a less obvious hotel neighborhood.",
+    "The Hoxton, Lloyd Amsterdam occupies a storied Eastern Docklands building with design-forward rooms, active public spaces, and useful tram access. The waterfront district is quieter and less obvious than the Canal Ring.",
     {
       venueKind: "lodging",
       lodgingType: "hotel",
@@ -844,7 +844,7 @@ const stops: Record<string, GuideStop> = {
     "amsterdam-stay-ambassade",
     "Ambassade Hotel",
     [52.3691, 4.8841],
-    "Ambassade is the literary Canal Ring hotel for travelers who want old-house character, canal views, and a quieter version of central Amsterdam than the main station blocks.",
+    "Ambassade spreads a literary hotel across historic Canal Ring houses, combining canal views, old-house character, a library, and a quieter central setting than the station blocks.",
     {
       venueKind: "lodging",
       lodgingType: "hotel",
@@ -859,7 +859,7 @@ const stops: Record<string, GuideStop> = {
     "amsterdam-stay-mr-jordaan",
     "Mr. Jordaan",
     [52.3742, 4.8795],
-    "Mr. Jordaan is a compact neighborhood hotel for travelers who want the western canals, cafes, and Nine Streets nearby without the formality of a grand hotel.",
+    "Mr. Jordaan is a compact neighborhood hotel for the western canals, cafes, and Nine Streets nearby without the formality of a grand hotel.",
     {
       venueKind: "lodging",
       lodgingType: "hotel",
@@ -889,7 +889,7 @@ const stops: Record<string, GuideStop> = {
     "amsterdam-hostel-generator",
     "Generator Amsterdam",
     [52.3611, 4.9198],
-    "Generator Amsterdam puts a design hostel beside Oosterpark, with social spaces and eastern-neighborhood access. It is a good budget base when you want fewer old-center crowds and a proper park nearby.",
+    "Generator Amsterdam puts a design hostel beside Oosterpark, with social spaces and eastern-neighborhood access. It is a good budget base for fewer old-center crowds and a proper park nearby.",
     {
       venueKind: "lodging",
       lodgingType: "hostel",
@@ -919,7 +919,7 @@ const stops: Record<string, GuideStop> = {
     "amsterdam-hostel-flying-pig-downtown",
     "The Flying Pig Downtown",
     [52.3764, 4.8969],
-    "The Flying Pig Downtown is the central party-hostel option for travelers who want station access and social momentum more than quiet. Use it when nightlife proximity matters more than sleep purity.",
+    "The Flying Pig Downtown is a central party-hostel for station access and social momentum more than quiet.",
     {
       venueKind: "lodging",
       lodgingType: "hostel",
@@ -949,7 +949,7 @@ const stops: Record<string, GuideStop> = {
     "amsterdam-hostel-cocomama",
     "Cocomama",
     [52.3571, 4.8995],
-    "Cocomama is the smaller De Pijp hostel for travelers who want a more domestic, social base near markets and cafes instead of a huge party dorm machine.",
+    "Cocomama is the smaller De Pijp hostel for a more domestic, social base near markets and cafes instead of a huge party dorm machine.",
     {
       venueKind: "lodging",
       lodgingType: "hostel",
@@ -1007,9 +1007,9 @@ const stops: Record<string, GuideStop> = {
     "amsterdam-activity-albert-cuyp-market",
     "Albert Cuyp Market",
     [52.3554, 4.8951],
-    "Albert Cuyp Market gives De Pijp a daytime spine: stroopwafels, herring, fabrics, produce, and quick snacks. Go hungry and treat it as a moving lunch rather than a shopping checklist.",
+    "Albert Cuyp Market lines De Pijp with stroopwafels, herring, produce, fabrics, and quick snacks. The long outdoor market is best experienced through its working stalls and food rather than as a shopping checklist.",
     {
-      venueKind: "retail",
+      venueKind: "food_drink",
       subcategories: ["market", "food"],
       attributeTags: ["market_retail", "street_food", "walking_route", "local_favorite"],
       officialUrl: "https://albertcuyp-markt.amsterdam/",
@@ -1064,7 +1064,7 @@ const stops: Record<string, GuideStop> = {
     "amsterdam-essential-centraal-station",
     "Amsterdam Centraal Station",
     [52.3791, 4.9003],
-    "Amsterdam Centraal is the arrival hinge: trains, trams, metro, ferries, and the old center all collide here. It is useful, crowded, and worth understanding before booking a hotel only by map distance.",
+    "Amsterdam Centraal is the arrival hinge: trains, trams, metro, ferries, and the old center all collide here.",
     {
       venueKind: "transport",
       subcategories: ["train", "tram", "ferry"],
@@ -1077,7 +1077,7 @@ const stops: Record<string, GuideStop> = {
     "amsterdam-essential-noord-ferry",
     "Free Ferry to Amsterdam Noord",
     [52.381, 4.904],
-    "The free ferry makes Noord part of the city center's practical geography. Use it for A'DAM Tower, Eye, Tolhuistuin, NDSM, and late-night planning when bridge routes would be awkward.",
+    "The free ferry connects Amsterdam Centraal with A'DAM Tower, Eye, Tolhuistuin, and NDSM across the IJ. Frequent service makes Noord practical without a bridge detour, including late in the evening.",
     {
       venueKind: "transport",
       subcategories: ["ferry", "waterfront"],
@@ -1176,7 +1176,7 @@ const citywideGuides: GuideSpec[] = [
     "Best Restaurants in Amsterdam",
     "Best restaurants in Amsterdam for Indonesian rijsttafel, greenhouse dining, museum-quarter reservations, markets, brown-cafe meals, and bakery stops.",
     "Indonesian Tables, Greenhouse Rooms, and Canal Snacks",
-    "Amsterdam food works when the day has rhythm: Indonesian rijsttafel, museum-quarter reservations, apple pie in the Jordaan, De Pijp brunch, and market grazing that keeps the canals from turning into a pretty but hungry walk.",
+    "Amsterdam food moves from Indonesian rijsttafel and museum-quarter reservations to Jordaan apple pie, De Pijp brunch, and market grazing beside the canals.",
     "Food",
     "food",
     ["rijks", "deKas", "blauw", "foodhallen", "winkel43", "klepel", "vleminckx", "bakers"],
@@ -1188,7 +1188,7 @@ const citywideGuides: GuideSpec[] = [
     "Best Bars and Nightlife in Amsterdam",
     "Best bars and nightlife in Amsterdam, from brown cafes and cocktail rooms to clubs, breweries, Noord venues, and live music near Leidseplein.",
     "Brown Cafes, Cocktail Rooms, and Ferry Nights",
-    "The night should not be one long Red Light District mistake. Start with brown cafes, add a serious cocktail room, then decide whether the route wants Paradiso, Noord clubs, brewery beers, or a ferry-side venue with more air.",
+    "Amsterdam nightlife spans brown cafes, serious cocktail rooms, brewery taps, live music, Noord clubs, and ferry-side venues with more air than the Red Light District crush.",
     "Nightlife",
     "nightlife",
     ["hoppe", "cafeChris", "hips", "door74", "paradiso", "shelter", "tolhuistuin", "brouwerijIj"],
@@ -1212,7 +1212,7 @@ const citywideGuides: GuideSpec[] = [
     "Best Parks and Nature in Amsterdam",
     "Best parks and nature in Amsterdam, including Vondelpark, Westerpark, Hortus Botanicus, Amsterdamse Bos, Oosterpark, and Noord waterfront walks.",
     "Parks, Ferries, Gardens, and Green Escapes",
-    "Use Amsterdam's green side as part of the route, not a break from it: Vondelpark between museums, Westerpark for food and events, Hortus for glasshouse calm, Amsterdamse Bos for scale, and Noord for waterfront air.",
+    "Amsterdam's green side ranges from busy central lawns and event parks to historic glasshouses, a vast urban forest, neighborhood gardens, and open waterfront. Cycling, ferries, and flat walking paths make these landscapes unusually accessible.",
     "Nature",
     "nature",
     ["vondelpark", "westerpark", "hortus", "amsterdamseBos", "ndsm", "oosterpark"],
@@ -1236,7 +1236,7 @@ const citywideGuides: GuideSpec[] = [
     "Best Hostels in Amsterdam",
     "Best hostels in Amsterdam for social Noord stays, Vondelpark museum access, central party bases, De Pijp dorms, and quieter eastern neighborhoods.",
     "Budget Beds With Real Neighborhood Logic",
-    "A good Amsterdam hostel should save money without wasting the city. ClinkNOORD and Flying Pig keep the night social, Stayokay Vondelpark and Hans Brinker solve the museum belt, while Cocomama, Ecomama, Generator, and Via Amsterdam offer quieter or cheaper tradeoffs.",
+    "Amsterdam hostels vary sharply between party-heavy central beds, social Noord properties, museum-area dorms, and quieter eastern or outlying bases. Dorm and private-room choice, bar programming, ferry or tram access, and late-night noise are the real tradeoffs.",
     "Stay",
     "hostels",
     ["clinkNoord", "generator", "stayokayVondel", "flyingPigDowntown", "hansBrinker", "cocomama", "ecomama", "viaAmsterdam"],
@@ -1260,7 +1260,7 @@ const citywideGuides: GuideSpec[] = [
     "Amsterdam Transport Essentials",
     "Amsterdam transport essentials covering Schiphol trains, Centraal Station, GVB trams and metro, free Noord ferries, and route planning.",
     "Airport Trains, Trams, and Free Ferries",
-    "Amsterdam is walkable until luggage, rain, museum timing, or Noord enters the plot. Use the Schiphol train, understand Centraal, keep GVB trams in the plan, and treat the free ferry as normal transit rather than a novelty.",
+    "Amsterdam transport becomes essential with luggage, rain, museum appointments, or Noord. Schiphol trains, Centraal, GVB trams, and the free ferry form the practical network.",
     "Essentials",
     "transport",
     ["schipholTrain", "centraal", "gvbTram", "noordFerry"],
@@ -1280,29 +1280,29 @@ const citywideGuides: GuideSpec[] = [
 ];
 
 const neighborhoodGuides: GuideSpec[] = [
-  baseGuide("jordaan-hotels", "jordaan-hotels", "best-hotels", "Best Hotels in Jordaan, Amsterdam", "Best hotels in Jordaan, Amsterdam, for canal-house stays, quieter western canals, Nine Streets access, and first-timer walkability.", "Canal-House Sleep Near the Western Rings", "Jordaan hotels work when the trip wants charm without giving up central access. Pulitzer, Mr. Jordaan, and Ambassade keep the western canals, cafes, and Nine Streets close while staying calmer than the station blocks.", "Stay", "stay", ["pulitzer", "mrJordaan", "ambasssade"], "Jordaan"),
-  baseGuide("canal-ring-hotels", "canal-ring-hotels", "best-hotels", "Best Hotels in the Canal Ring, Amsterdam", "Best hotels in Amsterdam's Canal Ring, including literary canal houses, luxury bases, and walkable stays near museums and Jordaan.", "Old Houses With Useful Geography", "The Canal Ring is the Amsterdam base for travelers who want walks to do the work. Pulitzer and Ambassade bring canal-house character, while Conservatorium sits just south when museum access matters more than sleeping directly on the water.", "Stay", "stay", ["pulitzer", "ambasssade", "conservatorium"], "Centrum (Canal Ring)"),
-  baseGuide("museum-quarter-hotels", "museum-quarter-hotels", "best-hotels", "Best Hotels in the Museum Quarter, Amsterdam", "Best hotels in Amsterdam's Museum Quarter for Rijksmuseum, Van Gogh Museum, Stedelijk, Vondelpark, and quieter luxury stays.", "Sleep Beside the Museum Lawn", "The Museum Quarter is the easiest base for culture-heavy days. Conservatorium is the polished anchor, Pulitzer and Ambassade keep canal charm within reach, and the rhythm is simple: museum, park, dinner, tram home.", "Stay", "stay", ["conservatorium", "pulitzer", "ambasssade"], "Museum Quarter"),
+  baseGuide("jordaan-hotels", "jordaan-hotels", "best-hotels", "Best Hotels in Jordaan, Amsterdam", "Best hotels in Jordaan, Amsterdam, for canal-house stays, quieter western canals, Nine Streets access, and first-timer walkability.", "Canal-House Sleep Near the Western Rings", "Jordaan hotels pair western-canal charm with cafes, the Nine Streets, and central access while remaining calmer than the station blocks.", "Stay", "stay", ["pulitzer", "mrJordaan", "ambasssade"], "Jordaan"),
+  baseGuide("canal-ring-hotels", "canal-ring-hotels", "best-hotels", "Best Hotels in the Canal Ring, Amsterdam", "Best hotels in Amsterdam's Canal Ring, including literary canal houses, luxury bases, and walkable stays near museums and Jordaan.", "Old Houses With Useful Geography", "Canal Ring hotels put much of Amsterdam within walking distance, balancing canal-house character against the stronger museum access found just south of the water.", "Stay", "stay", ["pulitzer", "ambasssade", "conservatorium"], "Centrum (Canal Ring)"),
+  baseGuide("museum-quarter-hotels", "museum-quarter-hotels", "best-hotels", "Best Hotels in the Museum Quarter, Amsterdam", "Best hotels in Amsterdam's Museum Quarter for Rijksmuseum, Van Gogh Museum, Stedelijk, Vondelpark, and quieter luxury stays.", "Sleep Beside the Museum Lawn", "Museum Quarter hotels combine immediate cultural access with Vondelpark, polished service, quieter streets, and varying degrees of canal-house character.", "Stay", "stay", ["conservatorium", "pulitzer", "ambasssade"], "Museum Quarter"),
   baseGuide("amsterdam-noord-hotels", "amsterdam-noord-hotels", "best-hotels", "Best Hotels in Amsterdam Noord", "Best hotels in Amsterdam Noord for ferry access, IJ views, music venues, waterfront walks, and a less conventional Amsterdam base.", "Ferry-Side Rooms With a View", "Noord hotels make sense when the ferry is part of the fun. Sir Adam sits on top of the action by A'DAM Tower, Hotel Jakarta gives the eastern waterfront a calmer version of the view, and Hoxton Lloyd keeps the docklands design-led.", "Stay", "stay", ["sirAdam", "hotelJakarta", "hoxtonLloyd"], "Amsterdam Noord (NDSM)"),
-  baseGuide("de-pijp-hotels", "de-pijp-hotels", "best-hotels", "Best Hotels in De Pijp, Amsterdam", "Best hotels in De Pijp, Amsterdam, for Albert Cuyp Market, cafes, metro access, nightlife edges, and value beyond the Canal Ring.", "Market-Edge Bases South of the Canals", "De Pijp works as a hotel base when food and transit matter more than postcard canals. Volkshotel gives value and energy nearby, Conservatorium is the luxury edge, and Hotel Jakarta becomes the calmer waterfront upgrade by tram.", "Stay", "stay", ["volkshotel", "conservatorium", "hotelJakarta"], "De Pijp"),
+  baseGuide("de-pijp-hotels", "de-pijp-hotels", "best-hotels", "Best Hotels in De Pijp, Amsterdam", "Best hotels in De Pijp, Amsterdam, for Albert Cuyp Market, cafes, metro access, nightlife edges, and value beyond the Canal Ring.", "Market-Edge Bases South of the Canals", "De Pijp hotels prioritize food, transit, and neighborhood energy over postcard canals, with choices ranging from lively value to luxury and calmer waterfront rooms by tram.", "Stay", "stay", ["volkshotel", "conservatorium", "hotelJakarta"], "De Pijp"),
   baseGuide("canal-ring-hostels", "canal-ring-hostels", "best-hostels", "Best Hostels in the Canal Ring, Amsterdam", "Best hostels in Amsterdam's Canal Ring and central core for station access, nightlife, museums, and budget beds that do not require long tram rides.", "Central Dorms Without a Long Ride Home", "Central Amsterdam hostels are about late-night convenience. Flying Pig Downtown is the party base near the station, Hans Brinker keeps Leidseplein and museums close, and Ecomama gives the eastern Canal Ring a calmer social option.", "Stay", "hostels", ["flyingPigDowntown", "hansBrinker", "ecomama"], "Centrum (Canal Ring)"),
-  baseGuide("museum-quarter-hostels", "museum-quarter-hostels", "best-hostels", "Best Hostels near Museum Quarter, Amsterdam", "Best hostels near Amsterdam's Museum Quarter for Vondelpark, Rijksmuseum, Van Gogh Museum, Leidseplein, and budget museum days.", "Budget Beds for Museum Days", "The Museum Quarter hostel choice should protect both money and time. Stayokay Vondelpark is the park-side anchor, Hans Brinker keeps nightlife close, and Cocomama works when De Pijp food matters as much as the museums.", "Stay", "hostels", ["stayokayVondel", "hansBrinker", "cocomama"], "Museum Quarter"),
-  baseGuide("amsterdam-noord-hostels", "amsterdam-noord-hostels", "best-hostels", "Best Hostels in Amsterdam Noord", "Best hostels in Amsterdam Noord for ferry access, social dorms, A'DAM Tower, NDSM, live music venues, and budget Amsterdam stays.", "Social Beds Across the IJ", "Noord hostels work because the ferry makes them feel central. ClinkNOORD is the social anchor, Generator and Via Amsterdam are useful alternatives for travelers who care more about price, space, and transit than canal-ring romance.", "Stay", "hostels", ["clinkNoord", "generator", "viaAmsterdam"], "Amsterdam Noord (NDSM)"),
-  baseGuide("de-pijp-hostels", "de-pijp-hostels", "best-hostels", "Best Hostels in De Pijp, Amsterdam", "Best hostels in De Pijp, Amsterdam, for Albert Cuyp Market, brunch, cafes, museums, and social budget stays south of the canals.", "Dorms Near Markets and Brunch", "De Pijp hostels are strongest for travelers who want food at the doorstep. Cocomama is the neighborhood pick, Hans Brinker keeps the Leidseplein edge close, and Stayokay Vondelpark makes the museum route easy.", "Stay", "hostels", ["cocomama", "hansBrinker", "stayokayVondel"], "De Pijp"),
+  baseGuide("museum-quarter-hostels", "museum-quarter-hostels", "best-hostels", "Best Hostels near Museum Quarter, Amsterdam", "Best hostels near Amsterdam's Museum Quarter for Vondelpark, Rijksmuseum, Van Gogh Museum, Leidseplein, and budget museum days.", "Budget Beds for Museum Days", "Hostels serving the Museum Quarter balance dorm prices with access to Vondelpark, the major museums, Leidseplein nightlife, and De Pijp food. Social intensity and walking distance vary by property.", "Stay", "hostels", ["stayokayVondel", "hansBrinker", "cocomama"], "Museum Quarter"),
+  baseGuide("amsterdam-noord-hostels", "amsterdam-noord-hostels", "best-hostels", "Best Hostels in Amsterdam Noord", "Best hostels in Amsterdam Noord for ferry access, social dorms, A'DAM Tower, NDSM, live music venues, and budget Amsterdam stays.", "Social Beds Across the IJ", "Noord hostels combine social dorms, lower prices, and more space with frequent ferry access across the IJ. The tradeoff is canal-ring romance for transit and the creative venues of the north.", "Stay", "hostels", ["clinkNoord", "generator", "viaAmsterdam"], "Amsterdam Noord (NDSM)"),
+  baseGuide("de-pijp-hostels", "de-pijp-hostels", "best-hostels", "Best Hostels in De Pijp, Amsterdam", "Best hostels in De Pijp, Amsterdam, for Albert Cuyp Market, brunch, cafes, museums, and social budget stays south of the canals.", "Dorms Near Markets and Brunch", "Hostels around De Pijp put markets, brunch, cafes, museums, and Leidseplein within reach. Dorm atmosphere, nightlife access, and exact distance from the neighborhood differ among the properties.", "Stay", "hostels", ["cocomama", "hansBrinker", "stayokayVondel"], "De Pijp"),
   baseGuide("de-pijp-food", "de-pijp-restaurants", "best-restaurants", "Best Restaurants in De Pijp, Amsterdam", "Best restaurants and food stops in De Pijp, Amsterdam, covering brunch, Albert Cuyp Market, Indonesian meals, snacks, and relaxed cafes.", "Markets, Brunch, and Rijsttafel Nearby", "De Pijp is the easy food neighborhood when the day should stay loose. Start at Albert Cuyp, use Bakers & Roasters for brunch, keep Restaurant Blauw for rijsttafel, and let Vleminckx or Foodhallen handle quick, low-commitment cravings nearby.", "Food", "food", ["albertCuyp", "bakers", "blauw", "vleminckx", "foodhallen"], "De Pijp"),
-  baseGuide("jordaan-bars", "jordaan-bars", "best-bars", "Best Bars in Jordaan, Amsterdam", "Best bars in Jordaan, Amsterdam, for brown cafes, wine-led dinners, canal-side drinks, and slower local-feeling nights.", "Brown Cafes and Wine Near the Western Canals", "Jordaan nightlife should be slower than the squares. Cafe Chris brings the brown-cafe backbone, Cafe de Klepel can become dinner and wine, and Winkel 43 keeps the route grounded in daytime neighborhood ritual before the night turns darker.", "Nightlife", "nightlife", ["cafeChris", "klepel", "winkel43", "hoppe"], "Jordaan"),
+  baseGuide("jordaan-bars", "jordaan-bars", "best-bars", "Best Bars in Jordaan, Amsterdam", "Best bars in Jordaan, Amsterdam, for brown cafes, wine-led dinners, canal-side drinks, and slower local-feeling nights.", "Brown Cafes and Wine Near the Western Canals", "Jordaan nightlife is slower than the main squares, built around wood-paneled brown cafes, wine-led dining rooms, neighborhood beer, and daytime institutions that carry into the evening. Conversation matters more than spectacle.", "Nightlife", "nightlife", ["cafeChris", "klepel", "winkel43", "hoppe"], "Jordaan"),
 ];
 
 const itineraryGuides: GuideSpec[] = [
   {
-    ...baseGuide("one-day-itinerary", "one-day-itinerary", "one-day-itinerary", "One Day in Amsterdam Itinerary", "One day in Amsterdam itinerary with Rijksmuseum, canal cruising, Jordaan, brown cafes, De Pijp food, and a practical ferry or tram plan.", "One Strong Canal-Ring Day", "One day in Amsterdam should not try to swallow the whole city. Anchor the morning at Rijksmuseum, see the canals by boat, graze in the Jordaan, use De Pijp for food, then finish with a brown cafe or ferry view instead of another rushed museum.",
+    ...baseGuide("one-day-itinerary", "one-day-itinerary", "one-day-itinerary", "One Day in Amsterdam Itinerary", "One day in Amsterdam itinerary with Rijksmuseum, canal cruising, Jordaan, brown cafes, De Pijp food, and a practical ferry or tram plan.", "One Strong Canal-Ring Day", "One Amsterdam day can hold the Rijksmuseum, a canal boat, Jordaan food, De Pijp, and a brown cafe or ferry view without rushing through another museum.",
       "Activities", "activities", ["rijksmuseum", "canalCruise", "winkel43", "albertCuyp", "hoppe"], undefined),
     submissionType: "itinerary",
     itinerary: {},
     stopDays: [1, 1, 1, 1, 1],
   },
   {
-    ...baseGuide("weekend-itinerary", "weekend-itinerary", "weekend-itinerary", "Weekend in Amsterdam Itinerary", "Weekend in Amsterdam itinerary for museums, Indonesian food, Jordaan cafes, Vondelpark, Noord ferry routes, cocktails, and live music.", "Two Days of Museums, Markets, and Noord Air", "A weekend works best with one museum-heavy day and one looser neighborhood day. Pair Rijksmuseum and Van Gogh with Vondelpark and cocktails, then use Jordaan, De Pijp, and the Noord ferry to keep the second day from becoming only canals.",
+    ...baseGuide("weekend-itinerary", "weekend-itinerary", "weekend-itinerary", "Weekend in Amsterdam Itinerary", "Weekend in Amsterdam itinerary for museums, Indonesian food, Jordaan cafes, Vondelpark, Noord ferry routes, cocktails, and live music.", "Two Days of Museums, Markets, and Noord Air", "An Amsterdam weekend balances one museum-heavy day with a looser day across Vondelpark, the Jordaan, De Pijp, cocktails, and the Noord ferry.",
       "Activities", "activities", ["rijksmuseum", "vanGogh", "vondelpark", "door74", "winkel43", "blauw", "noordFerry", "adamLookout", "tolhuistuin"], undefined),
     submissionType: "itinerary",
     itinerary: {},

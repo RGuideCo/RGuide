@@ -193,13 +193,6 @@ function countWords(value) {
   return normalizeText(value).split(/\s+/).filter(Boolean).length;
 }
 
-function countSentences(value) {
-  return String(value ?? "")
-    .split(/[.!?]+/)
-    .map((item) => item.trim())
-    .filter(Boolean).length;
-}
-
 function isValidUrl(value) {
   try {
     const url = new URL(value);
@@ -468,13 +461,9 @@ function checkStopBasics(list, stop, pathParts, report, options) {
   }
 
   const wordCount = countWords(stop.description);
-  const minWords = options.strict ? 35 : 18;
+  const minWords = options.strict ? 16 : 12;
   if (wordCount < minWords) {
     addIssue(report, severityForStrict(options), label, `Stop description has ${wordCount} words; expected at least ${minWords}.`);
-  }
-
-  if (options.strict && countSentences(stop.description) < 2) {
-    addIssue(report, "error", label, "Strict mode expects a 2-4 sentence stop description.");
   }
 
   for (const pattern of GENERIC_DESCRIPTION_PATTERNS) {
@@ -640,10 +629,11 @@ function runLocalChecks(guides, options) {
       if (key && key.length > 80) {
         const first = allDescriptions.get(key);
         const label = stopLabel(currentList, stop, pathParts);
-        if (first && first !== label) {
-          addIssue(report, severityForStrict(options), "all selected guides", `Repeated stop description across guides: ${first} and ${label}`);
+        const stopName = normalizeText(stop.name);
+        if (first && first.label !== label && first.stopName !== stopName) {
+          addIssue(report, severityForStrict(options), "all selected guides", `Repeated stop description across different venues: ${first.label} and ${label}`);
         } else {
-          allDescriptions.set(key, label);
+          allDescriptions.set(key, { label, stopName });
         }
       }
     });

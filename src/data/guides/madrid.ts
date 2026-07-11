@@ -8,7 +8,7 @@ export const madridNeighborhoodGuides = [
     "seoTitle": "Best Restaurants in Sol and Centro, Madrid",
     "seoDescription": "Best restaurants in Sol and Centro, Madrid, for historic dining rooms, tapas counters, market halls, churros, and central old-Madrid meals.",
     "title": "Kilometer-Zero Classics and Counters",
-    "description": "Sol and Centro can punish lazy food choices, so this route sticks to rooms with a reason to exist. Lhardy brings old-capital ceremony, Casa Labra keeps the fried-cod counter alive, Mercado de San Miguel handles polished grazing, and San Gines is the sweet Madrid ritual after the streets have worn you down.",
+    "description": "Sol and Centro restaurants that resist the old-center tourist-trap pattern through serious cooking, historic character, specialist counters, and dependable service.",
     "url": "https://www.google.com/maps/search/sol+centro+madrid+restaurants",
     "category": "Food",
     "location": {
@@ -33,7 +33,7 @@ export const madridNeighborhoodGuides = [
           40.4172,
           -3.7003
         ],
-        "description": "Lhardy is the historic Sol dining room for cocido, croquetas, consomme, and polished old-Madrid ceremony. Use Lhardy when the center needs a formal classic with bakery-counter history rather than another quick tapas stop.",
+        "description": "Lhardy is a historic Sol institution for cocido, croquetas, consomme, and polished old-Madrid dining-room ceremony. Its ground-floor bakery and takeaway counter add a second, less formal way to experience the house.",
         "price": "$$",
         "priceSource": "The Infatuation / Google Maps",
         "hours": {
@@ -54,7 +54,7 @@ export const madridNeighborhoodGuides = [
           40.4172,
           -3.7044
         ],
-        "description": "Standing-room cod, croquettes, beer, and quick service make Casa Labra the useful counter stop near Puerta del Sol. Use Casa Labra when you want a compact local-feeling stop that can sit before drinks or sightseeing.",
+        "description": "Casa Labra serves salt-cod fritters, croquettes, and beer with quick standing-room service near Puerta del Sol. The narrow menu and old tavern rhythm are the point.",
         "price": "$",
         "priceSource": "Time Out / Google Maps",
         "hours": {
@@ -75,7 +75,7 @@ export const madridNeighborhoodGuides = [
           40.4154,
           -3.7091
         ],
-        "description": "Mercado de San Miguel has moved from a century-old wholesale market into one of Madrid's flagship gastronomic halls. Use it for a quick, polished survey of Spanish flavors when the group needs flexible grazing near Plaza Mayor rather than a quiet sit-down meal.",
+        "description": "Mercado de San Miguel has moved from a century-old wholesale market into one of Madrid's flagship gastronomic halls. Its polished counters let groups graze across Spanish flavors near Plaza Mayor, though the busy room is no substitute for a quiet sit-down meal.",
         "price": "$",
         "priceSource": "Time Out / Google Maps",
         "hours": {
@@ -96,7 +96,7 @@ export const madridNeighborhoodGuides = [
           40.4168,
           -3.7068
         ],
-        "description": "Chocolatería San Ginés is the central churros-and-chocolate classic tucked off the passage near Plaza Mayor and Sol. It works best as a focused sweet stop: late after bars, early before sightseeing, or whenever the route needs a Madrid ritual instead of another full meal.",
+        "description": "Chocolatería San Ginés is the central churros-and-chocolate classic tucked off the passage near Plaza Mayor and Sol.",
         "price": "$",
         "priceSource": "Google Maps / Tripadvisor",
         "hours": {
@@ -141,7 +141,7 @@ export const madridNeighborhoodGuides = [
     "seoTitle": "Best Bars in Sol and Centro, Madrid",
     "seoDescription": "Best bars in Sol and Centro, Madrid, covering historic taverns, central cocktail rooms, rooftop drinks, and late-night institutions.",
     "title": "Central Drinks With a Reason",
-    "description": "Central Madrid is better when the night has a plot instead of just another crowded bar. Casa Labra starts with beer and bacalao, The Madrid EDITION Roof gives the old center a rooftop gloss, Toni 2 turns the room into a piano singalong, and Josealfredo keeps one proper cocktail in reserve.",
+    "description": "Central Madrid is better when the night has a plot instead of just another crowded bar.",
     "url": "https://www.google.com/maps/search/sol+centro+madrid+bars",
     "category": "Nightlife",
     "location": {
@@ -166,7 +166,7 @@ export const madridNeighborhoodGuides = [
           40.4172,
           -3.7044
         ],
-        "description": "Casa Labra is a centenary tavern near Puerta del Sol, famous for cod and cod croquettes served in a room that still feels close to its 19th-century bar roots. It belongs in a night plan as a Madrid-specific aperitif stop: beer, bacalao, and a quick standing-room ritual before the evening changes shape.",
+        "description": "Casa Labra is a centenary tavern near Puerta del Sol, famous for cod and cod croquettes served in a room that still feels close to its 19th-century bar roots.",
         "hours": {
           "mon": "12:00 PM-11:00 PM",
           "tue": "12:00 PM-11:00 PM",
@@ -185,7 +185,7 @@ export const madridNeighborhoodGuides = [
           40.4171,
           -3.7062
         ],
-        "description": "The Madrid EDITION Roof means Oroya's terrace above Plaza de Celenque, with Peruvian-leaning drinks, greenery, and rooftop views over the old center. Use it when the Sol plan needs a polished hotel terrace rather than another tavern or crowded street bar.",
+        "description": "The Madrid EDITION Roof means Oroya's terrace above Plaza de Celenque, with Peruvian-leaning drinks, greenery, and rooftop views over the old center.",
         "hours": {
           "mon": "6:00 PM-12:30 AM",
           "tue": "6:00 PM-12:30 AM",
@@ -204,7 +204,7 @@ export const madridNeighborhoodGuides = [
           40.421,
           -3.6976
         ],
-        "description": "Toni 2 Piano Bar is the Gran Via singalong institution where the room, piano, and crowd participation matter more than cocktail seriousness. It works for a theatrical late stop when the night should turn communal and a little chaotic.",
+        "description": "Toni 2 Piano Bar is the Gran Via singalong institution where the room, piano, and crowd participation matter more than cocktail seriousness.",
         "hours": {
           "mon": "10:00 PM-2:30 AM",
           "tue": "10:00 PM-2:30 AM",
@@ -223,7 +223,7 @@ export const madridNeighborhoodGuides = [
           40.4214,
           -3.7028
         ],
-        "description": "Josealfredo is the central cocktail room for a quieter, more deliberate drink around Gran Via and Malasana. The appeal is classic-bar intimacy, low light, and a proper glass before the night moves into louder neighborhoods.",
+        "description": "Josealfredo is the central cocktail room for a quieter, more deliberate drink around Gran Via and Malasana.",
         "hours": {
           "mon": "6:00 PM-12:30 AM",
           "tue": "6:00 PM-12:30 AM",
@@ -270,7 +270,7 @@ export const madridNeighborhoodGuides = [
     "seoTitle": "Best Hotels in Sol and Centro, Madrid",
     "seoDescription": "Best hotels in Sol and Centro, Madrid, for Canalejas luxury, Plaza Mayor atmosphere, Gran Via access, rooftops, and old-city walks.",
     "title": "Hotels at Kilometer Zero",
-    "description": "Staying around Sol only works if the hotel gives you some protection from the noise outside. Four Seasons and The Madrid EDITION make the center feel polished, Pestana Plaza Mayor lets the square become part of the stay, and 7 Islas pulls you toward Gran Via and Malasana with a more independent mood.",
+    "description": "Hotels around Sol trade immediate old-city access for noise, ranging from polished luxury and Plaza Mayor views to more independent rooms toward Gran Via and Malasana.",
     "url": "https://www.google.com/maps/search/sol+centro+madrid+hotels",
     "category": "Stay",
     "location": {
@@ -295,7 +295,7 @@ export const madridNeighborhoodGuides = [
           40.4172,
           -3.7015
         ],
-        "description": "Four Seasons Hotel Madrid is the high-budget Canalejas stay for travelers who want Sol access without old-center compromise. It belongs in the neighborhood guide when service, dining, spa, and room quiet need to carry as much weight as Plaza Mayor and Gran Via walks.",
+        "description": "Four Seasons Hotel Madrid brings high-touch service, destination dining, a spa, and quiet rooms to the Canalejas complex. Sol, Plaza Mayor, and Gran Via remain immediately accessible despite the property's retreat-like polish.",
         "price": "$$",
         "priceSource": "Condé Nast Traveler / Google Maps",
         "hours": {
@@ -337,7 +337,7 @@ export const madridNeighborhoodGuides = [
           40.415,
           -3.7074
         ],
-        "description": "Pestana Plaza Mayor is the Sol/Centro hotel for travelers who want the historic square to be the actual base, not just a stop. Its appeal is Plaza Mayor atmosphere with contemporary rooms, spa facilities, and enough comfort to offset the tourist churn outside.",
+        "description": "Pestana Plaza Mayor pairs a historic-square address with contemporary rooms and spa facilities. The comforts inside offset some of the tourist churn directly outside.",
         "price": "$$",
         "priceSource": "Tourism Madrid / Pestana",
         "hours": {
@@ -358,7 +358,7 @@ export const madridNeighborhoodGuides = [
           40.4217,
           -3.7012
         ],
-        "description": "7 Islas Hotel gives Sol/Centro travelers a Valverde base that leans toward Gran Via and Malasana rather than Plaza Mayor formality. It works when the stay should feel independent, art-led, and close to nightlife without becoming a hostel.",
+        "description": "7 Islas Hotel gives Sol/Centro travelers a Valverde base that leans toward Gran Via and Malasana rather than Plaza Mayor formality.",
         "price": "$",
         "priceSource": "7 Islas official / Google Maps",
         "hours": {
@@ -407,7 +407,7 @@ export const madridNeighborhoodGuides = [
     "seoTitle": "Best Hostels in Sol and Centro, Madrid",
     "seoDescription": "Best hostels in Sol and Centro, Madrid, for social dorms, private-room flexibility, Plaza Mayor access, Tirso de Molina, and first-trip logistics.",
     "title": "Central Hostels With a Social Spine",
-    "description": "These hostels are for travelers who want the old city close enough to feel immediate, not abstract. The Hat and Onefam Sungate lean social, 2060 The Newton adds rooftop momentum near Tirso de Molina, and Ok Hostel keeps dorms and private rooms practical just below Plaza Mayor.",
+    "description": "Central Madrid hostels keep the old city immediate through social dorms, private rooms, rooftop common spaces, and addresses between Sol, Tirso de Molina, and Plaza Mayor.",
     "url": "https://www.google.com/maps/search/sol+centro+madrid+hostels",
     "category": "Stay",
     "location": {
@@ -432,7 +432,7 @@ export const madridNeighborhoodGuides = [
           40.4145,
           -3.7073
         ],
-        "description": "The Hat Madrid is the Plaza Mayor hostel for travelers who want the old center immediately outside the door and a rooftop/common-space scene inside the building. It suits first-timers who want social programming without giving up easy walks to Sol and La Latina.",
+        "description": "The Hat Madrid places dorms, private rooms, active common spaces, and a rooftop beside Plaza Mayor. Social programming gives solo guests an easy way into the city, while Sol and La Latina remain within a short walk.",
         "price": "$",
         "priceSource": "Hostelworld / The Hat official",
         "hours": {
@@ -453,7 +453,7 @@ export const madridNeighborhoodGuides = [
           40.4183,
           -3.7044
         ],
-        "description": "Onefam Sungate is the social Sol hostel for travelers who want nightly activities and immediate central logistics. It belongs in central hostel planning when the goal is meeting people quickly rather than finding the quietest possible room.",
+        "description": "Onefam Sungate is a social Sol hostel with nightly activities and immediate central access. The programming makes it easy to meet people quickly, while the atmosphere favors sociability over the quietest possible room.",
         "price": "$",
         "priceSource": "Hostelworld / Google Maps",
         "hours": {
@@ -474,7 +474,7 @@ export const madridNeighborhoodGuides = [
           40.412,
           -3.7048
         ],
-        "description": "2060 The Newton Hostel is the Tirso de Molina base to use when Sol and Plaza Mayor need to stay walkable without sleeping directly on the busiest square. The rooftop-bar setup and common areas make it better for travelers who want a social center-city rhythm than for anyone chasing quiet boutique lodging.",
+        "description": "2060 The Newton Hostel is the Tirso de Molina base to use when Sol and Plaza Mayor need to stay walkable without sleeping directly on the busiest square. The rooftop-bar setup and common areas make it better for a social center-city rhythm than for anyone chasing quiet boutique lodging.",
         "price": "$",
         "priceSource": "Hostelworld / Google Maps",
         "hours": {
@@ -495,7 +495,7 @@ export const madridNeighborhoodGuides = [
           40.4113,
           -3.708
         ],
-        "description": "Ok Hostel Madrid gives Sol and Centro travelers a practical base just below Plaza Mayor, with both dorms and private rooms available. It works for budget travelers who want social hostel energy, quick old-city walks, and a closed-door option when a shared bunk is not the right fit.",
+        "description": "Ok Hostel Madrid gives Sol and Centro travelers a practical base just below Plaza Mayor, with both dorms and private rooms available.",
         "price": "$",
         "priceSource": "Hostelworld / Google Maps",
         "hours": {
@@ -548,7 +548,7 @@ export const madridNeighborhoodGuides = [
     "seoTitle": "Best Culture in Sol and Centro, Madrid",
     "seoDescription": "Best culture in Sol and Centro, Madrid, from Puerta del Sol and Plaza Mayor to the Royal Palace, Almudena, and old-city streets.",
     "title": "Royal Madrid and Kilometer Zero",
-    "description": "This is Madrid at its most public and ceremonial, where the city explains itself in stone, crowds, and royal scale. Puerta del Sol sets the tempo, Plaza Mayor supplies the Habsburg geometry, and the Royal Palace with Almudena Cathedral turns the west side of the center into a proper history walk.",
+    "description": "This is Madrid at its most public and ceremonial, where the city explains itself in stone, crowds, and royal scale.",
     "url": "https://www.google.com/maps/search/sol+centro+madrid+culture",
     "category": "Culture",
     "location": {
@@ -673,7 +673,7 @@ export const madridNeighborhoodGuides = [
     "seoTitle": "Best Restaurants in Barrio de las Letras, Madrid",
     "seoDescription": "Best restaurants in Barrio de las Letras, Madrid, for pre-theater dinners, tapas, taverns, modern Spanish rooms, and Art Walk meals.",
     "title": "Pre-Theater Tables and Literary Taverns",
-    "description": "Las Letras eats best when the meal respects the neighborhood's theater clocks, museum legs, and late-bar instincts. La Malontina and TriCiclo give the area modern dinner options, while Casa Alberto and Viva Madrid keep the old tavern bones in the route.",
+    "description": "Las Letras eats best when the meal respects the neighborhood's theater clocks, museum legs, and late-bar instincts.",
     "url": "https://www.google.com/maps/search/barrio+de+las+letras+madrid+restaurants",
     "category": "Food",
     "location": {
@@ -698,7 +698,7 @@ export const madridNeighborhoodGuides = [
           40.4144,
           -3.6981
         ],
-        "description": "A compact Cortes dinner for modern Spanish plates, first dates, and pre-theater plans that need more care than a tourist tapas crawl. Use La Malontina when you want a compact local-feeling stop that can sit before drinks or sightseeing.",
+        "description": "A compact Cortes dinner for modern Spanish plates, first dates, and pre-theater plans that need more care than a tourist tapas crawl.",
         "price": "$",
         "priceSource": "The Infatuation / Google Maps",
         "hours": {
@@ -719,7 +719,7 @@ export const madridNeighborhoodGuides = [
           40.4136,
           -3.7003
         ],
-        "description": "A historic tavern on Huertas for vermouth, traditional plates, and the old literary-quarter atmosphere. Use Casa Alberto when you want a compact local-feeling stop that can sit before drinks or sightseeing.",
+        "description": "Casa Alberto is a historic Huertas tavern for vermouth, traditional plates, red-painted woodwork, and the old literary-quarter atmosphere in a compact local room.",
         "price": "$",
         "priceSource": "Time Out / Google Maps",
         "hours": {
@@ -740,7 +740,7 @@ export const madridNeighborhoodGuides = [
           40.4133,
           -3.6994
         ],
-        "description": "A polished neighborhood restaurant for shared modern Spanish plates near the Art Walk and Plaza Santa Ana. Use TriCiclo when the route needs a focused sweet stop or casual reset rather than another full meal.",
+        "description": "A polished neighborhood restaurant for shared modern Spanish plates near the Art Walk and Plaza Santa Ana.",
         "price": "$",
         "priceSource": "MICHELIN Guide / Google Maps",
         "hours": {
@@ -761,7 +761,7 @@ export const madridNeighborhoodGuides = [
           40.4148,
           -3.7003
         ],
-        "description": "A restored tavern that works for tapas, vermouth, and old-room detail before the night moves toward Salmon Guru or Huertas. Use Viva Madrid when you want a compact local-feeling stop that can sit before drinks or sightseeing.",
+        "description": "Viva Madrid is a restored old tavern serving tapas and vermouth amid tilework and historic room detail near Huertas.",
         "price": "$",
         "priceSource": "Time Out / Google Maps",
         "hours": {
@@ -806,7 +806,7 @@ export const madridNeighborhoodGuides = [
     "seoTitle": "Best Bars in Barrio de las Letras, Madrid",
     "seoDescription": "Best bars in Barrio de las Letras, Madrid, including destination cocktails, sherry bars, vermouth taverns, and live music around Huertas.",
     "title": "Huertas Cocktails and Old Taverns",
-    "description": "Huertas can get messy, but these stops give the night shape before it dissolves into foot traffic. Salmon Guru brings cocktail spectacle, La Venencia keeps sherry austere and old, Viva Madrid gives the room some tile-and-vermouth romance, and Cafe Central turns the evening toward jazz.",
+    "description": "Huertas nightlife spans theatrical cocktails, austere sherry bars, tiled vermouth taverns, and live jazz. The neighborhood is busiest on foot, but its strongest rooms have a clear drink or music identity beyond the surrounding bar traffic.",
     "url": "https://www.google.com/maps/search/barrio+de+las+letras+madrid+bars",
     "category": "Nightlife",
     "location": {
@@ -831,7 +831,7 @@ export const madridNeighborhoodGuides = [
           40.4159,
           -3.6997
         ],
-        "description": "Salmon Guru gives Las Letras its high-voltage cocktail destination, with Diego Cabrera's comic-book rooms, playful glassware, and world-ranked bar reputation. It is the stop for inventive drinks and spectacle rather than a quiet vermouth.",
+        "description": "Salmon Guru is Diego Cabrera's high-voltage cocktail bar, known for comic-book rooms, playful glassware, inventive drinks, and a globally recognized program. Spectacle matters as much as quiet precision here.",
         "hours": {
           "mon": "6:00 PM-12:30 AM",
           "tue": "6:00 PM-12:30 AM",
@@ -869,7 +869,7 @@ export const madridNeighborhoodGuides = [
           40.4148,
           -3.7003
         ],
-        "description": "Viva Madrid is a restored literary-quarter tavern where tilework, vermouth, cocktails, and old-room detail carry the night. It works as a bridge between dinner and later bars because the setting feels distinctly Madrid without needing a full club plan.",
+        "description": "Viva Madrid is a restored literary-quarter tavern where tilework, vermouth, cocktails, and old-room detail carry the night.",
         "hours": {
           "mon": "12:00 PM-12:30 AM",
           "tue": "12:00 PM-12:30 AM",
@@ -888,7 +888,7 @@ export const madridNeighborhoodGuides = [
           40.4142,
           -3.7009
         ],
-        "description": "Café Central is the Plaza Santa Ana jazz institution for a seated, music-led night. Choose it when the evening should be built around a performance, a table, and a shared room rather than a bar crawl.",
+        "description": "Cafe Central is a Plaza Santa Ana jazz institution built around seated live performances, table service, and an audience sharing one focused room. The official program determines the musicians and set times.",
         "hours": {
           "mon": "Event schedule (check venue)",
           "tue": "Event schedule (check venue)",
@@ -935,7 +935,7 @@ export const madridNeighborhoodGuides = [
     "seoTitle": "Best Hotels in Barrio de las Letras, Madrid",
     "seoDescription": "Best hotels in Barrio de las Letras, Madrid, for Art Walk access, Plaza Santa Ana, theater nights, Huertas dinners, and classic central hotels.",
     "title": "Art Walk Hotels With Nightlife Nearby",
-    "description": "The best Las Letras hotels let you move between museums, Plaza Santa Ana, and late dinners without treating sleep as an afterthought. Room Mate Alba keeps the neighborhood compact, ME Madrid Reina Victoria lives on the square, The Westin Palace gives the Art Walk a grand-hotel edge, and NH Collection Madrid Suecia reaches toward Cibeles and Gran Via.",
+    "description": "The best Las Letras hotels let you move between museums, Plaza Santa Ana, and late dinners without treating sleep as an afterthought.",
     "url": "https://www.google.com/maps/search/barrio+de+las+letras+madrid+hotels",
     "category": "Stay",
     "location": {
@@ -960,7 +960,7 @@ export const madridNeighborhoodGuides = [
           40.4135,
           -3.7002
         ],
-        "description": "Room Mate Alba is the Las Letras boutique hotel for travelers who want Huertas, Plaza Santa Ana, and the Art Walk nearby without palace-hotel pricing. It fits museum mornings and late neighborhood dinners in a compact, practical way.",
+        "description": "Room Mate Alba is the Las Letras boutique hotel for Huertas, Plaza Santa Ana, and the Art Walk nearby without palace-hotel pricing. It fits museum mornings and late neighborhood dinners in a compact, practical way.",
         "price": "$",
         "priceSource": "Google Maps / hotel site",
         "hours": {
@@ -981,7 +981,7 @@ export const madridNeighborhoodGuides = [
           40.4142,
           -3.701
         ],
-        "description": "ME Madrid Reina Victoria is the Plaza Santa Ana hotel for travelers who want theater, bars, and Las Letras foot traffic at the door. It is best for guests who value address and energy over maximum quiet, especially when evenings are likely to stay around Huertas.",
+        "description": "ME Madrid Reina Victoria is the Plaza Santa Ana hotel for theater, bars, and Las Letras foot traffic at the door.",
         "price": "$$",
         "priceSource": "Google Maps / hotel site",
         "hours": {
@@ -1072,7 +1072,7 @@ export const madridNeighborhoodGuides = [
     "seoTitle": "Best Hostels near Barrio de las Letras, Madrid",
     "seoDescription": "Best hostels near Barrio de las Letras, Madrid, for Art Walk days, Atocha access, Tirso de Molina, social dorms, and budget central rooms.",
     "title": "Hostels for the Art Walk Edge",
-    "description": "Las Letras is not overflowing with true hostels, so the useful beds sit on the neighborhood's edges. Latroupe Prado works for Atocha and Reina Sofia days, 2060 The Newton and Ok Hostel keep Tirso practical, and The Hat pulls Plaza Mayor and La Latina into the same budget map.",
+    "description": "Hostel beds around Las Letras sit mainly on the edges near Atocha, Reina Sofia, Tirso de Molina, Plaza Mayor, and La Latina, balancing museum access against old-city social energy.",
     "url": "https://www.google.com/maps/search/barrio+de+las+letras+madrid+hostels",
     "category": "Stay",
     "location": {
@@ -1097,7 +1097,7 @@ export const madridNeighborhoodGuides = [
           40.4119,
           -3.6943
         ],
-        "description": "Latroupe Prado is the Las Letras hostel for travelers who want Atocha, Reina Sofia, and the Art Walk closer than the nightlife core. Its bar, restaurant, coworking, and common spaces make museum-heavy days feel easier to reset.",
+        "description": "Latroupe Prado is a hostel near Atocha, Reina Sofia, and the Art Walk, with a bar, restaurant, coworking area, and common spaces. Museum and rail access outweigh immediate nightlife proximity.",
         "price": "$",
         "priceSource": "Latroupe official / Hostelworld",
         "hours": {
@@ -1118,7 +1118,7 @@ export const madridNeighborhoodGuides = [
           40.412,
           -3.7048
         ],
-        "description": "2060 The Newton Hostel works for Las Letras trips because Tirso de Molina keeps Huertas, Plaza Santa Ana, and the Art Walk within an easy walk. Choose it when hostel pricing matters but the route still needs quick access to museums, taverns, and late central streets.",
+        "description": "2060 The Newton Hostel works for Las Letras trips because Tirso de Molina keeps Huertas, Plaza Santa Ana, and the Art Walk within an easy walk.",
         "price": "$",
         "priceSource": "Hostelworld / Google Maps",
         "hours": {
@@ -1139,7 +1139,7 @@ export const madridNeighborhoodGuides = [
           40.4145,
           -3.7073
         ],
-        "description": "The Hat Madrid works from Las Letras as the more social old-city alternative to sleeping directly on Huertas. Use it when the plan mixes Art Walk days with Plaza Mayor, La Latina, and a hostel crowd after dark.",
+        "description": "The Hat Madrid works from Las Letras as the more social old-city alternative to sleeping directly on Huertas.",
         "price": "$",
         "priceSource": "Hostelworld / The Hat official",
         "hours": {
@@ -1160,7 +1160,7 @@ export const madridNeighborhoodGuides = [
           40.4113,
           -3.708
         ],
-        "description": "Ok Hostel Madrid can work for Las Letras when the trip needs Huertas, Plaza Santa Ana, and Tirso de Molina nearby without Art Walk hotel rates. Dorms and private rooms make it flexible for solo travelers, friends, or couples who want hostel pricing while staying close to museum days and late central streets.",
+        "description": "Ok Hostel Madrid can work for Las Letras for Huertas, Plaza Santa Ana, and Tirso de Molina nearby without Art Walk hotel rates. Dorms and private rooms make it flexible for solo travelers, friends, or couples who want hostel pricing while staying close to museum days and late central streets.",
         "price": "$",
         "priceSource": "Hostelworld / Google Maps",
         "hours": {
@@ -1213,7 +1213,7 @@ export const madridNeighborhoodGuides = [
     "seoTitle": "Best Culture in Barrio de las Letras, Madrid",
     "seoDescription": "Best culture in Barrio de las Letras, Madrid, from literary streets and Lope de Vega to Teatro Español, CaixaForum, and the Prado edge.",
     "title": "Golden Age Streets and Art Walk Edges",
-    "description": "This is the guide for turning Madrid's literary quarter into more than pretty streets. Casa Museo Lope de Vega gives the Golden Age a real domestic address, Teatro Espanol keeps Plaza Santa Ana tied to live performance, and the Prado plus CaixaForum pull the route toward the Art Walk.",
+    "description": "Golden Age domestic history, live theatre around Plaza Santa Ana, and major art institutions along the nearby museum corridor give Las Letras cultural substance beyond its literary street names.",
     "url": "https://www.google.com/maps/search/barrio+de+las+letras+madrid+culture",
     "category": "Culture",
     "location": {
@@ -1338,7 +1338,7 @@ export const madridNeighborhoodGuides = [
     "seoTitle": "Best Restaurants in Retiro, Madrid",
     "seoDescription": "Best restaurants in Retiro, Madrid, for park-adjacent meals, polished taverns, museum-day lunches, and quieter dinners near Ibiza and Jerónimos.",
     "title": "Park-Edge Lunches and Polished Taverns",
-    "description": "Retiro meals should feel like a pause, not a surrender to the tourist corridor. La Catapa gives the area tavern confidence, KultO brings a sharper Mediterranean-Asia conversation, Florida Retiro turns the park into a dining plan, and El Perro y la Galleta keeps things polished but neighborhood-friendly.",
+    "description": "Retiro meals should feel like a pause, not a surrender to the tourist corridor.",
     "url": "https://www.google.com/maps/search/retiro+madrid+restaurants",
     "category": "Food",
     "location": {
@@ -1363,7 +1363,7 @@ export const madridNeighborhoodGuides = [
           40.421,
           -3.6757
         ],
-        "description": "A Retiro/Ibiza tavern for wines, tapas, and a quieter local meal after the park or museums. Use La Catapa when you want a compact local-feeling stop that can sit before drinks or sightseeing.",
+        "description": "La Catapa is a compact Retiro/Ibiza tavern for wines, tapas, seafood-leaning plates, and a quieter local meal built around bottles and conversation.",
         "price": "$",
         "priceSource": "Google Maps / local food coverage",
         "hours": {
@@ -1384,7 +1384,7 @@ export const madridNeighborhoodGuides = [
           40.4216,
           -3.6764
         ],
-        "description": "KultO reinterprets southern Spanish flavors through a traveler's lens, letting Mediterranean dishes cross paths with Asian influence. Use it near Ibiza when the Retiro food plan needs seafood, rice, and a more curious dinner than a standard tavern stop.",
+        "description": "KultO reinterprets southern Spanish flavors through a traveler's lens, letting Mediterranean dishes cross paths with Asian influence.",
         "price": "$",
         "priceSource": "MICHELIN Guide / Google Maps",
         "hours": {
@@ -1405,7 +1405,7 @@ export const madridNeighborhoodGuides = [
           40.4193,
           -3.6882
         ],
-        "description": "Florida Retiro is the park's day-to-night food and leisure complex, with multiple spaces built around gastronomy, music, and social plans. Its comfort-food menu leans on local produce, seasonality, tradition, and Madrid recipes, so it works when the route should stay inside Retiro instead of moving back toward Sol.",
+        "description": "Florida Retiro is the park's day-to-night food and leisure complex, with multiple spaces built around dining, music, and social events. Its comfort-food menu leans on local produce, seasonality, tradition, and Madrid recipes.",
         "price": "$",
         "priceSource": "Time Out / Google Maps",
         "hours": {
@@ -1426,7 +1426,7 @@ export const madridNeighborhoodGuides = [
           40.4196,
           -3.6815
         ],
-        "description": "El Perro y la Galleta works for a casual Retiro meal at the park-side Ibiza location, part of a small Madrid group rather than a single one-off restaurant. Choose this branch when the plan needs a friendly room for groups, familiar plates, and a relaxed dinner close to the park.",
+        "description": "El Perro y la Galleta works for a casual Retiro meal at the park-side Ibiza location, part of a small Madrid group rather than a single one-off restaurant.",
         "price": "$",
         "priceSource": "Google Maps / Tripadvisor",
         "hours": {
@@ -1471,7 +1471,7 @@ export const madridNeighborhoodGuides = [
     "seoTitle": "Best Bars in Retiro, Madrid",
     "seoDescription": "Best bars in Retiro, Madrid, for park drinks, refined hotel bars, vermouth stops, and quieter nights around Ibiza and Jerónimos.",
     "title": "Park Drinks and Quiet Finishes",
-    "description": "Retiro nightlife is not about chasing the loudest room in Madrid. Florida Retiro and Ramses give the park edge its dressed-up energy, Pictura at Mandarin Oriental Ritz keeps the cocktail polished, and La Catapa makes wine and tapas feel like a proper night rather than a compromise.",
+    "description": "Retiro nightlife is quieter and more polished than Madrid's club districts. Multi-space dining, hotel cocktails, wine-and-tapas rooms, and dressed-up park-edge bars favor conversation and a composed evening over all-night volume.",
     "url": "https://www.google.com/maps/search/retiro+madrid+bars",
     "category": "Nightlife",
     "location": {
@@ -1496,7 +1496,7 @@ export const madridNeighborhoodGuides = [
           40.4193,
           -3.6882
         ],
-        "description": "Florida Retiro turns the park into a night plan through Florida Park's dining, cocktails, music, and multi-space setup. La Galería and the broader complex make sense when the evening should stay inside Retiro while still feeling social and dressed for later hours.",
+        "description": "Florida Retiro combines dining, cocktails, music, and events across several spaces inside the park. La Galeria and the wider complex shift between meals and later social programming, so the official calendar affects the experience.",
         "hours": {
           "mon": "6:00 PM-12:30 AM",
           "tue": "6:00 PM-12:30 AM",
@@ -1515,7 +1515,7 @@ export const madridNeighborhoodGuides = [
           40.4156,
           -3.6926
         ],
-        "description": "Pictura at Mandarin Oriental Ritz is the refined hotel-bar option beside the Prado and Retiro, built for a composed cocktail after museum time. The draw is palace-hotel polish, careful service, and a quieter room than the surrounding late-night neighborhoods.",
+        "description": "The draw is palace-hotel polish, careful service, and a quieter room than the surrounding late-night neighborhoods.",
         "hours": {
           "mon": "6:00 PM-12:30 AM",
           "tue": "6:00 PM-12:30 AM",
@@ -1534,7 +1534,7 @@ export const madridNeighborhoodGuides = [
           40.421,
           -3.6757
         ],
-        "description": "La Catapa gives Retiro a wine-and-tapas night rather than a club plan, with the same tavern focus that makes it useful for Ibiza-area dinners. It fits an evening of bottles, seafood-leaning plates, and conversation after the park or museums.",
+        "description": "La Catapa is a Retiro/Ibiza tavern centered on wine, tapas, seafood-leaning plates, and conversation rather than club volume.",
         "hours": {
           "mon": "12:00 PM-11:00 PM",
           "tue": "12:00 PM-11:00 PM",
@@ -1553,7 +1553,7 @@ export const madridNeighborhoodGuides = [
           40.4202,
           -3.6887
         ],
-        "description": "Ramses is the Puerta de Alcalá terrace-and-restaurant complex for a polished Retiro-edge night. Use it for design-forward drinks, dinner energy, and a landmark-facing setting rather than a low-key neighborhood bar.",
+        "description": "Ramses combines design-forward drinks and dinner with a polished terrace facing Puerta de Alcalá. The landmark setting carries more ceremony than a low-key neighborhood bar.",
         "hours": {
           "mon": "6:00 PM-12:30 AM",
           "tue": "6:00 PM-12:30 AM",
@@ -1625,7 +1625,7 @@ export const madridNeighborhoodGuides = [
           40.4156,
           -3.6926
         ],
-        "description": "Mandarin Oriental Ritz is the museum-corridor luxury anchor because it sits beside the Prado and Retiro in Madrid's Golden Triangle of Art. Choose Mandarin Oriental Ritz when Belle Epoque atmosphere, service, dining, and park-museum proximity matter more than nightlife at the door.",
+        "description": "Mandarin Oriental Ritz is a museum-corridor luxury hotel because it sits beside the Prado and Retiro in Madrid's Golden Triangle of Art. Choose Mandarin Oriental Ritz when Belle Epoque atmosphere, service, dining, and park-museum proximity matter more than nightlife at the door.",
         "price": "$$",
         "priceSource": "Mandarin Oriental / MICHELIN Guide",
         "hours": {
@@ -1646,7 +1646,7 @@ export const madridNeighborhoodGuides = [
           40.4166,
           -3.6891
         ],
-        "description": "Petit Palace Savoy Alfonso XII gives the Retiro hotel set a practical park-facing option without the grand-luxury jump. It works when morning walks, museum access, and a quieter central sleep matter more than rooftop scene or destination dining.",
+        "description": "Petit Palace Savoy Alfonso XII gives the Retiro hotel set a practical park-facing option without the grand-luxury jump.",
         "price": "$",
         "priceSource": "Google Maps / hotel site",
         "hours": {
@@ -1667,7 +1667,7 @@ export const madridNeighborhoodGuides = [
           40.4076,
           -3.6909
         ],
-        "description": "Only YOU Hotel Atocha is the Retiro and Art Walk hotel for travelers who want rail access without losing Madrid style. Its lobby, dining, and social spaces make it more than a transit base, while Atocha, Reina Sofia, the Prado, and the park stay easy to reach.",
+        "description": "Only YOU Hotel Atocha is the Retiro and Art Walk hotel for rail access without losing Madrid style. Its lobby, dining, and social spaces make it more than a transit base, while Atocha, Reina Sofia, the Prado, and the park stay easy to reach.",
         "price": "$",
         "priceSource": "Google Maps / hotel site",
         "hours": {
@@ -1688,7 +1688,7 @@ export const madridNeighborhoodGuides = [
           40.4153,
           -3.695
         ],
-        "description": "The Westin Palace Madrid belongs in Retiro planning because the park, Prado, and Thyssen all sit close enough for culture-first days. Its historic dome, wellness and fitness facilities, and 27 Club bar make the stay feel formal and museum-led rather than neighborhood-casual.",
+        "description": "The Westin Palace Madrid places Retiro, the Prado, and the Thyssen within easy reach of its historic dome, formal rooms, wellness facilities, and 27 Club bar. The stay feels museum-led and ceremonial rather than neighborhood-casual.",
         "price": "$$",
         "priceSource": "Google Maps / hotel site",
         "hours": {
@@ -1737,7 +1737,7 @@ export const madridNeighborhoodGuides = [
     "seoTitle": "Best Hostels near Retiro, Madrid",
     "seoDescription": "Best hostels near Retiro, Madrid, for Atocha access, Prado and Reina Sofia days, budget rooms, and central transit without nightlife-first pressure.",
     "title": "Budget Bases for Museum Days",
-    "description": "Retiro's hostel map is honest about geography: the useful budget beds sit near Atocha, Lavapies, and Tirso rather than deep inside the park-side blocks. Latroupe Prado is the museum-and-rail pick, while 2060 The Newton and Ok Hostel trade park proximity for central movement and better value.",
+    "description": "Budget hostels serving Retiro cluster around Atocha, Lavapies, and Tirso rather than deep inside the park-side blocks. Rail and museum access, social common rooms, and lower prices compensate for the extra walk to the gardens.",
     "url": "https://www.google.com/maps/search/retiro+madrid+hostels",
     "category": "Stay",
     "location": {
@@ -1762,7 +1762,7 @@ export const madridNeighborhoodGuides = [
           40.4119,
           -3.6943
         ],
-        "description": "Latroupe Prado is the most logical Retiro-side hostel because Atocha and the Reina Sofia sit nearby while the park remains manageable on foot. Choose it when culture and train access matter more than sleeping beside late bars.",
+        "description": "Latroupe Prado sits near Atocha and Reina Sofia while keeping Retiro manageable on foot. Its bar, restaurant, coworking area, and common spaces favor museum and rail access over late-bar proximity.",
         "price": "$",
         "priceSource": "Latroupe official / Hostelworld",
         "hours": {
@@ -1804,7 +1804,7 @@ export const madridNeighborhoodGuides = [
           40.4113,
           -3.708
         ],
-        "description": "Ok Hostel Madrid is a Retiro-list budget option for travelers who accept a short hop or longer walk to the museums in exchange for old-city hostel pricing. Its dorms and private rooms help it cover different comfort levels, especially when the day starts with culture but the evening ends around La Latina or Lavapies.",
+        "description": "Ok Hostel Madrid is a Retiro-list budget hostel for travelers who accept a short hop or longer walk to the museums in exchange for old-city hostel pricing. Its dorms and private rooms help it cover different comfort levels, especially when the day starts with culture but the evening ends around La Latina or Lavapies.",
         "price": "$",
         "priceSource": "Hostelworld / Google Maps",
         "hours": {
@@ -1857,7 +1857,7 @@ export const madridNeighborhoodGuides = [
     "seoTitle": "Best Culture in Retiro, Madrid",
     "seoDescription": "Best culture in Retiro, Madrid, from El Retiro Park and Puerta de Alcalá to Prado-adjacent landmarks, museum edges, and garden walks.",
     "title": "Park Culture and Prado Edges",
-    "description": "Retiro culture is the city learning how to breathe between masterpieces. El Retiro Park gives the route water, gardens, and monuments, Puerta de Alcala marks the civic edge, and the Prado with Cason del Buen Retiro keeps the royal and museum history close.",
+    "description": "Retiro culture moves between water, gardens, monuments, civic architecture, royal history, and major museum collections. The park's open air prevents the district from becoming only an indoor art corridor.",
     "url": "https://www.google.com/maps/search/retiro+madrid+culture",
     "category": "Culture",
     "location": {
@@ -1982,7 +1982,7 @@ export const madridNeighborhoodGuides = [
     "seoTitle": "Best Restaurants in Malasana, Madrid",
     "seoDescription": "Best restaurants in Malasana, Madrid, for modern tasting menus, casual cafes, Lebanese plates, late dinners, and neighborhood food before bars.",
     "title": "Indie Dinners and Small Rooms",
-    "description": "Malasana wants dinner to stay loose enough for whatever happens after. Playing Solo gives the neighborhood a tiny tasting-menu room, Aredna and Ojala keep things contemporary and social, and La Musa works when the table should feel casual before the bars take over.",
+    "description": "Malasana wants dinner to stay loose enough for whatever happens after.",
     "url": "https://www.google.com/maps/search/malasana+madrid+restaurants",
     "category": "Food",
     "location": {
@@ -2007,7 +2007,7 @@ export const madridNeighborhoodGuides = [
           40.4285,
           -3.7041
         ],
-        "description": "A tiny kitchen-facing tasting-menu room that gives Malasana a modern destination dinner without leaving the neighborhood's small-scale feel. Use Playing Solo when the meal should be a reservation anchor rather than a casual crawl stop.",
+        "description": "Playing Solo is a tiny kitchen-facing Malasana room serving a modern tasting menu without losing the neighborhood's small scale. The meal depends on a reservation, not crawl momentum.",
         "price": "$",
         "priceSource": "The Infatuation",
         "hours": {
@@ -2028,7 +2028,7 @@ export const madridNeighborhoodGuides = [
           40.4265,
           -3.7007
         ],
-        "description": "A warm Lebanese room near Barceló, useful when the neighborhood needs generous spices and vegetables rather than another tapas default. Use Aredna when you want a compact local-feeling stop that can sit before drinks or sightseeing.",
+        "description": "A warm Lebanese room near Barceló, useful for generous spices and vegetables rather than another tapas default.",
         "price": "$",
         "priceSource": "The Infatuation / Google Maps",
         "hours": {
@@ -2049,7 +2049,7 @@ export const madridNeighborhoodGuides = [
           40.4265,
           -3.7045
         ],
-        "description": "A Malasana standby for casual meals, brunch energy, and groups that need something easy before the night gets louder. Use Ojalá when the plan needs an easy social table before the neighborhood turns louder.",
+        "description": "Ojala is a Malasana standby for casual meals, brunch, drinks, and easy group tables in a lively, informal room.",
         "price": "$",
         "priceSource": "Google Maps / Time Out",
         "hours": {
@@ -2070,7 +2070,7 @@ export const madridNeighborhoodGuides = [
           40.4254,
           -3.7053
         ],
-        "description": "A neighborhood small-plates room that fits the Malasana rhythm: social, informal, and useful before drinks around Dos de Mayo. Use La Musa when the meal should be a reservation anchor rather than a casual crawl stop.",
+        "description": "La Musa serves modern Spanish small plates and globally inflected dishes in a relaxed Malasaña dining room. The full menu supports a sit-down reservation rather than a passing bar snack.",
         "price": "$",
         "priceSource": "Google Maps / Tripadvisor",
         "hours": {
@@ -2115,7 +2115,7 @@ export const madridNeighborhoodGuides = [
     "seoTitle": "Best Bars in Malasana, Madrid",
     "seoDescription": "Best bars in Malasana, Madrid, including classic cocktail bars, indie dives, live-music rooms, electronic clubs, and Movida-era nightlife.",
     "title": "Movida Rooms and Late Drinks",
-    "description": "Malasana is still best when the polish cracks a little. 1862 Dry Bar starts the night with proper technique, Mondo Disko pushes it toward DJs, and La Via Lactea with TupperWare keeps the Movida aftertaste, the posters, and the late-room messiness alive.",
+    "description": "Malasana still carries the Movida through poster-covered indie bars and late rooms, now mixed with serious cocktails, live music, and electronic club programming. Personality and sound outrank polished uniformity.",
     "url": "https://www.google.com/maps/search/malasana+madrid+bars",
     "category": "Nightlife",
     "location": {
@@ -2140,7 +2140,7 @@ export const madridNeighborhoodGuides = [
           40.4234,
           -3.7036
         ],
-        "description": "1862 Dry Bar is the Malasana classic-cocktail room for drinkers who want technique, a historic bar feel, and a calmer start than the neighborhood's louder late rooms. It anchors the night with structure before the plan gets looser.",
+        "description": "1862 Dry Bar is the Malasana classic-cocktail room for drinkers who want technique, a historic bar feel, and a calmer start than the neighborhood's louder late rooms.",
         "hours": {
           "mon": "6:00 PM-12:30 AM",
           "tue": "6:00 PM-12:30 AM",
@@ -2159,7 +2159,7 @@ export const madridNeighborhoodGuides = [
           40.4264,
           -3.7004
         ],
-        "description": "Mondo Disko is the electronic-club anchor near Barceló, built around programmed nights rather than casual drop-in drinks. Save it for the point in the evening when the plan is dancing, tickets, and a proper late finish.",
+        "description": "Mondo Disko is an electronic-club near Barceló, built around programmed nights rather than casual drop-in drinks.",
         "hours": {
           "mon": "Event schedule (check venue)",
           "tue": "Event schedule (check venue)",
@@ -2178,7 +2178,7 @@ export const madridNeighborhoodGuides = [
           40.4267,
           -3.7044
         ],
-        "description": "La Vía Láctea is the Malasana classic tied to Movida memory, rock-and-roll posters, affordable drinks, and late neighborhood energy. It keeps the guide connected to the area's scruffier nightlife history.",
+        "description": "La Via Lactea is a Malasana classic tied to Movida memory, rock-and-roll posters, affordable drinks, and late neighborhood energy. The room preserves the area's scruffier nightlife history.",
         "hours": {
           "mon": "6:00 PM-12:30 AM",
           "tue": "6:00 PM-12:30 AM",
@@ -2197,7 +2197,7 @@ export const madridNeighborhoodGuides = [
           40.4271,
           -3.7042
         ],
-        "description": "TupperWare is the pop-culture dive where kitsch, music, and unpolished Malasana character are the draw. It belongs in the night when the group wants personality and noise more than a perfectly made cocktail.",
+        "description": "TupperWare is a pop-culture dive where kitsch, music, and unpolished Malasaña character matter more than a perfectly made cocktail. Go for personality, color, and noise.",
         "hours": {
           "mon": "6:00 PM-12:30 AM",
           "tue": "6:00 PM-12:30 AM",
@@ -2269,7 +2269,7 @@ export const madridNeighborhoodGuides = [
           40.4252,
           -3.6999
         ],
-        "description": "URSO is the Malasana hotel for travelers who want the neighborhood close but need a calmer, spa-level reset after late nights. The restored-palace feel works especially well when Tribunal and Chueca are part of the plan but sleep still matters.",
+        "description": "URSO is a restored-palace hotel on the Malasana edge with calm rooms, spa-level amenities, and easy access to Tribunal and Chueca without sleeping inside their loudest streets.",
         "price": "$$",
         "priceSource": "MICHELIN Key Hotels / Google Maps",
         "hours": {
@@ -2290,7 +2290,7 @@ export const madridNeighborhoodGuides = [
           40.4217,
           -3.7012
         ],
-        "description": "7 Islas Hotel is the Malasana-edge design option for travelers who want the neighborhood nearby but not directly under the loudest bar blocks. Its gallery feel and restaurant-bar setup make it a softer landing after Gran Via or Tribunal nights.",
+        "description": "7 Islas Hotel is a Malasana-edge design hotel for the neighborhood nearby but not directly under the loudest bar blocks.",
         "price": "$",
         "priceSource": "7 Islas official / Google Maps",
         "hours": {
@@ -2311,7 +2311,7 @@ export const madridNeighborhoodGuides = [
           40.4292,
           -3.7037
         ],
-        "description": "Ibis Madrid Centro is the value hotel pick inside Malasana, useful when location and predictable sleep matter more than boutique character. Tourism Madrid places it in the Movida-linked neighborhood, so it works for travelers who want the bars close but still prefer hotel basics over dorms.",
+        "description": "Ibis Madrid Centro is a value hotel inside Malasana, useful when location and predictable sleep matter more than boutique character. Tourism Madrid places it in the Movida-linked neighborhood, so it works for the bars close but still prefer hotel basics over dorms.",
         "price": "$",
         "priceSource": "Tourism Madrid / Google Maps",
         "hours": {
@@ -2332,7 +2332,7 @@ export const madridNeighborhoodGuides = [
           40.4198,
           -3.6995
         ],
-        "description": "Brach Madrid gives Malasana travelers a newer fashion-forward hotel on the Gran Via and Chueca edge, close to nightlife without becoming a hostel. It is best when the trip wants design, shopping, and central movement in a polished package.",
+        "description": "Brach Madrid is a fashion-forward hotel on the Gran Via and Chueca edge, pairing polished design with immediate shopping, nightlife, and central transport.",
         "price": "$$",
         "priceSource": "Google Maps / hotel site",
         "hours": {
@@ -2406,7 +2406,7 @@ export const madridNeighborhoodGuides = [
           40.4287,
           -3.7039
         ],
-        "description": "Onefam Madrid is the Malasana social-hostel choice when meeting people is part of the itinerary, not a side effect. The family-dinner and activity model fits Tribunal nights, casual bar plans, and travelers who want the neighborhood to set the pace.",
+        "description": "The family-dinner and activity model fits Tribunal nights, casual bar plans, and travelers who want the neighborhood to set the pace.",
         "price": "$",
         "priceSource": "Hostelworld / Google Maps",
         "hours": {
@@ -2427,7 +2427,7 @@ export const madridNeighborhoodGuides = [
           40.4248,
           -3.7009
         ],
-        "description": "Bastardo Hostel is the Malasana design-hostel hybrid for travelers who want style, shared spaces, and Tribunal proximity without a purely party-hostel feel. It works as a social base that still gives private-room flexibility.",
+        "description": "Bastardo Hostel is the Malasana design-hostel hybrid for style, shared spaces, and Tribunal proximity without a purely party-hostel feel. It is a social base that still gives private-room flexibility.",
         "price": "$",
         "priceSource": "Bastardo official / Hostelworld",
         "hours": {
@@ -2448,7 +2448,7 @@ export const madridNeighborhoodGuides = [
           40.4245,
           -3.6977
         ],
-        "description": "room00 Chueca Hostel works from Malasana as a budget sleep option near Hortaleza, Gran Via, and the Chueca border. Dorms, private rooms, and family rooms make it useful for travelers who want nightlife access without committing to a full party-hostel program.",
+        "description": "room00 Chueca Hostel works from Malasana as a budget sleep option near Hortaleza, Gran Via, and the Chueca border. Dorms, private rooms, and family rooms make it useful for nightlife access without committing to a full party-hostel program.",
         "price": "$",
         "priceSource": "Hostelworld / Visit Chueca",
         "hours": {
@@ -2501,7 +2501,7 @@ export const madridNeighborhoodGuides = [
     "seoTitle": "Best Culture in Malasana, Madrid",
     "seoDescription": "Best culture in Malasana, Madrid, from Museo de Historia and Plaza Dos de Mayo to Conde Duque, Teatro Lara, and Movida-era streets.",
     "title": "Movida Memory and Neighborhood Stages",
-    "description": "Malasana culture lives in street memory as much as institutions. Museo de Historia de Madrid gives the city a timeline, Plaza del Dos de Mayo keeps the uprising myth visible, Condeduque supplies contemporary programming, and Teatro Lara keeps the neighborhood connected to small-stage Madrid.",
+    "description": "Malasana culture lives in street memory as much as institutions, from the 1808 uprising and the city's historical record to contemporary arts programming and small-stage theater. Movida-era identity remains visible in the neighborhood around them.",
     "url": "https://www.google.com/maps/search/malasana+madrid+culture",
     "category": "Culture",
     "location": {
@@ -2626,7 +2626,7 @@ export const madridNeighborhoodGuides = [
     "seoTitle": "Best Restaurants in La Latina, Madrid",
     "seoDescription": "Best restaurants in La Latina, Madrid, for Cava Baja tapas, market meals, old taverns, Sunday El Rastro stops, and classic Madrid lunches.",
     "title": "Cava Baja Tapas and Old Taverns",
-    "description": "La Latina is easy to romanticize because the tapas streets do half the work for you. Juana La Loca and Casa Lucio give the route sit-down weight, Taberna La Concha keeps vermouth and small plates close, and Mercado de la Cebada brings the neighborhood back to market rhythm.",
+    "description": "La Latina concentrates Cava Baja tapas, old taverns, tortilla, vermouth, and crowded Sunday streets into Madrid's most recognizable grazing district.",
     "url": "https://www.google.com/maps/search/la+latina+madrid+restaurants",
     "category": "Food",
     "location": {
@@ -2651,7 +2651,7 @@ export const madridNeighborhoodGuides = [
           40.4113,
           -3.7115
         ],
-        "description": "A La Latina tapas anchor known for tortilla and a more polished Cava Baja meal than a random crawl stop. Use Juana La Loca when you want a compact local-feeling stop that can sit before drinks or sightseeing.",
+        "description": "Juana La Loca is a polished Cava Baja tapas bar known for tortilla, pintxos, and a more composed La Latina meal than random grazing.",
         "price": "$",
         "priceSource": "The Infatuation / Google Maps",
         "hours": {
@@ -2672,7 +2672,7 @@ export const madridNeighborhoodGuides = [
           40.412,
           -3.7106
         ],
-        "description": "The classic old-Madrid dining room for huevos rotos and a splurge-leaning La Latina lunch or dinner. Use Casa Lucio when the meal should be a reservation anchor rather than a casual crawl stop.",
+        "description": "Casa Lucio is an old-Madrid dining room known for huevos rotos and a splurge-leaning La Latina lunch or dinner. Reservations matter more here than on a casual Cava Baja crawl.",
         "price": "$",
         "priceSource": "Time Out / Google Maps",
         "hours": {
@@ -2693,7 +2693,7 @@ export const madridNeighborhoodGuides = [
           40.4115,
           -3.7114
         ],
-        "description": "A vermouth-and-tapas stop on Cava Baja for keeping the meal small, social, and neighborhood-specific. Use Taberna La Concha when you want a compact local-feeling stop that can sit before drinks or sightseeing.",
+        "description": "Taberna La Concha is a compact Cava Baja tavern for vermouth, tapas, and a small, social meal that feels specific to La Latina.",
         "price": "$",
         "priceSource": "Google Maps / Tripadvisor",
         "hours": {
@@ -2714,7 +2714,7 @@ export const madridNeighborhoodGuides = [
           40.4115,
           -3.7089
         ],
-        "description": "The market stop for a less formal La Latina food plan near the metro, plazas, and El Rastro approaches. Use Mercado de la Cebada when the group needs flexible grazing, uneven appetites, or a quick reset between sights.",
+        "description": "Mercado de la Cebada combines a working neighborhood market with prepared-food stalls and casual counters near La Latina. The variety handles mixed appetites without forcing one fixed meal.",
         "price": "$",
         "priceSource": "Google Maps / local guides",
         "hours": {
@@ -2759,7 +2759,7 @@ export const madridNeighborhoodGuides = [
     "seoTitle": "Best Bars in La Latina, Madrid",
     "seoDescription": "Best bars in La Latina, Madrid, including Cava Baja vermouth stops, rooftop drinks, tapas bars, and late rooms after El Rastro.",
     "title": "Cava Baja Into the Night",
-    "description": "A La Latina night should blur the line between dinner, drinking, and one more room you did not plan on entering. El Viajero gives the neighborhood its rooftop climb, Taberna La Concha keeps things intimate on Cava Baja, and Marula Cafe with ContraClub carries the evening toward music.",
+    "description": "La Latina nightlife blurs dinner and drinking through Cava Baja taverns, vermouth, wine bars, and late rooms that stay informal rather than club-driven.",
     "url": "https://www.google.com/maps/search/la+latina+madrid+bars",
     "category": "Nightlife",
     "location": {
@@ -2784,7 +2784,7 @@ export const madridNeighborhoodGuides = [
           40.4113,
           -3.711
         ],
-        "description": "El Viajero spreads La Latina nightlife across multiple floors, with street-level energy, indoor dining, and the rooftop terrace as the main prize. It works when the evening needs Cava Baja proximity, views, and a casual climb from tapas into drinks.",
+        "description": "El Viajero spreads La Latina nightlife across multiple floors, with street-level energy, indoor dining, and the rooftop terrace as the main prize.",
         "hours": {
           "mon": "12:00 PM-12:30 AM",
           "tue": "12:00 PM-12:30 AM",
@@ -2822,7 +2822,7 @@ export const madridNeighborhoodGuides = [
           40.4134,
           -3.71327
         ],
-        "description": "Marula Café sits by Caños Viejos as a La Latina music-and-dance room known for funk, soul, jazz, Afrobeat, and DJ-led nights. Use it when tapas should turn into a dance floor without leaving the old-city edge.",
+        "description": "Marula Café sits by Caños Viejos as a La Latina music-and-dance room known for funk, soul, jazz, Afrobeat, and DJ-led nights.",
         "hours": {
           "mon": "10:00 PM-2:30 AM",
           "tue": "10:00 PM-2:30 AM",
@@ -2841,7 +2841,7 @@ export const madridNeighborhoodGuides = [
           40.4102,
           -3.7093
         ],
-        "description": "ContraClub is the small live-room and club option for when La Latina moves beyond taverns and rooftops. It belongs in the guide as a later, music-led stop with a more compact feel than the city's big electronic rooms.",
+        "description": "ContraClub is a small live-room and club for when La Latina moves beyond taverns and rooftops.",
         "hours": {
           "mon": "Event schedule (check venue)",
           "tue": "Event schedule (check venue)",
@@ -2888,7 +2888,7 @@ export const madridNeighborhoodGuides = [
     "seoTitle": "Best Hotels in La Latina, Madrid",
     "seoDescription": "Best hotels in La Latina, Madrid, for Cava Baja tapas, old-city walks, Plaza Mayor access, boutique inns, and central design hotels.",
     "title": "Hotels for Tapas-First Nights",
-    "description": "These stays are for travelers who want old Madrid underfoot after dinner. Posada del Leon de Oro puts Cava Baja at the door, Pestana Plaza Mayor and The Madrid EDITION keep the historic center polished, and Room Mate Alba lets the route drift east toward Las Letras.",
+    "description": "Hotels around La Latina and the historic center range from intimate old-Madrid rooms to polished square-front properties. Street noise, restaurant access, room character, and service level define the tradeoffs.",
     "url": "https://www.google.com/maps/search/la+latina+madrid+hotels",
     "category": "Stay",
     "location": {
@@ -2913,7 +2913,7 @@ export const madridNeighborhoodGuides = [
           40.4124,
           -3.7105
         ],
-        "description": "Posada del León de Oro is the La Latina hotel for travelers who want Cava Baja as the base, not just an evening detour. Choose Posada del León de Oro when old-city atmosphere, tapas access, and a smaller boutique scale matter more than broad hotel facilities.",
+        "description": "Posada del León de Oro is the La Latina hotel for Cava Baja as the base, not just an evening detour. Choose Posada del León de Oro when old-city atmosphere, tapas access, and a smaller boutique scale matter more than broad hotel facilities.",
         "price": "$",
         "priceSource": "Google Maps / hotel site",
         "hours": {
@@ -2934,7 +2934,7 @@ export const madridNeighborhoodGuides = [
           40.415,
           -3.7074
         ],
-        "description": "Pestana Plaza Mayor belongs in La Latina planning because it keeps Cava Baja and old Madrid close while staying on a more formal landmark square. It suits travelers who want tapas access but prefer a hotel with stronger facilities than a small inn.",
+        "description": "Pestana Plaza Mayor occupies Madrid's landmark central square while keeping Cava Baja and the older streets of La Latina close. Its spa and full hotel facilities offer more support than a small neighborhood inn.",
         "price": "$$",
         "priceSource": "Tourism Madrid / Pestana",
         "hours": {
@@ -2976,7 +2976,7 @@ export const madridNeighborhoodGuides = [
           40.4135,
           -3.7002
         ],
-        "description": "Room Mate Alba works for La Latina trips as a slightly eastward boutique base, useful when tapas nights should pair with Las Letras and Art Walk days. Choose it when the itinerary crosses neighborhoods instead of staying only on Cava Baja.",
+        "description": "Room Mate Alba works for La Latina trips as a slightly eastward boutique base, useful when tapas nights should pair with Las Letras and Art Walk days.",
         "price": "$",
         "priceSource": "Google Maps / hotel site",
         "hours": {
@@ -3025,7 +3025,7 @@ export const madridNeighborhoodGuides = [
     "seoTitle": "Best Hostels in La Latina, Madrid",
     "seoDescription": "Best hostels in La Latina, Madrid, for Cava Baja access, Tirso de Molina, social dorms, private rooms, El Rastro, and budget central walks.",
     "title": "Hostels for Cava Baja and Tirso",
-    "description": "La Latina hostel planning is about being close to the tapas streets without paying hotel money for the privilege. The Hat catches Plaza Mayor and rooftop energy, Ok Hostel and 2060 The Newton cover the Tirso side, and Latroupe Prado is the quieter museum-edge counterweight.",
+    "description": "Hostels serving La Latina keep tapas streets and the historic center accessible at dorm prices. Rooftop social energy, quieter museum-edge rooms, common spaces, and distance from Cava Baja separate the properties.",
     "url": "https://www.google.com/maps/search/la+latina+madrid+hostels",
     "category": "Stay",
     "location": {
@@ -3050,7 +3050,7 @@ export const madridNeighborhoodGuides = [
           40.4145,
           -3.7073
         ],
-        "description": "The Hat Madrid is the La Latina-adjacent social pick, close enough to Cava Baja and Plaza Mayor to make tapas nights simple. It is strongest for travelers who want rooftop energy and easy meetups before moving through the old city.",
+        "description": "The Hat Madrid is a La Latina-adjacent social hotel, close enough to Cava Baja and Plaza Mayor to make tapas nights simple.",
         "price": "$",
         "priceSource": "Hostelworld / The Hat official",
         "hours": {
@@ -3071,7 +3071,7 @@ export const madridNeighborhoodGuides = [
           40.4113,
           -3.708
         ],
-        "description": "Ok Hostel Madrid belongs naturally in La Latina planning because Cava Baja, Tirso de Molina, and the Rastro side of the neighborhood are all close. It offers dorms and private rooms, so the stay can lean social and low-cost without forcing every traveler into a shared bunk.",
+        "description": "Ok Hostel Madrid sits close to Cava Baja, Tirso de Molina, and the Rastro side of La Latina. Dorms and private rooms let the stay remain social and low-cost without forcing every guest into a shared bunk.",
         "price": "$",
         "priceSource": "Hostelworld / Google Maps",
         "hours": {
@@ -3092,7 +3092,7 @@ export const madridNeighborhoodGuides = [
           40.412,
           -3.7048
         ],
-        "description": "2060 The Newton Hostel fits La Latina planning because Tirso de Molina sits between Cava Baja, Lavapies, Sol, and the market streets. Use it for a social, central base when the night is likely to move through several old-city pockets.",
+        "description": "2060 The Newton Hostel sits at Tirso de Molina between Cava Baja, Lavapies, Sol, and the market streets. Social spaces and a central bed suit evenings spread across several old-city pockets.",
         "price": "$",
         "priceSource": "Hostelworld / Google Maps",
         "hours": {
@@ -3113,7 +3113,7 @@ export const madridNeighborhoodGuides = [
           40.4119,
           -3.6943
         ],
-        "description": "Latroupe Prado is the La Latina list's quieter counterweight, better for Atocha and museum logistics than for rolling directly out onto Cava Baja. It works when travelers want hostel pricing but expect their days to start around the Art Walk.",
+        "description": "Latroupe Prado is a quieter hostel near Atocha and the museum corridor, with more distance from Cava Baja than the neighborhood's closest dorm beds.",
         "price": "$",
         "priceSource": "Latroupe official / Hostelworld",
         "hours": {
@@ -3166,7 +3166,7 @@ export const madridNeighborhoodGuides = [
     "seoTitle": "Best Culture in La Latina, Madrid",
     "seoDescription": "Best culture in La Latina, Madrid, from El Rastro and Plaza de la Paja to San Francisco el Grande, Cava Baja, and old Madrid streets.",
     "title": "Markets, Plazas, and Old Madrid",
-    "description": "This guide treats La Latina as an old-city walk rather than a museum checklist. El Rastro brings the Sunday ritual, San Francisco el Grande gives the route sacred scale, Plaza de la Paja slows the streets down, and Cava Baja turns tavern life into cultural evidence.",
+    "description": "La Latina's culture is carried by a Sunday street market, monumental religious architecture, intimate old-city plazas, and tavern streets that remain part of daily Madrid. Its history is public, social, and visible outside conventional museums.",
     "url": "https://www.google.com/maps/search/la+latina+madrid+culture",
     "category": "Culture",
     "location": {
@@ -3210,7 +3210,7 @@ export const madridNeighborhoodGuides = [
           40.4109,
           -3.7148
         ],
-        "description": "Basilica de San Francisco el Grande is a monumental neoclassical church known for its huge dome, circular plan, chapels, and religious artworks. It adds scale and solemnity to La Latina's older streets, especially for visitors interested in sacred architecture.",
+        "description": "Basílica de San Francisco el Grande brings a vast frescoed dome, monumental scale, and serious sacred art to La Latina's older streets. The interior is far grander than the surrounding neighborhood lanes suggest.",
         "hours": {
           "mon": "9:00 AM-8:00 PM",
           "tue": "9:00 AM-8:00 PM",
@@ -3229,7 +3229,7 @@ export const madridNeighborhoodGuides = [
           40.4123,
           -3.7118
         ],
-        "description": "Plaza de la Paja is one of La Latina's most atmospheric medieval-feeling squares, bordered by old walls, church history, and sloping lanes. It shows the quieter side of Madrid de los Austrias before the neighborhood opens into busier tapas streets.",
+        "description": "Plaza de la Paja is one of La Latina's most atmospheric medieval-feeling squares, bordered by old walls, church history, and sloping lanes.",
         "hours": {
           "mon": "Open public space",
           "tue": "Open public space",
@@ -3291,7 +3291,7 @@ export const madridNeighborhoodGuides = [
     "seoTitle": "Best Restaurants in Chueca, Madrid",
     "seoDescription": "Best restaurants in Chueca, Madrid, for wine-led dinners, market meals, modern Spanish cooking, LGBTQ+ nightlife-adjacent dining, and stylish central rooms.",
     "title": "Wine, Market Plates, and Stylish Rooms",
-    "description": "Chueca is strongest when dinner already knows the night might continue. Angelita gives the guide wine and cocktails under one roof, Mercado de San Anton keeps it market-driven, DSTAgE brings the serious reservation, and Kuoco 360 adds a more global, high-energy dinner.",
+    "description": "Chueca is strongest when dinner already knows the night might continue.",
     "url": "https://www.google.com/maps/search/chueca+madrid+restaurants",
     "category": "Food",
     "location": {
@@ -3316,7 +3316,7 @@ export const madridNeighborhoodGuides = [
           40.4208,
           -3.7005
         ],
-        "description": "The neighborhood's wine-led dining room and cocktail-bar crossover, ideal for a Chueca dinner that keeps going downstairs. Use Angelita when the route needs a focused sweet stop or casual reset rather than another full meal.",
+        "description": "Angelita combines a wine-led Chueca dining room upstairs with a serious cocktail bar downstairs, allowing dinner to continue without changing addresses.",
         "price": "$",
         "priceSource": "The Infatuation / World's 50 Best Bars",
         "hours": {
@@ -3337,7 +3337,7 @@ export const madridNeighborhoodGuides = [
           40.4228,
           -3.6972
         ],
-        "description": "The practical Chueca market hall for groups, rooftop dining, and flexible meals before or after bars. Use Mercado de San Antón when the group needs flexible grazing, uneven appetites, or a quick reset between sights.",
+        "description": "Mercado de San Antón layers produce stalls, prepared-food counters, and rooftop dining inside a modern Chueca market. Mixed appetites can split up and regroup without committing to one menu.",
         "price": "$",
         "priceSource": "Google Maps / Time Out",
         "hours": {
@@ -3358,7 +3358,7 @@ export const madridNeighborhoodGuides = [
           40.4248,
           -3.6971
         ],
-        "description": "A high-end Chueca/Salesas tasting-menu room for travelers who want a serious reservation close to the neighborhood's nightlife spine. Use DSTAgE when the meal should be a reservation anchor rather than a casual crawl stop.",
+        "description": "DSTAgE serves an ambitious tasting menu in a high-end Chueca/Salesas room close to the neighborhood's nightlife streets.",
         "price": "$",
         "priceSource": "MICHELIN Guide / Google Maps",
         "hours": {
@@ -3379,7 +3379,7 @@ export const madridNeighborhoodGuides = [
           40.4216,
           -3.6986
         ],
-        "description": "A lively fusion-leaning Chueca dinner for groups who want big flavors and a social room before cocktails. Use Kuoco 360 when the plan needs an easy social table before the neighborhood turns louder.",
+        "description": "Kuoco 360 is a lively, fusion-leaning Chueca restaurant built around big flavors, shareable plates, and a social room suited to groups.",
         "price": "$",
         "priceSource": "Google Maps / Tripadvisor",
         "hours": {
@@ -3424,7 +3424,7 @@ export const madridNeighborhoodGuides = [
     "seoTitle": "Best Bars in Chueca, Madrid",
     "seoDescription": "Best bars in Chueca, Madrid, including LGBTQ+ nightlife, cocktail rooms, wine bars, piano-bar classics, and stylish Gran Via-adjacent drinks.",
     "title": "Cocktails, Queer Rooms, and Late Classics",
-    "description": "Chueca nightlife has range: basement cocktails, lush new rooms, historic glamour, and piano-bar chaos within a short walk. Angelita and Ficus Bar handle the current cocktail mood, Museo Chicote brings Spain's first-cocktail-bar history, and Toni 2 finishes with the kind of singalong that refuses to be cool.",
+    "description": "Chueca nightlife has range: basement cocktails, lush new rooms, historic glamour, and piano-bar chaos within a short walk.",
     "url": "https://www.google.com/maps/search/chueca+madrid+bars",
     "category": "Nightlife",
     "location": {
@@ -3449,7 +3449,7 @@ export const madridNeighborhoodGuides = [
           40.4208,
           -3.7005
         ],
-        "description": "Angelita's downstairs bar gives Chueca a serious cocktail stop beneath a wine-led restaurant. It works when the night should move from dinner into a basement bar with produce-driven drinks and a more intimate mood.",
+        "description": "Angelita pairs a wine-led restaurant upstairs with an intimate basement bar serving produce-driven cocktails. The two formats make food, bottles, and serious mixed drinks part of one address.",
         "hours": {
           "mon": "6:00 PM-12:30 AM",
           "tue": "6:00 PM-12:30 AM",
@@ -3468,7 +3468,7 @@ export const madridNeighborhoodGuides = [
           40.4221,
           -3.6984
         ],
-        "description": "Ficus Bar is a current Chueca cocktail room with plant-filled styling, neighborhood scale, and a more relaxed pace than the Gran Via classics. It is useful for a stylish drink without turning the night into a destination-bar pilgrimage.",
+        "description": "Ficus Bar is a current Chueca cocktail room with plant-filled styling, neighborhood scale, and a more relaxed pace than the Gran Via classics.",
         "hours": {
           "mon": "6:00 PM-12:30 AM",
           "tue": "6:00 PM-12:30 AM",
@@ -3487,7 +3487,7 @@ export const madridNeighborhoodGuides = [
           40.4204,
           -3.6999
         ],
-        "description": "Museo Chicote matters because it opened as Spain's first cocktail bar and still gives Gran Via a dose of old Madrid glamour. Use it for history, mirrored-room polish, and classic cocktail atmosphere on the Chueca edge.",
+        "description": "Museo Chicote opened as Spain's first cocktail bar and preserves old Madrid glamour through a mirrored Gran Via room and classic cocktail service on the Chueca edge.",
         "hours": {
           "mon": "6:00 PM-12:30 AM",
           "tue": "6:00 PM-12:30 AM",
@@ -3506,7 +3506,7 @@ export const madridNeighborhoodGuides = [
           40.421,
           -3.6976
         ],
-        "description": "Toni 2 Piano Bar is the Chueca-adjacent singalong finish, close enough for the neighborhood's late rhythm but theatrical in its own old-school way. Go when the night needs piano, crowd energy, and a room that wants everyone involved.",
+        "description": "Toni 2 Piano Bar is the Chueca-adjacent singalong finish, close enough for the neighborhood's late rhythm but theatrical in its own old-school way.",
         "hours": {
           "mon": "10:00 PM-2:30 AM",
           "tue": "10:00 PM-2:30 AM",
@@ -3553,7 +3553,7 @@ export const madridNeighborhoodGuides = [
     "seoTitle": "Best Hotels in Chueca, Madrid",
     "seoDescription": "Best hotels in Chueca, Madrid, for boutique stays, rooftop access, Gran Via edges, LGBTQ+ nightlife, and polished central sleep.",
     "title": "Boutique Stays Around Chueca",
-    "description": "These hotels let Chueca stay close without making the room feel like an after-hours spillover. Only YOU Boutique and Room Mate Oscar lean into neighborhood character, Brach Madrid and Hotel Urban add design-forward polish, and URSO gives the guide a quieter spa-minded escape on the edge.",
+    "description": "These hotels let Chueca stay close without making the room feel like an after-hours spillover.",
     "url": "https://www.google.com/maps/search/chueca+madrid+hotels",
     "category": "Stay",
     "location": {
@@ -3578,7 +3578,7 @@ export const madridNeighborhoodGuides = [
           40.4235,
           -3.6964
         ],
-        "description": "Only YOU Boutique Hotel Madrid is the Chueca hotel anchor, with MICHELIN-noted palace-to-boutique design and a Barquillo address near shopping, cocktails, and Salesas. It is best when the neighborhood itself should shape the stay.",
+        "description": "Only YOU Boutique Hotel Madrid is a Chueca hotel, with MICHELIN-noted palace-to-boutique design and a Barquillo address near shopping, cocktails, and Salesas. It is best when the neighborhood itself should shape the stay.",
         "price": "$$",
         "priceSource": "MICHELIN Guide / Google Maps",
         "hours": {
@@ -3620,7 +3620,7 @@ export const madridNeighborhoodGuides = [
           40.4198,
           -3.6995
         ],
-        "description": "Brach Madrid fits Chueca as the polished design stay near Gran Via, Salesas, and the cocktail circuit. Choose it when the hotel should feel contemporary and social while still offering a full-service reset.",
+        "description": "Brach Madrid is a polished design hotel near Gran Via, Salesas, and Chueca's cocktail bars. Contemporary social spaces come with the services needed for a more complete hotel retreat.",
         "price": "$$",
         "priceSource": "Google Maps / hotel site",
         "hours": {
@@ -3662,7 +3662,7 @@ export const madridNeighborhoodGuides = [
           40.4252,
           -3.6999
         ],
-        "description": "URSO fits Chueca planning as the refined edge option: near enough for Barquillo, Salesas, and cocktail routes, but removed from the loudest blocks. Choose it when a polished room and spa mood matter more than being directly above the nightlife.",
+        "description": "URSO sits on Chueca's refined edge, close to Barquillo, Salesas, and cocktail bars but removed from the loudest blocks. Polished rooms and a spa take priority over sleeping directly above nightlife.",
         "price": "$$",
         "priceSource": "MICHELIN Key Hotels / Google Maps",
         "hours": {
@@ -3711,7 +3711,7 @@ export const madridNeighborhoodGuides = [
     "seoTitle": "Best Hostels in Chueca, Madrid",
     "seoDescription": "Best hostels in Chueca, Madrid, for Hortaleza dorms, Chueca-Malasana access, Gran Via walks, social stays, and budget rooms near nightlife.",
     "title": "Budget Beds on the Chueca Edge",
-    "description": "Chueca's hostel scene is really about choosing the right edge of the action. room00 Chueca keeps Hortaleza and Gran Via close with dorms, private rooms, and family rooms, Bastardo brings the designed social base near Tribunal, and Onefam Madrid is for travelers who want community to be built into the stay.",
+    "description": "Hostels on the Chueca edge range from designed social properties to dorms, private rooms, and family rooms near Hortaleza, Gran Via, and Tribunal. Community level matters as much as address.",
     "url": "https://www.google.com/maps/search/chueca+madrid+hostels",
     "category": "Stay",
     "location": {
@@ -3757,7 +3757,7 @@ export const madridNeighborhoodGuides = [
           40.4248,
           -3.7009
         ],
-        "description": "Bastardo Hostel fits the Chueca edge because it sits between queer nightlife, Malasana bars, and Gran Via movement. Choose it when the stay should feel social and designed, but not as stripped-back as the cheapest dorm option.",
+        "description": "Bastardo Hostel sits between Chueca's queer nightlife, Malasana bars, and Gran Via. Its social, design-conscious rooms feel more considered than the city's most stripped-back dorms.",
         "price": "$",
         "priceSource": "Bastardo official / Hostelworld",
         "hours": {
@@ -3778,7 +3778,7 @@ export const madridNeighborhoodGuides = [
           40.4287,
           -3.7039
         ],
-        "description": "Onefam Madrid works for Chueca hostel planning as the social base just northwest of the neighborhood's main nightlife spine. Use it when the plan is bars and new travel friends, with Chueca close enough to fold into the night.",
+        "description": "Onefam Madrid works for Chueca hostel planning as the social base just northwest of the neighborhood's main nightlife spine.",
         "price": "$",
         "priceSource": "Hostelworld / Google Maps",
         "hours": {
@@ -3831,7 +3831,7 @@ export const madridNeighborhoodGuides = [
     "seoTitle": "Best Culture in Chueca, Madrid",
     "seoDescription": "Best culture in Chueca, Madrid, from Museo del Romanticismo and Plaza de Chueca to Gran Via architecture, galleries, and LGBTQ+ urban history.",
     "title": "Romantic Rooms and Chueca Streets",
-    "description": "Chueca culture is not only nightlife; it is domestic history, public identity, and architecture with a bit of swagger. Museo del Romanticismo opens the 19th-century interior world, Plaza de Chueca shows the neighborhood in public, Gran Via supplies the theater-lit boulevard, and Palacio de Longoria adds Art Nouveau drama.",
+    "description": "Chueca culture is not only nightlife; it is domestic history, public identity, and architecture with a bit of swagger.",
     "url": "https://www.google.com/maps/search/chueca+madrid+culture",
     "category": "Culture",
     "location": {
@@ -3875,7 +3875,7 @@ export const madridNeighborhoodGuides = [
           40.4227,
           -3.6976
         ],
-        "description": "Plaza de Chueca is the lively center of Madrid's LGBTQ+ district, known for outdoor dining, inclusive nightlife, boutique streets, and neighborhood celebrations. Named after composer Federico Chueca, the square works as a compact public stage for the area's social identity.",
+        "description": "Plaza de Chueca is the lively center of Madrid's LGBTQ+ district, known for outdoor dining, inclusive nightlife, boutique streets, and neighborhood celebrations.",
         "hours": {
           "mon": "Open public space",
           "tue": "Open public space",
@@ -3959,7 +3959,7 @@ export const madridCitywideGuides = [
     "seoTitle": "Best Restaurants in Madrid",
     "seoDescription": "Best restaurants in Madrid, from tapas counters and market tortillas to modern Spanish rooms, wine-led Chueca dining, and destination tasting menus.",
     "title": "Tapas Streets, Markets, and Modern Rooms",
-    "description": "This is not a greatest-hits list for people trying to eat Madrid in one afternoon. Casa Dani, Lhardy, La Malontina, Angelita, and Playing Solo show markets, old rooms, taverns, and small kitchens, while DiverXO and Smoked Room remind you the city can also go full spectacle.",
+    "description": "This is not a greatest-hits list for people trying to eat Madrid in one afternoon.",
     "url": "https://www.google.com/maps/search/best+restaurants+madrid",
     "category": "Food",
     "location": {
@@ -3983,7 +3983,7 @@ export const madridCitywideGuides = [
           40.4255,
           -3.6869
         ],
-        "description": "Casa Dani is the Salamanca market anchor because Madrid food planning needs at least one stop that is about the everyday tortilla ritual rather than a formal reservation. The Infatuation highlights it inside Mercado de la Paz, and its sustained market-stall demand makes it a practical lunch or bar-seat stop when the day is moving through Serrano or Retiro-adjacent neighborhoods.",
+        "description": "Casa Dani is a Salamanca market because Madrid food planning needs at least one stop that is about the everyday tortilla ritual rather than a formal reservation. The Infatuation highlights it inside Mercado de la Paz, and its sustained market-stall demand makes it a practical lunch or bar-seat stop when the day is moving through Serrano or Retiro-adjacent neighborhoods.",
         "price": "$",
         "priceSource": "The Infatuation / Google Maps",
         "hours": {
@@ -4025,7 +4025,7 @@ export const madridCitywideGuides = [
           40.4208,
           -3.7005
         ],
-        "description": "Angelita works in both Food and Nightlife, but the restaurant earns a food slot because Chueca needs a wine-led dining room with serious produce behind it. The Infatuation and World's 50 Best Bars both support the address: upstairs for farm-driven plates and a huge wine program, downstairs for the cocktail bar after dinner.",
+        "description": "Angelita pairs a produce-led restaurant with an unusually deep wine program near Chueca. Seasonal plates and serious bottles make the dining room more than an annex to the cocktail bar downstairs.",
         "price": "$$",
         "priceSource": "The Infatuation / World's 50 Best Bars",
         "hours": {
@@ -4046,7 +4046,7 @@ export const madridCitywideGuides = [
           40.4285,
           -3.7041
         ],
-        "description": "Playing Solo gives Malasana a destination reservation without losing neighborhood scale. The Infatuation frames it as an eight-seat, kitchen-facing tasting-menu experience, so it belongs here for travelers who want Madrid's modern restaurant energy in a small room instead of a grand-hotel fine-dining setting.",
+        "description": "Playing Solo is an eight-seat, kitchen-facing tasting-menu restaurant in Malasana. The tiny counter puts modern Madrid cooking and direct contact with the kitchen ahead of grand-room fine-dining ceremony.",
         "price": "$$",
         "priceSource": "The Infatuation",
         "hours": {
@@ -4067,7 +4067,7 @@ export const madridCitywideGuides = [
           40.4172,
           -3.7003
         ],
-        "description": "Lhardy gives the citywide food guide its old-capital dining room: croquetas, consomme, formal service, and a Puerta del Sol address with real Madrid history. It is the classic to choose when the route needs ceremony and continuity, not just contemporary cooking.",
+        "description": "Lhardy preserves an old-capital dining room near Puerta del Sol, serving croquetas, consomme, and formal Madrid history with unapologetic ceremony.",
         "price": "$$",
         "priceSource": "The Infatuation / Google Maps",
         "hours": {
@@ -4088,7 +4088,7 @@ export const madridCitywideGuides = [
           40.4585,
           -3.6856
         ],
-        "description": "DiverXO is the trip-defining fine-dining entry, backed by MICHELIN's three-star rating and World's 50 Best's No. 4 placement in 2025. It is expensive, theatrical, and north of the usual central route, so use it as a protected reservation rather than a casual Madrid dinner.",
+        "description": "DiverXO is the trip-defining fine-dining entry, backed by MICHELIN's three-star rating and World's 50 Best's No. 4 placement in 2025.",
         "price": "$$",
         "priceSource": "MICHELIN Guide / World's 50 Best",
         "hours": {
@@ -4109,7 +4109,7 @@ export const madridCitywideGuides = [
           40.4381,
           -3.6918
         ],
-        "description": "Smoked Room is the intimate high-end counterpoint to DiverXO: MICHELIN gives it two stars and describes a highly exclusive, smoke-and-charcoal-focused dining room inside Hyatt Regency Hesperia Madrid. It belongs in the guide for travelers who want a luxury tasting menu with fewer seats, more kitchen contact, and a quieter mood.",
+        "description": "Smoked Room is the intimate high-end alternative to DiverXO: MICHELIN gives it two stars and describes a highly exclusive, smoke-and-charcoal-focused dining room inside Hyatt Regency Hesperia Madrid.",
         "price": "$$",
         "priceSource": "MICHELIN Guide",
         "hours": {
@@ -4158,7 +4158,7 @@ export const madridCitywideGuides = [
     "seoTitle": "Best Bars in Madrid",
     "seoDescription": "Best bars in Madrid, including vermouth rooms, Chueca cocktail bars, Las Letras destination drinks, Malasana clubs, and late-night Madrid institutions.",
     "title": "Vermouth, Cocktails, and Late Rooms",
-    "description": "Madrid nights work because they can change temperature without changing cities. Salmon Guru and Ficus Bar bring the cocktail voltage, Angelita and 1862 Dry Bar slow things down with craft, and Mondo Disko with Toni 2 Piano Bar proves the end of the night can mean either a dance floor or a room singing at the piano.",
+    "description": "Madrid nights move easily from vermouth and wine bars to precise cocktails and loud late rooms without losing the city's street-level sociability.",
     "url": "https://www.google.com/maps/search/best+bars+madrid",
     "category": "Nightlife",
     "location": {
@@ -4182,7 +4182,7 @@ export const madridCitywideGuides = [
           40.4159,
           -3.6997
         ],
-        "description": "Salmon Guru is Madrid's citywide cocktail showpiece, known for Diego Cabrera's inventive drinks, graphic rooms, and international bar-list attention. It belongs here as the high-energy destination drink, not as a quiet nightcap.",
+        "description": "Salmon Guru is Madrid's citywide cocktail showpiece, known for Diego Cabrera's inventive drinks, graphic rooms, and international bar-list attention.",
         "hours": {
           "mon": "6:00 PM-12:30 AM",
           "tue": "6:00 PM-12:30 AM",
@@ -4201,7 +4201,7 @@ export const madridCitywideGuides = [
           40.4208,
           -3.7005
         ],
-        "description": "Angelita gives the citywide nightlife guide a Chueca crossover: wine-led restaurant upstairs, cocktail seriousness downstairs. The value is being able to build a whole night around one address without it feeling like a generic bar stop.",
+        "description": "Angelita combines a wine-led restaurant upstairs with a serious cocktail bar downstairs, allowing an entire Chueca evening to unfold at one address without feeling generic.",
         "hours": {
           "mon": "6:00 PM-12:30 AM",
           "tue": "6:00 PM-12:30 AM",
@@ -4220,7 +4220,7 @@ export const madridCitywideGuides = [
           40.4221,
           -3.6984
         ],
-        "description": "Ficus Bar gives the citywide set a newer Chueca cocktail mood: lush room, neighborhood intimacy, and drinks that feel current without the scale of the big destination bars. It is a strong choice when the night should stay stylish but not overproduced.",
+        "description": "Ficus Bar gives the citywide set a newer Chueca cocktail mood: lush room, neighborhood intimacy, and drinks that feel current without the scale of the big destination bars. It is a strong bar when the night should stay stylish but not overproduced.",
         "hours": {
           "mon": "6:00 PM-12:30 AM",
           "tue": "6:00 PM-12:30 AM",
@@ -4239,7 +4239,7 @@ export const madridCitywideGuides = [
           40.4234,
           -3.7036
         ],
-        "description": "1862 Dry Bar is the citywide classic-cocktail pick for a measured drink around Malasana. It is best for technique, atmosphere, and a slower start before Madrid's louder late-night rooms take over.",
+        "description": "1862 Dry Bar is a Malasana classic-cocktail room known for measured drinks, serious technique, and an intimate two-level setting. It favors conversation and precision over high-volume late-night energy.",
         "hours": {
           "mon": "6:00 PM-12:30 AM",
           "tue": "6:00 PM-12:30 AM",
@@ -4258,7 +4258,7 @@ export const madridCitywideGuides = [
           40.4264,
           -3.7004
         ],
-        "description": "Mondo Disko is the citywide electronic-club entry, useful when the night is planned around DJs and late hours instead of another round of cocktails. Check the programming first, then treat it as the dedicated dance-floor stop.",
+        "description": "Mondo Disko is an electronic club near Barcelo built around DJs, programmed nights, late hours, and a dedicated dance floor. The official calendar matters more than casual drop-in drinking.",
         "hours": {
           "mon": "Event schedule (check venue)",
           "tue": "Event schedule (check venue)",
@@ -4277,7 +4277,7 @@ export const madridCitywideGuides = [
           40.421,
           -3.6976
         ],
-        "description": "Toni 2 Piano Bar gives the citywide nightlife guide a Madrid singalong institution rather than a standard cocktail stop. It is the pick for a theatrical late room where piano, regulars, and audience participation define the night.",
+        "description": "Toni 2 is a theatrical late-night piano bar where regulars, live playing, and audience singalongs define the room. Cocktails are secondary to participation and Madrid institution status.",
         "hours": {
           "mon": "10:00 PM-2:30 AM",
           "tue": "10:00 PM-2:30 AM",
@@ -4328,7 +4328,7 @@ export const madridCitywideGuides = [
     "seoTitle": "Best Hotels in Madrid",
     "seoDescription": "Best hotels in Madrid, comparing Sol luxury, Retiro museum hotels, Chueca boutique stays, Malasana design bases, and La Latina old-city access.",
     "title": "Hotels That Match the Madrid Route",
-    "description": "The right Madrid hotel depends on the trip you are actually taking, not the one a booking site imagines for you. Four Seasons, Mandarin Oriental Ritz, and The Madrid EDITION cover the polished high end, Only YOU Boutique and 7 Islas bring stronger neighborhood personality, while URSO and Pestana Plaza Mayor answer two very different needs for calm and old-center atmosphere.",
+    "description": "Madrid hotels range from polished high-end service and art-district grandeur to design-led neighborhood rooms, quiet spa stays, and old-center atmosphere. The right choice depends on whether museums, nightlife, calm, or walkable historic streets matter most.",
     "url": "https://www.google.com/maps/search/best+hotels+madrid",
     "category": "Stay",
     "location": {
@@ -4352,7 +4352,7 @@ export const madridCitywideGuides = [
           40.4172,
           -3.7015
         ],
-        "description": "Four Seasons Hotel Madrid is the citywide luxury anchor because it turns the Canalejas location into a polished base for Sol, Gran Via, the Art Walk, and old Madrid. Choose it when the hotel itself should be a major part of the trip.",
+        "description": "Four Seasons Hotel Madrid turns the Canalejas complex into a polished luxury property with high-touch service, destination dining, a spa, and quiet rooms. Sol, Gran Via, the Art Walk, and old Madrid remain immediately accessible.",
         "price": "$$",
         "priceSource": "Condé Nast Traveler / Google Maps",
         "hours": {
@@ -4373,7 +4373,7 @@ export const madridCitywideGuides = [
           40.4156,
           -3.6926
         ],
-        "description": "For the citywide hotel guide, Mandarin Oriental Ritz is the luxury stay that best ties Prado-triangle culture to Retiro park time. Choose Mandarin Oriental Ritz, Madrid when Belle Epoque atmosphere, service, dining, and museum proximity matter more than nightlife at the door.",
+        "description": "Mandarin Oriental Ritz ties Belle Epoque atmosphere and polished service to the Prado triangle and Retiro, with destination dining and museum access taking priority over nightlife at the door.",
         "price": "$$",
         "priceSource": "Mandarin Oriental / MICHELIN Guide",
         "hours": {
@@ -4394,7 +4394,7 @@ export const madridCitywideGuides = [
           40.4235,
           -3.6964
         ],
-        "description": "Only YOU Boutique Hotel Madrid is the citywide boutique pick for travelers who want Chueca energy without giving up a real hotel reset. The value is central movement, design character, and nightlife access in one base.",
+        "description": "Only YOU Boutique Hotel Madrid occupies a restored mansion near Chueca, with bold interiors, lively public rooms, and polished service. Its central address keeps nightlife, shopping, and several metro lines close without sacrificing a proper hotel reset.",
         "price": "$$",
         "priceSource": "MICHELIN Guide / Google Maps",
         "hours": {
@@ -4415,7 +4415,7 @@ export const madridCitywideGuides = [
           40.4252,
           -3.6999
         ],
-        "description": "URSO is the citywide calm-luxury pick between Malasana, Chamberi, and Chueca. It earns the slot for travelers who want central nightlife within reach but want the hotel itself to feel quieter, restored, and reset-focused.",
+        "description": "URSO is a calm luxury hotel between Malasana, Chamberi, and Chueca, with restored interiors, polished rooms, and a spa. Central nightlife stays close while the property itself remains quiet.",
         "price": "$$",
         "priceSource": "MICHELIN Key Hotels / Google Maps",
         "hours": {
@@ -4436,7 +4436,7 @@ export const madridCitywideGuides = [
           40.4171,
           -3.7062
         ],
-        "description": "The Madrid EDITION is the citywide design-hotel pick for travelers who want central movement, rooftop energy, and a contemporary room standard in one place. It is best when the trip mixes old Madrid walks with a more polished hotel scene.",
+        "description": "The Madrid EDITION is a citywide design-hotel for central movement, rooftop energy, and a contemporary room standard in one place. It is best when the trip mixes old Madrid walks with a more polished hotel scene.",
         "price": "$$",
         "priceSource": "Condé Nast Traveler / Google Maps",
         "hours": {
@@ -4457,7 +4457,7 @@ export const madridCitywideGuides = [
           40.415,
           -3.7074
         ],
-        "description": "Pestana Plaza Mayor is the citywide historic-center hotel for visitors who want Madrid de los Austrias built into the stay. Choose it when square-front atmosphere, rooftop-season usefulness, and walkable old-city logistics outweigh a quieter residential base.",
+        "description": "Pestana Plaza Mayor places contemporary rooms, spa facilities, and a seasonal rooftop directly on the historic square. Old-city walkability and atmosphere come with more tourist activity than a residential district.",
         "price": "$$",
         "priceSource": "Tourism Madrid / Pestana",
         "hours": {
@@ -4478,7 +4478,7 @@ export const madridCitywideGuides = [
           40.4217,
           -3.7012
         ],
-        "description": "7 Islas Hotel is the citywide boutique pick for travelers who want a central address with an independent, art-forward rhythm. It is useful when Gran Via access, Malasana proximity, and a smaller hotel personality matter more than grand-hotel service.",
+        "description": "7 Islas Hotel is a citywide boutique hotel for a central address with an independent, art-forward rhythm. It is useful when Gran Via access, Malasana proximity, and a smaller hotel personality matter more than grand-hotel service.",
         "price": "$",
         "priceSource": "7 Islas official / Google Maps",
         "hours": {
@@ -4527,7 +4527,7 @@ export const madridCitywideGuides = [
     "seoTitle": "Best Hostels in Madrid",
     "seoDescription": "Best hostels in Madrid, comparing Sol, La Latina, Malasana, Chueca, Tirso de Molina, Atocha, social dorms, private rooms, and budget bases.",
     "title": "Social Beds Across the Center",
-    "description": "Madrid's hostel map is a choice between social momentum, location, and the kind of sleep you need after midnight. The Hat, Onefam Madrid, and 2060 The Newton lean into meeting people, Latroupe Prado and Ok Hostel keep logistics practical, and Bastardo with room00 Chueca gives the budget set a design or Chueca-edge alternative.",
+    "description": "Madrid hostels differ in social programming, central location, design, and the quality of sleep after midnight. Party-forward dorms, practical old-center beds, and polished Chueca or Prado options all offer private-room flexibility to different degrees.",
     "url": "https://www.google.com/maps/search/best+hostels+madrid",
     "category": "Stay",
     "location": {
@@ -4551,7 +4551,7 @@ export const madridCitywideGuides = [
           40.4145,
           -3.7073
         ],
-        "description": "The Hat Madrid is the central hostel choice when the trip needs a recognizably social, first-visit base. The value is not quiet; it is rooftop momentum, dorm/private flexibility, and quick access to Sol, Plaza Mayor, and La Latina.",
+        "description": "The Hat Madrid is a central hostel for a recognizably social, first-visit base. The value is not quiet; it is rooftop momentum, dorm/private flexibility, and quick access to Sol, Plaza Mayor, and La Latina.",
         "price": "$",
         "priceSource": "Hostelworld / The Hat official",
         "hours": {
@@ -4572,7 +4572,7 @@ export const madridCitywideGuides = [
           40.4287,
           -3.7039
         ],
-        "description": "Onefam Madrid is the hostel pick for travelers who care most about built-in community, activities, and nights out. It is less about quiet lodging and more about using Malasana as a launchpad for meeting people quickly.",
+        "description": "Onefam Madrid is a hostel for travelers who care most about built-in community, activities, and nights out. It is less about quiet lodging and more about using Malasana as a launchpad for meeting people quickly.",
         "price": "$",
         "priceSource": "Hostelworld / Google Maps",
         "hours": {
@@ -4593,7 +4593,7 @@ export const madridCitywideGuides = [
           40.412,
           -3.7048
         ],
-        "description": "2060 The Newton Hostel is the practical central all-rounder: strong walkability, rooftop energy, and easy movement between Sol, La Latina, Lavapies, and the Art Walk. It is best for budget travelers who want a busy shared-room setting with real route flexibility.",
+        "description": "2060 The Newton Hostel is the practical central all-rounder: strong walkability, rooftop energy, and easy movement between Sol, La Latina, Lavapies, and the Art Walk.",
         "price": "$",
         "priceSource": "Hostelworld / Google Maps",
         "hours": {
@@ -4614,7 +4614,7 @@ export const madridCitywideGuides = [
           40.4119,
           -3.6943
         ],
-        "description": "Latroupe Prado gives the hostel set its museum-and-rail base, with Atocha and Reina Sofia doing more work than nightlife proximity. It is the pick for travelers who want shared lodging without building the whole trip around party streets.",
+        "description": "Latroupe Prado offers shared lodging near Atocha, Reina Sofia, and the museum corridor, with a bar, restaurant, coworking area, and common spaces. Rail and culture access matter more than party-street proximity.",
         "price": "$",
         "priceSource": "Latroupe official / Hostelworld",
         "hours": {
@@ -4635,7 +4635,7 @@ export const madridCitywideGuides = [
           40.4113,
           -3.708
         ],
-        "description": "Ok Hostel Madrid is the utility hostel for travelers who want Madrid's old center, La Latina, and Lavapies in one simple base. Dorms and private rooms keep it flexible, and the appeal is budget, location, and social access rather than design-hotel polish.",
+        "description": "Ok Hostel Madrid is the value hostel for Madrid's old center, La Latina, and Lavapies in one simple base. Dorms and private rooms keep it flexible, and the appeal is budget, location, and social access rather than design-hotel polish.",
         "price": "$",
         "priceSource": "Hostelworld / Google Maps",
         "hours": {
@@ -4656,7 +4656,7 @@ export const madridCitywideGuides = [
           40.4248,
           -3.7009
         ],
-        "description": "Bastardo Hostel is the design-hostel option for travelers comparing dorms, privates, and a more polished social atmosphere. Its value is the Tribunal position between Malasana and Chueca, not total quiet.",
+        "description": "Bastardo Hostel is a design-hostel for travelers comparing dorms, privates, and a more polished social atmosphere. Its value is the Tribunal position between Malasana and Chueca, not total quiet.",
         "price": "$",
         "priceSource": "Bastardo official / Hostelworld",
         "hours": {
@@ -4677,7 +4677,7 @@ export const madridCitywideGuides = [
           40.4245,
           -3.6977
         ],
-        "description": "room00 Chueca Hostel is the low-cost Chueca option for travelers who want central nightlife, shopping, and metro access without hotel pricing. Dorms, private rooms, and family rooms give it more range than a simple shared-bed hostel.",
+        "description": "room00 Chueca Hostel is a low-cost Chueca hostel for central nightlife, shopping, and metro access without hotel pricing. Dorms, private rooms, and family rooms give it more range than a simple shared-bed hostel.",
         "price": "$",
         "priceSource": "Hostelworld / Visit Chueca",
         "hours": {
@@ -4730,7 +4730,7 @@ export const madridCitywideGuides = [
     "seoTitle": "Best Culture in Madrid",
     "seoDescription": "Best culture in Madrid, connecting the Prado, Reina Sofia, Thyssen, Royal Palace, literary streets, galleries, and Retiro-area museum days.",
     "title": "Art Walk, Palace Rooms, and Literary Streets",
-    "description": "Madrid's culture is not one monument; it is a walk that keeps changing costume. The Prado, Reina Sofia, and Thyssen build the art spine, the Royal Palace pulls the story west, Barrio de las Letras keeps writers in the streets, and CaixaForum with Matadero Madrid pushes the city into contemporary rooms and rougher brick spaces.",
+    "description": "Madrid's culture moves from royal collections and the major art museums to palace rooms, literary streets, contemporary exhibition spaces, and converted industrial architecture. The contrast between courtly and modern institutions is the city's real cultural strength.",
     "url": "https://www.google.com/maps/search/best+culture+madrid",
     "category": "Culture",
     "location": {

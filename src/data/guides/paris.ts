@@ -826,7 +826,7 @@ function neighborhoodGuide(
     seoTitle: options.seoTitle ?? `Best ${topic} in ${neighborhood}, Paris`,
     seoDescription:
       options.seoDescription ??
-      `Best ${topic.toLowerCase()} in ${neighborhood}, Paris, selected for source support, neighborhood fit, and useful saved-map routing.`,
+      `Best ${topic.toLowerCase()} in ${neighborhood}, Paris, with neighborhood-specific places and practical visit details.`,
     title,
     description,
     url: `https://www.google.com/maps/search/${encodeURIComponent(`${neighborhood} ${topic} Paris`)}`,
@@ -843,7 +843,7 @@ const citywideFood: StopSeed[] = [
     name: "Bistrot des Tournelles",
     coordinates: [48.8555, 2.366],
     description:
-      "Bistrot des Tournelles anchors the Marais with a classic Paris bistro room, steak frites, terrines, and the kind of reservation that still fits a neighborhood walk. Save it for a proper dinner near Place des Vosges when the day needs old-school comfort and a room with momentum.",
+      "Bistrot des Tournelles serves steak frites and terrines in a classic Marais bistro room where reservations protect a proper meal from the neighborhood's crowded walk-in circuit.",
     price: "$$",
     priceSource: "The Infatuation / Google Maps",
   },
@@ -852,7 +852,7 @@ const citywideFood: StopSeed[] = [
     name: "Brasserie Lipp",
     coordinates: [48.8535, 2.3332],
     description:
-      "Brasserie Lipp gives Saint-Germain a literary brasserie stop with real use in a food guide: polished room, Alsatian-leaning classics, and a see-and-be-seen lunch or dinner that belongs to the boulevard. Book it when history and room tone matter as much as the plate.",
+      "Brasserie Lipp serves Alsatian-leaning classics in a polished Saint-Germain room with literary history and a durable see-and-be-seen crowd. Book it when boulevard atmosphere matters as much as the plate.",
     price: "$$$",
     priceSource: "The Infatuation / Google Maps",
   },
@@ -861,7 +861,7 @@ const citywideFood: StopSeed[] = [
     name: "Le Baratin",
     coordinates: [48.8731, 2.3857],
     description:
-      "Le Baratin is the Belleville bistro the MICHELIN Guide still flags for Raquel Carena's personal blackboard cooking, restrained prices, and appealing wines. It belongs because it shows a less-polished, deeply personal side of Paris dining: seasonal plates, natural wine, and a dinner worth planning across town.",
+      "Le Baratin is Raquel Carena's Belleville bistro, known for personal blackboard cooking, restrained prices, and an appealing natural-wine list. Seasonal plates and an unpolished dining room keep the experience closer to a neighborhood restaurant than a trophy reservation.",
     price: "$$",
     priceSource: "Eater / Time Out / MICHELIN Guide",
   },
@@ -870,7 +870,7 @@ const citywideFood: StopSeed[] = [
     name: "Septime",
     coordinates: [48.8535, 2.3829],
     description:
-      "Septime gives the citywide guide a one-star fine-dining benchmark in the 11th, with Bertrand Grebaut's seasonal cooking and a calm industrial room near Charonne. Treat it as a priority reservation for travelers who want contemporary Paris at its most exacting.",
+      "Septime is Bertrand Grebaut's one-star restaurant in the 11th, pairing seasonal cooking with a calm industrial room near Charonne. Reservations are difficult and worth securing early for one of contemporary Paris's most exacting menus.",
     price: "$$$",
     priceSource: "MICHELIN Guide / Eater",
   },
@@ -879,7 +879,7 @@ const citywideFood: StopSeed[] = [
     name: "Clamato",
     coordinates: [48.8536, 2.3828],
     description:
-      "Clamato is Septime's seafood-focused sibling, the MICHELIN-noted room for oysters, crudo, shellfish, vegetables, and share plates without a formal tasting menu. Its first-come rhythm makes timing part of the plan, but the payoff is a lighter, sharper Paris meal.",
+      "Clamato is Septime's seafood-focused sibling, the MICHELIN-noted room for oysters, crudo, shellfish, vegetables, and share plates without a formal tasting menu.",
     price: "$$",
     priceSource: "MICHELIN Guide / Paris by Mouth",
   },
@@ -888,7 +888,7 @@ const citywideFood: StopSeed[] = [
     name: "Du Pain et des Idees",
     coordinates: [48.8719, 2.3622],
     description:
-      "Du Pain et des Idees is the Canal Saint-Martin boulangerie stop for pain des amis, escargot pastries, and a morning that starts with craft rather than convenience. It belongs because the bread and viennoiserie can anchor a whole east-side route.",
+      "Du Pain et des Idees is a Canal Saint-Martin boulangerie for pain des amis, escargot pastries, and a morning that starts with craft rather than convenience.",
     price: "$",
     priceSource: "Eater / Google Maps",
   },
@@ -897,7 +897,7 @@ const citywideFood: StopSeed[] = [
     name: "David Toutain",
     coordinates: [48.8617, 2.3048],
     description:
-      "David Toutain gives Paris a serious fine-dining anchor near Invalides, with highly composed seasonal menus and a nature-driven point of view. Use it for one high-budget meal where the reservation, pacing, and room are the plan rather than a pause between sights.",
+      "David Toutain serves highly composed seasonal tasting menus near Invalides, with vegetables, texture, and a nature-driven point of view shaping the kitchen's fine-dining style.",
     price: "$$$",
     priceSource: "MICHELIN Guide / David Toutain official",
   },
@@ -909,7 +909,7 @@ const citywideBoulangerieFood: StopSeed[] = [
     name: "Du Pain et des Idees",
     coordinates: [48.8719, 2.3622],
     description:
-      "Du Pain et des Idees is the citywide boulangerie anchor for pain des amis, buttery escargot pastries, and a Canal Saint-Martin morning with purpose. Start here when the day should feel Parisian before the first museum or long walk.",
+      "Du Pain et des Idees is a citywide boulangerie for pain des amis, buttery escargot pastries, and a Canal Saint-Martin morning with purpose.",
     price: "$",
     priceSource: "Eater / official bakery site / Google Maps",
   },
@@ -918,7 +918,7 @@ const citywideBoulangerieFood: StopSeed[] = [
     name: "Poilane",
     coordinates: [48.8499, 2.3261],
     description:
-      "Poilane gives the Left Bank its legendary sourdough, apple tarts, and serious bread counter on Rue du Cherche-Midi. It is a morning stop for travelers who want a baguette or loaf with pedigree before Saint-Germain or Luxembourg.",
+      "Poilane gives the Left Bank its legendary sourdough, apple tarts, and serious bread counter on Rue du Cherche-Midi.",
     price: "$",
     priceSource: "Official bakery site / Google Maps",
   },
@@ -927,7 +927,7 @@ const citywideBoulangerieFood: StopSeed[] = [
     name: "La Maison d'Isabelle",
     coordinates: [48.8498, 2.3486],
     description:
-      "La Maison d'Isabelle is the Latin Quarter croissant stop for a quick, high-quality breakfast before Pantheon, Cluny, or Mouffetard. It keeps the morning simple: pastry first, then streets and museums.",
+      "La Maison d'Isabelle is a Latin Quarter bakery known for high-quality croissants and quick counter breakfasts near the Pantheon, Cluny, and Mouffetard.",
     price: "$",
     priceSource: "Google Maps / Paris bakery guides",
   },
@@ -936,7 +936,7 @@ const citywideBoulangerieFood: StopSeed[] = [
     name: "Holybelly 5",
     coordinates: [48.8723, 2.3606],
     description:
-      "Holybelly 5 adds the coffee-and-seated-breakfast version of a Paris morning near the canal. Use it when the group wants pancakes, eggs, and proper coffee before shifting into locks, shops, and east-side wandering.",
+      "Holybelly 5 is a seated breakfast cafe near Canal Saint-Martin known for pancakes, eggs, seasonal plates, and carefully made coffee. The full-service format suits anyone who wants more than a pastry at the counter.",
     price: "$$",
     priceSource: "Official cafe site / Google Maps",
   },
@@ -957,7 +957,7 @@ const citywideBrasserieFood: StopSeed[] = [
     name: "Brasserie Lipp",
     coordinates: [48.8535, 2.3332],
     description:
-      "Brasserie Lipp gives the brasserie guide its polished Saint-Germain institution: Alsatian-leaning classics, literary boulevard energy, and a room that still feels like part of the city's dining memory.",
+      "Brasserie Lipp is a polished Saint-Germain institution serving Alsatian-leaning classics in a literary boulevard room that remains part of the city's dining memory.",
     price: "$$$",
     priceSource: "The Infatuation / Google Maps",
   },
@@ -966,7 +966,7 @@ const citywideBrasserieFood: StopSeed[] = [
     name: "Bouillon Racine",
     coordinates: [48.849, 2.341],
     description:
-      "Bouillon Racine brings Art Nouveau detail and classic comfort to the Latin Quarter, making it a good brasserie-style stop near Odeon, Cluny, and the Sorbonne. It is strongest for groups that want setting without a luxury price point.",
+      "Bouillon Racine brings Art Nouveau detail and classic comfort to the Latin Quarter, making it a good brasserie-style stop near Odeon, Cluny, and the Sorbonne.",
     price: "$$",
     priceSource: "Official restaurant site / Google Maps",
   },
@@ -975,7 +975,7 @@ const citywideBrasserieFood: StopSeed[] = [
     name: "La Fontaine de Mars",
     coordinates: [48.8587, 2.3044],
     description:
-      "La Fontaine de Mars is the Rue Saint-Dominique classic for duck, cassoulet, steak, and a room that still works as neighborhood dining despite its Eiffel-side address. Use it when monuments need a proper traditional table nearby.",
+      "La Fontaine de Mars is the Rue Saint-Dominique classic for duck, cassoulet, steak, and a room that still works as neighborhood dining despite its Eiffel-side address.",
     price: "$$$",
     priceSource: "Official restaurant site / Google Maps",
   },
@@ -987,7 +987,7 @@ const citywidePatisserieFood: StopSeed[] = [
     name: "Angelina",
     coordinates: [48.8651, 2.3286],
     description:
-      "Angelina gives the patisserie guide the grand tea-room ritual: hot chocolate, Mont-Blanc, pastries, and a Rue de Rivoli room that pairs naturally with the Louvre and Tuileries.",
+      "Angelina stages the grand Paris tea-room ritual through thick hot chocolate, Mont-Blanc, pastries, and an ornate Rue de Rivoli dining room.",
     price: "$$",
     priceSource: "Official tea-room site / Google Maps",
   },
@@ -996,7 +996,7 @@ const citywidePatisserieFood: StopSeed[] = [
     name: "Pierre Herme Bonaparte",
     coordinates: [48.8516, 2.3333],
     description:
-      "Pierre Herme Bonaparte is the Left Bank stop for polished macarons and high-end sweet creations. Use it when Saint-Germain needs a precise dessert destination rather than a casual bakery counter.",
+      "Pierre Herme Bonaparte is a polished Left Bank patisserie known for macarons, chocolate, and flavor combinations that treat pastry as design. It is a boutique counter rather than a casual neighborhood bakery.",
     price: "$$",
     priceSource: "Official patisserie site / Google Maps",
   },
@@ -1005,7 +1005,7 @@ const citywidePatisserieFood: StopSeed[] = [
     name: "Laduree Champs-Elysees",
     coordinates: [48.8704, 2.3069],
     description:
-      "Laduree Champs-Elysees brings the famous macaron house into a classic Paris itinerary, especially when the route already runs through the avenue or Arc de Triomphe side. It is the polished, gift-box version of the sweet stop.",
+      "Laduree Champs-Elysees is the famous macaron house in its polished avenue form, with ornate tea-room service, pastries, and gift boxes near the Arc de Triomphe side.",
     price: "$$",
     priceSource: "Official patisserie site / Google Maps",
   },
@@ -1014,7 +1014,7 @@ const citywidePatisserieFood: StopSeed[] = [
     name: "Du Pain et des Idees",
     coordinates: [48.8719, 2.3622],
     description:
-      "Du Pain et des Idees belongs here for viennoiserie as much as bread, especially the escargot pastries that can turn a canal walk into a pastry route. It gives the guide a craft-bakery counterpoint to the grand maisons.",
+      "Du Pain et des Idees is as strong on viennoiserie as bread, especially its spiral escargot pastries and pain des amis. The Canal Saint-Martin bakery is compact, craft-led, and focused on a short, recognizable range.",
     price: "$",
     priceSource: "Official bakery site / Google Maps",
   },
@@ -1026,7 +1026,7 @@ const citywideNightlife: StopSeed[] = [
     name: "Bar Nouveau",
     coordinates: [48.8623, 2.3579],
     description:
-      "Bar Nouveau is the stylish Marais pick for Art Nouveau design, producer-led cocktails upstairs, and a six-cocktail set-menu experience downstairs on weekends. Use it when the night wants a polished, main-character start before dinner or galleries.",
+      "Bar Nouveau is a stylish Marais bar for Art Nouveau design, producer-led cocktails upstairs, and a six-cocktail set-menu experience downstairs on weekends.",
     price: "$$$",
     priceSource: "World's 50 Best Bars",
   },
@@ -1044,7 +1044,7 @@ const citywideNightlife: StopSeed[] = [
     name: "Danico",
     coordinates: [48.8666, 2.3399],
     description:
-      "Danico is the polished Galerie Vivienne destination backed by World 50 Best, useful when the night wants a hidden-room feel near Palais Royal, Bourse, or the covered passages. It is more special-occasion glam than loose neighborhood hang.",
+      "Danico is the polished Galerie Vivienne destination backed by World 50 Best, useful for a hidden-room feel near Palais Royal, Bourse, or the covered passages. It is more special-occasion glam than loose neighborhood hang.",
     price: "$$$",
     priceSource: "World's 50 Best Bars",
   },
@@ -1062,7 +1062,7 @@ const citywideNightlife: StopSeed[] = [
     name: "Le Duc des Lombards",
     coordinates: [48.8593, 2.3476],
     description:
-      "Le Duc des Lombards is the central live-music anchor, built for a ticketed set rather than a loose bar crawl. Its Chatelet position makes it easy after dinner, but the best version of the night starts with the calendar.",
+      "Le Duc des Lombards is a central live-music venue, built for a ticketed set rather than a loose bar crawl.",
     price: "$$",
     priceSource: "Paris venue listings / Google Maps",
   },
@@ -1071,7 +1071,7 @@ const citywideNightlife: StopSeed[] = [
     name: "La Gare / Le Gore",
     coordinates: [48.8927, 2.3839],
     description:
-      "La Gare / Le Gore is the northeast night out: live music in a former station, garden-and-terrace breathing room, then a basement club that can run into the early hours. Go when the plan can commit to La Villette and wants grit, dancing, and a less polished edge.",
+      "La Gare / Le Gore is the northeast night out: live music in a former station, garden-and-terrace breathing room, then a basement club that can run into the early hours.",
     price: "$",
     priceSource: "Visit Paris Region",
   },
@@ -1083,7 +1083,7 @@ const citywideLiveNightlife: StopSeed[] = [
     name: "Le Duc des Lombards",
     coordinates: [48.8593, 2.3476],
     description:
-      "Le Duc des Lombards is the easy central live-room choice: book a set, arrive on time, and let the night be about musicianship rather than another round of bar hopping.",
+      "Le Duc des Lombards is a central live-room music venue: book a set, arrive on time, and let the night be about musicianship rather than another round of bar hopping.",
     price: "$$",
     priceSource: "Official venue site / Google Maps",
   },
@@ -1092,7 +1092,7 @@ const citywideLiveNightlife: StopSeed[] = [
     name: "Le Caveau de la Huchette",
     coordinates: [48.8525, 2.3468],
     description:
-      "Le Caveau de la Huchette gives Paris a dancing-cellar night in the Latin Quarter, with live music, old-stone atmosphere, and a clear reason to stay after dinner.",
+      "Le Caveau de la Huchette is a Latin Quarter dancing cellar with live jazz, old-stone atmosphere, and a crowd that comes to move rather than treat music as background.",
     price: "$$",
     priceSource: "Official venue site / Google Maps",
   },
@@ -1101,7 +1101,7 @@ const citywideLiveNightlife: StopSeed[] = [
     name: "Au Lapin Agile",
     coordinates: [48.8888, 2.3401],
     description:
-      "Au Lapin Agile is the Montmartre cabaret stop for song, performance, and artist-history atmosphere. Treat it as a planned show night, especially when the group wants nightlife without centering drinks.",
+      "Au Lapin Agile is a historic Montmartre cabaret presenting traditional French song and intimate live performance in a room steeped in artist lore. Admission follows the performance schedule rather than drop-in bar hours.",
     price: "$$",
     priceSource: "Official venue site / Google Maps",
   },
@@ -1110,7 +1110,7 @@ const citywideLiveNightlife: StopSeed[] = [
     name: "La Gare / Le Gore",
     coordinates: [48.8927, 2.3839],
     description:
-      "La Gare / Le Gore stretches the night from live sets in a former station into a basement dance floor. It is the guide's scrappier, later counterweight to seated central venues.",
+      "La Gare / Le Gore stretches the night from live jazz and experimental sets in a former station into a scrappier basement dance floor with late electronic programming.",
     price: "$",
     priceSource: "Visit Paris Region / Google Maps",
   },
@@ -1119,7 +1119,7 @@ const citywideLiveNightlife: StopSeed[] = [
     name: "Point Ephemere",
     coordinates: [48.8819, 2.3686],
     description:
-      "Point Ephemere brings concerts, exhibitions, terrace energy, and canal-side programming into one address. Use it when the night should be built around what's on, not just where to drink.",
+      "Point Ephemere combines concerts, exhibitions, artist studios, a bar, and a canal-side terrace in one former industrial space. Programming changes nightly, so the official calendar matters more than a generic bar recommendation.",
     price: "$$",
     priceSource: "Official venue site / Google Maps",
   },
@@ -1140,7 +1140,7 @@ const citywideLowKeyNightlife: StopSeed[] = [
     name: "Le Piano Vache",
     coordinates: [48.8503, 2.3488],
     description:
-      "Le Piano Vache is the Latin Quarter dive-bar institution: posters, student energy, cheap-drink usefulness, and a night that does not ask anyone to dress up.",
+      "Le Piano Vache is the Latin Quarter dive-bar institution: posters, student energy, cheap drinks, and a night that does not ask anyone to dress up.",
     price: "$",
     priceSource: "Official venue site / Google Maps",
   },
@@ -1149,7 +1149,7 @@ const citywideLowKeyNightlife: StopSeed[] = [
     name: "Le Requin Chagrin",
     coordinates: [48.8465, 2.3478],
     description:
-      "Le Requin Chagrin keeps the Pantheon side casual with pub energy, group tables, and an easy second-stop role after Mouffetard or Latin Quarter dinner.",
+      "Le Requin Chagrin is a casual Pantheon-side pub with beer, group tables, and a low-pressure room near Mouffetard.",
     price: "$",
     priceSource: "Google Maps / local nightlife guides",
   },
@@ -1158,7 +1158,7 @@ const citywideLowKeyNightlife: StopSeed[] = [
     name: "La Perle",
     coordinates: [48.8608, 2.3614],
     description:
-      "La Perle is the Marais sidewalk-crowd standby, useful when the night wants people-watching, spillover energy, and minimal planning between galleries and late wandering.",
+      "La Perle is the Marais sidewalk-crowd standby, useful for people-watching, spillover energy, and minimal planning between galleries and late wandering.",
     price: "$$",
     priceSource: "Time Out / Google Maps",
   },
@@ -1167,7 +1167,7 @@ const citywideLowKeyNightlife: StopSeed[] = [
     name: "Teddy's Bar",
     coordinates: [48.8473, 2.3443],
     description:
-      "Teddy's Bar gives Rue Mouffetard a compact, low-pressure stop for beer, cocktails, and a casual group reset before the night decides where it is going.",
+      "Teddy's Bar is a compact, low-pressure Rue Mouffetard room pouring beer and cocktails for casual groups.",
     price: "$$",
     priceSource: "Google Maps / local nightlife guides",
   },
@@ -1176,7 +1176,7 @@ const citywideLowKeyNightlife: StopSeed[] = [
     name: "The Cambridge Public House",
     coordinates: [48.8618, 2.3632],
     description:
-      "The Cambridge Public House is the Marais pub pick for a dive-bar-adjacent Paris night: relaxed service, craft beers, Guinness, rotating cocktails, and enough food to keep the group moving without making the stop precious.",
+      "The Cambridge Public House is a Marais pub for a dive-bar-adjacent Paris night: relaxed service, craft beers, Guinness, rotating cocktails, and enough food to keep the group moving without making the stop precious.",
     price: "$$",
     priceSource: "World's 50 Best Bars / Time Out",
   },
@@ -1185,7 +1185,7 @@ const citywideLowKeyNightlife: StopSeed[] = [
     name: "Le Bar du Marche",
     coordinates: [48.8532, 2.3362],
     description:
-      "Le Bar du Marche gives Saint-Germain a loud, social Rue de Buci terrace that works better for casual drinks and people-watching than for a polished cocktail plan. It is useful when the Left Bank night needs momentum.",
+      "Le Bar du Marche is a loud, social Rue de Buci terrace for casual drinks, crowd energy, and people-watching rather than polished cocktail technique.",
     price: "$$",
     priceSource: "Google Maps / local nightlife guides",
   },
@@ -1194,7 +1194,7 @@ const citywideLowKeyNightlife: StopSeed[] = [
     name: "Le Caveau de la Huchette",
     coordinates: [48.8525, 2.3468],
     description:
-      "Le Caveau de la Huchette adds the Latin Quarter cellar lane: old stone, live music, dancing, and late-night atmosphere with more personality than a standard pub stop. Check the program before building the night around it.",
+      "Le Caveau de la Huchette adds the Latin Quarter cellar lane: old stone, live music, dancing, and late-night atmosphere with more personality than a standard pub stop.",
     price: "$$",
     priceSource: "Official venue site / Google Maps",
   },
@@ -1203,7 +1203,7 @@ const citywideLowKeyNightlife: StopSeed[] = [
     name: "Point Ephemere",
     coordinates: [48.8819, 2.3686],
     description:
-      "Point Ephemere is the Canal Saint-Martin wildcard: music, terrace energy, art-space programming, and a looser crowd farther north. It fits the guide because it gives the citywide route a less manicured late-night option.",
+      "Point Ephemere is the Canal Saint-Martin wildcard: music, terrace energy, art-space programming, and a looser crowd farther north.",
     price: "$$",
     priceSource: "Time Out / Google Maps",
   },
@@ -1212,7 +1212,7 @@ const citywideLowKeyNightlife: StopSeed[] = [
     name: "Le Recrutement Cafe",
     coordinates: [48.8568, 2.304],
     description:
-      "Le Recrutement Cafe is the casual Rue Saint-Dominique stop for simple drinks, people-watching, and almost no planning pressure after Eiffel or Invalides walking. It is not hidden, but it gives the route an easy neighborhood reset.",
+      "Le Recrutement Cafe is a casual Rue Saint-Dominique terrace for simple drinks and people-watching near the Eiffel Tower and Invalides.",
     price: "$$",
     priceSource: "Google Maps / local nightlife guides",
   },
@@ -1238,7 +1238,7 @@ const citywideCulture: StopSeed[] = [
     name: "Notre-Dame Cathedral",
     coordinates: [48.853, 2.3499],
     description:
-      "Notre-Dame Cathedral is the Gothic heart of the Ile de la Cite, famous for its twin towers, rose windows, sculpted portals, flying buttresses, and restored spire. After the 2019 fire and reopening, it remains one of the defining monuments of Paris and a living place of worship.",
+      "Notre-Dame Cathedral is the Gothic heart of the Ile de la Cite, famous for its twin towers, rose windows, sculpted portals, flying buttresses, and restored spire.",
   },
   {
     id: "paris-culture-sainte-chapelle",
@@ -1288,7 +1288,7 @@ const citywideCulture: StopSeed[] = [
     name: "Palace of Versailles",
     coordinates: [48.8049, 2.1204],
     description:
-      "The Palace of Versailles is the great royal estate of Louis XIV, with state apartments, the Hall of Mirrors, formal gardens, fountains, the Grand Trianon, Petit Trianon, and Marie-Antoinette's Hamlet. It belongs in Paris culture planning as the major palace day trip.",
+      "The Palace of Versailles is the great royal estate of Louis XIV, with state apartments, the Hall of Mirrors, formal gardens, fountains, the Grand Trianon, Petit Trianon, and Marie-Antoinette's Hamlet. The scale demands a dedicated day trip rather than a rushed palace interior.",
   },
 ];
 
@@ -1336,7 +1336,7 @@ const citywideSmallArtCulture: StopSeed[] = [
     name: "Galerie Martel",
     coordinates: [48.8752, 2.3528],
     description:
-      "Galerie Martel is a small 10th-arrondissement gallery focused on illustration, comics, drawing, painting, and graphic arts. It is a good low-key stop for seeing contemporary work at a more intimate scale.",
+      "Galerie Martel is a small 10th-arrondissement gallery focused on illustration, comics, drawing, painting, and graphic arts. It is a low-key cultural site for seeing contemporary work at a more intimate scale.",
   },
   {
     id: "paris-culture-small-delacroix",
@@ -1350,7 +1350,7 @@ const citywideSmallArtCulture: StopSeed[] = [
     name: "Monnaie de Paris",
     coordinates: [48.8567, 2.3391],
     description:
-      "Monnaie de Paris combines a working mint, exhibition spaces, metalwork history, and a monumental Seine-side building. It is useful for culture that feels craft-led rather than only painting-led.",
+      "Monnaie de Paris combines a working mint, exhibition spaces, metalwork history, and a monumental Seine-side building.",
   },
 ];
 
@@ -1371,7 +1371,7 @@ const citywideHotelStay: StopSeed[] = [
     name: "Hotel Lutetia",
     coordinates: [48.8517, 2.327],
     description:
-      "Hotel Lutetia is the grand Left Bank hotel reference: restored Art Deco scale, polished public rooms, spa facilities, and a wide range of rooms and suites for travelers who want Saint-Germain heritage with full-service luxury.",
+      "Hotel Lutetia is the grand Left Bank hotel reference: restored Art Deco scale, polished public rooms, spa facilities, and a wide range of rooms and suites for Saint-Germain heritage with full-service luxury.",
     price: "$$$",
     priceSource: "Conde Nast Traveler / Google Travel",
     officialUrl: "https://www.mandarinoriental.com/en/paris/lutetia",
@@ -1382,7 +1382,7 @@ const citywideHotelStay: StopSeed[] = [
     name: "Le Grand Mazarin",
     coordinates: [48.858, 2.3546],
     description:
-      "Le Grand Mazarin is the stylish Marais hotel for travelers who want chic maximalist design, a central old-quarter address, a pool and wellness mood, and easy access to galleries, restaurants, Hotel de Ville, and late bars.",
+      "Le Grand Mazarin is the stylish Marais hotel for chic maximalist design, a central old-quarter address, a pool and wellness mood, and easy access to galleries, restaurants, Hotel de Ville, and late bars.",
     price: "$$$",
     priceSource: "Conde Nast Traveler / Vogue",
     officialUrl: "https://www.legrandmazarin.com/",
@@ -1418,7 +1418,7 @@ const citywideHostelStay: StopSeed[] = [
     name: "Generator Paris",
     coordinates: [48.8795, 2.3696],
     description:
-      "Generator Paris is the design-hostel option near Canal Saint-Martin, with dorms, private rooms, social common areas, and a rooftop with city views. It keeps the budget lower while still giving travelers a polished base and easy east-side movement.",
+      "Generator Paris is a design-hostel near Canal Saint-Martin, with dorms, private rooms, social common areas, and a rooftop with city views. It keeps the budget lower while still giving travelers a polished base and easy east-side movement.",
     price: "$",
     priceSource: "Hostelworld / Google Maps",
     officialUrl: "https://staygenerator.com/hostels/paris",
@@ -1440,7 +1440,7 @@ const citywideHostelStay: StopSeed[] = [
     name: "Young and Happy Latin Quarter",
     coordinates: [48.8446, 2.3507],
     description:
-      "Young and Happy Latin Quarter is the Mouffetard hostel for travelers who want dorms near the Pantheon area, including smaller dorm options and women-only rooms depending on availability. Cozy common spaces keep it social without feeling oversized.",
+      "Young and Happy Latin Quarter offers dorms near Mouffetard and the Pantheon, including smaller dorm options and women-only rooms when available. Cozy common spaces keep the hostel social without feeling oversized.",
     price: "$",
     priceSource: "Hostelworld / Tripadvisor",
     officialUrl: "https://www.youngandhappy.fr/",
@@ -1451,7 +1451,7 @@ const citywideHostelStay: StopSeed[] = [
     name: "MIJE Marais",
     coordinates: [48.8564, 2.3615],
     description:
-      "MIJE Marais keeps the old quarter affordable through simple hostel rooms inside historic Marais houses. It is a location-first option for travelers who want Place des Vosges, Hotel de Ville, and the Seine nearby without hotel pricing.",
+      "MIJE Marais keeps the old quarter affordable through simple hostel rooms inside historic Marais houses. It is a location-first hostel for Place des Vosges, Hotel de Ville, and the Seine nearby without hotel pricing.",
     price: "$",
     priceSource: "Hostelworld / Google Maps",
     officialUrl: "https://www.mije.com/",
@@ -1462,7 +1462,7 @@ const citywideHostelStay: StopSeed[] = [
     name: "Le Village Montmartre",
     coordinates: [48.8842, 2.3446],
     description:
-      "Le Village Montmartre works as both hostel and simple hotel-style base, with dorms, superior rooms, and a terrace near Anvers and Sacre-Coeur. It is for travelers who want Montmartre access at a lower nightly spend.",
+      "Le Village Montmartre combines hostel dorms, superior private rooms, and a terrace near Anvers and Sacre-Coeur. The format keeps Montmartre accessible at a lower nightly spend.",
     price: "$",
     priceSource: "Hostelworld / HostelsClub",
     officialUrl: "https://www.villagehostel.fr/",
@@ -1487,7 +1487,7 @@ const citywideNature: StopSeed[] = [
     name: "Jardin du Luxembourg",
     coordinates: [48.8462, 2.3372],
     description:
-      "Jardin du Luxembourg gives the citywide nature guide its most useful Left Bank pause, linking Saint-Germain, the Latin Quarter, and museum days. Chairs, lawns, fountains, and palace views make it a practical reset rather than a nature detour.",
+      "Jardin du Luxembourg links Saint-Germain and the Latin Quarter through movable chairs, lawns, fountains, tree-lined walks, and palace views. It is the Left Bank's most useful green pause rather than a trip out to nature.",
     photo: photos.nature,
   },
   {
@@ -1495,7 +1495,7 @@ const citywideNature: StopSeed[] = [
     name: "Tuileries Garden and Seine Walk",
     coordinates: [48.8635, 2.327],
     description:
-      "Tuileries and the Seine turn the Louvre-Orsay corridor into a walkable day instead of two disconnected museum bookings. Use the garden and river edges for pacing, light, and a low-effort reset between major indoor stops.",
+      "Tuileries Garden and the Seine connect the Louvre and Orsay through formal lawns, sculpture, river light, and a low-effort outdoor reset between major museums.",
     photo: photos.seine,
   },
   {
@@ -1503,7 +1503,7 @@ const citywideNature: StopSeed[] = [
     name: "Parc des Buttes-Chaumont",
     coordinates: [48.8809, 2.382],
     description:
-      "Buttes-Chaumont is the northeast hill-park choice, with dramatic slopes and local picnic energy even while sections undergo renovation. It belongs in the guide because it makes Belleville and La Villette days feel greener and less central.",
+      "Buttes-Chaumont is a northeast hill-park, with dramatic slopes and local picnic energy even while sections undergo renovation.",
     photo: photos.nature,
   },
   {
@@ -1511,7 +1511,7 @@ const citywideNature: StopSeed[] = [
     name: "Cimetiere du Pere-Lachaise",
     coordinates: [48.8614, 2.3934],
     description:
-      "Pere-Lachaise is both cemetery and open-air museum, best approached as a slow leafy walk with a map rather than a quick celebrity-grave hunt. It pairs naturally with Belleville, Menilmontant, or the 11th after lunch.",
+      "Pere-Lachaise is both cemetery and open-air museum, best approached as a slow leafy walk with a map rather than a quick celebrity-grave hunt.",
     photo: photos.nature,
   },
   {
@@ -1519,7 +1519,7 @@ const citywideNature: StopSeed[] = [
     name: "Coulee verte Rene-Dumont",
     coordinates: [48.8467, 2.3754],
     description:
-      "Coulee verte Rene-Dumont gives Bastille and the 12th an elevated linear walk built from old rail infrastructure. It is the right choice when the day needs movement, greenery, and a quieter east-side route toward Reuilly or Vincennes.",
+      "Coulee verte Rene-Dumont gives Bastille and the 12th an elevated linear walk built from old rail infrastructure.",
     photo: photos.nature,
   },
   {
@@ -1527,7 +1527,7 @@ const citywideNature: StopSeed[] = [
     name: "Parc de Belleville",
     coordinates: [48.8718, 2.3843],
     description:
-      "Parc de Belleville gives the east a quick view payoff without the Sacre-Coeur crowd. Save it for a food-led Belleville plan, a sunset pause, or a simple way to understand the neighborhood's slope and skyline.",
+      "Parc de Belleville climbs the neighborhood's steep slope through terraces, planting, lawns, and broad skyline views without the Sacre-Coeur crowd. Sunset makes the geography of eastern Paris especially clear.",
     photo: photos.nature,
   },
 ];
@@ -1578,7 +1578,7 @@ const citywideActivities: StopSeed[] = [
     name: "Arc de Triomphe",
     coordinates: [48.8738, 2.295],
     description:
-      "The Arc de Triomphe is the monumental anchor of the Champs-Elysees, with sculpted reliefs, the Tomb of the Unknown Soldier, and a rooftop terrace looking over the avenues of western Paris.",
+      "The Arc de Triomphe is a monumental attraction of the Champs-Elysees, with sculpted reliefs, the Tomb of the Unknown Soldier, and a rooftop terrace looking over the avenues of western Paris.",
   },
   {
     id: "paris-activity-sacre-coeur",
@@ -1601,7 +1601,7 @@ const citywideActivities: StopSeed[] = [
     name: "Musee de l'Orangerie",
     coordinates: [48.8638, 2.3227],
     description:
-      "Musee de l'Orangerie is the art stop for Monet's Water Lilies rooms, plus Impressionist and Post-Impressionist works by Renoir, Cezanne, Matisse, Modigliani, Picasso, and Soutine.",
+      "Musee de l'Orangerie is an art museum for Monet's Water Lilies rooms, plus Impressionist and Post-Impressionist works by Renoir, Cezanne, Matisse, Modigliani, Picasso, and Soutine.",
     photo: photos.culture,
   },
   {
@@ -1624,7 +1624,7 @@ export const parisCitywideGuides = [
       "Best restaurants in Paris for classic bistros, wine-led rooms, bakeries, seafood, falafel counters, and modern reservation dinners by arrondissement.",
     title: "Bistros, Bakeries, and Modern Reservations",
     description:
-      "Paris food needs more than a trophy reservation: classic bistros, natural-wine rooms, bakeries, falafel counters, seafood waits, and modern tasting menus all solve different parts of the route. Use this to anchor meals by arrondissement instead of chasing one generic best-of list.",
+      "Paris dining runs from classic bistros and natural-wine rooms to bakeries, falafel counters, seafood institutions, and modern tasting menus. The selection favors places with a distinct craft, service style, or neighborhood identity across the arrondissements.",
     url: "https://www.google.com/maps/search/best+restaurants+paris",
     category: "Food",
     stops: citywideFood,
@@ -1639,7 +1639,7 @@ export const parisCitywideGuides = [
       "Best boulangeries and coffee mornings in Paris for croissants, baguettes, Canal Saint-Martin bakeries, Left Bank bread counters, and seated breakfast stops.",
     title: "Boulangeries and Coffee Mornings",
     description:
-      "Paris is a cuisine capital before lunch starts: boulangeries, croissants, baguettes, coffee counters, and seated breakfasts can shape a whole morning. Use this guide when Food is clicked first and the day needs bread, pastry, and coffee without choosing a neighborhood yet.",
+      "Paris is a cuisine capital before lunch starts: boulangeries, croissants, baguettes, coffee counters, and seated breakfasts can shape a whole morning.",
     url: "https://www.google.com/maps/search/best+boulangeries+coffee+paris",
     category: "Food",
     stops: citywideBoulangerieFood,
@@ -1654,7 +1654,7 @@ export const parisCitywideGuides = [
       "Best brasseries and bouillons in Paris for steak frites, French onion soup, Art Nouveau rooms, boulevard classics, and traditional dining.",
     title: "Brasseries and Bouillon Classics",
     description:
-      "Brasseries and bouillons are the Paris meal format for steak frites, French onion soup, duck, cassoulet, and rooms with real civic memory. This guide keeps the traditional dining experience central, useful, and easy to fold into sightseeing days.",
+      "Brasseries and bouillons are the Paris meal format for steak frites, French onion soup, duck, cassoulet, and rooms with real civic memory.",
     url: "https://www.google.com/maps/search/best+brasseries+bouillons+paris",
     category: "Food",
     stops: citywideBrasserieFood,
@@ -1669,7 +1669,7 @@ export const parisCitywideGuides = [
       "Best patisseries and macarons in Paris for Angelina, Pierre Herme, Laduree, grand tea rooms, sweet counters, and pastry-led routes.",
     title: "Patisseries and Macarons",
     description:
-      "Patisseries give Paris its sweeter form of ceremony: macarons, tea rooms, viennoiserie, boxed gifts, and polished counters that can become a whole route. Use this guide for dessert-led planning across the city instead of treating sweets as an afterthought.",
+      "Paris patisserie culture covers macarons, viennoiserie, formal tea rooms, polished counters, and boxed sweets made for carrying home. Technique and house specialties matter more here than photogenic display cases alone.",
     url: "https://www.google.com/maps/search/best+patisseries+macarons+paris",
     category: "Food",
     stops: citywidePatisserieFood,
@@ -1684,7 +1684,7 @@ export const parisCitywideGuides = [
       "Best bars and nightlife in Paris for stylish cocktail bars, wine bars, live rooms, Canal Saint-Martin evenings, Marais drinks, and late Pigalle energy.",
     title: "Stylish Bars, Wine, Live Rooms, and Pigalle",
     description:
-      "Paris nights work best when the format is clear: natural wine before dinner, design-forward bars in the Marais or Bourse, ticketed live rooms, canal terraces, or later Pigalle energy. This guide keeps after-dark planning tied to geography instead of sending every night across town.",
+      "Paris nightlife ranges from natural-wine rooms and design-forward cocktails to ticketed music venues, canal terraces, and later Pigalle energy.",
     url: "https://www.google.com/maps/search/best+bars+nightlife+paris",
     category: "Nightlife",
     stops: citywideNightlife,
@@ -1699,7 +1699,7 @@ export const parisCitywideGuides = [
       "Best Paris nightlife beyond drinks for live music, cabaret, dance floors, canal art spaces, Latin Quarter cellars, and late northeast venues.",
     title: "Nightlife Beyond Drinks",
     description:
-      "Not every Paris night needs to be a bar crawl. This guide is for ticketed sets, cabaret rooms, dancing cellars, canal programming, and live venues where the plan is the show, the room, or the dance floor first.",
+      "Paris nightlife extends beyond bar crawls into ticketed sets, cabaret rooms, dancing cellars, canal arts programming, and live venues. Music, performance, or the dance floor is the main attraction at every address here.",
     url: "https://www.google.com/maps/search/live+music+shows+nightlife+paris",
     category: "Nightlife",
     stops: citywideLiveNightlife,
@@ -1714,7 +1714,7 @@ export const parisCitywideGuides = [
       "Best dive bars in Paris for low-key late nights, student pubs, Montmartre happy hour, Marais sidewalk crowds, canal music rooms, and casual Left Bank drinks.",
     title: "Low-Key Dive Bars and Late-Night Pubs",
     description:
-      "For nights that should feel loose, cheap-ish, and social, this guide skips the bougie reservation mood and leans into dive bars, low-key terraces, student pubs, happy hours, music cellars, canal rooms, and neighborhood stops with a bit of personality.",
+      "Paris's looser drinking rooms favor modest prices, crowded terraces, student pubs, happy hours, music cellars, and canal-side bars over reservations and elaborate cocktail service. The common thread is an easy social room with some lived-in character.",
     url: "https://www.google.com/maps/search/best+dive+bars+paris",
     category: "Nightlife",
     stops: citywideLowKeyNightlife,
@@ -1729,7 +1729,7 @@ export const parisCitywideGuides = [
       "Best culture in Paris for iconic museums, Gothic landmarks, the Eiffel Tower, opera architecture, sculpture gardens, catacombs, and Versailles.",
     title: "Paris Icons and Museum Masterpieces",
     description:
-      "Paris culture is built from world-famous art, Gothic architecture, opera spectacle, sculpture gardens, underground history, and royal scale. Use this guide for the city's essential cultural places, from the Louvre and Orsay to Notre-Dame, the Eiffel Tower, and Versailles.",
+      "Paris culture is built from world-famous art, Gothic architecture, opera spectacle, sculpture gardens, underground history, and royal scale.",
     url: "https://www.google.com/maps/search/best+culture+paris",
     category: "Culture",
     stops: citywideCulture,
@@ -1744,7 +1744,7 @@ export const parisCitywideGuides = [
       "Notre-Dame, Sainte-Chapelle, Shakespeare and Company, and the Seine bookstalls for a historic Paris culture route around the islands and Left Bank.",
     title: "Notre-Dame, the Seine, and Historic Paris",
     description:
-      "This guide centers the old heart of Paris: Notre-Dame, stained glass, river quays, bookstalls, and the literary Left Bank edge. It gives the Seine and the islands their own cultural presence instead of treating them as background scenery.",
+      "It gives the Seine and the islands their own cultural presence instead of treating them as background scenery.",
     url: "https://www.google.com/maps/search/notre+dame+seine+historic+paris",
     category: "Culture",
     stops: citywideHistoricCoreCulture,
@@ -1774,7 +1774,7 @@ export const parisCitywideGuides = [
       "Best hotels in Paris, comparing palace hotels, Left Bank classics, Marais boutiques, Grands Boulevards stays, and Pigalle design hotels.",
     title: "Paris Hotels by Area and Style",
     description:
-      "Paris hotel planning is an arrondissement decision before it is a brand decision: Seine-facing palace service, Left Bank grandeur, Marais style, Grands Boulevards energy, or Pigalle rooftops. This guide keeps hotels separate from hostel and dorm-base searches.",
+      "Paris hotel planning is an arrondissement decision before it is a brand decision: Seine-facing palace service, Left Bank grandeur, Marais style, Grands Boulevards energy, or Pigalle rooftops.",
     url: "https://www.google.com/maps/search/best+hotels+paris",
     category: "Stay",
     stops: citywideHotelStay,
@@ -1789,7 +1789,7 @@ export const parisCitywideGuides = [
       "Best hostels in Paris for dorms, private rooms, social spaces, rooftop views, canal access, Belleville, Montmartre, Marais, and the Latin Quarter.",
     title: "Paris Hostels and Social Budget Bases",
     description:
-      "Paris hostel searches should not sit beside palace hotels. This guide focuses on dorms, private hostel rooms, social spaces, rooftop or terrace energy, and lower-cost bases around the canal, Belleville, Montmartre, Le Marais, and the Latin Quarter.",
+      "Paris hostels trade palace polish for dorms, private rooms, communal kitchens or bars, and lower nightly rates. The strongest options spread across the canal, Belleville, Montmartre, Le Marais, and the Latin Quarter, with social energy varying sharply by property.",
     url: "https://www.google.com/maps/search/best+hostels+paris",
     category: "Stay",
     stops: citywideHostelStay,
@@ -1804,7 +1804,7 @@ export const parisCitywideGuides = [
       "Best parks and walks in Paris for Luxembourg chairs, Tuileries and Seine routes, Buttes-Chaumont, Pere-Lachaise, Belleville views, and green east-side walks.",
     title: "Gardens, Cemeteries, and River Air",
     description:
-      "Paris nature is about relief inside dense days: chair gardens, river walks, hill parks, cemeteries, elevated rail paths, and east-side viewpoints. Use this guide when the route needs air between museums, meals, and neighborhoods rather than a full day outside the city.",
+      "Paris nature is about relief inside dense days: chair gardens, river walks, hill parks, cemeteries, elevated rail paths, and east-side viewpoints.",
     url: "https://www.google.com/maps/search/best+parks+walks+paris",
     category: "Nature",
     stops: citywideNature,
@@ -1897,41 +1897,41 @@ const parisNeighborhoodGuideSeeds: Record<ParisNeighborhood, Record<Neighborhood
     Food: {
       title: "Museum-Day Meals Around the Royal Core",
       description:
-        "The 1st needs meals that can survive Louvre timing, Tuileries walks, and central crowds. This guide mixes tea-room ritual, udon, polished dining, and a classic cafe so the day has food options without leaving the royal core.",
+        "The 1st needs meals that can survive Louvre timing, Tuileries walks, and central crowds.",
       stops: [
-        nStop("first-food-angelina", "Angelina", [48.8651, 2.3286], "Angelina is the Tuileries-side tea-room ritual for hot chocolate, pastries, and a seated pause between the Louvre, Rue de Rivoli, and Concorde. Use it when the stop is about classic Paris room tone as much as sugar.", { price: "$$", priceSource: "Google Maps / Paris dining guides" }),
-        nStop("first-food-sanukiya", "Sanukiya", [48.8648, 2.3339], "Sanukiya gives the 1st a warm, efficient udon stop near Pyramides, useful when the day wants comfort, speed, and a clear lunch plan around Palais Royal or the Louvre. It adds a different Paris food rhythm without pulling the route out of the royal core.", { price: "$", priceSource: "Google Maps / Paris dining guides" }),
-        nStop("first-food-verjus", "Verjus", [48.8634, 2.3381], "Verjus is the small reservation dinner for travelers who want the Louvre area to end with a proper modern meal rather than a tourist-corridor compromise. Save it for a more deliberate evening near Palais Royal.", { price: "$$$", priceSource: "MICHELIN Guide / Google Maps" }),
-        nStop("first-food-le-nemours", "Le Nemours", [48.8639, 2.3359], "Le Nemours is the cafe-brasserie hinge between the Louvre, Palais Royal, and Comedie-Francaise. It works for breakfast, coffee, or a simple lunch when location and terrace rhythm matter more than discovery.", { price: "$$", priceSource: "Google Maps / local dining guides" }),
-        nStop("first-food-le-fumoir", "Le Fumoir", [48.8606, 2.3407], "Le Fumoir works in Food as well as Nightlife because it is a Louvre-facing restaurant, bar, and tea room open from morning into evening. Use it for Scandinavian-influenced lunch or dinner, Sunday brunch, tea, or a polished museum-edge drink.", { price: "$$$", priceSource: "Official restaurant site / Google Maps" }),
+        nStop("first-food-angelina", "Angelina", [48.8651, 2.3286], "Angelina is the Tuileries-side tea-room ritual for hot chocolate, pastries, and a seated pause between the Louvre, Rue de Rivoli, and Concorde.", { price: "$$", priceSource: "Google Maps / Paris dining guides" }),
+        nStop("first-food-sanukiya", "Sanukiya", [48.8648, 2.3339], "Sanukiya is a warm, efficient udon restaurant near Pyramides, offering comfort, speed, and a distinct Japanese lunch format close to Palais Royal and the Louvre.", { price: "$", priceSource: "Google Maps / Paris dining guides" }),
+        nStop("first-food-verjus", "Verjus", [48.8634, 2.3381], "Verjus is a small, reservation-led restaurant near the Louvre serving modern seasonal cooking far removed from the tourist corridor's default menus.", { price: "$$$", priceSource: "MICHELIN Guide / Google Maps" }),
+        nStop("first-food-le-nemours", "Le Nemours", [48.8639, 2.3359], "Le Nemours is a cafe-brasserie between the Louvre, Palais Royal, and Comedie-Francaise, serving breakfast, coffee, and simple lunches from a prominent terrace. Location and Paris cafe rhythm are the draw.", { price: "$$", priceSource: "Google Maps / local dining guides" }),
+        nStop("first-food-le-fumoir", "Le Fumoir", [48.8606, 2.3407], "Le Fumoir is a Louvre-facing restaurant, bar, and tea room open from morning into evening, serving Scandinavian-influenced lunch and dinner, Sunday brunch, tea, and polished drinks.", { price: "$$$", priceSource: "Official restaurant site / Google Maps" }),
       ],
     },
     Nightlife: {
       title: "Museum-Edge Drinks and Hotel Bars",
       description:
-        "Nights in the 1st work best as polished starts or final stops near galleries, passages, and palace hotels. This guide keeps the route central with hotel bars, hidden rooms, wine-led addresses, and hybrid restaurant-bars that do not pull the night across town.",
+        "Nightlife in the 1st favors polished cocktail rooms and palace-hotel bars tucked near galleries and covered passages, with elegance taking priority over late club energy.",
       stops: [
-        nStop("first-nightlife-danico", "Danico", [48.8666, 2.3399], "Danico is the Galerie Vivienne destination with World 50 Best support and a hidden-room feel that fits a polished Right Bank night. Use it when the evening wants style near Palais Royal or Bourse.", { price: "$$$", priceSource: "World's 50 Best Bars / Google Maps" }),
-        nStop("first-nightlife-bar-228", "Bar 228", [48.865, 2.3286], "Bar 228 at Le Meurice gives the Tuileries edge a grand-hotel drink with dark wood, deep seats, and classic service. It is strongest for a special-occasion nightcap after museums, dinner, or a river walk.", { price: "$$$", priceSource: "Official hotel site / Google Maps" }),
-        nStop("first-nightlife-le-fumoir", "Le Fumoir", [48.8606, 2.3407], "Le Fumoir is a Louvre-adjacent restaurant, bar, and tea room, so it works when the museum day needs a composed drink or a real meal without changing neighborhoods. It is more all-day address than pure bar.", { price: "$$", priceSource: "Official restaurant site / Google Maps" }),
-        nStop("first-nightlife-juveniles", "Juveniles", [48.8669, 2.3373], "Juveniles is the wine-bar and small-plates option that keeps the covered-passage area relaxed. It works when the plan wants bottles, food, and conversation instead of a formal hotel bar.", { price: "$$", priceSource: "Google Maps / local wine guides" }),
+        nStop("first-nightlife-danico", "Danico", [48.8666, 2.3399], "Danico is the Galerie Vivienne destination with World 50 Best support and a hidden-room feel that fits a polished Right Bank night.", { price: "$$$", priceSource: "World's 50 Best Bars / Google Maps" }),
+        nStop("first-nightlife-bar-228", "Bar 228", [48.865, 2.3286], "Bar 228 at Le Meurice gives the Tuileries edge a grand-hotel drink with dark wood, deep seats, and classic service.", { price: "$$$", priceSource: "Official hotel site / Google Maps" }),
+        nStop("first-nightlife-le-fumoir", "Le Fumoir", [48.8606, 2.3407], "Le Fumoir combines a restaurant, bar, and tea room beside the Louvre. Its composed all-day dining room is equally credible for a drink or a full meal.", { price: "$$", priceSource: "Official restaurant site / Google Maps" }),
+        nStop("first-nightlife-juveniles", "Juveniles", [48.8669, 2.3373], "Juveniles is a relaxed wine bar and small-plates restaurant near the covered passages. The emphasis is on bottles, food, and conversation rather than the ceremony of the area's formal hotel bars.", { price: "$$", priceSource: "Google Maps / local wine guides" }),
       ],
     },
     Nature: {
       title: "Gardens, River Edges, and Central Air",
       description:
-        "Nature in the 1st is not wilderness; it is the breathing room around heavyweight sights. This guide links palace gardens, island edges, and the Seine so museum days can reset without adding another metro ride.",
+        "Nature in the 1st is not wilderness; it is the breathing room around heavyweight sights.",
       stops: [
-        nStop("first-nature-tuileries", "Jardin des Tuileries", [48.8635, 2.327], "Jardin des Tuileries turns the Louvre-Orangerie corridor into a paced walk with chairs, fountains, and broad sightlines. Use it between timed tickets or as the soft landing after a crowded museum block.", { photo: photos.nature }),
-        nStop("first-nature-palais-royal-garden", "Jardin du Palais Royal", [48.8637, 2.3377], "Jardin du Palais Royal is the quieter garden pause behind arcades and columns, useful when the Louvre side feels too exposed. It is a compact reset before covered passages, shopping, or dinner.", { photo: photos.nature }),
-        nStop("first-nature-vert-galant", "Square du Vert-Galant", [48.8571, 2.3413], "Square du Vert-Galant gives the 1st a low island viewpoint at the tip of Ile de la Cite. Use it for a short Seine pause between Sainte-Chapelle, Pont Neuf, and the Louvre.", { photo: photos.seine }),
-        nStop("first-nature-seine-quays", "Seine Quays by the Louvre", [48.8589, 2.3408], "The Seine quays make the 1st feel walkable instead of monument-heavy, especially between Pont Neuf, the Louvre, and Orsay views. Save this stop when the route needs light, orientation, and movement.", { photo: photos.seine }),
+        nStop("first-nature-tuileries", "Jardin des Tuileries", [48.8635, 2.327], "Jardin des Tuileries turns the Louvre-Orangerie corridor into a paced walk with chairs, fountains, and broad sightlines.", { photo: photos.nature }),
+        nStop("first-nature-palais-royal-garden", "Jardin du Palais Royal", [48.8637, 2.3377], "Jardin du Palais Royal is the quieter garden pause behind arcades and columns, useful when the Louvre side feels too exposed.", { photo: photos.nature }),
+        nStop("first-nature-vert-galant", "Square du Vert-Galant", [48.8571, 2.3413], "Square du Vert-Galant is a low island viewpoint at the tip of Ile de la Cite, with Seine-level lawns and benches beside Pont Neuf.", { photo: photos.seine }),
+        nStop("first-nature-seine-quays", "Seine Quays by the Louvre", [48.8589, 2.3408], "The Seine quays make the 1st feel walkable instead of monument-heavy, especially between Pont Neuf, the Louvre, and Orsay views.", { photo: photos.seine }),
       ],
     },
     Culture: {
       title: "Louvre, Palais Royal, and Gothic Glass",
       description:
-        "The 1st holds some of Paris's most recognizable culture: the Louvre's palace galleries, Palais Royal's arcades, Monet's Water Lilies, and Sainte-Chapelle's stained glass. This guide keeps the royal core focused on the places themselves.",
+        "The 1st holds some of Paris's most recognizable culture: the Louvre's palace galleries, Palais Royal's arcades, Monet's Water Lilies, and Sainte-Chapelle's stained glass.",
       stops: [
         nStop("first-culture-louvre", "Musee du Louvre", [48.8606, 2.3376], "The Louvre is Paris's essential art museum and a former royal palace, home to the Mona Lisa, Winged Victory, Venus de Milo, Egyptian antiquities, French painting, and monumental galleries that make the architecture part of the visit."),
         nStop("first-culture-palais-royal", "Palais Royal", [48.8637, 2.3377], "Palais Royal is a 17th-century palace complex with arcades, formal gardens, the Conseil d'Etat facade, and Daniel Buren's black-and-white columns in the courtyard. It is one of the cleanest architectural contrasts in central Paris."),
@@ -1942,10 +1942,10 @@ const parisNeighborhoodGuideSeeds: Record<ParisNeighborhood, Record<Neighborhood
     Stay: {
       title: "Palace Hotels and Central Sleep",
       description:
-        "Staying in the 1st is about paying for centrality: palace service, Louvre access, shopping arcades, and short walks to the Seine. This guide keeps the picks honest for travelers who want the hotel to be part of the trip.",
+        "Staying in the 1st is about paying for centrality: palace service, Louvre access, shopping arcades, and short walks to the Seine.",
       stops: [
         nStop("first-stay-cheval-blanc", "Cheval Blanc Paris", [48.8588, 2.342], "Cheval Blanc Paris is the Seine-facing palace hotel above Samaritaine, with exclusive rooms and suites, some framing the Eiffel Tower. The stay is built around high-service luxury, river access, and Michelin-starred rooftop dining at Le Tout-Paris.", { price: "$$$", priceSource: "Conde Nast Traveler / Google Travel", officialUrl: "https://www.chevalblanc.com/en/maison/paris/", ...hotelStay }),
-        nStop("first-stay-le-meurice", "Le Meurice", [48.865, 2.3286], "Le Meurice gives the 1st classic palace gravity on Rue de Rivoli, with Tuileries and the Louvre almost outside the door. It is a grand-service hotel for travelers who want old Paris formality, polished rooms, and a major hotel bar.", { price: "$$$", priceSource: "Official hotel site / Google Travel", officialUrl: "https://www.dorchestercollection.com/paris/le-meurice/", ...hotelStay }),
+        nStop("first-stay-le-meurice", "Le Meurice", [48.865, 2.3286], "Le Meurice gives the 1st classic palace gravity on Rue de Rivoli, with Tuileries and the Louvre almost outside the door. It is a grand-service hotel for old Paris formality, polished rooms, and a major hotel bar.", { price: "$$$", priceSource: "Official hotel site / Google Travel", officialUrl: "https://www.dorchestercollection.com/paris/le-meurice/", ...hotelStay }),
         nStop("first-stay-regina-louvre", "Hotel Regina Louvre", [48.8638, 2.3322], "Hotel Regina Louvre is the heritage hotel opposite the Tuileries, with Belle Epoque character, Louvre-side views, and a location that keeps Palais Royal, Rue de Rivoli, and the river close.", { price: "$$$", priceSource: "Google Travel / Tripadvisor", officialUrl: "https://www.regina-hotel.com/", ...hotelStay }),
         nStop("first-stay-madame-reve", "Hotel Madame Reve", [48.8626, 2.3428], "Hotel Madame Reve gives the 1st a contemporary hotel in the former Louvre post-office building, with warm rooms, restaurants, rooftop-facing energy, and central access to Les Halles, the Louvre, and the Seine.", { price: "$$$", priceSource: "Conde Nast Traveler / Google Travel", officialUrl: "https://madamereve.com/", ...hotelStay }),
       ],
@@ -1955,40 +1955,40 @@ const parisNeighborhoodGuideSeeds: Record<ParisNeighborhood, Record<Neighborhood
     Food: {
       title: "Old-Quarter Meals With a Point",
       description:
-        "Le Marais food works when each stop has a job: a bistro, falafel counter, market lunch, or polished wine-led room. This guide keeps the old quarter from becoming only boutiques, dessert lines, and vague cafe wandering.",
+        "Le Marais moves between classic bistros, falafel counters, market lunches, and polished wine-led rooms across a dense old-quarter street grid.",
       stops: [
-        nStop("marais-food-bistrot-tournelles", "Bistrot des Tournelles", [48.8555, 2.366], "Bistrot des Tournelles is the Marais bistro pick for travelers who want a real sit-down meal near Place des Vosges. The throwback room and classic plates make it useful when the neighborhood needs dinner, not just snacks.", { price: "$$", priceSource: "The Infatuation / Google Maps" }),
-        nStop("marais-food-las-fallafel", "L'As du Fallafel", [48.8574, 2.3591], "L'As du Fallafel is the Rue des Rosiers counter stop that still deserves a save because it solves a different Marais meal: fast, iconic, and better treated as a focused lunch or snack than a full restaurant plan.", { price: "$", priceSource: "The Infatuation / Google Maps" }),
-        nStop("marais-food-parcelles", "Parcelles", [48.8612, 2.3568], "Parcelles is the Marais reservation for a polished bistro meal without leaving the old-quarter route: market cooking, careful sauces, and a wine list that makes dinner feel chosen. Use it when galleries and boutiques should end with a real table rather than another counter stop.", { price: "$$$", priceSource: "The Infatuation / Google Maps" }),
-        nStop("marais-food-enfants-rouges", "Marche des Enfants Rouges", [48.8627, 2.3612], "Marche des Enfants Rouges gives the guide a flexible covered-market lunch: Moroccan tagines and couscous, Japanese bentos, Lebanese plates, sandwiches, produce stalls, and casual counters for mixed appetites. Treat it as lively grazing with neighborhood texture rather than a quiet sit-down meal.", { price: "$", priceSource: "Eater / Google Maps" }),
+        nStop("marais-food-bistrot-tournelles", "Bistrot des Tournelles", [48.8555, 2.366], "Bistrot des Tournelles is a Marais bistro for a real sit-down meal near Place des Vosges. The throwback room and classic plates make it useful for dinner, not just snacks.", { price: "$$", priceSource: "The Infatuation / Google Maps" }),
+        nStop("marais-food-las-fallafel", "L'As du Fallafel", [48.8574, 2.3591], "L'As du Fallafel is the iconic Rue des Rosiers counter for fast falafel, vegetables, sauces, and a focused lunch or substantial snack rather than a long sit-down meal.", { price: "$", priceSource: "The Infatuation / Google Maps" }),
+        nStop("marais-food-parcelles", "Parcelles", [48.8612, 2.3568], "Parcelles is a polished Marais bistro built around market cooking, careful sauces, and a wine list serious enough to shape the dinner.", { price: "$$$", priceSource: "The Infatuation / Google Maps" }),
+        nStop("marais-food-enfants-rouges", "Marche des Enfants Rouges", [48.8627, 2.3612], "Marche des Enfants Rouges is a covered market where Moroccan tagines and couscous, Japanese bentos, Lebanese plates, sandwiches, and produce stalls share the hall. Casual counters and mixed cuisines favor lively grazing over a quiet sit-down meal.", { price: "$", priceSource: "Eater / Google Maps" }),
       ],
     },
     Nightlife: {
       title: "Marais High-Key Bars and Low-Key Terraces",
       description:
-        "Le Marais nightlife works because polished bars, cocktail-pub ease, queer-friendly terraces, taco-counter energy, and late sidewalk crowds sit close together. This guide keeps the night walkable around the old quarter and gives the group a choice between bougie, playful, and low-key.",
+        "Le Marais compresses polished cocktails, easygoing pubs, queer-friendly terraces, taco counters, and late sidewalk crowds into a few dense old-quarter streets.",
       stops: [
-        nStop("marais-nightlife-bar-nouveau", "Bar Nouveau", [48.8623, 2.3579], "Bar Nouveau brings Art Nouveau detail, a design-forward room, and a weekend six-cocktail set-menu experience downstairs. Use it for a stylish Marais start when the group wants the night to feel intentional.", { price: "$$$", priceSource: "World's 50 Best Bars / Google Maps" }),
+        nStop("marais-nightlife-bar-nouveau", "Bar Nouveau", [48.8623, 2.3579], "Bar Nouveau pairs Art Nouveau detail with a design-forward room and a six-cocktail set menu downstairs on weekends.", { price: "$$$", priceSource: "World's 50 Best Bars / Google Maps" }),
         nStop("marais-nightlife-cambridge", "The Cambridge Public House", [48.8618, 2.3632], "The Cambridge Public House is a cocktail pub: relaxed service, rotating creations, craft beers, natural wines, and pub food in the Marais. It can start a night without making everyone commit to a hushed bar mood.", { price: "$$", priceSource: "World's 50 Best Bars / Time Out" }),
-        nStop("marais-nightlife-candelaria", "Candelaria", [48.8631, 2.3615], "Candelaria keeps the Marais bar route playful with a taqueria-front, cocktail-back format that still feels useful near Rue de Saintonge. Save it when the night needs food-adjacent energy and a hidden-room mood.", { price: "$$", priceSource: "Time Out / Google Maps" }),
+        nStop("marais-nightlife-candelaria", "Candelaria", [48.8631, 2.3615], "Candelaria pairs a narrow taqueria with a hidden cocktail bar behind it, giving Rue de Saintonge tacos, serious drinks, and a playful two-room format.", { price: "$$", priceSource: "Time Out / Google Maps" }),
         nStop("marais-nightlife-la-perle", "La Perle", [48.8608, 2.3614], "La Perle is the sidewalk-crowd Marais standby for a looser drink between galleries, dinner, and late wandering. Its value is social texture and location, not a perfectly quiet cocktail.", { price: "$$", priceSource: "Time Out / Google Maps" }),
       ],
     },
     Nature: {
       title: "Squares and Quiet Edges Between Streets",
       description:
-        "Le Marais is dense, so the useful green stops are squares, courtyards, and river edges that break up shopping and museums. This guide gives the old quarter small pauses without leaving the neighborhood route.",
+        "Le Marais finds breathing room in formal squares, tucked courtyards, pocket gardens, and the Seine edge between shops and museums.",
       stops: [
-        nStop("marais-nature-place-vosges", "Place des Vosges", [48.8556, 2.3655], "Place des Vosges is the Marais garden-square anchor, useful for a pause between arcades, Victor Hugo, Rue des Rosiers, and a bistro meal. It gives the old quarter symmetry and air.", { photo: photos.nature }),
-        nStop("marais-nature-square-temple", "Square du Temple - Elie Wiesel", [48.8648, 2.3605], "Square du Temple - Elie Wiesel is the north Marais green reset near Enfants Rouges and Rue de Bretagne. Use it when the route needs shade and local rhythm away from the busiest lanes.", { photo: photos.nature }),
+        nStop("marais-nature-place-vosges", "Place des Vosges", [48.8556, 2.3655], "Place des Vosges is a Marais garden-square, useful for a pause between arcades, Victor Hugo, Rue des Rosiers, and a bistro meal. It gives the old quarter symmetry and air.", { photo: photos.nature }),
+        nStop("marais-nature-square-temple", "Square du Temple - Elie Wiesel", [48.8648, 2.3605], "Square du Temple - Elie Wiesel is the north Marais green reset near Enfants Rouges and Rue de Bretagne.", { photo: photos.nature }),
         nStop("marais-nature-jardin-anne-frank", "Jardin Anne Frank", [48.861, 2.3547], "Jardin Anne Frank is a tucked-away pocket garden that helps the western Marais slow down near museums and shopping streets. It is best as a short decompression stop, not a destination park.", { photo: photos.nature }),
-        nStop("marais-nature-seine-hotel-ville", "Seine Quays by Hotel de Ville", [48.8567, 2.3522], "The Seine quays by Hotel de Ville pull Le Marais toward the river and give the neighborhood a scenic exit. Use them before crossing to the islands or looping back into the old streets.", { photo: photos.seine }),
+        nStop("marais-nature-seine-hotel-ville", "Seine Quays by Hotel de Ville", [48.8567, 2.3522], "The Seine quays by Hotel de Ville pull Le Marais toward the river and give the neighborhood a scenic exit.", { photo: photos.seine }),
       ],
     },
     Culture: {
       title: "Marais Houses, Picasso, and Paris Memory",
       description:
-        "Le Marais culture is built from mansion museums, writer homes, civic history, courtyards, and Picasso's Paris collection. This guide keeps the old quarter's history tangible rather than abstract.",
+        "Le Marais culture is built from mansion museums, writer homes, civic history, courtyards, and Picasso's Paris collection.",
       stops: [
         nStop("marais-culture-picasso", "Musee Picasso Paris", [48.8599, 2.3623], "Musee Picasso Paris fills the Hotel Sale with paintings, sculpture, drawings, ceramics, prints, notebooks, and archival material from Picasso's life and studio. The mansion setting makes the display feel intimate despite the depth of the collection."),
         nStop("marais-culture-carnavalet", "Musee Carnavalet", [48.8575, 2.3629], "Musee Carnavalet is the museum of Paris history, set across historic Marais mansions. Its rooms move through the city's archaeology, Revolution, street signs, interiors, paintings, objects, and everyday civic memory."),
@@ -2000,20 +2000,20 @@ const parisNeighborhoodGuideSeeds: Record<ParisNeighborhood, Record<Neighborhood
       {
         title: "Marais Boutique Hotels",
         description:
-          "Marais hotel stays are for travelers who want restaurants, galleries, bars, and old-center streets within a short walk. This guide keeps the hotel picks separate from hostel-style budget bases.",
+          "Marais hotels place restaurants, galleries, bars, and old-center streets within a short walk, trading large rooms for historic buildings and immediate neighborhood life.",
         stops: [
           nStop("marais-stay-grand-mazarin", "Le Grand Mazarin", [48.858, 2.3546], "Le Grand Mazarin gives Le Marais a stylish, chic hotel with maximalist rooms, wellness spaces, and a central address near Hotel de Ville, galleries, restaurants, and late bars.", { price: "$$$", priceSource: "Conde Nast Traveler / Vogue", officialUrl: "https://www.legrandmazarin.com/", ...hotelStay }),
           nStop("marais-stay-sookie", "Hotel Sookie", [48.8628, 2.3606], "Hotel Sookie is the smaller north Marais hotel with modern, calming design, warm rooms, and quick access to Rue de Bretagne, Enfants Rouges, galleries, and cafe-heavy side streets.", { price: "$$", priceSource: "Google Travel / Tripadvisor", officialUrl: "https://hotelsuzieblue.com/en", ...hotelStay }),
-          nStop("marais-stay-jules-jim", "Hotel Jules and Jim", [48.8632, 2.3567], "Hotel Jules and Jim gives the upper Marais a compact design-hotel option with a courtyard bar, contemporary rooms, and quick access to Arts et Metiers, Rue de Bretagne, and central nightlife.", { price: "$$", priceSource: "Google Travel / Tripadvisor", officialUrl: "https://www.hoteljulesetjim.com/", ...hotelStay }),
+          nStop("marais-stay-jules-jim", "Hotel Jules and Jim", [48.8632, 2.3567], "Hotel Jules and Jim is a compact upper-Marais design hotel with contemporary rooms and a courtyard bar. Arts et Metiers, Rue de Bretagne, and central nightlife are close at hand.", { price: "$$", priceSource: "Google Travel / Tripadvisor", officialUrl: "https://www.hoteljulesetjim.com/", ...hotelStay }),
         ],
       },
       {
         topic: "Hostels",
         title: "Marais Hostels and Budget Beds",
         description:
-          "The Marais has far fewer true hostel options than hotels, so this guide keeps the budget stay separate and focuses on the credible old-quarter hostel base rather than mixing it into boutique hotel lists.",
+          "The Marais has far fewer true hostels than hotels. Its credible budget beds favor compact dorms, private-room flexibility, and old-quarter access over the design polish and service of the neighborhood's boutique properties.",
         stops: [
-          nStop("marais-stay-mije", "MIJE Marais", [48.8564, 2.3615], "MIJE Marais is the budget-friendly historic-house hostel option for travelers who want the old quarter without hotel pricing. Expect simple rooms, shared spaces, and a location-first stay close to Place des Vosges and the Seine.", { price: "$", priceSource: "Hostelworld / Google Maps", officialUrl: "https://www.mije.com/", ...hostelStay }),
+          nStop("marais-stay-mije", "MIJE Marais", [48.8564, 2.3615], "MIJE Marais is a budget-friendly historic-house hostel for the old quarter without hotel pricing. Expect simple rooms, shared spaces, and a location-first stay close to Place des Vosges and the Seine.", { price: "$", priceSource: "Hostelworld / Google Maps", officialUrl: "https://www.mije.com/", ...hostelStay }),
         ],
       },
     ],
@@ -2022,40 +2022,40 @@ const parisNeighborhoodGuideSeeds: Record<ParisNeighborhood, Record<Neighborhood
     Food: {
       title: "Left Bank Tables and Cafe Rituals",
       description:
-        "Saint-Germain food should not be only cafe mythology. This guide gives the area meal roles: brasserie history, oysters, a modern bistro, a quick sandwich, and one iconic terrace for Left Bank days that need food with context.",
+        "Saint-Germain food is more than cafe mythology. Historic brasseries, oysters, modern bistro cooking, sandwiches, and grand terraces show how the Left Bank moves from quick lunch to formal dinner without losing its street life.",
       stops: [
-        nStop("saint-germain-food-lipp", "Brasserie Lipp", [48.8535, 2.3332], "Brasserie Lipp is the Saint-Germain institution for a literary, polished boulevard meal. It is useful when the plan wants old Left Bank atmosphere and classic cooking that can carry lunch or dinner.", { price: "$$$", priceSource: "The Infatuation / Google Maps" }),
-        nStop("saint-germain-food-huitrerie-regis", "Huitrerie Regis", [48.8532, 2.3351], "Huitrerie Regis gives Saint-Germain a precise seafood stop with oysters, white wine, and a compact room. Use it when the route needs a clean focused meal rather than a long brasserie sitting.", { price: "$$", priceSource: "Eater / Google Maps" }),
-        nStop("saint-germain-food-semilla", "Semilla", [48.8535, 2.3374], "Semilla is the modern Left Bank bistro for travelers who want Saint-Germain without only heritage rooms. It fits an evening around galleries, the river, and Odeon.", { price: "$$", priceSource: "Eater / Google Maps" }),
-        nStop("saint-germain-food-cafe-flore", "Cafe de Flore", [48.8542, 2.3322], "Cafe de Flore belongs as a context stop, not because it is hidden. Use it when the traveler wants the ritual of Saint-Germain cafe history and understands that the value is room and address.", { price: "$$", priceSource: "Conde Nast Traveler / Google Maps" }),
+        nStop("saint-germain-food-lipp", "Brasserie Lipp", [48.8535, 2.3332], "Brasserie Lipp is a literary Saint-Germain institution serving classic brasserie cooking in a polished boulevard room at lunch and dinner.", { price: "$$$", priceSource: "The Infatuation / Google Maps" }),
+        nStop("saint-germain-food-huitrerie-regis", "Huitrerie Regis", [48.8532, 2.3351], "Huitrerie Regis gives Saint-Germain a precise seafood stop with oysters, white wine, and a compact room.", { price: "$$", priceSource: "Eater / Google Maps" }),
+        nStop("saint-germain-food-semilla", "Semilla", [48.8535, 2.3374], "Semilla is the modern Left Bank bistro for Saint-Germain without only heritage rooms. It fits an evening around galleries, the river, and Odeon.", { price: "$$", priceSource: "Eater / Google Maps" }),
+        nStop("saint-germain-food-cafe-flore", "Cafe de Flore", [48.8542, 2.3322], "Cafe de Flore is a Saint-Germain institution known for its literary history, mirrored dining room, terrace, coffee, and classic cafe service. The premium pays for the setting and address rather than exclusivity.", { price: "$$", priceSource: "Conde Nast Traveler / Google Maps" }),
       ],
     },
     Nightlife: {
       title: "Left Bank Chic, Hotel Bars, and Speakeasies",
       description:
-        "Saint-Germain nightlife is best when it stays elegant but not sleepy: 1930s-style speakeasy rooms, grand hotel bars, market-street terraces, and snug late-night addresses. This guide keeps the Left Bank evening close to dinner and river walks without making every stop feel formal.",
+        "Saint-Germain nightlife is best when it stays elegant but not sleepy: 1930s-style speakeasy rooms, grand hotel bars, market-street terraces, and snug late-night addresses.",
       stops: [
-        nStop("saint-germain-nightlife-prescription", "Prescription Cocktail Club", [48.8538, 2.3372], "Prescription Cocktail Club gives Saint-Germain a 1930s-inspired, theatrical speakeasy mood near Odeon and Rue Mazarine. It is best when the night wants low light, style, and a short walk from dinner.", { price: "$$", priceSource: "Time Out / Google Maps" }),
-        nStop("saint-germain-nightlife-josephine", "Bar Josephine", [48.8517, 2.327], "Bar Josephine at Hotel Lutetia brings grand Left Bank hotel energy, live music on select nights, and enough dining-and-stay context to make the room feel like an evening plan rather than a quick stop.", { price: "$$$", priceSource: "Official hotel site / Google Maps" }),
-        nStop("saint-germain-nightlife-bar-marche", "Le Bar du Marche", [48.8532, 2.3362], "Le Bar du Marche is the buzzing Rue de Buci terrace for classic bistro fare from breakfast onward, plus cocktails when the Left Bank evening loosens up. Use it as a social hinge in the middle of Saint-Germain.", { price: "$$", priceSource: "Google Maps / local nightlife guides" }),
-        nStop("saint-germain-nightlife-castor-club", "Castor Club", [48.8539, 2.3392], "Castor Club is a snug Left Bank speakeasy with a hidden-door feel, a compact room, and an extensive cocktail list. Save it for a late, intimate stop when the group wants atmosphere over scale.", { price: "$$", priceSource: "Time Out / Google Maps" }),
+        nStop("saint-germain-nightlife-prescription", "Prescription Cocktail Club", [48.8538, 2.3372], "Prescription Cocktail Club is a low-lit, 1930s-inspired cocktail room near Odeon and Rue Mazarine, with theatrical style and polished drinks close to Saint-Germain restaurants.", { price: "$$", priceSource: "Time Out / Google Maps" }),
+        nStop("saint-germain-nightlife-josephine", "Bar Josephine", [48.8517, 2.327], "Bar Josephine at Hotel Lutetia combines grand Left Bank hotel design, cocktails, dining, and live music on select nights in a room made for a full evening.", { price: "$$$", priceSource: "Official hotel site / Google Maps" }),
+        nStop("saint-germain-nightlife-bar-marche", "Le Bar du Marche", [48.8532, 2.3362], "Le Bar du Marche is the buzzing Rue de Buci terrace for classic bistro fare from breakfast onward, plus cocktails when the Left Bank evening loosens up.", { price: "$$", priceSource: "Google Maps / local nightlife guides" }),
+        nStop("saint-germain-nightlife-castor-club", "Castor Club", [48.8539, 2.3392], "Castor Club is a snug Left Bank speakeasy with a hidden-door feel, a compact room, and an extensive cocktail list.", { price: "$$", priceSource: "Time Out / Google Maps" }),
       ],
     },
     Nature: {
       title: "Luxembourg Chairs and River Walks",
       description:
-        "Saint-Germain nature is mostly elegant pause space: Luxembourg chairs, small squares, and Seine edges. This guide keeps the Left Bank route breathable between galleries, cafes, Orsay, and dinner.",
+        "Saint-Germain nature is mostly elegant pause space: Luxembourg chairs, small squares, and Seine edges.",
       stops: [
-        nStop("saint-germain-nature-luxembourg", "Jardin du Luxembourg", [48.8462, 2.3372], "From Saint-Germain, Jardin du Luxembourg is the natural reset before the route drifts toward the Latin Quarter or another museum block. Chairs, fountains, and palace views make it a practical pause rather than a detour.", { photo: photos.nature }),
-        nStop("saint-germain-nature-laurent-prache", "Square Laurent-Prache", [48.8543, 2.3342], "Square Laurent-Prache is the small garden beside the church, useful when the boulevard needs a quiet minute. It works as a compact pause between cafes, shops, and the Delacroix museum.", { photo: photos.nature }),
-        nStop("saint-germain-nature-gabriel-pierne", "Square Gabriel-Pierne", [48.8548, 2.3375], "Square Gabriel-Pierne gives Rue de Seine and the galleries a leafy pocket with benches and a quieter rhythm. Use it when the Left Bank walk needs shade without turning into a park visit.", { photo: photos.nature }),
+        nStop("saint-germain-nature-luxembourg", "Jardin du Luxembourg", [48.8462, 2.3372], "Jardin du Luxembourg offers formal paths, fountains, palace views, trees, lawns, and the familiar green chairs on the Saint-Germain edge of the Latin Quarter.", { photo: photos.nature }),
+        nStop("saint-germain-nature-laurent-prache", "Square Laurent-Prache", [48.8543, 2.3342], "Square Laurent-Prache is the small garden beside the church, useful when the boulevard needs a quiet minute. It is a compact pause between cafes, shops, and the Delacroix museum.", { photo: photos.nature }),
+        nStop("saint-germain-nature-gabriel-pierne", "Square Gabriel-Pierne", [48.8548, 2.3375], "Square Gabriel-Pierne gives Rue de Seine and the galleries a leafy pocket with benches and a quieter rhythm.", { photo: photos.nature }),
         nStop("saint-germain-nature-quai-malaquais", "Quai Malaquais Seine Walk", [48.858, 2.335], "Quai Malaquais pulls Saint-Germain to the river, with views toward the Louvre and easy movement to Pont des Arts. It is the best reset between galleries, Orsay, and a central dinner.", { photo: photos.seine }),
       ],
     },
     Culture: {
       title: "Saint-Germain Abbey, Delacroix, and the Seine",
       description:
-        "Saint-Germain culture moves through an ancient abbey, an artist's former home, the French mint, and the domed Institut de France. This guide keeps the Left Bank intellectual without making it vague.",
+        "Saint-Germain culture moves through an ancient abbey, an artist's former home, the French mint, and the domed Institut de France.",
       stops: [
         nStop("saint-germain-culture-eglise", "Eglise Saint-Germain-des-Pres", [48.8539, 2.3346], "Eglise Saint-Germain-des-Pres is one of Paris's oldest churches, with Romanesque foundations and Gothic 12th-century architecture in its choir and early medieval layers. The painted interior, columns, and abbey history make the neighborhood's name visible."),
         nStop("saint-germain-culture-delacroix", "Musee national Eugene-Delacroix", [48.8541, 2.3356], "Musee national Eugene-Delacroix occupies the painter's final apartment and studio, with works, objects, letters, and a quiet garden. The scale is personal, focused on Delacroix's late life and artistic circle."),
@@ -2066,9 +2066,9 @@ const parisNeighborhoodGuideSeeds: Record<ParisNeighborhood, Record<Neighborhood
     Stay: {
       title: "Grand Left Bank Hotels",
       description:
-        "Saint-Germain hotel stays are for travelers who want cafe mornings, galleries, Luxembourg access, and calm Left Bank returns. This guide keeps the district focused on hotels rather than dorm-style budget bases.",
+        "Saint-Germain hotels pair cafe mornings and gallery streets with Luxembourg Garden access and calmer Left Bank evenings.",
       stops: [
-        nStop("saint-germain-stay-lutetia", "Hotel Lutetia", [48.8517, 2.327], "Hotel Lutetia is the grand Left Bank hotel choice, with Art Deco scale, polished public rooms, spa facilities, and a range of exclusive rooms and suites near Saint-Germain cafes, Orsay, and Luxembourg.", { price: "$$$", priceSource: "Conde Nast Traveler / The Times", officialUrl: "https://www.mandarinoriental.com/en/paris/lutetia", ...hotelStay }),
+        nStop("saint-germain-stay-lutetia", "Hotel Lutetia", [48.8517, 2.327], "Hotel Lutetia is a grand Left Bank hotel, with Art Deco scale, polished public rooms, spa facilities, and a range of exclusive rooms and suites near Saint-Germain cafes, Orsay, and Luxembourg.", { price: "$$$", priceSource: "Conde Nast Traveler / The Times", officialUrl: "https://www.mandarinoriental.com/en/paris/lutetia", ...hotelStay }),
         nStop("saint-germain-stay-relais-christine", "Relais Christine", [48.8541, 2.3403], "Relais Christine gives Saint-Germain a tucked-away luxury hotel near the river and Odeon, with historic-street access, intimate rooms, and a quieter mood than the larger Left Bank addresses.", { price: "$$$", priceSource: "Conde Nast Traveler / Google Travel", ...hotelStay }),
         nStop("saint-germain-stay-aubusson", "Hotel d'Aubusson", [48.8545, 2.3396], "Hotel d'Aubusson sits in a 17th-century townhouse with elegant rooms, grand public spaces, a jazz bar, and easy access to Rue de Buci, the Seine, galleries, and Left Bank evenings.", { price: "$$$", priceSource: "Google Travel / Tripadvisor", officialUrl: "https://www.hoteldaubusson.com/", ...hotelStay }),
         nStop("saint-germain-stay-madison", "Madison Hotel", [48.8534, 2.3338], "Madison Hotel is a polished boutique hotel beside Saint-Germain-des-Pres church, with rooms and suites that keep the boulevard, classic cafes, metro access, and gallery streets close.", { price: "$$", priceSource: "Google Travel / Tripadvisor", officialUrl: "https://www.hotel-madison.com/", ...hotelStay }),
@@ -2079,40 +2079,40 @@ const parisNeighborhoodGuideSeeds: Record<ParisNeighborhood, Record<Neighborhood
     Food: {
       title: "Historic Rooms and River-Edge Tables",
       description:
-        "Latin Quarter food is strongest when it moves between bakeries, Art Nouveau dining rooms, candlelit old houses, and a formal Seine-side classic. This guide keeps meals tied to the Pantheon, Mouffetard, Cluny, and the river without forcing a casual campus frame onto serious restaurants.",
+        "Latin Quarter food is strongest when it moves between bakeries, Art Nouveau dining rooms, candlelit old houses, and a formal Seine-side classic.",
       stops: [
-        nStop("latin-food-coupe-chou", "Le Coupe-Chou", [48.8485, 2.3483], "Le Coupe-Chou gives the Latin Quarter a candlelit old-house meal near the Sorbonne and Pantheon. Use it when the route wants atmosphere and a slower dinner without leaving the university streets.", { price: "$$", priceSource: "Google Maps / local dining guides" }),
-        nStop("latin-food-bouillon-racine", "Bouillon Racine", [48.849, 2.341], "Bouillon Racine is the Art Nouveau dining-room choice near Odeon and Cluny, useful when the day needs a historic room at a more accessible format. It is best for groups that want setting and classic comfort.", { price: "$$", priceSource: "Google Maps / local dining guides" }),
-        nStop("latin-food-maison-isabelle", "La Maison d'Isabelle", [48.8498, 2.3486], "La Maison d'Isabelle is the croissant and bakery stop that makes a Latin Quarter morning feel planned. Use it before the Pantheon, Mouffetard, or a museum block when breakfast should be quick and good.", { price: "$", priceSource: "Google Maps / Paris bakery guides" }),
-        nStop("latin-food-tour-argent", "La Tour d'Argent", [48.8499, 2.3544], "La Tour d'Argent is the formal river-edge splurge for travelers who want old Paris ceremony and a view-backed meal. It belongs as a deliberate booking, not a casual neighborhood dinner.", { price: "$$$", priceSource: "MICHELIN Guide / Google Maps" }),
+        nStop("latin-food-coupe-chou", "Le Coupe-Chou", [48.8485, 2.3483], "Le Coupe-Chou serves French classics in a candlelit old townhouse near the Sorbonne and Pantheon. Small rooms, exposed beams, and a slower dinner pace are central to the appeal.", { price: "$$", priceSource: "Google Maps / local dining guides" }),
+        nStop("latin-food-bouillon-racine", "Bouillon Racine", [48.849, 2.341], "Bouillon Racine serves classic brasserie fare in an ornate Art Nouveau dining room near Odeon and Cluny. The accessible format and dramatic setting work particularly well for groups.", { price: "$$", priceSource: "Google Maps / local dining guides" }),
+        nStop("latin-food-maison-isabelle", "La Maison d'Isabelle", [48.8498, 2.3486], "La Maison d'Isabelle is a Latin Quarter bakery known for award-winning butter croissants, baguettes, and a brisk morning counter.", { price: "$", priceSource: "Google Maps / Paris bakery guides" }),
+        nStop("latin-food-tour-argent", "La Tour d'Argent", [48.8499, 2.3544], "La Tour d'Argent serves formal French dining with old-Paris ceremony and elevated views across the Seine. The historic room and high prices make it a deliberate reservation rather than a casual neighborhood dinner.", { price: "$$$", priceSource: "MICHELIN Guide / Google Maps" }),
       ],
     },
     Nightlife: {
       title: "Live Cellars and Low-Key Latin Bars",
       description:
-        "Latin Quarter nights work when old cellars, live music, pub energy, and casual Mouffetard bars are used deliberately. This guide focuses on music, dancing, and low-key late stops after bookshops, dinner, or a Pantheon day.",
+        "Latin Quarter nights belong to old stone cellars, live music, student pubs, and casual Mouffetard bars rather than polished destination cocktails.",
       stops: [
-        nStop("latin-nightlife-huchette", "Le Caveau de la Huchette", [48.8525, 2.3468], "Le Caveau de la Huchette is the Latin Quarter live-cellar anchor, useful when nightlife should be music, dancing, and old-stone atmosphere. Check the program before building the night around it.", { price: "$$", priceSource: "Official venue site / Google Maps" }),
-        nStop("latin-nightlife-piano-vache", "Le Piano Vache", [48.8503, 2.3488], "Le Piano Vache gives the area a student-bar institution with posters, inexpensive drinks, and a looser mood near the Sorbonne. Use it when the night should stay casual and local-feeling.", { price: "$", priceSource: "Google Maps / local nightlife guides" }),
-        nStop("latin-nightlife-teddys", "Teddy's Bar", [48.8473, 2.3443], "Teddy's Bar is a compact cocktail and beer stop near Mouffetard, useful for a low-pressure drink after dinner. It works best as part of a small Latin Quarter bar sequence.", { price: "$$", priceSource: "Google Maps / local nightlife guides" }),
-        nStop("latin-nightlife-requin", "Le Requin Chagrin", [48.8465, 2.3478], "Le Requin Chagrin is the pub-style stop near the Pantheon and student streets, good for groups that want easy drinks without a reservation ritual. Save it for a casual second stop.", { price: "$", priceSource: "Google Maps / local nightlife guides" }),
+        nStop("latin-nightlife-huchette", "Le Caveau de la Huchette", [48.8525, 2.3468], "Le Caveau de la Huchette is a Latin Quarter live-cellar bar, useful when nightlife should be music, dancing, and old-stone atmosphere.", { price: "$$", priceSource: "Official venue site / Google Maps" }),
+        nStop("latin-nightlife-piano-vache", "Le Piano Vache", [48.8503, 2.3488], "Le Piano Vache gives the area a student-bar institution with posters, inexpensive drinks, and a looser mood near the Sorbonne.", { price: "$", priceSource: "Google Maps / local nightlife guides" }),
+        nStop("latin-nightlife-teddys", "Teddy's Bar", [48.8473, 2.3443], "Teddy's Bar is a compact, low-pressure cocktail and beer room near Mouffetard, sized for small groups rather than a large nightlife crowd.", { price: "$$", priceSource: "Google Maps / local nightlife guides" }),
+        nStop("latin-nightlife-requin", "Le Requin Chagrin", [48.8465, 2.3478], "Le Requin Chagrin is a pub-style bar near the Pantheon and student streets, good for groups that want easy drinks without a reservation ritual.", { price: "$", priceSource: "Google Maps / local nightlife guides" }),
       ],
     },
     Nature: {
       title: "Gardens, Arenas, and River Breathing Room",
       description:
-        "The Latin Quarter has real green relief if the route steps off the lecture-hall streets. This guide links Luxembourg, Jardin des Plantes, Arenes de Lutece, and the Seine for pauses between culture and food.",
+        "The Latin Quarter has real green relief if the route steps off the lecture-hall streets.",
       stops: [
-        nStop("latin-nature-luxembourg", "Jardin du Luxembourg", [48.8462, 2.3372], "Jardin du Luxembourg is the western green anchor for Latin Quarter days, especially before or after the Pantheon and Sorbonne. Chairs, fountains, and paths make it the easiest long pause.", { photo: photos.nature }),
-        nStop("latin-nature-jardin-plantes", "Jardin des Plantes", [48.8439, 2.3599], "Jardin des Plantes stretches the Latin Quarter east toward natural history, garden paths, and family-friendly museum time. It is best when the day needs greenery and a quieter rhythm.", { photo: photos.nature }),
-        nStop("latin-nature-arenes", "Arenes de Lutece", [48.8451, 2.3522], "Arenes de Lutece gives the neighborhood a Roman open-air pocket tucked behind ordinary streets. Use it as a short historical and green stop between Mouffetard and Jardin des Plantes.", { photo: photos.nature }),
-        nStop("latin-nature-seine-bookstalls", "Seine Bookstalls and Quays", [48.8527, 2.347], "The Seine bookstalls and quays are the Latin Quarter's river reset, linking Shakespeare and Company, Notre-Dame views, and slow browsing. It is the easiest way to add air to a bookish route."),
+        nStop("latin-nature-luxembourg", "Jardin du Luxembourg", [48.8462, 2.3372], "Jardin du Luxembourg pairs formal paths, fountains, lawns, tree-lined promenades, and the familiar green chairs of a Paris public garden. Its scale supports anything from a short bench break to a long afternoon outdoors.", { photo: photos.nature }),
+        nStop("latin-nature-jardin-plantes", "Jardin des Plantes", [48.8439, 2.3599], "Jardin des Plantes stretches the Latin Quarter east toward natural history, garden paths, and family-friendly museum time.", { photo: photos.nature }),
+        nStop("latin-nature-arenes", "Arenes de Lutece", [48.8451, 2.3522], "Arenes de Lutece preserves part of a Roman amphitheater in an open-air pocket hidden behind ordinary Latin Quarter streets. Stone seating, trees, and neighborhood use keep the ruin from feeling sealed off as a monument.", { photo: photos.nature }),
+        nStop("latin-nature-seine-bookstalls", "Seine Bookstalls and Quays", [48.8527, 2.347], "The Seine bookstalls and quays are the Latin Quarter's river reset, linking Shakespeare and Company, Notre-Dame views, and slow browsing."),
       ],
     },
     Culture: {
       title: "Pantheon, Cluny, Books, and the Sorbonne",
       description:
-        "The Latin Quarter culture guide is about civic memory, medieval art, book culture, and the Sorbonne's academic presence. This route keeps the area from becoming only cafes and nightlife.",
+        "Civic memory, medieval art, book culture, and the Sorbonne's academic presence reveal the Latin Quarter beyond its cafes and nightlife.",
       stops: [
         nStop("latin-culture-pantheon", "Pantheon", [48.8462, 2.346], "The Pantheon is a neoclassical monument with a vast dome, frescoed interior, Foucault pendulum, and crypts for major French figures including Voltaire, Rousseau, Victor Hugo, Emile Zola, Marie Curie, and Josephine Baker."),
         nStop("latin-culture-cluny", "Musee de Cluny", [48.8506, 2.3431], "Musee de Cluny is the museum of medieval art, known for the Lady and the Unicorn tapestries, medieval jewellery, sculptures, stained glass, carved ivories, manuscripts, and the remains of Roman baths beneath the building."),
@@ -2124,10 +2124,10 @@ const parisNeighborhoodGuideSeeds: Record<ParisNeighborhood, Record<Neighborhood
       {
         title: "Latin Quarter Hotels Near the Pantheon",
         description:
-          "Latin Quarter hotel stays work for travelers who want the Pantheon, Mouffetard, Jardin des Plantes, bookshops, and useful RER or metro access. This guide keeps boutique hotels separate from hostel beds.",
+          "Latin Quarter hotels cluster around the Pantheon, Mouffetard, Jardin des Plantes, bookshops, and practical RER or metro links.",
         stops: [
           nStop("latin-stay-dames-pantheon", "Hotel Les Dames du Pantheon", [48.846, 2.3459], "Hotel Les Dames du Pantheon is the Pantheon-facing boutique hotel where each floor has a different theme. It suits travelers who want Left Bank atmosphere, Sorbonne access, and short walks to bookshops and gardens.", { price: "$$", priceSource: "Google Travel / Tripadvisor", officialUrl: "https://www.hotellesdamesdupantheon.com/", ...hotelStay }),
-          nStop("latin-stay-grandes-ecoles", "Hotel des Grandes Ecoles", [48.8434, 2.3509], "Hotel des Grandes Ecoles feels like a country home in the heart of Paris, with garden calm near Mouffetard and the Pantheon. It is for travelers who want quiet charm rather than large luxury services.", { price: "$$", priceSource: "Google Travel / Tripadvisor", officialUrl: "https://en.hoteldesgrandesecoles.com/", ...hotelStay }),
+          nStop("latin-stay-grandes-ecoles", "Hotel des Grandes Ecoles", [48.8434, 2.3509], "Hotel des Grandes Ecoles feels like a country home in central Paris, with a calm garden near Mouffetard and the Pantheon. Quiet charm takes priority over large-hotel services.", { price: "$$", priceSource: "Google Travel / Tripadvisor", officialUrl: "https://en.hoteldesgrandesecoles.com/", ...hotelStay }),
           nStop("latin-stay-monte-cristo", "Hotel Monte Cristo", [48.8377, 2.3523], "Hotel Monte Cristo is a styled southern Latin Quarter hotel with a wellness area, pool, sauna, bar, restaurant, and a range of rooms and suites. It works well for Mouffetard, Jardin des Plantes, and quieter nights.", { price: "$$", priceSource: "Google Travel / Tripadvisor", officialUrl: "https://www.hotelmontecristoparis.com/", ...hotelStay }),
         ],
       },
@@ -2135,9 +2135,9 @@ const parisNeighborhoodGuideSeeds: Record<ParisNeighborhood, Record<Neighborhood
         topic: "Hostels",
         title: "Latin Quarter Hostel Beds",
         description:
-          "The Latin Quarter has a limited hostel field, so this guide keeps the true budget option separate from boutique hotels and focuses on the hostel that best serves Mouffetard and Pantheon-area routes.",
+          "The Latin Quarter has a limited hostel field. Its strongest budget base combines dorm and private-room options with practical access to Mouffetard, the Pantheon, and the area's metro and RER connections.",
         stops: [
-          nStop("latin-stay-young-happy", "Young and Happy Latin Quarter", [48.8446, 2.3507], "Young and Happy Latin Quarter is the Mouffetard hostel for travelers who want dorms near the Pantheon area, including smaller dorm options and women-only rooms depending on availability. Cozy common spaces keep it social without feeling oversized.", { price: "$", priceSource: "Hostelworld / Google Maps", officialUrl: "https://www.youngandhappy.fr/", ...hostelStay }),
+          nStop("latin-stay-young-happy", "Young and Happy Latin Quarter", [48.8446, 2.3507], "Young and Happy Latin Quarter is the Mouffetard hostel for dorms near the Pantheon area, including smaller dorm options and women-only rooms depending on availability. Cozy common spaces keep it social without feeling oversized.", { price: "$", priceSource: "Hostelworld / Google Maps", officialUrl: "https://www.youngandhappy.fr/", ...hostelStay }),
         ],
       },
     ],
@@ -2146,46 +2146,46 @@ const parisNeighborhoodGuideSeeds: Record<ParisNeighborhood, Record<Neighborhood
     Food: {
       title: "Hill Meals Beyond the View",
       description:
-        "Montmartre food is strongest when the meal has a purpose: a poultry room, a tiny bistro, a brunch stop, a Breton crepe table, or a village-street dinner. This guide keeps the hill's food useful before and after the view.",
+        "Montmartre food is strongest when the meal has a purpose: a poultry room, a tiny bistro, a brunch stop, a Breton crepe table, or a village-street dinner.",
       stops: [
-        nStop("montmartre-food-coq-fils", "Le Coq and Fils", [48.887, 2.3383], "Le Coq and Fils gives Montmartre a poultry-focused destination meal near the upper hill without leaning on postcard atmosphere alone. Use it for a planned lunch or dinner after the museum lanes.", { price: "$$$", priceSource: "MICHELIN Guide / Google Maps" }),
-        nStop("montmartre-food-boite-lettres", "La Boite aux Lettres", [48.8878, 2.3356], "La Boite aux Lettres is the small bistro pick for travelers who want a neighborhood dinner near Lamarck-Caulaincourt. It works when the hill needs warmth, wine, and a room that feels local.", { price: "$$", priceSource: "Google Maps / Paris dining guides" }),
-        nStop("montmartre-food-hardware", "Hardware Societe", [48.886, 2.3438], "Hardware Societe is the brunch-and-coffee stop for a Sacre-Coeur morning, with Australian cafe energy, plated breakfasts, and a location just below the basilica. Go early or treat the wait as part of a slower hill start.", { price: "$$", priceSource: "Google Maps / local dining guides" }),
+        nStop("montmartre-food-coq-fils", "Le Coq and Fils", [48.887, 2.3383], "Le Coq and Fils gives Montmartre a poultry-focused destination meal near the upper hill without leaning on postcard atmosphere alone.", { price: "$$$", priceSource: "MICHELIN Guide / Google Maps" }),
+        nStop("montmartre-food-boite-lettres", "La Boite aux Lettres", [48.8878, 2.3356], "La Boite aux Lettres is a small Montmartre bistro serving modern French plates in a neighborhood room near Lamarck-Caulaincourt.", { price: "$$", priceSource: "Google Maps / Paris dining guides" }),
+        nStop("montmartre-food-hardware", "Hardware Societe", [48.886, 2.3438], "Hardware Societe is a brunch-and-coffee cafe for a Sacre-Coeur morning, with Australian cafe energy, plated breakfasts, and a location just below the basilica. Go early or treat the wait as part of a slower hill start.", { price: "$$", priceSource: "Google Maps / local dining guides" }),
         nStop("montmartre-food-breizh-cafe", "Breizh Cafe Abbesses", [48.8846, 2.3377], "Breizh Cafe Abbesses adds the crepe piece Montmartre should have, with Breton galettes, cider, and a useful Abbesses base below the summit. It is the casual, lighter meal that can sit between a hill walk and Pigalle or Lamarck-Caulaincourt.", { price: "$$", priceSource: "Official restaurant site / Google Maps" }),
-        nStop("montmartre-food-poulbot", "Le Poulbot", [48.8866, 2.3404], "Le Poulbot gives the central hill a compact French meal close to Place du Tertre while still feeling more deliberate than the busiest tourist-strip terraces. It works for a warm bistro dinner after artist lanes, the basilica, or a Montmartre museum stop.", { price: "$$", priceSource: "Google Maps / local dining guides" }),
-        nStop("montmartre-food-moulin-galette", "Moulin de la Galette", [48.8873, 2.3367], "Moulin de la Galette works as both food and history: a restaurant beside one of Montmartre's surviving windmills, tied to the old dance-hall name painted by Renoir, Van Gogh, and other artists. It suits a meal where the hill's story should be part of the table.", { price: "$$$", priceSource: "Official restaurant site / Google Maps" }),
+        nStop("montmartre-food-poulbot", "Le Poulbot", [48.8866, 2.3404], "Le Poulbot gives the central hill a compact French meal close to Place du Tertre while still feeling more deliberate than the busiest tourist-strip terraces.", { price: "$$", priceSource: "Google Maps / local dining guides" }),
+        nStop("montmartre-food-moulin-galette", "Moulin de la Galette", [48.8873, 2.3367], "Moulin de la Galette is both food and history: a restaurant beside one of Montmartre's surviving windmills, tied to the old dance-hall name painted by Renoir, Van Gogh, and other artists. It suits a meal where the hill's story should be part of the table.", { price: "$$$", priceSource: "Official restaurant site / Google Maps" }),
       ],
     },
     Nightlife: {
       title: "Hilltop Views and Low-Key Montmartre Nights",
       description:
-        "Montmartre nights work when they lean into the hill: rooftop views, old cabaret rooms, hidden hotel bars, and lower-hill spots with a looser Marlusse-et-Lapin kind of energy. This guide keeps after-dark plans tied to slope, mood, and how dressed-up the group wants to feel.",
+        "Montmartre nights climb through rooftop views, old cabaret rooms, hidden hotel bars, and looser lower-hill drinking spots.",
       stops: [
-        nStop("montmartre-nightlife-terrass", "Terrass Hotel Rooftop", [48.8852, 2.3326], "Terrass Hotel Rooftop gives Montmartre a view-led drink without climbing back to the basilica steps. Use it for sunset, an early aperitif, or a polished rooftop start before the lower hill gets louder.", { price: "$$$", priceSource: "Official hotel site / Google Maps" }),
-        nStop("montmartre-nightlife-lapin-agile", "Au Lapin Agile", [48.8888, 2.3401], "Au Lapin Agile is the historic cabaret stop that keeps Montmartre connected to song, performance, and artist lore. Check the schedule and treat it as a planned show, not a drop-in bar.", { price: "$$", priceSource: "Official venue site / Google Maps" }),
-        nStop("montmartre-nightlife-tres-particulier", "Le Tres Particulier", [48.8882, 2.3339], "Le Tres Particulier is the hidden bar inside Hotel Particulier Montmartre, with garden secrecy, piano-bar intimacy, and a more chic hilltop mood. Book or confirm access before relying on it.", { price: "$$$", priceSource: "Official hotel site / Google Maps" }),
-        nStop("montmartre-nightlife-marlusse", "Marlusse et Lapin", [48.8842, 2.3364], "Marlusse et Lapin is the lower-hill bar for creative cocktails, a funky nook, live-performance nights, and happy-hour momentum near Abbesses. It works when Montmartre should end playful and social rather than polished.", { price: "$$", priceSource: "Google Maps / local nightlife guides" }),
+        nStop("montmartre-nightlife-terrass", "Terrass Hotel Rooftop", [48.8852, 2.3326], "Terrass Hotel Rooftop serves polished aperitifs and cocktails with broad sunset views from Montmartre, without requiring the climb to the basilica steps.", { price: "$$$", priceSource: "Official hotel site / Google Maps" }),
+        nStop("montmartre-nightlife-lapin-agile", "Au Lapin Agile", [48.8888, 2.3401], "Au Lapin Agile is a historic Montmartre cabaret presenting traditional French song and intimate live performance in a room steeped in artist lore. Admission follows the performance schedule rather than drop-in bar hours.", { price: "$$", priceSource: "Official venue site / Google Maps" }),
+        nStop("montmartre-nightlife-tres-particulier", "Le Tres Particulier", [48.8882, 2.3339], "Le Tres Particulier is the hidden bar inside Hotel Particulier Montmartre, with garden secrecy, piano-bar intimacy, and a more chic hilltop mood.", { price: "$$$", priceSource: "Official hotel site / Google Maps" }),
+        nStop("montmartre-nightlife-marlusse", "Marlusse et Lapin", [48.8842, 2.3364], "Marlusse et Lapin is the lower-hill bar for creative cocktails, a funky nook, live-performance nights, and happy-hour momentum near Abbesses.", { price: "$$", priceSource: "Google Maps / local nightlife guides" }),
       ],
     },
     Nature: {
       title: "Steps, Slopes, and Quiet Hill Corners",
       description:
-        "Montmartre's outdoor value is slope, view, and small green pockets rather than big parks. This guide links the basilica steps, squares, cemetery paths, and quieter hill corners into a route with real pauses.",
+        "Montmartre's outdoor value is slope, view, and small green pockets rather than big parks.",
       stops: [
-        nStop("montmartre-nature-sacre-steps", "Sacre-Coeur Steps", [48.8867, 2.3431], "The Sacre-Coeur steps are the obvious view point, but they work best early or late when the hill has room to breathe. Use them as a timed outdoor stop, not an all-day hangout.", { photo: photos.montmartre }),
-        nStop("montmartre-nature-louise-michel", "Square Louise Michel", [48.8846, 2.3443], "Square Louise Michel gives the climb to Sacre-Coeur a garden frame, with switchback paths, lawns, and changing city views. It is useful when the route needs a slower ascent.", { photo: photos.nature }),
-        nStop("montmartre-nature-suzanne-buisson", "Square Suzanne Buisson", [48.8886, 2.3369], "Square Suzanne Buisson is a quieter green pocket on the back side of the hill, away from the busiest summit lanes. Use it between Lamarck-Caulaincourt and the old mills.", { photo: photos.nature }),
-        nStop("montmartre-nature-cemetery", "Cimetiere de Montmartre", [48.8875, 2.3306], "Cimetiere de Montmartre adds a leafy, reflective walk below the hill and works as a calmer counterpoint to Sacre-Coeur crowds. It is best for a slow route toward Pigalle or Rue Caulaincourt.", { photo: photos.nature }),
+        nStop("montmartre-nature-sacre-steps", "Sacre-Coeur Steps", [48.8867, 2.3431], "The Sacre-Coeur steps provide Montmartre's obvious city view, clearest early or late when the hill has room to breathe. Midday crowds make the terrace a brief viewpoint rather than an all-day hangout.", { photo: photos.montmartre }),
+        nStop("montmartre-nature-louise-michel", "Square Louise Michel", [48.8846, 2.3443], "Square Louise Michel gives the climb to Sacre-Coeur a garden frame, with switchback paths, lawns, and changing city views.", { photo: photos.nature }),
+        nStop("montmartre-nature-suzanne-buisson", "Square Suzanne Buisson", [48.8886, 2.3369], "Square Suzanne Buisson is a quiet green pocket on the back of Montmartre hill, near Lamarck-Caulaincourt and the old mills but removed from the busiest summit lanes.", { photo: photos.nature }),
+        nStop("montmartre-nature-cemetery", "Cimetiere de Montmartre", [48.8875, 2.3306], "Cimetiere de Montmartre adds a leafy, reflective walk below the hill and is a calmer alternative to Sacre-Coeur crowds.", { photo: photos.nature }),
       ],
     },
     Culture: {
       title: "Montmartre Basilica, Artists, and Old Windmills",
       description:
-        "Montmartre culture is about the basilica, artist studios, village squares, old windmills, and the hill's role in Paris art history. This guide keeps the famous stops focused on what they are, not just how busy they get.",
+        "Montmartre culture spans the basilica, artist studios, village squares, surviving windmills, and the hill's long place in Paris art history.",
       stops: [
         nStop("montmartre-culture-sacre-coeur", "Basilique du Sacre-Coeur", [48.8867, 2.3431], "Basilique du Sacre-Coeur is Montmartre's white-domed hilltop church, with mosaics, crypt spaces, a dome climb, and one of the city's most recognizable silhouettes. Its position makes the basilica both a religious site and a Paris viewpoint."),
         nStop("montmartre-culture-musee-montmartre", "Musee de Montmartre", [48.8872, 2.3408], "Musee de Montmartre occupies 17th-century houses and gardens where artists including Renoir once worked. The museum covers Montmartre's studios, cabarets, posters, village life, and bohemian art history."),
-        nStop("montmartre-culture-place-tertre", "Place du Tertre", [48.8865, 2.3407], "Place du Tertre is Montmartre's artist square, lined with portrait painters, cafes, and narrow streets that keep the neighborhood's open-air studio identity visible. It belongs because the square shows how art became part of the hill's public life."),
+        nStop("montmartre-culture-place-tertre", "Place du Tertre", [48.8865, 2.3407], "Place du Tertre is Montmartre's artist square, lined with portrait painters, cafes, and narrow streets that keep the neighborhood's open-air studio identity visible. Portraiture remains part of the square's public life rather than something confined to a museum."),
         nStop("montmartre-culture-moulin-galette", "Moulin de la Galette", [48.8873, 2.3367], "Moulin de la Galette is the historic Montmartre windmill and restaurant site linked to the old dance hall painted by Renoir and other artists. It makes the hill's mill, restaurant, and art-history layers clear in one place."),
       ],
     },
@@ -2193,7 +2193,7 @@ const parisNeighborhoodGuideSeeds: Record<ParisNeighborhood, Record<Neighborhood
       {
         title: "Montmartre Hilltop Hotels",
         description:
-          "Montmartre hotel stays are for travelers who want village streets, rooftop views, north-side evenings, and hill access without folding hostel beds into the same list.",
+          "Montmartre hotels combine village streets, rooftop views, and north-side evenings on a steep hill. These are private-room stays, kept separate from the area's hostel beds.",
         stops: [
           nStop("montmartre-stay-terrass", "Terrass Hotel", [48.8852, 2.3326], "Terrass Hotel is the view-led Montmartre hotel, with rooftop drinks, rooms near Rue Caulaincourt, and easy access to Abbesses, the cemetery, and lower-hill restaurants.", { price: "$$$", priceSource: "Conde Nast Traveler / Google Travel", officialUrl: "https://www.terrass-hotel.com/", ...hotelStay }),
           nStop("montmartre-stay-arts", "Hotel des Arts Montmartre", [48.8853, 2.3348], "Hotel des Arts Montmartre is a smaller neighborhood hotel close to Abbesses, restaurants, and hill walks, with a warmer boutique mood than the bigger view-led properties.", { price: "$$", priceSource: "Google Travel / Tripadvisor", officialUrl: "https://www.arts-hotel-paris.com/", ...hotelStay }),
@@ -2204,9 +2204,9 @@ const parisNeighborhoodGuideSeeds: Record<ParisNeighborhood, Record<Neighborhood
         topic: "Hostels",
         title: "Montmartre Hostel Beds and Budget Rooms",
         description:
-          "Montmartre hostel stays should be searched separately from rooftop hotels. This guide keeps the lower-cost hill option clear for travelers choosing dorms, superior rooms, and simple social spaces.",
+          "Montmartre hostel stays should be searched separately from rooftop hotels.",
         stops: [
-          nStop("montmartre-stay-village", "Le Village Montmartre", [48.8842, 2.3446], "Le Village Montmartre works as both hostel and simple hotel-style base, with dorms, superior rooms, and a terrace near Anvers and Sacre-Coeur. It is for travelers who want Montmartre access at a lower nightly spend.", { price: "$", priceSource: "Hostelworld / HostelsClub", officialUrl: "https://www.villagehostel.fr/", ...hostelStay }),
+          nStop("montmartre-stay-village", "Le Village Montmartre", [48.8842, 2.3446], "Le Village Montmartre combines hostel dorms, superior private rooms, and a terrace near Anvers and Sacre-Coeur. The format keeps Montmartre accessible at a lower nightly spend.", { price: "$", priceSource: "Hostelworld / HostelsClub", officialUrl: "https://www.villagehostel.fr/", ...hostelStay }),
         ],
       },
     ],
@@ -2215,44 +2215,44 @@ const parisNeighborhoodGuideSeeds: Record<ParisNeighborhood, Record<Neighborhood
     Food: {
       title: "Bakery Mornings and Canal Tables",
       description:
-        "Canal Saint-Martin food is best when it follows the water: bakery starts, brunch queues, rotating kitchens, and terrace meals. This guide keeps the meal plan walkable along the locks and north-south canal spine.",
+        "Canal Saint-Martin food is best when it follows the water: bakery starts, brunch queues, rotating kitchens, and terrace meals.",
       stops: [
-        nStop("canal-food-du-pain", "Du Pain et des Idees", [48.8719, 2.3622], "Du Pain et des Idees is the bakery stop that makes canal mornings feel intentional. Use it for pastries and bread before the locks, Republique, or a north Marais route.", { price: "$", priceSource: "Eater / Google Maps" }),
-        nStop("canal-food-holybelly", "Holybelly 5", [48.8723, 2.3606], "Holybelly 5 is the brunch-and-coffee anchor near the canal, useful when the morning needs a proper seated meal before walking. Expect demand and build timing around it.", { price: "$$", priceSource: "Google Maps / Paris dining guides" }),
-        nStop("canal-food-early-june", "Early June", [48.8739, 2.3621], "Early June gives the canal a rotating-chef, natural-wine dinner that changes more often than a standard bistro menu. Save it for travelers who like a current, low-formality meal where the kitchen, bottles, and room feel tied to the neighborhood.", { price: "$$", priceSource: "Eater / Google Maps" }),
-        nStop("canal-food-chez-prune", "Chez Prune", [48.8726, 2.3634], "Chez Prune is the canal-side cafe standby for lunch, aperitif, or an easy meal with the water close by. Use it as the social hinge of the route: a terrace, a meeting point, and a relaxed pause before the canal keeps moving north.", { price: "$$", priceSource: "Time Out / Google Maps" }),
+        nStop("canal-food-du-pain", "Du Pain et des Idees", [48.8719, 2.3622], "Du Pain et des Idees is a Canal Saint-Martin bakery known for pain des amis, escargot pastries, and focused morning counter service near Republique.", { price: "$", priceSource: "Eater / Google Maps" }),
+        nStop("canal-food-holybelly", "Holybelly 5", [48.8723, 2.3606], "Holybelly 5 is a high-demand seated brunch cafe near the canal, serving pancakes, eggs, seasonal plates, and carefully made coffee. Queues are common.", { price: "$$", priceSource: "Google Maps / Paris dining guides" }),
+        nStop("canal-food-early-june", "Early June", [48.8739, 2.3621], "Early June gives the canal a rotating-chef, natural-wine dinner that changes more often than a standard bistro menu.", { price: "$$", priceSource: "Eater / Google Maps" }),
+        nStop("canal-food-chez-prune", "Chez Prune", [48.8726, 2.3634], "Chez Prune is the canal-side cafe standby for lunch, aperitif, or an easy meal with the water close by.", { price: "$$", priceSource: "Time Out / Google Maps" }),
       ],
     },
     Nightlife: {
       title: "Canal Drinks With a Route",
       description:
-        "Canal Saint-Martin nights are strongest when they stay walkable: a designed room, a music terrace, an atmospheric indoor spot, and a casual meeting-point cafe. The guide keeps the canal from becoming only bank-side wandering.",
+        "Canal Saint-Martin nights are strongest when they stay walkable: a designed room, a music terrace, an atmospheric indoor spot, and a casual meeting-point cafe.",
       stops: [
-        nStop("canal-nightlife-gravity", "Gravity Bar", [48.8728, 2.3622], "Gravity Bar gives the canal sophisticated craft cocktails, creative tapas, natural wines, and a hip room with a wavy-ceiling look. It works for a stylish but still relaxed start near Rue des Vinaigriers.", { price: "$$", priceSource: "Time Out / Google Maps" }),
-        nStop("canal-nightlife-la-meduse", "La Meduse", [48.8791, 2.3671], "La Meduse gives the canal a cocktail-and-natural-wine option right by the water, with enough food to keep the evening flexible. Use it when the night should stay canal-side but still feel deliberate.", { price: "$$", priceSource: "Time Out / Google Maps" }),
-        nStop("canal-nightlife-point-ephemere", "Point Ephemere", [48.8819, 2.3686], "Point Ephemere gives the canal a music, terrace, and art-space anchor farther north. It works when the night needs programming, a looser crowd, and something more event-led than a standard bar stop.", { price: "$$", priceSource: "Time Out / Google Maps" }),
+        nStop("canal-nightlife-gravity", "Gravity Bar", [48.8728, 2.3622], "Gravity Bar gives the canal sophisticated craft cocktails, creative tapas, natural wines, and a hip room with a wavy-ceiling look.", { price: "$$", priceSource: "Time Out / Google Maps" }),
+        nStop("canal-nightlife-la-meduse", "La Meduse", [48.8791, 2.3671], "La Meduse gives the canal a cocktail-and-natural-wine option right by the water, with enough food to keep the evening flexible.", { price: "$$", priceSource: "Time Out / Google Maps" }),
+        nStop("canal-nightlife-point-ephemere", "Point Ephemere", [48.8819, 2.3686], "Point Ephemere is a canal-side arts center with concerts, exhibitions, artist studios, a bar, and a broad terrace. The crowd and format change with the official program, making the calendar central to the visit.", { price: "$$", priceSource: "Time Out / Google Maps" }),
         nStop("canal-nightlife-comptoir-general", "Le Comptoir General", [48.8727, 2.3638], "Le Comptoir General gives the canal a rustic-chic room and leafy terrace, with classic fish dishes, cocktails, and a decor-heavy mood that can carry dinner into drinks. It is best saved for atmosphere-forward evenings.", { price: "$$", priceSource: "Time Out / Google Maps" }),
       ],
     },
     Nature: {
       title: "Locks, Banks, and East-Side Air",
       description:
-        "Canal Saint-Martin's outdoor value is linear: locks, bridges, pocket gardens, and a walk north toward wider water. This guide gives the neighborhood air without pretending it is a park district.",
+        "Canal Saint-Martin's outdoor value is linear: locks, bridges, pocket gardens, and a walk north toward wider water.",
       stops: [
-        nStop("canal-nature-locks", "Canal Saint-Martin Locks", [48.8721, 2.3648], "The Canal Saint-Martin locks are the neighborhood's outdoor spine, turning a simple walk into a sequence of bridges, water, and street corners. Use them between bakery, lunch, and evening drinks.", { photo: photos.canal }),
-        nStop("canal-nature-villemin", "Jardin Villemin", [48.8764, 2.3614], "Jardin Villemin gives the canal a practical green pause near Gare de l'Est and the central banks. It is useful for shade, families, or a break from narrow sidewalks.", { photo: photos.nature }),
-        nStop("canal-nature-frederic-lemaitre", "Square Frederic-Lemaitre", [48.871, 2.367], "Square Frederic-Lemaitre is a small green stop by the canal and Republique edge, helpful when the route needs a quieter bench between bars and water. It is a pause, not a destination.", { photo: photos.nature }),
-        nStop("canal-nature-bassin-villette", "Bassin de la Villette", [48.884, 2.371], "Bassin de la Villette extends the canal walk into wider water, picnic edges, and summer activity. Use it when the route can continue north instead of looping back immediately.", { photo: photos.canal }),
+        nStop("canal-nature-locks", "Canal Saint-Martin Locks", [48.8721, 2.3648], "The Canal Saint-Martin locks turn a neighborhood walk into a sequence of bridges, water, working gates, and street corners lined with bakeries, cafes, and evening bars.", { photo: photos.canal }),
+        nStop("canal-nature-villemin", "Jardin Villemin", [48.8764, 2.3614], "Jardin Villemin gives the canal a practical green pause near Gare de l'Est and the central banks.", { photo: photos.nature }),
+        nStop("canal-nature-frederic-lemaitre", "Square Frederic-Lemaitre", [48.871, 2.367], "Square Frederic-Lemaitre is a compact neighborhood garden beside the canal near Republique, with trees, planting, and benches set back from the traffic. It is useful as public green space, not as a destination park.", { photo: photos.nature }),
+        nStop("canal-nature-bassin-villette", "Bassin de la Villette", [48.884, 2.371], "Bassin de la Villette extends the canal walk into wider water, picnic edges, and summer activity.", { photo: photos.canal }),
       ],
     },
     Culture: {
       title: "Canal Art Spaces and Low-Key Galleries",
       description:
-        "Canal Saint-Martin culture works best when it leans current and low-key: art spaces, graphic galleries, music venues, and civic squares close to the canal and Republique edge.",
+        "Current, low-key culture around Canal Saint-Martin includes art spaces, graphic galleries, music venues, and civic squares near the water and Republique.",
       stops: [
-        nStop("canal-culture-point-ephemere", "Point Ephemere", [48.8819, 2.3686], "Point Ephemere is the canal's art-and-music anchor, with exhibitions, studios, concerts, workshops, and terrace energy beside the water. It is the clearest cultural stop for a creative Canal Saint-Martin night or afternoon."),
-        nStop("canal-culture-comptoir-general", "Le Comptoir General", [48.8727, 2.3638], "Le Comptoir General works as a cultural venue as much as a bar, with layered decor, events, a leafy terrace, and a slightly theatrical canal-side atmosphere. It gives the neighborhood a social, design-heavy stop."),
-        nStop("canal-culture-galerie-martel", "Galerie Martel", [48.8752, 2.3528], "Galerie Martel is a small gallery devoted to illustration, comics, drawing, painting, and graphic arts. It is a good low-key art stop near the 10th, with exhibitions that feel more niche than institutional."),
+        nStop("canal-culture-point-ephemere", "Point Ephemere", [48.8819, 2.3686], "Point Ephemere is a canal-side art and music space with exhibitions, artist studios, concerts, workshops, a bar, and a broad waterside terrace. The official program determines the room's character from one date to the next."),
+        nStop("canal-culture-comptoir-general", "Le Comptoir General", [48.8727, 2.3638], "Le Comptoir General is a cultural venue as much as a bar, with layered decor, events, a leafy terrace, and a slightly theatrical canal-side atmosphere. It gives the neighborhood a social, design-heavy stop."),
+        nStop("canal-culture-galerie-martel", "Galerie Martel", [48.8752, 2.3528], "Galerie Martel is a small gallery devoted to illustration, comics, drawing, painting, and graphic arts. Its exhibitions feel more niche and intimate than institutional."),
         nStop("canal-culture-republique", "Place de la Republique", [48.8675, 2.363], "Place de la Republique is the large civic square south of the canal, centered on the Monument a la Republique. It works culturally as a public gathering space, protest site, meeting point, and piece of republican symbolism."),
       ],
     },
@@ -2260,9 +2260,9 @@ const parisNeighborhoodGuideSeeds: Record<ParisNeighborhood, Record<Neighborhood
       {
         title: "Canal Saint-Martin Hotels",
         description:
-          "Canal Saint-Martin hotel stays are about canal views, east-side food, bars, train access, and design-led rooms. This guide keeps hotels separate from the neighborhood's social hostel bases.",
+          "Canal Saint-Martin hotel stays are about canal views, east-side food, bars, train access, and design-led rooms.",
         stops: [
-          nStop("canal-stay-citizen", "Le Citizen Hotel", [48.8726, 2.3643], "Le Citizen Hotel is a small canal-facing hotel with refined simplicity, elegant rooms, and canal views from each room. It works for travelers who want the water, cafes, and bars directly outside.", { price: "$$", priceSource: "Google Travel / Tripadvisor", officialUrl: "https://lecitizenhotel.com/", ...hotelStay }),
+          nStop("canal-stay-citizen", "Le Citizen Hotel", [48.8726, 2.3643], "Le Citizen Hotel is a small canal-facing hotel with refined simplicity, elegant rooms, and canal views from each room.", { price: "$$", priceSource: "Google Travel / Tripadvisor", officialUrl: "https://lecitizenhotel.com/", ...hotelStay }),
           nStop("canal-stay-providence", "Hotel Providence", [48.8701, 2.3568], "Hotel Providence is a design-led hotel in the heart of the eastern district, close to Canal Saint-Martin, Strasbourg-Saint-Denis, Republique, restaurants, and late bars.", { price: "$$$", priceSource: "Conde Nast Traveler / Google Travel", officialUrl: "https://hotelprovidenceparis.com/", ...hotelStay }),
         ],
       },
@@ -2270,9 +2270,9 @@ const parisNeighborhoodGuideSeeds: Record<ParisNeighborhood, Record<Neighborhood
         topic: "Hostels",
         title: "Canal Hostels and Social Bases",
         description:
-          "Canal Saint-Martin has real hostel demand, so this guide separates dorms, private hostel rooms, rooftop views, events, and larger social spaces from the canal hotel list.",
+          "Canal Saint-Martin has a real hostel scene built around dorms, private rooms, bars, rooftops, events, and large communal spaces. The properties range from party-forward to design-conscious, so social profile matters as much as bed price.",
         stops: [
-          nStop("canal-stay-generator", "Generator Paris", [48.8795, 2.3696], "Generator Paris is the design-hostel option near Canal Saint-Martin, with dorms, private rooms, social common areas, and a rooftop with city views. It keeps costs lower while still feeling polished.", { price: "$", priceSource: "Hostelworld / Google Maps", officialUrl: "https://staygenerator.com/hostels/paris", ...hostelStay }),
+          nStop("canal-stay-generator", "Generator Paris", [48.8795, 2.3696], "Generator Paris is a design-hostel near Canal Saint-Martin, with dorms, private rooms, social common areas, and a rooftop with city views. It keeps costs lower while still feeling polished.", { price: "$", priceSource: "Hostelworld / Google Maps", officialUrl: "https://staygenerator.com/hostels/paris", ...hostelStay }),
           nStop("canal-stay-st-christophers", "St Christopher's Inn Canal", [48.8868, 2.3756], "St Christopher's Inn Canal is the larger social-hostel base north on the waterline, useful for budget travelers who want dorms, events, private rooms, and Villette access.", { price: "$", priceSource: "Hostelworld / Google Maps", officialUrl: "https://www.st-christophers.co.uk/paris/canal-hostel/", ...hostelStay }),
         ],
       },
@@ -2282,56 +2282,56 @@ const parisNeighborhoodGuideSeeds: Record<ParisNeighborhood, Record<Neighborhood
     Food: {
       title: "Monument-Side Meals With Purpose",
       description:
-        "The 7th needs food stops that can stand up to Eiffel, Invalides, Rodin, and Orsay days. This guide balances destination dining, classic bistros, and practical cafes so the district is more than monument logistics.",
+        "The 7th needs food stops that can stand up to Eiffel, Invalides, Rodin, and Orsay days.",
       stops: [
-        nStop("seventh-food-david-toutain", "David Toutain", [48.8617, 2.3048], "In the 7th, David Toutain is the destination-dining counterweight to monument routes, with highly composed seasonal menus and a serious reservation posture near Invalides and the Eiffel Tower. Plan it as the day's main meal.", { price: "$$$", priceSource: "MICHELIN Guide / David Toutain official" }),
-        nStop("seventh-food-arpege", "Arpege", [48.8555, 2.3162], "Arpege is Alain Passard's garden-first fine-dining landmark, where the 7th becomes a serious food destination as much as a monument district. Use it only when the trip has room for a high-budget, high-commitment reservation built around craft and produce.", { price: "$$$", priceSource: "MICHELIN Guide / Google Maps" }),
-        nStop("seventh-food-fontaine-mars", "La Fontaine de Mars", [48.8587, 2.3044], "La Fontaine de Mars is the Rue Saint-Dominique classic for cassoulet, duck, steak, and a room that feels properly neighborhood despite the Eiffel-side address. It works when the group wants traditional Paris cooking before or after a monument day.", { price: "$$$", priceSource: "Google Maps / Paris dining guides" }),
-        nStop("seventh-food-cafe-varenne", "Cafe Varenne", [48.855, 2.3194], "Cafe Varenne is the practical brasserie near Rodin, Invalides, and government-quarter walks. Use it when the museum day needs a reliable lunch or dinner without a destination-dining commitment.", { price: "$$", priceSource: "Google Maps / local dining guides" }),
+        nStop("seventh-food-david-toutain", "David Toutain", [48.8617, 2.3048], "In the 7th, David Toutain is the destination-dining counterweight to monument routes, with highly composed seasonal menus and a serious reservation posture near Invalides and the Eiffel Tower.", { price: "$$$", priceSource: "MICHELIN Guide / David Toutain official" }),
+        nStop("seventh-food-arpege", "Arpege", [48.8555, 2.3162], "Arpege is Alain Passard's garden-first fine-dining landmark, built around exceptional produce and meticulous craft. The high-budget reservation demands a long, committed meal.", { price: "$$$", priceSource: "MICHELIN Guide / Google Maps" }),
+        nStop("seventh-food-fontaine-mars", "La Fontaine de Mars", [48.8587, 2.3044], "La Fontaine de Mars serves cassoulet, duck, and steak in a proper neighborhood dining room despite its Eiffel-side Rue Saint-Dominique address.", { price: "$$$", priceSource: "Google Maps / Paris dining guides" }),
+        nStop("seventh-food-cafe-varenne", "Cafe Varenne", [48.855, 2.3194], "Cafe Varenne is a neighborhood brasserie near the Rodin Museum and Invalides, serving familiar French lunch and dinner plates in a straightforward dining room. It is dependable rather than destination-driven.", { price: "$$", priceSource: "Google Maps / local dining guides" }),
         nStop("seventh-food-fitzgerald", "Fitzgerald", [48.8572, 2.3078], "Fitzgerald works as more than a hidden bar: it has lunch, dinner, drinks, terrace hours, and a Sunday brunch format that can soften an Eiffel-side day. Add it when the 7th needs something relaxed but still stylish.", { price: "$$$", priceSource: "Official restaurant site / Google Maps" }),
       ],
     },
     Nightlife: {
       title: "River Drinks and Polished Nightcaps",
       description:
-        "The 7th is not a late-night district, so the best after-dark stops are intentional: river barges, hotel-adjacent bars, rooftops, and polished cafes. This guide keeps evenings close to Eiffel-side routes.",
+        "The 7th is not a late-night district, so the best after-dark stops are intentional: river barges, hotel-adjacent bars, rooftops, and polished cafes.",
       stops: [
         nStop("seventh-nightlife-fitzgerald", "Fitzgerald", [48.8572, 2.3078], "Fitzgerald gives the 7th a restaurant, terrace, and speakeasy-style bar behind Rue Saint-Dominique. It can start as brunch or dinner and turn into a more dressed-up late drink without leaving the Eiffel side.", { price: "$$$", priceSource: "Time Out / Google Maps" }),
-        nStop("seventh-nightlife-rosa-bonheur", "Rosa Bonheur sur Seine", [48.862, 2.3069], "Rosa Bonheur sur Seine brings the 7th to the river with a barge-party format that works better for groups and warm evenings than quiet cocktails. Check the night and crowd before relying on it.", { price: "$$", priceSource: "Google Maps / local nightlife guides" }),
-        nStop("seventh-nightlife-les-ombres", "Les Ombres", [48.861, 2.2978], "Les Ombres is the Eiffel-view rooftop restaurant and bar above Quai Branly, serving lunch and dinner with contemporary French cooking touched by Mediterranean influence. Use it when the night is about view, food, and occasion together.", { price: "$$$", priceSource: "Google Maps / official venue site" }),
-        nStop("seventh-nightlife-recrutement", "Le Recrutement Cafe", [48.8568, 2.304], "Le Recrutement Cafe is the casual Rue Saint-Dominique terrace for a simple drink after Eiffel or Invalides walking. Its value is location, people-watching, and low planning pressure.", { price: "$$", priceSource: "Google Maps / local nightlife guides" }),
+        nStop("seventh-nightlife-rosa-bonheur", "Rosa Bonheur sur Seine", [48.862, 2.3069], "Rosa Bonheur sur Seine brings the 7th to the river with a barge-party format that works better for groups and warm evenings than quiet cocktails.", { price: "$$", priceSource: "Google Maps / local nightlife guides" }),
+        nStop("seventh-nightlife-les-ombres", "Les Ombres", [48.861, 2.2978], "Les Ombres is the Eiffel-view rooftop restaurant and bar above Quai Branly, serving lunch and dinner with contemporary French cooking touched by Mediterranean influence.", { price: "$$$", priceSource: "Google Maps / official venue site" }),
+        nStop("seventh-nightlife-recrutement", "Le Recrutement Cafe", [48.8568, 2.304], "Le Recrutement Cafe is a casual Rue Saint-Dominique terrace for simple drinks, low-pressure service, and people-watching near the Eiffel Tower and Invalides.", { price: "$$", priceSource: "Google Maps / local nightlife guides" }),
       ],
     },
     Nature: {
       title: "Lawns, Gardens, and River Space",
       description:
-        "Outdoor time in the 7th should soften monument days: Champ de Mars, Rodin's sculpture garden, Invalides lawns, and Seine edges. This guide gives the district air around its biggest tickets.",
+        "Outdoor time in the 7th should soften monument days: Champ de Mars, Rodin's sculpture garden, Invalides lawns, and Seine edges.",
       stops: [
-        nStop("seventh-nature-champ-mars", "Champ de Mars", [48.8556, 2.2986], "Champ de Mars is the Eiffel-side lawn and view corridor, useful when the tower needs space around it. Use it early, late, or as a picnic pause rather than a midday crowd trap.", { photo: photos.eiffel }),
-        nStop("seventh-nature-invalides", "Esplanade des Invalides", [48.8606, 2.313], "Esplanade des Invalides gives the 7th a broad green axis between the river and the dome. It works as a walking reset between Orsay, Rodin, and Invalides.", { photo: photos.nature }),
+        nStop("seventh-nature-champ-mars", "Champ de Mars", [48.8556, 2.2986], "Champ de Mars is the Eiffel-side lawn and view corridor, best early, late, or with a picnic when the tower has space around it. Midday brings the heaviest crowds.", { photo: photos.eiffel }),
+        nStop("seventh-nature-invalides", "Esplanade des Invalides", [48.8606, 2.313], "Esplanade des Invalides gives the 7th a broad green axis between the river and the dome. It is a walking reset between Orsay, Rodin, and Invalides.", { photo: photos.nature }),
         nStop("seventh-nature-rodin-garden", "Musee Rodin Sculpture Garden", [48.8554, 2.3158], "The Musee Rodin sculpture garden is the district's best art-and-air combination, with outdoor works and a slower pace than the larger museums. It keeps sculpture, garden time, and 7th-arrondissement calm in the same stop."),
-        nStop("seventh-nature-solferino", "Port de Solferino Seine Walk", [48.861, 2.315], "Port de Solferino gives the 7th a river route between Orsay, Invalides, and Eiffel-side bridges. It is the easiest way to keep the day scenic without adding another ticket.", { photo: photos.seine }),
+        nStop("seventh-nature-solferino", "Port de Solferino Seine Walk", [48.861, 2.315], "Port de Solferino opens the 7th directly onto the Seine, with a low riverbank path linking the Orsay side to bridges toward Invalides and the Eiffel Tower. The experience is free, linear, and defined by changing water-level views.", { photo: photos.seine }),
       ],
     },
     Culture: {
       title: "Eiffel Tower, Rodin, Orsay, and Invalides",
       description:
-        "The 7th holds some of Paris's clearest cultural landmarks: the Eiffel Tower, Orsay's railway-station museum, Rodin's sculpture rooms and garden, and the Invalides dome. This guide describes the places directly rather than treating them as logistics.",
+        "The 7th holds some of Paris's clearest cultural landmarks: the Eiffel Tower, Orsay's railway-station museum, Rodin's sculpture rooms and garden, and the Invalides dome.",
       stops: [
         nStop("seventh-culture-eiffel", "Eiffel Tower", [48.8584, 2.2945], "The Eiffel Tower is Paris's defining landmark, built for the 1889 Exposition Universelle. Its iron lattice structure, observation levels, engineering history, restaurants, and night illumination make it a cultural monument as much as a viewpoint.", { photo: photos.eiffel }),
         nStop("seventh-culture-orsay", "Musee d'Orsay", [48.8599, 2.3266], "Musee d'Orsay is a former railway station turned art museum, holding the world's largest collection of Impressionist and Post-Impressionist masterpieces. Monet, Renoir, Degas, Manet, Van Gogh, sculpture, and decorative arts fill the great hall and upper galleries."),
         nStop("seventh-culture-rodin", "Musee Rodin", [48.8554, 2.3158], "Musee Rodin presents Rodin's sculpture inside the Hotel Biron and its garden, including The Thinker, The Kiss, The Gates of Hell, studies, plasters, and outdoor bronzes. The museum shows both finished icons and the making process behind them."),
-        nStop("seventh-culture-invalides", "Les Invalides", [48.8566, 2.3126], "Les Invalides is a vast 17th-century complex built for veterans, now housing military museums, courtyards, the gilded Dome Church, and Napoleon's tomb. Its scale makes it one of the major architectural anchors of the 7th."),
+        nStop("seventh-culture-invalides", "Les Invalides", [48.8566, 2.3126], "Les Invalides is a vast 17th-century complex built for veterans, now housing military museums, courtyards, the gilded Dome Church, and Napoleon's tomb. Its scale makes it one of the defining monuments of the 7th."),
       ],
     },
     Stay: {
       title: "Eiffel-Side Hotels",
       description:
-        "Staying in the 7th is about calm, monuments, museums, and polished streets rather than late nightlife. This guide focuses on hotels that keep Eiffel, Rodin, Invalides, and Orsay days walkable.",
+        "Staying in the 7th is about calm, monuments, museums, and polished streets rather than late nightlife.",
       stops: [
-        nStop("seventh-stay-la-comtesse", "Hotel La Comtesse", [48.8539, 2.3065], "Hotel La Comtesse is the Eiffel-view boutique hotel for travelers who want Champ de Mars, Rue Cler, and Invalides close by, with location and view doing more work than big-resort amenities.", { price: "$$", priceSource: "Google Travel / Tripadvisor", officialUrl: "https://www.comtesse-hotel.com/", ...hotelStay }),
-        nStop("seventh-stay-le-walt", "Hotel Le Walt", [48.8548, 2.3089], "Hotel Le Walt is a smaller hotel near Ecole Militaire, the Eiffel route, Rue Cler, and Invalides, with a quieter room-focused stay that keeps the 7th's museum and monument days easy.", { price: "$$", priceSource: "Google Travel / Tripadvisor", officialUrl: "https://www.lewaltparis.com/", ...hotelStay }),
-        nStop("seventh-stay-jk-place", "J.K. Place Paris", [48.8604, 2.3183], "J.K. Place Paris is an intimate design-luxury hotel near the Seine, Orsay, and Invalides, with a wellness spa, marble-and-tile pool, and the polished profile of a global best-hotel-list regular.", { price: "$$$", priceSource: "Conde Nast Traveler / Google Travel", officialUrl: "https://www.jkplaces.com/jkparis/", ...hotelStay }),
+        nStop("seventh-stay-la-comtesse", "Hotel La Comtesse", [48.8539, 2.3065], "Hotel La Comtesse is the Eiffel-view boutique hotel for Champ de Mars, Rue Cler, and Invalides close by, with location and view doing more work than big-resort amenities.", { price: "$$", priceSource: "Google Travel / Tripadvisor", officialUrl: "https://www.comtesse-hotel.com/", ...hotelStay }),
+        nStop("seventh-stay-le-walt", "Hotel Le Walt", [48.8548, 2.3089], "Hotel Le Walt is a smaller, quieter, room-focused property near Ecole Militaire, Rue Cler, Invalides, and the Eiffel Tower.", { price: "$$", priceSource: "Google Travel / Tripadvisor", officialUrl: "https://www.lewaltparis.com/", ...hotelStay }),
+        nStop("seventh-stay-jk-place", "J.K. Place Paris", [48.8604, 2.3183], "J.K. Place Paris is an intimate design-luxury hotel near the Seine, Orsay, and Invalides, with polished residential interiors, a wellness spa, and a marble-and-tile pool.", { price: "$$$", priceSource: "Conde Nast Traveler / Google Travel", officialUrl: "https://www.jkplaces.com/jkparis/", ...hotelStay }),
         nStop("seventh-stay-montalembert", "Hotel Montalembert", [48.8565, 2.327], "Hotel Montalembert sits on the Saint-Germain edge of the 7th, with elegant rooms, Left Bank dining nearby, and easy movement between Orsay, galleries, Rue du Bac, and Saint-Germain cafes.", { price: "$$$", priceSource: "Google Travel / Tripadvisor", officialUrl: "https://www.hotelmontalembert-paris.com/", ...hotelStay }),
       ],
     },

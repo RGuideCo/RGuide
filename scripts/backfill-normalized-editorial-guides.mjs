@@ -608,8 +608,9 @@ function resolveNeighborhoodId(maps, cityId, neighborhood) {
 
 function parsePublishArgs(argv) {
   const dryRun = argv.includes("--dry-run") || argv.includes("--check");
-  const filterArgs = argv.filter((arg) => arg !== "--dry-run" && arg !== "--check");
-  return { dryRun, filters: parseEditorialGuideArgs(filterArgs) };
+  const copyOnly = argv.includes("--copy-only");
+  const filterArgs = argv.filter((arg) => !["--dry-run", "--check", "--copy-only"].includes(arg));
+  return { dryRun, copyOnly, filters: parseEditorialGuideArgs(filterArgs) };
 }
 
 function logPhase(message, metadata = undefined) {
@@ -1412,21 +1413,24 @@ async function upsertVenueHoursBatch(client, hoursRows, venueIdByKey) {
 }
 
 async function upsertSourcesBatch(client, selectedGuides) {
-  const sourcesByUrl = new Map();
+  const sourceUrls = new Set();
+  const sourcesByCanonicalUrl = new Map();
   for (const list of selectedGuides) {
     for (const source of list.sources ?? []) {
       if (!source?.url) {
         continue;
       }
-      sourcesByUrl.set(source.url, {
+      const canonicalUrl = source.url.replace(/\/+$/, "");
+      sourceUrls.add(source.url);
+      sourcesByCanonicalUrl.set(canonicalUrl, {
         name: source.name?.trim() || source.url,
-        url: source.url,
+        url: canonicalUrl,
         publisher: source.publisher ?? null,
         source_type: source.sourceType ?? source.source_type ?? null,
       });
     }
   }
-  const sources = [...sourcesByUrl.values()];
+  const sources = [...sourcesByCanonicalUrl.values()];
   if (!sources.length) {
     return new Map();
   }
@@ -1444,17 +1448,20 @@ async function upsertSourcesBatch(client, selectedGuides) {
        insert into public.sources (name, url, publisher, source_type, sourced_at, raw_metadata)
        select name, url, publisher, source_type, now(), '{}'::jsonb
        from incoming
-       on conflict (url) do update set
+       on conflict ((regexp_replace(url, '/+$', ''))) do update set
          name = coalesce(excluded.name, public.sources.name),
          publisher = coalesce(excluded.publisher, public.sources.publisher),
          source_type = coalesce(excluded.source_type, public.sources.source_type),
          sourced_at = greatest(public.sources.sourced_at, excluded.sourced_at)
-       returning id, url
+       returning id, regexp_replace(url, '/+$', '') as canonical_url
      )
-     select id, url from upserted`,
+     select id, canonical_url from upserted`,
     [JSON.stringify(sources)],
   );
-  return new Map(result.rows.map((row) => [row.url, row.id]));
+  const sourceIdByCanonicalUrl = new Map(result.rows.map((row) => [row.canonical_url, row.id]));
+  return new Map(
+    [...sourceUrls].map((url) => [url, sourceIdByCanonicalUrl.get(url.replace(/\/+$/, ""))]),
+  );
 }
 
 async function linkEntrySourcesBatch(client, selectedGuides, entryIdByLegacyId, sourceIdByUrl) {
@@ -1606,6 +1613,88 @@ async function publishBatched(client, maps, selectedGuides, stats) {
   stats.sources = sourceIdByUrl.size;
   stats.sourceLinks = await linkEntrySourcesBatch(client, selectedGuides, entryIdByLegacyId, sourceIdByUrl);
   logPhase("phase sources:done", { sources: stats.sources, links: stats.sourceLinks });
+
+  logPhase("phase render_cache:start", { entries: entryIdByLegacyId.size });
+  stats.renderCaches = await refreshEntryRenderCacheBatch(client, [...entryIdByLegacyId.values()]);
+  logPhase("phase render_cache:done", { affected: stats.renderCaches });
+
+  logPhase("phase verification:start");
+  const verification = await verifyPublishedScope(client, entryIdByLegacyId);
+  logPhase("phase verification:done", {
+    counts: verification.counts,
+    mixedStayGuides: verification.mixedStayGuides.length,
+  });
+  if (verification.mixedStayGuides.length) {
+    const details = verification.mixedStayGuides
+      .map((guide) => `${guide.slug}: ${guide.lodging_types.join(", ")}`)
+      .join("; ");
+    throw new Error(`Stay guide lodging type verification failed: ${details}`);
+  }
+
+  return verification;
+}
+
+async function publishCopyOnly(client, selectedGuides, stats) {
+  const entryRows = selectedGuides.map((list) => ({
+    legacy_id: list.id,
+    description: list.description,
+  }));
+  logPhase("phase copy_entries:start", { rows: entryRows.length });
+  const entryResult = await client.query(
+    `with incoming as (
+       select *
+       from jsonb_to_recordset($1::jsonb) as row(
+         legacy_id text,
+         description text
+       )
+     )
+     update public.entries entry
+     set description = incoming.description
+     from incoming
+     where entry.legacy_id = incoming.legacy_id
+     returning entry.id, entry.legacy_id`,
+    [JSON.stringify(entryRows)],
+  );
+  const entryIdByLegacyId = new Map(entryResult.rows.map((row) => [row.legacy_id, row.id]));
+  stats.entries = entryIdByLegacyId.size;
+  logPhase("phase copy_entries:done", { affected: stats.entries });
+  if (entryIdByLegacyId.size !== selectedGuides.length) {
+    throw new Error(`Copy-only publish found ${entryIdByLegacyId.size}/${selectedGuides.length} live entries. Run the full normalized publisher for missing guides.`);
+  }
+
+  const stopRows = selectedGuides.flatMap((list) =>
+    (list.stops ?? []).map((stop) => ({
+      entry_id: entryIdByLegacyId.get(list.id),
+      legacy_id: stop.id,
+      description: stop.description,
+      places: stop.places ?? [],
+    })),
+  );
+  logPhase("phase copy_entry_stops:start", { rows: stopRows.length });
+  const stopResult = await client.query(
+    `with incoming as (
+       select *
+       from jsonb_to_recordset($1::jsonb) as row(
+         entry_id uuid,
+         legacy_id text,
+         description text,
+         places jsonb
+       )
+     )
+     update public.entry_stops stop
+     set description = incoming.description,
+         places = coalesce(incoming.places, '[]'::jsonb)
+     from incoming
+     where stop.entry_id = incoming.entry_id
+       and stop.legacy_id = incoming.legacy_id
+     returning stop.id`,
+    [JSON.stringify(stopRows)],
+  );
+  stats.entryStops = stopResult.rowCount ?? 0;
+  logPhase("phase copy_entry_stops:done", { affected: stats.entryStops });
+  if (stats.entryStops !== stopRows.length) {
+    throw new Error(`Copy-only publish found ${stats.entryStops}/${stopRows.length} live entry stops. Run the full normalized publisher for missing stops.`);
+  }
 
   logPhase("phase render_cache:start", { entries: entryIdByLegacyId.size });
   stats.renderCaches = await refreshEntryRenderCacheBatch(client, [...entryIdByLegacyId.values()]);
@@ -2289,7 +2378,7 @@ async function main() {
   loadEnvFile(path.join(ROOT, ".env.local"));
   loadEnvFile(path.join(ROOT, ".env"));
 
-  const { dryRun, filters } = parsePublishArgs(process.argv.slice(2));
+  const { dryRun, copyOnly, filters } = parsePublishArgs(process.argv.slice(2));
   requireScopedFilters(filters);
 
   const databaseUrl = process.env.SUPABASE_DB_URL ?? process.env.SUPABASE_DATABASE_URL ?? process.env.DATABASE_URL;
@@ -2308,6 +2397,7 @@ async function main() {
     count: selectedGuides.length,
     stops: selectedGuides.reduce((sum, list) => sum + (list.stops?.length ?? 0), 0),
     dryRun,
+    copyOnly,
   });
 
   const client = new pg.Client({
@@ -2329,14 +2419,19 @@ async function main() {
   await client.connect();
   try {
     await client.query("begin");
-    const timezoneUpdates = await ensureSelectedDestinationTimezones(client, selectedGuides);
-    if (timezoneUpdates) {
-      logPhase("phase destination_timezones:done", { affected: timezoneUpdates });
+    let verification;
+    if (copyOnly) {
+      verification = await publishCopyOnly(client, selectedGuides, stats);
+    } else {
+      const timezoneUpdates = await ensureSelectedDestinationTimezones(client, selectedGuides);
+      if (timezoneUpdates) {
+        logPhase("phase destination_timezones:done", { affected: timezoneUpdates });
+      }
+      logPhase("phase destination_maps:start");
+      const maps = await loadDestinationMaps(client);
+      logPhase("phase destination_maps:done");
+      verification = await publishBatched(client, maps, selectedGuides, stats);
     }
-    logPhase("phase destination_maps:start");
-    const maps = await loadDestinationMaps(client);
-    logPhase("phase destination_maps:done");
-    const verification = await publishBatched(client, maps, selectedGuides, stats);
     if (dryRun) {
       await client.query("rollback");
       logPhase("dry run rolled back");
@@ -2347,6 +2442,7 @@ async function main() {
       ok: true,
       scope,
       dryRun,
+      copyOnly,
       selectedGuides: selectedGuides.length,
       stats,
       verification,

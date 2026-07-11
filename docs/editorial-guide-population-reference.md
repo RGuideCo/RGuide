@@ -387,7 +387,7 @@ Required stop-level fields:
 - `id`: stable, readable place ID, usually `{neighborhood}-{place-name}`.
 - `name`: current public name from official site or Google Maps.
 - `coordinates`: `[latitude, longitude]`. This app uses latitude first.
-- `description`: usually 2-4 substantial sentences explaining why the place belongs in this exact guide, what the visitor experiences, and the practical caveat or best-use context.
+- `description`: usually 1-3 fact-first sentences naming what the place serves, stages, exhibits, or provides; what distinguishes it; and only the practical details that materially change a visit.
 - `hours`: required for every real stop. Verify from Google Maps, the official site, a venue platform, booking platform, official calendar, or another current-status source. Use structured day keys when possible; otherwise use `{ default: "..." }` with a clear source-backed schedule caveat that names the exact dependency. These must publish to normalized `venue_hours`/`venue_special_hours` or `venues.hours_note`; after publish, those canonical venue tables/columns are the live source of truth. `entry_stops.hours` is only an import/display fallback and should not be used as the final place to maintain shared venue facts. Do not publish stops with blank, implied, unsourced, or placeholder hours such as `Hours vary`, `verify current hours`, `confirm before going`, `current-status evidence is map-based`, or `open and active in the current source set`.
 
 Conditional stop-level fields:
@@ -429,7 +429,7 @@ Every location should include:
 - Accurate coordinates.
 - Neighborhood fit.
 - Why it is worth a saved-map spot.
-- Best-use context: who it is for, when to go, or how it fits a route.
+- Decision-useful context when it is genuinely relevant: who it is for, what to order or book, whether the room is loud or quiet, or whether a reservation is important.
 - Price tier when money meaningfully affects the user's decision.
 - Hours or schedule caveat.
 - At least two supporting sources unless it is an official landmark, official park, or user-provided personal guide.
@@ -467,15 +467,20 @@ Keep search fields stable and generic; make visible guide copy editorial.
 - Avoid putting the city name in a visible `title` when the page context already shows the city. Use it only when there is a real disambiguation need.
 - Neighborhood titles should feel local: reference the old-city lanes, market, waterfront, hill, plaza culture, nightlife strip, architecture grid, or other place-specific context.
 - Citywide rollup titles should communicate selection logic: cross-town essentials, counter meals, late-night rooms, hostel bases, museum spine, weekend route, etc.
-- List descriptions should be more than a category label. Name the geography, the reason this guide exists, the kind of stops included, and the best-use context.
+- List descriptions should be more than a category label. Name the geography, the editorial thesis, and the cuisines, formats, scenes, eras, price bands, or experiences that define the selection.
 - Do not change SEO fields just because the visible title changes. Preserve indexed routes unless there is a clear product or SEO reason to migrate them.
 
 Editorial voice standard:
 
-- Write with Anthony Bourdain curiosity and TripAdvisor usefulness: sensory, specific, opinionated, and practical.
-- Use real facts from source pages: signature dishes, room type, collection focus, crowd, reservation posture, transit fit, price tradeoff, design, view, or route role.
-- Avoid tourist-board adjectives and review-site filler. Do not write keyword chains.
-- Each stop needs one useful caveat or best-use note: go early, book ahead, skip if you want quiet, best for a first night, strong with a museum route, better for lunch than dinner, and so on.
+- Write with Anthony Bourdain curiosity and TripAdvisor usefulness: alert to place, appetite, craft, history, and contradiction, while remaining accurate enough to help someone decide. This is a tonal shorthand, not permission to imitate a person or manufacture swagger.
+- Lead with the venue itself. Name what it cooks, pours, plays, exhibits, stages, rents, or provides before discussing itinerary fit.
+- Use real facts from source pages: signature dishes, cooking method, music format, room type, collection focus, amenities, crowd, reservation posture, price tradeoff, design, or view.
+- Make editorial judgments from those facts. A description may be opinionated, but the opinion must point back to something observable.
+- Keep the research process out of reader-facing copy. Source URLs, review patterns, map evidence, and selection rationale belong in evidence fields; never explain that a place was `included`, `chosen`, or `supported by sources` inside its description.
+- Practical advice is optional, not a quota. Add it only when it changes the visit: a hard reservation, a meaningful queue, cash-only service, an event calendar, a dress or door policy, accessibility, seasonal access, or a real noise/value tradeoff.
+- Direct advice should concern the place itself: what to order, which room to book, where to sit, which performance format to choose, or when its own service changes. Do not pad descriptions with instructions to visit before or after another stop.
+- Avoid tourist-board adjectives, review-site filler, keyword chains, fake insider language, and cute metaphors that obscure what the place offers.
+- Do not use meta-copy such as `earns its spot`, `belongs in this guide`, `gives the route`, `anchors the day`, `use it as a stop`, `the night needs`, or `before/after nearby plans`.
 
 Good pattern:
 
@@ -686,10 +691,12 @@ List descriptions:
 - Use the same elevated editorial style as city and neighborhood descriptions. One sentence can work for very compact guides, but two sentences are preferred when the guide card has room.
 - Explorer city/category description cap: 320 characters. Write city intro and category intro copy so the useful meaning fits inside that limit.
 - Aim for 220-320 characters. Get close to the cap when it helps the card feel balanced, but do not pad.
-- The first sentence should name the geography and the distinctive reason the list exists.
-- The second sentence should explain the best-use context: when to use the guide, what kind of night/day it solves, or what tradeoff it makes.
+- The first sentence should name the geography and the distinctive subject or editorial thesis.
+- The second sentence should sharpen the selection standard: the cuisines, formats, scenes, eras, price bands, or experiences that qualify a place for inclusion.
 - For neighborhood guides, make the list description feel local to that neighborhood rather than only naming the category.
 - For citywide guides, explain the selection logic across neighborhoods instead of sounding like a generic "best of" bucket.
+- Write about the subject, not the container. Avoid `this guide`, `this list`, `these stops`, and instructions to `use this` unless the wording is genuinely necessary for clarity.
+- Do not summarize a guide by naming its venues in order. The stops already do that work.
 - Avoid generic claims like "something for everyone."
 - Avoid keyword chains. Fewer details with stronger editorial meaning are better than a list of every possible stop type.
 
@@ -746,33 +753,46 @@ Spain is a high-variety destination where late-night cities, island routes, moun
 
 Stop descriptions:
 
-- Lead with why this stop is included.
-- Add the concrete thing a visitor will experience.
-- Add a useful caveat, timing note, or audience fit when relevant.
-- Mandatory check: every single stop description must be unique and hand-crafted for its exact guide context. Do not reuse a full description when the same POI appears in a citywide guide, neighborhood guide, weekend guide, or category crossover.
-- Scan all stop descriptions for repeated boilerplate before committing or pushing. No sentence frame should appear across multiple POIs or repeated POI placements, especially generic lines like "fills a clear meal role for this route" or "gives the night a defined role rather than another loose bar pin."
-- If two descriptions share the same sentence, rewrite both with place-specific and guide-specific detail. Reused POIs still need unique descriptions that explain why the stop belongs in that exact list.
-- Keep most stops to 2-4 fleshed-out sentences. One sentence is acceptable only for simple official landmarks, tiny nested stops, or placeholder-free personal lists where the surrounding guide already carries the context.
-- The first sentence should define the stop's role in this exact guide, not merely describe what the place is.
-- The middle sentence or sentences should name the source-backed draw: dish, room style, collection, route fit, social energy, sleep tradeoff, view, booking posture, or neighborhood logic.
-- The final sentence should add practical use: when to go, who it suits, what to book, what to avoid, or how it fits nearby stops.
+- Lead with what the place actually is and the strongest source-backed reason to care.
+- Name the concrete offering before mood or logistics: dishes and technique; drinks and music; rooms and amenities; collections and performances; landscape and access; or the activity a visitor performs.
+- Keep most stops to 1-3 substantial sentences, usually about 25-80 words. A concrete 16-24 word sentence is better than a padded paragraph when it names the offering and a meaningful distinction. Longer copy is justified only when the place has genuinely useful complexity.
+- Put the highest-value fact in the first sentence. The opening should still make sense if the venue is read outside its current guide.
+- Use the next sentence for observable character or editorial judgment: service style, room energy, craftsmanship, historical significance, value, or audience fit.
+- Add practical advice only when it is specific to the venue and materially useful. Reservation, queue, seating, show format, room category, cash policy, accessibility, and seasonal access are valid; generic route sequencing is not.
+- When the same venue appears in multiple guides, keep its factual core consistent. A guide-specific override is warranted only when the venue serves a genuinely different purpose in that guide. Do not force artificial variation simply to make duplicate placements sound unique.
+- Scan all stop descriptions for repeated boilerplate before committing or pushing. Repeating a strong factual description for the same venue is better than inventing a different itinerary metaphor; repeating a generic sentence frame across different venues is not.
+
+Category-first fact checklist:
+
+- Food: cuisine or regional tradition, signature dishes, ingredients or technique, service format, and meaningful price/reservation posture.
+- Nightlife: what is poured or performed, music genres or programming model, whether the room is for listening, talking, or dancing, crowd/door posture, and the nights that materially differ.
+- Stay: hotel or hostel type, dorm/private availability where relevant, room character, useful amenities, social-versus-quiet profile, location, and a real value tradeoff.
+- Culture: collection, artist, era, performance discipline, architecture, or historical role, plus the actual visit format.
+- Nature and scenic: landscape, trail, water, viewpoint, wildlife, facilities, access, and seasonal conditions.
+- Activities: what the visitor physically does, duration, difficulty, equipment or booking needs, and what makes the operator or setting distinctive.
+
+Sentence test:
+
+- Every sentence should answer at least one of these: What is served, shown, played, taught, rented, or provided? What makes it distinct? What fact changes the visitor's decision?
+- If a sentence only tells the reader where the stop sits in an imagined day or night, delete it.
+- Prefer plain nouns and active verbs over abstract planning language such as `logic`, `utility`, `role`, `anchor`, `counterpoint`, `pacing`, `energy`, or `fit` when those words are standing in for facts. Treat constructions such as `useful when`, `works as`, `the move`, `for travelers who want`, and a day or night that `wants` something as rewrite signals: name the offering or tradeoff directly.
 
 Good Food pattern:
 
 ```text
-Bar La Plata earns its spot through longevity, traveler-review consistency, and a menu that has stayed intentionally short since 1945. The value is the whole old-tavern package: fried fish, tomato salad, butifarra, house wine, fast counter service, and a room that still feels local despite being deep in the Gothic Quarter.
+Bar La Plata has kept its menu deliberately short since 1945: fried fish, tomato salad, butifarra, and house wine. Fast counter service and a room still used by regulars preserve the character of an old Gothic Quarter tavern.
 ```
 
 Good Culture pattern:
 
 ```text
-MUHBA Placa del Rei gives the old-city portion historical depth instead of letting the Gothic Quarter become only atmosphere. The underground Roman route and palace context make Barcelona's layers easier to read for the rest of the week.
+MUHBA Placa del Rei traces Roman Barcino through an underground archaeological site beneath the medieval royal palace. Walkways cross former streets, workshops, and wine-making spaces, turning the Gothic Quarter's buried history into something visible.
 ```
 
 Good Stay pattern:
 
 ```text
-Use Yeah Barcelona as the hostel-category base for a week because the location works for Eixample, Gracia, and Sagrada Familia while the social programming helps longer-stay travelers find plans without depending on random bar crawls.
+Yeah Barcelona has dorms and private rooms, a guest kitchen, communal dinners, walking tours, and a bar that makes it easy for solo travelers to meet people. Its Eixample location keeps Sagrada Familia and Gracia within an easy walk while the metro handles the old city.
 ```
 
 Avoid:
@@ -783,13 +803,18 @@ Avoid:
 - Descriptions that only repeat the category.
 - Tourist-board language that sounds like a brochure.
 - "Hidden gem" unless the place is genuinely under-covered.
+- Meta claims such as `earns its spot`, `belongs here`, or `is the role in this list`.
+- Research-process narration such as `supported by sources`, `review strength`, `map signals`, `included because`, or `chosen for`.
+- Itinerary filler such as `use it before`, `save it for after`, `gives the route`, `anchors the day`, or `keeps the night moving`.
+- Synthetic toughness or whimsy such as `fuel, not ceremony`, `bad decisions`, `the room swallowed a record collection`, or other lines that sound written to perform a voice rather than describe a place.
+- Mandatory negativity. A caveat belongs only when it changes a booking or visit decision.
 
-Useful sentence frames:
+Useful fact-first sentence frames:
 
-- `{Place} earns its spot because {source-backed reason}, with {specific experience} and {best-use context}.`
-- `{Place} is the {role} in this list: {format/scene}, {neighborhood fit}, and {caveat}.`
-- `Use {Place} when {traveler scenario}; it works especially well for {timing/route/audience}.`
-- `{Place} gives the route {contrast or purpose}, making it useful before/after {nearby plan}.`
+- `{Place} specializes in {specific offering}, using {technique/format/source-backed distinction}.`
+- `{Place} is a {venue type} built around {dishes/music/collection/rooms}, with {observable character}.`
+- `Order/book/choose {specific item or format}; {concrete reason or tradeoff}.`
+- `{Specific access, booking, queue, room, or schedule fact} matters because {decision it changes}.`
 
 ## Prompt Templates
 
@@ -887,7 +912,7 @@ While populating:
 - Confirm hours or mark schedule caveats.
 - Add price and `priceSource` for paid categories.
 - Add `bookingUrl` for hotels and hostels when a stable Booking.com or Hostelworld property page is available.
-- Keep descriptions specific to the list, not generic to the place.
+- Keep descriptions specific to the place and the guide's subject, not to the stop's position in an imagined itinerary.
 - Add list-level `sources`.
 
 After editing:

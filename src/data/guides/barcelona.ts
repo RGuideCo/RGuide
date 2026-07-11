@@ -177,7 +177,7 @@ export const barcelonaCoreGuides = withDiveBarChips([
     "seoTitle": "Best Parks in Barcelona",
     "seoDescription": "Best parks in Barcelona for Gaudi architecture, hilltop views, historic gardens, Ciutadella lawns, Montjuic walks, and green spaces worth saving.",
     "title": "Green Escapes and Hilltop Views",
-    "description": "Barcelona gives you stone, traffic, and spectacle in heavy doses; this guide is where the city exhales. Start with the tiled theater of Parc Guell or the civic sprawl of Ciutadella, then climb toward Montjuic, Horta's maze, Cervantes roses, or the Bunkers del Carmel when you want the whole city laid out under the sky.",
+    "description": "Barcelona's open air ranges from Parc Guell's tiled theatre and Ciutadella's civic lawns to Montjuic, Horta's maze, Cervantes roses, and the broad skyline from Bunkers del Carmel.",
     "url": "https://www.google.com/maps/search/top+parks+in+barcelona",
     "category": "Nature",
     "location": {
@@ -201,7 +201,7 @@ export const barcelonaCoreGuides = withDiveBarChips([
           41.4145,
           2.1527
         ],
-        "description": "Parc Guell is the nature guide's architecture-meets-viewpoint anchor, combining Gaudi's sculptural landscape, mosaic terraces, and hillside city views. Book the monumental zone when needed and treat the visit as a planned half-day stop rather than a casual park detour.",
+        "description": "Parc Guell combines Gaudi's sculptural landscape, mosaic terraces, and hillside city views across a park whose monumental zone may require timed booking. The architecture and terrain justify a planned half-day rather than a casual detour.",
         "hours": {
           "default": "Daily ~9:30 AM-7:30 PM."
         },
@@ -214,7 +214,7 @@ export const barcelonaCoreGuides = withDiveBarChips([
           41.3888,
           2.186
         ],
-        "description": "Parc de la Ciutadella gives the list its central, easy-access green space, with 19th-century exhibition history, the Cascada Monumental, lake boating, and broad lawns. Use it as the reset between El Born, the zoo edge, and the waterfront when the route needs open air without leaving the center.",
+        "description": "Parc de la Ciutadella is a central green space with 19th-century exhibition history, the Cascada Monumental, lake boating, and broad lawns.",
         "hours": {
           "default": "Daily ~10:00 AM-10:30 PM."
         },
@@ -227,7 +227,7 @@ export const barcelonaCoreGuides = withDiveBarChips([
           41.363,
           2.1679
         ],
-        "description": "Montjuic Park is the big hill-day pick, linking gardens, lookouts, museums, castle approaches, Olympic-era venues, and botanical spaces. It is best for travelers who want nature, culture, and views in one slower route rather than a single quick photo stop.",
+        "description": "Montjuic Park is a big hill-day outdoor site, linking gardens, lookouts, museums, castle approaches, Olympic-era venues, and botanical spaces.",
         "hours": {
           "default": "Park 24h; gardens/sites ~10:00 AM-sunset."
         },
@@ -240,7 +240,7 @@ export const barcelonaCoreGuides = withDiveBarChips([
           41.4397,
           2.1477
         ],
-        "description": "Parc del Laberint d'Horta brings a quieter garden experience to the guide, with an 18th-century cypress maze, neoclassical design, and romantic landscaping near Collserola. Use it when the city center feels too dense and the plan can support a more intentional trip north.",
+        "description": "Parc del Laberint d'Horta centers on an 18th-century cypress maze framed by neoclassical terraces and later romantic gardens. Its position near Collserola feels markedly quieter than Barcelona's central parks.",
         "hours": {
           "winter": "10:00 AM-6:00 PM",
           "spring": "10:00 AM-7:00 PM",
@@ -256,7 +256,7 @@ export const barcelonaCoreGuides = withDiveBarChips([
           41.3871,
           2.1123
         ],
-        "description": "Parc de Cervantes earns its place through the rose collection, with thousands of bushes and peak blooms from late spring into summer. It is a seasonal, calmer Pedralbes stop that works best when the route is already leaning west or needs a quieter garden break.",
+        "description": "Parc de Cervantes contains thousands of rose bushes in a broad collection that reaches peak bloom from late spring into summer.",
         "hours": {
           "default": "Daily 8:00 AM-sunset."
         },
@@ -269,7 +269,7 @@ export const barcelonaCoreGuides = withDiveBarChips([
           41.4183,
           2.1527
         ],
-        "description": "Parc del Guinardo and the Bunkers del Carmel give the guide its strongest panoramic payoff, with Turo de la Rovira's former anti-aircraft battery remains and wide skyline views. Go for sunset or clear-weather views, but plan the climb and crowds instead of treating it like a simple neighborhood park.",
+        "description": "Parc del Guinardo climbs toward the Bunkers del Carmel, where Turo de la Rovira's former anti-aircraft battery remains open onto wide skyline views.",
         "hours": {
           "default": "Park 24h; Bunkers ~8:30 AM-7:30 PM (night-restricted)."
         },
@@ -282,7 +282,7 @@ export const barcelonaCoreGuides = withDiveBarChips([
           41.401,
           2.1574
         ],
-        "description": "Plaça del Sol adds the Gràcia neighborhood-plaza version of open air to the citywide parks guide: terraces, musicians, evening gatherings, and the local social rhythm that makes the district feel village-like rather than monumental.",
+        "description": "Plaça del Sol is Gràcia's neighborhood version of open air: cafe terraces, musicians, evening gatherings, and the social rhythm that makes the district feel village-like rather than monumental.",
         "hours": {
           "default": "Open public space."
         },
@@ -295,7 +295,7 @@ export const barcelonaCoreGuides = withDiveBarChips([
           41.3704,
           2.1598
         ],
-        "description": "Teatre Grec brings a garden-and-amphitheater stop into the Montjuïc side of the guide. Built into a former quarry, it works as a leafy cultural detour during the day and becomes more important when summer performance programming is active.",
+        "description": "Teatre Grec is an open-air amphitheater built into a former Montjuïc quarry and surrounded by leafy gardens. The grounds are pleasant by day, while summer festival programming turns the site into a working performance venue.",
         "hours": {
           "default": "Open public gardens; performances by schedule."
         },
@@ -308,7 +308,7 @@ export const barcelonaCoreGuides = withDiveBarChips([
           41.3634,
           2.1661
         ],
-        "description": "Montjuïc Castle extends the hilltop-view thread with port panoramas, defensive history, and a clear endpoint for a Montjuïc walk. It belongs here when the goal is open air with more structure than another lawn or garden.",
+        "description": "Montjuïc Castle extends the hilltop-view thread with port panoramas, defensive history, and a clear endpoint for a Montjuïc walk.",
         "hours": {
           "default": "Daily ~9:00 AM-8:00 PM."
         },
@@ -321,7 +321,7 @@ export const barcelonaCoreGuides = withDiveBarChips([
           41.3687,
           2.1475
         ],
-        "description": "Poble Espanyol rounds out the guide as an open-air Montjuïc stop with plazas, workshops, event programming, and staged Spanish regional architecture. Use it when the walk needs a contained outdoor attraction rather than another viewpoint.",
+        "description": "Poble Espanyol is an open-air Montjuïc complex of plazas, workshops, event spaces, and full-scale interpretations of Spanish regional architecture, originally created for the 1929 International Exhibition.",
         "hours": {
           "default": "Daily ~9:00 AM-8:00 PM."
         },
@@ -394,7 +394,7 @@ export const barcelonaCoreGuides = withDiveBarChips([
     "seoTitle": "Barcelona Airport Transfer Guide",
     "seoDescription": "Barcelona airport transfer essentials for Aerobus stops, R2 Nord train route and timetable, taxi ranks, Uber pickup, and city-side pickup points.",
     "title": "Airport Transfers Without the Guesswork",
-    "description": "Barcelona airport transport is simple once you stop treating it as one option. Aerobus is the easiest city-center shuttle, the R2 Nord train is the cleanest rail move if Terminal 2 or Sants/Passeig de Gracia fit your route, and taxis or Uber make sense when luggage, late arrivals, or awkward addresses start to matter. Use this guide as the practical decision layer: where to stand, which direction the stops run, and which timetable link to trust before you move.",
+    "description": "Barcelona airport transport is simple once you stop treating it as one option. Aerobus is the easiest city-center shuttle, the R2 Nord train is the cleanest rail move if Terminal 2 or Sants/Passeig de Gracia fit your route, and taxis or Uber make sense when luggage, late arrivals, or awkward addresses start to matter.",
     "url": "https://www.google.com/maps/search/barcelona+airport+transport",
     "category": "Essentials",
     "location": {
@@ -495,7 +495,7 @@ export const barcelonaCoreGuides = withDiveBarChips([
               41.3817987,
               2.1582757
             ],
-            "description": "Airport-to-city buses use the Gran Via/Comte Borrell area; city-to-airport buses use Sepulveda - Comte d'Urgell. This is the stop to understand if you are staying in the lower Eixample or Sant Antoni.",
+            "description": "Airport-to-city buses use the Gran Via/Comte Borrell area, while city-to-airport buses use Sepulveda - Comte d'Urgell. Both serve lower Eixample and Sant Antoni stays.",
             "category": "Essentials",
             "subcategory": "bus_stop",
             "venueKind": "transport"
@@ -543,7 +543,7 @@ export const barcelonaCoreGuides = withDiveBarChips([
               41.38093,
               2.1593743
             ],
-            "description": "This is the key city-to-airport stop between Placa Catalunya and Placa Espanya. Use it for A1 or A2 outbound if you are staying around Sant Antoni or the lower Eixample.",
+            "description": "Sepulveda - Comte d'Urgell is an outbound A1 and A2 Aerobus stop serving Sant Antoni and the lower Eixample between Placa Catalunya and Placa Espanya.",
             "category": "Essentials",
             "subcategory": "bus_stop",
             "venueKind": "transport"
@@ -557,7 +557,7 @@ export const barcelonaCoreGuides = withDiveBarChips([
           41.3042,
           2.0745
         ],
-        "description": "The R2 Nord is the airport train to know: it serves the Airport station at Terminal 2 and runs into Barcelona through El Prat, Bellvitge, Sants, Passeig de Gracia, and El Clot-Arago before continuing north. It is usually the best value if you are landing at T2 or connecting to Sants, but T1 passengers must first use the free terminal shuttle to reach the train. Timetables: https://rodalies.gencat.cat/en/horaris/index.html",
+        "description": "It is usually the best value if you are landing at T2 or connecting to Sants, but T1 passengers must first use the free terminal shuttle to reach the train. Timetables: https://rodalies.gencat.cat/en/horaris/index.html",
         "category": "Essentials",
         "subcategory": "airport_train",
         "subcategories": [
@@ -609,7 +609,7 @@ export const barcelonaCoreGuides = withDiveBarChips([
               41.3547,
               2.1159
             ],
-            "description": "A suburban stop before the train enters the central Barcelona rail corridor.",
+            "description": "Bellvitge is a suburban R2 Nord station immediately outside Barcelona's central rail corridor, with local connections for the surrounding district.",
             "category": "Essentials",
             "subcategory": "train_station",
             "venueKind": "transport"
@@ -645,7 +645,7 @@ export const barcelonaCoreGuides = withDiveBarChips([
               41.4102,
               2.1873
             ],
-            "description": "A practical stop for Clot, Poblenou-side transfers, and northeast Barcelona rather than the old city.",
+            "description": "El Clot-Arago serves Clot, Poblenou-side transfers, and northeast Barcelona rather than the old city and central Eixample.",
             "category": "Essentials",
             "subcategory": "train_station",
             "venueKind": "transport"
@@ -699,7 +699,7 @@ export const barcelonaCoreGuides = withDiveBarChips([
               41.3047,
               2.0795
             ],
-            "description": "Taxi rank outside the T2A arrivals side. Follow taxi signage after baggage claim.",
+            "description": "The official taxi rank sits outside the T2A arrivals side; follow the signed route from baggage claim to the curb.",
             "category": "Essentials",
             "subcategory": "taxi_rank",
             "venueKind": "transport"
@@ -831,7 +831,7 @@ export const barcelonaCoreGuides = withDiveBarChips([
     "seoTitle": "Best Restaurants in the Gothic Quarter, Barcelona",
     "seoDescription": "Best restaurants in the Gothic Quarter, Barcelona, from historic Catalan dining rooms to modern tasting menus and old-town spots that avoid the tourist-trap pattern.",
     "title": "Old-City Tables That Hold Up",
-    "description": "The Gothic Quarter is beautiful, crowded, and very good at selling mediocre dinners to tired people. This guide steers toward rooms with a point of view: La Sosenga and Capet for sharper Catalan cooking, Bar La Plata for the old counter feeling, Sensi Bistro and Bistrot Levante when the night wants something softer. Bar Oviso, Bar Lobo, Els Quatre Gats, and Milk keep it useful when the plan is casual but still needs a real address.",
+    "description": "The Gothic Quarter is beautiful, crowded, and very good at selling mediocre dinners to tired people.",
     "url": "https://www.google.com/maps/search/gothic+quarter+restaurants+barcelona",
     "category": "Food",
     "location": {
@@ -856,7 +856,7 @@ export const barcelonaCoreGuides = withDiveBarChips([
           41.3826,
           2.1749
         ],
-        "description": "La Sosenga is the Gothic Quarter safeguard against old-town sameness: a small Catalan room where seasonal cooking and regional references matter more than medieval-lane atmosphere. It is best for diners who want a calmer, food-first reservation inside the busiest part of the city.",
+        "description": "La Sosenga is the Gothic Quarter safeguard against old-town sameness: a small Catalan room where seasonal cooking and regional references matter more than medieval-lane atmosphere.",
         "price": "$$",
         "priceSource": "Time Out",
         "hours": {
@@ -877,7 +877,7 @@ export const barcelonaCoreGuides = withDiveBarChips([
           41.3833,
           2.1769
         ],
-        "description": "Eater's Old City coverage and Google Maps signals make Bistrot Levante useful as a modern counterpoint to the Gothic Quarter's traditional taverns. The draw is not landmark history; it is a compact bistro on Placeta de Manuel Ribé with Eastern Mediterranean flavors, good vegetable-forward plates, and a calmer room that works for lunch or dinner when nearby streets are packed.",
+        "description": "Eater's Old City coverage and Google Maps signals make Bistrot Levante useful as a modern alternative to the Gothic Quarter's traditional taverns. The draw is not landmark history; it is a compact bistro on Placeta de Manuel Ribé with Eastern Mediterranean flavors, good vegetable-forward plates, and a calmer room that works for lunch or dinner when nearby streets are packed.",
         "price": "$$",
         "priceSource": "Eater / Google Maps",
         "hours": {
@@ -898,7 +898,7 @@ export const barcelonaCoreGuides = withDiveBarChips([
           41.3818,
           2.1799
         ],
-        "description": "Bar La Plata earns its spot through longevity, traveler-review consistency, and a menu that has stayed intentionally short since 1945. The value is the whole old-tavern package: fried fish, tomato salad, butifarra, house wine, fast counter service, and a room that still feels local despite being deep in the Gothic Quarter.",
+        "description": "The value is the whole old-tavern package: fried fish, tomato salad, butifarra, house wine, fast counter service, and a room that still feels local despite being deep in the Gothic Quarter.",
         "price": "$",
         "priceSource": "Tripadvisor / Google Maps",
         "hours": {
@@ -919,7 +919,7 @@ export const barcelonaCoreGuides = withDiveBarChips([
           41.3816,
           2.1764
         ],
-        "description": "Capet is the small-room Gothic Quarter splurge for contemporary Catalan cooking without the full production of Barcelona's headline tasting menus. It works when the brief is intimate, chef-led, polished, and firmly dinner-focused.",
+        "description": "Capet serves contemporary Catalan cooking in an intimate Gothic Quarter room. Reservation pace and serious food provide a quieter splurge than Barcelona's headline tasting-menu productions.",
         "price": "$$$",
         "priceSource": "MICHELIN Guide / Resy",
         "hours": {
@@ -940,7 +940,7 @@ export const barcelonaCoreGuides = withDiveBarChips([
           41.3803,
           2.1771
         ],
-        "description": "Sensi Bistro is the polished, visitor-friendly creative tapas option near Plaça Reial, useful for groups that want composed sharing plates without gambling on the Gothic Quarter lanes. It is more international bistro-tapas than hidden local tavern, which is exactly why it works for an easy dinner.",
+        "description": "Sensi Bistro is a polished, visitor-friendly creative tapas restaurant near Plaça Reial, useful for groups that want composed sharing plates without gambling on the Gothic Quarter lanes. It is more international bistro-tapas than hidden local tavern, which is exactly why it works for an easy dinner.",
         "price": "$$",
         "priceSource": "Tripadvisor / Google Maps",
         "hours": {
@@ -961,7 +961,7 @@ export const barcelonaCoreGuides = withDiveBarChips([
                       41.3826,
                       2.1766
               ],
-              "description": "Bar Oviso is the casual Gothic food-and-drink stop for tapas, beers, and a low-pressure old-city pause. It belongs in food more than nightlife when the plan needs something easy near Plaça Sant Jaume without turning into a formal dinner.",
+              "description": "Bar Oviso is a casual Gothic food-and-drink bar for tapas, beers, and a low-pressure old-city pause.",
               "price": "$$",
               "priceSource": "Google Maps / local listings",
               "hours": {
@@ -982,7 +982,7 @@ export const barcelonaCoreGuides = withDiveBarChips([
                       41.3844,
                       2.1698
               ],
-              "description": "Bar Lobo is the roomy Gothic/Raval-edge option for Mediterranean plates, tapas, and a meal that can stretch into drinks. Use it when centrality, space, and broad appeal matter more than finding a tiny hidden tavern.",
+              "description": "Bar Lobo is a roomy Gothic/Raval-edge bar for Mediterranean plates, tapas, and a meal that can stretch into drinks.",
               "price": "$$",
               "priceSource": "Time Out / Google Maps",
               "hours": {
@@ -1003,7 +1003,7 @@ export const barcelonaCoreGuides = withDiveBarChips([
                       41.3855,
                       2.1737
               ],
-              "description": "Els Quatre Gats is an art nouveau-style cafe, restaurant, and tavern opened in 1896, useful for travelers who want Barcelona art history with a meal. It is more heritage room than hidden food find, but that context is the reason to go.",
+              "description": "Els Quatre Gats is an art nouveau-style cafe, restaurant, and tavern opened in 1896, useful for Barcelona art history with a meal. It is more heritage room than hidden food find, but that context is the reason to go.",
               "price": "$$",
               "priceSource": "Official site / Google Maps",
               "hours": {
@@ -1024,7 +1024,7 @@ export const barcelonaCoreGuides = withDiveBarChips([
                       41.3797,
                       2.1767
               ],
-              "description": "Milk Bar & Bistro is the brunch-and-comfort-food pick in the Gothic Quarter, with bagels, eggs, cocktails, and an easy all-day feel near Plaça Reial. It works best when breakfast, brunch, or a relaxed meal matters more than tapas tradition.",
+              "description": "Milk Bar & Bistro is a brunch-and-comfort-food bar in the Gothic Quarter, with bagels, eggs, cocktails, and an easy all-day feel near Plaça Reial.",
               "price": "$$",
               "priceSource": "Google Maps / Tripadvisor",
               "hours": {
@@ -1077,7 +1077,7 @@ export const barcelonaCoreGuides = withDiveBarChips([
     "seoTitle": "Best Restaurants in El Born, Barcelona",
     "seoDescription": "Best restaurants in El Born, Barcelona, including seafood counters, natural-wine rooms, tapas classics, market-adjacent kitchens, and booking-worthy local favorites.",
     "title": "Cava, Counters, and Cool Rooms",
-    "description": "El Born is at its best when the meal feels tangled up with the streets around it: stone lanes, museum crowds, cava glasses, and kitchens running hot behind narrow doors. Cal Pep and El Xampanyet bring the counter-and-cava Barcelona people come looking for, while Bar del Pla, Fismuler, Bar Brutal, and Cuines Santa Caterina make the neighborhood feel current rather than preserved. Bormuth and Casa Delfin keep the list grounded when you need something lively, easy, and close.",
+    "description": "El Born is at its best when the meal feels tangled up with the streets around it: stone lanes, museum crowds, cava glasses, and kitchens running hot behind narrow doors.",
     "url": "https://www.google.com/maps/search/el+born+restaurants+barcelona",
     "category": "Food",
     "location": {
@@ -1102,7 +1102,7 @@ export const barcelonaCoreGuides = withDiveBarChips([
           41.3835,
           2.1839
         ],
-        "description": "Cal Pep is the Born seafood-counter classic for travelers who want the room to move fast around them: clams, squid, fried fish, seasonal plates, and kitchen-led ordering from tight seats. It is a splurge for the format, but the point is the counter performance as much as the seafood.",
+        "description": "Cal Pep is an El Born seafood-counter classic serving clams, squid, fried fish, and seasonal plates through kitchen-led ordering from tight seats. Prices reflect both the seafood and the fast counter performance.",
         "price": "$$$",
         "priceSource": "The Infatuation / Google Maps",
         "hours": {
@@ -1123,7 +1123,7 @@ export const barcelonaCoreGuides = withDiveBarChips([
           41.3857,
           2.1817
         ],
-        "description": "Bar del Pla is the El Born dinner pick when tapas should feel contemporary and wine-led instead of interchangeable. Expect Catalan comfort, creative small plates, close tables, and enough neighborhood buzz to justify booking rather than wandering into the nearest old-city counter.",
+        "description": "Bar del Pla is an El Born dinner bar when tapas should feel contemporary and wine-led instead of interchangeable. Expect Catalan comfort, creative small plates, close tables, and enough neighborhood buzz to justify booking rather than wandering into the nearest old-city counter.",
         "price": "$$",
         "priceSource": "The Infatuation / Google Maps",
         "hours": {
@@ -1144,7 +1144,7 @@ export const barcelonaCoreGuides = withDiveBarChips([
           41.3867,
           2.1846
         ],
-        "description": "Fismuler is a stylish Born meal built around seasonal Mediterranean cooking, raw seafood, serious wine, and the cheesecake people keep talking about. It feels more like a destination dinner than a tapas stop, so save it for a longer night rather than a quick pre-bar bite.",
+        "description": "Fismuler serves seasonal Mediterranean cooking, raw seafood, serious wine, and a frequently discussed cheesecake in a stylish Born dining room. The format is a full restaurant meal rather than a quick tapas counter.",
         "price": "$$$",
         "priceSource": "The Infatuation / Google Maps",
         "hours": {
@@ -1165,7 +1165,7 @@ export const barcelonaCoreGuides = withDiveBarChips([
           41.3849,
           2.1811
         ],
-        "description": "Bar Brutal is famous first for wine: one of Barcelona's best-known natural-wine rooms, with low-intervention bottles driving the meal as much as the plates. Go for curious drinking, lively service, and salty snackable food in El Born; choose it when the wine list is the point, not just a side note.",
+        "description": "Bar Brutal is one of Barcelona's best-known natural-wine rooms, with low-intervention bottles driving the meal as much as the salty, snackable plates. Curious drinking and lively service define the El Born room.",
         "price": "$$",
         "priceSource": "The Infatuation / Instagram",
         "hours": {
@@ -1207,7 +1207,7 @@ export const barcelonaCoreGuides = withDiveBarChips([
                       41.3839,
                       2.1811
               ],
-              "description": "Bormuth is the Born food fallback that still feels like the neighborhood: tapas, vermouth, and enough seating to turn a casual stop into dinner. It is useful when the group wants the Passeig del Born atmosphere without a delicate reservation plan.",
+              "description": "Bormuth is the Born food fallback that still feels like the neighborhood: tapas, vermouth, and enough seating to turn a casual stop into dinner.",
               "price": "$$",
               "priceSource": "Google Maps / Tripadvisor",
               "hours": {
@@ -1228,7 +1228,7 @@ export const barcelonaCoreGuides = withDiveBarChips([
                       41.3834,
                       2.1824
               ],
-              "description": "Casa Delfín is a Born restaurant-and-tavern classic for tapas, rice, vermouth, and plaza-side people-watching near the market. It fits the food guide when the meal should be easy, central, and old-neighborhood in feel.",
+              "description": "Casa Delfín is a Born restaurant-and-tavern classic for tapas, rice, vermouth, and plaza-side people-watching near the market. The meal is easy, central, and rooted in the old neighborhood.",
               "price": "$$",
               "priceSource": "Google Maps / Tripadvisor",
               "hours": {
@@ -1249,7 +1249,7 @@ export const barcelonaCoreGuides = withDiveBarChips([
           41.3847,
           2.1836
         ],
-        "description": "El Xampanyet is a short, loud Born classic: cava, anchovies, conservas, simple tapas, and a room that usually feels one order away from overflowing. Treat it as a salty pre-dinner or post-museum stop, not a slow meal.",
+        "description": "El Xampanyet is a packed, tile-lined Born cava counter serving anchovies, conservas, and simple salty tapas. The short, loud room moves quickly and rarely feels like a slow meal.",
         "price": "$",
         "priceSource": "The Infatuation / Tripadvisor",
         "hours": {
@@ -1298,7 +1298,7 @@ export const barcelonaCoreGuides = withDiveBarChips([
     "seoTitle": "Best Restaurants in Eixample, Barcelona",
     "seoDescription": "Best restaurants in Eixample, Barcelona, from destination tasting menus and polished tapas counters to design-hotel dining rooms and reliable group-friendly classics.",
     "title": "Upscale Dining & Tapas",
-    "description": "Eixample is where Barcelona can afford to be polished without losing its appetite. Disfrutar is the obvious pilgrimage, but the guide also gives you Bar Mut's steak-and-wine confidence, Bodega Bonay's looser modern mood, and Paco Meralgo or Cerveceria Catalana when tapas need tempo. Bodega Joan and El Nacional are here for the big-table, no-mystery nights when logistics matter as much as taste.",
+    "description": "Eixample is where Barcelona can afford to be polished without losing its appetite. Bodega Joan and El Nacional are here for the big-table, no-mystery nights when logistics matter as much as taste.",
     "url": "https://www.google.com/maps/search/eixample+restaurants+barcelona",
     "category": "Food",
     "location": {
@@ -1344,7 +1344,7 @@ export const barcelonaCoreGuides = withDiveBarChips([
           41.3917,
           2.1554
         ],
-        "description": "Bar Mut is polished Eixample Barcelona: wine, seasonal Catalan plates, steakhouse-bistro comfort, and a room that feels classic without becoming formal. Use it for an expensive, grown-up meal near Passeig de Gràcia when a tasting menu would be too much.",
+        "description": "Bar Mut pairs serious wine with seasonal Catalan plates and steakhouse-bistro comfort in a classic Eixample room. Prices suit a grown-up meal near Passeig de Gracia without tasting-menu formality.",
         "price": "$$$",
         "priceSource": "The Infatuation / Google Maps",
         "hours": {
@@ -1365,7 +1365,7 @@ export const barcelonaCoreGuides = withDiveBarChips([
           41.3918,
           2.1746
         ],
-        "description": "Bodega Bonay is included because The Infatuation and reservation signals position it as one of Eixample's better modern restaurants. The draw is a stylish food-and-wine room built around Catalan natural wine, anchovies, cecina, pastas, and long lunches that feel social without requiring a tasting menu.",
+        "description": "Bodega Bonay is a stylish Eixample food-and-wine room built around Catalan natural wine, anchovies, cecina, pastas, and long social lunches without tasting-menu formality.",
         "category": "Food",
         "venueKind": "food_drink",
         "foodServiceType": "restaurant",
@@ -1389,7 +1389,7 @@ export const barcelonaCoreGuides = withDiveBarChips([
           41.3915,
           2.1519
         ],
-        "description": "Paco Meralgo is the reliable mid-range tapas counter for Eixample, backed more by review volume and practical usefulness than by novelty. It works when diners want croquettes, bombas, seafood, and quick service in a polished room, especially when higher-profile reservations are unavailable.",
+        "description": "Paco Meralgo is the reliable mid-range tapas counter for Eixample, backed more by review volume and practical usefulness than by novelty.",
         "price": "$$",
         "priceSource": "Google Maps / Tripadvisor",
         "hours": {
@@ -1410,7 +1410,7 @@ export const barcelonaCoreGuides = withDiveBarChips([
           41.3921,
           2.1602
         ],
-        "description": "Cervecería Catalana is not a secret and should not be sold as one; it is a high-volume Eixample tapas machine that still works when speed, choice, and counter energy matter. Go for montaditos, tortillas, seafood, and the busy-room rhythm, with the wait treated as part of the plan.",
+        "description": "Cervecería Catalana is not a secret and should not be sold as one; it is a high-volume Eixample tapas machine that still works when speed, choice, and counter energy matter.",
         "price": "$$",
         "priceSource": "Google Maps / Tripadvisor",
         "hours": {
@@ -1431,7 +1431,7 @@ export const barcelonaCoreGuides = withDiveBarChips([
                       41.396,
                       2.1684
               ],
-              "description": "Bodega Joan is an Eixample food stop rather than a nightlife pick: homestyle Catalan tapas, charcuterie boards, paellas, sangria, and straightforward dining-room comfort. Use it when the group wants a filling, familiar meal instead of a cocktail-led night.",
+              "description": "Bodega Joan serves homestyle Catalan tapas, charcuterie boards, paellas, and sangria in a straightforward Eixample dining room.",
               "price": "$$",
               "priceSource": "Google Maps / Tripadvisor",
               "hours": {
@@ -1513,7 +1513,7 @@ export const barcelonaCoreGuides = withDiveBarChips([
     "seoTitle": "Best Restaurants in Gràcia, Barcelona",
     "seoDescription": "Best restaurants in Gràcia, Barcelona, covering chef-led rooms, market lunches, creative tapas, casual local favorites, and neighborhood dining worth booking.",
     "title": "Village Tables Worth the Walk",
-    "description": "Gracia eats like a neighborhood that still believes in regulars, plazas, and taking your time. Bemba Smash Burger gives the guide a young, quick hit; Con Gracia and La Panxa del Bisbe bring the slower chef-led version; La Pubilla, Bar Canigo, and Bodega Quimet keep it tied to market food, vermouth, and the daily rhythm. Bar Salvatge, Gut, and Shoronpo round it out for nights when Gracia should feel more lived-in than scheduled.",
+    "description": "Gracia eats like a neighborhood that still believes in regulars, plazas, and taking your time. Bar Salvatge, Gut, and Shoronpo round it out for nights when Gracia should feel more lived-in than scheduled.",
     "url": "https://www.google.com/maps/search/gracia+restaurants+barcelona",
     "category": "Food",
     "location": {
@@ -1538,7 +1538,7 @@ export const barcelonaCoreGuides = withDiveBarChips([
           41.407,
           2.1583
         ],
-        "description": "Bemba is the casual Gràcia reset: a focused smash-burger counter that breaks up the parade of tapas, rice, and tasting menus. It belongs in the guide because it is quick, current, affordable, and genuinely useful on a longer Barcelona trip.",
+        "description": "Bemba is the casual Gràcia reset: a focused smash-burger counter that breaks up the parade of tapas, rice, and tasting menus.",
         "price": "$",
         "priceSource": "Eater / Instagram",
         "hours": {
@@ -1559,7 +1559,7 @@ export const barcelonaCoreGuides = withDiveBarChips([
           41.3979,
           2.1599
         ],
-        "description": "Con Gracia gives Gràcia a quiet special-occasion lane: tasting-menu pacing, wine pairing, and a more personal room than the plaza-bar circuit. It is the neighborhood choice for polish without going back down into Eixample.",
+        "description": "Con Gracia gives Gràcia a quiet special-occasion lane: tasting-menu pace, wine pairing, and a more personal room than the plaza-bar circuit. It is a neighborhood restaurant for polish without going back down into Eixample.",
         "price": "$$$",
         "priceSource": "Time Out / Google Maps",
         "hours": {
@@ -1580,7 +1580,7 @@ export const barcelonaCoreGuides = withDiveBarChips([
           41.4025,
           2.1534
         ],
-        "description": "La Pubilla is included for its market-facing Catalan cooking and sustained local/traveler review strength. The best use case is breakfast or lunch near Mercat de la Llibertat, where the food reads as daily neighborhood cooking rather than destination theatrics: stews, eggs, seasonal plates, and a room that turns over with regulars.",
+        "description": "La Pubilla serves daily Catalan cooking beside Mercat de la Llibertat: stews, eggs, and seasonal plates in a room shared with regulars. Daytime hours make breakfast and lunch its natural services.",
         "price": "$$",
         "priceSource": "Tripadvisor / Google Maps",
         "hours": {
@@ -1601,7 +1601,7 @@ export const barcelonaCoreGuides = withDiveBarChips([
                       41.4022,
                       2.1564
               ],
-              "description": "Bar Canigó is a Gràcia breakfast, lunch, tapas, and vermouth spot that earns its food-guide place through everyday usefulness. Go for a simple neighborhood meal or an early vermouth when the plan should feel local rather than curated.",
+              "description": "Bar Canigó is an everyday Gràcia bar for breakfast, lunch, tapas, and vermouth. Its range and neighborhood rhythm matter more than destination-dining ceremony.",
               "price": "$$",
               "priceSource": "Official site / Google Maps",
               "hours": {
@@ -1622,7 +1622,7 @@ export const barcelonaCoreGuides = withDiveBarChips([
                       41.4029,
                       2.1562
               ],
-              "description": "Bodega Quimet is a Gràcia food-and-vermouth institution, with award-winning house vermouth, traditional tavern charm, and tapas built for conservas, cheeses, anchovies, and long grazing. It is a food stop first, even when the drink is the hook.",
+              "description": "Bodega Quimet is a Gracia tavern built around house vermouth, conservas, cheeses, anchovies, cured meats, and easy grazing. The drink may be the hook, but food is integral.",
               "price": "$$",
               "priceSource": "Official site / Google Maps",
               "hours": {
@@ -1643,7 +1643,7 @@ export const barcelonaCoreGuides = withDiveBarChips([
                       41.3993,
                       2.1584
               ],
-              "description": "Bar Salvatge is the Gràcia natural-wine-and-food stop, pairing low-intervention bottles with local cuisine, cheeses, and snackable plates in a funky storefront. Use it when the wine list should shape dinner without becoming formal.",
+              "description": "Bar Salvatge is a Gràcia natural-wine-and-food bar, pairing low-intervention bottles with local cuisine, cheeses, and snackable plates in a funky storefront.",
               "price": "$$",
               "priceSource": "Google Maps / local listings",
               "hours": {
@@ -1664,7 +1664,7 @@ export const barcelonaCoreGuides = withDiveBarChips([
           41.4002,
           2.1568
         ],
-        "description": "Gut is the lighter Gràcia option for Mediterranean-Asian plates, vegetables, and gluten-free or health-conscious flexibility. It is the room to choose when the group wants brightness and ease instead of another fried-and-wine-heavy night.",
+        "description": "Gut is a lighter Gràcia restaurant for Mediterranean-Asian plates, vegetables, and gluten-free or health-conscious flexibility. It is the room to choose when the group wants brightness and ease instead of another fried-and-wine-heavy night.",
         "price": "$$",
         "priceSource": "Time Out / Google Maps",
         "hours": {
@@ -1706,7 +1706,7 @@ export const barcelonaCoreGuides = withDiveBarChips([
           41.3981,
           2.1572
         ],
-        "description": "Shoronpo adds a non-tapas Gràcia hit with ramen, soup dumplings, tantanmen, and fried snacks in a busy, compact room. Use it when the city's Catalan-Spanish rhythm needs a sharp change without leaving the neighborhood.",
+        "description": "Shoronpo adds a non-tapas Gràcia hit with ramen, soup dumplings, tantanmen, and fried snacks in a busy, compact room.",
         "price": "$$",
         "priceSource": "Eater / Instagram",
         "hours": {
@@ -1755,7 +1755,7 @@ export const barcelonaCoreGuides = withDiveBarChips([
     "seoTitle": "Best Restaurants in Poble-sec, Barcelona",
     "seoDescription": "Best restaurants in Poble-sec, Barcelona, for serious tapas, Montjuic-view rice, Venetian-Catalan plates, and dinner stops near theaters and Sala Apolo.",
     "title": "Blai Bites and Montjuïc Meals",
-    "description": "Poble-sec is a hill, a theater district, a tapas crawl, and a very good excuse to let dinner turn into the night. Quimet & Quimet is the standing-room legend, Martinez gives you rice and a view, and Xemei adds Venetian-Catalan eccentricity that feels right below Montjuic. La Platilleria and Margarit keep the guide from floating away into special-occasion territory.",
+    "description": "Poble-sec food moves from standing-room bodegas and Blai counters to rice with a view and more idiosyncratic Mediterranean dining beneath Montjuic. Small rooms and neighborhood energy matter as much as individual dishes.",
     "url": "https://www.google.com/maps/search/poble+sec+restaurants+barcelona",
     "category": "Food",
     "location": {
@@ -1780,7 +1780,7 @@ export const barcelonaCoreGuides = withDiveBarChips([
           41.3738,
           2.1635
         ],
-        "description": "Quimet & Quimet is one of Poble-sec's most source-consistent food stops, supported by its own current hours, traveler reviews, and long-running editorial reputation. It is standing-room only, built around montaditos layered with smoked, preserved, and tinned ingredients, and works best as an early, focused stop with no expectation of lingering.",
+        "description": "Quimet & Quimet is a tiny standing-room Poble-sec bodega built around montaditos, conservas, smoked fish, beer, vermouth, and bottles stacked to the ceiling. Early arrival helps because the counter favors fast, focused eating over a long sit-down meal.",
         "price": "$$",
         "priceSource": "Official site / Tripadvisor",
         "hours": {
@@ -1801,7 +1801,7 @@ export const barcelonaCoreGuides = withDiveBarChips([
           41.3692,
           2.1661
         ],
-        "description": "Martínez is a planned Montjuïc lunch, not a casual neighborhood fallback: terrace views, seafood rice, fideuà, Catalan wine, and a long meal above the port. Book it when setting and pacing matter as much as the paella pan.",
+        "description": "Martínez is a planned Montjuïc lunch, not a casual neighborhood fallback: terrace views, seafood rice, fideuà, Catalan wine, and a long meal above the port. Book it when setting and pace matter as much as the paella pan.",
         "price": "$$$",
         "priceSource": "Eater / The Infatuation",
         "hours": {
@@ -1822,7 +1822,7 @@ export const barcelonaCoreGuides = withDiveBarChips([
           41.3718,
           2.1668
         ],
-        "description": "Xemei gives Poble-sec a Venetian-Adriatic change of register instead of another tapas room: seafood, handmade pasta, offbeat Italian bottles, and a lively dining room that feels specific to this slope of the city. Use it when the group wants Barcelona energy with lagoon-city flavors rather than a generic seafood checklist.",
+        "description": "Xemei gives Poble-sec a Venetian-Adriatic change of register instead of another tapas room: seafood, handmade pasta, offbeat Italian bottles, and a lively dining room that feels specific to this slope of the city.",
         "price": "$$",
         "priceSource": "Eater / El País",
         "hours": {
@@ -1843,7 +1843,7 @@ export const barcelonaCoreGuides = withDiveBarChips([
           41.3746,
           2.1658
         ],
-        "description": "La Platilleria is the warm small-plates choice for a Poble-sec dinner that does not need to become a full tasting-menu event. Review signals support it for approachable service, compact plates, and a location that works before theater, after Montjuïc, or as a calmer alternative to the busiest Carrer de Blai stops.",
+        "description": "La Platilleria is a warm small-plates restaurant for a Poble-sec dinner that does not need to become a full tasting-menu event.",
         "price": "$$",
         "priceSource": "Google Maps / Tripadvisor",
         "hours": {
@@ -1864,7 +1864,7 @@ export const barcelonaCoreGuides = withDiveBarChips([
           41.3732,
           2.1646
         ],
-        "description": "Margarit is a newer Poble-sec pick validated by Eater and social geo-tags, useful because it brings Mediterranean-Greek cooking and natural-wine energy to the Montjuïc slope. The appeal is dips, grilled vegetables, seafood, and a relaxed room that feels current without drifting into hype-only territory.",
+        "description": "Margarit brings Mediterranean-Greek cooking and natural-wine energy to the Montjuic slope. Dips, grilled vegetables, seafood, and a relaxed room feel current without depending on hype alone.",
         "price": "$$",
         "priceSource": "Eater / Instagram",
         "hours": {
@@ -1916,7 +1916,7 @@ export const barcelonaCoreGuides = withDiveBarChips([
     "seoTitle": "Best Restaurants in Barcelona",
     "seoDescription": "Best restaurants in Barcelona, from world-class tasting menus and seafood counters to natural-wine rooms, tavern classics, market lunches, and neighborhood meals worth crossing town for.",
     "title": "Essential Local Spots",
-    "description": "This is the cross-town list for meals that can carry a day instead of merely interrupting it. Disfrutar, Cal Pep, Quimet & Quimet, and Bar del Pla are the heavy anchors, but the guide also makes room for Bodega Bonay, La Sosenga, La Pubilla, and Capet, the places that make a neighborhood feel legible through the plate. Martinez, Bar Brutal, Bar La Plata, and Bemba keep the range honest: splurge, counter, wine, burger, repeat as needed.",
+    "description": "This is the cross-town list for meals that can carry a day instead of merely interrupting it. Martinez, Bar Brutal, Bar La Plata, and Bemba keep the range honest: splurge, counter, wine, burger, repeat as needed.",
     "url": "https://www.google.com/maps/search/best+restaurants+barcelona",
     "category": "Food",
     "location": {
@@ -1940,7 +1940,7 @@ export const barcelonaCoreGuides = withDiveBarChips([
           41.3835,
           2.1839
         ],
-        "description": "Cal Pep earns a citywide slot because the Born counter still feels like a Barcelona meal in motion: seafood arrives quickly, the seats are tight, and the kitchen nudges the order toward what is best that day. It is not cheap, but it is memorable in a way a standard tapas crawl rarely is.",
+        "description": "Cal Pep runs like a Barcelona meal in motion: seafood arrives quickly across a tight Born counter, and the kitchen steers the order toward what is best that day. It is not cheap, but the pace and immediacy distinguish it from a standard tapas crawl.",
         "price": "$$$",
         "priceSource": "The Infatuation / Google Maps",
         "hours": {
@@ -1961,7 +1961,7 @@ export const barcelonaCoreGuides = withDiveBarChips([
           41.3738,
           2.1635
         ],
-        "description": "Quimet & Quimet is the classic Poble-sec stop that earns citywide placement because official hours, Time Out, traveler reviews, and long-running food-guide consensus all point to the same thing: a tiny standing-room bodega built around montaditos, conservas, beer, and vermouth. Go early and treat it as a focused pre-dinner stop, not a lingering restaurant.",
+        "description": "Quimet & Quimet is a tiny standing-room Poble-sec bodega built around montaditos, conservas, smoked fish, beer, vermouth, and bottles stacked to the ceiling. Early arrival helps because the counter favors fast, focused eating over a long sit-down meal.",
         "price": "$$",
         "priceSource": "Official site / Time Out / Tripadvisor",
         "hours": {
@@ -1982,7 +1982,7 @@ export const barcelonaCoreGuides = withDiveBarChips([
           41.3857,
           2.1817
         ],
-        "description": "Bar del Pla is the citywide pick for a real El Born dinner that still has tapas flexibility: creative Catalan plates, a wine-first mood, and enough buzz to feel current without becoming pure scene. Book it when the night should start with food and naturally roll toward drinks.",
+        "description": "Bar del Pla is a citywide bar for a real El Born dinner that still has tapas flexibility: creative Catalan plates, a wine-first mood, and enough buzz to feel current without becoming pure scene. Book it when the night should start with food and naturally roll toward drinks.",
         "price": "$$",
         "priceSource": "The Infatuation / Google Maps",
         "hours": {
@@ -2003,7 +2003,7 @@ export const barcelonaCoreGuides = withDiveBarChips([
           41.3878,
           2.1533
         ],
-        "description": "Disfrutar anchors the citywide list as the meal people plan trips around: global recognition, a long tasting-menu arc, and very little room for spontaneity. It should read as the special reservation, not one more Barcelona dinner idea.",
+        "description": "Disfrutar is Barcelona's globally recognized special-occasion reservation, built around a long, inventive tasting menu and precise service. Availability leaves very little room for spontaneity.",
         "price": "$$$",
         "priceSource": "MICHELIN Guide / World's 50 Best",
         "hours": {
@@ -2024,7 +2024,7 @@ export const barcelonaCoreGuides = withDiveBarChips([
           41.3918,
           2.1746
         ],
-        "description": "Bodega Bonay gives the citywide list a stylish Eixample lunch or dinner that does not require tasting-menu money. The Infatuation's 2026 review and reservation signals frame it around Catalan natural wine, anchovies, cured meats, pastas, and a social long-lunch scene.",
+        "description": "Bodega Bonay is a stylish Eixample food-and-wine room built around Catalan natural wine, anchovies, cured meats, pastas, and a social long-lunch scene without tasting-menu pricing.",
         "category": "Food",
         "venueKind": "food_drink",
         "foodServiceType": "restaurant",
@@ -2048,7 +2048,7 @@ export const barcelonaCoreGuides = withDiveBarChips([
           41.3826,
           2.1749
         ],
-        "description": "La Sosenga keeps the all-city list from over-indexing on famous counters. It is a calmer Gothic Quarter reservation for seasonal Catalan cooking, regional references, and a dining room that feels protected from the old-town tourist churn outside.",
+        "description": "La Sosenga serves seasonal Catalan cooking and regional references in a calm Gothic Quarter dining room protected from much of the old-town tourist churn.",
         "price": "$$",
         "priceSource": "Time Out / Google Maps",
         "hours": {
@@ -2069,7 +2069,7 @@ export const barcelonaCoreGuides = withDiveBarChips([
           41.3818,
           2.1799
         ],
-        "description": "Bar La Plata is the cheap classic because its value is unusually clear: a short menu, fried fish, tomato salad, butifarra, house wine, and a Gothic Quarter room that has not inflated itself into a concept. Tripadvisor and Google Maps support it as a practical old-tavern stop when the plan needs something quick, local-feeling, and low-fuss.",
+        "description": "Bar La Plata is the cheap classic because its value is unusually clear: a short menu, fried fish, tomato salad, butifarra, house wine, and a Gothic Quarter room that has not inflated itself into a concept.",
         "price": "$",
         "priceSource": "Tripadvisor / Google Maps",
         "hours": {
@@ -2090,7 +2090,7 @@ export const barcelonaCoreGuides = withDiveBarChips([
           41.4025,
           2.1534
         ],
-        "description": "La Pubilla is the Gràcia market-lunch pick, useful because it shows Barcelona's daily Catalan cooking away from the old-city circuit. The support is more practical than hype-driven: sustained review strength, Mercat de la Llibertat proximity, stews, eggs, seasonal plates, and daytime hours that make it best for breakfast or lunch.",
+        "description": "La Pubilla serves daily Catalan cooking beside Mercat de la Llibertat: stews, eggs, and seasonal plates in a room shared with regulars. Daytime hours make breakfast and lunch its natural services.",
         "price": "$$",
         "priceSource": "Tripadvisor / Google Maps",
         "hours": {
@@ -2132,7 +2132,7 @@ export const barcelonaCoreGuides = withDiveBarChips([
           41.407,
           2.1583
         ],
-        "description": "Bemba is the casual pressure valve in a citywide food plan, useful precisely because it is not tapas, rice, or fine dining. The focused smash-burger counter gives Gràcia a quick, affordable stop that still feels chosen.",
+        "description": "Bemba is a focused Gracia smash-burger counter offering a quick, affordable meal outside Barcelona's usual tapas, rice, and fine-dining formats.",
         "price": "$",
         "priceSource": "Eater / Instagram",
         "hours": {
@@ -2153,7 +2153,7 @@ export const barcelonaCoreGuides = withDiveBarChips([
           41.3849,
           2.1811
         ],
-        "description": "Bar Brutal belongs citywide because Barcelona natural-wine drinkers know it as a reference point. The food is snackable and lively, but the real reason to go is the low-intervention bottle list and the feeling that dinner is being led by the glass.",
+        "description": "Bar Brutal is a Barcelona reference point for low-intervention wine, with a deep bottle list and lively plates designed to follow what is in the glass. Dinner here is led by the wine without becoming only a tasting exercise.",
         "price": "$$",
         "priceSource": "The Infatuation / Instagram",
         "hours": {
@@ -2174,7 +2174,7 @@ export const barcelonaCoreGuides = withDiveBarChips([
           41.3816,
           2.1764
         ],
-        "description": "Capet is the all-city alternative for travelers who want a serious Gothic Quarter dinner without surrendering the whole evening to a famous tasting-menu machine. It is intimate, contemporary, Catalan, and better suited to a quieter splurge.",
+        "description": "Capet serves contemporary Catalan cooking in an intimate Gothic Quarter room. Reservation pace and serious food provide a quieter splurge than Barcelona's headline tasting-menu productions.",
         "price": "$$$",
         "priceSource": "MICHELIN Guide / Resy",
         "hours": {
@@ -2247,7 +2247,7 @@ export const barcelonaCoreGuides = withDiveBarChips([
     "seoTitle": "Best Tapas in Barcelona",
     "seoDescription": "Best tapas in Barcelona, from Barceloneta classics and standing-room cava counters to Gothic taverns, vermouth bodegas, market bars, and polished small plates.",
     "title": "Old Counter Classics: Tapas & Cava",
-    "description": "Barcelona tapas is less a checklist than a way of moving through the city: one counter for a bomba, another for fried fish, a glass of cava before the room fills, a vermouth bodega when Gràcia starts to loosen up. This guide leans into places with a reason to exist. La Cova Fumada, Bar La Plata, El Vaso de Oro, and Can Paixano keep the old rhythm alive; Quimet & Quimet, El Xampanyet, and Bodega Quimet cover the salty bottle-lined ritual; Bar Cañete, Bar del Pla, Paco Meralgo, and La Platilleria give the crawl enough polish to become dinner.",
+    "description": "Barcelona tapas is less a checklist than a way of moving through the city: one counter for a bomba, another for fried fish, a glass of cava before the room fills, a vermouth bodega when Gràcia starts to loosen up.",
     "url": "https://www.google.com/maps/search/best+tapas+barcelona",
     "category": "Food",
     "location": {
@@ -2271,7 +2271,7 @@ export const barcelonaCoreGuides = withDiveBarChips([
           41.3806,
           2.1895
         ],
-        "description": "La Cova Fumada is the Barceloneta bar every tapas guide wants to sound casual about, but the place has earned the attention. No sign, odd hours, shared tables, a blackboard menu, and the famous bomba make it feel closer to a neighborhood inheritance than a restaurant concept. Go early, accept the wait, order from the board, and let the room do what it has done since 1944: feed whoever squeezes in.",
+        "description": "La Cova Fumada is a signless Barceloneta bar with odd hours, shared tables, a blackboard menu, and the famous bomba. Go early, accept the wait, order from the board, and let the room continue what it has done since 1944: feed whoever squeezes in.",
         "price": "$",
         "priceSource": "Official site / Barcelona Food Experience",
         "officialUrl": "https://lacovafumada.com/",
@@ -2293,7 +2293,7 @@ export const barcelonaCoreGuides = withDiveBarChips([
           41.3738,
           2.1635
         ],
-        "description": "Quimet & Quimet is the standing-room essential: tins, smoked fish, montaditos, beer, vermouth, and bottles stacked so tightly the room feels built out of appetite. It is too famous to be a secret and too singular to skip. Treat it as a short, high-impact Poble-sec stop, order decisively, and do not expect the meal to slow down for you.",
+        "description": "Quimet & Quimet is a tiny standing-room Poble-sec bodega built around montaditos, conservas, smoked fish, beer, vermouth, and bottles stacked to the ceiling. Early arrival helps because the counter favors fast, focused eating over a long sit-down meal.",
         "price": "$$",
         "priceSource": "Official site / The Infatuation / Barcelona Food Experience",
         "officialUrl": "https://quimetiquimet.com/en/",
@@ -2315,7 +2315,7 @@ export const barcelonaCoreGuides = withDiveBarChips([
           41.3847,
           2.1836
         ],
-        "description": "El Xampanyet is the Born at full volume: cava, anchovies, conservas, tile walls, and a room that usually feels one order away from overflowing. It is best as a quick ritual before dinner or after the Picasso Museum, when the right move is one salty round, a glass in hand, and no fantasy that you will have the table to yourself.",
+        "description": "El Xampanyet is a packed, tile-lined Born cava counter serving anchovies, conservas, and simple salty tapas. The short, loud room moves quickly and rarely feels like a slow meal.",
         "price": "$",
         "priceSource": "The Infatuation / Tripadvisor",
         "officialUrl": "https://www.elxampanyet.com/",
@@ -2359,7 +2359,7 @@ export const barcelonaCoreGuides = withDiveBarChips([
           41.3827,
           2.1831
         ],
-        "description": "Can Paixano is the cava-counter crush you plan around rather than stumble into: sparkling wine, sandwiches, simple tapas, bodies pressed into a narrow Barceloneta room, and a rule of motion that rewards arriving early. It is not delicate and does not need to be. Come for cheap bubbles and the old La Xampanyeria energy, then leave before the crowd turns the doorway into a negotiation.",
+        "description": "Can Paixano is a narrow, crowded Barceloneta counter for inexpensive cava, sandwiches, and simple tapas. The old La Xampanyeria energy is standing-room, fast-moving, and least difficult early in service.",
         "price": "$",
         "priceSource": "Official site / Barcelona Food Experience",
         "officialUrl": "https://www.canpaixano.com/",
@@ -2372,7 +2372,7 @@ export const barcelonaCoreGuides = withDiveBarChips([
           41.3804,
           2.1891
         ],
-        "description": "El Vaso de Oro is Barceloneta standing-room theater: house beer pulled with precision, cooks moving fast, and the famous solomillo with foie giving the bar its richer edge. It looks simple until you watch how tightly the room operates. Use it when tapas should feel muscular, salty, and a little impatient, with beer doing as much work as the food.",
+        "description": "El Vaso de Oro is Barceloneta standing-room theater: house beer pulled with precision, cooks moving fast, and the famous solomillo with foie giving the bar its richer edge. It looks simple until you watch how tightly the room operates.",
         "price": "$$",
         "priceSource": "Official site / Barcelona Food Experience",
         "officialUrl": "https://www.vasodeoro.com/",
@@ -2401,7 +2401,7 @@ export const barcelonaCoreGuides = withDiveBarChips([
           41.3857,
           2.1817
         ],
-        "description": "Bar del Pla handles the guide’s modern full-meal slot, where small plates can become dinner without losing the looseness of tapas. The draw is creative Catalan cooking, a wine-first mood, and a Born room that feels current rather than preserved. Book it when the crawl needs to sit down, breathe, and eat properly.",
+        "description": "Bar del Pla turns creative Catalan small plates into a full dinner without losing the looseness of tapas. Seasonal cooking, an attentive wine list, and a lively Born dining room make it feel current rather than preserved; reservations help at dinner.",
         "price": "$$",
         "priceSource": "The Infatuation / Google Maps",
         "officialUrl": "https://www.bardelpla.cat/",
@@ -2445,7 +2445,7 @@ export const barcelonaCoreGuides = withDiveBarChips([
           41.4029,
           2.1562
         ],
-        "description": "Bodega Quimet gives the guide a Gràcia bodega that behaves like a neighborhood habit: vermouth, conservas, cheeses, anchovies, cured meats, and a room that still understands the pleasure of standing around with one more small plate. It is less trophy stop than texture, which is exactly why it belongs.",
+        "description": "Bodega Quimet is a Gracia tavern built around house vermouth, conservas, cheeses, anchovies, cured meats, and easy grazing. The drink may be the hook, but food is integral.",
         "price": "$$",
         "priceSource": "Official site / Google Maps / Barcelona Food Experience",
         "officialUrl": "https://www.bodegaquimet.com/",
@@ -2467,7 +2467,7 @@ export const barcelonaCoreGuides = withDiveBarChips([
           41.3746,
           2.1658
         ],
-        "description": "La Platilleria keeps Poble-sec from being reduced to one famous standing-room address. The room is calmer, the plates are compact and approachable, and the rhythm works before theater, after Montjuïc, or before an Apolo night. It is the kind of tapas stop that lets the neighborhood stay useful instead of turning every meal into a queue.",
+        "description": "La Platilleria keeps Poble-sec from being reduced to one famous standing-room address. It is a kind of tapas counter that lets the neighborhood stay useful instead of turning every meal into a queue.",
         "price": "$$",
         "priceSource": "Google Maps / Tripadvisor",
         "hours": {
@@ -2532,7 +2532,7 @@ export const barcelonaCoreGuides = withDiveBarChips([
     "seoTitle": "Best Seafood in Barcelona",
     "seoDescription": "Best seafood in Barcelona, from Born seafood counters and Montjuïc rice terraces to robata fish, Venetian-Catalan plates, market taverns, and polished seafood rooms.",
     "title": "Scenic Seafood",
-    "description": "This guide is seafood without pretending every good fish in Barcelona has to come with a beach view. Cal Pep is the counter classic, Martinez gives rice and citywide panorama, and Fismuler brings a more polished, modern dining-room pace. Xemei, El Xampanyet, and El Nacional fill in the rest: Venetian edges, anchovy-cava simplicity, and a grander room when the night needs scale.",
+    "description": "Cal Pep is the counter classic, Martinez gives rice and citywide panorama, and Fismuler brings a more polished, modern dining-room pace.",
     "url": "https://www.google.com/maps/search/best+seafood+barcelona",
     "category": "Food",
     "location": {
@@ -2556,7 +2556,7 @@ export const barcelonaCoreGuides = withDiveBarChips([
           41.3835,
           2.1839
         ],
-        "description": "Cal Pep is the Born seafood-counter classic for travelers who want the room to move fast around them: clams, squid, fried fish, seasonal plates, and kitchen-led ordering from tight seats. It is a splurge for the format, but the point is the counter performance as much as the seafood.",
+        "description": "Cal Pep is an El Born seafood-counter classic serving clams, squid, fried fish, and seasonal plates through kitchen-led ordering from tight seats. Prices reflect both the seafood and the fast counter performance.",
         "price": "$$$",
         "priceSource": "The Infatuation / Google Maps",
         "hours": {
@@ -2577,7 +2577,7 @@ export const barcelonaCoreGuides = withDiveBarChips([
           41.3692,
           2.1661
         ],
-        "description": "Martínez is the seafood guide’s rice-with-a-view stop: paella, fideuà, terrace tables, and a Montjuïc perch over the port. It is seafood as a planned lunch, with the setting doing as much work as the pan.",
+        "description": "Martínez serves paella, fideuà, and seafood at terrace tables on a Montjuïc perch above the port. The setting does as much work as the pan, making lunch the strongest format.",
         "price": "$$$",
         "priceSource": "Eater / The Infatuation",
         "hours": {
@@ -2598,7 +2598,7 @@ export const barcelonaCoreGuides = withDiveBarChips([
           41.3867,
           2.1846
         ],
-        "description": "Fismuler widens the seafood guide beyond old counters and paella terraces. The appeal is raw seafood, seasonal Mediterranean plates, wine, and a stylish Born room where the meal can stretch without feeling formal.",
+        "description": "Fismuler serves raw seafood, seasonal Mediterranean plates, and serious wine in a stylish Born room where dinner can stretch without becoming formal.",
         "price": "$$$",
         "priceSource": "The Infatuation / Google Maps",
         "hours": {
@@ -2619,7 +2619,7 @@ export const barcelonaCoreGuides = withDiveBarChips([
           41.3718,
           2.1668
         ],
-        "description": "Xemei brings Adriatic seafood and pasta into the Barcelona seafood mix, which keeps the guide from becoming only rice and conservas. It is the Poble-sec pick for Venetian flavors, lively service, and a looser dinner mood.",
+        "description": "Xemei serves Adriatic seafood and pasta through Venetian flavors, lively service, and a loose Poble-sec dining room distinct from Barcelona's rice and conservas traditions.",
         "price": "$$",
         "priceSource": "Eater / El País",
         "hours": {
@@ -2640,7 +2640,7 @@ export const barcelonaCoreGuides = withDiveBarChips([
           41.3847,
           2.1836
         ],
-        "description": "El Xampanyet counts here through anchovies, conservas, and cava rather than grilled fish or seafood rice. It is the salty Born seafood snack stop: fast, crowded, and better for a round than a full dinner.",
+        "description": "El Xampanyet counts here through anchovies, conservas, and cava rather than grilled fish or seafood rice. It is a salty Born seafood snack counter: fast, crowded, and better for a round than a full dinner.",
         "price": "$",
         "priceSource": "The Infatuation / Tripadvisor",
         "hours": {
@@ -2661,7 +2661,7 @@ export const barcelonaCoreGuides = withDiveBarChips([
           41.3917,
           2.168
         ],
-        "description": "El Nacional is the seafood guide’s practical central option when a group needs choice under one roof. The seafood counter is the move, but the bigger value is late hours, central location, and a room that can absorb mixed appetites.",
+        "description": "El Nacional gathers several dining counters under one grand central roof; the seafood counter is the strongest move for shellfish and fish, while late hours and breadth absorb mixed appetites.",
         "price": "$$",
         "priceSource": "Time Out / Google Maps",
         "hours": {
@@ -2682,7 +2682,7 @@ export const barcelonaCoreGuides = withDiveBarChips([
           41.3834,
           2.1824
         ],
-        "description": "Casa Delfín broadens the seafood guide with a Born tavern classic for tapas, rice, vermouth, and market-adjacent people-watching. It is the easy central option when the meal should feel old-neighborhood rather than formal.",
+        "description": "Casa Delfín serves seafood tapas, rice, and vermouth in a market-adjacent Born tavern with old-neighborhood ease rather than formal dining ceremony.",
         "price": "$$",
         "priceSource": "Google Maps / Tripadvisor",
         "hours": {
@@ -2708,7 +2708,7 @@ export const barcelonaCoreGuides = withDiveBarChips([
           41.3867,
           2.1788
         ],
-        "description": "Cuines Santa Caterina is the practical market-side seafood and Catalan-food stop for groups, odd meal times, and mixed cravings under the Santa Caterina roof. It is useful, broad, central, and easier than forcing everyone into one narrow counter format.",
+        "description": "Cuines Santa Caterina is a market-side seafood and Catalan-food for groups, odd meal times, and mixed cravings under the Santa Caterina roof. It is useful, broad, central, and easier than forcing everyone into one narrow counter format.",
         "price": "$$",
         "priceSource": "The Infatuation / Google Maps",
         "hours": {
@@ -2734,7 +2734,7 @@ export const barcelonaCoreGuides = withDiveBarChips([
           41.3746,
           2.1658
         ],
-        "description": "La Platilleria adds a warmer Poble-sec small-plates room to the seafood guide, useful before theater, after Montjuïc, or when the group wants dinner that stays local and relaxed.",
+        "description": "La Platilleria is a warm, relaxed Poble-sec dining room centered on shareable small plates and an intimate neighborhood dinner atmosphere.",
         "price": "$$",
         "priceSource": "Google Maps / Tripadvisor",
         "hours": {
@@ -2759,7 +2759,7 @@ export const barcelonaCoreGuides = withDiveBarChips([
           41.3833,
           2.1769
         ],
-        "description": "Bistrot Levante is the Gothic Quarter counterpoint to Barcelona's seafood-and-tapas staples: Eastern Mediterranean flavors, vegetable-forward plates, and a compact room that works when nearby old-city streets are packed.",
+        "description": "Bistrot Levante is the Gothic Quarter alternative to Barcelona's seafood-and-tapas staples: Eastern Mediterranean flavors, vegetable-forward plates, and a compact room that works when nearby old-city streets are packed.",
         "price": "$$",
         "priceSource": "Eater / Google Maps",
         "hours": {
@@ -2817,7 +2817,7 @@ export const barcelonaCoreGuides = withDiveBarChips([
     "seoTitle": "Best Catalan Food in Barcelona",
     "seoDescription": "Best Catalan food in Barcelona, from old taverns and market lunches to contemporary Catalan tasting menus, polished bistros, tapas counters, and regional cooking worth booking.",
     "title": "Local Taverns & Market Bites",
-    "description": "Catalan cooking can be quiet, seasonal, stubborn, and deeply satisfying when you stop chasing novelty. La Sosenga, La Pubilla, and Bar La Plata bring the tavern and market bones; Capet, Bar Mut, and Paco Meralgo make the tradition sharper and more urban. Bodega Bonay stretches the category just enough, letting wine, design, and familiar flavors sit at the same table.",
+    "description": "Catalan cooking can be quiet, seasonal, stubborn, and deeply satisfying when you stop chasing novelty. Bodega Bonay stretches the category just enough, letting wine, design, and familiar flavors sit at the same table.",
     "url": "https://www.google.com/maps/search/best+catalan+food+barcelona",
     "category": "Food",
     "location": {
@@ -2841,7 +2841,7 @@ export const barcelonaCoreGuides = withDiveBarChips([
           41.3826,
           2.1749
         ],
-        "description": "La Sosenga is the Gothic Quarter safeguard against old-town sameness: a small Catalan room where seasonal cooking and regional references matter more than medieval-lane atmosphere. It is best for diners who want a calmer, food-first reservation inside the busiest part of the city.",
+        "description": "La Sosenga is the Gothic Quarter safeguard against old-town sameness: a small Catalan room where seasonal cooking and regional references matter more than medieval-lane atmosphere.",
         "price": "$$",
         "priceSource": "Time Out / Google Maps",
         "hours": {
@@ -2862,7 +2862,7 @@ export const barcelonaCoreGuides = withDiveBarChips([
           41.4025,
           2.1534
         ],
-        "description": "La Pubilla is the Catalan market-lunch stop: stews, eggs, seasonal plates, and a room tied to Mercat de la Llibertat rather than to sightseeing traffic. Review strength and map signals make it especially useful for breakfast or lunch in Gràcia.",
+        "description": "La Pubilla serves daily Catalan cooking beside Mercat de la Llibertat: stews, eggs, and seasonal plates in a room shared with regulars. Daytime hours make breakfast and lunch its natural services.",
         "price": "$$",
         "priceSource": "Tripadvisor / Google Maps",
         "hours": {
@@ -2904,7 +2904,7 @@ export const barcelonaCoreGuides = withDiveBarChips([
           41.3816,
           2.1764
         ],
-        "description": "Capet gives the Catalan guide its refined Gothic Quarter lane: regional cooking interpreted through a small, chef-led room instead of a tavern format. It is the polished reservation when Catalan food should feel contemporary and controlled.",
+        "description": "Capet serves contemporary Catalan cooking in an intimate Gothic Quarter room. Reservation pace and serious food provide a quieter splurge than Barcelona's headline tasting-menu productions.",
         "price": "$$$",
         "priceSource": "MICHELIN Guide / Resy",
         "hours": {
@@ -2925,7 +2925,7 @@ export const barcelonaCoreGuides = withDiveBarChips([
           41.3917,
           2.1554
         ],
-        "description": "Bar Mut represents the polished Eixample side of Catalan eating: wine, seasonal plates, steakhouse-bistro comfort, and a classic room near Passeig de Gràcia. It is for a grown-up meal, not a tapas crawl.",
+        "description": "Bar Mut represents the polished Eixample side of Catalan eating through wine, seasonal plates, steakhouse-bistro comfort, and a classic room near Passeig de Gracia. The format favors a composed meal over a tapas crawl.",
         "price": "$$$",
         "priceSource": "The Infatuation / Google Maps",
         "hours": {
@@ -2946,7 +2946,7 @@ export const barcelonaCoreGuides = withDiveBarChips([
           41.3915,
           2.1519
         ],
-        "description": "Paco Meralgo gives the Catalan list a reliable mid-range tapas-counter format: croquettes, bombas, seafood, tortillas, and quick service. It is not the most obscure pick, but source and review volume make it useful when the goal is a solid Catalan meal without fine-dining cost.",
+        "description": "Paco Meralgo is a reliable mid-range tapas counter serving croquettes, bombas, seafood, tortillas, and other Catalan plates at a quick pace without fine-dining cost.",
         "price": "$$",
         "priceSource": "Google Maps / Tripadvisor",
         "hours": {
@@ -2967,7 +2967,7 @@ export const barcelonaCoreGuides = withDiveBarChips([
           41.3918,
           2.1746
         ],
-        "description": "Bodega Bonay represents current Catalan dining through natural wine, anchovies, cured meats, pastas, and a stylish room that works for a long lunch. The Infatuation and reservation signals make it a modern food-and-wine counterpoint to the old taverns.",
+        "description": "Bodega Bonay represents current Catalan dining through natural wine, anchovies, cured meats, pastas, and a stylish room that works for a long lunch. The Infatuation and reservation signals make it a modern food-and-wine alternative to the old taverns.",
         "category": "Food",
         "venueKind": "food_drink",
         "foodServiceType": "restaurant",
@@ -3018,7 +3018,7 @@ export const barcelonaCoreGuides = withDiveBarChips([
           41.396,
           2.1684
         ],
-        "description": "Bodega Joan adds a straightforward Eixample dining-room option for homestyle Catalan tapas, charcuterie, paella, sangria, and filling group meals. It keeps the guide useful when the brief is comfort and logistics, not only trophy meals.",
+        "description": "Bodega Joan is a straightforward Eixample dining room serving homestyle Catalan tapas, charcuterie, paella, sangria, and filling meals that handle groups comfortably.",
         "price": "$$",
         "priceSource": "Google Maps / Tripadvisor",
         "hours": {
@@ -3044,7 +3044,7 @@ export const barcelonaCoreGuides = withDiveBarChips([
           41.3738,
           2.1635
         ],
-        "description": "Quimet & Quimet gives the Catalan guide a Poble-sec institution built around standing montaditos, conservas, smoked ingredients, and bottles stacked to the ceiling. Go early and treat it as a focused stop rather than a long sit-down meal.",
+        "description": "Quimet & Quimet is a tiny standing-room Poble-sec bodega built around montaditos, conservas, smoked fish, beer, vermouth, and bottles stacked to the ceiling. Early arrival helps because the counter favors fast, focused eating over a long sit-down meal.",
         "price": "$$",
         "priceSource": "Official site / Tripadvisor",
         "hours": {
@@ -3102,7 +3102,7 @@ export const barcelonaCoreGuides = withDiveBarChips([
     "seoTitle": "Best Fine Dining in Barcelona",
     "seoDescription": "Best fine dining in Barcelona, from world-famous tasting menus and Michelin-backed rooms to chef-led Catalan dinners, seafood splurges, and polished reservations.",
     "title": "Destination Dining",
-    "description": "These are the reservations that change the shape of the day around them. Disfrutar is the headline act, but Capet and Con Gracia give the city smaller rooms with ambition, while Martinez and Cal Pep prove that seafood can still feel like theater without a white tablecloth script. Bar Mut closes the loop with the kind of polished, carnivorous confidence that wants a long bottle and no rush.",
+    "description": "These are the reservations that change the shape of the day around them. Bar Mut closes the loop with the kind of polished, carnivorous confidence that wants a long bottle and no rush.",
     "url": "https://www.google.com/maps/search/best+fine+dining+barcelona",
     "category": "Food",
     "location": {
@@ -3147,7 +3147,7 @@ export const barcelonaCoreGuides = withDiveBarChips([
           41.3816,
           2.1764
         ],
-        "description": "Capet is the fine-dining pick for intimacy over spectacle. Choose it when you want contemporary Catalan cooking, reservation pacing, and a Gothic Quarter setting without the cost or theater of Barcelona’s headline tasting menus.",
+        "description": "Capet serves contemporary Catalan cooking in an intimate Gothic Quarter room. Reservation pace and serious food provide a quieter splurge than Barcelona's headline tasting-menu productions.",
         "price": "$$$",
         "priceSource": "MICHELIN Guide / Resy",
         "hours": {
@@ -3168,7 +3168,7 @@ export const barcelonaCoreGuides = withDiveBarChips([
           41.3979,
           2.1599
         ],
-        "description": "Con Gracia is the fine-dining choice for a quieter night in Gràcia: tasting-menu pacing, wine pairing, and a room that feels personal rather than grand. It is useful when the occasion calls for polish but not the city’s biggest-name reservations.",
+        "description": "Con Gracia is a fine-dining restaurant for a quieter night in Gràcia: tasting-menu pace, wine pairing, and a room that feels personal rather than grand. It is useful when the occasion calls for polish but not the city’s biggest-name reservations.",
         "price": "$$$",
         "priceSource": "Time Out / Google Maps",
         "hours": {
@@ -3231,7 +3231,7 @@ export const barcelonaCoreGuides = withDiveBarChips([
           41.3917,
           2.1554
         ],
-        "description": "Bar Mut is the fine-dining list’s classic bistro option, with wine, seasonal Catalan plates, and Eixample polish in place of tasting-menu choreography. It is expensive and grown-up without being ceremonial.",
+        "description": "Bar Mut is a fine-dining list’s classic bistro, with wine, seasonal Catalan plates, and Eixample polish in place of tasting-menu choreography. It is expensive and grown-up without being ceremonial.",
         "price": "$$$",
         "priceSource": "The Infatuation / Google Maps",
         "hours": {
@@ -3252,7 +3252,7 @@ export const barcelonaCoreGuides = withDiveBarChips([
           41.3867,
           2.1846
         ],
-        "description": "Fismuler adds a stylish Born dinner to the destination-dining guide: seasonal Mediterranean cooking, raw seafood, serious wine, and a room that feels special without tasting-menu formality.",
+        "description": "Fismuler serves seasonal Mediterranean cooking, raw seafood, and serious wine in a stylish Born room that feels special without tasting-menu formality.",
         "price": "$$$",
         "priceSource": "The Infatuation / Google Maps",
         "hours": {
@@ -3279,7 +3279,7 @@ export const barcelonaCoreGuides = withDiveBarChips([
           41.3918,
           2.1746
         ],
-        "description": "Bodega Bonay gives the destination-dining guide a modern food-and-wine room without turning the night into a formal splurge. Natural wine, anchovies, cured meats, pastas, and a stylish Eixample setting make it a strong long-lunch or dinner pick.",
+        "description": "Bodega Bonay is a modern Eixample food-and-wine room serving natural wine, anchovies, cured meats, and pastas without the formality or price of a tasting-menu splurge.",
         "category": "Food",
         "venueKind": "food_drink",
         "foodServiceType": "restaurant",
@@ -3308,7 +3308,7 @@ export const barcelonaCoreGuides = withDiveBarChips([
           41.3803,
           2.1771
         ],
-        "description": "Sensi Bistro gives the guide a polished Gothic Quarter creative-tapas room for groups that want composed sharing plates without gambling on the old-city lanes. It is an easy dinner choice when accessibility matters as much as novelty.",
+        "description": "Sensi Bistro serves composed creative tapas and sharing plates in a polished Gothic Quarter dining room. The accessible format handles groups without sacrificing novelty.",
         "price": "$$",
         "priceSource": "Tripadvisor / Google Maps",
         "hours": {
@@ -3397,7 +3397,7 @@ export const barcelonaCoreGuides = withDiveBarChips([
     "seoTitle": "Best Museums and Cultural Stops in the Gothic Quarter, Barcelona",
     "seoDescription": "Best museums and cultural stops in the Gothic Quarter, Barcelona, including Roman Barcino layers, cathedral streets, civic landmarks, and historic squares.",
     "title": "Roman Stones and Cathedral Shadows",
-    "description": "The Gothic Quarter works best when you stop treating it like scenery and start reading the stones. Barcelona Cathedral, MUHBA Placa del Rei, and the Temple of Augustus put the Roman and medieval city back under your feet, while Placa de Sant Felip Neri makes the history intimate and bruised. Palau de la Generalitat adds the civic weight that keeps the quarter from becoming just a maze of pretty lanes.",
+    "description": "The Gothic Quarter is best read through its Roman foundations, medieval religious architecture, civic institutions, and scarred public squares. The strongest stops explain how power and daily life accumulated inside streets that are too often treated as scenery.",
     "url": "https://www.google.com/maps/search/gothic+quarter+culture+barcelona",
     "category": "Culture",
     "location": {
@@ -3422,7 +3422,7 @@ export const barcelonaCoreGuides = withDiveBarChips([
           41.3839,
           2.1762
         ],
-        "description": "Barcelona Cathedral is the Gothic Quarter's anchor because official tourism sources and visitor guides consistently use it to explain the neighborhood's medieval identity. The visit is not only the nave: the cloister, choir, rooftop, geese, and surrounding cathedral square make it the best single stop for understanding how religious architecture shapes the old-city street pattern.",
+        "description": "Barcelona Cathedral gathers a Gothic nave, carved choir, rooftop views, and a cloister known for its resident geese inside the medieval street pattern. The surrounding square shows how religious architecture organized the old city as clearly as the building itself.",
         "hours": {
           "mon": "9:00 AM-8:00 PM",
           "tue": "9:00 AM-8:00 PM",
@@ -3441,7 +3441,7 @@ export const barcelonaCoreGuides = withDiveBarChips([
           41.3845,
           2.1777
         ],
-        "description": "MUHBA Plaça del Rei is included for its unusually clear layering of Roman Barcino and medieval Barcelona. Official museum material highlights the underground archaeological route, palace halls, and royal-city context, making this one of the strongest stops for travelers who want the Gothic Quarter to feel historically legible rather than just atmospheric.",
+        "description": "MUHBA Placa del Rei layers the streets and workshops of Roman Barcino beneath the palace architecture of medieval Barcelona.",
         "hours": {
           "mon": "Closed",
           "tue": "10:00 AM-7:00 PM",
@@ -3460,7 +3460,7 @@ export const barcelonaCoreGuides = withDiveBarChips([
           41.3842,
           2.1776
         ],
-        "description": "The Temple of Augustus is a compact but high-value Roman stop, supported by Barcelona history sources because it reveals four surviving columns inside a medieval courtyard. It works best as a quick cultural detour: a small, quiet reminder that the Gothic Quarter's narrow lanes sit directly on top of the Roman city.",
+        "description": "The Temple of Augustus preserves four monumental Roman columns inside a medieval Gothic Quarter courtyard. The small, quiet site makes Barcelona's buried Roman city visible beneath the surrounding lanes.",
         "hours": {
           "mon": "Closed",
           "tue": "10:00 AM-7:00 PM",
@@ -3479,7 +3479,7 @@ export const barcelonaCoreGuides = withDiveBarChips([
           41.3834,
           2.1752
         ],
-        "description": "Plaça de Sant Felip Neri is here because guide sources repeatedly call out its emotional and architectural weight. The square combines Baroque stonework, schoolyard quiet, and visible Civil War damage, so it gives the old city a more reflective pause than the busier cathedral and Plaça Reial circuits.",
+        "description": "Plaça de Sant Felip Neri combines Baroque stonework, schoolyard quiet, and visible Civil War damage in one of the Gothic Quarter's most emotionally charged squares. The scars on the church facade resist the old city's prettier postcard reading.",
         "hours": {
           "mon": "Open public space",
           "tue": "Open public space",
@@ -3498,7 +3498,7 @@ export const barcelonaCoreGuides = withDiveBarChips([
           41.3829,
           2.1771
         ],
-        "description": "Palau de la Generalitat belongs as a civic-history landmark rather than a casual museum stop. Official and tourism sources frame it as the seat of Catalonia's government, and viewing it from Plaça de Sant Jaume helps connect the Gothic Quarter's ceremonial architecture with present-day Catalan political life.",
+        "description": "Palau de la Generalitat is the historic and current seat of Catalonia's government, with Gothic and Renaissance architecture facing Plaça de Sant Jaume. Exterior views connect the old city's ceremonial core to present-day Catalan political life; interior access follows limited guided schedules.",
         "hours": {
           "mon": "Exterior viewing; guided visits by schedule",
           "tue": "Exterior viewing; guided visits by schedule",
@@ -3537,7 +3537,7 @@ export const barcelonaCoreGuides = withDiveBarChips([
     "seoTitle": "Best Museums and Cultural Stops in El Born, Barcelona",
     "seoDescription": "Best museums and cultural stops in El Born, Barcelona, from the Picasso Museum and Santa Maria del Mar to medieval memory sites and Modernista music rooms.",
     "title": "Picasso, Markets, and Memory",
-    "description": "El Born is where Barcelona's culture feels compressed into a walkable afternoon: art, memory, music, and old merchant money packed into a few streets. Museu Picasso and Santa Maria del Mar give the neighborhood its spine, while El Born Centre de Cultura i Memoria turns ruins into a civic argument. Palau de la Musica Catalana and Moco pull the route toward performance and contemporary spectacle without losing the old-city charge.",
+    "description": "El Born compresses art, archaeology, Gothic religious architecture, merchant wealth, music, and contemporary spectacle into a few old-city streets. Medieval fabric and excavated memory keep its cultural institutions tied to the neighborhood around them.",
     "url": "https://www.google.com/maps/search/el+born+culture+barcelona",
     "category": "Culture",
     "location": {
@@ -3581,7 +3581,7 @@ export const barcelonaCoreGuides = withDiveBarChips([
           41.3839,
           2.1822
         ],
-        "description": "Santa Maria del Mar is included as the neighborhood-made Gothic counterpoint to Barcelona Cathedral. Tourism and heritage sources highlight its Ribera guild origins, clean Catalan Gothic proportions, and soaring stone interior, making it one of the best places to feel El Born's medieval merchant history in architectural form.",
+        "description": "Santa Maria del Mar grew from El Born's Ribera guild community and presents Catalan Gothic architecture through clean proportions and a soaring stone interior. The basilica gives medieval merchant history an architectural form.",
         "hours": {
           "mon": "9:00 AM-8:00 PM",
           "tue": "9:00 AM-8:00 PM",
@@ -3600,7 +3600,7 @@ export const barcelonaCoreGuides = withDiveBarChips([
           41.3867,
           2.1833
         ],
-        "description": "El Born Centre de Cultura i Memòria is valuable because official sources position it as both a preserved market hall and an archaeological memory site. The exposed 1700s street remains make the consequences of 1714 and the transformation of the neighborhood easier to grasp than a standard museum panel would.",
+        "description": "El Born Centre de Cultura i Memoria combines a preserved market hall with an archaeological memory site. Exposed 1700s streets make the consequences of 1714 and the neighborhood's transformation more tangible than a standard museum panel.",
         "hours": {
           "mon": "Closed",
           "tue": "10:00 AM-7:00 PM",
@@ -3619,7 +3619,7 @@ export const barcelonaCoreGuides = withDiveBarChips([
           41.3876,
           2.1753
         ],
-        "description": "Palau de la Música Catalana appears in El Born-adjacent culture lists because official and UNESCO-linked sources consistently treat it as one of Barcelona's great Modernista interiors. The stained-glass skylight, ceramic columns, sculptural facade, and live-concert use make it worth seeing by tour or performance rather than only from the sidewalk.",
+        "description": "Palau de la Musica Catalana is one of Barcelona's great Modernista interiors, with a stained-glass skylight, ceramic columns, sculptural facade, and an active concert program. Tours and performances reveal far more than the exterior alone.",
         "hours": {
           "mon": "9:00 AM-9:00 PM",
           "tue": "9:00 AM-9:00 PM",
@@ -3638,7 +3638,7 @@ export const barcelonaCoreGuides = withDiveBarChips([
           41.3852,
           2.181
         ],
-        "description": "Moco Museum is included as a contemporary counterweight to El Born's heavy historic circuit. Its source profile is more visitor-demand and modern-art driven than civic-history driven, with street art, immersive work, and recognizable names making it useful for travelers who want a lighter museum after Picasso or Santa Maria del Mar.",
+        "description": "Moco Museum presents street art, immersive installations, and recognizable modern and contemporary names in an accessible El Born format. Its emphasis is visual immediacy rather than civic history or deep collection scholarship.",
         "hours": {
           "mon": "9:00 AM-8:00 PM",
           "tue": "9:00 AM-8:00 PM",
@@ -3677,7 +3677,7 @@ export const barcelonaCoreGuides = withDiveBarChips([
     "seoTitle": "Best Museums and Cultural Stops in Eixample, Barcelona",
     "seoDescription": "Best museums and cultural stops in Eixample, Barcelona, focused on Gaudi houses, Sagrada Familia, Modernista architecture, and design landmarks across the grid.",
     "title": "Modernisme Power Walk",
-    "description": "Eixample is not subtle, and that is the pleasure of it. Sagrada Familia, Casa Batllo, and La Pedrera turn the grid into a procession of stone, color, and impossible surfaces, while Casa Amatller reminds you that Gaudi was not the only genius in the room. Fundacio Antoni Tapies gives the walk a quieter, more intellectual stop when the facades start to blur.",
+    "description": "Eixample turns its rational street grid into a showcase for Modernisme: carved stone, colored tile, ironwork, domestic interiors, and religious architecture at radically different scales. Gaudi dominates, but his contemporaries and later modern art give the district depth.",
     "url": "https://www.google.com/maps/search/eixample+culture+barcelona",
     "category": "Culture",
     "location": {
@@ -3721,7 +3721,7 @@ export const barcelonaCoreGuides = withDiveBarChips([
           41.3917,
           2.1649
         ],
-        "description": "Casa Batlló is included because official and guide sources treat it as one of the clearest examples of Gaudí turning a private house into a total artwork. The roofline, tiled facade, bone-like structure, light well, and immersive interpretation make it more than a photo stop on Passeig de Gràcia.",
+        "description": "Casa Batllo shows Gaudi turning a private house into a total artwork through its tiled facade, bone-like structure, light well, and restless roofline. The interior interpretation carries the experience beyond an exterior photograph on Passeig de Gracia.",
         "hours": {
           "mon": "9:00 AM-10:00 PM",
           "tue": "9:00 AM-10:00 PM",
@@ -3740,7 +3740,7 @@ export const barcelonaCoreGuides = withDiveBarChips([
           41.3954,
           2.1619
         ],
-        "description": "Casa Milà / La Pedrera belongs as the broader domestic-architecture lesson in Eixample. Official sources emphasize the undulating stone facade, attic structure, apartment design, and rooftop chimneys, so it works well for travelers who want to understand how Gaudí translated movement and natural forms into an inhabited building.",
+        "description": "Casa Milà / La Pedrera turns Gaudí's ideas about movement and natural form into an inhabited Eixample building. Its undulating stone facade, catenary-arched attic, apartment interiors, courtyards, and sculptural rooftop chimneys reveal how the architecture works beyond the street view.",
         "hours": {
           "mon": "9:00 AM-8:00 PM",
           "tue": "9:00 AM-8:00 PM",
@@ -3759,7 +3759,7 @@ export const barcelonaCoreGuides = withDiveBarChips([
           41.391,
           2.163
         ],
-        "description": "Fundació Antoni Tàpies is included because it combines a major Catalan artist with a Modernista industrial building, giving Eixample culture a modern-art layer beyond Gaudí. Source material highlights Tàpies' textured, material-heavy work and the building's distinctive rooftop sculpture, making it a focused stop for art-minded visitors.",
+        "description": "Fundacio Antoni Tapies pairs the Catalan artist's textured, material-heavy work with a Modernista industrial building and distinctive rooftop sculpture. The focused collection adds modern art to Eixample beyond Gaudi.",
         "hours": {
           "mon": "Closed",
           "tue": "10:00 AM-7:00 PM",
@@ -3817,7 +3817,7 @@ export const barcelonaCoreGuides = withDiveBarChips([
     "seoTitle": "Best Museums and Cultural Stops in Gràcia, Barcelona",
     "seoDescription": "Best museums and cultural stops in Gràcia, Barcelona, balancing Park Guell and Casa Vicens with plazas, cinemas, markets, and neighborhood public life.",
     "title": "Gaudí Beginnings and Plaza Life",
-    "description": "Gracia is where the monumental city loosens its collar. Park Guell and Casa Vicens show Gaudi at two very different scales, but the guide matters because it also includes Cines Verdi, Placa del Sol, and Mercat de la Llibertat, the places that make the district feel lived in. Use it when culture should include a bench, a market errand, and the ordinary life around the landmark.",
+    "description": "Gracia loosens Barcelona's monumental scale through plazas, market errands, benches, early Gaudi architecture, and ordinary neighborhood life around the landmarks.",
     "url": "https://www.google.com/maps/search/gracia+culture+barcelona",
     "category": "Culture",
     "location": {
@@ -3861,7 +3861,7 @@ export const barcelonaCoreGuides = withDiveBarChips([
           41.4035,
           2.1507
         ],
-        "description": "Casa Vicens is included because official sources identify it as Gaudí's first major house and an early statement of his style. Its ceramic surfaces, botanical motifs, Islamic-influenced geometry, and domestic scale make it one of the best ways to see Gaudí before the later, more monumental works.",
+        "description": "Casa Vicens was Gaudi's first major house and an early statement of the color, ornament, and architectural imagination that would define his work.",
         "hours": {
           "mon": "9:00 AM-8:00 PM",
           "tue": "9:00 AM-8:00 PM",
@@ -3899,7 +3899,7 @@ export const barcelonaCoreGuides = withDiveBarChips([
           41.401,
           2.1574
         ],
-        "description": "Plaça del Sol is included because guide sources consistently describe Gràcia through its plazas, and this is the neighborhood's clearest social stage. The value is observational: terraces, evening gatherings, musicians, and local routines that explain the district's village identity better than a formal attraction would.",
+        "description": "Placa del Sol is one of Gracia's clearest social stages, filled with terraces, evening gatherings, musicians, and local routines. Observation explains the district's village identity better than a formal attraction would.",
         "hours": {
           "mon": "Open public space",
           "tue": "Open public space",
@@ -3918,7 +3918,7 @@ export const barcelonaCoreGuides = withDiveBarChips([
           41.4002,
           2.1532
         ],
-        "description": "Mercat de la Llibertat gives the Gràcia list a daily-life anchor. City and tourism sources frame it as a restored 19th-century market hall, and it is best used for morning food culture, neighborhood pacing, and a quieter look at local shopping before the evening plaza scene takes over.",
+        "description": "Mercat de la Llibertat is a restored 19th-century Gracia market hall where food stalls, produce, meat, fish, and everyday neighborhood shopping remain the main attraction.",
         "hours": {
           "mon": "8:00 AM-2:00 PM",
           "tue": "8:00 AM-8:00 PM",
@@ -3957,7 +3957,7 @@ export const barcelonaCoreGuides = withDiveBarChips([
     "seoTitle": "Best Museums and Cultural Stops in Poble-sec, Barcelona",
     "seoDescription": "Best museums and cultural stops in Poble-sec and Montjuic, Barcelona, including MNAC, Fundacio Joan Miro, CaixaForum, hilltop history, and performance spaces.",
     "title": "Montjuïc Museum Day",
-    "description": "Montjuic turns culture into a climb, and that physical effort is part of the reward. MNAC and Fundacio Joan Miro give the hill its museum weight, CaixaForum adds a lower-slope pause, and Montjuic Castle reminds you the view has teeth. Poble Espanyol and Teatre Grec keep the day strange and theatrical, the way this side of the city should be.",
+    "description": "Montjuic turns culture into a climb through Catalan art, Miro, industrial architecture, military history, open-air performance, and broad city views. The hill's institutions feel connected to the landscape rather than sealed into a conventional museum district.",
     "url": "https://www.google.com/maps/search/poble+sec+montjuic+culture+barcelona",
     "category": "Culture",
     "location": {
@@ -3982,7 +3982,7 @@ export const barcelonaCoreGuides = withDiveBarChips([
           41.3688,
           2.1536
         ],
-        "description": "MNAC is the Montjuïc heavyweight because official museum sources place major Catalan art history inside the Palau Nacional. Its Romanesque frescoes, Gothic work, modernisme, photography, and terrace views make it the strongest single museum stop for understanding Catalonia's visual culture at scale.",
+        "description": "MNAC presents Catalan visual culture at scale inside the Palau Nacional, from exceptional Romanesque mural paintings and Gothic work to modernisme and photography. Terraces above the museum open broad views across the city.",
         "hours": {
           "mon": "Closed",
           "tue": "10:00 AM-8:00 PM",
@@ -4001,7 +4001,7 @@ export const barcelonaCoreGuides = withDiveBarChips([
           41.3686,
           2.1592
         ],
-        "description": "Fundació Joan Miró is included because official sources and guide coverage agree on the strength of both the collection and the building. The Sert-designed museum, sculpture terraces, works on paper, and Miró's color language make it a calmer, more focused Montjuïc alternative to MNAC's encyclopedic scale.",
+        "description": "Fundacio Joan Miro combines a Sert-designed museum, sculpture terraces, works on paper, and the artist's unmistakable color language. Its focused collection is calmer and more concentrated than MNAC's encyclopedic scale.",
         "hours": {
           "mon": "Closed",
           "tue": "10:00 AM-7:00 PM",
@@ -4020,7 +4020,7 @@ export const barcelonaCoreGuides = withDiveBarChips([
           41.3717,
           2.1491
         ],
-        "description": "CaixaForum Barcelona earns its place as a flexible exhibition stop in a converted Modernista textile factory. Source material highlights the industrial architecture and rotating programming, so it is useful when travelers want a shorter culture visit near Plaça d'Espanya without committing to a large permanent collection.",
+        "description": "CaixaForum Barcelona occupies a converted Modernista textile factory near Placa d'Espanya. Industrial architecture and rotating exhibitions create a flexible cultural visit without the scale of a large permanent collection.",
         "hours": {
           "mon": "10:00 AM-7:00 PM",
           "tue": "10:00 AM-7:00 PM",
@@ -4039,7 +4039,7 @@ export const barcelonaCoreGuides = withDiveBarChips([
           41.3634,
           2.1661
         ],
-        "description": "Montjuïc Castle is included for its layered military and civic history as much as its views. Tourism sources connect it to the hill's defensive role, port control, and later political memory, making it a strong endpoint for a cable-car route, garden walk, or broader Montjuïc history day.",
+        "description": "Montjuic Castle combines broad city and harbor views with layered military, prison, and civic history at the top of the hill.",
         "hours": {
           "mon": "9:00 AM-8:00 PM",
           "tue": "9:00 AM-8:00 PM",
@@ -4077,7 +4077,7 @@ export const barcelonaCoreGuides = withDiveBarChips([
           41.3704,
           2.1598
         ],
-        "description": "Teatre Grec belongs because it ties Poble-sec/Montjuïc to performance culture and summer festival life. Built into a former quarry, it is most meaningful during programmed events, but the amphitheater and gardens also make sense as part of a daytime walk through the hill's cultural landscape.",
+        "description": "Teatre Grec is an open-air amphitheater built into a former Montjuic quarry and central to Barcelona's summer festival culture. Programmed performances show the space at full purpose, while the surrounding gardens remain accessible by day.",
         "hours": {
           "mon": "Open public gardens; performances by schedule",
           "tue": "Open public gardens; performances by schedule",
@@ -4141,7 +4141,7 @@ export const barcelonaCoreGuides = withDiveBarChips([
           41.3833,
           2.1754
         ],
-        "description": "Hotel Neri is the Gothic Quarter stay for travelers who want historic texture without giving up boutique comfort. Hotel-guide and map signals support it for its restored palace setting beside Sant Felip Neri, quiet rooms, and intimate scale, making it better for a romantic old-city base than for resort-style amenities.",
+        "description": "Hotel Neri occupies a restored palace beside Sant Felip Neri, pairing Gothic Quarter texture with quiet rooms and intimate boutique comfort. Romantic old-city atmosphere replaces resort-style amenities.",
         "hours": {
           "mon": "24 hours",
           "tue": "24 hours",
@@ -4160,7 +4160,7 @@ export const barcelonaCoreGuides = withDiveBarChips([
           41.3826,
           2.1784
         ],
-        "description": "Mercer Hotel Barcelona is included as the luxury heritage stay in the Gothic core. Source coverage repeatedly points to the Roman wall fragments, medieval fabric, courtyard calm, and high-service positioning, so it is best for travelers who want the old city built into the property itself.",
+        "description": "Mercer Hotel Barcelona incorporates Roman wall fragments, medieval fabric, a calm courtyard, and high-touch service into a luxury Gothic Quarter property. The old city is physically built into the hotel.",
         "hours": {
           "mon": "24 hours",
           "tue": "24 hours",
@@ -4179,7 +4179,7 @@ export const barcelonaCoreGuides = withDiveBarChips([
           41.3843,
           2.1741
         ],
-        "description": "Kimpton Vividora is the polished lifestyle-hotel option near the cathedral, backed by hotel guides and Google Travel demand. Its value is central logistics, design-forward rooms, rooftop views, and a more contemporary service model for visitors who want the Gothic Quarter without staying in a small historic inn.",
+        "description": "Kimpton Vividora is a polished lifestyle-hotel near the cathedral, backed by hotel guides and Google Travel demand. Its value is central logistics, design-forward rooms, rooftop views, and a more contemporary service model for the Gothic Quarter without staying in a small historic inn.",
         "hours": {
           "mon": "24 hours",
           "tue": "24 hours",
@@ -4198,7 +4198,7 @@ export const barcelonaCoreGuides = withDiveBarChips([
           41.386,
           2.176
         ],
-        "description": "H10 Madison is included because hotel sources and map demand show it as a practical central stay with a strong rooftop setup. It works well for first-time visitors who want cathedral access, Palau de la Música proximity, Plaça Catalunya transit, and a hotel that is straightforward rather than overly precious.",
+        "description": "H10 Madison is a straightforward central hotel with a strong rooftop, close to the cathedral, Palau de la Musica, and Placa Catalunya transit. Practical access matters more than precious boutique theater.",
         "hours": {
           "mon": "24 hours",
           "tue": "24 hours",
@@ -4234,7 +4234,7 @@ export const barcelonaCoreGuides = withDiveBarChips([
     "seoTitle": "Best Places to Stay in El Born, Barcelona",
     "seoDescription": "Best places to stay in El Born, Barcelona, including boutique hotels, practical hostals, museum-street bases, Ciutadella access, and lively old-town lodging.",
     "title": "Boutique Beds by the Market",
-    "description": "El Born is the old-town base with a little more swagger and a little less claustrophobia than the deepest Gothic lanes. The Barcelona EDITION sets the polished tone, K+K Hotel Picasso and Park Hotel keep you close to Ciutadella and the station, and chic&basic Born gives the stay some design bite. Hostal Orleans is the reminder that location can still do most of the work.",
+    "description": "El Born's hotel mix runs from polished rooftops and design-led rooms to straightforward hostals near Ciutadella and Franca station. The neighborhood suits travelers who want old-city streets, museums, restaurants, and late bars outside the door.",
     "url": "https://www.google.com/maps/search/el+born+hotels+hostels+barcelona",
     "category": "Stay",
     "location": {
@@ -4278,7 +4278,7 @@ export const barcelonaCoreGuides = withDiveBarChips([
           41.3867,
           2.1852
         ],
-        "description": "K+K Hotel Picasso is included as a practical edge-of-Born hotel with park and museum access. Source signals support it for the rooftop pool, quieter location near Parc de la Ciutadella, and easy walks to the Picasso Museum, Estació de França, and Born restaurants.",
+        "description": "K+K Hotel Picasso sits on El Born's quieter edge with a rooftop pool and immediate access to Parc de la Ciutadella. The Picasso Museum, Estacio de Franca, and neighborhood restaurants are easy walks.",
         "hours": {
           "mon": "24 hours",
           "tue": "24 hours",
@@ -4297,7 +4297,7 @@ export const barcelonaCoreGuides = withDiveBarChips([
           41.3847,
           2.1855
         ],
-        "description": "Park Hotel Barcelona is a logistics-first Born stay: guides and map data support it for Estació de França, waterfront walks, and quick access into El Born. It is best for travelers who value transit and neighborhood dining over a high-design hotel experience.",
+        "description": "Park Hotel Barcelona is a logistics-first Born stay: guides and map data support it for Estació de França, waterfront walks, and quick access into El Born.",
         "hours": {
           "mon": "24 hours",
           "tue": "24 hours",
@@ -4316,7 +4316,7 @@ export const barcelonaCoreGuides = withDiveBarChips([
           41.386,
           2.1838
         ],
-        "description": "chic&basic Born Boutique Hotel is included because it matches the neighborhood's design-shop personality better than a generic chain stay. Its 19th-century building, playful interiors, and central Born location make it useful for travelers who want style and walkability at a more moderate level than the EDITION.",
+        "description": "chic&basic Born Boutique Hotel fills a 19th-century building with playful interiors that match the neighborhood's design-shop personality. The central location offers style and walkability below the price of El Born's luxury hotels.",
         "hours": {
           "mon": "24 hours",
           "tue": "24 hours",
@@ -4370,7 +4370,7 @@ export const barcelonaCoreGuides = withDiveBarChips([
     "seoTitle": "Best Places to Stay in Eixample, Barcelona",
     "seoDescription": "Best places to stay in Eixample, Barcelona, for design hotels, central transit, Modernista architecture, and calmer bases outside the old-city lanes.",
     "title": "Design Stays on the Grid",
-    "description": "Eixample is the base for travelers who want Barcelona to function smoothly: wider streets, better taxis, Modernista walks, and fewer old-city compromises. Casa Bonay and Almanac bring design and polish, Praktik Bakery adds a small daily pleasure right in the building, and The One gives the stay a luxury register.",
+    "description": "Eixample hotels pair wide streets, easier transport, and Modernista surroundings with design-led rooms, rooftop amenities, bakery mornings, and quieter conditions than the old-city lanes.",
     "url": "https://www.google.com/maps/search/eixample+hotels+barcelona",
     "category": "Stay",
     "location": {
@@ -4395,7 +4395,7 @@ export const barcelonaCoreGuides = withDiveBarChips([
           41.3918,
           2.1746
         ],
-        "description": "Casa Bonay is the Eixample design-hotel anchor because travel guides and restaurant sources connect the rooms to a broader local ecosystem of coffee, natural wine, rooftop space, and dining. It works for travelers who want neighborhood life inside the hotel rather than a purely corporate base.",
+        "description": "Casa Bonay is an Eixample design hotel with coffee, natural wine, rooftop space, dining, and neighborhood life integrated into the property rather than separated behind a corporate lobby.",
         "hours": {
           "mon": "24 hours",
           "tue": "24 hours",
@@ -4414,7 +4414,7 @@ export const barcelonaCoreGuides = withDiveBarChips([
           41.3906,
           2.1683
         ],
-        "description": "Almanac Barcelona is included as a polished luxury option near Passeig de Gràcia, supported by hotel-guide coverage and Google Travel demand. The draw is central positioning, contemporary rooms, rooftop views, and easy access to Eixample architecture without the density of the old city.",
+        "description": "Almanac Barcelona is a polished luxury hotel near Passeig de Gracia with contemporary rooms, rooftop views, and immediate access to Eixample architecture without old-city density.",
         "hours": {
           "mon": "24 hours",
           "tue": "24 hours",
@@ -4433,7 +4433,7 @@ export const barcelonaCoreGuides = withDiveBarChips([
           41.3952,
           2.1639
         ],
-        "description": "Praktik Bakery is useful because hotel sources consistently remember the concept: a boutique stay built around an actual bakery. It is a mid-range Eixample pick for travelers who care about morning routine, smell-of-bread atmosphere, and walkability more than big-lobby luxury.",
+        "description": "Praktik Bakery is a mid-range Eixample boutique hotel built around a working bakery. Fresh-bread mornings, walkability, and an intimate scale take priority over big-lobby luxury.",
         "hours": {
           "mon": "24 hours",
           "tue": "24 hours",
@@ -4452,7 +4452,7 @@ export const barcelonaCoreGuides = withDiveBarChips([
           41.3958,
           2.1624
         ],
-        "description": "The One Barcelona is the higher-end Eixample stay near La Pedrera, chosen for rooftop pool appeal, quiet luxury positioning, and proximity to Passeig de Gràcia. It is a good fit when the traveler wants architectural sightseeing access with a calmer hotel feel than the Gothic Quarter.",
+        "description": "The One Barcelona is a quiet luxury hotel near La Pedrera with a rooftop pool and easy access to Passeig de Gracia. Its Eixample setting is calmer than the Gothic Quarter.",
         "hours": {
           "mon": "24 hours",
           "tue": "24 hours",
@@ -4513,7 +4513,7 @@ export const barcelonaCoreGuides = withDiveBarChips([
           41.4009,
           2.1576
         ],
-        "description": "Sonder La Casa del Sol is included for its exact neighborhood fit: compact boutique lodging right by Plaça del Sol. It suits travelers who want to step directly into Gràcia's terrace culture, accept a smaller property format, and use the neighborhood itself as the main amenity.",
+        "description": "Sonder La Casa del Sol is a compact boutique property beside Placa del Sol, placing guests directly in Gracia's terrace culture. The small format makes the neighborhood itself the main amenity.",
         "hours": {
           "mon": "24 hours",
           "tue": "24 hours",
@@ -4532,7 +4532,7 @@ export const barcelonaCoreGuides = withDiveBarChips([
           41.4069,
           2.1495
         ],
-        "description": "Hotel Ronda Lesseps is a practical northern Gràcia base, supported by map and hotel-platform signals for value, metro access, and proximity to Park Güell. It is best for travelers who prefer quieter nights and do not need to sleep in the most central plaza zone.",
+        "description": "Hotel Ronda Lesseps is a good-value northern Gracia property with metro access and useful proximity to Park Guell.",
         "hours": {
           "mon": "24 hours",
           "tue": "24 hours",
@@ -4551,7 +4551,7 @@ export const barcelonaCoreGuides = withDiveBarChips([
           41.4115,
           2.1459
         ],
-        "description": "Catalonia Park Güell is a value hotel for travelers using Gràcia as a quieter northern base. Source signals point to practical rooms, pool/value appeal, and metro reach, so it belongs for guests prioritizing price and Park Güell access over boutique-neighborhood charm.",
+        "description": "Catalonia Park Güell offers practical rooms, a pool, and metro access from a quieter northern position near Gràcia and Park Güell. The value lies in price and facilities rather than boutique-neighborhood charm.",
         "hours": {
           "mon": "24 hours",
           "tue": "24 hours",
@@ -4586,7 +4586,7 @@ export const barcelonaCoreGuides = withDiveBarChips([
     "seoTitle": "Best Places to Stay in Poble-sec, Barcelona",
     "seoDescription": "Best places to stay in Poble-sec, Barcelona, for Montjuic access, theater nights, Sala Apolo proximity, hotels, and a base between old town and the hill.",
     "title": "Sleep Near Montjuïc",
-    "description": "Poble-sec is not the postcard base, which is exactly why it can work. Hotel Brummell gives the neighborhood a design-hotel pulse, INNSiDE Apolo keeps you close to Parallel and the late-night circuit, and Hotel Coronado stays simple and useful.",
+    "description": "Poble-sec hotels offer design character, Parallel nightlife, Montjuic access, and simpler rooms outside Barcelona's postcard core.",
     "url": "https://www.google.com/maps/search/poble+sec+hotels+barcelona",
     "category": "Stay",
     "location": {
@@ -4611,7 +4611,7 @@ export const barcelonaCoreGuides = withDiveBarChips([
           41.3713,
           2.166
         ],
-        "description": "Hotel Brummell is Poble-sec's design-led stay, supported by hotel-guide attention for its calm local setting near Montjuïc, small scale, and stylish common spaces. It is the best fit when travelers want the neighborhood's food and theater access without staying in a large Paral·lel hotel.",
+        "description": "Hotel Brummell is a small, design-led Poble-sec property with stylish common spaces and a calm setting near Montjuic. Neighborhood food and theatre access replace the scale of a large Parallel hotel.",
         "hours": {
           "mon": "24 hours",
           "tue": "24 hours",
@@ -4630,7 +4630,7 @@ export const barcelonaCoreGuides = withDiveBarChips([
           41.3749,
           2.1701
         ],
-        "description": "INNSiDE by Meliá Barcelona Apolo is the practical large-hotel choice by Paral·lel and Sala Apolo. Source and map signals support it for nightlife access, metro convenience, conference-scale reliability, and easy walks toward the old town, port, and Poble-sec tapas streets.",
+        "description": "INNSiDE by Melia Barcelona Apolo is a large hotel beside Parallel and Sala Apolo, with metro convenience, conference-scale reliability, and easy walks toward the port, old town, and Poble-sec tapas streets.",
         "hours": {
           "mon": "24 hours",
           "tue": "24 hours",
@@ -4649,7 +4649,7 @@ export const barcelonaCoreGuides = withDiveBarChips([
           41.3744,
           2.1669
         ],
-        "description": "Hotel Coronado is another no-frills Poble-sec option supported by map visibility and location utility. It works for short stays focused on tapas, shows, and transit, especially when the traveler wants to spend less on the room and stay close to Carrer de Blai.",
+        "description": "Hotel Coronado is a no-frills Poble-sec hotel near Carrer de Blai, Parallel transit, tapas bars, and performance venues. Basic rooms and lower rates matter more here than boutique design or destination amenities.",
         "hours": {
           "mon": "24 hours",
           "tue": "24 hours",
@@ -4684,7 +4684,7 @@ export const barcelonaCoreGuides = withDiveBarChips([
     "seoTitle": "Best Hotels in Barcelona",
     "seoDescription": "Best hotels in Barcelona, comparing Gothic Quarter heritage stays, El Born boutique rooms, Eixample design hotels, Gracia village bases, and Poble-sec practical stays.",
     "title": "Hotels by Neighborhood Fit",
-    "description": "Choosing a Barcelona hotel is really choosing the version of the city you want to wake up inside. Hotel Neri gives you old-stone intimacy, Chic & Basic Born puts nightlife and museum streets close, Almanac sharpens the Eixample option, and Hotel Casa Fuster makes Gracia feel grand. Hotel Brummell is the Poble-sec counterpoint: lower, looser, and better placed for Montjuic and late nights.",
+    "description": "Barcelona hotels change character by neighborhood: old-stone intimacy in the Gothic Quarter, nightlife and museums in El Born, polished architecture in Eixample, grand Modernisme in Gracia, and a looser Montjuic edge in Poble-sec.",
     "url": "https://www.google.com/maps/search/best+hotels+barcelona",
     "category": "Stay",
     "location": {
@@ -4708,7 +4708,7 @@ export const barcelonaCoreGuides = withDiveBarChips([
           41.3833,
           2.1754
         ],
-        "description": "Hotel Neri is the citywide pick for travelers who want Gothic Quarter heritage without losing boutique comfort. Its restored palace setting, quieter Sant Felip Neri position, and intimate scale make it a stronger old-city base than a generic central hotel.",
+        "description": "Hotel Neri brings boutique comfort to a restored palace on quiet Plaça de Sant Felip Neri. Its historic fabric, intimate scale, and Gothic Quarter position give the old-city setting more character than a generic central hotel.",
         "hours": {
           "mon": "24 hours",
           "tue": "24 hours",
@@ -4727,7 +4727,7 @@ export const barcelonaCoreGuides = withDiveBarChips([
           41.3877,
           2.1832
         ],
-        "description": "Chic & Basic Born Boutique Hotel is the El Born choice for travelers who want nightlife, museum streets, Ciutadella access, and boutique scale in one base. It fits visitors who plan to walk the old city at night but want a slightly softer edge than the Gothic core.",
+        "description": "Chic & Basic Born Boutique Hotel is an El Born hotel for nightlife, museum streets, Ciutadella access, and boutique scale in one base.",
         "hours": {
           "mon": "24 hours",
           "tue": "24 hours",
@@ -4746,7 +4746,7 @@ export const barcelonaCoreGuides = withDiveBarChips([
           41.3901,
           2.1688
         ],
-        "description": "Almanac Barcelona gives the shortlist an Eixample design-hotel anchor near Passeig de Gracia. Use it when architecture walks, shopping, rooftop time, and polished rooms matter more than sleeping inside the oldest lanes.",
+        "description": "Almanac Barcelona is a polished Eixample design hotel near Passeig de Gracia, with contemporary rooms, a rooftop, and immediate access to architecture and shopping. It favors central-city convenience over old-quarter atmosphere.",
         "hours": {
           "mon": "24 hours",
           "tue": "24 hours",
@@ -4765,7 +4765,7 @@ export const barcelonaCoreGuides = withDiveBarChips([
           41.3983,
           2.1589
         ],
-        "description": "Hotel Casa Fuster is the Gracia-edge grand hotel for travelers who want modernista architecture, Passeig de Gracia access, and a calmer village-side return at night. It is best when the hotel building itself is part of the Barcelona experience.",
+        "description": "Hotel Casa Fuster is the Gracia-edge grand hotel for modernista architecture, Passeig de Gracia access, and a calmer village-side return at night. It is best when the hotel building itself is part of the Barcelona experience.",
         "hours": {
           "mon": "24 hours",
           "tue": "24 hours",
@@ -4784,7 +4784,7 @@ export const barcelonaCoreGuides = withDiveBarChips([
           41.3719,
           2.1631
         ],
-        "description": "Hotel Brummell is the Poble-sec stay for travelers who want a smaller design hotel with Montjuic, tapas streets, and the port side nearby. Choose it when you want neighborhood texture and easy hill access rather than a big central lobby.",
+        "description": "Hotel Brummell is a small, design-led Poble-sec property with stylish common spaces and a calm setting near Montjuic. Neighborhood food, tapas streets, and hill access replace the scale of a big central lobby.",
         "hours": {
           "mon": "24 hours",
           "tue": "24 hours",
@@ -4841,7 +4841,7 @@ export const barcelonaCoreGuides = withDiveBarChips([
           41.3843,
           2.1741
         ],
-        "description": "Kimpton Vividora is the polished lifestyle-hotel option near the cathedral, useful for central logistics, rooftop views, contemporary rooms, and a Gothic Quarter stay that does not feel like a small historic inn.",
+        "description": "Kimpton Vividora is a polished lifestyle-hotel near the cathedral, useful for central logistics, rooftop views, contemporary rooms, and a Gothic Quarter stay that does not feel like a small historic inn.",
         "hours": {
           "mon": "24 hours",
           "tue": "24 hours",
@@ -4860,7 +4860,7 @@ export const barcelonaCoreGuides = withDiveBarChips([
           41.3918,
           2.1746
         ],
-        "description": "Casa Bonay is the Eixample design-hotel anchor for travelers who want coffee, natural wine, rooftop space, dining, and neighborhood life inside the hotel rather than a purely corporate base.",
+        "description": "Casa Bonay is an Eixample design hotel with coffee, natural wine, rooftop space, dining, and neighborhood life integrated into the property rather than separated behind a corporate lobby.",
         "hours": {
           "mon": "24 hours",
           "tue": "24 hours",
@@ -4879,7 +4879,7 @@ export const barcelonaCoreGuides = withDiveBarChips([
           41.3958,
           2.1624
         ],
-        "description": "The One Barcelona is the higher-end Eixample stay near La Pedrera, chosen for rooftop pool appeal, quiet luxury positioning, and proximity to Passeig de Gràcia.",
+        "description": "The One Barcelona is a quiet luxury hotel near La Pedrera with a rooftop pool and easy access to Passeig de Gracia.",
         "hours": {
           "mon": "24 hours",
           "tue": "24 hours",
@@ -4922,7 +4922,7 @@ export const barcelonaCoreGuides = withDiveBarChips([
     "seoTitle": "Best Hostels in Barcelona",
     "seoDescription": "Best hostels in Barcelona, pulling the strongest hostel pick from each neighborhood guide for social dorms, private rooms, location, and traveler fit.",
     "title": "Social Bases Across the Map",
-    "description": "This hostel list is about social gravity, not just cheap beds. Kabul brings the Placa Reial party machine, 360 Hostel Borne gives old-town access with a slightly easier landing, and Yeah Barcelona Hostel is the clean Eixample workhorse. Casa Gracia and Onefam Paralelo pull the map into neighborhood life, whether you want plazas above Diagonal or late nights near Poble-sec.",
+    "description": "Barcelona's social hostels range from full party programming to cleaner, calmer communal stays with dorms and private rooms. Location changes the experience sharply, from old-town nightlife and Eixample access to Gracia plazas and Poble-sec bars.",
     "url": "https://www.google.com/maps/search/best+hostels+barcelona",
     "category": "Stay",
     "location": {
@@ -4946,7 +4946,7 @@ export const barcelonaCoreGuides = withDiveBarChips([
           41.3802,
           2.1758
         ],
-        "description": "Kabul is the citywide pick for travelers who want Barcelona's hostel scene to double as the nightlife plan. Hostelworld, Google Maps, and long-running backpacker coverage consistently support it for Plaça Reial location, organized social programming, rooftop/common-space energy, and fast access to the Gothic Quarter bar circuit; it is a strong fit for outgoing solo travelers, not for light sleepers.",
+        "description": "Hostelworld, Google Maps, and long-running backpacker coverage consistently support it for Plaça Reial location, organized social programming, rooftop/common-space energy, and fast access to the Gothic Quarter bar circuit; it is a strong fit for outgoing solo travelers, not for light sleepers.",
         "hours": {
           "mon": "24 hours",
           "tue": "24 hours",
@@ -4965,7 +4965,7 @@ export const barcelonaCoreGuides = withDiveBarChips([
           41.3898,
           2.1805
         ],
-        "description": "360 Hostel Borne is the El Born/Arc de Triomf representative because it gives travelers a social base without placing the dorms directly on the loudest old-town streets. Hostel-platform and map signals point to shared meals, activities, kitchen/common-space usefulness, and easy walks to Ciutadella, El Born, and central transit.",
+        "description": "360 Hostel Borne is a social hostel near Arc de Triomf with shared meals, organized activities, a kitchen, and useful common space. Ciutadella, El Born, and central transit are walkable without sleeping on the loudest old-town streets.",
         "hours": {
           "mon": "24 hours",
           "tue": "24 hours",
@@ -4984,7 +4984,7 @@ export const barcelonaCoreGuides = withDiveBarChips([
           41.3983,
           2.1654
         ],
-        "description": "Yeah Barcelona is the Eixample pick because it combines polished dorms, private rooms, and structured social programming in a location that works for Sagrada Familia, lower Gracia, and Eixample dining. Multiple hostel and map sources make it one of the safest all-around recommendations when travelers want social energy without sleeping in the Gothic core.",
+        "description": "Yeah Barcelona is an Eixample hostel because it combines polished dorms, private rooms, and structured social programming in a location that works for Sagrada Familia, lower Gracia, and Eixample dining. Multiple hostel and map sources make it one of the safest all-around recommendations when travelers want social energy without sleeping in the Gothic core.",
         "category": "Stay",
         "venueKind": "lodging",
         "lodgingType": "hostel",
@@ -5006,7 +5006,7 @@ export const barcelonaCoreGuides = withDiveBarChips([
           41.3978,
           2.1578
         ],
-        "description": "Casa Gracia is the Gracia pick because it bridges hostel, hotel, and neighborhood social hub better than a pure dorm property. Source signals support it for dorm/private flexibility, Diagonal transit, communal programming, and immediate access to Gracia's plaza-and-restaurant life, making it especially useful for travelers who want style and a less old-town-heavy base.",
+        "description": "Casa Gracia is a Gracia hotel because it bridges hostel, hotel, and neighborhood social hub better than a pure dorm property. Source signals support it for dorm/private flexibility, Diagonal transit, communal programming, and immediate access to Gracia's plaza-and-restaurant life, making it especially useful for style and a less old-town-heavy base.",
         "hours": {
           "mon": "24 hours",
           "tue": "24 hours",
@@ -5025,7 +5025,7 @@ export const barcelonaCoreGuides = withDiveBarChips([
           41.374,
           2.1658
         ],
-        "description": "Onefam Paralelo is the Poble-sec pick for solo travelers who want staff-led activities and a built-in group dynamic near Carrer de Blai, Montjuic, and Sala Apolo. Hostelworld and map signals support it as a community-first stay rather than just a cheap bed, which makes it the strongest representative for the neighborhood.",
+        "description": "Onefam Paralelo is a community-first Poble-sec hostel for solo travelers, with staff-led activities, group dinners, and built-in social life near Carrer de Blai, Montjuic, and Sala Apolo.",
         "hours": {
           "mon": "24 hours",
           "tue": "24 hours",
@@ -5044,7 +5044,7 @@ export const barcelonaCoreGuides = withDiveBarChips([
           41.3903,
           2.1811
         ],
-        "description": "Born Barcelona Hostel is the quieter, smaller-format pick near Arc de Triomf and the upper edge of El Born. It suits travelers who want museum and park access with a practical bed-and-base setup rather than a party-hostel identity.",
+        "description": "Born Barcelona Hostel is a quieter, smaller-format hostel near Arc de Triomf and the upper edge of El Born. It suits travelers who want museum and park access with a practical bed-and-base setup rather than a party-hostel identity.",
         "hours": {
           "mon": "24 hours",
           "tue": "24 hours",
@@ -5063,7 +5063,7 @@ export const barcelonaCoreGuides = withDiveBarChips([
           41.3908,
           2.1867
         ],
-        "description": "Arc House Barcelona is the practical budget choice for Parc de la Ciutadella, Estació del Nord, and fast walks into El Born. It belongs as a low-cost option driven by location and value.",
+        "description": "Arc House Barcelona is a simple budget hostel near Parc de la Ciutadella and Estació del Nord, with El Born within an easy walk. Location and low cost carry more weight than extensive facilities.",
         "hours": {
           "mon": "24 hours",
           "tue": "24 hours",
@@ -5101,7 +5101,7 @@ export const barcelonaCoreGuides = withDiveBarChips([
           41.3897,
           2.1608
         ],
-        "description": "Sant Jordi Rock Palace is the music-themed Eixample option with stronger group energy, rooftop pool appeal, and easy reach to Passeig de Gràcia and late-night central bars.",
+        "description": "Sant Jordi Rock Palace is a music-themed Eixample hostel with stronger group energy, rooftop pool appeal, and easy reach to Passeig de Gràcia and late-night central bars.",
         "hours": {
           "mon": "24 hours",
           "tue": "24 hours",
@@ -5120,7 +5120,7 @@ export const barcelonaCoreGuides = withDiveBarChips([
           41.386,
           2.1604
         ],
-        "description": "Onefam Batllo is the central Eixample social-hostel pick for solo travelers who want structured programming, staff-led activities, and easy walks to Casa Batlló and Passeig de Gràcia.",
+        "description": "Onefam Batllo is a central Eixample social-hostel for solo travelers who want structured programming, staff-led activities, and easy walks to Casa Batlló and Passeig de Gràcia.",
         "hours": {
           "mon": "24 hours",
           "tue": "24 hours",
@@ -5159,7 +5159,7 @@ export const barcelonaCoreGuides = withDiveBarChips([
     "seoTitle": "Best Hostels in the Gothic Quarter, Barcelona",
     "seoDescription": "Best hostels in the Gothic Quarter, Barcelona, including old-city party hostels, cathedral-area dorms, budget private rooms, and walkable bases near Placa Reial and El Born.",
     "title": "Old-City Dorms and Party Bases",
-    "description": "The Gothic Quarter hostel choice is really a question of how much old-city intensity you want. Kabul is the party engine in Placa Reial, Itaca and Safestay Gothic keep things closer to the cathedral-and-lanes version of the neighborhood, and Hostel New York is the bare-bones central option. None of these are about retreat; they are about being in the middle of it.",
+    "description": "Gothic Quarter hostels range from full party programming on Placa Reial to quieter dorms and bare-bones central beds near the cathedral lanes. Old-city access is the advantage; street noise, compact rooms, and late foot traffic are the tradeoffs.",
     "url": "https://www.google.com/maps/search/gothic+quarter+hostels+barcelona",
     "category": "Stay",
     "location": {
@@ -5184,7 +5184,7 @@ export const barcelonaCoreGuides = withDiveBarChips([
           41.3802,
           2.1758
         ],
-        "description": "Kabul is the Gothic Quarter pick when the hostel itself is part of the nightlife plan. Hostelworld and long-running traveler coverage consistently frame it around Plaça Reial location, organized social programming, rooftop/common-space energy, and fast access to late bars; it is better for outgoing backpackers than for quiet sleepers.",
+        "description": "Hostelworld and long-running traveler coverage consistently frame it around Plaça Reial location, organized social programming, rooftop/common-space energy, and fast access to late bars; it is better for outgoing backpackers than for quiet sleepers.",
         "hours": {
           "mon": "24 hours",
           "tue": "24 hours",
@@ -5203,7 +5203,7 @@ export const barcelonaCoreGuides = withDiveBarChips([
           41.385,
           2.1749
         ],
-        "description": "Itaca is the calmer cathedral-area counterweight to Kabul: small-scale, central, and practical for travelers who want Gothic lanes, Plaça Catalunya, and old-city walking routes without committing to a party-hostel atmosphere. Hostelworld and review signals support it for location and simple dorm/private value.",
+        "description": "Itaca is the calmer cathedral-area counterweight to Kabul: small-scale, central, and practical for Gothic lanes, Plaça Catalunya, and old-city walking routes without committing to a party-hostel atmosphere. Hostelworld and review signals support it for location and simple dorm/private value.",
         "hours": {
           "mon": "24 hours",
           "tue": "24 hours",
@@ -5222,7 +5222,7 @@ export const barcelonaCoreGuides = withDiveBarChips([
           41.3838,
           2.1786
         ],
-        "description": "Safestay Barcelona Gothic sits between the Gothic Quarter and El Born, making it useful for travelers who want budget beds close to Jaume I, the Picasso Museum, and cathedral lanes. It is a chain hostel rather than a boutique stay, but the value is location, scale, and predictable dorm infrastructure.",
+        "description": "Safestay Barcelona Gothic sits between the Gothic Quarter and El Born, making it useful for budget beds close to Jaume I, the Picasso Museum, and cathedral lanes. It is a chain hostel rather than a boutique stay, but the value is location, scale, and predictable dorm infrastructure.",
         "hours": {
           "mon": "24 hours",
           "tue": "24 hours",
@@ -5241,7 +5241,7 @@ export const barcelonaCoreGuides = withDiveBarChips([
           41.381,
           2.1807
         ],
-        "description": "Hostel New York is the no-frills old-city option: basic, cheap, and positioned for travelers who care more about being near the port, Barceloneta, and Gothic nightlife than about design or a heavy social program. Use it as the budget fallback in this neighborhood set.",
+        "description": "Hostel New York is a no-frills old-city hostel: basic, cheap, and positioned for travelers who care more about being near the port, Barceloneta, and Gothic nightlife than about design or a heavy social program.",
         "hours": {
           "mon": "24 hours",
           "tue": "24 hours",
@@ -5276,7 +5276,7 @@ export const barcelonaCoreGuides = withDiveBarChips([
     "seoTitle": "Best Hostels in El Born, Barcelona",
     "seoDescription": "Best hostels in El Born, Barcelona, covering Arc de Triomf bases, social dorms, budget private rooms, and hostel stays close to Santa Maria del Mar, Ciutadella, and the Picasso Museum.",
     "title": "Dorms by Ciutadella and the Born",
-    "description": "El Born hostels give backpackers the old city without dropping them into the loudest part of it. 360 Hostel Borne and Born Barcelona Hostel keep Arc de Triomf, Ciutadella, and the museum streets close, while Arc House and Black Swan make transit and social energy easier. This is the softer old-town landing, still close enough to walk home late.",
+    "description": "El Born hostels place dorms and private rooms near Arc de Triomf, Ciutadella, museum streets, and strong transit with less intensity than Placa Reial. Social programming ranges from relaxed to party-led.",
     "url": "https://www.google.com/maps/search/el+born+hostels+barcelona",
     "category": "Stay",
     "location": {
@@ -5301,7 +5301,7 @@ export const barcelonaCoreGuides = withDiveBarChips([
           41.3898,
           2.1805
         ],
-        "description": "360 Hostel Borne is the strongest El Born/Arc de Triomf hostel for travelers who want a social base without sleeping directly on the loudest old-town streets. Hostelworld and hostel-listing signals point to organized activities, communal kitchen/common space, and easy walks to Ciutadella, El Born, and central transit.",
+        "description": "360 Hostel Borne is a social hostel near Arc de Triomf with shared meals, organized activities, a kitchen, and useful common space. Ciutadella, El Born, and central transit are walkable without sleeping on the loudest old-town streets.",
         "hours": {
           "mon": "24 hours",
           "tue": "24 hours",
@@ -5320,7 +5320,7 @@ export const barcelonaCoreGuides = withDiveBarChips([
           41.3903,
           2.1811
         ],
-        "description": "Born Barcelona Hostel works as the quieter, smaller-format pick near Arc de Triomf and the upper edge of El Born. It suits travelers who want the neighborhood's museum and park access but prefer a practical bed-and-base setup over a party-hostel identity.",
+        "description": "Born Barcelona Hostel is a quiet, small-format property near Arc de Triomf and the upper edge of El Born. Practical beds and access to museums and Ciutadella Park take priority over a party-hostel identity.",
         "hours": {
           "mon": "24 hours",
           "tue": "24 hours",
@@ -5339,7 +5339,7 @@ export const barcelonaCoreGuides = withDiveBarChips([
           41.3908,
           2.1867
         ],
-        "description": "Arc House is included for budget travelers prioritizing Parc de la Ciutadella, Estacio del Nord, and fast walks into El Born. Source signals are more value-and-location driven than experience-led, so it belongs as a practical low-cost option rather than the most characterful stay.",
+        "description": "Arc House is a low-cost hostel close to Parc de la Ciutadella, Estacio del Nord, and El Born. Value and location outweigh character or extensive social programming.",
         "hours": {
           "mon": "24 hours",
           "tue": "24 hours",
@@ -5358,7 +5358,7 @@ export const barcelonaCoreGuides = withDiveBarChips([
           41.3907,
           2.1773
         ],
-        "description": "Black Swan sits just west of El Born near Arc de Triomf, but it earns a spot because hostel sources consistently highlight the social setup, tours, shared meals, and central transit reach. It is best for solo travelers who want an activity-forward hostel close to the Born without old-town noise at the door.",
+        "description": "Black Swan Hostel is an activity-forward, dorm-led social hostel near Arc de Triomf and El Born. Organized events and communal energy suit solo travelers, while the location avoids having the old town's busiest nightlife directly at the door.",
         "hours": {
           "mon": "24 hours",
           "tue": "24 hours",
@@ -5393,7 +5393,7 @@ export const barcelonaCoreGuides = withDiveBarChips([
     "seoTitle": "Best Hostels in Eixample, Barcelona",
     "seoDescription": "Best hostels in Eixample, Barcelona, including social hostels near Sagrada Familia, cocktail-friendly bases, central dorms, and calmer garden-style hostels near Passeig de Gracia.",
     "title": "Grid-Side Social Hostels",
-    "description": "Eixample hostels are for travelers who want the social parts of a hostel without the full old-town crush. Yeah Barcelona Hostel is the dependable anchor, Sant Jordi Rock Palace and Onefam Batllo bring stronger scene energy, and Barcelona Central Garden feels calmer and more grown-up. Primavera Hostel rounds it out for longer stays where transit and sleep both matter.",
+    "description": "Eixample hostels offer social common rooms, dorms, private rooms, and strong transit without the full old-town crush. Quieter properties suit longer stays where sleep matters.",
     "url": "https://www.google.com/maps/search/eixample+hostels+barcelona",
     "category": "Stay",
     "location": {
@@ -5440,7 +5440,7 @@ export const barcelonaCoreGuides = withDiveBarChips([
           41.3897,
           2.1608
         ],
-        "description": "Sant Jordi Rock Palace is the music-themed Eixample option with stronger group energy: rooftop pool, themed interiors, and easy reach to Passeig de Gracia and late-night central bars. It is better for travelers who want a polished social hostel than for anyone seeking quiet minimalism.",
+        "description": "Sant Jordi Rock Palace is a music-themed Eixample hostel with stronger group energy: rooftop pool, themed interiors, and easy reach to Passeig de Gracia and late-night central bars. It is better for a polished social hostel than for anyone seeking quiet minimalism.",
         "hours": {
           "mon": "24 hours",
           "tue": "24 hours",
@@ -5459,7 +5459,7 @@ export const barcelonaCoreGuides = withDiveBarChips([
           41.386,
           2.1604
         ],
-        "description": "Onefam Batllo is included for solo travelers who want structured social programming and a central Eixample base. Hostelworld signals tend to emphasize community, staff-led activities, and an easy walk to Casa Batllo and Passeig de Gracia, so it works as the social alternative to larger hostels.",
+        "description": "Onefam Batllo combines structured social programming, staff-led activities, and a central Eixample location near Casa Batllo and Passeig de Gracia. Its community focus distinguishes it from larger hostels.",
         "hours": {
           "mon": "24 hours",
           "tue": "24 hours",
@@ -5478,7 +5478,7 @@ export const barcelonaCoreGuides = withDiveBarChips([
           41.3905,
           2.171
         ],
-        "description": "Barcelona Central Garden is the calmer Eixample pick, useful for travelers who want a smaller hostel, terrace/garden feel, and central access without a party-hostel rhythm. It is a strong fit for couples, older backpackers, or first-time visitors who value sleep and walkability.",
+        "description": "Barcelona Central Garden is a calmer Eixample hotel, useful for a smaller hostel, terrace/garden feel, and central access without a party-hostel rhythm. It is a strong fit for couples, older backpackers, or first-time visitors who value sleep and walkability.",
         "hours": {
           "mon": "24 hours",
           "tue": "24 hours",
@@ -5536,7 +5536,7 @@ export const barcelonaCoreGuides = withDiveBarChips([
     "seoTitle": "Best Hostels in Gracia, Barcelona",
     "seoDescription": "Best hostels in Gracia, Barcelona, for village-like plazas, Park Guell access, social dorms, quieter hillside bases, and budget stays above Diagonal.",
     "title": "Village Hostel Bases",
-    "description": "Gracia hostels are a different Barcelona proposition: less stumble-out-the-door sightseeing, more plaza life and Park Guell mornings. Casa Gracia is the hybrid social base, Rocket and Factory lean backpacker, and Yeah Barcelona Hostel sits close enough to borrow from Eixample. Pick this area when the trip needs a neighborhood rhythm instead of constant old-city acceleration.",
+    "description": "Gracia hostels trade old-city sightseeing for plaza life, neighborhood bars, and easier access to Park Guell. The mix includes design-conscious social stays, traditional backpacker dorms, and Eixample-edge properties with stronger transport.",
     "url": "https://www.google.com/maps/search/gracia+hostels+barcelona",
     "category": "Stay",
     "location": {
@@ -5580,7 +5580,7 @@ export const barcelonaCoreGuides = withDiveBarChips([
           41.4108,
           2.1514
         ],
-        "description": "Rocket Hostels Gracia is the pure backpacker pick for travelers who want Park Guell access and a smaller, less central sleep base. It makes most sense for budget travelers who prefer quiet hillside nights over old-town nightlife at the door.",
+        "description": "Rocket Hostels Gracia is a pure backpacker hostel for Park Guell access and a smaller, less central sleep base. It makes most sense for budget travelers who prefer quiet hillside nights over old-town nightlife at the door.",
         "hours": {
           "mon": "24 hours",
           "tue": "24 hours",
@@ -5599,7 +5599,7 @@ export const barcelonaCoreGuides = withDiveBarChips([
           41.4124,
           2.1555
         ],
-        "description": "Factory Hostels is included for Park Guell and upper-Gracia positioning plus a quieter hostel rhythm. It is less useful for late-night city-center bar hopping, but strong for travelers prioritizing price, views, and morning access to Gaudi routes.",
+        "description": "Factory Hostels offers a quieter hostel rhythm near Park Guell and upper Gracia, with good prices, views, and morning access to Gaudi architecture. Late-night city-center bars are less convenient.",
         "hours": {
           "mon": "24 hours",
           "tue": "24 hours",
@@ -5618,7 +5618,7 @@ export const barcelonaCoreGuides = withDiveBarChips([
           41.3983,
           2.1654
         ],
-        "description": "Yeah Barcelona technically sits on the Eixample/Gracia edge, but it belongs in the Gracia hostel comparison because it is one of the strongest social hostels within easy walking distance of the neighborhood's lower plazas. Use it when social programming matters more than being deep inside Gracia.",
+        "description": "Yeah Barcelona sits on the Eixample-Gràcia edge with dorms, private rooms, communal dinners, tours, and a strong social atmosphere. The neighborhood's lower plazas are within easy walking distance.",
         "category": "Stay",
         "venueKind": "lodging",
         "lodgingType": "hostel",
@@ -5660,7 +5660,7 @@ export const barcelonaCoreGuides = withDiveBarChips([
     "seoTitle": "Best Hostels in Poble-sec, Barcelona",
     "seoDescription": "Best hostels in Poble-sec, Barcelona, for Parallel nightlife, Carrer de Blai tapas, Montjuic access, budget dorms, and social stays near Sala Apolo.",
     "title": "Parallel Backpacker Bases",
-    "description": "Poble-sec is where a hostel can plug straight into the night without paying old-town prices. Onefam Paralelo, HelloBCN, and Pars Teatro keep the social current close to Blai, Parallel, and Apolo, while Hostal Apolo gives a simpler bed near the same orbit. It is practical, a little scruffy, and very good for travelers who plan to be out late.",
+    "description": "Poble-sec hostels put social dorms and simpler private beds near Carrer de Blai, Parallel, and Sala Apolo without old-town pricing. The neighborhood suits late nights, though rooms and streets can feel busier and less polished than Eixample.",
     "url": "https://www.google.com/maps/search/poble+sec+hostels+barcelona",
     "category": "Stay",
     "location": {
@@ -5685,7 +5685,7 @@ export const barcelonaCoreGuides = withDiveBarChips([
           41.374,
           2.1658
         ],
-        "description": "Onefam Paralelo is the top Poble-sec hostel for solo travelers and people who want the hostel to organize the social side of the trip. Hostelworld signals consistently emphasize staff-led activities, community dinners, and the location near Carrer de Blai, Montjuic, and Sala Apolo.",
+        "description": "Onefam Paralelo is a community-first Poble-sec hostel for solo travelers, with staff-led activities, group dinners, and built-in social life near Carrer de Blai, Montjuic, and Sala Apolo.",
         "hours": {
           "mon": "24 hours",
           "tue": "24 hours",
@@ -5704,7 +5704,7 @@ export const barcelonaCoreGuides = withDiveBarChips([
           41.3752,
           2.1687
         ],
-        "description": "HelloBCN is the practical Parallel base: bigger, straightforward, and well positioned for metro access, Poble-sec tapas, and Apolo nights. It works when travelers want price, lockers, and simple dorm infrastructure over boutique character.",
+        "description": "HelloBCN is the practical Parallel base: bigger, straightforward, and well positioned for metro access, Poble-sec tapas, and Apolo nights.",
         "hours": {
           "mon": "24 hours",
           "tue": "24 hours",
@@ -5723,7 +5723,7 @@ export const barcelonaCoreGuides = withDiveBarChips([
           41.3761,
           2.1747
         ],
-        "description": "Pars Teatro sits closer to the port and Parallel edge and brings a more character-heavy backpacker feel. Source signals support it for social common spaces and a theatrical interior, making it a good fit for travelers who want personality and old-town reach.",
+        "description": "Pars Teatro sits closer to the port and Parallel edge and brings a more character-heavy backpacker feel. Source signals support it for social common spaces and a theatrical interior, making it a good fit for personality and old-town reach.",
         "hours": {
           "mon": "24 hours",
           "tue": "24 hours",
@@ -5742,7 +5742,7 @@ export const barcelonaCoreGuides = withDiveBarChips([
           41.3747,
           2.169
         ],
-        "description": "Hostal Apolo is not a classic party hostel, but it gives the Poble-sec set a low-cost private-room fallback beside Parallel and Sala Apolo. It is useful for travelers who want budget lodging and location but not a dorm-based social scene.",
+        "description": "Hostal Apolo is not a classic party hostel, but it gives the Poble-sec set a low-cost private-room fallback beside Parallel and Sala Apolo.",
         "hours": {
           "mon": "24 hours",
           "tue": "24 hours",
@@ -5781,7 +5781,7 @@ export const barcelonaCoreGuides = withDiveBarChips([
     "seoTitle": "Best Dive Bars in Eixample, Barcelona",
     "seoDescription": "Best dive bars in Eixample, Barcelona, covering local small bars, classic counters, vermouth spots, and lower-key late-night neighborhood drinking.",
     "title": "Low-Key Drinks on the Grid",
-    "description": "Eixample's low-key drinking hides in plain sight between the grand avenues. Morro Fi gives the vermouth-and-snack ritual, Bar Malasang keeps things casual, and Garage Beer Co. Universitat or BierCab move the night toward craft beer without turning it precious. Use this when you want a second stop after dinner, not a whole performance.",
+    "description": "Eixample's low-key drinking hides between the grand avenues in vermouth counters, casual neighborhood bars, and serious craft-beer rooms. These are conversation-first places where snacks and a well-poured drink matter more than spectacle.",
     "url": "https://www.google.com/maps/search/eixample+dive+bars+barcelona",
     "category": "Nightlife",
     "location": {
@@ -5806,7 +5806,7 @@ export const barcelonaCoreGuides = withDiveBarChips([
           41.3839,
           2.1576
         ],
-        "description": "Morro Fi gives the Eixample route a precise vermouth counter: house vermouth, conservas, gildas, and a room that feels local without needing to be hidden. Use it before dinner or as a short aperitif stop when the grid needs something more casual than cocktails.",
+        "description": "Morro Fi is a precise Eixample vermouth counter serving house vermouth, conservas, gildas, and other salty snacks in a compact local room.",
         "hours": {
           "mon": "12:00 PM-11:00 PM",
           "tue": "12:00 PM-11:00 PM",
@@ -5825,7 +5825,7 @@ export const barcelonaCoreGuides = withDiveBarChips([
           41.3891,
           2.1591
         ],
-        "description": "Bar Malasang keeps the Eixample list grounded with low lighting, vinyl energy, and a room that behaves more like a neighborhood hangout than a destination bar. It works best after dinner when you want one more drink without stepping into the city's polished cocktail circuit.",
+        "description": "Bar Malasang is a low-lit Eixample room with vinyl energy and the unforced character of a neighborhood hangout rather than a destination bar.",
         "hours": {
           "mon": "6:00 PM-12:30 AM",
           "tue": "6:00 PM-12:30 AM",
@@ -5844,7 +5844,7 @@ export const barcelonaCoreGuides = withDiveBarChips([
           41.3848,
           2.1585
         ],
-        "description": "Garage Beer Co. Universitat keeps the craft-beer slot current with house beers, rotating releases, guest taps, and a casual room on Consell de Cent. It is the right replacement-style pick when the guide needs something open, useful, and beer-led rather than another vermouth or cocktail stop.",
+        "description": "Garage Beer Co. Universitat pours its own beers, rotating releases, and guest taps in a casual Consell de Cent taproom. The focus stays firmly on contemporary craft brewing rather than vermouth or cocktail ceremony.",
         "hours": {
           "mon": "5:00 PM-12:00 AM",
           "tue": "5:00 PM-12:00 AM",
@@ -5922,7 +5922,7 @@ export const barcelonaCoreGuides = withDiveBarChips([
     "seoTitle": "Best Bars in Eixample, Barcelona",
     "seoDescription": "Best bars in Eixample, Barcelona, including classic cocktail rooms, speakeasy-style stops, high-demand nightlife, and central bars worth planning around.",
     "title": "Polished Nights Around Passeig",
-    "description": "This is Eixample dressed for a proper night out. Dry Martini carries the old Barcelona cocktail ritual, Sips brings the global ranking heat, and Bobby's Free turns the speakeasy idea into something playful rather than dusty. The Alchemix and Ideal Cocktail Bar make the route feel less like a checklist and more like a crawl through the city's polished drinking history.",
+    "description": "Eixample nightlife at its most polished: serious cocktails, historic drinking rooms, considered service, and bars whose interiors carry as much character as the glass.",
     "url": "https://www.google.com/maps/search/eixample+popular+bars+barcelona",
     "category": "Nightlife",
     "location": {
@@ -5947,7 +5947,7 @@ export const barcelonaCoreGuides = withDiveBarChips([
           41.3902,
           2.1552
         ],
-        "description": "Founded in Barcelona in 1978, Dry Martini is the Eixample classic for cocktail tradition, polished service, and a proper martini served with ceremony. It belongs in the guide as a global benchmark for elegant, old-school drinking rather than a novelty bar.",
+        "description": "Founded in Barcelona in 1978, Dry Martini is the Eixample classic for cocktail tradition, polished service, and a proper martini served with ceremony.",
         "hours": {
           "mon": "1:00 PM-2:30 AM",
           "tue": "1:00 PM-2:30 AM",
@@ -5966,7 +5966,7 @@ export const barcelonaCoreGuides = withDiveBarChips([
           41.3889,
           2.1567
         ],
-        "description": "Sips is the high-demand Eixample stop where the cocktail itself becomes the main event: precise, theatrical, and internationally recognized. Treat it as a planned reservation or queue-worthy destination, not a casual backup after dinner.",
+        "description": "Sips is a high-demand Eixample bar where the cocktail itself becomes the main event: precise, theatrical, and internationally recognized.",
         "hours": {
           "mon": "6:00 PM-12:30 AM",
           "tue": "6:00 PM-12:30 AM",
@@ -5985,7 +5985,7 @@ export const barcelonaCoreGuides = withDiveBarChips([
           41.3942,
           2.1595
         ],
-        "description": "Bobby's Free gives the guide its playful speakeasy slot, with the barbershop entrance and premium cocktails doing more than simple neighborhood-bar work. It is best for a group that wants a reveal, a queue-tolerant late start, and a more animated Eixample night.",
+        "description": "Bobby's Free hides a premium cocktail bar behind a playful barbershop entrance, bringing theatrical access to an otherwise polished Eixample drinks room.",
         "hours": {
           "mon": "6:00 PM-12:30 AM",
           "tue": "6:00 PM-12:30 AM",
@@ -6023,7 +6023,7 @@ export const barcelonaCoreGuides = withDiveBarChips([
           41.3886,
           2.1575
         ],
-        "description": "Ideal Cocktail Bar gives the Eixample set a classic room with old-school service, deep technique, and less spectacle than the newer destination bars. Use it for a calmer after-dinner plan when the drink quality matters but the night should not become a scene.",
+        "description": "Ideal Cocktail Bar gives the Eixample set a classic room with old-school service, deep technique, and less spectacle than the newer destination bars.",
         "hours": {
           "mon": "6:00 PM-12:30 AM",
           "tue": "6:00 PM-12:30 AM",
@@ -6086,7 +6086,7 @@ export const barcelonaCoreGuides = withDiveBarChips([
     "seoTitle": "Best Dive Bars in El Born, Barcelona",
     "seoDescription": "Best dive bars in El Born, Barcelona, for old-school cava, tapas counters, vermouth stops, wine bars, and smaller neighborhood drinking culture.",
     "title": "Cava Corners and Wine Dens",
-    "description": "El Born can do low-key without going quiet. El Xampanyet and Bar del Pla keep the night tied to cava, plates, and conversation, while Bar Sauvage and La Vinya del Senyor pull it toward wine. Bormuth and Casa Delfin are the practical middle ground: lively, central, and easy to fold into a dinner route.",
+    "description": "El Born drinking at a lower temperature, from cava counters and vermouth to natural wine, cocktails, and lively bars with enough food and seating to hold a group.",
     "url": "https://www.google.com/maps/search/el+born+dive+bars+barcelona",
     "category": "Nightlife",
     "location": {
@@ -6111,7 +6111,7 @@ export const barcelonaCoreGuides = withDiveBarChips([
           41.3847,
           2.1836
         ],
-        "description": "El Xampanyet is a short, loud Born classic: cava, anchovies, conservas, simple tapas, and a room that usually feels one order away from overflowing. Treat it as a salty pre-dinner or post-museum stop, not a slow meal.",
+        "description": "El Xampanyet is a packed, tile-lined Born cava counter serving anchovies, conservas, and simple salty tapas. The short, loud room moves quickly and rarely feels like a slow meal.",
         "hours": {
           "mon": "7:00 PM-11:00 PM",
           "tue": "12:00 PM-3:30 PM, 7:00 PM-11:00 PM",
@@ -6130,7 +6130,7 @@ export const barcelonaCoreGuides = withDiveBarChips([
           41.3857,
           2.1817
         ],
-        "description": "Bar del Pla gives the Born bar guide a food-led room where wine and dinner overlap naturally. It is the move when the night needs real plates before drifting into louder cocktail or bar stops nearby.",
+        "description": "Bar del Pla lets wine and dinner overlap naturally through creative Catalan small plates, seasonal cooking, and a lively Born dining room.",
         "hours": {
           "mon": "6:00 PM-12:30 AM",
           "tue": "6:00 PM-12:30 AM",
@@ -6149,7 +6149,7 @@ export const barcelonaCoreGuides = withDiveBarChips([
           41.3854,
           2.1813
         ],
-        "description": "Bar Sauvage adds a younger, design-forward cocktail pulse to the Born route without making the guide only about speakeasies. It works best later, when the old tapas counters start to feel too quiet and the group wants more movement.",
+        "description": "Bar Sauvage mixes cocktails from Latin spirits and fresh produce in a lively El Born party room. Music and movement build later in the evening.",
         "hours": {
           "mon": "6:00 PM-12:30 AM",
           "tue": "6:00 PM-12:30 AM",
@@ -6168,7 +6168,7 @@ export const barcelonaCoreGuides = withDiveBarChips([
           41.3839,
           2.1811
         ],
-        "description": "Bormuth is the reliable tapas-and-vermouth stop near Passeig del Born, useful because it keeps steady all-day turnover without requiring a delicate plan. It fits the guide as a practical group option when you want the Born's energy with a little more seating and food support.",
+        "description": "Bormuth is a lively El Born bar and restaurant with tapas, drinks, and enough seating and food to support a group.",
         "hours": {
           "mon": "12:00 PM-12:30 AM",
           "tue": "12:00 PM-12:30 AM",
@@ -6187,7 +6187,7 @@ export const barcelonaCoreGuides = withDiveBarChips([
           41.3834,
           2.1824
         ],
-        "description": "Casa Delfín gives the Born list a plaza-side classic for vermouth, tapas, and people-watching that can work from afternoon into night. Use it when the route needs an easy pause near the market and Santa Maria del Mar rather than a tightly timed cocktail booking.",
+        "description": "Casa Delfin is a plaza-side El Born classic serving vermouth and tapas with a steady view of neighborhood foot traffic from afternoon into night.",
         "hours": {
           "mon": "12:00 PM-12:30 AM",
           "tue": "12:00 PM-12:30 AM",
@@ -6206,7 +6206,7 @@ export const barcelonaCoreGuides = withDiveBarChips([
           41.3836,
           2.1828
         ],
-        "description": "La Vinya del Senyor is a wine-and-small-plates pause directly across from Santa Maria del Mar, ideal for a slower glass with tapas, cheese, conservas, and the basilica in view. Use it when the Born evening should stay elegant and conversational.",
+        "description": "La Vinya del Senyor is a wine-and-small-plates pause directly across from Santa Maria del Mar, ideal for a slower glass with tapas, cheese, conservas, and the basilica in view.",
         "hours": {
           "mon": "12:00 PM-11:00 PM",
           "tue": "12:00 PM-11:00 PM",
@@ -6257,7 +6257,7 @@ export const barcelonaCoreGuides = withDiveBarChips([
     "seoTitle": "Best Bars in El Born, Barcelona",
     "seoDescription": "Best bars in El Born, Barcelona, including destination cocktail bars, speakeasy-style rooms, high-traffic nightlife, and late-night spots with real momentum.",
     "title": "Born After-Dark Staples",
-    "description": "Born after dark is not subtle; it wants a door, a room, a story, and sometimes a wait. Paradiso is the headline, but Collage, Creps al Born, Dr. Stravinsky, Mariposa Negra, and Dux give the neighborhood more than one way to make cocktails feel like a main event. Use this when the night is meant to have a destination, not just a bar tab.",
+    "description": "El Born's destination bars turn cocktails into a full evening through hidden entrances, theatrical menus, gin-focused rooms, busy counters, and serious technique. Demand can mean queues, but the neighborhood has more depth than a single famous door.",
     "url": "https://www.google.com/maps/search/el+born+popular+bars+barcelona",
     "category": "Nightlife",
     "location": {
@@ -6282,7 +6282,7 @@ export const barcelonaCoreGuides = withDiveBarChips([
           41.3859,
           2.1822
         ],
-        "description": "Paradiso is the Born's headline cocktail stop: a hidden-door room with theatrical drinks, global recognition, and enough demand that the visit should be treated as the night's main event rather than a quick drink between stops.",
+        "description": "Paradiso is the Born's headline cocktail attraction: a hidden-door room with theatrical drinks, global recognition, and enough demand that the visit should be treated as the night's main event rather than a quick drink between stops.",
         "hours": {
           "mon": "6:00 PM-12:30 AM",
           "tue": "6:00 PM-12:30 AM",
@@ -6301,7 +6301,7 @@ export const barcelonaCoreGuides = withDiveBarChips([
           41.385,
           2.182
         ],
-        "description": "Collage Cocktail Bar gives the Born route a colorful craft-cocktail room that is easier to use with groups than the most in-demand trophy bars. It is a good later start when the night wants polish and energy without making the whole plan depend on one door.",
+        "description": "Collage Cocktail Bar is a colorful El Born craft-cocktail room with enough space and energy for groups, offering polished drinks without the neighborhood's most difficult trophy-bar queue.",
         "hours": {
           "mon": "6:00 PM-12:30 AM",
           "tue": "6:00 PM-12:30 AM",
@@ -6320,7 +6320,7 @@ export const barcelonaCoreGuides = withDiveBarChips([
           41.3844,
           2.182
         ],
-        "description": "Creps al Born is the lively Born staple for cocktails, crepes, and late-night looseness in one room. It works when the plan wants movement, music, and an easy social stop instead of a formal cocktail tasting.",
+        "description": "Creps al Born is the lively Born staple for cocktails, crepes, and late-night looseness in one room.",
         "hours": {
           "mon": "6:00 PM-12:30 AM",
           "tue": "6:00 PM-12:30 AM",
@@ -6339,7 +6339,7 @@ export const barcelonaCoreGuides = withDiveBarChips([
           41.3858,
           2.1804
         ],
-        "description": "Dr. Stravinsky gives the Born list a serious experimental-cocktail anchor, with in-house infusions, distillations, and signatures that reward attention. It works best for drinkers who want technique and flavor exploration more than a simple late-night crowd.",
+        "description": "Dr. Stravinsky is a serious El Born cocktail laboratory built around in-house infusions, distillations, and signatures that reward attention.",
         "hours": {
           "mon": "5:00 PM-2:00 AM",
           "tue": "5:00 PM-2:00 AM",
@@ -6358,7 +6358,7 @@ export const barcelonaCoreGuides = withDiveBarChips([
           41.3849,
           2.1819
         ],
-        "description": "Mariposa Negra adds a moodier destination-cocktail option to the Born route, with dramatic interior styling and enough demand to create a line. Use it when the evening wants atmosphere and visual impact without leaving the neighborhood's compact nightlife core.",
+        "description": "Mariposa Negra is a moody El Born cocktail bar with dramatic interior styling, destination-level drinks, and enough demand to create a line.",
         "hours": {
           "mon": "6:00 PM-12:30 AM",
           "tue": "6:00 PM-12:30 AM",
@@ -6377,7 +6377,7 @@ export const barcelonaCoreGuides = withDiveBarChips([
           41.3863,
           2.1807
         ],
-        "description": "Dux is a Born gin-and-cocktail bar with a polished but busy neighborhood feel, useful when the night needs a stylish drink without becoming a high-concept tasting session. Keep it as a flexible late stop for gin tonics, classics, and easy momentum.",
+        "description": "Dux is a polished, busy El Born bar focused on gin and cocktails. Gin and tonics and familiar classics make it less theatrical than the neighborhood's high-concept tasting rooms while still feeling sharper than a casual pub.",
         "hours": {
           "mon": "6:00 PM-12:30 AM",
           "tue": "6:00 PM-12:30 AM",
@@ -6432,7 +6432,7 @@ export const barcelonaCoreGuides = withDiveBarChips([
     "seoTitle": "Best Dive Bars in the Gothic Quarter, Barcelona",
     "seoDescription": "Best dive bars in the Gothic Quarter, Barcelona, from old-city counter bars and gritty classics to late-night locals with real neighborhood character.",
     "title": "Old-City Hideout Bars",
-    "description": "The Gothic Quarter is full of traps after dark, so the useful places are the ones with some scuff and a reason to exist. Bar La Plata and Bar Oviso keep the old-city counter feeling alive, Manchester and Nevermind bring the indie dive energy, and Bar Lobo is there when the group needs an easier landing. Els Quatre Gats adds the art-history glow without pretending the night is purely refined.",
+    "description": "Gothic Quarter nightlife is strongest in scuffed old bars, art-historical rooms, and small hideouts that retain a reason to exist beyond tourist footfall.",
     "url": "https://www.google.com/maps/search/gothic+quarter+dive+bars+barcelona",
     "category": "Nightlife",
     "location": {
@@ -6457,7 +6457,7 @@ export const barcelonaCoreGuides = withDiveBarChips([
           41.3818,
           2.1799
         ],
-        "description": "Bar La Plata is the Gothic Quarter's standing-bar anchor: short menu, fast service, and a vermouth rhythm that feels older than the surrounding tourist churn. Use it as a compact food-and-drink pause before the route turns toward darker late-night rooms.",
+        "description": "Bar La Plata is the Gothic Quarter's standing-bar: short menu, fast service, and a vermouth rhythm that feels older than the surrounding tourist churn.",
         "hours": {
           "mon": "12:00 PM-12:30 AM",
           "tue": "12:00 PM-12:30 AM",
@@ -6476,7 +6476,7 @@ export const barcelonaCoreGuides = withDiveBarChips([
           41.3828,
           2.1736
         ],
-        "description": "Manchester Bar is the Gothic Quarter stop for indie-rock atmosphere, dark-room drinking, and a less polished old-city crowd. It is best when the night needs music-bar texture rather than another cocktail-room performance.",
+        "description": "Manchester Bar is a Gothic Quarter bar for indie-rock atmosphere, dark-room drinking, and a less polished old-city crowd.",
         "hours": {
           "mon": "6:00 PM-12:30 AM",
           "tue": "6:00 PM-12:30 AM",
@@ -6495,7 +6495,7 @@ export const barcelonaCoreGuides = withDiveBarChips([
           41.3824,
           2.1739
         ],
-        "description": "Bar Oviso works as a compact Gothic starter: low-key beers, easy conversation, and enough old-city location value to make the next stop simple. Use it before live music, clubs, or a Born crossover when the night needs a relaxed first room.",
+        "description": "Bar Oviso is a compact Gothic starter: low-key beers, easy conversation, and enough old-city location value to make the next stop simple.",
         "hours": {
           "mon": "6:00 PM-12:30 AM",
           "tue": "6:00 PM-12:30 AM",
@@ -6514,7 +6514,7 @@ export const barcelonaCoreGuides = withDiveBarChips([
           41.3837,
           2.1711
         ],
-        "description": "Bar Lobo gives the Gothic guide a larger all-day fallback where early dinner can roll naturally into drinks. It is useful for mixed groups that need space, food, and centrality before deciding whether the night becomes a bar crawl.",
+        "description": "Bar Lobo is a larger all-day Gothic Quarter room serving food and drinks with enough seating to carry service from afternoon into evening.",
         "hours": {
           "mon": "12:00 PM-12:30 AM",
           "tue": "12:00 PM-12:30 AM",
@@ -6533,7 +6533,7 @@ export const barcelonaCoreGuides = withDiveBarChips([
           41.3814,
           2.1744
         ],
-        "description": "Nevermind is the Gothic Quarter's skate-and-grunge late stop, with loud music, casual drinks, and a rougher visual identity than the polished cocktail circuit. It fits when the night should feel young, noisy, and unfussy.",
+        "description": "Nevermind is a skate-and-grunge late bar with loud music, casual drinks, and a rough visual identity. It delivers young, noisy dive-bar energy rather than polished cocktail service.",
         "hours": {
           "mon": "6:00 PM-12:30 AM",
           "tue": "6:00 PM-12:30 AM",
@@ -6603,7 +6603,7 @@ export const barcelonaCoreGuides = withDiveBarChips([
     "seoTitle": "Best Bars in the Gothic Quarter, Barcelona",
     "seoDescription": "Best bars in the Gothic Quarter, Barcelona, including cocktail rooms, live-music venues, busy old-city nightlife, and Plaça Reial late-night anchors.",
     "title": "Plaça Reial Night Machines",
-    "description": "The Gothic Quarter's bigger nights orbit music, crowds, and rooms that have been collecting stories for years. Harlem Jazz Club and Jamboree give you live sound and Placa Reial gravity, while Pipa Club hides its speakeasy mood upstairs. Milk Bar & Bistro and Dow Jones Bar keep the guide loose enough for the kind of night that starts with a drink and becomes a plan.",
+    "description": "The Gothic Quarter's bigger nights orbit music, crowds, and rooms that have been collecting stories for years.",
     "url": "https://www.google.com/maps/search/gothic+quarter+popular+nightlife+barcelona",
     "category": "Nightlife",
     "location": {
@@ -6628,7 +6628,7 @@ export const barcelonaCoreGuides = withDiveBarChips([
           41.3799,
           2.1762
         ],
-        "description": "Milk Bar & Bistro is a Gothic Quarter brunch-and-cocktail room that can start with eggs, bagels, and comfort food before sliding into drinks. It is useful near Plaça Reial when the plan needs food first and nightlife second.",
+        "description": "Milk Bar & Bistro is an all-day Gothic Quarter room near Placa Reial serving eggs, bagels, comfort food, brunch cocktails, and later drinks.",
         "hours": {
           "mon": "6:00 PM-12:30 AM",
           "tue": "6:00 PM-12:30 AM",
@@ -6647,7 +6647,7 @@ export const barcelonaCoreGuides = withDiveBarChips([
           41.3819,
           2.176
         ],
-        "description": "Harlem Jazz Club gives the Gothic list a live-music anchor with jazz, funk, and touring sets in the old city core. Check the bill first, then use it when the night should be organized around a performance instead of another bar queue.",
+        "description": "Harlem Jazz Club programs jazz, funk, and touring live sets in an intimate room in the old-city core.",
         "hours": {
           "mon": "6:00 PM-12:30 AM",
           "tue": "6:00 PM-12:30 AM",
@@ -6666,7 +6666,7 @@ export const barcelonaCoreGuides = withDiveBarChips([
           41.3816,
           2.1752
         ],
-        "description": "Dow Jones Bar adds a deliberately chaotic concept stop, with drink prices moving like a stock exchange ticker and the crowd reacting to the board. It is best for groups that want novelty and energy rather than a refined cocktail room.",
+        "description": "Dow Jones Bar adds a deliberately chaotic concept stop, with drink prices moving like a stock exchange ticker and the crowd reacting to the board.",
         "hours": {
           "mon": "6:00 PM-12:30 AM",
           "tue": "6:00 PM-12:30 AM",
@@ -6685,7 +6685,7 @@ export const barcelonaCoreGuides = withDiveBarChips([
           41.381,
           2.1766
         ],
-        "description": "Pipa Club is Barcelona's hidden speakeasy-style room for craft cocktails, live music, and a touch of 1920s elegance behind an unassuming entrance. Use it when the Gothic night should feel tucked away, stylish, and performance-friendly.",
+        "description": "Pipa Club is Barcelona's hidden speakeasy-style room for craft cocktails, live music, and a touch of 1920s elegance behind an unassuming entrance.",
         "hours": {
           "mon": "6:00 PM-12:30 AM",
           "tue": "6:00 PM-12:30 AM",
@@ -6704,7 +6704,7 @@ export const barcelonaCoreGuides = withDiveBarChips([
           41.3802,
           2.1757
         ],
-        "description": "Jamboree belongs in the Gothic popular list as a Plaça Reial institution with decades of jazz, live music, and late club programming behind it. Check the night's format, because it can function as a concert stop or the final dance-floor move.",
+        "description": "Jamboree is a Plaça Reial institution with decades of jazz, live music, and late club programming behind it. Check the night's format, because the room can operate as a seated concert venue or a full dance floor.",
         "hours": {
           "mon": "10:00 PM-2:30 AM",
           "tue": "10:00 PM-2:30 AM",
@@ -6754,7 +6754,7 @@ export const barcelonaCoreGuides = withDiveBarChips([
     "seoTitle": "Best Dive Bars in Gràcia, Barcelona",
     "seoDescription": "Best dive bars in Gràcia, Barcelona, covering smaller neighborhood bars, bodegas, natural-wine stops, vermouth rooms, and relaxed late-night hangouts.",
     "title": "Village Bars with Regulars",
-    "description": "Gracia's casual bars feel best when you are not trying to conquer the night. Bar Canigo and Bodega Quimet bring vermouth, tapas, and neighborhood regularity, La Fourmi keeps the plaza-adjacent ease, and Bar Torpedo gives the route a sharper little jolt. Bar Salvatge pushes the list toward natural wine and cheese without losing the storefront funk.",
+    "description": "Gracia's casual bars feel best when you are not trying to conquer the night.",
     "url": "https://www.google.com/maps/search/gracia+dive+bars+barcelona",
     "category": "Nightlife",
     "location": {
@@ -6779,7 +6779,7 @@ export const barcelonaCoreGuides = withDiveBarChips([
           41.4012,
           2.1609
         ],
-        "description": "Bar Canigó is a Gràcia all-day staple: breakfast and lunch early, then tapas, vermouth, and casual beers as the plaza rhythm takes over. It works because it feels like a neighborhood routine, not a destination cocktail room.",
+        "description": "Bar Canigó is a Gracia all-day staple, moving from breakfast and lunch to tapas, vermouth, and casual beer as the plaza fills. Regulars and routine matter more than destination-cocktail polish.",
         "hours": {
           "mon": "12:00 PM-11:00 PM",
           "tue": "12:00 PM-11:00 PM",
@@ -6817,7 +6817,7 @@ export const barcelonaCoreGuides = withDiveBarChips([
           41.4026,
           2.1582
         ],
-        "description": "La Fourmi gives the route a softer social bar: relaxed service, low-pressure drinks, and enough neighborhood warmth to stretch a post-dinner stop into a longer conversation. It is useful when the group wants atmosphere without a big-night agenda.",
+        "description": "La Fourmi is a relaxed Gracia social bar with low-pressure drinks, informal service, and the warmth of a neighborhood room built for conversation. It suits groups that want atmosphere without club volume or cocktail ceremony.",
         "hours": {
           "mon": "6:00 PM-12:30 AM",
           "tue": "6:00 PM-12:30 AM",
@@ -6836,7 +6836,7 @@ export const barcelonaCoreGuides = withDiveBarChips([
           41.3998,
           2.1575
         ],
-        "description": "Bar Torpedo is the compact late stop for when Gràcia's slower evening needs a little momentum. The appeal is not polish; it is tight-room energy, upbeat music, and a crowd that makes sense after plaza drinks or a casual dinner nearby.",
+        "description": "Bar Torpedo is a compact late bar for when Gràcia's slower evening needs a little momentum.",
         "hours": {
           "mon": "6:00 PM-12:30 AM",
           "tue": "6:00 PM-12:30 AM",
@@ -6855,7 +6855,7 @@ export const barcelonaCoreGuides = withDiveBarChips([
           41.4021,
           2.1611
         ],
-        "description": "Bar Salvatge is a funky, rustic-chic Gràcia storefront where natural wines meet local cuisine, cheeses, and snackable plates. It belongs in the guide for drinkers who want wine to lead the night without losing the food side.",
+        "description": "Bar Salvatge is a funky, rustic-chic Gràcia storefront where natural wines meet local cuisine, cheeses, and snackable plates.",
         "hours": {
           "mon": "6:00 PM-12:30 AM",
           "tue": "6:00 PM-12:30 AM",
@@ -6906,7 +6906,7 @@ export const barcelonaCoreGuides = withDiveBarChips([
     "seoTitle": "Best Bars in Gràcia, Barcelona",
     "seoDescription": "Best bars in Gràcia, Barcelona, including plaza nightlife, independent music rooms, classic cocktail spots, and stronger destination bars with event pull.",
     "title": "Gràcia Nights That Travel",
-    "description": "Gracia's destination nights still feel smaller and more local than the center, which is the point. Sol de Nit and Heliogabal keep the plaza-and-music current alive, Bobby Gin and La Whiskeria make the drinks more deliberate, and Elephanta adds a neighborhood bar with its own following. The Original Old Fashioned gives the guide a speakeasy-styled finish without dragging you back downtown.",
+    "description": "Gracia's destination nights still feel smaller and more local than the center, which is the point.",
     "url": "https://www.google.com/maps/search/gracia+popular+nightlife+barcelona",
     "category": "Nightlife",
     "location": {
@@ -6931,7 +6931,7 @@ export const barcelonaCoreGuides = withDiveBarChips([
           41.4014,
           2.1577
         ],
-        "description": "Sol de Nit anchors the Gràcia popular route with plaza energy, terrace spill, and a crowd that makes sense before the night moves indoors. Use it as the social first stop when the neighborhood's squares are part of the appeal.",
+        "description": "Sol de Nit is a popular Gracia plaza bar defined by terrace spill, a social crowd, and casual drinks in the open air.",
         "hours": {
           "mon": "6:00 PM-12:30 AM",
           "tue": "6:00 PM-12:30 AM",
@@ -6950,7 +6950,7 @@ export const barcelonaCoreGuides = withDiveBarChips([
           41.4029,
           2.1588
         ],
-        "description": "Heliogàbal is the Gràcia music-room anchor, pairing independent programming with a bar scale that still feels neighborhood-specific. Check the schedule and use it when the night should revolve around a small live set rather than a generic drinks plan.",
+        "description": "Heliogàbal is a Gràcia music-room bar, pairing independent programming with a bar scale that still feels neighborhood-specific.",
         "hours": {
           "mon": "6:00 PM-12:30 AM",
           "tue": "6:00 PM-12:30 AM",
@@ -6988,7 +6988,7 @@ export const barcelonaCoreGuides = withDiveBarChips([
           41.4036,
           2.1585
         ],
-        "description": "La Whiskeria is a cocktail bar with a whisky backbone: long-bar seating, classic mixed drinks, and a more deliberate drinking pace than the plaza bars nearby. Use it for spirits depth without giving up a proper cocktail-bar feel.",
+        "description": "La Whiskeria is a cocktail bar with a whisky backbone, long-bar seating, classic mixed drinks, and a more deliberate pace than the nearby plaza bars. Its spirits depth does not sacrifice proper cocktail service.",
         "hours": {
           "mon": "6:00 PM-12:30 AM",
           "tue": "6:00 PM-12:30 AM",
@@ -7007,7 +7007,7 @@ export const barcelonaCoreGuides = withDiveBarChips([
           41.4028,
           2.1576
         ],
-        "description": "Elephanta gives the Gràcia list a cozy gin-and-cocktail room with softer lighting and a strong neighborhood following. It is best for a slower destination drink when you want the area to feel local but still a little elevated.",
+        "description": "Elephanta gives the Gràcia list a cozy gin-and-cocktail room with softer lighting and a strong neighborhood following.",
         "hours": {
           "mon": "6:00 PM-12:30 AM",
           "tue": "6:00 PM-12:30 AM",
@@ -7026,7 +7026,7 @@ export const barcelonaCoreGuides = withDiveBarChips([
           41.3981,
           2.1596
         ],
-        "description": "The Original Old Fashioned is a tiny speakeasy-inspired Gràcia cocktail bar built around old-fashioneds, whisky, gin, and careful classics. Use it as a deliberate final drink rather than a loud crawl stop.",
+        "description": "The Original Old Fashioned is a tiny speakeasy-inspired Gràcia cocktail bar built around old-fashioneds, whisky, gin, and careful classics.",
         "hours": {
           "mon": "6:00 PM-12:30 AM",
           "tue": "6:00 PM-12:30 AM",
@@ -7089,7 +7089,7 @@ export const barcelonaCoreGuides = withDiveBarChips([
     "seoTitle": "Best Dive Bars in Poble-sec, Barcelona",
     "seoDescription": "Best dive bars in Poble-sec, Barcelona, from old-school bodegas and Carrer de Blai pintxos stops to standing-room tapas bars and neighborhood drinks.",
     "title": "Bodega Crawl on Blai",
-    "description": "Poble-sec is built for the kind of night where dinner and drinking stop being separate categories. Bodega Salto, La Tasqueta de Blai, and Quimet & Quimet give you the bottles, montaditos, and standing-room momentum, while Abirradero brings beer into the mix. La Platilleria keeps the crawl from becoming pure grazing by giving it a proper small-plates anchor.",
+    "description": "Poble-sec nightlife lets small plates, vermouth, wine, and bar drinking share the same streets. Blai's counters stay casual while more substantial kitchens keep the area from becoming pure grazing.",
     "url": "https://www.google.com/maps/search/poble+sec+dive+bars+barcelona",
     "category": "Nightlife",
     "location": {
@@ -7114,7 +7114,7 @@ export const barcelonaCoreGuides = withDiveBarChips([
           41.3726,
           2.1673
         ],
-        "description": "Bodega Saltó is the Poble-sec character anchor, with eccentric decor, old-bodega energy, and a room that feels more bohemian than polished. It works best before or after Carrer de Blai when the route needs personality, not just pintxos volume.",
+        "description": "Bodega Saltó is a Poble-sec character bar, with eccentric decor, old-bodega energy, and a room that feels more bohemian than polished.",
         "hours": {
           "mon": "6:00 PM-12:30 AM",
           "tue": "6:00 PM-12:30 AM",
@@ -7139,7 +7139,7 @@ export const barcelonaCoreGuides = withDiveBarChips([
           41.3737,
           2.1669
         ],
-        "description": "La Tasqueta de Blai is the practical pintxos stop for understanding why Carrer de Blai works as a crawl street. It is crowded and direct, so use it for quick bites and momentum rather than a lingering dinner.",
+        "description": "La Tasqueta de Blai explains Carrer de Blai through crowded counters, inexpensive pintxos, and quick turnover. The format favors several fast bites over a lingering dinner.",
         "hours": {
           "mon": "6:00 PM-12:30 AM",
           "tue": "6:00 PM-12:30 AM",
@@ -7164,7 +7164,7 @@ export const barcelonaCoreGuides = withDiveBarChips([
           41.3738,
           2.1635
         ],
-        "description": "Quimet & Quimet is the Poble-sec institution: standing-only, bottle-lined, and built around montaditos that justify the stop even on a short route. Go early, keep the visit compact, and let it launch the rest of the Blai or Paral·lel evening.",
+        "description": "Go early, keep the visit compact, and let it launch the rest of the Blai or Paral·lel evening.",
         "hours": {
           "mon": "12:00 PM-11:00 PM",
           "tue": "12:00 PM-11:00 PM",
@@ -7189,7 +7189,7 @@ export const barcelonaCoreGuides = withDiveBarChips([
           41.374,
           2.1703
         ],
-        "description": "Abirradero broadens the Poble-sec crawl beyond vermouth and pintxos with craft beer, casual food, and a taproom pace. It is useful when the group wants a sit-down reset before deciding whether the night heads toward Apolo.",
+        "description": "Abirradero broadens the Poble-sec crawl beyond vermouth and pintxos with craft beer, casual food, and a taproom pace.",
         "hours": {
           "mon": "12:00 PM-12:30 AM",
           "tue": "12:00 PM-12:30 AM",
@@ -7214,7 +7214,7 @@ export const barcelonaCoreGuides = withDiveBarChips([
           41.3746,
           2.1658
         ],
-        "description": "La Platilleria gives the Poble-sec set a warmer small-plates rhythm, where dinner can stay casual and still feel chosen. Use it when the group wants food, conversation, and a neighborhood room before the late-night options take over.",
+        "description": "La Platilleria gives the Poble-sec set a warmer small-plates rhythm, where dinner can stay casual and still feel chosen.",
         "hours": {
           "mon": "6:00 PM-12:30 AM",
           "tue": "6:00 PM-12:30 AM",
@@ -7275,7 +7275,7 @@ export const barcelonaCoreGuides = withDiveBarChips([
     "seoTitle": "Best Bars in Poble-sec, Barcelona",
     "seoDescription": "Best bars in Poble-sec, Barcelona, including club anchors, queer-friendly cocktail rooms, theater-adjacent nightlife, and bigger venues with citywide draw.",
     "title": "Apolo Orbit and Big Nights",
-    "description": "Poble-sec gets louder as you move toward Parallel, where the night can turn theatrical, queer, electronic, or just very late. La Federica gives the guide a warm neighborhood-bar entry, Sala Apolo is the big-room institution, and LAUT carries the clubbier underground edge. Tinta Roja and Plataforma add cabaret, performance, and dance-floor voltage to the Apolo orbit.",
+    "description": "Poble-sec gets louder as you move toward Parallel, where the night can turn theatrical, queer, electronic, or just very late. Tinta Roja and Plataforma add cabaret, performance, and dance-floor voltage to the Apolo orbit.",
     "url": "https://www.google.com/maps/search/poble+sec+popular+nightlife+barcelona",
     "category": "Nightlife",
     "location": {
@@ -7300,7 +7300,7 @@ export const barcelonaCoreGuides = withDiveBarChips([
           41.3736,
           2.1675
         ],
-        "description": "La Federica is a laid-back LGBTQ haunt for cocktails, tapas, music, and regular exhibitions by local artists. It works as a warm Poble-sec starter before the night moves toward clubs, cabaret, or Paral·lel.",
+        "description": "La Federica is a laid-back LGBTQ haunt for cocktails, tapas, music, and regular exhibitions by local artists.",
         "hours": {
           "mon": "6:00 PM-12:30 AM",
           "tue": "6:00 PM-12:30 AM",
@@ -7319,7 +7319,7 @@ export const barcelonaCoreGuides = withDiveBarChips([
           41.3752,
           2.1696
         ],
-        "description": "Sala Apolo is the Poble-sec heavyweight: a multi-room club and concert institution with electronic, indie, and citywide programming pull. Check the lineup and use it as the final anchor, because it can define the whole night.",
+        "description": "Sala Apolo is a multi-room Poble-sec club and concert institution programming electronic music, indie nights, and live shows through changing promoters. The event calendar, not casual drop-in bar service, determines the experience.",
         "hours": {
           "mon": "10:00 PM-2:30 AM",
           "tue": "10:00 PM-2:30 AM",
@@ -7357,7 +7357,7 @@ export const barcelonaCoreGuides = withDiveBarChips([
           41.3717,
           2.1655
         ],
-        "description": "Tinta Roja is a 1920s-style theater cafe in a former dairy, with tango, Latin music, cabaret, and artistic events shaping the night. Check the schedule and use it when Poble-sec should mean performance, not just bar-hopping.",
+        "description": "Tinta Roja is a 1920s-style theater cafe in a former dairy, with tango, Latin music, cabaret, and artistic events shaping the night.",
         "hours": {
           "mon": "Event schedule (check venue)",
           "tue": "Event schedule (check venue)",
@@ -7376,7 +7376,7 @@ export const barcelonaCoreGuides = withDiveBarChips([
           41.3742,
           2.1673
         ],
-        "description": "Plataforma gives the Poble-sec list a less polished late-club finish, with alternative, pop, rock, and throwback DJ nights above Paral·lel. Use it when the group wants dancing without the larger commitment or production scale of Apolo.",
+        "description": "Plataforma is a less polished late club above Parallel, programming alternative, pop, rock, and throwback DJ nights.",
         "hours": {
           "mon": "10:00 PM-2:30 AM",
           "tue": "10:00 PM-2:30 AM",
@@ -7451,7 +7451,7 @@ export const barcelonaCoreGuides = withDiveBarChips([
     "seoTitle": "Best Dive Bars in Barcelona",
     "seoDescription": "Best dive bars in Barcelona, pulling 10 smaller bar picks from Eixample, El Born, the Gothic Quarter, Gràcia, Raval, and Poble-sec.",
     "title": "Cellars, Counters, and Late-Night Regulars",
-    "description": "This is the Barcelona bar crawl for people who care more about character than polish. Bar Marsella brings absinthe history and old-room decay, Bar La Plata, El Xampanyet, and Quimet & Quimet keep the counters salty and fast, and Manchester, Nevermind, Bar Malasang, Bodega Quimet, Bar Canigo, and Bodega Salto add the neighborhood rooms that make the route feel lived-in.",
+    "description": "This is the Barcelona bar crawl for people who care more about character than polish.",
     "url": "https://www.google.com/maps/search/best+dive+bars+barcelona",
     "category": "Nightlife",
     "location": {
@@ -7475,7 +7475,7 @@ export const barcelonaCoreGuides = withDiveBarChips([
           41.3852,
           2.1619
         ],
-        "description": "Bar Marsella is the Raval-edge pick because it brings the strongest old-Barcelona dive-bar identity in the citywide set: absinthe history, worn-in rooms, late-night traffic, and enough grit to counter polished cocktail Barcelona. Use it as a late, atmospheric stop when the citywide route needs texture rather than refinement.",
+        "description": "Bar Marsella is a Raval-edge bar because it brings the strongest old-Barcelona dive-bar identity in the citywide set: absinthe history, worn-in rooms, late-night traffic, and enough grit to counter polished cocktail Barcelona.",
         "hours": {
           "mon": "6:00 PM-12:30 AM",
           "tue": "6:00 PM-12:30 AM",
@@ -7500,7 +7500,7 @@ export const barcelonaCoreGuides = withDiveBarChips([
           41.3847,
           2.1836
         ],
-        "description": "El Xampanyet is not a dive in the rough-edged sense; it is the packed, salty, old-school cava counter that gives a bar route texture. The move is anchovies, conservas, a glass, and then back into the Born.",
+        "description": "El Xampanyet is a packed old-school El Born cava counter for anchovies, conservas, salty snacks, and quick glasses in a tile-lined room.",
         "hours": {
           "mon": "7:00 PM-11:00 PM",
           "tue": "12:00 PM-3:30 PM, 7:00 PM-11:00 PM",
@@ -7525,7 +7525,7 @@ export const barcelonaCoreGuides = withDiveBarChips([
           41.3818,
           2.1799
         ],
-        "description": "Bar La Plata is the Gothic Quarter pick for travelers who want an old-city bar that does not need a concept. The draw is a short historic menu, house wine/vermouth rhythm, fast service, and a room that still feels specific rather than generic despite its central location.",
+        "description": "Bar La Plata is a Gothic Quarter bar for an old-city bar that does not need a concept. The draw is a short historic menu, house wine/vermouth rhythm, fast service, and a room that still feels specific rather than generic despite its central location.",
         "hours": {
           "mon": "12:00 PM-12:30 AM",
           "tue": "12:00 PM-12:30 AM",
@@ -7550,7 +7550,7 @@ export const barcelonaCoreGuides = withDiveBarChips([
           41.4012,
           2.1609
         ],
-        "description": "Bar Canigó is a Gràcia all-day staple: breakfast and lunch early, then tapas, vermouth, and casual beers as the plaza rhythm takes over. It works because it feels like a neighborhood routine, not a destination cocktail room.",
+        "description": "Bar Canigó is a Gracia all-day staple, moving from breakfast and lunch to tapas, vermouth, and casual beer as the plaza fills. Regulars and routine matter more than destination-cocktail polish.",
         "hours": {
           "mon": "12:00 PM-11:00 PM",
           "tue": "12:00 PM-11:00 PM",
@@ -7575,7 +7575,7 @@ export const barcelonaCoreGuides = withDiveBarChips([
           41.3738,
           2.1635
         ],
-        "description": "Quimet & Quimet is the Poble-sec anchor because it is small, standing-only, and deeply tied to the neighborhood's bottle-and-montadito culture. It is more famous than hidden, but the format is still pure Barcelona: quick pours, tight space, exceptional tins, and a crowd that turns food into bar energy.",
+        "description": "Quimet & Quimet is a Poble-sec bar because it is small, standing-only, and deeply tied to the neighborhood's bottle-and-montadito culture. It is more famous than hidden, but the format is still pure Barcelona: quick pours, tight space, exceptional tins, and a crowd that turns food into bar energy.",
         "hours": {
           "mon": "12:00 PM-11:00 PM",
           "tue": "12:00 PM-11:00 PM",
@@ -7600,7 +7600,7 @@ export const barcelonaCoreGuides = withDiveBarChips([
           41.3726,
           2.1673
         ],
-        "description": "Bodega Saltó is the Poble-sec character pick: eccentric decor, old-bodega energy, and a room that feels bohemian instead of polished. It belongs in the citywide set because it gives the crawl a true neighborhood-bar stop after the better-known counters.",
+        "description": "Bodega Saltó is a Poble-sec character bar: eccentric decor, old-bodega energy, and a room that feels bohemian instead of polished.",
         "hours": {
           "mon": "6:00 PM-12:30 AM",
           "tue": "6:00 PM-12:30 AM",
@@ -7625,7 +7625,7 @@ export const barcelonaCoreGuides = withDiveBarChips([
           41.3828,
           2.1736
         ],
-        "description": "Manchester Bar is the Gothic Quarter pick for indie-rock atmosphere, dark-room drinking, and a less polished old-city crowd. It gives the route a music-bar edge when the night needs texture rather than another cocktail-room performance.",
+        "description": "Manchester Bar is a Gothic Quarter bar for indie-rock atmosphere, dark-room drinking, and a less polished old-city crowd.",
         "hours": {
           "mon": "6:00 PM-12:30 AM",
           "tue": "6:00 PM-12:30 AM",
@@ -7650,7 +7650,7 @@ export const barcelonaCoreGuides = withDiveBarChips([
           41.3814,
           2.1744
         ],
-        "description": "Nevermind is the skate-and-grunge late stop, with loud music, casual drinks, and a rougher visual identity than the polished Barcelona bar circuit. It is the right citywide pick when the search intent is actually dive-bar energy.",
+        "description": "Nevermind is a skate-and-grunge late bar with loud music, casual drinks, and a rough visual identity. It delivers young, noisy dive-bar energy rather than polished cocktail service.",
         "hours": {
           "mon": "6:00 PM-12:30 AM",
           "tue": "6:00 PM-12:30 AM",
@@ -7675,7 +7675,7 @@ export const barcelonaCoreGuides = withDiveBarChips([
           41.4041,
           2.156
         ],
-        "description": "Bodega Quimet brings the Gràcia bodega lane into the citywide guide: house vermouth, shelves of bottles, conservas, cheese, and early-evening grazing without destination-bar polish. It is quieter than the late stops, but very useful for the crawl's neighborhood credibility.",
+        "description": "Bodega Quimet serves house vermouth, conservas, cheese, and early-evening plates among shelves of bottles in Gràcia. The room is quieter than late-night bars and firmly neighborhood-led.",
         "hours": {
           "mon": "12:00 PM-11:00 PM",
           "tue": "12:00 PM-11:00 PM",
@@ -7700,7 +7700,7 @@ export const barcelonaCoreGuides = withDiveBarChips([
           41.3891,
           2.1591
         ],
-        "description": "Bar Malasang gives Eixample a low-lit, vinyl-leaning neighborhood hangout that behaves more like a regulars' room than a destination cocktail bar. It is a strong middle stop when the citywide route needs something loose, social, and unfussy.",
+        "description": "Bar Malasang gives Eixample a low-lit, vinyl-leaning neighborhood hangout that behaves more like a regulars' room than a destination cocktail bar.",
         "hours": {
           "mon": "6:00 PM-12:30 AM",
           "tue": "6:00 PM-12:30 AM",
@@ -7753,7 +7753,7 @@ export const barcelonaCoreGuides = withDiveBarChips([
     "seoTitle": "Best Bars in Barcelona",
     "seoDescription": "Best bars in Barcelona, aggregating the biggest destination cocktail rooms, live-music spots, and high-demand nightlife picks from each neighborhood guide.",
     "title": "Cocktails, Clubs, and Rooms With Gravity",
-    "description": "Barcelona destination nightlife is not one scene; it is a handful of rooms people willingly cross town for. Sips and Paradiso carry the cocktail-world spotlight, Jamboree brings the Placa Reial music pull, Heliogabal keeps Gracia's independent edge alive, and Sala Apolo is the late-night machine in Poble-sec. Use this when the night needs a plan, not just another open tab.",
+    "description": "Barcelona's destination nightlife spans major concert halls, multi-room clubs, listening spaces, and bars with distinctive music or drinks. Programming and room character justify the journey across town.",
     "url": "https://www.google.com/maps/search/best+bars+barcelona",
     "category": "Nightlife",
     "location": {
@@ -7796,7 +7796,7 @@ export const barcelonaCoreGuides = withDiveBarChips([
           41.3859,
           2.1822
         ],
-        "description": "Paradiso is the Born's headline cocktail stop: a hidden-door room with theatrical drinks, global recognition, and enough demand that the visit should be treated as the night's main event rather than a quick drink between stops.",
+        "description": "Paradiso is the Born's headline cocktail attraction: a hidden-door room with theatrical drinks, global recognition, and enough demand that the visit should be treated as the night's main event rather than a quick drink between stops.",
         "hours": {
           "mon": "6:00 PM-12:30 AM",
           "tue": "6:00 PM-12:30 AM",
@@ -7815,7 +7815,7 @@ export const barcelonaCoreGuides = withDiveBarChips([
           41.3802,
           2.1757
         ],
-        "description": "Jamboree is the Gothic Quarter representative because it turns Plaça Reial into a late-night music anchor. It belongs in a citywide guide for travelers who want Barcelona nightlife to include live sets, club programming, and a room with institutional memory.",
+        "description": "Jamboree turns Plaça Reial into a late-night music room with live sets, club programming, and decades of institutional memory. The format changes by event, from jazz and concerts to DJs and dancing.",
         "hours": {
           "mon": "10:00 PM-2:30 AM",
           "tue": "10:00 PM-2:30 AM",
@@ -7834,7 +7834,7 @@ export const barcelonaCoreGuides = withDiveBarChips([
           41.4029,
           2.1588
         ],
-        "description": "Heliogàbal is the Gràcia pick because it brings independent music and neighborhood bar culture together in a way that feels specific to the district. It is smaller than the big old-city venues, but the event pull and local music identity make it a real destination.",
+        "description": "Heliogàbal is a Gràcia bar because it brings independent music and neighborhood bar culture together in a way that feels specific to the district. It is smaller than the big old-city venues, but the event pull and local music identity make it a real destination.",
         "hours": {
           "mon": "6:00 PM-12:30 AM",
           "tue": "6:00 PM-12:30 AM",
@@ -7853,7 +7853,7 @@ export const barcelonaCoreGuides = withDiveBarChips([
           41.3752,
           2.1696
         ],
-        "description": "Sala Apolo is the Poble-sec pick and the city's large-format nightlife anchor in this set. It works for club nights, concerts, and late plans that need more than a bar stool, especially when the evening is already moving along Paral·lel or Carrer de Blai.",
+        "description": "Sala Apolo is a multi-room Poble-sec club and concert institution programming electronic music, indie nights, and live shows through changing promoters. The event calendar, not casual drop-in bar service, determines the experience.",
         "hours": {
           "mon": "10:00 PM-2:30 AM",
           "tue": "10:00 PM-2:30 AM",
@@ -7872,7 +7872,7 @@ export const barcelonaCoreGuides = withDiveBarChips([
           41.3902,
           2.1552
         ],
-        "description": "Dry Martini adds old-school cocktail tradition to the citywide nightlife guide: polished service, a proper martini, and a room that works when the night should feel classic rather than theatrical.",
+        "description": "Dry Martini preserves old-school cocktail tradition through polished service, a properly made namesake drink, and a room that feels classic rather than theatrical.",
         "hours": {
           "mon": "1:00 PM-2:30 AM",
           "tue": "1:00 PM-2:30 AM",
@@ -7891,7 +7891,7 @@ export const barcelonaCoreGuides = withDiveBarChips([
           41.3858,
           2.1804
         ],
-        "description": "Dr. Stravinsky brings a serious experimental-cocktail lane to the Born side of the guide, with in-house infusions, distillations, and signatures for drinkers who want technique and flavor exploration.",
+        "description": "Dr. Stravinsky builds experimental cocktails from in-house infusions, ferments, and distillations in a compact Born room. Technique matters here, but the signatures remain focused on flavor rather than laboratory theater.",
         "hours": {
           "mon": "5:00 PM-2:00 AM",
           "tue": "5:00 PM-2:00 AM",
@@ -7910,7 +7910,7 @@ export const barcelonaCoreGuides = withDiveBarChips([
           41.3942,
           2.1595
         ],
-        "description": "Bobby's Free gives the guide a playful speakeasy slot, with the barbershop entrance and premium cocktails doing more than simple neighborhood-bar work.",
+        "description": "Bobby's Free hides a premium cocktail bar behind a playful barbershop entrance, bringing theatrical access to an otherwise polished Eixample drinks room.",
         "hours": {
           "mon": "6:00 PM-12:30 AM",
           "tue": "6:00 PM-12:30 AM",
@@ -7929,7 +7929,7 @@ export const barcelonaCoreGuides = withDiveBarChips([
           41.385,
           2.182
         ],
-        "description": "Collage Cocktail Bar is a colorful Born craft-cocktail room that is easier to use with groups than the most in-demand trophy bars. It works when the night wants polish without depending on one door.",
+        "description": "Collage Cocktail Bar is a colorful Born craft-cocktail room that is easier to use with groups than the most in-demand trophy bars.",
         "hours": {
           "mon": "6:00 PM-12:30 AM",
           "tue": "6:00 PM-12:30 AM",
@@ -8011,7 +8011,7 @@ export const barcelonaCoreGuides = withDiveBarChips([
     "seoTitle": "Best Culture in Barcelona",
     "seoDescription": "Best culture in Barcelona, aggregating the strongest museum, architecture, memory, and landmark picks from each neighborhood guide.",
     "title": "Cathedrals, Modernisme, and Museum Hills",
-    "description": "This is the city's cultural spine, built for travelers who want the major chapters without treating Barcelona like a postcard rack. Barcelona Cathedral and Santa Maria del Mar hold the old city, Casa Batllo and Casa Vicens show Modernisme at different scales, and Fundacio Joan Miro sends the route up Montjuic for air and color. It is not everything, but it gives the city a readable shape.",
+    "description": "Barcelona's cultural spine runs from Gothic religious architecture and old-city history to domestic Modernisme and Montjuic's modern art. The selection covers the city's major visual chapters without reducing them to postcard facades.",
     "url": "https://www.google.com/maps/search/best+culture+barcelona",
     "category": "Culture",
     "location": {
@@ -8035,7 +8035,7 @@ export const barcelonaCoreGuides = withDiveBarChips([
           41.3839,
           2.1762
         ],
-        "description": "Barcelona Cathedral is the Gothic Quarter's clearest cultural anchor because it makes the old city legible: medieval street pattern, cloister, choir, rooftop views, and a square organized around religious architecture. Use it early in the culture route so the surrounding lanes read as history, not just atmosphere.",
+        "description": "Barcelona Cathedral gathers a Gothic nave, carved choir, rooftop views, and a cloister known for its resident geese inside the medieval street pattern. The surrounding square shows how religious architecture organized the old city as clearly as the building itself.",
         "hours": {
           "mon": "9:00 AM-8:00 PM",
           "tue": "9:00 AM-8:00 PM",
@@ -8073,7 +8073,7 @@ export const barcelonaCoreGuides = withDiveBarChips([
           41.3917,
           2.1649
         ],
-        "description": "Casa Batlló is the Eixample pick because it concentrates Barcelona's Modernista fantasy into one high-impact visit. It is tourist-heavy for good reason: facade, interiors, roofline, craft detail, and Passeig de Gràcia context make it one of the city's most useful architecture stops.",
+        "description": "Casa Batlló is an Eixample cultural site because it concentrates Barcelona's Modernista fantasy into one high-impact visit. It is tourist-heavy for good reason: facade, interiors, roofline, craft detail, and Passeig de Gràcia context make it one of the city's most useful architecture stops.",
         "hours": {
           "mon": "9:00 AM-8:00 PM",
           "tue": "9:00 AM-8:00 PM",
@@ -8092,7 +8092,7 @@ export const barcelonaCoreGuides = withDiveBarChips([
           41.4035,
           2.1507
         ],
-        "description": "Casa Vicens is the Gràcia pick because it shows Gaudí before the monumental greatest-hits version. The domestic scale, ceramic surfaces, garden logic, and early stylistic experiments make it a more intimate architecture visit than the central icons.",
+        "description": "Casa Vicens reveals Gaudi's early experiments through domestic scale, ceramic surfaces, geometric ornament, and garden design, offering more intimacy than his central icons.",
         "hours": {
           "mon": "9:00 AM-8:00 PM",
           "tue": "9:00 AM-8:00 PM",
@@ -8111,7 +8111,7 @@ export const barcelonaCoreGuides = withDiveBarChips([
           41.3686,
           2.1592
         ],
-        "description": "Fundació Joan Miró is the Poble-sec/Montjuïc pick because it combines a focused artist collection with a building and hillside setting that feel inseparable from the visit. It gives the citywide list a quieter art stop after the dense architecture of the center.",
+        "description": "Fundació Joan Miró is a Poble-sec/Montjuïc cultural site because it combines a focused artist collection with a building and hillside setting that feel inseparable from the visit.",
         "hours": {
           "mon": "Closed",
           "tue": "10:00 AM-7:00 PM",
@@ -8168,7 +8168,7 @@ export const barcelonaCoreGuides = withDiveBarChips([
           41.3853,
           2.1815
         ],
-        "description": "Museu Picasso anchors the Born side of the culture guide with Picasso's formative Barcelona years, medieval-palace rooms, early work, Blue Period context, and the Las Meninas series.",
+        "description": "Museu Picasso traces the artist's formative Barcelona years through early work, Blue Period context, and the Las Meninas series displayed across medieval palace rooms.",
         "hours": {
           "mon": "Closed",
           "tue": "9:00 AM-8:00 PM",
@@ -8187,7 +8187,7 @@ export const barcelonaCoreGuides = withDiveBarChips([
           41.3688,
           2.1536
         ],
-        "description": "MNAC is the Montjuïc heavyweight for Catalan visual culture at scale, from Romanesque frescoes and Gothic work to modernisme, photography, and terrace views from the Palau Nacional.",
+        "description": "MNAC presents Catalan visual culture at scale inside the Palau Nacional, from exceptional Romanesque mural paintings and Gothic work to modernisme and photography. Terraces above the museum open broad views across the city.",
         "hours": {
           "mon": "Closed",
           "tue": "10:00 AM-8:00 PM",
@@ -8252,7 +8252,7 @@ export const barcelonaItineraryGuides = withDiveBarChips([
     "seoTitle": "Best Things to Do in Barcelona in One Day",
     "seoDescription": "Best one-day Barcelona journey, combining one essential culture stop, one restaurant, one neighborhood walk, one low-key bar, and one destination nightlife option.",
     "title": "One Strong Day, No Filler",
-    "description": "One day in Barcelona should not pretend to be a conquest. This route takes the hit of Casa Batllo, moves to Cal Pep for the pleasure of a counter lunch, then lets Santa Maria del Mar and El Xampanyet slow the afternoon into old-city rhythm. Paradiso is the final act: a cocktail room big enough to make the short trip feel like it had a proper ending.",
+    "description": "A strong first day moves from Modernista architecture to a lively counter lunch, then into El Born's Gothic church, cava-bar ritual, and destination cocktails. The compact geography leaves time to look closely instead of collecting landmarks at speed.",
     "url": "https://www.google.com/maps/search/best+things+to+do+barcelona+one+day",
     "category": "Activities",
     "itinerary": {},
@@ -8279,7 +8279,7 @@ export const barcelonaItineraryGuides = withDiveBarChips([
           2.1649
         ],
         "itineraryDay": 1,
-        "description": "Start with the culture category at Casa Batlló because one day in Barcelona needs a high-impact Modernista anchor. It gives first-time visitors architecture, craft, rooftop drama, and Passeig de Gràcia context without sending them across the city before lunch.",
+        "description": "Casa Batlló reshapes an Eixample house through a skeletal facade, colored ceramic skin, flowing interiors, light wells, and a symbolic roofline. Timed booking gives the crowded Modernista interior a little structure.",
         "hours": {
           "mon": "9:00 AM-8:00 PM",
           "tue": "9:00 AM-8:00 PM",
@@ -8299,7 +8299,7 @@ export const barcelonaItineraryGuides = withDiveBarChips([
           2.1839
         ],
         "itineraryDay": 1,
-        "description": "Use Cal Pep as the one-day food stop because the counter turns lunch into an event without sending the route far from El Born. Seafood tapas and quick pacing make it easy to move from architecture into the old-city afternoon.",
+        "description": "Seafood tapas and quick pace make it easy to move from architecture into the old-city afternoon.",
         "price": "$$$",
         "priceSource": "The Infatuation / Google Maps",
         "hours": {
@@ -8321,7 +8321,7 @@ export const barcelonaItineraryGuides = withDiveBarChips([
           2.1822
         ],
         "itineraryDay": 1,
-        "description": "Make Santa Maria del Mar the afternoon culture stop because it is close to lunch, short enough for a one-day route, and central to the Born's merchant history. It gives the journey a clear architectural pause before the evening shifts into cava counters and cocktail rooms.",
+        "description": "Santa Maria del Mar is a remarkably unified Catalan Gothic basilica tied to the medieval merchants and maritime workers of the Born. Slender columns and a broad, spare interior give the church an openness that its dense surrounding streets conceal.",
         "hours": {
           "mon": "9:00 AM-8:00 PM",
           "tue": "9:00 AM-8:00 PM",
@@ -8361,7 +8361,7 @@ export const barcelonaItineraryGuides = withDiveBarChips([
           2.1822
         ],
         "itineraryDay": 1,
-        "description": "Paradiso is the Born's headline cocktail stop: a hidden-door room with theatrical drinks, global recognition, and enough demand that the visit should be treated as the night's main event rather than a quick drink between stops.",
+        "description": "Paradiso is the Born's headline cocktail attraction: a hidden-door room with theatrical drinks, global recognition, and enough demand that the visit should be treated as the night's main event rather than a quick drink between stops.",
         "hours": {
           "mon": "6:00 PM-12:30 AM",
           "tue": "6:00 PM-12:30 AM",
@@ -8381,7 +8381,7 @@ export const barcelonaItineraryGuides = withDiveBarChips([
           2.1744
         ],
         "itineraryDay": 1,
-        "description": "Sagrada Família gives the one-day route Barcelona's clearest architectural anchor: Gaudí's unfinished basilica, colored glass, branching columns, symbolic towers, and a visit that needs a timed booking rather than a casual walk-by.",
+        "description": "Sagrada Familia is Gaudi's unfinished basilica of colored glass, branching columns, symbolic towers, and dense religious geometry. A timed booking is necessary to understand the interior rather than settle for a casual walk-by.",
         "hours": {
           "mon": "9:00 AM-8:00 PM",
           "tue": "9:00 AM-8:00 PM",
@@ -8421,7 +8421,7 @@ export const barcelonaItineraryGuides = withDiveBarChips([
           2.1527
         ],
         "itineraryDay": 1,
-        "description": "Park Güell adds the open-air Gaudí stop if the day needs views, mosaics, and a less museum-like stretch. Book the monumental zone and treat the hill climb as part of the experience.",
+        "description": "Park Güell sets Gaudi's mosaics, viaducts, and organic architecture across a steep open-air site with wide Barcelona views. The monumental zone requires a timed ticket, and the hill climb is part of the physical visit.",
         "hours": {
           "mon": "9:30 AM-7:30 PM",
           "tue": "9:30 AM-7:30 PM",
@@ -8441,7 +8441,7 @@ export const barcelonaItineraryGuides = withDiveBarChips([
           2.1536
         ],
         "itineraryDay": 1,
-        "description": "MNAC gives the day a Montjuïc option with Catalan art at scale, from Romanesque frescoes and Gothic work to modernisme, photography, and terrace views from the Palau Nacional.",
+        "description": "MNAC presents Catalan art at exceptional scale, from Romanesque frescoes and Gothic work to modernisme and photography. Its Palau Nacional terraces add some of Montjuic's broadest city views.",
         "hours": {
           "mon": "Closed",
           "tue": "10:00 AM-8:00 PM",
@@ -8461,7 +8461,7 @@ export const barcelonaItineraryGuides = withDiveBarChips([
           2.1696
         ],
         "itineraryDay": 1,
-        "description": "Sala Apolo is the larger nightlife endpoint when the one-day route should finish with a real Barcelona room rather than another quiet cocktail stop. Check the programming before committing the night to it.",
+        "description": "Sala Apolo is a multi-room Poble-sec club and concert institution programming electronic music, indie nights, and live shows through changing promoters. The event calendar, not casual drop-in bar service, determines the experience.",
         "hours": {
           "mon": "10:00 PM-2:30 AM",
           "tue": "10:00 PM-2:30 AM",
@@ -8500,7 +8500,7 @@ export const barcelonaItineraryGuides = withDiveBarChips([
     "seoTitle": "Best Things to Do in Barcelona for a Weekend",
     "seoDescription": "Best Barcelona weekend journey, mixing culture, restaurants, dive bars, popular nightlife, hostel/stay context, and neighborhood pacing across two days.",
     "title": "Two Nights, Five Neighborhood Moods",
-    "description": "A good Barcelona weekend needs contrast more than speed. Casa Gracia gives the base a neighborhood pulse, Casa Batllo and Bodega Bonay polish the first day, and Bar Marsella lets the night fray at the edges. Day two climbs toward Fundacio Joan Miro, drops into Quimet & Quimet, and finishes at Sala Apolo when the city is ready to get loud.",
+    "description": "A Barcelona weekend gains contrast from Montjuic art, old bodega counters, neighborhood streets, and a late club room rather than speed between landmarks.",
     "url": "https://www.google.com/maps/search/barcelona+weekend+itinerary",
     "category": "Activities",
     "itinerary": {},
@@ -8527,7 +8527,7 @@ export const barcelonaItineraryGuides = withDiveBarChips([
           2.1578
         ],
         "itineraryDay": 1,
-        "description": "Use Casa Gracia as the stay-category anchor for the weekend because it splits the difference between hostel social energy, private-room flexibility, and easy transit. Starting from Gràcia keeps the route from becoming only an old-city weekend.",
+        "description": "Casa Gracia combines hostel social energy, private-room flexibility, communal spaces, and useful transit in a handsome building at the top of Passeig de Gràcia.",
         "hours": {
           "mon": "24 hours",
           "tue": "24 hours",
@@ -8547,7 +8547,7 @@ export const barcelonaItineraryGuides = withDiveBarChips([
           2.1649
         ],
         "itineraryDay": 1,
-        "description": "Casa Batlló handles the headline culture slot on day one because it is central, visually immediate, and easy to pair with an Eixample lunch or Passeig de Gràcia walk. Book it as the major architecture moment, then let the rest of the day loosen up.",
+        "description": "Casa Batlló reshapes an Eixample house through a skeletal facade, colored ceramic skin, flowing interiors, light wells, and a roofline that dissolves architecture into symbolism. Timed booking gives the crowded interior a little structure.",
         "hours": {
           "mon": "9:00 AM-8:00 PM",
           "tue": "9:00 AM-8:00 PM",
@@ -8567,7 +8567,7 @@ export const barcelonaItineraryGuides = withDiveBarChips([
           2.1746
         ],
         "itineraryDay": 1,
-        "description": "Bodega Bonay is the weekend food stop when the plan needs a stylish but manageable meal rather than a tasting-menu commitment. It keeps the route in Eixample while adding natural wine, anchovies, pastas, and a lively restaurant-room setting.",
+        "description": "Bodega Bonay is a stylish but manageable weekend food-and-wine room serving natural wine, anchovies, cured meats, and pastas without tasting-menu commitment.",
         "category": "Food",
         "venueKind": "food_drink",
         "foodServiceType": "restaurant",
@@ -8592,7 +8592,7 @@ export const barcelonaItineraryGuides = withDiveBarChips([
           2.1619
         ],
         "itineraryDay": 1,
-        "description": "Bar Marsella gives the weekend a dive-bar texture after the polished daytime stops. Its worn-in absinthe history and late-night feel work especially well before moving toward Gothic/Born nightlife.",
+        "description": "Bar Marsella is a worn-in Raval drinking room associated with absinthe, dusty chandeliers, mirrored walls, and more than a century of late-night history. The patina is real; polish is not the appeal.",
         "hours": {
           "mon": "6:00 PM-12:30 AM",
           "tue": "6:00 PM-12:30 AM",
@@ -8612,7 +8612,7 @@ export const barcelonaItineraryGuides = withDiveBarChips([
           2.1592
         ],
         "itineraryDay": 2,
-        "description": "Fundació Joan Miró anchors day two with Montjuïc culture, a focused museum visit, and a hillside setting that slows the pace after a late night. It gives the weekend route a calm art stop without making the day feel underbuilt.",
+        "description": "Fundació Joan Miró brings the artist's paintings, sculpture, works on paper, and archive into Josep Lluís Sert's luminous Montjuïc building. Terraces, courtyards, and hillside views make the architecture part of the collection experience.",
         "hours": {
           "mon": "Closed",
           "tue": "10:00 AM-7:00 PM",
@@ -8632,7 +8632,7 @@ export const barcelonaItineraryGuides = withDiveBarChips([
           2.1635
         ],
         "itineraryDay": 2,
-        "description": "Quimet & Quimet is the Poble-sec food-and-bar hybrid for the weekend route. Standing montaditos and bottles make it practical before Carrer de Blai or a club night while still feeling like a real Barcelona institution.",
+        "description": "Quimet & Quimet is a standing-room Poble-sec bar lined with bottles and tins, known for montaditos layered with conservas, cheese, smoked fish, and sharp condiments. The tiny room gets crowded quickly, but service moves with practiced speed.",
         "hours": {
           "mon": "12:00 PM-11:00 PM",
           "tue": "12:00 PM-11:00 PM",
@@ -8652,7 +8652,7 @@ export const barcelonaItineraryGuides = withDiveBarChips([
           2.1696
         ],
         "itineraryDay": 2,
-        "description": "Sala Apolo is the popular-nightlife finish because weekends need at least one venue with citywide pull. Check the programming, then treat it as the big final stop rather than a casual bar-hop stop.",
+        "description": "Sala Apolo is a multi-room Poble-sec club and concert institution programming electronic music, indie nights, and live shows through changing promoters. The event calendar, not casual drop-in bar service, determines the experience.",
         "hours": {
           "mon": "10:00 PM-2:30 AM",
           "tue": "10:00 PM-2:30 AM",
@@ -8672,7 +8672,7 @@ export const barcelonaItineraryGuides = withDiveBarChips([
           2.1744
         ],
         "itineraryDay": 1,
-        "description": "Sagrada Família gives the weekend route its unavoidable architecture moment: Gaudí's unfinished basilica, symbolic towers, branching columns, stained glass, and a visit that rewards booking ahead.",
+        "description": "Sagrada Família is Gaudí's unfinished basilica of symbolic facades, rising towers, branching stone columns, and stained glass that floods the nave with shifting color. Timed tickets and tower access reward advance booking.",
         "hours": {
           "mon": "9:00 AM-8:00 PM",
           "tue": "9:00 AM-8:00 PM",
@@ -8712,7 +8712,7 @@ export const barcelonaItineraryGuides = withDiveBarChips([
           2.1839
         ],
         "itineraryDay": 2,
-        "description": "Cal Pep adds the Born counter lunch or dinner that makes the weekend route feel food-led rather than only architecture-and-bars: seafood tapas, quick pacing, and a room that turns the meal into part of the itinerary.",
+        "description": "Cal Pep serves seafood tapas and market-led small plates at a tight Born counter where dishes arrive quickly and the kitchen often steers the order toward the day's best ingredients. The meal feels improvised but never accidental.",
         "price": "$$$",
         "priceSource": "The Infatuation / Google Maps",
         "hours": {
@@ -8757,7 +8757,7 @@ export const barcelonaItineraryGuides = withDiveBarChips([
     "seoTitle": "Best Things to Do in Barcelona for a Week",
     "seoDescription": "Best one-week Barcelona journey, using the strongest citywide picks across restaurants, culture, dive bars, popular bars, hostels, stays, neighborhoods, and Montjuïc.",
     "title": "A Week From Gràcia to the Hill",
-    "description": "A week lets Barcelona stop behaving like a checklist. Start with Yeah Barcelona Hostel, Casa Vicens, and Bemba in the Gracia/Eixample orbit, then let Casa Batllo and Disfrutar take over a bigger, more deliberate day. MUHBA, Bar La Plata, Santa Maria del Mar, Paradiso, Fundacio Joan Miro, Quimet & Quimet, and Sala Apolo carry the trip from Roman stone to late-night Poble-sec without forcing everything into one heroic march.",
+    "description": "A full week lets Barcelona unfold by district: Gracia and Eixample architecture, old-city archaeology and taverns, ambitious dining, El Born nightlife, Montjuic museums, and a late Poble-sec finish. Each day stays geographically coherent enough to leave room for street life.",
     "url": "https://www.google.com/maps/search/barcelona+one+week+itinerary",
     "category": "Activities",
     "itinerary": {},
@@ -8784,7 +8784,7 @@ export const barcelonaItineraryGuides = withDiveBarChips([
           2.1654
         ],
         "itineraryDay": 1,
-        "description": "Use Yeah Barcelona as the hostel-category base for a week because the location works for Eixample, Gràcia, and Sagrada Família while the social programming helps longer-stay travelers find plans. It is especially useful when the journey needs an affordable base that can create community without relying on random bar crawls.",
+        "description": "Yeah Barcelona offers dorms, private rooms, communal dinners, tours, and social programming between Eixample, Gràcia, and Sagrada Família. The organized community gives longer stays more structure than a random bar crawl.",
         "category": "Stay",
         "venueKind": "lodging",
         "lodgingType": "hostel",
@@ -8807,7 +8807,7 @@ export const barcelonaItineraryGuides = withDiveBarChips([
           2.1507
         ],
         "itineraryDay": 1,
-        "description": "Start the week in Gràcia with Casa Vicens so the architecture story begins before the giant Gaudí icons. It is smaller, more domestic, and gives the neighborhood's village rhythm a cultural anchor.",
+        "description": "Casa Vicens is Gaudí's first major house, a domestic-scale collision of patterned tile, ironwork, garden references, and Moorish-influenced forms in Gràcia. Its smaller rooms reveal the architect's early ideas more intimately than the later basilica and apartment blocks.",
         "hours": {
           "mon": "9:00 AM-8:00 PM",
           "tue": "9:00 AM-8:00 PM",
@@ -8827,7 +8827,7 @@ export const barcelonaItineraryGuides = withDiveBarChips([
           2.1583
         ],
         "itineraryDay": 1,
-        "description": "Bemba is useful on a weeklong journey because not every good meal should be a reservation. It gives the Gràcia day something quick, affordable, and current before the route returns to museums, bars, and bigger dinners.",
+        "description": "Bemba is useful on a weeklong journey because not every good meal should be a reservation.",
         "price": "$",
         "priceSource": "Eater / Instagram",
         "hours": {
@@ -8869,7 +8869,7 @@ export const barcelonaItineraryGuides = withDiveBarChips([
           2.1533
         ],
         "itineraryDay": 2,
-        "description": "Disfrutar belongs in the week plan because a longer trip can protect a full evening for one global fine-dining reservation. Build the day around the booking and let it be the special meal, not a flexible add-on.",
+        "description": "Disfrutar turns avant-garde technique into a long, playful tasting menu shaped by chefs who trained at elBulli. The meal occupies an evening and reservations can disappear months ahead, so the commitment is part of the experience.",
         "price": "$$$",
         "priceSource": "MICHELIN Guide / World's 50 Best",
         "hours": {
@@ -8891,7 +8891,7 @@ export const barcelonaItineraryGuides = withDiveBarChips([
           2.1777
         ],
         "itineraryDay": 3,
-        "description": "MUHBA Plaça del Rei gives the old-city portion historical depth instead of letting the Gothic Quarter become only atmosphere. The underground Roman route and palace context make Barcelona's layers easier to read for the rest of the week.",
+        "description": "MUHBA Plaça del Rei gives the old-city portion historical depth instead of letting the Gothic Quarter become only atmosphere.",
         "hours": {
           "mon": "Closed",
           "tue": "10:00 AM-7:00 PM",
@@ -8911,7 +8911,7 @@ export const barcelonaItineraryGuides = withDiveBarChips([
           2.1799
         ],
         "itineraryDay": 3,
-        "description": "Bar La Plata is the low-key Gothic bar stop for the week: simple, historic, fast, and food-adjacent. It is best used as a compact vermouth-and-bites pause before moving into the Born or waterfront.",
+        "description": "Bar La Plata is a simple, historic Gothic Quarter tavern serving fried fish, tomato salad, butifarra, and house wine at a fast counter.",
         "hours": {
           "mon": "12:00 PM-12:30 AM",
           "tue": "12:00 PM-12:30 AM",
@@ -8931,7 +8931,7 @@ export const barcelonaItineraryGuides = withDiveBarChips([
           2.1822
         ],
         "itineraryDay": 4,
-        "description": "Santa Maria del Mar anchors the El Born day with architecture that explains the neighborhood's medieval merchant identity. Pair it with the Picasso Museum area, Ciutadella, or a cava stop nearby.",
+        "description": "Santa Maria del Mar expresses El Born's medieval merchant identity through a broad Catalan Gothic nave, restrained stonework, and exceptional spatial clarity.",
         "hours": {
           "mon": "9:00 AM-8:00 PM",
           "tue": "9:00 AM-8:00 PM",
@@ -8951,7 +8951,7 @@ export const barcelonaItineraryGuides = withDiveBarChips([
           2.1822
         ],
         "itineraryDay": 4,
-        "description": "Paradiso is the Born's headline cocktail stop: a hidden-door room with theatrical drinks, global recognition, and enough demand that the visit should be treated as the night's main event rather than a quick drink between stops.",
+        "description": "Paradiso is the Born's headline cocktail attraction: a hidden-door room with theatrical drinks, global recognition, and enough demand that the visit should be treated as the night's main event rather than a quick drink between stops.",
         "hours": {
           "mon": "6:00 PM-12:30 AM",
           "tue": "6:00 PM-12:30 AM",
@@ -9011,7 +9011,7 @@ export const barcelonaItineraryGuides = withDiveBarChips([
           2.1696
         ],
         "itineraryDay": 7,
-        "description": "Sala Apolo closes the week with the city's bigger nightlife energy: concerts, club programming, and a real reason to stay out late. It is the final category contrast after museums, restaurants, hostels, and small bars.",
+        "description": "Sala Apolo closes the week with the city's bigger nightlife energy: concerts, club programming, and a real reason to stay out late.",
         "hours": {
           "mon": "10:00 PM-2:30 AM",
           "tue": "10:00 PM-2:30 AM",

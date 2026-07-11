@@ -55,7 +55,10 @@ When you receive one of the short prompts above:
    - do not use placeholder hours such as `Hours vary`, `verify current hours`, `confirm before going`, `current-status evidence is map-based`, or `open and active in the current source set`; use real day/time hours when available, or a source-backed caveat that names the exact dependency such as the official calendar, reservation page, show schedule, market days, weather, season, or property page;
    - do not publish if any real venue stop is missing real hours or a source-backed schedule caveat; fix the stop data first so the normalized publisher can write canonical `venue_hours`/`venue_special_hours` or `venues.hours_note`;
    - after publish, canonical venue hours are the live source of truth; `entry_stops.hours` is only an import/display fallback and must not be treated as the final place to maintain venue facts;
-   - every stop description needs source-grounded editorial texture: Anthony Bourdain curiosity with TripAdvisor usefulness, not keyword chains.
+   - every stop description needs source-grounded editorial texture: Anthony Bourdain curiosity with TripAdvisor usefulness, not keyword chains;
+   - lead with what the venue actually cooks, pours, plays, exhibits, stages, rents, or provides; itinerary position is never the main description;
+   - do not use meta or route filler such as `earns its spot`, `belongs in this guide`, `gives the route`, `anchors the day`, `use it before/after`, or `the night needs`;
+   - practical advice is optional and must change the venue decision: what to order/book, queue or reservation posture, room choice, door policy, schedule, accessibility, or a real price/noise tradeoff.
 6. Do not call the task done until strict local verification, normalized publish, R2 ingestion, and strict live verification have passed.
 
 Required final commands:

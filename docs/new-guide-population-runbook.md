@@ -76,7 +76,7 @@ Every candidate needs:
 - map/current-status URL;
 - image source candidate URL;
 - at least two supporting source URLs;
-- a specific reason it belongs in this exact guide;
+- the source-backed offering or distinction that qualifies it for the guide;
 - caveats such as booking need, price tier, crowd, timing, access, or audience fit.
 
 Reject:
@@ -141,14 +141,16 @@ seoSlug: "list-barcelona-citywide-dining"
 
 Description rules:
 
-- write 2-4 specific sentences per stop;
+- write 1-3 fact-first sentences per stop, usually 25-80 words; a concrete 16-24 word sentence is acceptable, and padding to hit a target is not;
 - use facts from the venue/property/official/source pages;
-- explain why the stop belongs in this exact guide;
-- name the source-backed draw: dish, room, collection, crowd, price tradeoff, location fit, booking posture, view, design, or route role;
-- add one useful caveat or best-use note;
+- lead with what the venue cooks, pours, plays, exhibits, stages, rents, or provides;
+- name the source-backed draw: dish, technique, music programming, room, collection, amenities, crowd, price tradeoff, booking posture, view, or design;
+- add a caveat only when it materially changes the visit, such as a reservation, queue, door policy, event calendar, accessibility issue, seasonal opening, or room/noise tradeoff;
 - write with Anthony Bourdain curiosity and TripAdvisor usefulness: textured, opinionated, and specific, but still practical for someone deciding where to go;
 - do not use generic keyword chains, tourist-board wording, repeated sentence frames, or phrases like `hidden gem`, `must-see`, or `something for everyone`;
-- when the same venue appears in two guides, write a different description for each guide context.
+- do not use selection-role or itinerary filler such as `the pick`, `the stop`, `earns its spot`, `belongs in this guide`, `gives the route`, `anchors the day`, `use it before/after`, or `the night needs`;
+- keep source support, review patterns, map evidence, and selection rationale in evidence fields rather than narrating them in the public description;
+- when the same venue appears in two guides, keep its factual core consistent and add guide-specific copy only when it explains a genuinely different use; do not manufacture variation.
 
 Hours rules:
 
@@ -206,6 +208,14 @@ Publish through the normalized writer only:
 ```bash
 npm run push:editorial-guides -- --city {City}
 ```
+
+For a description-only bulk revision, use the normalized writer's copy-only mode:
+
+```bash
+node scripts/backfill-normalized-editorial-guides.mjs --city {City} --copy-only
+```
+
+This mode updates `entries.description`, guide-specific `entry_stops.description`, nested-place copy, and `entry_render_cache`. It deliberately leaves canonical venue hours, classifications, sources, and media untouched, and fails when a selected live entry or stop is missing.
 
 or for a single guide:
 

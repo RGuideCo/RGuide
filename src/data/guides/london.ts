@@ -529,19 +529,19 @@ function streetLineMarker(label: string, coordinates: [number, number][]): NonNu
 
 const stops: Record<string, GuideStop> = {
   nobleRot: stop("soho-food-noble-rot", "Noble Rot Soho", [51.5126, -0.1318], "Noble Rot Soho turns the former Gay Hussar site into a wine-led modern British dining room: go for serious bottles, confident seasonal cooking, and the feeling that dinner is plugged into Soho's literary and political past.", photo.restaurant, "$$$"),
-  kiln: stop("soho-food-kiln", "Kiln", [51.5137, -0.1361], "Kiln is a counter around live fire, claypots, seafood, and regional Thai cooking shaped by northern Thailand, Burma, and Yunnan. Go when Soho needs heat, smoke, and close-up kitchen theatre rather than a polite pre-theatre table.", photo.restaurant, "$$"),
-  barrafinaDean: stop("soho-food-barrafina-dean", "Barrafina Dean Street", [51.5138, -0.1327], "Barrafina Dean Street is the Soho tapas counter to choose for seafood, tortillas, croquetas, sherry, and quick decisions made from a stool. It works because the format keeps the meal lively without needing a long reservation.", photo.restaurant, "$$"),
+  kiln: stop("soho-food-kiln", "Kiln", [51.5137, -0.1361], "Kiln is a counter around live fire, claypots, seafood, and regional Thai cooking shaped by northern Thailand, Burma, and Yunnan.", photo.restaurant, "$$"),
+  barrafinaDean: stop("soho-food-barrafina-dean", "Barrafina Dean Street", [51.5138, -0.1327], "Barrafina Dean Street serves seafood, tortillas, croquetas, and sherry from a lively Soho counter where stool seating keeps the meal fast and direct.", photo.restaurant, "$$"),
   mildreds: stop("soho-food-mildreds", "Mildreds Soho", [51.5145, -0.1361], "Mildreds Soho is the long-running vegetarian crowd-pleaser for internationally inspired plant-based food, seasonal produce, cocktails, and enough menu range to satisfy mixed groups who are not all eating the same way.", photo.restaurant, "$$"),
-  baoSoho: stop("soho-food-bao", "BAO Soho", [51.5137, -0.1366], "BAO Soho is small, fast, and focused: steamed buns, Taiwanese snacks, rice bowls, and a tight room that suits a quick destination meal before bars or theatre. Go for precision and texture, not lingering.", photo.restaurant, "$$"),
+  baoSoho: stop("soho-food-bao", "BAO Soho", [51.5137, -0.1366], "BAO Soho is small, fast, and focused on steamed buns, Taiwanese snacks, rice bowls, precision, and texture. The tight room favors a concise meal over lingering.", photo.restaurant, "$$"),
   gauthier: stop("soho-food-gauthier", "Gauthier Soho", [51.5135, -0.1326], "Gauthier Soho gives London plant-based dining a formal lane: a vegan tasting-menu townhouse where the point is old-school French polish, seasonal technique, and a slower special-occasion meal without animal products.", photo.restaurant, "$$$"),
   hoppers: stop("soho-food-hoppers", "Hoppers Soho", [51.5133, -0.1365], "Hoppers Soho helped push Sri Lankan and South Indian cooking into central London's mainstream. Go for hoppers, dosas, kothu, sambols, kari, and arrack drinks in a room that feels like a real meal, not a novelty stop.", photo.restaurant, "$$"),
-  fourSeasonsChinatown: stop("soho-food-four-seasons", "Four Seasons Chinatown", [51.5117, -0.1315], "Four Seasons Chinatown is the practical West End choice for Cantonese roast duck, char siu, rice plates, and group-friendly Chinese food when the guide needs something specific in Chinatown rather than a vague 'Asian' stop.", photo.restaurant, "$$"),
+  fourSeasonsChinatown: stop("soho-food-four-seasons", "Four Seasons Chinatown", [51.5117, -0.1315], "Four Seasons Chinatown is known for Cantonese roast duck, char siu, rice plates, and generous sharing dishes in the heart of Chinatown. The window of lacquered meats tells you what to order as soon as you arrive.", photo.restaurant, "$$"),
 
   rules: stop("covent-food-rules", "Rules", [51.5107, -0.1234], "Rules has been serving Covent Garden since 1798, and the point is old London ceremony: game from its estate, pies, puddings, polished service, and a dining room that makes a theatre night feel rooted rather than generic.", photo.restaurant, "$$$"),
   closMaggiore: stop("covent-food-clos-maggiore", "Clos Maggiore", [51.5113, -0.1247], "Clos Maggiore is the Covent Garden French booking for romance: Provençal and Tuscan influence, a flower-filled conservatory, deep wine list, and a pre-theatre setup that still feels like an occasion.", photo.restaurant, "$$$"),
   barbary: stop("covent-food-barbary", "The Barbary", [51.5142, -0.1268], "The Barbary is a Covent Garden counter built around the cooking of the Barbary Coast: North African fire, Middle Eastern breads, ferments, spice, and close-up grilling in Neal's Yard.", photo.restaurant, "$$"),
   dishoomCovent: stop("covent-food-dishoom", "Dishoom Covent Garden", [51.5124, -0.1269], "Dishoom Covent Garden channels old Bombay cafe culture into an all-day London workhorse: bacon naan rolls at breakfast, black daal, grills, chaats, cocktails, and a room that handles groups better than most central tables.", photo.restaurant, "$$"),
-  zedel: stop("covent-food-zedel", "Brasserie Zedel", [51.5104, -0.1351], "Brasserie Zedel is the Piccadilly choice for scale and value: a grand Art Deco Parisian brasserie below street level, classic French dishes, fast pre-theatre service, and enough glamour to make an affordable meal feel dressed up.", photo.restaurant, "$$"),
+  zedel: stop("covent-food-zedel", "Brasserie Zedel", [51.5104, -0.1351], "Brasserie Zedel is a Piccadilly brasserie for scale and value: a grand Art Deco Parisian brasserie below street level, classic French dishes, fast pre-theatre service, and enough glamour to make an affordable meal feel dressed up.", photo.restaurant, "$$"),
 
   brat: stop("shoreditch-food-brat", "BRAT", [51.5245, -0.0755], "BRAT is the Shoreditch wood-fire benchmark for Basque-influenced cooking: whole turbot, grilled breads, seasonal produce, smoked potatoes, and a room where the grill is the reason to book rather than background atmosphere.", photo.restaurant, "$$$"),
   smokingGoat: stop("shoreditch-food-smoking-goat", "Smoking Goat Shoreditch", [51.5238, -0.0787], "Smoking Goat is built around Thai drinking food, charcoal, heat, and Bangkok late-night canteen energy. Go for fish-sauce wings, smoky sharing plates, strong drinks, and a Shoreditch dinner that can roll into bars.", photo.restaurant, "$$"),
@@ -552,13 +552,13 @@ const stops: Record<string, GuideStop> = {
   gunpowder: stop("shoreditch-food-gunpowder", "Gunpowder Spitalfields", [51.5187, -0.0758], "Gunpowder Spitalfields brings modern Indian small plates into a compact East End room: go for Kashmiri lamb, mustard fish, chaat, spice, and a sharper alternative to a generic Brick Lane curry stop.", photo.restaurant, "$$"),
   plates: stop("shoreditch-food-plates", "Plates London", [51.5259, -0.0802], "Plates London is the refined plant-based tasting-menu room from Kirk and Keeley Haworth, built around precise technique, seasonal British produce, and a quietly polished Shoreditch setting.", photo.restaurant, "$$$"),
 
-  core: stop("notting-food-core", "Core by Clare Smyth", [51.5177, -0.2047], "Core is Clare Smyth's Notting Hill flagship, built around precise modern British tasting menus, elegant service, and dishes that make luxury feel calm rather than theatrical. Go when the meal is the trip anchor.", photo.restaurant, "$$$"),
-  theLedbury: stop("notting-food-ledbury", "The Ledbury", [51.5173, -0.2003], "The Ledbury pairs Brett Graham's produce-led modern cooking with serious wine and a polished Notting Hill room. It is one of the west London bookings to choose when you want innovation without losing warmth.", photo.restaurant, "$$$"),
-  farmGirl: stop("notting-food-farm-girl", "Farm Girl", [51.5136, -0.2001], "Farm Girl is the Portobello daytime stop for Australian-style brunch, coffee, smoothies, and a lighter Notting Hill rhythm before the market. It is more about morning fuel and people-watching than dinner ambition.", photo.restaurant, "$$"),
+  core: stop("notting-food-core", "Core by Clare Smyth", [51.5177, -0.2047], "Core is Clare Smyth's Notting Hill flagship, built around precise modern British tasting menus, elegant service, and dishes that make luxury feel calm rather than theatrical.", photo.restaurant, "$$$"),
+  theLedbury: stop("notting-food-ledbury", "The Ledbury", [51.5173, -0.2003], "The Ledbury pairs Brett Graham's produce-led modern cooking with serious wine and a polished Notting Hill room. It is one of the west London bookings to choose for innovation without losing warmth.", photo.restaurant, "$$$"),
+  farmGirl: stop("notting-food-farm-girl", "Farm Girl", [51.5136, -0.2001], "Farm Girl is a Portobello daytime cafe serving Australian-style brunch, coffee, and smoothies in a bright room made for morning fuel and people-watching rather than dinner ambition.", photo.restaurant, "$$"),
   gold: stop("notting-food-gold", "Gold", [51.5161, -0.2032], "Gold turns Portobello into a proper evening with wood-fired modern European plates, sharing dishes, a garden room, and enough polish to bridge the gap between casual market browsing and a booked dinner.", photo.restaurant, "$$$"),
   falafelKing: stop("notting-food-falafel-king", "Falafel King", [51.5144, -0.2005], "Falafel King is the Portobello counter for a low-cost reset: falafel, wraps, salads, and quick Middle Eastern food that makes sense between antiques, vintage shops, and a more expensive west London dinner.", photo.restaurant, "$"),
   sketch: stop("mayfair-food-sketch", "Sketch", [51.5129, -0.1416], "Sketch is the Mayfair restaurant complex to book for London spectacle: art-led rooms, Gallery afternoon tea, cocktails, and special-occasion dining where the interiors are as much the draw as the food.", photo.restaurant, "$$$"),
-  maru: stop("mayfair-food-maru", "Maru", [51.5106, -0.1449], "Maru is a tiny Mayfair omakase counter built for precision: a small number of seats, Japanese technique, seasonal fish, and a quiet pace that adds East Asian fine-dining range to the London list.", photo.restaurant, "$$$"),
+  maru: stop("mayfair-food-maru", "Maru", [51.5106, -0.1449], "Maru is a tiny Mayfair omakase counter built for precision, with a small number of seats, Japanese technique, seasonal fish, and a quiet service rhythm.", photo.restaurant, "$$$"),
   tendril: stop("mayfair-food-tendril", "Tendril", [51.5115, -0.1448], "Tendril is a mostly vegan Mayfair restaurant for inventive vegetable-led cooking, cocktails, and a central London room that works when plant-based dining needs to feel current rather than worthy.", photo.restaurant, "$$"),
 
   boroughMarket: {
@@ -575,39 +575,39 @@ const stops: Record<string, GuideStop> = {
   wrightBrothers: stop("southbank-food-wright-brothers", "Wright Brothers Borough", [51.5052, -0.0911], "Wright Brothers Borough is the seafood counter to use when Borough Market needs to become a seated meal: oysters, shellfish, fish plates, cold white wine, and a briny pause from street-food grazing.", photo.restaurant, "$$"),
   flatIronSquare: stop("southbank-food-flat-iron-square", "Flat Iron Square", [51.5056, -0.0961], "Flat Iron Square is a Bankside courtyard and taproom setup for groups: rotating street-food vendors, beer, cocktails, screenings, DJs, and flexible seating near London Bridge without committing to one restaurant.", photo.market, "$$"),
   camdenMarket: {
-    ...stop("camden-food-market", "Camden Market", [51.5413, -0.1469], "Camden Market is the canal-side food-and-culture stop for street food, vintage fashion, alternative retail, and more than 1,000 stalls, shops, and vendors around Camden Lock and Hawley Wharf.", photo.market, "$$"),
+    ...stop("camden-food-market", "Camden Market", [51.5413, -0.1469], "Camden Market is a canal-side market for street food, vintage fashion, alternative retail, and more than 1,000 stalls, shops, and vendors around Camden Lock and Hawley Wharf.", photo.market, "$$"),
     mapMarker: streetLineMarker("Camden Market", [
       [51.5405, -0.1478],
       [51.5412, -0.1469],
       [51.5421, -0.1457],
     ]),
   },
-  mallow: stop("southbank-food-mallow", "Mallow Borough Market", [51.5051, -0.0905], "Mallow Borough Market is the fully plant-based restaurant to use when the South Bank guide needs a seated vegan meal near the market: global flavors, colorful plates, cocktails, and a room that still feels casual.", photo.restaurant, "$$"),
-  tofuVegan: stop("islington-food-tofu-vegan", "Tofu Vegan Islington", [51.5462, -0.1039], "Tofu Vegan Islington is the plant-based Chinese pick for mapo tofu, dumplings, mock-meat dishes, noodles, and a menu that makes vegan food feel abundant rather than like a compromise.", photo.restaurant, "$$"),
+  mallow: stop("southbank-food-mallow", "Mallow Borough Market", [51.5051, -0.0905], "Mallow Borough Market serves a fully plant-based menu of globally influenced, colorful plates and cocktails in a casual seated restaurant near the market.", photo.restaurant, "$$"),
+  tofuVegan: stop("islington-food-tofu-vegan", "Tofu Vegan Islington", [51.5462, -0.1039], "Tofu Vegan Islington is a plant-based Chinese restaurant for mapo tofu, dumplings, mock-meat dishes, noodles, and a menu that makes vegan food feel abundant rather than like a compromise.", photo.restaurant, "$$"),
 
-  poppiesCamden: stop("camden-food-poppies", "Poppies Camden", [51.5391, -0.1432], "Poppies Camden is the neighbourhood's classic fish-and-chips stop: retro room, proper cod and haddock, pies, jellied-eel nostalgia, and a location that works before gigs or after Camden Market.", photo.restaurant, "$$"),
+  poppiesCamden: stop("camden-food-poppies", "Poppies Camden", [51.5391, -0.1432], "Poppies Camden is the neighbourhood's classic fish-and-chips shop, with a retro room, proper cod and haddock, pies, jellied-eel nostalgia, and a useful location near the market and music venues.", photo.restaurant, "$$"),
   bluesKitchenCamdenFood: stop("camden-food-blues-kitchen", "The Blues Kitchen Camden", [51.5382, -0.1423], "The Blues Kitchen Camden is as much a food stop as a music room, with barbecue, burgers, wings, bourbon, and live blues energy for a Camden night that starts at dinner.", photo.restaurant, "$$"),
   mildredsCamden: stop("soho-food-mildreds", "Mildreds Camden", [51.539, -0.1426], "Mildreds Camden gives the market area a reliable plant-based restaurant for curries, burgers, bowls, cocktails, and mixed groups who need vegetarian food to feel easy rather than worthy.", photo.restaurant, "$$"),
-  jazzCafe: stop("camden-bar-jazz-cafe", "The Jazz Cafe", [51.5387, -0.1431], "The Jazz Cafe is Camden's booked-music anchor for soul, jazz, hip-hop, club nights, and balcony dining, best treated as the main event rather than a casual bar drop-in.", photo.theatre, "$$"),
+  jazzCafe: stop("camden-bar-jazz-cafe", "The Jazz Cafe", [51.5387, -0.1431], "The Jazz Cafe is a booked Camden music room for soul, jazz, hip-hop, club nights, and balcony dining; tickets and the calendar matter more than casual drop-ins.", photo.theatre, "$$"),
   electricBallroom: stop("camden-bar-electric-ballroom", "Electric Ballroom", [51.5396, -0.1426], "Electric Ballroom is Camden's big live-room institution, running gigs, club nights, and market-era music history in one of the neighbourhood's most recognisable venues.", photo.theatre, "$$"),
   blackHeart: stop("camden-bar-black-heart", "The Black Heart", [51.5396, -0.1437], "The Black Heart is the Camden rock pub for craft beer, heavy music, upstairs gigs, and a less polished night near the market and Electric Ballroom.", photo.pub, "$"),
-  dublinCastle: stop("camden-bar-dublin-castle", "The Dublin Castle", [51.5389, -0.1454], "The Dublin Castle is Camden's old-school live-music pub, tied to the area's band history and still useful for pints, small gigs, and a rougher counterpoint to the bigger ticketed venues.", photo.pub, "$"),
-  halfwayHeaven: stop("citywide-bar-halfway", "Halfway to Heaven", [51.5077, -0.1269], "Halfway to Heaven is a central LGBTQ+ cabaret pub between Charing Cross and Trafalgar Square, with a relaxed upstairs bar and downstairs shows, karaoke, and drag-led entertainment. Use it for an easy West End queer stop before or after Soho.", photo.pub, "$"),
-  heaven: stop("citywide-bar-heaven", "Heaven", [51.5081, -0.124], "Heaven is one of London's landmark LGBTQ+ clubs, a Charing Cross superclub tied to G-A-Y nights and decades of queer nightlife history. Treat it as the late-club anchor rather than a casual pub stop, and check the current listings before going.", photo.theatre, "$$"),
-  sheSoho: stop("citywide-bar-she-soho", "SHE Soho", [51.5133, -0.1308], "SHE Soho is the Old Compton Street basement bar built around queer women, non-binary guests, DJs, karaoke, drag kings, and late Soho energy. It gives the LGBTQ+ guide a more specific lane than another mixed pub.", photo.pub, "$$"),
-  yardBar: stop("citywide-bar-yard", "The Yard Bar Soho", [51.5116, -0.1333], "The Yard Bar Soho is a Rupert Street LGBTQ+ bar with a courtyard, balconied loft, and a more social pre-club rhythm than a straight-up dance floor. Use it for a first round, a group meet-up, or a softer Soho night.", photo.pub, "$$"),
+  dublinCastle: stop("camden-bar-dublin-castle", "The Dublin Castle", [51.5389, -0.1454], "The Dublin Castle is Camden's old-school live-music pub, tied to the area's band history and still useful for pints, small gigs, and a rougher alternative to the bigger ticketed venues.", photo.pub, "$"),
+  halfwayHeaven: stop("citywide-bar-halfway", "Halfway to Heaven", [51.5077, -0.1269], "Halfway to Heaven is a central LGBTQ+ cabaret pub between Charing Cross and Trafalgar Square, with a relaxed upstairs bar and downstairs shows, karaoke, and drag-led entertainment.", photo.pub, "$"),
+  heaven: stop("citywide-bar-heaven", "Heaven", [51.5081, -0.124], "Heaven is one of London's landmark LGBTQ+ clubs, a Charing Cross superclub tied to G-A-Y nights and decades of queer nightlife history.", photo.theatre, "$$"),
+  sheSoho: stop("citywide-bar-she-soho", "SHE Soho", [51.5133, -0.1308], "SHE Soho is an Old Compton Street basement bar centered on queer women and non-binary guests, with DJs, karaoke, drag kings, and late Soho energy beyond the mixed-pub circuit.", photo.pub, "$$"),
+  yardBar: stop("citywide-bar-yard", "The Yard Bar Soho", [51.5116, -0.1333], "The Yard Bar Soho is a Rupert Street LGBTQ+ bar with a courtyard, balconied loft, and a more social pre-club rhythm than a straight-up dance floor. The layout suits a first round, group meet-up, or softer Soho night.", photo.pub, "$$"),
   holidayInnCamden: stop("camden-stay-holiday-inn", "Holiday Inn London Camden Lock", [51.5415, -0.1457], "Holiday Inn Camden Lock is the practical canal-side hotel for travellers who want Camden Market, Roundhouse, music venues, and Northern line access without overcomplicating the base.", photo.hotel, "$$"),
   camdenTownHotel: stop("camden-stay-town-hotel", "Camden Town Hotel", [51.5468, -0.1494], "Camden Town Hotel puts you on Chalk Farm Road opposite the Roundhouse, with straightforward rooms, a BBQ restaurant downstairs, and a location that makes late gigs and market days easy without the former Selina uncertainty.", photo.hotel, "$$"),
   camdenEnterprise: stop("camden-stay-enterprise", "Camden Enterprise Hotel", [51.5465, -0.1497], "Camden Enterprise Hotel is the pub-with-rooms option above a Victorian corner building, useful for Roundhouse access, Chalk Farm, and a Camden stay with more local texture than a chain.", photo.hotel, "$$"),
   wesleyCamden: stop("camden-stay-wesley", "The Wesley Camden Town", [51.5396, -0.1416], "The Wesley Camden Town is a straightforward hotel base close to Camden Town station, the market, gig venues, and the canal, useful when location matters more than luxury theatre.", photo.hotel, "$$"),
   stChristopherCamden: stop("camden-hostel-st-christopher", "St Christopher's Inn Camden", [51.5389, -0.1431], "St Christopher's Inn Camden is the obvious hostel for travellers who want bars, gigs, Camden Market, and dorm beds close together rather than a quiet residential base.", photo.hostel, "$"),
-  smartCamden: stop("camden-hostel-smart", "Smart Camden Inn Hostel", [51.5431, -0.1429], "Smart Camden Inn Hostel is a simple budget base near Camden Town for dorm travellers who want the market, canals, pubs, and Northern line nearby, with private rooms available when a full dorm is not the plan.", photo.hostel, "$"),
+  smartCamden: stop("camden-hostel-smart", "Smart Camden Inn Hostel", [51.5431, -0.1429], "Smart Camden Inn Hostel is a simple budget property near Camden Town, with dorms, private rooms, and easy access to the market, canals, pubs, and Northern line.", photo.hostel, "$"),
   selinaCamden: stop("camden-stay-selina", "Selina Camden", [51.5468, -0.1494], "Selina Camden works for travellers who want a hostel-hotel hybrid: private rooms, social spaces, co-working energy, and quick access to Chalk Farm, Roundhouse, and Camden nights.", photo.hostel, "$$"),
 
   cinnamonClub: stop("westminster-food-cinnamon-club", "The Cinnamon Club", [51.4978, -0.1297], "The Cinnamon Club turns the old Westminster Library into a grand modern-Indian dining room, useful for serious spice, political-district atmosphere, and a meal that feels anchored in the neighbourhood.", photo.restaurant, "$$$"),
   quilon: stop("westminster-food-quilon", "Quilon", [51.4987, -0.1378], "Quilon is Westminster's refined south-west coastal Indian restaurant, with seafood, tasting menus, and a polished room that works for a destination dinner near St James's Park.", photo.restaurant, "$$$"),
   regencyCafe: stop("westminster-food-regency-cafe", "Regency Cafe", [51.4947, -0.1324], "Regency Cafe is the Westminster breakfast classic: tiled room, fry-ups, tea, shouted orders, and everyday London texture close to Tate Britain and Victoria.", photo.restaurant, "$"),
-  blueBoar: stop("westminster-food-blue-boar", "Blue Boar Pub", [51.5006, -0.1293], "Blue Boar Pub is the Westminster pub-dining choice for pies, roasts, cask ale, and a smart room close to Parliament, St James's Park, and Whitehall, so it belongs in both pub-food and drinks routes.", photo.pub, "$$"),
+  blueBoar: stop("westminster-food-blue-boar", "Blue Boar Pub", [51.5006, -0.1293], "Blue Boar Pub serves pies, roasts, cask ale, and polished British pub food in a smart Westminster room close to Parliament, St James's Park, and Whitehall.", photo.pub, "$$"),
   kerridges: stop("westminster-food-kerridge", "Kerridge's Bar & Grill", [51.5069, -0.1243], "Kerridge's Bar & Grill brings Tom Kerridge's British cooking into the Corinthia, with chops, pies, rotisserie, and hotel polish for a bigger Westminster meal.", photo.restaurant, "$$$"),
   caxtonBar: stop("westminster-bar-caxton", "The Caxton Bar", [51.4987, -0.1353], "The Caxton Bar at St. Ermin's is a polished Westminster hotel bar for cocktails, whisky, and a quieter drink near St James's Park and Victoria, with enough intelligence-history atmosphere to feel local to Whitehall.", photo.pub, "$$$"),
   staffordAmericanBar: stop("westminster-bar-stafford", "The American Bar at The Stafford", [51.5065, -0.1413], "The Stafford's American Bar gives Westminster and St James's an old-school cocktail room with clubby history, courtyard seating, and the kind of hotel-bar ritual that suits a dressed-up night.", photo.pub, "$$$"),
@@ -632,10 +632,10 @@ const stops: Record<string, GuideStop> = {
   ciaoBella: stop("bloomsbury-food-ciao-bella", "Ciao Bella", [51.5216, -0.1183], "Ciao Bella is a noisy Lamb's Conduit Italian classic for big plates, pavement tables, groups, and a neighbourhood feeling that keeps Bloomsbury from becoming only museums and hotels.", photo.restaurant, "$$"),
   rotiKingEuston: stop("bloomsbury-food-roti-king", "Roti King Euston", [51.5284, -0.1324], "Roti King Euston is the basement Malaysian-Singaporean queue for roti canai, kari, and noodles, useful when Bloomsbury needs a cheap meal with real pull.", photo.restaurant, "$"),
   honeyCo: stop("bloomsbury-food-honey-co", "Honey & Co Daily", [51.5226, -0.1177], "Honey & Co Daily brings Middle Eastern baking, salads, lunch plates, and excellent cakes to Bloomsbury, making Lamb's Conduit Street useful from breakfast through afternoon.", photo.restaurant, "$$"),
-  dallowayTerrace: stop("bloomsbury-food-dalloway", "Dalloway Terrace", [51.5178, -0.1306], "Dalloway Terrace is the Bloomsbury hotel-terrace choice for brunch, afternoon tea, cocktails, and a decorative room that suits a more polished museum day.", photo.restaurant, "$$$"),
+  dallowayTerrace: stop("bloomsbury-food-dalloway", "Dalloway Terrace", [51.5178, -0.1306], "Dalloway Terrace is a Bloomsbury hotel-terrace cafe for brunch, afternoon tea, cocktails, and a decorative room that suits a more polished museum day.", photo.restaurant, "$$$"),
   lambBloomsbury: stop("bloomsbury-bar-lamb", "The Lamb", [51.5222, -0.1186], "The Lamb is the Lamb's Conduit pub for etched glass, cask ale, snug Victorian atmosphere, and a proper Bloomsbury pint away from the station rush.", photo.pub, "$$"),
   bloomsburyClub: stop("bloomsbury-bar-bloomsbury-club", "The Bloomsbury Club Bar", [51.5178, -0.1306], "The Bloomsbury Club Bar is a polished hotel cocktail room with literary mood, low light, and a stronger reason to drink near Tottenham Court Road than defaulting to a chain pub.", photo.pub, "$$$"),
-  museumTavern: stop("bloomsbury-bar-museum-tavern", "Museum Tavern", [51.5189, -0.1267], "Museum Tavern is the British Museum-adjacent pub for a straightforward pint, Victorian facade, and an easy stop after galleries or before a Bloomsbury dinner.", photo.pub, "$$"),
+  museumTavern: stop("bloomsbury-bar-museum-tavern", "Museum Tavern", [51.5189, -0.1267], "Museum Tavern is a Victorian pub opposite the British Museum, serving straightforward pints and pub food in a convenient Bloomsbury room.", photo.pub, "$$"),
   kimptonFitzroy: stop("bloomsbury-stay-kimpton", "Kimpton Fitzroy London", [51.5224, -0.1252], "Kimpton Fitzroy London is the Russell Square landmark hotel for terracotta Gothic drama, grand public rooms, cocktail bars, and a base that makes Bloomsbury feel theatrical.", photo.hotel, "$$$"),
   standardLondon: stop("bloomsbury-stay-standard", "The Standard London", [51.5306, -0.1246], "The Standard London turns the old Camden Town Hall Annex into a design hotel with rooftop views, bold rooms, and King's Cross access just north of Bloomsbury.", photo.hotel, "$$$"),
   montagueGardens: stop("bloomsbury-stay-montague", "The Montague on the Gardens", [51.5197, -0.1262], "The Montague on the Gardens is the Bloomsbury townhouse stay for British Museum access, warm service, garden-facing rooms, and a gentler central-London base.", photo.hotel, "$$$"),
@@ -656,9 +656,9 @@ const stops: Record<string, GuideStop> = {
   osloHackney: stop("hackney-bar-oslo", "Oslo Hackney", [51.547, -0.0556], "Oslo Hackney is the old-station building for burgers, beers, live gigs, and club nights, making it one of the easiest Hackney places to turn dinner into nightlife.", photo.theatre, "$$"),
   paperDress: stop("hackney-bar-paper-dress", "Paper Dress Vintage", [51.5484, -0.0558], "Paper Dress Vintage turns a vintage shop into a bar and live room, giving Hackney a playful night out for gigs, DJs, cocktails, and dressed-up local character.", photo.pub, "$$"),
   nightTales: stop("hackney-bar-night-tales", "Night Tales Loft", [51.5485, -0.0553], "Night Tales Loft is Hackney's terrace-and-club option for cocktails, DJs, late nights, and a more produced party feel near Hackney Central.", photo.pub, "$$"),
-  dolphinHackney: stop("hackney-bar-dolphin", "The Dolphin", [51.5487, -0.0558], "The Dolphin is the famously late Hackney pub for messy pints, regulars, and after-everything energy when polished cocktail bars are no longer the brief.", photo.pub, "$"),
+  dolphinHackney: stop("hackney-bar-dolphin", "The Dolphin", [51.5487, -0.0558], "The Dolphin is a famously late Hackney pub built around pints, regulars, a packed room, and rougher energy than the area's polished cocktail bars.", photo.pub, "$"),
   behindThisWall: stop("hackney-bar-behind-this-wall", "Behind This Wall", [51.548, -0.0559], "Behind This Wall is the Hackney cocktail basement for sound-system care, seasonal drinks, and a more considered bar stop before the night gets louder.", photo.pub, "$$$"),
-  dalstonSuperstore: stop("hackney-bar-dalston-superstore", "Dalston Superstore", [51.5485, -0.0751], "Dalston Superstore is a key LGBTQ+ bar, club, gallery, and community space on Kingsland High Street, with drag, DJs, cabaret, brunches, and a clearer late-night reason to route Hackney toward Dalston.", photo.pub, "$$"),
+  dalstonSuperstore: stop("hackney-bar-dalston-superstore", "Dalston Superstore", [51.5485, -0.0751], "Dalston Superstore is a key LGBTQ+ bar, club, gallery, and community space on Kingsland High Street, programming drag, DJs, cabaret, exhibitions, and brunches.", photo.pub, "$$"),
   townHallHotel: stop("hackney-stay-town-hall", "Town Hall Hotel", [51.5297, -0.0541], "Town Hall Hotel gives Hackney an architectural stay in the old Bethnal Green town hall, with apartment-style rooms, Deco detail, and strong access to East End restaurants.", photo.hotel, "$$$"),
   kingslandLocke: stop("hackney-stay-kingsland", "Kingsland Locke", [51.5481, -0.0755], "Kingsland Locke is the Dalston aparthotel for longer stays, kitchens, co-working, and direct access to Kingsland Road food, bars, and Overground connections.", photo.hotel, "$$"),
   kipHotel: stop("hackney-stay-kip", "Kip Hotel", [51.5467, -0.0557], "Kip Hotel is the compact Hackney Central budget stay for travellers who care more about Overground access, London Fields, and late east London plans than a full-service hotel setup.", photo.hotel, "$"),
@@ -668,12 +668,12 @@ const stops: Record<string, GuideStop> = {
 
   fishWingsTings: stop("brixton-food-fish-wings", "Fish, Wings & Tings", [51.4629, -0.1127], "Fish, Wings & Tings is a Brixton Village essential for Trinidadian roti, codfish fritters, jerk, curry, and the market energy that makes Brixton food feel specific.", photo.restaurant, "$$"),
   negril: stop("brixton-food-negril", "Negril", [51.4546, -0.1175], "Negril brings Brixton Caribbean food into a relaxed restaurant setting, with jerk, curry goat, patties, rum, and a neighbourhood crowd beyond the market.", photo.restaurant, "$$"),
-  agileRabbit: stop("brixton-food-agile-rabbit", "The Agile Rabbit", [51.4627, -0.1129], "The Agile Rabbit keeps Brixton Village useful for an easy, lower-cost meal: thin-crust pizza, casual tables, drinks, and enough market energy to work before gigs or late bars.", photo.restaurant, "$"),
+  agileRabbit: stop("brixton-food-agile-rabbit", "The Agile Rabbit", [51.4627, -0.1129], "The Agile Rabbit serves thin-crust pizza and drinks at casual tables inside Brixton Village, offering a lively, lower-cost meal in the market.", photo.restaurant, "$"),
   nanban: stop("brixton-food-nanban", "Nanban", [51.4615, -0.1152], "Nanban is Brixton's Japanese-soul-food hybrid for ramen, curry, fried chicken, and playful local flavour that fits the area's restless food culture.", photo.restaurant, "$$"),
   okanBrixton: stop("brixton-food-okan", "Okan Brixton Village", [51.4627, -0.1127], "Okan Brixton Village is the Osaka-style counter for okonomiyaki, yakisoba, and tight market seating, good when Brixton needs a quick meal with personality.", photo.restaurant, "$"),
   naughtyPiglets: stop("brixton-food-naughty-piglets", "Naughty Piglets", [51.461, -0.1168], "Naughty Piglets is the small Brixton wine-and-plates room for seasonal cooking, counter energy, and a date-night scale that still feels neighbourhood-led.", photo.restaurant, "$$$"),
-  phonox: stop("brixton-bar-phonox", "Phonox", [51.4618, -0.1148], "Phonox is Brixton's serious club room for house, techno, and long DJ sets, best treated as the late-night anchor rather than a warm-up bar.", photo.theatre, "$$"),
-  bluesKitchenBrixton: stop("brixton-bar-blues-kitchen", "The Blues Kitchen Brixton", [51.4621, -0.1145], "The Blues Kitchen Brixton is the food, bourbon, blues, and live-band option for groups who want dinner and dancing under one roof.", photo.pub, "$$"),
+  phonox: stop("brixton-bar-phonox", "Phonox", [51.4618, -0.1148], "Phonox is Brixton's serious club room for house, techno, and long DJ sets, with the booked late-night program as the main event rather than warm-up drinking.", photo.theatre, "$$"),
+  bluesKitchenBrixton: stop("brixton-bar-blues-kitchen", "The Blues Kitchen Brixton", [51.4621, -0.1145], "The Blues Kitchen Brixton pairs Southern food and bourbon with blues, soul, and live bands. The large room lets groups eat and dance under one roof.", photo.pub, "$$"),
   hootananny: stop("brixton-bar-hootananny", "Hootananny Brixton", [51.4537, -0.117], "Hootananny is the Brixton pub-club for reggae, ska, global live music, big crowds, and a looser night than the polished central-London circuit.", photo.theatre, "$"),
   princeWales: stop("brixton-bar-prince-wales", "The Prince of Wales Brixton", [51.4613, -0.1148], "The Prince of Wales is the Brixton rooftop, pub, and club hybrid for terrace drinks, DJs, and a night that can move from casual pints into dancing.", photo.pub, "$$"),
   electricBrixton: stop("brixton-bar-electric", "Electric Brixton", [51.4598, -0.1175], "Electric Brixton is the neighbourhood's major live venue and club room, with big touring acts, dance nights, and enough scale to build the evening around.", photo.theatre, "$$"),
@@ -682,17 +682,17 @@ const stops: Record<string, GuideStop> = {
   tulseHillHotel: stop("brixton-stay-tulse-hill", "Tulse Hill Hotel", [51.4416, -0.1052], "Tulse Hill Hotel gives the Brixton area a boutique pub stay with dining, Victorian character, and useful access to Brockwell Park and south London trains.", photo.hotel, "$$"),
   churchStreetHotel: stop("brixton-stay-church-street", "Church Street Hotel", [51.4732, -0.0934], "Church Street Hotel is a colourful Camberwell base within reach of Brixton, good for travellers who want south London food and music without staying in a chain hotel.", photo.hotel, "$$"),
 
-  britishMuseum: stop("soho-culture-british-museum", "British Museum", [51.5194, -0.127], "The British Museum is the central London heavyweight for global archaeology and contested empire history, with a permanent collection of around eight million works, including the Rosetta Stone, Assyrian reliefs, Egyptian galleries, and a Great Court that can anchor a whole morning.", photo.museum),
-  photographersGallery: stop("soho-culture-photographers-gallery", "The Photographers' Gallery", [51.5144, -0.1395], "The Photographers' Gallery is the compact Soho stop for contemporary photography, changing exhibitions, photobooks, prints, and a smarter cultural pause between Oxford Street, Carnaby, and dinner.", photo.museum),
+  britishMuseum: stop("soho-culture-british-museum", "British Museum", [51.5194, -0.127], "The British Museum holds around eight million objects spanning global archaeology and contested empire history, including the Rosetta Stone, Assyrian reliefs, and Egyptian galleries. The Great Court and collection can fill an entire morning.", photo.museum),
+  photographersGallery: stop("soho-culture-photographers-gallery", "The Photographers' Gallery", [51.5144, -0.1395], "The Photographers' Gallery is a compact Soho gallery for contemporary photography, changing exhibitions, photobooks, prints, and a smarter cultural pause between Oxford Street, Carnaby, and dinner.", photo.museum),
   sohoTheatre: stop("soho-culture-soho-theatre", "Soho Theatre", [51.5142, -0.1321], "Soho Theatre keeps the area performance-led beyond West End musicals, with comedy, cabaret, new writing, late shows, and small rooms that make a night feel current rather than purely tourist-facing.", photo.theatre),
-  carnabyStreet: stop("soho-culture-carnaby", "Carnaby Street", [51.5136, -0.1396], "Carnaby Street is now retail-heavy, but it still works as a cultural waypoint for 1960s fashion, music, youth culture, independent shops, Kingly Court food stops, and the Soho-to-Mayfair shopping spine.", photo.london),
+  carnabyStreet: stop("soho-culture-carnaby", "Carnaby Street", [51.5136, -0.1396], "Carnaby Street is now retail-heavy, but it still is a cultural waypoint for 1960s fashion, music, youth culture, independent shops, Kingly Court food stops, and the Soho-to-Mayfair shopping spine.", photo.london),
   liberty: stop("soho-culture-liberty", "Liberty London", [51.5141, -0.1402], "Liberty London is retail as architecture and design history: Tudor-revival frontage, fabric rooms, perfume, homeware, fashion edits, and a slower department-store experience than the Oxford Street crush outside.", photo.london),
 
-  royalOpera: stop("covent-culture-royal-opera-house", "Royal Ballet and Opera at the Royal Opera House", [51.5129, -0.1222], "Royal Ballet and Opera makes Covent Garden's Royal Opera House the district's grand performance anchor, with opera, ballet, backstage tours, terrace drinks, and a sense of how the piazza's market history turned into London's most formal stage culture.", photo.theatre),
+  royalOpera: stop("covent-culture-royal-opera-house", "Royal Ballet and Opera at the Royal Opera House", [51.5129, -0.1222], "Royal Ballet and Opera stages opera and ballet at Covent Garden's Royal Opera House, alongside backstage tours and terrace drinks in London's grandest theatre district.", photo.theatre),
   nationalGallery: stop("covent-culture-national-gallery", "National Gallery", [51.5089, -0.1283], "The National Gallery gives the West End a free masterpiece stop, from Renaissance altarpieces to Turner, Van Gogh, and Impressionism, with Trafalgar Square right outside for an easy bridge into theatre or dinner.", photo.museum),
   londonTransport: stop("covent-culture-transport-museum", "London Transport Museum", [51.5118, -0.1216], "London Transport Museum turns the city's movement into culture: Tube design, roundels, Routemasters, maps, engineering, posters, and a family-friendly way to understand how London became navigable.", photo.museum),
   somersetHouse: stop("covent-culture-somerset-house", "Somerset House", [51.5111, -0.1171], "Somerset House gives the Strand a civic courtyard, major exhibitions, design programming, winter skating, summer fountains, and river-edge architecture that widens a Covent Garden day beyond shops and theatres.", photo.museum),
-  theatreRoyal: stop("covent-culture-theatre-royal", "Theatre Royal Drury Lane", [51.5129, -0.1206], "Theatre Royal Drury Lane is the West End heritage stop for restored interiors, long-running stage history, guided tours, afternoon tea, and the feeling that theatre can be architectural as well as performed.", photo.theatre),
+  theatreRoyal: stop("covent-culture-theatre-royal", "Theatre Royal Drury Lane", [51.5129, -0.1206], "Theatre Royal Drury Lane is a West End heritage theatre for restored interiors, long-running stage history, guided tours, afternoon tea, and the feeling that theatre can be architectural as well as performed.", photo.theatre),
 
   barbican: stop("shoreditch-culture-barbican", "Barbican Centre", [51.5202, -0.0938], "The Barbican is a whole cultural estate rather than one venue: brutalist walkways, concert halls, cinemas, galleries, theatre, the conservatory, and enough concrete atmosphere to make east-central London feel cinematic.", photo.museum),
   whitechapelGallery: stop("shoreditch-culture-whitechapel", "Whitechapel Gallery", [51.5163, -0.0709], "Whitechapel Gallery has shown modern and contemporary art on the East End edge for more than a century. Go for serious exhibitions, artist commissions, books, and a sharper counterweight to Shoreditch street-art shorthand.", photo.museum),
@@ -705,7 +705,7 @@ const stops: Record<string, GuideStop> = {
       [51.5245, -0.0715],
     ]),
   },
-  geffrye: stop("shoreditch-culture-museum-home", "Museum of the Home", [51.5314, -0.0765], "Museum of the Home uses almshouse buildings, period rooms, gardens, and domestic objects to show how Londoners have lived. It gives a Shoreditch day a quieter, more human scale after markets and bars.", photo.museum),
+  geffrye: stop("shoreditch-culture-museum-home", "Museum of the Home", [51.5314, -0.0765], "Museum of the Home uses almshouse buildings, period rooms, gardens, and domestic objects to show how Londoners have lived.", photo.museum),
 
   portobello: {
     ...stop("notting-culture-portobello", "Portobello Road Market", [51.5156, -0.2033], "Portobello Road Market is Notting Hill's main act: a mile-plus run of antiques, vintage, food, fashion, fruit and veg, and more than 1,000 vendors, with Friday and Saturday bringing the biggest antiques-and-crowd energy.", photo.market),
@@ -715,110 +715,110 @@ const stops: Record<string, GuideStop> = {
       [51.519, -0.2055],
     ]),
   },
-  electricCinema: stop("notting-culture-electric-cinema", "Electric Cinema", [51.515, -0.2058], "Electric Cinema gives Portobello a properly atmospheric evening stop: restored interiors, armchairs, sofas, a bar, and film programming that makes a movie feel like part of the neighborhood rather than a fallback plan.", photo.theatre),
+  electricCinema: stop("notting-culture-electric-cinema", "Electric Cinema", [51.515, -0.2058], "Electric Cinema pairs film programming with restored interiors, armchairs, sofas, and a bar, making the historic Portobello auditorium as memorable as the screening.", photo.theatre),
   museumBrands: stop("notting-culture-museum-brands", "Museum of Brands", [51.5177, -0.2063], "Museum of Brands turns packaging, advertising, toys, household goods, and everyday design into a compact social-history walk. It is especially good when Portobello browsing needs context rather than another shop.", photo.museum),
-  tabernacle: stop("notting-culture-tabernacle", "The Tabernacle", [51.5173, -0.2017], "The Tabernacle is Notting Hill's community-arts anchor, tied to carnival culture, live music, theatre, classes, food, and local programming. It helps the area feel lived-in rather than only cinematic.", photo.theatre),
-  graffik: stop("notting-culture-graffik", "Graffik Gallery", [51.5191, -0.208], "Graffik Gallery gives the Portobello route a street-art and contemporary-painting stop, with exhibitions, workshops, and urban art context that connects west London browsing to the city's wider graffiti culture.", photo.museum),
+  tabernacle: stop("notting-culture-tabernacle", "The Tabernacle", [51.5173, -0.2017], "The Tabernacle is a Notting Hill community arts venue tied to carnival culture, live music, theatre, classes, food, and local programming. Its schedule shows the area as lived-in rather than merely cinematic.", photo.theatre),
+  graffik: stop("notting-culture-graffik", "Graffik Gallery", [51.5191, -0.208], "Graffik Gallery presents street art and contemporary painting through exhibitions and workshops, connecting west London browsing to the city's wider graffiti culture.", photo.museum),
 
   tateModern: stop("southbank-culture-tate-modern", "Tate Modern", [51.5076, -0.0994], "Tate Modern turns the former Bankside Power Station into London's most important modern and contemporary art museum: free collection displays, Turbine Hall scale, major exhibitions, river views, and an easy bridge to St Paul's or Borough.", photo.museum),
   globe: stop("southbank-culture-globe", "Shakespeare's Globe", [51.5081, -0.0972], "Shakespeare's Globe makes the river walk theatrical through open-air performances, indoor Sam Wanamaker Playhouse shows, tours, and a rebuilt playhouse context that gives Bankside more than postcard views.", photo.theatre),
-  southbankCentre: stop("southbank-culture-southbank-centre", "Southbank Centre", [51.5058, -0.1168], "Southbank Centre is a riverside arts campus made up of Royal Festival Hall, Queen Elizabeth Hall, Purcell Room, the Hayward Gallery, and the National Poetry Library. Use it for concerts, festivals, talks, markets, terraces, and brutalist public space.", photo.theatre),
-  nationalTheatre: stop("southbank-culture-national-theatre", "National Theatre", [51.5071, -0.1141], "National Theatre gives the South Bank major drama, new writing, backstage buzz, terraces, and a monumental concrete presence. Even without a ticket, the foyers, bookshop, restaurants, and river-level bars make it a useful cultural anchor.", photo.theatre),
+  southbankCentre: stop("southbank-culture-southbank-centre", "Southbank Centre", [51.5058, -0.1168], "Southbank Centre is a riverside arts campus made up of Royal Festival Hall, Queen Elizabeth Hall, Purcell Room, the Hayward Gallery, and the National Poetry Library. Its halls and public spaces host concerts, festivals, talks, markets, and exhibitions amid terraces and brutalist architecture.", photo.theatre),
+  nationalTheatre: stop("southbank-culture-national-theatre", "National Theatre", [51.5071, -0.1141], "National Theatre stages major drama and new writing in a monumental concrete South Bank complex. Foyers, a bookshop, restaurants, terraces, and river-level bars remain open cultural spaces even without a ticket.", photo.theatre),
   bfi: stop("southbank-culture-bfi", "BFI Southbank", [51.507, -0.1152], "BFI Southbank is the United Kingdom's leading repertory cinema, specialising in classic, independent, international, and archival film seasons, with festivals, talks, a specialist bookshop, and a riverfront bar-cafe setup.", photo.theatre),
 
-  buckinghamPalace: stop("citywide-culture-buckingham-palace", "Buckingham Palace", [51.5014, -0.1419], "Buckingham Palace is the ceremonial core of royal London: guards, gates, balcony history, State Rooms in season, and a St James's Park setting that makes it a natural start for a Westminster landmarks route.", photo.london),
-  westminsterAbbey: stop("citywide-culture-westminster-abbey", "Westminster Abbey", [51.4993, -0.1273], "Westminster Abbey is the Gothic church of coronations, royal weddings, poets, scientists, monarchs, and national memory. It belongs in culture because it explains British ceremony as much as any museum.", photo.museum),
+  buckinghamPalace: stop("citywide-culture-buckingham-palace", "Buckingham Palace", [51.5014, -0.1419], "Buckingham Palace is the ceremonial core of royal London, defined by guards, gates, balcony history, seasonal State Room access, and its setting beside St James's Park.", photo.london),
+  westminsterAbbey: stop("citywide-culture-westminster-abbey", "Westminster Abbey", [51.4993, -0.1273], "Westminster Abbey is the Gothic church of coronations, royal weddings, poets, scientists, monarchs, and national memory. Its architecture and memorials explain British ceremony as vividly as any museum.", photo.museum),
   bigBen: stop("citywide-culture-big-ben", "Big Ben and the Houses of Parliament", [51.5007, -0.1246], "Big Ben and the Houses of Parliament are the postcard image with real political weight: Elizabeth Tower, Westminster Bridge views, Gothic Revival architecture, and the daily machinery of government beside the Thames.", photo.london),
   londonEye: stop("citywide-culture-london-eye", "London Eye", [51.5033, -0.1196], "The London Eye is touristy because it works: a slow skyline rotation over Westminster, the river, St Paul's, and the rail bridges, useful when visitors need orientation rather than another indoor stop.", photo.london),
-  towerBridge: stop("citywide-culture-tower-bridge", "Tower Bridge", [51.5055, -0.0754], "Tower Bridge is the engineering-and-symbol stop that still earns the crowd: bascules, high-level walkways, river traffic, and the visual link between the City, Southwark, and the Tower of London.", photo.london),
+  towerBridge: stop("citywide-culture-tower-bridge", "Tower Bridge", [51.5055, -0.0754], "Tower Bridge combines working bascules, high-level walkways, river traffic, and one of London's most recognizable silhouettes. The crossing visually links the City, Southwark, and the Tower of London.", photo.london),
   towerOfLondon: stop("citywide-culture-tower-of-london", "Tower of London", [51.5081, -0.0759], "The Tower of London gives the city its fortress layer: Crown Jewels, Beefeaters, prison history, ravens, executions, and nearly a thousand years of power sitting beside the Thames.", photo.museum),
   stPauls: stop("citywide-culture-st-pauls", "St Paul's Cathedral", [51.5138, -0.0984], "St Paul's Cathedral is Christopher Wren's London landmark, with the dome, Whispering Gallery, crypt, wartime symbolism, and a clean pedestrian link across Millennium Bridge to Tate Modern.", photo.museum),
-  theShard: stop("citywide-culture-shard", "The Shard", [51.5045, -0.0865], "The Shard is the modern skyline counterpoint to the historic river route, best for high views over London Bridge, the City, South Bank, and the Thames when the guide needs contemporary vertical drama.", photo.london),
-  victoriaAlbert: stop("citywide-culture-v-and-a", "Victoria and Albert Museum", [51.4966, -0.1722], "The V&A is London's great museum of art, design, fashion, performance, furniture, photography, and decorative objects. It is the South Kensington stop when culture should feel tactile, global, and beautifully displayed.", photo.museum),
+  theShard: stop("citywide-culture-shard", "The Shard", [51.5045, -0.0865], "The Shard is London's contemporary vertical landmark, with high views over London Bridge, the City, South Bank, and the bends of the Thames.", photo.london),
+  victoriaAlbert: stop("citywide-culture-v-and-a", "Victoria and Albert Museum", [51.4966, -0.1722], "The V&A is London's great museum of art, design, fashion, performance, furniture, photography, and decorative objects. It is a South Kensington museum when culture should feel tactile, global, and beautifully displayed.", photo.museum),
   tateBritain: stop("citywide-culture-tate-britain", "Tate Britain", [51.4911, -0.1278], "Tate Britain is the British-art counterpart to Tate Modern, with Turner, the Pre-Raphaelites, modern British painting, and a quieter Millbank setting that rewards a slower museum day.", photo.museum),
   nationalPortraitGallery: stop("citywide-culture-national-portrait-gallery", "National Portrait Gallery", [51.5094, -0.1281], "National Portrait Gallery makes British history personal through faces: monarchs, writers, artists, politicians, pop culture, photography, and a Trafalgar Square location that pairs easily with the National Gallery.", photo.museum),
   wallaceCollection: stop("citywide-culture-wallace-collection", "The Wallace Collection", [51.5176, -0.153], "The Wallace Collection is the Manchester Square townhouse museum for French painting, furniture, armour, porcelain, and grand domestic rooms that feel more intimate than London's larger institutions.", photo.museum),
   royalAcademy: stop("citywide-culture-royal-academy", "Royal Academy of Arts", [51.5094, -0.1398], "The Royal Academy brings Piccadilly major exhibitions, artist-led history, the Summer Exhibition, and a courtyard setting that makes Mayfair culture feel more public than its private galleries suggest.", photo.museum),
   kensingtonPalace: stop("citywide-culture-kensington-palace", "Kensington Palace", [51.505, -0.1877], "Kensington Palace connects royal apartments, gardens, fashion, Queen Victoria's childhood, Princess Diana memory, and Kensington Gardens into one west London palace stop.", photo.museum),
-  harrods: stop("citywide-culture-harrods", "Harrods", [51.4994, -0.1633], "Harrods belongs in shopping culture because the building, food halls, luxury departments, and Knightsbridge spectacle are part of how visitors read London retail, class, and display.", photo.london),
+  harrods: stop("citywide-culture-harrods", "Harrods", [51.4994, -0.1633], "Harrods turns its landmark Knightsbridge building, food halls, luxury departments, and elaborate displays into a concentrated expression of London retail, class, and spectacle.", photo.london),
   selfridges: stop("citywide-culture-selfridges", "Selfridges", [51.5144, -0.1526], "Selfridges gives Oxford Street a true department-store landmark: architecture, windows, fashion, beauty, food, and retail theatre that makes shopping feel like part of the city's culture.", photo.london),
   oxfordStreet: stop("citywide-culture-oxford-street", "Oxford Street", [51.5149, -0.1444], "Oxford Street is crowded and commercial, but it matters as London's main shopping artery, tying Selfridges, flagship stores, seasonal lights, buses, and the West End retail crush into one cultural corridor.", photo.london),
 
-  zSoho: stop("soho-stay-z-hotel", "The Z Hotel Soho", [51.5132, -0.1298], "The Z Hotel Soho is for travelers choosing location over room size: compact rooms, sharp pricing for the area, and immediate access to theatres, Chinatown, Soho bars, Tottenham Court Road, and late-night food.", photo.hotel, "$$"),
+  zSoho: stop("soho-stay-z-hotel", "The Z Hotel Soho", [51.5132, -0.1298], "The Z Hotel Soho trades room size for sharp local pricing and immediate access to theatres, Chinatown, Soho bars, Tottenham Court Road, and late-night food.", photo.hotel, "$$"),
   hamYard: stop("soho-stay-ham-yard", "Ham Yard Hotel", [51.5118, -0.1347], "Ham Yard is the polished Firmdale stay with bold interiors, a courtyard, restaurant, bar, roof terrace, spa, bowling alley, and a Soho location that lets the hotel feel like part of the night, not just a bed.", photo.hotel, "$$$"),
-  hazlitts: stop("soho-stay-hazlitts", "Hazlitt's", [51.514, -0.1338], "Hazlitt's is the historic Soho townhouse option for four-poster character, literary atmosphere, antique-heavy rooms, and a quieter retreat behind Frith Street's restaurants and late bars.", photo.hotel, "$$$"),
-  broadwick: stop("soho-stay-broadwick", "Broadwick Soho", [51.5133, -0.1365], "Broadwick Soho is the maximalist luxury choice for guests who want the hotel itself to have personality: vivid design, rooftop drinks, destination dining, and instant access to Berwick Street, Carnaby, and theatreland.", photo.hotel, "$$$"),
-  residentSoho: stop("soho-stay-resident", "The Resident Soho", [51.5141, -0.1356], "The Resident Soho is a practical central base with compact rooms, in-room mini-kitchens, and a calmer serviced-hotel feel. Choose it when walkability matters more than lobby scene.", photo.hotel, "$$"),
+  hazlitts: stop("soho-stay-hazlitts", "Hazlitt's", [51.514, -0.1338], "Hazlitt's is a historic Soho townhouse hotel for four-poster character, literary atmosphere, antique-heavy rooms, and a quieter retreat behind Frith Street's restaurants and late bars.", photo.hotel, "$$$"),
+  broadwick: stop("soho-stay-broadwick", "Broadwick Soho", [51.5133, -0.1365], "Broadwick Soho is a maximalist luxury hotel for guests who want the hotel itself to have personality: vivid design, rooftop drinks, destination dining, and instant access to Berwick Street, Carnaby, and theatreland.", photo.hotel, "$$$"),
+  residentSoho: stop("soho-stay-resident", "The Resident Soho", [51.5141, -0.1356], "The Resident Soho has compact rooms, in-room mini-kitchens, and a calm serviced-hotel feel in the middle of the West End. Walkability is the strength; the lobby scene is deliberately light.", photo.hotel, "$$"),
 
   nomad: stop("covent-stay-nomad", "NoMad London", [51.513, -0.1215], "NoMad London turns the former Bow Street Magistrates' Court into a theatrical Covent Garden stay, with grand interiors, destination dining, cocktail energy, and unbeatable access to the Royal Opera House and West End.", photo.hotel, "$$$"),
   savoy: stop("covent-stay-savoy", "The Savoy", [51.5104, -0.1201], "The Savoy is the grand river-edge classic for London hotel history: Thames views, American Bar ritual, afternoon tea, service theatre, and a base that links Covent Garden, the Strand, and the South Bank.", photo.hotel, "$$$"),
   henrietta: stop("covent-stay-henrietta", "Henrietta Hotel", [51.5105, -0.1244], "Henrietta Hotel is a boutique Covent Garden base with townhouse scale, design-led rooms, strong restaurant access, and the kind of location that lets theatre, Soho, and the river stay walkable.", photo.hotel, "$$$"),
-  fielding: stop("covent-stay-fielding", "Fielding Hotel", [51.5133, -0.1237], "Fielding Hotel is the simpler theatre-district choice on a quiet Covent Garden street, best when the priority is value, location, and getting to shows or the Tube without paying for a big hotel scene.", photo.hotel, "$$"),
+  fielding: stop("covent-stay-fielding", "Fielding Hotel", [51.5133, -0.1237], "Fielding Hotel is a simpler theatre-district hotel on a quiet Covent Garden street, best when the priority is value, location, and getting to shows or the Tube without paying for a big hotel scene.", photo.hotel, "$$"),
   oneAldwych: stop("covent-stay-one-aldwych", "One Aldwych", [51.5117, -0.1193], "One Aldwych is the polished independent stay at the Covent Garden and Strand corner, with strong service, a pool, restaurants, and fast access to theatres, Somerset House, Waterloo Bridge, and the river.", photo.hotel, "$$$"),
 
-  boundary: stop("shoreditch-stay-boundary", "Boundary Shoreditch", [51.5245, -0.0761], "Boundary Shoreditch is the design-hotel pick for Redchurch Street energy, rooftop drinks, strong neighborhood dining, and a base that feels connected to east London's creative identity rather than dropped into it.", photo.hotel, "$$$"),
+  boundary: stop("shoreditch-stay-boundary", "Boundary Shoreditch", [51.5245, -0.0761], "Boundary Shoreditch is a design-hotel for Redchurch Street energy, rooftop drinks, strong neighborhood dining, and a base that feels connected to east London's creative identity rather than dropped into it.", photo.hotel, "$$$"),
   hoxton: stop("shoreditch-stay-hoxton", "The Hoxton Shoreditch", [51.5273, -0.0818], "The Hoxton Shoreditch is the social-lobby classic for east London: workspace, all-day restaurant energy, compact rooms, and an easy walk to Hoxton Square, Old Street, Shoreditch High Street, and late bars.", photo.hotel, "$$"),
   mondrian: stop("shoreditch-stay-mondrian", "Mondrian Shoreditch", [51.5246, -0.0796], "Mondrian Shoreditch is the larger polished base for guests who want east-side nightlife without giving up amenities: rooftop pull, pool-club energy, bigger-hotel service, and easy access to Spitalfields and Shoreditch.", photo.hotel, "$$$"),
-  citizenM: stop("shoreditch-stay-citizenm", "citizenM London Shoreditch", [51.5244, -0.0788], "citizenM Shoreditch is the compact tech-forward option for travelers who want a reliable room, 24-hour lobby, strong Wi-Fi, and location near Boxpark, Shoreditch High Street, and the Overground.", photo.hotel, "$$"),
+  citizenM: stop("shoreditch-stay-citizenm", "citizenM London Shoreditch", [51.5244, -0.0788], "citizenM Shoreditch is a compact tech-forward hotel for a reliable room, 24-hour lobby, strong Wi-Fi, and location near Boxpark, Shoreditch High Street, and the Overground.", photo.hotel, "$$"),
   battyLangley: stop("shoreditch-stay-batty-langley", "Batty Langley's", [51.5196, -0.0748], "Batty Langley's is the Spitalfields character stay, all Georgian townhouse atmosphere, antique furniture, drawing rooms, and old East End mood within walking distance of Liverpool Street and Brick Lane.", photo.hotel, "$$$"),
 
   laslett: stop("notting-stay-laslett", "The Laslett", [51.5097, -0.1963], "The Laslett is the Notting Hill boutique base for design, books, art, neighborhood calm, and immediate Notting Hill Gate transport. It suits travelers who want west London texture rather than a grand hotel bubble.", photo.hotel, "$$$"),
   portobelloHotel: stop("notting-stay-portobello", "The Portobello Hotel", [51.5126, -0.202], "The Portobello Hotel is the romantic townhouse stay close to the market, known for eccentric rooms, rock-and-roll west London lore, and a quieter residential feel just off Portobello Road.", photo.hotel, "$$$"),
-  rubyZoe: stop("notting-stay-ruby-zoe", "Ruby Zoe Hotel", [51.5104, -0.1976], "Ruby Zoe is the efficient modern Notting Hill Gate pick, with compact rooms, a bar, transit access, and a lighter price-to-location equation than the neighborhood's more romantic townhouse hotels.", photo.hotel, "$$"),
+  rubyZoe: stop("notting-stay-ruby-zoe", "Ruby Zoe Hotel", [51.5104, -0.1976], "Ruby Zoe is an efficient modern Notting Hill Gate hotel, with compact rooms, a bar, transit access, and a lighter price-to-location equation than the neighborhood's more romantic townhouse hotels.", photo.hotel, "$$"),
   ravnaGora: stop("notting-stay-ravna-gora", "Ravna Gora", [51.5113, -0.2008], "Ravna Gora is a no-frills west London stay in a Victorian building, best for travellers who want Portobello, Holland Park, and Notting Hill Gate transport nearby while keeping the room spend modest.", photo.hotel, "$"),
   kensingtonCourt: stop("notting-stay-kensington-court", "Kensington Court Hotel Notting Hill", [51.5117, -0.1888], "Kensington Court Hotel is a practical transit-first west London base, better for guests who need simple rooms near Notting Hill Gate, Bayswater, and Kensington Gardens than a scene-heavy hotel.", photo.hotel, "$$"),
 
   seaContainers: stop("southbank-stay-sea-containers", "Sea Containers London", [51.5081, -0.1069], "Sea Containers is the South Bank riverside stay for design, Thames views, rooftop drinks, and a base that links Tate Modern, Borough, Blackfriars, and the West End without making the river feel like a barrier.", photo.hotel, "$$$"),
   hoxtonSouthwark: stop("southbank-stay-hoxton", "The Hoxton Southwark", [51.5057, -0.1037], "The Hoxton Southwark gives Bankside a social, design-led base with lobby energy, restaurants, workspace, and quick walks to Blackfriars, Tate Modern, Borough Market, and the Thames Path.", photo.hotel, "$$"),
-  citizenMSouthbank: stop("southbank-stay-citizenm", "citizenM London Bankside", [51.5055, -0.098], "citizenM Bankside is compact, reliable, and well placed for Tate Modern, Shakespeare's Globe, Borough Market, and London Bridge, especially when a short trip needs a simple room and strong location.", photo.hotel, "$$"),
-  londonBridgeHotel: stop("southbank-stay-london-bridge", "London Bridge Hotel", [51.5052, -0.0864], "London Bridge Hotel is the practical station-side base for Borough Market, the Shard, trains, and the City. Choose it when fast movement matters more than a destination lobby.", photo.hotel, "$$"),
+  citizenMSouthbank: stop("southbank-stay-citizenm", "citizenM London Bankside", [51.5055, -0.098], "citizenM Bankside is compact and reliable, placing Tate Modern, Shakespeare's Globe, Borough Market, and London Bridge within easy reach. Small rooms trade space for a 24-hour lobby and strong central location.", photo.hotel, "$$"),
+  londonBridgeHotel: stop("southbank-stay-london-bridge", "London Bridge Hotel", [51.5052, -0.0864], "London Bridge Hotel is a station-side property close to Borough Market, the Shard, mainline trains, and the City. Fast connections take precedence over a destination lobby or resort-style facilities.", photo.hotel, "$$"),
   parkPlaza: stop("southbank-stay-park-plaza", "Park Plaza Westminster Bridge", [51.5009, -0.1167], "Park Plaza Westminster Bridge is the large-format South Bank stay for families and groups who want Westminster, Waterloo, the London Eye, meeting rooms, and landmark access without tiny central rooms.", photo.hotel, "$$"),
 
   generator: stop("hostel-generator", "Generator London", [51.5265, -0.1248], "Generator London is the social hostel workhorse near Russell Square and King's Cross, with dorms, private rooms, a bar, lounge spaces, and enough transit reach for first-time visitors who want central London without hotel prices.", photo.hostel, "$"),
   wombats: stop("hostel-wombats", "Wombat's City Hostel London", [51.5115, -0.0682], "Wombat's City Hostel is the east-side social base near Tower Hill and Whitechapel, with dorms, private rooms, big common areas, a bar, lockers, and easy Tube access to both the City and Shoreditch.", photo.hostel, "$"),
   astorMuseum: stop("hostel-astor-museum", "Astor Museum Hostel", [51.5195, -0.1269], "Astor Museum Hostel is the culture-first budget base beside the British Museum, best for dorm travellers who want Bloomsbury, Soho, Covent Garden, and the Piccadilly/Central line corridor close without paying West End hotel rates.", photo.hostel, "$"),
-  onefamNotting: stop("hostel-onefam-notting", "Onefam Notting Hill", [51.5154, -0.1936], "Onefam Notting Hill is the social west London hostel for travelers who want organized group energy at night but a calmer Portobello, Hyde Park, and Notting Hill Gate setting by day.", photo.hostel, "$"),
+  onefamNotting: stop("hostel-onefam-notting", "Onefam Notting Hill", [51.5154, -0.1936], "Onefam Notting Hill is the social west London hostel for organized group energy at night but a calmer Portobello, Hyde Park, and Notting Hill Gate setting by day.", photo.hostel, "$"),
   stChristopherBorough: stop("hostel-st-christopher-borough", "St Christopher's Inn London Bridge", [51.5043, -0.0911], "St Christopher's Inn London Bridge is a hostel for backpackers who want Borough Market, river walks, London Bridge transport, and pub energy downstairs rather than a quiet, tucked-away dorm.", photo.hostel, "$"),
 
   frenchHouse: stop("soho-bar-french-house", "The French House", [51.5127, -0.1326], "The French House is a Soho institution for half-pints, artists, writers, theatre people, and old central-London conversation. Go for the bar's history and upstairs dining, not because the name means French fine dining.", photo.pub, "$$"),
-  bradleys: stop("soho-bar-bradleys", "Bradley's Spanish Bar", [51.515, -0.1328], "Bradley's Spanish Bar is a narrow Soho veteran for cava, beer, jukebox nights, and late central-London energy. Go when the night needs a real bar with regulars rather than another polished cocktail room.", photo.pub, "$"),
-  ship: stop("soho-bar-ship", "The Ship", [51.5139, -0.1362], "The Ship is a compact Wardour Street pub for a proper pint, old Soho feel, and an easy pre- or post-dinner reset. Go when the night needs a real pub rather than another bar concept.", photo.pub, "$"),
+  bradleys: stop("soho-bar-bradleys", "Bradley's Spanish Bar", [51.515, -0.1328], "Bradley's Spanish Bar is a narrow Soho veteran for cava, beer, jukebox nights, and late central-London energy.", photo.pub, "$"),
+  ship: stop("soho-bar-ship", "The Ship", [51.5139, -0.1362], "The Ship is a compact Wardour Street pub for cask ale, a crowded standing-room pint, and the worn-in feel of old Soho.", photo.pub, "$"),
   swift: stop("soho-bar-swift", "Swift Soho", [51.5136, -0.1327], "Swift Soho splits the night well: fast, bright aperitif drinks upstairs and a darker basement for more deliberate cocktails, strong technique, and a room polished enough for dates without feeling stiff.", photo.pub, "$$$"),
   ronnieScotts: stop("soho-bar-ronnies", "Ronnie Scott's", [51.5135, -0.1319], "Ronnie Scott's is the Soho jazz institution that turns nightlife into a booked event: world-class players, late shows, supper-club atmosphere, and a reason to build the whole evening around music.", photo.theatre, "$$$"),
 
-  lambFlag: stop("covent-bar-lamb-flag", "The Lamb & Flag", [51.5114, -0.1259], "The Lamb & Flag is a traditional Georgian Covent Garden pub with Charles Dickens lore, narrow lanes, cask ale, pub food, and enough theatreland bustle to work before a show without feeling invented for tourists.", photo.pub, "$$"),
+  lambFlag: stop("covent-bar-lamb-flag", "The Lamb & Flag", [51.5114, -0.1259], "The Lamb & Flag is a traditional Georgian Covent Garden pub with Charles Dickens lore, narrow lanes, cask ale, pub food, and genuine theatreland bustle.", photo.pub, "$$"),
   porterhouse: stop("covent-bar-porterhouse", "The Porterhouse", [51.5105, -0.1231], "The Porterhouse is the large multi-level Covent Garden beer hall for groups, house-brewed beers, Irish pub energy, screens, and capacity when smaller historic pubs are too packed to be useful.", photo.pub, "$$"),
   americanBar: stop("covent-bar-american", "American Bar at The Savoy", [51.5104, -0.1202], "The American Bar at The Savoy is London's legendary art deco hotel bar, built around classic cocktails, white-jacket service, and a live jazz pianist every night. Book it when the drink is meant to be part of the story.", photo.pub, "$$$"),
-  mrFoggs: stop("covent-bar-foggs", "Mr Fogg's Tavern", [51.5109, -0.1247], "Mr Fogg's Tavern is a playful Covent Garden pub for groups who want theatrical decor, gin, pub food, and an easy pre-show drink. It is not subtle, but it solves the fun-near-the-piazza problem.", photo.pub, "$$"),
+  mrFoggs: stop("covent-bar-foggs", "Mr Fogg's Tavern", [51.5109, -0.1247], "Mr Fogg's Tavern is a playful Covent Garden pub for groups seeking theatrical decor, gin, pub food, and an easy pre-show drink. It is not subtle, but it solves the fun-near-the-piazza problem.", photo.pub, "$$"),
   eveBar: stop("covent-bar-eve", "Eve Bar", [51.5115, -0.1238], "Eve Bar is the basement cocktail escape under Frog by Adam Handling, useful when Covent Garden needs sharper drinks, low light, and more edge than the piazza's obvious pub-and-chain circuit.", photo.pub, "$$$"),
 
-  bookClub: stop("shoreditch-bar-book-club", "The Book Club", [51.5262, -0.0804], "The Book Club is a casual Shoreditch all-rounder for brunch, drinks, ping-pong, DJs, workshops, and group starts. Use it when the night needs flexibility more than cocktail precision.", photo.pub, "$$"),
-  happinessForgets: stop("shoreditch-bar-happiness", "Happiness Forgets", [51.5298, -0.0836], "Happiness Forgets is the Hoxton basement cocktail benchmark: low light, serious classics, no big performance, and a calmer counterpoint before or after the louder Shoreditch rooms.", photo.pub, "$$$"),
-  oldBlueLast: stop("shoreditch-bar-old-blue-last", "The Old Blue Last", [51.5246, -0.0807], "The Old Blue Last keeps Shoreditch connected to live music, beer, club nights, and rougher pub energy. Go when the route needs volume, bands, and history rather than a designed cocktail lounge.", photo.pub, "$"),
+  bookClub: stop("shoreditch-bar-book-club", "The Book Club", [51.5262, -0.0804], "The Book Club is a casual Shoreditch all-rounder for brunch, drinks, ping-pong, DJs, workshops, and group starts.", photo.pub, "$$"),
+  happinessForgets: stop("shoreditch-bar-happiness", "Happiness Forgets", [51.5298, -0.0836], "Happiness Forgets is a low-lit Hoxton basement devoted to concise cocktails, strong classics, and attentive table service without theatrical presentation.", photo.pub, "$$$"),
+  oldBlueLast: stop("shoreditch-bar-old-blue-last", "The Old Blue Last", [51.5246, -0.0807], "The Old Blue Last keeps Shoreditch connected to live music, beer, club nights, and rougher pub energy.", photo.pub, "$"),
   queenAdelaide: stop("shoreditch-bar-queen-adelaide", "The Queen Adelaide", [51.5248, -0.0755], "The Queen Adelaide is a snug, old-timey east London pub for cocktails, draft beer, funky accents, and a warm stop between Shoreditch restaurants, clubs, and Brick Lane.", photo.pub, "$"),
   villageUnderground: stop("shoreditch-bar-village-underground", "Village Underground", [51.5233, -0.0782], "Village Underground is a creative cultural hub in a revamped warehouse, marked by tube carriages and shipping containers above the venue, with concerts, electronic nights, and large-scale east London events.", photo.theatre, "$$"),
 
-  churchillArms: stop("notting-bar-churchill", "The Churchill Arms", [51.5069, -0.1948], "The Churchill Arms is the flower-covered Kensington pub that earns its fame with Thai food, Churchill memorabilia, cask ale, and instant recognizability. It works for both a pint and a spice-route detour.", photo.pub, "$$"),
+  churchillArms: stop("notting-bar-churchill", "The Churchill Arms", [51.5069, -0.1948], "The Churchill Arms is an instantly recognizable, flower-covered Kensington pub serving cask ale and Thai food among dense Churchill memorabilia.", photo.pub, "$$"),
   trailerHappiness: stop("notting-bar-trailer", "Trailer Happiness", [51.5162, -0.2049], "Trailer Happiness is a retro, kitsch-filled Polynesian cocktail bar near Portobello, with rum-heavy drinks, basement energy, and Caribbean-style snack food for a late Notting Hill night.", photo.pub, "$$"),
   theCow: stop("notting-bar-cow", "The Cow", [51.5206, -0.2001], "The Cow is one of Notting Hill's defining gastropubs, famous for Guinness, oysters, seafood platters, fish stew, bangers and mash, and an upstairs dining room that makes a pint feel like dinner.", photo.pub, "$$"),
   sunInSplendour: stop("notting-bar-sun", "Sun in Splendour", [51.5098, -0.1971], "Sun in Splendour is the practical Notting Hill Gate pub for meeting up, Sunday roasts, cask ale, and starting or ending a Portobello walk without pushing the day into a reservation.", photo.pub, "$"),
-  walmerCastle: stop("notting-bar-walmer", "The Walmer Castle", [51.5116, -0.2078], "The Walmer Castle is the polished Ledbury Road pub for a more grown-up west London night: dining room, cocktails, pints, and enough comfort to work after Portobello or before a Notting Hill dinner.", photo.pub, "$$"),
+  walmerCastle: stop("notting-bar-walmer", "The Walmer Castle", [51.5116, -0.2078], "The Walmer Castle is a polished Ledbury Road pub with a comfortable dining room, cocktails, pints, and a more grown-up west London atmosphere.", photo.pub, "$$"),
 
   anchorBankside: stop("southbank-bar-anchor", "The Anchor Bankside", [51.5074, -0.0927], "The Anchor Bankside is a Thameside pub dating back to 1615, serving real ale and food across the bar and restaurant with outdoor seating between Borough Market and Tate Modern.", photo.pub, "$$"),
   foundersArms: stop("southbank-bar-founders", "Founder's Arms", [51.5083, -0.1048], "Founder's Arms is a glass-fronted river pub with a large heated patio overlooking the Thames and St Paul's, best for pints, simple food, and a view-led pause between Tate Modern and Blackfriars.", photo.pub, "$$"),
-  twelveKnot: stop("southbank-bar-twelve-knot", "12th Knot", [51.5081, -0.1069], "12th Knot is the Sea Containers rooftop bar for skyline cocktails, DJ nights, and sunset views over the Thames. It works when the South Bank route needs height and polish after museums or markets.", photo.pub, "$$$"),
+  twelveKnot: stop("southbank-bar-twelve-knot", "12th Knot", [51.5081, -0.1069], "12th Knot is the Sea Containers rooftop bar for skyline cocktails, DJ nights, and sunset views over the Thames.", photo.pub, "$$$"),
   underStudy: stop("southbank-bar-understudy", "The Understudy", [51.5071, -0.1141], "The Understudy is the National Theatre's relaxed bar for craft beer, casual drinks, river terraces, and a performance-adjacent pause that does not require a ticket or a dress code.", photo.pub, "$$"),
-  omeara: stop("southbank-bar-omeara", "OMEARA", [51.5055, -0.0961], "OMEARA gives the Borough side a proper live-music and club room under the railway arches, useful when market drinks need to become a gig, DJ night, or late South Bank plan.", photo.theatre, "$$"),
+  omeara: stop("southbank-bar-omeara", "OMEARA", [51.5055, -0.0961], "OMEARA is a live-music and club venue under the Borough railway arches, programming gigs, DJ nights, and late events in a compact room.", photo.theatre, "$$"),
   redLion: stop("westminster-bar-red-lion", "The Red Lion", [51.5019, -0.1262], "The Red Lion is a classic Westminster pub for cask ale, pies, political-drama atmosphere, and a proper central London lunch between Parliament, St James's, Whitehall, and theatre plans.", photo.pub, "$$"),
   masonsArms: stop("mayfair-bar-masons-arms", "The Mason's Arms", [51.5119, -0.1465], "The Mason's Arms gives Mayfair a grounded pub-food option for roasts, pies, pints, and a less performative meal near Bond Street and Grosvenor Square, where casual choices can feel thin.", photo.pub, "$$"),
   sherlockHolmesPub: stop("westminster-bar-sherlock-holmes", "The Sherlock Holmes Pub", [51.5073, -0.1245], "The Sherlock Holmes Pub is a central old-school pub with British comfort food, cask ale, Sherlock memorabilia, and a tourist-friendly dining room that still fits the pub-meal brief near Charing Cross.", photo.pub, "$$"),
   loreOfTheLand: stop("fitzrovia-bar-lore-of-the-land", "The Lore of the Land", [51.5223, -0.1415], "The Lore of the Land is a polished Fitzrovia pub for seasonal British cooking, roasts, thoughtful beer, and a dining room with enough intent to make 'pub dinner' feel like a real reservation.", photo.pub, "$$$"),
 
   hydePark: stop("nature-hyde-park", "Hyde Park", [51.5073, -0.1657], "Hyde Park is the central green reset for the Serpentine, Speakers' Corner, memorials, rowing, lawns, and a natural link to Kensington Gardens, Mayfair, Knightsbridge, and museum days.", photo.park),
-  regentsPark: stop("nature-regents-park", "Regent's Park", [51.5313, -0.1569], "Regent's Park brings formal gardens, rose beds, open fields, London Zoo, boating, and Primrose Hill access into one slow-day route, making it one of the city's most useful parks for first-time visitors.", photo.park),
+  regentsPark: stop("nature-regents-park", "Regent's Park", [51.5313, -0.1569], "Regent's Park combines formal gardens, rose beds, open fields, London Zoo, boating, and direct access to Primrose Hill in one large central landscape.", photo.park),
   hampsteadHeath: stop("nature-hampstead-heath", "Hampstead Heath", [51.5608, -0.1657], "Hampstead Heath is the wilder London park day for swimming ponds, woods, meadows, Kenwood House, muddy paths, and Parliament Hill views that make the city feel suddenly spacious.", photo.park),
-  richmondPark: stop("nature-richmond-park", "Richmond Park", [51.4479, -0.2743], "Richmond Park is the big western escape for deer, cycling, long walks, ancient trees, Isabella Plantation, and a half-day plan that makes London feel more like countryside than capital.", photo.park),
-  greenwichPark: stop("nature-greenwich-park", "Greenwich Park", [51.4769, -0.0005], "Greenwich Park combines hilltop skyline views, the Royal Observatory, maritime history, flower gardens, deer-park traces, and a village-river route that makes it more than a simple green pause.", photo.park),
+  richmondPark: stop("nature-richmond-park", "Richmond Park", [51.4479, -0.2743], "Richmond Park is London's vast western deer park, with cycling, long walks, ancient trees, Isabella Plantation, and enough open land to feel closer to countryside than capital.", photo.park),
+  greenwichPark: stop("nature-greenwich-park", "Greenwich Park", [51.4769, -0.0005], "Greenwich Park combines hilltop skyline views, the Royal Observatory, maritime history, flower gardens, and traces of its deer-park past above the Thames.", photo.park),
   regentsCanal: stop("nature-regents-canal", "Regent's Canal", [51.5396, -0.1454], "Regent's Canal is the linear walk for seeing London change by water: Little Venice, Regent's Park, Camden Lock, King's Cross, Islington, Broadway Market, and east London without staying underground.", photo.park),
 };
 
@@ -851,262 +851,6 @@ type GuideSpec = {
   stopDays?: number[];
 };
 
-const guideDescriptions: Record<string, string> = {
-  "soho-restaurants": [
-    "Soho does not reward timid eating. Start with the wine-room hush of Noble Rot, take the counter heat at Kiln or Barrafina Dean Street, then let Mildreds and BAO Soho keep the route loose enough for theatre, records, or one more drink.",
-    "This is central London food at street level: quick decisions, close tables, good bottles, and rooms that know how to feed people before the night changes shape.",
-  ].join(" "),
-  "covent-garden-restaurants": [
-    "Covent Garden can feel polished to a shine, but the right table gives it some bite. Rules brings the old dining-room theatre, Clos Maggiore gives you the French special-occasion booking, while The Barbary, Dishoom, and Brasserie Zedel keep the neighborhood useful before or after the West End.",
-    "Use this when dinner needs to work with the West End instead of fighting it.",
-  ].join(" "),
-  "shoreditch-restaurants": [
-    "This is not a single cuisine guide anymore; it is an East End day-to-night route. E. Pellicci handles the full-English morning, St. John Bread and Wine and Manteca cover British and pasta-led meals, while BRAT and Smoking Goat bring the fire, Basque influence, and Bangkok heat for bigger dinners.",
-    "Use it when Shoreditch needs breakfast, lunch, and dinner logic instead of one vague spicy label.",
-  ].join(" "),
-  "notting-hill-restaurants": [
-    "Notting Hill is slower than central London, and the meals should respect that. Core and The Ledbury are the big reservations, Gold gives Portobello a lively middle gear, Farm Girl handles the softer morning, and Falafel King is there when the market has done its work and you just need something good in your hand.",
-    "This guide is for a west London day that knows when to linger.",
-  ].join(" "),
-  "south-bank-restaurants": [
-    "The South Bank is at its best when eating stays close to the river. Borough Market gives you the crowd and the appetite, Padella turns a queue into a reward, Wright Brothers handles oysters, BRAT x Climpson's Arch adds fire, and Flat Iron Square keeps groups from overplanning themselves into misery.",
-    "Use it for a day that moves by foot, hunger, and the Thames.",
-  ].join(" "),
-
-  "soho-culture": [
-    "Soho culture should not pretend the area is only restaurants and bars. The British Museum gives the northern edge museum weight, The Photographers' Gallery and Soho Theatre keep things current, while Carnaby Street and Liberty explain why shopping, fashion, music, and street identity still matter here.",
-    "This is a compact route for reading the neighborhood between meals, theatres, and late rooms.",
-  ].join(" "),
-  "covent-garden-culture": [
-    "Covent Garden is built on performance, but the stage is not only inside the theatre. Royal Ballet and Opera and Theatre Royal Drury Lane give it ceremony, the National Gallery pulls the route toward Trafalgar Square, while the London Transport Museum and Somerset House add machinery, design, and Strand-side discipline.",
-    "It is a culture day that still leaves room for dinner.",
-  ].join(" "),
-  "shoreditch-culture": [
-    "Shoreditch is where London lets the edges show. The Barbican supplies concrete ambition, Whitechapel Gallery gives the art some teeth, Old Spitalfields Market and Brick Lane keep commerce and migration in the frame, and Museum of the Home slows everything down just enough to notice domestic history.",
-    "This is east London beyond the shorthand.",
-  ].join(" "),
-  "notting-hill-culture": [
-    "Notting Hill's culture lives in shopfronts, screens, basements, and market weather. Portobello Road is the spine, Electric Cinema turns a film into a room worth remembering, Museum of Brands catches the strange poetry of packaging, while The Tabernacle and Graffik Gallery keep the neighborhood connected to carnival, community, and paint.",
-    "Go slowly; the good parts are in the browse.",
-  ].join(" "),
-  "south-bank-culture": [
-    "The South Bank is London's easiest culture walk because the venues are genuinely different. Tate Modern handles modern art and Turbine Hall scale, Shakespeare's Globe gives Bankside theatre history, Southbank Centre supplies music, poetry, and festivals, while the National Theatre and BFI cover drama and film.",
-    "It is high culture without being precious, especially when you let the river, bridges, and bookstalls do some of the work.",
-  ].join(" "),
-  "citywide-landmarks": [
-    "London's landmark culture needs its own route because these places are not filler between museums. Buckingham Palace, Westminster Abbey, Big Ben, the London Eye, Tower Bridge, the Tower of London, St Paul's, and The Shard explain monarchy, parliament, religion, punishment, engineering, skyline, and river geography in one citywide arc.",
-    "Use this for the classic first-time London spine that was missing from the culture category.",
-  ].join(" "),
-  "citywide-museums-galleries": [
-    "London's museum map is bigger than the British Museum and Tate Modern. The V&A, Tate Britain, National Portrait Gallery, Wallace Collection, Royal Academy, and Kensington Palace add design, British art, portraiture, decorative arts, major exhibitions, and royal domestic history.",
-    "This is the guide for visitors who want depth after the obvious icons.",
-  ].join(" "),
-  "citywide-shopping-culture": [
-    "Shopping is culture in London when the places carry design, class, fashion, street identity, and spectacle. Liberty, Harrods, Selfridges, Carnaby Street, Oxford Street, Brick Lane, and Portobello show different versions of the city through retail rather than through another museum label.",
-    "Use it when browsing should still feel like learning the city.",
-  ].join(" "),
-
-  "soho-stays": [
-    "Staying in Soho means accepting that the city will not politely go to bed. The Z Hotel and The Resident keep things practical, Hazlitt's gives you townhouse atmosphere, Ham Yard brings design polish, and Broadwick Soho adds a bit of velvet mischief near the bars and theatres.",
-    "Choose this guide when the point is to step outside and already be in the night.",
-  ].join(" "),
-  "covent-garden-stays": [
-    "Covent Garden is for travelers who want their London measured in short walks: theatre, museums, dinner, bed. NoMad and The Savoy bring the occasion, Henrietta and One Aldwych add boutique polish, and The Fielding keeps the theatre-district base more grounded.",
-    "It is not the quietest choice, but it is brutally useful.",
-  ].join(" "),
-  "shoreditch-stays": [
-    "A Shoreditch hotel should feel like more than a place to drop luggage. Boundary and The Hoxton understand the neighborhood's social rhythm, Mondrian and citizenM keep the base contemporary, and Batty Langley's gives Spitalfields a moodier, older counterpoint.",
-    "Stay here when east London is part of the trip, not an afterthought.",
-  ].join(" "),
-  "notting-hill-stays": [
-    "Notting Hill is the softer landing: pastel streets, Portobello mornings, and a little distance from central London's elbows. The Laslett and The Portobello Hotel carry the townhouse romance, Ruby Zoe keeps it modern, while Ravna Gora and Kensington Court make the west side more reachable.",
-    "This is where you sleep when you want London to start gently.",
-  ].join(" "),
-  "south-bank-stays": [
-    "South Bank hotels work because bridges turn the river into a shortcut. Sea Containers is the design-and-view choice, The Hoxton Southwark and citizenM Bankside keep Tate and Borough close, London Bridge Hotel is pure station logic, and Park Plaza Westminster Bridge handles family scale near Waterloo.",
-    "Pick this base when river walks, Borough Market, and Westminster crossings matter as much as the room.",
-  ].join(" "),
-  "camden-stays": [
-    "Camden hotel choices are really about how close you want to sleep to the music. Holiday Inn Camden Lock keeps the canal and market easy, Camden Enterprise and The Wesley suit Chalk Farm and Roundhouse nights, Camden Town Hotel replaces the closed York & Albany/Selina uncertainty, and The Standard gives King's Cross design when Camden itself is too loud.",
-    "Use this for gigs, markets, and late Northern line logistics rather than a generic central stay.",
-  ].join(" "),
-  "westminster-stays": [
-    "Westminster luxury should feel ceremonial, not copy-pasted from another museum guide. The Goring, Corinthia, The Guardsman, The Savoy, and One Aldwych all work for landmark-heavy trips, but the appeal is service, room scale, palace-and-Whitehall access, and being able to cross from royal London to the river without planning around the Tube.",
-    "This is the grand-hotel lane for travellers who want the base to carry part of the occasion.",
-  ].join(" "),
-  "marylebone-stays": [
-    "Marylebone hotels sit in the calmer pocket behind Regent Street: useful for shopping, clinics, restaurants, and west-central meetings without sleeping directly on Oxford Street. The Marylebone Hotel is the polished all-rounder, Nobu and The Langham bring bigger luxury, and The Zetter keeps the townhouse mood more intimate.",
-    "Choose it when village streets and fast West End access need to coexist.",
-  ].join(" "),
-  "bloomsbury-stays": [
-    "Bloomsbury is the museum-and-rail base for travellers who want central London with breathing room. Kimpton Fitzroy brings landmark drama, The Standard handles King's Cross energy, Montague and The Bloomsbury keep British Museum days comfortable, and Charlotte Street Hotel pulls the route toward Fitzrovia and Soho.",
-    "It works best for visitors balancing galleries, Eurostar or Euston arrivals, and quieter evenings than the West End.",
-  ].join(" "),
-  "hackney-stays": [
-    "East London hotels should match how late and how local the trip is. Town Hall Hotel and Kingsland Locke are better for Bethnal Green, Dalston, and longer stays; Kip keeps Hackney Central simple; One Hundred Shoreditch and Hart Shoreditch replace the closed Mama Shelter slot with stronger Shoreditch-side options.",
-    "This guide is for London Fields, Dalston, Hoxton, and Shoreditch nights without pretending the whole area is one neighbourhood.",
-  ].join(" "),
-  "brixton-stays": [
-    "South London works better when the bed is chosen around the night bus, the gig, and the morning after. Half Moon Herne Hill and Tulse Hill Hotel give pub-with-rooms character, Church Street Hotel keeps Camberwell in play, Premier Inn Brixton is the practical fallback, and Park Plaza only belongs when Waterloo is the wiser sleep.",
-    "Use this when Brixton is the evening anchor but the stay can spread across the south side.",
-  ].join(" "),
-
-  "soho-hostels": [
-    "There are not many true Soho dorms, so this guide is deliberately about nearby central backups. Astor Museum is the closest cultural base, while Generator, Clink261, and Smart Russell Square trade direct Soho placement for better prices and late transit from Russell Square or King's Cross.",
-    "It is the budget answer for Soho nights when sleeping in Soho would swallow the budget.",
-  ].join(" "),
-  "covent-garden-hostels": [
-    "Covent Garden has the same hostel problem as Soho: the useful beds sit just outside the prettiest streets. Astor Museum is the theatre-and-museum walk, while Generator, Clink261, and Smart Russell Square make the late train home feel less fragile.",
-    "This is for show nights and museum days, not for pretending Covent Garden is full of hostels.",
-  ].join(" "),
-  "shoreditch-hostels": [
-    "Shoreditch's actual dorm inventory is thin, so this guide splits the decision honestly: Wombat's and St Christopher's keep you east and river-adjacent, while Generator and Clink261 are King's Cross backups with better cross-city transport after a late night.",
-    "Use it when east London is the plan but a clean hostel choice matters more than a perfect postcode.",
-  ].join(" "),
-  "notting-hill-hostels": [
-    "Notting Hill has one clear hostel anchor rather than a deep field. Onefam is the west-side social choice for Portobello and Hyde Park, while Astor Museum, Generator, and Smart Russell Square are central backups for travellers who value transport over sleeping west.",
-    "It keeps the guide honest instead of recycling the same central dorm list as if they were all in W11.",
-  ].join(" "),
-  "south-bank-hostels": [
-    "For South Bank on a hostel budget, Borough is the real anchor. St Christopher's London Bridge keeps market and river walks close, Wombat's works for Tower Bridge and east-side nights, and Generator or Astor Museum are included only as practical central backups when South Bank beds price up.",
-    "This is now a market-and-river budget guide rather than another identical central hostel list.",
-  ].join(" "),
-  "camden-hostels": [
-    "Camden's hostel field is smaller than the nightlife map suggests, especially with Selina gone. St Christopher's and Smart Camden are the two proper local dorm choices; Generator and Clink261 are King's Cross backups that still keep Camden close on the Northern line or a short ride.",
-    "Use this for market days and gigs when the budget option needs to survive the journey home.",
-  ].join(" "),
-  "bloomsbury-hostels": [
-    "Bloomsbury is the strongest central hostel pocket because the British Museum, Russell Square, and King's Cross are genuinely close. Generator, Astor Museum, Clink261, and Smart Russell Square overlap with other neighbourhood guides, but here they are not filler; this is their natural base.",
-    "Pick this guide when transit and museum access matter more than being inside a nightlife district.",
-  ].join(" "),
-
-  "soho-dive-bars": [
-    "Soho's low-key drinking works best when the rooms already have history. The French House, Bradley's, and The Ship keep the pub-and-jukebox side intact, while Ronnie Scott's turns the route toward a booked jazz night if you want the evening to become more than standing rounds.",
-    "Use this for older Soho character rather than another polished cocktail crawl.",
-  ].join(" "),
-  "soho-popular-bars": [
-    "When Soho wants a proper night out, start with Swift for polished cocktails, let Ronnie Scott's put music in the room, and keep Noble Rot nearby for wine-bar gravity. This is the guide for drinks with a booking-worthy anchor rather than a random pub crawl.",
-    "It keeps the old central rooms in reach without making every Soho guide the same list.",
-  ].join(" "),
-  "covent-garden-dive-bars": [
-    "The trick in Covent Garden is separating actual pub drinking from pre-theatre spectacle. Lamb & Flag and The Porterhouse keep the route sturdy, Mr Fogg's adds a themed tavern turn, and Eve gives you a basement cocktail option when a pint is no longer the answer.",
-    "Use this when the night needs to stay near the West End without becoming another hotel-bar list.",
-  ].join(" "),
-  "covent-garden-popular-bars": [
-    "Covent Garden drinks can go grand, strange, or happily excessive. The American Bar supplies hotel legend, Eve handles the low-lit cocktail hour, The Porterhouse works for groups, Mr Fogg's leans into the costume, and Lamb & Flag keeps the whole thing from floating away.",
-    "It is a pre- or post-theatre night with several escape routes.",
-  ].join(" "),
-  "shoreditch-dive-bars": [
-    "This is the Shoreditch version of a flexible first round: The Old Blue Last for live-music pub history, Queen Adelaide for a warmer Hackney Road stop, The Book Club for groups, and Happiness Forgets when the night needs proper cocktails instead of more noise.",
-    "It is a starting map, not a duplicate of the bigger gig guide.",
-  ].join(" "),
-  "shoreditch-popular-bars": [
-    "For a bigger east London night, Village Underground is the main event, Happiness Forgets sets the cocktail standard, and The Book Club, Old Blue Last, and Queen Adelaide fill the route with flexible rooms before or after the ticketed plan.",
-    "This now reads as gigs, basements, and pub energy rather than an accidental cocktail list.",
-  ].join(" "),
-  "notting-hill-dive-bars": [
-    "Notting Hill drinks best when the polish cracks a little. The Churchill Arms is all flowers and pints, The Cow brings seafood and old-school confidence, Sun in Splendour keeps Portobello casual, Trailer Happiness goes basement rum, and The Walmer Castle rounds it out with west London pub warmth.",
-    "This is neighborhood drinking with better scenery than it admits.",
-  ].join(" "),
-  "notting-hill-popular-bars": [
-    "A Notting Hill night is softer than Soho but not sleepy. Trailer Happiness gives it rum and neon, The Walmer Castle and The Cow bring the polished pub current, while The Churchill Arms and Sun in Splendour keep the route tied to Portobello rather than some generic cocktail map.",
-    "Go for character, not velocity.",
-  ].join(" "),
-  "south-bank-dive-bars": [
-    "South Bank drinking is best when it behaves like a river walk. The Anchor and Founders Arms give you historic and view-led pints, The Understudy catches the theatre crowd, and Flat Iron Square handles groups who want food, beer, and space.",
-    "This guide is now clearly about pints and easy riverside stops, not late rooms.",
-  ].join(" "),
-  "south-bank-popular-bars": [
-    "For a South Bank night with more lift, start high at 12th Knot, drop to The Understudy for theatre-bar looseness, then let OMEARA supply the actual live-room finish. The Anchor and Founders Arms stay nearby when the river needs to pull the night back down to earth.",
-    "Good for dates, groups, and nights that want views before volume.",
-  ].join(" "),
-  "camden-popular-bars": [
-    "Camden nightlife should be about music first. The Jazz Cafe, Electric Ballroom, The Black Heart, The Blues Kitchen, and The Dublin Castle now give the guide a clearer spread of jazz, club nights, rock pubs, blues, and small-room band history.",
-    "This replaces the hostel mismatch with a proper Camden live-room route.",
-  ].join(" "),
-  "westminster-popular-bars": [
-    "Westminster drinks work when they lean into the district's contrasts: The Red Lion and Blue Boar cover political-pub lunches and roasts, while The Caxton Bar, The Stafford's American Bar, and The Savoy's American Bar supply the polished cocktail-room side.",
-    "It is Whitehall pints plus hotel ceremony, not a generic hotel-lounge guide.",
-  ].join(" "),
-  "marylebone-popular-bars": [
-    "Marylebone and the west-central edge are better served by public rooms than private members' clubs. Artesian handles the serious cocktail booking, The Grazing Goat and Lore of the Land bring pub-dinner weight, and Swift or The Walmer Castle give the route a stronger public bar finish.",
-    "Use this for drinks that can become dinner without relying on Home House access.",
-  ].join(" "),
-  "bloomsbury-popular-bars": [
-    "Bloomsbury drinks are quieter, but they are not empty. The Lamb and Museum Tavern cover Victorian pub character, Marquis Cornwallis keeps the student-and-museum crowd honest, The Bloomsbury Club Bar gives the route one polished cocktail room, and London Cocktail Club adds a louder Goodge Street finish.",
-    "It suits museum days, literary streets, and central nights that do not need Soho volume.",
-  ].join(" "),
-  "hackney-popular-bars": [
-    "Hackney nightlife now has a stronger late-night spine: Oslo and Paper Dress for gigs, Night Tales for DJs and terrace energy, The Dolphin for old late-pub chaos, and Dalston Superstore for queer club, cabaret, and community-space gravity.",
-    "This is the guide that should answer the 'where are the clubs and queer rooms?' question.",
-  ].join(" "),
-
-  "top-parks": [
-    "London's parks are not pauses from the city; they are part of its operating system. Hyde Park and Regent's Park give the royal scale, Hampstead Heath gives the lungs and the view, Richmond Park adds deer and distance, Greenwich Park drops toward the river, and Regent's Canal turns the whole thing into a walkable thread.",
-    "Use this when the city starts to feel too hard-edged and you need air without leaving London behind.",
-  ].join(" "),
-  "citywide-restaurants": [
-    "This is the London eating list for people willing to cross town for the right room. Noble Rot and Rules hold central London history in different registers, BRAT and Manteca bring east-side fire and pasta, while Core, The Ledbury, and Sketch cover the reservations that can shape a whole day.",
-    "It is not comprehensive; it is a set of meals worth planning a day around.",
-  ].join(" "),
-  "citywide-markets": [
-    "London markets are where the city stops pretending to be orderly. Borough is the historic food heavyweight, Camden and Flat Iron Square feed casual groups, Spitalfields mixes designers and street-food kitchens, Portobello keeps the antiques hunt alive, and Brick Lane adds bagels, curry houses, and weekend crush.",
-    "Come hungry, leave with something you did not mean to buy.",
-  ].join(" "),
-  "citywide-pub-dining": [
-    "Some London meals are better when they start as a pint, whether that means a proper dinner at The Lore of the Land, breakfast at E. Pellicci, oysters at The Cow, a Thameside lunch at The Anchor, or a classic pub meal at Lamb & Flag, The Red Lion, The Mason's Arms, and The Sherlock Holmes Pub.",
-    "This is pub culture as a meal plan, not just a list of places to drink.",
-  ].join(" "),
-  "citywide-fine-dining": [
-    "London fine dining is not one mood. Core and The Ledbury bring west-side precision, Clos Maggiore does French romance, Sketch supplies the iconic room, Maru adds Japanese omakase focus, Noble Rot gives wine-soaked intelligence, BRAT keeps smoke in the room, and Rules keeps the old British ceremony alive.",
-    "Book carefully, then let the city dress up a little.",
-  ].join(" "),
-  "citywide-south-asian": [
-    "London's spice map is bigger than one cuisine, so this guide now makes that range explicit. Dishoom, Hoppers, and Gunpowder cover Indian, Sri Lankan, and modern South Asian routes, while Kiln, Smoking Goat, The Churchill Arms, Four Seasons Chinatown, and Maru pull in Thai, Chinese, and Japanese stops.",
-    "It is a cross-city starting point for Asian food rather than a narrow Brick Lane shorthand.",
-  ].join(" "),
-  "citywide-vegetarian": [
-    "London has enough plant-based range to deserve its own guide rather than a few token menu notes. Gauthier and Plates cover the fine-dining end, Mildreds and Tendril handle central flexibility, Bubala brings Middle Eastern generosity, while Mallow and Tofu Vegan make the route feel abundant and casual.",
-    "Use this when vegetarian or vegan eating needs to be a real plan, not a compromise.",
-  ].join(" "),
-  "citywide-popular-bars": [
-    "For a London night with range, move from Swift's Soho cocktails to the American Bar's art deco ceremony, then east to Happiness Forgets, west to Trailer Happiness, or up to 12th Knot for a skyline finish. These are cocktail rooms and view-led bars, not clubs.",
-    "Use it when drinks are the destination and the night should feel planned.",
-  ].join(" "),
-  "citywide-dive-bars": [
-    "London dive-bar searches should land on a citywide guide that understands the local language: old pubs, jukebox rooms, live-music pubs, basement bars, beer halls, and neighborhood rooms where the night can stay loose. This route pulls the strongest low-key drinking stops from Soho, Covent Garden, Shoreditch, Notting Hill, and the South Bank.",
-    "Use it for worn-in character, pints, late first rounds, and local bar texture rather than a polished cocktail crawl.",
-  ].join(" "),
-  "citywide-lgbtq-nightlife": [
-    "London's LGBTQ+ nightlife needs its own route instead of being folded into a generic pub crawl. Heaven gives the guide a late-club anchor, Halfway to Heaven and The Yard cover West End cabaret and social drinks, SHE Soho brings a queer women and non-binary focused basement, and Dalston Superstore carries the east London club-and-community side.",
-    "G-A-Y Bar is not included because the Soho bar closed in 2025; Heaven remains the active G-A-Y-branded club stop.",
-  ].join(" "),
-  "citywide-culture": [
-    "London's stage-and-screen culture deserves its own citywide route rather than being buried inside a museum list. Royal Ballet and Opera, Shakespeare's Globe, Southbank Centre, National Theatre, BFI Southbank, Barbican Centre, Soho Theatre, and The Photographers' Gallery connect opera, drama, film, comedy, photography, and contemporary arts without repeating the landmark or museum-heavy guides.",
-    "Use this when culture means what is being performed, projected, programmed, and debated now.",
-  ].join(" "),
-  "citywide-hotels": [
-    "Choosing a London hotel is really choosing your version of the city. Ham Yard puts you in Soho's current, NoMad works the theatre district, Boundary gives Shoreditch a roof and a lobby, The Laslett softens the west, and Sea Containers keeps the river at your window.",
-    "The right base saves more time than any clever itinerary.",
-  ].join(" "),
-  "citywide-hostels": [
-    "A good London hostel is not just cheap; it keeps the city usable after midnight and bearable in the morning. Generator and Wombat's bring social momentum, Astor Museum keeps the center close, Onefam Notting Hill softens the west-side landing, and St Christopher's Borough puts markets and trains within reach.",
-    "Spend less on the bed, not on the city.",
-  ].join(" "),
-  "one-day-activities": [
-    "One day in London has to be ruthless without feeling joyless. Start with the British Museum, eat your way through Borough Market, cross into Tate Modern, leave room for Shakespeare's Globe, and finish with a proper drink at Swift instead of collapsing into the nearest chain pub.",
-    "It is not all of London; it is one strong line through it.",
-  ].join(" "),
-  "weekend-activities": [
-    "A London weekend should have both polish and a little dirt under the nails. NoMad and the National Gallery set up the West End, Rules and Ronnie Scott's handle the old central night, then BRAT, Hampstead Heath, and 12th Knot push the second day from fire to open air to river views.",
-    "Two nights is enough to feel the city change accents if you let it.",
-  ].join(" "),
-  "week-activities": [
-    "A week in London should feel like several cities stitched together by buses, parks, and appetite. Generator, Hyde Park, the British Museum, Kiln, and the Royal Opera House cover the central opening; BRAT and Brick Lane turn it east; Portobello, Core, Tate Modern, Borough Market, and Hampstead Heath give the back half room to breathe.",
-    "The goal is not to finish London. The goal is to leave with a few neighborhoods still calling you back.",
-  ].join(" "),
-};
-
 function guide(spec: GuideSpec): MapList {
   const isItinerary = spec.submissionType === "itinerary";
   const isDiveBarGuide = spec.seoSlug === "best-dive-bars";
@@ -1118,7 +862,7 @@ function guide(spec: GuideSpec): MapList {
     seoTitle: spec.seoTitle,
     seoDescription: spec.seoDescription,
     title: spec.title,
-    description: guideDescriptions[spec.id] ?? spec.description,
+    description: spec.description,
     url: `https://www.google.com/maps/search/${encodeURIComponent(spec.seoTitle.toLowerCase())}`,
     category: spec.category,
     ...(spec.itinerary ? { itinerary: spec.itinerary } : {}),
@@ -1147,8 +891,8 @@ function guide(spec: GuideSpec): MapList {
 const neighborhoodGuides: GuideSpec[] = [
   foodGuide("soho-restaurants", "soho-restaurants", "Best Restaurants in Soho, London", "Old central London counters, wine rooms, Thai grills, tapas bars, and vegetarian classics for eating well before theatre or late drinks.", "Soho", ["nobleRot", "kiln", "barrafinaDean", "mildreds", "baoSoho"], "Theatreland Tables and Counter Heat"),
   foodGuide("covent-garden-restaurants", "covent-garden-restaurants", "Best Restaurants in Covent Garden, London", "Historic rooms, romantic bookings, counter cooking, and pre-theatre restaurants that keep Covent Garden from becoming only a show district.", "Covent Garden", ["rules", "closMaggiore", "barbary", "dishoomCovent", "zedel"], "Pre-Theatre Classics and Counters"),
-  foodGuide("shoreditch-restaurants", "shoreditch-restaurants", "Best Restaurants in Shoreditch, London", "Breakfast cafes, British anchors, hand-rolled pasta, Basque wood fire, and Thai late-night heat for a clearer East London food day.", "Shoreditch", ["ePellicci", "stJohnBread", "manteca", "brat", "smokingGoat"], "East End Breakfast, Fire, and Dinner Tables"),
-  foodGuide("notting-hill-restaurants", "notting-hill-restaurants", "Best Restaurants in Notting Hill, London", "Breakfast, Portobello grazing, wood-fired dinners, and west London reservations for a neighborhood that rewards slower pacing.", "Notting Hill", ["farmGirl", "portobello", "falafelKing", "gold", "theLedbury", "core"], "Portobello Breakfast to Big Bookings"),
+  foodGuide("shoreditch-restaurants", "shoreditch-restaurants", "Best Restaurants in Shoreditch, London", "East London tables move from breakfast cafes and British institutions to hand-rolled pasta, Basque wood fire, and late-night Thai heat.", "Shoreditch", ["ePellicci", "stJohnBread", "manteca", "brat", "smokingGoat"], "East End Breakfast, Fire, and Dinner Tables"),
+  foodGuide("notting-hill-restaurants", "notting-hill-restaurants", "Best Restaurants in Notting Hill, London", "Notting Hill moves from breakfast and Portobello grazing to wood-fired dinners and serious west London reservations, all at a slower neighborhood pace.", "Notting Hill", ["farmGirl", "portobello", "falafelKing", "gold", "theLedbury", "core"], "Portobello Breakfast to Big Bookings"),
   foodGuide("south-bank-restaurants", "south-bank-restaurants", "Best Restaurants near South Bank, London", "Borough Market grazing, housemade pasta, oysters, wood-fired dinners, and flexible group stops between Borough and the Thames.", "South Bank", ["boroughMarket", "padella", "wrightBrothers", "bratXclimpson", "flatIronSquare"], "Borough Market to Bankside Tables"),
   foodGuide("camden-restaurants", "camden-restaurants", "Best Restaurants in Camden, London", "Camden food for market grazing, fish and chips, barbecue, plant-based meals, and music-room dinners that stay close to Camden Town and the canal.", "Camden", ["camdenMarket", "poppiesCamden", "bluesKitchenCamdenFood", "mildredsCamden", "jazzCafe"], "Camden Market, Chips, and Music-Room Meals"),
   foodGuide("westminster-restaurants", "westminster-restaurants", "Best Restaurants in Westminster, London", "Westminster food for fry-ups, political-district pubs, and hotel grills near Tate Britain, Whitehall, Parliament, and the Strand.", "Westminster", ["regencyCafe", "blueBoar", "redLion", "sherlockHolmesPub", "kerridges"], "Whitehall Breakfasts, Pubs, and Hotel Dining"),
@@ -1159,12 +903,12 @@ const neighborhoodGuides: GuideSpec[] = [
 
   cultureGuide("soho-culture", "soho-culture", "Best Culture in Soho, London", "Photography, comedy, jazz, retail history, and British Museum spillover for reading Soho as more than food, bars, and theatre crowds.", "Soho", ["britishMuseum", "photographersGallery", "sohoTheatre", "carnabyStreet", "liberty"], "Photography, Comedy, and Carnaby Memory"),
   cultureGuide("covent-garden-culture", "covent-garden-culture", "Best Culture in Covent Garden, London", "Opera, West End heritage, free major art, design history, and Strand institutions that make Covent Garden a cultural base.", "Covent Garden", ["royalOpera", "nationalGallery", "londonTransport", "somersetHouse", "theatreRoyal"], "Opera, Galleries, and Stage Doors"),
-  cultureGuide("shoreditch-culture", "shoreditch-culture", "Best Culture in Shoreditch, London", "Brutalist arts, contemporary galleries, markets, street culture, and East End history for a sharper east London culture route.", "Shoreditch", ["barbican", "whitechapelGallery", "spitalfieldsMarket", "brickLane", "geffrye"], "East End Layers and Contemporary Rooms"),
+  cultureGuide("shoreditch-culture", "shoreditch-culture", "Best Culture in Shoreditch, London", "Brutalist arts venues, contemporary galleries, markets, street culture, and East End history reveal the neighborhood beyond its restaurants and bars.", "Shoreditch", ["barbican", "whitechapelGallery", "spitalfieldsMarket", "brickLane", "geffrye"], "East End Layers and Contemporary Rooms"),
   cultureGuide("notting-hill-culture", "notting-hill-culture", "Best Culture in Notting Hill, London", "Portobello antiques, cinema, carnival-linked community arts, design nostalgia, and small galleries for west London browsing.", "Notting Hill", ["portobello", "electricCinema", "museumBrands", "tabernacle", "graffik"], "Markets, Movies, and Carnival Echoes"),
   cultureGuide("south-bank-culture", "south-bank-culture", "Best Culture on South Bank, London", "Tate Modern, theatre, cinema, riverside festivals, and brutalist public space for London's easiest culture-heavy walk.", "South Bank", ["tateModern", "globe", "southbankCentre", "nationalTheatre", "bfi"], "A River Walk Built From Stages"),
-  stayGuide("soho-stays", "soho-hotels", "Best Hotels in Soho, London", "Compact rooms, design hotels, townhouses, and nightlife-adjacent stays for travelers who want central London at the doorstep.", "Soho", ["zSoho", "hamYard", "hazlitts", "broadwick", "residentSoho"], "Sleep Inside the West End Current"),
+  stayGuide("soho-stays", "soho-hotels", "Best Hotels in Soho, London", "Soho stays trade square footage for immediate access to theatres, Chinatown, restaurants, bars, and the West End, ranging from compact rooms to design hotels and townhouses.", "Soho", ["zSoho", "hamYard", "hazlitts", "broadwick", "residentSoho"], "Sleep Inside the West End Current"),
   stayGuide("covent-garden-stays", "covent-garden-hotels", "Best Hotels in Covent Garden, London", "Grand hotels, boutique rooms, theatre-district value, and Strand access for a stay built around shows and walkability.", "Covent Garden", ["nomad", "savoy", "henrietta", "fielding", "oneAldwych"], "Theatre-Ready Hotel Bases"),
-  stayGuide("shoreditch-stays", "shoreditch-hotels", "Best Hotels in Shoreditch, London", "Design hotels, social lobbies, Spitalfields townhouses, and rooftop energy for travelers using east London as their base.", "Shoreditch", ["boundary", "hoxton", "mondrian", "citizenM", "battyLangley"], "Shoreditch Design Hotels and Social Lobbies"),
+  stayGuide("shoreditch-stays", "shoreditch-hotels", "Best Hotels in Shoreditch, London", "Shoreditch hotels range from social-lobby design properties and rooftops to quieter Spitalfields townhouses, all embedded in east London's restaurants, galleries, and nightlife.", "Shoreditch", ["boundary", "hoxton", "mondrian", "citizenM", "battyLangley"], "Shoreditch Design Hotels and Social Lobbies"),
   stayGuide("notting-hill-stays", "notting-hill-hotels", "Best Hotels in Notting Hill, London", "Townhouse character, boutique calm, value stays, and transit-friendly west London rooms near Portobello and Holland Park.", "Notting Hill", ["laslett", "portobelloHotel", "rubyZoe", "ravnaGora", "kensingtonCourt"], "Townhouse Calm Near Portobello"),
   stayGuide("south-bank-stays", "south-bank-hotels", "Best Hotels near South Bank, London", "Riverside design, station access, family-scale rooms, and Bankside bases for Tate, Borough, Westminster, and the Thames.", "South Bank", ["seaContainers", "hoxtonSouthwark", "citizenMSouthbank", "londonBridgeHotel", "parkPlaza"], "Riverside Beds and Easy Crossings"),
   stayGuide("camden-stays", "camden-hotels", "Best Hotels in Camden, London", "Camden hotels and pub stays for canal access, Roundhouse nights, Camden Market, Chalk Farm, and music-led London trips.", "Camden", ["holidayInnCamden", "camdenEnterprise", "wesleyCamden", "camdenTownHotel", "standardLondon"], "Camden Canal Hotels for Market and Gig Nights"),
@@ -1175,15 +919,15 @@ const neighborhoodGuides: GuideSpec[] = [
   stayGuide("brixton-stays", "brixton-hotels", "Best Hotels near Brixton, London", "Brixton-area hotels and pub stays for gig nights, market food, Brockwell Park, and south London neighbourhood access.", "Brixton", ["halfMoonHerneHill", "tulseHillHotel", "churchStreetHotel", "premierInnBrixton", "parkPlaza"], "South London Stays for Brixton Nights"),
 
   hostelGuide("soho-hostels", "soho-hostels", "Best Hostels in and near Soho, London", "Central hostel bases that put budget travelers close to Soho, the British Museum, Covent Garden, and late-night transit without repeating every King's Cross fallback.", "Soho", ["astorMuseum", "smartRussell", "generator"], "Central Dorms for Soho Nights"),
-  hostelGuide("covent-garden-hostels", "covent-garden-hostels", "Best Hostels near Covent Garden, London", "Budget dorm bases for travelers who want theatre, museums, and the West End without the full repeated central-backup list.", "Covent Garden", ["astorMuseum", "clink261", "generator"], "Theatreland Hostels and King's Cross Backups"),
+  hostelGuide("covent-garden-hostels", "covent-garden-hostels", "Best Hostels near Covent Garden, London", "Budget dorm beds with workable access to Covent Garden theatres, West End museums, and central Tube lines, including nearby King's Cross properties where the immediate area runs short on hostels.", "Covent Garden", ["astorMuseum", "clink261", "generator"], "Theatreland Hostels and King's Cross Backups"),
   hostelGuide("shoreditch-hostels", "shoreditch-hostels", "Best Hostels near Shoreditch, London", "East-side and City-edge social bases for backpackers who want bars, markets, live music, and quick links without pretending every King's Cross hostel is Shoreditch.", "Shoreditch", ["wombats", "stChristopherBorough", "clink261"], "East-Side Hostels for Markets and Late Nights"),
   hostelGuide("notting-hill-hostels", "notting-hill-hostels", "Best Hostels near Notting Hill, London", "West and central London hostel bases for Portobello days, park access, and a quieter sleep than the party districts.", "Notting Hill", ["onefamNotting", "astorMuseum", "generator", "smartRussell"], "Portobello Hostels and Central Backups"),
-  hostelGuide("south-bank-hostels", "south-bank-hostels", "Best Hostels near South Bank, London", "Borough and central hostel bases for travelers who want markets, Tate Modern, river walks, and station access.", "South Bank", ["stChristopherBorough", "wombats", "generator", "astorMuseum"], "Borough Hostels for Markets and River Walks"),
-  hostelGuide("camden-hostels", "camden-hostels", "Best Hostels in Camden, London", "Camden hostel beds for budget travelers who want market days, Roundhouse shows, pub crawls, and Northern line access without padding the guide with every central fallback.", "Camden", ["stChristopherCamden", "smartCamden", "generator"], "Camden Dorms for Market and Gig Nights"),
+  hostelGuide("south-bank-hostels", "south-bank-hostels", "Best Hostels near South Bank, London", "Hostels around Borough and the central South Bank put markets, Tate Modern, river walks, and major stations within easy reach, with dorm atmosphere varying sharply by property.", "South Bank", ["stChristopherBorough", "wombats", "generator", "astorMuseum"], "Borough Hostels for Markets and River Walks"),
+  hostelGuide("camden-hostels", "camden-hostels", "Best Hostels in Camden, London", "Camden hostel beds for budget travelers who want market days, Roundhouse shows, pub crawls, and Northern line access without relying on a long list of central fallbacks.", "Camden", ["stChristopherCamden", "smartCamden", "generator"], "Camden Dorms for Market and Gig Nights"),
   hostelGuide("bloomsbury-hostels", "bloomsbury-hostels", "Best Hostels in Bloomsbury, London", "Bloomsbury and King's Cross hostels for British Museum access, central transit, dorm beds, and budget stays near the West End.", "Bloomsbury", ["astorMuseum", "generator", "clink261", "smartRussell"], "Bloomsbury Hostels by Museums and King's Cross"),
 
   diveBarGuide("soho-dive-bars", "soho-dive-bars", "Best Dive Bars and Pubs in Soho, London", "Old pubs, jukebox rooms, and jazz history that keep Soho grounded between cocktail reservations.", "Soho", ["frenchHouse", "bradleys", "ship", "ronnieScotts"], "Old Soho Pubs and Jazz Rooms"),
-  popularBarGuide("soho-popular-bars", "soho-popular-nightlife", "Best Bars in Soho, London", "Cocktails, jazz, wine rooms, and central London bars with enough pull to plan the night around.", "Soho", ["swift", "ronnieScotts", "nobleRot", "frenchHouse"], "Soho Cocktails, Jazz, and Wine Rooms"),
+  popularBarGuide("soho-popular-bars", "soho-popular-nightlife", "Best Bars in Soho, London", "Cocktail bars, jazz rooms, and wine-led drinking in Soho, favoring places with distinctive drinks, live programming, or a room worth lingering in.", "Soho", ["swift", "ronnieScotts", "nobleRot", "frenchHouse"], "Soho Cocktails, Jazz, and Wine Rooms"),
   diveBarGuide("covent-garden-dive-bars", "covent-garden-dive-bars", "Best Pubs in Covent Garden, London", "Historic pubs, beer halls, themed taverns, and basement cocktails for drinking near Covent Garden without getting trapped by the piazza.", "Covent Garden", ["lambFlag", "porterhouse", "mrFoggs", "eveBar"], "Theatreland Pubs and Beer Halls"),
   popularBarGuide("covent-garden-popular-bars", "covent-garden-popular-nightlife", "Best Bars in Covent Garden, London", "Hotel-bar ceremony, themed taverns, basement cocktails, and large group-friendly rooms for West End nights.", "Covent Garden", ["americanBar", "eveBar", "porterhouse", "mrFoggs", "lambFlag"], "West End Drinks Before the Curtain"),
   diveBarGuide("shoreditch-dive-bars", "shoreditch-dive-bars", "Best Dive Bars and Pubs in Shoreditch, London", "Casual pubs, basement cocktails, and flexible east London first rounds that can become a bigger night quickly.", "Shoreditch", ["oldBlueLast", "queenAdelaide", "bookClub", "happinessForgets"], "Old Street First Rounds"),
@@ -1208,7 +952,7 @@ const citywideGuides: GuideSpec[] = [
     seoTitle: "Best Parks in London",
     seoDescription: "Best parks and green walks in London, from Hyde Park and Regent's Park to Hampstead Heath, Richmond Park, Greenwich, and Regent's Canal.",
     title: "Royal Parks, Heaths, and Canal Walks",
-    description: "Use this when London needs air between museums, pubs, and markets: royal lawns, big heath views, deer park scale, maritime slopes, and canal walks that keep the route transit-aware.",
+    description: "London's green spaces range from formal royal lawns and boating lakes to swimming ponds, deer park, maritime hills, and long canal towpaths. Each pick offers a distinct landscape within the city.",
     category: "Nature",
     sourceKey: "nature",
     stopIds: ["hydePark", "regentsPark", "hampsteadHeath", "richmondPark", "greenwichPark", "regentsCanal"],
@@ -1216,50 +960,50 @@ const citywideGuides: GuideSpec[] = [
   { ...foodGuide("citywide-restaurants", "best-restaurants-citywide", "Best Restaurants in London", "Best restaurants in London, pulling destination meals from Soho, Covent Garden, Shoreditch, Notting Hill, Mayfair, and the South Bank.", undefined, ["nobleRot", "rules", "brat", "manteca", "core", "theLedbury", "sketch"], "Tables Worth Crossing the Tube For"), seoSlug: "best-restaurants" },
   { ...foodGuide("citywide-markets", "best-food-markets-citywide", "Best Food Markets in London", "Best food markets and grazing routes in London, from Borough and Camden to Spitalfields, Portobello, Bankside, and Brick Lane.", undefined, ["boroughMarket", "camdenMarket", "spitalfieldsMarket", "portobello", "flatIronSquare", "brickLane"], "Markets, Counters, and Grazing Streets"), seoSlug: "best-food-markets" },
   { ...foodGuide("citywide-pub-dining", "best-pub-food-citywide", "Best Pub Food in London", "Best pub lunches, pub dinners, oyster pints, roasts, pies, and old London cafe meals across the city.", undefined, ["loreOfTheLand", "ePellicci", "lambFlag", "theCow", "anchorBankside", "redLion", "masonsArms", "sherlockHolmesPub", "frenchHouse"], "Pub Breakfasts, Lunches, and Proper Dinners"), seoSlug: "best-pub-food" },
-  { ...foodGuide("citywide-fine-dining", "best-fine-dining-citywide", "Best Fine Dining in London", "Best fine dining in London, collecting special-occasion bookings, tasting menus, grand rooms, omakase counters, and high-polish neighborhood anchors.", undefined, ["core", "theLedbury", "closMaggiore", "sketch", "maru", "nobleRot", "brat", "rules"], "Reservations to Build the Trip Around"), seoSlug: "best-fine-dining" },
+  { ...foodGuide("citywide-fine-dining", "best-fine-dining-citywide", "Best Fine Dining in London", "London's special-occasion dining crosses tasting menus, grand historic rooms, omakase counters, modern British cooking, and polished neighborhood restaurants worth a firm reservation.", undefined, ["core", "theLedbury", "closMaggiore", "sketch", "maru", "nobleRot", "brat", "rules"], "Reservations to Build the Trip Around"), seoSlug: "best-fine-dining" },
   { ...foodGuide("citywide-south-asian", "best-asian-spice-routes-citywide", "Best Asian Restaurants and Spice Routes in London", "Best Asian and spice-led restaurants in London, from low-cost roti queues and Sri Lankan rooms to Thai, Chinese, and modern Indian destination counters.", undefined, ["rotiKingEuston", "dishoomCovent", "hoppers", "gunpowder", "kiln", "smokingGoat", "churchillArms", "fourSeasonsChinatown"], "Spice Routes Across London"), seoSlug: "asian-spice-routes" },
   { ...foodGuide("citywide-vegetarian", "best-vegetarian-vegan-food-citywide", "Best Vegetarian and Vegan Food in London", "Best vegetarian and vegan restaurants in London, from formal plant-based tasting menus and generous Middle Eastern sharing tables to vegan Chinese, Soho staples, and Borough Market dinners.", undefined, ["gauthier", "mildreds", "bubala", "mallow", "tofuVegan", "tendril", "plates"], "Vegetarian and Plant-Based London"), seoSlug: "best-vegetarian-vegan-food" },
   { ...popularBarGuide("citywide-popular-bars", "best-popular-bars-citywide", "Best Bars in London", "Best bars in London, from Soho cocktails and hotel classics to Shoreditch venues, west London rum rooms, and South Bank rooftops.", undefined, ["swift", "americanBar", "happinessForgets", "trailerHappiness", "twelveKnot"], "Cocktail Rooms, Jazz, and Skyline Drinks"), seoSlug: "best-bars" },
   { ...diveBarGuide("citywide-dive-bars", "best-dive-bars-citywide", "Best Dive Bars in London", "Best dive bars in London for old Soho pubs, jukebox rooms, live-music pubs, beer halls, Portobello pints, basement rum, and South Bank river stops.", undefined, ["frenchHouse", "bradleys", "ship", "lambFlag", "porterhouse", "oldBlueLast", "queenAdelaide", "churchillArms", "sunInSplendour", "anchorBankside"], "Old Pubs, Jukebox Rooms, and Local Pints"), seoSlug: "best-dive-bars" },
   { ...popularBarGuide("citywide-lgbtq-nightlife", "best-lgbtq-nightlife-citywide", "Best LGBTQ+ Nightlife in London", "Best LGBTQ+ bars, cabaret rooms, queer clubs, and social spaces in London, from Soho and Charing Cross to Dalston.", undefined, ["heaven", "halfwayHeaven", "yardBar", "sheSoho", "dalstonSuperstore"], "LGBTQ+ Clubs, Cabaret Rooms, and Queer Bars"), seoSlug: "best-lgbtq-nightlife" },
-  { ...cultureGuide("citywide-landmarks", "classic-london-landmarks", "Best Classic Landmarks in London", "Buckingham Palace, Westminster Abbey, Big Ben, the London Eye, Tower Bridge, the Tower of London, St Paul's Cathedral, and The Shard for the classic London spine.", undefined, ["buckinghamPalace", "westminsterAbbey", "bigBen", "londonEye", "towerBridge", "towerOfLondon", "stPauls", "theShard"], "Classic Landmarks Along the Thames"), seoSlug: "classic-landmarks" },
-  { ...cultureGuide("citywide-museums-galleries", "museums-and-galleries", "Best Museums and Galleries in London", "V&A, Tate Britain, National Portrait Gallery, Wallace Collection, Royal Academy, and Kensington Palace for London museum depth beyond the obvious first stops.", undefined, ["victoriaAlbert", "tateBritain", "nationalPortraitGallery", "wallaceCollection", "royalAcademy", "kensingtonPalace"], "Museums, Galleries, and Palace Rooms"), seoSlug: "museums-and-galleries" },
-  { ...cultureGuide("citywide-shopping-culture", "shopping-streets-and-design-landmarks", "Best Shopping Streets and Design Landmarks in London", "Liberty, Harrods, Selfridges, Carnaby Street, Oxford Street, Brick Lane, and Portobello as London shopping culture and street identity.", undefined, ["liberty", "harrods", "selfridges", "carnabyStreet", "oxfordStreet", "brickLane", "portobello"], "Shopping Streets and Design Landmarks"), seoSlug: "shopping-streets-and-design" },
+  { ...cultureGuide("citywide-landmarks", "classic-london-landmarks", "Best Classic Landmarks in London", "Buckingham Palace, Westminster Abbey, Big Ben, the London Eye, Tower Bridge, the Tower of London, St Paul's Cathedral, and The Shard for the classic London spine.", undefined, ["buckinghamPalace", "westminsterAbbey", "bigBen", "londonEye", "towerBridge", "towerOfLondon", "stPauls", "theShard"], "Classic Landmarks Along the Thames"), seoSlug: "classic-landmarks", description: "London's defining landmarks trace monarchy, Parliament, faith, engineering, punishment, and modern skyline ambition along the Thames. The selection favors places that explain the city as well as photograph it." },
+  { ...cultureGuide("citywide-museums-galleries", "museums-and-galleries", "Best Museums and Galleries in London", "V&A, Tate Britain, National Portrait Gallery, Wallace Collection, Royal Academy, and Kensington Palace for London museum depth beyond the obvious first stops.", undefined, ["victoriaAlbert", "tateBritain", "nationalPortraitGallery", "wallaceCollection", "royalAcademy", "kensingtonPalace"], "Museums, Galleries, and Palace Rooms"), seoSlug: "museums-and-galleries", description: "London's museum depth runs through design, British art, portraiture, decorative arts, temporary exhibitions, and royal domestic history. These institutions reward a focused visit beyond the largest headline collections." },
+  { ...cultureGuide("citywide-shopping-culture", "shopping-streets-and-design-landmarks", "Best Shopping Streets and Design Landmarks in London", "Liberty, Harrods, Selfridges, Carnaby Street, Oxford Street, Brick Lane, and Portobello as London shopping culture and street identity.", undefined, ["liberty", "harrods", "selfridges", "carnabyStreet", "oxfordStreet", "brickLane", "portobello"], "Shopping Streets and Design Landmarks"), seoSlug: "shopping-streets-and-design", description: "London retail doubles as a record of class, fashion, subculture, spectacle, and street identity. Grand department stores sit beside independent design, vintage markets, and shopping streets whose crowds are part of the story." },
   { ...cultureGuide("citywide-culture", "performance-film-and-contemporary-stages", "Best Performance, Film, and Contemporary Culture in London", "Best performance, film, theatre, photography, and contemporary culture in London, linking major stages, cinemas, and programmed arts venues without repeating the landmark and museum guides.", undefined, ["royalOpera", "globe", "southbankCentre", "nationalTheatre", "bfi", "barbican", "sohoTheatre", "photographersGallery"], "Performance, Film, and Contemporary Stages"), seoSlug: "performance-film-contemporary-culture" },
   stayGuide("citywide-hotels", "best-hotels-citywide", "Best Hotels in London", "Best hotels in London, comparing central nightlife, theatre access, east London design, west London calm, and South Bank river bases.", undefined, ["hamYard", "nomad", "boundary", "laslett", "seaContainers"], "London Hotels Worth Building the Trip Around"),
   hostelGuide("citywide-hostels", "best-hostels-citywide", "Best Hostels in London", "Best hostels in London for social central stays, east-side nights, west London calm, and South Bank access.", undefined, ["generator", "wombats", "astorMuseum", "onefamNotting", "stChristopherBorough", "clink261", "smartRussell"], "Social Beds Across the Tube Map"),
   { ...activityGuide("one-day-activities", "one-day-itinerary", "Best Things to Do in London in One Day", "Best one-day London itinerary, combining a major museum, market meal, riverside walk, theatre or gallery time, and a strong evening drink.", ["britishMuseum", "boroughMarket", "tateModern", "globe", "swift"], "One Strong Day, Kept Central", [1, 1, 1, 1, 1]), seoSlug: "one-day-itinerary" },
   { ...activityGuide("weekend-activities", "weekend-itinerary", "Best Things to Do in London for a Weekend", "Best London weekend itinerary, balancing West End shows, Soho meals, Shoreditch nightlife, South Bank culture, parks, and market browsing.", ["nomad", "nationalGallery", "rules", "ronnieScotts", "brat", "hampsteadHeath", "twelveKnot"], "Two Nights Across the Tube Map", [1, 1, 1, 1, 2, 2, 2]), seoSlug: "weekend-itinerary" },
-  { ...activityGuide("week-activities", "week-itinerary", "Best Things to Do in London for a Week", "Best one-week London itinerary, using museums, restaurants, pubs, parks, markets, hostels, hotels, theatre, and neighborhood pacing.", ["generator", "hydePark", "britishMuseum", "kiln", "royalOpera", "brat", "brickLane", "portobello", "core", "tateModern", "boroughMarket", "hampsteadHeath"], "A Week of Villages, Parks, and Stages", [1, 1, 2, 2, 3, 3, 4, 5, 5, 6, 6, 7]), seoSlug: "week-itinerary" },
+  { ...activityGuide("week-activities", "week-itinerary", "Best Things to Do in London for a Week", "Seven days in London can hold major museums, neighborhood restaurants, pubs, parks, markets, theatre, and several distinct village-like districts without reducing the city to landmarks.", ["generator", "hydePark", "britishMuseum", "kiln", "royalOpera", "brat", "brickLane", "portobello", "core", "tateModern", "boroughMarket", "hampsteadHeath"], "A Week of Villages, Parks, and Stages", [1, 1, 2, 2, 3, 3, 4, 5, 5, 6, 6, 7]), seoSlug: "week-itinerary" },
 ];
 
 function foodGuide(id: string, slug: string, seoTitle: string, seoDescription: string, neighborhood: string | undefined, stopIds: string[], title: string): GuideSpec {
-  return baseGuide(id, slug, "best-restaurants", seoTitle, seoDescription, title, "London food works best when it is planned by area: markets, pubs, modern British rooms, South Asian routes, and reservations that respect tube time.", "Food", "food", neighborhood, stopIds);
+  return baseGuide(id, slug, "best-restaurants", seoTitle, seoDescription, title, seoDescription, "Food", "food", neighborhood, stopIds);
 }
 
 function cultureGuide(id: string, slug: string, seoTitle: string, seoDescription: string, neighborhood: string | undefined, stopIds: string[], title: string): GuideSpec {
-  return baseGuide(id, slug, "best-culture", seoTitle, seoDescription, title, "Use this culture route to connect London's museums, galleries, performance rooms, street history, and neighborhood texture without turning the day into a cross-town checklist.", "Culture", "culture", neighborhood, stopIds);
+  return baseGuide(id, slug, "best-culture", seoTitle, seoDescription, title, seoDescription, "Culture", "culture", neighborhood, stopIds);
 }
 
 function stayGuide(id: string, slug: string, seoTitle: string, seoDescription: string, neighborhood: string | undefined, stopIds: string[], title: string): GuideSpec {
-  return baseGuide(id, slug, "best-hotels", seoTitle, seoDescription, title, "London hotels should be chosen by transit line, sleep style, and the part of the city you will actually use after dark.", "Stay", "stay", neighborhood, stopIds);
+  return baseGuide(id, slug, "best-hotels", seoTitle, seoDescription, title, seoDescription, "Stay", "stay", neighborhood, stopIds);
 }
 
 function hostelGuide(id: string, slug: string, seoTitle: string, seoDescription: string, neighborhood: string | undefined, stopIds: string[], title = "Budget Beds With Useful Transit"): GuideSpec {
-  return baseGuide(id, slug, "best-hostels", seoTitle, seoDescription, title, "Use this for lower-cost London bases that still respect late-night transit, social energy, and the neighborhood you want to wake up in.", "Stay", "hostels", neighborhood, stopIds);
+  return baseGuide(id, slug, "best-hostels", seoTitle, seoDescription, title, seoDescription, "Stay", "hostels", neighborhood, stopIds);
 }
 
 function diveBarGuide(id: string, slug: string, seoTitle: string, seoDescription: string, neighborhood: string | undefined, stopIds: string[], title: string): GuideSpec {
-  return baseGuide(id, slug, "best-dive-bars", seoTitle, seoDescription, title, "London's low-key drinking works through pubs, basement rooms, old regulars' bars, and live-music spaces rather than one generic nightlife strip.", "Nightlife", "nightlife", neighborhood, stopIds);
+  return baseGuide(id, slug, "best-dive-bars", seoTitle, seoDescription, title, seoDescription, "Nightlife", "nightlife", neighborhood, stopIds);
 }
 
 function popularBarGuide(id: string, slug: string, seoTitle: string, seoDescription: string, neighborhood: string | undefined, stopIds: string[], title: string): GuideSpec {
-  return baseGuide(id, slug, "best-bars", seoTitle, seoDescription, title, "Use this when the night needs stronger pull: cocktail rooms, hotel bars, live venues, theatre-adjacent drinks, and late rooms with a reason to cross town.", "Nightlife", "nightlife", neighborhood, stopIds);
+  return baseGuide(id, slug, "best-bars", seoTitle, seoDescription, title, seoDescription, "Nightlife", "nightlife", neighborhood, stopIds);
 }
 
 function activityGuide(id: string, slug: string, seoTitle: string, seoDescription: string, stopIds: string[], title: string, stopDays: number[]): GuideSpec {
   return {
-    ...baseGuide(id, slug, "best-things-to-do", seoTitle, seoDescription, title, "London itineraries should be built by area and transit line, mixing museums, food, parks, pubs, theatre, and markets without wasting the day underground.", "Activities", "culture", undefined, stopIds),
+    ...baseGuide(id, slug, "best-things-to-do", seoTitle, seoDescription, title, seoDescription, "Activities", "culture", undefined, stopIds),
     itinerary: {},
     submissionType: "itinerary",
     stopDays,

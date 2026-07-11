@@ -94,7 +94,7 @@ Before writing guide data, propose candidate stops. For each stop include:
 - map URL,
 - image source candidate URL,
 - at least two supporting source URLs,
-- why it belongs in this exact guide.
+- the source-backed offering or distinction that qualifies it for the guide.
 
 Reject weak picks, duplicate-location bundles, permanently closed places, generic tourist traps, unclear-status venues, and stops with poor source support.
 
@@ -122,7 +122,7 @@ Category fields are required:
 - Stay: lodgingType, bookingUrl, price/priceSource where useful, attributeTags.
 - Nightlife: nightlifeType, musicGenres where relevant, price/priceSource where useful, attributeTags.
 
-Descriptions must use actual facts from venue/property/source pages. Write 2-4 specific sentences per stop with editorial flair and practical judgment: what the place feels like, what it is best for, what to order/book/avoid/time correctly, and why it belongs in this exact guide. Do not use generic travel copy, keyword chains, repeated sentence frames, or unsupported claims.
+Descriptions must use actual facts from venue/property/source pages. Write 1-3 fact-first sentences per stop, usually 25-80 words, leading with what the place cooks, pours, plays, exhibits, stages, rents, or provides. A concrete 16-24 word sentence is acceptable; never add itinerary filler to reach a length target. Add editorial judgment only when it is grounded in observable facts. Practical advice is optional and must materially change the venue decision, such as what to order or book, queue or reservation posture, room choice, door policy, schedule, accessibility, or a real price/noise tradeoff. Keep source support, review patterns, map evidence, and selection rationale in evidence fields, not public copy. Do not use generic travel copy, keyword chains, repeated sentence frames, unsupported claims, or selection-role filler such as `the pick`, `the stop`, `earns its spot`, `belongs in this guide`, `gives the route`, `anchors the day`, `use it before/after`, or `the night needs`.
 
 Photo sourcing:
 - Start with the actual venue/property/official website.
