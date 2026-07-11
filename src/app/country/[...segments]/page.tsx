@@ -8,6 +8,7 @@ import { getContinentsWithDestinationDescriptions } from "@/lib/destination-desc
 import {
   getCanonicalCityPath,
   getCountryDeepLinkStaticParams,
+  getIndexableCitiesForCountry,
   resolveCountryDeepLink,
 } from "@/lib/deep-link-routes";
 import { getServerEditorialGuides } from "@/lib/server-editorial-guides";
@@ -20,14 +21,21 @@ interface CountryDeepLinkPageProps {
 
 export const revalidate = 86400;
 
-export function generateStaticParams() {
-  return getCountryDeepLinkStaticParams();
+export async function generateStaticParams() {
+  const [continents, editorialGuides] = await Promise.all([
+    getContinentsWithDestinationDescriptions(),
+    getServerEditorialGuides(),
+  ]);
+  return getCountryDeepLinkStaticParams(continents, editorialGuides);
 }
 
 export async function generateMetadata({ params }: CountryDeepLinkPageProps): Promise<Metadata> {
   const { segments } = await params;
-  const continents = await getContinentsWithDestinationDescriptions();
-  const route = resolveCountryDeepLink(segments, { continents });
+  const [continents, editorialGuides] = await Promise.all([
+    getContinentsWithDestinationDescriptions(),
+    getServerEditorialGuides(),
+  ]);
+  const route = resolveCountryDeepLink(segments, { continents, guides: editorialGuides });
 
   if (!route) {
     return { title: "Country not found" };
@@ -43,6 +51,12 @@ export async function generateMetadata({ params }: CountryDeepLinkPageProps): Pr
     alternates: {
       canonical: route.canonicalPath,
     },
+    robots: route.indexable
+      ? undefined
+      : {
+          index: false,
+          follow: true,
+        },
     openGraph: {
       title: route.title,
       description: route.description,
@@ -61,6 +75,7 @@ export async function generateMetadata({ params }: CountryDeepLinkPageProps): Pr
       card: "summary_large_image",
       title: route.title,
       description: route.description,
+      images: countryImageUrl ? [countryImageUrl] : undefined,
     },
   };
 }
@@ -71,7 +86,7 @@ export default async function CountryDeepLinkPage({ params }: CountryDeepLinkPag
     getContinentsWithDestinationDescriptions(),
     getServerEditorialGuides(),
   ]);
-  const route = resolveCountryDeepLink(segments, { continents });
+  const route = resolveCountryDeepLink(segments, { continents, guides: editorialGuides });
 
   if (!route) {
     notFound();
@@ -98,9 +113,7 @@ export default async function CountryDeepLinkPage({ params }: CountryDeepLinkPag
             <h1 className="mt-2 text-4xl font-semibold text-slate-950">{route.h1}</h1>
             <p className="mt-4 max-w-3xl text-base leading-7 text-slate-700">{route.intro}</p>
             <section className="mt-10 grid gap-3 sm:grid-cols-2 lg:grid-cols-3" aria-label={`${route.country.name} cities`}>
-              {route.country.cities
-                .filter((city) => !city.isPlaceholderRegion)
-                .map((city) => (
+              {getIndexableCitiesForCountry(route.country, editorialGuides).map((city) => (
                   <Link
                     key={city.id}
                     href={getCanonicalCityPath(city)}
@@ -114,7 +127,7 @@ export default async function CountryDeepLinkPage({ params }: CountryDeepLinkPag
         }
       >
         <SplitScreenClientLoader
-          initialAppData={{ continents, guides: editorialGuides }}
+          initialAppData={{ continents, guides: [] }}
           initialRouteState={{
             selection: route.selection,
             activeCategory: route.activeCategory,

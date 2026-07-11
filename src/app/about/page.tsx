@@ -34,13 +34,45 @@ export default function AboutPage() {
             </article>
           ))}
         </div>
-        <p className="mt-8 text-sm text-slate-600">
-          Questions, corrections, and partnership notes can be sent through the{" "}
-          <Link href="/contact" className="font-medium text-orange-700 hover:text-orange-800">
-            contact page
-          </Link>
-          .
-        </p>
+
+        <section className="mt-10 border-t border-slate-950/10 pt-8" aria-labelledby="editorial-process-heading">
+          <h2 id="editorial-process-heading" className="text-2xl font-semibold text-slate-950">
+            How the guides are built
+          </h2>
+          <div className="mt-5 grid gap-5 md:grid-cols-3">
+            {[
+              ["Research", "Guide research starts with official venue and destination sources, then uses current editorial references and local signals to verify what is open, relevant, and worth the trip."],
+              ["Selection", "Stops are chosen for location fit, quality, practical usefulness, and the role they play in a neighborhood or route. A famous name does not earn automatic placement."],
+              ["Maintenance", "Hours, booking details, venue status, and source links are reviewed as guides are revised. Material guide updates flow into the page's published update signals."],
+            ].map(([title, description]) => (
+              <article key={title}>
+                <h3 className="text-base font-semibold text-slate-950">{title}</h3>
+                <p className="mt-2 text-sm leading-6 text-slate-600">{description}</p>
+              </article>
+            ))}
+          </div>
+        </section>
+
+        <section className="mt-10 border-t border-slate-950/10 pt-8" aria-labelledby="editorial-independence-heading">
+          <h2 id="editorial-independence-heading" className="text-2xl font-semibold text-slate-950">
+            Corrections and editorial independence
+          </h2>
+          <p className="mt-3 max-w-3xl text-sm leading-6 text-slate-600">
+            Recommendations are selected for editorial relevance and trip-planning value. Some booking links may earn
+            RGuide a commission, but affiliate relationships do not guarantee placement or positive coverage. Read the{" "}
+            <Link href="/affiliate-disclosure" className="font-medium text-orange-700 hover:text-orange-800">
+              affiliate disclosure
+            </Link>{" "}
+            for details.
+          </p>
+          <p className="mt-3 max-w-3xl text-sm leading-6 text-slate-600">
+            Travelers and venues can report closures, changed hours, source errors, or missing context through the{" "}
+            <Link href="/contact" className="font-medium text-orange-700 hover:text-orange-800">
+              contact page
+            </Link>
+            . Editorial corrections are reviewed separately from partnership requests.
+          </p>
+        </section>
       </section>
     </main>
   );

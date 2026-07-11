@@ -48,7 +48,9 @@ export async function generateMetadata({ params }: CityDeepLinkPageProps): Promi
     return { title: "City not found" };
   }
 
-  const cityImageUrl = `${route.city.image}${route.city.image.includes("?") ? "&" : "?"}title=1`;
+  const socialImageSource =
+    route.guide?.photo ?? route.guide?.stops.find((stop) => Boolean(stop.photo))?.photo ?? route.city.image;
+  const socialImageUrl = `${socialImageSource}${socialImageSource.includes("?") ? "&" : "?"}title=1`;
 
   return {
     title: route.title,
@@ -56,6 +58,12 @@ export async function generateMetadata({ params }: CityDeepLinkPageProps): Promi
     alternates: {
       canonical: route.canonicalPath,
     },
+    robots: route.indexable
+      ? undefined
+      : {
+          index: false,
+          follow: true,
+        },
     openGraph: {
       title: route.title,
       description: route.description,
@@ -63,7 +71,7 @@ export async function generateMetadata({ params }: CityDeepLinkPageProps): Promi
       type: "website",
       images: [
         {
-          url: cityImageUrl,
+          url: socialImageUrl,
           alt: route.title,
         },
       ],
@@ -72,6 +80,7 @@ export async function generateMetadata({ params }: CityDeepLinkPageProps): Promi
       card: "summary_large_image",
       title: route.title,
       description: route.description,
+      images: [socialImageUrl],
     },
   };
 }

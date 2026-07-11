@@ -18,6 +18,8 @@ export type CityDeepLinkResolution = CityDeepLinkState & {
   category?: ListCategory;
   guide?: MapList;
   canonicalPath: string;
+  indexable: boolean;
+  lastModified?: string;
   title: string;
   description: string;
   h1: string;
@@ -29,6 +31,8 @@ export type CountryDeepLinkResolution = CityDeepLinkState & {
   continent: Continent;
   country: Country;
   canonicalPath: string;
+  indexable: boolean;
+  lastModified?: string;
   title: string;
   description: string;
   h1: string;
@@ -39,6 +43,8 @@ export type CountryDeepLinkResolution = CityDeepLinkState & {
 export type ContinentDeepLinkResolution = CityDeepLinkState & {
   continent: Continent;
   canonicalPath: string;
+  indexable: boolean;
+  lastModified?: string;
   title: string;
   description: string;
   h1: string;
@@ -66,6 +72,68 @@ const organizationReference = {
   name: SITE_SEARCH_NAME,
   url: getAbsoluteHref("/"),
 };
+
+const CATEGORY_SEARCH_TITLES: Record<ListCategory, string> = {
+  Food: "Food & Restaurant Guides",
+  Nightlife: "Bars & Nightlife Guides",
+  Nature: "Parks & Nature Guides",
+  Culture: "Museums & Culture Guides",
+  Stay: "Hotels & Hostels Guides",
+  Activities: "Things to Do",
+  Routes: "Itineraries & Walking Routes",
+  Essentials: "Travel Tips & Essentials",
+};
+
+const TITLE_LOWERCASE_WORDS = new Set(["a", "an", "and", "at", "for", "in", "of", "on", "or", "the", "to"]);
+
+function parseEditorialDate(value?: string | null) {
+  if (!value) {
+    return null;
+  }
+
+  const timestamp = Date.parse(value);
+  return Number.isFinite(timestamp) ? new Date(timestamp).toISOString() : null;
+}
+
+export function isIndexableEditorialGuide(guide: MapList) {
+  return (
+    !guide.id.startsWith("event-") &&
+    guide.submissionType !== "event" &&
+    guide.visibility !== "private" &&
+    guide.visibility !== "followers" &&
+    guide.stops.length > 0
+  );
+}
+
+export function getGuideLastModified(guide: Pick<MapList, "createdAt" | "updatedAt">) {
+  return parseEditorialDate(guide.updatedAt) ?? parseEditorialDate(guide.createdAt) ?? undefined;
+}
+
+export function getLatestGuideLastModified(guides: Array<Pick<MapList, "createdAt" | "updatedAt">>) {
+  return guides
+    .map(getGuideLastModified)
+    .filter((value): value is string => Boolean(value))
+    .sort((left, right) => Date.parse(right) - Date.parse(left))[0];
+}
+
+function toMetadataDescription(value: string, maxLength = 165) {
+  const normalized = value.replace(/\s+/g, " ").trim();
+  if (normalized.length <= maxLength) {
+    return normalized;
+  }
+
+  const shortened = normalized.slice(0, maxLength + 1);
+  const wordBoundary = shortened.lastIndexOf(" ");
+  return `${shortened.slice(0, wordBoundary > 110 ? wordBoundary : maxLength).replace(/[,:;\s]+$/, "")}.`;
+}
+
+function titleCaseSearchPhrase(value: string) {
+  return value
+    .split("-")
+    .filter(Boolean)
+    .map((word, index) => (index > 0 && TITLE_LOWERCASE_WORDS.has(word) ? word : `${word.charAt(0).toUpperCase()}${word.slice(1)}`))
+    .join(" ");
+}
 
 function cleanSegments(segments: string[]) {
   return segments.map((segment) => decodeURIComponent(segment).trim()).filter(Boolean);
@@ -227,6 +295,20 @@ export function getGuideSeoTitle(
 
   const placeLabel = neighborhood ? `${neighborhood.name}, ${city.name}` : city.name;
   return `${getGuideIntentLabel(guide)} in ${placeLabel}`;
+}
+
+export function getGuideMetadataTitle(
+  guide: GuideSeoSeed,
+  city: Pick<City, "name">,
+  neighborhood?: Pick<SubArea, "name">,
+) {
+  const editorialTitle = getGuideSeoTitle(guide, city, neighborhood);
+  if (editorialTitle.length <= 62) {
+    return editorialTitle;
+  }
+
+  const placeLabel = neighborhood ? `${neighborhood.name}, ${city.name}` : city.name;
+  return `${titleCaseSearchPhrase(getGuideSeoSlug(guide))} in ${placeLabel}`;
 }
 
 export function getGuideSeoDescription(
@@ -429,11 +511,40 @@ export function getIndexableListsForCityRoute(
   guideSource: MapList[] = mapLists,
 ) {
   if (guide) {
-    return [guide];
+    return isIndexableEditorialGuide(guide) ? [guide] : [];
   }
-  return neighborhood
+  const lists = neighborhood
     ? getListsForCityRoute(city, neighborhood, category, guideSource)
     : getAllListsForCityRoute(city, category, guideSource);
+
+  return lists.filter(isIndexableEditorialGuide);
+}
+
+export function getPreferredCityCategoryPath(
+  city: City,
+  category: ListCategory,
+  neighborhood?: Pick<SubArea, "name">,
+  guideSource: MapList[] = mapLists,
+) {
+  const guides = getIndexableListsForCityRoute(city, neighborhood, category, undefined, guideSource);
+  if (guides.length === 1) {
+    return getCanonicalGuidePath(city, guides[0], neighborhood, guideSource);
+  }
+
+  return getCanonicalCityCategoryPath(city, category, neighborhood);
+}
+
+export function getPreferredCityNeighborhoodPath(
+  city: City,
+  neighborhood: Pick<SubArea, "name">,
+  guideSource: MapList[] = mapLists,
+) {
+  const guides = getIndexableListsForCityRoute(city, neighborhood, undefined, undefined, guideSource);
+  if (guides.length === 1) {
+    return getCanonicalGuidePath(city, guides[0], neighborhood, guideSource);
+  }
+
+  return getCanonicalCityNeighborhoodPath(city, neighborhood);
 }
 
 export function getNeighborhoodsForCityRoute(city: City) {
@@ -455,11 +566,25 @@ export function getCategoriesForCityRoute(
   return CATEGORIES.filter((category) => lists.some((list) => list.category === category));
 }
 
+export function getIndexableCategoriesForCityRoute(
+  city: City,
+  neighborhood?: Pick<SubArea, "name">,
+  guideSource: MapList[] = mapLists,
+) {
+  const lists = neighborhood
+    ? getListsForCityRoute(city, neighborhood, undefined, guideSource)
+    : getAllListsForCityRoute(city, undefined, guideSource);
+  const indexableLists = lists.filter(isIndexableEditorialGuide);
+
+  return CATEGORIES.filter((category) => indexableLists.some((list) => list.category === category));
+}
+
 export function getRelatedCityRouteGuides(
   route: Pick<CityDeepLinkResolution, "city" | "neighborhood" | "category" | "guide">,
   guideSource: MapList[] = mapLists,
 ) {
   const sameScope = getListsForCityRoute(route.city, route.neighborhood, route.category, guideSource)
+    .filter(isIndexableEditorialGuide)
     .filter((list) => list.id !== route.guide?.id)
     .sort((left, right) => right.upvotes - left.upvotes || left.title.localeCompare(right.title));
 
@@ -468,6 +593,7 @@ export function getRelatedCityRouteGuides(
   }
 
   const cityWide = getListsForCityRoute(route.city, undefined, route.guide.category, guideSource)
+    .filter(isIndexableEditorialGuide)
     .filter((list) => list.id !== route.guide?.id && !sameScope.some((item) => item.id === list.id))
     .sort((left, right) => right.upvotes - left.upvotes || left.title.localeCompare(right.title));
 
@@ -512,9 +638,50 @@ function buildCountryBreadcrumbData(country: Country, canonicalPath: string) {
   };
 }
 
-function buildCountryItemListData(country: Country, canonicalPath: string) {
-  const cityItems = country.cities
-    .filter((city) => !city.isPlaceholderRegion)
+export function getIndexableGuidesForCountry(country: Country, guideSource: MapList[] = mapLists) {
+  const cityNames = new Set(country.cities.filter((city) => !city.isPlaceholderRegion).map((city) => city.name));
+
+  return guideSource.filter(
+    (guide) =>
+      isIndexableEditorialGuide(guide) &&
+      (guide.location.country === country.name || (guide.location.city ? cityNames.has(guide.location.city) : false)),
+  );
+}
+
+export function getIndexableCitiesForCountry(country: Country, guideSource: MapList[] = mapLists) {
+  const guideCityNames = new Set(
+    getIndexableGuidesForCountry(country, guideSource)
+      .map((guide) => guide.location.city)
+      .filter((cityName): cityName is string => Boolean(cityName)),
+  );
+
+  return country.cities.filter((city) => !city.isPlaceholderRegion && guideCityNames.has(city.name));
+}
+
+export function getIndexableGuidesForContinent(continent: Continent, guideSource: MapList[] = mapLists) {
+  const countryNames = new Set(continent.countries.map((country) => country.name));
+  const cityNames = new Set(
+    continent.countries.flatMap((country) =>
+      country.cities.filter((city) => !city.isPlaceholderRegion).map((city) => city.name),
+    ),
+  );
+
+  return guideSource.filter(
+    (guide) =>
+      isIndexableEditorialGuide(guide) &&
+      (guide.location.continent === continent.name ||
+        countryNames.has(guide.location.country) ||
+        (guide.location.city ? cityNames.has(guide.location.city) : false)),
+  );
+}
+
+export function getIndexableCountriesForContinent(continent: Continent, guideSource: MapList[] = mapLists) {
+  return continent.countries.filter((country) => getIndexableGuidesForCountry(country, guideSource).length > 0);
+}
+
+function buildCountryItemListData(country: Country, canonicalPath: string, guideSource: MapList[]) {
+  const url = getAbsoluteHref(canonicalPath);
+  const cityItems = getIndexableCitiesForCountry(country, guideSource)
     .map((city, index) => ({
       "@type": "ListItem",
       position: index + 1,
@@ -524,12 +691,17 @@ function buildCountryItemListData(country: Country, canonicalPath: string) {
 
   return {
     "@context": "https://schema.org",
-    "@type": "ItemList",
+    "@type": "CollectionPage",
+    "@id": `${url}#webpage`,
     name: `RGuide ${country.name} travel guides`,
-    url: getAbsoluteHref(canonicalPath),
+    url,
     isPartOf: websiteReference,
     publisher: organizationReference,
-    itemListElement: cityItems,
+    mainEntity: {
+      "@type": "ItemList",
+      numberOfItems: cityItems.length,
+      itemListElement: cityItems,
+    },
   };
 }
 
@@ -554,8 +726,9 @@ function buildContinentBreadcrumbData(continent: Continent, canonicalPath: strin
   };
 }
 
-function buildContinentItemListData(continent: Continent, canonicalPath: string) {
-  const countryItems = continent.countries.map((country, index) => ({
+function buildContinentItemListData(continent: Continent, canonicalPath: string, guideSource: MapList[]) {
+  const url = getAbsoluteHref(canonicalPath);
+  const countryItems = getIndexableCountriesForContinent(continent, guideSource).map((country, index) => ({
     "@type": "ListItem",
     position: index + 1,
     name: country.name,
@@ -564,12 +737,17 @@ function buildContinentItemListData(continent: Continent, canonicalPath: string)
 
   return {
     "@context": "https://schema.org",
-    "@type": "ItemList",
+    "@type": "CollectionPage",
+    "@id": `${url}#webpage`,
     name: `RGuide ${continent.name} travel guides`,
-    url: getAbsoluteHref(canonicalPath),
+    url,
     isPartOf: websiteReference,
     publisher: organizationReference,
-    itemListElement: countryItems,
+    mainEntity: {
+      "@type": "ItemList",
+      numberOfItems: countryItems.length,
+      itemListElement: countryItems,
+    },
   };
 }
 
@@ -577,9 +755,11 @@ export function resolveContinentDeepLink(
   rawSegments: string[],
   routeData: {
     continents?: Continent[];
+    guides?: MapList[];
   } = {},
 ): ContinentDeepLinkResolution | null {
   const continentSource = routeData.continents ?? continents;
+  const guideSource = routeData.guides ?? mapLists;
   const segments = cleanSegments(rawSegments);
   const [continentSlug, ...rest] = segments;
 
@@ -593,18 +773,16 @@ export function resolveContinentDeepLink(
   }
 
   const canonicalPath = getCanonicalContinentPath(continent);
-  const countryCount = continent.countries.length;
-  const cityCount = continent.countries.reduce(
-    (total, country) => total + country.cities.filter((city) => !city.isPlaceholderRegion).length,
+  const indexableGuides = getIndexableGuidesForContinent(continent, guideSource);
+  const indexableCountries = getIndexableCountriesForContinent(continent, guideSource);
+  const cityCount = indexableCountries.reduce(
+    (total, country) => total + getIndexableCitiesForCountry(country, guideSource).length,
     0,
   );
-  const guideCount = mapLists.filter(
-    (list) => list.location.scope === "continent" && list.location.continent === continent.name,
-  ).length;
-  const title = `RGuide ${continent.name} Travel Guide`;
-  const description = `Explore RGuide travel guides across ${continent.name}, including countries, cities, neighborhoods, hotels, restaurants, bars, culture, nature, and things to do.`;
-  const h1 = continent.name;
-  const intro = `Browse ${countryCount} countries, ${cityCount} cities, and ${guideCount} continent guides across ${continent.name}.`;
+  const title = `${continent.name} Travel Guides`;
+  const fullDescription = `Explore ${indexableGuides.length} curated RGuide Travel guides across ${continent.name}, covering ${cityCount} cities in ${indexableCountries.length} countries.`;
+  const h1 = `${continent.name} Travel Guides`;
+  const intro = `${fullDescription} Open a country or city to compare neighborhoods, hotels, restaurants, bars, culture, nature, and things to do.`;
 
   return {
     selection: {
@@ -612,13 +790,15 @@ export function resolveContinentDeepLink(
     },
     continent,
     canonicalPath,
+    indexable: indexableGuides.length > 0,
+    lastModified: getLatestGuideLastModified(indexableGuides),
     title,
-    description,
+    description: toMetadataDescription(fullDescription),
     h1,
     intro,
     structuredData: [
       buildContinentBreadcrumbData(continent, canonicalPath),
-      buildContinentItemListData(continent, canonicalPath),
+      buildContinentItemListData(continent, canonicalPath, guideSource),
     ],
   };
 }
@@ -627,9 +807,11 @@ export function resolveCountryDeepLink(
   rawSegments: string[],
   routeData: {
     continents?: Continent[];
+    guides?: MapList[];
   } = {},
 ): CountryDeepLinkResolution | null {
   const continentSource = routeData.continents ?? continents;
+  const guideSource = routeData.guides ?? mapLists;
   const segments = cleanSegments(rawSegments);
   const [countrySlug, ...rest] = segments;
 
@@ -644,16 +826,15 @@ export function resolveCountryDeepLink(
 
   const { continent, country } = match;
   const canonicalPath = getCanonicalCountryPath(country);
-  const cityCount = country.cities.filter((city) => !city.isPlaceholderRegion).length;
+  const indexableGuides = getIndexableGuidesForCountry(country, guideSource);
+  const cityCount = getIndexableCitiesForCountry(country, guideSource).length;
   const cityLabel = cityCount === 1 ? "city" : "cities";
-  const title = `RGuide ${country.name} Travel Guide`;
-  const description =
+  const title = `${country.name} Travel Guides`;
+  const editorialIntro =
     country.description ||
     `Explore RGuide city guides, neighborhoods, restaurants, hotels, bars, culture, and things to do across ${country.name}.`;
-  const h1 = country.name;
-  const intro =
-    country.description ||
-    `Browse ${cityCount} ${cityLabel} in ${country.name}, then open city guides for restaurants, hotels, nightlife, culture, and things to do.`;
+  const h1 = `${country.name} Travel Guides`;
+  const intro = `${editorialIntro} Browse ${indexableGuides.length} curated guides across ${cityCount} ${cityLabel}.`;
 
   return {
     selection: {
@@ -663,13 +844,15 @@ export function resolveCountryDeepLink(
     continent,
     country,
     canonicalPath,
+    indexable: indexableGuides.length > 0,
+    lastModified: getLatestGuideLastModified(indexableGuides),
     title,
-    description,
+    description: toMetadataDescription(intro),
     h1,
     intro,
     structuredData: [
       buildCountryBreadcrumbData(country, canonicalPath),
-      buildCountryItemListData(country, canonicalPath),
+      buildCountryItemListData(country, canonicalPath, guideSource),
     ],
   };
 }
@@ -701,14 +884,12 @@ function buildItemListData(
   name: string,
   guideSource: MapList[] = mapLists,
 ) {
-  return {
-    "@context": "https://schema.org",
+  const url = getAbsoluteHref(canonicalPath);
+  const itemList = {
     "@type": "ItemList",
+    "@id": `${url}#guide-list`,
     name,
-    url: getAbsoluteHref(canonicalPath),
     numberOfItems: lists.length,
-    isPartOf: websiteReference,
-    publisher: organizationReference,
     itemListElement: lists.slice(0, 20).map((list, index) => ({
       "@type": "ListItem",
       position: index + 1,
@@ -727,36 +908,95 @@ function buildItemListData(
       ),
     })),
   };
+
+  return {
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    "@id": `${url}#webpage`,
+    name,
+    url,
+    isPartOf: websiteReference,
+    publisher: organizationReference,
+    mainEntity: itemList,
+  };
 }
 
 function buildGuideData(guide: MapList, canonicalPath: string) {
   const city = { name: guide.location.city ?? guide.location.country };
   const neighborhood = guide.location.neighborhood ? { name: guide.location.neighborhood } : undefined;
   const seoDescription = getGuideSeoDescription(guide, city, neighborhood);
+  const url = getAbsoluteHref(canonicalPath);
+  const image = guide.photo ?? guide.stops.find((stop) => Boolean(stop.photo))?.photo;
 
   return {
     "@context": "https://schema.org",
-    "@type": "CreativeWork",
-    name: getGuideSeoTitle(guide, city, neighborhood),
-    alternateName: guide.title,
+    "@type": "Article",
+    "@id": `${url}#article`,
+    headline: getGuideSeoTitle(guide, city, neighborhood),
+    alternativeHeadline: guide.title,
     description: seoDescription,
-    url: getAbsoluteHref(canonicalPath),
-    image: guide.photo,
-    about: guide.category,
+    url,
+    image,
+    datePublished: parseEditorialDate(guide.createdAt) ?? undefined,
+    dateModified: getGuideLastModified(guide),
+    articleSection: guide.category,
+    about: [
+      {
+        "@type": "Place",
+        name: [guide.location.neighborhood, guide.location.city, guide.location.country].filter(Boolean).join(", "),
+      },
+      {
+        "@type": "Thing",
+        name: guide.category,
+      },
+    ],
+    mainEntityOfPage: {
+      "@type": "WebPage",
+      "@id": `${url}#webpage`,
+    },
     isPartOf: websiteReference,
     publisher: organizationReference,
-    author: {
-      "@type": "Person",
-      name: guide.creator.name,
+    author: organizationReference,
+    citation: guide.sources?.map((source) => source.url),
+    mainEntity: {
+      "@type": "ItemList",
+      "@id": `${url}#stops`,
+      name: `${getGuideSeoTitle(guide, city, neighborhood)} stops`,
+      numberOfItems: guide.stops.length,
+      itemListElement: guide.stops.map((stop, index) => ({
+        "@type": "ListItem",
+        position: index + 1,
+        item: {
+          "@type": "Place",
+          name: stop.name,
+          description: stop.description,
+          image: stop.photo,
+          url: stop.officialUrl,
+        },
+      })),
     },
-    itemListElement: guide.stops.map((stop, index) => ({
-      "@type": "ListItem",
-      position: index + 1,
-      name: stop.name,
-      description: stop.description,
-      image: stop.photo,
-    })),
   };
+}
+
+function getCategoryHubTitle(category: ListCategory, placeLabel: string) {
+  if (category === "Activities") {
+    return `Things to Do in ${placeLabel}`;
+  }
+
+  return `${CATEGORY_SEARCH_TITLES[category]} in ${placeLabel}`;
+}
+
+function getCityHubSummary(lists: MapList[], placeLabel: string, category?: ListCategory) {
+  const guideCount = lists.length;
+  const stopCount = lists.reduce((total, list) => total + list.stops.length, 0);
+  const categoryNames = CATEGORIES.filter((item) => lists.some((list) => list.category === item));
+
+  if (category) {
+    return `Compare ${guideCount} curated ${CATEGORY_SEARCH_TITLES[category].toLowerCase()} for ${placeLabel}, with ${stopCount} mapped stops, neighborhood context, practical details, and source-backed picks.`;
+  }
+
+  const coverage = categoryNames.slice(0, 5).map((item) => item.toLowerCase()).join(", ");
+  return `Explore ${guideCount} curated travel guides for ${placeLabel}, with ${stopCount} mapped stops${coverage ? ` across ${coverage}` : ""}. Compare neighborhoods and open a guide to plan the trip.`;
 }
 
 export function resolveCityDeepLink(
@@ -824,54 +1064,62 @@ export function resolveCityDeepLink(
 
   const neighborhood = neighborhoodMatch?.subarea;
   const lists = getIndexableListsForCityRoute(city, neighborhood, category, guide, guideSource);
-  const canonicalPath = guide
+  const guideIsIndexable = guide ? isIndexableEditorialGuide(guide) : false;
+  const indexable = guide
+    ? guideIsIndexable
+    : !category && !neighborhood
+      ? lists.length > 0
+      : lists.length >= 2;
+  const routePath = guide
     ? getCanonicalGuidePath(city, guide, neighborhood, guideSource)
     : category
       ? getCanonicalCityCategoryPath(city, category, neighborhood)
       : neighborhood
         ? getCanonicalCityNeighborhoodPath(city, neighborhood)
         : getCanonicalCityPath(city);
+  const soleCategoryGuide = !guide && category && lists.length === 1 ? lists[0] : undefined;
+  const canonicalPath = soleCategoryGuide
+    ? getCanonicalGuidePath(city, soleCategoryGuide, neighborhood, guideSource)
+    : routePath;
 
   const placeLabel = neighborhood ? `${neighborhood.name}, ${city.name}` : city.name;
   const parisDistrictSeo = getParisDistrictSeoLabel(city, neighborhood);
   const seoPlaceLabel = parisDistrictSeo?.place ?? placeLabel;
   const guideSeoTitle = guide ? getGuideSeoTitle(guide, city, neighborhood) : null;
+  const guideDescription = guide ? getGuideSeoDescription(guide, city, neighborhood) : null;
+  const hubSummary = guide ? null : getCityHubSummary(lists, seoPlaceLabel, category);
   const h1 = guide
     ? guideSeoTitle!
     : category
-      ? `${category} in ${placeLabel}`
+      ? getCategoryHubTitle(category, placeLabel)
       : neighborhood
-        ? `${neighborhood.name}, ${city.name}`
-        : `${city.name} guides`;
+        ? `${neighborhood.name}, ${city.name} Travel Guides`
+        : `${city.name} Travel Guides`;
   const title = guide
-    ? guideSeoTitle!
+    ? getGuideMetadataTitle(guide, city, neighborhood)
     : category
-      ? `${category} guides in ${seoPlaceLabel}`
+      ? getCategoryHubTitle(category, seoPlaceLabel)
       : neighborhood
         ? parisDistrictSeo
           ? `${neighborhood.name}, ${city.name} district guides`
-          : `${neighborhood.name}, ${city.name} guides`
-        : `${city.name} travel guides`;
+          : `${neighborhood.name}, ${city.name} Travel Guides`
+        : `${city.name} Travel Guides`;
   const description = guide
-    ? getGuideSeoDescription(guide, city, neighborhood)
-    : category
-      ? parisDistrictSeo
-        ? `Curated ${category.toLowerCase()} travel guides for ${placeLabel}, the ${parisDistrictSeo.district} of Paris, including local favorites and places worth saving.`
-        : `Curated ${category.toLowerCase()} travel guides for ${placeLabel}, including local favorites and places worth saving.`
-      : neighborhood?.description
-        ? parisDistrictSeo
-          ? `${neighborhood.description} Browse curated travel guides for the ${parisDistrictSeo.district} of Paris, also known as ${neighborhood.name}.`
-          : `${neighborhood.description} Browse curated travel guides for ${placeLabel}.`
-        : `Browse curated travel guides for ${placeLabel}, with picks for food, nightlife, culture, nature, stays, and activities.`;
+    ? toMetadataDescription(guideDescription!)
+    : toMetadataDescription(
+        neighborhood?.description && !category
+          ? `${neighborhood.description} ${hubSummary}`
+          : city.description && !category && !neighborhood
+            ? city.description
+            : hubSummary!,
+      );
   const intro = guide
-    ? getGuideSeoDescription(guide, city, neighborhood)
-    : category
-      ? parisDistrictSeo
-        ? `Explore ${category.toLowerCase()} guides for ${placeLabel}, the ${parisDistrictSeo.district} of Paris, ranked and mapped so you can choose where to go next.`
-        : `Explore ${category.toLowerCase()} guides for ${placeLabel}, ranked and mapped so you can choose where to go next.`
-      : parisDistrictSeo
-        ? `${neighborhood?.description ?? ""} Use this as the ${parisDistrictSeo.district} of Paris guide, with food, hotels, culture, parks, and routes tied to the arrondissement.`.trim()
-        : neighborhood?.description ?? city.description;
+    ? guideDescription!
+    : neighborhood?.description && !category
+      ? `${neighborhood.description} ${hubSummary}`
+      : city.description && !category && !neighborhood
+        ? city.description
+        : hubSummary!;
 
   return {
     city,
@@ -880,6 +1128,8 @@ export function resolveCityDeepLink(
     category,
     guide,
     canonicalPath,
+    indexable,
+    lastModified: getLatestGuideLastModified(lists),
     selection: buildSelection(city, neighborhoodMatch, continentSource),
     activeCategory: category,
     expandedGuideId: guide?.id,
@@ -917,24 +1167,29 @@ export function getCityDeepLinkStaticParams(
   };
 
   for (const city of citySource) {
-    const cityLists = getListsForCityRoute(city, undefined, undefined, guideSource);
+    const cityLists = getListsForCityRoute(city, undefined, undefined, guideSource).filter(isIndexableEditorialGuide);
     const cityNeighborhoods = getNeighborhoodsForCityRoute(city);
-    if (cityLists.length || cityNeighborhoods.length) {
+    const indexableNeighborhoods = cityNeighborhoods.filter(({ neighborhood }) =>
+      getListsForCityRoute(city, neighborhood, undefined, guideSource).some(isIndexableEditorialGuide),
+    );
+    if (cityLists.length || indexableNeighborhoods.length) {
       addUniquePath(getCanonicalCityPath(city));
     }
 
-    for (const category of getCategoriesForCityRoute(city, undefined, guideSource)) {
+    for (const category of getIndexableCategoriesForCityRoute(city, undefined, guideSource)) {
       addUniquePath(getCanonicalCityCategoryPath(city, category));
     }
 
-    for (const { neighborhood } of cityNeighborhoods) {
-      const neighborhoodLists = getListsForCityRoute(city, neighborhood, undefined, guideSource);
+    for (const { neighborhood } of indexableNeighborhoods) {
+      const neighborhoodLists = getListsForCityRoute(city, neighborhood, undefined, guideSource).filter(
+        isIndexableEditorialGuide,
+      );
       if (!neighborhoodLists.length) {
         continue;
       }
 
       addUniquePath(getCanonicalCityNeighborhoodPath(city, neighborhood));
-      for (const category of getCategoriesForCityRoute(city, neighborhood, guideSource)) {
+      for (const category of getIndexableCategoriesForCityRoute(city, neighborhood, guideSource)) {
         addUniquePath(getCanonicalCityCategoryPath(city, category, neighborhood));
       }
       for (const guide of neighborhoodLists) {
@@ -950,16 +1205,20 @@ export function getCityDeepLinkStaticParams(
   return params;
 }
 
-export function getCountryDeepLinkStaticParams(continentSource: Continent[] = continents) {
+export function getCountryDeepLinkStaticParams(
+  continentSource: Continent[] = continents,
+  guideSource: MapList[] = mapLists,
+) {
   return continentSource.flatMap((continent) =>
-    continent.countries.map((country) => ({
-      segments: [slugify(country.name)],
-    })),
+    getIndexableCountriesForContinent(continent, guideSource).map((country) => ({ segments: [slugify(country.name)] })),
   );
 }
 
-export function getContinentDeepLinkStaticParams(continentSource: Continent[] = continents) {
-  return continentSource.map((continent) => ({
-    segments: [slugify(continent.name)],
-  }));
+export function getContinentDeepLinkStaticParams(
+  continentSource: Continent[] = continents,
+  guideSource: MapList[] = mapLists,
+) {
+  return continentSource
+    .filter((continent) => getIndexableGuidesForContinent(continent, guideSource).length > 0)
+    .map((continent) => ({ segments: [slugify(continent.name)] }));
 }

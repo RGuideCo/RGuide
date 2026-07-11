@@ -50,7 +50,7 @@ export async function loadEditorialGuides() {
 
   if (!normalizedError && normalizedData?.length) {
     return {
-      guides: normalizedData.map((record) => record.list),
+      guides: normalizedData.map((record) => ({ ...record.list, updatedAt: record.updated_at })),
       error: null,
     };
   }
@@ -68,7 +68,10 @@ export async function loadEditorialGuides() {
     return { guides: [] as MapList[], error: normalizedError ?? error };
   }
 
-  const guides = (data ?? []).map((record) => record.rendered_payload);
+  const guides = (data ?? []).map((record) => ({
+    ...record.rendered_payload,
+    updatedAt: record.updated_at,
+  }));
 
   return {
     guides,

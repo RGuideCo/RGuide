@@ -8,6 +8,7 @@ import { getContinentsWithDestinationDescriptions } from "@/lib/destination-desc
 import {
   getCanonicalCountryPath,
   getContinentDeepLinkStaticParams,
+  getIndexableCountriesForContinent,
   resolveContinentDeepLink,
 } from "@/lib/deep-link-routes";
 import { getServerEditorialGuides } from "@/lib/server-editorial-guides";
@@ -20,14 +21,21 @@ interface ContinentDeepLinkPageProps {
 
 export const revalidate = 86400;
 
-export function generateStaticParams() {
-  return getContinentDeepLinkStaticParams();
+export async function generateStaticParams() {
+  const [continents, editorialGuides] = await Promise.all([
+    getContinentsWithDestinationDescriptions(),
+    getServerEditorialGuides(),
+  ]);
+  return getContinentDeepLinkStaticParams(continents, editorialGuides);
 }
 
 export async function generateMetadata({ params }: ContinentDeepLinkPageProps): Promise<Metadata> {
   const { segments } = await params;
-  const continents = await getContinentsWithDestinationDescriptions();
-  const route = resolveContinentDeepLink(segments, { continents });
+  const [continents, editorialGuides] = await Promise.all([
+    getContinentsWithDestinationDescriptions(),
+    getServerEditorialGuides(),
+  ]);
+  const route = resolveContinentDeepLink(segments, { continents, guides: editorialGuides });
 
   if (!route) {
     return { title: "Continent not found" };
@@ -39,6 +47,12 @@ export async function generateMetadata({ params }: ContinentDeepLinkPageProps): 
     alternates: {
       canonical: route.canonicalPath,
     },
+    robots: route.indexable
+      ? undefined
+      : {
+          index: false,
+          follow: true,
+        },
     openGraph: {
       title: route.title,
       description: route.description,
@@ -59,7 +73,7 @@ export default async function ContinentDeepLinkPage({ params }: ContinentDeepLin
     getContinentsWithDestinationDescriptions(),
     getServerEditorialGuides(),
   ]);
-  const route = resolveContinentDeepLink(segments, { continents });
+  const route = resolveContinentDeepLink(segments, { continents, guides: editorialGuides });
 
   if (!route) {
     notFound();
@@ -86,7 +100,7 @@ export default async function ContinentDeepLinkPage({ params }: ContinentDeepLin
             <h1 className="mt-2 text-4xl font-semibold text-slate-950">{route.h1}</h1>
             <p className="mt-4 max-w-3xl text-base leading-7 text-slate-700">{route.intro}</p>
             <section className="mt-10 grid gap-3 sm:grid-cols-2 lg:grid-cols-3" aria-label={`${route.continent.name} countries`}>
-              {route.continent.countries.map((country) => (
+              {getIndexableCountriesForContinent(route.continent, editorialGuides).map((country) => (
                 <Link
                   key={country.id}
                   href={getCanonicalCountryPath(country)}
@@ -100,7 +114,7 @@ export default async function ContinentDeepLinkPage({ params }: ContinentDeepLin
         }
       >
         <SplitScreenClientLoader
-          initialAppData={{ continents, guides: editorialGuides }}
+          initialAppData={{ continents, guides: [] }}
           initialRouteState={{
             selection: route.selection,
             activeCategory: route.activeCategory,

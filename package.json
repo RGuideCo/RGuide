@@ -8,6 +8,7 @@
     "start": "next start",
     "lint": "tsc --noEmit",
     "typecheck": "tsc --noEmit",
+    "audit:seo": "node scripts/audit-seo-build.mjs",
     "enrich:neighborhoods": "node scripts/fetch-city-neighborhoods.mjs",
     "enrich:boundaries": "node scripts/fetch-city-neighborhoods.mjs --boundaries-only",
     "export:editorial-guides": "node scripts/export-editorial-guides-sql.mjs",

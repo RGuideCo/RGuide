@@ -1,12 +1,12 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { notFound } from "next/navigation";
 
 import { CategoryCard } from "@/components/cards/CategoryCard";
-import { MapListCard } from "@/components/cards/MapListCard";
 import { CATEGORIES } from "@/lib/constants";
-import { getCanonicalGuidePath, getGuideSeoTitle } from "@/lib/deep-link-routes";
+import { getCanonicalGuidePath, getGuideSeoTitle, isIndexableEditorialGuide } from "@/lib/deep-link-routes";
 import { getCategoryLabel } from "@/lib/mock-data";
-import { getCategoryHref, getGuideHref } from "@/lib/routes";
+import { getAbsoluteHref, getCategoryHref, getGuideHref } from "@/lib/routes";
 import { getServerEditorialGuides } from "@/lib/server-editorial-guides";
 import type { ListCategory } from "@/types";
 
@@ -35,6 +35,17 @@ const CATEGORY_INTROS: Record<ListCategory, string> = {
     "Use essential city-planning guides for practical travel context, neighborhood fit, stay decisions, and the basic choices that shape the rest of a trip.",
 };
 
+const CATEGORY_META_TITLES: Record<ListCategory, string> = {
+  Food: "Restaurant & Food Guides by City",
+  Nightlife: "Bar & Nightlife Guides by City",
+  Nature: "Park & Nature Guides by City",
+  Culture: "Museum & Culture Guides by City",
+  Stay: "Hotel & Hostel Guides by City",
+  Activities: "Things to Do & City Itineraries",
+  Routes: "Walking Routes & City Itineraries",
+  Essentials: "City Travel Tips & Essentials",
+};
+
 export async function generateMetadata({ params }: CategoryPageProps): Promise<Metadata> {
   const { category } = await params;
   const label = getCategoryLabel(category);
@@ -45,17 +56,35 @@ export async function generateMetadata({ params }: CategoryPageProps): Promise<M
     };
   }
 
+
+  const editorialGuides = await getServerEditorialGuides();
+  const indexableGuides = editorialGuides.filter(isIndexableEditorialGuide);
+  const lists = indexableGuides.filter((list) => list.category === label);
+  const title = CATEGORY_META_TITLES[label];
+  const description = CATEGORY_INTROS[label];
+
   return {
-    title: `${label} Guides`,
-    description: `Browse curated ${label.toLowerCase()} travel guides across RGuide destinations.`,
+    title,
+    description,
     alternates: {
       canonical: getCategoryHref(label),
     },
+    robots: lists.length >= 2
+      ? undefined
+      : {
+          index: false,
+          follow: true,
+        },
     openGraph: {
-      title: `${label} Guides`,
-      description: `Browse curated ${label.toLowerCase()} travel guides across RGuide destinations.`,
+      title,
+      description,
       url: getCategoryHref(label),
       type: "website",
+    },
+    twitter: {
+      card: "summary",
+      title,
+      description,
     },
   };
 }
@@ -69,13 +98,53 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
   }
 
   const editorialGuides = await getServerEditorialGuides();
-  const lists = editorialGuides.filter((list) => list.category === label);
+  const indexableGuides = editorialGuides.filter(isIndexableEditorialGuide);
+  const lists = indexableGuides.filter((list) => list.category === label);
+  const canonicalPath = getCategoryHref(label);
+  const categoryJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    "@id": `${getAbsoluteHref(canonicalPath)}#webpage`,
+    name: CATEGORY_META_TITLES[label],
+    description: CATEGORY_INTROS[label],
+    url: getAbsoluteHref(canonicalPath),
+    isPartOf: {
+      "@id": getAbsoluteHref("/#website"),
+    },
+    mainEntity: {
+      "@type": "ItemList",
+      numberOfItems: lists.length,
+      itemListElement: lists.slice(0, 50).map((list, index) => ({
+        "@type": "ListItem",
+        position: index + 1,
+        name: getGuideSeoTitle(
+          list,
+          { name: list.location.city ?? "" },
+          list.location.neighborhood ? { name: list.location.neighborhood } : undefined,
+        ),
+        url: getAbsoluteHref(
+          list.location.scope === "city" && list.location.city
+            ? getCanonicalGuidePath(
+                { name: list.location.city },
+                list,
+                list.location.neighborhood ? { name: list.location.neighborhood } : undefined,
+                editorialGuides,
+              )
+            : getGuideHref(list),
+        ),
+      })),
+    },
+  };
 
   return (
     <div className="page-shell py-10">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(categoryJsonLd) }}
+      />
       <div className="max-w-3xl">
         <p className="text-sm font-medium uppercase tracking-[0.24em] text-orange-600">Category</p>
-        <h1 className="mt-2 text-4xl font-semibold text-slate-900">{label}</h1>
+        <h1 className="mt-2 text-4xl font-semibold text-slate-900">{CATEGORY_META_TITLES[label]}</h1>
         <p className="mt-3 text-slate-600">{CATEGORY_INTROS[label]}</p>
       </div>
 
@@ -84,42 +153,50 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
           <CategoryCard
             key={item}
             category={item}
-            count={editorialGuides.filter((list) => list.category === item).length}
+            count={indexableGuides.filter((list) => list.category === item).length}
           />
         ))}
       </div>
-      <div className="mt-8 space-y-4">
-        {lists.map((list) => (
-          <article key={list.id} className="space-y-3">
-            <div>
-              <h2 className="text-lg font-semibold text-slate-950">
-                <a
-                  href={
-                    list.location.scope === "city" && list.location.city
-                      ? getCanonicalGuidePath(
-                          { name: list.location.city },
-                          list,
-                          list.location.neighborhood ? { name: list.location.neighborhood } : undefined,
-                          editorialGuides,
-                        )
-                      : getGuideHref(list)
-                  }
-                  className="hover:text-orange-700"
-                >
-                  {list.location.scope === "city" && list.location.city
-                    ? getGuideSeoTitle(
-                        list,
-                        { name: list.location.city },
-                        list.location.neighborhood ? { name: list.location.neighborhood } : undefined,
-                      )
-                    : list.title}
-                </a>
+      <div className="mt-8 grid gap-4 lg:grid-cols-2">
+        {lists.map((list) => {
+          const href =
+            list.location.scope === "city" && list.location.city
+              ? getCanonicalGuidePath(
+                  { name: list.location.city },
+                  list,
+                  list.location.neighborhood ? { name: list.location.neighborhood } : undefined,
+                  editorialGuides,
+                )
+              : getGuideHref(list);
+          const title =
+            list.location.scope === "city" && list.location.city
+              ? getGuideSeoTitle(
+                  list,
+                  { name: list.location.city },
+                  list.location.neighborhood ? { name: list.location.neighborhood } : undefined,
+                )
+              : list.title;
+
+          return (
+            <article key={list.id} className="rounded-lg border border-slate-950/10 bg-white p-4 shadow-sm">
+              <p className="text-xs font-semibold uppercase tracking-[0.14em] text-slate-500">
+                {[list.location.neighborhood, list.location.city, list.location.country].filter(Boolean).join(" / ")}
+              </p>
+              <h2 className="mt-2 text-lg font-semibold leading-6 text-slate-950">
+                <Link href={href} className="hover:text-orange-700">
+                  {title}
+                </Link>
               </h2>
-              <p className="mt-1 text-sm text-slate-600">{list.description}</p>
-            </div>
-            <MapListCard list={list} />
-          </article>
-        ))}
+              <p className="mt-2 text-sm leading-6 text-slate-600">{list.description}</p>
+              <div className="mt-4 border-t border-slate-100 pt-3 text-xs text-slate-500">
+                <span className="font-semibold text-slate-700">{list.stops.length} mapped stops</span>
+                {list.stops.length ? (
+                  <span> including {list.stops.slice(0, 3).map((stop) => stop.name).join(", ")}</span>
+                ) : null}
+              </div>
+            </article>
+          );
+        })}
       </div>
     </div>
   );

@@ -2,15 +2,14 @@ import Link from "next/link";
 
 import {
   CityDeepLinkResolution,
-  getCanonicalCityCategoryPath,
-  getCanonicalCityNeighborhoodPath,
   getCanonicalCityPath,
   getCanonicalGuidePath,
   getGuideSeoTitle,
   getIndexableListsForCityRoute,
-  getCategoriesForCityRoute,
-  getListsForCityRoute,
+  getIndexableCategoriesForCityRoute,
   getNeighborhoodsForCityRoute,
+  getPreferredCityCategoryPath,
+  getPreferredCityNeighborhoodPath,
   getRelatedCityRouteGuides,
 } from "@/lib/deep-link-routes";
 import { CATEGORIES } from "@/lib/constants";
@@ -181,7 +180,10 @@ export function CityRouteSeoIndex({ route, guides }: CityRouteSeoIndexProps) {
   const visibleGuides = indexableGuides.slice(0, route.guide ? 1 : 12);
   const relatedGuides = getRelatedCityRouteGuides(route, guides).slice(0, 6);
   const neighborhoods = getNeighborhoodsForCityRoute(route.city)
-    .filter(({ neighborhood }) => getListsForCityRoute(route.city, neighborhood, undefined, guides).length > 0)
+    .filter(
+      ({ neighborhood }) =>
+        getIndexableListsForCityRoute(route.city, neighborhood, undefined, undefined, guides).length > 0,
+    )
     .slice(0, 18);
   const parisDistrictLinks =
     route.city.name === "Paris"
@@ -196,13 +198,13 @@ export function CityRouteSeoIndex({ route, guides }: CityRouteSeoIndexProps) {
             return {
               id: neighborhood.id,
               label: `Paris ${ordinal} district guides`,
-              href: getCanonicalCityNeighborhoodPath(route.city, neighborhood),
+              href: getPreferredCityNeighborhoodPath(route.city, neighborhood, guides),
             };
           })
           .filter((item): item is { id: string; label: string; href: string } => Boolean(item))
       : [];
   const categories = route.neighborhood
-    ? getCategoriesForCityRoute(route.city, route.neighborhood, guides)
+    ? getIndexableCategoriesForCityRoute(route.city, route.neighborhood, guides)
     : CATEGORIES.filter((category) => getIndexableListsForCityRoute(route.city, undefined, category, undefined, guides).length > 0);
   const placeName = route.neighborhood ? `${route.neighborhood.name}, ${route.city.name}` : route.city.name;
   const matchingGuideCount = indexableGuides.length;
@@ -216,9 +218,9 @@ export function CityRouteSeoIndex({ route, guides }: CityRouteSeoIndexProps) {
             <p className="text-xs font-semibold uppercase tracking-[0.18em] text-orange-700">
               {route.guide ? "Guide Details" : route.category ? `${route.category} Guide Index` : "Destination Guide Index"}
             </p>
-            <h2 id="route-guide-index-heading" className="mt-2 text-2xl font-semibold tracking-tight text-slate-950">
+            <h1 id="route-guide-index-heading" className="mt-2 text-2xl font-semibold tracking-tight text-slate-950">
               {route.h1}
-            </h2>
+            </h1>
             <p className="mt-3 max-w-3xl text-sm leading-6 text-slate-600">{route.intro}</p>
             <div className="mt-4 flex flex-wrap gap-2 text-xs font-medium text-slate-600">
               <span className="rounded-full bg-stone-100 px-3 py-1.5">{placeName}</span>
@@ -235,7 +237,7 @@ export function CityRouteSeoIndex({ route, guides }: CityRouteSeoIndexProps) {
               </Link>
               {route.neighborhood ? (
                 <Link
-                  href={getCanonicalCityNeighborhoodPath(route.city, route.neighborhood)}
+                  href={getPreferredCityNeighborhoodPath(route.city, route.neighborhood, guides)}
                   className="text-slate-700 hover:text-orange-700"
                 >
                   All {route.neighborhood.name} guides
@@ -244,7 +246,7 @@ export function CityRouteSeoIndex({ route, guides }: CityRouteSeoIndexProps) {
               {categories.map((category) => (
                 <Link
                   key={category}
-                  href={getCanonicalCityCategoryPath(route.city, category, route.neighborhood)}
+                  href={getPreferredCityCategoryPath(route.city, category, route.neighborhood, guides)}
                   className="text-slate-700 hover:text-orange-700"
                 >
                   {category} in {placeName}
@@ -273,7 +275,7 @@ export function CityRouteSeoIndex({ route, guides }: CityRouteSeoIndexProps) {
               {neighborhoods.map(({ neighborhood }) => (
                 <Link
                   key={neighborhood.id}
-                  href={getCanonicalCityNeighborhoodPath(route.city, neighborhood)}
+                  href={getPreferredCityNeighborhoodPath(route.city, neighborhood, guides)}
                   className="rounded-full border border-slate-200 bg-white px-3 py-1.5 text-sm text-slate-700 hover:border-orange-200 hover:text-orange-700"
                 >
                   {neighborhood.name}

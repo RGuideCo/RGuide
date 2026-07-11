@@ -48,6 +48,17 @@ export const metadata: Metadata = {
   creator: SITE_SEARCH_NAME,
   publisher: SITE_SEARCH_NAME,
   category: "travel",
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+      "max-video-preview": -1,
+    },
+  },
   alternates: {
     canonical: "/",
   },
@@ -56,6 +67,7 @@ export const metadata: Metadata = {
     description: SITE_DESCRIPTION,
     url: "/",
     siteName: SITE_SEARCH_NAME,
+    locale: "en_US",
     type: "website",
   },
   twitter: {
@@ -71,23 +83,6 @@ export const metadata: Metadata = {
 const websiteJsonLd = {
   "@context": "https://schema.org",
   "@graph": [
-    {
-      "@type": "WebPage",
-      "@id": getAbsoluteHref("/#webpage"),
-      name: `${SITE_SEARCH_NAME} - Curated City Travel Guides`,
-      url: getAbsoluteHref("/"),
-      description: SITE_DESCRIPTION,
-      inLanguage: "en",
-      isPartOf: {
-        "@id": getAbsoluteHref("/#website"),
-      },
-      about: {
-        "@id": getAbsoluteHref("/#organization"),
-      },
-      publisher: {
-        "@id": getAbsoluteHref("/#organization"),
-      },
-    },
     {
       "@type": "WebSite",
       "@id": getAbsoluteHref("/#website"),

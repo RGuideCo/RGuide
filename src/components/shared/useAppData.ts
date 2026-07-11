@@ -81,20 +81,6 @@ export function useAppData(initialData?: AppData, scope: AppDataScope = {}) {
       setData(initialData);
       setError(null);
 
-      loadAppData({ forceRefresh: true, scope: requestScope })
-        .then((nextData) => {
-          if (isMounted) {
-            setData(nextData);
-          }
-        })
-        .catch((nextError: Error) => {
-          appDataPromises.set(key, Promise.resolve(initialData));
-          console.error(nextError);
-          if (isMounted) {
-            setError(nextError);
-          }
-        });
-
       return () => {
         isMounted = false;
       };

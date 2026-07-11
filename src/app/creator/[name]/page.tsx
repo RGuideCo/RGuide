@@ -5,7 +5,7 @@ import { notFound } from "next/navigation";
 import { SplitScreenClientLoader } from "@/components/home/SplitScreenClientLoader";
 import { ProgressiveEnhancementShell } from "@/components/shared/ProgressiveEnhancementShell";
 import { users } from "@/data";
-import { getCanonicalGuidePath } from "@/lib/deep-link-routes";
+import { getCanonicalGuidePath, isIndexableEditorialGuide } from "@/lib/deep-link-routes";
 import { getContinentsWithDestinationDescriptions } from "@/lib/destination-descriptions";
 import { getCreatorHref, getGuideHref } from "@/lib/routes";
 import { getServerEditorialGuides } from "@/lib/server-editorial-guides";
@@ -22,9 +22,10 @@ function getCreatorProfile(nameSlug: string, guides: MapList[]): { creator?: Use
   const localCreator = users.find((user) => slugify(user.name) === nameSlug || slugify(user.id) === nameSlug);
   const lists = guides.filter(
     (list) =>
-      slugify(list.creator.name) === nameSlug ||
-      slugify(list.creator.id) === nameSlug ||
-      list.creator.id === localCreator?.id,
+      isIndexableEditorialGuide(list) &&
+      (slugify(list.creator.name) === nameSlug ||
+        slugify(list.creator.id) === nameSlug ||
+        list.creator.id === localCreator?.id),
   );
   const guideCreator = lists[0]?.creator;
 
@@ -127,7 +128,7 @@ function CreatorProfileFallback({
 export async function generateMetadata({ params }: CreatorPageProps): Promise<Metadata> {
   const { name } = await params;
   const editorialGuides = await getServerEditorialGuides();
-  const { creator } = getCreatorProfile(name, editorialGuides);
+  const { creator, lists } = getCreatorProfile(name, editorialGuides);
 
   if (!creator) {
     return { title: "Creator not found" };
@@ -139,6 +140,12 @@ export async function generateMetadata({ params }: CreatorPageProps): Promise<Me
     alternates: {
       canonical: getCreatorHref(creator),
     },
+    robots: lists.length
+      ? undefined
+      : {
+          index: false,
+          follow: true,
+        },
     openGraph: {
       title: creator.name,
       description: `Browse curated travel guides published by ${creator.name}.`,
@@ -202,7 +209,7 @@ export default async function CreatorPage({ params }: CreatorPageProps) {
       fallback={<CreatorProfileFallback {...publicProfile} />}
     >
       <SplitScreenClientLoader
-        initialAppData={{ continents, guides: editorialGuides }}
+        initialAppData={{ continents, guides: [] }}
         publicProfile={publicProfile}
       />
     </ProgressiveEnhancementShell>

@@ -1,6 +1,7 @@
 import "server-only";
 
 import { unstable_cache } from "next/cache";
+import { cache } from "react";
 import pg from "pg";
 import type { Client } from "pg";
 import { createClient, type SupabaseClient } from "@supabase/supabase-js";
@@ -15,18 +16,22 @@ interface WeeklyEventGuideRow {
 
 interface NormalizedGuideRow {
   list: MapList;
+  updated_at: string | null;
 }
 
 interface RenderCacheRow {
   rendered_payload: MapList;
+  updated_at: string | null;
 }
 
 interface DataApiGuideRow {
   list: MapList;
+  updated_at: string | null;
 }
 
 interface DataApiRenderCacheRow {
   rendered_payload: MapList;
+  updated_at: string | null;
 }
 
 interface DataApiWeeklyEventGuideRow {
@@ -103,6 +108,17 @@ function normalizeWeeklyEventGuide(guide: MapList): MapList {
     ...guide,
     submissionType: "event",
   };
+}
+
+function attachGuideUpdatedAt(guide: MapList, updatedAt?: string | null): MapList {
+  const normalizedGuide = normalizeWeeklyEventGuide(guide);
+
+  return updatedAt
+    ? {
+        ...normalizedGuide,
+        updatedAt,
+      }
+    : normalizedGuide;
 }
 
 const EDITORIAL_GUIDES_CACHE_SECONDS = Number.parseInt(
@@ -228,7 +244,7 @@ async function loadEditorialGuidesFromDataApi(scope: EditorialGuideScope = {}): 
   const cityId = await getCityIdFromDataApi(supabase, scope.cityName);
   let query = supabase
     .from("entries_maplist")
-    .select("list");
+    .select("list,updated_at");
 
   if (scope.cityName) {
     if (!cityId) {
@@ -241,7 +257,7 @@ async function loadEditorialGuidesFromDataApi(scope: EditorialGuideScope = {}): 
 
   if (!error && data?.length) {
     return filterCurrentEventGuides([
-      ...data.map((row) => normalizeWeeklyEventGuide(row.list)),
+      ...data.map((row) => attachGuideUpdatedAt(row.list, row.updated_at)),
       ...(await loadWeeklyEventsFromDataApi(supabase, scope)),
     ]);
   }
@@ -321,7 +337,7 @@ async function loadRenderCacheGuidesFromDataApi(
   const cityId = await getCityIdFromDataApi(supabase, scope.cityName);
   let query = supabase
     .from("entry_render_cache")
-    .select("rendered_payload")
+    .select("rendered_payload,updated_at")
     .eq("render_format", "maplist")
     .eq("render_version", 1)
     .eq("is_current", true);
@@ -340,7 +356,7 @@ async function loadRenderCacheGuidesFromDataApi(
   }
 
   return filterCurrentEventGuides([
-    ...data.map((row) => normalizeWeeklyEventGuide(row.rendered_payload)),
+    ...data.map((row) => attachGuideUpdatedAt(row.rendered_payload, row.updated_at)),
     ...(await loadWeeklyEventsFromDataApi(supabase, scope)),
   ]);
 }
@@ -355,7 +371,7 @@ async function loadNormalizedGuides(client: Client, scope: EditorialGuideScope =
 
     const { rows } = await client.query<NormalizedGuideRow>(
       [
-        "select view.list",
+        "select view.list, entry.updated_at",
         "from public.entries entry",
         "join public.entries_maplist view on view.id = entry.id",
         "left join public.destinations city on city.id = entry.city_id",
@@ -378,7 +394,10 @@ async function loadNormalizedGuides(client: Client, scope: EditorialGuideScope =
       ? weeklyEventRows.map((row) => normalizeWeeklyEventGuide(row.guide))
       : filterGuidesByScope(getLocalWeeklyEventGuides(), scope);
 
-    return filterCurrentEventGuides([...rows.map((row) => normalizeWeeklyEventGuide(row.list)), ...weeklyEventGuides]);
+    return filterCurrentEventGuides([
+      ...rows.map((row) => attachGuideUpdatedAt(row.list, row.updated_at)),
+      ...weeklyEventGuides,
+    ]);
   } catch {
     return null;
   }
@@ -393,7 +412,7 @@ async function loadRenderCacheGuides(client: Client, scope: EditorialGuideScope 
 
   const { rows } = await client.query<RenderCacheRow>(
     [
-      "select cache.rendered_payload",
+      "select cache.rendered_payload, cache.updated_at",
       "from public.entry_render_cache cache",
       "join public.entries entry on entry.id = cache.entry_id",
       "left join public.destinations city on city.id = entry.city_id",
@@ -416,7 +435,10 @@ async function loadRenderCacheGuides(client: Client, scope: EditorialGuideScope 
     ? weeklyEventRows.map((row) => normalizeWeeklyEventGuide(row.guide))
     : filterGuidesByScope(getLocalWeeklyEventGuides(), scope);
 
-  return filterCurrentEventGuides([...rows.map((row) => normalizeWeeklyEventGuide(row.rendered_payload)), ...weeklyEventGuides]);
+  return filterCurrentEventGuides([
+    ...rows.map((row) => attachGuideUpdatedAt(row.rendered_payload, row.updated_at)),
+    ...weeklyEventGuides,
+  ]);
 }
 
 async function loadWeeklyEventsFromDatabase(client: Client, scope: EditorialGuideScope = {}) {
@@ -524,10 +546,14 @@ const getCachedCityEditorialGuidesFromSupabase = unstable_cache(
   },
 );
 
+const getRequestMemoizedAllEditorialGuides = cache(async () => loadEditorialGuidesFromSupabase());
+
 export async function getServerEditorialGuides(scope: EditorialGuideScope = {}) {
-  const supabaseGuideLoader = scope.cityName && !scope.bypassCache
-    ? getCachedCityEditorialGuidesFromSupabase(scope.cityName)
-    : loadEditorialGuidesFromSupabase(scope);
+  const supabaseGuideLoader = scope.bypassCache
+    ? loadEditorialGuidesFromSupabase(scope)
+    : scope.cityName
+      ? getCachedCityEditorialGuidesFromSupabase(scope.cityName)
+      : getRequestMemoizedAllEditorialGuides();
 
   const supabaseGuides = await supabaseGuideLoader.catch((error) => {
     console.error("Failed to load cached server editorial guides", error);

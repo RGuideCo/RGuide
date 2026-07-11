@@ -266,6 +266,7 @@ export interface MapList {
   };
   upvotes: number;
   createdAt: string;
+  updatedAt?: string;
   stops: GuideStop[];
   sources?: ListSource[];
 }
