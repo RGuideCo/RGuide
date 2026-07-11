@@ -1,4 +1,5 @@
 import fs from "node:fs";
+import { createHash } from "node:crypto";
 import path from "node:path";
 import process from "node:process";
 import { fileURLToPath } from "node:url";
@@ -134,6 +135,16 @@ function activationVenueKey(record, activation) {
   return `${record.cityId}|${slugify(activation.venue)}`;
 }
 
+function activationLegacyId(event, activation) {
+  const identity = String(activation.title ?? event.title).trim().toLowerCase();
+  const hash = createHash("md5").update(identity).digest("hex");
+  return `${event.id}:activation:${hash}`;
+}
+
+function activationMapKey(event, activation) {
+  return activationLegacyId(event, activation);
+}
+
 function collectRuns(records) {
   const runsByKey = new Map();
   for (const record of records) {
@@ -195,7 +206,10 @@ function collectSourceRows(records) {
       sourced_at: record.sourceRun.sourcedAt,
       raw_metadata: { cityId: record.cityId, eventId: event.id },
     });
-    for (const activation of event.activations ?? []) {
+    const activations = event.activations?.length
+      ? event.activations
+      : [{ id: `${event.id}-venue`, title: event.title, url: event.url }];
+    for (const activation of activations) {
       if (!activation.url || rowsByUrl.has(activation.url)) {
         continue;
       }
@@ -488,7 +502,93 @@ async function upsertEvents(client, records, cityIds, runIds, venueIds) {
   return new Map(upserted.map((row) => [row.legacy_id, row.id]));
 }
 
-async function replaceOccurrences(client, records, cityIds, runIds, venueIds, eventIds) {
+async function upsertActivations(client, records, eventIds, venueIds) {
+  const grouped = new Map();
+
+  for (const record of records) {
+    const event = record.rawEvent;
+    const eventId = eventIds.get(event.id);
+    const activations = event.activations?.length
+      ? event.activations
+      : [{
+          id: `${event.id}-venue`,
+          title: event.title,
+          venue: event.venue,
+          description: event.description,
+          coordinates: event.coordinates,
+          url: event.url,
+        }];
+
+    activations.forEach((activation, index) => {
+      const legacyId = activationLegacyId(event, activation);
+      const venueId = venueIds.get(activationVenueKey(record, activation)) ?? venueIds.get(eventVenueKey(record, event)) ?? null;
+      const existing = grouped.get(legacyId);
+      const hash = legacyId.slice(legacyId.lastIndexOf(":") + 1);
+      grouped.set(legacyId, {
+        event_id: eventId,
+        legacy_id: legacyId,
+        slug: `${slugify(activation.title) || "activation"}-${hash.slice(0, 8)}`,
+        title: activation.title,
+        description: activation.description ?? existing?.description ?? null,
+        activation_category: event.category,
+        venue_id: existing && existing.venue_id !== venueId ? null : venueId,
+        official_url: activation.url ?? event.url,
+        booking_url: activation.url ?? event.url,
+        price_label: event.price ?? null,
+        sort_order: Math.min(existing?.sort_order ?? index + 1, index + 1),
+        raw_metadata: {
+          source: "weekly_events",
+          eventId: event.id,
+          activationIds: uniqueValues([...(existing?.raw_metadata?.activationIds ?? []), activation.id]),
+        },
+      });
+    });
+  }
+
+  const rows = [...grouped.values()];
+  if (!rows.length) {
+    return new Map();
+  }
+
+  const { rows: upserted } = await client.query(
+    [
+      "with incoming as (",
+      "  select * from jsonb_to_recordset($1::jsonb) as row(",
+      "    event_id uuid, legacy_id text, slug text, title text, description text, activation_category text,",
+      "    venue_id uuid, official_url text, booking_url text, price_label text, sort_order integer, raw_metadata jsonb",
+      "  )",
+      "), upserted as (",
+      "  insert into public.event_activations (",
+      "    event_id, legacy_id, slug, title, description, activation_category, venue_id,",
+      "    official_url, booking_url, price_label, sort_order, raw_metadata",
+      "  )",
+      "  select event_id, legacy_id, slug, title, description, activation_category, venue_id,",
+      "    official_url, booking_url, price_label, sort_order, raw_metadata",
+      "  from incoming",
+      "  on conflict (event_id, legacy_id) do update set",
+      "    slug = excluded.slug, title = excluded.title, description = excluded.description,",
+      "    activation_category = excluded.activation_category, venue_id = excluded.venue_id,",
+      "    official_url = excluded.official_url, booking_url = excluded.booking_url,",
+      "    price_label = excluded.price_label, sort_order = excluded.sort_order,",
+      "    raw_metadata = public.event_activations.raw_metadata || excluded.raw_metadata, updated_at = now()",
+      "  returning id, event_id, legacy_id",
+      ")",
+      "select id, event_id, legacy_id from upserted",
+    ].join(" "),
+    [JSON.stringify(rows)],
+  );
+
+  const eventIdsInScope = uniqueValues(rows.map((row) => row.event_id));
+  const legacyIdsInScope = rows.map((row) => row.legacy_id);
+  await client.query(
+    "delete from public.event_activations where event_id = any($1::uuid[]) and not (legacy_id = any($2::text[]))",
+    [eventIdsInScope, legacyIdsInScope],
+  );
+
+  return new Map(upserted.map((row) => [row.legacy_id, row.id]));
+}
+
+async function replaceOccurrences(client, records, cityIds, runIds, venueIds, eventIds, activationIds) {
   const selectedEventIds = records.map((record) => eventIds.get(record.rawEvent.id)).filter(Boolean);
   if (!selectedEventIds.length) {
     return 0;
@@ -518,6 +618,7 @@ async function replaceOccurrences(client, records, cityIds, runIds, venueIds, ev
     activations.forEach((activation, index) => {
       rows.push({
         event_id: eventId,
+        activation_id: activationIds.get(activationMapKey(event, activation)),
         legacy_id: activation.id,
         title: activation.title,
         description: activation.description,
@@ -548,15 +649,15 @@ async function replaceOccurrences(client, records, cityIds, runIds, venueIds, ev
   const result = await client.query(
     [
       "insert into public.event_occurrences (",
-      "  event_id, legacy_id, title, description, venue_id, city_id, destination_id,",
+      "  event_id, activation_id, legacy_id, title, description, venue_id, city_id, destination_id,",
       "  starts_at, ends_at, starts_on, ends_on, timezone, price_label, booking_url, official_url,",
       "  coordinates, occurrence_order, raw_metadata, source_run_id, latest_refresh_source_run_id",
       ")",
-      "select event_id, legacy_id, title, description, venue_id, city_id, destination_id,",
+      "select event_id, activation_id, legacy_id, title, description, venue_id, city_id, destination_id,",
       "  starts_at, ends_at, starts_on, ends_on, timezone, price_label, booking_url, official_url,",
       "  coordinates, occurrence_order, raw_metadata, source_run_id, latest_refresh_source_run_id",
       "from jsonb_to_recordset($1::jsonb) as row(",
-      "  event_id uuid, legacy_id text, title text, description text, venue_id uuid, city_id uuid, destination_id uuid,",
+      "  event_id uuid, activation_id uuid, legacy_id text, title text, description text, venue_id uuid, city_id uuid, destination_id uuid,",
       "  starts_at timestamptz, ends_at timestamptz, starts_on date, ends_on date, timezone text,",
       "  price_label text, booking_url text, official_url text, coordinates jsonb, occurrence_order integer,",
       "  raw_metadata jsonb, source_run_id uuid, latest_refresh_source_run_id uuid",
@@ -566,6 +667,94 @@ async function replaceOccurrences(client, records, cityIds, runIds, venueIds, ev
   );
 
   return result.rowCount;
+}
+
+async function upsertEventMedia(client, records, eventIds, activationIds) {
+  const rowsByScope = new Map();
+
+  for (const record of records) {
+    const event = record.rawEvent;
+    const eventId = eventIds.get(event.id);
+    if (record.guide.photo) {
+      rowsByScope.set(`event:${eventId}`, {
+        event_id: eventId,
+        activation_id: null,
+        url: record.guide.photo,
+        public_url: record.guide.photo.startsWith("https://media.rguide.co/") ? record.guide.photo : null,
+        source_url: record.guide.photo,
+        storage_provider: record.guide.photo.startsWith("https://media.rguide.co/") ? "cloudflare_r2" : null,
+        ingestion_status: record.guide.photo.startsWith("https://media.rguide.co/") ? "uploaded" : "external",
+        raw_metadata: { source: "weekly_events_publisher", eventId: event.id },
+      });
+    }
+
+    const activations = event.activations?.length
+      ? event.activations
+      : [{ id: `${event.id}-venue`, title: event.title }];
+    activations.forEach((activation, index) => {
+      const activationId = activationIds.get(activationMapKey(event, activation));
+      const photo = record.guide.stops?.[index]?.photo;
+      if (!activationId || !photo) {
+        return;
+      }
+      rowsByScope.set(`activation:${activationId}`, {
+        event_id: eventId,
+        activation_id: activationId,
+        url: photo,
+        public_url: photo.startsWith("https://media.rguide.co/") ? photo : null,
+        source_url: photo,
+        storage_provider: photo.startsWith("https://media.rguide.co/") ? "cloudflare_r2" : null,
+        ingestion_status: photo.startsWith("https://media.rguide.co/") ? "uploaded" : "external",
+        raw_metadata: {
+          source: "weekly_events_publisher",
+          eventId: event.id,
+          activationIds: [activation.id],
+        },
+      });
+    });
+  }
+
+  const rows = [...rowsByScope.values()];
+  if (!rows.length) {
+    return 0;
+  }
+
+  await client.query(
+    [
+      "with incoming as (",
+      "  select * from jsonb_to_recordset($1::jsonb) as row(",
+      "    event_id uuid, activation_id uuid, url text, public_url text, source_url text,",
+      "    storage_provider text, ingestion_status text, raw_metadata jsonb",
+      "  )",
+      "), updated as (",
+      "  update public.event_media media set",
+      "    url = case when incoming.public_url is not null or media.public_url is null then incoming.url else media.url end,",
+      "    public_url = coalesce(incoming.public_url, media.public_url),",
+      "    source_url = coalesce(incoming.source_url, media.source_url),",
+      "    storage_provider = coalesce(incoming.storage_provider, media.storage_provider),",
+      "    ingestion_status = case when incoming.public_url is not null then incoming.ingestion_status else media.ingestion_status end,",
+      "    raw_metadata = media.raw_metadata || incoming.raw_metadata, updated_at = now()",
+      "  from incoming",
+      "  where media.event_id = incoming.event_id and media.activation_id is not distinct from incoming.activation_id",
+      "    and media.occurrence_id is null and media.role = 'primary' and media.is_active",
+      "  returning media.id",
+      ")",
+      "insert into public.event_media (",
+      "  event_id, activation_id, url, public_url, role, source_url, storage_provider, ingestion_status, raw_metadata",
+      ")",
+      "select incoming.event_id, incoming.activation_id, incoming.url, incoming.public_url, 'primary',",
+      "  incoming.source_url, incoming.storage_provider, incoming.ingestion_status, incoming.raw_metadata",
+      "from incoming",
+      "where not exists (",
+      "  select 1 from public.event_media media",
+      "  where media.event_id = incoming.event_id and media.activation_id is not distinct from incoming.activation_id",
+      "    and media.occurrence_id is null and media.role = 'primary' and media.is_active",
+      ")",
+    ].join(" "),
+    [JSON.stringify(rows)],
+  );
+
+  return rows.length;
 }
 
 async function upsertSources(client, records) {
@@ -598,7 +787,7 @@ async function upsertSources(client, records) {
   return new Map(upserted.map((row) => [row.url, row.id]));
 }
 
-async function linkSources(client, records, sourceIds, eventIds) {
+async function linkSources(client, records, sourceIds, eventIds, activationIds) {
   const links = [];
   const occurrenceRows = await client.query(
     [
@@ -625,20 +814,36 @@ async function linkSources(client, records, sourceIds, eventIds) {
       });
     }
 
-    for (const activation of event.activations ?? []) {
+    const sourceableActivations = event.activations?.length
+      ? event.activations
+      : [{ id: `${event.id}-venue`, title: event.title, url: event.url }];
+    for (const activation of sourceableActivations) {
       const sourceId = sourceIds.get(activation.url ?? event.url);
       const occurrenceId = occurrenceByLegacy.get(activation.id);
-      if (!sourceId || !occurrenceId) {
+      const activationId = activationIds.get(activationMapKey(event, activation));
+      if (!sourceId) {
         continue;
       }
-      links.push({
-        entity_type: "event_occurrence",
-        entity_id: occurrenceId,
-        source_id: sourceId,
-        relationship: "official",
-        sourced_at: record.sourceRun.sourcedAt,
-        raw_metadata: { source: "weekly_events", eventId: event.id, activationId: activation.id },
-      });
+      if (activationId) {
+        links.push({
+          entity_type: "event_activation",
+          entity_id: activationId,
+          source_id: sourceId,
+          relationship: "official",
+          sourced_at: record.sourceRun.sourcedAt,
+          raw_metadata: { source: "weekly_events", eventId: event.id, activationId: activation.id },
+        });
+      }
+      if (occurrenceId) {
+        links.push({
+          entity_type: "event_occurrence",
+          entity_id: occurrenceId,
+          source_id: sourceId,
+          relationship: "official",
+          sourced_at: record.sourceRun.sourcedAt,
+          raw_metadata: { source: "weekly_events", eventId: event.id, activationId: activation.id },
+        });
+      }
     }
   }
 
@@ -775,6 +980,9 @@ async function verifyPublishedScope(client, records, cityIds) {
     [
       "select",
       "  (select count(*)::int from public.events where legacy_id = any($2::text[])) as event_count,",
+      "  (select count(*)::int from public.event_activations activation",
+      "    join public.events event on event.id = activation.event_id",
+      "    where event.legacy_id = any($2::text[])) as activation_count,",
       "  (select count(*)::int from public.event_occurrences occurrence",
       "    join public.events event on event.id = occurrence.event_id",
       "    where event.legacy_id = any($2::text[])) as occurrence_count,",
@@ -819,13 +1027,29 @@ async function publishWeeklyEvents(client, selectedRecords, dryRun) {
   const eventIds = await upsertEvents(client, selectedRecords, cityIds, runIds, venueIds);
   logPhase("phase events:done", { affected: eventIds.size });
 
+  logPhase("phase activations:start");
+  const activationIds = await upsertActivations(client, selectedRecords, eventIds, venueIds);
+  logPhase("phase activations:done", { affected: activationIds.size });
+
   logPhase("phase occurrences:start");
-  const occurrenceCount = await replaceOccurrences(client, selectedRecords, cityIds, runIds, venueIds, eventIds);
+  const occurrenceCount = await replaceOccurrences(
+    client,
+    selectedRecords,
+    cityIds,
+    runIds,
+    venueIds,
+    eventIds,
+    activationIds,
+  );
   logPhase("phase occurrences:done", { affected: occurrenceCount });
+
+  logPhase("phase event_media:start");
+  const eventMediaCount = await upsertEventMedia(client, selectedRecords, eventIds, activationIds);
+  logPhase("phase event_media:done", { affected: eventMediaCount });
 
   logPhase("phase sources:start");
   const sourceIds = await upsertSources(client, selectedRecords);
-  const sourceLinkCount = await linkSources(client, selectedRecords, sourceIds, eventIds);
+  const sourceLinkCount = await linkSources(client, selectedRecords, sourceIds, eventIds, activationIds);
   logPhase("phase sources:done", { sources: sourceIds.size, links: sourceLinkCount });
 
   logPhase("phase publications:start", { rows: selectedRecords.length });
@@ -846,7 +1070,9 @@ async function publishWeeklyEvents(client, selectedRecords, dryRun) {
   return {
     runs: runs.length,
     events: eventIds.size,
+    activations: activationIds.size,
     occurrences: occurrenceCount,
+    eventMedia: eventMediaCount,
     venues: venueIds.size,
     sources: sourceIds.size,
     sourceLinks: sourceLinkCount,

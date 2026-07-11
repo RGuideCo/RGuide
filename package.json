@@ -18,6 +18,7 @@
     "validate:content-source": "node scripts/validate-content-source-html.mjs",
     "refresh:entry-render-cache": "node scripts/refresh-entry-render-cache.mjs",
     "verify:normalized-backfill": "node scripts/verify-normalized-backfill.mjs",
+    "audit:schema": "node scripts/audit-normalized-schema.mjs",
     "verify:guide-publish": "node scripts/verify-guide-publish.mjs",
     "report:venue-hours": "node scripts/report-missing-venue-hours.mjs",
     "ingest:venue-hours-google": "node scripts/ingest-venue-hours-google.mjs",

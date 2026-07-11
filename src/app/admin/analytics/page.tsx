@@ -64,7 +64,6 @@ type AnalyticsClickEvent = RecentRow & {
 };
 
 const ANALYTICS_ACCESS_COOKIE = "rguide_analytics_access";
-const DEFAULT_ANALYTICS_PASSWORD = "rguide2026";
 const RECENT_PAGE_SIZE = 50;
 const TIME_ZONE = "Pacific/Auckland";
 const RANGE_OPTIONS = [
@@ -83,7 +82,7 @@ type AnalyticsQuery = {
 };
 
 function getAnalyticsAccessToken() {
-  return process.env.ANALYTICS_DASHBOARD_TOKEN?.trim() || DEFAULT_ANALYTICS_PASSWORD;
+  return process.env.ANALYTICS_DASHBOARD_TOKEN?.trim() || null;
 }
 
 function isValidAccessToken(candidate: string | undefined | null) {
@@ -119,13 +118,8 @@ function getDatabaseUrl() {
 function getSupabaseAnalyticsConfig() {
   const url = process.env.SUPABASE_URL ?? process.env.NEXT_PUBLIC_SUPABASE_URL ?? null;
   const serviceKey = process.env.SUPABASE_SERVICE_ROLE_KEY ?? null;
-  const publicKey =
-    process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY ??
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ??
-    null;
-  const key = serviceKey ?? publicKey;
 
-  return url && key ? { url, key, canReadDirectly: Boolean(serviceKey) } : null;
+  return url && serviceKey ? { url, key: serviceKey, canReadDirectly: true } : null;
 }
 
 function getPgSslConfig(databaseUrl: string) {

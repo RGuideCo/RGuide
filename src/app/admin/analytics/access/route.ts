@@ -2,10 +2,9 @@ import { timingSafeEqual } from "node:crypto";
 import { NextResponse } from "next/server";
 
 const ANALYTICS_ACCESS_COOKIE = "rguide_analytics_access";
-const DEFAULT_ANALYTICS_PASSWORD = "rguide2026";
 
 function getAnalyticsAccessToken() {
-  return process.env.ANALYTICS_DASHBOARD_TOKEN?.trim() || DEFAULT_ANALYTICS_PASSWORD;
+  return process.env.ANALYTICS_DASHBOARD_TOKEN?.trim() || null;
 }
 
 function isValidAccessToken(candidate: string | null) {
