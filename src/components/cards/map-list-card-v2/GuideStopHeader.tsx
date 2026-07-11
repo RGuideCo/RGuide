@@ -60,6 +60,7 @@ export function GuideStopHeader({
         className={`expanded-guide-stop-number-button inline-flex shrink-0 items-center justify-center font-mono font-semibold text-white shadow-sm transition hover:brightness-95 focus-visible:ring-2 focus-visible:ring-slate-400/50 ${
           showStopNumbers ? "h-6 w-6 rounded-md text-xs" : "h-2.5 w-2.5 rounded-full"
         }`}
+        style={{ backgroundColor: "var(--guide-accent, #64748b)" }}
         aria-label={`Select ${name} on map`}
         title={`Select ${name} on map`}
       >
