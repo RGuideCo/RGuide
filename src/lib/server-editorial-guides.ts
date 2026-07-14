@@ -40,6 +40,7 @@ interface DataApiWeeklyEventGuideRow {
 
 interface EditorialGuideScope {
   cityName?: string;
+  countryName?: string;
   bypassCache?: boolean;
 }
 
@@ -92,11 +93,29 @@ function filterCurrentEventGuides(guides: MapList[]) {
 }
 
 function filterGuidesByScope(guides: MapList[], scope: EditorialGuideScope = {}) {
-  if (!scope.cityName) {
-    return guides;
+  if (scope.cityName) {
+    return guides.filter((guide) => guide.location.city === scope.cityName);
+  }
+  if (scope.countryName) {
+    return guides.filter((guide) => guide.location.country === scope.countryName);
   }
 
-  return guides.filter((guide) => guide.location.city === scope.cityName);
+  return guides;
+}
+
+function getDatabaseScopeFilter(
+  scope: EditorialGuideScope,
+  cityExpression: string,
+  countryExpression: string,
+) {
+  if (scope.cityName) {
+    return { clause: `and ${cityExpression} = $1`, values: [scope.cityName] };
+  }
+  if (scope.countryName) {
+    return { clause: `and ${countryExpression} = $1`, values: [scope.countryName] };
+  }
+
+  return { clause: "", values: [] as string[] };
 }
 
 function normalizeWeeklyEventGuide(guide: MapList): MapList {
@@ -251,6 +270,8 @@ async function loadEditorialGuidesFromDataApi(scope: EditorialGuideScope = {}): 
       return null;
     }
     query = query.eq("city_id", cityId);
+  } else if (scope.countryName) {
+    query = query.eq("list->location->>country", scope.countryName);
   }
 
   const { data, error } = await query.returns<DataApiGuideRow[]>();
@@ -283,6 +304,8 @@ async function loadWeeklyEventsFromDataApi(
       return [];
     }
     normalizedQuery = normalizedQuery.eq("city_id", cityId);
+  } else if (scope.countryName) {
+    normalizedQuery = normalizedQuery.eq("guide->location->>country", scope.countryName);
   }
 
   const normalized = await normalizedQuery
@@ -301,6 +324,8 @@ async function loadWeeklyEventsFromDataApi(
 
   if (scope.cityName) {
     publicationQuery = publicationQuery.eq("city_id", cityId);
+  } else if (scope.countryName) {
+    publicationQuery = publicationQuery.eq("rendered_map_list->location->>country", scope.countryName);
   }
 
   const publication = await publicationQuery
@@ -319,6 +344,8 @@ async function loadWeeklyEventsFromDataApi(
 
   if (scope.cityName) {
     legacyQuery = legacyQuery.eq("city_id", cityId);
+  } else if (scope.countryName) {
+    legacyQuery = legacyQuery.eq("guide->location->>country", scope.countryName);
   }
 
   const legacy = await legacyQuery.returns<DataApiWeeklyEventGuideRow[]>();
@@ -347,6 +374,8 @@ async function loadRenderCacheGuidesFromDataApi(
       return null;
     }
     query = query.eq("rendered_payload->location->>city", scope.cityName);
+  } else if (scope.countryName) {
+    query = query.eq("rendered_payload->location->>country", scope.countryName);
   }
 
   const { data, error } = await query.returns<DataApiRenderCacheRow[]>();
@@ -363,11 +392,11 @@ async function loadRenderCacheGuidesFromDataApi(
 
 async function loadNormalizedGuides(client: Client, scope: EditorialGuideScope = {}): Promise<MapList[] | null> {
   try {
-    const values: string[] = [];
-    const cityFilter = scope.cityName ? "  and city.name = $1" : "";
-    if (scope.cityName) {
-      values.push(scope.cityName);
-    }
+    const { clause: locationFilter, values } = getDatabaseScopeFilter(
+      scope,
+      "city.name",
+      "entry.country_name",
+    );
 
     const { rows } = await client.query<NormalizedGuideRow>(
       [
@@ -376,7 +405,7 @@ async function loadNormalizedGuides(client: Client, scope: EditorialGuideScope =
         "join public.entries_maplist view on view.id = entry.id",
         "left join public.destinations city on city.id = entry.city_id",
         "where entry.source_table = 'editorial_guides'",
-        cityFilter,
+        locationFilter,
         "order by entry.category asc, entry.country_name asc nulls last,",
         "  (view.list->'location'->>'city') asc nulls last,",
         "  (view.list->'location'->>'neighborhood') asc nulls last,",
@@ -404,11 +433,11 @@ async function loadNormalizedGuides(client: Client, scope: EditorialGuideScope =
 }
 
 async function loadRenderCacheGuides(client: Client, scope: EditorialGuideScope = {}): Promise<MapList[]> {
-  const values: string[] = [];
-  const cityFilter = scope.cityName ? "  and city.name = $1" : "";
-  if (scope.cityName) {
-    values.push(scope.cityName);
-  }
+  const { clause: locationFilter, values } = getDatabaseScopeFilter(
+    scope,
+    "city.name",
+    "entry.country_name",
+  );
 
   const { rows } = await client.query<RenderCacheRow>(
     [
@@ -421,7 +450,7 @@ async function loadRenderCacheGuides(client: Client, scope: EditorialGuideScope 
       "  and cache.is_current = true",
       "  and entry.source_table = 'editorial_guides'",
       "  and entry.status = 'published'",
-      cityFilter,
+      locationFilter,
       "order by entry.category asc, entry.country_name asc nulls last,",
       "  cache.rendered_payload->'location'->>'city' asc nulls last,",
       "  cache.rendered_payload->'location'->>'neighborhood' asc nulls last,",
@@ -457,11 +486,11 @@ async function loadWeeklyEventsFromDatabase(client: Client, scope: EditorialGuid
 
 async function loadNormalizedWeeklyEvents(client: Client, scope: EditorialGuideScope = {}) {
   try {
-    const values: string[] = [];
-    const cityFilter = scope.cityName ? "and city.name = $1" : "";
-    if (scope.cityName) {
-      values.push(scope.cityName);
-    }
+    const { clause: locationFilter, values } = getDatabaseScopeFilter(
+      scope,
+      "city.name",
+      "guide->'location'->>'country'",
+    );
 
     const result = await client.query<WeeklyEventGuideRow>(
       [
@@ -470,7 +499,7 @@ async function loadNormalizedWeeklyEvents(client: Client, scope: EditorialGuideS
         "left join public.destinations city on city.id = event.city_id",
         "where sourced_at >= current_date - interval '14 days'",
         "  and coalesce(ends_at, starts_at) >= now()",
-        cityFilter,
+        locationFilter,
         "order by guide->'location'->>'city' asc, starts_at asc, guide->>'title' asc",
       ].join(" "),
       values,
@@ -483,11 +512,11 @@ async function loadNormalizedWeeklyEvents(client: Client, scope: EditorialGuideS
 
 async function loadWeeklyEventPublicationCache(client: Client, scope: EditorialGuideScope = {}) {
   try {
-    const values: string[] = [];
-    const cityFilter = scope.cityName ? "and city.name = $1" : "";
-    if (scope.cityName) {
-      values.push(scope.cityName);
-    }
+    const { clause: locationFilter, values } = getDatabaseScopeFilter(
+      scope,
+      "city.name",
+      "rendered_map_list->'location'->>'country'",
+    );
 
     const { rows } = await client.query<WeeklyEventGuideRow>(
       [
@@ -496,7 +525,7 @@ async function loadWeeklyEventPublicationCache(client: Client, scope: EditorialG
         "left join public.destinations city on city.id = publication.city_id",
         "where sourced_at >= current_date - interval '14 days'",
         "  and coalesce(ends_at, starts_at) >= now()",
-        cityFilter,
+        locationFilter,
         "order by rendered_map_list->'location'->>'city' asc, starts_at asc, rendered_map_list->>'title' asc",
       ].join(" "),
       values,
@@ -509,11 +538,11 @@ async function loadWeeklyEventPublicationCache(client: Client, scope: EditorialG
 
 async function loadLegacyWeeklyEventGuides(client: Client, scope: EditorialGuideScope = {}) {
   try {
-    const values: string[] = [];
-    const cityFilter = scope.cityName ? "and city.name = $1" : "";
-    if (scope.cityName) {
-      values.push(scope.cityName);
-    }
+    const { clause: locationFilter, values } = getDatabaseScopeFilter(
+      scope,
+      "city.name",
+      "guide->'location'->>'country'",
+    );
 
     const { rows } = await client.query<WeeklyEventGuideRow>(
       [
@@ -522,7 +551,7 @@ async function loadLegacyWeeklyEventGuides(client: Client, scope: EditorialGuide
         "left join public.destinations city on city.id = guide.city_id",
         "where sourced_at >= current_date - interval '14 days'",
         "  and coalesce(ends_at, starts_at) >= now()",
-        cityFilter,
+        locationFilter,
         "order by guide->'location'->>'city' asc, guide->>'title' asc",
       ].join(" "),
       values,
@@ -546,6 +575,19 @@ const getCachedCityEditorialGuidesFromSupabase = unstable_cache(
   },
 );
 
+const getCachedCountryEditorialGuidesFromSupabase = unstable_cache(
+  async (countryName: string) => {
+    return loadEditorialGuidesFromSupabase({ countryName });
+  },
+  ["server-editorial-guides", "country-scoped"],
+  {
+    revalidate: Number.isFinite(EDITORIAL_GUIDES_CACHE_SECONDS)
+      ? EDITORIAL_GUIDES_CACHE_SECONDS
+      : 86400,
+    tags: ["editorial-guides"],
+  },
+);
+
 const getRequestMemoizedAllEditorialGuides = cache(async () => loadEditorialGuidesFromSupabase());
 
 export async function getServerEditorialGuides(scope: EditorialGuideScope = {}) {
@@ -553,6 +595,8 @@ export async function getServerEditorialGuides(scope: EditorialGuideScope = {}) 
     ? loadEditorialGuidesFromSupabase(scope)
     : scope.cityName
       ? getCachedCityEditorialGuidesFromSupabase(scope.cityName)
+      : scope.countryName
+        ? getCachedCountryEditorialGuidesFromSupabase(scope.countryName)
       : getRequestMemoizedAllEditorialGuides();
 
   const supabaseGuides = await supabaseGuideLoader.catch((error) => {

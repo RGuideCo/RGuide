@@ -26,26 +26,36 @@ type SplitScreenClientLoaderProps = Omit<
 export function SplitScreenClientLoader({ initialAppData, appDataScope, ...props }: SplitScreenClientLoaderProps) {
   const [requestedScope, setRequestedScope] = useState<AppDataScope | undefined>(appDataScope);
   const requestedCityName = requestedScope?.cityName ?? null;
+  const requestedCountryName = requestedScope?.countryName ?? null;
   const initialCityName = appDataScope?.cityName ?? null;
-  const initialDataForScope = requestedCityName === initialCityName ? initialAppData : undefined;
+  const initialCountryName = appDataScope?.countryName ?? null;
+  const initialDataForScope =
+    requestedCityName === initialCityName && requestedCountryName === initialCountryName
+      ? initialAppData
+      : undefined;
   const { data } = useAppData(initialDataForScope, requestedScope);
 
   useEffect(() => {
     setRequestedScope(appDataScope);
-  }, [appDataScope?.cityName]);
+  }, [appDataScope?.cityName, appDataScope?.countryName]);
 
-  const handleCityDataRequested = useCallback((cityName: string) => {
-    const normalizedCityName = cityName.trim();
-    if (!normalizedCityName) {
-      return;
-    }
-
+  const handleGuideDataRequested = useCallback((scope: AppDataScope) => {
+    const normalizedCityName = scope.cityName?.trim() ?? "";
+    const normalizedCountryName = scope.countryName?.trim() ?? "";
     setRequestedScope((current) => {
-      if (current?.cityName === normalizedCityName) {
+      const currentCityName = current?.cityName?.trim() ?? "";
+      const currentCountryName = current?.countryName?.trim() ?? "";
+      if (currentCityName === normalizedCityName && currentCountryName === normalizedCountryName) {
         return current;
       }
 
-      return { cityName: normalizedCityName };
+      if (normalizedCityName) {
+        return { cityName: normalizedCityName };
+      }
+      if (normalizedCountryName) {
+        return { countryName: normalizedCountryName };
+      }
+      return {};
     });
   }, []);
 
@@ -58,7 +68,7 @@ export function SplitScreenClientLoader({ initialAppData, appDataScope, ...props
       {...props}
       continents={data.continents}
       initialEditorialGuides={data.guides}
-      onCityDataRequested={handleCityDataRequested}
+      onGuideDataRequested={handleGuideDataRequested}
     />
   );
 }

@@ -15,11 +15,12 @@ export async function GET(request: Request) {
   try {
     const { searchParams } = new URL(request.url);
     const cityName = searchParams.get("city")?.trim() || undefined;
+    const countryName = cityName ? undefined : searchParams.get("country")?.trim() || undefined;
     const rateLimit = checkRateLimit(request, {
       namespace: "app-data",
       limit: 120,
       windowMs: 60_000,
-      keyParts: [cityName],
+      keyParts: [cityName, countryName],
     });
 
     if (!rateLimit.allowed) {
@@ -28,10 +29,10 @@ export async function GET(request: Request) {
 
     const [continents, guides] = await Promise.all([
       getContinentsWithDestinationDescriptions({ forceDatabase: true }),
-      getServerEditorialGuides({ cityName, bypassCache: Boolean(cityName) }),
+      getServerEditorialGuides({ cityName, countryName, bypassCache: Boolean(cityName || countryName) }),
     ]);
 
-    const cacheControl = cityName
+    const cacheControl = cityName || countryName
       ? "no-store, max-age=0"
       : `public, s-maxage=${cacheSeconds}, stale-while-revalidate=${cacheSeconds * 4}`;
 

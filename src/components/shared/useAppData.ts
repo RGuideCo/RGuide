@@ -11,6 +11,7 @@ export interface AppData {
 
 export interface AppDataScope {
   cityName?: string | null;
+  countryName?: string | null;
 }
 
 const appDataPromises = new Map<string, Promise<AppData>>();
@@ -18,14 +19,23 @@ const appDataSnapshots = new Map<string, AppData>();
 
 function getAppDataKey(scope: AppDataScope = {}) {
   const cityName = scope.cityName?.trim().toLowerCase();
-  return cityName ? `city:${cityName}` : "all";
+  const countryName = scope.countryName?.trim().toLowerCase();
+  if (cityName) return `city:${cityName}`;
+  if (countryName) return `country:${countryName}`;
+  return "all";
 }
 
 function getAppDataUrl(scope: AppDataScope = {}) {
   const cityName = scope.cityName?.trim();
-  if (!cityName) return "/api/app-data";
+  const countryName = scope.countryName?.trim();
+  if (!cityName && !countryName) return "/api/app-data";
 
-  const params = new URLSearchParams({ city: cityName });
+  const params = new URLSearchParams();
+  if (cityName) {
+    params.set("city", cityName);
+  } else if (countryName) {
+    params.set("country", countryName);
+  }
   return `/api/app-data?${params.toString()}`;
 }
 
@@ -70,10 +80,11 @@ export function useAppData(initialData?: AppData, scope: AppDataScope = {}) {
   const [data, setData] = useState<AppData | null>(null);
   const [error, setError] = useState<Error | null>(null);
   const cityName = scope.cityName ?? null;
+  const countryName = scope.countryName ?? null;
 
   useEffect(() => {
     let isMounted = true;
-    const requestScope = { cityName };
+    const requestScope = { cityName, countryName };
     const key = getAppDataKey(requestScope);
 
     if (initialData) {
@@ -103,7 +114,7 @@ export function useAppData(initialData?: AppData, scope: AppDataScope = {}) {
     return () => {
       isMounted = false;
     };
-  }, [initialData, cityName]);
+  }, [initialData, cityName, countryName]);
 
   return { data, error };
 }

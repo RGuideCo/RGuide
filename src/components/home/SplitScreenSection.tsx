@@ -177,7 +177,7 @@ export interface SplitScreenSectionProps {
       placesBeenCount: number;
     };
   };
-  onCityDataRequested?: (cityName: string) => void;
+  onGuideDataRequested?: (scope: { cityName?: string; countryName?: string }) => void;
 }
 
 function areGuideCollectionsEquivalent(left: MapList[], right: MapList[]) {
@@ -581,7 +581,7 @@ export function SplitScreenSection({
   initialRouteState,
   seoContent,
   publicProfile,
-  onCityDataRequested,
+  onGuideDataRequested,
 }: SplitScreenSectionProps) {
   useEffect(() => {
     document.documentElement.classList.remove("rguide-hydration-timeout");
@@ -1052,7 +1052,6 @@ export function SplitScreenSection({
         return;
       }
 
-      onCityDataRequested?.(route.city.name);
       const currentGuideId = expandedGuideIdRef.current;
       setIsLocationFavoritesRailActive(false);
       setSelection(route.selection);
@@ -1679,7 +1678,6 @@ export function SplitScreenSection({
     });
 
     if (city) {
-      onCityDataRequested?.(city.name);
       setActiveCategory(null);
       setActiveSubcategory(null);
       setExpandedGuideId(null);
@@ -1795,9 +1793,6 @@ export function SplitScreenSection({
           subareaId,
         };
     const context = getCityRouteContext(nextSelection);
-    if (context?.city) {
-      onCityDataRequested?.(context.city.name);
-    }
     setSelection(nextSelection);
     setExpandedGuideId(null);
     setClosingGuide(null);
@@ -1845,9 +1840,6 @@ export function SplitScreenSection({
           nestedSubareaId,
         };
     const context = getCityRouteContext(nextSelection);
-    if (context?.city) {
-      onCityDataRequested?.(context.city.name);
-    }
     setSelection(nextSelection);
     setExpandedGuideId(null);
     setClosingGuide(null);
@@ -1975,6 +1967,16 @@ export function SplitScreenSection({
     const nestedSubarea = subarea?.subareas?.find((item) => item.id === selection.nestedSubareaId);
     return { continent, country, state, city, subarea, nestedSubarea };
   }, [continents, selection]);
+
+  useEffect(() => {
+    if (activeLocation.city?.name) {
+      onGuideDataRequested?.({ cityName: activeLocation.city.name });
+      return;
+    }
+    if (activeLocation.country?.name) {
+      onGuideDataRequested?.({ countryName: activeLocation.country.name });
+    }
+  }, [activeLocation.city?.name, activeLocation.country?.name, onGuideDataRequested]);
   const activeCountrySubarea = useMemo(
     () => activeLocation.country?.subareas?.find((item) => item.id === selection.countrySubareaId),
     [activeLocation.country, selection.countrySubareaId],
