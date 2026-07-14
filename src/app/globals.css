@@ -1249,6 +1249,11 @@ textarea:focus-visible {
     box-shadow: none;
   }
 
+  .expanded-guide-stop-card[data-expanded="true"][data-title-density="long"] {
+    --expanded-stop-title-row-height: 3.8rem;
+    --expanded-stop-title-below-edge: 1.5rem;
+  }
+
   .expanded-guide-stop-card[data-expanded="true"][data-active="true"] {
     border: 0;
     outline: 0;
@@ -1265,6 +1270,7 @@ textarea:focus-visible {
     right: calc(var(--expanded-stop-panel-inline) + var(--expanded-stop-panel-inner-x));
     left: calc(var(--expanded-stop-panel-inline) + var(--expanded-stop-panel-inner-x));
     z-index: 4;
+    height: var(--expanded-stop-title-row-height);
     min-height: var(--expanded-stop-title-row-height);
     width: auto;
     overflow: visible;
@@ -1273,6 +1279,32 @@ textarea:focus-visible {
     background: transparent;
     color: #020617;
     transform: none;
+  }
+
+  .expanded-guide-stop-card[data-expanded="true"][data-title-density] .expanded-guide-stop-title-row .expanded-guide-stop-name-control .expanded-guide-stop-title-label {
+    display: -webkit-box;
+    width: fit-content;
+    max-width: 100%;
+    overflow: hidden;
+    padding: 0.32rem 0.55rem 0.38rem;
+    border: 1px solid color-mix(in srgb, var(--guide-accent, #94a3b8) 76%, #0f172a);
+    border-radius: 6px;
+    background: var(--guide-accent, #64748b);
+    box-shadow:
+      0 1px 0 rgba(255, 255, 255, 0.22) inset,
+      0 5px 12px rgba(15, 23, 42, 0.12);
+    color: #fff;
+    font-size: clamp(18px, 1.35vw, 21px);
+    letter-spacing: 0.008em;
+    line-height: 1.04;
+    text-shadow: 0 1px 1px rgba(15, 23, 42, 0.16);
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+  }
+
+  .expanded-guide-stop-card[data-expanded="true"][data-title-density] .expanded-guide-stop-title-row .expanded-guide-stop-name-control input {
+    font-size: clamp(18px, 1.35vw, 21px);
+    line-height: 1.08;
   }
 
   .expanded-guide-stop-card[data-expanded="true"]:has(.expanded-guide-stop-body > .expanded-poi-bio:not(.expanded-poi-bio-no-photo) .expanded-poi-bio-photo) .expanded-guide-stop-title-row {

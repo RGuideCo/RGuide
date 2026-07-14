@@ -47,7 +47,11 @@ export function GuideStopHeader({
   onAddStop,
   onToggle,
 }: GuideStopHeaderProps) {
-  const title = titleContent ?? <span className="block text-base font-semibold leading-5 text-slate-900">{name}</span>;
+  const title = titleContent ?? (
+    <span className="expanded-guide-stop-title-label block text-base font-semibold leading-5 text-slate-900">
+      {name}
+    </span>
+  );
   const activateHeader = onHeaderActivate ?? onStopSelect;
 
   return (

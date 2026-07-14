@@ -59,6 +59,8 @@ export function GuideStopCardChrome({
 }: GuideStopCardChromeProps) {
   const categoryStyle = CATEGORY_STYLES[category];
   const panelId = `guide-stop-panel-${listId}-${stop.id}`;
+  const titleWordCount = stop.name.trim().split(/\s+/).filter(Boolean).length;
+  const titleDensity = stop.name.length >= 32 || titleWordCount >= 5 ? "long" : "standard";
 
   return (
     <li
@@ -84,6 +86,7 @@ export function GuideStopCardChrome({
         data-active={isActive}
         data-hovered={isHovered}
         data-expanded={isExpanded}
+        data-title-density={titleDensity}
         className="expanded-guide-stop-card"
         style={{ "--guide-accent": categoryStyle.mapColor } as GuideCardStyle}
       >
