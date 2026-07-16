@@ -12,6 +12,7 @@ export interface AppData {
 export interface AppDataScope {
   cityName?: string | null;
   countryName?: string | null;
+  continentName?: string | null;
 }
 
 const appDataPromises = new Map<string, Promise<AppData>>();
@@ -20,27 +21,35 @@ const appDataSnapshots = new Map<string, AppData>();
 function getAppDataKey(scope: AppDataScope = {}) {
   const cityName = scope.cityName?.trim().toLowerCase();
   const countryName = scope.countryName?.trim().toLowerCase();
+  const continentName = scope.continentName?.trim().toLowerCase();
   if (cityName) return `city:${cityName}`;
   if (countryName) return `country:${countryName}`;
+  if (continentName) return `continent:${continentName}`;
   return "all";
 }
 
 function getAppDataUrl(scope: AppDataScope = {}) {
   const cityName = scope.cityName?.trim();
   const countryName = scope.countryName?.trim();
-  if (!cityName && !countryName) return "/api/app-data";
+  const continentName = scope.continentName?.trim();
+  if (!cityName && !countryName && !continentName) return "/api/app-data";
 
   const params = new URLSearchParams();
   if (cityName) {
     params.set("city", cityName);
   } else if (countryName) {
     params.set("country", countryName);
+  } else if (continentName) {
+    params.set("continent", continentName);
   }
   return `/api/app-data?${params.toString()}`;
 }
 
 function seedAppData(initialData: AppData, scope: AppDataScope = {}) {
   const key = getAppDataKey(scope);
+  if (initialData.guides.length === 0) {
+    return;
+  }
   appDataSnapshots.set(key, initialData);
   appDataPromises.set(key, Promise.resolve(initialData));
 }
@@ -81,20 +90,25 @@ export function useAppData(initialData?: AppData, scope: AppDataScope = {}) {
   const [error, setError] = useState<Error | null>(null);
   const cityName = scope.cityName ?? null;
   const countryName = scope.countryName ?? null;
+  const continentName = scope.continentName ?? null;
 
   useEffect(() => {
     let isMounted = true;
-    const requestScope = { cityName, countryName };
+    const requestScope = { cityName, countryName, continentName };
     const key = getAppDataKey(requestScope);
+
+    const hasCompleteInitialData = Boolean(initialData?.guides.length);
 
     if (initialData) {
       seedAppData(initialData, requestScope);
       setData(initialData);
       setError(null);
 
-      return () => {
-        isMounted = false;
-      };
+      if (hasCompleteInitialData) {
+        return () => {
+          isMounted = false;
+        };
+      }
     }
 
     loadAppData({ scope: requestScope })
@@ -114,7 +128,7 @@ export function useAppData(initialData?: AppData, scope: AppDataScope = {}) {
     return () => {
       isMounted = false;
     };
-  }, [initialData, cityName, countryName]);
+  }, [initialData, cityName, countryName, continentName]);
 
   return { data, error };
 }

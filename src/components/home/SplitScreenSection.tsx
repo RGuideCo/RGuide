@@ -181,7 +181,7 @@ export interface SplitScreenSectionProps {
       placesBeenCount: number;
     };
   };
-  onGuideDataRequested?: (scope: { cityName?: string; countryName?: string }) => void;
+  onGuideDataRequested?: (scope: { cityName?: string; countryName?: string; continentName?: string }) => void;
 }
 
 function areGuideCollectionsEquivalent(left: MapList[], right: MapList[]) {
@@ -1979,8 +1979,14 @@ export function SplitScreenSection({
     }
     if (activeLocation.country?.name) {
       onGuideDataRequested?.({ countryName: activeLocation.country.name });
+      return;
     }
-  }, [activeLocation.city?.name, activeLocation.country?.name, onGuideDataRequested]);
+    if (activeLocation.continent?.name) {
+      onGuideDataRequested?.({ continentName: activeLocation.continent.name });
+      return;
+    }
+    onGuideDataRequested?.({});
+  }, [activeLocation.city?.name, activeLocation.country?.name, activeLocation.continent?.name, onGuideDataRequested]);
   const activeCountrySubarea = useMemo(
     () => activeLocation.country?.subareas?.find((item) => item.id === selection.countrySubareaId),
     [activeLocation.country, selection.countrySubareaId],
@@ -3837,14 +3843,25 @@ export function SplitScreenSection({
     ? orderedRailFilteredLists.filter((list) => isListNeighborhoodGuideForActiveCity(list))
     : [];
   const recentGuideLists = useMemo(() => {
-    if (!isGlobalSelection || activeGuideRail !== "all-guides" || activeGuideSource === "user-guides" || activeGuideSource === "favorites") {
+    const continentName = activeLocation.continent && !activeLocation.country
+      ? activeLocation.continent.name
+      : null;
+    if (
+      (!isGlobalSelection && !continentName) ||
+      activeGuideRail !== "all-guides" ||
+      activeGuideSource === "user-guides" ||
+      activeGuideSource === "favorites"
+    ) {
       return [];
     }
 
-    const worldwideGuideIds = new Set(orderedRailFilteredLists.map((list) => list.id));
-    const baseRecentLists = activeCategory
+    const activeScopeGuideIds = new Set(orderedRailFilteredLists.map((list) => list.id));
+    const categoryRecentLists = activeCategory
       ? globalMergedLists.filter((list) => doesListMatchCategory(list, activeCategory))
       : globalMergedLists;
+    const baseRecentLists = continentName
+      ? categoryRecentLists.filter((list) => list.location.continent === continentName)
+      : categoryRecentLists;
 
     return baseRecentLists
       .filter(
@@ -3856,7 +3873,7 @@ export function SplitScreenSection({
           list.submissionType !== "journey" &&
           list.submissionType !== "itinerary" &&
           (!activeSubcategory || doesListMatchSubcategory(list, activeSubcategory)) &&
-          !worldwideGuideIds.has(list.id),
+          !activeScopeGuideIds.has(list.id),
       )
       .slice()
       .sort((left, right) => {
@@ -3867,7 +3884,7 @@ export function SplitScreenSection({
         return rightTime - leftTime || right.upvotes - left.upvotes || left.title.localeCompare(right.title);
       })
       .slice(0, 20);
-  }, [activeGuideRail, activeGuideSource, activeCategory, activeSubcategory, globalMergedLists, isGlobalSelection, orderedRailFilteredLists]);
+  }, [activeGuideRail, activeGuideSource, activeCategory, activeSubcategory, activeLocation.continent, activeLocation.country, globalMergedLists, isGlobalSelection, orderedRailFilteredLists]);
 
   const visibleGuideMarkerListSignature = useMemo(
     () =>
