@@ -2267,13 +2267,6 @@ export function MapListCard({
           ) : null}
         </div>
       </div>
-      {expanded && !inlineEditing && !isEventGuide ? (
-        <GuideQuickLinks
-          guideId={list.id}
-          links={guideQuickLinks}
-          onGuideSelect={onGuideCrossLinkSelect}
-        />
-      ) : null}
       {expandable && !expanded && sourceSummary ? (
         <GuideSourceSummary
           listId={list.id}
@@ -2299,7 +2292,9 @@ export function MapListCard({
         <div
           id={`guide-panel-${list.id}`}
           className={`guide-expand-panel grid transition-[grid-template-rows,opacity,margin,background-color] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] ${
-            expanded ? "mt-2 grid-rows-[1fr] opacity-100" : "mt-0 grid-rows-[0fr] opacity-0"
+            expanded
+              ? `${!inlineEditing && !isEventGuide && guideQuickLinks.length > 0 ? "mt-0" : "mt-2"} grid-rows-[1fr] opacity-100`
+              : "mt-0 grid-rows-[0fr] opacity-0"
           } ${fillPane && expanded ? "min-h-0 flex-1 basis-0" : ""} ${
             expanded ? `relative -mx-3 px-3 ${fillPane ? "bg-transparent" : "bg-slate-50"}` : ""
           }`}
@@ -2323,8 +2318,19 @@ export function MapListCard({
                   element.scrollTop = stopListMaxScrollTop;
                 }
               }}
-              className={`${fillPane && expanded ? "mobile-guide-scroll-container flex min-h-0 flex-1 flex-col overflow-y-auto overscroll-contain pb-3 pr-1 lg:overflow-hidden lg:pb-0 lg:pr-0" : ""} relative pt-2`}
+              className={`${fillPane && expanded ? "mobile-guide-scroll-container flex min-h-0 flex-1 flex-col overflow-y-auto overscroll-contain pb-3 pr-1 lg:overflow-hidden lg:pb-0 lg:pr-0" : ""} relative ${
+                expanded && !inlineEditing && !isEventGuide && guideQuickLinks.length > 0 ? "pt-0" : "pt-2"
+              }`}
             >
+              {expanded && !inlineEditing && !isEventGuide && guideQuickLinks.length > 0 ? (
+                <div className="-mr-1 mb-4 lg:mr-0">
+                  <GuideQuickLinks
+                    guideId={list.id}
+                    links={guideQuickLinks}
+                    onGuideSelect={onGuideCrossLinkSelect}
+                  />
+                </div>
+              ) : null}
               <GuideBodyComponent>
               <div
                 className={
