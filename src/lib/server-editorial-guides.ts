@@ -8,6 +8,7 @@ import { createClient, type SupabaseClient } from "@supabase/supabase-js";
 
 import { mapLists } from "@/data/lists";
 import { weeklyCityEventRuns, weeklyEventToGuideList } from "@/data/weekly-events";
+import { getServerDatabaseUrl } from "@/lib/server-database-url";
 import type { MapList } from "@/types";
 
 interface WeeklyEventGuideRow {
@@ -153,15 +154,6 @@ const EDITORIAL_GUIDES_CACHE_SECONDS = Number.parseInt(
   10,
 );
 
-function getDatabaseUrl() {
-  return (
-    process.env.SUPABASE_DB_URL ??
-    process.env.SUPABASE_DATABASE_URL ??
-    process.env.DATABASE_URL ??
-    null
-  );
-}
-
 function getSupabaseDataApiConfig() {
   const url = process.env.SUPABASE_URL ?? process.env.NEXT_PUBLIC_SUPABASE_URL ?? null;
   const key =
@@ -199,7 +191,7 @@ async function loadEditorialGuidesFromSupabase(scope: EditorialGuideScope = {}):
     return loadEditorialGuidesFromDataApi(scope);
   }
 
-  const databaseUrl = getDatabaseUrl();
+  const databaseUrl = getServerDatabaseUrl();
 
   if (!databaseUrl) {
     return loadEditorialGuidesFromDataApi(scope);

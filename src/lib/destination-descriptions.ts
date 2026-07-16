@@ -4,6 +4,7 @@ import { unstable_cache } from "next/cache";
 import { createClient } from "@supabase/supabase-js";
 
 import { getContinents } from "@/lib/mock-data";
+import { getServerDatabaseUrl } from "@/lib/server-database-url";
 import type {
   City,
   Continent,
@@ -323,15 +324,6 @@ export function collectDestinationDescriptions(continents: Continent[]): Destina
   );
 }
 
-function getDatabaseUrl() {
-  return (
-    process.env.SUPABASE_DB_URL ??
-    process.env.SUPABASE_DATABASE_URL ??
-    process.env.DATABASE_URL ??
-    null
-  );
-}
-
 function getSupabaseDataApiConfig() {
   const url = process.env.SUPABASE_URL ?? process.env.NEXT_PUBLIC_SUPABASE_URL ?? null;
   const key =
@@ -367,7 +359,7 @@ async function loadDestinationContentRows(options: DestinationContentLoadOptions
     return loadDestinationContentRowsFromDataApi();
   }
 
-  const databaseUrl = getDatabaseUrl();
+  const databaseUrl = getServerDatabaseUrl();
 
   if (!databaseUrl) {
     return loadDestinationContentRowsFromDataApi();
