@@ -659,8 +659,7 @@ async function loadCandidates(client, options, publicBaseUrl) {
       "  city.country_name,",
       "  city.name as city_name,",
       "  entry.id as entry_id,",
-      "  entry.slug as entry_slug,",
-      "  coalesce(nullif(media.source_url, ''), media.url) as source_image_url",
+      "  entry.slug as entry_slug",
       "from public.venue_media media",
       "join public.venues venue on venue.id = media.venue_id",
       "left join public.destinations city on city.id = venue.city_id",
@@ -673,7 +672,21 @@ async function loadCandidates(client, options, publicBaseUrl) {
     values,
   );
 
-  return rows.filter((row) => !isR2Url(row.source_image_url, publicBaseUrl));
+  return rows
+    .map((row) => {
+      const mediaUrl = String(row.url ?? "").trim();
+      const sourceUrl = String(row.source_url ?? "").trim();
+
+      return {
+        ...row,
+        // Before ingestion, media.url is the image candidate while source_url may be a landing page.
+        // Once url is already an R2 object, source_url remains the correct re-ingestion fallback.
+        source_image_url: mediaUrl && !isR2Url(mediaUrl, publicBaseUrl)
+          ? mediaUrl
+          : sourceUrl || mediaUrl,
+      };
+    })
+    .filter((row) => !isR2Url(row.source_image_url, publicBaseUrl));
 }
 
 function isQuarantinedPlaceholder(row) {
@@ -921,6 +934,21 @@ async function refreshRenderCaches(client, entryIds) {
   return rowCount ?? 0;
 }
 
+async function findPublishedEntryIdsForVenues(client, venueIds) {
+  if (!venueIds.size) return new Set();
+
+  const { rows } = await client.query(
+    `select distinct stop.entry_id
+     from public.entry_stops stop
+     join public.entries entry on entry.id = stop.entry_id
+     where stop.venue_id = any($1::uuid[])
+       and entry.status = 'published'::public.rguide_entry_status`,
+    [[...venueIds]],
+  );
+
+  return new Set(rows.map((row) => row.entry_id));
+}
+
 async function main() {
   loadEnvFile(path.join(ROOT, ".env.local"));
   loadEnvFile(path.join(ROOT, ".env"));
@@ -943,7 +971,7 @@ async function main() {
   const client = await connectPgClient(databaseUrl);
 
   const stats = { selected: 0, uploaded: 0, failed: 0, skipped: 0, cacheRefreshed: 0 };
-  const touchedEntryIds = new Set();
+  const touchedVenueIds = new Set();
 
   try {
     const candidates = await loadCandidates(client, options, publicBaseUrl);
@@ -990,7 +1018,7 @@ async function main() {
           if (!options.dryRun) {
             await reuseStoredMediaRow(client, row, storedMedia, resolvedSource);
             await promoteStoredMediaAsPrimary(client, row);
-            if (row.entry_id) touchedEntryIds.add(row.entry_id);
+            touchedVenueIds.add(row.venue_id);
           }
 
           stats.uploaded += 1;
@@ -1029,7 +1057,7 @@ async function main() {
             if (!options.dryRun) {
               await reuseStoredMediaRow(client, row, fallbackStoredMedia, resolvedSource);
               await promoteStoredMediaAsPrimary(client, row);
-              if (row.entry_id) touchedEntryIds.add(row.entry_id);
+              touchedVenueIds.add(row.venue_id);
             }
 
             stats.uploaded += 1;
@@ -1059,7 +1087,7 @@ async function main() {
           }));
           await updateMediaRow(client, row, { key, ...image }, bucket, publicBaseUrl);
           await promoteStoredMediaAsPrimary(client, row);
-          if (row.entry_id) touchedEntryIds.add(row.entry_id);
+          touchedVenueIds.add(row.venue_id);
         }
 
         stats.uploaded += 1;
@@ -1076,6 +1104,7 @@ async function main() {
     }
 
     if (!options.dryRun) {
+      const touchedEntryIds = await findPublishedEntryIdsForVenues(client, touchedVenueIds);
       stats.cacheRefreshed = await refreshRenderCaches(client, touchedEntryIds);
     }
 
