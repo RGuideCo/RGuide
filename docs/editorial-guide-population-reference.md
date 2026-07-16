@@ -134,6 +134,12 @@ For each city:
 - Neighborhoods: Centro Storico, Trastevere, Monti, Prati, Testaccio, Campo de' Fiori, Jewish Ghetto, Pigneto, Aventino, Parioli.
 - Category angle: Food should distinguish trattorias, pasta rooms, bakeries, aperitivo, market stops, and reservation dinners; Nightlife should cover wine bars, piazza drinks, cocktail rooms, and Trastevere/Pigneto energy; Culture should connect ancient sites, churches, museums, and street texture; Stay should weigh Centro convenience against quieter bases; Nature should use villas, hills, river walks, and Appian routes; Activities should avoid overpacking monuments.
 
+**Florence, Italy**
+
+- City: Renaissance concentration on a human scale, Tuscan kitchens, artisan streets, palace museums, wine bars, garden hills, and an Arno-crossing rhythm that rewards slower days.
+- Neighborhoods: Duomo, Santa Maria Novella, Santa Croce, Sant'Ambrogio, San Lorenzo, Santo Spirito, San Frediano, Oltrarno, San Niccolo, Campo di Marte.
+- Category angle: Food should distinguish bistecca institutions, seasonal Tuscan trattorias, lampredotto counters, bakeries, and reservation-led modern rooms; Nightlife should keep enoteche and neighborhood bars separate from serious cocktails; Culture should connect Renaissance collections, churches, sculpture, architecture, and working artisan traditions; Stay should separate hotels from hostels and weigh historic-core access against Oltrarno calm; Nature should use Boboli, Bardini, the Arno, hill viewpoints, and Tuscan day routes; Activities should pace timed museum entries, market meals, workshops, and walking climbs without reducing the city to a checklist.
+
 **Barcelona, Spain**
 
 - City: Mediterranean density, Gothic lanes, Eixample architecture, tapas timing, natural wine, design stays, hostels, hill parks, and beach edges.
@@ -163,6 +169,18 @@ For each city:
 - City: compact river geography, castle routes, old-town pressure, beer halls, cafes, design stays, galleries, and Vltava walks.
 - Neighborhoods: Old Town, Mala Strana, Nove Mesto, Vinohrady, Zizkov, Karlin, Holesovice, Letna, Smichov, Hradcany.
 - Category angle: Food should separate beer halls, Czech kitchens, cafes, bakeries, modern rooms, and market stops; Nightlife should cover pubs, beer gardens, cocktail rooms, clubs, and Zizkov/Vinohrady nights; Culture should connect castle, Jewish Quarter, old-town lanes, museums, and design; Stay should avoid over-central tourist pressure when useful; Nature should use Letna, Petrin, islands, river walks, and viewpoints; Activities should move beyond the busiest squares.
+
+**Dublin, Ireland**
+
+- City: a compact literary capital where Georgian streets, revolutionary history, working pubs, new Irish cooking, whiskey, museums, parks, and a DART-linked bay can share one trip without pretending Temple Bar is the whole story.
+- Neighborhoods: Georgian Quarter, Temple Bar, The Liberties, Smithfield, Stoneybatter, Portobello, Docklands, Phibsborough, Rathmines, Howth.
+- Category angle: Food should distinguish modern Irish kitchens, seafood, immigrant cooking, bakeries, and affordable counters; Nightlife should keep traditional music pubs and neighborhood locals separate from serious cocktail rooms; Culture should connect literature, independence, migration, art, archaeology, and the city’s Georgian-to-tenement history; Stay should split hotels from hostels and weigh central convenience against street noise; Nature should use Phoenix Park, the canal, Dublin Bay, coastal villages, and cliff paths; Activities should balance timed museum tickets, distillery tours, live sport, parks, and weather-dependent coastal walks.
+
+**Munich, Germany**
+
+- City: Bavarian ritual and polished urban life, beer halls and gardens, royal collections, modern design, football, river swimming, Alpine access, and an unusually strong neighborhood rhythm beyond the Altstadt.
+- Neighborhoods: Altstadt-Lehel, Maxvorstadt, Glockenbachviertel, Isarvorstadt, Haidhausen, Schwabing, Westend, Au, Giesing, Neuhausen-Nymphenburg.
+- Category angle: Food should separate Bavarian institutions, contemporary regional cooking, immigrant kitchens, bakeries, markets, and affordable counters; Nightlife should keep beer halls and neighborhood pubs distinct from serious cocktail rooms; Culture should connect Wittelsbach collections, major museums, architecture, science, and contemporary art; Stay should weigh Altstadt convenience against quieter transit-linked districts; Nature should use the English Garden, Isar, palace grounds, lakes, and Alpine day routes; Activities should balance booked museums and stadium visits with markets, beer gardens, river time, and weather-dependent outdoor plans.
 
 **Berlin, Germany**
 
@@ -276,6 +294,12 @@ For each city:
 - Neighborhoods: Shinjuku, Shibuya, Ginza, Asakusa, Ueno, Roppongi, Ebisu, Nakameguro, Harajuku/Omotesando, Akihabara.
 - Category angle: Food should distinguish counters, reservation sushi, ramen, izakaya, department-store food, and neighborhood specialties; Nightlife should split cocktail bars, izakaya lanes, clubs, jazz, karaoke, and late districts; Culture should connect temples, museums, design, anime/game culture, and traditional-modern contrasts; Stay should be rail-line and neighborhood-led; Nature should use gardens, rivers, parks, and day trips; Activities should be clustered by station.
 
+**Kyoto, Japan**
+
+- City: former-imperial-capital pacing, temple and garden hours, kaiseki, craft, sake, compact rail corridors, bus pressure, and seasonal crowd strategy.
+- Neighborhoods: Gion, Higashiyama, Downtown/Nishiki, Arashiyama, Fushimi, Northern Higashiyama, Kyoto Station/Umekoji, Nishijin, Okazaki, Pontocho/Kiyamachi.
+- Category angle: Food should distinguish kaiseki, shojin ryori, obanzai, noodles, tofu, sweets, market counters, and reservation dining; Nightlife should separate izakaya, sake, craft beer, casual Kiyamachi rooms, and serious cocktail bars; Culture should connect imperial, shogunal, Buddhist, Shinto, craft, museum, and modern-popular layers; Stay should keep hotels separate from hostels and compare station convenience with machiya calm; Nature should use gardens, mountain paths, canals, bamboo, and seasonal access; Activities should pace early temple openings, timed museums, heat, and crowd pressure.
+
 **Seoul, South Korea**
 
 - City: subway-linked neighborhoods, palace grounds, barbecue nights, markets, cafes, design hotels, shopping districts, museums, and all-night food.
@@ -293,6 +317,20 @@ For each city:
 - City: pilgrimage-first planning, mosque access, hotel proximity, crowd flow, shopping corridors, food courts, and regional religious context.
 - Neighborhoods: Al Haram, Ajyad, Aziziyah, Al Misfalah, Jabal Omar, Kudai, Al Shubaikah, Mina, Al Naseem, Al Khalidiyyah.
 - Category angle: Food should focus on practical group meals, hotel dining, food courts, regional Saudi options, and late service near pilgrimage routes; Nightlife should be reframed as evening tea, hotel lounges, family-friendly late meals, and post-prayer logistics, not bar culture; Culture should center Islamic sites and respectful historical context; Stay should be proximity, crowd, and mobility-led; Nature should use mountain views and regional day context where appropriate; Activities should prioritize pilgrimage movement, rest, and respectful pacing.
+
+### Oceania
+
+**Sydney, Australia**
+
+- City: harbor geography, ferries, beaches, coastal pools and walks, modern Australian dining, pubs, cocktail rooms, major museums, and distinct inner-city neighborhoods.
+- Neighborhoods: Sydney CBD, The Rocks, Surry Hills, Newtown, Paddington, Bondi, Potts Point, Darlinghurst, Manly, Barangaroo.
+- Category angle: Food should balance destination restaurants, neighborhood dining, seafood, bakeries, and affordable multicultural counters; Nightlife should keep historic pubs and casual bars separate from reservation-led cocktail rooms; Culture should connect First Nations perspectives, harbor architecture, museums, galleries, and adaptive reuse; Stay should separate hotels from hostels and weigh harbor access against neighborhood character; Nature should use beaches, coastal walks, gardens, headlands, and ferry-linked escapes; Activities should build around ferries, weather, tide conditions, and compact geographic clusters.
+
+**Melbourne, Australia**
+
+- City: laneway dining, coffee culture, market halls, immigrant food traditions, pubs, cocktail rooms, design hotels, major museums, gardens, sport, and bay-side neighborhoods shaped by quick weather changes.
+- Neighborhoods: Melbourne CBD, Carlton, Fitzroy, Collingwood, Richmond, South Yarra, St Kilda, Brunswick, Footscray, Southbank.
+- Category angle: Food should balance destination dining, neighborhood institutions, markets, bakeries, and affordable multicultural counters; Nightlife should keep pubs and casual bars separate from reservation-led cocktail rooms; Culture should connect First Peoples perspectives, art, moving-image culture, migration, libraries, museums, and adaptive reuse; Stay should separate hotels from hostels and weigh central transport against neighborhood character; Nature should use gardens, the bay, river paths, and day-trip edges; Activities should account for match calendars, seasonal garden hours, weather, and compact tram-linked clusters.
 
 ### Latin America
 
