@@ -2318,7 +2318,7 @@ export function MapListCard({
                   element.scrollTop = stopListMaxScrollTop;
                 }
               }}
-              className={`${fillPane && expanded ? "mobile-guide-scroll-container flex min-h-0 flex-1 flex-col overflow-y-auto overscroll-contain pb-3 pr-1 lg:overflow-hidden lg:pb-0 lg:pr-0" : ""} relative ${
+              className={`${fillPane && expanded ? "mobile-guide-scroll-container -mx-3 flex min-h-0 w-[calc(100%+1.5rem)] flex-1 flex-col overflow-y-auto overscroll-contain pb-3 pl-3 pr-4 lg:mx-0 lg:w-auto lg:overflow-hidden lg:px-0 lg:pb-0" : ""} relative ${
                 expanded && !inlineEditing && !isEventGuide && guideQuickLinks.length > 0 ? "pt-0" : "pt-2"
               }`}
             >
