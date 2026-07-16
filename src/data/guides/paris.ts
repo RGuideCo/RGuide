@@ -1897,7 +1897,7 @@ const parisNeighborhoodGuideSeeds: Record<ParisNeighborhood, Record<Neighborhood
     Food: {
       title: "Museum-Day Meals Around the Royal Core",
       description:
-        "The 1st needs meals that can survive Louvre timing, Tuileries walks, and central crowds.",
+        "Restaurants around the Louvre and Palais Royal span quick udon counters, historic brasseries, seasonal tasting menus, and a formal tea room without leaning on Rue de Rivoli's tourist formulas. Counter service keeps lunch brief; the tasting menu and tea room require more time and, for dinner, a reservation.",
       stops: [
         nStop("first-food-angelina", "Angelina", [48.8651, 2.3286], "Angelina is the Tuileries-side tea-room ritual for hot chocolate, pastries, and a seated pause between the Louvre, Rue de Rivoli, and Concorde.", { price: "$$", priceSource: "Google Maps / Paris dining guides" }),
         nStop("first-food-sanukiya", "Sanukiya", [48.8648, 2.3339], "Sanukiya is a warm, efficient udon restaurant near Pyramides, offering comfort, speed, and a distinct Japanese lunch format close to Palais Royal and the Louvre.", { price: "$", priceSource: "Google Maps / Paris dining guides" }),
@@ -1920,7 +1920,7 @@ const parisNeighborhoodGuideSeeds: Record<ParisNeighborhood, Record<Neighborhood
     Nature: {
       title: "Gardens, River Edges, and Central Air",
       description:
-        "Nature in the 1st is not wilderness; it is the breathing room around heavyweight sights.",
+        "In the 1st, outdoor space runs from the formal Tuileries and Palais Royal gardens to low Seine-level lawns beside Pont Neuf. The larger gardens support an unhurried break between museums; the quays and island tip provide a short walk with open river views.",
       stops: [
         nStop("first-nature-tuileries", "Jardin des Tuileries", [48.8635, 2.327], "Jardin des Tuileries turns the Louvre-Orangerie corridor into a paced walk with chairs, fountains, and broad sightlines.", { photo: photos.nature }),
         nStop("first-nature-palais-royal-garden", "Jardin du Palais Royal", [48.8637, 2.3377], "Jardin du Palais Royal is the quieter garden pause behind arcades and columns, useful when the Louvre side feels too exposed.", { photo: photos.nature }),
@@ -1988,7 +1988,7 @@ const parisNeighborhoodGuideSeeds: Record<ParisNeighborhood, Record<Neighborhood
     Culture: {
       title: "Marais Houses, Picasso, and Paris Memory",
       description:
-        "Le Marais culture is built from mansion museums, writer homes, civic history, courtyards, and Picasso's Paris collection.",
+        "Across the Marais, former private mansions hold collections devoted to Picasso, Paris history, and the writers who lived in the district. These are compact, room-by-room museums with architecture worth noticing, a better fit for focused visits than an all-day blockbuster.",
       stops: [
         nStop("marais-culture-picasso", "Musee Picasso Paris", [48.8599, 2.3623], "Musee Picasso Paris fills the Hotel Sale with paintings, sculpture, drawings, ceramics, prints, notebooks, and archival material from Picasso's life and studio. The mansion setting makes the display feel intimate despite the depth of the collection."),
         nStop("marais-culture-carnavalet", "Musee Carnavalet", [48.8575, 2.3629], "Musee Carnavalet is the museum of Paris history, set across historic Marais mansions. Its rooms move through the city's archaeology, Revolution, street signs, interiors, paintings, objects, and everyday civic memory."),
@@ -2044,7 +2044,7 @@ const parisNeighborhoodGuideSeeds: Record<ParisNeighborhood, Record<Neighborhood
     Nature: {
       title: "Luxembourg Chairs and River Walks",
       description:
-        "Saint-Germain nature is mostly elegant pause space: Luxembourg chairs, small squares, and Seine edges.",
+        "Saint-Germain's outdoor space extends from Luxembourg Garden to the Seine, with smaller church-side squares among the galleries. The garden supports a long walk or afternoon in a chair; the river and pocket squares are better for short breaks between museums, shops, and meals.",
       stops: [
         nStop("saint-germain-nature-luxembourg", "Jardin du Luxembourg", [48.8462, 2.3372], "Jardin du Luxembourg offers formal paths, fountains, palace views, trees, lawns, and the familiar green chairs on the Saint-Germain edge of the Latin Quarter.", { photo: photos.nature }),
         nStop("saint-germain-nature-laurent-prache", "Square Laurent-Prache", [48.8543, 2.3342], "Square Laurent-Prache is the small garden beside the church, useful when the boulevard needs a quiet minute. It is a compact pause between cafes, shops, and the Delacroix museum.", { photo: photos.nature }),
@@ -2066,7 +2066,7 @@ const parisNeighborhoodGuideSeeds: Record<ParisNeighborhood, Record<Neighborhood
     Stay: {
       title: "Grand Left Bank Hotels",
       description:
-        "Saint-Germain hotels pair cafe mornings and gallery streets with Luxembourg Garden access and calmer Left Bank evenings.",
+        "Saint-Germain hotels put Luxembourg Garden, the Seine, and the Left Bank's galleries within an easy walk. The grand Art Deco address has a full spa and larger public rooms; the townhouse hotels are smaller and quieter, with Rue de Buci or neighborhood cafes just outside.",
       stops: [
         nStop("saint-germain-stay-lutetia", "Hotel Lutetia", [48.8517, 2.327], "Hotel Lutetia is a grand Left Bank hotel, with Art Deco scale, polished public rooms, spa facilities, and a range of exclusive rooms and suites near Saint-Germain cafes, Orsay, and Luxembourg.", { price: "$$$", priceSource: "Conde Nast Traveler / The Times", officialUrl: "https://www.mandarinoriental.com/en/paris/lutetia", ...hotelStay }),
         nStop("saint-germain-stay-relais-christine", "Relais Christine", [48.8541, 2.3403], "Relais Christine gives Saint-Germain a tucked-away luxury hotel near the river and Odeon, with historic-street access, intimate rooms, and a quieter mood than the larger Left Bank addresses.", { price: "$$$", priceSource: "Conde Nast Traveler / Google Travel", ...hotelStay }),
@@ -2101,7 +2101,7 @@ const parisNeighborhoodGuideSeeds: Record<ParisNeighborhood, Record<Neighborhood
     Nature: {
       title: "Gardens, Arenas, and River Breathing Room",
       description:
-        "The Latin Quarter has real green relief if the route steps off the lecture-hall streets.",
+        "The Latin Quarter's green spaces extend from Luxembourg Garden to the planted paths of Jardin des Plantes, with a Roman amphitheater between ordinary streets. The gardens can fill an afternoon; the arena and Seine quays provide shorter breaks from the museums and dense central blocks.",
       stops: [
         nStop("latin-nature-luxembourg", "Jardin du Luxembourg", [48.8462, 2.3372], "Jardin du Luxembourg pairs formal paths, fountains, lawns, tree-lined promenades, and the familiar green chairs of a Paris public garden. Its scale supports anything from a short bench break to a long afternoon outdoors.", { photo: photos.nature }),
         nStop("latin-nature-jardin-plantes", "Jardin des Plantes", [48.8439, 2.3599], "Jardin des Plantes stretches the Latin Quarter east toward natural history, garden paths, and family-friendly museum time.", { photo: photos.nature }),
@@ -2159,7 +2159,7 @@ const parisNeighborhoodGuideSeeds: Record<ParisNeighborhood, Record<Neighborhood
     Nightlife: {
       title: "Hilltop Views and Low-Key Montmartre Nights",
       description:
-        "Montmartre nights climb through rooftop views, old cabaret rooms, hidden hotel bars, and looser lower-hill drinking spots.",
+        "Montmartre's nightlife splits between the upper hill's sunset terraces, historic song cabarets, and discreet hotel bars, with more casual drinking near Abbesses below. Cabaret requires a ticket and fixed performance time; the rooftop and cocktail bars suit a single aperitif without committing to a full show.",
       stops: [
         nStop("montmartre-nightlife-terrass", "Terrass Hotel Rooftop", [48.8852, 2.3326], "Terrass Hotel Rooftop serves polished aperitifs and cocktails with broad sunset views from Montmartre, without requiring the climb to the basilica steps.", { price: "$$$", priceSource: "Official hotel site / Google Maps" }),
         nStop("montmartre-nightlife-lapin-agile", "Au Lapin Agile", [48.8888, 2.3401], "Au Lapin Agile is a historic Montmartre cabaret presenting traditional French song and intimate live performance in a room steeped in artist lore. Admission follows the performance schedule rather than drop-in bar hours.", { price: "$$", priceSource: "Official venue site / Google Maps" }),
@@ -2170,7 +2170,7 @@ const parisNeighborhoodGuideSeeds: Record<ParisNeighborhood, Record<Neighborhood
     Nature: {
       title: "Steps, Slopes, and Quiet Hill Corners",
       description:
-        "Montmartre's outdoor value is slope, view, and small green pockets rather than big parks.",
+        "Montmartre's outdoor routes use the hill itself: Sacre-Coeur viewpoints, garden paths on the climb, and quieter green pockets toward Lamarck-Caulaincourt. Go early or late for the clearest views; at midday, the cemetery and back-of-hill squares provide more room than the basilica terrace.",
       stops: [
         nStop("montmartre-nature-sacre-steps", "Sacre-Coeur Steps", [48.8867, 2.3431], "The Sacre-Coeur steps provide Montmartre's obvious city view, clearest early or late when the hill has room to breathe. Midday crowds make the terrace a brief viewpoint rather than an all-day hangout.", { photo: photos.montmartre }),
         nStop("montmartre-nature-louise-michel", "Square Louise Michel", [48.8846, 2.3443], "Square Louise Michel gives the climb to Sacre-Coeur a garden frame, with switchback paths, lawns, and changing city views.", { photo: photos.nature }),
@@ -2204,7 +2204,7 @@ const parisNeighborhoodGuideSeeds: Record<ParisNeighborhood, Record<Neighborhood
         topic: "Hostels",
         title: "Montmartre Hostel Beds and Budget Rooms",
         description:
-          "Montmartre hostel stays should be searched separately from rooftop hotels.",
+          "Near Anvers, Le Village Montmartre combines dorm beds, private rooms, and a terrace within walking distance of Sacre-Coeur. It lowers the nightly cost without giving up a central hill address, but remains a hostel rather than a substitute for the area's full-service hotels.",
         stops: [
           nStop("montmartre-stay-village", "Le Village Montmartre", [48.8842, 2.3446], "Le Village Montmartre combines hostel dorms, superior private rooms, and a terrace near Anvers and Sacre-Coeur. The format keeps Montmartre accessible at a lower nightly spend.", { price: "$", priceSource: "Hostelworld / HostelsClub", officialUrl: "https://www.villagehostel.fr/", ...hostelStay }),
         ],
@@ -2237,7 +2237,7 @@ const parisNeighborhoodGuideSeeds: Record<ParisNeighborhood, Record<Neighborhood
     Nature: {
       title: "Locks, Banks, and East-Side Air",
       description:
-        "Canal Saint-Martin's outdoor value is linear: locks, bridges, pocket gardens, and a walk north toward wider water.",
+        "Canal Saint-Martin's outdoor space follows the water, running past working locks and footbridges from Republique toward the broader Bassin de la Villette. Small gardens provide benches along the way, but the continuous waterside walk is more substantial than any single park.",
       stops: [
         nStop("canal-nature-locks", "Canal Saint-Martin Locks", [48.8721, 2.3648], "The Canal Saint-Martin locks turn a neighborhood walk into a sequence of bridges, water, working gates, and street corners lined with bakeries, cafes, and evening bars.", { photo: photos.canal }),
         nStop("canal-nature-villemin", "Jardin Villemin", [48.8764, 2.3614], "Jardin Villemin gives the canal a practical green pause near Gare de l'Est and the central banks.", { photo: photos.nature }),
@@ -2260,7 +2260,7 @@ const parisNeighborhoodGuideSeeds: Record<ParisNeighborhood, Record<Neighborhood
       {
         title: "Canal Saint-Martin Hotels",
         description:
-          "Canal Saint-Martin hotel stays are about canal views, east-side food, bars, train access, and design-led rooms.",
+          "Hotels around Canal Saint-Martin favor small, design-conscious rooms and immediate access to the water, Republique, and Gare de l'Est. The smaller hotel puts canal views in every room; the design hotel sits closer to Strasbourg-Saint-Denis restaurants and bars but not directly on the water.",
         stops: [
           nStop("canal-stay-citizen", "Le Citizen Hotel", [48.8726, 2.3643], "Le Citizen Hotel is a small canal-facing hotel with refined simplicity, elegant rooms, and canal views from each room.", { price: "$$", priceSource: "Google Travel / Tripadvisor", officialUrl: "https://lecitizenhotel.com/", ...hotelStay }),
           nStop("canal-stay-providence", "Hotel Providence", [48.8701, 2.3568], "Hotel Providence is a design-led hotel in the heart of the eastern district, close to Canal Saint-Martin, Strasbourg-Saint-Denis, Republique, restaurants, and late bars.", { price: "$$$", priceSource: "Conde Nast Traveler / Google Travel", officialUrl: "https://hotelprovidenceparis.com/", ...hotelStay }),
@@ -2282,7 +2282,7 @@ const parisNeighborhoodGuideSeeds: Record<ParisNeighborhood, Record<Neighborhood
     Food: {
       title: "Monument-Side Meals With Purpose",
       description:
-        "The 7th needs food stops that can stand up to Eiffel, Invalides, Rodin, and Orsay days.",
+        "In the 7th, restaurants cluster around the Eiffel Tower, Invalides, Rodin Museum, and Orsay rather than a single dining street. Produce-led tasting menus demand a long, expensive reservation, while neighborhood brasseries are better for a direct lunch between museums.",
       stops: [
         nStop("seventh-food-david-toutain", "David Toutain", [48.8617, 2.3048], "In the 7th, David Toutain is the destination-dining counterweight to monument routes, with highly composed seasonal menus and a serious reservation posture near Invalides and the Eiffel Tower.", { price: "$$$", priceSource: "MICHELIN Guide / David Toutain official" }),
         nStop("seventh-food-arpege", "Arpege", [48.8555, 2.3162], "Arpege is Alain Passard's garden-first fine-dining landmark, built around exceptional produce and meticulous craft. The high-budget reservation demands a long, committed meal.", { price: "$$$", priceSource: "MICHELIN Guide / Google Maps" }),
@@ -2327,7 +2327,7 @@ const parisNeighborhoodGuideSeeds: Record<ParisNeighborhood, Record<Neighborhood
     Stay: {
       title: "Eiffel-Side Hotels",
       description:
-        "Staying in the 7th is about calm, monuments, museums, and polished streets rather than late nightlife.",
+        "Hotels in the 7th put the Eiffel Tower, Invalides, Orsay, and the Seine within a calm, largely residential base. Smaller properties charge for views and walkability; higher-priced stays add spas, pools, and more elaborate interiors, while late-night bar access remains limited.",
       stops: [
         nStop("seventh-stay-la-comtesse", "Hotel La Comtesse", [48.8539, 2.3065], "Hotel La Comtesse is the Eiffel-view boutique hotel for Champ de Mars, Rue Cler, and Invalides close by, with location and view doing more work than big-resort amenities.", { price: "$$", priceSource: "Google Travel / Tripadvisor", officialUrl: "https://www.comtesse-hotel.com/", ...hotelStay }),
         nStop("seventh-stay-le-walt", "Hotel Le Walt", [48.8548, 2.3089], "Hotel Le Walt is a smaller, quieter, room-focused property near Ecole Militaire, Rue Cler, Invalides, and the Eiffel Tower.", { price: "$$", priceSource: "Google Travel / Tripadvisor", officialUrl: "https://www.lewaltparis.com/", ...hotelStay }),
@@ -2337,6 +2337,444 @@ const parisNeighborhoodGuideSeeds: Record<ParisNeighborhood, Record<Neighborhood
     },
   },
 };
+
+const parisRepairCheckedAt = "2026-07-16";
+
+const parisTargetGuideIds = new Set([
+  "list-paris-1st-arrondissement-restaurants",
+  "list-paris-1st-arrondissement-parks-and-walks",
+  "list-paris-le-marais-culture",
+  "list-paris-saint-germain-des-pres-parks-and-walks",
+  "list-paris-saint-germain-des-pres-hotels-and-hostels",
+  "list-paris-latin-quarter-parks-and-walks",
+  "list-paris-montmartre-bars",
+  "list-paris-montmartre-parks-and-walks",
+  "list-paris-montmartre-hostels",
+  "list-paris-canal-saint-martin-parks-and-walks",
+  "list-paris-canal-saint-martin-hotels-and-hostels",
+  "list-paris-7th-arrondissement-restaurants",
+  "list-paris-7th-arrondissement-hotels-and-hostels",
+]);
+
+const parisEveryDay = (value: string, defaultNote?: string): GuideStop["hours"] => ({
+  ...(defaultNote ? { default: defaultNote } : {}),
+  mon: value,
+  tue: value,
+  wed: value,
+  thu: value,
+  fri: value,
+  sat: value,
+  sun: value,
+});
+
+type ParisStopRepair = Partial<GuideStop> & {
+  officialUrl: string;
+  statusUrl?: string;
+};
+
+const parisStopRepairs: Record<string, ParisStopRepair> = {
+  "first-food-angelina": {
+    officialUrl: "https://www.angelina-paris.fr/adresses/paris-rivoli",
+    statusUrl: "https://parisjetaime.com/eng/restaurant/angelina-rivoli-p1127",
+    hours: { mon: "7:30 AM-7:00 PM", tue: "7:30 AM-7:00 PM", wed: "7:30 AM-7:00 PM", thu: "7:30 AM-7:00 PM", fri: "7:30 AM-7:30 PM", sat: "8:00 AM-7:30 PM", sun: "8:00 AM-7:30 PM" },
+    venueKind: "food_drink", foodServiceType: "cafe", cuisineTypes: ["French", "Patisserie", "Tea room"],
+    attributeTags: ["historic", "dessert", "breakfast", "reservation_recommended"],
+  },
+  "first-food-sanukiya": {
+    officialUrl: "https://www.instagram.com/sanukiya_udon/",
+    statusUrl: "https://www.pagesjaunes.fr/pros/51318713",
+    hours: parisEveryDay("11:30 AM-10:30 PM"),
+    venueKind: "food_drink", foodServiceType: "restaurant", cuisineTypes: ["Japanese", "Udon"],
+    attributeTags: ["casual", "counter_seating", "budget_food", "walk_in_friendly"],
+    imageSourceUrl: "https://commons.wikimedia.org/wiki/File:Sanukiya,_Paris,_19_March_2016.jpg",
+  },
+  "first-food-verjus": {
+    officialUrl: "https://www.verjusparis.com/contact",
+    statusUrl: "https://guide.michelin.com/en/ile-de-france/paris/restaurant/verjus",
+    hours: { mon: "6:00 PM-11:00 PM", tue: "6:00 PM-11:00 PM", wed: "6:00 PM-11:00 PM", thu: "6:00 PM-11:00 PM", fri: "12:30 PM-2:00 PM; 6:00 PM-11:00 PM", sat: "Closed", sun: "Closed" },
+    venueKind: "food_drink", foodServiceType: "restaurant", cuisineTypes: ["Contemporary", "Modern French"],
+    attributeTags: ["date_night", "tasting_menu", "reservation_required", "destination_dining"],
+  },
+  "first-food-le-nemours": {
+    officialUrl: "https://www.lenemours.paris/contact-infos",
+    statusUrl: "https://parisjetaime.com/eng/restaurant/le-nemours-p1277",
+    hours: { mon: "8:00 AM-12:00 AM", tue: "8:00 AM-12:00 AM", wed: "8:00 AM-12:00 AM", thu: "8:00 AM-12:00 AM", fri: "8:00 AM-12:00 AM", sat: "9:00 AM-12:00 AM", sun: "9:00 AM-8:00 PM" },
+    venueKind: "food_drink", foodServiceType: "cafe", cuisineTypes: ["French", "Brasserie"],
+    attributeTags: ["terrace", "breakfast", "central", "walk_in_friendly"],
+    photo: "https://cdn.restovisio.com/resize/800/gallery/large/57d6c5341dfc4-3a9acd9d3df46d37388d74711234552a.jpg",
+    imageSourceUrl: "https://www.lenemours.paris/#section-galerie",
+  },
+  "first-food-le-fumoir": {
+    officialUrl: "https://www.lefumoir.com/",
+    statusUrl: "https://parisjetaime.com/eng/restaurant/le-fumoir-p1281",
+    hours: parisEveryDay("11:00 AM-2:00 AM"),
+    venueKind: "food_drink", foodServiceType: "restaurant", cuisineTypes: ["French", "Scandinavian-influenced"],
+    attributeTags: ["date_night", "late_night", "central", "reservation_recommended"],
+  },
+
+  "first-nature-tuileries": {
+    officialUrl: "https://www.louvre.fr/en/explore/the-gardens",
+    statusUrl: "https://www.louvre.fr/en/visit/hours-admission",
+    hours: parisEveryDay("7:00 AM-10:30 PM", "The Louvre's dated seasonal garden timetable controls closing time; the current 21 June-30 July period closes at 10:30 PM."),
+    venueKind: "outdoors", subcategory: "formal_garden", attributeTags: ["scenic", "walking", "central", "free_entry"],
+    photo: "https://upload.wikimedia.org/wikipedia/commons/0/00/Grand_bassin_octogonal_Jardin_des_Tuileries_003.jpg",
+    imageSourceUrl: "https://commons.wikimedia.org/wiki/File:Grand_bassin_octogonal_Jardin_des_Tuileries_003.jpg",
+  },
+  "first-nature-palais-royal-garden": {
+    officialUrl: "https://www.domaine-palais-royal.fr/visiter/informations-pratiques",
+    hours: parisEveryDay("8:00 AM-10:30 PM", "The official seasonal schedule is 8:00 AM-10:30 PM from April through September and 8:00 AM-8:30 PM from October through March."),
+    venueKind: "outdoors", subcategory: "formal_garden", attributeTags: ["quiet", "walking", "central", "free_entry"],
+    photo: "https://upload.wikimedia.org/wikipedia/commons/e/e8/P1120936_Paris_Ier_Palais-Royal_galerie_de_Beaujolais_rwk.JPG",
+    imageSourceUrl: "https://commons.wikimedia.org/wiki/File:P1120936_Paris_Ier_Palais-Royal_galerie_de_Beaujolais_rwk.JPG",
+  },
+  "first-nature-vert-galant": {
+    officialUrl: "https://www.paris.fr/lieux/square-du-vert-galant-2825",
+    hours: parisEveryDay("Open 24 hours", "The dated Ville de Paris seasonal timetable and weather-safety notices control exceptional gate closures."),
+    venueKind: "outdoors", subcategory: "riverside_park", attributeTags: ["scenic", "romantic", "walking", "free_entry"],
+    photo: "https://upload.wikimedia.org/wikipedia/commons/3/32/Square_du_Vert-Galant_003.jpg",
+    imageSourceUrl: "https://commons.wikimedia.org/wiki/File:Square_du_Vert-Galant_003.jpg",
+  },
+  "first-nature-seine-quays": {
+    officialUrl: "https://www.paris.fr/lieux/parc-rives-de-seine-15619",
+    hours: parisEveryDay("Open 24 hours", "Flood, weather, and river-safety closures are published on the official Ville de Paris page."),
+    venueKind: "outdoors", subcategory: "river_walk", attributeTags: ["walking", "scenic", "central", "free_entry"],
+    photo: "https://upload.wikimedia.org/wikipedia/commons/a/a7/Quai_du_Louvre_from_Pont_des_Arts_%40_Seine_%40_Paris_%2833394149414%29.jpg",
+    imageSourceUrl: "https://commons.wikimedia.org/wiki/File:Quai_du_Louvre_from_Pont_des_Arts_@_Seine_@_Paris_(33394149414).jpg",
+  },
+
+  "marais-culture-picasso": {
+    officialUrl: "https://www.museepicassoparis.fr/en/plan-your-visit",
+    hours: { mon: "Closed", tue: "10:30 AM-6:00 PM", wed: "10:30 AM-6:00 PM", thu: "10:30 AM-6:00 PM", fri: "10:30 AM-6:00 PM", sat: "9:30 AM-6:00 PM", sun: "9:30 AM-6:00 PM" },
+    venueKind: "culture", subcategory: "art_museum", attributeTags: ["museum", "art", "timed_ticket", "rainy_day"],
+  },
+  "marais-culture-carnavalet": {
+    officialUrl: "https://www.carnavalet.paris.fr/en/prepare-your-visit",
+    hours: { mon: "Closed", tue: "10:00 AM-6:00 PM", wed: "10:00 AM-6:00 PM", thu: "10:00 AM-6:00 PM", fri: "10:00 AM-6:00 PM", sat: "10:00 AM-6:00 PM", sun: "10:00 AM-6:00 PM" },
+    venueKind: "culture", subcategory: "history_museum", attributeTags: ["museum", "historic", "free_entry", "rainy_day"],
+  },
+  "marais-culture-victor-hugo": {
+    officialUrl: "https://www.maisonsvictorhugo.paris.fr/en/paris/visit",
+    hours: { mon: "Closed", tue: "10:00 AM-6:00 PM", wed: "10:00 AM-6:00 PM", thu: "10:00 AM-6:00 PM", fri: "10:00 AM-6:00 PM", sat: "10:00 AM-6:00 PM", sun: "10:00 AM-6:00 PM" },
+    venueKind: "culture", subcategory: "literary_museum", attributeTags: ["museum", "historic", "free_entry", "rainy_day"],
+    photo: "https://upload.wikimedia.org/wikipedia/commons/4/46/Maison_de_Victor_Hugo_Paris_27122012_Chambre.jpg",
+    imageSourceUrl: "https://commons.wikimedia.org/wiki/File:Maison_de_Victor_Hugo_Paris_27122012_Chambre.jpg",
+  },
+  "marais-culture-hotel-sully": {
+    officialUrl: "https://www.hotel-de-sully.fr/en/visit/practical-information",
+    hours: parisEveryDay("9:00 AM-7:00 PM", "Courtyard and garden-passage access follows the official monument schedule and security notices."),
+    venueKind: "culture", subcategory: "historic_architecture", attributeTags: ["historic", "architecture", "free_entry", "walking"],
+  },
+
+  "saint-germain-nature-luxembourg": {
+    officialUrl: "https://jardin.senat.fr/",
+    hours: { default: "Gate hours follow the dated biweekly timetable published by the French Senate; official ceremonies and severe-weather closures are posted on that timetable." },
+    venueKind: "outdoors", subcategory: "formal_garden", attributeTags: ["scenic", "walking", "family_friendly", "free_entry"],
+    photo: "https://upload.wikimedia.org/wikipedia/commons/a/af/Palais_du_Luxembourg%2C_South_View_140116_1.jpg",
+    imageSourceUrl: "https://commons.wikimedia.org/wiki/File:Palais_du_Luxembourg,_South_View_140116_1.jpg",
+  },
+  "saint-germain-nature-laurent-prache": {
+    officialUrl: "https://www.paris.fr/lieux/square-laurent-prache-2455",
+    hours: { default: "The dated Ville de Paris seasonal timetable controls gate hours and exceptional weather closures.", mon: "9:30 AM-8:30 PM", tue: "9:30 AM-8:30 PM", wed: "9:30 AM-8:30 PM", thu: "9:30 AM-8:30 PM", fri: "9:30 AM-8:30 PM", sat: "9:00 AM-8:30 PM", sun: "9:00 AM-8:30 PM" },
+    venueKind: "outdoors", subcategory: "neighborhood_garden", attributeTags: ["quiet", "central", "free_entry", "historic"],
+    photo: "https://upload.wikimedia.org/wikipedia/commons/c/cc/P1240329_Paris_VI_square_Laurent-Prache_rwk.jpg",
+    imageSourceUrl: "https://commons.wikimedia.org/wiki/File:P1240329_Paris_VI_square_Laurent-Prache_rwk.jpg",
+  },
+  "saint-germain-nature-gabriel-pierne": {
+    officialUrl: "https://www.paris.fr/lieux/square-gabriel-pierne-2453",
+    hours: { default: "Ville de Paris's official summer-night exception runs 16 July-6 September 2026; the dated seasonal timetable and safety notices control later changes.", mon: "8:00 AM-11:59 PM", tue: "8:00 AM-11:59 PM", wed: "8:00 AM-11:59 PM", thu: "8:00 AM-11:59 PM", fri: "8:00 AM-11:59 PM", sat: "9:00 AM-11:59 PM", sun: "9:00 AM-11:59 PM" },
+    venueKind: "outdoors", subcategory: "neighborhood_garden", attributeTags: ["quiet", "central", "free_entry", "art"],
+    photo: "https://upload.wikimedia.org/wikipedia/commons/4/4e/F5759_Paris_6e_square_Gabriel_Pierne_rwk.jpg",
+    imageSourceUrl: "https://commons.wikimedia.org/wiki/File:F5759_Paris_6e_square_Gabriel_Pierne_rwk.jpg",
+  },
+  "saint-germain-nature-quai-malaquais": {
+    officialUrl: "https://www.paris.fr/lieux/parc-rives-de-seine-15619",
+    hours: parisEveryDay("Open 24 hours", "Flood, weather, and river-safety closures are published on the official Ville de Paris page."),
+    venueKind: "outdoors", subcategory: "river_walk", attributeTags: ["walking", "scenic", "central", "free_entry"],
+    photo: "https://upload.wikimedia.org/wikipedia/commons/2/27/Paris_75006_Street_light_quai_Malaquais_20060526.jpg",
+    imageSourceUrl: "https://commons.wikimedia.org/wiki/File:Paris_75006_Street_light_quai_Malaquais_20060526.jpg",
+  },
+
+  "saint-germain-stay-lutetia": { officialUrl: "https://www.mandarinoriental.com/en/paris/lutetia", lodgingType: "hotel", attributeTags: ["luxury", "wellness", "historic", "central"] },
+  "saint-germain-stay-relais-christine": { officialUrl: "https://www.relais-christine.com/", lodgingType: "hotel", attributeTags: ["luxury", "romantic", "quiet", "historic"] },
+  "saint-germain-stay-aubusson": { officialUrl: "https://www.hoteldaubusson.com/", lodgingType: "hotel", attributeTags: ["luxury", "historic", "live_music", "wellness"] },
+  "saint-germain-stay-madison": { officialUrl: "https://www.hotel-madison.com/", lodgingType: "hotel", attributeTags: ["design", "central", "romantic", "midrange"] },
+
+  "latin-nature-luxembourg": {
+    officialUrl: "https://jardin.senat.fr/",
+    hours: { default: "Gate hours follow the dated biweekly timetable published by the French Senate; official ceremonies and severe-weather closures are posted on that timetable." },
+    venueKind: "outdoors", subcategory: "formal_garden", attributeTags: ["scenic", "walking", "family_friendly", "free_entry"],
+    photo: "https://upload.wikimedia.org/wikipedia/commons/a/af/Palais_du_Luxembourg%2C_South_View_140116_1.jpg",
+    imageSourceUrl: "https://commons.wikimedia.org/wiki/File:Palais_du_Luxembourg,_South_View_140116_1.jpg",
+  },
+  "latin-nature-jardin-plantes": {
+    officialUrl: "https://www.jardindesplantesdeparis.fr/en/prepare-your-visit",
+    statusUrl: "https://www.mnhn.fr/en/jardin-des-plantes",
+    hours: parisEveryDay("7:30 AM-8:00 PM", "Garden gates follow the official seasonal schedule; individual galleries, greenhouses, and zoo areas keep separate ticketed timetables."),
+    venueKind: "outdoors", subcategory: "botanical_garden", attributeTags: ["nature", "family_friendly", "museum", "walking"],
+    photo: "https://upload.wikimedia.org/wikipedia/commons/4/42/Paris_-_Jardin_des_plantes_-_AL_Jussieu.jpg",
+    imageSourceUrl: "https://commons.wikimedia.org/wiki/File:Paris_-_Jardin_des_plantes_-_AL_Jussieu.jpg",
+  },
+  "latin-nature-arenes": {
+    officialUrl: "https://www.paris.fr/lieux/arenes-de-lutece-et-square-capitan-1787",
+    hours: parisEveryDay("8:00 AM-9:30 PM", "The dated Ville de Paris seasonal timetable controls gate hours and event closures."),
+    venueKind: "outdoors", subcategory: "archaeological_park", attributeTags: ["historic", "free_entry", "family_friendly", "walking"],
+    photo: "https://upload.wikimedia.org/wikipedia/commons/0/0f/Arenes_de_Lutece_IMG_8656.JPG",
+    imageSourceUrl: "https://commons.wikimedia.org/wiki/File:Arenes_de_Lutece_IMG_8656.JPG",
+  },
+  "latin-nature-seine-bookstalls": {
+    officialUrl: "https://www.paris.fr/pages/les-bouquinistes-de-paris-18838",
+    hours: parisEveryDay("Open 24 hours for the public quays", "Individual green-box bookstalls follow each vendor's daytime and weather schedule."),
+    venueKind: "outdoors", subcategory: "river_walk", attributeTags: ["walking", "books", "shopping_street", "scenic"],
+    photo: "https://upload.wikimedia.org/wikipedia/commons/c/c2/Paris_75005_Quai_de_Montebello_Bouquinistes_20071014.jpg",
+    imageSourceUrl: "https://commons.wikimedia.org/wiki/File:Paris_75005_Quai_de_Montebello_Bouquinistes_20071014.jpg",
+  },
+
+  "montmartre-nightlife-terrass": {
+    officialUrl: "https://en.terrass-hotel.com/rooftop",
+    hours: { default: "Breakfast and soft drinks run 7:00 AM-3:30 PM Monday-Saturday.", mon: "3:30 PM-11:30 PM", tue: "3:30 PM-12:30 AM", wed: "3:30 PM-12:30 AM", thu: "3:30 PM-12:30 AM", fri: "3:30 PM-12:30 AM", sat: "3:30 PM-12:30 AM", sun: "3:30 PM-11:30 PM" },
+    venueKind: "nightlife", nightlifeType: "rooftop_bar", attributeTags: ["rooftop", "scenic_nightlife", "premium_drinks", "date_night"],
+  },
+  "montmartre-nightlife-lapin-agile": {
+    officialUrl: "https://au-lapin-agile.com/pratique/",
+    hours: { mon: "Closed", tue: "9:00 PM-1:00 AM", wed: "Closed", thu: "9:00 PM-1:00 AM", fri: "9:00 PM-1:00 AM", sat: "9:00 PM-1:00 AM", sun: "Closed" },
+    venueKind: "nightlife", nightlifeType: "live_music_venue", musicGenres: ["French chanson", "cabaret"],
+    attributeTags: ["historic", "live_music", "reservation_recommended", "local_specialty"],
+  },
+  "montmartre-nightlife-tres-particulier": {
+    officialUrl: "https://www.hotelparticulier.com/tresparticulier?lng=fr",
+    hours: { mon: "6:00 PM-2:00 AM", tue: "6:00 PM-2:00 AM", wed: "6:00 PM-2:00 AM", thu: "6:00 PM-2:00 AM", fri: "6:00 PM-2:00 AM", sat: "6:00 PM-2:00 AM", sun: "4:00 PM-12:00 AM" },
+    venueKind: "nightlife", nightlifeType: "cocktail_bar", attributeTags: ["premium_drinks", "romantic_nightlife", "design", "low_key_nightlife"],
+  },
+  "montmartre-nightlife-marlusse": {
+    officialUrl: "https://www.instagram.com/marlusse_et_lapin/",
+    statusUrl: "https://maps.apple.com/place?place-id=I1270593410FA14DC",
+    hours: parisEveryDay("6:00 PM-2:00 AM"),
+    venueKind: "nightlife", nightlifeType: "dive_bar", attributeTags: ["local_bar", "cheap_drinks", "late_night", "lively_nightlife"],
+  },
+
+  "montmartre-nature-sacre-steps": {
+    officialUrl: "https://www.sacre-coeur-montmartre.com/english/visit-and-audio-guide/",
+    hours: parisEveryDay("Open 24 hours for the public steps", "Basilica, dome, and event access follow separate official site and liturgical schedules."),
+    venueKind: "outdoors", subcategory: "viewpoint", attributeTags: ["scenic", "walking", "central", "free_entry"],
+    imageSourceUrl: "https://www.sacre-coeur-montmartre.com/",
+  },
+  "montmartre-nature-louise-michel": {
+    officialUrl: "https://www.paris.fr/lieux/square-louise-michel-1766",
+    hours: { default: "Gate hours follow the dated seasonal timetable published by Ville de Paris; weather, security, and scheduled-event closures are posted there." },
+    venueKind: "outdoors", subcategory: "hillside_garden", attributeTags: ["scenic", "walking", "free_entry", "central"],
+    photo: "https://upload.wikimedia.org/wikipedia/commons/f/fa/Paris_Square_Louise-Michel_Fontaine_monumentale_087.jpg",
+    imageSourceUrl: "https://commons.wikimedia.org/wiki/File:Paris_Square_Louise-Michel_Fontaine_monumentale_087.jpg",
+  },
+  "montmartre-nature-suzanne-buisson": {
+    officialUrl: "https://www.paris.fr/lieux/square-suzanne-buisson-2688",
+    hours: { default: "The dated Ville de Paris seasonal timetable controls gate hours and exceptional weather closures.", mon: "8:00 AM-8:30 PM", tue: "8:00 AM-8:30 PM", wed: "8:00 AM-8:30 PM", thu: "8:00 AM-8:30 PM", fri: "8:00 AM-8:30 PM", sat: "9:00 AM-8:30 PM", sun: "9:00 AM-8:30 PM" },
+    venueKind: "outdoors", subcategory: "neighborhood_garden", attributeTags: ["quiet", "historic", "walking", "free_entry"],
+    photo: "https://upload.wikimedia.org/wikipedia/commons/e/e1/P1060375_Paris_XVIII_square_Suzanne-Buisson_rwk.JPG",
+    imageSourceUrl: "https://commons.wikimedia.org/wiki/File:P1060375_Paris_XVIII_square_Suzanne-Buisson_rwk.JPG",
+  },
+  "montmartre-nature-cemetery": {
+    officialUrl: "https://www.paris.fr/lieux/cimetiere-de-montmartre-5061",
+    statusUrl: "https://www.paris.fr/lieux/cimetieres/tous-les-horaires",
+    hours: { mon: "8:00 AM-6:00 PM", tue: "8:00 AM-6:00 PM", wed: "8:00 AM-6:00 PM", thu: "8:00 AM-6:00 PM", fri: "8:00 AM-6:00 PM", sat: "8:30 AM-6:00 PM", sun: "9:00 AM-6:00 PM" },
+    venueKind: "outdoors", subcategory: "historic_cemetery", attributeTags: ["quiet", "historic", "walking", "free_entry"],
+    photo: "https://upload.wikimedia.org/wikipedia/commons/6/64/Cimeti%C3%A8re_de_Montmartre_-_Vue_de_la_division_9.jpg",
+    imageSourceUrl: "https://commons.wikimedia.org/wiki/File:Cimeti%C3%A8re_de_Montmartre_-_Vue_de_la_division_9.jpg",
+  },
+  "montmartre-stay-village": { officialUrl: "https://www.villagehostel.fr/", lodgingType: "hostel", attributeTags: ["budget", "social", "central", "terrace"] },
+
+  "canal-nature-locks": {
+    officialUrl: "https://www.paris.fr/pages/le-canal-saint-martin-6815",
+    hours: parisEveryDay("Open 24 hours for the public canal banks", "Navigation and lock operations follow the official canal timetable; temporary bridge and bank closures are posted by Ville de Paris."),
+    venueKind: "outdoors", subcategory: "canal_walk", attributeTags: ["walking", "scenic", "free_entry", "local_favorite"],
+    photo: "https://upload.wikimedia.org/wikipedia/commons/d/d9/Canal_Saint-Martin_-_%C3%89cluses_des_R%C3%A9collets_001.JPG",
+    imageSourceUrl: "https://commons.wikimedia.org/wiki/File:Canal_Saint-Martin_-_%C3%89cluses_des_R%C3%A9collets_001.JPG",
+  },
+  "canal-nature-villemin": {
+    officialUrl: "https://www.paris.fr/lieux/jardin-villemin-mahsa-jina-amini-1798",
+    hours: { default: "Ville de Paris's official summer-night exception runs 4 July-6 September 2026; the dated seasonal timetable and safety notices control later changes.", mon: "7:00 AM-11:59 PM", tue: "7:00 AM-11:59 PM", wed: "7:00 AM-11:59 PM", thu: "7:00 AM-11:59 PM", fri: "7:00 AM-11:59 PM", sat: "8:00 AM-11:59 PM", sun: "8:00 AM-11:59 PM" },
+    venueKind: "outdoors", subcategory: "neighborhood_garden", attributeTags: ["family_friendly", "relaxing", "free_entry", "local_favorite"],
+    photo: "https://upload.wikimedia.org/wikipedia/commons/3/36/P1040702_Paris_X_rue_des_R%C3%A9collets_jardin_Villemin_rwk.jpg",
+    imageSourceUrl: "https://commons.wikimedia.org/wiki/File:P1040702_Paris_X_rue_des_R%C3%A9collets_jardin_Villemin_rwk.jpg",
+  },
+  "canal-nature-frederic-lemaitre": {
+    officialUrl: "https://www.paris.fr/lieux/square-frederick-lemaitre-2486",
+    hours: { default: "The dated Ville de Paris seasonal timetable controls gate hours and exceptional weather closures.", mon: "8:00 AM-8:30 PM", tue: "8:00 AM-8:30 PM", wed: "8:00 AM-8:30 PM", thu: "8:00 AM-8:30 PM", fri: "8:00 AM-8:30 PM", sat: "9:00 AM-8:30 PM", sun: "9:00 AM-8:30 PM" },
+    venueKind: "outdoors", subcategory: "neighborhood_garden", attributeTags: ["quiet", "walking", "free_entry", "local_favorite"],
+    photo: "https://upload.wikimedia.org/wikipedia/commons/4/4d/Square_Fr%C3%A9d%C3%A9rick-Lema%C3%AEtre%2C_Paris_10e_2.jpg",
+    imageSourceUrl: "https://commons.wikimedia.org/wiki/File:Square_Fr%C3%A9d%C3%A9rick-Lema%C3%AEtre,_Paris_10e_2.jpg",
+  },
+  "canal-nature-bassin-villette": {
+    officialUrl: "https://www.paris.fr/pages/tmp-canaux-7834",
+    hours: parisEveryDay("Open 24 hours for the public banks", "Supervised swimming, navigation, and waterside events follow the dated official canal and event calendars."),
+    venueKind: "outdoors", subcategory: "canal_basin", attributeTags: ["scenic", "walking", "family_friendly", "free_entry"],
+    photo: "https://upload.wikimedia.org/wikipedia/commons/c/c3/Bassin_de_la_Villette_1.jpg",
+    imageSourceUrl: "https://commons.wikimedia.org/wiki/File:Bassin_de_la_Villette_1.jpg",
+  },
+  "canal-stay-citizen": { officialUrl: "https://lecitizenhotel.com/", lodgingType: "hotel", attributeTags: ["design", "scenic", "quiet", "midrange"] },
+  "canal-stay-providence": { officialUrl: "https://hotelprovidenceparis.com/", lodgingType: "hotel", attributeTags: ["design", "luxury", "nightlife", "central"] },
+
+  "seventh-food-david-toutain": {
+    officialUrl: "https://www.davidtoutain.com/location/horaires-et-localisation/",
+    statusUrl: "https://guide.michelin.com/en/ile-de-france/paris/restaurant/david-toutain",
+    hours: { mon: "12:30 PM-2:00 PM; 7:30 PM-9:00 PM", tue: "12:00 PM-2:00 PM; 7:30 PM-9:00 PM", wed: "7:30 PM-9:00 PM", thu: "12:00 PM-2:00 PM; 7:30 PM-9:00 PM", fri: "12:00 PM-2:00 PM; 7:30 PM-9:00 PM", sat: "Closed", sun: "Closed" },
+    venueKind: "food_drink", foodServiceType: "restaurant", cuisineTypes: ["Contemporary", "Modern French"],
+    attributeTags: ["fine_dining", "tasting_menu", "destination_dining", "reservation_required"],
+  },
+  "seventh-food-arpege": {
+    officialUrl: "https://www.alain-passard.com/en/",
+    statusUrl: "https://guide.michelin.com/en/ile-de-france/paris/restaurant/arpege",
+    hours: { mon: "12:00 PM-2:00 PM; 7:30 PM-10:00 PM", tue: "12:00 PM-2:00 PM; 7:30 PM-10:00 PM", wed: "12:00 PM-2:00 PM; 7:30 PM-10:00 PM", thu: "12:00 PM-2:00 PM; 7:30 PM-10:00 PM", fri: "12:00 PM-2:00 PM; 7:30 PM-10:00 PM", sat: "Closed", sun: "Closed" },
+    venueKind: "food_drink", foodServiceType: "restaurant", cuisineTypes: ["Vegetable-led", "Modern French"],
+    attributeTags: ["fine_dining", "tasting_menu", "vegetarian_friendly", "reservation_required"],
+  },
+  "seventh-food-fontaine-mars": {
+    officialUrl: "https://www.fontaine-de-mars.com/en/",
+    hours: { mon: "12:00 PM-3:00 PM; 7:00 PM-11:00 PM", tue: "12:00 PM-3:00 PM; 7:00 PM-11:00 PM", wed: "12:00 PM-3:00 PM; 7:00 PM-11:00 PM", thu: "12:00 PM-3:00 PM; 7:00 PM-11:00 PM", fri: "12:00 PM-3:00 PM; 7:00 PM-11:00 PM", sat: "12:00 PM-3:30 PM; 7:00 PM-11:00 PM", sun: "12:00 PM-3:30 PM; 7:00 PM-11:00 PM" },
+    venueKind: "food_drink", foodServiceType: "restaurant", cuisineTypes: ["French", "Southwestern French", "Bistro"],
+    attributeTags: ["historic", "local_specialty", "classic", "reservation_recommended"],
+  },
+  "seventh-food-cafe-varenne": {
+    officialUrl: "https://menuonline.fr/cafevarenne/",
+    statusUrl: "https://lefooding.com/restaurants/cafe-varenne",
+    hours: { mon: "7:30 AM-10:30 PM", tue: "7:30 AM-10:30 PM", wed: "7:30 AM-10:30 PM", thu: "7:30 AM-10:30 PM", fri: "7:30 AM-10:30 PM", sat: "9:00 AM-10:30 PM", sun: "Closed" },
+    venueKind: "food_drink", foodServiceType: "restaurant", cuisineTypes: ["French", "Brasserie"],
+    attributeTags: ["local_favorite", "solo_friendly", "terrace", "walk_in_friendly"],
+  },
+  "seventh-food-fitzgerald": {
+    officialUrl: "https://www.fitz-group.fr/en/fitzgerald-paris",
+    hours: { mon: "12:00 PM-2:30 PM; 6:30 PM-2:00 AM", tue: "12:00 PM-2:30 PM; 6:30 PM-2:00 AM", wed: "12:00 PM-2:30 PM; 6:30 PM-2:00 AM", thu: "12:00 PM-2:30 PM; 6:30 PM-2:00 AM", fri: "12:00 PM-2:30 PM; 6:30 PM-2:00 AM", sat: "6:30 PM-2:00 AM", sun: "11:30 AM-2:30 PM; 6:30 PM-2:00 AM" },
+    description: "Fitzgerald pairs modern French small plates with a terrace, late dinner service, cocktails, and Sunday brunch in an Art Deco dining room near Invalides.",
+    venueKind: "food_drink", foodServiceType: "restaurant", cuisineTypes: ["Modern French", "Small plates"],
+    attributeTags: ["brunch", "late_night", "date_night", "lively_food"],
+    photo: "https://cdn.prod.website-files.com/657ebf942cf08a351e21c1b1/69fa2572be134d9316ca5b21_FITZGERALD%20terrasse%20avril%202026%20%C2%A9Yann%20Deret-9859.jpg",
+    imageSourceUrl: "https://www.fitz-group.fr/en/fitzgerald-paris",
+  },
+
+  "seventh-stay-la-comtesse": { officialUrl: "https://www.comtesse-hotel.com/", lodgingType: "hotel", attributeTags: ["scenic", "design", "romantic", "midrange"] },
+  "seventh-stay-le-walt": { officialUrl: "https://www.lewaltparis.com/", lodgingType: "hotel", attributeTags: ["quiet", "design", "romantic", "midrange"] },
+  "seventh-stay-jk-place": { officialUrl: "https://www.jkplaces.com/jkparis/", lodgingType: "hotel", attributeTags: ["luxury", "wellness", "design", "quiet"] },
+  "seventh-stay-montalembert": { officialUrl: "https://www.hotelmontalembert-paris.com/", lodgingType: "hotel", attributeTags: ["luxury", "historic", "central", "design"] },
+};
+
+const parisFoodRepairSources: ListSource[] = [
+  { name: "MICHELIN Guide - Paris restaurants", url: "https://guide.michelin.com/en/fr/ile-de-france/paris/restaurants" },
+  { name: "Paris je t'aime - Restaurants", url: "https://parisjetaime.com/eng/restaurants-paris" },
+  { name: "Le Fooding - Paris restaurants", url: "https://lefooding.com/en/search/restaurant/place/paris-8246" },
+  { name: "The Infatuation - Best Paris restaurants", url: "https://www.theinfatuation.com/paris/guides/best-restaurants-paris" },
+  { name: "Time Out Paris - Restaurants", url: "https://www.timeout.com/paris/en/restaurants" },
+  { name: "Conde Nast Traveler - Paris restaurants", url: "https://www.cntraveler.com/gallery/best-restaurants-in-paris" },
+  { name: "Gault et Millau - Paris", url: "https://fr.gaultmillau.com/en/search/restaurant/Paris" },
+  { name: "Google Maps", url: "https://maps.google.com" },
+  { name: "Apple Maps Paris", url: "https://maps.apple.com/?q=Paris%20restaurants" },
+  { name: "OpenStreetMap Paris", url: "https://www.openstreetmap.org/relation/7444" },
+];
+
+const parisNightlifeRepairSources: ListSource[] = [
+  { name: "Paris je t'aime - Bars", url: "https://parisjetaime.com/eng/article/bars-in-paris-a946" },
+  { name: "Time Out Paris - Bars", url: "https://www.timeout.com/paris/en/bars-pubs" },
+  { name: "Conde Nast Traveler - Paris bars", url: "https://www.cntraveler.com/gallery/best-bars-in-paris" },
+  { name: "World's 50 Best Bars", url: "https://www.worlds50bestbars.com/list/1-50" },
+  { name: "Terrass Hotel rooftop", url: "https://en.terrass-hotel.com/rooftop" },
+  { name: "Au Lapin Agile practical information", url: "https://au-lapin-agile.com/pratique/" },
+  { name: "Le Tres Particulier official", url: "https://www.hotelparticulier.com/tresparticulier?lng=fr" },
+  { name: "Google Maps", url: "https://maps.google.com" },
+  { name: "Apple Maps Paris bars", url: "https://maps.apple.com/?q=Paris%20bars" },
+  { name: "OpenStreetMap Paris", url: "https://www.openstreetmap.org/relation/7444" },
+];
+
+const parisStayRepairSources: ListSource[] = [
+  { name: "Paris je t'aime - Accommodation", url: "https://parisjetaime.com/eng/accommodation" },
+  { name: "Conde Nast Traveler - Best Paris hotels", url: "https://www.cntraveler.com/gallery/best-hotels-in-paris" },
+  { name: "MICHELIN Guide - Paris hotels", url: "https://guide.michelin.com/en/hotels-stays/paris" },
+  { name: "Forbes Travel Guide - Paris", url: "https://www.forbestravelguide.com/destinations/paris-france" },
+  { name: "The Times - Best Paris hotels", url: "https://www.thetimes.com/travel/destinations/europe-travel/france/paris/best-hotels-in-paris-65dngr3zt" },
+  { name: "Hostelworld - Paris hostels", url: "https://www.hostelworld.com/hostels/Paris" },
+  { name: "Booking.com - Paris", url: "https://www.booking.com/city/fr/paris.html" },
+  { name: "Tripadvisor - Paris hotels", url: "https://www.tripadvisor.com/Hotels-g187147-Paris_Ile_de_France-Hotels.html" },
+  { name: "Google Maps", url: "https://maps.google.com" },
+  { name: "OpenStreetMap Paris", url: "https://www.openstreetmap.org/relation/7444" },
+];
+
+const parisCultureRepairSources: ListSource[] = [
+  { name: "Paris Musees", url: "https://www.parismusees.paris.fr/en" },
+  { name: "Musee Picasso Paris", url: "https://www.museepicassoparis.fr/en" },
+  { name: "Musee Carnavalet", url: "https://www.carnavalet.paris.fr/en" },
+  { name: "Maison de Victor Hugo", url: "https://www.maisonsvictorhugo.paris.fr/en" },
+  { name: "Hotel de Sully", url: "https://www.hotel-de-sully.fr/en" },
+  { name: "Paris je t'aime - Museums", url: "https://parisjetaime.com/eng/discovering-paris/major-parisian-museums" },
+  { name: "French Ministry of Culture", url: "https://www.culture.gouv.fr/en" },
+  { name: "Google Maps", url: "https://maps.google.com" },
+  { name: "Apple Maps Paris museums", url: "https://maps.apple.com/?q=Paris%20museums" },
+  { name: "OpenStreetMap Paris", url: "https://www.openstreetmap.org/relation/7444" },
+];
+
+const parisNatureRepairSources: ListSource[] = [
+  { name: "Ville de Paris - Parks current hours", url: "https://www.paris.fr/lieux/parcs-jardins-et-bois/tous-les-horaires" },
+  { name: "Ville de Paris - River banks", url: "https://www.paris.fr/lieux/parc-rives-de-seine-15619" },
+  { name: "Ville de Paris - Canals", url: "https://www.paris.fr/pages/tmp-canaux-7834" },
+  { name: "French Senate - Luxembourg Garden", url: "https://jardin.senat.fr/" },
+  { name: "Louvre - Tuileries Garden", url: "https://www.louvre.fr/en/explore/the-gardens" },
+  { name: "Domaine national du Palais-Royal", url: "https://www.domaine-palais-royal.fr/visiter/informations-pratiques" },
+  { name: "Museum national d'Histoire naturelle - Jardin des Plantes", url: "https://www.mnhn.fr/en/jardin-des-plantes" },
+  { name: "Wikimedia Commons - Paris parks", url: "https://commons.wikimedia.org/wiki/Category:Parks_and_gardens_in_Paris" },
+  { name: "Google Maps", url: "https://maps.google.com" },
+  { name: "OpenStreetMap Paris", url: "https://www.openstreetmap.org/relation/7444" },
+];
+
+function uniqueParisSources(sources: ListSource[]) {
+  return [...new Map(sources.filter((source) => /^https?:\/\//i.test(source.url)).map((source) => [source.url, source])).values()];
+}
+
+function repairParisTargetGuide(list: MapList): MapList {
+  if (!parisTargetGuideIds.has(list.id)) return list;
+
+  const stops = list.stops.map((item) => {
+    const repair = parisStopRepairs[item.id];
+    if (!repair) return item;
+    const officialUrl = repair.officialUrl;
+    const mapUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`${item.coordinates[0]},${item.coordinates[1]}`)}`;
+    const statusUrl = repair.statusUrl ?? officialUrl;
+    const imageSourceUrl = repair.imageSourceUrl ?? item.imageSourceUrl ?? poiPhotoSources[item.name]?.source ?? officialUrl;
+    const stayDefaults: Partial<GuideStop> = list.category === "Stay"
+      ? { venueKind: "lodging", lodgingType: "hotel", bookingUrl: officialUrl, attributeTags: ["central", "design"] }
+      : {};
+
+    return {
+      ...item,
+      ...stayDefaults,
+      ...repair,
+      officialUrl,
+      ...(list.category === "Stay" ? { bookingUrl: repair.bookingUrl ?? officialUrl } : {}),
+      imageSourceUrl,
+      sourceUrls: [...new Set([...(item.sourceUrls ?? []), officialUrl, mapUrl, statusUrl, imageSourceUrl])],
+      sourceEvidence: {
+        ...item.sourceEvidence,
+        officialUrl,
+        mapUrl,
+        currentStatusUrl: statusUrl,
+        imageSourceUrl,
+        checkedAt: parisRepairCheckedAt,
+      },
+    } satisfies GuideStop;
+  });
+
+  const categorySources = list.category === "Food"
+    ? parisFoodRepairSources
+    : list.category === "Nightlife"
+      ? parisNightlifeRepairSources
+      : list.category === "Stay"
+        ? parisStayRepairSources
+        : list.category === "Culture"
+          ? parisCultureRepairSources
+          : parisNatureRepairSources;
+  const stopSources = stops.flatMap((item) => [
+    ...(item.officialUrl ? [{ name: `${item.name} official`, url: item.officialUrl }] : []),
+    ...(item.sourceEvidence?.currentStatusUrl ? [{ name: `${item.name} current status`, url: item.sourceEvidence.currentStatusUrl }] : []),
+    ...(item.imageSourceUrl ? [{ name: `${item.name} image source`, url: item.imageSourceUrl }] : []),
+  ]);
+
+  return { ...list, stops, sources: uniqueParisSources([...(list.sources ?? []), ...categorySources, ...stopSources]) };
+}
 
 export const parisNeighborhoodGuides = parisNeighborhoods.flatMap((neighborhood) =>
   neighborhoodCategories.flatMap((category) => {
@@ -2365,7 +2803,7 @@ export const parisNeighborhoodGuides = parisNeighborhoods.flatMap((neighborhood)
       );
     });
   }),
-) satisfies MapList[];
+).map(repairParisTargetGuide) satisfies MapList[];
 
 export const parisGuides = [
   ...parisCitywideGuides,

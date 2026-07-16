@@ -1,4 +1,4 @@
-import type { MapList } from "@/types";
+import type { GuideStop, ListSource, MapList } from "@/types";
 
 const BARCELONA_AIRPORT_AEROBUS_ROUTE: [number, number][] = [
   [41.28875, 2.073252],
@@ -169,7 +169,766 @@ const BARCELONA_AIRPORT_R2_NORD_ROUTE: [number, number][] = [
   [41.4104445, 2.1891948],
 ];
 
-export const barcelonaCoreGuides = withDiveBarChips([
+type BarcelonaStopRepair = Partial<GuideStop> & {
+  officialUrl: string;
+  mapQuery?: string;
+  editorialUrls?: string[];
+  platformUrls?: string[];
+  evidenceNotes?: string;
+};
+
+function barcelonaDailyHours(hours: string): NonNullable<GuideStop["hours"]> {
+  return {
+    mon: hours,
+    tue: hours,
+    wed: hours,
+    thu: hours,
+    fri: hours,
+    sat: hours,
+    sun: hours,
+  };
+}
+
+const BARCELONA_LEGACY_GUIDE_IDS = new Set([
+  "list-barcelona-gothic-quarter-restaurants",
+  "list-barcelona-poble-sec-stays",
+  "list-barcelona-gothic-popular-bars",
+  "list-barcelona-gracia-dive-bars",
+  "list-barcelona-gracia-popular-bars",
+  "list-barcelona-citywide-dive-bars",
+]);
+
+const BARCELONA_STOP_REPAIRS = {
+  "gothic-la-sosenga": {
+    officialUrl: "https://www.lasosenga.es/es/",
+    hours: {
+      mon: "Closed",
+      tue: "1:00 PM-4:45 PM",
+      wed: "1:00 PM-4:45 PM",
+      thu: "1:00 PM-4:45 PM; 8:00 PM-11:45 PM",
+      fri: "1:00 PM-4:45 PM; 8:00 PM-11:45 PM",
+      sat: "1:00 PM-4:45 PM",
+      sun: "Closed",
+    },
+    price: "$$",
+    priceSource: "Official menu",
+    venueKind: "food_drink",
+    foodServiceType: "restaurant",
+    cuisineTypes: ["catalan", "seasonal", "contemporary"],
+    attributeTags: ["local_favorite", "reservation_recommended", "quiet_food"],
+  },
+  "gothic-bistrot-levante": {
+    officialUrl: "https://bistrotlevante.com/",
+    hours: {
+      mon: "Closed",
+      tue: "Closed",
+      wed: "12:30 PM-11:00 PM",
+      thu: "12:30 PM-11:00 PM",
+      fri: "12:30 PM-11:00 PM",
+      sat: "12:00 PM-11:00 PM",
+      sun: "12:00 PM-11:00 PM",
+    },
+    photo: "https://bistrotlevante.com/wp-content/uploads/2020/03/Levante_bistrot-2020-40.jpg",
+    price: "$$",
+    priceSource: "Official booking page / Barna Centre",
+    venueKind: "food_drink",
+    foodServiceType: "restaurant",
+    cuisineTypes: ["mediterranean", "middle_eastern", "vegetarian"],
+    attributeTags: ["vegetarian_friendly", "vegan_friendly", "quiet_food"],
+    platformUrls: ["https://www.barnacentre.com/en/business/bistrot-levante"],
+    evidenceNotes: "The venue and district directory publish slightly different Monday service; the structured hours use the currently bookable Wednesday-Sunday service.",
+  },
+  "gothic-la-plata-restaurant": {
+    officialUrl: "https://barlaplata.com/",
+    hours: {
+      mon: "11:00 AM-3:00 PM; 6:00 PM-11:00 PM",
+      tue: "11:00 AM-3:00 PM; 6:00 PM-11:00 PM",
+      wed: "11:00 AM-3:00 PM; 6:00 PM-11:00 PM",
+      thu: "11:00 AM-3:00 PM; 6:00 PM-11:00 PM",
+      fri: "11:00 AM-3:00 PM; 6:00 PM-11:00 PM",
+      sat: "11:00 AM-3:00 PM; 6:00 PM-11:00 PM",
+      sun: "Closed",
+    },
+    price: "$",
+    priceSource: "Official menu",
+    venueKind: "food_drink",
+    foodServiceType: "pub",
+    cuisineTypes: ["catalan", "tapas", "seafood"],
+    attributeTags: ["local_favorite", "budget_food", "walk_in_friendly"],
+  },
+  "gothic-capet": {
+    officialUrl: "https://www.capetrestaurant.com/contact",
+    hours: {
+      mon: "Closed",
+      tue: "1:00 PM-3:30 PM; 8:00 PM-11:00 PM",
+      wed: "1:00 PM-3:30 PM; 8:00 PM-11:00 PM",
+      thu: "1:00 PM-3:30 PM; 8:00 PM-11:00 PM",
+      fri: "1:00 PM-3:30 PM; 8:00 PM-11:00 PM",
+      sat: "1:00 PM-3:30 PM; 8:00 PM-11:00 PM",
+      sun: "Closed",
+    },
+    price: "$$$",
+    priceSource: "Official menu / MICHELIN Guide",
+    venueKind: "food_drink",
+    foodServiceType: "restaurant",
+    cuisineTypes: ["catalan", "contemporary", "seasonal"],
+    attributeTags: ["fine_dining", "reservation_recommended", "date_night"],
+    editorialUrls: ["https://guide.michelin.com/es/en/catalunya/barcelona/restaurant/capet"],
+  },
+  "gothic-sensi-bistro": {
+    officialUrl: "https://sensi.es/bistro/es/",
+    hours: {
+      mon: "6:15 PM-12:45 AM",
+      tue: "6:15 PM-12:45 AM",
+      wed: "6:15 PM-12:45 AM",
+      thu: "6:15 PM-12:45 AM",
+      fri: "6:15 PM-1:00 AM",
+      sat: "6:15 PM-1:00 AM",
+      sun: "6:15 PM-1:00 AM",
+    },
+    price: "$$",
+    priceSource: "Official menu",
+    venueKind: "food_drink",
+    foodServiceType: "restaurant",
+    cuisineTypes: ["mediterranean", "tapas", "international"],
+    attributeTags: ["group_friendly", "reservation_recommended", "lively_food"],
+  },
+  "gothic-bar-oviso-restaurant": {
+    officialUrl: "https://www.instagram.com/ovisobar/",
+    hours: {
+      mon: "10:00 AM-12:00 AM",
+      tue: "10:00 AM-12:00 AM",
+      wed: "10:00 AM-12:00 AM",
+      thu: "10:00 AM-12:00 AM",
+      fri: "10:00 AM-12:30 AM",
+      sat: "10:00 AM-12:30 AM",
+      sun: "10:00 AM-12:00 AM",
+    },
+    price: "$",
+    priceSource: "Barna Centre / current menu listings",
+    venueKind: "food_drink",
+    foodServiceType: "pub",
+    cuisineTypes: ["mediterranean", "tapas", "spanish"],
+    attributeTags: ["budget_food", "casual", "group_friendly"],
+    platformUrls: ["https://www.barnacentre.com/es/negocio/bar-oviso"],
+    evidenceNotes: "The venue's social profile is its official presence; the Barna Centre business listing supplies the published hours.",
+  },
+  "gothic-bar-lobo-restaurant": {
+    officialUrl: "https://grupotragaluz.com/ca/restaurants/bar-lobo/",
+    hours: barcelonaDailyHours("9:00 AM-1:00 AM; kitchen until 12:00 AM"),
+    price: "$$",
+    priceSource: "Official menu",
+    venueKind: "food_drink",
+    foodServiceType: "restaurant",
+    cuisineTypes: ["mediterranean", "tapas", "catalan"],
+    attributeTags: ["group_friendly", "brunch", "lively_food"],
+  },
+  "gothic-els-quatre-gats-restaurant": {
+    officialUrl: "https://4gats.com/",
+    hours: barcelonaDailyHours("12:00 PM-12:00 AM"),
+    price: "$$",
+    priceSource: "Official menu / booking page",
+    venueKind: "food_drink",
+    foodServiceType: "restaurant",
+    cuisineTypes: ["catalan", "mediterranean", "spanish"],
+    attributeTags: ["historic", "reservation_recommended", "tourist_friendly"],
+  },
+  "gothic-milk-bar-bistro-restaurant": {
+    officialUrl: "https://milkbarcelona.com/",
+    hours: {
+      mon: "9:00 AM-3:00 PM; 7:00 PM-11:00 PM",
+      tue: "9:00 AM-3:00 PM; 7:00 PM-11:00 PM",
+      wed: "9:00 AM-3:00 PM; 7:00 PM-11:00 PM",
+      thu: "9:00 AM-3:00 PM; 7:00 PM-11:00 PM",
+      fri: "9:00 AM-4:00 PM; 7:00 PM-11:30 PM",
+      sat: "9:00 AM-4:00 PM; 7:00 PM-11:30 PM",
+      sun: "9:00 AM-4:00 PM; 7:00 PM-11:00 PM",
+    },
+    price: "$$",
+    priceSource: "Official menu",
+    venueKind: "food_drink",
+    foodServiceType: "cafe",
+    cuisineTypes: ["brunch", "international", "comfort_food"],
+    attributeTags: ["brunch", "group_friendly", "vegetarian_friendly"],
+  },
+  "poblesec-hotel-brummell": {
+    officialUrl: "https://hotelbrummell.brummellprojects.com/",
+    bookingUrl: "https://engine.witbooking.com/en/hotel/hotelbrummell.com",
+    hours: barcelonaDailyHours("Reception 7:00 AM-11:00 PM; 24-hour emergency support for guests"),
+    price: "$$$",
+    priceSource: "Official booking page / MICHELIN Guide",
+    venueKind: "lodging",
+    lodgingType: "hotel",
+    attributeTags: ["design", "quiet", "romantic"],
+    editorialUrls: ["https://guide.michelin.com/gb/en/hotels-stays/barcelona/hotel-brummell-7975"],
+  },
+  "poblesec-innside-apolo": {
+    officialUrl: "https://www.melia.com/en/hotels/spain/barcelona/innside-barcelona-apolo",
+    bookingUrl: "https://www.booking.com/hotel/es/innside-by-melia-barcelona-apolo.en-gb.html",
+    hours: barcelonaDailyHours("Open 24 hours; reception staffed at all times"),
+    price: "$$$",
+    priceSource: "Official booking page / Booking.com",
+    venueKind: "lodging",
+    lodgingType: "hotel",
+    attributeTags: ["central", "work_friendly", "accessible"],
+    platformUrls: ["https://www.booking.com/hotel/es/innside-by-melia-barcelona-apolo.en-gb.html"],
+  },
+  "poblesec-coronado": {
+    officialUrl: "https://www.hotelcoronado.net/en/",
+    bookingUrl: "https://www.booking.com/hotel/es/coronado.html",
+    hours: barcelonaDailyHours("Open 24 hours; reception staffed at all times"),
+    price: "$$",
+    priceSource: "Official booking page / Booking.com",
+    venueKind: "lodging",
+    lodgingType: "hotel",
+    attributeTags: ["budget", "central", "walkable"],
+    platformUrls: ["https://www.booking.com/hotel/es/coronado.html"],
+  },
+  "gothic-milk": {
+    officialUrl: "https://milkbarcelona.com/",
+    hours: {
+      mon: "9:00 AM-3:00 PM; 7:00 PM-11:00 PM",
+      tue: "9:00 AM-3:00 PM; 7:00 PM-11:00 PM",
+      wed: "9:00 AM-3:00 PM; 7:00 PM-11:00 PM",
+      thu: "9:00 AM-3:00 PM; 7:00 PM-11:00 PM",
+      fri: "9:00 AM-4:00 PM; 7:00 PM-11:30 PM",
+      sat: "9:00 AM-4:00 PM; 7:00 PM-11:30 PM",
+      sun: "9:00 AM-4:00 PM; 7:00 PM-11:00 PM",
+    },
+    price: "$$",
+    priceSource: "Official menu",
+    venueKind: "nightlife",
+    nightlifeType: "lounge",
+    attributeTags: ["casual_nightlife", "group_friendly", "cocktails"],
+  },
+  "gothic-harlem": {
+    officialUrl: "https://www.harlemjazzclub.es/en/",
+    hours: {
+      mon: "Closed",
+      tue: "8:00 PM-2:00 AM",
+      wed: "8:00 PM-2:00 AM",
+      thu: "8:00 PM-3:00 AM",
+      fri: "8:00 PM-3:00 AM",
+      sat: "8:00 PM-3:00 AM",
+      sun: "7:30 PM-2:00 AM",
+    },
+    price: "$$",
+    priceSource: "Official ticket calendar",
+    venueKind: "nightlife",
+    nightlifeType: "live_music_venue",
+    musicGenres: ["jazz", "funk", "soul"],
+    attributeTags: ["live_music", "tickets_required", "late_night"],
+  },
+  "gothic-marula-cafe": {
+    name: "Marula Café",
+    coordinates: [41.3787, 2.1751],
+    description: "Marula Café is a compact Escudellers music room where funk, soul, Afrobeat, Latin sessions, and DJs carry concerts into late dancing. The official agenda matters more than a fixed weekly genre promise.",
+    officialUrl: "https://marulacafe.com/info/",
+    mapQuery: "Marula Café Barcelona",
+    hours: {
+      default: "Venue opening hours are fixed by day; concert formats and individual start times are published in the official agenda",
+      mon: "Closed",
+      tue: "Closed",
+      wed: "10:30 PM-5:00 AM",
+      thu: "10:30 PM-5:00 AM",
+      fri: "Concerts 10:00 PM-12:00 AM; DJ sessions 12:00 AM-6:00 AM",
+      sat: "Concerts 10:00 PM-12:00 AM; DJ sessions 12:00 AM-6:00 AM",
+      sun: "9:30 PM-4:30 AM",
+    },
+    photo: "https://marulacafe.com/wp-content/uploads/2025/02/sala-home2-1.jpg",
+    price: "$$",
+    priceSource: "Official event ticketing / venue price range",
+    venueKind: "nightlife",
+    nightlifeType: "live_music_venue",
+    musicGenres: ["funk", "soul", "afrobeat", "latin"],
+    attributeTags: ["live_music", "dj_sets", "late_night"],
+  },
+  "gothic-ocana": {
+    name: "Ocaña",
+    coordinates: [41.3803, 2.1753],
+    description: "Ocaña spreads a café, restaurant, cocktail bar, and late room across Plaça Reial, making it useful when a group wants dinner, drinks, and nightlife without changing addresses.",
+    officialUrl: "https://www.ocana.cat/contact/",
+    mapQuery: "Ocaña Plaça Reial Barcelona",
+    hours: barcelonaDailyHours("8:30 AM-3:00 AM"),
+    photo: "https://www.ocana.cat/content/uploads/2019/12/7F6A5278.jpg",
+    price: "$$",
+    priceSource: "Official menu",
+    venueKind: "nightlife",
+    nightlifeType: "lounge",
+    attributeTags: ["cocktails", "group_friendly", "late_night"],
+  },
+  "gothic-jamboree": {
+    officialUrl: "https://jamboreejazz.com/",
+    hours: {
+      default: "Performance, doors, and club start times are published per event on the official event calendar",
+    },
+    price: "$$",
+    priceSource: "Official ticket calendar",
+    venueKind: "nightlife",
+    nightlifeType: "live_music_venue",
+    musicGenres: ["jazz", "blues", "soul"],
+    attributeTags: ["live_music", "tickets_required", "late_night"],
+  },
+  "gracia-canigo": {
+    officialUrl: "https://www.barcanigo.com/index_en.html",
+    hours: {
+      mon: "10:00 AM-5:00 PM",
+      tue: "10:00 AM-1:00 AM",
+      wed: "10:00 AM-1:00 AM",
+      thu: "10:00 AM-2:00 AM",
+      fri: "10:00 AM-2:30 AM",
+      sat: "7:00 PM-2:30 AM",
+      sun: "Closed",
+    },
+    price: "$",
+    priceSource: "Official menu",
+    venueKind: "nightlife",
+    nightlifeType: "dive_bar",
+    attributeTags: ["dive_bars", "local_bar", "vermouth"],
+  },
+  "gracia-bodega-quimet": {
+    officialUrl: "https://www.bodegaquimet.com/localizacion",
+    hours: {
+      mon: "10:00 AM-4:00 PM",
+      tue: "10:00 AM-4:00 PM; 6:00 PM-11:00 PM",
+      wed: "10:00 AM-4:00 PM; 6:00 PM-11:00 PM",
+      thu: "10:00 AM-4:00 PM; 6:00 PM-11:00 PM",
+      fri: "11:00 AM-4:00 PM; 6:00 PM-11:00 PM",
+      sat: "11:00 AM-4:00 PM; 6:00 PM-11:00 PM",
+      sun: "11:00 AM-4:00 PM",
+    },
+    price: "$",
+    priceSource: "Official menu",
+    venueKind: "nightlife",
+    nightlifeType: "wine_bar",
+    attributeTags: ["dive_bars", "local_bar", "vermouth"],
+  },
+  "gracia-fourmi": {
+    officialUrl: "https://lafourmibarcelona.es/",
+    hours: {
+      mon: "6:00 PM-1:00 AM",
+      tue: "6:00 PM-1:00 AM",
+      wed: "6:00 PM-1:00 AM",
+      thu: "6:00 PM-1:00 AM",
+      fri: "6:00 PM-3:00 AM",
+      sat: "6:00 PM-3:00 AM",
+      sun: "6:00 PM-1:00 AM",
+    },
+    price: "$",
+    priceSource: "Official menu",
+    venueKind: "nightlife",
+    nightlifeType: "dive_bar",
+    attributeTags: ["dive_bars", "casual_nightlife", "late_night"],
+  },
+  "gracia-la-rovira": {
+    name: "La Rovira",
+    coordinates: [41.4063, 2.1599],
+    description: "La Rovira is an all-day Gràcia bar for craft beer, vermouth, generous plates, and the easy neighborhood overlap between lunch tables and late drinks.",
+    officialUrl: "https://larovirabcn.com/",
+    mapQuery: "La Rovira Carrer Rabassa Barcelona",
+    hours: {
+      mon: "9:00 AM-12:00 AM",
+      tue: "9:00 AM-12:00 AM",
+      wed: "9:00 AM-12:00 AM",
+      thu: "9:00 AM-12:00 AM",
+      fri: "9:00 AM-1:00 AM",
+      sat: "9:00 AM-1:00 AM",
+      sun: "9:00 AM-12:00 AM",
+    },
+    photo: "https://larovirabcn.com/wp-content/uploads/2024/02/rov19.jpg",
+    price: "$",
+    priceSource: "Official menu",
+    venueKind: "nightlife",
+    nightlifeType: "beer_bar",
+    attributeTags: ["dive_bars", "craft_beer", "local_bar"],
+  },
+  "gracia-salvatge": {
+    officialUrl: "https://barsalvatge.com/",
+    hours: barcelonaDailyHours("6:00 PM-12:30 AM"),
+    price: "$$",
+    priceSource: "Official menu",
+    venueKind: "nightlife",
+    nightlifeType: "wine_bar",
+    attributeTags: ["dive_bars", "natural_wine", "local_bar"],
+  },
+  "gracia-sol-de-nit": {
+    officialUrl: "https://www.cafedelsoldenit.es/",
+    hours: barcelonaDailyHours("11:00 AM-3:00 AM"),
+    price: "$",
+    priceSource: "Official menu",
+    venueKind: "nightlife",
+    nightlifeType: "pub",
+    attributeTags: ["terrace", "group_friendly", "casual_nightlife"],
+  },
+  "gracia-heliogabal": {
+    officialUrl: "https://www.heliogabal.com/",
+    hours: {
+      mon: "Closed",
+      tue: "Closed",
+      wed: "Closed",
+      thu: "8:30 PM-2:30 AM",
+      fri: "8:30 PM-3:00 AM",
+      sat: "8:30 PM-3:00 AM",
+      sun: "6:30 PM-11:00 PM",
+    },
+    price: "$$",
+    priceSource: "Official ticket calendar",
+    venueKind: "nightlife",
+    nightlifeType: "live_music_venue",
+    musicGenres: ["indie", "alternative", "singer_songwriter"],
+    attributeTags: ["live_music", "tickets_required", "local_bar"],
+  },
+  "gracia-bobby-gin": {
+    officialUrl: "https://www.bobbygin.com/en/contacto/",
+    hours: {
+      mon: "7:00 PM-2:00 AM",
+      tue: "7:00 PM-2:00 AM",
+      wed: "7:00 PM-2:00 AM",
+      thu: "7:00 PM-2:30 AM",
+      fri: "7:00 PM-3:00 AM",
+      sat: "7:00 PM-3:00 AM",
+      sun: "7:00 PM-2:00 AM",
+    },
+    price: "$$",
+    priceSource: "Official menu",
+    venueKind: "nightlife",
+    nightlifeType: "cocktail_bar",
+    attributeTags: ["craft_cocktails", "gin", "date_night"],
+  },
+  "gracia-14-de-la-rosa": {
+    name: "14 De La Rosa",
+    coordinates: [41.4008, 2.1585],
+    description: "14 De La Rosa is a narrow Gràcia cocktail bar with a serious back bar, low light, and measured classics that reward sitting down instead of collecting another plaza round.",
+    officialUrl: "https://www.14delarosa.com/home-motto",
+    mapQuery: "14 De La Rosa Barcelona",
+    hours: {
+      sun: "Closed",
+      mon: "5:00 PM-2:00 AM",
+      tue: "5:00 PM-2:00 AM",
+      wed: "5:00 PM-2:00 AM",
+      thu: "5:00 PM-2:00 AM",
+      fri: "5:00 PM-3:00 AM",
+      sat: "5:00 PM-3:00 AM",
+    },
+    photo: "https://images.squarespace-cdn.com/content/v1/5beb225b55b02cd32247f7a4/1542137261737-L3LDP01VWQ6BJG3J2504/D760CC4C-FBA6-4ACA-9190-2102AA5F2046.jpeg?format=1500w",
+    price: "$$",
+    priceSource: "Official menu / Tripadvisor",
+    venueKind: "nightlife",
+    nightlifeType: "cocktail_bar",
+    attributeTags: ["craft_cocktails", "date_night", "local_bar"],
+    platformUrls: [
+      "https://www.tripadvisor.co.uk/Restaurant_Review-g187497-d15679118-Reviews-14_De_La_Rosa-Barcelona_Catalonia.html",
+    ],
+    evidenceNotes: "The claimed Tripadvisor business listing supplies exact current opening and closing times; the venue site supplies identity and contact details.",
+  },
+  "gracia-elephanta": {
+    officialUrl: "https://elephanta.cat/es/contacto/",
+    hours: {
+      mon: "6:00 PM-1:30 AM",
+      tue: "6:00 PM-1:30 AM",
+      wed: "6:00 PM-1:30 AM",
+      thu: "6:00 PM-2:30 AM",
+      fri: "6:00 PM-3:00 AM",
+      sat: "5:30 PM-3:00 AM",
+      sun: "5:00 PM-11:30 PM",
+    },
+    price: "$$",
+    priceSource: "Official menu",
+    venueKind: "nightlife",
+    nightlifeType: "cocktail_bar",
+    attributeTags: ["craft_cocktails", "gin", "local_bar"],
+  },
+  "gracia-old-fashioned": {
+    officialUrl: "https://www.theoriginaloldfashioned.com/gallery",
+    hours: {
+      mon: "7:00 PM-2:00 AM",
+      tue: "7:00 PM-2:00 AM",
+      wed: "7:00 PM-2:00 AM",
+      thu: "7:00 PM-2:00 AM",
+      fri: "7:00 PM-3:00 AM",
+      sat: "7:00 PM-3:00 AM",
+      sun: "7:00 PM-2:00 AM",
+    },
+    price: "$$",
+    priceSource: "Official menu",
+    venueKind: "nightlife",
+    nightlifeType: "cocktail_bar",
+    attributeTags: ["craft_cocktails", "whisky", "date_night"],
+  },
+  "citywide-dive-bar-marsella": {
+    officialUrl: "https://www.barcelona.cat/en/conocebcn/pics/bar-marsella-92086038702",
+    hours: {
+      mon: "6:00 PM-2:00 AM",
+      tue: "10:00 AM-2:00 PM; 6:00 PM-2:00 AM",
+      wed: "10:00 AM-2:00 PM; 6:00 PM-2:00 AM",
+      thu: "10:00 AM-2:00 PM; 6:00 PM-2:00 AM",
+      fri: "10:00 AM-2:00 PM; 6:00 PM-2:30 AM",
+      sat: "10:00 AM-2:00 PM; 6:00 PM-2:30 AM",
+      sun: "10:00 AM-2:00 PM; 6:00 PM-2:00 AM",
+    },
+    price: "$",
+    priceSource: "Barcelona city property listing / current map listing",
+    venueKind: "nightlife",
+    nightlifeType: "dive_bar",
+    attributeTags: ["dive_bars", "historic", "absinthe", "late_night"],
+    evidenceNotes: "The city property listing is the authoritative public record because the bar has no standalone official website.",
+  },
+  "citywide-dive-el-xampanyet": {
+    officialUrl: "https://www.elxampanyet.com/",
+    hours: {
+      mon: "7:00 PM-11:00 PM",
+      tue: "12:00 PM-3:30 PM; 7:00 PM-11:00 PM",
+      wed: "12:00 PM-3:30 PM; 7:00 PM-11:00 PM",
+      thu: "12:00 PM-3:30 PM; 7:00 PM-11:00 PM",
+      fri: "12:00 PM-3:30 PM; 7:00 PM-11:00 PM",
+      sat: "12:00 PM-3:30 PM",
+      sun: "Closed",
+    },
+    price: "$",
+    priceSource: "Official menu",
+    venueKind: "nightlife",
+    nightlifeType: "wine_bar",
+    attributeTags: ["dive_bars", "cava_counter", "standing_room", "old_school"],
+  },
+  "citywide-dive-la-plata": {
+    officialUrl: "https://barlaplata.com/",
+    hours: {
+      mon: "11:00 AM-3:00 PM; 6:00 PM-11:00 PM",
+      tue: "11:00 AM-3:00 PM; 6:00 PM-11:00 PM",
+      wed: "11:00 AM-3:00 PM; 6:00 PM-11:00 PM",
+      thu: "11:00 AM-3:00 PM; 6:00 PM-11:00 PM",
+      fri: "11:00 AM-3:00 PM; 6:00 PM-11:00 PM",
+      sat: "11:00 AM-3:00 PM; 6:00 PM-11:00 PM",
+      sun: "Closed",
+    },
+    price: "$",
+    priceSource: "Official menu",
+    venueKind: "nightlife",
+    nightlifeType: "dive_bar",
+    attributeTags: ["dive_bars", "historic", "vermouth", "local_bar"],
+  },
+  "citywide-dive-canigo": {
+    officialUrl: "https://www.barcanigo.com/index_en.html",
+    hours: {
+      mon: "10:00 AM-5:00 PM",
+      tue: "10:00 AM-1:00 AM",
+      wed: "10:00 AM-1:00 AM",
+      thu: "10:00 AM-2:00 AM",
+      fri: "10:00 AM-2:30 AM",
+      sat: "7:00 PM-2:30 AM",
+      sun: "Closed",
+    },
+    price: "$",
+    priceSource: "Official menu",
+    venueKind: "nightlife",
+    nightlifeType: "dive_bar",
+    attributeTags: ["dive_bars", "neighborhood_bar", "vermouth", "casual_nightlife"],
+  },
+  "citywide-dive-quimet-quimet": {
+    officialUrl: "https://quimetiquimet.com/en/contact/",
+    hours: {
+      mon: "12:00 PM-4:00 PM; 6:00 PM-10:30 PM",
+      tue: "12:00 PM-4:00 PM; 6:00 PM-10:30 PM",
+      wed: "12:00 PM-4:00 PM; 6:00 PM-10:30 PM",
+      thu: "12:00 PM-4:00 PM; 6:00 PM-10:30 PM",
+      fri: "12:00 PM-4:00 PM; 6:00 PM-10:30 PM",
+      sat: "Closed",
+      sun: "Closed",
+    },
+    price: "$$",
+    priceSource: "Official menu",
+    venueKind: "nightlife",
+    nightlifeType: "wine_bar",
+    attributeTags: ["dive_bars", "standing_room", "montaditos", "local_bar"],
+  },
+  "citywide-dive-bodega-salto": {
+    officialUrl: "https://bodegasalto.net/aviso-legal/",
+    hours: {
+      mon: "6:00 PM-1:00 AM",
+      tue: "6:00 PM-1:00 AM",
+      wed: "6:00 PM-1:00 AM",
+      thu: "6:00 PM-1:00 AM",
+      fri: "6:00 PM-3:00 AM",
+      sat: "12:00 PM-3:00 AM",
+      sun: "12:00 PM-8:00 PM",
+    },
+    price: "$",
+    priceSource: "Official venue site / current map listing",
+    venueKind: "nightlife",
+    nightlifeType: "dive_bar",
+    attributeTags: ["dive_bars", "old_school", "local_bar", "casual_nightlife"],
+  },
+  "citywide-dive-manchester": {
+    officialUrl: "https://www.paginasamarillas.es/f/barcelona/manchester-gotico_221775794_000000002.html",
+    hours: barcelonaDailyHours("6:30 PM-3:00 AM"),
+    price: "$",
+    priceSource: "Current business directory / map listing",
+    venueKind: "nightlife",
+    nightlifeType: "dive_bar",
+    musicGenres: ["indie", "britpop", "rock"],
+    attributeTags: ["dive_bars", "indie_bar", "late_night", "casual_nightlife"],
+    evidenceNotes: "The venue has no standalone website; its current business property page and map listing provide status evidence.",
+  },
+  "citywide-dive-nevermind": {
+    officialUrl: "http://nevermindbcn.es/",
+    mapQuery: "Nevermind Bar Escudellers Blancs Barcelona",
+    hours: {
+      mon: "7:00 PM-2:30 AM",
+      tue: "7:00 PM-2:30 AM",
+      wed: "7:00 PM-2:30 AM",
+      thu: "7:00 PM-2:30 AM",
+      fri: "7:00 PM-3:00 AM",
+      sat: "7:00 PM-3:00 AM",
+      sun: "7:00 PM-2:30 AM",
+    },
+    price: "$",
+    priceSource: "Official venue site / current map listing",
+    venueKind: "nightlife",
+    nightlifeType: "dive_bar",
+    musicGenres: ["grunge", "punk", "rock"],
+    attributeTags: ["dive_bars", "grunge_bar", "late_night", "casual_nightlife"],
+  },
+  "citywide-dive-bodega-quimet": {
+    officialUrl: "https://www.bodegaquimet.com/localizacion",
+    hours: {
+      mon: "10:00 AM-4:00 PM",
+      tue: "10:00 AM-4:00 PM; 6:00 PM-11:00 PM",
+      wed: "10:00 AM-4:00 PM; 6:00 PM-11:00 PM",
+      thu: "10:00 AM-4:00 PM; 6:00 PM-11:00 PM",
+      fri: "11:00 AM-4:00 PM; 6:00 PM-11:00 PM",
+      sat: "11:00 AM-4:00 PM; 6:00 PM-11:00 PM",
+      sun: "11:00 AM-4:00 PM",
+    },
+    price: "$",
+    priceSource: "Official menu",
+    venueKind: "nightlife",
+    nightlifeType: "wine_bar",
+    attributeTags: ["dive_bars", "bodega", "vermouth", "local_bar"],
+  },
+  "citywide-dive-bar-malasang": {
+    officialUrl: "https://barmalasang.com/",
+    hours: {
+      mon: "Closed",
+      tue: "9:00 AM-12:30 AM",
+      wed: "9:00 AM-12:30 AM",
+      thu: "9:00 AM-12:30 AM",
+      fri: "9:00 AM-2:30 AM",
+      sat: "11:00 AM-2:30 AM",
+      sun: "11:00 AM-6:30 PM",
+    },
+    price: "$",
+    priceSource: "Official menu",
+    venueKind: "nightlife",
+    nightlifeType: "dive_bar",
+    musicGenres: ["rock", "indie"],
+    attributeTags: ["dive_bars", "neighborhood_bar", "vinyl_bar", "casual_nightlife"],
+  },
+} satisfies Record<string, BarcelonaStopRepair>;
+
+const BARCELONA_EXTRA_GUIDE_SOURCES: Record<string, ListSource[]> = {
+  "list-barcelona-poble-sec-stays": [
+    {
+      name: "Hotel Brummell guest guide",
+      url: "https://hotelbrummell.brummellprojects.com/guide/",
+    },
+    {
+      name: "MICHELIN Guide - Hotel Brummell",
+      url: "https://guide.michelin.com/gb/en/hotels-stays/barcelona/hotel-brummell-7975",
+    },
+    {
+      name: "Booking.com - INNSiDE Barcelona Apolo",
+      url: "https://www.booking.com/hotel/es/innside-by-melia-barcelona-apolo.en-gb.html",
+    },
+    {
+      name: "Booking.com - Hotel Coronado",
+      url: "https://www.booking.com/hotel/es/coronado.html",
+    },
+  ],
+};
+
+function uniqueBarcelonaUrls(urls: Array<string | undefined>): string[] {
+  return [...new Set(urls.filter((url): url is string => Boolean(url)))];
+}
+
+function barcelonaMapUrl(query: string): string {
+  return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(query)}`;
+}
+
+function repairLegacyBarcelonaGuides(guides: MapList[]): MapList[] {
+  return guides.map((guide) => {
+    if (!BARCELONA_LEGACY_GUIDE_IDS.has(guide.id)) return guide;
+
+    const stops = guide.stops.map((stop) => {
+      const repair = BARCELONA_STOP_REPAIRS[
+        stop.id as keyof typeof BARCELONA_STOP_REPAIRS
+      ] as BarcelonaStopRepair | undefined;
+      if (!repair) return stop;
+
+      const {
+        mapQuery,
+        editorialUrls = [],
+        platformUrls = [],
+        evidenceNotes,
+        ...fields
+      } = repair;
+      const name = fields.name ?? stop.name;
+      const mapUrl = barcelonaMapUrl(mapQuery ?? `${name} Barcelona`);
+      const imageSourceUrl = fields.imageSourceUrl ?? fields.photo ?? stop.imageSourceUrl ?? stop.photo;
+      const sourceUrls = uniqueBarcelonaUrls([
+        ...(stop.sourceUrls ?? []),
+        fields.officialUrl,
+        fields.bookingUrl,
+        mapUrl,
+        imageSourceUrl,
+        ...editorialUrls,
+        ...platformUrls,
+      ]);
+
+      return {
+        ...stop,
+        ...fields,
+        imageSourceUrl,
+        sourceUrls,
+        sourceEvidence: {
+          ...stop.sourceEvidence,
+          officialUrl: fields.officialUrl,
+          mapUrl,
+          currentStatusUrl: mapUrl,
+          imageSourceUrl,
+          editorialUrls,
+          platformUrls,
+          notes: evidenceNotes ?? "Official/property page and venue-specific map evidence checked for current status and published hours.",
+          checkedAt: "2026-07-16",
+        },
+      } satisfies GuideStop;
+    });
+
+    const officialSources = stops.flatMap((stop) => {
+      const repair = BARCELONA_STOP_REPAIRS[
+        stop.id as keyof typeof BARCELONA_STOP_REPAIRS
+      ] as BarcelonaStopRepair | undefined;
+      return repair
+        ? [{ name: `${stop.name} official/property page`, url: repair.officialUrl }]
+        : [];
+    });
+    const sourceByUrl = new Map<string, ListSource>();
+    for (const source of [
+      ...(guide.sources ?? []),
+      ...officialSources,
+      ...(BARCELONA_EXTRA_GUIDE_SOURCES[guide.id] ?? []),
+    ]) {
+      if (source?.url && !sourceByUrl.has(source.url)) sourceByUrl.set(source.url, source);
+    }
+
+    return {
+      ...guide,
+      stops,
+      sources: [...sourceByUrl.values()],
+    };
+  });
+}
+
+export const barcelonaCoreGuides = withDiveBarChips(repairLegacyBarcelonaGuides([
   {
     "id": "list-barcelona-top-parks",
     "slug": "barcelona-top-parks-in-the-city",
@@ -831,7 +1590,7 @@ export const barcelonaCoreGuides = withDiveBarChips([
     "seoTitle": "Best Restaurants in the Gothic Quarter, Barcelona",
     "seoDescription": "Best restaurants in the Gothic Quarter, Barcelona, from historic Catalan dining rooms to modern tasting menus and old-town spots that avoid the tourist-trap pattern.",
     "title": "Old-City Tables That Hold Up",
-    "description": "The Gothic Quarter is beautiful, crowded, and very good at selling mediocre dinners to tired people.",
+    "description": "The Gothic Quarter demands care because heavy visitor traffic supports plenty of forgettable meals. The most reliable tables are small Catalan kitchens, historic taverns, modern Mediterranean rooms, and straightforward all-day restaurants where focused cooking counts for more than medieval-lane scenery.",
     "url": "https://www.google.com/maps/search/gothic+quarter+restaurants+barcelona",
     "category": "Food",
     "location": {
@@ -877,7 +1636,7 @@ export const barcelonaCoreGuides = withDiveBarChips([
           41.3833,
           2.1769
         ],
-        "description": "Eater's Old City coverage and Google Maps signals make Bistrot Levante useful as a modern alternative to the Gothic Quarter's traditional taverns. The draw is not landmark history; it is a compact bistro on Placeta de Manuel Ribé with Eastern Mediterranean flavors, good vegetable-forward plates, and a calmer room that works for lunch or dinner when nearby streets are packed.",
+        "description": "Bistrot Levante is a compact bistro on Placeta de Manuel Ribé, pairing Eastern Mediterranean flavours with vegetable-led plates in a calmer room than the surrounding Gothic Quarter lanes.",
         "price": "$$",
         "priceSource": "Eater / Google Maps",
         "hours": {
@@ -4586,7 +5345,7 @@ export const barcelonaCoreGuides = withDiveBarChips([
     "seoTitle": "Best Places to Stay in Poble-sec, Barcelona",
     "seoDescription": "Best places to stay in Poble-sec, Barcelona, for Montjuic access, theater nights, Sala Apolo proximity, hotels, and a base between old town and the hill.",
     "title": "Sleep Near Montjuïc",
-    "description": "Poble-sec hotels offer design character, Parallel nightlife, Montjuic access, and simpler rooms outside Barcelona's postcard core.",
+    "description": "Poble-sec hotels sit between Avinguda del Paral·lel and Montjuïc, close to theatres, music venues, tapas streets, and direct metro links. The choice ranges from a small design property to a large full-service hotel and basic lower-cost rooms, with fewer grand-hotel amenities than the central districts.",
     "url": "https://www.google.com/maps/search/poble+sec+hotels+barcelona",
     "category": "Stay",
     "location": {
@@ -6603,7 +7362,7 @@ export const barcelonaCoreGuides = withDiveBarChips([
     "seoTitle": "Best Bars in the Gothic Quarter, Barcelona",
     "seoDescription": "Best bars in the Gothic Quarter, Barcelona, including cocktail rooms, live-music venues, busy old-city nightlife, and Plaça Reial late-night anchors.",
     "title": "Plaça Reial Night Machines",
-    "description": "The Gothic Quarter's bigger nights orbit music, crowds, and rooms that have been collecting stories for years.",
+    "description": "The Gothic Quarter’s larger nights cluster around Plaça Reial and the surrounding old-city lanes, mixing live jazz, club programming, cocktails, and all-day rooms that run late. Check the event format before arriving: the same venue may shift from a seated concert to a crowded dance floor.",
     "url": "https://www.google.com/maps/search/gothic+quarter+popular+nightlife+barcelona",
     "category": "Nightlife",
     "location": {
@@ -6660,42 +7419,43 @@ export const barcelonaCoreGuides = withDiveBarChips([
         "photo": "https://www.harlemjazzclub.es/wp-content/uploads/2020/06/Harlem-Jazz-Club-selection-153.jpg"
       },
       {
-        "id": "gothic-dow-jones",
-        "name": "Dow Jones Bar",
+        "id": "gothic-marula-cafe",
+        "name": "Marula Café",
         "coordinates": [
-          41.3816,
-          2.1752
+          41.3787,
+          2.1751
         ],
-        "description": "Dow Jones Bar adds a deliberately chaotic concept stop, with drink prices moving like a stock exchange ticker and the crowd reacting to the board.",
+        "description": "Marula Café is a compact Escudellers music room where funk, soul, Afrobeat, Latin sessions, and DJs carry concerts into late dancing. The official agenda matters more than a fixed weekly genre promise.",
         "hours": {
-          "mon": "6:00 PM-12:30 AM",
-          "tue": "6:00 PM-12:30 AM",
-          "wed": "6:00 PM-1:00 AM",
-          "thu": "6:00 PM-1:30 AM",
-          "fri": "6:00 PM-2:30 AM",
-          "sat": "6:00 PM-2:30 AM",
-          "sun": "6:00 PM-12:00 AM"
+          "default": "Venue opening hours are fixed by day; concert formats and individual start times are published in the official agenda",
+          "mon": "Closed",
+          "tue": "Closed",
+          "wed": "10:30 PM-5:00 AM",
+          "thu": "10:30 PM-5:00 AM",
+          "fri": "Concerts 10:00 PM-12:00 AM; DJ sessions 12:00 AM-6:00 AM",
+          "sat": "Concerts 10:00 PM-12:00 AM; DJ sessions 12:00 AM-6:00 AM",
+          "sun": "9:30 PM-4:30 AM"
         },
-        "photo": "https://arewabxlefttuhzucoxx.supabase.co/storage/v1/object/public/bar_attachments/e968db8f-51bd-43a0-988d-8fba01def671/dow.png"
+        "photo": "https://marulacafe.com/wp-content/uploads/2025/02/sala-home2-1.jpg"
       },
       {
-        "id": "gothic-pipa",
-        "name": "Pipa Club",
+        "id": "gothic-ocana",
+        "name": "Ocaña",
         "coordinates": [
-          41.381,
-          2.1766
+          41.3803,
+          2.1753
         ],
-        "description": "Pipa Club is Barcelona's hidden speakeasy-style room for craft cocktails, live music, and a touch of 1920s elegance behind an unassuming entrance.",
+        "description": "Ocaña spreads a café, restaurant, cocktail bar, and late room across Plaça Reial, making it useful when a group wants dinner, drinks, and nightlife without changing addresses.",
         "hours": {
-          "mon": "6:00 PM-12:30 AM",
-          "tue": "6:00 PM-12:30 AM",
-          "wed": "6:00 PM-1:00 AM",
-          "thu": "6:00 PM-1:30 AM",
-          "fri": "6:00 PM-2:30 AM",
-          "sat": "6:00 PM-2:30 AM",
-          "sun": "6:00 PM-12:00 AM"
+          "mon": "8:30 AM-3:00 AM",
+          "tue": "8:30 AM-3:00 AM",
+          "wed": "8:30 AM-3:00 AM",
+          "thu": "8:30 AM-3:00 AM",
+          "fri": "8:30 AM-3:00 AM",
+          "sat": "8:30 AM-3:00 AM",
+          "sun": "8:30 AM-3:00 AM"
         },
-        "photo": "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/18/1a/b5/10/20190617-004723-largejpg.jpg?w=1000&h=-1&s=1"
+        "photo": "https://www.ocana.cat/content/uploads/2019/12/7F6A5278.jpg"
       },
       {
         "id": "gothic-jamboree",
@@ -6706,13 +7466,7 @@ export const barcelonaCoreGuides = withDiveBarChips([
         ],
         "description": "Jamboree is a Plaça Reial institution with decades of jazz, live music, and late club programming behind it. Check the night's format, because the room can operate as a seated concert venue or a full dance floor.",
         "hours": {
-          "mon": "10:00 PM-2:30 AM",
-          "tue": "10:00 PM-2:30 AM",
-          "wed": "10:00 PM-3:30 AM",
-          "thu": "10:00 PM-4:30 AM",
-          "fri": "10:00 PM-5:00 AM",
-          "sat": "10:00 PM-5:00 AM",
-          "sun": "10:00 PM-2:30 AM"
+          "default": "Performance, doors, and club start times are published per event on the official event calendar"
         },
         "photo": "https://offloadmedia.feverup.com/barcelonasecreta.com/wp-content/uploads/2025/11/07103833/d5dc3e42-58ab-11ef-9897-42b55136ae18-1.jpg"
       }],
@@ -6754,7 +7508,7 @@ export const barcelonaCoreGuides = withDiveBarChips([
     "seoTitle": "Best Dive Bars in Gràcia, Barcelona",
     "seoDescription": "Best dive bars in Gràcia, Barcelona, covering smaller neighborhood bars, bodegas, natural-wine stops, vermouth rooms, and relaxed late-night hangouts.",
     "title": "Village Bars with Regulars",
-    "description": "Gracia's casual bars feel best when you are not trying to conquer the night.",
+    "description": "Gràcia’s casual bars sit among residential squares and neighborhood streets, where bodegas, vermouth counters, natural-wine rooms, and relaxed late bars serve a regular local crowd. Conversation and simple food take priority over club volume; most places suit an unhurried early evening or a small group.",
     "url": "https://www.google.com/maps/search/gracia+dive+bars+barcelona",
     "category": "Nightlife",
     "location": {
@@ -6830,23 +7584,23 @@ export const barcelonaCoreGuides = withDiveBarChips([
         "photo": "https://www.barcelona-life.com/wp-content/uploads/2018/02/la-fourmi-barcelona.jpg"
       },
       {
-        "id": "gracia-torpedo",
-        "name": "Bar Torpedo",
+        "id": "gracia-la-rovira",
+        "name": "La Rovira",
         "coordinates": [
-          41.3998,
-          2.1575
+          41.4063,
+          2.1599
         ],
-        "description": "Bar Torpedo is a compact late bar for when Gràcia's slower evening needs a little momentum.",
+        "description": "La Rovira is an all-day Gràcia bar for craft beer, vermouth, generous plates, and the easy neighborhood overlap between lunch tables and late drinks.",
         "hours": {
-          "mon": "6:00 PM-12:30 AM",
-          "tue": "6:00 PM-12:30 AM",
-          "wed": "6:00 PM-1:00 AM",
-          "thu": "6:00 PM-1:30 AM",
-          "fri": "6:00 PM-2:30 AM",
-          "sat": "6:00 PM-2:30 AM",
-          "sun": "6:00 PM-12:00 AM"
+          "mon": "9:00 AM-12:00 AM",
+          "tue": "9:00 AM-12:00 AM",
+          "wed": "9:00 AM-12:00 AM",
+          "thu": "9:00 AM-12:00 AM",
+          "fri": "9:00 AM-1:00 AM",
+          "sat": "9:00 AM-1:00 AM",
+          "sun": "9:00 AM-12:00 AM"
         },
-        "photo": "https://lh3.googleusercontent.com/gps-cs-s/APNQkAH2gLxqDDIj0w2gOq2-qTWlTsNkjVuH8S_dOUxk47ca8Kes_1pt6UBtuS36REJKIE0apo-Yusnm2s41n38UMWJg7EnUkBpMM3sN1bn8I0PDWiaAtlSBE5tM1VHJYad9yQuZ8hOS2phlF6tQ=w289-h312-n-k-no"
+        "photo": "https://larovirabcn.com/wp-content/uploads/2024/02/rov19.jpg"
       },
             {
         "id": "gracia-salvatge",
@@ -6906,7 +7660,7 @@ export const barcelonaCoreGuides = withDiveBarChips([
     "seoTitle": "Best Bars in Gràcia, Barcelona",
     "seoDescription": "Best bars in Gràcia, Barcelona, including plaza nightlife, independent music rooms, classic cocktail spots, and stronger destination bars with event pull.",
     "title": "Gràcia Nights That Travel",
-    "description": "Gracia's destination nights still feel smaller and more local than the center, which is the point.",
+    "description": "Gràcia’s busier bars remain smaller than central-city clubs, pairing plaza terraces and independent music rooms with polished gin, whisky, and classic-cocktail counters. Terrace tables accommodate casual groups; the smallest cocktail rooms have limited seating and are easiest for pairs.",
     "url": "https://www.google.com/maps/search/gracia+popular+nightlife+barcelona",
     "category": "Nightlife",
     "location": {
@@ -6982,23 +7736,23 @@ export const barcelonaCoreGuides = withDiveBarChips([
         "photo": "https://www.bobbygin.com/wp-content/uploads/2021/09/ginfonk_coleccio%CC%81n_web.jpeg"
       },
       {
-        "id": "gracia-whiskeria",
-        "name": "La Whiskeria",
+        "id": "gracia-14-de-la-rosa",
+        "name": "14 De La Rosa",
         "coordinates": [
-          41.4036,
+          41.4008,
           2.1585
         ],
-        "description": "La Whiskeria is a cocktail bar with a whisky backbone, long-bar seating, classic mixed drinks, and a more deliberate pace than the nearby plaza bars. Its spirits depth does not sacrifice proper cocktail service.",
+        "description": "14 De La Rosa is a narrow Gràcia cocktail bar with a serious back bar, low light, and measured classics that reward sitting down instead of collecting another plaza round.",
         "hours": {
-          "mon": "6:00 PM-12:30 AM",
-          "tue": "6:00 PM-12:30 AM",
-          "wed": "6:00 PM-1:00 AM",
-          "thu": "6:00 PM-1:30 AM",
-          "fri": "6:00 PM-2:30 AM",
-          "sat": "6:00 PM-2:30 AM",
-          "sun": "6:00 PM-12:00 AM"
+          "sun": "Closed",
+          "mon": "5:00 PM-2:00 AM",
+          "tue": "5:00 PM-2:00 AM",
+          "wed": "5:00 PM-2:00 AM",
+          "thu": "5:00 PM-2:00 AM",
+          "fri": "5:00 PM-3:00 AM",
+          "sat": "5:00 PM-3:00 AM"
         },
-        "photo": "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/2a/72/76/ea/la-barra-mas-larga-de.jpg?w=1200&h=-1&s=1"
+        "photo": "https://images.squarespace-cdn.com/content/v1/5beb225b55b02cd32247f7a4/1542137261737-L3LDP01VWQ6BJG3J2504/D760CC4C-FBA6-4ACA-9190-2102AA5F2046.jpeg?format=1500w"
       },
       {
         "id": "gracia-elephanta",
@@ -7451,7 +8205,7 @@ export const barcelonaCoreGuides = withDiveBarChips([
     "seoTitle": "Best Dive Bars in Barcelona",
     "seoDescription": "Best dive bars in Barcelona, pulling 10 smaller bar picks from Eixample, El Born, the Gothic Quarter, Gràcia, Raval, and Poble-sec.",
     "title": "Cellars, Counters, and Late-Night Regulars",
-    "description": "This is the Barcelona bar crawl for people who care more about character than polish.",
+    "description": "Barcelona’s character bars are scattered from the Raval and Gothic Quarter to Gràcia, Poble-sec, and Eixample, with old bodegas, cava counters, music bars, and late rooms. Short drinks lists, conservas, vermouth, worn interiors, and standing-room crowds matter more here than cocktail polish.",
     "url": "https://www.google.com/maps/search/best+dive+bars+barcelona",
     "category": "Nightlife",
     "location": {
@@ -8242,7 +8996,7 @@ export const barcelonaCoreGuides = withDiveBarChips([
       }
     ]
   }
-] satisfies MapList[]);
+] satisfies MapList[]));
 
 export const barcelonaItineraryGuides = withDiveBarChips([
   {
