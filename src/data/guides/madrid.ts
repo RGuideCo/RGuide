@@ -5046,7 +5046,7 @@ const madridStopRepairs: Record<string, MadridStopRepair> = {
     hours: { mon: "1:00 PM-1:00 AM", tue: "1:00 PM-1:00 AM", wed: "1:00 PM-1:00 AM", thu: "1:00 PM-1:00 AM", fri: "1:00 PM-1:00 AM", sat: "10:00 AM-1:00 AM", sun: "10:00 AM-1:00 AM" },
     foodServiceType: "restaurant", cuisineTypes: ["Mediterranean", "Modern Spanish"],
     attributeTags: ["casual", "group_friendly", "family_friendly_food", "reservation_recommended"],
-    photo: "https://elperroylagalleta.com/wp-content/uploads/2022/03/Interior-Retiro-Madrid.jpg",
+    photo: "https://elperroylagalleta.com/wp-content/uploads/2025/03/Cenas-con-Encanto.jpg",
     imageSourceUrl: "https://elperroylagalleta.com/locales/restaurante-en-retiro/",
   },
 
