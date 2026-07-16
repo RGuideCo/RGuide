@@ -89,6 +89,10 @@ Guidelines:
 - Use 2-3 notes per category.
 - Avoid generic advice that could describe any city.
 - Mention the actual local planning logic: neighborhoods, station areas, timing, booking constraints, weather, price, or transit.
+- Use Tokyo's normalized city notes as the editorial benchmark: compact labels, named districts or systems, and one useful decision per note.
+- Describe what the city offers before giving route advice. Food notes should name dishes or meal traditions; nightlife notes should identify music or room types; culture notes should identify collections, history, or performance.
+- Route language must solve a real constraint such as distance, last transport, opening rhythm, heat, or a timed ticket. Do not add generic "before/after" sequencing to make the copy sound useful.
+- A note should fail review if swapping in another city name would leave it mostly true.
 - Food can also use selected cuisine notes through `foodCuisineNeedToKnowNotes`; long term, these should become category insight rows keyed by destination and cuisine/field.
 - For neighborhood-specific category guidance, attach the insight row to the neighborhood destination, not the parent city.
 
