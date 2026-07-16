@@ -112,6 +112,39 @@ function descriptionId(...parts: string[]) {
   return parts.filter(Boolean).join(":");
 }
 
+function destinationContentLookupIds(id: string) {
+  const [scope, countryId, entityId, ...rest] = id.split(":");
+
+  if (
+    scope !== "city" ||
+    !countryId ||
+    !entityId ||
+    rest.length > 0 ||
+    !entityId.startsWith(`${countryId}-`)
+  ) {
+    return [id];
+  }
+
+  const cityId = entityId.slice(countryId.length + 1);
+  return cityId ? [id, descriptionId("city", countryId, cityId)] : [id];
+}
+
+function mapDestinationContentRows<Row extends { id: string }, Value>(
+  rows: Row[],
+  valueForRow: (row: Row) => Value,
+) {
+  const values = new Map<string, Value>();
+
+  for (const row of rows) {
+    const value = valueForRow(row);
+    for (const id of destinationContentLookupIds(row.id)) {
+      values.set(id, value);
+    }
+  }
+
+  return values;
+}
+
 function versionedImageUrl(imageUrl: string | undefined, imageUpdatedAt: string | null | undefined) {
   if (!imageUrl || !imageUpdatedAt || imageUrl.startsWith("/")) {
     return imageUrl;
@@ -802,10 +835,10 @@ export function applyDestinationDescriptions(
   categoryInsightRows: DestinationCategoryInsightRow[] = [],
   neighborhoodStrengthRows: DestinationCategoryNeighborhoodStrengthRow[] = [],
 ) {
-  const descriptions = new Map(rows.map((row) => [row.id, row.description.trim()]));
-  const cityAffiliateLinks = new Map(cityAffiliateRows.map((row) => [row.id, row]));
-  const cityFoodCuisines = new Map(cityFoodCuisineRows.map((row) => [row.id, row]));
-  const destinationImages = new Map(destinationImageRows.map((row) => [row.id, row]));
+  const descriptions = mapDestinationContentRows(rows, (row) => row.description.trim());
+  const cityAffiliateLinks = mapDestinationContentRows(cityAffiliateRows, (row) => row);
+  const cityFoodCuisines = mapDestinationContentRows(cityFoodCuisineRows, (row) => row);
+  const destinationImages = mapDestinationContentRows(destinationImageRows, (row) => row);
   const categoryInsights = new Map<string, DestinationCategoryInsight[]>();
   const neighborhoodStrengths = new Map<string, DestinationCategoryNeighborhoodStrength[]>();
 
@@ -816,7 +849,9 @@ export function applyDestinationDescriptions(
       continue;
     }
 
-    categoryInsights.set(row.id, [...(categoryInsights.get(row.id) ?? []), insight]);
+    for (const id of destinationContentLookupIds(row.id)) {
+      categoryInsights.set(id, [...(categoryInsights.get(id) ?? []), insight]);
+    }
   }
 
   for (const row of neighborhoodStrengthRows) {
@@ -824,18 +859,20 @@ export function applyDestinationDescriptions(
       continue;
     }
 
-    neighborhoodStrengths.set(row.parentId, [
-      ...(neighborhoodStrengths.get(row.parentId) ?? []),
-      {
-        neighborhoodId: row.neighborhoodId,
-        neighborhoodName: row.neighborhoodName ?? undefined,
-        category: row.category,
-        fieldKey: row.fieldKey,
-        score: row.score,
-        rationale: row.rationale ?? undefined,
-        sourceUrls: row.sourceUrls ?? undefined,
-      },
-    ]);
+    for (const parentId of destinationContentLookupIds(row.parentId)) {
+      neighborhoodStrengths.set(parentId, [
+        ...(neighborhoodStrengths.get(parentId) ?? []),
+        {
+          neighborhoodId: row.neighborhoodId,
+          neighborhoodName: row.neighborhoodName ?? undefined,
+          category: row.category,
+          fieldKey: row.fieldKey,
+          score: row.score,
+          rationale: row.rationale ?? undefined,
+          sourceUrls: row.sourceUrls ?? undefined,
+        },
+      ]);
+    }
   }
 
   return continents.map((continent) => ({
