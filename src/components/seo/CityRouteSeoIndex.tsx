@@ -13,6 +13,7 @@ import {
   getRelatedCityRouteGuides,
 } from "@/lib/deep-link-routes";
 import { CATEGORIES } from "@/lib/constants";
+import { getGuideCrossLinkGroups } from "@/lib/guide-cross-links";
 import {
   buildAgodaStaySearchUrl,
   buildStay22StopUrl,
@@ -178,7 +179,9 @@ export function CityRouteSeoIndex({ route, guides }: CityRouteSeoIndexProps) {
   const indexableGuides = getIndexableListsForCityRoute(route.city, route.neighborhood, route.category, route.guide, guides)
     .sort((left, right) => right.upvotes - left.upvotes || left.title.localeCompare(right.title));
   const visibleGuides = indexableGuides.slice(0, route.guide ? 1 : 12);
-  const relatedGuides = getRelatedCityRouteGuides(route, guides).slice(0, 6);
+  const relatedGuides = route.guide
+    ? getGuideCrossLinkGroups(route.guide, guides).flatMap((group) => group.guides).slice(0, 6)
+    : getRelatedCityRouteGuides(route, guides).slice(0, 6);
   const neighborhoods = getNeighborhoodsForCityRoute(route.city)
     .filter(
       ({ neighborhood }) =>

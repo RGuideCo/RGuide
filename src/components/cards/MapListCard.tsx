@@ -37,6 +37,13 @@ import {
   NestedPoiCard,
   getVariedGuideSources,
 } from "@/components/cards/map-list-card-v2";
+import {
+  GuideCrossLinks,
+  type GuideCrossLink,
+  type GuideCrossLinkGroup,
+} from "@/components/cards/GuideCrossLinks";
+import { GuideQuickLinks } from "@/components/cards/GuideQuickLinks";
+import { GuideStayLink, type GuideAffiliateLink } from "@/components/cards/GuideStayLink";
 import { useAppStore } from "@/store/app-store";
 import { ListCategory, MapList } from "@/types";
 
@@ -68,7 +75,13 @@ interface MapListCardProps {
   onExpandedStopIdsChange?: (stopIds: string[]) => void;
   collapsedLocationSubtitleHiddenParts?: string[];
   isExternallyHovered?: boolean;
+  guideCrossLinkGroups?: GuideCrossLinkGroup[];
+  guideQuickLinks?: GuideCrossLink[];
+  onGuideCrossLinkSelect?: (guideId: string) => void;
 }
+
+const EMPTY_GUIDE_CROSS_LINK_GROUPS: GuideCrossLinkGroup[] = [];
+const EMPTY_GUIDE_QUICK_LINKS: GuideCrossLink[] = [];
 
 function usesRankedStops(title: string) {
   return /\btop\s*\d+\b/i.test(title) || /\b\d+\b/.test(title);
@@ -995,6 +1008,42 @@ function getNearbyStayDetails(list: MapList, stop: MapList["stops"][number]) {
   };
 }
 
+function getGuideStayAffiliateLink(list: MapList): GuideAffiliateLink | null {
+  const city = list.location.city?.trim();
+  const country = list.location.country?.trim();
+  if (!city || !country) {
+    return null;
+  }
+
+  const neighborhood = list.location.neighborhood?.trim() || null;
+  const scopeName = neighborhood ?? city;
+  const useAgoda = shouldUseAgodaForStay({
+    category: "Stay",
+    city,
+    country,
+    continent: list.location.continent,
+  });
+  const scopeCampaign = neighborhood ? "neighborhood" : "citywide";
+
+  return {
+    href: useAgoda
+      ? buildAgodaStaySearchUrl({
+          city,
+          country,
+          neighborhood,
+          campaign: `guide_quick_${scopeCampaign}_agoda_${city}_${neighborhood ?? "citywide"}_${list.id}`,
+        })
+      : buildStay22DestinationUrl({
+          city,
+          country,
+          neighborhood,
+          campaign: `guide_quick_${scopeCampaign}_stay_${city}_${neighborhood ?? "citywide"}_${list.id}`,
+        }),
+    label: `Stay in ${scopeName}`,
+    platformLabel: useAgoda ? "Agoda" : "Stay22",
+  };
+}
+
 export function MapListCard({
   list,
   onHoverStart,
@@ -1023,6 +1072,9 @@ export function MapListCard({
   onExpandedStopIdsChange,
   collapsedLocationSubtitleHiddenParts = [],
   isExternallyHovered = false,
+  guideCrossLinkGroups = EMPTY_GUIDE_CROSS_LINK_GROUPS,
+  guideQuickLinks = EMPTY_GUIDE_QUICK_LINKS,
+  onGuideCrossLinkSelect,
 }: MapListCardProps) {
   const router = useRouter();
   const weekdayLabel = TODAY_WEEKDAY_LABEL;
@@ -1051,6 +1103,7 @@ export function MapListCard({
   const categoryStyle = CATEGORY_STYLES[list.category];
   const guideAccentColor = isItineraryGuide && !isEventGuide ? "#020617" : categoryStyle.mapColor;
   const guideExpandedColor = isItineraryGuide && !isEventGuide ? "#111827" : categoryStyle.mapColor;
+  const guideStayAffiliateLink = useMemo(() => getGuideStayAffiliateLink(list), [list]);
   const expandedChrome = expanded || preserveExpandedChrome;
   const hiddenLocationPartsKey = expandedChrome ? "" : collapsedLocationSubtitleHiddenParts.join("\u0001");
   const hiddenLocationParts = useMemo(
@@ -1485,21 +1538,24 @@ export function MapListCard({
         ? document.getElementById(`guide-stop-top-${list.id}-${lastStop.id}`)
         : null;
       const lastStopElement = lastStop ? document.getElementById(`guide-stop-item-${list.id}-${lastStop.id}`) : null;
+      const crossLinksElement = document.getElementById(`guide-related-links-${list.id}`);
+      const endSentinel = crossLinksElement ?? lastStopSentinel;
+      const endElement = crossLinksElement ?? lastStopElement;
 
-      if (!scrollElement || !stopListElement || !lastStopSentinel) {
+      if (!scrollElement || !stopListElement || !endSentinel) {
         setStopListEndPadding(0);
         setStopListMaxScrollTop(null);
         return;
       }
 
       const listRect = scrollElement.getBoundingClientRect();
-      const sentinelRect = lastStopSentinel.getBoundingClientRect();
+      const sentinelRect = endSentinel.getBoundingClientRect();
       const previousPadding = Number.parseFloat(window.getComputedStyle(stopListElement).paddingBottom) || 0;
       const sentinelTop = scrollElement.scrollTop + sentinelRect.top - listRect.top;
       const naturalScrollHeight = scrollElement.scrollHeight - previousPadding;
       const desktopMaxScrollTop = Math.max(0, Math.ceil(sentinelTop - STOP_SCROLL_TOP_INSET));
-      const lastStopBottom = lastStopElement
-        ? scrollElement.scrollTop + lastStopElement.getBoundingClientRect().bottom - listRect.top
+      const lastStopBottom = endElement
+        ? scrollElement.scrollTop + endElement.getBoundingClientRect().bottom - listRect.top
         : sentinelTop;
       const mobileMaxScrollTop = Math.max(
         desktopMaxScrollTop,
@@ -1522,7 +1578,7 @@ export function MapListCard({
       updateTimeouts.forEach((timeoutId) => window.clearTimeout(timeoutId));
       window.removeEventListener("resize", updateEndPadding);
     };
-  }, [deferHeavyExpandedContent, expanded, expandedStopIds, fillPane, list.id, list.stops]);
+  }, [deferHeavyExpandedContent, expanded, expandedStopIds, fillPane, guideCrossLinkGroups.length, list.id, list.stops]);
 
   useEffect(() => {
     if (
@@ -2080,11 +2136,7 @@ export function MapListCard({
             </>
           )}
         </div>
-        <div
-          className={`expanded-guide-header-actions relative z-10 flex shrink-0 items-center gap-1.5 ${
-            expandedChrome ? "expanded-guide-header-actions-expanded" : ""
-          }`}
-        >
+        <div className="expanded-guide-header-actions relative z-10 flex shrink-0 items-center gap-1.5">
           {canInlineEditGuide && currentUser?.canPublishGuides ? (
             <button
               type="button"
@@ -2215,6 +2267,13 @@ export function MapListCard({
           ) : null}
         </div>
       </div>
+      {expanded && !inlineEditing && !isEventGuide ? (
+        <GuideQuickLinks
+          guideId={list.id}
+          links={guideQuickLinks}
+          onGuideSelect={onGuideCrossLinkSelect}
+        />
+      ) : null}
       {expandable && !expanded && sourceSummary ? (
         <GuideSourceSummary
           listId={list.id}
@@ -2281,6 +2340,11 @@ export function MapListCard({
                 list={list}
                 isEditing={inlineEditing}
                 onDescriptionChange={updateInlineGuideDescription}
+                afterDescription={
+                  expanded && !inlineEditing && !isEventGuide && guideStayAffiliateLink ? (
+                    <GuideStayLink link={guideStayAffiliateLink} />
+                  ) : null
+                }
                 sourceAction={
                   sourceSummary ? (
                   <GuideSourceSummary
@@ -2568,6 +2632,16 @@ export function MapListCard({
                             <Plus className="h-4 w-4" />
                             <span>Add place</span>
                           </button>
+                        </li>
+                      ) : null}
+                      {!inlineEditing && !isEventGuide && guideCrossLinkGroups.length ? (
+                        <li className="guide-content-cascade-item list-none pt-3">
+                          <GuideCrossLinks
+                            guideId={list.id}
+                            placeName={list.location.neighborhood ?? list.location.city ?? "this destination"}
+                            groups={guideCrossLinkGroups}
+                            onGuideSelect={onGuideCrossLinkSelect}
+                          />
                         </li>
                       ) : null}
                     </ol>

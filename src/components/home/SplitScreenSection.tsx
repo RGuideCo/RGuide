@@ -27,6 +27,7 @@ import { startTransition, useEffect, useLayoutEffect, useMemo, useRef, useState 
 import type { PointerEvent as ReactPointerEvent, ReactNode } from "react";
 
 import { MapListCard } from "@/components/cards/MapListCard";
+import type { GuideCrossLink, GuideCrossLinkGroup } from "@/components/cards/GuideCrossLinks";
 import {
   MaterialCalendarMonth,
   MaterialFavorite,
@@ -133,7 +134,8 @@ import { useProfilePlacesBeenState } from "@/components/home/split-screen/profil
 import { useRouteState } from "@/components/home/split-screen/route-state";
 import { usePlacesBeenDirectory } from "@/components/home/use-places-been-directory";
 import { getCountryFlagEmoji } from "@/lib/country-flag";
-import { CATEGORY_STYLES } from "@/lib/constants";
+import { CATEGORIES, CATEGORY_STYLES } from "@/lib/constants";
+import { getGuideCrossLinkGroups } from "@/lib/guide-cross-links";
 import { buildAgodaStaySearchUrl, buildStay22DestinationUrl, shouldUseAgodaForStay } from "@/lib/stay22";
 import {
   CityDeepLinkState,
@@ -144,6 +146,7 @@ import {
   getCanonicalCountryPath,
   getCanonicalGuidePath,
   getGuideLastModified,
+  isIndexableEditorialGuide,
   resolveContinentDeepLink,
   resolveCountryDeepLink,
   resolveCityDeepLink,
@@ -3749,6 +3752,65 @@ export function SplitScreenSection({
     globalMergedLists.find((list) => list.id === expandedGuideId) ??
     null;
   const displayedGuide = expandedGuide;
+  const displayedGuideCrossLinkGroups = useMemo<GuideCrossLinkGroup[]>(() => {
+    if (!displayedGuide) {
+      return [];
+    }
+
+    return getGuideCrossLinkGroups(displayedGuide, activeEditorialLists).map((group) => ({
+      id: group.id,
+      title: group.title,
+      links: group.guides.map((guide) => ({
+        id: guide.id,
+        href: getCanonicalGuidePath(
+          { name: guide.location.city ?? displayedGuide.location.city ?? "" },
+          guide,
+          guide.location.neighborhood ? { name: guide.location.neighborhood } : undefined,
+          activeEditorialLists,
+        ),
+        title: guide.title,
+        category: guide.category,
+        context: guide.location.neighborhood
+          ? `${guide.category} in ${guide.location.neighborhood}`
+          : `${guide.category} across ${guide.location.city ?? displayedGuide.location.city ?? "the city"}`,
+      })),
+    }));
+  }, [activeEditorialLists, displayedGuide]);
+  const displayedCitywideGuideLinks = useMemo<GuideCrossLink[]>(() => {
+    const cityName = displayedGuide?.location.city?.trim();
+    if (!displayedGuide || !cityName) {
+      return [];
+    }
+
+    const cityKey = normalizeLocationName(cityName);
+    return activeEditorialLists
+      .filter(isIndexableEditorialGuide)
+      .filter(
+        (guide) =>
+          guide.id !== displayedGuide.id &&
+          !guide.location.neighborhood?.trim() &&
+          normalizeLocationName(guide.location.city) === cityKey,
+      )
+      .sort(
+        (left, right) => {
+          const leftCategoryRank = left.category === displayedGuide.category ? -1 : CATEGORIES.indexOf(left.category);
+          const rightCategoryRank = right.category === displayedGuide.category ? -1 : CATEGORIES.indexOf(right.category);
+
+          return (
+            leftCategoryRank - rightCategoryRank ||
+            right.upvotes - left.upvotes ||
+            left.title.localeCompare(right.title)
+          );
+        },
+      )
+      .map((guide) => ({
+        id: guide.id,
+        href: getCanonicalGuidePath({ name: cityName }, guide, undefined, activeEditorialLists),
+        title: guide.title,
+        category: guide.category,
+        context: `${guide.category} across ${cityName}`,
+      }));
+  }, [activeEditorialLists, displayedGuide]);
   const activeMapGuide = isProfileSubmitLayout
     ? profileSubmissionPreviewList
     : expandedGuide;
@@ -5181,6 +5243,33 @@ export function SplitScreenSection({
     if (guidePath) {
       pushExplorerPath(guidePath);
     }
+  };
+  const handleGuideCrossLinkSelect = (guideId: string) => {
+    const nextGuide = activeEditorialLists.find((guide) => guide.id === guideId);
+    if (!nextGuide) {
+      return;
+    }
+
+    const guidePath = getGuideCanonicalRoutePath(nextGuide);
+    const route = guidePath
+      ? resolveCityDeepLink(guidePath.split("/").filter(Boolean).slice(1), {
+          continents,
+          guides: activeEditorialLists,
+        })
+      : null;
+    const nextGuideSource = nextGuide.creator.name.startsWith("R ") ? "r-guides" : "user-guides";
+    const selectionWillChange = route
+      ? JSON.stringify(selection) !== JSON.stringify(route.selection)
+      : false;
+
+    if (selectionWillChange && route) {
+      skipInitialSelectionCleanupRef.current = true;
+      setSelection(route.selection);
+    }
+    if (activeGuideSource !== nextGuideSource) {
+      skipInitialGuideRailCleanupRef.current = true;
+    }
+    handleCityHighlightGuideSelect(nextGuide);
   };
   const handleProfileGuideToggle = (nextList: MapList) => {
     setProfileExpandedGuideId((current) => {
@@ -9344,6 +9433,9 @@ export function SplitScreenSection({
                           forceExpandStopId={selectedGuideStopId}
                           forceExpandStopNonce={selectedGuideStopNonce}
                           collapsedLocationSubtitleHiddenParts={getCollapsedLocationSubtitleHiddenParts(displayedGuide)}
+                          guideCrossLinkGroups={displayedGuideCrossLinkGroups}
+                          guideQuickLinks={displayedCitywideGuideLinks}
+                          onGuideCrossLinkSelect={handleGuideCrossLinkSelect}
                         />
                       </div>
                       {!isGuideTakingFullListPane && remainingGuides.length ? (

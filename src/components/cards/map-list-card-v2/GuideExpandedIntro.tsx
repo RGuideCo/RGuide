@@ -9,11 +9,18 @@ import type { MapList } from "@/types";
 interface GuideExpandedIntroProps {
   list: MapList;
   sourceAction?: ReactNode;
+  afterDescription?: ReactNode;
   isEditing?: boolean;
   onDescriptionChange?: (description: string) => void;
 }
 
-export function GuideExpandedIntro({ list, sourceAction, isEditing = false, onDescriptionChange }: GuideExpandedIntroProps) {
+export function GuideExpandedIntro({
+  list,
+  sourceAction,
+  afterDescription,
+  isEditing = false,
+  onDescriptionChange,
+}: GuideExpandedIntroProps) {
   const dateRange = [list.itinerary?.startDate ?? list.journey?.startDate, list.itinerary?.endDate ?? list.journey?.endDate]
     .filter(Boolean)
     .join(" to ");
@@ -54,6 +61,7 @@ export function GuideExpandedIntro({ list, sourceAction, isEditing = false, onDe
           {list.description}
         </p>
       )}
+      {afterDescription}
       <Link
         href={getCreatorHref({ name: list.creator.name })}
         className="guide-content-cascade-item relative z-10 mt-2 block px-4 text-sm font-bold text-slate-900 lg:hidden"
