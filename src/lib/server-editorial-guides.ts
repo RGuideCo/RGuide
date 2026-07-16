@@ -41,6 +41,7 @@ interface DataApiWeeklyEventGuideRow {
 interface EditorialGuideScope {
   cityName?: string;
   countryName?: string;
+  continentName?: string;
   bypassCache?: boolean;
 }
 
@@ -99,6 +100,9 @@ function filterGuidesByScope(guides: MapList[], scope: EditorialGuideScope = {})
   if (scope.countryName) {
     return guides.filter((guide) => guide.location.country === scope.countryName);
   }
+  if (scope.continentName) {
+    return guides.filter((guide) => guide.location.continent === scope.continentName);
+  }
 
   return guides;
 }
@@ -107,12 +111,16 @@ function getDatabaseScopeFilter(
   scope: EditorialGuideScope,
   cityExpression: string,
   countryExpression: string,
+  continentExpression: string,
 ) {
   if (scope.cityName) {
     return { clause: `and ${cityExpression} = $1`, values: [scope.cityName] };
   }
   if (scope.countryName) {
     return { clause: `and ${countryExpression} = $1`, values: [scope.countryName] };
+  }
+  if (scope.continentName) {
+    return { clause: `and ${continentExpression} = $1`, values: [scope.continentName] };
   }
 
   return { clause: "", values: [] as string[] };
@@ -272,6 +280,8 @@ async function loadEditorialGuidesFromDataApi(scope: EditorialGuideScope = {}): 
     query = query.eq("city_id", cityId);
   } else if (scope.countryName) {
     query = query.eq("list->location->>country", scope.countryName);
+  } else if (scope.continentName) {
+    query = query.eq("list->location->>continent", scope.continentName);
   }
 
   const { data, error } = await query.returns<DataApiGuideRow[]>();
@@ -306,6 +316,8 @@ async function loadWeeklyEventsFromDataApi(
     normalizedQuery = normalizedQuery.eq("city_id", cityId);
   } else if (scope.countryName) {
     normalizedQuery = normalizedQuery.eq("guide->location->>country", scope.countryName);
+  } else if (scope.continentName) {
+    normalizedQuery = normalizedQuery.eq("guide->location->>continent", scope.continentName);
   }
 
   const normalized = await normalizedQuery
@@ -326,6 +338,8 @@ async function loadWeeklyEventsFromDataApi(
     publicationQuery = publicationQuery.eq("city_id", cityId);
   } else if (scope.countryName) {
     publicationQuery = publicationQuery.eq("rendered_map_list->location->>country", scope.countryName);
+  } else if (scope.continentName) {
+    publicationQuery = publicationQuery.eq("rendered_map_list->location->>continent", scope.continentName);
   }
 
   const publication = await publicationQuery
@@ -346,6 +360,8 @@ async function loadWeeklyEventsFromDataApi(
     legacyQuery = legacyQuery.eq("city_id", cityId);
   } else if (scope.countryName) {
     legacyQuery = legacyQuery.eq("guide->location->>country", scope.countryName);
+  } else if (scope.continentName) {
+    legacyQuery = legacyQuery.eq("guide->location->>continent", scope.continentName);
   }
 
   const legacy = await legacyQuery.returns<DataApiWeeklyEventGuideRow[]>();
@@ -376,6 +392,8 @@ async function loadRenderCacheGuidesFromDataApi(
     query = query.eq("rendered_payload->location->>city", scope.cityName);
   } else if (scope.countryName) {
     query = query.eq("rendered_payload->location->>country", scope.countryName);
+  } else if (scope.continentName) {
+    query = query.eq("rendered_payload->location->>continent", scope.continentName);
   }
 
   const { data, error } = await query.returns<DataApiRenderCacheRow[]>();
@@ -396,6 +414,7 @@ async function loadNormalizedGuides(client: Client, scope: EditorialGuideScope =
       scope,
       "city.name",
       "entry.country_name",
+      "entry.continent_name",
     );
 
     const { rows } = await client.query<NormalizedGuideRow>(
@@ -437,6 +456,7 @@ async function loadRenderCacheGuides(client: Client, scope: EditorialGuideScope 
     scope,
     "city.name",
     "entry.country_name",
+    "entry.continent_name",
   );
 
   const { rows } = await client.query<RenderCacheRow>(
@@ -490,6 +510,7 @@ async function loadNormalizedWeeklyEvents(client: Client, scope: EditorialGuideS
       scope,
       "city.name",
       "guide->'location'->>'country'",
+      "guide->'location'->>'continent'",
     );
 
     const result = await client.query<WeeklyEventGuideRow>(
@@ -516,6 +537,7 @@ async function loadWeeklyEventPublicationCache(client: Client, scope: EditorialG
       scope,
       "city.name",
       "rendered_map_list->'location'->>'country'",
+      "rendered_map_list->'location'->>'continent'",
     );
 
     const { rows } = await client.query<WeeklyEventGuideRow>(
@@ -542,6 +564,7 @@ async function loadLegacyWeeklyEventGuides(client: Client, scope: EditorialGuide
       scope,
       "city.name",
       "guide->'location'->>'country'",
+      "guide->'location'->>'continent'",
     );
 
     const { rows } = await client.query<WeeklyEventGuideRow>(
@@ -588,6 +611,19 @@ const getCachedCountryEditorialGuidesFromSupabase = unstable_cache(
   },
 );
 
+const getCachedContinentEditorialGuidesFromSupabase = unstable_cache(
+  async (continentName: string) => {
+    return loadEditorialGuidesFromSupabase({ continentName });
+  },
+  ["server-editorial-guides", "continent-scoped"],
+  {
+    revalidate: Number.isFinite(EDITORIAL_GUIDES_CACHE_SECONDS)
+      ? EDITORIAL_GUIDES_CACHE_SECONDS
+      : 86400,
+    tags: ["editorial-guides"],
+  },
+);
+
 const getRequestMemoizedAllEditorialGuides = cache(async () => loadEditorialGuidesFromSupabase());
 
 export async function getServerEditorialGuides(scope: EditorialGuideScope = {}) {
@@ -597,7 +633,9 @@ export async function getServerEditorialGuides(scope: EditorialGuideScope = {}) 
       ? getCachedCityEditorialGuidesFromSupabase(scope.cityName)
       : scope.countryName
         ? getCachedCountryEditorialGuidesFromSupabase(scope.countryName)
-      : getRequestMemoizedAllEditorialGuides();
+        : scope.continentName
+          ? getCachedContinentEditorialGuidesFromSupabase(scope.continentName)
+          : getRequestMemoizedAllEditorialGuides();
 
   const supabaseGuides = await supabaseGuideLoader.catch((error) => {
     console.error("Failed to load cached server editorial guides", error);

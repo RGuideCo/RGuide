@@ -16,11 +16,14 @@ export async function GET(request: Request) {
     const { searchParams } = new URL(request.url);
     const cityName = searchParams.get("city")?.trim() || undefined;
     const countryName = cityName ? undefined : searchParams.get("country")?.trim() || undefined;
+    const continentName = cityName || countryName
+      ? undefined
+      : searchParams.get("continent")?.trim() || undefined;
     const rateLimit = checkRateLimit(request, {
       namespace: "app-data",
       limit: 120,
       windowMs: 60_000,
-      keyParts: [cityName, countryName],
+      keyParts: [cityName, countryName, continentName],
     });
 
     if (!rateLimit.allowed) {
@@ -29,10 +32,15 @@ export async function GET(request: Request) {
 
     const [continents, guides] = await Promise.all([
       getContinentsWithDestinationDescriptions({ forceDatabase: true }),
-      getServerEditorialGuides({ cityName, countryName, bypassCache: Boolean(cityName || countryName) }),
+      getServerEditorialGuides({
+        cityName,
+        countryName,
+        continentName,
+        bypassCache: Boolean(cityName || countryName || continentName),
+      }),
     ]);
 
-    const cacheControl = cityName || countryName
+    const cacheControl = cityName || countryName || continentName
       ? "no-store, max-age=0"
       : `public, s-maxage=${cacheSeconds}, stale-while-revalidate=${cacheSeconds * 4}`;
 

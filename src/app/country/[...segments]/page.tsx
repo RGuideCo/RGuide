@@ -128,6 +128,7 @@ export default async function CountryDeepLinkPage({ params }: CountryDeepLinkPag
       >
         <SplitScreenClientLoader
           initialAppData={{ continents, guides: [] }}
+          appDataScope={{ countryName: route.country.name }}
           initialRouteState={{
             selection: route.selection,
             activeCategory: route.activeCategory,
