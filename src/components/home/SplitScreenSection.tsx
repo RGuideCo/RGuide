@@ -3773,14 +3773,14 @@ export function SplitScreenSection({
   const neighborhoodRailLists = shouldGroupCityGuideList
     ? orderedRailFilteredLists.filter((list) => isListNeighborhoodGuideForActiveCity(list))
     : [];
-  const recentRGuideLists = useMemo(() => {
+  const recentGuideLists = useMemo(() => {
     if (!isGlobalSelection || activeGuideRail !== "all-guides" || activeGuideSource === "user-guides" || activeGuideSource === "favorites") {
       return [];
     }
 
     const worldwideGuideIds = new Set(orderedRailFilteredLists.map((list) => list.id));
     const baseRecentLists = activeCategory
-      ? globalMergedLists.filter((list) => list.category === activeCategory)
+      ? globalMergedLists.filter((list) => doesListMatchCategory(list, activeCategory))
       : globalMergedLists;
 
     return baseRecentLists
@@ -3788,7 +3788,11 @@ export function SplitScreenSection({
         (list) =>
           !list.id.startsWith("event-") &&
           list.creator.name.startsWith("R ") &&
-          list.location.city?.toLowerCase() === "barcelona" &&
+          list.submissionType !== "event" &&
+          list.submissionType !== "journal" &&
+          list.submissionType !== "journey" &&
+          list.submissionType !== "itinerary" &&
+          (!activeSubcategory || doesListMatchSubcategory(list, activeSubcategory)) &&
           !worldwideGuideIds.has(list.id),
       )
       .slice()
@@ -3800,19 +3804,19 @@ export function SplitScreenSection({
         return rightTime - leftTime || right.upvotes - left.upvotes || left.title.localeCompare(right.title);
       })
       .slice(0, 20);
-  }, [activeGuideRail, activeGuideSource, activeCategory, globalMergedLists, isGlobalSelection, orderedRailFilteredLists]);
+  }, [activeGuideRail, activeGuideSource, activeCategory, activeSubcategory, globalMergedLists, isGlobalSelection, orderedRailFilteredLists]);
 
   const visibleGuideMarkerListSignature = useMemo(
     () =>
       [
         ...orderedRailFilteredLists.map((list) => list.id),
-        ...recentRGuideLists.map((list) => list.id),
+        ...recentGuideLists.map((list) => list.id),
       ].join("|"),
-    [orderedRailFilteredLists, recentRGuideLists],
+    [orderedRailFilteredLists, recentGuideLists],
   );
   const visibleGuideMarkerFallbackIds = useMemo(() => {
     const seen = new Set<string>();
-    const lists = [...orderedRailFilteredLists, ...recentRGuideLists];
+    const lists = [...orderedRailFilteredLists, ...recentGuideLists];
     return lists
       .filter((list) => {
         if (seen.has(list.id) || list.id === activeMapGuide?.id) {
@@ -3823,7 +3827,7 @@ export function SplitScreenSection({
       })
       .slice(0, 45)
       .map((list) => list.id);
-  }, [activeMapGuide?.id, orderedRailFilteredLists, recentRGuideLists]);
+  }, [activeMapGuide?.id, orderedRailFilteredLists, recentGuideLists]);
 
   useEffect(() => {
     if (typeof window === "undefined" || isProfileSubmitLayout || isGuidePaneTakingFullListPane) {
@@ -9408,12 +9412,12 @@ export function SplitScreenSection({
                           {neighborhoodRailLists.map((list) => renderGuideRailCard(list, "neighborhood-"))}
                         </div>
                       ) : null}
-                      {recentRGuideLists.length ? (
+                      {recentGuideLists.length ? (
                         <div className="space-y-4 border-t border-white/14 pt-4">
                           <p className="px-1 text-[11px] font-medium uppercase tracking-[0.2em] text-white/62">
                             Recent Guides
                           </p>
-                          {recentRGuideLists.map((list) => (
+                          {recentGuideLists.map((list) => (
                             <div
                               key={`recent-rguide-${list.id}`}
                               data-guide-card-anchor={list.id}
