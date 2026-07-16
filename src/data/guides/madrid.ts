@@ -5239,8 +5239,8 @@ const madridCitywideAdditions: GuideStop[] = [
     officialUrl: "https://latasqueria.com/", bookingUrl: "https://latasqueria.com/",
     venueKind: "food_drink", foodServiceType: "restaurant", cuisineTypes: ["Madrilenian", "Offal", "Contemporary"],
     attributeTags: ["fine_dining", "tasting_menu", "local_specialty", "reservation_required"],
-    photo: "https://latasqueria.com/wp-content/uploads/2024/07/la-tasqueria-2024-home-interior-1.jpg",
-    imageSourceUrl: "https://latasqueria.com/en/la-tasqueria-and-javi-estevez/",
+    photo: "https://latasqueria.com/wp-content/uploads/2024/07/la-tasqueria-2024-home-portada.jpg",
+    imageSourceUrl: "https://latasqueria.com/",
   },
   {
     id: "madrid-food-casa-lucio",

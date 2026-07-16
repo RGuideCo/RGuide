@@ -435,7 +435,7 @@ const BARCELONA_STOP_REPAIRS = {
       sat: "Concerts 10:00 PM-12:00 AM; DJ sessions 12:00 AM-6:00 AM",
       sun: "9:30 PM-4:30 AM",
     },
-    photo: "https://marulacafe.com/wp-content/uploads/2025/02/sala-home2-1.jpg",
+    photo: "https://marulacafe.com/wp-content/uploads/2025/02/lasala-mask-2-2.jpg",
     price: "$$",
     priceSource: "Official event ticketing / venue price range",
     venueKind: "nightlife",

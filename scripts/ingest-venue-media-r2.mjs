@@ -1,7 +1,9 @@
-import fs from "node:fs";
+import { execFile } from "node:child_process";
 import dns from "node:dns/promises";
+import fs from "node:fs";
 import path from "node:path";
 import process from "node:process";
+import { promisify } from "node:util";
 import { fileURLToPath } from "node:url";
 
 import { PutObjectCommand, S3Client } from "@aws-sdk/client-s3";
@@ -24,6 +26,9 @@ const OPENVERSE_API_URL = "https://api.openverse.engineering/v1/images/";
 const OPENVERSE_ALLOWED_LICENSES = "by,by-sa,cc0,pdm";
 const USER_AGENT = "rGuide-media-ingest/1.0 (https://rguide.co; media@rguide.co)";
 const BROWSER_USER_AGENT = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0 Safari/537.36";
+const IMAGE_ACCEPT_HEADER = "image/avif,image/webp,image/png,image/jpeg,image/*;q=0.8,*/*;q=0.1";
+const CURL_IMAGE_MAX_BYTES = 25 * 1024 * 1024;
+const execFileAsync = promisify(execFile);
 
 function loadEnvFile(filePath) {
   if (!fs.existsSync(filePath)) return;
@@ -217,6 +222,70 @@ function contentTypeFromPath(filePath) {
   if (extension === ".webp") return "image/webp";
   if (extension === ".avif") return "image/avif";
   return null;
+}
+
+function contentTypeFromBytes(bytes) {
+  const buffer = Buffer.from(bytes);
+  if (buffer.length >= 3 && buffer[0] === 0xff && buffer[1] === 0xd8 && buffer[2] === 0xff) {
+    return "image/jpeg";
+  }
+  if (buffer.length >= 8 && buffer.subarray(0, 8).equals(Buffer.from([0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a]))) {
+    return "image/png";
+  }
+  if (buffer.length >= 12 && buffer.toString("ascii", 0, 4) === "RIFF" && buffer.toString("ascii", 8, 12) === "WEBP") {
+    return "image/webp";
+  }
+  if (buffer.length >= 12 && buffer.toString("ascii", 4, 8) === "ftyp") {
+    const brands = buffer.toString("ascii", 8, Math.min(buffer.length, 32));
+    if (brands.includes("avif") || brands.includes("avis")) {
+      return "image/avif";
+    }
+  }
+  return null;
+}
+
+async function fetchImageWithCurl(url, fetchError) {
+  try {
+    const protocol = new URL(url).protocol;
+    if (protocol !== "http:" && protocol !== "https:") {
+      throw new Error(`curl fallback does not support ${protocol || "unknown"} URLs`);
+    }
+    const { stdout } = await execFileAsync(
+      "curl",
+      [
+        "--location",
+        "--fail",
+        "--silent",
+        "--show-error",
+        "--max-time",
+        "30",
+        "--proto",
+        "=http,https",
+        "--proto-redir",
+        "=http,https",
+        "--user-agent",
+        BROWSER_USER_AGENT,
+        "--header",
+        `Accept: ${IMAGE_ACCEPT_HEADER}`,
+        "--",
+        url,
+      ],
+      { encoding: "buffer", maxBuffer: CURL_IMAGE_MAX_BYTES },
+    );
+    const bytes = new Uint8Array(stdout);
+    const contentType = contentTypeFromBytes(bytes);
+    if (!bytes.length) {
+      throw new Error("curl returned an empty body");
+    }
+    if (!contentType || !IMAGE_EXT_BY_TYPE.has(contentType)) {
+      throw new Error("curl returned an unsupported image body");
+    }
+    return { bytes, contentType };
+  } catch (curlError) {
+    const fetchMessage = fetchError instanceof Error ? fetchError.message : "unknown fetch error";
+    const curlMessage = curlError instanceof Error ? curlError.message : "unknown curl error";
+    throw new Error(`source fetch failed (${fetchMessage}); curl fallback failed (${curlMessage})`);
+  }
 }
 
 function resolveLocalImagePath(url) {
@@ -543,14 +612,19 @@ async function fetchImage(url) {
   const fetchWithUserAgent = (userAgent) => fetch(url, {
     redirect: "follow",
     headers: {
-      "accept": "image/avif,image/webp,image/png,image/jpeg,image/*;q=0.8,*/*;q=0.1",
+      "accept": IMAGE_ACCEPT_HEADER,
       "user-agent": userAgent,
     },
   });
 
-  let response = await fetchWithUserAgent(USER_AGENT);
-  if (response.status === 403) {
-    response = await fetchWithUserAgent(BROWSER_USER_AGENT);
+  let response;
+  try {
+    response = await fetchWithUserAgent(USER_AGENT);
+    if (response.status === 403) {
+      response = await fetchWithUserAgent(BROWSER_USER_AGENT);
+    }
+  } catch (error) {
+    return fetchImageWithCurl(url, error);
   }
 
   const contentType = response.headers.get("content-type")?.split(";")[0]?.toLowerCase() ?? "";
