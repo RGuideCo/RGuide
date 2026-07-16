@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState, type WheelEvent as ReactWheelEvent } from "react";
 
 import {
   MaterialAccountBalance,
@@ -31,11 +31,12 @@ const CATEGORY_ICONS: Record<ListCategory, MaterialSymbolIcon> = {
 
 type GuideQuickLinksProps = {
   guideId: string;
+  placeName: string;
   links: GuideCrossLink[];
   onGuideSelect?: (guideId: string) => void;
 };
 
-export function GuideQuickLinks({ guideId, links, onGuideSelect }: GuideQuickLinksProps) {
+export function GuideQuickLinks({ guideId, placeName, links, onGuideSelect }: GuideQuickLinksProps) {
   const scrollerRef = useRef<HTMLDivElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
   const revealTimeoutRef = useRef<number | null>(null);
@@ -59,6 +60,33 @@ export function GuideQuickLinks({ guideId, links, onGuideSelect }: GuideQuickLin
       revealTimeoutRef.current = null;
     }
   }, []);
+
+  const handleWheel = useCallback(
+    (event: ReactWheelEvent<HTMLElement>) => {
+      const scroller = scrollerRef.current;
+      if (!scroller || scroller.scrollWidth <= scroller.clientWidth) {
+        return;
+      }
+
+      const rawDelta = Math.abs(event.deltaX) > Math.abs(event.deltaY) ? event.deltaX : event.deltaY;
+      if (!rawDelta) {
+        return;
+      }
+
+      const deltaScale = event.deltaMode === 1 ? 16 : event.deltaMode === 2 ? scroller.clientWidth : 1;
+      const maxScrollLeft = scroller.scrollWidth - scroller.clientWidth;
+      const nextScrollLeft = Math.max(0, Math.min(maxScrollLeft, scroller.scrollLeft + rawDelta * deltaScale));
+
+      if (Math.abs(nextScrollLeft - scroller.scrollLeft) < 0.5) {
+        return;
+      }
+
+      event.preventDefault();
+      scroller.scrollLeft = nextScrollLeft;
+      updateEdgeFades();
+    },
+    [updateEdgeFades],
+  );
 
   const queueChipReveal = useCallback(
     (chip: HTMLElement) => {
@@ -119,13 +147,16 @@ export function GuideQuickLinks({ guideId, links, onGuideSelect }: GuideQuickLin
     <nav
       id={`guide-quick-links-${guideId}`}
       data-guide-quick-links
-      aria-label="Citywide guides"
+      aria-label={`Explore more of ${placeName}`}
       className="guide-content-cascade-item relative z-10 -mx-3 bg-slate-800 px-3 py-2.5"
       style={{ animationDelay: "50ms" }}
       onClick={(event) => event.stopPropagation()}
+      onWheel={handleWheel}
     >
       <div className="flex items-center justify-between gap-3">
-        <p className="shrink-0 text-[9px] font-semibold uppercase text-white">Explore more</p>
+        <p className="min-w-0 truncate text-[9px] font-semibold uppercase text-white">
+          Explore more of {placeName}
+        </p>
         <p className="shrink-0 text-[9px] font-medium text-white/65">
           {links.length} {links.length === 1 ? "guide" : "guides"}
         </p>

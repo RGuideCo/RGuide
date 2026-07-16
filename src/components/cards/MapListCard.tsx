@@ -245,6 +245,16 @@ function buildLocationSubtitle(list: MapList, hiddenParts: string[] = []) {
     .join(" • ");
 }
 
+function buildGuideQuickLinksPlaceName(list: MapList) {
+  const neighborhood = list.location.neighborhood?.trim() || inferNeighborhoodFromGuideText(list);
+  const city = list.location.city?.trim();
+
+  return [neighborhood, city]
+    .filter((part): part is string => Boolean(part))
+    .filter((part, index, all) => all.findIndex((item) => item.toLowerCase() === part.toLowerCase()) === index)
+    .join(", ") || list.location.country;
+}
+
 type GuideSource = NonNullable<MapList["sources"]>[number];
 
 function buildGuideMeta(list: MapList, hiddenLocationParts?: string[]) {
@@ -2326,6 +2336,7 @@ export function MapListCard({
                 <div className="-mr-1 mb-4 lg:mr-0">
                   <GuideQuickLinks
                     guideId={list.id}
+                    placeName={buildGuideQuickLinksPlaceName(list)}
                     links={guideQuickLinks}
                     onGuideSelect={onGuideCrossLinkSelect}
                   />
