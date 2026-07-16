@@ -800,7 +800,12 @@ function buildStopPayload(selectedGuides, contexts) {
         coordinates: normalizeCoordinates(stop.coordinates),
         official_url: stop.officialUrl ?? stop.bookingUrl ?? null,
         venue_kind: classification.venueKind ?? "other",
-        venue_kinds: classification.venueKind ? [classification.venueKind] : [],
+        venue_kinds: mergeUniqueValues(
+          classification.venueKind ? [classification.venueKind] : [],
+          classification.lodgingType ? ["lodging"] : [],
+          classification.foodServiceType ? ["food_drink"] : [],
+          classification.nightlifeType ? ["nightlife"] : [],
+        ),
         lodging_type: classification.lodgingType ?? null,
         food_service_type: classification.foodServiceType ?? null,
         cuisine_types: classification.cuisineTypes ?? [],
@@ -1062,7 +1067,12 @@ async function upsertVenuesBatch(client, venueRows) {
            when excluded.venue_kind = 'other' then public.venues.venue_kind
            else excluded.venue_kind
          end,
-         venue_kinds = array(select distinct unnest(public.venues.venue_kinds || excluded.venue_kinds)),
+         venue_kinds = array(
+           select distinct unnest(
+             public.venues.venue_kinds || excluded.venue_kinds ||
+             array[public.venues.venue_kind, excluded.venue_kind]::public.venue_kind[]
+           )
+         ),
          lodging_type = coalesce(excluded.lodging_type, public.venues.lodging_type),
          food_service_type = coalesce(excluded.food_service_type, public.venues.food_service_type),
          cuisine_types = array(select distinct unnest(public.venues.cuisine_types || excluded.cuisine_types)),
@@ -1776,7 +1786,12 @@ async function upsertVenue(client, input, stats) {
          when excluded.venue_kind = 'other' then public.venues.venue_kind
          else excluded.venue_kind
        end,
-       venue_kinds = array(select distinct unnest(public.venues.venue_kinds || excluded.venue_kinds)),
+       venue_kinds = array(
+         select distinct unnest(
+           public.venues.venue_kinds || excluded.venue_kinds ||
+           array[public.venues.venue_kind, excluded.venue_kind]::public.venue_kind[]
+         )
+       ),
        lodging_type = coalesce(excluded.lodging_type, public.venues.lodging_type),
        food_service_type = coalesce(excluded.food_service_type, public.venues.food_service_type),
        cuisine_types = array(select distinct unnest(public.venues.cuisine_types || excluded.cuisine_types)),

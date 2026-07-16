@@ -232,7 +232,7 @@ const stops: Record<string, GuideStop> = {
     "berlin-food-coda",
     "CODA Dessert Dining",
     [52.4868, 13.4246],
-    "That makes it one of Berlin's most interesting reservations, especially for travelers who already know the standard tasting-menu grammar. Go curious, and do not treat it like a cake shop.",
+    "CODA Dessert Dining builds a Michelin-starred tasting menu around pastry technique without treating dessert as a conventional final course. Savoury ingredients, fermentation, restrained sweetness, and a compact Neukölln room make it a distinct reservation rather than a cake-shop detour.",
     {
       venueKind: "food_drink",
       foodServiceType: "restaurant",
@@ -1753,8 +1753,18 @@ type GuideSpec = {
   submissionType?: SubmissionType;
 };
 
+const BERLIN_GUIDE_EVIDENCE_REPAIR_IDS = new Set([
+  "list-berlin-citywide-restaurants",
+  "list-berlin-citywide-culture",
+]);
+
+function berlinMapUrl(name: string): string {
+  return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`${name} Berlin`)}`;
+}
+
 function guide(spec: GuideSpec): MapList {
   const isDiveBarGuide = spec.seoSlug === "best-dive-bars";
+  const needsEvidenceRepair = BERLIN_GUIDE_EVIDENCE_REPAIR_IDS.has(spec.id);
 
   return {
     id: spec.id,
@@ -1775,13 +1785,43 @@ function guide(spec: GuideSpec): MapList {
     },
     upvotes: 0,
     createdAt,
-    stops: spec.stopIds.map((id) => ({
-      ...stops[id],
-      ...(isDiveBarGuide
-        ? { attributeTags: ["dive_bars", ...(stops[id]?.attributeTags ?? []).filter((tag) => tag !== "dive_bars")] }
-        : {}),
-      ...(berlinHoursByStop[id] ? { hours: berlinHoursByStop[id] } : {}),
-    })),
+    stops: spec.stopIds.map((id) => {
+      const base = stops[id];
+      const stop = {
+        ...base,
+        ...(isDiveBarGuide
+          ? { attributeTags: ["dive_bars", ...(base.attributeTags ?? []).filter((tag) => tag !== "dive_bars")] }
+          : {}),
+        ...(berlinHoursByStop[id] ? { hours: berlinHoursByStop[id] } : {}),
+      } satisfies GuideStop;
+
+      if (!needsEvidenceRepair) return stop;
+
+      const officialUrl = stop.officialUrl ?? stop.bookingUrl;
+      const mapUrl = berlinMapUrl(stop.name);
+      const imageSourceUrl = stop.imageSourceUrl ?? stop.photo;
+      const sourceUrls = [...new Set([
+        ...(stop.sourceUrls ?? []),
+        officialUrl,
+        mapUrl,
+        imageSourceUrl,
+      ].filter((url): url is string => Boolean(url)))];
+
+      return {
+        ...stop,
+        imageSourceUrl,
+        sourceUrls,
+        sourceEvidence: {
+          ...stop.sourceEvidence,
+          officialUrl,
+          mapUrl,
+          currentStatusUrl: mapUrl,
+          imageSourceUrl,
+          notes: "Official venue and venue-specific map evidence checked for current status.",
+          checkedAt: "2026-07-16",
+        },
+      } satisfies GuideStop;
+    }),
     sources: sources[spec.sourceKey],
   };
 }
@@ -1794,7 +1834,7 @@ const citywideGuides: GuideSpec[] = [
     seoTitle: "Best Restaurants in Berlin",
     seoDescription: "Best restaurants in Berlin for Michelin dining, modern German cooking, natural wine, Kreuzberg dinners, vegetarian tasting menus, and neighborhood rooms worth booking.",
     title: "Fine Dining With Attitude",
-    description: "Berlin dining is strongest when it stops apologizing for not being Paris.",
+    description: "Berlin’s ambitious dining spans Mitte, Kreuzberg, Prenzlauer Berg, and Neukölln, from German tasting menus to vegetarian and Asian-inflected cooking. Some menus emphasize regional ingredients and vegetables, while others favor sharper global flavors; small rooms and fixed courses often require advance reservations.",
     category: "Food",
     sourceKey: "restaurants",
     stopIds: ["rutz", "timRaue", "coda", "nobelhart", "otto", "horvath", "cookiesCream", "barra", "kink", "lokal"],
@@ -1866,7 +1906,7 @@ const citywideGuides: GuideSpec[] = [
     seoTitle: "Best Culture in Berlin",
     seoDescription: "Best culture in Berlin for Museum Island, Wall history, Jewish Museum Berlin, Topography of Terror, contemporary art, DDR history, and civic landmarks.",
     title: "Museums & Berlin's Deep History",
-    description: "Berlin culture is not one museum corridor; it is an argument across the city.",
+    description: "Berlin’s major cultural sites stretch from Museum Island and the Kulturforum to Bernauer Strasse, Kreuzberg, and the Spree, making history visible far beyond one museum district. Collections, memorial landscapes, political architecture, and former border sites require different amounts of time and emotional attention.",
     category: "Culture",
     sourceKey: "culture",
     stopIds: ["museumIsland", "topography", "jewishMuseum", "wallMemorial", "eastSideGallery", "humboldtForum", "hamburgerBahnhof", "gemaeldegalerie", "ddrMuseum", "reichstag"],

@@ -1,6 +1,6 @@
-import type { MapList } from "@/types";
+import type { GuideStop, ListSource, MapList } from "@/types";
 
-export const madridNeighborhoodGuides = [
+const madridNeighborhoodGuideSeeds = [
   {
     "id": "list-madrid-sol-centro-restaurants",
     "slug": "madrid-sol-centro-restaurants",
@@ -141,7 +141,7 @@ export const madridNeighborhoodGuides = [
     "seoTitle": "Best Bars in Sol and Centro, Madrid",
     "seoDescription": "Best bars in Sol and Centro, Madrid, covering historic taverns, central cocktail rooms, rooftop drinks, and late-night institutions.",
     "title": "Central Drinks With a Reason",
-    "description": "Central Madrid is better when the night has a plot instead of just another crowded bar.",
+    "description": "Across Sol and Gran Via, a night out can mean a 19th-century tavern, a rooftop above the old center, a singalong piano room, or a serious cocktail bar. Choose by format: the tavern starts early with cod and beer, while the piano bar is built for a late, participatory crowd.",
     "url": "https://www.google.com/maps/search/sol+centro+madrid+bars",
     "category": "Nightlife",
     "location": {
@@ -673,7 +673,7 @@ export const madridNeighborhoodGuides = [
     "seoTitle": "Best Restaurants in Barrio de las Letras, Madrid",
     "seoDescription": "Best restaurants in Barrio de las Letras, Madrid, for pre-theater dinners, tapas, taverns, modern Spanish rooms, and Art Walk meals.",
     "title": "Pre-Theater Tables and Literary Taverns",
-    "description": "Las Letras eats best when the meal respects the neighborhood's theater clocks, museum legs, and late-bar instincts.",
+    "description": "In Barrio de las Letras, restaurants serve museum visitors and theater crowds without relying on the generic tapas menus around Huertas. Compact modern rooms suit a booked dinner, while historic taverns are better for vermouth and traditional plates before a performance.",
     "url": "https://www.google.com/maps/search/barrio+de+las+letras+madrid+restaurants",
     "category": "Food",
     "location": {
@@ -1338,7 +1338,7 @@ export const madridNeighborhoodGuides = [
     "seoTitle": "Best Restaurants in Retiro, Madrid",
     "seoDescription": "Best restaurants in Retiro, Madrid, for park-adjacent meals, polished taverns, museum-day lunches, and quieter dinners near Ibiza and Jerónimos.",
     "title": "Park-Edge Lunches and Polished Taverns",
-    "description": "Retiro meals should feel like a pause, not a surrender to the tourist corridor.",
+    "description": "Retiro's restaurants sit between the park, the museum corridor, and the residential streets of Ibiza, where small taverns offer a quieter alternative to monument-side dining. A wine-led seafood lunch is slower and more intimate; the park's multi-space complex seats larger groups but sacrifices some of that quiet.",
     "url": "https://www.google.com/maps/search/retiro+madrid+restaurants",
     "category": "Food",
     "location": {
@@ -1982,7 +1982,7 @@ export const madridNeighborhoodGuides = [
     "seoTitle": "Best Restaurants in Malasana, Madrid",
     "seoDescription": "Best restaurants in Malasana, Madrid, for modern tasting menus, casual cafes, Lebanese plates, late dinners, and neighborhood food before bars.",
     "title": "Indie Dinners and Small Rooms",
-    "description": "Malasana wants dinner to stay loose enough for whatever happens after.",
+    "description": "Malasana's restaurants keep the neighborhood's small scale, from an eight-seat tasting counter to relaxed rooms for Lebanese cooking, brunch, and shared plates. The tasting counter requires advance booking and a long, structured dinner; the larger informal rooms accommodate groups and unplanned drinks afterward.",
     "url": "https://www.google.com/maps/search/malasana+madrid+restaurants",
     "category": "Food",
     "location": {
@@ -3291,7 +3291,7 @@ export const madridNeighborhoodGuides = [
     "seoTitle": "Best Restaurants in Chueca, Madrid",
     "seoDescription": "Best restaurants in Chueca, Madrid, for wine-led dinners, market meals, modern Spanish cooking, LGBTQ+ nightlife-adjacent dining, and stylish central rooms.",
     "title": "Wine, Market Plates, and Stylish Rooms",
-    "description": "Chueca is strongest when dinner already knows the night might continue.",
+    "description": "Chueca's dining runs alongside its wine bars, market, and late-night streets, with both formal tasting menus and flexible group meals. Book the small high-end rooms for a planned occasion; market counters and shareable plates are easier when appetites or arrival times differ.",
     "url": "https://www.google.com/maps/search/chueca+madrid+restaurants",
     "category": "Food",
     "location": {
@@ -3553,7 +3553,7 @@ export const madridNeighborhoodGuides = [
     "seoTitle": "Best Hotels in Chueca, Madrid",
     "seoDescription": "Best hotels in Chueca, Madrid, for boutique stays, rooftop access, Gran Via edges, LGBTQ+ nightlife, and polished central sleep.",
     "title": "Boutique Stays Around Chueca",
-    "description": "These hotels let Chueca stay close without making the room feel like an after-hours spillover.",
+    "description": "Hotels in and around Chueca keep Barquillo, Gran Via, and the neighborhood's nightlife within walking distance, with quieter rooms toward the Salesas edge. Room Mate Oscar has the rooftop pool; spa hotels provide more separation from the busiest late-night blocks.",
     "url": "https://www.google.com/maps/search/chueca+madrid+hotels",
     "category": "Stay",
     "location": {
@@ -3951,7 +3951,7 @@ export const madridNeighborhoodGuides = [
   }
 ] satisfies MapList[];
 
-export const madridCitywideGuides = [
+const madridCitywideGuideSeeds = [
   {
     "id": "list-madrid-citywide-restaurants",
     "slug": "madrid-citywide-restaurants",
@@ -3959,7 +3959,7 @@ export const madridCitywideGuides = [
     "seoTitle": "Best Restaurants in Madrid",
     "seoDescription": "Best restaurants in Madrid, from tapas counters and market tortillas to modern Spanish rooms, wine-led Chueca dining, and destination tasting menus.",
     "title": "Tapas Streets, Markets, and Modern Rooms",
-    "description": "This is not a greatest-hits list for people trying to eat Madrid in one afternoon.",
+    "description": "Madrid's restaurants range from market-stall tortilla and old-capital dining rooms to eight-seat counters and high-budget tasting menus. Market lunches and old taverns rarely require a long booking, while the smallest modern rooms and internationally recognized fine dining demand advance reservations and more time.",
     "url": "https://www.google.com/maps/search/best+restaurants+madrid",
     "category": "Food",
     "location": {
@@ -4905,6 +4905,422 @@ export const madridCitywideGuides = [
     ]
   }
 ] satisfies MapList[];
+
+const madridCheckedAt = "2026-07-16";
+
+const madridTargetGuideIds = new Set([
+  "list-madrid-sol-centro-popular-bars",
+  "list-madrid-letras-restaurants",
+  "list-madrid-retiro-restaurants",
+  "list-madrid-malasana-restaurants",
+  "list-madrid-chueca-restaurants",
+  "list-madrid-chueca-stays",
+  "list-madrid-citywide-restaurants",
+]);
+
+const madridDaily = (value: string, defaultNote?: string): GuideStop["hours"] => ({
+  ...(defaultNote ? { default: defaultNote } : {}),
+  mon: value,
+  tue: value,
+  wed: value,
+  thu: value,
+  fri: value,
+  sat: value,
+  sun: value,
+});
+
+type MadridStopRepair = Partial<GuideStop> & {
+  officialUrl: string;
+  statusUrl?: string;
+};
+
+const madridStopRepairs: Record<string, MadridStopRepair> = {
+  "sol-nightlife-casa-labra": {
+    officialUrl: "http://www.casalabra.es/",
+    statusUrl: "https://www.esmadrid.com/restaurantes/casa-labra",
+    hours: madridDaily("11:30 AM-3:30 PM; 6:30 PM-10:30 PM"),
+    price: "$",
+    priceSource: "Casa Labra / Tourism Madrid",
+    venueKind: "nightlife",
+    nightlifeType: "pub",
+    attributeTags: ["historic", "local_bar", "cheap_drinks", "walk_in_friendly"],
+  },
+  "sol-nightlife-edition-roof": {
+    officialUrl: "https://www.oroyamadrid.com/en/oroya",
+    statusUrl: "https://www.editionhotels.com/madrid/restaurants-and-bars/oroya/",
+    hours: {
+      mon: "12:00 PM-12:00 AM", tue: "12:00 PM-12:00 AM", wed: "12:00 PM-12:00 AM",
+      thu: "12:00 PM-12:00 AM", fri: "12:00 PM-1:00 AM", sat: "12:00 PM-1:00 AM", sun: "12:00 PM-12:00 AM",
+    },
+    price: "$$$",
+    priceSource: "Oroya official menu / Madrid EDITION",
+    venueKind: "nightlife",
+    nightlifeType: "rooftop_bar",
+    attributeTags: ["rooftop", "scenic_nightlife", "premium_drinks", "date_night"],
+  },
+  "sol-nightlife-toni2": {
+    officialUrl: "https://toni2.es/contacto/",
+    statusUrl: "https://www.esmadrid.com/en/nightlife/toni-2",
+    hours: {
+      mon: "11:30 PM-5:30 AM", tue: "11:30 PM-5:30 AM", wed: "11:30 PM-5:30 AM",
+      thu: "11:30 PM-5:30 AM", fri: "10:00 PM-6:00 AM", sat: "10:00 PM-6:00 AM", sun: "11:30 PM-5:30 AM",
+    },
+    price: "$$",
+    priceSource: "Toni 2 official contact page / Tourism Madrid",
+    venueKind: "nightlife",
+    nightlifeType: "live_music_venue",
+    musicGenres: ["piano", "singalong"],
+    attributeTags: ["live_music", "late_late", "lively_nightlife", "local_bar"],
+  },
+  "sol-nightlife-josealfredo": {
+    officialUrl: "https://josealfredobar.com/",
+    statusUrl: "https://www.esmadrid.com/en/nightlife/josealfredo",
+    hours: madridDaily("7:00 PM-3:00 AM"),
+    price: "$$",
+    priceSource: "Josealfredo official site / Tourism Madrid",
+    venueKind: "nightlife",
+    nightlifeType: "cocktail_bar",
+    attributeTags: ["premium_drinks", "date_night", "late_night", "low_key_nightlife"],
+  },
+
+  "letras-food-la-malontina": {
+    officialUrl: "https://lamalontina.es/reservas",
+    statusUrl: "https://www.esmadrid.com/en/restaurants/malontina",
+    hours: {
+      mon: "12:30 PM-10:30 PM", tue: "12:30 PM-10:30 PM", wed: "12:30 PM-10:30 PM",
+      thu: "12:30 PM-10:30 PM", fri: "12:30 PM-11:00 PM", sat: "12:30 PM-11:00 PM", sun: "1:30 PM-10:00 PM",
+    },
+    foodServiceType: "restaurant", cuisineTypes: ["Spanish", "Mediterranean"],
+    attributeTags: ["local_favorite", "casual", "date_night", "reservation_recommended"],
+  },
+  "letras-food-casa-alberto": {
+    officialUrl: "https://www.casaalberto.es/reservar-casa-alberto",
+    statusUrl: "https://www.esmadrid.com/en/restaurants/casa-alberto",
+    hours: { mon: "Closed", tue: "12:00 PM-11:00 PM", wed: "12:00 PM-11:00 PM", thu: "12:00 PM-11:00 PM", fri: "12:00 PM-11:00 PM", sat: "12:00 PM-11:00 PM", sun: "12:00 PM-4:00 PM" },
+    foodServiceType: "restaurant", cuisineTypes: ["Madrilenian", "Spanish", "Traditional"],
+    attributeTags: ["historic", "local_specialty", "local_favorite", "reservation_recommended"],
+  },
+  "letras-food-triciclo": {
+    officialUrl: "https://www.restaurantetriciclo.com/",
+    statusUrl: "https://www.esmadrid.com/en/restaurants/triciclo",
+    hours: { mon: "1:00 PM-4:00 PM; 8:00 PM-11:00 PM", tue: "1:00 PM-4:00 PM; 8:00 PM-11:00 PM", wed: "1:00 PM-4:00 PM; 8:00 PM-11:00 PM", thu: "1:00 PM-4:00 PM; 8:00 PM-11:00 PM", fri: "1:00 PM-4:00 PM; 8:00 PM-11:00 PM", sat: "1:00 PM-4:00 PM; 8:00 PM-11:00 PM", sun: "Closed" },
+    foodServiceType: "restaurant", cuisineTypes: ["Modern Spanish", "Mediterranean"],
+    attributeTags: ["date_night", "reservation_recommended", "share_plates", "local_favorite"],
+  },
+  "letras-food-viva-madrid": {
+    officialUrl: "https://www.vivamadrid1856.com/",
+    statusUrl: "https://www.esmadrid.com/en/restaurants/viva-madrid",
+    hours: {
+      default: "The kitchen serves daily from 12:00 PM to 1:00 AM.",
+      mon: "12:00 PM-2:00 AM", tue: "12:00 PM-2:00 AM", wed: "12:00 PM-2:00 AM", thu: "12:00 PM-2:00 AM",
+      fri: "12:00 PM-2:30 AM", sat: "12:00 PM-2:30 AM", sun: "12:00 PM-2:00 AM",
+    },
+    foodServiceType: "restaurant", cuisineTypes: ["Spanish", "Tapas"],
+    attributeTags: ["historic", "lively_food", "late_night", "share_plates"],
+  },
+
+  "retiro-food-la-catapa": {
+    officialUrl: "https://tabernalacatapa.com/",
+    statusUrl: "https://tabernalacatapa.com/",
+    hours: { default: "The official June and July timetable closes dining at 8:00 PM and the kitchen at 7:00 PM.", mon: "Closed", tue: "12:00 PM-8:00 PM", wed: "12:00 PM-8:00 PM", thu: "12:00 PM-8:00 PM", fri: "12:00 PM-8:00 PM", sat: "12:00 PM-8:00 PM", sun: "Closed" },
+    foodServiceType: "restaurant", cuisineTypes: ["Spanish", "Tapas"],
+    attributeTags: ["local_favorite", "share_plates", "casual", "reservation_recommended"],
+  },
+  "retiro-food-kulto": {
+    officialUrl: "https://kulto.es/",
+    statusUrl: "https://www.esmadrid.com/restaurantes/kulto",
+    hours: { mon: "Closed", tue: "Closed", wed: "1:00 PM-11:00 PM", thu: "1:00 PM-11:00 PM", fri: "1:00 PM-11:00 PM", sat: "1:00 PM-11:00 PM", sun: "1:00 PM-11:00 PM" },
+    foodServiceType: "restaurant", cuisineTypes: ["Andalusian", "Modern Spanish"],
+    attributeTags: ["date_night", "seafood", "reservation_recommended", "local_favorite"],
+  },
+  "retiro-food-florida": {
+    officialUrl: "https://www.floridapark.es/en/el-pabellon/info",
+    statusUrl: "https://www.floridapark.es/en/el-pabellon/info",
+    hours: madridDaily("12:00 PM-4:00 PM; 8:00 PM-11:00 PM", "These are El Pabellon's official kitchen hours; Florida Park's wider entertainment complex remains open later."),
+    foodServiceType: "restaurant", cuisineTypes: ["Spanish", "Mediterranean"],
+    attributeTags: ["scenic_food", "group_friendly", "lively_food", "reservation_recommended"],
+  },
+  "retiro-food-perro-galleta": {
+    officialUrl: "https://elperroylagalleta.com/locales/restaurante-en-retiro/",
+    statusUrl: "https://www.esmadrid.com/en/restaurants/perro-y-la-galleta-retiro",
+    hours: { mon: "1:00 PM-1:00 AM", tue: "1:00 PM-1:00 AM", wed: "1:00 PM-1:00 AM", thu: "1:00 PM-1:00 AM", fri: "1:00 PM-1:00 AM", sat: "10:00 AM-1:00 AM", sun: "10:00 AM-1:00 AM" },
+    foodServiceType: "restaurant", cuisineTypes: ["Mediterranean", "Modern Spanish"],
+    attributeTags: ["casual", "group_friendly", "family_friendly_food", "reservation_recommended"],
+    photo: "https://elperroylagalleta.com/wp-content/uploads/2022/03/Interior-Retiro-Madrid.jpg",
+    imageSourceUrl: "https://elperroylagalleta.com/locales/restaurante-en-retiro/",
+  },
+
+  "malasana-food-playing-solo": {
+    officialUrl: "https://playingsolorestaurant.com/",
+    statusUrl: "https://guide.michelin.com/es/es/comunidad-de-madrid/madrid/restaurante/playing-solo",
+    hours: { mon: "Closed", tue: "8:00 PM-11:00 PM", wed: "8:00 PM-11:00 PM", thu: "8:00 PM-11:00 PM", fri: "8:00 PM-11:00 PM", sat: "8:00 PM-11:00 PM", sun: "Closed" },
+    price: "$$$", priceSource: "Playing Solo official tasting menus / MICHELIN Guide",
+    foodServiceType: "restaurant", cuisineTypes: ["Japanese", "French", "Contemporary"],
+    attributeTags: ["tasting_menu", "counter_seating", "fine_dining", "reservation_required"],
+  },
+  "malasana-food-aredna": {
+    officialUrl: "https://arednarestaurante.com/",
+    statusUrl: "https://www.esmadrid.com/en/restaurants/aredna",
+    hours: madridDaily("1:00 PM-1:00 AM"),
+    foodServiceType: "restaurant", cuisineTypes: ["Mediterranean", "Modern Spanish"],
+    attributeTags: ["date_night", "reservation_recommended", "central", "local_favorite"],
+  },
+  "malasana-food-ojala": {
+    officialUrl: "https://grupolamusa.com/restaurante-ojala/",
+    statusUrl: "https://www.esmadrid.com/en/restaurants/ojala",
+    foodServiceType: "restaurant", cuisineTypes: ["International", "Mediterranean", "Brunch"],
+    attributeTags: ["brunch", "group_friendly", "lively_food", "casual"],
+  },
+  "malasana-food-la-musa": {
+    officialUrl: "https://grupolamusa.com/restaurante-musa-malasana/",
+    statusUrl: "https://grupolamusa.com/restaurante-musa-malasana/",
+    hours: { mon: "1:00 PM-12:00 AM", tue: "1:00 PM-12:00 AM", wed: "1:00 PM-12:00 AM", thu: "1:00 PM-12:30 AM", fri: "1:00 PM-1:00 AM", sat: "1:00 PM-1:00 AM", sun: "1:00 PM-12:00 AM" },
+    foodServiceType: "restaurant", cuisineTypes: ["Mediterranean", "Spanish"],
+    attributeTags: ["share_plates", "group_friendly", "casual", "lively_food"],
+    photo: "https://grupolamusa.com/wp-content/uploads/2025/11/Musa-Malasana-1.webp",
+    imageSourceUrl: "https://grupolamusa.com/restaurante-musa-malasana/",
+  },
+
+  "chueca-food-angelita": {
+    officialUrl: "https://madrid-angelita.es/es/",
+    statusUrl: "https://www.esmadrid.com/en/restaurants/angelita-madrid",
+    hours: { mon: "5:30 PM-12:30 AM", tue: "5:30 PM-12:30 AM", wed: "5:30 PM-12:30 AM", thu: "5:30 PM-12:30 AM", fri: "5:30 PM-12:30 AM", sat: "Closed", sun: "Closed" },
+    foodServiceType: "restaurant", cuisineTypes: ["Modern Spanish", "Wine-led"],
+    attributeTags: ["date_night", "wine", "reservation_recommended", "local_favorite"],
+  },
+  "chueca-food-mercado-san-anton": {
+    officialUrl: "https://www.mercadosananton.com/",
+    statusUrl: "https://www.madrid.es/portales/munimadrid/es/Inicio/Actividad-economica-y-hacienda/Comercio-y-mercados/Mercado-municipal-de-San-Anton/",
+    hours: {
+      default: "Market counters run Monday-Saturday 10:00 AM-10:00 PM; dining floors keep the later hours below.",
+      mon: "10:00 AM-12:00 AM", tue: "10:00 AM-12:00 AM", wed: "10:00 AM-12:00 AM", thu: "10:00 AM-12:00 AM",
+      fri: "10:00 AM-1:30 AM", sat: "10:00 AM-1:30 AM", sun: "10:00 AM-12:00 AM",
+    },
+    foodServiceType: "stall", cuisineTypes: ["Spanish", "International", "Market food"],
+    attributeTags: ["market", "group_friendly", "share_plates", "walk_in_friendly"],
+  },
+  "chueca-food-dstage": {
+    officialUrl: "https://www.dstageconcept.com/",
+    statusUrl: "https://guide.michelin.com/es/es/comunidad-de-madrid/madrid/restaurante/dstage",
+    hours: { mon: "Closed", tue: "8:30 PM-11:30 PM", wed: "8:30 PM-11:30 PM", thu: "8:30 PM-11:30 PM", fri: "1:30 PM-4:00 PM; 8:30 PM-11:30 PM", sat: "1:30 PM-4:00 PM; 8:30 PM-11:30 PM", sun: "Closed" },
+    foodServiceType: "restaurant", cuisineTypes: ["Contemporary", "Modern Spanish"],
+    attributeTags: ["fine_dining", "tasting_menu", "destination_dining", "reservation_required"],
+  },
+  "chueca-food-kuoco": {
+    officialUrl: "https://kuoco360food.wixsite.com/kuoco",
+    statusUrl: "https://www.esmadrid.com/restaurantes/kuoco-360o-food",
+    hours: { mon: "Closed", tue: "1:30 PM-4:00 PM; 8:30 PM-11:30 PM", wed: "1:30 PM-4:00 PM; 8:30 PM-11:30 PM", thu: "1:30 PM-4:00 PM; 8:30 PM-11:30 PM", fri: "1:30 PM-4:00 PM; 8:30 PM-11:30 PM", sat: "1:30 PM-4:00 PM; 8:30 PM-11:30 PM", sun: "1:30 PM-4:00 PM; 8:30 PM-11:30 PM" },
+    foodServiceType: "restaurant", cuisineTypes: ["Latin American", "Asian", "Fusion"],
+    attributeTags: ["date_night", "share_plates", "reservation_recommended", "local_favorite"],
+    photo: "https://static.wixstatic.com/media/2768e0_5436d6cc2a7a49df8b261ccbbe5f4ea4%7Emv2.jpg/v1/fit/w_2500,h_1330,al_c/2768e0_5436d6cc2a7a49df8b261ccbbe5f4ea4%7Emv2.jpg",
+    imageSourceUrl: "https://kuoco360food.wixsite.com/kuoco",
+  },
+
+  "stay-only-you-boutique": { officialUrl: "https://www.onlyyouhotels.com/en/hotels/only-you-boutique-hotel-madrid/", lodgingType: "hotel", attributeTags: ["design", "luxury", "central", "nightlife"] },
+  "stay-room-mate-oscar": { officialUrl: "https://room-matehotels.com/en/oscar/", lodgingType: "hotel", attributeTags: ["design", "rooftop", "central", "lively"] },
+  "stay-brach": { officialUrl: "https://brachmadrid.com/", lodgingType: "hotel", attributeTags: ["luxury", "design", "wellness", "central"] },
+  "stay-hotel-urban": { officialUrl: "https://www.hotelurban.com/", lodgingType: "hotel", attributeTags: ["luxury", "rooftop", "design", "central"] },
+  "stay-urso": { officialUrl: "https://www.hotelurso.com/", lodgingType: "hotel", attributeTags: ["luxury", "wellness", "quiet", "design"] },
+
+  "madrid-food-casa-dani": {
+    officialUrl: "https://casadani.es/contacto",
+    statusUrl: "https://www.mercadodelapaz.com/portfolio/54-casa-dani-bar-restaurante/",
+    description: "Casa Dani is the busy Mercado de la Paz counter for tortilla de patatas, croquetas, and straightforward Madrid market cooking, served from early morning through the market day.",
+    hours: { mon: "7:00 AM-8:00 PM", tue: "7:00 AM-8:00 PM", wed: "7:00 AM-8:00 PM", thu: "7:00 AM-8:00 PM", fri: "7:00 AM-8:00 PM", sat: "7:00 AM-5:00 PM", sun: "Closed" },
+    priceSource: "Casa Dani official menu / Mercado de la Paz",
+    foodServiceType: "counter_service", cuisineTypes: ["Spanish", "Madrilenian"],
+    attributeTags: ["market", "local_specialty", "walk_in_friendly", "casual"],
+    imageSourceUrl: "https://casadani.es/",
+  },
+  "madrid-food-la-malontina": {
+    officialUrl: "https://lamalontina.es/reservas",
+    statusUrl: "https://www.esmadrid.com/en/restaurants/malontina",
+    description: "La Malontina is a small Barrio de las Letras dining room serving seasonal Spanish and Mediterranean plates, with an intimate scale that suits a quiet lunch or dinner.",
+    hours: { mon: "12:30 PM-10:30 PM", tue: "12:30 PM-10:30 PM", wed: "12:30 PM-10:30 PM", thu: "12:30 PM-10:30 PM", fri: "12:30 PM-11:00 PM", sat: "12:30 PM-11:00 PM", sun: "1:30 PM-10:00 PM" },
+    foodServiceType: "restaurant", cuisineTypes: ["Spanish", "Mediterranean"],
+    attributeTags: ["local_favorite", "casual", "date_night", "reservation_recommended"],
+  },
+  "madrid-food-angelita": {
+    officialUrl: "https://madrid-angelita.es/es/",
+    statusUrl: "https://www.esmadrid.com/en/restaurants/angelita-madrid",
+    hours: { mon: "5:30 PM-12:30 AM", tue: "5:30 PM-12:30 AM", wed: "5:30 PM-12:30 AM", thu: "5:30 PM-12:30 AM", fri: "5:30 PM-12:30 AM", sat: "Closed", sun: "Closed" },
+    foodServiceType: "restaurant", cuisineTypes: ["Modern Spanish", "Wine-led"],
+    attributeTags: ["date_night", "wine", "reservation_recommended", "local_favorite"],
+  },
+  "madrid-food-playing-solo": {
+    officialUrl: "https://playingsolorestaurant.com/",
+    statusUrl: "https://guide.michelin.com/es/es/comunidad-de-madrid/madrid/restaurante/playing-solo",
+    hours: { mon: "Closed", tue: "8:00 PM-11:00 PM", wed: "8:00 PM-11:00 PM", thu: "8:00 PM-11:00 PM", fri: "8:00 PM-11:00 PM", sat: "8:00 PM-11:00 PM", sun: "Closed" },
+    price: "$$$", priceSource: "Playing Solo official tasting menus / MICHELIN Guide",
+    foodServiceType: "restaurant", cuisineTypes: ["Japanese", "French", "Contemporary"],
+    attributeTags: ["tasting_menu", "counter_seating", "fine_dining", "reservation_required"],
+  },
+  "madrid-food-lhardy": { officialUrl: "https://lhardy.com/", statusUrl: "https://www.esmadrid.com/en/restaurants/lhardy", foodServiceType: "restaurant", cuisineTypes: ["Madrilenian", "Traditional Spanish"], attributeTags: ["historic", "local_specialty", "reservation_recommended"] },
+  "madrid-food-diverxo": {
+    officialUrl: "https://diverxo.com/",
+    statusUrl: "https://guide.michelin.com/es/es/comunidad-de-madrid/madrid/restaurante/diverxo",
+    description: "Dabiz Muñoz's DiverXO serves a long, theatrical tasting menu that moves between Spanish, Asian, and global references in a surreal dining room near Castellana.",
+    price: "$$$", priceSource: "DiverXO official tasting menu / MICHELIN Guide",
+    foodServiceType: "restaurant", cuisineTypes: ["Creative", "Fusion"],
+    attributeTags: ["fine_dining", "tasting_menu", "destination_dining", "reservation_required"],
+    photo: "https://diverxo.com/wp-content/uploads/2021/12/xo-obra-opt.webp",
+    imageSourceUrl: "https://diverxo.com/",
+  },
+  "madrid-food-smoked-room": {
+    officialUrl: "https://smokedroom.com/madrid/",
+    statusUrl: "https://guide.michelin.com/es/es/comunidad-de-madrid/madrid/restaurante/smoked-room",
+    description: "Smoked Room is an intimate counter restaurant inside Hyatt Regency Hesperia Madrid, building its tasting menu around fire, smoke, charcoal, and closely watched grill work.",
+    price: "$$$", priceSource: "Smoked Room official tasting menu / MICHELIN Guide",
+    foodServiceType: "restaurant", cuisineTypes: ["Japanese", "Grill", "Contemporary"],
+    attributeTags: ["fine_dining", "tasting_menu", "counter_seating", "reservation_required"],
+  },
+};
+
+const madridFoodSources: ListSource[] = [
+  { name: "Tourism Madrid - Gastronomy", url: "https://www.esmadrid.com/en/gastronomy" },
+  { name: "Tourism Madrid - Michelin-starred restaurants", url: "https://www.esmadrid.com/en/michelin-starred-restaurants" },
+  { name: "MICHELIN Guide - Madrid restaurants", url: "https://guide.michelin.com/us/en/comunidad-de-madrid/madrid/restaurants" },
+  { name: "Guia Repsol - Madrid restaurants", url: "https://www.guiarepsol.com/es/comer/restaurantes/madrid/" },
+  { name: "The Infatuation - Best Madrid restaurants", url: "https://www.theinfatuation.com/madrid/guides/best-madrid-restaurants" },
+  { name: "Time Out Madrid - Best restaurants", url: "https://www.timeout.es/madrid/es/restaurantes/los-100-mejores-restaurantes-de-madrid-top-100" },
+  { name: "Conde Nast Traveler - Madrid restaurants", url: "https://www.cntraveler.com/gallery/best-restaurants-in-madrid" },
+  { name: "Madrid municipal markets", url: "https://www.madrid.es/portales/munimadrid/es/Inicio/Actividad-economica-y-hacienda/Comercio-y-mercados/" },
+  { name: "Google Maps", url: "https://maps.google.com" },
+  { name: "OpenStreetMap Madrid", url: "https://www.openstreetmap.org/relation/5326784" },
+];
+
+const madridNightlifeSources: ListSource[] = [
+  { name: "Tourism Madrid - Nightlife", url: "https://www.esmadrid.com/en/nightlife" },
+  { name: "Tourism Madrid - Cocktail bars", url: "https://www.esmadrid.com/en/madrid-nightlife-areas" },
+  { name: "Time Out Madrid - Bars", url: "https://www.timeout.es/madrid/es/bares-y-pubs" },
+  { name: "World's 50 Best Bars", url: "https://www.worlds50bestbars.com/list/1-50" },
+  { name: "Conde Nast Traveler - Madrid bars", url: "https://www.cntraveler.com/gallery/best-bars-in-madrid" },
+  { name: "Madrid EDITION dining", url: "https://www.editionhotels.com/madrid/restaurants-and-bars/" },
+  { name: "Toni 2 official", url: "https://toni2.es/" },
+  { name: "Josealfredo official", url: "https://josealfredobar.com/" },
+  { name: "Google Maps", url: "https://maps.google.com" },
+  { name: "OpenStreetMap Madrid", url: "https://www.openstreetmap.org/relation/5326784" },
+];
+
+const madridStaySources: ListSource[] = [
+  { name: "Tourism Madrid - Accommodation", url: "https://www.esmadrid.com/en/accommodation" },
+  { name: "Conde Nast Traveler - Best Madrid hotels", url: "https://www.cntraveler.com/gallery/best-hotels-in-madrid" },
+  { name: "MICHELIN Guide - Madrid hotels", url: "https://guide.michelin.com/us/en/hotels-stays/madrid" },
+  { name: "Forbes Travel Guide - Madrid", url: "https://www.forbestravelguide.com/destinations/madrid-spain" },
+  { name: "Booking.com - Madrid", url: "https://www.booking.com/city/es/madrid.html" },
+  { name: "Tripadvisor - Madrid hotels", url: "https://www.tripadvisor.com/Hotels-g187514-Madrid-Hotels.html" },
+  { name: "Only YOU Boutique Hotel Madrid", url: "https://www.onlyyouhotels.com/en/hotels/only-you-boutique-hotel-madrid/" },
+  { name: "Room Mate Oscar", url: "https://room-matehotels.com/en/oscar/" },
+  { name: "Brach Madrid", url: "https://brachmadrid.com/" },
+  { name: "Google Maps", url: "https://maps.google.com" },
+];
+
+const madridCitywideAdditions: GuideStop[] = [
+  {
+    id: "madrid-food-sala-despiece",
+    name: "Sala de Despiece",
+    coordinates: [40.43894, -3.69923],
+    description: "Sala de Despiece moved its original Chamberi restaurant to Alonso Cano in 2024, keeping the butcher-room design, long counter, and precise plates built around seasonal vegetables, fish, and meat.",
+    hours: { mon: "1:30 PM-5:00 PM; 8:00 PM-11:45 PM", tue: "1:30 PM-5:00 PM; 8:00 PM-11:45 PM", wed: "1:30 PM-5:00 PM; 8:00 PM-11:45 PM", thu: "1:30 PM-5:00 PM; 8:00 PM-11:45 PM", fri: "1:00 PM-5:00 PM; 8:00 PM-11:45 PM", sat: "1:00 PM-5:00 PM; 8:00 PM-11:45 PM", sun: "1:00 PM-5:00 PM; 8:00 PM-11:45 PM" },
+    price: "$$", priceSource: "Sala de Despiece official site / Tourism Madrid (EUR 16-30)",
+    officialUrl: "https://saladedespiece.com/", bookingUrl: "https://saladedespiece.com/",
+    venueKind: "food_drink", foodServiceType: "restaurant", cuisineTypes: ["Tapas", "Modern Spanish"],
+    attributeTags: ["counter_seating", "share_plates", "lively_food", "reservation_recommended"],
+    photo: "https://s2.abcstatics.com/abc/www/multimedia/gastronomia/2025/04/04/sala-despiece-1-U02107046745zXJ-760x427%40diario_abc.jpg",
+    imageSourceUrl: "https://www.abc.es/gastronomia/sala-despiece-alonso-cano-madrid-londres-aperturas-restaurantes-20250404194746-nt.html",
+  },
+  {
+    id: "madrid-food-la-tasqueria",
+    name: "La Tasqueria",
+    coordinates: [40.44367, -3.69604],
+    description: "Javi Estevez treats Madrid's offal tradition as modern fine dining at La Tasqueria, where tasting menus turn cheeks, trotters, tripe, and lesser-used cuts into carefully judged courses.",
+    hours: { mon: "1:30 PM-3:30 PM; 7:30 PM-10:30 PM", tue: "1:30 PM-3:30 PM; 7:30 PM-10:30 PM", wed: "1:30 PM-3:30 PM; 7:30 PM-10:30 PM", thu: "1:30 PM-3:30 PM; 7:30 PM-10:30 PM", fri: "1:30 PM-3:30 PM; 8:30 PM-10:30 PM", sat: "1:30 PM-3:30 PM", sun: "Closed" },
+    price: "$$$", priceSource: "La Tasqueria official menus / Tourism Madrid (EUR 60+)",
+    officialUrl: "https://latasqueria.com/", bookingUrl: "https://latasqueria.com/",
+    venueKind: "food_drink", foodServiceType: "restaurant", cuisineTypes: ["Madrilenian", "Offal", "Contemporary"],
+    attributeTags: ["fine_dining", "tasting_menu", "local_specialty", "reservation_required"],
+    photo: "https://latasqueria.com/wp-content/uploads/2024/07/la-tasqueria-2024-home-interior-1.jpg",
+    imageSourceUrl: "https://latasqueria.com/en/la-tasqueria-and-javi-estevez/",
+  },
+  {
+    id: "madrid-food-casa-lucio",
+    name: "Casa Lucio",
+    coordinates: [40.41218, -3.7114],
+    description: "Casa Lucio occupies a centuries-old Cava Baja dining room and remains a reference for traditional Madrid cooking, especially huevos rotos, roasts, fish, and old-school table service.",
+    hours: madridDaily("1:00 PM-4:00 PM; 8:00 PM-11:45 PM", "The restaurant closes for the full month of August under its official seasonal schedule."),
+    price: "$$$", priceSource: "Casa Lucio official menu / Tourism Madrid",
+    officialUrl: "https://casalucio.es/es/contacto/", bookingUrl: "https://casalucio.es/es/contacto/",
+    venueKind: "food_drink", foodServiceType: "restaurant", cuisineTypes: ["Madrilenian", "Traditional Spanish"],
+    attributeTags: ["historic", "local_specialty", "classic", "reservation_recommended"],
+    photo: "https://casalucio.es/wp-content/uploads/2015/09/local_01.jpg",
+    imageSourceUrl: "https://casalucio.es/es/el-local/",
+  },
+];
+
+function uniqueMadridSources(sources: ListSource[]) {
+  return [...new Map(sources.filter((source) => /^https?:\/\//i.test(source.url)).map((source) => [source.url, source])).values()];
+}
+
+function repairMadridGuide(list: MapList): MapList {
+  if (!madridTargetGuideIds.has(list.id)) return list;
+
+  const seedStops = list.id === "list-madrid-citywide-restaurants"
+    ? [...list.stops, ...madridCitywideAdditions]
+    : list.stops;
+
+  const stops = seedStops.map((stop) => {
+    const repair = madridStopRepairs[stop.id] ?? {};
+    const officialUrl = repair.officialUrl ?? stop.officialUrl ?? stop.bookingUrl;
+    if (!officialUrl) return stop;
+    const mapUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`${stop.coordinates[0]},${stop.coordinates[1]}`)}`;
+    const statusUrl = repair.statusUrl ?? officialUrl;
+    const imageSourceUrl = repair.imageSourceUrl ?? stop.imageSourceUrl ?? officialUrl;
+    const categoryDefaults: Partial<GuideStop> = list.category === "Food"
+      ? { venueKind: "food_drink", foodServiceType: "restaurant", cuisineTypes: ["Spanish"], attributeTags: ["central", "reservation_recommended"] }
+      : list.category === "Nightlife"
+        ? { venueKind: "nightlife", nightlifeType: "other", attributeTags: ["central", "lively_nightlife"] }
+        : {
+            venueKind: "lodging",
+            lodgingType: "hotel",
+            hours: madridDaily("Open 24 hours", "Guest operations run continuously; check-in and amenity times are controlled by the official property page."),
+            bookingUrl: officialUrl,
+            attributeTags: ["central", "design"],
+          };
+
+    return {
+      ...stop,
+      ...categoryDefaults,
+      ...repair,
+      officialUrl,
+      ...(list.category === "Stay" ? { bookingUrl: repair.bookingUrl ?? officialUrl } : {}),
+      imageSourceUrl,
+      sourceUrls: [...new Set([...(stop.sourceUrls ?? []), officialUrl, mapUrl, statusUrl, imageSourceUrl])],
+      sourceEvidence: {
+        ...stop.sourceEvidence,
+        officialUrl,
+        mapUrl,
+        currentStatusUrl: statusUrl,
+        imageSourceUrl,
+        checkedAt: madridCheckedAt,
+      },
+    } satisfies GuideStop;
+  });
+
+  const categorySources = list.category === "Food"
+    ? madridFoodSources
+    : list.category === "Nightlife"
+      ? madridNightlifeSources
+      : madridStaySources;
+  const stopSources = stops.flatMap((stop) => [
+    ...(stop.officialUrl ? [{ name: `${stop.name} official`, url: stop.officialUrl }] : []),
+    ...(stop.sourceEvidence?.currentStatusUrl ? [{ name: `${stop.name} current status`, url: stop.sourceEvidence.currentStatusUrl }] : []),
+  ]);
+
+  return { ...list, stops, sources: uniqueMadridSources([...(list.sources ?? []), ...categorySources, ...stopSources]) };
+}
+
+export const madridNeighborhoodGuides = madridNeighborhoodGuideSeeds.map(repairMadridGuide) satisfies MapList[];
+export const madridCitywideGuides = madridCitywideGuideSeeds.map(repairMadridGuide) satisfies MapList[];
 
 export const madridGuides = [
   ...madridNeighborhoodGuides,
