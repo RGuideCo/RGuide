@@ -143,6 +143,7 @@ import {
   getCanonicalContinentPath,
   getCanonicalCountryPath,
   getCanonicalGuidePath,
+  getGuideLastModified,
   resolveContinentDeepLink,
   resolveCountryDeepLink,
   resolveCityDeepLink,
@@ -3797,8 +3798,8 @@ export function SplitScreenSection({
       )
       .slice()
       .sort((left, right) => {
-        const rightDate = Date.parse(right.createdAt);
-        const leftDate = Date.parse(left.createdAt);
+        const rightDate = Date.parse(getGuideLastModified(right) ?? "");
+        const leftDate = Date.parse(getGuideLastModified(left) ?? "");
         const rightTime = Number.isFinite(rightDate) ? rightDate : 0;
         const leftTime = Number.isFinite(leftDate) ? leftDate : 0;
         return rightTime - leftTime || right.upvotes - left.upvotes || left.title.localeCompare(right.title);
