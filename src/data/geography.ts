@@ -108,11 +108,17 @@ const cityImageSlugAliases: Record<string, string> = {
   rio: "rio-de-janeiro",
 };
 
+const cityImageOverrides: Record<string, string> = {
+  dublin: "https://media.rguide.co/venues/ie/dublin/dublinia/9136c3f2-primary.jpg",
+  kyoto: "https://media.rguide.co/venues/jp/kyoto/fushimi-inari-taisha/ca3d253a-primary.jpg",
+  osaka: "https://media.rguide.co/venues/jp/osaka/osaka-castle-museum/db02ec7e-primary.jpg",
+};
+
 const cityImage = (query: string) => {
   const normalizedQuery = slugify(query);
   const slug = cityImageSlugAliases[normalizedQuery] ?? normalizedQuery;
 
-  return `/api/destination-image/${slug}-v2`;
+  return cityImageOverrides[slug] ?? `/api/destination-image/${slug}-v2`;
 };
 
 const topCityDescriptionOverrides = new Map<string, string>([
