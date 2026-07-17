@@ -1,6 +1,9 @@
 import { readFile } from "node:fs/promises";
+import { resolve } from "node:path";
+import { pathToFileURL } from "node:url";
 
 const SITEMAP_PATH = ".next/server/app/sitemap.xml.body";
+const SITEMAP_ROUTE_PATH = ".next/server/app/sitemap.xml/route.js";
 const CANONICAL_ORIGIN = "https://www.rguide.co";
 const FORBIDDEN_PATH_PREFIXES = ["/api/", "/admin/", "/auth/", "/events/", "/favorites", "/list/", "/mobile", "/submit", "/venues/"];
 
@@ -15,7 +18,22 @@ function getRouteClass(pathname) {
   return pathname.split("/").filter(Boolean)[0] ?? "other";
 }
 
-const xml = await readFile(SITEMAP_PATH, "utf8");
+async function readBuiltSitemap() {
+  try {
+    return await readFile(SITEMAP_PATH, "utf8");
+  } catch (error) {
+    if (error?.code !== "ENOENT") throw error;
+
+    const builtRoute = await import(pathToFileURL(resolve(SITEMAP_ROUTE_PATH)).href);
+    const routeExports = await builtRoute.default;
+    const response = await routeExports.routeModule.userland.GET();
+
+    assert(response.ok, `Built sitemap returned HTTP ${response.status}.`);
+    return response.text();
+  }
+}
+
+const xml = await readBuiltSitemap();
 const locations = [...xml.matchAll(/<loc>([^<]+)<\/loc>/g)].map((match) => match[1]);
 const lastModifiedValues = [...xml.matchAll(/<lastmod>([^<]+)<\/lastmod>/g)].map((match) => match[1]);
 const uniqueLocations = new Set(locations);

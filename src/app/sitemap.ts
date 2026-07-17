@@ -2,7 +2,6 @@ import type { MetadataRoute } from "next";
 
 import { users } from "@/data";
 import { CATEGORIES } from "@/lib/constants";
-import { getContinentsWithDestinationDescriptions } from "@/lib/destination-descriptions";
 import {
   getCityDeepLinkStaticParams,
   getLatestGuideLastModified,
@@ -12,11 +11,16 @@ import {
   resolveCountryDeepLink,
 } from "@/lib/deep-link-routes";
 import { getCitiesFromContinents } from "@/lib/geography-tree";
+import { getContinents } from "@/lib/mock-data";
 import { getAbsoluteHref, getCategoryHref, getCreatorHref } from "@/lib/routes";
 import { getServerEditorialGuides } from "@/lib/server-editorial-guides";
 import { slugify } from "@/lib/utils";
 
-export const revalidate = 86400;
+// Guide publishing writes directly to Supabase, outside Next's cache lifecycle.
+// Always build the sitemap from current published rows so new guides are
+// discoverable on the next crawler request instead of up to a day later.
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
 
 function createSitemapEntry(path: string, lastModified?: string): MetadataRoute.Sitemap[number] {
   return {
@@ -26,10 +30,8 @@ function createSitemapEntry(path: string, lastModified?: string): MetadataRoute.
 }
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const [continents, editorialGuides] = await Promise.all([
-    getContinentsWithDestinationDescriptions(),
-    getServerEditorialGuides(),
-  ]);
+  const continents = getContinents();
+  const editorialGuides = await getServerEditorialGuides({ bypassCache: true });
   const cities = getCitiesFromContinents(continents);
   const indexableGuides = editorialGuides.filter(isIndexableEditorialGuide);
   const staticRoutes: MetadataRoute.Sitemap = [
