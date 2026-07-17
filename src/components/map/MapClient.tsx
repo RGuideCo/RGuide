@@ -3799,6 +3799,8 @@ export function MapClient({
   const activeGuideCameraTimeoutsRef = useRef<number[]>([]);
   const collapsedGuidesCameraKeyRef = useRef<string | null>(null);
   const collapsedGuidesCameraTimeoutRef = useRef<number | null>(null);
+  const collapsedGuidesCameraSuppressedUntilRef = useRef(0);
+  const previousHoveredGuideMarkerIdRef = useRef<string | null | undefined>(hoveredGuideMarkerId);
   const selectionCameraKeyRef = useRef<string | null>(null);
   const selectionCameraSettlingUntilRef = useRef(0);
   const countryBoundaryHighResTimeoutRef = useRef<number | null>(null);
@@ -4194,6 +4196,17 @@ export function MapClient({
     visibleGuideMarkerDirectHoverIdRef.current = hoverTargetId;
     setVisibleGuideMarkerHoverLayout(map, hoverTargetId);
   }, [hoveredGuideMarkerId, visibleGuideMarkerIds]);
+
+  useEffect(() => {
+    if (previousHoveredGuideMarkerIdRef.current === hoveredGuideMarkerId) {
+      return;
+    }
+
+    previousHoveredGuideMarkerIdRef.current = hoveredGuideMarkerId;
+    // Marker hover scrolls its guide card into view. Keep those scroll-driven
+    // marker-window updates from being interpreted as camera navigation.
+    collapsedGuidesCameraSuppressedUntilRef.current = performance.now() + 800;
+  }, [hoveredGuideMarkerId]);
 
   useEffect(() => {
     viewportModeRef.current = viewportMode;
@@ -5834,6 +5847,13 @@ export function MapClient({
       visibleGuideBoundsSignature,
       viewportModeRef.current,
     ].join("|");
+    if (
+      hoveredGuideMarkerId ||
+      performance.now() < collapsedGuidesCameraSuppressedUntilRef.current
+    ) {
+      collapsedGuidesCameraKeyRef.current = nextCameraKey;
+      return;
+    }
     if (collapsedGuidesCameraKeyRef.current === nextCameraKey) {
       return;
     }
@@ -5906,6 +5926,7 @@ export function MapClient({
     runCollapsedGuidesCamera();
   }, [
     activeGuide,
+    hoveredGuideMarkerId,
     selection.cityId,
     styleReadyTick,
     viewportMode,
