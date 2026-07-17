@@ -1164,11 +1164,11 @@ const romeCoreGuides = [
   guide({
     id: "list-rome-citywide-nightlife",
     slug: "rome-best-bars-nightlife",
-    seoSlug: "best-bars",
-    seoTitle: "Best Bars and Nightlife in Rome",
-    seoDescription: "Best bars and nightlife in Rome for wine bars, cocktail rooms, piazza drinks, beer stops, and neighborhood evenings.",
-    title: "Wine Bars, Piazza Drinks, and Late Rooms",
-    description: "Rome nightlife changes by neighborhood: aperitivo in Prati, craft beer in Trastevere, cocktails in Centro, and lower-key late rooms around Monti and Celio. Drinks, crowd, music, and room character define the differences.",
+    seoSlug: "best-dive-bars",
+    seoTitle: "Best Dive Bars in Rome",
+    seoDescription: "Best dive bars in Rome for neighborhood wine counters, craft beer, piazza drinks, music rooms, and low-key late nights.",
+    title: "Dive Bars, Wine Counters & Piazza Nights",
+    description: "Rome's less polished nightlife changes by neighborhood: beer in Trastevere, wine counters near Centro, and lower-key late rooms around Monti and Celio. Crowd, music, regulars, and room character define the differences.",
     url: "https://www.google.com/maps/search/best+bars+nightlife+rome",
     category: "Nightlife",
     stops: [

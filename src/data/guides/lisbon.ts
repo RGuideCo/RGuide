@@ -70,6 +70,9 @@ const imageSources = {
   cerveteca: "https://static.wixstatic.com/media/be1127501d734d9d3576dcb0543608a7.jpg/v1/fill/w_1200,h_646,al_c,q_85,enc_avif,quality_auto/be1127501d734d9d3576dcb0543608a7.jpg",
   solPesca: "https://scontent-akl1-1.cdninstagram.com/v/t39.30808-6/663279328_1254957016745300_5627254388536842317_n.jpg?stp=c0.135.1080.1080a_dst-jpg_e35_s640x640_sh2.08_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6ImltYWdlX3VybGdlbi4xMDgwLnNkci5yZWd1bGFyX3Bob3RvLmMyIn0&_nc_ht=scontent-akl1-1.cdninstagram.com&_nc_cat=108&_nc_oc=Q6cZ2gEUWNccuPYMsH_loi40f2W5WOpcPkIJUBDVAdY84GHxmp5BUCZVCXjs_Kj_vKuiidoXJQvhO8JBqAUDdsqqOGSI&_nc_ohc=xy7nl8L2RUoQ7kNvwFCPSq2&_nc_gid=gJ5s8Re8BI0Rb488qHJjXQ&edm=AOQ1c0wAAAAA&ccb=7-5&oh=00_Af7jRqXYk9gjjV7ridaU_wl_4aVFFZx98LI1CUZkIcRKqg&oe=6A1FE436&_nc_sid=8b3546",
   ginjinha: "https://lojascomhistoria.pt/medium/uploads/images/9aa7975a1c85c1799f72259d37445241.jpg",
+  procopio: "https://barprocopio.com/public/images/vista_geral_interior.jpg",
+  britishBar: "https://media.timeout.com/images/103744630/750/422/image.jpg",
+  aParodia: "https://lojascomhistoria.pt/medium/uploads/files/416d9f2acd3fe71acad80167d02a8178.jpg",
   redFrog: "https://www.redfrog.pt/wp-content/uploads/2021/05/RED2021-scaled.jpg",
   monkeyMash: "https://www.monkeymash.pt/wp-content/uploads/2022/04/Menu-Monkey-03-_A5-Digital_1.jpg",
   cinco: "https://www.cincolounge.com/image/2/1800/0/5/000/uploads/media/dsc_7684_9714-1740430526.jpg",
@@ -148,6 +151,11 @@ const sources = {
     source("Visit Lisboa - Ginjinha", "https://www.visitlisboa.com/en/p/lisbon-flavours/wine/ginjinha"),
     source("All About Portugal - Sol e Pesca", "https://www.allaboutportugal.pt/en/lisboa/bars/sol-e-pesca"),
     source("AFAR - A Tasca do Chico", "https://www.afar.com/places/a-tasca-do-chico-lisbon"),
+    source("Bar Procopio official", "https://barprocopio.com/en/"),
+    source("British Bar official", "https://britishbar.pt/"),
+    source("A Parodia official", "https://aparodia.com/historia.html"),
+    source("Foxtrot official", "https://www.barfoxtrot.pt/"),
+    source("Pavilhao Chines - Lisbon historic shops", "https://lojascomhistoria.pt/lojas/pavilhao-chines"),
     source("Google Maps - Lisbon bars", maps("casual bars fado beer Lisbon Portugal")),
   ],
   cocktails: [
@@ -219,16 +227,33 @@ const hoursByStopId: Record<string, StopHours> = {
   "lisbon-hostel-living-lounge": { default: "Hostel official and booking pages list reception, check-in, dorm, and private-room details." },
   "lisbon-hostel-lisbon-destination": { default: "Hostel official and booking pages list Rossio Station reception, check-in, dorm, and private-room details." },
   "lisbon-hostel-yes-lisbon": { default: "Hostel official and booking pages list reception, check-in, and room availability details." },
-  "lisbon-casual-pensao-amor": { default: "Official bar page lists evening, late-night, event, and holiday schedules." },
-  "lisbon-casual-tasca-do-chico": { default: "Official social page and maintained listings post fado-night and bar schedules by program." },
-  "lisbon-casual-cerveteca": { default: "Official craft-beer page lists afternoon and evening service windows by day." },
-  "lisbon-casual-sol-e-pesca": { default: "Maintained bar listings post Cais do Sodre afternoon, evening, and late-night service windows." },
-  "lisbon-casual-a-ginjinha": { default: "Maintained shop listings post daily counter hours from morning or midday into evening." },
+  "lisbon-casual-pensao-amor": {
+    mon: "12:00-03:00", tue: "12:00-03:00", wed: "12:00-03:00", thu: "12:00-04:00", fri: "12:00-04:00", sat: "12:00-04:00", sun: "12:00-03:00",
+  },
+  "lisbon-casual-tasca-do-chico": {
+    mon: "19:00-01:30", tue: "19:00-01:30", wed: "19:00-01:30", thu: "19:00-01:30", fri: "19:00-03:00", sat: "19:00-03:00", sun: "19:00-01:30",
+  },
+  "lisbon-casual-cerveteca": {
+    mon: "14:30-22:00", tue: "14:30-22:00", wed: "14:30-23:00", thu: "14:30-23:00", fri: "14:30-00:00", sat: "15:00-23:00", sun: "15:00-23:00",
+  },
+  "lisbon-casual-sol-e-pesca": {
+    mon: "Closed", tue: "12:00-02:00", wed: "12:00-02:00", thu: "12:00-02:00", fri: "12:00-03:00", sat: "12:00-03:00", sun: "Closed",
+  },
+  "lisbon-casual-a-ginjinha": { default: "Daily 10:00-22:00" },
+  "lisbon-casual-procopio": {
+    mon: "18:00-02:00", tue: "18:00-02:00", wed: "18:00-02:00", thu: "18:00-02:00", fri: "18:00-02:00", sat: "21:00-03:00", sun: "Closed",
+  },
+  "lisbon-casual-british-bar": {
+    mon: "12:00-04:00", tue: "12:00-04:00", wed: "12:00-04:00", thu: "12:00-04:00", fri: "12:00-04:00", sat: "12:00-04:00", sun: "12:00-04:00",
+  },
+  "lisbon-casual-a-parodia": {
+    mon: "20:00-02:00", tue: "20:00-02:00", wed: "20:00-02:00", thu: "20:00-02:00", fri: "20:00-02:00", sat: "20:00-02:00", sun: "Closed",
+  },
   "lisbon-cocktail-red-frog": { default: "Official reservation page lists evening and late-night cocktail service on open days." },
   "lisbon-cocktail-monkey-mash": { default: "Official bar page lists evening and late-night cocktail service plus reservation windows." },
   "lisbon-cocktail-cinco-lounge": { default: "Official bar listing posts evening cocktail service by day." },
-  "lisbon-cocktail-foxtrot": { default: "Official bar page lists evening, late-night, and kitchen service windows by day." },
-  "lisbon-cocktail-pavilhao-chines": { default: "Maintained bar listing posts evening and late-night service windows." },
+  "lisbon-cocktail-foxtrot": { mon: "18:00-02:00", tue: "18:00-02:00", wed: "18:00-02:00", thu: "18:00-02:00", fri: "18:00-02:00", sat: "18:00-02:00", sun: "Closed" },
+  "lisbon-cocktail-pavilhao-chines": { mon: "18:00-02:00", tue: "18:00-02:00", wed: "18:00-02:00", thu: "18:00-02:00", fri: "18:00-02:00", sat: "18:00-02:00", sun: "21:00-02:00" },
   "lisbon-culture-castelo-sao-jorge": { default: "Official ticket page lists daily seasonal visitor hours and last-entry times." },
   "lisbon-culture-jeronimos": { default: "Official monument page lists seasonal visitor hours, ticket areas, and closed days." },
   "lisbon-culture-belem-tower": { default: "Official monument page lists seasonal visitor hours, restoration notices, and weather-related access notes." },
@@ -739,6 +764,57 @@ const casualBarStops = [
       editorialUrls: ["https://lojascomhistoria.pt/shops/a-ginjinha?lang=en", "https://www.visitlisboa.com/en/p/lisbon-flavours/wine/ginjinha"],
     },
   ),
+  stop(
+    "lisbon-casual-procopio",
+    "Procopio",
+    [38.7219, -9.1552],
+    "Procopio has been serving Lisbon since 1972 from an ivy-covered house by the Amoreiras garden. Art Nouveau furniture, red booths, an outdoor terrace, and popcorn with the drinks give it the settled character of a bar that never chased a redesign.",
+    {
+      venueKind: "nightlife",
+      nightlifeType: "dive_bar",
+      musicGenres: ["background"],
+      price: "$$",
+      priceSource: "Official bar site",
+      attributeTags: ["historic", "local_bar", "low_key_nightlife", "late_night"],
+      officialUrl: "https://barprocopio.com/en/",
+      sourcePhoto: imageSources.procopio,
+      editorialUrls: ["https://www.theinfatuation.com/lisbon/reviews/procopio", "https://lojascomhistoria.pt/lojas/procopio"],
+    },
+  ),
+  stop(
+    "lisbon-casual-british-bar",
+    "British Bar",
+    [38.7068, -9.1451],
+    "British Bar has held its Cais do Sodre corner since 1919, with a long wooden counter, beer and aperitifs, live music, and the famous clock whose hands run backward. The room feels more dockside Lisbon than themed English pub.",
+    {
+      venueKind: "nightlife",
+      nightlifeType: "pub",
+      musicGenres: ["live_music", "karaoke"],
+      price: "$",
+      priceSource: "Official bar site / current listing",
+      attributeTags: ["historic", "local_bar", "live_music", "late_night"],
+      officialUrl: "https://britishbar.pt/",
+      sourcePhoto: imageSources.britishBar,
+      editorialUrls: ["https://www.timeout.com/lisbon/bars-and-pubs/british-bar", "https://lojascomhistoria.pt/lojas/british-bar"],
+    },
+  ),
+  stop(
+    "lisbon-casual-a-parodia",
+    "A Parodia",
+    [38.7155, -9.1642],
+    "A Parodia opened two days after the 1974 revolution and still hides behind a bell on a Campo de Ourique side street. Bordalo Pinheiro prints, matchboxes, old furniture, and two intimate rooms make conversation the main event.",
+    {
+      venueKind: "nightlife",
+      nightlifeType: "dive_bar",
+      musicGenres: ["background"],
+      price: "$$",
+      priceSource: "Official bar site / Lisbon historic shops",
+      attributeTags: ["historic", "local_bar", "low_key_nightlife", "hidden_bar"],
+      officialUrl: "https://aparodia.com/historia.html",
+      sourcePhoto: imageSources.aParodia,
+      editorialUrls: ["https://lojascomhistoria.pt/lojas/a-parodia", "https://www.visitportugal.com/en/node/304601"],
+    },
+  ),
 ];
 
 const cocktailStops = [
@@ -828,6 +904,11 @@ const cocktailStops = [
       editorialUrls: ["https://www.lisbonlux.com/magazine/top-cocktail-bars-in-lisbon.html", "https://www.timeout.com/lisbon/bars-and-pubs/cinco-lounge"],
     },
   ),
+];
+
+const expandedCasualBarStops = [
+  ...casualBarStops,
+  ...cocktailStops.filter((stop) => ["lisbon-cocktail-foxtrot", "lisbon-cocktail-pavilhao-chines"].includes(stop.id)),
 ];
 
 const cultureStops = [
@@ -1183,14 +1264,14 @@ export const lisbonCitywideGuides: MapList[] = [
   guide(
     "list-lisbon-citywide-casual-bars",
     "list-lisbon-citywide-casual-bars",
-    "best-bars",
-    "Classic Nightlife & Fado Rooms",
-    "A casual Lisbon nightlife guide for low-key drinks, small-room fado, craft beer, tinned fish, and a quick ginjinha stop before the city turns late.",
+    "best-dive-bars",
+    "Ginjinha, Dive Bars & Late-Night Locals",
+    "Lisbon's dive-bar side runs through tiny ginjinha counters, small-room fado, old neighborhood bars, craft beer, tinned fish, and late rooms with more character than polish.",
     "Nightlife",
-    casualBarStops,
+    expandedCasualBarStops,
     sources.casualBars,
-    "Best Casual Bars in Lisbon: Fado, Beer, Ginjinha, and Pink Street",
-    "A Lisbon casual bar guide with Pensão Amor, Tasca do Chico, Cerveteca, Sol e Pesca, and A Ginjinha, backed by official, fado, nightlife, and map sources.",
+    "Best Dive Bars in Lisbon",
+    "A Lisbon dive-bar guide with ginjinha counters, fado rooms, old neighborhood bars, current hours, and source-backed venue status.",
   ),
   guide(
     "list-lisbon-citywide-cocktail-bars",

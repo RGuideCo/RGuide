@@ -1773,13 +1773,13 @@ const pubGuide = guide(
   "Nightlife",
   "list-dublin-citywide-pubs",
   "dublin-citywide-pubs",
-  "best-pubs",
-  "Classic Pubs, Live Irish Music & Listening Bars",
-  "Dublin pub culture is broader than one crowded district: Victorian snugs, musician-led sessions, listening bars and adaptive historic rooms all matter. These ten picks distinguish the sound, crowd and practical rhythm of each place.",
+  "best-dive-bars",
+  "Snugs, Dive Pubs & Live Sessions",
+  "Dublin's lived-in pub culture is broader than one crowded district: Victorian snugs, musician-led sessions, listening bars, and neighborhood rooms all matter. These ten picks distinguish the sound, crowd, and practical rhythm of each place.",
   pubStops,
   completeSources(pubEditorialSources, pubStops),
-  "Best Pubs in Dublin for Trad Music, Conversation and Character",
-  "Ten verified Dublin pubs and casual bars, from Victorian snugs and serious traditional sessions to listening bars and lively historic rooms.",
+  "Best Dive Bars in Dublin",
+  "Ten verified Dublin dive pubs and casual bars, from Victorian snugs and serious traditional sessions to listening bars and lively historic rooms.",
 );
 
 const cocktailGuide = guide(

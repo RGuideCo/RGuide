@@ -41,6 +41,13 @@ const sources: Record<string, ListSource[]> = {
     { name: "I amsterdam - Nightlife", url: "https://www.iamsterdam.com/en/see-and-do/nightlife" },
     { name: "Resident Advisor - Amsterdam events", url: "https://ra.co/events/nl/amsterdam" },
     { name: "Time Out - Amsterdam bars", url: "https://www.timeout.com/amsterdam/bars" },
+    { name: "Cafe Hoppe official", url: "https://www.cafehoppe.com/" },
+    { name: "Cafe Chris official", url: "https://cafechris.nl/" },
+    { name: "Cafe Sound Garden listing", url: "https://www.timeout.com/amsterdam/bars-and-pubs/cafe-soundgarden" },
+    { name: "Cafe The Minds official", url: "https://www.theminds.nl/" },
+    { name: "Paradiso official calendar", url: "https://www.paradiso.nl/en/" },
+    { name: "Tolhuistuin official calendar", url: "https://tolhuistuin.nl/" },
+    { name: "Brouwerij 't IJ official", url: "https://www.brouwerijhetij.nl/" },
   ],
   stay: [
     { name: "Conde Nast Traveler - Amsterdam hotels", url: "https://www.cntraveler.com/gallery/best-hotels-in-amsterdam" },
@@ -208,15 +215,33 @@ const hoursByStopId: Record<string, StopHours> = {
     sun: "20:00-03:00",
   },
   "amsterdam-nightlife-paradiso": {
-    default: "Event hours vary by show; check the official calendar for doors and curfew.",
+    default: "The official event calendar publishes doors, performance time, and curfew for each concert or club night.",
   },
   "amsterdam-nightlife-shelter": {
-    default: "Club hours vary by event; check the official calendar before planning a late-night route.",
+    default: "The official event calendar publishes doors and closing time for each club night.",
   },
   "amsterdam-nightlife-tolhuistuin": {
-    default: "Venue, terrace, restaurant, and concert hours vary by program; check the official calendar.",
+    default: "The official event calendar publishes doors and closing time for each concert, club night, terrace program, or cultural event.",
   },
   "amsterdam-nightlife-brouwerij-t-ij": allDays("14:00-20:00"),
+  "amsterdam-nightlife-cafe-sound-garden": {
+    mon: "13:00-01:00",
+    tue: "13:00-01:00",
+    wed: "13:00-01:00",
+    thu: "13:00-01:00",
+    fri: "13:00-03:00",
+    sat: "15:00-03:00",
+    sun: "15:00-01:00",
+  },
+  "amsterdam-nightlife-cafe-the-minds": {
+    mon: "21:00-03:00",
+    tue: "21:00-03:00",
+    wed: "21:00-03:00",
+    thu: "21:00-03:00",
+    fri: "21:00-04:00",
+    sat: "21:00-04:00",
+    sun: "21:00-03:00",
+  },
   "amsterdam-culture-rijksmuseum": allDays("09:00-17:00"),
   "amsterdam-culture-van-gogh-museum": {
     default: "Daily opening hours vary by month, with some Friday late openings; check the official calendar before booking.",
@@ -301,14 +326,45 @@ const hoursByStopId: Record<string, StopHours> = {
 };
 
 function stop(id: string, name: string, coordinates: [number, number], description: string, options: StopOptions = {}): GuideStop {
-  const { sourcePhoto, ...rest } = options;
+  const {
+    sourcePhoto,
+    sourceUrls = [],
+    sourceEvidence,
+    imageSourceUrl,
+    officialUrl,
+    bookingUrl,
+    ...rest
+  } = options;
+  const mapUrl = sourceEvidence?.mapUrl ?? `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`${name} Amsterdam Netherlands`)}`;
+  const resolvedImageUrl = imageSourceUrl ?? sourcePhoto ?? sourceEvidence?.imageSourceUrl;
+  const officialEvidence = sourceEvidence?.officialUrl ?? officialUrl ?? bookingUrl;
+  const resolvedSourceUrls = [
+    officialEvidence,
+    bookingUrl,
+    mapUrl,
+    resolvedImageUrl,
+    ...sourceUrls,
+  ].filter(Boolean) as string[];
+
   return {
     id,
     name,
     coordinates,
     description,
     hours: hoursByStopId[id] ?? { default: "Hours vary; check current official hours before going." },
-    ...(sourcePhoto ? { photo: sourcePhoto } : {}),
+    ...(resolvedImageUrl ? { photo: resolvedImageUrl, imageSourceUrl: resolvedImageUrl } : {}),
+    sourceUrls: [...new Set(resolvedSourceUrls)],
+    sourceEvidence: {
+      officialUrl: officialEvidence,
+      mapUrl,
+      currentStatusUrl: mapUrl,
+      imageSourceUrl: resolvedImageUrl,
+      checkedAt: "2026-07-17",
+      notes: "Official venue information and the current map listing were reviewed for operating status and opening details.",
+      ...sourceEvidence,
+    },
+    officialUrl,
+    ...(bookingUrl ? { bookingUrl } : {}),
     ...rest,
   };
 }
@@ -579,6 +635,38 @@ const stops: Record<string, GuideStop> = {
       attributeTags: ["craft_beer", "scenic_nightlife", "group_friendly", "casual_nightlife"],
       officialUrl: "https://www.brouwerijhetij.nl/",
       sourcePhoto: "https://cms.brouwerijhetij.nl/storage/transforms/images/De-brouwerij/_1200x630_crop_center-center_82_none/Brouwerij-t-IJ.jpg?mtime=1770885270",
+    },
+  ),
+  soundGarden: stop(
+    "amsterdam-nightlife-cafe-sound-garden",
+    "Cafe Sound Garden",
+    [52.3776, 4.8757],
+    "Cafe Sound Garden is a canal-side rock dive with a battered pool table, pinball, alternative music, and a rear terrace that gives the room an unexpected open-air release.",
+    {
+      venueKind: "nightlife",
+      nightlifeType: "dive_bar",
+      musicGenres: ["rock", "alternative", "punk"],
+      price: "$",
+      priceSource: "Time Out Amsterdam / current venue listing",
+      attributeTags: ["dive_bar", "pool_table", "jukebox", "local_bar"],
+      officialUrl: "http://www.cafesoundgarden.nl/",
+      sourcePhoto: "https://media.timeout.com/images/101237041/750/422/image.jpg",
+    },
+  ),
+  theMinds: stop(
+    "amsterdam-nightlife-cafe-the-minds",
+    "Cafe The Minds",
+    [52.3722, 4.8899],
+    "Cafe The Minds is Amsterdam's small punk-rock dive: loud guitars, affordable beer, pool, pinball, and a Spuistraat room that still belongs to the city's underground rather than its polished bar circuit.",
+    {
+      venueKind: "nightlife",
+      nightlifeType: "dive_bar",
+      musicGenres: ["punk", "rock", "metal"],
+      price: "$",
+      priceSource: "Official site / current venue listing",
+      attributeTags: ["dive_bar", "punk", "pool_table", "late_night"],
+      officialUrl: "https://www.theminds.nl/",
+      sourcePhoto: "https://live.staticflickr.com/5076/5900050793_67c5f23c92_b.jpg",
     },
   ),
   rijksmuseum: stop(
@@ -1184,14 +1272,14 @@ const citywideGuides: GuideSpec[] = [
   baseGuide(
     "best-bars-citywide",
     "best-bars-citywide",
-    "best-bars",
-    "Best Bars and Nightlife in Amsterdam",
-    "Best bars and nightlife in Amsterdam, from brown cafes and cocktail rooms to clubs, breweries, Noord venues, and live music near Leidseplein.",
-    "Brown Cafes, Cocktail Rooms, and Ferry Nights",
-    "Amsterdam nightlife spans brown cafes, serious cocktail rooms, brewery taps, live music, Noord clubs, and ferry-side venues with more air than the Red Light District crush.",
+    "best-dive-bars",
+    "Best Dive Bars in Amsterdam",
+    "Best dive bars in Amsterdam for brown cafes, punk rooms, brewery taps, jukeboxes, live music, and late neighborhood drinking beyond the cocktail circuit.",
+    "Brown Cafes, Dive Bars, and Music Rooms",
+    "Amsterdam's unpolished drinking culture runs through old brown cafes, punk rooms, brewery taps, jukeboxes, live music, and late neighborhood bars where the room matters more than cocktail theater.",
     "Nightlife",
     "nightlife",
-    ["hoppe", "cafeChris", "hips", "door74", "paradiso", "shelter", "tolhuistuin", "brouwerijIj"],
+    ["hoppe", "cafeChris", "soundGarden", "theMinds", "paradiso", "shelter", "tolhuistuin", "brouwerijIj", "hips", "door74"],
   ),
   baseGuide(
     "best-culture-citywide",

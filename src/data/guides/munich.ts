@@ -1601,13 +1601,13 @@ const beerGuide = guide(
   "Nightlife",
   "list-munich-citywide-beer-halls-pubs",
   "munich-citywide-beer-halls-pubs",
-  "best-beer-halls-and-pubs",
-  "Beer Halls, Beer Gardens & Local Pubs",
-  "Munich’s beer culture lives in grand halls, chestnut-shaded gardens, brewery taprooms and less traditional community spaces. These ten choices distinguish weather-led garden schedules, food hours, live music and the atmosphere each place actually offers.",
+  "best-dive-bars",
+  "Dive Pubs, Beer Halls & Neighborhood Locals",
+  "Munich's unpolished beer culture lives in neighborhood pubs, grand halls, chestnut-shaded gardens, brewery taprooms, and community rooms. These ten choices distinguish weather-led schedules, food hours, live music, and the atmosphere each place actually offers.",
   beerStops,
   beerSources,
-  "Best Beer Halls, Beer Gardens and Pubs in Munich",
-  "Ten verified Munich beer halls, gardens, brewery taprooms and pubs with precise hours, seasonal dependencies and practical atmosphere notes.",
+  "Best Dive Bars in Munich",
+  "Ten verified Munich dive pubs, beer halls, gardens, and brewery taprooms with precise hours, seasonal dependencies, and practical atmosphere notes.",
 );
 
 const cultureGuide = guide(

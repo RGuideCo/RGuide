@@ -3951,6 +3951,31 @@ const madridNeighborhoodGuideSeeds = [
   }
 ] satisfies MapList[];
 
+const madridDiveBarStopIds = [
+  "sol-nightlife-casa-labra",
+  "letras-nightlife-la-venencia",
+  "letras-nightlife-viva-madrid",
+  "letras-nightlife-cafe-central",
+  "malasana-nightlife-via-lactea",
+  "malasana-nightlife-tupperware",
+  "latina-nightlife-taberna-concha",
+  "latina-nightlife-contra",
+  "sol-nightlife-toni2",
+  "sol-nightlife-josealfredo",
+];
+
+const madridNeighborhoodStops = new Map<string, GuideStop>(
+  madridNeighborhoodGuideSeeds
+    .flatMap((guide) => guide.stops)
+    .map((stop): [string, GuideStop] => [stop.id, stop]),
+);
+
+const madridDiveBarStops = madridDiveBarStopIds.map((id) => {
+  const stop = madridNeighborhoodStops.get(id);
+  if (!stop) throw new Error(`Missing Madrid dive-bar stop: ${id}`);
+  return stop;
+});
+
 const madridCitywideGuideSeeds = [
   {
     "id": "list-madrid-citywide-restaurants",
@@ -4154,11 +4179,11 @@ const madridCitywideGuideSeeds = [
   {
     "id": "list-madrid-citywide-popular-bars",
     "slug": "madrid-best-bars-citywide",
-    "seoSlug": "best-bars",
-    "seoTitle": "Best Bars in Madrid",
-    "seoDescription": "Best bars in Madrid, including vermouth rooms, Chueca cocktail bars, Las Letras destination drinks, Malasana clubs, and late-night Madrid institutions.",
-    "title": "Vermouth, Cocktails, and Late Rooms",
-    "description": "Madrid nights move easily from vermouth and wine bars to precise cocktails and loud late rooms without losing the city's street-level sociability.",
+    "seoSlug": "best-dive-bars",
+    "seoTitle": "Best Dive Bars in Madrid",
+    "seoDescription": "Best dive bars in Madrid for old taverns, sherry counters, Movida rooms, live jazz, piano singalongs, and neighborhood late nights.",
+    "title": "Dive Bars, Vermouth, and Late Rooms",
+    "description": "Madrid's lived-in drinking culture moves from sherry counters and old taverns to Movida rooms, jazz, piano singalongs, and late neighborhood bars without losing its street-level sociability.",
     "url": "https://www.google.com/maps/search/best+bars+madrid",
     "category": "Nightlife",
     "location": {
@@ -4916,6 +4941,7 @@ const madridTargetGuideIds = new Set([
   "list-madrid-chueca-restaurants",
   "list-madrid-chueca-stays",
   "list-madrid-citywide-restaurants",
+  "list-madrid-citywide-popular-bars",
 ]);
 
 const madridDaily = (value: string, defaultNote?: string): GuideStop["hours"] => ({
@@ -4981,6 +5007,73 @@ const madridStopRepairs: Record<string, MadridStopRepair> = {
     venueKind: "nightlife",
     nightlifeType: "cocktail_bar",
     attributeTags: ["premium_drinks", "date_night", "late_night", "low_key_nightlife"],
+  },
+  "letras-nightlife-la-venencia": {
+    officialUrl: "https://www.esmadrid.com/en/nightlife/venencia",
+    hours: { mon: "7:30 PM-1:30 AM", tue: "7:30 PM-1:30 AM", wed: "7:30 PM-1:30 AM", thu: "7:30 PM-1:30 AM", fri: "7:30 PM-2:00 AM", sat: "7:30 PM-2:00 AM", sun: "Closed" },
+    price: "$",
+    priceSource: "Tourism Madrid / current map listing",
+    venueKind: "nightlife",
+    nightlifeType: "wine_bar",
+    attributeTags: ["historic", "sherry", "local_bar", "low_key_nightlife"],
+  },
+  "letras-nightlife-viva-madrid": {
+    officialUrl: "https://www.vivamadrid.com/",
+    hours: madridDaily("12:00 PM-2:00 AM"),
+    price: "$$",
+    priceSource: "Viva Madrid official site / current map listing",
+    venueKind: "nightlife",
+    nightlifeType: "pub",
+    attributeTags: ["historic", "local_bar", "vermouth", "late_night"],
+  },
+  "letras-nightlife-cafe-central": {
+    officialUrl: "https://www.cafecentralmadrid.com/",
+    hours: { default: "The official event calendar publishes the bar opening and performance time for each listed evening." },
+    price: "$$",
+    priceSource: "Cafe Central official program",
+    venueKind: "nightlife",
+    nightlifeType: "live_music_venue",
+    musicGenres: ["jazz"],
+    attributeTags: ["live_music", "jazz", "historic", "central"],
+  },
+  "malasana-nightlife-via-lactea": {
+    officialUrl: "https://www.esmadrid.com/en/nightlife/via-lactea",
+    hours: { mon: "6:00 PM-3:00 AM", tue: "6:00 PM-3:00 AM", wed: "6:00 PM-3:00 AM", thu: "6:00 PM-3:00 AM", fri: "6:00 PM-3:30 AM", sat: "6:00 PM-3:30 AM", sun: "6:00 PM-3:00 AM" },
+    price: "$",
+    priceSource: "Tourism Madrid / current map listing",
+    venueKind: "nightlife",
+    nightlifeType: "dive_bar",
+    musicGenres: ["rock", "indie"],
+    attributeTags: ["dive_bar", "historic", "late_night", "local_bar"],
+  },
+  "malasana-nightlife-tupperware": {
+    officialUrl: "https://www.esmadrid.com/en/nightlife/tupperware",
+    hours: { mon: "8:00 PM-3:00 AM", tue: "8:00 PM-3:00 AM", wed: "8:00 PM-3:00 AM", thu: "8:00 PM-3:00 AM", fri: "8:00 PM-3:30 AM", sat: "8:00 PM-3:30 AM", sun: "8:00 PM-3:00 AM" },
+    price: "$",
+    priceSource: "Tourism Madrid / current map listing",
+    venueKind: "nightlife",
+    nightlifeType: "dive_bar",
+    musicGenres: ["rock", "indie"],
+    attributeTags: ["dive_bar", "kitsch", "late_night", "local_bar"],
+  },
+  "latina-nightlife-taberna-concha": {
+    officialUrl: "https://www.esmadrid.com/en/restaurants/taberna-la-concha",
+    hours: { mon: "12:00 PM-12:00 AM", tue: "12:00 PM-12:00 AM", wed: "12:00 PM-12:00 AM", thu: "12:00 PM-12:00 AM", fri: "12:00 PM-1:00 AM", sat: "12:00 PM-1:00 AM", sun: "12:00 PM-12:00 AM" },
+    price: "$$",
+    priceSource: "Tourism Madrid / current map listing",
+    venueKind: "nightlife",
+    nightlifeType: "wine_bar",
+    attributeTags: ["vermouth", "local_bar", "tapas", "walk_in_friendly"],
+  },
+  "latina-nightlife-contra": {
+    officialUrl: "https://www.contraclub.es/",
+    hours: { default: "The official event calendar publishes the opening and door time for each concert, club night, or special event." },
+    price: "$$",
+    priceSource: "ContraClub official calendar",
+    venueKind: "nightlife",
+    nightlifeType: "live_music_venue",
+    musicGenres: ["rock", "indie", "dj_sets"],
+    attributeTags: ["live_music", "late_night", "local_bar", "dance_floor"],
   },
 
   "letras-food-la-malontina": {
@@ -5266,7 +5359,9 @@ function repairMadridGuide(list: MapList): MapList {
 
   const seedStops = list.id === "list-madrid-citywide-restaurants"
     ? [...list.stops, ...madridCitywideAdditions]
-    : list.stops;
+    : list.id === "list-madrid-citywide-popular-bars"
+      ? madridDiveBarStops
+      : list.stops;
 
   const stops = seedStops.map((stop) => {
     const repair = madridStopRepairs[stop.id] ?? {};

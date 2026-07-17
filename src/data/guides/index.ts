@@ -54,7 +54,24 @@ import {
 import { enrichGuidesCuisineTypes } from "@/lib/guide-cuisine";
 import type { MapList } from "@/types";
 
-export const editorialGuideLists: MapList[] = enrichGuidesCuisineTypes([
+function enrichDiveBarTags(lists: MapList[]): MapList[] {
+  return lists.map((list) => {
+    if (list.seoSlug !== "best-dive-bars") return list;
+
+    return {
+      ...list,
+      stops: list.stops.map((stop) => ({
+        ...stop,
+        attributeTags: [
+          "dive_bars",
+          ...(stop.attributeTags ?? []).filter((tag) => tag !== "dive_bars"),
+        ],
+      })),
+    };
+  });
+}
+
+export const editorialGuideLists: MapList[] = enrichDiveBarTags(enrichGuidesCuisineTypes([
   ...parisNeighborhoodGuides,
   ...parisCitywideGuides,
   ...londonNeighborhoodGuides,
@@ -96,4 +113,4 @@ export const editorialGuideLists: MapList[] = enrichGuidesCuisineTypes([
   ...madridCitywideGuides,
   ...barcelonaItineraryGuides,
   ...sanFranciscoGuides,
-]);
+]));
