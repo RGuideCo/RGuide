@@ -46,6 +46,7 @@ interface MapClientProps {
   visibleNestedStopParentIds?: string[];
   hoveredStopId?: string | null;
   selectedStopId?: string | null;
+  countryToggleMode?: boolean;
   onHoverGuideStop?: (stopId: string | null) => void;
   onSelectGuideStop?: (stopId: string) => void;
   onHoverGuideMarker?: (guideId: string | null) => void;
@@ -231,7 +232,7 @@ const STATE_LABEL_LAYER_ID = "state-label-layer";
 const BASE_COUNTRY_LABEL_LAYER_IDS = ["label_country_1", "label_country_2", "label_country_3"] as const;
 const SHOULD_RECORD_MAP_PERF = process.env.NODE_ENV !== "production";
 const MAX_MAP_PERF_EVENTS = 180;
-const COUNTRY_GEOJSON_SOURCE_OPTIONS = { buffer: 0, maxzoom: 6, tolerance: 0.5 } as const;
+const COUNTRY_GEOJSON_SOURCE_OPTIONS = { buffer: 128, maxzoom: 6, tolerance: 0.5 } as const;
 const POINT_GEOJSON_SOURCE_OPTIONS = { buffer: 0 } as const;
 const GUIDE_STOP_COLOR_MATCH = [
   "match",
@@ -408,6 +409,54 @@ function getBoundsArea(bounds: LngLatBounds) {
   const southWest = bounds.getSouthWest();
   const northEast = bounds.getNorthEast();
   return Math.abs((northEast.lng - southWest.lng) * (northEast.lat - southWest.lat));
+}
+
+function isPointInLinearRing(point: [number, number], ring: number[][]) {
+  const [lng, lat] = point;
+  let inside = false;
+
+  for (let index = 0, previousIndex = ring.length - 1; index < ring.length; previousIndex = index++) {
+    const [currentLng, currentLat] = ring[index];
+    const [previousLng, previousLat] = ring[previousIndex];
+    const crossesLatitude = currentLat > lat !== previousLat > lat;
+    const intersectionLng =
+      ((previousLng - currentLng) * (lat - currentLat)) / (previousLat - currentLat) + currentLng;
+
+    if (crossesLatitude && lng < intersectionLng) {
+      inside = !inside;
+    }
+  }
+
+  return inside;
+}
+
+function isPointInPolygon(point: [number, number], polygon: number[][][]) {
+  const [outerRing, ...holes] = polygon;
+  return Boolean(
+    outerRing &&
+      isPointInLinearRing(point, outerRing) &&
+      !holes.some((ring) => isPointInLinearRing(point, ring)),
+  );
+}
+
+function getCountryAtPoint(continents: Continent[], point: [number, number]) {
+  for (const continent of continents) {
+    for (const country of continent.countries) {
+      const geometry = countryBoundaryFeatures[country.id]?.geometry;
+      const containsPoint =
+        geometry?.type === "Polygon"
+          ? isPointInPolygon(point, geometry.coordinates)
+          : geometry?.type === "MultiPolygon"
+            ? geometry.coordinates.some((polygon) => isPointInPolygon(point, polygon))
+            : false;
+
+      if (containsPoint) {
+        return { continentId: continent.id, countryId: country.id };
+      }
+    }
+  }
+
+  return null;
 }
 
 function normalizeLabelName(value: string) {
@@ -3686,6 +3735,7 @@ export function MapClient({
   visibleNestedStopParentIds = [],
   hoveredStopId,
   selectedStopId,
+  countryToggleMode = false,
   onHoverGuideStop,
   onSelectGuideStop,
   onHoverGuideMarker,
@@ -3735,6 +3785,7 @@ export function MapClient({
     onHoverGuideMarker,
     onSelectGuideMarker,
     onSubmitMapClick,
+    countryToggleMode,
     continents,
     selection,
   });
@@ -4059,10 +4110,11 @@ export function MapClient({
       onHoverGuideMarker,
       onSelectGuideMarker,
       onSubmitMapClick,
+      countryToggleMode,
       continents,
       selection,
     };
-  }, [continents, onHoverGuideMarker, onHoverGuideStop, onSelectCity, onSelectContinent, onSelectCountry, onSelectGuideMarker, onSelectGuideStop, onSelectSubarea, onSelectState, onSubmitMapClick, selection]);
+  }, [continents, countryToggleMode, onHoverGuideMarker, onHoverGuideStop, onSelectCity, onSelectContinent, onSelectCountry, onSelectGuideMarker, onSelectGuideStop, onSelectSubarea, onSelectState, onSubmitMapClick, selection]);
   useEffect(() => {
     guideStopDataRef.current = guideStopData;
   }, [guideStopData]);
@@ -4493,6 +4545,29 @@ export function MapClient({
       map.on("mouseleave", "poi-map-marker-line", () => handlersRef.current.onHoverGuideStop?.(null));
 
       map.on("click", (event) => {
+        if (handlersRef.current.countryToggleMode) {
+          const countryFeature = map
+            .queryRenderedFeatures(event.point, { layers: ["country-fills"] })
+            .find((feature) => typeof feature.properties?.id === "string");
+          const geometryCountry = getCountryAtPoint(handlersRef.current.continents, [
+            event.lngLat.lng,
+            event.lngLat.lat,
+          ]);
+          const countryId =
+            typeof countryFeature?.properties?.id === "string"
+              ? countryFeature.properties.id
+              : geometryCountry?.countryId ?? null;
+          const continentId =
+            typeof countryFeature?.properties?.continentId === "string"
+              ? countryFeature.properties.continentId
+              : geometryCountry?.continentId ?? null;
+
+          if (continentId && countryId) {
+            handlersRef.current.onSelectCountry(continentId, countryId);
+          }
+          return;
+        }
+
         const clickedGuideStopFeature = map
           .queryRenderedFeatures(event.point, {
             layers: [

@@ -1494,7 +1494,6 @@ export function SplitScreenSection({
         });
       }
       setDraftPlacesBeenCountry("");
-      setProfilePlacesBeenMapSelection({ continentId, countryId });
       return;
     }
     setFocusedCountrySignal({ countryId, nonce: Date.now() });
@@ -6135,6 +6134,12 @@ export function SplitScreenSection({
               visibleNestedStopParentIds={visibleNestedStopParentIds}
               hoveredStopId={hoveredStopId}
               selectedStopId={selectedGuideStopId}
+              countryToggleMode={
+                isProfileMode &&
+                activeProfileLeftRail === "places-been" &&
+                activePlacesBeenFilter === "countries" &&
+                isAddingPlacesBeenCountry
+              }
               onHoverGuideStop={setHoveredStopId}
               onHoverGuideMarker={handleHoverGuideMarker}
               onSelectGuideMarker={handleSelectGuideMarker}
@@ -8348,7 +8353,7 @@ export function SplitScreenSection({
                           <h2
                             className={`profile-left-name absolute top-0 font-semibold transition-[left,transform,font-size,color] duration-[620ms] ease-[cubic-bezier(0.22,1,0.36,1)] ${
                               activeProfileLeftRail === "places-been"
-                                ? "left-0 translate-x-0 text-sm uppercase tracking-[0.1em] text-slate-500"
+                                ? "left-0 translate-x-0 text-sm uppercase tracking-[0.1em] text-white/[0.58]"
                                 : "left-1/2 -translate-x-1/2 text-2xl text-slate-900"
                             }`}
                           >
@@ -8383,11 +8388,20 @@ export function SplitScreenSection({
                         </p>
                       ) : null}
                       {activeProfileLeftRail === "places-been" ? (
-                        <div className="mt-2 flex min-h-0 flex-1 w-full flex-col text-left">
-                          <p className="text-[10px] uppercase tracking-[0.12em] text-white/48">Places been</p>
-                          <p className="mt-1 text-sm text-white/68">{profilePlacesBeenSummary}</p>
-                          <div className="mt-3 flex items-center gap-1.5">
-                            <div className="grid flex-1 grid-cols-3 gap-1.5">
+                        <div
+                          data-profile-places-been
+                          className="mt-2 flex min-h-0 w-full flex-1 flex-col text-left"
+                        >
+                          <div className="border-b border-white/[0.1] pb-3">
+                            <p className="text-[10px] font-semibold uppercase tracking-[0.14em] text-white/[0.46]">
+                              Places been
+                            </p>
+                            <p className="mt-1 text-sm leading-relaxed text-white/[0.78]">
+                              {profilePlacesBeenSummary}
+                            </p>
+                          </div>
+                          <div className="mt-3 flex items-center gap-2">
+                            <div className="grid flex-1 grid-cols-3 gap-1 rounded-lg border border-white/[0.12] bg-black/20 p-1">
                               {(
                                 [
                                   { id: "countries", label: "Countries" },
@@ -8399,10 +8413,10 @@ export function SplitScreenSection({
                                   key={filter.id}
                                   type="button"
                                   onClick={() => handlePlacesBeenFilterSelect(filter.id)}
-                                  className={`rounded-full border px-2 py-1 text-xs font-medium transition ${
+                                  className={`rounded-md border px-2 py-1.5 text-xs font-semibold transition-colors ${
                                     activePlacesBeenFilter === filter.id
-                                      ? "border-white bg-white text-slate-950 shadow-sm"
-                                      : "border-white/14 bg-white/[0.08] text-white/72 hover:border-white/24 hover:bg-white/[0.13] hover:text-white"
+                                      ? "border-white/[0.34] bg-white/[0.15] text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.1)]"
+                                      : "border-transparent text-white/[0.56] hover:bg-white/[0.07] hover:text-white"
                                   }`}
                                 >
                                   {filter.label}
@@ -8412,10 +8426,10 @@ export function SplitScreenSection({
                             <button
                               type="button"
                               onClick={() => setIsAddingPlacesBeenCountry((current) => !current)}
-                              className={`inline-flex h-7 w-7 items-center justify-center rounded-full border transition ${
+                              className={`inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border transition-colors ${
                                 isAddingPlacesBeenCountry
-                                  ? "border-white bg-white text-slate-950 shadow-sm"
-                                  : "border-white/14 bg-white/[0.08] text-white/72 hover:border-white/24 hover:bg-white/[0.13] hover:text-white"
+                                  ? "border-orange-300/60 bg-orange-500/20 text-orange-100"
+                                  : "border-white/[0.14] bg-white/[0.05] text-white/[0.66] hover:border-white/[0.28] hover:bg-white/[0.1] hover:text-white"
                               }`}
                               aria-label={`Add ${
                                 activePlacesBeenFilter === "countries"
@@ -8440,7 +8454,7 @@ export function SplitScreenSection({
                             </button>
                           </div>
                           {isAddingPlacesBeenCountry ? (
-                            <div className="mt-2 flex items-center gap-1.5">
+                            <div className="mt-2 flex items-center gap-2">
                               <input
                                 type="text"
                                 value={draftPlacesBeenCountry}
@@ -8462,18 +8476,18 @@ export function SplitScreenSection({
                                       ? "Add city (optional: City, Country)"
                                       : "Add place (optional: Place, Country)"
                                 }
-                                className="h-8 min-w-0 flex-1 rounded-full border border-slate-300 bg-white px-3 text-xs text-slate-700 outline-none transition placeholder:text-slate-400 focus:border-slate-500"
+                                className="h-9 min-w-0 flex-1 rounded-lg !border-white/[0.16] !bg-black/25 px-3 text-xs !text-white outline-none transition placeholder:!text-white/[0.36] focus:!border-white/[0.4]"
                               />
                               <button
                                 type="button"
                                 onClick={handleAddPlacesBeenEntry}
-                                className="h-8 rounded-full border border-slate-900 bg-slate-900 px-3 text-xs font-medium text-white transition hover:bg-slate-800"
+                                className="h-9 rounded-lg border border-orange-300/50 bg-orange-500/20 px-3 text-xs font-semibold text-orange-50 transition hover:border-orange-200/70 hover:bg-orange-500/30"
                               >
                                 Add
                               </button>
                             </div>
                           ) : null}
-                          <div className="mt-3 min-h-0 flex-1 overflow-y-auto pr-1">
+                          <div className="mt-3 min-h-0 flex-1 overflow-y-auto pr-1 [scrollbar-color:rgba(255,255,255,0.18)_transparent]">
                             {profilePlacesBeenByCountry.length ? (
                               activePlacesBeenFilter === "countries" ? (
                                 <div className="space-y-1">
@@ -8494,10 +8508,10 @@ export function SplitScreenSection({
                                         onClick={() => {
                                           handlePlacesBeenEntryFocus(countryEntry);
                                         }}
-                                        className={`flex w-full items-center gap-2 rounded-xl px-2.5 py-1.5 text-left text-sm transition ${
+                                        className={`flex w-full items-center gap-2 rounded-lg border px-2.5 py-2 text-left text-sm transition-colors ${
                                           isActive
-                                            ? "bg-orange-50 text-orange-700"
-                                            : "text-slate-700 hover:bg-stone-100"
+                                            ? "border-orange-300/45 bg-orange-500/[0.16] text-orange-50"
+                                            : "border-transparent bg-white/[0.035] text-white/[0.74] hover:border-white/[0.14] hover:bg-white/[0.08] hover:text-white"
                                         }`}
                                       >
                                         {countryFlag ? (
@@ -8505,9 +8519,9 @@ export function SplitScreenSection({
                                             {countryFlag}
                                           </span>
                                         ) : (
-                                          <span className="h-1.5 w-1.5 rounded-full bg-cyan-500" />
+                                          <span className="h-2 w-2 rounded-full border border-cyan-200/50 bg-cyan-400/70" />
                                         )}
-                                        <span className="truncate">{group.country}</span>
+                                        <span className="truncate font-medium">{group.country}</span>
                                       </button>
                                     );
                                   })}
@@ -8524,16 +8538,16 @@ export function SplitScreenSection({
                                     return (
                                       <div
                                         key={group.country}
-                                        className="rounded-xl border border-slate-200 bg-white/70 px-2 py-1.5"
+                                        className="overflow-hidden rounded-lg border border-white/[0.11] bg-white/[0.035]"
                                       >
-                                        <div className="flex items-center gap-1">
+                                        <div className="flex items-center gap-1 p-1.5">
                                           <button
                                             type="button"
                                             onClick={() => handlePlacesBeenCountryFocus(group.country)}
                                             className={`min-w-0 flex-1 rounded-lg px-2 py-1 text-left text-xs font-semibold uppercase tracking-[0.08em] transition ${
                                               isCountryFocused
-                                                ? "bg-orange-50 text-orange-700"
-                                                : "text-slate-600 hover:bg-stone-100"
+                                                ? "bg-orange-500/[0.16] text-orange-100"
+                                                : "text-white/[0.6] hover:bg-white/[0.07] hover:text-white"
                                             }`}
                                           >
                                             <span className="inline-flex items-center gap-2">
@@ -8548,7 +8562,7 @@ export function SplitScreenSection({
                                           <button
                                             type="button"
                                             onClick={() => handlePlacesBeenCountryToggle(group.country)}
-                                            className="inline-flex h-6 w-6 items-center justify-center rounded-lg text-slate-500 transition hover:bg-stone-100 hover:text-slate-700"
+                                            className="inline-flex h-7 w-7 items-center justify-center rounded-md text-white/[0.46] transition hover:bg-white/[0.08] hover:text-white"
                                             aria-label={`${isExpanded ? "Collapse" : "Expand"} ${group.country}`}
                                           >
                                             <ChevronRight
@@ -8559,7 +8573,7 @@ export function SplitScreenSection({
                                           </button>
                                         </div>
                                         {isExpanded ? (
-                                          <div className="mt-1 space-y-1">
+                                          <div className="space-y-1 border-t border-white/[0.08] px-1.5 py-1.5">
                                             {group.entries.map((entry) => {
                                               const entryStopId = `places-been-${entry.kind}-${entry.id}`;
                                               const isActive = Boolean(
@@ -8570,13 +8584,13 @@ export function SplitScreenSection({
                                                   key={entry.id}
                                                   type="button"
                                                   onClick={() => handlePlacesBeenEntryFocus(entry)}
-                                                  className={`flex w-full items-center gap-2 rounded-lg px-2 py-1.5 text-left text-sm transition ${
+                                                  className={`flex w-full items-center gap-2 rounded-md border px-2 py-1.5 text-left text-sm transition-colors ${
                                                     isActive
-                                                      ? "bg-orange-50 text-orange-700"
-                                                      : "text-slate-700 hover:bg-stone-100"
+                                                      ? "border-orange-300/40 bg-orange-500/[0.14] text-orange-50"
+                                                      : "border-transparent text-white/[0.68] hover:border-white/[0.1] hover:bg-white/[0.06] hover:text-white"
                                                   }`}
                                                 >
-                                                  <span className="h-1.5 w-1.5 rounded-full bg-cyan-500" />
+                                                  <span className="h-1.5 w-1.5 rounded-full bg-cyan-300/80" />
                                                   <span className="truncate">{entry.name}</span>
                                                 </button>
                                               );
@@ -8589,7 +8603,9 @@ export function SplitScreenSection({
                                 </div>
                               )
                             ) : (
-                              <p className="text-sm text-slate-500">No places added yet.</p>
+                              <p className="rounded-lg border border-dashed border-white/[0.14] bg-black/10 px-3 py-4 text-center text-sm text-white/[0.46]">
+                                No places added yet.
+                              </p>
                             )}
                           </div>
                         </div>
