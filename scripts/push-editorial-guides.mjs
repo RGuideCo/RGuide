@@ -13,6 +13,9 @@ function run(command, args) {
 }
 
 const args = process.argv.slice(2);
+const skipMediaEnforcement = args.includes("--copy-only") || args.includes("--title-only");
 
 await run(process.execPath, ["scripts/backfill-normalized-editorial-guides.mjs", ...args]);
-await run(process.execPath, ["scripts/enforce-r2-venue-photos.mjs", ...args]);
+if (!skipMediaEnforcement) {
+  await run(process.execPath, ["scripts/enforce-r2-venue-photos.mjs", ...args]);
+}

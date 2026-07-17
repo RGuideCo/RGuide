@@ -217,6 +217,14 @@ node scripts/backfill-normalized-editorial-guides.mjs --city {City} --copy-only
 
 This mode updates `entries.description`, guide-specific `entry_stops.description`, nested-place copy, and `entry_render_cache`. It deliberately leaves canonical venue hours, classifications, sources, and media untouched, and fails when a selected live entry or stop is missing.
 
+For a title-only revision, use the normalized writer's title-only mode:
+
+```bash
+npm run push:editorial-guides -- --city {City} --title-only
+```
+
+This mode updates `entries.title` and `entry_render_cache` only. It verifies that both normalized and rendered titles match the source and leaves stops, venues, hours, classifications, sources, and media untouched.
+
 or for a single guide:
 
 ```bash
