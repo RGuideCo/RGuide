@@ -380,7 +380,7 @@ export const useAppStore = create<AppState>()(
         const hasCity = Boolean(input.city?.trim());
         const hasNeighborhood = Boolean(input.neighborhood?.trim());
         const visibility: MapList["visibility"] =
-          input.publishPublic && currentUser.canPublishGuides ? "public" : "followers";
+          input.publishPublic && currentUser.canPublishGuides ? "public" : "private";
 
         const nextList: MapList = {
           id: `submission-${Date.now()}`,
@@ -427,6 +427,11 @@ export const useAppStore = create<AppState>()(
         void saveSubmittedGuide(nextList).then(({ guide, error }) => {
           if (error) {
             console.error("Failed to sync submitted guide", error);
+            set((state) => ({
+              submittedLists: state.submittedLists.filter(
+                (list) => list.id !== nextList.id || list !== nextList,
+              ),
+            }));
             return;
           }
           if (guide) {
@@ -485,7 +490,7 @@ export const useAppStore = create<AppState>()(
         const hasCity = Boolean(input.city?.trim());
         const hasNeighborhood = Boolean(input.neighborhood?.trim());
         const visibility: MapList["visibility"] =
-          input.publishPublic && currentUser.canPublishGuides ? "public" : "followers";
+          input.publishPublic && currentUser.canPublishGuides ? "public" : "private";
 
         const updatedList: MapList = {
           ...existing,
@@ -526,6 +531,11 @@ export const useAppStore = create<AppState>()(
         void saveSubmittedGuide(updatedList).then(({ guide, error }) => {
           if (error) {
             console.error("Failed to sync submitted guide update", error);
+            set((state) => ({
+              submittedLists: state.submittedLists.map((list) =>
+                list.id === listId && list === updatedList ? existing : list,
+              ),
+            }));
             return;
           }
           if (guide) {

@@ -164,8 +164,8 @@ export function SetPasswordForm() {
     event.preventDefault();
     setMessage("");
 
-    if (password.length < 6) {
-      setMessage("Use at least 6 characters.");
+    if (password.length < 8) {
+      setMessage("Use at least 8 characters.");
       return;
     }
 
@@ -243,7 +243,7 @@ export function SetPasswordForm() {
               onChange={(event) => setPassword(event.target.value)}
               placeholder="Password"
               autoComplete="new-password"
-              minLength={6}
+              minLength={8}
               required
               disabled={status !== "ready"}
               className="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 pr-12 text-slate-900 disabled:cursor-not-allowed disabled:bg-slate-100"
@@ -270,7 +270,7 @@ export function SetPasswordForm() {
               onChange={(event) => setConfirmPassword(event.target.value)}
               placeholder="Confirm password"
               autoComplete="new-password"
-              minLength={6}
+              minLength={8}
               required
               disabled={status !== "ready"}
               className="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 pr-12 text-slate-900 disabled:cursor-not-allowed disabled:bg-slate-100"

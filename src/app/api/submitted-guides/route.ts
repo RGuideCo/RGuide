@@ -6,6 +6,7 @@ import {
   getAuthenticatedSupabaseUser,
   getSupabaseServiceClient,
 } from "@/lib/supabase/server";
+import { getProfileAvatarUrl } from "@/lib/profile-avatar";
 import type { ExternalPlaceProvider, ExternalPlaceReference, GuideStop, ListCategory, MapList } from "@/types";
 
 export const dynamic = "force-dynamic";
@@ -23,6 +24,25 @@ type EntryRow = {
   slug: string;
   user_id: string | null;
   source_table: string | null;
+  submission_type: string;
+};
+
+type EditorialSourceEntryRow = {
+  id: string;
+  legacy_id: string;
+};
+
+type EditorialSourceStopRow = {
+  entry_id: string;
+  legacy_id: string;
+  venue_id: string | null;
+  places: unknown;
+};
+
+type CanonicalNestedPlace = {
+  id: string;
+  venueId: string | null;
+  places: CanonicalNestedPlace[];
 };
 
 type VenueRow = {
@@ -96,6 +116,11 @@ function getAppMetadataString(user: SupabaseUser, key: string) {
   return typeof value === "string" ? value : undefined;
 }
 
+function getUserMetadataString(user: SupabaseUser, key: string) {
+  const value = user.user_metadata?.[key];
+  return typeof value === "string" ? value : undefined;
+}
+
 function getAppMetadataBoolean(user: SupabaseUser, key: string) {
   const value = user.app_metadata?.[key];
   return typeof value === "boolean" ? value : undefined;
@@ -119,10 +144,27 @@ function canPublishPublicGuides(user: SupabaseUser) {
   );
 }
 
+function withAuthenticatedCreator(list: MapList, user: SupabaseUser): MapList {
+  const name =
+    getUserMetadataString(user, "full_name") ??
+    getUserMetadataString(user, "name") ??
+    user.email?.split("@")[0] ??
+    "RGuide traveler";
+
+  return {
+    ...list,
+    creator: {
+      id: user.id,
+      name,
+      avatar: getProfileAvatarUrl(getUserMetadataString(user, "avatar_url")),
+    },
+  };
+}
+
 function getRequestedVisibility(list: MapList): GuideVisibility {
   if (list.visibility === "public") return "public";
   if (list.visibility === "private" || list.journal?.visibility === "private") return "private";
-  return "followers";
+  return "private";
 }
 
 function dateOnly(value: string | undefined) {
@@ -264,7 +306,7 @@ async function resolveDestinationIds(supabase: SupabaseClient, list: MapList) {
 async function getExistingEntry(supabase: SupabaseClient, listId: string) {
   const { data, error } = await supabase
     .from("entries")
-    .select("id,slug,user_id,source_table")
+    .select("id,slug,user_id,source_table,submission_type")
     .eq("legacy_id", listId)
     .limit(1)
     .returns<EntryRow[]>();
@@ -592,6 +634,205 @@ async function resolveStopTree(supabase: SupabaseClient, params: {
   };
 }
 
+function toCanonicalNestedPlaces(value: unknown): CanonicalNestedPlace[] {
+  if (!Array.isArray(value)) return [];
+
+  return value.flatMap((candidate) => {
+    if (!candidate || typeof candidate !== "object" || Array.isArray(candidate)) return [];
+    const record = candidate as Record<string, unknown>;
+    const id = optionalText(record.id, 240);
+    if (!id) return [];
+    const venueId = optionalText(record.venueId ?? record.venue_id, 40);
+
+    return [{
+      id,
+      venueId: isUuid(venueId) ? venueId : null,
+      places: toCanonicalNestedPlaces(record.places),
+    }];
+  });
+}
+
+function collectCanonicalVenueIds(places: CanonicalNestedPlace[], venueIds: Set<string>) {
+  for (const place of places) {
+    if (place.venueId) venueIds.add(place.venueId);
+    collectCanonicalVenueIds(place.places, venueIds);
+  }
+}
+
+function collectSourceReferences(stops: GuideStop[]) {
+  const sourceListIds = new Set<string>();
+  const sourceStopIds = new Set<string>();
+  const stack = [...stops];
+
+  while (stack.length) {
+    const stop = stack.pop();
+    if (!stop) continue;
+    const sourceListId = optionalText(stop.sourceListId, 240);
+    const sourceStopId = optionalText(stop.sourceStopId, 240);
+    if (sourceListId) sourceListIds.add(sourceListId);
+    if (sourceStopId) sourceStopIds.add(sourceStopId);
+    if (stop.places?.length) stack.push(...stop.places);
+  }
+
+  return {
+    sourceListIds: [...sourceListIds],
+    sourceStopIds: [...sourceStopIds],
+  };
+}
+
+async function validateRegularGuideSources(
+  supabase: SupabaseClient,
+  stops: GuideStop[],
+): Promise<{ ok: true; stops: GuideStop[] } | { ok: false; error: string }> {
+  const invalidSourceError =
+    "Regular guides can only contain venues added from published RGuide guides.";
+  const { sourceListIds, sourceStopIds } = collectSourceReferences(stops);
+
+  if (!sourceListIds.length || !sourceStopIds.length) {
+    return { ok: false, error: invalidSourceError };
+  }
+
+  const { data: sourceEntries, error: entryError } = await supabase
+    .from("entries")
+    .select("id,legacy_id")
+    .eq("source_table", "editorial_guides")
+    .eq("status", "published")
+    .eq("submission_type", "guide")
+    .in("legacy_id", sourceListIds)
+    .returns<EditorialSourceEntryRow[]>();
+
+  if (entryError) throw entryError;
+
+  const entryByLegacyId = new Map((sourceEntries ?? []).map((entry) => [entry.legacy_id, entry]));
+  if (sourceListIds.some((sourceListId) => !entryByLegacyId.has(sourceListId))) {
+    return { ok: false, error: invalidSourceError };
+  }
+
+  const entryIds = (sourceEntries ?? []).map((entry) => entry.id);
+  const { data: sourceStops, error: stopError } = await supabase
+    .from("entry_stops")
+    .select("entry_id,legacy_id,venue_id,places")
+    .in("entry_id", entryIds)
+    .in("legacy_id", sourceStopIds)
+    .returns<EditorialSourceStopRow[]>();
+
+  if (stopError) throw stopError;
+
+  const sourceStopByKey = new Map(
+    (sourceStops ?? []).map((stop) => [`${stop.entry_id}:${stop.legacy_id}`, stop]),
+  );
+  const canonicalPlacesByStopKey = new Map<string, CanonicalNestedPlace[]>();
+  const canonicalVenueIds = new Set<string>();
+
+  for (const sourceStop of sourceStops ?? []) {
+    const key = `${sourceStop.entry_id}:${sourceStop.legacy_id}`;
+    const canonicalPlaces = toCanonicalNestedPlaces(sourceStop.places);
+    canonicalPlacesByStopKey.set(key, canonicalPlaces);
+    if (sourceStop.venue_id) canonicalVenueIds.add(sourceStop.venue_id);
+    collectCanonicalVenueIds(canonicalPlaces, canonicalVenueIds);
+  }
+
+  const approvedVenueIds = new Set<string>();
+  if (canonicalVenueIds.size) {
+    const { data: approvedVenues, error: venueError } = await supabase
+      .from("venues")
+      .select("id")
+      .in("id", [...canonicalVenueIds])
+      .eq("moderation_status", "approved")
+      .is("merged_into_venue_id", null)
+      .returns<Array<{ id: string }>>();
+
+    if (venueError) throw venueError;
+    for (const venue of approvedVenues ?? []) approvedVenueIds.add(venue.id);
+  }
+
+  function validateNestedStop(
+    stop: GuideStop,
+    sourceListId: string,
+    candidates: CanonicalNestedPlace[],
+  ): GuideStop | null {
+    if (
+      stop.sourceKind !== "stop" ||
+      stop.sourceListId !== sourceListId ||
+      !stop.sourceStopId
+    ) {
+      return null;
+    }
+
+    const candidate = candidates.find((place) => place.id === stop.sourceStopId);
+    if (!candidate) return null;
+    if (candidate.venueId && !approvedVenueIds.has(candidate.venueId)) return null;
+
+    const places = stop.places?.map((place) =>
+      validateNestedStop(place, sourceListId, candidate.places),
+    );
+    if (places?.some((place) => !place)) return null;
+
+    return {
+      ...stop,
+      sourceKind: "stop",
+      sourceListId,
+      sourceStopId: candidate.id,
+      venueId: candidate.venueId ?? undefined,
+      sourceVenueId: candidate.venueId ?? undefined,
+      externalPlace: undefined,
+      places: places as GuideStop[] | undefined,
+    };
+  }
+
+  function validateTopLevelStop(stop: GuideStop, expectedListId?: string): GuideStop | null {
+    const sourceListId = optionalText(stop.sourceListId, 240);
+    if (!sourceListId || (expectedListId && sourceListId !== expectedListId)) return null;
+
+    const sourceEntry = entryByLegacyId.get(sourceListId);
+    if (!sourceEntry) return null;
+
+    if (stop.sourceKind === "guide") {
+      if (!stop.places?.length || stop.sourceStopId) return null;
+      const places = stop.places.map((place) => validateTopLevelStop(place, sourceListId));
+      if (places.some((place) => !place)) return null;
+
+      return {
+        ...stop,
+        sourceKind: "guide",
+        sourceListId,
+        venueId: undefined,
+        sourceVenueId: undefined,
+        externalPlace: undefined,
+        places: places as GuideStop[],
+      };
+    }
+
+    if (stop.sourceKind !== "stop" || !stop.sourceStopId) return null;
+    const sourceKey = `${sourceEntry.id}:${stop.sourceStopId}`;
+    const sourceStop = sourceStopByKey.get(sourceKey);
+    if (!sourceStop?.venue_id || !approvedVenueIds.has(sourceStop.venue_id)) return null;
+
+    const places = stop.places?.map((place) =>
+      validateNestedStop(place, sourceListId, canonicalPlacesByStopKey.get(sourceKey) ?? []),
+    );
+    if (places?.some((place) => !place)) return null;
+
+    return {
+      ...stop,
+      sourceKind: "stop",
+      sourceListId,
+      sourceStopId: sourceStop.legacy_id,
+      venueId: sourceStop.venue_id,
+      sourceVenueId: sourceStop.venue_id,
+      externalPlace: undefined,
+      places: places as GuideStop[] | undefined,
+    };
+  }
+
+  const validatedStops = stops.map((stop) => validateTopLevelStop(stop));
+  if (validatedStops.some((stop) => !stop)) {
+    return { ok: false, error: invalidSourceError };
+  }
+
+  return { ok: true, stops: validatedStops as GuideStop[] };
+}
+
 function stopMetadata(stop: GuideStop) {
   return JSON.parse(JSON.stringify({
     submittedFrom: "browser",
@@ -738,11 +979,32 @@ function validateList(list: MapList) {
     return { ok: false as const, error: "Add at least one stop before saving." };
   }
 
-  if (stops.length > maxStops) {
+  const stopTree: Array<{ stop: GuideStop; depth: number }> = stops.map((stop) => ({ stop, depth: 1 }));
+  const allStops: GuideStop[] = [];
+  let hasExcessiveDepth = false;
+
+  while (stopTree.length && allStops.length <= maxStops) {
+    const current = stopTree.pop();
+    if (!current) continue;
+    allStops.push(current.stop);
+    if (current.depth >= 8 && current.stop.places?.length) {
+      hasExcessiveDepth = true;
+      break;
+    }
+    for (const place of current.stop.places ?? []) {
+      stopTree.push({ stop: place, depth: current.depth + 1 });
+    }
+  }
+
+  if (allStops.length > maxStops) {
     return { ok: false as const, error: `This guide has too many stops. Keep it under ${maxStops}.` };
   }
 
-  const emptyStop = stops.find((stop) => !cleanText(stop.name, 220) || !cleanText(stop.description, 2400));
+  if (hasExcessiveDepth) {
+    return { ok: false as const, error: "This guide has too many nested stop levels." };
+  }
+
+  const emptyStop = allStops.find((stop) => !cleanText(stop.name, 220) || !cleanText(stop.description, 2400));
   if (emptyStop) {
     return { ok: false as const, error: "Every stop needs a name and description before saving." };
   }
@@ -780,7 +1042,7 @@ export async function POST(request: NextRequest) {
   try {
     const payload = (await request.json()) as { list?: MapList };
     if (!payload.list) throw new Error("Missing list.");
-    list = payload.list;
+    list = withAuthenticatedCreator(payload.list, user);
   } catch {
     return json({ error: "Invalid guide payload." }, { status: 400 });
   }
@@ -801,6 +1063,11 @@ export async function POST(request: NextRequest) {
       return json({ error: "You can only edit your own guides." }, { status: 403 });
     }
 
+    const submissionType = toSchemaSubmissionType(list.submissionType);
+    if (existingEntry && existingEntry.submission_type !== submissionType) {
+      return json({ error: "A saved guide cannot be changed into a different entry type." }, { status: 409 });
+    }
+
     if (!existingEntry) {
       const maxGuides = getNumberEnv("USER_GUIDE_MAX_GUIDES", 1000);
       const { count, error: countError } = await service
@@ -819,19 +1086,6 @@ export async function POST(request: NextRequest) {
       }
     }
 
-    const { destinationId, cityId, neighborhoodId } = await resolveDestinationIds(service, list);
-    const resolvedStops = await Promise.all(
-      list.stops.map((stop) =>
-        resolveStopTree(service, {
-          user,
-          list,
-          stop,
-          cityId,
-          neighborhoodId,
-        }),
-      ),
-    );
-    const slug = await getAvailableEntrySlug(service, list.slug, existingEntry?.id ?? null);
     const requestedVisibility = getRequestedVisibility(list);
     const canPublishPublic = canPublishPublicGuides(user);
 
@@ -841,6 +1095,31 @@ export async function POST(request: NextRequest) {
         { status: 403 },
       );
     }
+
+    const regularGuideSources =
+      submissionType === "guide" && !canPublishPublic
+        ? await validateRegularGuideSources(service, list.stops)
+        : null;
+
+    if (regularGuideSources && !regularGuideSources.ok) {
+      return json({ error: regularGuideSources.error }, { status: 403 });
+    }
+
+    const { destinationId, cityId, neighborhoodId } = await resolveDestinationIds(service, list);
+    const resolvedStops = regularGuideSources?.ok
+      ? regularGuideSources.stops
+      : await Promise.all(
+          list.stops.map((stop) =>
+            resolveStopTree(service, {
+              user,
+              list,
+              stop,
+              cityId,
+              neighborhoodId,
+            }),
+          ),
+        );
+    const slug = await getAvailableEntrySlug(service, list.slug, existingEntry?.id ?? null);
 
     const visibility = requestedVisibility === "public" ? "public" : requestedVisibility;
     const status = visibility === "public" ? "published" : "draft";

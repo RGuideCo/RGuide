@@ -11,9 +11,15 @@ interface ProfileInput {
   visibility?: "public" | "private";
 }
 
+const MAX_AVATAR_BYTES = 5 * 1024 * 1024;
+const AVATAR_EXTENSION_BY_MIME_TYPE: Record<string, string> = {
+  "image/jpeg": "jpg",
+  "image/png": "png",
+  "image/webp": "webp",
+};
+
 function getAvatarExtension(file: File) {
-  const extension = file.name.split(".").pop()?.toLowerCase();
-  return extension && /^[a-z0-9]+$/.test(extension) ? extension : "jpg";
+  return AVATAR_EXTENSION_BY_MIME_TYPE[file.type] ?? null;
 }
 
 export async function updateSupabaseProfile({
@@ -47,7 +53,22 @@ export async function updateSupabaseProfile({
   let avatarUrl = getProfileAvatarUrl(fallbackAvatarUrl);
 
   if (avatarFile) {
-    const path = `${user.id}/avatar.${getAvatarExtension(avatarFile)}`;
+    const extension = getAvatarExtension(avatarFile);
+    if (!extension) {
+      return {
+        avatarUrl,
+        error: new Error("Use a JPEG, PNG, or WebP profile image."),
+      };
+    }
+
+    if (avatarFile.size > MAX_AVATAR_BYTES) {
+      return {
+        avatarUrl,
+        error: new Error("Profile images must be 5 MB or smaller."),
+      };
+    }
+
+    const path = `${user.id}/avatar.${extension}`;
     const { error: uploadError } = await supabase.storage
       .from("avatars")
       .upload(path, avatarFile, {

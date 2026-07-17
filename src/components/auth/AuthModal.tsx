@@ -10,8 +10,7 @@ type AuthMessageTone = "error" | "success";
 
 export function AuthModal() {
   const { authModalOpen, authMode, closeAuthModal, openAuthModal } = useAppStore();
-  const allowPublicSignup = process.env.NEXT_PUBLIC_ALLOW_PUBLIC_SIGNUP === "true";
-  const activeAuthMode = allowPublicSignup ? authMode : "login";
+  const activeAuthMode = authMode;
   const [isResetPasswordView, setIsResetPasswordView] = useState(false);
   const [resetEmailSent, setResetEmailSent] = useState(false);
   const [name, setName] = useState("");
@@ -63,7 +62,7 @@ export function AuthModal() {
               full_name: name.trim() || email.split("@")[0],
             },
             emailRedirectTo:
-              typeof window !== "undefined" ? window.location.origin : undefined,
+              typeof window !== "undefined" ? `${window.location.origin}/auth/confirmed` : undefined,
           },
         });
 
@@ -141,9 +140,9 @@ export function AuthModal() {
       : "Join RGuide";
   const intro = isResetPasswordView
     ? "Enter the email connected to your RGuide account and we'll send a secure reset link."
-    : allowPublicSignup
+    : activeAuthMode === "login"
       ? "Sign in with the email and password connected to your RGuide account."
-      : "RGuide is invite-only while the first public guides are being tested.";
+      : "Create an account to save venues and build your own private guides.";
 
   return (
     <div className="fixed inset-0 z-[1000] flex items-center justify-center bg-slate-950/40 p-4">
@@ -244,7 +243,7 @@ export function AuthModal() {
                   onChange={(event) => setPassword(event.target.value)}
                   placeholder="Password"
                   autoComplete={activeAuthMode === "login" ? "current-password" : "new-password"}
-                  minLength={6}
+                  minLength={8}
                   required
                   className="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 pr-12 text-slate-900"
                 />
@@ -297,7 +296,7 @@ export function AuthModal() {
           </form>
         )}
 
-        {allowPublicSignup && !isResetPasswordView ? (
+        {!isResetPasswordView ? (
           <div className="mt-4 text-sm text-slate-600">
             {activeAuthMode === "login" ? "Need an account?" : "Already have an account?"}{" "}
             <button

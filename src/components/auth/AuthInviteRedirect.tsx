@@ -11,7 +11,7 @@ function hasInviteAuthParams() {
 
   return (
     Boolean(params.get("access_token") && params.get("refresh_token")) &&
-    (type === "invite" || type === "recovery" || window.location.pathname !== "/auth/set-password")
+    (type === "invite" || type === "recovery")
   );
 }
 

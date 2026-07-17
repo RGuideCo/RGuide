@@ -8322,7 +8322,7 @@ export function SplitScreenSection({
                       <input
                         ref={profileAvatarInputRef}
                         type="file"
-                        accept="image/*"
+                        accept="image/jpeg,image/png,image/webp"
                         onChange={(event) => handleProfileAvatarChange(event.target.files?.[0] ?? null)}
                         className="hidden"
                       />

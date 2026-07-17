@@ -18,6 +18,18 @@ Body:
 
 Use `invite.html`.
 
+## Confirm Signup
+
+Subject:
+
+```txt
+Confirm your RGuide account
+```
+
+Body:
+
+Use `confirmation.html`.
+
 ## Reset Password
 
 Subject:
@@ -30,4 +42,4 @@ Body:
 
 Use `recovery.html`.
 
-Keep `{{ .ConfirmationURL }}` intact. Supabase replaces it with the secure invite/reset link.
+Keep `{{ .ConfirmationURL }}` intact. Supabase replaces it with the secure confirmation, invite, or reset link.

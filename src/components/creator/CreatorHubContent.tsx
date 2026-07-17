@@ -132,6 +132,7 @@ export function CreatorHubContent({
   );
 
   const activeRailMeta = creatorRailOptions.find((option) => option.id === activeRail) ?? creatorRailOptions[0];
+  const guideCreationRequiresVenue = activeRail === "guides" && !currentUser?.canPublishGuides;
 
   useEffect(() => {
     if (!activeLists.length) {
@@ -250,14 +251,26 @@ export function CreatorHubContent({
                       <span className="rounded-full border border-slate-200 px-2 py-1 text-xs font-medium text-slate-600">
                         {activeLists.length}
                       </span>
-                      <Link
-                        href={activeRailMeta.addHref}
-                        className="inline-flex h-7 w-7 items-center justify-center rounded-full border border-slate-200 bg-white text-slate-700 hover:border-slate-300 hover:text-slate-900"
-                        aria-label={activeRailMeta.addLabel}
-                        title={activeRailMeta.addLabel}
-                      >
-                        <Plus className="h-4 w-4" />
-                      </Link>
+                      {guideCreationRequiresVenue ? (
+                        <button
+                          type="button"
+                          disabled
+                          className="inline-flex h-7 w-7 cursor-not-allowed items-center justify-center rounded-full border border-slate-200 bg-slate-100 text-slate-400"
+                          aria-label="Add venues from a published guide to create a guide"
+                          title="Add venues from a published guide to create a guide"
+                        >
+                          <Plus className="h-4 w-4" />
+                        </button>
+                      ) : (
+                        <Link
+                          href={activeRailMeta.addHref}
+                          className="inline-flex h-7 w-7 items-center justify-center rounded-full border border-slate-200 bg-white text-slate-700 hover:border-slate-300 hover:text-slate-900"
+                          aria-label={activeRailMeta.addLabel}
+                          title={activeRailMeta.addLabel}
+                        >
+                          <Plus className="h-4 w-4" />
+                        </Link>
+                      )}
                     </div>
                   </div>
 
