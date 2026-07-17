@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { Eye, EyeOff, X } from "@/components/icons/MaterialSymbol";
 import { FormEvent, useEffect, useState } from "react";
 
@@ -20,6 +21,7 @@ export function AuthModal() {
   const [message, setMessage] = useState("");
   const [messageTone, setMessageTone] = useState<AuthMessageTone>("error");
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isGoogleSubmitting, setIsGoogleSubmitting] = useState(false);
   const supabase = getSupabaseBrowserClient();
 
   useEffect(() => {
@@ -28,6 +30,7 @@ export function AuthModal() {
     setShowPassword(false);
     setIsResetPasswordView(false);
     setResetEmailSent(false);
+    setIsGoogleSubmitting(false);
   }, [activeAuthMode, authModalOpen]);
 
   function showMessage(text: string, tone: AuthMessageTone = "error") {
@@ -39,6 +42,34 @@ export function AuthModal() {
     setIsResetPasswordView(true);
     setMessage("");
     setMessageTone("error");
+  }
+
+  async function handleGoogleSignIn() {
+    setMessage("");
+
+    if (!supabase) {
+      showMessage("Supabase is not configured yet. Add the project URL and publishable key.");
+      return;
+    }
+
+    setIsGoogleSubmitting(true);
+
+    try {
+      const redirectTo =
+        typeof window !== "undefined" ? `${window.location.origin}/auth/callback` : undefined;
+      const { error } = await supabase.auth.signInWithOAuth({
+        provider: "google",
+        options: { redirectTo },
+      });
+
+      if (error) {
+        showMessage(error.message);
+        setIsGoogleSubmitting(false);
+      }
+    } catch {
+      showMessage("Google sign-in could not be started. Please try again.");
+      setIsGoogleSubmitting(false);
+    }
   }
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
@@ -209,6 +240,28 @@ export function AuthModal() {
           </form>
         ) : (
           <form onSubmit={handleSubmit} className="mt-6 space-y-4">
+            <button
+              type="button"
+              onClick={handleGoogleSignIn}
+              disabled={isSubmitting || isGoogleSubmitting}
+              className="inline-flex w-full items-center justify-center gap-3 rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm font-medium text-slate-800 transition hover:border-slate-300 hover:bg-stone-50 disabled:cursor-not-allowed disabled:bg-slate-100 disabled:text-slate-400"
+            >
+              <Image
+                src="/google-g.png"
+                alt=""
+                width={18}
+                height={18}
+                className="h-[18px] w-[18px] object-contain"
+              />
+              {isGoogleSubmitting ? "Connecting to Google..." : "Continue with Google"}
+            </button>
+            <div className="flex items-center gap-3" aria-hidden="true">
+              <span className="h-px flex-1 bg-slate-200" />
+              <span className="text-xs font-medium uppercase text-slate-400">
+                Or continue with email
+              </span>
+              <span className="h-px flex-1 bg-slate-200" />
+            </div>
             {activeAuthMode === "signup" ? (
               <label className="block text-sm">
                 <span className="mb-2 block font-medium text-slate-700">Name</span>
@@ -284,7 +337,7 @@ export function AuthModal() {
 
             <button
               type="submit"
-              disabled={isSubmitting}
+              disabled={isSubmitting || isGoogleSubmitting}
               className="w-full rounded-2xl bg-slate-900 px-4 py-3 text-sm font-medium text-white hover:bg-slate-800 disabled:cursor-not-allowed disabled:bg-slate-400"
             >
               {isSubmitting
