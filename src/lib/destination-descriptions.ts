@@ -107,6 +107,7 @@ const DESTINATION_DESCRIPTIONS_CACHE_SECONDS = Number.parseInt(
   process.env.DESTINATION_DESCRIPTIONS_CACHE_SECONDS ?? "86400",
   10,
 );
+const DESTINATION_IMAGE_DATA_API_PAGE_SIZE = 1000;
 
 function descriptionId(...parts: string[]) {
   return parts.filter(Boolean).join(":");
@@ -442,18 +443,32 @@ async function loadDestinationContentRowsFromDataApi(): Promise<DestinationConte
     auth: { autoRefreshToken: false, persistSession: false },
   });
 
-  const { data, error } = await supabase
-    .from("destinations")
-    .select("legacy_id,image_url,updated_at,metadata")
-    .in("scope", ["city", "country"])
-    .eq("is_published", true)
-    .not("legacy_id", "is", null)
-    .not("image_url", "is", null)
-    .returns<DestinationDataApiImageRow[]>();
+  const destinationImages: DestinationImageRow[] = [];
+  let destinationImageOffset = 0;
 
-  const destinationImages: DestinationImageRow[] = error
-    ? []
-    : (data ?? []).flatMap((row) => {
+  while (true) {
+    const { data, error } = await supabase
+      .from("destinations")
+      .select("legacy_id,image_url,updated_at,metadata")
+      .in("scope", ["city", "country"])
+      .eq("is_published", true)
+      .not("legacy_id", "is", null)
+      .not("image_url", "is", null)
+      .order("legacy_id", { ascending: true })
+      .range(
+        destinationImageOffset,
+        destinationImageOffset + DESTINATION_IMAGE_DATA_API_PAGE_SIZE - 1,
+      )
+      .returns<DestinationDataApiImageRow[]>();
+
+    if (error) {
+      console.error("Failed to load destination images from the Supabase data API", error);
+      break;
+    }
+
+    const page = data ?? [];
+    destinationImages.push(
+      ...page.flatMap((row) => {
         if (!row.legacy_id || !row.image_url) {
           return [];
         }
@@ -465,7 +480,15 @@ async function loadDestinationContentRowsFromDataApi(): Promise<DestinationConte
             imageUpdatedAt: row.metadata?.destination_image?.ingested_at ?? row.updated_at,
           },
         ];
-      });
+      }),
+    );
+
+    if (page.length < DESTINATION_IMAGE_DATA_API_PAGE_SIZE) {
+      break;
+    }
+
+    destinationImageOffset += page.length;
+  }
 
   const [{ data: insightData }, { data: strengthData }] = await Promise.all([
     supabase
@@ -672,7 +695,7 @@ const getCachedDestinationContentRows = unstable_cache(
   async () => {
     return loadDestinationContentRows();
   },
-  ["destination-content-rows", "city-images-v2"],
+  ["destination-content-rows", "city-images-v3-paginated"],
   {
     revalidate: Number.isFinite(DESTINATION_DESCRIPTIONS_CACHE_SECONDS)
       ? DESTINATION_DESCRIPTIONS_CACHE_SECONDS
@@ -685,7 +708,7 @@ const getCachedRuntimeDestinationContentRows = unstable_cache(
   async () => {
     return loadDestinationContentRows({ forceDatabase: true });
   },
-  ["destination-content-rows", "city-images-runtime-v1"],
+  ["destination-content-rows", "city-images-runtime-v2-paginated"],
   {
     revalidate: Number.isFinite(DESTINATION_DESCRIPTIONS_CACHE_SECONDS)
       ? DESTINATION_DESCRIPTIONS_CACHE_SECONDS
