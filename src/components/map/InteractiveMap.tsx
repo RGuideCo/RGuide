@@ -11,6 +11,12 @@ type SavedMapLocation = {
   selection: SelectionState;
 };
 
+type MapViewportSelectionTarget = {
+  continentId: string;
+  countryId: string;
+  cityId?: string;
+};
+
 const DynamicMapClient = dynamic(
   () => import("@/components/map/MapClient").then((module) => module.MapClient),
   {
@@ -42,6 +48,7 @@ interface InteractiveMapProps {
   hoveredStopId?: string | null;
   selectedStopId?: string | null;
   countryToggleMode?: boolean;
+  syncSelectionToViewport?: boolean;
   onHoverGuideStop?: (stopId: string | null) => void;
   onSelectGuideStop?: (stopId: string) => void;
   onHoverGuideMarker?: (guideId: string | null) => void;
@@ -50,6 +57,7 @@ interface InteractiveMapProps {
   onSelectContinent: (continentId: string) => void;
   onSelectCountry: (continentId: string, countryId: string) => void;
   onSelectCity: (continentId: string, countryId: string, cityId: string) => void;
+  onViewportSelectionChange?: (target: MapViewportSelectionTarget) => void;
   onSelectSubarea?: (
     continentId: string,
     countryId: string,

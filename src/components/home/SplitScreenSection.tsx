@@ -1469,7 +1469,11 @@ export function SplitScreenSection({
     const fontSize = getFontSizePx(labelEl ?? triggerEl, 14);
     return { rect, fontSize };
   };
-  const handleSelectCountry = (continentId: string, countryId: string) => {
+  const handleSelectCountry = (
+    continentId: string,
+    countryId: string,
+    options?: { focusMap?: boolean },
+  ) => {
     if (
       isProfileMode &&
       activeProfileLeftRail === "places-been" &&
@@ -1496,7 +1500,7 @@ export function SplitScreenSection({
       setDraftPlacesBeenCountry("");
       return;
     }
-    setFocusedCountrySignal({ countryId, nonce: Date.now() });
+    setFocusedCountrySignal(options?.focusMap === false ? null : { countryId, nonce: Date.now() });
     setIsLocationFavoritesRailActive(false);
     setSelection(() => ({ continentId, countryId }));
     const country = continents
@@ -1688,6 +1692,22 @@ export function SplitScreenSection({
       setClosingGuide(null);
       pushExplorerPath(getCanonicalCityPath(city));
     }
+  };
+  const handleMapViewportSelection = ({
+    continentId,
+    countryId,
+    cityId,
+  }: {
+    continentId: string;
+    countryId: string;
+    cityId?: string;
+  }) => {
+    if (cityId) {
+      handleSelectCity(continentId, countryId, cityId);
+      return;
+    }
+
+    handleSelectCountry(continentId, countryId, { focusMap: false });
   };
   const handleSelectCityFromList = (
     continentId: string,
@@ -6140,6 +6160,7 @@ export function SplitScreenSection({
                 activePlacesBeenFilter === "countries" &&
                 isAddingPlacesBeenCountry
               }
+              syncSelectionToViewport={!isProfileMode && !isProfileSubmitLayout}
               onHoverGuideStop={setHoveredStopId}
               onHoverGuideMarker={handleHoverGuideMarker}
               onSelectGuideMarker={handleSelectGuideMarker}
@@ -6160,6 +6181,7 @@ export function SplitScreenSection({
               onSelectContinent={handleSelectContinent}
               onSelectCountry={handleSelectCountry}
               onSelectCity={handleSelectCityFromList}
+              onViewportSelectionChange={handleMapViewportSelection}
               onSelectSubarea={handleSelectSubarea}
               onSelectState={handleSelectState}
 	            />

@@ -47,6 +47,7 @@ interface MapClientProps {
   hoveredStopId?: string | null;
   selectedStopId?: string | null;
   countryToggleMode?: boolean;
+  syncSelectionToViewport?: boolean;
   onHoverGuideStop?: (stopId: string | null) => void;
   onSelectGuideStop?: (stopId: string) => void;
   onHoverGuideMarker?: (guideId: string | null) => void;
@@ -55,6 +56,7 @@ interface MapClientProps {
   onSelectContinent: (continentId: string) => void;
   onSelectCountry: (continentId: string, countryId: string) => void;
   onSelectCity: (continentId: string, countryId: string, cityId: string) => void;
+  onViewportSelectionChange?: (target: MapViewportSelectionTarget) => void;
   onSelectSubarea?: (
     continentId: string,
     countryId: string,
@@ -183,6 +185,18 @@ type MapViewportInsets = {
   left: number;
 };
 
+type MapViewportSelectionTarget = {
+  continentId: string;
+  countryId: string;
+  cityId?: string;
+};
+
+type ViewportCitySelectionFeatureProperties = {
+  continentId: string;
+  countryId: string;
+  cityId: string;
+};
+
 type RGuideMapPerfMetrics = {
   startedAt: number;
   sourceSetDataCounts: Record<string, number>;
@@ -234,6 +248,9 @@ const SHOULD_RECORD_MAP_PERF = process.env.NODE_ENV !== "production";
 const MAX_MAP_PERF_EVENTS = 180;
 const COUNTRY_GEOJSON_SOURCE_OPTIONS = { buffer: 128, maxzoom: 6, tolerance: 0.5 } as const;
 const POINT_GEOJSON_SOURCE_OPTIONS = { buffer: 0 } as const;
+const VIEWPORT_CITY_ENTER_ZOOM = 8.85;
+const VIEWPORT_CITY_EXIT_ZOOM = 8.15;
+const VIEWPORT_SELECTION_CAMERA_SUPPRESSION_MS = 1400;
 const GUIDE_STOP_COLOR_MATCH = [
   "match",
   ["get", "category"],
@@ -1931,6 +1948,164 @@ function createVisibleGuideCityMarkerData(
       };
     }),
   };
+}
+
+function createViewportCitySelectionData(
+  continents: Continent[],
+): FeatureCollection<Point, ViewportCitySelectionFeatureProperties> {
+  return {
+    type: "FeatureCollection",
+    features: continents.flatMap((continent) =>
+      continent.countries.flatMap((country) =>
+        country.cities
+          .filter(
+            (city) =>
+              !city.isPlaceholderRegion &&
+              Number.isFinite(city.coordinates[0]) &&
+              Number.isFinite(city.coordinates[1]),
+          )
+          .map((city) => ({
+            type: "Feature" as const,
+            properties: {
+              continentId: continent.id,
+              countryId: country.id,
+              cityId: city.id,
+            },
+            geometry: {
+              type: "Point" as const,
+              coordinates: [city.coordinates[1], city.coordinates[0]],
+            },
+          })),
+      ),
+    ),
+  };
+}
+
+function getNearestCityViewportTarget(
+  map: maplibregl.Map,
+  cityMarkerData: FeatureCollection<Point, ViewportCitySelectionFeatureProperties>,
+  viewportInsets: MapViewportInsets,
+  zoomFocusPoint?: { x: number; y: number } | null,
+): MapViewportSelectionTarget | null {
+  const container = map.getContainer();
+  const width = container.clientWidth;
+  const height = container.clientHeight;
+  const insets = clampPaddingToMap(map, viewportInsets);
+  const viewportWidth = Math.max(1, width - insets.left - insets.right);
+  const viewportHeight = Math.max(1, height - insets.top - insets.bottom);
+  const viewportCenter = {
+    x: insets.left + viewportWidth / 2,
+    y: insets.top + viewportHeight / 2,
+  };
+  const focusPoint = zoomFocusPoint ?? viewportCenter;
+  const maxDistance = Math.min(210, Math.max(110, Math.min(viewportWidth, viewportHeight) * 0.32));
+  const maxDistanceSquared = maxDistance * maxDistance;
+
+  let nearest: (MapViewportSelectionTarget & { distanceSquared: number }) | null = null;
+  for (const feature of cityMarkerData.features) {
+    const { continentId, countryId, cityId } = feature.properties;
+    if (!continentId || !countryId || !cityId) {
+      continue;
+    }
+
+    const point = map.project(feature.geometry.coordinates as [number, number]);
+    const isVisible =
+      point.x >= insets.left &&
+      point.x <= width - insets.right &&
+      point.y >= insets.top &&
+      point.y <= height - insets.bottom;
+    if (!isVisible) {
+      continue;
+    }
+
+    const distanceSquared = (point.x - focusPoint.x) ** 2 + (point.y - focusPoint.y) ** 2;
+    if (distanceSquared > maxDistanceSquared || (nearest && distanceSquared >= nearest.distanceSquared)) {
+      continue;
+    }
+
+    nearest = { continentId, countryId, cityId, distanceSquared };
+  }
+
+  if (!nearest) {
+    return null;
+  }
+
+  return {
+    continentId: nearest.continentId,
+    countryId: nearest.countryId,
+    cityId: nearest.cityId,
+  };
+}
+
+function getUserZoomFocusPoint(
+  map: maplibregl.Map,
+  originalEvent: MouseEvent | TouchEvent | WheelEvent,
+  viewportInsets: MapViewportInsets,
+) {
+  const container = map.getContainer();
+  const eventTarget = originalEvent.target;
+  if (
+    !(eventTarget instanceof Node) ||
+    !container.contains(eventTarget) ||
+    (eventTarget instanceof Element && eventTarget.closest(".maplibregl-ctrl"))
+  ) {
+    return null;
+  }
+
+  let clientX: number | null = null;
+  let clientY: number | null = null;
+  if (originalEvent instanceof TouchEvent) {
+    const touches = originalEvent.touches.length
+      ? Array.from(originalEvent.touches)
+      : Array.from(originalEvent.changedTouches);
+    if (touches.length) {
+      clientX = touches.reduce((sum, touch) => sum + touch.clientX, 0) / touches.length;
+      clientY = touches.reduce((sum, touch) => sum + touch.clientY, 0) / touches.length;
+    }
+  } else {
+    clientX = originalEvent.clientX;
+    clientY = originalEvent.clientY;
+  }
+
+  if (clientX === null || clientY === null) {
+    return null;
+  }
+
+  const rect = container.getBoundingClientRect();
+  const point = { x: clientX - rect.left, y: clientY - rect.top };
+  const insets = clampPaddingToMap(map, viewportInsets);
+  const isInsideViewport =
+    point.x >= insets.left &&
+    point.x <= container.clientWidth - insets.right &&
+    point.y >= insets.top &&
+    point.y <= container.clientHeight - insets.bottom;
+
+  return isInsideViewport ? point : null;
+}
+
+function selectionMatchesViewportTarget(
+  selection: SelectionState,
+  target: MapViewportSelectionTarget,
+) {
+  if (selection.continentId !== target.continentId || selection.countryId !== target.countryId) {
+    return false;
+  }
+
+  if (target.cityId) {
+    return (
+      selection.cityId === target.cityId &&
+      !selection.subareaId &&
+      !selection.nestedSubareaId
+    );
+  }
+
+  return (
+    !selection.countrySubareaId &&
+    !selection.stateId &&
+    !selection.cityId &&
+    !selection.subareaId &&
+    !selection.nestedSubareaId
+  );
 }
 
 function splitRouteSegmentAtAntimeridian(
@@ -3736,6 +3911,7 @@ export function MapClient({
   hoveredStopId,
   selectedStopId,
   countryToggleMode = false,
+  syncSelectionToViewport = false,
   onHoverGuideStop,
   onSelectGuideStop,
   onHoverGuideMarker,
@@ -3744,6 +3920,7 @@ export function MapClient({
   onSelectContinent,
   onSelectCountry,
   onSelectCity,
+  onViewportSelectionChange,
   onSelectSubarea,
   onSelectState,
 }: MapClientProps) {
@@ -3778,6 +3955,7 @@ export function MapClient({
     onSelectContinent,
     onSelectCountry,
     onSelectCity,
+    onViewportSelectionChange,
     onSelectSubarea,
     onSelectState,
     onHoverGuideStop,
@@ -3786,6 +3964,7 @@ export function MapClient({
     onSelectGuideMarker,
     onSubmitMapClick,
     countryToggleMode,
+    syncSelectionToViewport,
     continents,
     selection,
   });
@@ -3803,6 +3982,7 @@ export function MapClient({
   const previousHoveredGuideMarkerIdRef = useRef<string | null | undefined>(hoveredGuideMarkerId);
   const selectionCameraKeyRef = useRef<string | null>(null);
   const selectionCameraSettlingUntilRef = useRef(0);
+  const viewportSelectionTargetRef = useRef<MapViewportSelectionTarget | null>(null);
   const countryBoundaryHighResTimeoutRef = useRef<number | null>(null);
   const visibleGuideMarkerEnteredAtRef = useRef<Map<string, number>>(new Map());
   const visibleGuideMarkerHoverProgressRef = useRef<Map<string, number>>(new Map());
@@ -3948,6 +4128,10 @@ export function MapClient({
     () => createVisibleGuideCityMarkerData(continents, guideLists, selection),
     [continents, guideLists, selection],
   );
+  const viewportCitySelectionData = useMemo(
+    () => createViewportCitySelectionData(continents),
+    [continents],
+  );
   const guideRouteData = useMemo(
     () => createGuideRouteData(activeGuide, selectedStopId, visibleNestedStopParentIds),
     [activeGuide, selectedStopId, visibleNestedStopParentIds],
@@ -3958,6 +4142,7 @@ export function MapClient({
   );
   const guideStopDataRef = useRef(guideStopData);
   const visibleGuideCityMarkerDataRef = useRef(visibleGuideCityMarkerData);
+  const viewportCitySelectionDataRef = useRef(viewportCitySelectionData);
   const activeGuideStopSignature = useMemo(
     () =>
       (activeGuide?.stops ?? [])
@@ -4105,6 +4290,7 @@ export function MapClient({
       onSelectContinent,
       onSelectCountry,
       onSelectCity,
+      onViewportSelectionChange,
       onSelectSubarea,
       onSelectState,
       onHoverGuideStop,
@@ -4113,16 +4299,20 @@ export function MapClient({
       onSelectGuideMarker,
       onSubmitMapClick,
       countryToggleMode,
+      syncSelectionToViewport,
       continents,
       selection,
     };
-  }, [continents, countryToggleMode, onHoverGuideMarker, onHoverGuideStop, onSelectCity, onSelectContinent, onSelectCountry, onSelectGuideMarker, onSelectGuideStop, onSelectSubarea, onSelectState, onSubmitMapClick, selection]);
+  }, [continents, countryToggleMode, onHoverGuideMarker, onHoverGuideStop, onSelectCity, onSelectContinent, onSelectCountry, onSelectGuideMarker, onSelectGuideStop, onSelectSubarea, onSelectState, onSubmitMapClick, onViewportSelectionChange, selection, syncSelectionToViewport]);
   useEffect(() => {
     guideStopDataRef.current = guideStopData;
   }, [guideStopData]);
   useEffect(() => {
     visibleGuideCityMarkerDataRef.current = visibleGuideCityMarkerData;
   }, [visibleGuideCityMarkerData]);
+  useEffect(() => {
+    viewportCitySelectionDataRef.current = viewportCitySelectionData;
+  }, [viewportCitySelectionData]);
 
   useEffect(() => {
     const now = performance.now();
@@ -4284,6 +4474,7 @@ export function MapClient({
       return;
     }
 
+    let removeViewportZoomInputListeners: (() => void) | null = null;
     resetMapPerfMetrics();
     recordMapPerfEvent("map:create");
     const map = new maplibregl.Map({
@@ -4556,6 +4747,131 @@ export function MapClient({
       map.on("mouseleave", "guide-stop-diamond-labels", () => handlersRef.current.onHoverGuideStop?.(null));
       map.on("mouseleave", "poi-map-marker-fill", () => handlersRef.current.onHoverGuideStop?.(null));
       map.on("mouseleave", "poi-map-marker-line", () => handlersRef.current.onHoverGuideStop?.(null));
+
+      const requestViewportSelection = (target: MapViewportSelectionTarget) => {
+        viewportSelectionTargetRef.current = target;
+        collapsedGuidesCameraSuppressedUntilRef.current =
+          performance.now() + VIEWPORT_SELECTION_CAMERA_SUPPRESSION_MS;
+        handlersRef.current.onViewportSelectionChange?.(target);
+      };
+
+      let isUserZoomGesture = false;
+      let lastUserZoomInputAt = 0;
+      let userZoomFocusLngLat: maplibregl.LngLat | null = null;
+      const rememberUserZoomFocusFromEvent = (originalEvent: MouseEvent | TouchEvent | WheelEvent) => {
+        isUserZoomGesture = true;
+        lastUserZoomInputAt = performance.now();
+        const activeViewportInsets = getViewportInsets(
+          map,
+          viewportModeRef.current,
+          viewportInsetsRef.current,
+        );
+        const point = getUserZoomFocusPoint(map, originalEvent, activeViewportInsets);
+        if (point) {
+          userZoomFocusLngLat = map.unproject([point.x, point.y]);
+        }
+      };
+      const rememberMapZoomFocus = (
+        event: maplibregl.MapLibreEvent<MouseEvent | TouchEvent | WheelEvent | undefined>,
+      ) => {
+        if (event.originalEvent) {
+          rememberUserZoomFocusFromEvent(event.originalEvent);
+        }
+      };
+      const mapContainer = map.getContainer();
+      const handleNativeTouchZoom = (event: TouchEvent) => {
+        if (event.touches.length >= 2) {
+          rememberUserZoomFocusFromEvent(event);
+        }
+      };
+      const handleNativeZoomKey = (event: KeyboardEvent) => {
+        if (["+", "-", "=", "NumpadAdd", "NumpadSubtract"].includes(event.key)) {
+          isUserZoomGesture = true;
+          userZoomFocusLngLat = null;
+        }
+      };
+      const nativeZoomListenerOptions = { capture: true, passive: true } as const;
+      mapContainer.addEventListener("wheel", rememberUserZoomFocusFromEvent, nativeZoomListenerOptions);
+      mapContainer.addEventListener("dblclick", rememberUserZoomFocusFromEvent, nativeZoomListenerOptions);
+      mapContainer.addEventListener("touchstart", handleNativeTouchZoom, nativeZoomListenerOptions);
+      mapContainer.addEventListener("touchmove", handleNativeTouchZoom, nativeZoomListenerOptions);
+      mapContainer.addEventListener("keydown", handleNativeZoomKey, true);
+      removeViewportZoomInputListeners = () => {
+        mapContainer.removeEventListener("wheel", rememberUserZoomFocusFromEvent, true);
+        mapContainer.removeEventListener("dblclick", rememberUserZoomFocusFromEvent, true);
+        mapContainer.removeEventListener("touchstart", handleNativeTouchZoom, true);
+        mapContainer.removeEventListener("touchmove", handleNativeTouchZoom, true);
+        mapContainer.removeEventListener("keydown", handleNativeZoomKey, true);
+      };
+
+      map.on("zoomstart", (event) => {
+        if (event.originalEvent) {
+          isUserZoomGesture = true;
+          userZoomFocusLngLat = null;
+          rememberMapZoomFocus(event);
+        } else if (!isUserZoomGesture) {
+          userZoomFocusLngLat = null;
+        }
+      });
+      map.on("zoom", rememberMapZoomFocus);
+
+      map.on("zoomend", (event) => {
+        const userZoomInputAge = performance.now() - lastUserZoomInputAt;
+        const wasUserZoomGesture =
+          isUserZoomGesture || Boolean(event.originalEvent) || userZoomInputAge < 1600;
+        const zoomFocusLngLat = userZoomFocusLngLat;
+        isUserZoomGesture = false;
+        userZoomFocusLngLat = null;
+        const currentHandlers = handlersRef.current;
+        if (
+          !wasUserZoomGesture ||
+          !currentHandlers.syncSelectionToViewport ||
+          !currentHandlers.onViewportSelectionChange ||
+          viewportModeRef.current === "submit"
+        ) {
+          return;
+        }
+
+        const currentSelection = currentHandlers.selection;
+        const zoom = map.getZoom();
+        if (
+          zoom <= VIEWPORT_CITY_EXIT_ZOOM &&
+          currentSelection.cityId &&
+          currentSelection.continentId &&
+          currentSelection.countryId
+        ) {
+          requestViewportSelection({
+            continentId: currentSelection.continentId,
+            countryId: currentSelection.countryId,
+          });
+          return;
+        }
+
+        if (zoom < VIEWPORT_CITY_ENTER_ZOOM) {
+          return;
+        }
+
+        const activeViewportInsets = getViewportInsets(
+          map,
+          viewportModeRef.current,
+          viewportInsetsRef.current,
+        );
+        const target = getNearestCityViewportTarget(
+          map,
+          viewportCitySelectionDataRef.current,
+          activeViewportInsets,
+          zoomFocusLngLat
+            ? map.project(zoomFocusLngLat)
+            : event.originalEvent
+              ? getUserZoomFocusPoint(map, event.originalEvent, activeViewportInsets)
+              : null,
+        );
+        if (!target?.cityId || target.cityId === currentSelection.cityId) {
+          return;
+        }
+
+        requestViewportSelection(target);
+      });
 
       map.on("click", (event) => {
         if (handlersRef.current.countryToggleMode) {
@@ -4886,6 +5202,8 @@ export function MapClient({
       guideStopHoverPopupRef.current?.remove();
       guideStopHoverPopupRef.current = null;
       map.off("render", recordRenderGap);
+      removeViewportZoomInputListeners?.();
+      removeViewportZoomInputListeners = null;
       userLocationMarkerRef.current?.remove();
       userLocationMarkerRef.current = null;
       map.remove();
@@ -5612,6 +5930,16 @@ export function MapClient({
       return;
     }
     const nextCameraKey = selectionCameraKey;
+    const viewportSelectionTarget = viewportSelectionTargetRef.current;
+    if (viewportSelectionTarget) {
+      if (selectionMatchesViewportTarget(selection, viewportSelectionTarget)) {
+        selectionCameraKeyRef.current = nextCameraKey;
+        selectionCameraSettlingUntilRef.current = 0;
+        recordMapPerfEvent("camera:selection-preserved", nextCameraKey);
+        return;
+      }
+      viewportSelectionTargetRef.current = null;
+    }
     if (selectionCameraKeyRef.current === nextCameraKey) {
       return;
     }
@@ -5847,6 +6175,14 @@ export function MapClient({
       visibleGuideBoundsSignature,
       viewportModeRef.current,
     ].join("|");
+    const viewportSelectionTarget = viewportSelectionTargetRef.current;
+    if (
+      viewportSelectionTarget &&
+      selectionMatchesViewportTarget(selection, viewportSelectionTarget)
+    ) {
+      collapsedGuidesCameraKeyRef.current = nextCameraKey;
+      return;
+    }
     if (
       hoveredGuideMarkerId ||
       performance.now() < collapsedGuidesCameraSuppressedUntilRef.current
