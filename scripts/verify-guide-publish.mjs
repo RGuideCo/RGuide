@@ -672,6 +672,7 @@ async function runLiveChecks(guides, options) {
          entry.id,
          entry.legacy_id,
          entry.slug,
+         entry.title,
          entry.category,
          entry.submission_type,
          cache.rendered_payload,
@@ -702,12 +703,18 @@ async function runLiveChecks(guides, options) {
       if (row.slug !== guide.slug) {
         addIssue(report, "error", label, `Published slug mismatch: ${row.slug}`);
       }
+      if (row.title !== guide.title) {
+        addIssue(report, "error", label, `Published title mismatch: ${row.title}`);
+      }
       if (Number(row.stop_count) !== topLevelStopCount(guide)) {
         addIssue(report, severityForStrict(options), label, `Published entry_stops count ${row.stop_count} does not match local top-level stop count ${topLevelStopCount(guide)}.`);
       }
       if (!row.rendered_payload) {
         addIssue(report, "error", label, "Missing current entry_render_cache maplist payload.");
         continue;
+      }
+      if (row.rendered_payload.title !== guide.title) {
+        addIssue(report, "error", label, `Rendered title mismatch: ${row.rendered_payload.title}`);
       }
 
       const pois = Array.isArray(row.rendered_payload?.pois)

@@ -609,8 +609,14 @@ function resolveNeighborhoodId(maps, cityId, neighborhood) {
 function parsePublishArgs(argv) {
   const dryRun = argv.includes("--dry-run") || argv.includes("--check");
   const copyOnly = argv.includes("--copy-only");
-  const filterArgs = argv.filter((arg) => !["--dry-run", "--check", "--copy-only"].includes(arg));
-  return { dryRun, copyOnly, filters: parseEditorialGuideArgs(filterArgs) };
+  const titleOnly = argv.includes("--title-only");
+  if (copyOnly && titleOnly) {
+    throw new Error("Use either --copy-only or --title-only, not both.");
+  }
+  const filterArgs = argv.filter(
+    (arg) => !["--dry-run", "--check", "--copy-only", "--title-only"].includes(arg),
+  );
+  return { dryRun, copyOnly, titleOnly, filters: parseEditorialGuideArgs(filterArgs) };
 }
 
 function logPhase(message, metadata = undefined) {
@@ -1726,6 +1732,85 @@ async function publishCopyOnly(client, selectedGuides, stats) {
   return verification;
 }
 
+async function publishTitleOnly(client, selectedGuides, stats) {
+  const entryRows = selectedGuides.map((list) => ({
+    legacy_id: list.id,
+    title: list.title,
+  }));
+  logPhase("phase title_entries:start", { rows: entryRows.length });
+  const entryResult = await client.query(
+    `with incoming as (
+       select *
+       from jsonb_to_recordset($1::jsonb) as row(
+         legacy_id text,
+         title text
+       )
+     )
+     update public.entries entry
+     set title = incoming.title
+     from incoming
+     where entry.legacy_id = incoming.legacy_id
+     returning entry.id, entry.legacy_id`,
+    [JSON.stringify(entryRows)],
+  );
+  const entryIdByLegacyId = new Map(entryResult.rows.map((row) => [row.legacy_id, row.id]));
+  stats.entries = entryIdByLegacyId.size;
+  logPhase("phase title_entries:done", { affected: stats.entries });
+  if (entryIdByLegacyId.size !== selectedGuides.length) {
+    throw new Error(
+      `Title-only publish found ${entryIdByLegacyId.size}/${selectedGuides.length} live entries. Run the full normalized publisher for missing guides.`,
+    );
+  }
+
+  logPhase("phase render_cache:start", { entries: entryIdByLegacyId.size });
+  stats.renderCaches = await refreshEntryRenderCacheBatch(client, [...entryIdByLegacyId.values()]);
+  logPhase("phase render_cache:done", { affected: stats.renderCaches });
+
+  const { rows: titleRows } = await client.query(
+    `select
+       entry.legacy_id,
+       entry.title,
+       cache.rendered_payload->>'title' as rendered_title
+     from public.entries entry
+     left join public.entry_render_cache cache
+       on cache.entry_id = entry.id
+      and cache.render_format = 'maplist'
+      and cache.render_version = 1
+      and cache.is_current = true
+     where entry.id = any($1::uuid[])`,
+    [[...entryIdByLegacyId.values()]],
+  );
+  const titleByLegacyId = new Map(titleRows.map((row) => [row.legacy_id, row]));
+  const mismatches = selectedGuides.flatMap((guide) => {
+    const row = titleByLegacyId.get(guide.id);
+    if (row?.title === guide.title && row?.rendered_title === guide.title) {
+      return [];
+    }
+    return [
+      `${guide.id}: expected ${JSON.stringify(guide.title)}, entry=${JSON.stringify(row?.title)}, render=${JSON.stringify(row?.rendered_title)}`,
+    ];
+  });
+  if (mismatches.length) {
+    throw new Error(`Title-only publish verification failed:\n${mismatches.join("\n")}`);
+  }
+
+  logPhase("phase verification:start");
+  const verification = await verifyPublishedScope(client, entryIdByLegacyId);
+  logPhase("phase verification:done", {
+    counts: verification.counts,
+    mixedStayGuides: verification.mixedStayGuides.length,
+    titleMismatches: 0,
+  });
+  if (verification.mixedStayGuides.length) {
+    const details = verification.mixedStayGuides
+      .map((guide) => `${guide.slug}: ${guide.lodging_types.join(", ")}`)
+      .join("; ");
+    throw new Error(`Stay guide lodging type verification failed: ${details}`);
+  }
+
+  return { ...verification, titleMismatches: [] };
+}
+
 async function upsertSource(client, source, stats) {
   if (!source?.url) {
     return null;
@@ -2393,7 +2478,7 @@ async function main() {
   loadEnvFile(path.join(ROOT, ".env.local"));
   loadEnvFile(path.join(ROOT, ".env"));
 
-  const { dryRun, copyOnly, filters } = parsePublishArgs(process.argv.slice(2));
+  const { dryRun, copyOnly, titleOnly, filters } = parsePublishArgs(process.argv.slice(2));
   requireScopedFilters(filters);
 
   const databaseUrl = process.env.SUPABASE_DB_URL ?? process.env.SUPABASE_DATABASE_URL ?? process.env.DATABASE_URL;
@@ -2413,6 +2498,7 @@ async function main() {
     stops: selectedGuides.reduce((sum, list) => sum + (list.stops?.length ?? 0), 0),
     dryRun,
     copyOnly,
+    titleOnly,
   });
 
   const client = new pg.Client({
@@ -2435,7 +2521,9 @@ async function main() {
   try {
     await client.query("begin");
     let verification;
-    if (copyOnly) {
+    if (titleOnly) {
+      verification = await publishTitleOnly(client, selectedGuides, stats);
+    } else if (copyOnly) {
       verification = await publishCopyOnly(client, selectedGuides, stats);
     } else {
       const timezoneUpdates = await ensureSelectedDestinationTimezones(client, selectedGuides);
@@ -2458,6 +2546,7 @@ async function main() {
       scope,
       dryRun,
       copyOnly,
+      titleOnly,
       selectedGuides: selectedGuides.length,
       stats,
       verification,
