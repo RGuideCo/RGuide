@@ -1044,6 +1044,17 @@ async function upsertVenuesBatch(client, venueRows) {
          source_metadata jsonb
        )
      ),
+     resolved as (
+       select
+         incoming.*,
+         coalesce(existing.slug, incoming.slug) as resolved_slug
+       from incoming
+       left join public.venues existing
+         on existing.city_id is not distinct from incoming.city_id
+        and existing.normalized_name = incoming.normalized_name
+        and existing.coordinates is not distinct from incoming.coordinates
+        and existing.merged_into_venue_id is null
+     ),
      upserted as (
        insert into public.venues (
          legacy_id, slug, name, normalized_name, aliases, destination_id, city_id,
@@ -1052,11 +1063,11 @@ async function upsertVenuesBatch(client, venueRows) {
          nightlife_type, music_genres, attribute_tags, source_metadata
        )
        select
-         legacy_id, slug, name, normalized_name, coalesce(aliases, '{}'), destination_id, city_id,
+         legacy_id, resolved_slug, name, normalized_name, coalesce(aliases, '{}'), destination_id, city_id,
          neighborhood_id, country, timezone, coordinates, official_url, coalesce(venue_kind, 'other'),
          coalesce(venue_kinds, '{}'), lodging_type, food_service_type, coalesce(cuisine_types, '{}'), price_tier,
          nightlife_type, coalesce(music_genres, '{}'), coalesce(attribute_tags, '{}'), coalesce(source_metadata, '{}'::jsonb)
-       from incoming
+       from resolved
        on conflict (city_id, slug) do update set
          legacy_id = coalesce(public.venues.legacy_id, excluded.legacy_id),
          slug = excluded.slug,
@@ -1095,11 +1106,11 @@ async function upsertVenuesBatch(client, venueRows) {
          source_metadata = public.venues.source_metadata || excluded.source_metadata
        returning id, city_id, slug
      )
-     select incoming.row_key, upserted.id
-     from incoming
+     select resolved.row_key, upserted.id
+     from resolved
      join upserted
-       on upserted.city_id is not distinct from incoming.city_id
-      and upserted.slug = incoming.slug`,
+       on upserted.city_id is not distinct from resolved.city_id
+      and upserted.slug = resolved.resolved_slug`,
     [JSON.stringify(venueRows)],
   );
   return new Map(result.rows.map((row) => [row.row_key, row.id]));
