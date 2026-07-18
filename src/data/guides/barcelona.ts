@@ -10073,6 +10073,9 @@ const barcelonaLateNightFoodStops: GuideStop[] = [
     hours: { default: "Daily 6:00 PM-12:30 AM." },
     officialUrl: "https://barsalvatge.com/",
     mapQuery: "Bar Salvatge, Carrer de Verdi 50, Barcelona",
+    photo: "https://media.timeout.com/images/105517129/1372/772/image",
+    imageSourceUrl: "https://www.timeout.cat/barcelona/ca/bars-i-pubs/bar-salvatge",
+    imageSourceName: "Time Out Barcelona",
   }),
 ];
 
