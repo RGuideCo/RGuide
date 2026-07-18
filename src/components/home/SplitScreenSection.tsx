@@ -856,6 +856,8 @@ export function SplitScreenSection({
   const globeRailVideoRef = useRef<HTMLVideoElement | null>(null);
   const [profileInlineEditNonce, setProfileInlineEditNonce] = useState(0);
   const [isMobileInfoModalOpen, setIsMobileInfoModalOpen] = useState(false);
+  const [isDesktopGuideSourceMenuOpen, setIsDesktopGuideSourceMenuOpen] = useState(false);
+  const [isDesktopGuideTypeMenuOpen, setIsDesktopGuideTypeMenuOpen] = useState(false);
   const [isProfileCreateModalOpen, setIsProfileCreateModalOpen] = useState(false);
   const [profileCreateName, setProfileCreateName] = useState("");
   const [profileCreateType, setProfileCreateType] = useState<"guide" | "itinerary" | "event">("guide");
@@ -3386,7 +3388,6 @@ export function SplitScreenSection({
     ? categorySubcategoriesByScope[subcategoryScope][visibleSubcategoryCategory]
     : [];
   const categoryTitleLabel = activeCategoryOption?.label ?? hoveredCategoryLabel ?? "Categories";
-  const categoryOptionMidpoint = Math.ceil(categoryOptions.length / 2);
   const guideSourceSelectors = [
     { id: "all-guides" as const, label: "All guides", shortLabel: "All", icon: null },
     { id: "r-guides" as const, label: "R guides", shortLabel: "R", icon: null },
@@ -3438,7 +3439,29 @@ export function SplitScreenSection({
     "user-guides": "User",
     favorites: "Favorite",
   } as const;
+  const sourceControlLabelById = {
+    "all-guides": "All",
+    "r-guides": "R",
+    "user-guides": "User",
+    favorites: "Favorite",
+  } as const;
   const menuBarTitleLabel = `${sourceTitlePrefixById[activeGuideSourceSelector.id]} ${activeGuideActionSelector?.label ?? "Entries"}`;
+  const desktopGuideLocationLabel =
+    activeLocation.nestedSubarea?.name ??
+    activeLocation.subarea?.name ??
+    activeLocation.city?.name ??
+    activeLocation.state?.name ??
+    activeCountrySubarea?.name ??
+    activeLocation.country?.name ??
+    activeLocation.continent?.name ??
+    "World";
+  const desktopMenuBarTitleLabel = [
+    formatBreadcrumbName(desktopGuideLocationLabel),
+    activeCategoryOption?.label,
+    activeGuideActionSelector?.label ?? "Entries",
+  ]
+    .filter(Boolean)
+    .join(" ");
   const resetCategoryFilters = () => {
     setActiveCategory(null);
     setActiveSubcategory(null);
@@ -8854,219 +8877,234 @@ export function SplitScreenSection({
 	                      : isGuidePaneTakingFullListPane
 	                        ? "pointer-events-none max-h-0 -translate-y-3 pb-0 opacity-0 transition-[opacity,transform] duration-200 ease-out"
 	                        : "max-h-56 translate-y-0 pb-0 opacity-100 transition-[opacity,transform] duration-200 ease-out"
-		                  } ${isSubcategoryMenuOpen || isDesktopSearchOpen ? "z-[140]" : "z-10"} overflow-visible`}
+		                  } ${
+                        isSubcategoryMenuOpen ||
+                        isDesktopSearchOpen ||
+                        isDesktopGuideSourceMenuOpen ||
+                        isDesktopGuideTypeMenuOpen
+                          ? "z-[140]"
+                          : "z-10"
+                      } overflow-visible`}
 		                >
                     <div
-                      className="relative left-1/2 -mt-5 w-[calc(100%+2.5rem)] -translate-x-1/2 border-b border-white/12 bg-[#1a1a1a]/95 px-5 pb-3 pt-5 shadow-[inset_0_1px_0_rgba(255,255,255,0.08)]"
+                      className="relative left-1/2 -mt-5 w-[calc(100%+2.5rem)] -translate-x-1/2 border-b-2 bg-[#111111]/95 shadow-[inset_0_1px_0_rgba(255,255,255,0.07)] transition-[border-color] duration-300"
+                      style={{
+                        borderBottomColor: activeCategory
+                          ? CATEGORY_STYLES[activeCategory].mapColor
+                          : "#f05232",
+                      }}
                       role="toolbar"
                       aria-label="Menu bar"
                     >
-                      <div className="relative h-10">
+                      <div className="relative h-[5rem]">
                         <div
-                          className={`grid h-10 grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] items-center gap-4 transition-[opacity,transform] duration-200 ${
-                            isDesktopSearchOpen ? "pointer-events-none -translate-y-1 opacity-0" : "translate-y-0 opacity-100"
+                          className={`flex h-full items-center justify-between gap-4 px-5 transition-[opacity] duration-300 ${
+                            isDesktopSearchOpen ? "pointer-events-none opacity-0" : "opacity-100"
                           }`}
                         >
-                          <div
-                            className={`relative grid h-10 w-full items-center justify-items-start gap-2 ${
-                              isProfileMode ? "grid-cols-4" : "grid-cols-4"
-                            }`}
-                            role="group"
-                            aria-label="Guide source"
-                          >
-                            <span
-                              className={`pointer-events-none absolute -left-0.5 top-0 h-10 rounded-[0.625rem] bg-black/18 ring-1 ring-white/10 ${
-                                isProfileMode ? "w-[calc(100%+0.25rem)]" : "w-[calc(75%+2.875rem)]"
-                              }`}
-                              aria-hidden="true"
-                            />
+                          <span className="min-w-0 truncate text-[22px] font-extrabold uppercase tracking-[0] text-white">
+                            {desktopMenuBarTitleLabel}
+                          </span>
+                          <div className="flex shrink-0 items-center gap-1.5">
                             {isProfileMode ? (
                               <button
                                 type="button"
-                                onClick={openProfileCreateModal}
+                                onClick={() => {
+                                  setIsDesktopGuideSourceMenuOpen(false);
+                                  setIsDesktopGuideTypeMenuOpen(false);
+                                  openProfileCreateModal();
+                                }}
                                 disabled={!canCreateStandaloneProfileEntry}
-                                className={`relative z-10 flex h-9 w-9 items-center justify-center rounded-lg border shadow-sm transition-[background-color,color,border-color,transform] duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-400/70 ${
+                                className={`inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-sm border transition-[color,border-color,background-color] duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/60 ${
                                   canCreateStandaloneProfileEntry
-                                    ? "border-white bg-white text-slate-950 hover:scale-105 hover:border-white hover:text-slate-950"
-                                    : "cursor-not-allowed border-white/10 bg-white/8 text-white/35 shadow-none"
+                                    ? "border-white/25 text-white hover:border-[#f05232] hover:bg-white/[0.06]"
+                                    : "cursor-not-allowed border-white/10 text-white/25"
                                 }`}
-                                aria-label={
-                                  canCreateStandaloneProfileEntry
-                                    ? "Create guide"
-                                    : "Create guide unavailable"
-                                }
-                                title={
-                                  canCreateStandaloneProfileEntry
-                                    ? "Create guide"
-                                    : standaloneCreateDisabledTitle
-                                }
+                                aria-label={canCreateStandaloneProfileEntry ? "Create guide" : "Create guide unavailable"}
+                                title={canCreateStandaloneProfileEntry ? "Create guide" : standaloneCreateDisabledTitle}
                               >
                                 <Plus className="h-4 w-4" />
                               </button>
                             ) : null}
-                            {visibleGuideSourceSelectors.map((selector) => {
-                              const isActive = activeGuideSource === selector.id;
-                              const SelectorIcon = selector.icon;
-                              return (
-                                <button
-                                  key={selector.id}
-                                  type="button"
-                                  onClick={() => handleGuideSourceSelect(selector.id)}
-                                  className={`relative z-10 flex h-9 w-9 items-center justify-center rounded-lg border shadow-sm transition-[background-color,color,border-color,transform] duration-200 hover:scale-105 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-400/70 ${
-                                    isActive
-                                      ? "border-white bg-white text-slate-950 hover:border-white hover:text-slate-950"
-                                      : "border-transparent bg-transparent text-white shadow-none hover:border-white/20 hover:text-white"
-                                  }`}
-                                  aria-label={selector.label}
-                                  title={selector.label}
-                                >
-                                  {SelectorIcon ? <SelectorIcon className="h-4 w-4" /> : selector.shortLabel}
-                                </button>
-                              );
-                            })}
-                          </div>
-                          <span className="inline-flex w-[8.5rem] justify-center text-center text-sm font-bold uppercase tracking-[0.18em] text-white">
-                            {menuBarTitleLabel}
-                          </span>
-                          <div className="grid h-9 w-full grid-cols-4 items-center justify-items-end gap-2">
-                            {visibleGuideActionSelectors.map((selector) => {
-                              const isActive = activeGuideRail === selector.id;
-                              const SelectorIcon = selector.icon;
-                              return (
-                                <button
-                                  key={selector.id}
-                                  type="button"
-                                  onClick={() => handleGuideRailSelect(selector.id)}
-                                  style={isActive ? guideActionActiveStyles[selector.id] : undefined}
-                                  className={`relative flex h-9 w-9 items-center justify-center overflow-hidden rounded-lg border border-white/16 bg-white/8 text-white shadow-sm transition-[background-color,color,border-color,transform] duration-200 hover:scale-105 hover:border-white/28 hover:bg-white/12 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-400/70 ${
-                                    isActive ? "shadow-md hover:text-current" : ""
-                                  }`}
-                                  aria-label={selector.label}
-                                  title={selector.label}
-                                >
-                                  <SelectorIcon
-                                    className={`relative z-10 h-4 w-4 ${
-                                      isActive && selector.id === "all-guides"
-                                        ? "text-sky-400"
-                                        : ""
-                                    }`}
-                                  />
-                                </button>
-                              );
-                            })}
+                            <div
+                              className="flex h-9 shrink-0 items-stretch overflow-hidden border-b-2 border-[#f05232] transition-[width] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)]"
+                              role="group"
+                              aria-label="Guide source"
+                            >
+                              {visibleGuideSourceSelectors.map((selector) => {
+                                const isActive = activeGuideSource === selector.id;
+                                const isVisible = isDesktopGuideSourceMenuOpen || isActive;
+                                return (
+                                  <button
+                                    key={selector.id}
+                                    type="button"
+                                    onClick={() => {
+                                      if (!isDesktopGuideSourceMenuOpen) {
+                                        setIsDesktopGuideSourceMenuOpen(true);
+                                        setIsDesktopGuideTypeMenuOpen(false);
+                                        return;
+                                      }
+                                      if (!isActive) {
+                                        handleGuideSourceSelect(selector.id);
+                                      }
+                                      setIsDesktopGuideSourceMenuOpen(false);
+                                    }}
+                                    className={`flex h-9 shrink-0 items-center overflow-hidden whitespace-nowrap text-[11px] font-extrabold uppercase tracking-[0.1em] transition-[max-width,padding,opacity,color,background-color] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] focus-visible:bg-white/[0.06] focus-visible:outline-none focus-visible:!ring-0 focus-visible:!ring-offset-0 ${
+                                      isVisible ? "max-w-24 px-2 opacity-100" : "pointer-events-none max-w-0 px-0 opacity-0"
+                                    } ${isActive ? "text-white" : "text-white/70 hover:bg-white/[0.05] hover:text-white"}`}
+                                    aria-label={selector.label}
+                                    aria-pressed={isActive}
+                                    aria-expanded={isActive ? isDesktopGuideSourceMenuOpen : undefined}
+                                    aria-hidden={!isVisible}
+                                    tabIndex={isVisible ? 0 : -1}
+                                  >
+                                    {sourceControlLabelById[selector.id]}
+                                  </button>
+                                );
+                              })}
+                            </div>
+                            <div
+                              className="flex h-9 shrink-0 items-stretch overflow-hidden border-b-2 transition-[width] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)]"
+                              style={{
+                                borderBottomColor: activeGuideActionSelector
+                                  ? guideActionActiveStyles[activeGuideActionSelector.id].borderColor
+                                  : "rgba(255,255,255,0.25)",
+                              }}
+                              role="group"
+                              aria-label="Entry type"
+                            >
+                              {visibleGuideActionSelectors.map((selector) => {
+                                const isActive = activeGuideRail === selector.id;
+                                const isVisible = isDesktopGuideTypeMenuOpen || isActive;
+                                return (
+                                  <button
+                                    key={selector.id}
+                                    type="button"
+                                    onClick={() => {
+                                      if (!isDesktopGuideTypeMenuOpen) {
+                                        setIsDesktopGuideTypeMenuOpen(true);
+                                        setIsDesktopGuideSourceMenuOpen(false);
+                                        return;
+                                      }
+                                      if (!isActive) {
+                                        handleGuideRailSelect(selector.id);
+                                      }
+                                      setIsDesktopGuideTypeMenuOpen(false);
+                                    }}
+                                    className={`flex h-9 shrink-0 items-center overflow-hidden whitespace-nowrap text-[11px] font-extrabold uppercase tracking-[0.1em] transition-[max-width,padding,opacity,color,background-color] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] focus-visible:bg-white/[0.06] focus-visible:outline-none focus-visible:!ring-0 focus-visible:!ring-offset-0 ${
+                                      isVisible ? "max-w-24 px-2 opacity-100" : "pointer-events-none max-w-0 px-0 opacity-0"
+                                    } ${isActive ? "text-white" : "text-white/70 hover:bg-white/[0.05] hover:text-white"}`}
+                                    aria-label={selector.label}
+                                    aria-pressed={isActive}
+                                    aria-expanded={isActive ? isDesktopGuideTypeMenuOpen : undefined}
+                                    aria-hidden={!isVisible}
+                                    tabIndex={isVisible ? 0 : -1}
+                                  >
+                                    {selector.label}
+                                  </button>
+                                );
+                              })}
+                            </div>
+                            <button
+                              type="button"
+                              onClick={() => {
+                                setIsDesktopGuideSourceMenuOpen(false);
+                                setIsDesktopGuideTypeMenuOpen(false);
+                                setIsFoodOpenTimeMenuOpen(false);
+                                setIsFoodCuisineMenuOpen(false);
+                                setIsNightlifeBarMenuOpen(false);
+                                setIsNightlifeMusicMenuOpen(false);
+                                setIsDesktopSearchOpen(true);
+                              }}
+                              className="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-sm border border-white/25 bg-white/[0.035] text-white transition hover:border-[#f05232] hover:bg-white/[0.07] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/50"
+                              aria-label="Open search"
+                              title="Search"
+                            >
+                              <Search className="h-4 w-4" />
+                            </button>
                           </div>
                         </div>
-	                      <div
-	                        className={`absolute right-0 flex items-center justify-end overflow-visible rounded-lg transition-[width,background-color,border-color,box-shadow] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] ${
-	                          isDesktopSearchOpen
-                              ? "top-0 z-[260] h-10 w-full border border-slate-200 bg-white shadow-sm"
-                              : "top-0.5 z-20 h-9 w-9 border border-transparent bg-transparent"
-	                        }`}
-	                      >
-                        {isDesktopSearchOpen ? (
+                        <div
+                          className={`absolute inset-x-5 top-1/2 z-[260] flex h-10 -translate-y-1/2 items-center justify-end overflow-visible rounded-sm border border-slate-200 bg-white shadow-sm transition-[clip-path,opacity] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] ${
+                            isDesktopSearchOpen ? "opacity-100" : "pointer-events-none opacity-0"
+                          }`}
+                          style={{
+                            clipPath: isDesktopSearchOpen ? "inset(0 0 0 0)" : "inset(0 0 0 100%)",
+                          }}
+                          aria-hidden={!isDesktopSearchOpen}
+                        >
                           <SearchBar
-                            autoFocus
+                            key={isDesktopSearchOpen ? "desktop-search-open" : "desktop-search-closed"}
+                            autoFocus={isDesktopSearchOpen}
                             compact
                             embedded
                             variant="square"
                             size="md"
                             onResultSelect={() => setIsDesktopSearchOpen(false)}
-                            className="max-w-none flex-1"
+                            className="min-w-0 flex-1 !max-w-none"
                           />
-                        ) : null}
-                        <button
-                          type="button"
-                          onClick={() => {
-                            setIsFoodOpenTimeMenuOpen(false);
-                            setIsFoodCuisineMenuOpen(false);
-                            setIsNightlifeBarMenuOpen(false);
-                            setIsNightlifeMusicMenuOpen(false);
-                            setIsDesktopSearchOpen((current) => !current);
-                          }}
-                          className={`inline-flex shrink-0 items-center justify-center rounded-lg text-white transition hover:text-white ${
-                            isDesktopSearchOpen
-                              ? "h-10 w-10 border border-transparent bg-transparent shadow-none"
-                              : "h-9 w-9 border border-white/16 bg-white/8 shadow-sm hover:border-white/28 hover:bg-white/12"
-                          }`}
-                          aria-label={isDesktopSearchOpen ? "Close search" : "Open search"}
-                          title={isDesktopSearchOpen ? "Close search" : "Search"}
-                        >
-                          {isDesktopSearchOpen ? <X className="h-4 w-4" /> : <Search className="h-4 w-4" />}
-	                        </button>
-	                      </div>
+                          <button
+                            type="button"
+                            onClick={() => setIsDesktopSearchOpen(false)}
+                            className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-sm border border-transparent bg-transparent text-black transition hover:bg-slate-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-400/70"
+                            aria-label="Close search"
+                            title="Close search"
+                            tabIndex={isDesktopSearchOpen ? 0 : -1}
+                          >
+                            <X className="h-5 w-5 text-black" />
+                          </button>
+                        </div>
 	                    </div>
                     </div>
                     {!isPublicProfileMode ? (
                       <div
-                        className={`mt-2 w-full translate-y-0 space-y-3 pb-2 opacity-100 transition-[margin,max-height,opacity,transform,padding] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] ${
-                          isSubcategoryMenuOpen ? "max-h-44 overflow-visible" : "max-h-40 overflow-hidden"
-                        }`}
+                        className={`mt-0 w-full translate-y-0 space-y-3 pb-2 opacity-100 transition-[margin,max-height,opacity,transform,padding] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] ${
+                          isSubcategoryMenuOpen ? "max-h-44" : "max-h-40"
+                        } overflow-visible`}
                       >
                         <div
                           id="desktop-category-menu"
                           className="grid grid-rows-[1fr] translate-y-0 opacity-100 transition-[grid-template-rows,opacity,transform] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)]"
                         >
-                          <div className="min-h-0 overflow-hidden">
-                            <div className="grid grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] items-center gap-4 pt-1">
-                            <div className="grid w-full grid-cols-4 items-center justify-items-start gap-2">
-                              {categoryOptions.slice(0, categoryOptionMidpoint).map((option) => (
-                                <button
-                                  key={option.label}
-                                  type="button"
-                                  onClick={() => handleCategoryToggle(option.category)}
-                                  onMouseEnter={() => setHoveredCategoryLabel(option.label)}
-                                  onMouseLeave={() => setHoveredCategoryLabel(null)}
-                                  className={`category-icon-button flex h-9 w-9 items-center justify-center rounded-lg border border-transparent outline-none focus:outline-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-400/70 ${
-                                    activeCategory === option.category
-                                      ? "category-icon-button-active text-white"
-                                      : "bg-white/8 text-slate-950 hover:bg-white/12 hover:text-slate-950"
-                                  }`}
-                                  style={
-                                    activeCategory === option.category
-                                      ? {
-                                          "--category-color": CATEGORY_STYLES[option.category].mapColor,
-                                        } as React.CSSProperties
-                                      : {
-                                          "--category-color": CATEGORY_STYLES[option.category].mapColor,
-                                        } as React.CSSProperties
-                                  }
-                                  aria-label={option.label}
-                                >
-                                  <option.icon className="h-4 w-4" />
-                                </button>
-                              ))}
-                            </div>
-                            <span className="inline-flex w-[8.5rem] justify-center text-center text-[11px] font-medium uppercase tracking-[0.18em] text-white/54">
-                              {categoryTitleLabel}
-                            </span>
-                            <div className="grid w-full grid-cols-4 items-center justify-items-end gap-2">
-                              {categoryOptions.slice(categoryOptionMidpoint).map((option) => (
-                                <button
-                                  key={option.label}
-                                  type="button"
-                                  onClick={() => handleCategoryToggle(option.category)}
-                                  onMouseEnter={() => setHoveredCategoryLabel(option.label)}
-                                  onMouseLeave={() => setHoveredCategoryLabel(null)}
-                                  className={`category-icon-button flex h-9 w-9 items-center justify-center rounded-lg border border-transparent outline-none focus:outline-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-400/70 ${
-                                    activeCategory === option.category
-                                      ? "category-icon-button-active text-white"
-                                      : "bg-white/8 text-slate-950 hover:bg-white/12 hover:text-slate-950"
-                                  }`}
-                                  style={
-                                    activeCategory === option.category
-                                      ? {
-                                          "--category-color": CATEGORY_STYLES[option.category].mapColor,
-                                        } as React.CSSProperties
-                                      : {
-                                          "--category-color": CATEGORY_STYLES[option.category].mapColor,
-                                        } as React.CSSProperties
-                                  }
-                                  aria-label={option.label}
-                                >
-                                  <option.icon className="h-4 w-4" />
-                                </button>
-                              ))}
-                            </div>
+                          <div className="min-h-0 overflow-visible">
+                            <div
+                              className="relative left-1/2 flex h-12 w-[calc(100%+2.5rem)] -translate-x-1/2 items-stretch border-b border-slate-950/16 bg-[#f1f2ef] shadow-[0_1px_0_rgba(255,255,255,0.72)_inset]"
+                            >
+                              <div className="japanese-category-tape flex w-full min-w-0 flex-1 items-stretch overflow-hidden">
+                                {categoryOptions.map((option) => {
+                                  const isActive = activeCategory === option.category;
+                                  const categoryColor = CATEGORY_STYLES[option.category].mapColor;
+                                  return (
+                                    <button
+                                      key={option.label}
+                                      type="button"
+                                      onClick={() => handleCategoryToggle(option.category)}
+                                      onMouseEnter={() => setHoveredCategoryLabel(option.label)}
+                                      onMouseLeave={() => setHoveredCategoryLabel(null)}
+                                      className={`group relative flex h-12 min-w-0 flex-1 items-center justify-center gap-0.5 border-r border-slate-950/12 px-0.5 outline-none transition-[background-color,color,border-color] duration-200 focus:outline-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-slate-950/60 ${
+                                        isActive
+                                          ? "text-white"
+                                          : "bg-transparent text-slate-950 hover:bg-white/80"
+                                      }`}
+                                      style={isActive ? { backgroundColor: categoryColor } : undefined}
+                                      aria-label={option.label}
+                                      aria-pressed={isActive}
+                                    >
+                                      <option.icon className="h-3.5 w-3.5 shrink-0" />
+                                      <span className="min-w-0 whitespace-nowrap text-[8.5px] font-bold uppercase tracking-[0]">
+                                        {option.label}
+                                      </span>
+                                      {!isActive ? (
+                                        <span
+                                          className="absolute inset-x-0 bottom-0 h-0.5 origin-left scale-x-0 transition-transform duration-200 group-hover:scale-x-100"
+                                          style={{ backgroundColor: categoryColor }}
+                                          aria-hidden="true"
+                                        />
+                                      ) : null}
+                                    </button>
+                                  );
+                                })}
+                              </div>
                             </div>
                           </div>
                         </div>
