@@ -555,7 +555,7 @@ function CityWeatherChip({
 
   return (
     <div
-      className={`${placement === "absolute" ? "absolute right-4 top-4 z-20" : "relative"} flex max-w-[7.25rem] items-start justify-end gap-1.5 text-right text-xs ${
+      className={`${placement === "absolute" ? "absolute right-0 top-4 z-20" : "relative"} flex max-w-[7.25rem] items-start justify-end gap-1.5 text-right text-xs ${
         onImage
           ? "text-white drop-shadow-[0_1px_2px_rgba(0,0,0,0.85)]"
           : "rounded-full bg-white/80 px-2.5 py-2 text-slate-600 shadow-sm ring-1 ring-slate-200 backdrop-blur"
@@ -5538,26 +5538,26 @@ export function SplitScreenSection({
     activeProfileLeftRail !== "edit-profile" &&
     !isProfileSettingsPane;
   const profileVisibility = currentUser?.visibility ?? "public";
-  const darkPaneHeadingClass = "text-sm font-semibold text-[rgba(255,255,255,0.76)]";
+  const darkPaneHeadingClass = "text-[11px] font-extrabold uppercase tracking-[0] text-[rgba(255,255,255,0.68)]";
   const darkPaneToggleClass = (active: boolean, enabled = true) =>
-    `flex h-8 w-8 items-center justify-center rounded-full transition ${
+    `flex h-8 w-8 items-center justify-center rounded-sm border transition ${
       active
-        ? "border-2 border-white bg-transparent text-white shadow-sm"
-        : "border border-[rgba(255,255,255,0.18)] bg-[rgba(255,255,255,0.08)] text-[rgba(255,255,255,0.68)] hover:border-[rgba(255,255,255,0.5)] hover:bg-[rgba(255,255,255,0.13)] hover:text-white"
+        ? "left-pane-light-surface left-pane-light-ink"
+        : "border-white/20 bg-transparent text-white/68 hover:border-white/60 hover:text-white"
     } ${enabled ? "" : "cursor-not-allowed opacity-45"}`;
   const darkPaneRowClass = (active: boolean) =>
-    `group flex w-full items-center gap-2 rounded-2xl border px-3 py-2 text-left text-sm transition ${
+    `group flex w-full items-center gap-2 border-x-0 border-b border-t-0 border-white/12 px-2 py-2.5 text-left text-sm transition ${
       active
-        ? "border-white text-white"
-        : "border-transparent text-[rgba(255,255,255,0.62)] hover:border-white hover:text-white"
+        ? "left-pane-directory-row-active font-semibold"
+        : "text-white hover:bg-white/[0.06]"
     }`;
   const darkPanePillClass = (active: boolean, size: "xs" | "sm" = "sm") =>
-    `rounded-full border transition ${
+    `rounded-sm border transition ${
       size === "xs" ? "px-3 py-1 text-xs font-medium" : "px-3 py-1.5 text-sm"
     } ${
       active
-        ? "border-white text-white"
-        : "border-transparent text-[rgba(255,255,255,0.62)] hover:border-white hover:text-white"
+        ? "left-pane-light-surface left-pane-light-ink font-semibold"
+        : "border-white/24 text-white hover:border-white/70"
     }`;
   const darkRailCircleButtonClass = (active: boolean, extra = "") =>
     `guide-rail-button ${extra} flex h-10 w-10 items-center justify-center rounded-full border bg-transparent text-white transition hover:scale-105 hover:border-2 hover:border-white hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/60 ${
@@ -6707,7 +6707,7 @@ export function SplitScreenSection({
           >
             <div
               ref={leftPaneRef}
-              className={`frosted-pane-left left-pane-dark-preview pointer-events-auto relative z-30 hidden min-h-0 flex-col overflow-visible p-4 transition-[transform,opacity] ease-[cubic-bezier(0.22,1,0.36,1)] lg:z-auto lg:flex lg:h-full lg:overflow-hidden lg:p-5 ${
+              className={`frosted-pane-left left-pane-dark-preview left-pane-jp-hierarchy pointer-events-auto relative z-30 hidden min-h-0 flex-col overflow-visible p-4 transition-[transform,opacity] ease-[cubic-bezier(0.22,1,0.36,1)] lg:z-auto lg:flex lg:h-full lg:overflow-hidden lg:p-5 ${
                 isLeftPaneCollapsed
                   ? "duration-[620ms] -translate-x-20 opacity-0 pointer-events-none"
                   : "duration-500 translate-x-0 opacity-100"
@@ -6827,7 +6827,7 @@ export function SplitScreenSection({
                 </div>
               ) : null}
               <div
-                className={`shrink-0 pb-4 transition-opacity duration-150 ${
+                className={`left-pane-masthead shrink-0 pb-4 transition-opacity duration-150 ${
                   isStateMorphing ? "opacity-0 pointer-events-none" : "opacity-100"
                 }`}
               >
@@ -6842,13 +6842,13 @@ export function SplitScreenSection({
                     aria-hidden={continentTitleMorph ? "true" : "false"}
                   >
                     {visibleSeoContextLabel ? (
-                      <p className={`mb-1 max-w-[calc(100%-8rem)] text-sm font-medium ${activeDestinationImage ? "text-white drop-shadow-sm" : "text-slate-600"}`}>
+                      <p className={`mb-1 max-w-[calc(100%-8rem)] text-[11px] font-extrabold uppercase tracking-[0] text-white ${activeDestinationImage ? "drop-shadow-sm" : ""}`}>
                         {visibleSeoContextLabel}
                       </p>
                     ) : null}
                     <h1
                       ref={titleRef}
-                      className={`max-w-[calc(100%-8rem)] text-2xl font-semibold ${activeDestinationImage ? "text-white drop-shadow-sm" : "text-slate-900"}`}
+                      className={`max-w-[calc(100%-8rem)] text-[30px] font-black leading-[1.02] tracking-[0] ${activeDestinationImage ? "text-white drop-shadow-sm" : "text-white"}`}
                     >
                       {activeCategory && activeLocation.city && !expandedGuide ? (
                         <button
@@ -6871,7 +6871,7 @@ export function SplitScreenSection({
                     {!isSavedPlacesRailActive ? (
                       <div
                         ref={detailRef}
-                        className={`mt-1 max-w-[calc(100%-3rem)] text-sm transition-all duration-300 ${activeDestinationImage ? "text-white drop-shadow-sm" : "text-slate-600"}`}
+                        className={`mt-2 max-w-[calc(100%-3rem)] text-[13px] font-semibold text-white transition-all duration-300 ${activeDestinationImage ? "drop-shadow-sm" : ""}`}
                         style={{
                           opacity: postMorphRevealPhase >= 1 ? 1 : 0,
                           transform:
@@ -7189,10 +7189,10 @@ export function SplitScreenSection({
                             aria-hidden={isCategoryInsightMode}
                           >
                             <p
-                              className={`ml-3 min-h-[9rem] border-l pl-3 text-sm leading-5 ${
+                              className={`ml-0 min-h-[9rem] border-l-2 pl-3 text-[13px] leading-5 ${
                                 activeDestinationImage
-                                  ? "border-white/35 text-white drop-shadow-sm"
-                                  : "border-slate-200 text-slate-600"
+                                  ? "border-white/38 text-white drop-shadow-sm"
+                                  : "border-white/24 text-white"
                               }`}
                             >
                               {renderLeftPaneAnnotatedText(
@@ -7210,15 +7210,15 @@ export function SplitScreenSection({
                             } flex items-center gap-2 transition-[margin,transform] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)]`}
                           >
                             {activeStayBookingHref ? (
-                              <div className="inline-flex h-9 overflow-hidden rounded-full border border-cyan-600/45 bg-white shadow-sm">
+                              <div
+                                className="inline-flex h-9 overflow-hidden rounded-sm border bg-black/24 shadow-none"
+                                style={{ borderColor: CATEGORY_STYLES.Stay.mapColor }}
+                              >
                                 <button
                                   type="button"
                                   onClick={handleStayCategoryFilter}
-                                  className={`inline-flex h-9 w-9 items-center justify-center transition ${
-                                    activeCategory === "Stay"
-                                      ? "bg-cyan-700 text-white"
-                                      : "text-cyan-700 hover:bg-cyan-50"
-                                  }`}
+                                  className="inline-flex h-9 w-9 items-center justify-center text-white transition hover:bg-white/[0.08]"
+                                  style={activeCategory === "Stay" ? { backgroundColor: CATEGORY_STYLES.Stay.mapColor } : undefined}
                                   aria-label={`Show stays in ${activeSeoPlaceLabel}`}
                                   aria-pressed={activeCategory === "Stay"}
                                   title="Show stays"
@@ -7229,7 +7229,8 @@ export function SplitScreenSection({
                                   href={activeStayBookingHref}
                                   target="_blank"
                                   rel="noreferrer sponsored"
-                                  className="inline-flex h-9 items-center gap-1 border-l border-cyan-600/25 px-2.5 text-[11px] font-semibold uppercase tracking-[0.12em] text-cyan-800 transition hover:bg-cyan-50 hover:text-cyan-950"
+                                  className="inline-flex h-9 items-center gap-1 border-l px-2.5 text-[11px] font-extrabold uppercase tracking-[0] text-white transition hover:bg-white/[0.08]"
+                                  style={{ borderLeftColor: CATEGORY_STYLES.Stay.mapColor }}
                                   aria-label={`Search stays in ${activeStayBookingQuery}`}
                                   title={`Book stays in ${activeStayBookingQuery}`}
                                 >
@@ -7243,25 +7244,25 @@ export function SplitScreenSection({
                                 <button
                                   type="button"
                                   onClick={() => toggleFavoriteLocation(activeFavoriteLocation)}
-                                  className={`inline-flex h-9 w-9 items-center justify-center rounded-full border bg-black/25 shadow-sm transition ${
+                                  className={`inline-flex h-9 w-9 items-center justify-center rounded-sm bg-transparent text-white shadow-none transition ${
                                     isActiveLocationFavorited
-                                      ? "border-teal-200/85 text-teal-50"
-                                      : "border-white/34 text-white hover:border-white/52 hover:bg-black/34"
+                                      ? "border-2 border-white"
+                                      : "border border-white/54 hover:border-white hover:bg-white/[0.06]"
                                   }`}
                                   aria-label={`${isActiveLocationFavorited ? "Remove" : "Save"} ${activeSeoPlaceLabel} ${isActiveLocationFavorited ? "from" : "to"} saved places`}
                                   title={isActiveLocationFavorited ? "Remove saved place" : "Save place"}
                                 >
-                                  <Bookmark className={`h-3.5 w-3.5 ${isActiveLocationFavorited ? "fill-current" : ""}`} />
+                                  <Bookmark className="h-3.5 w-3.5" filled={isActiveLocationFavorited} />
                                 </button>
                               ) : null}
                               {activeLocation.city ? (
                                 <button
                                   type="button"
-                                  className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-white/34 bg-black/25 text-white shadow-sm transition hover:border-white/52 hover:bg-black/34"
+                                  className="inline-flex h-9 w-9 items-center justify-center rounded-sm border border-white/54 bg-transparent text-white shadow-none transition hover:border-white hover:bg-white/[0.06]"
                                   aria-label={`Tour ${activeSeoPlaceLabel}`}
                                   title="Neighborhood tour coming soon"
                                 >
-                                  <Footprints className="h-3.5 w-3.5" />
+                                  <Footprints className="h-3.5 w-3.5" filled={false} />
                                 </button>
                               ) : null}
                             </div>
@@ -7271,11 +7272,7 @@ export function SplitScreenSection({
                           <div
                             className={`${
                               isCategoryInsightExiting ? "category-insight-draw-out" : "category-insight-draw-in"
-                            } mt-2 rounded-[10px] border p-3 ${
-                              activeDestinationImage
-                                ? "border-white/18 bg-black/24 text-white shadow-[0_12px_34px_rgba(0,0,0,0.18)]"
-                                : "border-slate-200/80 bg-white/75 text-slate-800 shadow-sm"
-                            }`}
+                            } mt-3 border-x-0 border-y border-white/16 bg-black/32 px-0 py-3 text-white shadow-none`}
                           >
                             <div className="mb-2 flex items-center gap-2">
                               <span
@@ -7284,9 +7281,7 @@ export function SplitScreenSection({
                                 aria-hidden="true"
                               />
                               <p
-                                className={`text-[10px] font-semibold uppercase tracking-[0.2em] ${
-                                  activeDestinationImage ? "text-white/58" : "text-slate-500"
-                                }`}
+                                className="text-[10px] font-extrabold uppercase tracking-[0] text-white/58"
                               >
                                 {displayCategoryInsight.label}
                               </p>
@@ -7322,8 +7317,8 @@ export function SplitScreenSection({
                                       borderColor: isActiveChip
                                         ? CATEGORY_STYLES[displayCategoryInsight.category].mapColor
                                         : `${CATEGORY_STYLES[displayCategoryInsight.category].mapColor}33`,
-                                      color: isActiveChip || activeDestinationImage
-                                        ? "rgba(255,255,255,0.92)"
+                                      color: isActiveChip
+                                        ? "rgba(255,255,255,0.96)"
                                         : CATEGORY_STYLES[displayCategoryInsight.category].mapColor,
                                     }}
                                     aria-pressed={isActiveChip}
@@ -7343,9 +7338,7 @@ export function SplitScreenSection({
                             <div className="mt-2 space-y-1.5">
                               {displayCategoryInsight.category === "Food" && activeFoodCuisine !== FOOD_CUISINE_ANY ? (
                                 <p
-                                  className={`text-[10px] font-semibold uppercase tracking-[0.18em] ${
-                                    activeDestinationImage ? "text-white/54" : "text-slate-500"
-                                  }`}
+                                  className="text-[10px] font-extrabold uppercase tracking-[0] text-white/54"
                                 >
                                   {activeFoodCuisine} need to knows
                                 </p>
@@ -7356,19 +7349,13 @@ export function SplitScreenSection({
                                 return (
                                   <div
                                     key={`${note.label ?? displayCategoryInsight.label}-${note.body}`}
-                                    className={`border-l pl-2 text-[12px] leading-5 ${
-                                      activeDestinationImage
-                                        ? "border-white/24 text-white/76"
-                                        : "border-slate-200 text-slate-600"
-                                    }`}
+                                    className="border-l border-white/24 pl-2 text-[12px] leading-5 text-white/76"
                                   >
                                     {note.label ? (
                                       <span
                                         className="mr-1.5 font-semibold uppercase tracking-[0.12em]"
                                         style={{
-                                          color: activeDestinationImage
-                                            ? "rgba(255,255,255,0.92)"
-                                            : CATEGORY_STYLES[displayCategoryInsight.category].mapColor,
+                                          color: "rgba(255,255,255,0.94)",
                                         }}
                                       >
                                         {note.label}
@@ -7387,21 +7374,26 @@ export function SplitScreenSection({
                             </div>
                           </div>
                         ) : !expandedGuide && cityHighlightRows.length && !isCategoryInsightExiting ? (
-                          <div className="city-summary-draw-in mt-3 space-y-1.5 overflow-hidden text-sm leading-5">
+                          <div className="city-summary-draw-in mt-3 overflow-hidden text-[13px] leading-5">
                             {cityHighlightRows.map((row) => {
                               const isActiveRow = activeCategory === row.category;
                               const rowColor = getLightCategoryTextColor(row.category, 0.48);
-                              const contentColor = getLightCategoryTextColor(row.category, 0.68);
+                              const contentColor = "rgba(255,255,255,0.7)";
 
                               return (
                                 <div
                                   key={`${row.label}-${row.category}`}
-                                  className="flex min-w-0 items-center gap-1.5 whitespace-nowrap"
+                                  className="relative flex min-h-9 min-w-0 items-center gap-1.5 border-b border-white/10 py-1.5 pl-3 last:border-b-0"
                                 >
+                                  <span
+                                    className="absolute bottom-1.5 left-0 top-1.5 w-0.5"
+                                    style={{ backgroundColor: CATEGORY_STYLES[row.category].mapColor }}
+                                    aria-hidden="true"
+                                  />
                                   <button
                                     type="button"
                                     onClick={() => handleCategoryToggle(row.category)}
-                                    className="shrink-0 font-semibold transition hover:underline"
+                                    className="shrink-0 font-extrabold uppercase transition hover:text-white"
                                     style={{ color: rowColor }}
                                     aria-pressed={isActiveRow}
                                     aria-label={`Filter ${activeSeoPlaceLabel} guides by ${row.label}`}
@@ -7416,7 +7408,7 @@ export function SplitScreenSection({
                                         <button
                                           type="button"
                                           onClick={() => handleCityHighlightGuideSelect(item.guide)}
-                                          className="font-medium transition hover:underline"
+                                          className="font-semibold transition hover:text-white"
                                           style={{ color: contentColor }}
                                           title={item.guide.title}
                                         >
@@ -7840,7 +7832,14 @@ export function SplitScreenSection({
                 {isCitySelection ? (
                   <div className="flex h-full min-h-0 flex-col">
                     <div className="mb-2 shrink-0 flex items-center justify-between">
-                      <p className="text-sm font-semibold text-slate-700">
+                      <p
+                        className="inline-flex h-8 items-center px-2.5 text-[11px] font-extrabold uppercase tracking-[0] text-white"
+                        style={{
+                          backgroundColor: activeCategory
+                            ? CATEGORY_STYLES[activeCategory].mapColor
+                            : "#f05232",
+                        }}
+                      >
                         {cityUsesNestedDistricts && activeLocation.subarea && activeNestedCitySubareas.length
                           ? "Neighborhoods"
                           : cityUsesNestedDistricts
@@ -7851,7 +7850,7 @@ export function SplitScreenSection({
                     </div>
                     <div className="min-h-0 flex-1 overflow-y-auto">
                       {rankedCityListItems.length ? (
-                        <div className="space-y-2">
+                        <div className="overflow-hidden">
                           {rankedCityListItems.map((item) => {
                             const isSelected = (item.isNested ? selection.nestedSubareaId : selection.subareaId) === item.id;
                             const isDescriptionHovered = hoveredDescriptionNeighborhoodId === item.id;
@@ -7862,10 +7861,10 @@ export function SplitScreenSection({
                                 key={item.id}
                                 type="button"
                                 title={item.name}
-                                className={`group relative flex w-full items-center gap-2 overflow-hidden rounded-2xl border border-transparent px-3 py-2 text-left text-sm transition ${
+                                className={`group relative flex w-full items-center gap-2 overflow-hidden border-b border-white/10 px-2 py-2.5 text-left text-sm transition last:border-b-0 ${
                                   isSelected || isDescriptionHovered
-                                    ? "text-white"
-                                    : "border-transparent text-slate-200 hover:text-white"
+                                    ? "left-pane-directory-row-active font-semibold"
+                                    : "text-white hover:bg-white/[0.06]"
                                 }`}
                                 onClick={() =>
                                   item.isNested
@@ -7884,14 +7883,6 @@ export function SplitScreenSection({
                                       )
                                 }
                               >
-                                {isSelected ? (
-                                  <span
-                                    className="pointer-events-none absolute inset-0 overflow-hidden rounded-2xl"
-                                    aria-hidden="true"
-                                  >
-                                    <span className="neighborhood-selection-swipe absolute inset-0 rounded-2xl border border-white/80" />
-                                  </span>
-                                ) : null}
                                 <span className="relative h-4 w-4 shrink-0" aria-hidden="true">
                                   <MapPin
                                     className={`absolute inset-0 h-4 w-4 text-red-500 transition-colors ${
@@ -7899,9 +7890,12 @@ export function SplitScreenSection({
                                     }`}
                                   />
                                   <span
-                                    className={`absolute left-1/2 top-[4px] h-1.5 w-1.5 -translate-x-1/2 rounded-full bg-[#1a1a1a] transition-opacity ${
+                                    className={`absolute left-1/2 top-[4px] h-1.5 w-1.5 -translate-x-1/2 rounded-full transition-opacity ${
                                       isSelected || isDescriptionHovered ? "opacity-100" : "opacity-0 group-hover:opacity-100"
                                     }`}
+                                    style={{
+                                      backgroundColor: isSelected || isDescriptionHovered ? "#f1f2ef" : "#1a1a1a",
+                                    }}
                                   />
                                 </span>
                                 <span className="min-w-0 flex-1 truncate">
@@ -8190,9 +8184,9 @@ export function SplitScreenSection({
                     }`}
                   >
                     <div className="mb-2 shrink-0 flex items-center justify-between">
-                      <p className="text-sm font-semibold text-white/72">Continents</p>
+                      <p className={darkPaneHeadingClass}>Continents</p>
                       <div className="flex items-center gap-2">
-                        <span className="flex h-8 w-8 items-center justify-center rounded-full border border-white/16 bg-white/10 text-white">
+                        <span className="flex h-8 w-8 items-center justify-center rounded-sm border border-white/20 bg-transparent text-white/72">
                           <Globe2 className="h-4 w-4" />
                         </span>
                       </div>
@@ -9081,7 +9075,7 @@ export function SplitScreenSection({
                                       onClick={() => handleCategoryToggle(option.category)}
                                       onMouseEnter={() => setHoveredCategoryLabel(option.label)}
                                       onMouseLeave={() => setHoveredCategoryLabel(null)}
-                                      className={`group relative flex h-12 min-w-0 flex-1 items-center justify-center gap-0.5 border-r border-slate-950/12 px-0.5 outline-none transition-[background-color,color,border-color] duration-200 focus:outline-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-slate-950/60 ${
+                                      className={`group relative flex h-12 min-w-0 flex-1 items-center justify-center gap-1.5 border-r border-slate-950/12 px-0.5 outline-none transition-[background-color,color,border-color] duration-200 focus:outline-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-slate-950/60 ${
                                         isActive
                                           ? "text-white"
                                           : "bg-transparent text-slate-950 hover:bg-white/80"
@@ -9090,7 +9084,7 @@ export function SplitScreenSection({
                                       aria-label={option.label}
                                       aria-pressed={isActive}
                                     >
-                                      <option.icon className="h-3.5 w-3.5 shrink-0" />
+                                      <option.icon className="h-[18px] w-[18px] shrink-0" />
                                       <span className="min-w-0 whitespace-nowrap text-[8.5px] font-bold uppercase tracking-[0]">
                                         {option.label}
                                       </span>
@@ -10012,15 +10006,15 @@ export function SplitScreenSection({
                         } flex items-center gap-2 transition-[margin,transform] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)]`}
                       >
                         {activeStayBookingHref ? (
-                          <div className="inline-flex h-9 overflow-hidden rounded-full border border-cyan-600/45 bg-white shadow-sm">
+                          <div
+                            className="inline-flex h-9 overflow-hidden rounded-sm border bg-black/24 shadow-none"
+                            style={{ borderColor: CATEGORY_STYLES.Stay.mapColor }}
+                          >
                             <button
                               type="button"
                               onClick={handleStayCategoryFilter}
-                              className={`inline-flex h-9 w-9 items-center justify-center transition ${
-                                activeCategory === "Stay"
-                                  ? "bg-cyan-700 text-white"
-                                  : "text-cyan-700 hover:bg-cyan-50"
-                              }`}
+                              className="inline-flex h-9 w-9 items-center justify-center text-white transition hover:bg-white/[0.08]"
+                              style={activeCategory === "Stay" ? { backgroundColor: CATEGORY_STYLES.Stay.mapColor } : undefined}
                               aria-label={`Show stays in ${activeSeoPlaceLabel}`}
                               aria-pressed={activeCategory === "Stay"}
                               title="Show stays"
@@ -10031,7 +10025,8 @@ export function SplitScreenSection({
                               href={activeStayBookingHref}
                               target="_blank"
                               rel="noreferrer sponsored"
-                              className="inline-flex h-9 items-center gap-1 border-l border-cyan-600/25 px-2.5 text-[11px] font-semibold uppercase tracking-[0.12em] text-cyan-800 transition hover:bg-cyan-50 hover:text-cyan-950"
+                              className="inline-flex h-9 items-center gap-1 border-l px-2.5 text-[11px] font-extrabold uppercase tracking-[0] text-white transition hover:bg-white/[0.08]"
+                              style={{ borderLeftColor: CATEGORY_STYLES.Stay.mapColor }}
                               aria-label={`Search stays in ${activeStayBookingQuery}`}
                               title={`Book stays in ${activeStayBookingQuery}`}
                             >
@@ -10045,25 +10040,25 @@ export function SplitScreenSection({
                             <button
                               type="button"
                               onClick={() => toggleFavoriteLocation(activeFavoriteLocation)}
-                              className={`inline-flex h-9 w-9 items-center justify-center rounded-full border bg-black/25 shadow-sm transition ${
+                              className={`inline-flex h-9 w-9 items-center justify-center rounded-sm bg-transparent text-white shadow-none transition ${
                                 isActiveLocationFavorited
-                                  ? "border-teal-200/85 text-teal-50"
-                                  : "border-white/34 text-white hover:border-white/52 hover:bg-black/34"
+                                  ? "border-2 border-white"
+                                  : "border border-white/54 hover:border-white hover:bg-white/[0.06]"
                               }`}
                               aria-label={`${isActiveLocationFavorited ? "Remove" : "Save"} ${activeSeoPlaceLabel} ${isActiveLocationFavorited ? "from" : "to"} saved places`}
                               title={isActiveLocationFavorited ? "Remove saved place" : "Save place"}
                             >
-                              <Bookmark className={`h-3.5 w-3.5 ${isActiveLocationFavorited ? "fill-current" : ""}`} />
+                              <Bookmark className="h-3.5 w-3.5" filled={isActiveLocationFavorited} />
                             </button>
                           ) : null}
                           {activeLocation.city ? (
                             <button
                               type="button"
-                              className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-white/34 bg-black/25 text-white shadow-sm transition hover:border-white/52 hover:bg-black/34"
+                              className="inline-flex h-9 w-9 items-center justify-center rounded-sm border border-white/54 bg-transparent text-white shadow-none transition hover:border-white hover:bg-white/[0.06]"
                               aria-label={`Tour ${activeSeoPlaceLabel}`}
                               title="Neighborhood tour coming soon"
                             >
-                              <Footprints className="h-3.5 w-3.5" />
+                              <Footprints className="h-3.5 w-3.5" filled={false} />
                             </button>
                           ) : null}
                         </div>
