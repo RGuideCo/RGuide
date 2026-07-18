@@ -9,11 +9,13 @@ import {
 import {
   parisCitywideGuides,
   parisNeighborhoodGuides,
+  parisSeoQueryGuides,
 } from "@/data/guides/paris";
 import { globalGuides } from "@/data/guides/global";
 import {
   barcelonaCoreGuides,
   barcelonaItineraryGuides,
+  barcelonaSeoQueryGuides,
 } from "@/data/guides/barcelona";
 import {
   amsterdamCitywideGuides,
@@ -57,6 +59,7 @@ import type { MapList } from "@/types";
 export const editorialGuideLists: MapList[] = enrichGuidesCuisineTypes([
   ...parisNeighborhoodGuides,
   ...parisCitywideGuides,
+  ...parisSeoQueryGuides,
   ...londonNeighborhoodGuides,
   ...londonCitywideGuides,
   ...newYorkCityCitywideGuides,
@@ -75,6 +78,7 @@ export const editorialGuideLists: MapList[] = enrichGuidesCuisineTypes([
   ...tokyoNeighborhoodGuides,
   ...tokyoCitywideGuides,
   ...barcelonaCoreGuides,
+  ...barcelonaSeoQueryGuides,
   ...bangkokCitywideGuides,
   ...athensCitywideGuides,
   ...hanoiCitywideGuides,
