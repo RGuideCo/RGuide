@@ -148,16 +148,16 @@ export function GuideQuickLinks({ guideId, placeName, links, onGuideSelect }: Gu
       id={`guide-quick-links-${guideId}`}
       data-guide-quick-links
       aria-label={`Explore more of ${placeName}`}
-      className="guide-content-cascade-item relative z-10 -mx-3 bg-slate-800 px-3 py-2.5"
+      className="guide-content-cascade-item relative z-10 -mx-3 border-y border-white/10 bg-slate-800 px-3 py-2.5"
       style={{ animationDelay: "50ms" }}
       onClick={(event) => event.stopPropagation()}
       onWheel={handleWheel}
     >
       <div className="flex items-center justify-between gap-3">
-        <p className="min-w-0 truncate text-[9px] font-semibold uppercase text-white">
+        <p className="min-w-0 truncate text-[10px] font-extrabold uppercase tracking-[0] text-white">
           Explore more of {placeName}
         </p>
-        <p className="shrink-0 text-[9px] font-medium text-white/65">
+        <p className="shrink-0 font-mono text-[9px] font-semibold uppercase tracking-[0.08em] text-white/60">
           {links.length} {links.length === 1 ? "guide" : "guides"}
         </p>
       </div>
@@ -186,10 +186,10 @@ export function GuideQuickLinks({ guideId, placeName, links, onGuideSelect }: Gu
                       onGuideSelect(link.id);
                     }
                   }}
-                  className="group inline-flex h-7 w-max max-w-28 shrink-0 items-center gap-1 overflow-hidden rounded-md px-2 text-xs font-semibold text-white shadow-sm outline-none transition-[max-width,filter] duration-300 ease-out hover:max-w-lg hover:brightness-90 focus-visible:max-w-lg focus-visible:ring-2 focus-visible:ring-white/70"
+                  className="group inline-flex h-7 w-max max-w-28 shrink-0 items-center gap-1.5 overflow-hidden rounded-sm border border-white/20 px-2 text-[9px] font-extrabold uppercase tracking-[0] text-white shadow-none outline-none transition-[max-width,filter] duration-300 ease-out hover:max-w-lg hover:brightness-90 focus-visible:max-w-lg focus-visible:ring-2 focus-visible:ring-white/75"
                   style={{ backgroundColor: CATEGORY_STYLES[link.category].mapColor }}
                 >
-                  <CategoryIcon className="h-3.5 w-3.5" weight={500} />
+                  <CategoryIcon className="h-4 w-4 shrink-0" weight={300} />
                   <span className="min-w-0 overflow-hidden whitespace-nowrap [-webkit-mask-image:linear-gradient(to_right,#000_72%,transparent_100%)] [mask-image:linear-gradient(to_right,#000_72%,transparent_100%)] group-hover:[-webkit-mask-image:none] group-hover:[mask-image:none] group-focus-visible:[-webkit-mask-image:none] group-focus-visible:[mask-image:none]">
                     {link.title}
                   </span>

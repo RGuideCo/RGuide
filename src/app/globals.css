@@ -379,6 +379,44 @@ textarea:focus-visible {
   color: rgba(255, 255, 255, 0.92) !important;
 }
 
+.frosted-pane-left.left-pane-dark-preview .profile-light-surface,
+.left-pane-solid.left-pane-dark-preview .profile-light-surface {
+  background-color: #f1f2ef !important;
+  border-color: #f1f2ef !important;
+  color: #111111 !important;
+}
+
+.frosted-pane-left.left-pane-dark-preview .profile-light-surface :where(span, svg),
+.left-pane-solid.left-pane-dark-preview .profile-light-surface :where(span, svg) {
+  color: inherit !important;
+}
+
+.frosted-pane-left.left-pane-dark-preview input.profile-inline-name,
+.left-pane-solid.left-pane-dark-preview input.profile-inline-name {
+  background-color: transparent !important;
+  border: 0 !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.38) !important;
+  border-radius: 0;
+  color: #ffffff !important;
+}
+
+.frosted-pane-left.left-pane-dark-preview input.profile-inline-name:focus,
+.left-pane-solid.left-pane-dark-preview input.profile-inline-name:focus {
+  border-bottom-color: #ffffff !important;
+}
+
+.frosted-pane-left.left-pane-dark-preview textarea.profile-inline-bio,
+.left-pane-solid.left-pane-dark-preview textarea.profile-inline-bio {
+  background-color: rgba(255, 255, 255, 0.055) !important;
+  border-color: rgba(255, 255, 255, 0.22) !important;
+  color: rgba(255, 255, 255, 0.9) !important;
+}
+
+.frosted-pane-left.left-pane-dark-preview textarea.profile-inline-bio:focus,
+.left-pane-solid.left-pane-dark-preview textarea.profile-inline-bio:focus {
+  border-color: rgba(255, 255, 255, 0.62) !important;
+}
+
 .frosted-pane-left.left-pane-dark-preview .profile-left-stat-card,
 .frosted-pane-left.left-pane-dark-preview .pane-cascade-item,
 .left-pane-solid.left-pane-dark-preview .profile-left-stat-card,

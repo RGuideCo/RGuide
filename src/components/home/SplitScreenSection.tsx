@@ -1085,7 +1085,6 @@ export function SplitScreenSection({
     setProfileBioDraft(currentUser?.bio ?? "");
     setProfileAvatarPreview(currentUser?.avatar ?? "");
     setProfileAvatarFile(null);
-    setProfileEditMessage(null);
     setProfileSettingsMessage(null);
   }, [currentUser?.avatar, currentUser?.bio, currentUser?.id, currentUser?.name]);
 
@@ -1108,7 +1107,6 @@ export function SplitScreenSection({
       return previewUrl;
     });
     setProfileEditMessage(null);
-    void handleProfileSave(file);
   };
 
   const handleProfileSave = async (avatarFileOverride?: File | null) => {
@@ -5535,16 +5533,21 @@ export function SplitScreenSection({
   const isProfileSettingsPane = activeProfileLeftRail === "settings";
   const isProfileOverviewPane =
     activeProfileLeftRail !== "places-been" &&
-    activeProfileLeftRail !== "edit-profile" &&
     !isProfileSettingsPane;
   const profileVisibility = currentUser?.visibility ?? "public";
+  const isProfileEditDirty = Boolean(
+    currentUser &&
+      (profileAvatarFile ||
+        profileNameDraft.trim() !== currentUser.name.trim() ||
+        profileBioDraft.trim() !== currentUser.bio.trim()),
+  );
   const darkPaneHeadingClass = "text-[11px] font-extrabold uppercase tracking-[0] text-[rgba(255,255,255,0.68)]";
   const darkPaneToggleClass = (active: boolean, enabled = true) =>
     `flex h-8 w-8 items-center justify-center rounded-sm border transition ${
       active
-        ? "left-pane-light-surface left-pane-light-ink"
-        : "border-white/20 bg-transparent text-white/68 hover:border-white/60 hover:text-white"
-    } ${enabled ? "" : "cursor-not-allowed opacity-45"}`;
+        ? "border-2 border-[#8ed8f8] bg-transparent text-[#8ed8f8]"
+        : "border-white/30 bg-transparent text-white hover:border-white/70 hover:text-white"
+    } ${enabled ? "" : "cursor-not-allowed opacity-55"}`;
   const darkPaneRowClass = (active: boolean) =>
     `group flex w-full items-center gap-2 border-x-0 border-b border-t-0 border-white/12 px-2 py-2.5 text-left text-sm transition ${
       active
@@ -5926,7 +5929,12 @@ export function SplitScreenSection({
                   >
                     <button
                       type="button"
-                      onClick={() => setActiveProfileLeftRail(option.id)}
+                      onClick={() => {
+                        setActiveProfileLeftRail(option.id);
+                        if (option.id === "edit-profile") {
+                          setProfileEditMessage(null);
+                        }
+                      }}
                       className={darkRailCircleButtonClass(activeProfileLeftRail === option.id, "relative z-10")}
                       aria-label={option.label}
                       title={option.label}
@@ -8186,7 +8194,7 @@ export function SplitScreenSection({
                     <div className="mb-2 shrink-0 flex items-center justify-between">
                       <p className={darkPaneHeadingClass}>Continents</p>
                       <div className="flex items-center gap-2">
-                        <span className="flex h-8 w-8 items-center justify-center rounded-sm border border-white/20 bg-transparent text-white/72">
+                        <span className="flex h-8 w-8 items-center justify-center rounded-sm border-2 border-[#8ed8f8] bg-transparent text-[#8ed8f8]">
                           <Globe2 className="h-4 w-4" />
                         </span>
                       </div>
@@ -8378,14 +8386,17 @@ export function SplitScreenSection({
                         {activeProfileLeftRail === "edit-profile" ? (
                           <input
                             value={profileNameDraft}
-                            onChange={(event) => setProfileNameDraft(event.target.value)}
-                            onBlur={() => void handleProfileSave()}
+                            onChange={(event) => {
+                              setProfileNameDraft(event.target.value);
+                              setProfileEditMessage(null);
+                            }}
                             onKeyDown={(event) => {
                               if (event.key === "Enter") {
-                                event.currentTarget.blur();
+                                event.preventDefault();
+                                void handleProfileSave();
                               }
                             }}
-                            className="mx-auto block w-full max-w-[16rem] rounded-xl border border-slate-200 bg-white px-3 py-2 text-center text-2xl font-semibold text-slate-900 outline-none transition focus:border-slate-400"
+                            className="profile-inline-name mx-auto block w-full max-w-[16rem] px-1 py-1 text-center text-2xl font-semibold outline-none transition"
                             aria-label="Profile name"
                           />
                         ) : (
@@ -8403,11 +8414,13 @@ export function SplitScreenSection({
                       {activeProfileLeftRail === "edit-profile" ? (
                         <textarea
                           value={profileBioDraft}
-                          onChange={(event) => setProfileBioDraft(event.target.value)}
-                          onBlur={() => void handleProfileSave()}
+                          onChange={(event) => {
+                            setProfileBioDraft(event.target.value);
+                            setProfileEditMessage(null);
+                          }}
                           rows={3}
                           maxLength={220}
-                          className="mt-2 w-full resize-none rounded-xl border border-slate-200 bg-white px-3 py-2 text-center text-sm text-slate-600 outline-none transition focus:border-slate-400"
+                          className="profile-inline-bio mt-2 w-full resize-none rounded-sm border px-3 py-2 text-center text-sm outline-none transition"
                           aria-label="Profile bio"
                         />
                       ) : (
@@ -8421,10 +8434,30 @@ export function SplitScreenSection({
                           {currentUser.bio}
                         </p>
                       )}
-                      {activeProfileLeftRail === "edit-profile" && profileEditMessage ? (
-                        <p className="mt-2 rounded-full border border-slate-200 bg-white px-3 py-1 text-xs text-slate-600">
-                          {isSavingProfile ? "Saving..." : profileEditMessage}
-                        </p>
+                      {activeProfileLeftRail === "edit-profile" ? (
+                        <div className="mt-3 flex w-full flex-col items-center gap-2">
+                          <button
+                            type="button"
+                            onClick={() => void handleProfileSave()}
+                            disabled={isSavingProfile || !isProfileEditDirty}
+                            className="profile-light-surface inline-flex min-h-10 w-full items-center justify-center rounded-sm border px-4 py-2 text-sm font-extrabold uppercase tracking-[0] transition hover:brightness-95 disabled:cursor-not-allowed disabled:opacity-45"
+                          >
+                            {isSavingProfile ? "Saving changes..." : "Save changes"}
+                          </button>
+                          {profileEditMessage ? (
+                            <p
+                              className={`rounded-sm border px-3 py-1.5 text-xs font-semibold ${
+                                profileEditMessage === "Profile updated."
+                                  ? "border-emerald-300/30 bg-emerald-400/10"
+                                  : "border-red-300/35 bg-red-500/10"
+                              }`}
+                              style={{ color: profileEditMessage === "Profile updated." ? "#86efac" : "#fb7185" }}
+                              aria-live="polite"
+                            >
+                              {profileEditMessage}
+                            </p>
+                          ) : null}
+                        </div>
                       ) : null}
                       {activeProfileLeftRail === "places-been" ? (
                         <div
@@ -8681,7 +8714,7 @@ export function SplitScreenSection({
                                   disabled={isSavingProfileVisibility}
                                   className={`rounded-full px-3 py-1.5 text-xs font-semibold uppercase tracking-[0.12em] transition ${
                                     isActive
-                                      ? "bg-white text-slate-950 shadow-sm"
+                                      ? "profile-light-surface shadow-sm"
                                       : "text-white/[0.58] hover:bg-white/[0.08] hover:text-white"
                                   } ${isSavingProfileVisibility ? "cursor-wait opacity-70" : ""}`}
                                 >
@@ -8717,7 +8750,17 @@ export function SplitScreenSection({
                         </div>
 
                         {profileSettingsMessage ? (
-                          <p className="rounded-full border border-white/[0.12] bg-white/[0.08] px-3 py-1.5 text-xs font-medium text-white/[0.72]">
+                          <p
+                            className={`rounded-sm border px-3 py-1.5 text-xs font-semibold ${
+                              profileSettingsMessage.startsWith("Profile set to")
+                                ? "border-emerald-300/30 bg-emerald-400/10"
+                                : "border-red-300/35 bg-red-500/10"
+                            }`}
+                            style={{
+                              color: profileSettingsMessage.startsWith("Profile set to") ? "#86efac" : "#fb7185",
+                            }}
+                            aria-live="polite"
+                          >
                             {profileSettingsMessage}
                           </p>
                         ) : null}
