@@ -1,5 +1,6 @@
 import Link from "next/link";
 
+import { GuideEditorialReview } from "@/components/cards/GuideEditorialReview";
 import {
   CityDeepLinkResolution,
   getCanonicalCityPath,
@@ -110,7 +111,7 @@ function GuidePreviewCard({
   const neighborhood = guide.location.neighborhood ? { name: guide.location.neighborhood } : undefined;
   const href = getCanonicalGuidePath({ name: guide.location.city ?? "" }, guide, neighborhood, guides);
   const seoTitle = getGuideSeoTitle({ ...guide }, { name: guide.location.city ?? "" }, neighborhood);
-  const stops = guide.stops.slice(0, priority ? 6 : 3);
+  const stops = priority ? guide.stops : guide.stops.slice(0, 3);
   const visibleSources = getVisibleGuideSources(guide);
 
   return (
@@ -171,6 +172,7 @@ function GuidePreviewCard({
           ))}
         </div>
       ) : null}
+      {priority ? <GuideEditorialReview guide={guide} className="mt-4 border-t border-slate-200 pt-3" /> : null}
     </article>
   );
 }

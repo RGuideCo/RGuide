@@ -4920,14 +4920,18 @@ const madridTargetGuideIds = new Set([
   "list-madrid-letras-popular-bars",
   "list-madrid-retiro-restaurants",
   "list-madrid-retiro-popular-bars",
+  "list-madrid-retiro-stays",
   "list-madrid-malasana-restaurants",
   "list-madrid-malasana-popular-bars",
   "list-madrid-la-latina-restaurants",
   "list-madrid-la-latina-popular-bars",
+  "list-madrid-la-latina-stays",
   "list-madrid-chueca-restaurants",
   "list-madrid-chueca-popular-bars",
   "list-madrid-chueca-stays",
+  "list-madrid-letras-stays",
   "list-madrid-citywide-restaurants",
+  "list-madrid-citywide-stays",
 ]);
 
 const madridDaily = (value: string, defaultNote?: string): GuideStop["hours"] => ({
@@ -5273,11 +5277,37 @@ const madridStopRepairs: Record<string, MadridStopRepair> = {
     attributeTags: ["historic", "classic_cocktails", "gran_via", "reservations"],
   },
 
+  "stay-four-seasons": { officialUrl: "https://www.fourseasons.com/madrid/", lodgingType: "hotel", attributeTags: ["luxury", "spa", "central", "fine_dining"] },
+  "stay-mandarin-oriental-ritz": { officialUrl: "https://www.mandarinoriental.com/en/madrid/hotel-ritz", lodgingType: "hotel", attributeTags: ["luxury", "historic", "museums", "fine_dining"] },
   "stay-only-you-boutique": { officialUrl: "https://www.onlyyouhotels.com/en/hotels/only-you-boutique-hotel-madrid/", lodgingType: "hotel", attributeTags: ["design", "luxury", "central", "nightlife"] },
-  "stay-room-mate-oscar": { officialUrl: "https://room-matehotels.com/en/oscar/", lodgingType: "hotel", attributeTags: ["design", "rooftop", "central", "lively"] },
+  "stay-room-mate-oscar": { officialUrl: "https://room-matehotels.com/gb/hotel-oscar-madrid/", lodgingType: "hotel", attributeTags: ["design", "rooftop", "central", "lively"] },
+  "stay-westin-palace": {
+    officialUrl: "https://www.thepalacehotelmadrid.com/",
+    name: "The Palace, a Luxury Collection Hotel, Madrid",
+    description: "The Palace is the landmark Art Walk hotel beneath a restored stained-glass dome, with the Prado and Thyssen museums a short walk away. Choose it for historic grandeur, fully renovated rooms, polished service, and a cultural itinerary centered on the UNESCO-listed Paseo del Prado.",
+    priceSource: "The Palace official site",
+    lodgingType: "hotel",
+    attributeTags: ["luxury", "historic", "museums", "fine_dining"],
+  },
+  "stay-posada-leon": {
+    officialUrl: "https://posadadelleondeoro.com/en/inicio-english/",
+    description: "Posada del Leon de Oro is a small historic hotel on La Latina's Cava Baja, operating as lodging since 1880. Choose it for old-city character, immediate tapas access, and a more intimate base than Madrid's large luxury hotels.",
+    priceSource: "Posada del Leon de Oro official site",
+    lodgingType: "hotel",
+    attributeTags: ["historic", "boutique", "local_character", "walkable"],
+  },
   "stay-brach": { officialUrl: "https://brachmadrid.com/", lodgingType: "hotel", attributeTags: ["luxury", "design", "wellness", "central"] },
   "stay-hotel-urban": { officialUrl: "https://www.hotelurban.com/", lodgingType: "hotel", attributeTags: ["luxury", "rooftop", "design", "central"] },
-  "stay-urso": { officialUrl: "https://www.hotelurso.com/", lodgingType: "hotel", attributeTags: ["luxury", "wellness", "quiet", "design"] },
+  "stay-urso": { officialUrl: "https://hotelurso.com/", lodgingType: "hotel", attributeTags: ["luxury", "wellness", "quiet", "design"] },
+  "stay-edition": { officialUrl: "https://www.editionhotels.com/madrid/", lodgingType: "hotel", attributeTags: ["luxury", "design", "rooftop", "central"] },
+  "stay-pestana-plaza-mayor": { officialUrl: "https://www.pestana.com/uk/hotel/pestana-madrid-plaza-mayor", lodgingType: "hotel", attributeTags: ["historic_center", "spa", "rooftop", "walkable"] },
+  "stay-seven-islas": {
+    officialUrl: "https://www.esmadrid.com/alojamientos/siete-islas-hotel",
+    statusUrl: "https://www.esmadrid.com/alojamientos/siete-islas-hotel",
+    priceSource: "Tourism Madrid",
+    lodgingType: "hotel",
+    attributeTags: ["boutique", "design", "central", "independent"],
+  },
 
   "madrid-food-casa-dani": {
     officialUrl: "https://casadani.es/contacto",
@@ -5477,7 +5507,38 @@ function repairMadridGuide(list: MapList): MapList {
 }
 
 export const madridNeighborhoodGuides = madridNeighborhoodGuideSeeds.map(repairMadridGuide) satisfies MapList[];
-const madridBaseCitywideGuides = madridCitywideGuideSeeds.map(repairMadridGuide) satisfies MapList[];
+
+const madridNeighborhoodStopsById = new Map(
+  madridNeighborhoodGuides.flatMap((guide) => guide.stops).map((stop) => [stop.id, stop]),
+);
+const madridCitywideHotelExtraStopIds = ["stay-westin-palace", "stay-room-mate-oscar", "stay-posada-leon"];
+
+function expandMadridCitywideHotelGuide(list: MapList): MapList {
+  if (list.id !== "list-madrid-citywide-stays") return list;
+
+  const extraStops = madridCitywideHotelExtraStopIds.map((stopId) => {
+    const stop = madridNeighborhoodStopsById.get(stopId);
+    if (!stop) throw new Error(`Missing Madrid citywide hotel stop: ${stopId}`);
+    return stop;
+  });
+
+  const extraSources = extraStops.flatMap((stop) => [
+    ...(stop.officialUrl ? [{ name: `${stop.name} official`, url: stop.officialUrl }] : []),
+    ...(stop.sourceEvidence?.currentStatusUrl
+      ? [{ name: `${stop.name} current status`, url: stop.sourceEvidence.currentStatusUrl }]
+      : []),
+  ]);
+
+  return {
+    ...list,
+    stops: [...list.stops, ...extraStops],
+    sources: uniqueMadridSources([...(list.sources ?? []), ...extraSources]),
+  };
+}
+
+const madridBaseCitywideGuides = madridCitywideGuideSeeds
+  .map(repairMadridGuide)
+  .map(expandMadridCitywideHotelGuide) satisfies MapList[];
 const madridSourceGuides = [...madridNeighborhoodGuides, ...madridBaseCitywideGuides];
 
 const madridCheapEatStops: GuideStop[] = [
