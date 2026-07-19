@@ -21,6 +21,8 @@ const COUNTRY_NAME_ALIASES: Record<string, string> = {
   vietnam: "VN",
   laos: "LA",
   moldova: "MD",
+  "republic of serbia": "RS",
+  serbia: "RS",
 };
 
 function codeToFlagEmoji(code: string) {

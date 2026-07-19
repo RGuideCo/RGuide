@@ -14,7 +14,14 @@ type WorldCountrySeed = {
   bounds: [[number, number], [number, number]];
 };
 
-const worldCountrySeeds = worldCountries as unknown as WorldCountrySeed[];
+const countryDisplayNameById: Record<string, string> = {
+  "republic-of-serbia": "Serbia",
+};
+
+const worldCountrySeeds = (worldCountries as unknown as WorldCountrySeed[]).map((country) => ({
+  ...country,
+  name: countryDisplayNameById[country.id] ?? country.name,
+}));
 const supplementalWorldCountrySeeds: WorldCountrySeed[] = [
   {
     id: "hong-kong",
