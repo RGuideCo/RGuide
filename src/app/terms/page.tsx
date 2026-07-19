@@ -1,12 +1,14 @@
 import type { Metadata } from "next";
+import { getLocalePublicationState } from "@/lib/i18n/server";
 
-export const metadata: Metadata = {
-  title: "Terms of Use",
-  description: "RGuide terms of use for travel guide content and site features.",
-  alternates: {
-    canonical: "/terms",
-  },
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const spanish = await getLocalePublicationState("es");
+  return {
+    title: "Terms of Use",
+    description: "RGuide terms of use for travel guide content and site features.",
+    alternates: { canonical: "/terms", languages: spanish.indexable ? { en: "/terms", es: "/es/terminos", "x-default": "/terms" } : undefined },
+  };
+}
 
 export default function TermsPage() {
   return (

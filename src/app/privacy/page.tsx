@@ -1,12 +1,14 @@
 import type { Metadata } from "next";
+import { getLocalePublicationState } from "@/lib/i18n/server";
 
-export const metadata: Metadata = {
-  title: "Privacy Policy",
-  description: "RGuide privacy policy and data handling overview.",
-  alternates: {
-    canonical: "/privacy",
-  },
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const spanish = await getLocalePublicationState("es");
+  return {
+    title: "Privacy Policy",
+    description: "RGuide privacy policy and data handling overview.",
+    alternates: { canonical: "/privacy", languages: spanish.indexable ? { en: "/privacy", es: "/es/privacidad", "x-default": "/privacy" } : undefined },
+  };
+}
 
 export default function PrivacyPage() {
   return (

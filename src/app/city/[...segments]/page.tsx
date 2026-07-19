@@ -2,11 +2,23 @@ import type { Metadata } from "next";
 import { notFound, permanentRedirect } from "next/navigation";
 
 import { SplitScreenClientLoader } from "@/components/home/SplitScreenClientLoader";
+import { LocaleSwitcher } from "@/components/i18n/LocaleSwitcher";
 import { CityRouteSeoIndex } from "@/components/seo/CityRouteSeoIndex";
 import { ProgressiveEnhancementShell } from "@/components/shared/ProgressiveEnhancementShell";
 import { getContinentsWithDestinationDescriptions } from "@/lib/destination-descriptions";
 import { getCityBySimpleSlug, getCityDeepLinkStaticParams, resolveCityDeepLink } from "@/lib/deep-link-routes";
 import { getCitiesFromContinents } from "@/lib/geography-tree";
+import {
+  getLocalizedCityCategoryPath,
+  getLocalizedCityNeighborhoodPath,
+  getLocalizedCityPath,
+  getLocalizedGuidePath,
+} from "@/lib/i18n/paths";
+import {
+  findDestinationRouteTranslation,
+  getDestinationRouteTranslations,
+  getLocalePublicationState,
+} from "@/lib/i18n/server";
 import { getServerEditorialGuides } from "@/lib/server-editorial-guides";
 
 interface CityDeepLinkPageProps {
@@ -30,6 +42,22 @@ function getRequestedCityName(segments: string[], cities: ReturnType<typeof getC
   )?.name;
 }
 
+function getSpanishAlternatePath(
+  route: NonNullable<ReturnType<typeof resolveCityDeepLink>>,
+  spanishGuides: Awaited<ReturnType<typeof getServerEditorialGuides>>,
+  localizedCitySlug?: string,
+) {
+  if (route.guide) {
+    const translatedGuide = spanishGuides.find((guide) => guide.id === route.guide?.id);
+    return translatedGuide
+      ? getLocalizedGuidePath("es", route.city, translatedGuide, route.neighborhood, localizedCitySlug)
+      : null;
+  }
+  if (route.category) return getLocalizedCityCategoryPath("es", route.city, route.category, route.neighborhood, localizedCitySlug);
+  if (route.neighborhood) return getLocalizedCityNeighborhoodPath("es", route.city, route.neighborhood, localizedCitySlug);
+  return getLocalizedCityPath("es", route.city, localizedCitySlug);
+}
+
 export async function generateMetadata({ params }: CityDeepLinkPageProps): Promise<Metadata> {
   const { segments } = await params;
   const continents = await getContinentsWithDestinationDescriptions();
@@ -38,6 +66,11 @@ export async function generateMetadata({ params }: CityDeepLinkPageProps): Promi
   const editorialGuides = await getServerEditorialGuides({
     cityName: requestedCityName,
   });
+  const [spanishGuides, spanishPublication, destinationTranslations] = await Promise.all([
+    getServerEditorialGuides({ cityName: requestedCityName, locale: "es" }),
+    getLocalePublicationState("es"),
+    getDestinationRouteTranslations("es"),
+  ]);
   const route = resolveCityDeepLink(segments, {
     continents,
     cities,
@@ -51,12 +84,23 @@ export async function generateMetadata({ params }: CityDeepLinkPageProps): Promi
   const socialImageSource =
     route.guide?.photo ?? route.guide?.stops.find((stop) => Boolean(stop.photo))?.photo ?? route.city.image;
   const socialImageUrl = `${socialImageSource}${socialImageSource.includes("?") ? "&" : "?"}title=1`;
+  const cityTranslation = findDestinationRouteTranslation(destinationTranslations, {
+    id: route.city.id,
+    name: route.city.name,
+    scope: "city",
+  });
+  const spanishPath = spanishPublication.indexable
+    ? getSpanishAlternatePath(route, spanishGuides, cityTranslation?.slug)
+    : null;
 
   return {
     title: route.title,
     description: route.description,
     alternates: {
       canonical: route.canonicalPath,
+      languages: spanishPath
+        ? { en: route.canonicalPath, es: spanishPath, "x-default": route.canonicalPath }
+        : undefined,
     },
     robots: route.indexable
       ? undefined
@@ -93,6 +137,11 @@ export default async function CityDeepLinkPage({ params }: CityDeepLinkPageProps
   const editorialGuides = await getServerEditorialGuides({
     cityName: requestedCityName,
   });
+  const [spanishGuides, spanishPublication, destinationTranslations] = await Promise.all([
+    getServerEditorialGuides({ cityName: requestedCityName, locale: "es" }),
+    getLocalePublicationState("es"),
+    getDestinationRouteTranslations("es"),
+  ]);
   const route = resolveCityDeepLink(segments, {
     continents,
     cities,
@@ -107,6 +156,14 @@ export default async function CityDeepLinkPage({ params }: CityDeepLinkPageProps
   if (requestedPath !== route.canonicalPath) {
     permanentRedirect(route.canonicalPath);
   }
+  const cityTranslation = findDestinationRouteTranslation(destinationTranslations, {
+    id: route.city.id,
+    name: route.city.name,
+    scope: "city",
+  });
+  const spanishPath = spanishPublication.indexable
+    ? getSpanishAlternatePath(route, spanishGuides, cityTranslation?.slug)
+    : null;
 
   return (
     <>
@@ -132,6 +189,9 @@ export default async function CityDeepLinkPage({ params }: CityDeepLinkPageProps
           }}
         />
       </ProgressiveEnhancementShell>
+      {spanishPath ? (
+        <LocaleSwitcher locale="en" links={{ en: route.canonicalPath, es: spanishPath }} />
+      ) : null}
     </>
   );
 }

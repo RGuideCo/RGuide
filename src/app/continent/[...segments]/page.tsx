@@ -3,6 +3,7 @@ import Link from "next/link";
 import { notFound, permanentRedirect } from "next/navigation";
 
 import { SplitScreenClientLoader } from "@/components/home/SplitScreenClientLoader";
+import { LocaleSwitcher } from "@/components/i18n/LocaleSwitcher";
 import { ProgressiveEnhancementShell } from "@/components/shared/ProgressiveEnhancementShell";
 import { getContinentsWithDestinationDescriptions } from "@/lib/destination-descriptions";
 import {
@@ -12,6 +13,12 @@ import {
   resolveContinentDeepLink,
 } from "@/lib/deep-link-routes";
 import { getServerEditorialGuides } from "@/lib/server-editorial-guides";
+import { getLocalizedContinentPath } from "@/lib/i18n/paths";
+import {
+  findDestinationRouteTranslation,
+  getDestinationRouteTranslations,
+  getLocalePublicationState,
+} from "@/lib/i18n/server";
 
 interface ContinentDeepLinkPageProps {
   params: Promise<{
@@ -31,9 +38,11 @@ export async function generateStaticParams() {
 
 export async function generateMetadata({ params }: ContinentDeepLinkPageProps): Promise<Metadata> {
   const { segments } = await params;
-  const [continents, editorialGuides] = await Promise.all([
+  const [continents, editorialGuides, spanishPublication, destinationTranslations] = await Promise.all([
     getContinentsWithDestinationDescriptions(),
     getServerEditorialGuides(),
+    getLocalePublicationState("es"),
+    getDestinationRouteTranslations("es"),
   ]);
   const route = resolveContinentDeepLink(segments, { continents, guides: editorialGuides });
 
@@ -41,11 +50,22 @@ export async function generateMetadata({ params }: ContinentDeepLinkPageProps): 
     return { title: "Continent not found" };
   }
 
+  const continentTranslation = findDestinationRouteTranslation(destinationTranslations, {
+    id: route.continent.id,
+    name: route.continent.name,
+    scope: "continent",
+  });
+  const spanishPath = spanishPublication.indexable && continentTranslation
+    ? getLocalizedContinentPath("es", route.continent, continentTranslation.slug)
+    : null;
   return {
     title: route.title,
     description: route.description,
     alternates: {
       canonical: route.canonicalPath,
+      languages: spanishPath
+        ? { en: route.canonicalPath, es: spanishPath, "x-default": route.canonicalPath }
+        : undefined,
     },
     robots: route.indexable
       ? undefined
@@ -69,9 +89,11 @@ export async function generateMetadata({ params }: ContinentDeepLinkPageProps): 
 
 export default async function ContinentDeepLinkPage({ params }: ContinentDeepLinkPageProps) {
   const { segments } = await params;
-  const [continents, editorialGuides] = await Promise.all([
+  const [continents, editorialGuides, spanishPublication, destinationTranslations] = await Promise.all([
     getContinentsWithDestinationDescriptions(),
     getServerEditorialGuides(),
+    getLocalePublicationState("es"),
+    getDestinationRouteTranslations("es"),
   ]);
   const route = resolveContinentDeepLink(segments, { continents, guides: editorialGuides });
 
@@ -83,6 +105,14 @@ export default async function ContinentDeepLinkPage({ params }: ContinentDeepLin
   if (requestedPath !== route.canonicalPath) {
     permanentRedirect(route.canonicalPath);
   }
+  const continentTranslation = findDestinationRouteTranslation(destinationTranslations, {
+    id: route.continent.id,
+    name: route.continent.name,
+    scope: "continent",
+  });
+  const spanishPath = spanishPublication.indexable && continentTranslation
+    ? getLocalizedContinentPath("es", route.continent, continentTranslation.slug)
+    : null;
 
   return (
     <>
@@ -127,6 +157,7 @@ export default async function ContinentDeepLinkPage({ params }: ContinentDeepLin
           }}
         />
       </ProgressiveEnhancementShell>
+      {spanishPath ? <LocaleSwitcher locale="en" links={{ en: route.canonicalPath, es: spanishPath }} /> : null}
     </>
   );
 }

@@ -1,12 +1,26 @@
+import type { Metadata } from "next";
+
 import { HomeServerContent } from "@/components/home/HomeServerContent";
+import { LocaleSwitcher } from "@/components/i18n/LocaleSwitcher";
 import { SplitScreenClientLoader } from "@/components/home/SplitScreenClientLoader";
 import { ProgressiveEnhancementShell } from "@/components/shared/ProgressiveEnhancementShell";
 import { SITE_DESCRIPTION, SITE_SEARCH_NAME } from "@/lib/constants";
 import { getContinentsWithDestinationDescriptions } from "@/lib/destination-descriptions";
 import { getAbsoluteHref } from "@/lib/routes";
+import { getLocalePublicationState } from "@/lib/i18n/server";
 import { getServerEditorialGuides } from "@/lib/server-editorial-guides";
 
 export const revalidate = 21600;
+
+export async function generateMetadata(): Promise<Metadata> {
+  const spanish = await getLocalePublicationState("es");
+  return {
+    alternates: {
+      canonical: "/",
+      languages: spanish.indexable ? { en: "/", es: "/es", "x-default": "/" } : undefined,
+    },
+  };
+}
 
 const homePageJsonLd = {
   "@context": "https://schema.org",
@@ -28,9 +42,10 @@ const homePageJsonLd = {
 };
 
 export default async function HomePage() {
-  const [continents, editorialGuides] = await Promise.all([
+  const [continents, editorialGuides, spanish] = await Promise.all([
     getContinentsWithDestinationDescriptions(),
     getServerEditorialGuides(),
+    getLocalePublicationState("es"),
   ]);
 
   return (
@@ -44,6 +59,7 @@ export default async function HomePage() {
       >
         <SplitScreenClientLoader initialAppData={{ continents, guides: [] }} />
       </ProgressiveEnhancementShell>
+      {spanish.indexable ? <LocaleSwitcher locale="en" links={{ en: "/", es: "/es" }} /> : null}
     </>
   );
 }

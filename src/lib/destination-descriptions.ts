@@ -4,6 +4,7 @@ import { unstable_cache } from "next/cache";
 import { createClient } from "@supabase/supabase-js";
 
 import { getContinents } from "@/lib/mock-data";
+import { normalizeLocale, type AppLocale } from "@/lib/i18n/config";
 import { getServerDatabaseUrl } from "@/lib/server-database-url";
 import type {
   City,
@@ -90,6 +91,11 @@ interface DestinationDataApiImageRow {
   } | null;
 }
 
+interface DestinationDataApiDescriptionRow {
+  description: string;
+  destination: { legacy_id: string | null } | { legacy_id: string | null }[] | null;
+}
+
 interface DestinationContentRows {
   descriptions: DestinationDescriptionRow[];
   cityAffiliateLinks: CityAffiliateLinkRow[];
@@ -101,6 +107,7 @@ interface DestinationContentRows {
 
 interface DestinationContentLoadOptions {
   forceDatabase?: boolean;
+  locale?: AppLocale;
 }
 
 const DESTINATION_DESCRIPTIONS_CACHE_SECONDS = Number.parseInt(
@@ -389,14 +396,15 @@ function shouldSkipDatabaseConnection(options: DestinationContentLoadOptions = {
 }
 
 async function loadDestinationContentRows(options: DestinationContentLoadOptions = {}): Promise<DestinationContentRows> {
+  const locale = normalizeLocale(options.locale);
   if (shouldSkipDatabaseConnection(options)) {
-    return loadDestinationContentRowsFromDataApi();
+    return loadDestinationContentRowsFromDataApi(locale);
   }
 
   const databaseUrl = getServerDatabaseUrl();
 
   if (!databaseUrl) {
-    return loadDestinationContentRowsFromDataApi();
+    return loadDestinationContentRowsFromDataApi(locale);
   }
 
   const client = new pg.Client({
@@ -409,11 +417,11 @@ async function loadDestinationContentRows(options: DestinationContentLoadOptions
 
   try {
     await client.connect();
-    const descriptions = await loadNormalizedDestinationDescriptionRows(client);
+    const descriptions = await loadNormalizedDestinationDescriptionRows(client, locale);
     const cityAffiliateLinks = await loadCityLeftPanelAffiliateLinkRows(client);
     const cityFoodCuisines = await loadCityFoodCuisineRows(client);
     const destinationImages = await loadDestinationImageRows(client);
-    const categoryInsights = await loadDestinationCategoryInsightRows(client);
+    const categoryInsights = await loadDestinationCategoryInsightRows(client, locale);
     const neighborhoodStrengths = await loadDestinationCategoryNeighborhoodStrengthRows(client);
 
     return {
@@ -426,13 +434,13 @@ async function loadDestinationContentRows(options: DestinationContentLoadOptions
     };
   } catch (error) {
     console.error("Failed to load destination content", error);
-    return loadDestinationContentRowsFromDataApi();
+    return loadDestinationContentRowsFromDataApi(locale);
   } finally {
     await client.end().catch(() => {});
   }
 }
 
-async function loadDestinationContentRowsFromDataApi(): Promise<DestinationContentRows> {
+async function loadDestinationContentRowsFromDataApi(locale: AppLocale): Promise<DestinationContentRows> {
   const config = getSupabaseDataApiConfig();
 
   if (!config) {
@@ -490,11 +498,19 @@ async function loadDestinationContentRowsFromDataApi(): Promise<DestinationConte
     destinationImageOffset += page.length;
   }
 
-  const [{ data: insightData }, { data: strengthData }] = await Promise.all([
+  const [{ data: descriptionData }, { data: insightData }, { data: strengthData }] = await Promise.all([
+    supabase
+      .from("destination_descriptions_v2")
+      .select("description,destination:destinations!inner(legacy_id)")
+      .eq("locale", locale)
+      .eq("translation_status", "published")
+      .eq("description_kind", "overview")
+      .neq("description", "")
+      .returns<DestinationDataApiDescriptionRow[]>(),
     supabase
       .from("active_destination_category_insights")
       .select("destination_legacy_id,category,label,summary,chips,notes")
-      .eq("locale", "en")
+      .eq("locale", locale)
       .not("destination_legacy_id", "is", null),
     supabase
       .from("active_destination_category_neighborhood_strengths")
@@ -504,6 +520,11 @@ async function loadDestinationContentRowsFromDataApi(): Promise<DestinationConte
       .not("parent_destination_legacy_id", "is", null)
       .not("neighborhood_destination_legacy_id", "is", null),
   ]);
+
+  const descriptions: DestinationDescriptionRow[] = (descriptionData ?? []).flatMap((row) => {
+    const destination = Array.isArray(row.destination) ? row.destination[0] : row.destination;
+    return destination?.legacy_id ? [{ id: destination.legacy_id, description: row.description }] : [];
+  });
 
   const categoryInsights: DestinationCategoryInsightRow[] = (insightData ?? []).flatMap((row) => {
     const id = typeof row.destination_legacy_id === "string" ? row.destination_legacy_id : "";
@@ -552,7 +573,7 @@ async function loadDestinationContentRowsFromDataApi(): Promise<DestinationConte
   });
 
   return {
-    descriptions: [],
+    descriptions,
     cityAffiliateLinks: [],
     cityFoodCuisines: [],
     destinationImages,
@@ -561,7 +582,7 @@ async function loadDestinationContentRowsFromDataApi(): Promise<DestinationConte
   };
 }
 
-async function loadNormalizedDestinationDescriptionRows(client: Client) {
+async function loadNormalizedDestinationDescriptionRows(client: Client, locale: AppLocale) {
   try {
     const { rows } = await client.query<DestinationDescriptionRow>(
       [
@@ -570,9 +591,11 @@ async function loadNormalizedDestinationDescriptionRows(client: Client) {
         "join public.destinations destination on destination.id = description.destination_id",
         "where description.description <> ''",
         "  and destination.legacy_id is not null",
-        "  and description.locale = 'en'",
+        "  and description.locale = $1",
+        "  and description.translation_status = 'published'",
         "  and description.description_kind = 'overview'",
       ].join(" "),
+      [locale],
     );
     return rows;
   } catch {
@@ -645,7 +668,7 @@ async function loadDestinationImageRows(client: Client) {
   }
 }
 
-async function loadDestinationCategoryInsightRows(client: Client) {
+async function loadDestinationCategoryInsightRows(client: Client, locale: AppLocale) {
   try {
     const { rows } = await client.query<DestinationCategoryInsightRow>(
       [
@@ -656,10 +679,11 @@ async function loadDestinationCategoryInsightRows(client: Client) {
         "       chips,",
         "       notes",
         "from public.active_destination_category_insights",
-        "where locale = 'en'",
+        "where locale = $1",
         "  and destination_legacy_id is not null",
         "order by destination_legacy_id, sort_order, category",
       ].join(" "),
+      [locale],
     );
     return rows;
   } catch {
@@ -692,8 +716,8 @@ async function loadDestinationCategoryNeighborhoodStrengthRows(client: Client) {
 }
 
 const getCachedDestinationContentRows = unstable_cache(
-  async () => {
-    return loadDestinationContentRows();
+  async (locale: AppLocale) => {
+    return loadDestinationContentRows({ locale });
   },
   ["destination-content-rows", "city-images-v3-paginated"],
   {
@@ -705,8 +729,8 @@ const getCachedDestinationContentRows = unstable_cache(
 );
 
 const getCachedRuntimeDestinationContentRows = unstable_cache(
-  async () => {
-    return loadDestinationContentRows({ forceDatabase: true });
+  async (locale: AppLocale) => {
+    return loadDestinationContentRows({ forceDatabase: true, locale });
   },
   ["destination-content-rows", "city-images-runtime-v2-paginated"],
   {
@@ -915,13 +939,14 @@ export function applyDestinationDescriptions(
 }
 
 export async function getContinentsWithDestinationDescriptions(options: DestinationContentLoadOptions = {}) {
+  const locale = normalizeLocale(options.locale);
   const continents = getContinents();
   const loadRows =
     process.env.NODE_ENV === "development"
-      ? () => loadDestinationContentRows(options)
+      ? () => loadDestinationContentRows({ ...options, locale })
       : options.forceDatabase
-      ? getCachedRuntimeDestinationContentRows
-      : getCachedDestinationContentRows;
+      ? () => getCachedRuntimeDestinationContentRows(locale)
+      : () => getCachedDestinationContentRows(locale);
   const rows = await loadRows().catch((error) => {
     console.error("Failed to load cached destination content", error);
     return emptyDestinationContentRows();

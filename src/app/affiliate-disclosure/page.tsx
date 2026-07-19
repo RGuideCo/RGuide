@@ -1,12 +1,14 @@
 import type { Metadata } from "next";
+import { getLocalePublicationState } from "@/lib/i18n/server";
 
-export const metadata: Metadata = {
-  title: "Affiliate Disclosure",
-  description: "RGuide affiliate disclosure for booking and travel partner links.",
-  alternates: {
-    canonical: "/affiliate-disclosure",
-  },
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const spanish = await getLocalePublicationState("es");
+  return {
+    title: "Affiliate Disclosure",
+    description: "RGuide affiliate disclosure for booking and travel partner links.",
+    alternates: { canonical: "/affiliate-disclosure", languages: spanish.indexable ? { en: "/affiliate-disclosure", es: "/es/divulgacion-afiliados", "x-default": "/affiliate-disclosure" } : undefined },
+  };
+}
 
 export default function AffiliateDisclosurePage() {
   return (

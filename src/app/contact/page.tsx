@@ -1,12 +1,14 @@
 import type { Metadata } from "next";
+import { getLocalePublicationState } from "@/lib/i18n/server";
 
-export const metadata: Metadata = {
-  title: "Contact RGuide Travel",
-  description: "Contact RGuide Travel for editorial corrections, partnerships, and general questions.",
-  alternates: {
-    canonical: "/contact",
-  },
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const spanish = await getLocalePublicationState("es");
+  return {
+    title: "Contact RGuide Travel",
+    description: "Contact RGuide Travel for editorial corrections, partnerships, and general questions.",
+    alternates: { canonical: "/contact", languages: spanish.indexable ? { en: "/contact", es: "/es/contacto", "x-default": "/contact" } : undefined },
+  };
+}
 
 export default function ContactPage() {
   return (
