@@ -9118,17 +9118,23 @@ export function SplitScreenSection({
                                       onClick={() => handleCategoryToggle(option.category)}
                                       onMouseEnter={() => setHoveredCategoryLabel(option.label)}
                                       onMouseLeave={() => setHoveredCategoryLabel(null)}
-                                      className={`group relative flex h-12 min-w-0 flex-1 items-center justify-center gap-1.5 border-r border-slate-950/12 px-0.5 outline-none transition-[background-color,color,border-color] duration-200 focus:outline-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-slate-950/60 ${
+                                      className={`group relative flex h-12 min-w-0 flex-1 items-center justify-center gap-1.5 overflow-hidden border-r border-slate-950/12 px-0.5 outline-none transition-[color,border-color] duration-200 focus:outline-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-slate-950/60 ${
                                         isActive
                                           ? "text-white"
                                           : "bg-transparent text-slate-950 hover:bg-white/80"
                                       }`}
-                                      style={isActive ? { backgroundColor: categoryColor } : undefined}
                                       aria-label={option.label}
                                       aria-pressed={isActive}
                                     >
-                                      <option.icon className="h-[18px] w-[18px] shrink-0" />
-                                      <span className="min-w-0 whitespace-nowrap text-[8.5px] font-bold uppercase tracking-[0]">
+                                      <span
+                                        className={`pointer-events-none absolute inset-0 origin-bottom transition-transform duration-200 ease-[cubic-bezier(0.22,1,0.36,1)] ${
+                                          isActive ? "scale-y-100" : "scale-y-0"
+                                        }`}
+                                        style={{ backgroundColor: categoryColor }}
+                                        aria-hidden="true"
+                                      />
+                                      <option.icon className="relative z-10 h-[18px] w-[18px] shrink-0" />
+                                      <span className="relative z-10 min-w-0 whitespace-nowrap text-[8.5px] font-bold uppercase tracking-[0]">
                                         {option.label}
                                       </span>
                                       {!isActive ? (
