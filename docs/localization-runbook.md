@@ -20,27 +20,43 @@ Every indexable English and Spanish page must have a self-canonical plus recipro
 ## Initial Spanish Rollout
 
 1. Apply `supabase/20260719_multilingual_content_foundation.sql`.
-2. Add GitHub Actions secrets `SUPABASE_DB_URL` and `OPENAI_API_KEY`.
-3. Optionally set the repository variable `OPENAI_TRANSLATION_MODEL`; the worker defaults to `gpt-5-mini`.
-4. Queue current published content:
+2. Add the GitHub Actions secret `SUPABASE_DB_URL` so the read-only verification workflow can inspect publication readiness.
+3. Queue current published content:
 
    ```bash
    npm run translate:backfill -- --locale es
    ```
 
-5. Process the queue in reviewed batches:
+4. Export a small, reviewable batch. Five roots is the default and 25 is the maximum:
 
    ```bash
-   npm run translate:process -- --locale es --limit 25 --auto-publish
+   npm run translate:export -- --locale es --limit 5 --output translation-batches/work/es-next.json
    ```
 
-6. Repeat until verification passes:
+5. Ask Codex to translate the exported file:
+
+   ```text
+   Translate the next Spanish content batch in translation-batches/work/es-next.json.
+   Follow docs/localization-runbook.md exactly. Fill only each translation object,
+   preserve every identifier and source hash, validate the batch, import it with
+   --auto-publish, and report the verification result. Do not call a paid translation API.
+   ```
+
+6. Codex fills only each item's `translation` object. It must not edit `input`, IDs, locale, or source hashes. Import the completed batch through the normalized writer:
+
+   ```bash
+   npm run translate:import -- --locale es --batch translation-batches/work/es-next.json --auto-publish
+   ```
+
+   The importer rejects stale source hashes, mismatched IDs, missing stops or schedule items, and incomplete translated fields. It writes the typed translation tables and rebuilds localized MapList caches; the JSON batch is only a temporary handoff file.
+
+7. Repeat export, Codex translation, and import until verification passes:
 
    ```bash
    npm run verify:translations -- --locale es
    ```
 
-7. Enable Spanish indexing only after the verifier reports no missing, stale, open, or invalid rows:
+8. Enable Spanish indexing only after the verifier reports no missing, stale, open, or invalid rows:
 
    ```bash
    npm run translate:set-indexable -- --locale es
@@ -54,9 +70,11 @@ npm run translate:set-indexable -- --locale es --disable
 
 ## New And Updated Guides
 
-Database triggers queue translations when a published entry, stop, destination description, category insight, event activation, occurrence, or rendered cache changes. The scheduled GitHub workflow processes pending work every two hours and automatically publishes complete translations.
+Database triggers queue translations when a published entry, stop, destination description, category insight, event activation, occurrence, or rendered cache changes. They remain queued until a Codex batch is explicitly exported, translated, validated, and imported. There is no scheduled paid translation worker.
 
-If only non-translatable data changes, such as a venue photo, hours, or schedule date, the worker reuses the approved translation and rebuilds the localized cache without making another model call.
+If only non-translatable data changes, such as a venue photo, hours, or schedule date, the importer can reuse the approved translation and rebuild the localized cache without translating the editorial copy again.
+
+Batch files live under `translation-batches/work/` and are ignored by Git. They are operational handoff files, not another content source of truth.
 
 ## Adding Another Language
 

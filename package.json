@@ -35,6 +35,8 @@
     "audit:venue-media-primary-r2": "node scripts/audit-venue-media-primary-r2.mjs",
     "cleanup:venue-media-primary-r2": "node scripts/cleanup-venue-media-primary-r2.mjs",
     "translate:backfill": "node scripts/backfill-content-translations.mjs",
+    "translate:export": "node scripts/export-translation-batch.mjs",
+    "translate:import": "node scripts/process-translation-jobs.mjs",
     "translate:process": "node scripts/process-translation-jobs.mjs",
     "verify:translations": "node scripts/verify-content-translations.mjs",
     "translate:set-indexable": "node scripts/set-locale-indexability.mjs"

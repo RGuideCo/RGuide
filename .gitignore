@@ -10,5 +10,7 @@ build/
 *.tsbuildinfo
 *.log
 
+translation-batches/work/
+
 .DS_Store
 .vercel
