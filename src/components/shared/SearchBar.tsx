@@ -7,6 +7,9 @@ import { useCallback, useEffect, useId, useMemo, useRef, useState } from "react"
 import { createPortal } from "react-dom";
 
 import { cities } from "@/data";
+import { ROUTE_SEGMENTS, getLocalePrefix, type AppLocale } from "@/lib/i18n/config";
+import { getLocalizedCityPath, getLocalizedGuidePath } from "@/lib/i18n/paths";
+import type { DestinationRouteTranslation } from "@/lib/i18n/types";
 import { getCityHref, getGuideHref } from "@/lib/routes";
 import { getEditorialLists, useAppStore } from "@/store/app-store";
 
@@ -18,6 +21,8 @@ interface SearchBarProps {
   variant?: "pill" | "square";
   size?: "sm" | "md" | "lg";
   embedded?: boolean;
+  locale?: AppLocale;
+  destinationTranslations?: DestinationRouteTranslation[];
 }
 
 export function SearchBar({
@@ -28,6 +33,8 @@ export function SearchBar({
   variant = "pill",
   size,
   embedded = false,
+  locale = "en",
+  destinationTranslations = [],
 }: SearchBarProps) {
   const editorialLists = useAppStore((state) => state.editorialLists);
   const rootRef = useRef<HTMLDivElement | null>(null);
@@ -43,28 +50,70 @@ export function SearchBar({
     }
 
     const normalized = query.toLowerCase();
+    const getDestinationTranslation = (scope: string, sourceName: string, legacyId?: string) =>
+      destinationTranslations.find(
+        (translation) =>
+          translation.scope === scope &&
+          (translation.legacyId === legacyId || translation.sourceName === sourceName),
+      );
     const cityMatches = cities
-      .filter((city) => city.name.toLowerCase().includes(normalized))
+      .map((city) => ({ city, translation: getDestinationTranslation("city", city.name, city.id) }))
+      .filter(({ city, translation }) =>
+        [city.name, translation?.displayName].some((name) => name?.toLowerCase().includes(normalized)),
+      )
       .slice(0, 4)
-      .map((city) => ({
+      .map(({ city, translation }) => ({
         id: city.id,
-        title: city.name,
-        subtitle: `${city.country}, ${city.continent}`,
-        href: getCityHref(city),
+        title: translation?.displayName ?? city.name,
+        subtitle: [
+          getDestinationTranslation("country", city.country)?.displayName ?? city.country,
+          getDestinationTranslation("continent", city.continent)?.displayName ?? city.continent,
+        ].join(", "),
+        href: locale === "en" ? getCityHref(city) : getLocalizedCityPath(locale, city, translation?.slug),
       }));
 
     const listMatches = searchableLists
       .filter((list) => list.title.toLowerCase().includes(normalized))
       .slice(0, 4)
-      .map((list) => ({
-        id: list.id,
-        title: list.title,
-        subtitle: [list.location.city, list.location.country, list.category].filter(Boolean).join(" • "),
-        href: getGuideHref(list),
-      }));
+      .map((list) => {
+        const city = list.location.city
+          ? cities.find((candidate) => candidate.name === list.location.city)
+          : undefined;
+        const cityTranslation = city
+          ? getDestinationTranslation("city", city.name, city.id)
+          : undefined;
+        const neighborhood = city?.subareas
+          ?.flatMap((subarea) => [subarea, ...(subarea.subareas ?? [])])
+          .find((candidate) => candidate.name === list.location.neighborhood);
+        const neighborhoodTranslation = neighborhood
+          ? getDestinationTranslation("neighborhood", neighborhood.name, neighborhood.id)
+          : undefined;
+        const localizedHref = list.submissionType === "event"
+          ? `${getLocalePrefix(locale)}/${ROUTE_SEGMENTS[locale].events}/${list.seoSlug ?? list.slug}`
+          : city
+            ? getLocalizedGuidePath(
+                locale,
+                city,
+                list,
+                neighborhood,
+                cityTranslation?.slug,
+                neighborhoodTranslation?.slug,
+              )
+            : getGuideHref(list);
+        return {
+          id: list.id,
+          title: list.title,
+          subtitle: [
+            cityTranslation?.displayName ?? list.location.city,
+            getDestinationTranslation("country", list.location.country)?.displayName ?? list.location.country,
+            list.category,
+          ].filter(Boolean).join(" • "),
+          href: locale === "en" ? getGuideHref(list) : localizedHref,
+        };
+      });
 
     return [...cityMatches, ...listMatches].slice(0, 6);
-  }, [query, searchableLists]);
+  }, [destinationTranslations, locale, query, searchableLists]);
 
   const updateDropdownRect = useCallback(() => {
     const root = rootRef.current;
@@ -142,7 +191,7 @@ export function SearchBar({
   return (
     <div ref={rootRef} className={clsx("relative isolate z-[260] w-full max-w-xl", className)}>
       <label className="sr-only" htmlFor={searchId}>
-        Search cities and lists
+        {locale === "es" ? "Buscar ciudades y guías" : "Search cities and lists"}
       </label>
       <div
         className={clsx(
@@ -165,7 +214,7 @@ export function SearchBar({
           type="search"
           value={query}
           onChange={(event) => setQuery(event.target.value)}
-          placeholder="Search cities, countries, or list titles"
+          placeholder={locale === "es" ? "Buscar ciudades, países o guías" : "Search cities, countries, or list titles"}
           autoFocus={autoFocus}
           className={clsx(
             "w-full appearance-none border-0 bg-transparent p-0 text-slate-900 outline-none ring-0 shadow-none placeholder:text-slate-400 focus:border-0 focus:bg-transparent focus:outline-none focus:ring-0",

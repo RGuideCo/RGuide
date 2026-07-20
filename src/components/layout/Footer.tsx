@@ -1,6 +1,7 @@
 "use client";
 
 import { type MouseEvent, useEffect, useState } from "react";
+import { usePathname } from "next/navigation";
 
 type FooterModal = "about" | "contact" | "privacy" | "terms" | "affiliate-disclosure" | null;
 type FooterModalId = Exclude<FooterModal, null>;
@@ -46,6 +47,14 @@ const footerLinks: Array<{ href: string; label: string; modal: FooterModalId }> 
   { href: "/affiliate-disclosure", label: "Disclosure", modal: "affiliate-disclosure" },
 ];
 
+const spanishFooterLinks: Array<{ href: string; label: string; modal: FooterModalId }> = [
+  { href: "/es/acerca-de", label: "Acerca de", modal: "about" },
+  { href: "/es/contacto", label: "Contacto", modal: "contact" },
+  { href: "/es/privacidad", label: "Privacidad", modal: "privacy" },
+  { href: "/es/terminos", label: "Condiciones", modal: "terms" },
+  { href: "/es/divulgacion-afiliados", label: "Afiliados", modal: "affiliate-disclosure" },
+];
+
 const modalTitles: Record<FooterModalId, string> = {
   about: "About",
   contact: "Contact",
@@ -53,6 +62,22 @@ const modalTitles: Record<FooterModalId, string> = {
   terms: "Terms",
   "affiliate-disclosure": "Disclosure",
 };
+
+const spanishModalTitles: Record<FooterModalId, string> = {
+  about: "Acerca de",
+  contact: "Contacto",
+  privacy: "Privacidad",
+  terms: "Condiciones",
+  "affiliate-disclosure": "Divulgación",
+};
+
+const spanishAboutFaqs = [
+  { question: "¿Qué es RGuide Travel?", answer: "RGuide Travel es un índice de guías seleccionadas para planificar dónde comer, alojarse, salir y explorar una ciudad." },
+  { question: "¿Quién crea las guías?", answer: "Las RGuides son guías editoriales de RGuide. También pueden aparecer guías, recorridos y recomendaciones guardadas por usuarios." },
+  { question: "¿Cómo se eligen los lugares?", answer: "Las guías se organizan por ubicación, categoría y contexto, con fuentes y señales locales que mantienen cada lista práctica." },
+  { question: "¿Puedo guardar lugares para un viaje?", answer: "Sí. Puedes marcar guías como favoritas y crear recorridos con los lugares de las guías ampliadas." },
+  { question: "¿Cómo sugiero una corrección?", answer: "Envía correcciones, fuentes o comentarios sobre las guías a editorial@rguide.co." },
+];
 
 const policyCopy: Record<"privacy" | "terms" | "affiliate-disclosure", string[]> = {
   privacy: [
@@ -75,8 +100,35 @@ const policyCopy: Record<"privacy" | "terms" | "affiliate-disclosure", string[]>
   ],
 };
 
+const spanishPolicyCopy: Record<"privacy" | "terms" | "affiliate-disclosure", string[]> = {
+  privacy: [
+    "RGuide recopila únicamente la información necesaria para operar el sitio, mejorar sus funciones y responder a mensajes.",
+    "El sitio puede utilizar analítica y registros de alojamiento para entender el rendimiento, los errores y los patrones de tráfico.",
+    "RGuide no vende información personal. Los servicios externos pueden tratar datos según sus propias políticas.",
+    "Para consultas de privacidad o eliminación, escribe a hello@rguide.co.",
+  ],
+  terms: [
+    "RGuide ofrece contenido informativo para planificar viajes. Los precios, horarios, disponibilidad y accesos pueden cambiar.",
+    "Las guías y aportaciones deben ser legales, precisas según el conocimiento de quien las envía y respetar derechos de terceros.",
+    "RGuide no es responsable de sitios externos, plataformas de reserva, operaciones de negocios ni resultados de viaje.",
+    "Para consultas sobre las condiciones, escribe a hello@rguide.co.",
+  ],
+  "affiliate-disclosure": [
+    "RGuide puede recibir una comisión cuando una persona utiliza enlaces de socios para reservar alojamientos, actividades u otros servicios. Esto no cambia el precio pagado.",
+    "Las relaciones de afiliación no garantizan presencia, posición ni cobertura positiva.",
+    "Antes de reservar, revisa los precios, políticas, disponibilidad y condiciones directamente con el proveedor.",
+    "Las preguntas sobre colaboraciones o divulgaciones pueden enviarse a hello@rguide.co.",
+  ],
+};
+
 export function Footer() {
   const [activeModal, setActiveModal] = useState<FooterModal>(null);
+  const pathname = usePathname();
+  const isSpanish = pathname === "/es" || pathname.startsWith("/es/");
+  const visibleFooterLinks = isSpanish ? spanishFooterLinks : footerLinks;
+  const visibleModalTitles = isSpanish ? spanishModalTitles : modalTitles;
+  const visibleFaqs = isSpanish ? spanishAboutFaqs : aboutFaqs;
+  const visiblePolicyCopy = isSpanish ? spanishPolicyCopy : policyCopy;
 
   const handleModalLinkClick = (event: MouseEvent<HTMLAnchorElement>, modal: FooterModalId) => {
     if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey || event.button !== 0) {
@@ -110,9 +162,9 @@ export function Footer() {
           <div className="min-w-0 flex-1 px-3 sm:px-4 lg:px-2">
             <nav
               className="ml-auto flex w-full flex-wrap items-center justify-end gap-x-5 gap-y-2 text-right font-mono text-[0.68rem] font-semibold uppercase tracking-[0.18em] text-slate-500"
-              aria-label="Footer information"
+              aria-label={isSpanish ? "Información del pie de página" : "Footer information"}
             >
-              {footerLinks.map((link) => (
+              {visibleFooterLinks.map((link) => (
                 <a
                   key={link.href}
                   href={link.href}
@@ -144,22 +196,22 @@ export function Footer() {
               id={`footer-${activeModal}-title`}
               className="font-mono text-[0.7rem] font-semibold uppercase tracking-[0.18em] text-slate-500"
             >
-              {modalTitles[activeModal]}
+              {visibleModalTitles[activeModal]}
             </p>
 
             {activeModal === "about" ? (
               <div className="mx-auto mt-4 max-w-md text-left">
                 <p className="text-center text-sm leading-6 text-slate-600">
-                  RGuide Travel is a travel-planning index for opinionated city guides: restaurants, stays,
-                  bars, culture, nature, and activities organized around the way people actually move
-                  through a place.
+                  {isSpanish
+                    ? "RGuide Travel es un índice para planificar viajes con guías urbanas de restaurantes, alojamientos, bares, cultura, naturaleza y actividades organizadas según la forma en que una persona recorre un lugar."
+                    : "RGuide Travel is a travel-planning index for opinionated city guides: restaurants, stays, bars, culture, nature, and activities organized around the way people actually move through a place."}
                 </p>
                 <div className="mt-5 border-t border-slate-950/10 pt-4">
                   <p className="text-center font-mono text-[0.65rem] font-semibold uppercase tracking-[0.18em] text-slate-500">
                     FAQ
                   </p>
                   <div className="mt-3 space-y-3">
-                    {aboutFaqs.map((item) => (
+                    {visibleFaqs.map((item) => (
                       <div key={item.question}>
                         <p className="text-sm font-semibold text-slate-900">{item.question}</p>
                         <p className="mt-1 text-sm leading-5 text-slate-600">{item.answer}</p>
@@ -173,13 +225,15 @@ export function Footer() {
                 {contactLinks.map((link) => (
                   <a key={link.href} href={link.href} className="group hover:text-slate-950">
                     <span>{link.label}</span>
-                    <span className="ml-2 text-xs text-slate-400 group-hover:text-slate-500">{link.detail}</span>
+                    <span className="ml-2 text-xs text-slate-400 group-hover:text-slate-500">
+                      {isSpanish ? (link.detail === "General" ? "General" : "Editorial") : link.detail}
+                    </span>
                   </a>
                 ))}
               </div>
             ) : (
               <div className="mx-auto mt-4 max-w-xl space-y-4 text-left text-sm leading-6 text-slate-600">
-                {policyCopy[activeModal].map((paragraph) => (
+                {visiblePolicyCopy[activeModal].map((paragraph) => (
                   <p key={paragraph}>{paragraph}</p>
                 ))}
               </div>
@@ -190,7 +244,7 @@ export function Footer() {
               onClick={() => setActiveModal(null)}
               className="mt-6 rounded-md border border-slate-950/10 bg-white px-3 py-1.5 text-xs font-medium text-slate-600 transition hover:border-slate-950/20 hover:text-slate-950"
             >
-              Close
+              {isSpanish ? "Cerrar" : "Close"}
             </button>
           </section>
         </div>

@@ -8,6 +8,7 @@ import { createClient, type SupabaseClient } from "@supabase/supabase-js";
 
 import { mapLists } from "@/data/lists";
 import { weeklyCityEventRuns, weeklyEventToGuideList } from "@/data/weekly-events";
+import { DEFAULT_LOCALE, normalizeLocale, type AppLocale } from "@/lib/i18n/config";
 import { getServerDatabaseUrl } from "@/lib/server-database-url";
 import type { MapList } from "@/types";
 
@@ -39,10 +40,11 @@ interface DataApiWeeklyEventGuideRow {
   guide: MapList;
 }
 
-interface EditorialGuideScope {
+export interface EditorialGuideScope {
   cityName?: string;
   countryName?: string;
   continentName?: string;
+  locale?: AppLocale;
   bypassCache?: boolean;
 }
 
@@ -187,14 +189,20 @@ function getPgSslConfig(databaseUrl: string) {
 }
 
 async function loadEditorialGuidesFromSupabase(scope: EditorialGuideScope = {}): Promise<MapList[] | null> {
+  const locale = normalizeLocale(scope.locale);
+
   if (shouldSkipDatabaseConnection()) {
-    return loadEditorialGuidesFromDataApi(scope);
+    return locale === DEFAULT_LOCALE
+      ? loadEditorialGuidesFromDataApi(scope)
+      : loadLocalizedGuidesFromDataApi(scope, locale);
   }
 
   const databaseUrl = getServerDatabaseUrl();
 
   if (!databaseUrl) {
-    return loadEditorialGuidesFromDataApi(scope);
+    return locale === DEFAULT_LOCALE
+      ? loadEditorialGuidesFromDataApi(scope)
+      : loadLocalizedGuidesFromDataApi(scope, locale);
   }
 
   const client = new pg.Client({
@@ -204,6 +212,10 @@ async function loadEditorialGuidesFromSupabase(scope: EditorialGuideScope = {}):
 
   try {
     await client.connect();
+    if (locale !== DEFAULT_LOCALE) {
+      return loadLocalizedGuides(client, scope, locale);
+    }
+
     if (process.env.RGUIDE_FORCE_RENDER_CACHE === "1") {
       return loadRenderCacheGuides(client, scope);
     }
@@ -217,10 +229,125 @@ async function loadEditorialGuidesFromSupabase(scope: EditorialGuideScope = {}):
     return loadRenderCacheGuides(client, scope);
   } catch (error) {
     console.error("Failed to load server editorial guides", error);
-    return loadEditorialGuidesFromDataApi(scope);
+    return locale === DEFAULT_LOCALE
+      ? loadEditorialGuidesFromDataApi(scope)
+      : loadLocalizedGuidesFromDataApi(scope, locale);
   } finally {
     await client.end().catch(() => {});
   }
+}
+
+async function loadLocalizedGuidesFromDataApi(
+  scope: EditorialGuideScope,
+  locale: Exclude<AppLocale, "en">,
+): Promise<MapList[] | null> {
+  const config = getSupabaseDataApiConfig();
+  if (!config) {
+    return null;
+  }
+
+  const supabase = createClient(config.url, config.key, {
+    auth: { autoRefreshToken: false, persistSession: false },
+  });
+  let query = supabase
+    .from("entry_localized_render_cache")
+    .select("rendered_payload,updated_at")
+    .eq("locale", locale)
+    .eq("render_format", "maplist")
+    .eq("render_version", 1)
+    .eq("is_current", true);
+  let eventQuery = supabase
+    .from("event_localized_render_cache")
+    .select("rendered_payload,updated_at")
+    .eq("locale", locale)
+    .eq("render_format", "maplist")
+    .eq("render_version", 1)
+    .eq("is_current", true);
+
+  if (scope.cityName) {
+    query = query.eq("rendered_payload->location->>city", scope.cityName);
+    eventQuery = eventQuery.eq("rendered_payload->location->>city", scope.cityName);
+  } else if (scope.countryName) {
+    query = query.eq("rendered_payload->location->>country", scope.countryName);
+    eventQuery = eventQuery.eq("rendered_payload->location->>country", scope.countryName);
+  } else if (scope.continentName) {
+    query = query.eq("rendered_payload->location->>continent", scope.continentName);
+    eventQuery = eventQuery.eq("rendered_payload->location->>continent", scope.continentName);
+  }
+
+  const [entryResult, eventResult] = await Promise.all([
+    query.returns<DataApiRenderCacheRow[]>(),
+    eventQuery.returns<DataApiRenderCacheRow[]>(),
+  ]);
+  if (entryResult.error && eventResult.error) {
+    console.error(`Failed to load ${locale} editorial guides from the data API`, {
+      entries: entryResult.error,
+      events: eventResult.error,
+    });
+    return null;
+  }
+
+  return filterCurrentEventGuides(
+    [...(entryResult.data ?? []), ...(eventResult.data ?? [])]
+      .map((row) => attachGuideUpdatedAt(row.rendered_payload, row.updated_at)),
+  );
+}
+
+async function loadLocalizedGuides(
+  client: Client,
+  scope: EditorialGuideScope,
+  locale: Exclude<AppLocale, "en">,
+): Promise<MapList[]> {
+  const { clause: locationFilter, values } = getDatabaseScopeFilter(
+    scope,
+    "city.name",
+    "entry.country_name",
+    "entry.continent_name",
+  );
+  const localeParameter = values.length + 1;
+  const { rows } = await client.query<RenderCacheRow>(
+    [
+      "select cache.rendered_payload, cache.updated_at",
+      "from public.entry_localized_render_cache cache",
+      "join public.entries entry on entry.id = cache.entry_id",
+      "left join public.destinations city on city.id = entry.city_id",
+      `where cache.locale = $${localeParameter}`,
+      "  and cache.render_format = 'maplist'",
+      "  and cache.render_version = 1",
+      "  and cache.is_current = true",
+      "  and entry.status = 'published'",
+      "  and coalesce(entry.visibility, 'public') = 'public'",
+      locationFilter,
+      "order by entry.category, entry.country_name nulls last,",
+      "  cache.rendered_payload->'location'->>'city' nulls last,",
+      "  cache.rendered_payload->>'title'",
+    ].join(" "),
+    [...values, locale],
+  );
+  const { clause: eventLocationFilter, values: eventValues } = getDatabaseScopeFilter(
+    scope,
+    "cache.rendered_payload->'location'->>'city'",
+    "cache.rendered_payload->'location'->>'country'",
+    "cache.rendered_payload->'location'->>'continent'",
+  );
+  const eventLocaleParameter = eventValues.length + 1;
+  const { rows: eventRows } = await client.query<RenderCacheRow>(
+    [
+      "select cache.rendered_payload, cache.updated_at",
+      "from public.event_localized_render_cache cache",
+      `where cache.locale = $${eventLocaleParameter}`,
+      "  and cache.render_format = 'maplist'",
+      "  and cache.render_version = 1",
+      "  and cache.is_current = true",
+      eventLocationFilter,
+      "order by cache.rendered_payload->'location'->>'city' nulls last, cache.rendered_payload->>'title'",
+    ].join(" "),
+    [...eventValues, locale],
+  );
+
+  return filterCurrentEventGuides(
+    [...rows, ...eventRows].map((row) => attachGuideUpdatedAt(row.rendered_payload, row.updated_at)),
+  );
 }
 
 async function getCityIdFromDataApi(supabase: SupabaseClient, cityName?: string) {
@@ -578,8 +705,8 @@ async function loadLegacyWeeklyEventGuides(client: Client, scope: EditorialGuide
 }
 
 const getCachedCityEditorialGuidesFromSupabase = unstable_cache(
-  async (cityName: string) => {
-    return loadEditorialGuidesFromSupabase({ cityName });
+  async (cityName: string, locale: AppLocale) => {
+    return loadEditorialGuidesFromSupabase({ cityName, locale });
   },
   ["server-editorial-guides", "city-scoped"],
   {
@@ -591,8 +718,8 @@ const getCachedCityEditorialGuidesFromSupabase = unstable_cache(
 );
 
 const getCachedCountryEditorialGuidesFromSupabase = unstable_cache(
-  async (countryName: string) => {
-    return loadEditorialGuidesFromSupabase({ countryName });
+  async (countryName: string, locale: AppLocale) => {
+    return loadEditorialGuidesFromSupabase({ countryName, locale });
   },
   ["server-editorial-guides", "country-scoped"],
   {
@@ -604,8 +731,8 @@ const getCachedCountryEditorialGuidesFromSupabase = unstable_cache(
 );
 
 const getCachedContinentEditorialGuidesFromSupabase = unstable_cache(
-  async (continentName: string) => {
-    return loadEditorialGuidesFromSupabase({ continentName });
+  async (continentName: string, locale: AppLocale) => {
+    return loadEditorialGuidesFromSupabase({ continentName, locale });
   },
   ["server-editorial-guides", "continent-scoped"],
   {
@@ -616,18 +743,21 @@ const getCachedContinentEditorialGuidesFromSupabase = unstable_cache(
   },
 );
 
-const getRequestMemoizedAllEditorialGuides = cache(async () => loadEditorialGuidesFromSupabase());
+const getRequestMemoizedAllEditorialGuides = cache(async (locale: AppLocale) =>
+  loadEditorialGuidesFromSupabase({ locale }),
+);
 
 export async function getServerEditorialGuides(scope: EditorialGuideScope = {}) {
+  const locale = normalizeLocale(scope.locale);
   const supabaseGuideLoader = scope.bypassCache
-    ? loadEditorialGuidesFromSupabase(scope)
+    ? loadEditorialGuidesFromSupabase({ ...scope, locale })
     : scope.cityName
-      ? getCachedCityEditorialGuidesFromSupabase(scope.cityName)
+      ? getCachedCityEditorialGuidesFromSupabase(scope.cityName, locale)
       : scope.countryName
-        ? getCachedCountryEditorialGuidesFromSupabase(scope.countryName)
+        ? getCachedCountryEditorialGuidesFromSupabase(scope.countryName, locale)
         : scope.continentName
-          ? getCachedContinentEditorialGuidesFromSupabase(scope.continentName)
-          : getRequestMemoizedAllEditorialGuides();
+          ? getCachedContinentEditorialGuidesFromSupabase(scope.continentName, locale)
+          : getRequestMemoizedAllEditorialGuides(locale);
 
   const supabaseGuides = await supabaseGuideLoader.catch((error) => {
     console.error("Failed to load cached server editorial guides", error);
@@ -636,6 +766,10 @@ export async function getServerEditorialGuides(scope: EditorialGuideScope = {}) 
 
   if (supabaseGuides) {
     return supabaseGuides;
+  }
+
+  if (locale !== DEFAULT_LOCALE) {
+    return [];
   }
 
   return filterCurrentEventGuides(filterGuidesByScope(

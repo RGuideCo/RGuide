@@ -6,6 +6,8 @@ import { CategoryCard } from "@/components/cards/CategoryCard";
 import { CATEGORIES } from "@/lib/constants";
 import { getCanonicalGuidePath, getGuideSeoTitle, isIndexableEditorialGuide } from "@/lib/deep-link-routes";
 import { getCategoryLabel } from "@/lib/mock-data";
+import { getLocalizedCategoryIndexPath } from "@/lib/i18n/paths";
+import { getLocalePublicationState } from "@/lib/i18n/server";
 import { getAbsoluteHref, getCategoryHref, getGuideHref } from "@/lib/routes";
 import { getServerEditorialGuides } from "@/lib/server-editorial-guides";
 import type { ListCategory } from "@/types";
@@ -57,7 +59,10 @@ export async function generateMetadata({ params }: CategoryPageProps): Promise<M
   }
 
 
-  const editorialGuides = await getServerEditorialGuides();
+  const [editorialGuides, spanishPublication] = await Promise.all([
+    getServerEditorialGuides(),
+    getLocalePublicationState("es"),
+  ]);
   const indexableGuides = editorialGuides.filter(isIndexableEditorialGuide);
   const lists = indexableGuides.filter((list) => list.category === label);
   const title = CATEGORY_META_TITLES[label];
@@ -68,6 +73,13 @@ export async function generateMetadata({ params }: CategoryPageProps): Promise<M
     description,
     alternates: {
       canonical: getCategoryHref(label),
+      languages: spanishPublication.indexable
+        ? {
+            en: getCategoryHref(label),
+            es: getLocalizedCategoryIndexPath("es", label),
+            "x-default": getCategoryHref(label),
+          }
+        : undefined,
     },
     robots: lists.length >= 2
       ? undefined

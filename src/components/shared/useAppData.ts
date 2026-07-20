@@ -3,16 +3,19 @@
 import { useEffect, useState } from "react";
 
 import type { Continent, MapList } from "@/types";
+import type { AppLocale } from "@/lib/i18n/config";
 
 export interface AppData {
   continents: Continent[];
   guides: MapList[];
+  locale?: AppLocale;
 }
 
 export interface AppDataScope {
   cityName?: string | null;
   countryName?: string | null;
   continentName?: string | null;
+  locale?: AppLocale;
 }
 
 const appDataPromises = new Map<string, Promise<AppData>>();
@@ -22,19 +25,21 @@ function getAppDataKey(scope: AppDataScope = {}) {
   const cityName = scope.cityName?.trim().toLowerCase();
   const countryName = scope.countryName?.trim().toLowerCase();
   const continentName = scope.continentName?.trim().toLowerCase();
-  if (cityName) return `city:${cityName}`;
-  if (countryName) return `country:${countryName}`;
-  if (continentName) return `continent:${continentName}`;
-  return "all";
+  const locale = scope.locale ?? "en";
+  if (cityName) return `${locale}:city:${cityName}`;
+  if (countryName) return `${locale}:country:${countryName}`;
+  if (continentName) return `${locale}:continent:${continentName}`;
+  return `${locale}:all`;
 }
 
 function getAppDataUrl(scope: AppDataScope = {}) {
   const cityName = scope.cityName?.trim();
   const countryName = scope.countryName?.trim();
   const continentName = scope.continentName?.trim();
-  if (!cityName && !countryName && !continentName) return "/api/app-data";
+  const locale = scope.locale ?? "en";
 
   const params = new URLSearchParams();
+  params.set("locale", locale);
   if (cityName) {
     params.set("city", cityName);
   } else if (countryName) {
@@ -91,10 +96,11 @@ export function useAppData(initialData?: AppData, scope: AppDataScope = {}) {
   const cityName = scope.cityName ?? null;
   const countryName = scope.countryName ?? null;
   const continentName = scope.continentName ?? null;
+  const locale = scope.locale ?? "en";
 
   useEffect(() => {
     let isMounted = true;
-    const requestScope = { cityName, countryName, continentName };
+    const requestScope = { cityName, countryName, continentName, locale };
     const key = getAppDataKey(requestScope);
 
     const hasCompleteInitialData = Boolean(initialData?.guides.length);
@@ -128,7 +134,7 @@ export function useAppData(initialData?: AppData, scope: AppDataScope = {}) {
     return () => {
       isMounted = false;
     };
-  }, [initialData, cityName, countryName, continentName]);
+  }, [initialData, cityName, countryName, continentName, locale]);
 
   return { data, error };
 }

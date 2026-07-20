@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 
 import { getContinentsWithDestinationDescriptions } from "@/lib/destination-descriptions";
+import { DEFAULT_LOCALE, isSupportedLocale } from "@/lib/i18n/config";
 import { checkRateLimit, rateLimitResponse, withRateLimitHeaders } from "@/lib/rate-limit";
 import { getServerEditorialGuides } from "@/lib/server-editorial-guides";
 
@@ -14,6 +15,11 @@ export const runtime = "nodejs";
 export async function GET(request: Request) {
   try {
     const { searchParams } = new URL(request.url);
+    const requestedLocale = searchParams.get("locale")?.trim() || DEFAULT_LOCALE;
+    if (!isSupportedLocale(requestedLocale)) {
+      return NextResponse.json({ error: "Unsupported locale" }, { status: 400 });
+    }
+    const locale = requestedLocale;
     const cityName = searchParams.get("city")?.trim() || undefined;
     const countryName = cityName ? undefined : searchParams.get("country")?.trim() || undefined;
     const continentName = cityName || countryName
@@ -23,7 +29,7 @@ export async function GET(request: Request) {
       namespace: "app-data",
       limit: 120,
       windowMs: 60_000,
-      keyParts: [cityName, countryName, continentName],
+      keyParts: [locale, cityName, countryName, continentName],
     });
 
     if (!rateLimit.allowed) {
@@ -31,11 +37,12 @@ export async function GET(request: Request) {
     }
 
     const [continents, guides] = await Promise.all([
-      getContinentsWithDestinationDescriptions({ forceDatabase: true }),
+      getContinentsWithDestinationDescriptions({ forceDatabase: true, locale }),
       getServerEditorialGuides({
         cityName,
         countryName,
         continentName,
+        locale,
         bypassCache: Boolean(cityName || countryName || continentName),
       }),
     ]);
@@ -46,7 +53,7 @@ export async function GET(request: Request) {
 
     return withRateLimitHeaders(
       NextResponse.json(
-        { continents, guides },
+        { continents, guides, locale },
         {
           headers: {
             "Cache-Control": cacheControl,

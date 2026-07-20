@@ -1,13 +1,15 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { getLocalePublicationState } from "@/lib/i18n/server";
 
-export const metadata: Metadata = {
-  title: "About RGuide Travel",
-  description: "Learn how RGuide Travel organizes curated city travel guides by city, neighborhood, and trip context.",
-  alternates: {
-    canonical: "/about",
-  },
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const spanish = await getLocalePublicationState("es");
+  return {
+    title: "About RGuide Travel",
+    description: "Learn how RGuide Travel organizes curated city travel guides by city, neighborhood, and trip context.",
+    alternates: { canonical: "/about", languages: spanish.indexable ? { en: "/about", es: "/es/acerca-de", "x-default": "/about" } : undefined },
+  };
+}
 
 export default function AboutPage() {
   return (

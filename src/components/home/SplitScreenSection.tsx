@@ -139,20 +139,27 @@ import { getGuideCrossLinkGroups } from "@/lib/guide-cross-links";
 import { buildAgodaStaySearchUrl, buildStay22DestinationUrl, shouldUseAgodaForStay } from "@/lib/stay22";
 import {
   CityDeepLinkState,
-  getCanonicalCityCategoryPath,
-  getCanonicalCityNeighborhoodPath,
-  getCanonicalCityPath,
-  getCanonicalContinentPath,
-  getCanonicalCountryPath,
-  getCanonicalGuidePath,
   getGuideLastModified,
   isIndexableEditorialGuide,
   resolveContinentDeepLink,
   resolveCountryDeepLink,
   resolveCityDeepLink,
 } from "@/lib/deep-link-routes";
+import { ROUTE_SEGMENTS, type AppLocale } from "@/lib/i18n/config";
+import { getDictionary } from "@/lib/i18n/dictionaries";
+import { resolveLocalizedCityDeepLink } from "@/lib/i18n/deep-link-routes";
+import type { DestinationRouteTranslation } from "@/lib/i18n/types";
+import {
+  getLocalizedCityCategoryPath,
+  getLocalizedCityNeighborhoodPath,
+  getLocalizedCityPath,
+  getLocalizedContinentPath,
+  getLocalizedCountryPath,
+  getLocalizedGuidePath,
+} from "@/lib/i18n/paths";
 import { getSupabaseBrowserClient } from "@/lib/supabase/client";
 import { updateSupabaseProfile, updateSupabaseProfileVisibility } from "@/lib/supabase/profile";
+import { slugify } from "@/lib/utils";
 import { getEditorialLists, useAppStore } from "@/store/app-store";
 import type { FavoriteLocation } from "@/store/app-store";
 import { Continent, ListCategory, MapList, SelectionState } from "@/types";
@@ -165,6 +172,8 @@ export interface SplitScreenSectionProps {
     h1: string;
     intro: string;
   };
+  locale?: AppLocale;
+  destinationTranslations?: DestinationRouteTranslation[];
   publicProfile?: {
     creator: {
       id: string;
@@ -584,9 +593,15 @@ export function SplitScreenSection({
   initialEditorialGuides = [],
   initialRouteState,
   seoContent,
+  locale = "en",
+  destinationTranslations = [],
   publicProfile,
   onGuideDataRequested,
 }: SplitScreenSectionProps) {
+  const dictionary = getDictionary(locale);
+  const browseLabels = dictionary.browse;
+  const getCategoryLabel = (category: ListCategory) => dictionary.categories[category];
+
   useEffect(() => {
     document.documentElement.classList.remove("rguide-hydration-timeout");
     document.documentElement.classList.add("rguide-split-screen-ready");
@@ -622,6 +637,54 @@ export function SplitScreenSection({
   const activeEditorialLists = useMemo(
     () => getEditorialLists(hydratedEditorialLists),
     [hydratedEditorialLists],
+  );
+  const getDestinationTranslation = (
+    destination: { id?: string; name: string },
+    scope: DestinationRouteTranslation["scope"],
+  ) => destinationTranslations.find(
+    (translation) =>
+      translation.scope === scope &&
+      (translation.legacyId === destination.id || translation.sourceName === destination.name),
+  );
+  const getRouteCityPath = (city: Parameters<typeof getLocalizedCityPath>[1] & { id?: string }) =>
+    getLocalizedCityPath(locale, city, getDestinationTranslation(city, "city")?.slug);
+  const getRouteCountryPath = (country: Parameters<typeof getLocalizedCountryPath>[1] & { id?: string }) =>
+    getLocalizedCountryPath(locale, country, getDestinationTranslation(country, "country")?.slug);
+  const getRouteContinentPath = (continent: Parameters<typeof getLocalizedContinentPath>[1] & { id?: string }) =>
+    getLocalizedContinentPath(locale, continent, getDestinationTranslation(continent, "continent")?.slug);
+  const getRouteNeighborhoodPath = (
+    city: Parameters<typeof getLocalizedCityNeighborhoodPath>[1],
+    neighborhood: Parameters<typeof getLocalizedCityNeighborhoodPath>[2],
+  ) => getLocalizedCityNeighborhoodPath(
+    locale,
+    city,
+    neighborhood,
+    getDestinationTranslation(city, "city")?.slug,
+    getDestinationTranslation(neighborhood, "neighborhood")?.slug,
+  );
+  const getRouteCategoryPath = (
+    city: Parameters<typeof getLocalizedCityCategoryPath>[1],
+    category: Parameters<typeof getLocalizedCityCategoryPath>[2],
+    neighborhood?: Parameters<typeof getLocalizedCityCategoryPath>[3],
+  ) => getLocalizedCityCategoryPath(
+    locale,
+    city,
+    category,
+    neighborhood,
+    getDestinationTranslation(city, "city")?.slug,
+    neighborhood ? getDestinationTranslation(neighborhood, "neighborhood")?.slug : undefined,
+  );
+  const getRouteGuidePath = (
+    city: Parameters<typeof getLocalizedGuidePath>[1],
+    guide: Parameters<typeof getLocalizedGuidePath>[2],
+    neighborhood?: Parameters<typeof getLocalizedGuidePath>[3],
+  ) => getLocalizedGuidePath(
+    locale,
+    city,
+    guide,
+    neighborhood,
+    getDestinationTranslation(city, "city")?.slug,
+    neighborhood ? getDestinationTranslation(neighborhood, "neighborhood")?.slug : undefined,
   );
   const {
     selection,
@@ -996,7 +1059,10 @@ export function SplitScreenSection({
 
   useEffect(() => {
     const handlePopState = () => {
-      const routeSegments = window.location.pathname.split("/").filter(Boolean);
+      const rawRouteSegments = window.location.pathname.split("/").filter(Boolean);
+      const routeSegments = locale === "es" && rawRouteSegments[0] === "es"
+        ? rawRouteSegments.slice(1)
+        : rawRouteSegments;
       if (!routeSegments.length) {
         setIsLocationFavoritesRailActive(false);
         setSelection({});
@@ -1009,8 +1075,15 @@ export function SplitScreenSection({
         return;
       }
 
-      if (routeSegments[0] === "continent") {
-        const route = resolveContinentDeepLink(routeSegments.slice(1), {
+      if (routeSegments[0] === ROUTE_SEGMENTS[locale].continent) {
+        const translated = locale === "es"
+          ? destinationTranslations.find(
+              (translation) => translation.scope === "continent" && translation.slug === routeSegments[1],
+            )
+          : undefined;
+        const contentSegments = routeSegments.slice(1);
+        if (translated) contentSegments[0] = slugify(translated.sourceName);
+        const route = resolveContinentDeepLink(contentSegments, {
           continents,
         });
         if (!route) {
@@ -1028,8 +1101,15 @@ export function SplitScreenSection({
         return;
       }
 
-      if (routeSegments[0] === "country") {
-        const route = resolveCountryDeepLink(routeSegments.slice(1), {
+      if (routeSegments[0] === ROUTE_SEGMENTS[locale].country) {
+        const translated = locale === "es"
+          ? destinationTranslations.find(
+              (translation) => translation.scope === "country" && translation.slug === routeSegments[1],
+            )
+          : undefined;
+        const contentSegments = routeSegments.slice(1);
+        if (translated) contentSegments[0] = slugify(translated.sourceName);
+        const route = resolveCountryDeepLink(contentSegments, {
           continents,
         });
         if (!route) {
@@ -1047,13 +1127,16 @@ export function SplitScreenSection({
         return;
       }
 
-      if (routeSegments[0] !== "city") {
+      if (routeSegments[0] !== ROUTE_SEGMENTS[locale].city) {
         return;
       }
-      const route = resolveCityDeepLink(routeSegments.slice(1), {
-        continents,
-        guides: activeEditorialLists,
-      });
+      const route = locale === "es"
+        ? resolveLocalizedCityDeepLink(locale, routeSegments.slice(1), {
+            continents,
+            guides: activeEditorialLists,
+            destinationTranslations,
+          })
+        : resolveCityDeepLink(routeSegments.slice(1), { continents, guides: activeEditorialLists });
       if (!route) {
         return;
       }
@@ -1078,7 +1161,7 @@ export function SplitScreenSection({
 
     window.addEventListener("popstate", handlePopState);
     return () => window.removeEventListener("popstate", handlePopState);
-  }, [activeEditorialLists, continents]);
+  }, [activeEditorialLists, continents, destinationTranslations, locale]);
 
   useEffect(() => {
     setProfileNameDraft(currentUser?.name ?? "");
@@ -1350,7 +1433,7 @@ export function SplitScreenSection({
     if (!context) {
       return null;
     }
-    return getCanonicalGuidePath(context.city, guide, getGuideRouteNeighborhood(context.city, guide), activeEditorialLists);
+    return getRouteGuidePath(context.city, guide, getGuideRouteNeighborhood(context.city, guide));
   };
   const getCurrentCityRoutePath = (categoryOverride: ListCategory | null = activeCategory) => {
     const context = getCityRouteContext(selection);
@@ -1358,12 +1441,12 @@ export function SplitScreenSection({
       return null;
     }
     if (categoryOverride) {
-      return getCanonicalCityCategoryPath(context.city, categoryOverride, context.neighborhood);
+      return getRouteCategoryPath(context.city, categoryOverride, context.neighborhood);
     }
     if (context.neighborhood) {
-      return getCanonicalCityNeighborhoodPath(context.city, context.neighborhood);
+      return getRouteNeighborhoodPath(context.city, context.neighborhood);
     }
-    return getCanonicalCityPath(context.city);
+    return getRouteCityPath(context.city);
   };
   const normalizeRoutePlaceName = (value?: string | null) =>
     (value ?? "")
@@ -1406,7 +1489,7 @@ export function SplitScreenSection({
     setSelection(() => ({ continentId }));
     const continent = continents.find((item) => item.id === continentId);
     if (continent) {
-      pushExplorerPath(getCanonicalContinentPath(continent));
+      pushExplorerPath(getRouteContinentPath(continent));
     }
   };
   const handleResetToGlobalView = () => {
@@ -1512,7 +1595,7 @@ export function SplitScreenSection({
       setExpandedGuideId(null);
       clearCategoryBeforeGuideExpand();
       setClosingGuide(null);
-      pushExplorerPath(getCanonicalCountryPath(country));
+      pushExplorerPath(getRouteCountryPath(country));
     }
   };
   const handleSelectContinentFromGlobal = (
@@ -1690,7 +1773,7 @@ export function SplitScreenSection({
       setExpandedGuideId(null);
       clearCategoryBeforeGuideExpand();
       setClosingGuide(null);
-      pushExplorerPath(getCanonicalCityPath(city));
+      pushExplorerPath(getRouteCityPath(city));
     }
   };
   const handleMapViewportSelection = ({
@@ -1822,10 +1905,10 @@ export function SplitScreenSection({
     if (context) {
       const nextPath =
         activeCategory && context.neighborhood
-          ? getCanonicalCityCategoryPath(context.city, activeCategory, context.neighborhood)
+          ? getRouteCategoryPath(context.city, activeCategory, context.neighborhood)
           : context.neighborhood
-            ? getCanonicalCityNeighborhoodPath(context.city, context.neighborhood)
-            : getCanonicalCityPath(context.city);
+            ? getRouteNeighborhoodPath(context.city, context.neighborhood)
+            : getRouteCityPath(context.city);
       pushExplorerPath(nextPath);
     }
   };
@@ -1869,10 +1952,10 @@ export function SplitScreenSection({
     if (context) {
       const nextPath =
         activeCategory && context.neighborhood
-          ? getCanonicalCityCategoryPath(context.city, activeCategory, context.neighborhood)
+          ? getRouteCategoryPath(context.city, activeCategory, context.neighborhood)
           : context.neighborhood
-            ? getCanonicalCityNeighborhoodPath(context.city, context.neighborhood)
-            : getCanonicalCityPath(context.city);
+            ? getRouteNeighborhoodPath(context.city, context.neighborhood)
+            : getRouteCityPath(context.city);
       pushExplorerPath(nextPath);
     }
   };
@@ -2420,9 +2503,9 @@ export function SplitScreenSection({
 
     const context = getCityRouteContext(location.selection);
     if (context?.neighborhood) {
-      pushExplorerPath(getCanonicalCityNeighborhoodPath(context.city, context.neighborhood));
+      pushExplorerPath(getRouteNeighborhoodPath(context.city, context.neighborhood));
     } else if (context?.city) {
-      pushExplorerPath(getCanonicalCityPath(context.city));
+      pushExplorerPath(getRouteCityPath(context.city));
     }
   };
   const activeCountryCities = useMemo(
@@ -3385,20 +3468,22 @@ export function SplitScreenSection({
   const visibleSubcategoryOptions = visibleSubcategoryCategory
     ? categorySubcategoriesByScope[subcategoryScope][visibleSubcategoryCategory]
     : [];
-  const categoryTitleLabel = activeCategoryOption?.label ?? hoveredCategoryLabel ?? "Categories";
+  const categoryTitleLabel = activeCategory
+    ? getCategoryLabel(activeCategory)
+    : hoveredCategoryLabel ?? browseLabels.categories;
   const guideSourceSelectors = [
-    { id: "all-guides" as const, label: "All guides", shortLabel: "All", icon: null },
-    { id: "r-guides" as const, label: "R guides", shortLabel: "R", icon: null },
-    { id: "user-guides" as const, label: "User guides", shortLabel: "User", icon: MaterialPerson },
-    { id: "favorites" as const, label: "Favorites", shortLabel: "Fav", icon: MaterialFavorite },
+    { id: "all-guides" as const, label: browseLabels.allGuides, shortLabel: browseLabels.all, icon: null },
+    { id: "r-guides" as const, label: browseLabels.rGuides, shortLabel: "R", icon: null },
+    { id: "user-guides" as const, label: browseLabels.userGuides, shortLabel: browseLabels.user, icon: MaterialPerson },
+    { id: "favorites" as const, label: browseLabels.favorites, shortLabel: browseLabels.favorite, icon: MaterialFavorite },
   ];
   const visibleGuideSourceSelectors = isProfileMode
     ? guideSourceSelectors.filter((selector) => selector.id !== "r-guides")
     : guideSourceSelectors;
   const guideActionSelectors = [
-    { id: "all-guides" as const, label: "Guides", shortLabel: "Guide", icon: MaterialMap },
-    { id: "week-events" as const, label: "Events", shortLabel: "Events", icon: MaterialCalendarMonth },
-    { id: "itinerary" as const, label: "Journeys", shortLabel: "Journey", icon: MaterialRoute },
+    { id: "all-guides" as const, label: browseLabels.guides, shortLabel: browseLabels.guide, icon: MaterialMap },
+    { id: "week-events" as const, label: browseLabels.events, shortLabel: browseLabels.events, icon: MaterialCalendarMonth },
+    { id: "itinerary" as const, label: browseLabels.journeys, shortLabel: browseLabels.journey, icon: MaterialRoute },
   ];
   const visibleGuideActionSelectors = guideActionSelectors;
   const guideActionActiveStyles = {
@@ -3432,18 +3517,18 @@ export function SplitScreenSection({
   const activeGuideActionSelector =
     guideActionSelectors.find((selector) => selector.id === activeGuideRail) ?? null;
   const sourceTitlePrefixById = {
-    "all-guides": "All",
+    "all-guides": browseLabels.all,
     "r-guides": "R",
-    "user-guides": "User",
-    favorites: "Favorite",
+    "user-guides": browseLabels.user,
+    favorites: browseLabels.favorite,
   } as const;
   const sourceControlLabelById = {
-    "all-guides": "All",
+    "all-guides": browseLabels.all,
     "r-guides": "R",
-    "user-guides": "User",
-    favorites: "Favorite",
+    "user-guides": browseLabels.user,
+    favorites: browseLabels.favorite,
   } as const;
-  const menuBarTitleLabel = `${sourceTitlePrefixById[activeGuideSourceSelector.id]} ${activeGuideActionSelector?.label ?? "Entries"}`;
+  const menuBarTitleLabel = `${sourceTitlePrefixById[activeGuideSourceSelector.id]} ${activeGuideActionSelector?.label ?? browseLabels.entries}`;
   const desktopGuideLocationLabel =
     activeLocation.nestedSubarea?.name ??
     activeLocation.subarea?.name ??
@@ -3452,11 +3537,11 @@ export function SplitScreenSection({
     activeCountrySubarea?.name ??
     activeLocation.country?.name ??
     activeLocation.continent?.name ??
-    "World";
+    browseLabels.world;
   const desktopMenuBarTitleLabel = [
     formatBreadcrumbName(desktopGuideLocationLabel),
-    activeCategoryOption?.label,
-    activeGuideActionSelector?.label ?? "Entries",
+    activeCategory ? getCategoryLabel(activeCategory) : undefined,
+    activeGuideActionSelector?.label ?? browseLabels.entries,
   ]
     .filter(Boolean)
     .join(" ");
@@ -3808,11 +3893,10 @@ export function SplitScreenSection({
       title: group.title,
       links: group.guides.map((guide) => ({
         id: guide.id,
-        href: getCanonicalGuidePath(
+        href: getRouteGuidePath(
           { name: guide.location.city ?? displayedGuide.location.city ?? "" },
           guide,
           guide.location.neighborhood ? { name: guide.location.neighborhood } : undefined,
-          activeEditorialLists,
         ),
         title: guide.title,
         category: guide.category,
@@ -3821,7 +3905,7 @@ export function SplitScreenSection({
           : `${guide.category} across ${guide.location.city ?? displayedGuide.location.city ?? "the city"}`,
       })),
     }));
-  }, [activeEditorialLists, displayedGuide]);
+  }, [activeEditorialLists, displayedGuide, locale]);
   const displayedCitywideGuideLinks = useMemo<GuideCrossLink[]>(() => {
     const cityName = displayedGuide?.location.city?.trim();
     if (!displayedGuide || !cityName) {
@@ -3851,12 +3935,12 @@ export function SplitScreenSection({
       )
       .map((guide) => ({
         id: guide.id,
-        href: getCanonicalGuidePath({ name: cityName }, guide, undefined, activeEditorialLists),
+        href: getRouteGuidePath({ name: cityName }, guide),
         title: guide.title,
         category: guide.category,
         context: `${guide.category} across ${cityName}`,
       }));
-  }, [activeEditorialLists, displayedGuide]);
+  }, [activeEditorialLists, displayedGuide, locale]);
   const activeMapGuide = isProfileSubmitLayout
     ? profileSubmissionPreviewList
     : expandedGuide;
@@ -5308,11 +5392,17 @@ export function SplitScreenSection({
     }
 
     const guidePath = getGuideCanonicalRoutePath(nextGuide);
+    const guidePathSegments = guidePath?.split("/").filter(Boolean) ?? [];
     const route = guidePath
-      ? resolveCityDeepLink(guidePath.split("/").filter(Boolean).slice(1), {
-          continents,
-          guides: activeEditorialLists,
-        })
+      ? locale === "es"
+        ? resolveLocalizedCityDeepLink(locale, guidePathSegments.slice(2), {
+            continents,
+            guides: activeEditorialLists,
+          })
+        : resolveCityDeepLink(guidePathSegments.slice(1), {
+            continents,
+            guides: activeEditorialLists,
+          })
       : null;
     const nextGuideSource = nextGuide.creator.name.startsWith("R ") ? "r-guides" : "user-guides";
     const selectionWillChange = route
@@ -6295,6 +6385,8 @@ export function SplitScreenSection({
                   >
                     {isMobileExplorerSearchOpen ? (
                       <SearchBar
+                        locale={locale}
+                        destinationTranslations={destinationTranslations}
                         autoFocus
                         compact
                         embedded
@@ -6388,8 +6480,8 @@ export function SplitScreenSection({
                           handleResetToGlobalView();
                         }}
                         className="flex h-8 w-8 shrink-0 items-center justify-center overflow-hidden rounded-full border border-slate-200 bg-white/95 text-slate-800 shadow-[0_8px_18px_rgba(15,23,42,0.08)] transition hover:border-slate-300 focus-visible:ring-2 focus-visible:ring-orange-500/50"
-                        aria-label="Return to global view"
-                        title="Global view"
+                        aria-label={browseLabels.returnToGlobalView}
+                        title={browseLabels.globalView}
                       >
                         <video
                           muted
@@ -6406,9 +6498,9 @@ export function SplitScreenSection({
                       </button>
                     ) : null}
 		                <MobileBrowseSelect
-		                  label="Select continent"
+		                  label={browseLabels.selectContinent}
 		                  value={selection.continentId ?? ""}
-		                  placeholder="Browse destinations"
+		                  placeholder={browseLabels.browseDestinations}
 		                  forceIconButton
 		                  centeredMenu
 		                  showPlaceholderOption={false}
@@ -6439,12 +6531,12 @@ export function SplitScreenSection({
 
 	                {activeLocation.continent ? (
 	                  <MobileBrowseSelect
-		                    label="Select country"
+		                    label={browseLabels.selectCountry}
 			                    value={selection.countryId ?? (mobileAllSelection.country ? MOBILE_ALL_COUNTRIES_VALUE : "")}
-			                    placeholder="Select country"
+			                    placeholder={browseLabels.selectCountry}
 			                    showPlaceholderOption={false}
 			                    options={[
-			                      { value: MOBILE_ALL_COUNTRIES_VALUE, label: "All countries" },
+			                      { value: MOBILE_ALL_COUNTRIES_VALUE, label: browseLabels.allCountries },
 			                      ...activeLocation.continent.countries
 		                        .slice()
 		                        .sort((left, right) => left.name.localeCompare(right.name))
@@ -6480,12 +6572,12 @@ export function SplitScreenSection({
 
 	                {activeLocation.country && activeCountrySubareas.length ? (
 	                  <MobileBrowseSelect
-	                    label="Select region"
+	                    label={browseLabels.selectRegion}
 		                    value={selection.countrySubareaId ?? (mobileAllSelection.region ? MOBILE_ALL_REGIONS_VALUE : "")}
-		                    placeholder="All regions"
+		                    placeholder={browseLabels.allRegions}
 		                    showPlaceholderOption={false}
 		                    options={[
-		                      { value: MOBILE_ALL_REGIONS_VALUE, label: "All regions" },
+		                      { value: MOBILE_ALL_REGIONS_VALUE, label: browseLabels.allRegions },
 		                      ...activeCountrySubareas
 		                        .slice()
 		                        .sort((left, right) => left.name.localeCompare(right.name))
@@ -6585,12 +6677,12 @@ export function SplitScreenSection({
 
 	                {activeLocation.country && activeCountryCities.length ? (
 		                  <MobileBrowseSelect
-		                    label="Select city"
+		                    label={browseLabels.selectCity}
 			                    value={selection.cityId ?? (mobileAllSelection.city ? MOBILE_ALL_CITIES_VALUE : "")}
-			                    placeholder="All cities"
+			                    placeholder={browseLabels.allCities}
 		                    showPlaceholderOption={false}
 		                    options={[
-		                      { value: MOBILE_ALL_CITIES_VALUE, label: "All cities" },
+		                      { value: MOBILE_ALL_CITIES_VALUE, label: browseLabels.allCities },
 		                      ...activeCountryCities
 		                        .slice()
 		                        .sort((left, right) => left.name.localeCompare(right.name))
@@ -6648,12 +6740,12 @@ export function SplitScreenSection({
 
 	                {activeLocation.city && cityListItems.length ? (
 	                  <MobileBrowseSelect
-	                    label="Select neighborhood"
+	                    label={browseLabels.selectNeighborhood}
 		                    value={selection.nestedSubareaId ?? selection.subareaId ?? (mobileAllSelection.neighborhood ? MOBILE_ALL_NEIGHBORHOODS_VALUE : "")}
-		                    placeholder="All neighborhoods"
+		                    placeholder={browseLabels.allNeighborhoods}
 		                    showPlaceholderOption={false}
 		                    options={[
-		                      { value: MOBILE_ALL_NEIGHBORHOODS_VALUE, label: "All neighborhoods" },
+		                      { value: MOBILE_ALL_NEIGHBORHOODS_VALUE, label: browseLabels.allNeighborhoods },
 		                      ...rankedCityListItems.map((item) => ({
 			                        value: item.id,
 			                        label: formatBreadcrumbName(item.name),
@@ -7645,9 +7737,9 @@ export function SplitScreenSection({
                     }}
                   >
                   <MobileBrowseSelect
-                    label="Select continent"
+                    label={browseLabels.selectContinent}
                     value={selection.continentId ?? ""}
-                    placeholder="Browse destinations"
+                    placeholder={browseLabels.browseDestinations}
                     options={continents.map((continent) => ({
                       value: continent.id,
                       label: continent.name,
@@ -7663,9 +7755,9 @@ export function SplitScreenSection({
 
                   {activeLocation.continent ? (
                     <MobileBrowseSelect
-                      label="Select country"
+                      label={browseLabels.selectCountry}
                       value={selection.countryId ?? ""}
-                      placeholder="Select country"
+                      placeholder={browseLabels.selectCountry}
                       options={activeLocation.continent.countries
                         .slice()
                         .sort((left, right) => left.name.localeCompare(right.name))
@@ -7685,9 +7777,9 @@ export function SplitScreenSection({
 
                   {activeLocation.country && activeCountrySubareas.length ? (
                     <MobileBrowseSelect
-                      label="Select region"
+                      label={browseLabels.selectRegion}
                       value={selection.countrySubareaId ?? ""}
-                      placeholder="All regions"
+                      placeholder={browseLabels.allRegions}
                       options={activeCountrySubareas
                         .slice()
                         .sort((left, right) => left.name.localeCompare(right.name))
@@ -7711,9 +7803,9 @@ export function SplitScreenSection({
 
                   {activeLocation.country && activeCountryStates.length ? (
                     <MobileBrowseSelect
-                      label={`Select ${countryStateLabelLower}`}
+                      label={locale === "es" ? browseLabels.selectRegion : `Select ${countryStateLabelLower}`}
                       value={selection.stateId ?? ""}
-                      placeholder={`All ${countryStateLabelLower}`}
+                      placeholder={locale === "es" ? browseLabels.allRegions : `All ${countryStateLabelLower}`}
                       options={activeCountryStates
                         .slice()
                         .sort((left, right) => left.name.localeCompare(right.name))
@@ -7747,9 +7839,9 @@ export function SplitScreenSection({
 
                   {activeLocation.country && activeCountryCities.length ? (
                     <MobileBrowseSelect
-                      label="Select city"
+                      label={browseLabels.selectCity}
                       value={selection.cityId ?? ""}
-                      placeholder="Select city"
+                      placeholder={browseLabels.selectCity}
                       options={activeCountryCities
                         .slice()
                         .sort((left, right) => left.name.localeCompare(right.name))
@@ -7782,9 +7874,9 @@ export function SplitScreenSection({
 
                   {activeLocation.city && cityListItems.length ? (
                     <MobileBrowseSelect
-                      label="Select neighborhood"
+                      label={browseLabels.selectNeighborhood}
                       value={selection.nestedSubareaId ?? selection.subareaId ?? ""}
-                      placeholder="All neighborhoods"
+                      placeholder={browseLabels.allNeighborhoods}
                       options={rankedCityListItems.map((item) => ({
                         value: item.id,
                         label: formatBreadcrumbName(item.name),
@@ -8897,7 +8989,7 @@ export function SplitScreenSection({
                               "--category-color": CATEGORY_STYLES[option.category].mapColor,
                               transitionDelay: `${index * 18}ms`,
                             } as React.CSSProperties}
-                            aria-label={isActive ? `Clear ${option.label}` : option.label}
+                            aria-label={isActive ? `Clear ${getCategoryLabel(option.category)}` : getCategoryLabel(option.category)}
                             aria-pressed={isActive}
                           >
                             <option.icon className="h-4 w-4" />
@@ -8931,7 +9023,7 @@ export function SplitScreenSection({
                           : "#f05232",
                       }}
                       role="toolbar"
-                      aria-label="Menu bar"
+                      aria-label={browseLabels.menuBar}
                     >
                       <div className="relative h-[5rem]">
                         <div
@@ -8957,8 +9049,8 @@ export function SplitScreenSection({
                                     ? "border-white/25 text-white hover:border-[#f05232] hover:bg-white/[0.06]"
                                     : "cursor-not-allowed border-white/10 text-white/25"
                                 }`}
-                                aria-label={canCreateStandaloneProfileEntry ? "Create guide" : "Create guide unavailable"}
-                                title={canCreateStandaloneProfileEntry ? "Create guide" : standaloneCreateDisabledTitle}
+                                aria-label={canCreateStandaloneProfileEntry ? browseLabels.createGuide : browseLabels.createGuideUnavailable}
+                                title={canCreateStandaloneProfileEntry ? browseLabels.createGuide : standaloneCreateDisabledTitle}
                               >
                                 <Plus className="h-4 w-4" />
                               </button>
@@ -8966,7 +9058,7 @@ export function SplitScreenSection({
                             <div
                               className="flex h-9 shrink-0 items-stretch overflow-hidden border-b-2 border-[#f05232] transition-[width] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)]"
                               role="group"
-                              aria-label="Guide source"
+                              aria-label={browseLabels.guideSource}
                             >
                               {visibleGuideSourceSelectors.map((selector) => {
                                 const isActive = activeGuideSource === selector.id;
@@ -9008,7 +9100,7 @@ export function SplitScreenSection({
                                   : "rgba(255,255,255,0.25)",
                               }}
                               role="group"
-                              aria-label="Entry type"
+                              aria-label={browseLabels.entryType}
                             >
                               {visibleGuideActionSelectors.map((selector) => {
                                 const isActive = activeGuideRail === selector.id;
@@ -9054,8 +9146,8 @@ export function SplitScreenSection({
                                 setIsDesktopSearchOpen(true);
                               }}
                               className="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-sm border border-white/25 bg-white/[0.035] text-white transition hover:border-[#f05232] hover:bg-white/[0.07] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/50"
-                              aria-label="Open search"
-                              title="Search"
+                              aria-label={browseLabels.openSearch}
+                              title={browseLabels.search}
                             >
                               <Search className="h-4 w-4" />
                             </button>
@@ -9071,6 +9163,8 @@ export function SplitScreenSection({
                           aria-hidden={!isDesktopSearchOpen}
                         >
                           <SearchBar
+                            locale={locale}
+                            destinationTranslations={destinationTranslations}
                             key={isDesktopSearchOpen ? "desktop-search-open" : "desktop-search-closed"}
                             autoFocus={isDesktopSearchOpen}
                             compact
@@ -9084,8 +9178,8 @@ export function SplitScreenSection({
                             type="button"
                             onClick={() => setIsDesktopSearchOpen(false)}
                             className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-sm border border-transparent bg-transparent text-black transition hover:bg-slate-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-400/70"
-                            aria-label="Close search"
-                            title="Close search"
+                            aria-label={browseLabels.closeSearch}
+                            title={browseLabels.closeSearch}
                             tabIndex={isDesktopSearchOpen ? 0 : -1}
                           >
                             <X className="h-5 w-5 text-black" />
@@ -9116,14 +9210,14 @@ export function SplitScreenSection({
                                       key={option.label}
                                       type="button"
                                       onClick={() => handleCategoryToggle(option.category)}
-                                      onMouseEnter={() => setHoveredCategoryLabel(option.label)}
+                                      onMouseEnter={() => setHoveredCategoryLabel(getCategoryLabel(option.category))}
                                       onMouseLeave={() => setHoveredCategoryLabel(null)}
                                       className={`group relative flex h-12 min-w-0 flex-1 items-center justify-center gap-1.5 overflow-hidden border-r border-slate-950/12 px-0.5 outline-none transition-[color,border-color] duration-200 focus:outline-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-slate-950/60 ${
                                         isActive
                                           ? "text-white"
                                           : "bg-transparent text-slate-950 hover:bg-white/80"
                                       }`}
-                                      aria-label={option.label}
+                                      aria-label={getCategoryLabel(option.category)}
                                       aria-pressed={isActive}
                                     >
                                       <span
@@ -9135,7 +9229,7 @@ export function SplitScreenSection({
                                       />
                                       <option.icon className="relative z-10 h-[18px] w-[18px] shrink-0" />
                                       <span className="relative z-10 min-w-0 whitespace-nowrap text-[8.5px] font-bold uppercase tracking-[0]">
-                                        {option.label}
+                                        {getCategoryLabel(option.category)}
                                       </span>
                                       {!isActive ? (
                                         <span
@@ -10792,8 +10886,8 @@ export function SplitScreenSection({
                         style={{
                           "--category-color": CATEGORY_STYLES[option.category].mapColor,
                         } as React.CSSProperties}
-                        aria-label={option.label}
-                        title={option.label}
+                        aria-label={getCategoryLabel(option.category)}
+                        title={getCategoryLabel(option.category)}
                       >
                         <option.icon className="h-4 w-4" />
                       </button>
