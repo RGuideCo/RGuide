@@ -5,12 +5,13 @@ import process from "node:process";
 import {
   assertCompletedTranslation,
   assertSourceIdentity,
+  hydrateTranslatedItem,
   readTranslationBatch,
   translationWorkload,
 } from "./translation-batch-utils.mjs";
 
 function parseOptions(argv) {
-  const options = { batch: null, shards: 5, inputPrefix: null, output: null };
+  const options = { batch: null, shards: 10, inputPrefix: null, output: null };
   for (let index = 0; index < argv.length; index += 1) {
     const value = argv[index];
     if (value === "--batch") options.batch = argv[++index];
@@ -46,8 +47,9 @@ function main() {
       const sourceItem = sourceItems.get(item.jobId);
       if (!sourceItem) throw new Error(`Unknown translated job ${item.jobId}.`);
       assertSourceIdentity(sourceItem, item);
-      assertCompletedTranslation(item);
-      translatedItems.set(item.jobId, item);
+      const hydratedItem = hydrateTranslatedItem(sourceItem, item);
+      assertCompletedTranslation(hydratedItem);
+      translatedItems.set(item.jobId, hydratedItem);
     }
   }
   if (translatedItems.size !== batch.items.length) {

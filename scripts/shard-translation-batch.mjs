@@ -2,15 +2,20 @@ import fs from "node:fs";
 import path from "node:path";
 import process from "node:process";
 
-import { readTranslationBatch, translationWorkload } from "./translation-batch-utils.mjs";
+import {
+  compactTranslationItem,
+  readTranslationBatch,
+  translationWorkload,
+} from "./translation-batch-utils.mjs";
 
 function parseOptions(argv) {
-  const options = { batch: null, shards: 5, outputPrefix: null };
+  const options = { batch: null, shards: 10, outputPrefix: null, compact: true };
   for (let index = 0; index < argv.length; index += 1) {
     const value = argv[index];
     if (value === "--batch") options.batch = argv[++index];
     else if (value === "--shards") options.shards = Number.parseInt(argv[++index], 10);
     else if (value === "--output-prefix") options.outputPrefix = argv[++index];
+    else if (value === "--full") options.compact = false;
     else throw new Error(`Unknown argument: ${value}`);
   }
   if (!options.batch) throw new Error("Set --batch.");
@@ -43,8 +48,9 @@ function main() {
     fs.mkdirSync(path.dirname(path.resolve(output)), { recursive: true });
     fs.writeFileSync(output, `${JSON.stringify({
       ...batch,
+      format: options.compact ? "compact-translation-shard-v1" : "full-translation-shard-v1",
       shard: { index: bin.index + 1, total: options.shards, workload: bin.workload },
-      items: bin.items,
+      items: options.compact ? bin.items.map(compactTranslationItem) : bin.items,
     }, null, 2)}\n`);
     return { output, items: bin.items.length, workload: bin.workload };
   });

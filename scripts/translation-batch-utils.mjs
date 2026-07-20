@@ -12,18 +12,44 @@ export function readTranslationBatch(filePath) {
 }
 
 export function translationWorkload(item) {
-  if (item.entityType === "entry") return 1 + (item.input?.normalizedStops?.length ?? 0);
+  const source = item.input ?? item.source;
+  if (item.entityType === "entry") return 1 + (source?.normalizedStops?.length ?? 0);
   if (item.entityType === "event") {
-    return 1 + (item.input?.activations?.length ?? 0) + (item.input?.occurrences?.length ?? 0);
+    return 1 + (source?.activations?.length ?? 0) + (source?.occurrences?.length ?? 0);
   }
   if (item.entityType === "destination") {
-    const destination = item.input?.destination;
+    const destination = source?.destination;
     return 1 + (destination?.descriptions?.length ?? 0) + (destination?.insights ?? []).reduce(
       (total, insight) => total + 1 + (insight.chips?.length ?? 0) + (insight.notes?.length ?? 0),
       0,
     );
   }
   throw new Error(`Unsupported translation entity type: ${item.entityType}.`);
+}
+
+export function compactTranslationItem(item) {
+  const common = {
+    jobId: item.jobId,
+    entityType: item.entityType,
+    entityId: item.entityId,
+    locale: item.locale,
+    sourceHash: item.sourceHash,
+    translation: item.translation,
+  };
+  if (item.entityType === "entry") {
+    return {
+      ...common,
+      source: {
+        guide: item.input.guide,
+        normalizedStops: (item.input.normalizedStops ?? []).map((stop) => ({
+          entryStopId: stop.entryStopId,
+          name: stop.name,
+          description: stop.description,
+        })),
+      },
+    };
+  }
+  return { ...common, source: item.input };
 }
 
 function assertText(value, label) {
@@ -149,7 +175,32 @@ export function assertSourceIdentity(sourceItem, translatedItem) {
   for (const field of ["jobId", "entityType", "entityId", "locale", "sourceHash"]) {
     if (translatedItem[field] !== sourceItem[field]) throw new Error(`${field} changed for ${sourceItem.jobId}.`);
   }
-  if (JSON.stringify(translatedItem.input) !== JSON.stringify(sourceItem.input)) {
-    throw new Error(`Source input changed for ${sourceItem.jobId}.`);
+  if (translatedItem.input) {
+    if (JSON.stringify(translatedItem.input) !== JSON.stringify(sourceItem.input)) {
+      throw new Error(`Source input changed for ${sourceItem.jobId}.`);
+    }
+    return;
   }
+  const expectedCompactSource = compactTranslationItem(sourceItem).source;
+  if (JSON.stringify(translatedItem.source) !== JSON.stringify(expectedCompactSource)) {
+    throw new Error(`Compact source changed for ${sourceItem.jobId}.`);
+  }
+}
+
+export function hydrateTranslatedItem(sourceItem, translatedItem) {
+  if (translatedItem.input) return translatedItem;
+  const translation = translatedItem.translation;
+  if (sourceItem.entityType !== "entry") return { ...sourceItem, translation };
+  const sourceStops = sourceItem.input.normalizedStops ?? [];
+  const translatedStops = translation?.stops ?? [];
+  return {
+    ...sourceItem,
+    translation: {
+      ...translation,
+      stops: translatedStops.map((stop, index) => ({
+        ...stop,
+        placesJson: sourceStops[index]?.placesJson,
+      })),
+    },
+  };
 }
