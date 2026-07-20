@@ -3,6 +3,7 @@ import type { Client } from "pg";
 import { unstable_cache } from "next/cache";
 import { createClient } from "@supabase/supabase-js";
 
+import { getPgSslConfig } from "@/lib/database-ssl";
 import { getContinents } from "@/lib/mock-data";
 import { normalizeLocale, type AppLocale } from "@/lib/i18n/config";
 import { getServerDatabaseUrl } from "@/lib/server-database-url";
@@ -368,7 +369,6 @@ export function collectDestinationDescriptions(continents: Continent[]): Destina
 function getSupabaseDataApiConfig() {
   const url = process.env.SUPABASE_URL ?? process.env.NEXT_PUBLIC_SUPABASE_URL ?? null;
   const key =
-    process.env.SUPABASE_SERVICE_ROLE_KEY ??
     process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY ??
     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ??
     null;
@@ -409,10 +409,7 @@ async function loadDestinationContentRows(options: DestinationContentLoadOptions
 
   const client = new pg.Client({
     connectionString: databaseUrl,
-    ssl:
-      databaseUrl.includes("localhost") || databaseUrl.includes("127.0.0.1")
-        ? false
-        : { rejectUnauthorized: false },
+    ssl: getPgSslConfig(databaseUrl),
   });
 
   try {

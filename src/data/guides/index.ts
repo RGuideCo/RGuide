@@ -33,6 +33,7 @@ import { hanoiCitywideGuides } from "@/data/guides/hanoi";
 import { hongKongCitywideGuides } from "@/data/guides/hong-kong";
 import { istanbulCitywideGuides } from "@/data/guides/istanbul";
 import { kyotoCitywideGuides } from "@/data/guides/kyoto";
+import { lasVegasCitywideGuides } from "@/data/guides/las-vegas";
 import { lisbonCitywideGuides } from "@/data/guides/lisbon";
 import { losAngelesCitywideGuides } from "@/data/guides/los-angeles";
 import { miamiCitywideGuides } from "@/data/guides/miami";
@@ -41,6 +42,7 @@ import { melbourneCitywideGuides } from "@/data/guides/melbourne";
 import { milanCitywideGuides } from "@/data/guides/milan";
 import { munichCitywideGuides } from "@/data/guides/munich";
 import { newYorkCityCitywideGuides } from "@/data/guides/new-york-city";
+import { newYorkBoroughFoodStayNightlifeGuides } from "@/data/guides/new-york-boroughs";
 import { orlandoCitywideGuides } from "@/data/guides/orlando";
 import { osakaCitywideGuides } from "@/data/guides/osaka";
 import { pragueCitywideGuides } from "@/data/guides/prague";
@@ -49,6 +51,8 @@ import { sanFranciscoGuides } from "@/data/guides/san-francisco";
 import { seoulCitywideGuides } from "@/data/guides/seoul";
 import { singaporeCitywideGuides } from "@/data/guides/singapore";
 import { sydneyCitywideGuides } from "@/data/guides/sydney";
+import { taipeiCitywideGuides } from "@/data/guides/taipei";
+import { viennaCitywideGuides } from "@/data/guides/vienna";
 import {
   tokyoCitywideGuides,
   tokyoNeighborhoodGuides,
@@ -63,6 +67,7 @@ export const editorialGuideLists: MapList[] = enrichGuidesCuisineTypes([
   ...londonNeighborhoodGuides,
   ...londonCitywideGuides,
   ...newYorkCityCitywideGuides,
+  ...newYorkBoroughFoodStayNightlifeGuides,
   ...losAngelesCitywideGuides,
   ...miamiCitywideGuides,
   ...orlandoCitywideGuides,
@@ -84,6 +89,7 @@ export const editorialGuideLists: MapList[] = enrichGuidesCuisineTypes([
   ...hanoiCitywideGuides,
   ...hongKongCitywideGuides,
   ...kyotoCitywideGuides,
+  ...lasVegasCitywideGuides,
   ...osakaCitywideGuides,
   ...berlinCitywideGuides,
   ...copenhagenCitywideGuides,
@@ -93,6 +99,8 @@ export const editorialGuideLists: MapList[] = enrichGuidesCuisineTypes([
   ...seoulCitywideGuides,
   ...singaporeCitywideGuides,
   ...sydneyCitywideGuides,
+  ...taipeiCitywideGuides,
+  ...viennaCitywideGuides,
   ...amsterdamNeighborhoodGuides,
   ...amsterdamCitywideGuides,
   ...amsterdamItineraryGuides,
