@@ -48,12 +48,21 @@ export function createDatabaseClient() {
 }
 
 export function parseArgs(argv) {
-  const options = { locale: "es", limit: 25, dryRun: false, autoPublish: false, disable: false, id: null };
+  const options = {
+    locale: "es",
+    limit: 25,
+    dryRun: false,
+    autoPublish: false,
+    disable: false,
+    id: null,
+    batch: null,
+  };
   for (let index = 0; index < argv.length; index += 1) {
     const value = argv[index];
     if (value === "--locale") options.locale = argv[++index];
     else if (value === "--limit") options.limit = Number.parseInt(argv[++index], 10);
     else if (value === "--id") options.id = argv[++index];
+    else if (value === "--batch") options.batch = argv[++index];
     else if (value === "--dry-run") options.dryRun = true;
     else if (value === "--auto-publish") options.autoPublish = true;
     else if (value === "--disable") options.disable = true;

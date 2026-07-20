@@ -1,4 +1,6 @@
 import crypto from "node:crypto";
+import fs from "node:fs";
+import path from "node:path";
 import process from "node:process";
 
 import {
@@ -7,10 +9,13 @@ import {
   createDatabaseClient,
   loadProjectEnv,
   parseArgs,
+  repoRoot,
   slugify,
 } from "./i18n-utils.mjs";
+import { getTranslationInstructions } from "./translation-guidance.mjs";
 
 const OPENAI_RESPONSES_URL = "https://api.openai.com/v1/responses";
+let activeBatch = null;
 
 function outputText(response) {
   for (const item of response.output ?? []) {
@@ -21,7 +26,21 @@ function outputText(response) {
   throw new Error("Translation provider returned no output_text payload.");
 }
 
-async function requestStructuredTranslation({ name, schema, input, targetLocale }) {
+async function requestStructuredTranslation({ name, schema, input, targetLocale, job }) {
+  if (activeBatch) {
+    const item = activeBatch.itemsByJobId.get(job.id);
+    if (!item) throw new Error(`Translation batch does not contain job ${job.id}.`);
+    if (item.entityType !== job.root_entity_type || item.entityId !== job.root_entity_id || item.locale !== job.locale) {
+      throw new Error(`Translation batch identity does not match job ${job.id}.`);
+    }
+    if (item.sourceHash !== job.source_hash) {
+      throw new Error(`Translation batch source hash is stale for job ${job.id}. Export a new batch.`);
+    }
+    if (!item.translation || typeof item.translation !== "object" || Array.isArray(item.translation)) {
+      throw new Error(`Translation batch item ${job.id} has no completed translation object.`);
+    }
+    return item.translation;
+  }
   const apiKey = process.env.OPENAI_API_KEY;
   if (!apiKey) throw new Error("Set OPENAI_API_KEY to process translation jobs.");
   const model = process.env.OPENAI_TRANSLATION_MODEL?.trim() || "gpt-5-mini";
@@ -33,17 +52,7 @@ async function requestStructuredTranslation({ name, schema, input, targetLocale 
     },
     body: JSON.stringify({
       model,
-      instructions: [
-        `You are the ${targetLocale.english_name} localization editor for RGuide, an independent travel guide.`,
-        `Translate all reader-facing editorial copy into natural ${targetLocale.english_name} (${targetLocale.code}).`,
-        "Preserve every factual claim, proper name, URL, date, price, opening-hour detail, and category classification.",
-        `Do not add facts. Do not translate brand names unless the venue has an established ${targetLocale.english_name} name.`,
-        "Preserve every supplied identifier exactly, including UUIDs, category keys, chip slugs, note keys, and schedule item IDs.",
-        "Translate filter labels for readers, but never change canonical filter values or classification meaning.",
-        "Keep the confident editorial voice: observant, specific, concise, and human; never produce keyword chains.",
-        "SEO slugs must be lowercase ASCII search-intent slugs in the target language without city names, citywide, top-10, or list prefixes.",
-        "Return only data matching the provided JSON schema.",
-      ].join(" "),
+      instructions: [...getTranslationInstructions(targetLocale), "Return only data matching the provided JSON schema."].join(" "),
       input: JSON.stringify(input),
       text: {
         format: {
@@ -207,6 +216,27 @@ function hashTranslationInput(value) {
   return crypto.createHash("sha256").update(JSON.stringify(value)).digest("hex");
 }
 
+function loadTranslationBatch(batchPath, locale) {
+  const resolvedPath = path.resolve(repoRoot, batchPath);
+  const batch = JSON.parse(fs.readFileSync(resolvedPath, "utf8"));
+  if (batch.schemaVersion !== 1) throw new Error("Unsupported translation batch schema version.");
+  if (batch.locale !== locale) {
+    throw new Error(`Translation batch locale ${batch.locale ?? "missing"} does not match --locale ${locale}.`);
+  }
+  if (!Array.isArray(batch.items) || batch.items.length === 0) {
+    throw new Error("Translation batch contains no items.");
+  }
+  const itemsByJobId = new Map();
+  for (const item of batch.items) {
+    if (!item?.jobId || !item?.entityType || !item?.entityId || !item?.sourceHash) {
+      throw new Error("Every translation batch item requires jobId, entityType, entityId, and sourceHash.");
+    }
+    if (itemsByJobId.has(item.jobId)) throw new Error(`Duplicate translation batch job: ${item.jobId}.`);
+    itemsByJobId.set(item.jobId, item);
+  }
+  return { path: resolvedPath, itemsByJobId };
+}
+
 function localizeEventPayload(value, activationTranslations, occurrenceTranslations) {
   if (Array.isArray(value)) {
     return value.map((item) => localizeEventPayload(item, activationTranslations, occurrenceTranslations));
@@ -233,28 +263,29 @@ function localizeEventPayload(value, activationTranslations, occurrenceTranslati
 }
 
 async function processEntry(client, job, autoPublish, targetLocale) {
-  const [{ rows: entryRows }, { rows: stopRows }, { rows: existingEntryRows }, { rows: existingStopRows }] = await Promise.all([
-    client.query(
-      [
-        "select entry.id, entry.legacy_id, entry.slug, entry.category, entry.city_id, entry.neighborhood_id, view.list,",
-        "city_translation.slug as localized_city_slug, neighborhood_translation.slug as localized_neighborhood_slug",
-        "from public.entries entry join public.entries_maplist view on view.id = entry.id",
-        "left join public.destination_translations city_translation on city_translation.destination_id=entry.city_id and city_translation.locale=$2 and city_translation.translation_status='published'",
-        "left join public.destination_translations neighborhood_translation on neighborhood_translation.destination_id=entry.neighborhood_id and neighborhood_translation.locale=$2 and neighborhood_translation.translation_status='published'",
-        "where entry.id = $1 and entry.status = 'published'",
-      ].join(" "),
-      [job.root_entity_id, job.locale],
-    ),
-    client.query(
-      "select id, legacy_id, stop_order, name, description, places from public.entry_stops where entry_id = $1 order by stop_order, id",
-      [job.root_entity_id],
-    ),
-    client.query("select * from public.entry_translations where entry_id=$1 and locale=$2", [job.root_entity_id, job.locale]),
-    client.query(
-      "select translation.* from public.entry_stop_translations translation join public.entry_stops stop on stop.id=translation.entry_stop_id where stop.entry_id=$1 and translation.locale=$2 order by stop.stop_order,stop.id",
-      [job.root_entity_id, job.locale],
-    ),
-  ]);
+  const { rows: entryRows } = await client.query(
+    [
+      "select entry.id, entry.legacy_id, entry.slug, entry.category, entry.city_id, entry.neighborhood_id, view.list,",
+      "city_translation.slug as localized_city_slug, neighborhood_translation.slug as localized_neighborhood_slug",
+      "from public.entries entry join public.entries_maplist view on view.id = entry.id",
+      "left join public.destination_translations city_translation on city_translation.destination_id=entry.city_id and city_translation.locale=$2 and city_translation.translation_status='published'",
+      "left join public.destination_translations neighborhood_translation on neighborhood_translation.destination_id=entry.neighborhood_id and neighborhood_translation.locale=$2 and neighborhood_translation.translation_status='published'",
+      "where entry.id = $1 and entry.status = 'published'",
+    ].join(" "),
+    [job.root_entity_id, job.locale],
+  );
+  const { rows: stopRows } = await client.query(
+    "select id, legacy_id, stop_order, name, description, places from public.entry_stops where entry_id = $1 order by stop_order, id",
+    [job.root_entity_id],
+  );
+  const { rows: existingEntryRows } = await client.query(
+    "select * from public.entry_translations where entry_id=$1 and locale=$2",
+    [job.root_entity_id, job.locale],
+  );
+  const { rows: existingStopRows } = await client.query(
+    "select translation.* from public.entry_stop_translations translation join public.entry_stops stop on stop.id=translation.entry_stop_id where stop.entry_id=$1 and translation.locale=$2 order by stop.stop_order,stop.id",
+    [job.root_entity_id, job.locale],
+  );
   const source = entryRows[0];
   if (!source) throw new Error("Published entry was not found.");
 
@@ -306,7 +337,7 @@ async function processEntry(client, job, autoPublish, targetLocale) {
           };
         }),
       }
-    : await requestStructuredTranslation({ name: "rguide_entry_translation", schema: entrySchema, input, targetLocale });
+    : await requestStructuredTranslation({ name: "rguide_entry_translation", schema: entrySchema, input, targetLocale, job });
   const seoSlug = slugify(assertText(translated.seoSlug, "seoSlug"));
   if (!seoSlug) throw new Error("Translated SEO slug is invalid.");
   if (!Array.isArray(translated.stops) || translated.stops.length !== stopRows.length) {
@@ -325,7 +356,7 @@ async function processEntry(client, job, autoPublish, targetLocale) {
   await client.query(
     [
       "insert into public.entry_translations (entry_id, locale, title, description, highlights, seo_slug, seo_title, seo_description, translation_status, source_hash, translation_method, translated_at, published_at, metadata)",
-      "values ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,'machine',now(),case when $9 = 'published' then now() else null end,jsonb_build_object('translation_input_hash',$11))",
+      "values ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,'machine',now(),case when $9 = 'published' then now() else null end,jsonb_build_object('translation_input_hash',$11::text))",
       "on conflict (entry_id, locale) do update set title=excluded.title, description=excluded.description, highlights=excluded.highlights,",
       "seo_slug=excluded.seo_slug, seo_title=excluded.seo_title, seo_description=excluded.seo_description, translation_status=excluded.translation_status,",
       "source_hash=excluded.source_hash, translation_method=excluded.translation_method, translated_at=excluded.translated_at, published_at=excluded.published_at, metadata=public.entry_translations.metadata || excluded.metadata, updated_at=now()",
@@ -337,7 +368,7 @@ async function processEntry(client, job, autoPublish, targetLocale) {
     await client.query(
       [
         "insert into public.entry_stop_translations (entry_stop_id, locale, name, description, places, translation_status, source_hash, translation_method, translated_at, published_at, metadata)",
-        "values ($1,$2,$3,$4,$5,$6,$7,'machine',now(),case when $6 = 'published' then now() else null end,jsonb_build_object('translation_input_hash',$8))",
+        "values ($1,$2,$3,$4,$5,$6,$7,'machine',now(),case when $6 = 'published' then now() else null end,jsonb_build_object('translation_input_hash',$8::text))",
         "on conflict (entry_stop_id, locale) do update set name=excluded.name, description=excluded.description, places=excluded.places,",
         "translation_status=excluded.translation_status, source_hash=excluded.source_hash, translation_method=excluded.translation_method,",
         "translated_at=excluded.translated_at, published_at=excluded.published_at, metadata=public.entry_stop_translations.metadata || excluded.metadata, updated_at=now()",
@@ -375,11 +406,11 @@ async function processEntry(client, job, autoPublish, targetLocale) {
     await client.query(
       [
         "insert into public.entry_localized_render_cache (entry_id, locale, render_format, render_version, rendered_payload, source_hash, rendered_at, stale_at, is_current, metadata)",
-        "values ($1,$2,'maplist',1,$3,$4,now(),null,true,jsonb_build_object('translator',$5,'source','entries_maplist'))",
+        "values ($1,$2,'maplist',1,$3,$4,now(),null,true,jsonb_build_object('translator',$5::text,'source','entries_maplist'))",
         "on conflict (entry_id, locale, render_format, render_version) do update set rendered_payload=excluded.rendered_payload, source_hash=excluded.source_hash,",
         "rendered_at=excluded.rendered_at, stale_at=null, is_current=true, metadata=public.entry_localized_render_cache.metadata || excluded.metadata, updated_at=now()",
       ].join(" "),
-      [job.root_entity_id, job.locale, JSON.stringify(payload), job.source_hash, canReuseTranslation ? "existing-translation" : "openai"],
+      [job.root_entity_id, job.locale, JSON.stringify(payload), job.source_hash, canReuseTranslation ? "existing-translation" : activeBatch ? "codex-batch" : "openai"],
     );
   }
 }
@@ -415,6 +446,7 @@ async function processDestination(client, job, autoPublish, targetLocale) {
     schema: destinationSchema,
     input: { locale: job.locale, destination: source },
     targetLocale,
+    job,
   });
   const sourceDescriptionKinds = new Set((source.descriptions ?? []).map((description) => description.kind));
   const translatedDescriptionKinds = new Set((translated.descriptions ?? []).map((description) => description.kind));
@@ -433,7 +465,10 @@ async function processDestination(client, job, autoPublish, targetLocale) {
     throw new Error("Translated destination insight categories do not match the English source.");
   }
   const status = autoPublish ? "published" : "review";
+  const translatedDisplayName = assertText(translated.displayName, "destination displayName");
   const translatedSlug = slugify(assertText(translated.slug, "destination slug"));
+  const translatedSeoTitle = assertText(translated.seoTitle, "destination seoTitle");
+  const translatedSeoDescription = assertText(translated.seoDescription, "destination seoDescription");
   await client.query(
     [
       "insert into public.destination_translations (destination_id, locale, display_name, slug, seo_title, seo_description, translation_status, source_hash, translation_method, translated_at, published_at)",
@@ -441,11 +476,14 @@ async function processDestination(client, job, autoPublish, targetLocale) {
       "on conflict (destination_id, locale) do update set display_name=excluded.display_name, slug=excluded.slug, seo_title=excluded.seo_title, seo_description=excluded.seo_description,",
       "translation_status=excluded.translation_status, source_hash=excluded.source_hash, translated_at=excluded.translated_at, published_at=excluded.published_at, updated_at=now()",
     ].join(" "),
-    [job.root_entity_id, job.locale, assertText(translated.displayName, "displayName"), translatedSlug, translated.seoTitle, translated.seoDescription, status, job.source_hash],
+    [job.root_entity_id, job.locale, translatedDisplayName, translatedSlug, translatedSeoTitle, translatedSeoDescription, status, job.source_hash],
   );
   const expectedKinds = new Set((source.descriptions ?? []).map((description) => description.kind));
   for (const description of translated.descriptions ?? []) {
     if (!expectedKinds.has(description.kind)) continue;
+    const sourceDescription = (source.descriptions ?? []).find((item) => item.kind === description.kind);
+    const title = sourceDescription?.title === null ? null : assertText(description.title, "destination description title");
+    const summary = sourceDescription?.summary === null ? null : assertText(description.summary, "destination description summary");
     await client.query(
       [
         "insert into public.destination_descriptions_v2 (destination_id, locale, title, summary, description, description_kind, is_primary, translation_status, source_hash, translation_method, translated_at, published_at, metadata)",
@@ -454,7 +492,7 @@ async function processDestination(client, job, autoPublish, targetLocale) {
         "translation_status=excluded.translation_status, source_hash=excluded.source_hash, translation_method=excluded.translation_method, translated_at=excluded.translated_at, published_at=excluded.published_at,",
         "metadata=public.destination_descriptions_v2.metadata || excluded.metadata, updated_at=now()",
       ].join(" "),
-      [job.root_entity_id, job.locale, description.title, description.summary, assertText(description.description, "destination description"), description.kind, status, job.source_hash],
+      [job.root_entity_id, job.locale, title, summary, assertText(description.description, "destination description"), description.kind, status, job.source_hash],
     );
   }
 
@@ -462,6 +500,8 @@ async function processDestination(client, job, autoPublish, targetLocale) {
   for (const insight of translated.insights ?? []) {
     const sourceInsight = sourceInsights.get(insight.category);
     if (!sourceInsight) continue;
+    const insightLabel = sourceInsight.label === null ? null : assertText(insight.label, "destination insight label");
+    const insightSummary = sourceInsight.summary === null ? null : assertText(insight.summary, "destination insight summary");
     const { rows: localizedInsightRows } = await client.query(
       [
         "insert into public.destination_category_insights (destination_id, category, locale, label, summary, sort_order, source_type, source_metadata, is_active, translation_status, source_hash, translation_method, translated_at, published_at)",
@@ -471,7 +511,7 @@ async function processDestination(client, job, autoPublish, targetLocale) {
         "translation_status=excluded.translation_status, source_hash=excluded.source_hash, translation_method=excluded.translation_method, translated_at=excluded.translated_at, published_at=excluded.published_at, updated_at=now()",
         "returning id",
       ].join(" "),
-      [job.root_entity_id, insight.category, job.locale, insight.label, insight.summary, sourceInsight.sortOrder ?? 100, status, job.source_hash],
+      [job.root_entity_id, insight.category, job.locale, insightLabel, insightSummary, sourceInsight.sortOrder ?? 100, status, job.source_hash],
     );
     const localizedInsightId = localizedInsightRows[0]?.id;
     if (!localizedInsightId) throw new Error(`Failed to upsert ${insight.category} destination insight.`);
@@ -492,32 +532,44 @@ async function processDestination(client, job, autoPublish, targetLocale) {
     for (const sourceNote of sourceInsight.notes ?? []) {
       const localizedNote = translatedNotes.get(sourceNote.key);
       if (!localizedNote) throw new Error(`Missing translated insight note ${insight.category}/${sourceNote.key}.`);
+      const noteLabel = sourceNote.label === null ? null : assertText(localizedNote.label, "insight note label");
       await client.query(
         "insert into public.destination_category_insight_notes (insight_id, note_key, label, body, sort_order, is_active, source_metadata) values ($1,$2,$3,$4,$5,true,jsonb_build_object('translation_method','machine','source_locale','en'))",
-        [localizedInsightId, sourceNote.key, localizedNote.label, assertText(localizedNote.body, "insight note body"), sourceNote.sortOrder ?? 100],
+        [localizedInsightId, sourceNote.key, noteLabel, assertText(localizedNote.body, "insight note body"), sourceNote.sortOrder ?? 100],
       );
     }
   }
 }
 
 async function processEvent(client, job, autoPublish, targetLocale) {
-  const [
-    { rows: eventRows },
-    { rows: activationRows },
-    { rows: occurrenceRows },
-    { rows: publicationRows },
-    { rows: existingEventRows },
-    { rows: existingActivationRows },
-    { rows: existingOccurrenceRows },
-  ] = await Promise.all([
-    client.query("select * from public.events where id=$1 and status='published'", [job.root_entity_id]),
-    client.query("select id,legacy_id,title,description from public.event_activations where event_id=$1 order by sort_order,id", [job.root_entity_id]),
-    client.query("select id,legacy_id,title,description from public.event_occurrences where event_id=$1 order by occurrence_order,id", [job.root_entity_id]),
-    client.query("select rendered_map_list from public.weekly_event_publications where event_id=$1 order by sourced_at desc, updated_at desc limit 1", [job.root_entity_id]),
-    client.query("select * from public.event_translations where event_id=$1 and locale=$2", [job.root_entity_id, job.locale]),
-    client.query("select translation.* from public.event_activation_translations translation join public.event_activations activation on activation.id=translation.event_activation_id where activation.event_id=$1 and translation.locale=$2", [job.root_entity_id, job.locale]),
-    client.query("select translation.* from public.event_occurrence_translations translation join public.event_occurrences occurrence on occurrence.id=translation.event_occurrence_id where occurrence.event_id=$1 and translation.locale=$2", [job.root_entity_id, job.locale]),
-  ]);
+  const { rows: eventRows } = await client.query(
+    "select * from public.events where id=$1 and status='published'",
+    [job.root_entity_id],
+  );
+  const { rows: activationRows } = await client.query(
+    "select id,legacy_id,title,description from public.event_activations where event_id=$1 order by sort_order,id",
+    [job.root_entity_id],
+  );
+  const { rows: occurrenceRows } = await client.query(
+    "select id,legacy_id,title,description from public.event_occurrences where event_id=$1 order by occurrence_order,id",
+    [job.root_entity_id],
+  );
+  const { rows: publicationRows } = await client.query(
+    "select rendered_map_list from public.weekly_event_publications where event_id=$1 order by sourced_at desc, updated_at desc limit 1",
+    [job.root_entity_id],
+  );
+  const { rows: existingEventRows } = await client.query(
+    "select * from public.event_translations where event_id=$1 and locale=$2",
+    [job.root_entity_id, job.locale],
+  );
+  const { rows: existingActivationRows } = await client.query(
+    "select translation.* from public.event_activation_translations translation join public.event_activations activation on activation.id=translation.event_activation_id where activation.event_id=$1 and translation.locale=$2",
+    [job.root_entity_id, job.locale],
+  );
+  const { rows: existingOccurrenceRows } = await client.query(
+    "select translation.* from public.event_occurrence_translations translation join public.event_occurrences occurrence on occurrence.id=translation.event_occurrence_id where occurrence.event_id=$1 and translation.locale=$2",
+    [job.root_entity_id, job.locale],
+  );
   const source = eventRows[0];
   if (!source) throw new Error("Published event was not found.");
   const input = {
@@ -562,7 +614,7 @@ async function processEvent(client, job, autoPublish, targetLocale) {
           return { id: row.id, title: localized.title, description: localized.description };
         }),
       }
-    : await requestStructuredTranslation({ name: "rguide_event_translation", schema: eventSchema, input, targetLocale });
+    : await requestStructuredTranslation({ name: "rguide_event_translation", schema: eventSchema, input, targetLocale, job });
   const translatedActivationIds = new Set((translated.activations ?? []).map((item) => item.id));
   const translatedOccurrenceIds = new Set((translated.occurrences ?? []).map((item) => item.id));
   if (
@@ -579,32 +631,44 @@ async function processEvent(client, job, autoPublish, targetLocale) {
   await client.query(
     [
       "insert into public.event_translations (event_id, locale, title, description, highlights, seo_slug, seo_title, seo_description, translation_status, source_hash, translation_method, translated_at, published_at, metadata)",
-      "values ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,'machine',now(),case when $9='published' then now() else null end,jsonb_build_object('translation_input_hash',$11))",
+      "values ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,'machine',now(),case when $9='published' then now() else null end,jsonb_build_object('translation_input_hash',$11::text))",
       "on conflict (event_id, locale) do update set title=excluded.title, description=excluded.description, highlights=excluded.highlights, seo_slug=excluded.seo_slug,",
       "seo_title=excluded.seo_title, seo_description=excluded.seo_description, translation_status=excluded.translation_status, source_hash=excluded.source_hash, translated_at=excluded.translated_at, published_at=excluded.published_at, metadata=public.event_translations.metadata || excluded.metadata, updated_at=now()",
     ].join(" "),
     [job.root_entity_id, job.locale, assertText(translated.title, "event title"), assertText(translated.description, "event description"), translated.highlights ?? [], slugify(translated.seoSlug), assertText(translated.seoTitle, "event seoTitle"), assertText(translated.seoDescription, "event seoDescription"), status, job.source_hash, translationInputHash],
   );
   for (const activation of translated.activations ?? []) {
-    if (!activationRows.some((row) => row.id === activation.id)) continue;
+    const sourceActivation = activationRows.find((row) => row.id === activation.id);
+    if (!sourceActivation) continue;
+    const activationTitle = assertText(activation.title, "event activation title");
+    const activationDescription = sourceActivation.description === null
+      ? null
+      : assertText(activation.description, "event activation description");
     await client.query(
       [
         "insert into public.event_activation_translations (event_activation_id, locale, title, description, translation_status, source_hash, translation_method, translated_at, published_at, metadata)",
-        "values ($1,$2,$3,$4,$5,$6,'machine',now(),case when $5='published' then now() else null end,jsonb_build_object('translation_input_hash',$7))",
+        "values ($1,$2,$3,$4,$5,$6,'machine',now(),case when $5='published' then now() else null end,jsonb_build_object('translation_input_hash',$7::text))",
         "on conflict (event_activation_id, locale) do update set title=excluded.title, description=excluded.description, translation_status=excluded.translation_status, source_hash=excluded.source_hash, translated_at=excluded.translated_at, published_at=excluded.published_at, metadata=public.event_activation_translations.metadata || excluded.metadata, updated_at=now()",
       ].join(" "),
-      [activation.id, job.locale, activation.title, activation.description, status, job.source_hash, translationInputHash],
+      [activation.id, job.locale, activationTitle, activationDescription, status, job.source_hash, translationInputHash],
     );
   }
   for (const occurrence of translated.occurrences ?? []) {
-    if (!occurrenceRows.some((row) => row.id === occurrence.id)) continue;
+    const sourceOccurrence = occurrenceRows.find((row) => row.id === occurrence.id);
+    if (!sourceOccurrence) continue;
+    const occurrenceTitle = sourceOccurrence.title === null
+      ? null
+      : assertText(occurrence.title, "event occurrence title");
+    const occurrenceDescription = sourceOccurrence.description === null
+      ? null
+      : assertText(occurrence.description, "event occurrence description");
     await client.query(
       [
         "insert into public.event_occurrence_translations (event_occurrence_id, locale, title, description, translation_status, source_hash, translation_method, translated_at, published_at, metadata)",
-        "values ($1,$2,$3,$4,$5,$6,'machine',now(),case when $5='published' then now() else null end,jsonb_build_object('translation_input_hash',$7))",
+        "values ($1,$2,$3,$4,$5,$6,'machine',now(),case when $5='published' then now() else null end,jsonb_build_object('translation_input_hash',$7::text))",
         "on conflict (event_occurrence_id, locale) do update set title=excluded.title, description=excluded.description, translation_status=excluded.translation_status, source_hash=excluded.source_hash, translated_at=excluded.translated_at, published_at=excluded.published_at, metadata=public.event_occurrence_translations.metadata || excluded.metadata, updated_at=now()",
       ].join(" "),
-      [occurrence.id, job.locale, occurrence.title, occurrence.description, status, job.source_hash, translationInputHash],
+      [occurrence.id, job.locale, occurrenceTitle, occurrenceDescription, status, job.source_hash, translationInputHash],
     );
   }
 
@@ -638,28 +702,35 @@ async function processEvent(client, job, autoPublish, targetLocale) {
     await client.query(
       [
         "insert into public.event_localized_render_cache (event_id, locale, render_format, render_version, rendered_payload, source_hash, rendered_at, stale_at, is_current, metadata)",
-        "values ($1,$2,'maplist',1,$3,$4,now(),null,true,jsonb_build_object('translator',$5,'source','weekly_event_publications'))",
+        "values ($1,$2,'maplist',1,$3,$4,now(),null,true,jsonb_build_object('translator',$5::text,'source','weekly_event_publications'))",
         "on conflict (event_id, locale, render_format, render_version) do update set rendered_payload=excluded.rendered_payload, source_hash=excluded.source_hash,",
         "rendered_at=excluded.rendered_at, stale_at=null, is_current=true, metadata=public.event_localized_render_cache.metadata || excluded.metadata, updated_at=now()",
       ].join(" "),
-      [job.root_entity_id, job.locale, JSON.stringify(payload), job.source_hash, canReuseTranslation ? "existing-translation" : "openai"],
+      [job.root_entity_id, job.locale, JSON.stringify(payload), job.source_hash, canReuseTranslation ? "existing-translation" : activeBatch ? "codex-batch" : "openai"],
     );
   }
 }
 
 async function claimJob(client, options, workerId) {
   const values = [options.locale, workerId];
-  const idFilter = options.id ? "and (job.id::text=$3 or job.root_entity_id::text=$3)" : "";
-  if (options.id) values.push(options.id);
+  let explicitFilter = "";
+  if (options.batchJobIds?.length) {
+    values.push(options.batchJobIds);
+    explicitFilter = "and job.id = any($3::uuid[])";
+  } else if (options.id) {
+    values.push(options.id);
+    explicitFilter = "and (job.id::text=$3 or job.root_entity_id::text=$3)";
+  }
+  const availabilityFilter = options.batchJobIds?.length
+    ? "((job.status in ('pending','failed')) or (job.status='processing' and job.leased_at < now() - interval '30 minutes'))"
+    : "((job.status in ('pending','failed') and job.next_attempt_at <= now()) or (job.status='processing' and job.leased_at < now() - interval '30 minutes'))";
+  const attemptsFilter = options.batchJobIds?.length ? "" : "and job.attempts < job.max_attempts";
   const { rows } = await client.query(
     [
       "with candidate as (",
       "select job.id from public.translation_jobs job",
-      "where job.locale=$1 and job.attempts < job.max_attempts and (",
-      "  (job.status in ('pending','failed') and job.next_attempt_at <= now())",
-      "  or (job.status='processing' and job.leased_at < now() - interval '30 minutes')",
-      ")",
-      idFilter,
+      `where job.locale=$1 ${attemptsFilter} and ${availabilityFilter}`,
+      explicitFilter,
       "order by job.priority desc, job.created_at for update skip locked limit 1",
       ") update public.translation_jobs job set status='processing', attempts=job.attempts+1, leased_at=now(), leased_by=$2, updated_at=now()",
       "from candidate where job.id=candidate.id returning job.*",
@@ -672,14 +743,25 @@ async function claimJob(client, options, workerId) {
 async function main() {
   loadProjectEnv();
   const options = parseArgs(process.argv.slice(2));
+  if (options.batch) {
+    activeBatch = loadTranslationBatch(options.batch, options.locale);
+    options.batchJobIds = [...activeBatch.itemsByJobId.keys()];
+    options.limit = options.batchJobIds.length;
+  }
   if (options.dryRun) {
-    console.log(JSON.stringify({ ok: true, dryRun: true, locale: options.locale, message: "No provider or database writes were attempted." }, null, 2));
+    console.log(JSON.stringify({
+      ok: true,
+      dryRun: true,
+      locale: options.locale,
+      batchItems: options.batchJobIds?.length ?? 0,
+      message: "No provider or database writes were attempted.",
+    }, null, 2));
     return;
   }
   const client = createDatabaseClient();
   const workerId = `local-${process.pid}-${crypto.randomUUID().slice(0, 8)}`;
   await client.connect();
-  const summary = { completed: 0, failed: 0, byType: {} };
+  const summary = { completed: 0, failed: 0, batchIncomplete: 0, byType: {} };
   try {
     const { rows: localeRows } = await client.query(
       "select code, english_name, native_name from public.content_locales where code=$1 and is_active and not is_default",
@@ -717,11 +799,26 @@ async function main() {
         console.error(`  failed: ${message}`);
       }
     }
+    if (options.batchJobIds?.length) {
+      const { rows: batchJobRows } = await client.query(
+        "select id::text as id,status,source_hash from public.translation_jobs where id=any($1::uuid[])",
+        [options.batchJobIds],
+      );
+      const jobsById = new Map(batchJobRows.map((job) => [job.id, job]));
+      const incompleteIds = options.batchJobIds.filter((jobId) => {
+        const job = jobsById.get(jobId);
+        const batchItem = activeBatch.itemsByJobId.get(jobId);
+        return !job || job.status !== "completed" || job.source_hash !== batchItem.sourceHash;
+      });
+      summary.batchIncomplete = incompleteIds.length;
+      if (incompleteIds.length) console.error(`Incomplete translation batch jobs: ${incompleteIds.join(", ")}`);
+    }
   } finally {
     await client.end().catch(() => {});
   }
-  console.log(JSON.stringify({ ok: summary.failed === 0, locale: options.locale, autoPublish: options.autoPublish, ...summary }, null, 2));
-  if (summary.failed) process.exitCode = 1;
+  const ok = summary.failed === 0 && summary.batchIncomplete === 0;
+  console.log(JSON.stringify({ ok, locale: options.locale, autoPublish: options.autoPublish, ...summary }, null, 2));
+  if (!ok) process.exitCode = 1;
 }
 
 main().catch((error) => {

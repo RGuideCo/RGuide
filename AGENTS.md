@@ -41,6 +41,14 @@ This repository is rGuide, the travel guide and destination website. Do not appl
 - For app-wide code changes, run the relevant lint/build checks when practical.
 - If Supabase, R2, Vercel, or network access fails due to sandboxing, report the exact blocker and do not claim the live site changed.
 
+## Localization
+
+- Follow `docs/localization-runbook.md` for translation work.
+- Use explicit Codex translation batches through `translate:export` and `translate:import`.
+- Do not call a paid translation API or enable a scheduled translation worker unless the user explicitly changes this policy.
+- Translation batch JSON is a temporary handoff. Normalized translation tables and localized render caches remain the source of truth.
+- Keep a locale `noindex` until `verify:translations` passes completely.
+
 ## Git
 
 - Prefer small, focused commits.
