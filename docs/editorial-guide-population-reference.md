@@ -170,6 +170,12 @@ For each city:
 - Neighborhoods: Old Town, Mala Strana, Nove Mesto, Vinohrady, Zizkov, Karlin, Holesovice, Letna, Smichov, Hradcany.
 - Category angle: Food should separate beer halls, Czech kitchens, cafes, bakeries, modern rooms, and market stops; Nightlife should cover pubs, beer gardens, cocktail rooms, clubs, and Zizkov/Vinohrady nights; Culture should connect castle, Jewish Quarter, old-town lanes, museums, and design; Stay should avoid over-central tourist pressure when useful; Nature should use Letna, Petrin, islands, river walks, and viewpoints; Activities should move beyond the busiest squares.
 
+**Vienna, Austria**
+
+- City: imperial collections and living neighborhoods, serious music, Viennese kitchens, coffeehouse and Würstelstand rituals, design hotels, social hostels, vineyards, market streets, and a transit network that makes district-scale planning easy.
+- Neighborhoods: Innere Stadt, Neubau, Mariahilf, Wieden, Josefstadt, Alsergrund, Leopoldstadt, Ottakring, Döbling, Favoriten.
+- Category angle: Food should separate contemporary Austrian dining, Wirtshaus cooking, vegetarian tasting menus, markets, sausage stands, and affordable counters; Nightlife should keep worn-in café-bars, beer rooms, Gürtel live venues, and serious cocktail bars distinct; Culture should connect Habsburg collections, Vienna 1900, Jewish history, applied arts, city history, and music; Stay should keep hotels and hostels separate while weighing old-center access against neighborhood character and rail logistics; Nature should use palace gardens, Prater green space, Danube routes, vineyards, Vienna Woods, and hill viewpoints; Activities should pace timed imperial rooms and major museums with markets, performances, and weather-dependent outdoor views.
+
 **Dublin, Ireland**
 
 - City: a compact literary capital where Georgian streets, revolutionary history, working pubs, new Irish cooking, whiskey, museums, parks, and a DART-linked bay can share one trip without pretending Temple Bar is the whole story.
