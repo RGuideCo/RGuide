@@ -717,10 +717,11 @@ async function processEvent(client, job, autoPublish, targetLocale) {
 }
 
 async function claimJob(client, options, workerId) {
+  if (options.batchJobIds?.length && options.claimableBatchJobIds.length === 0) return null;
   const values = [options.locale, workerId];
   let explicitFilter = "";
   if (options.batchJobIds?.length) {
-    values.push(options.batchJobIds);
+    values.push(options.claimableBatchJobIds);
     explicitFilter = "and job.id = any($3::uuid[])";
   } else if (options.id) {
     values.push(options.id);
@@ -751,6 +752,7 @@ async function main() {
   if (options.batch) {
     activeBatch = loadTranslationBatch(options.batch, options.locale);
     options.batchJobIds = [...activeBatch.itemsByJobId.keys()];
+    options.claimableBatchJobIds = [...options.batchJobIds];
     options.limit = options.batchJobIds.length;
   }
   if (options.dryRun) {
@@ -777,6 +779,9 @@ async function main() {
     for (let index = 0; index < options.limit; index += 1) {
       const job = await claimJob(client, options, workerId);
       if (!job) break;
+      if (options.batchJobIds?.length) {
+        options.claimableBatchJobIds = options.claimableBatchJobIds.filter((jobId) => jobId !== job.id);
+      }
       const startedAt = Date.now();
       console.log(`[${index + 1}/${options.limit}] ${job.root_entity_type} ${job.root_entity_id} (${job.locale})`);
       try {
