@@ -20,6 +20,7 @@ import {
   getLocalePublicationState,
 } from "@/lib/i18n/server";
 import { getServerEditorialGuides } from "@/lib/server-editorial-guides";
+import { serializeJsonForHtml } from "@/lib/serialize-json";
 
 interface CityDeepLinkPageProps {
   params: Promise<{
@@ -171,7 +172,7 @@ export default async function CityDeepLinkPage({ params }: CityDeepLinkPageProps
         <script
           key={index}
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(item) }}
+          dangerouslySetInnerHTML={{ __html: serializeJsonForHtml(item) }}
         />
       ))}
       <ProgressiveEnhancementShell fallback={<CityRouteSeoIndex route={route} guides={editorialGuides} />}>

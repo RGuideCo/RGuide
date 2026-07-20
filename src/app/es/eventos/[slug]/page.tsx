@@ -11,6 +11,7 @@ import {
 } from "@/lib/i18n/server";
 import { getAbsoluteHref, getEventHref } from "@/lib/routes";
 import { getServerEditorialGuides } from "@/lib/server-editorial-guides";
+import { serializeJsonForHtml } from "@/lib/serialize-json";
 
 export const dynamic = "force-dynamic";
 
@@ -63,7 +64,7 @@ export default async function SpanishEventPage({ params }: SpanishEventPageProps
   return (
     <>
       <div className="page-shell py-10">
-        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: serializeJsonForHtml(jsonLd) }} />
         <div className="space-y-8">
           <article className="surface p-6 sm:p-8">
             <nav aria-label="Migas de pan" className="mb-4">

@@ -8,6 +8,7 @@ import { createClient, type SupabaseClient } from "@supabase/supabase-js";
 
 import { mapLists } from "@/data/lists";
 import { weeklyCityEventRuns, weeklyEventToGuideList } from "@/data/weekly-events";
+import { getPgSslConfig } from "@/lib/database-ssl";
 import { DEFAULT_LOCALE, normalizeLocale, type AppLocale } from "@/lib/i18n/config";
 import { getServerDatabaseUrl } from "@/lib/server-database-url";
 import type { MapList } from "@/types";
@@ -155,11 +156,11 @@ const EDITORIAL_GUIDES_CACHE_SECONDS = Number.parseInt(
   process.env.EDITORIAL_GUIDES_CACHE_SECONDS ?? "86400",
   10,
 );
+const buildDataApiGuidePromises = new Map<AppLocale, Promise<MapList[] | null>>();
 
 function getSupabaseDataApiConfig() {
   const url = process.env.SUPABASE_URL ?? process.env.NEXT_PUBLIC_SUPABASE_URL ?? null;
   const key =
-    process.env.SUPABASE_SERVICE_ROLE_KEY ??
     process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY ??
     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ??
     null;
@@ -182,19 +183,28 @@ function shouldSkipDatabaseConnection() {
   return isProductionBuild;
 }
 
-function getPgSslConfig(databaseUrl: string) {
-  return databaseUrl.includes("localhost") || databaseUrl.includes("127.0.0.1")
-    ? false
-    : { rejectUnauthorized: false };
+function loadBuildDataApiGuides(locale: AppLocale) {
+  const existing = buildDataApiGuidePromises.get(locale);
+
+  if (existing) {
+    return existing;
+  }
+
+  const guides =
+    locale === DEFAULT_LOCALE
+      ? loadEditorialGuidesFromDataApi({})
+      : loadLocalizedGuidesFromDataApi({}, locale);
+
+  buildDataApiGuidePromises.set(locale, guides);
+  return guides;
 }
 
 async function loadEditorialGuidesFromSupabase(scope: EditorialGuideScope = {}): Promise<MapList[] | null> {
   const locale = normalizeLocale(scope.locale);
 
   if (shouldSkipDatabaseConnection()) {
-    return locale === DEFAULT_LOCALE
-      ? loadEditorialGuidesFromDataApi(scope)
-      : loadLocalizedGuidesFromDataApi(scope, locale);
+    const guides = await loadBuildDataApiGuides(locale);
+    return guides ? filterGuidesByScope(guides, scope) : null;
   }
 
   const databaseUrl = getServerDatabaseUrl();
@@ -316,7 +326,7 @@ async function loadLocalizedGuides(
       "  and cache.render_version = 1",
       "  and cache.is_current = true",
       "  and entry.status = 'published'",
-      "  and coalesce(entry.visibility, 'public') = 'public'",
+      "  and (entry.submission_type <> 'journal' or coalesce(entry.journal_visibility, 'public') = 'public')",
       locationFilter,
       "order by entry.category, entry.country_name nulls last,",
       "  cache.rendered_payload->'location'->>'city' nulls last,",
@@ -335,10 +345,12 @@ async function loadLocalizedGuides(
     [
       "select cache.rendered_payload, cache.updated_at",
       "from public.event_localized_render_cache cache",
+      "join public.events event on event.id = cache.event_id",
       `where cache.locale = $${eventLocaleParameter}`,
       "  and cache.render_format = 'maplist'",
       "  and cache.render_version = 1",
       "  and cache.is_current = true",
+      "  and event.status = 'published'",
       eventLocationFilter,
       "order by cache.rendered_payload->'location'->>'city' nulls last, cache.rendered_payload->>'title'",
     ].join(" "),
@@ -543,6 +555,8 @@ async function loadNormalizedGuides(client: Client, scope: EditorialGuideScope =
         "join public.entries_maplist view on view.id = entry.id",
         "left join public.destinations city on city.id = entry.city_id",
         "where entry.source_table = 'editorial_guides'",
+        "  and entry.status = 'published'",
+        "  and (entry.submission_type <> 'journal' or coalesce(entry.journal_visibility, 'public') = 'public')",
         locationFilter,
         "order by entry.category asc, entry.country_name asc nulls last,",
         "  (view.list->'location'->>'city') asc nulls last,",
@@ -589,6 +603,7 @@ async function loadRenderCacheGuides(client: Client, scope: EditorialGuideScope 
       "  and cache.is_current = true",
       "  and entry.source_table = 'editorial_guides'",
       "  and entry.status = 'published'",
+      "  and (entry.submission_type <> 'journal' or coalesce(entry.journal_visibility, 'public') = 'public')",
       locationFilter,
       "order by entry.category asc, entry.country_name asc nulls last,",
       "  cache.rendered_payload->'location'->>'city' asc nulls last,",

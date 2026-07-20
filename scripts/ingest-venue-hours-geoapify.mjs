@@ -4,6 +4,7 @@ import process from "node:process";
 import { fileURLToPath } from "node:url";
 
 import pg from "pg";
+import { getPgSslConfig } from "./database-ssl.mjs";
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const DAY_CODES = ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"];
@@ -411,13 +412,13 @@ async function main() {
   loadEnvFile(path.join(ROOT, ".env"));
 
   const databaseUrl = getDatabaseUrl();
-  const geoapifyKey = process.env.GEOAPIFY_API_KEY ?? process.env.NEXT_PUBLIC_GEOAPIFY_API_KEY;
+  const geoapifyKey = process.env.GEOAPIFY_API_KEY;
   if (!databaseUrl) throw new Error("Set SUPABASE_DB_URL, SUPABASE_DATABASE_URL, or DATABASE_URL.");
-  if (!geoapifyKey) throw new Error("Set GEOAPIFY_API_KEY or NEXT_PUBLIC_GEOAPIFY_API_KEY.");
+  if (!geoapifyKey) throw new Error("Set GEOAPIFY_API_KEY.");
 
   const client = new pg.Client({
     connectionString: databaseUrl,
-    ssl: databaseUrl.includes("localhost") ? false : { rejectUnauthorized: false },
+    ssl: getPgSslConfig(databaseUrl),
   });
   await client.connect();
 

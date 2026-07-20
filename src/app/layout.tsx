@@ -20,6 +20,7 @@ import {
   SITE_URL,
 } from "@/lib/constants";
 import { getAbsoluteHref } from "@/lib/routes";
+import { serializeJsonForHtml } from "@/lib/serialize-json";
 
 import "material-symbols/rounded.css";
 import "@/app/globals.css";
@@ -146,7 +147,7 @@ export default function RootLayout({
               id="stay22-lma-config"
               strategy="beforeInteractive"
               dangerouslySetInnerHTML={{
-                __html: `window.Stay22 = window.Stay22 || {}; window.Stay22.params = { lmaID: ${JSON.stringify(stay22LmaId)} };`,
+                __html: `window.Stay22 = window.Stay22 || {}; window.Stay22.params = { lmaID: ${serializeJsonForHtml(stay22LmaId)} };`,
               }}
             />
             <Script
@@ -168,7 +169,7 @@ export default function RootLayout({
         <Analytics />
         <script
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteJsonLd) }}
+          dangerouslySetInnerHTML={{ __html: serializeJsonForHtml(websiteJsonLd) }}
         />
       </body>
     </html>

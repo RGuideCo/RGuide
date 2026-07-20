@@ -25,7 +25,7 @@ export async function GET(request: Request) {
     const continentName = cityName || countryName
       ? undefined
       : searchParams.get("continent")?.trim() || undefined;
-    const rateLimit = checkRateLimit(request, {
+    const rateLimit = await checkRateLimit(request, {
       namespace: "app-data",
       limit: 120,
       windowMs: 60_000,

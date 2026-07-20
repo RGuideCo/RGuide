@@ -9,6 +9,7 @@ import { getContinentsWithDestinationDescriptions } from "@/lib/destination-desc
 import { getAbsoluteHref } from "@/lib/routes";
 import { getLocalePublicationState } from "@/lib/i18n/server";
 import { getServerEditorialGuides } from "@/lib/server-editorial-guides";
+import { serializeJsonForHtml } from "@/lib/serialize-json";
 
 export const revalidate = 21600;
 
@@ -52,7 +53,7 @@ export default async function HomePage() {
     <>
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(homePageJsonLd) }}
+        dangerouslySetInnerHTML={{ __html: serializeJsonForHtml(homePageJsonLd) }}
       />
       <ProgressiveEnhancementShell
         fallback={<HomeServerContent continents={continents} editorialGuides={editorialGuides} />}

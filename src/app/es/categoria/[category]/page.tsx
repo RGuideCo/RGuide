@@ -20,6 +20,7 @@ import {
 import { getContinents } from "@/lib/mock-data";
 import { getAbsoluteHref, getCategoryHref } from "@/lib/routes";
 import { getServerEditorialGuides } from "@/lib/server-editorial-guides";
+import { serializeJsonForHtml } from "@/lib/serialize-json";
 import type { ListCategory, MapList } from "@/types";
 
 interface SpanishCategoryPageProps {
@@ -153,7 +154,7 @@ export default async function SpanishCategoryPage({ params }: SpanishCategoryPag
   return (
     <>
     <main className="page-shell py-10">
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: serializeJsonForHtml(jsonLd) }} />
       <header className="max-w-3xl">
         <p className="text-sm font-medium uppercase tracking-[0.24em] text-orange-600">Categoría</p>
         <h1 className="mt-2 text-4xl font-semibold text-slate-900">{CATEGORY_TITLES[data.category]}</h1>
