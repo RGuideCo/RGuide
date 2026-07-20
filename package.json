@@ -55,7 +55,7 @@
     "lottie-react": "^2.4.1",
     "maplibre-gl": "5.24.0",
     "material-symbols": "^0.45.5",
-    "next": "16.2.6",
+    "next": "16.2.10",
     "pg": "^8.20.0",
     "polygon-clipping": "^0.15.7",
     "react": "19.2.6",
