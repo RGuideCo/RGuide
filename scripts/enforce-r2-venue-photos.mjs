@@ -24,7 +24,7 @@ function loadEnvFile(filePath) {
 function parseArgs(argv) {
   const options = {
     city: null,
-    slug: null,
+    slugs: [],
     id: null,
     dryRun: false,
   };
@@ -39,7 +39,9 @@ function parseArgs(argv) {
     };
 
     if (arg === "--city") options.city = readValue();
-    else if (arg === "--slug") options.slug = readValue();
+    else if (arg === "--slug") {
+      options.slugs.push(...readValue().split(",").map((value) => value.trim()).filter(Boolean));
+    }
     else if (arg === "--id") options.id = readValue();
     else if (arg === "--dry-run") options.dryRun = true;
   }
@@ -64,9 +66,9 @@ function scopedWhereClause(options, values) {
     values.push(options.city);
     conditions.push(`city.name ilike $${values.length}`);
   }
-  if (options.slug) {
-    values.push(options.slug);
-    conditions.push(`entry.slug = $${values.length}`);
+  if (options.slugs.length) {
+    values.push(options.slugs);
+    conditions.push(`entry.slug = any($${values.length}::text[])`);
   }
   if (options.id) {
     values.push(options.id);

@@ -351,7 +351,13 @@ function hasImageEvidence(stop) {
 
 function looksLikePlaceholderPhoto(url) {
   if (!url) return false;
-  return /placeholder|default|favicon|logo|brand|sprite|blank/i.test(url) || /images\.unsplash\.com/i.test(url);
+  let filename = url;
+  try {
+    filename = decodeURIComponent(new URL(url).pathname.split("/").pop() || "");
+  } catch {
+    // Invalid URLs are reported separately by looksLikeBrokenImageUrl.
+  }
+  return /placeholder|default|favicon|logo|brand|sprite|blank/i.test(filename) || /images\.unsplash\.com/i.test(url);
 }
 
 function looksLikeBrokenImageUrl(url) {
