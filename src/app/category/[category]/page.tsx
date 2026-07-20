@@ -10,6 +10,7 @@ import { getLocalizedCategoryIndexPath } from "@/lib/i18n/paths";
 import { getLocalePublicationState } from "@/lib/i18n/server";
 import { getAbsoluteHref, getCategoryHref, getGuideHref } from "@/lib/routes";
 import { getServerEditorialGuides } from "@/lib/server-editorial-guides";
+import { serializeJsonForHtml } from "@/lib/serialize-json";
 import type { ListCategory } from "@/types";
 
 interface CategoryPageProps {
@@ -152,7 +153,7 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
     <div className="page-shell py-10">
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(categoryJsonLd) }}
+        dangerouslySetInnerHTML={{ __html: serializeJsonForHtml(categoryJsonLd) }}
       />
       <div className="max-w-3xl">
         <p className="text-sm font-medium uppercase tracking-[0.24em] text-orange-600">Category</p>

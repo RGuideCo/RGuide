@@ -4,6 +4,7 @@ import { NextRequest, NextResponse } from "next/server";
 import pg from "pg";
 import { createClient } from "@supabase/supabase-js";
 
+import { getPgSslConfig } from "@/lib/database-ssl";
 import { checkRateLimit, rateLimitResponse, withRateLimitHeaders } from "@/lib/rate-limit";
 
 export const dynamic = "force-dynamic";
@@ -43,12 +44,7 @@ type AnalyticsRpcResult = {
 
 function getSupabaseAnalyticsConfig() {
   const url = process.env.SUPABASE_URL ?? process.env.NEXT_PUBLIC_SUPABASE_URL ?? null;
-  const serviceKey = process.env.SUPABASE_SERVICE_ROLE_KEY ?? null;
-  const publicKey =
-    process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY ??
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ??
-    null;
-  const key = serviceKey ?? publicKey;
+  const key = process.env.SUPABASE_SERVICE_ROLE_KEY ?? null;
 
   return url && key ? { url, key } : null;
 }
@@ -60,12 +56,6 @@ function getDatabaseUrl() {
     process.env.DATABASE_URL ??
     null
   );
-}
-
-function getPgSslConfig(databaseUrl: string) {
-  return databaseUrl.includes("localhost") || databaseUrl.includes("127.0.0.1")
-    ? false
-    : { rejectUnauthorized: false };
 }
 
 function truncate(value: unknown, maxLength: number) {
@@ -82,16 +72,18 @@ function getHeader(request: NextRequest, name: string) {
 }
 
 function getIpHash(request: NextRequest) {
+  const vercelForwardedFor = request.headers.get("x-vercel-forwarded-for")?.split(",")[0]?.trim();
+  const cloudflareIp = request.headers.get("cf-connecting-ip")?.trim();
   const forwardedFor = request.headers.get("x-forwarded-for")?.split(",")[0]?.trim();
   const realIp = request.headers.get("x-real-ip")?.trim();
-  const ip = forwardedFor || realIp;
+  const ip = vercelForwardedFor || cloudflareIp || realIp || forwardedFor;
+  const salt = process.env.ANALYTICS_IP_HASH_SALT ?? process.env.SUPABASE_SERVICE_ROLE_KEY;
 
-  if (!ip) {
+  if (!ip || !salt) {
     return null;
   }
 
-  const salt = process.env.ANALYTICS_IP_HASH_SALT ?? "rguide";
-  return crypto.createHash("sha256").update(`${salt}:${ip}`).digest("hex");
+  return crypto.createHmac("sha256", salt).update(ip).digest("hex");
 }
 
 function isPlainObject(value: unknown): value is Record<string, unknown> {
@@ -179,7 +171,7 @@ async function recordWithDatabaseUrl(events: ReturnType<typeof enrichEvent>[]) {
 }
 
 export async function POST(request: NextRequest) {
-  const rateLimit = checkRateLimit(request, {
+  const rateLimit = await checkRateLimit(request, {
     namespace: "analytics-click",
     limit: 180,
     windowMs: 60_000,

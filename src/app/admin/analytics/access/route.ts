@@ -1,32 +1,27 @@
-import { timingSafeEqual } from "node:crypto";
 import { NextResponse } from "next/server";
 
-const ANALYTICS_ACCESS_COOKIE = "rguide_analytics_access";
-
-function getAnalyticsAccessToken() {
-  return process.env.ANALYTICS_DASHBOARD_TOKEN?.trim() || null;
-}
-
-function isValidAccessToken(candidate: string | null) {
-  const token = getAnalyticsAccessToken();
-
-  if (!token || !candidate) {
-    return false;
-  }
-
-  const tokenBuffer = Buffer.from(token);
-  const candidateBuffer = Buffer.from(candidate);
-
-  return (
-    tokenBuffer.length === candidateBuffer.length &&
-    timingSafeEqual(tokenBuffer, candidateBuffer)
-  );
-}
+import {
+  ANALYTICS_ACCESS_COOKIE,
+  ANALYTICS_SESSION_MAX_AGE_SECONDS,
+  createAnalyticsAccessSession,
+  isValidAnalyticsAccessToken,
+} from "@/lib/analytics-access";
+import { checkRateLimit, rateLimitResponse } from "@/lib/rate-limit";
 
 export async function POST(request: Request) {
+  const rateLimit = await checkRateLimit(request, {
+    namespace: "analytics-dashboard-access",
+    limit: 10,
+    windowMs: 15 * 60 * 1000,
+  });
+
+  if (!rateLimit.allowed) {
+    return rateLimitResponse(rateLimit);
+  }
+
   const formData = await request.formData();
   const token = formData.get("token");
-  const isValid = isValidAccessToken(typeof token === "string" ? token : null);
+  const isValid = isValidAnalyticsAccessToken(typeof token === "string" ? token : null);
   const redirectUrl = new URL("/admin/analytics", request.url);
 
   if (!isValid) {
@@ -34,14 +29,20 @@ export async function POST(request: Request) {
     return NextResponse.redirect(redirectUrl, { status: 303 });
   }
 
+  const session = createAnalyticsAccessSession();
+
+  if (!session) {
+    return NextResponse.json({ error: "Analytics access is not configured." }, { status: 503 });
+  }
+
   const response = NextResponse.redirect(redirectUrl, { status: 303 });
 
-  response.cookies.set(ANALYTICS_ACCESS_COOKIE, token as string, {
+  response.cookies.set(ANALYTICS_ACCESS_COOKIE, session, {
     httpOnly: true,
     sameSite: "lax",
     secure: process.env.NODE_ENV === "production",
     path: "/admin/analytics",
-    maxAge: 60 * 60 * 24 * 30,
+    maxAge: ANALYTICS_SESSION_MAX_AGE_SECONDS,
   });
 
   return response;

@@ -4,6 +4,7 @@ import process from "node:process";
 import { fileURLToPath } from "node:url";
 
 import pg from "pg";
+import { getPgSslConfig } from "./database-ssl.mjs";
 
 import {
   addPoiReferencesToGuides,
@@ -50,12 +51,6 @@ function getDatabaseUrl() {
     process.env.DATABASE_URL ??
     null
   );
-}
-
-function getPgSslConfig(databaseUrl) {
-  return databaseUrl.includes("localhost") || databaseUrl.includes("127.0.0.1")
-    ? false
-    : { rejectUnauthorized: false };
 }
 
 function pushSample(samples, value) {

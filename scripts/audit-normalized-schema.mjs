@@ -4,6 +4,7 @@ import process from "node:process";
 import { fileURLToPath } from "node:url";
 
 import pg from "pg";
+import { getPgSslConfig } from "./database-ssl.mjs";
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const STRICT = process.argv.includes("--strict");
@@ -30,12 +31,6 @@ function getDatabaseUrl() {
   return process.env.SUPABASE_DB_URL ?? process.env.SUPABASE_DATABASE_URL ?? process.env.DATABASE_URL ?? null;
 }
 
-function getSsl(databaseUrl) {
-  return databaseUrl.includes("localhost") || databaseUrl.includes("127.0.0.1")
-    ? false
-    : { rejectUnauthorized: false };
-}
-
 function report(label, rows, severity, issues) {
   if (!rows.length) return;
   issues.push({ label, rows, severity });
@@ -51,7 +46,7 @@ async function main() {
   const databaseUrl = getDatabaseUrl();
   if (!databaseUrl) throw new Error("Set SUPABASE_DB_URL, SUPABASE_DATABASE_URL, or DATABASE_URL.");
 
-  const client = new pg.Client({ connectionString: databaseUrl, ssl: getSsl(databaseUrl) });
+  const client = new pg.Client({ connectionString: databaseUrl, ssl: getPgSslConfig(databaseUrl) });
   await client.connect();
 
   const issues = [];

@@ -4,6 +4,7 @@ import process from "node:process";
 import { fileURLToPath } from "node:url";
 
 import pg from "pg";
+import { getPgSslConfig } from "./database-ssl.mjs";
 
 import {
   describeEditorialGuideFilters,
@@ -165,12 +166,6 @@ function loadEnvFile(filePath) {
 
 function getDatabaseUrl() {
   return process.env.SUPABASE_DB_URL ?? process.env.SUPABASE_DATABASE_URL ?? process.env.DATABASE_URL ?? null;
-}
-
-function getPgSslConfig(databaseUrl) {
-  return databaseUrl.includes("localhost") || databaseUrl.includes("127.0.0.1")
-    ? false
-    : { rejectUnauthorized: false };
 }
 
 function normalizeText(value) {

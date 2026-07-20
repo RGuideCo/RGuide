@@ -1024,7 +1024,7 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: userError ?? "Sign in before saving." }, { status: 401 });
   }
 
-  const rateLimit = checkRateLimit(request, {
+  const rateLimit = await checkRateLimit(request, {
     namespace: "submitted-guides:write",
     limit: getNumberEnv("USER_GUIDE_WRITE_LIMIT_PER_10_MINUTES", 40),
     windowMs: 10 * 60_000,
@@ -1173,7 +1173,7 @@ export async function DELETE(request: NextRequest) {
     return NextResponse.json({ error: userError ?? "Sign in before deleting." }, { status: 401 });
   }
 
-  const rateLimit = checkRateLimit(request, {
+  const rateLimit = await checkRateLimit(request, {
     namespace: "submitted-guides:delete",
     limit: getNumberEnv("USER_GUIDE_DELETE_LIMIT_PER_10_MINUTES", 30),
     windowMs: 10 * 60_000,

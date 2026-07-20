@@ -6,6 +6,7 @@ import { MapListCard } from "@/components/cards/MapListCard";
 import { getWeeklyEventGuideListsForCity } from "@/data/weekly-events";
 import { getAbsoluteHref, getCityHref, getEventHref } from "@/lib/routes";
 import { getServerEditorialGuides } from "@/lib/server-editorial-guides";
+import { serializeJsonForHtml } from "@/lib/serialize-json";
 
 export const dynamic = "force-dynamic";
 
@@ -113,7 +114,7 @@ export default async function EventDetailPage({ params }: EventDetailPageProps) 
     <div className="page-shell py-10">
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(eventJsonLd) }}
+        dangerouslySetInnerHTML={{ __html: serializeJsonForHtml(eventJsonLd) }}
       />
       <div className="space-y-8">
         <article className="surface p-6 sm:p-8">

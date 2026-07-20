@@ -7,6 +7,7 @@ import { fileURLToPath } from "node:url";
 import { PutObjectCommand, S3Client } from "@aws-sdk/client-s3";
 import { countries, getCountryCode } from "countries-list";
 import pg from "pg";
+import { getPgSslConfig } from "./database-ssl.mjs";
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const IMAGE_EXT_BY_TYPE = new Map([
@@ -216,12 +217,6 @@ function requiredEnv(name) {
 
 function getDatabaseUrl() {
   return process.env.SUPABASE_DB_URL ?? process.env.SUPABASE_DATABASE_URL ?? process.env.DATABASE_URL ?? null;
-}
-
-function getPgSslConfig(databaseUrl) {
-  return databaseUrl.includes("localhost") || databaseUrl.includes("127.0.0.1")
-    ? false
-    : { rejectUnauthorized: false };
 }
 
 function createPgClient(databaseUrl) {

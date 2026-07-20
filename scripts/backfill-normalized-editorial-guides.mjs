@@ -4,6 +4,7 @@ import process from "node:process";
 import { fileURLToPath } from "node:url";
 
 import pg from "pg";
+import { getPgSslConfig } from "./database-ssl.mjs";
 
 import {
   addPoiReferencesToGuides,
@@ -2514,7 +2515,7 @@ async function main() {
 
   const client = new pg.Client({
     connectionString: databaseUrl,
-    ssl: databaseUrl.includes("localhost") || databaseUrl.includes("127.0.0.1") ? false : { rejectUnauthorized: false },
+    ssl: getPgSslConfig(databaseUrl),
   });
   const stats = {
     entries: 0,
