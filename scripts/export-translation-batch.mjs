@@ -20,8 +20,8 @@ function parseOptions(argv) {
     else throw new Error(`Unknown argument: ${value}`);
   }
   if (!/^[a-z]{2,3}(?:-[A-Z]{2})?$/.test(options.locale)) throw new Error("Invalid --locale.");
-  if (!Number.isInteger(options.limit) || options.limit < 1 || options.limit > 25) {
-    throw new Error("--limit must be between 1 and 25 for a reviewable Codex batch.");
+  if (!Number.isInteger(options.limit) || options.limit < 1 || options.limit > 100) {
+    throw new Error("--limit must be between 1 and 100. Use balanced shards for batches above 25 roots.");
   }
   if (options.type && !["destination", "entry", "event"].includes(options.type)) {
     throw new Error("--type must be destination, entry, or event.");
@@ -30,19 +30,9 @@ function parseOptions(argv) {
   return options;
 }
 
-async function loadEntryItem(client, job) {
-  const { rows: entryRows } = await client.query(
-    "select entry.id, view.list from public.entries entry join public.entries_maplist view on view.id=entry.id where entry.id=$1 and entry.status='published'",
-    [job.root_entity_id],
-  );
-  const { rows: stopRows } = await client.query(
-    "select id,legacy_id,stop_order,name,description,places from public.entry_stops where entry_id=$1 order by stop_order,id",
-    [job.root_entity_id],
-  );
-  const source = entryRows[0];
-  if (!source) throw new Error(`Published entry ${job.root_entity_id} was not found.`);
+function buildEntryItem(source, stopRows, locale) {
   const input = {
-    locale: job.locale,
+    locale,
     guide: {
       title: source.list.title,
       description: source.list.description,
@@ -80,6 +70,33 @@ async function loadEntryItem(client, job) {
       })),
     },
   };
+}
+
+async function loadEntryItems(client, jobs) {
+  if (jobs.length === 0) return new Map();
+  const entryIds = jobs.map((job) => job.root_entity_id);
+  const { rows: entryRows } = await client.query(
+    "select entry.id,view.list from public.entries entry join public.entries_maplist view on view.id=entry.id where entry.id=any($1::uuid[]) and entry.status='published'",
+    [entryIds],
+  );
+  const { rows: stopRows } = await client.query(
+    "select entry_id,id,legacy_id,stop_order,name,description,places from public.entry_stops where entry_id=any($1::uuid[]) order by entry_id,stop_order,id",
+    [entryIds],
+  );
+  const entriesById = new Map(entryRows.map((entry) => [entry.id, entry]));
+  const stopsByEntryId = new Map();
+  for (const stop of stopRows) {
+    const stops = stopsByEntryId.get(stop.entry_id) ?? [];
+    stops.push(stop);
+    stopsByEntryId.set(stop.entry_id, stops);
+  }
+  const itemsByJobId = new Map();
+  for (const job of jobs) {
+    const source = entriesById.get(job.root_entity_id);
+    if (!source) throw new Error(`Published entry ${job.root_entity_id} was not found.`);
+    itemsByJobId.set(job.id, buildEntryItem(source, stopsByEntryId.get(job.root_entity_id) ?? [], job.locale));
+  }
+  return itemsByJobId;
 }
 
 async function loadDestinationItem(client, job) {
@@ -206,9 +223,13 @@ async function main() {
       values,
     );
     const items = [];
+    const entryItems = await loadEntryItems(
+      client,
+      jobs.filter((job) => job.root_entity_type === "entry"),
+    );
     for (const job of jobs) {
       const content = job.root_entity_type === "entry"
-        ? await loadEntryItem(client, job)
+        ? entryItems.get(job.id)
         : job.root_entity_type === "destination"
           ? await loadDestinationItem(client, job)
           : await loadEventItem(client, job);

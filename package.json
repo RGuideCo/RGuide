@@ -36,6 +36,8 @@
     "cleanup:venue-media-primary-r2": "node scripts/cleanup-venue-media-primary-r2.mjs",
     "translate:backfill": "node scripts/backfill-content-translations.mjs",
     "translate:export": "node scripts/export-translation-batch.mjs",
+    "translate:shard": "node scripts/shard-translation-batch.mjs",
+    "translate:merge": "node scripts/merge-translation-shards.mjs",
     "translate:import": "node scripts/process-translation-jobs.mjs",
     "translate:process": "node scripts/process-translation-jobs.mjs",
     "verify:translations": "node scripts/verify-content-translations.mjs",

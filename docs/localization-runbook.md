@@ -27,11 +27,20 @@ Every indexable English and Spanish page must have a self-canonical plus recipro
    npm run translate:backfill -- --locale es
    ```
 
-4. Export a small, reviewable batch. Five roots is the default and 25 is the maximum:
+4. Export a small batch directly, or export up to 100 roots for balanced parallel translation:
 
    ```bash
    npm run translate:export -- --locale es --limit 5 --output translation-batches/work/es-next.json
    ```
+
+   For a parallel 50-root batch, split by actual nested translation workload rather than raw guide count:
+
+   ```bash
+   npm run translate:export -- --locale es --type entry --limit 50 --output translation-batches/work/es-next-50.json
+   npm run translate:shard -- --batch translation-batches/work/es-next-50.json --shards 5
+   ```
+
+   Assign each generated shard to one translator. Each translator must complete and self-review only its own shard. Do not add a second full-batch reviewer to the critical path; the parent process performs deterministic merge validation and an editorial sample from every shard.
 
 5. Ask Codex to translate the exported file:
 
@@ -42,10 +51,16 @@ Every indexable English and Spanish page must have a self-canonical plus recipro
    --auto-publish, and report the verification result. Do not call a paid translation API.
    ```
 
-6. Codex fills only each item's `translation` object. It must not edit `input`, IDs, locale, or source hashes. Import the completed batch through the normalized writer:
+6. Codex fills only each item's `translation` object. It must not edit `input`, IDs, locale, or source hashes. Merge parallel shards before importing:
 
    ```bash
-   npm run translate:import -- --locale es --batch translation-batches/work/es-next.json --auto-publish
+   npm run translate:merge -- --batch translation-batches/work/es-next-50.json --shards 5 --output translation-batches/work/es-next-50-complete.json
+   ```
+
+   The merge rejects missing or duplicate jobs, changed inputs or source hashes, missing translated fields, changed nested IDs/order, altered `placesJson`, copied English descriptions, and invalid localized SEO slugs. Import the completed batch through the normalized writer:
+
+   ```bash
+   npm run translate:import -- --locale es --batch translation-batches/work/es-next-50-complete.json --auto-publish
    ```
 
    The importer rejects stale source hashes, mismatched IDs, missing stops or schedule items, and incomplete translated fields. It writes the typed translation tables and rebuilds localized MapList caches; the JSON batch is only a temporary handoff file.

@@ -364,18 +364,23 @@ async function processEntry(client, job, autoPublish, targetLocale) {
     [job.root_entity_id, job.locale, assertText(translated.title, "title"), assertText(translated.description, "description"), translated.highlights ?? [], seoSlug, assertText(translated.seoTitle, "seoTitle"), assertText(translated.seoDescription, "seoDescription"), status, job.source_hash, translationInputHash],
   );
 
-  for (const stop of translated.stops) {
-    await client.query(
-      [
-        "insert into public.entry_stop_translations (entry_stop_id, locale, name, description, places, translation_status, source_hash, translation_method, translated_at, published_at, metadata)",
-        "values ($1,$2,$3,$4,$5,$6,$7,'machine',now(),case when $6 = 'published' then now() else null end,jsonb_build_object('translation_input_hash',$8::text))",
-        "on conflict (entry_stop_id, locale) do update set name=excluded.name, description=excluded.description, places=excluded.places,",
-        "translation_status=excluded.translation_status, source_hash=excluded.source_hash, translation_method=excluded.translation_method,",
-        "translated_at=excluded.translated_at, published_at=excluded.published_at, metadata=public.entry_stop_translations.metadata || excluded.metadata, updated_at=now()",
-      ].join(" "),
-      [stop.entryStopId, job.locale, assertText(stop.name, "stop name"), assertText(stop.description, "stop description"), JSON.stringify(parsePlaces(stop.placesJson, `places for ${stop.entryStopId}`)), status, job.source_hash, translationInputHash],
-    );
-  }
+  const stopTranslations = translated.stops.map((stop) => ({
+    entry_stop_id: stop.entryStopId,
+    name: assertText(stop.name, "stop name"),
+    description: assertText(stop.description, "stop description"),
+    places: parsePlaces(stop.placesJson, `places for ${stop.entryStopId}`),
+  }));
+  await client.query(
+    [
+      "insert into public.entry_stop_translations (entry_stop_id, locale, name, description, places, translation_status, source_hash, translation_method, translated_at, published_at, metadata)",
+      "select item.entry_stop_id,$2,item.name,item.description,item.places,$3,$4,'machine',now(),case when $3 = 'published' then now() else null end,jsonb_build_object('translation_input_hash',$5::text)",
+      "from jsonb_to_recordset($1::jsonb) as item(entry_stop_id uuid,name text,description text,places jsonb)",
+      "on conflict (entry_stop_id, locale) do update set name=excluded.name, description=excluded.description, places=excluded.places,",
+      "translation_status=excluded.translation_status, source_hash=excluded.source_hash, translation_method=excluded.translation_method,",
+      "translated_at=excluded.translated_at, published_at=excluded.published_at, metadata=public.entry_stop_translations.metadata || excluded.metadata, updated_at=now()",
+    ].join(" "),
+    [JSON.stringify(stopTranslations), job.locale, status, job.source_hash, translationInputHash],
+  );
 
   if (autoPublish) {
     const translatedById = new Map(translated.stops.map((stop) => [stop.entryStopId, stop]));
