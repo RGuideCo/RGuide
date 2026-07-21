@@ -25,7 +25,7 @@ interface SpanishCityPageProps {
   params: Promise<{ segments: string[] }>;
 }
 
-export const revalidate = 86400;
+export const revalidate = 300;
 
 function getRequestedCityName(segments: string[], cities: ReturnType<typeof getCitiesFromContinents>) {
   return getCityBySimpleSlug(segments[0] ?? "", cities)?.name;

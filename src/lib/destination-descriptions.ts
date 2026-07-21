@@ -719,7 +719,7 @@ const getCachedDestinationContentRows = unstable_cache(
   async (locale: AppLocale) => {
     return loadDestinationContentRows({ locale });
   },
-  ["destination-content-rows", "city-images-v3-paginated"],
+  ["destination-content-rows-v2", "city-images-v3-paginated"],
   {
     revalidate: Number.isFinite(DESTINATION_DESCRIPTIONS_CACHE_SECONDS)
       ? DESTINATION_DESCRIPTIONS_CACHE_SECONDS
@@ -732,7 +732,7 @@ const getCachedRuntimeDestinationContentRows = unstable_cache(
   async (locale: AppLocale) => {
     return loadDestinationContentRows({ forceDatabase: true, locale });
   },
-  ["destination-content-rows", "city-images-runtime-v2-paginated"],
+  ["destination-content-rows-v2", "city-images-runtime-v2-paginated"],
   {
     revalidate: Number.isFinite(DESTINATION_DESCRIPTIONS_CACHE_SECONDS)
       ? DESTINATION_DESCRIPTIONS_CACHE_SECONDS

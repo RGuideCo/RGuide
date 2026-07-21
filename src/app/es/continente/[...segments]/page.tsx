@@ -19,7 +19,7 @@ import { getServerEditorialGuides } from "@/lib/server-editorial-guides";
 import { slugify } from "@/lib/utils";
 
 interface SpanishContinentPageProps { params: Promise<{ segments: string[] }> }
-export const revalidate = 86400;
+export const revalidate = 300;
 
 async function loadRoute(segments: string[]) {
   const [continents, guides, publication, destinationTranslations] = await Promise.all([

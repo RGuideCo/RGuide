@@ -40,12 +40,27 @@ export function LocalizedCityRouteSeoIndex({
   const categories = CATEGORIES.filter((category) =>
     guides.some((guide) => guide.location.city === route.city.name && guide.category === category),
   );
+  const cityName = destinationTranslations.find(
+    (translation) =>
+      translation.scope === "city" &&
+      (translation.legacyId === route.city.id || translation.sourceName === route.city.name),
+  )?.displayName ?? route.city.name;
+  const countryName = destinationTranslations.find(
+    (translation) => translation.scope === "country" && translation.sourceName === route.city.country,
+  )?.displayName ?? route.city.country;
+  const neighborhoodName = route.neighborhood
+    ? destinationTranslations.find(
+        (translation) =>
+          translation.scope === "neighborhood" &&
+          (translation.legacyId === route.neighborhood?.id || translation.sourceName === route.neighborhood?.name),
+      )?.displayName ?? route.neighborhood.name
+    : undefined;
 
   return (
     <section className="page-shell py-8 sm:py-10" aria-labelledby="localized-city-heading">
       <div className="surface overflow-hidden p-4 sm:p-6">
         <p className="text-xs font-semibold uppercase text-orange-700">
-          {[route.neighborhood?.name, route.city.name, route.city.country].filter(Boolean).join(" / ")}
+          {[neighborhoodName, cityName, countryName].filter(Boolean).join(" / ")}
         </p>
         <h1 id="localized-city-heading" className="mt-2 text-3xl font-semibold text-slate-950 sm:text-4xl">{route.h1}</h1>
         <p className="mt-3 max-w-3xl text-sm leading-6 text-slate-600">{route.intro}</p>
@@ -115,7 +130,7 @@ export function LocalizedCityRouteSeoIndex({
 
         {!route.neighborhood ? (
           <nav className="mt-8 border-t border-slate-200 pt-5" aria-label="Barrios">
-            <h2 className="text-lg font-semibold text-slate-950">Barrios de {route.city.name}</h2>
+            <h2 className="text-lg font-semibold text-slate-950">Barrios de {cityName}</h2>
             <div className="mt-3 flex flex-wrap gap-2">
               {route.city.subareas?.slice(0, 24).map((neighborhood) => {
                 const translation = destinationTranslations.find(

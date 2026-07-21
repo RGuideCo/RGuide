@@ -19,7 +19,7 @@ import { getServerEditorialGuides } from "@/lib/server-editorial-guides";
 import { slugify } from "@/lib/utils";
 
 interface SpanishCountryPageProps { params: Promise<{ segments: string[] }> }
-export const revalidate = 86400;
+export const revalidate = 300;
 
 async function loadRoute(segments: string[]) {
   const [continents, guides, publication, destinationTranslations] = await Promise.all([
@@ -65,6 +65,11 @@ export default async function SpanishCountryPage({ params }: SpanishCountryPageP
   if (`/es/pais/${segments.join("/")}` !== canonical) permanentRedirect(canonical);
   const dictionary = getDictionary("es");
   const placeName = canonicalTranslation?.displayName ?? route.country.name;
+  const continentName = findDestinationRouteTranslation(destinationTranslations, {
+    id: route.continent.id,
+    name: route.continent.name,
+    scope: "continent",
+  })?.displayName ?? route.continent.name;
   const title = `Guías de viaje de ${placeName}`;
   const jsonLd = { "@context": "https://schema.org", "@type": "CollectionPage", "@id": `${getAbsoluteHref(canonical)}#webpage`, url: getAbsoluteHref(canonical), name: title, description: route.country.description, inLanguage: "es" };
   return (
@@ -72,7 +77,7 @@ export default async function SpanishCountryPage({ params }: SpanishCountryPageP
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
       <ProgressiveEnhancementShell fallback={
         <main className="mx-auto max-w-5xl px-6 py-12">
-          <p className="text-sm font-medium text-slate-500">{route.continent.name}</p>
+          <p className="text-sm font-medium text-slate-500">{continentName}</p>
           <h1 className="mt-2 text-4xl font-semibold text-slate-950">{title}</h1>
           <p className="mt-4 max-w-3xl text-base leading-7 text-slate-700">{route.country.description}</p>
           <section className="mt-10 grid gap-3 sm:grid-cols-2 lg:grid-cols-3" aria-label={dictionary.citiesLabel(placeName)}>

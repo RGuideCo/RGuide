@@ -75,7 +75,7 @@ const getCachedDestinationRouteTranslations = unstable_cache(
       }];
     });
   },
-  ["destination-route-translations-v1"],
+  ["destination-route-translations-v2"],
   { revalidate: 3600, tags: ["destination-translations"] },
 );
 
