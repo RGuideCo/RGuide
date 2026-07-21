@@ -11,7 +11,7 @@ import { getAbsoluteHref } from "@/lib/routes";
 import { getServerEditorialGuides } from "@/lib/server-editorial-guides";
 import { serializeJsonForHtml } from "@/lib/serialize-json";
 
-export const revalidate = 21600;
+export const revalidate = 300;
 
 export async function generateMetadata(): Promise<Metadata> {
   const publication = await getLocalePublicationState("es");

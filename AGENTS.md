@@ -45,6 +45,9 @@ This repository is rGuide, the travel guide and destination website. Do not appl
 
 - Follow `docs/localization-runbook.md` for translation work.
 - Use explicit Codex translation batches through `translate:export` and `translate:import`.
+- For batches above 25 roots, use compact `translate:shard` handoffs to balance nested translation workload across agents and `translate:merge` for deterministic validation. Use 10 disjoint shards for a 50-root batch.
+- Require translator self-review, parent merge validation, and one editorial sample per shard. Do not delay import with a redundant full-batch reviewer unless a sample exposes a quality problem.
+- For routine translation batches, do not run a production build when application and workflow code are unchanged. Keep sampling off the post-translation critical path by reviewing each shard as it finishes.
 - Do not call a paid translation API or enable a scheduled translation worker unless the user explicitly changes this policy.
 - Translation batch JSON is a temporary handoff. Normalized translation tables and localized render caches remain the source of truth.
 - Keep a locale `noindex` until `verify:translations` passes completely.
