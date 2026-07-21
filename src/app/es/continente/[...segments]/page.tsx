@@ -16,6 +16,7 @@ import {
 } from "@/lib/i18n/server";
 import { getAbsoluteHref } from "@/lib/routes";
 import { getServerEditorialGuides } from "@/lib/server-editorial-guides";
+import { serializeJsonForHtml } from "@/lib/serialize-json";
 import { slugify } from "@/lib/utils";
 
 interface SpanishContinentPageProps { params: Promise<{ segments: string[] }> }
@@ -68,7 +69,7 @@ export default async function SpanishContinentPage({ params }: SpanishContinentP
   const jsonLd = { "@context": "https://schema.org", "@type": "CollectionPage", "@id": `${getAbsoluteHref(canonical)}#webpage`, url: getAbsoluteHref(canonical), name: title, description: route.description, inLanguage: "es" };
   return (
     <>
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: serializeJsonForHtml(jsonLd) }} />
       <ProgressiveEnhancementShell fallback={
         <main className="mx-auto max-w-5xl px-6 py-12">
           <p className="text-sm font-medium text-slate-500">{dictionary.continentEyebrow}</p>

@@ -288,7 +288,7 @@ async function loadExternalSuggestions(params: {
   cityCoordinates?: Coordinates;
   limit: number;
 }) {
-  const apiKey = process.env.GEOAPIFY_API_KEY ?? process.env.NEXT_PUBLIC_GEOAPIFY_API_KEY;
+  const apiKey = process.env.GEOAPIFY_API_KEY;
 
   if (!apiKey) {
     return [];
@@ -345,7 +345,7 @@ export async function GET(request: NextRequest) {
   const limit = Number.isFinite(requestedLimit)
     ? Math.min(Math.max(requestedLimit, 1), 12)
     : DEFAULT_LIMIT;
-  const rateLimit = checkRateLimit(request, {
+  const rateLimit = await checkRateLimit(request, {
     namespace: "places-search",
     limit: 60,
     windowMs: 60_000,

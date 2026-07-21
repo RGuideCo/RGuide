@@ -5,6 +5,8 @@ import type { Feature, FeatureCollection, Geometry } from "geojson";
 import londonBoundaries from "@/data/boundaries/london.json";
 import tokyoBoundaries from "@/data/boundaries/tokyo.json";
 import type { NeighborhoodBoundaryProperties } from "@/data/boundary-loaders";
+import { getPgSslConfig } from "@/lib/database-ssl";
+import { checkRateLimit, rateLimitResponse } from "@/lib/rate-limit";
 
 export const revalidate = 86400;
 export const runtime = "nodejs";
@@ -23,12 +25,6 @@ function getDatabaseUrl() {
     process.env.DATABASE_URL ??
     null
   );
-}
-
-function getPgSslConfig(databaseUrl: string) {
-  return databaseUrl.includes("localhost") || databaseUrl.includes("127.0.0.1")
-    ? false
-    : { rejectUnauthorized: false };
 }
 
 function emptyCollection(): FeatureCollection<Geometry, NeighborhoodBoundaryProperties> {
@@ -71,9 +67,19 @@ function boundaryResponse(collection: FeatureCollection<Geometry, NeighborhoodBo
 }
 
 export async function GET(
-  _request: Request,
+  request: Request,
   context: { params: Promise<{ cityId: string }> },
 ) {
+  const rateLimit = await checkRateLimit(request, {
+    namespace: "destination-boundaries",
+    limit: 120,
+    windowMs: 60 * 1000,
+  });
+
+  if (!rateLimit.allowed) {
+    return rateLimitResponse(rateLimit);
+  }
+
   const { cityId } = await context.params;
   const databaseUrl = getDatabaseUrl();
 

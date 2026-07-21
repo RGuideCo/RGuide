@@ -2,6 +2,7 @@ import fs from "node:fs";
 import process from "node:process";
 
 import pg from "pg";
+import { getPgSslConfig } from "./database-ssl.mjs";
 
 function loadEnvFile(filePath) {
   if (!fs.existsSync(filePath)) return;
@@ -35,7 +36,7 @@ if (!databaseUrl) throw new Error("Missing database URL");
 
 const client = new pg.Client({
   connectionString: databaseUrl,
-  ssl: databaseUrl.includes("localhost") ? false : { rejectUnauthorized: false },
+  ssl: getPgSslConfig(databaseUrl),
 });
 
 await client.connect();

@@ -19,7 +19,7 @@ export async function GET(request: Request) {
   try {
     const { searchParams } = new URL(request.url);
     const cityName = searchParams.get("city")?.trim() || undefined;
-    const rateLimit = checkRateLimit(request, {
+    const rateLimit = await checkRateLimit(request, {
       namespace: "editorial-guides",
       limit: 120,
       windowMs: 60_000,

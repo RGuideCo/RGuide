@@ -18,6 +18,7 @@ import {
 } from "@/lib/i18n/server";
 import { getCitiesFromContinents } from "@/lib/geography-tree";
 import { getServerEditorialGuides } from "@/lib/server-editorial-guides";
+import { serializeJsonForHtml } from "@/lib/serialize-json";
 import { slugify } from "@/lib/utils";
 import type { City } from "@/types";
 
@@ -148,7 +149,7 @@ export default async function SpanishCityPage({ params }: SpanishCityPageProps) 
   return (
     <>
       {route.structuredData.map((item, index) => (
-        <script key={index} type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(item) }} />
+        <script key={index} type="application/ld+json" dangerouslySetInnerHTML={{ __html: serializeJsonForHtml(item) }} />
       ))}
       <ProgressiveEnhancementShell
         fallback={(

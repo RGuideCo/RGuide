@@ -13,6 +13,7 @@ import {
   resolveCountryDeepLink,
 } from "@/lib/deep-link-routes";
 import { getServerEditorialGuides } from "@/lib/server-editorial-guides";
+import { serializeJsonForHtml } from "@/lib/serialize-json";
 import { getLocalizedCountryPath } from "@/lib/i18n/paths";
 import {
   findDestinationRouteTranslation,
@@ -133,7 +134,7 @@ export default async function CountryDeepLinkPage({ params }: CountryDeepLinkPag
         <script
           key={index}
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(item) }}
+          dangerouslySetInnerHTML={{ __html: serializeJsonForHtml(item) }}
         />
       ))}
       <ProgressiveEnhancementShell

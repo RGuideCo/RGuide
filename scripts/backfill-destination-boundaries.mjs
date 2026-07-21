@@ -1,6 +1,7 @@
 import fs from "fs";
 import path from "path";
 import pg from "pg";
+import { getPgSslConfig } from "./database-ssl.mjs";
 
 const ROOT = process.cwd();
 const BOUNDARY_DIR = path.join(ROOT, "src/data/boundaries");
@@ -185,9 +186,7 @@ async function main() {
 
   const client = new pg.Client({
     connectionString: databaseUrl,
-    ssl: databaseUrl.includes("localhost") || databaseUrl.includes("127.0.0.1")
-      ? false
-      : { rejectUnauthorized: false },
+    ssl: getPgSslConfig(databaseUrl),
   });
 
   const stats = {

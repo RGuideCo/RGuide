@@ -9,6 +9,7 @@ import { DICTIONARIES } from "@/lib/i18n/dictionaries";
 import { getDestinationRouteTranslations, getLocalePublicationState } from "@/lib/i18n/server";
 import { getAbsoluteHref } from "@/lib/routes";
 import { getServerEditorialGuides } from "@/lib/server-editorial-guides";
+import { serializeJsonForHtml } from "@/lib/serialize-json";
 
 export const revalidate = 300;
 
@@ -50,7 +51,7 @@ export default async function SpanishHomePage() {
 
   return (
     <>
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: serializeJsonForHtml(jsonLd) }} />
       <ProgressiveEnhancementShell
         fallback={
           <LocalizedHomeServerContent

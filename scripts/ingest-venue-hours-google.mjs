@@ -4,6 +4,7 @@ import process from "node:process";
 import { fileURLToPath } from "node:url";
 
 import pg from "pg";
+import { getPgSslConfig } from "./database-ssl.mjs";
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const GOOGLE_DETAILS_SKU = "places_api_place_details_enterprise";
@@ -135,12 +136,6 @@ function coordinatesToPoint(value) {
 
 function getDatabaseUrl() {
   return process.env.SUPABASE_DB_URL ?? process.env.SUPABASE_DATABASE_URL ?? process.env.DATABASE_URL ?? null;
-}
-
-function getPgSslConfig(databaseUrl) {
-  return databaseUrl.includes("localhost") || databaseUrl.includes("127.0.0.1")
-    ? false
-    : { rejectUnauthorized: false };
 }
 
 function enabledGoogleHours(args) {
@@ -511,7 +506,7 @@ async function upsertSource(client) {
         'Google Maps Platform',
         'venue_hours',
         now(),
-        jsonb_build_object('source', 'google_places_api_new', 'sku', $1)
+        jsonb_build_object('source', 'google_places_api_new', 'sku', $1::text)
       )
       on conflict (url) do update set
         name = excluded.name,

@@ -8,6 +8,7 @@ import { getCanonicalGuidePath } from "@/lib/deep-link-routes";
 import { getAbsoluteHref, getCategoryHref, getCityHref, getListHref } from "@/lib/routes";
 import { getContinentsWithDestinationDescriptions } from "@/lib/destination-descriptions";
 import { getServerEditorialGuides } from "@/lib/server-editorial-guides";
+import { serializeJsonForHtml } from "@/lib/serialize-json";
 
 interface ListDetailPageProps {
   params: Promise<{
@@ -143,12 +144,12 @@ export default async function ListDetailPage({ params }: ListDetailPageProps) {
     <div className="page-shell py-10">
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
+        dangerouslySetInnerHTML={{ __html: serializeJsonForHtml(breadcrumbJsonLd) }}
       />
       {list.stops.length ? (
         <script
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(itemListJsonLd) }}
+          dangerouslySetInnerHTML={{ __html: serializeJsonForHtml(itemListJsonLd) }}
         />
       ) : null}
       <div className="grid gap-6 xl:grid-cols-[minmax(0,1fr)_320px]">

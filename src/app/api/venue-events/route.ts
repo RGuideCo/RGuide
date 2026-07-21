@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createClient } from "@supabase/supabase-js";
 
+import { checkRateLimit, rateLimitResponse } from "@/lib/rate-limit";
 import type { VenueEvent } from "@/types";
 
 export const dynamic = "force-dynamic";
@@ -13,7 +14,6 @@ type VenueEventRow = VenueEvent & {
 function getSupabaseDataApiConfig() {
   const url = process.env.SUPABASE_URL ?? process.env.NEXT_PUBLIC_SUPABASE_URL ?? null;
   const key =
-    process.env.SUPABASE_SERVICE_ROLE_KEY ??
     process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY ??
     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ??
     null;
@@ -29,6 +29,16 @@ function parseBoolean(value: string | null) {
 }
 
 export async function GET(request: NextRequest) {
+  const rateLimit = await checkRateLimit(request, {
+    namespace: "venue-events",
+    limit: 120,
+    windowMs: 60 * 1000,
+  });
+
+  if (!rateLimit.allowed) {
+    return rateLimitResponse(rateLimit);
+  }
+
   const config = getSupabaseDataApiConfig();
 
   if (!config) {

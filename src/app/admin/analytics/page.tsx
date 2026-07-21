@@ -3,7 +3,9 @@ import { cookies } from "next/headers";
 import Link from "next/link";
 import pg from "pg";
 import { createClient } from "@supabase/supabase-js";
-import { timingSafeEqual } from "node:crypto";
+
+import { ANALYTICS_ACCESS_COOKIE, isValidAnalyticsAccessSession } from "@/lib/analytics-access";
+import { getPgSslConfig } from "@/lib/database-ssl";
 
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
@@ -63,7 +65,6 @@ type AnalyticsClickEvent = RecentRow & {
   created_at: string;
 };
 
-const ANALYTICS_ACCESS_COOKIE = "rguide_analytics_access";
 const RECENT_PAGE_SIZE = 50;
 const TIME_ZONE = "Pacific/Auckland";
 const RANGE_OPTIONS = [
@@ -81,29 +82,9 @@ type AnalyticsQuery = {
   offset: number;
 };
 
-function getAnalyticsAccessToken() {
-  return process.env.ANALYTICS_DASHBOARD_TOKEN?.trim() || null;
-}
-
-function isValidAccessToken(candidate: string | undefined | null) {
-  const token = getAnalyticsAccessToken();
-
-  if (!token || !candidate) {
-    return false;
-  }
-
-  const tokenBuffer = Buffer.from(token);
-  const candidateBuffer = Buffer.from(candidate);
-
-  return (
-    tokenBuffer.length === candidateBuffer.length &&
-    timingSafeEqual(tokenBuffer, candidateBuffer)
-  );
-}
-
 async function hasAnalyticsAccess() {
   const cookieStore = await cookies();
-  return isValidAccessToken(cookieStore.get(ANALYTICS_ACCESS_COOKIE)?.value);
+  return isValidAnalyticsAccessSession(cookieStore.get(ANALYTICS_ACCESS_COOKIE)?.value);
 }
 
 function getDatabaseUrl() {
@@ -120,12 +101,6 @@ function getSupabaseAnalyticsConfig() {
   const serviceKey = process.env.SUPABASE_SERVICE_ROLE_KEY ?? null;
 
   return url && serviceKey ? { url, key: serviceKey, canReadDirectly: true } : null;
-}
-
-function getPgSslConfig(databaseUrl: string) {
-  return databaseUrl.includes("localhost") || databaseUrl.includes("127.0.0.1")
-    ? false
-    : { rejectUnauthorized: false };
 }
 
 function toNumber(value: unknown) {
