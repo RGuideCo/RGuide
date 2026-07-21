@@ -13,6 +13,14 @@ export interface LocalePublicationState {
   indexable: boolean;
 }
 
+interface DestinationRouteTranslationDataApiRow {
+  display_name: string;
+  slug: string;
+  destination: unknown;
+}
+
+const DESTINATION_TRANSLATION_DATA_API_PAGE_SIZE = 1000;
+
 function getSupabaseConfig() {
   const url = process.env.SUPABASE_URL ?? process.env.NEXT_PUBLIC_SUPABASE_URL;
   const key =
@@ -53,13 +61,25 @@ const getCachedDestinationRouteTranslations = unstable_cache(
     const supabase = createClient(config.url, config.key, {
       auth: { autoRefreshToken: false, persistSession: false },
     });
-    const { data, error } = await supabase
-      .from("destination_translations")
-      .select("display_name,slug,destination:destinations!inner(legacy_id,name,scope)")
-      .eq("locale", locale)
-      .eq("translation_status", "published");
-    if (error || !data) return [];
-    return data.flatMap((row) => {
+    const rows: DestinationRouteTranslationDataApiRow[] = [];
+    let offset = 0;
+
+    while (true) {
+      const { data, error } = await supabase
+        .from("destination_translations")
+        .select("display_name,slug,destination:destinations!inner(legacy_id,name,scope)")
+        .eq("locale", locale)
+        .eq("translation_status", "published")
+        .order("destination_id", { ascending: true })
+        .range(offset, offset + DESTINATION_TRANSLATION_DATA_API_PAGE_SIZE - 1)
+        .returns<DestinationRouteTranslationDataApiRow[]>();
+      if (error || !data) return [];
+      rows.push(...data);
+      if (data.length < DESTINATION_TRANSLATION_DATA_API_PAGE_SIZE) break;
+      offset += data.length;
+    }
+
+    return rows.flatMap((row) => {
       const destinationValue = row.destination as unknown;
       const destination = Array.isArray(destinationValue) ? destinationValue[0] : destinationValue;
       if (!destination || typeof destination !== "object") return [];
@@ -74,7 +94,7 @@ const getCachedDestinationRouteTranslations = unstable_cache(
       }];
     });
   },
-  ["destination-route-translations-v2"],
+  ["destination-route-translations-v3"],
   { revalidate: 3600, tags: ["destination-translations"] },
 );
 
