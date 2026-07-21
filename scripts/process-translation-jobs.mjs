@@ -417,6 +417,18 @@ async function processEntry(client, job, autoPublish, targetLocale) {
       ].join(" "),
       [job.root_entity_id, job.locale, JSON.stringify(payload), job.source_hash, canReuseTranslation ? "existing-translation" : activeBatch ? "codex-batch" : "openai"],
     );
+    if (typeof payload.id === "string" && payload.id.startsWith("event-")) {
+      await client.query(
+        [
+          "update public.event_localized_render_cache",
+          "set rendered_payload=jsonb_set(rendered_payload,'{stops}',$3::jsonb,true), updated_at=now(),",
+          "    metadata=metadata || jsonb_build_object('localized_stops_source','entry_localized_render_cache')",
+          "where locale=$1 and render_format='maplist' and render_version=1 and is_current",
+          "  and rendered_payload->>'id'=$2",
+        ].join(" "),
+        [job.locale, payload.id, JSON.stringify(payload.stops)],
+      );
+    }
   }
 }
 
@@ -678,6 +690,20 @@ async function processEvent(client, job, autoPublish, targetLocale) {
   }
 
   if (autoPublish && publicationRows[0]?.rendered_map_list) {
+    const sourcePayload = publicationRows[0].rendered_map_list;
+    const sourcePayloadId = typeof sourcePayload.id === "string" ? sourcePayload.id : null;
+    const { rows: localizedEntryCacheRows } = sourcePayloadId
+      ? await client.query(
+          [
+            "select rendered_payload from public.entry_localized_render_cache",
+            "where locale=$1 and render_format='maplist' and render_version=1 and is_current",
+            "  and rendered_payload->>'id'=$2",
+            "order by updated_at desc limit 1",
+          ].join(" "),
+          [job.locale, sourcePayloadId],
+        )
+      : { rows: [] };
+    const localizedEntryStops = localizedEntryCacheRows[0]?.rendered_payload?.stops;
     const translatedActivations = new Map();
     for (const translation of translated.activations ?? []) {
       const sourceActivation = activationRows.find((row) => row.id === translation.id);
@@ -694,7 +720,8 @@ async function processEvent(client, job, autoPublish, targetLocale) {
     }
     const seoSlug = slugify(assertText(translated.seoSlug, "event seoSlug"));
     const payload = {
-      ...localizeEventPayload(publicationRows[0].rendered_map_list, translatedActivations, translatedOccurrences),
+      ...localizeEventPayload(sourcePayload, translatedActivations, translatedOccurrences),
+      ...(Array.isArray(localizedEntryStops) ? { stops: localizedEntryStops } : {}),
       title: assertText(translated.title, "event title"),
       description: assertText(translated.description, "event description"),
       highlights: translated.highlights ?? [],
@@ -728,7 +755,9 @@ async function claimJob(client, options, workerId) {
     explicitFilter = "and (job.id::text=$3 or job.root_entity_id::text=$3)";
   }
   const availabilityFilter = options.batchJobIds?.length
-    ? "((job.status in ('pending','failed')) or (job.status='processing' and job.leased_at < now() - interval '30 minutes'))"
+    ? options.refreshCompleted
+      ? "((job.status in ('pending','failed','completed')) or (job.status='processing' and job.leased_at < now() - interval '30 minutes'))"
+      : "((job.status in ('pending','failed')) or (job.status='processing' and job.leased_at < now() - interval '30 minutes'))"
     : "((job.status in ('pending','failed') and job.next_attempt_at <= now()) or (job.status='processing' and job.leased_at < now() - interval '30 minutes'))";
   const attemptsFilter = options.batchJobIds?.length ? "" : "and job.attempts < job.max_attempts";
   const { rows } = await client.query(
@@ -754,6 +783,9 @@ async function main() {
     options.batchJobIds = [...activeBatch.itemsByJobId.keys()];
     options.claimableBatchJobIds = [...options.batchJobIds];
     options.limit = options.batchJobIds.length;
+  }
+  if (options.refreshCompleted && !options.batch) {
+    throw new Error("--refresh-completed requires an explicit --batch file.");
   }
   if (options.dryRun) {
     console.log(JSON.stringify({

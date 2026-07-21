@@ -52,6 +52,7 @@ export function parseArgs(argv) {
     limit: 25,
     dryRun: false,
     autoPublish: false,
+    refreshCompleted: false,
     disable: false,
     id: null,
     batch: null,
@@ -64,6 +65,7 @@ export function parseArgs(argv) {
     else if (value === "--batch") options.batch = argv[++index];
     else if (value === "--dry-run") options.dryRun = true;
     else if (value === "--auto-publish") options.autoPublish = true;
+    else if (value === "--refresh-completed") options.refreshCompleted = true;
     else if (value === "--disable") options.disable = true;
     else throw new Error(`Unknown argument: ${value}`);
   }

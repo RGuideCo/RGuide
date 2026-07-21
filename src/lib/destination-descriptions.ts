@@ -97,6 +97,26 @@ interface DestinationDataApiDescriptionRow {
   destination: { legacy_id: string | null } | { legacy_id: string | null }[] | null;
 }
 
+interface DestinationDataApiCategoryInsightRow {
+  destination_legacy_id: string | null;
+  category: unknown;
+  label: string | null;
+  summary: string | null;
+  chips: unknown;
+  notes: unknown;
+}
+
+interface DestinationDataApiNeighborhoodStrengthRow {
+  parent_destination_legacy_id: string | null;
+  neighborhood_destination_legacy_id: string | null;
+  neighborhood_destination_name: string | null;
+  category: unknown;
+  field_key: string | null;
+  score: number | string | null;
+  rationale: string | null;
+  source_urls: unknown;
+}
+
 interface DestinationContentRows {
   descriptions: DestinationDescriptionRow[];
   cityAffiliateLinks: CityAffiliateLinkRow[];
@@ -116,6 +136,38 @@ const DESTINATION_DESCRIPTIONS_CACHE_SECONDS = Number.parseInt(
   10,
 );
 const DESTINATION_IMAGE_DATA_API_PAGE_SIZE = 1000;
+const DESTINATION_CONTENT_DATA_API_PAGE_SIZE = 1000;
+
+async function loadPaginatedDestinationContentRows<Row>(
+  label: string,
+  loadPage: (from: number, to: number) => Promise<{ data: Row[] | null; error: unknown | null }>,
+) {
+  const rows: Row[] = [];
+  let offset = 0;
+
+  while (true) {
+    const { data, error } = await loadPage(
+      offset,
+      offset + DESTINATION_CONTENT_DATA_API_PAGE_SIZE - 1,
+    );
+
+    if (error) {
+      console.error(`Failed to load ${label} from the Supabase data API`, error);
+      break;
+    }
+
+    const page = data ?? [];
+    rows.push(...page);
+
+    if (page.length < DESTINATION_CONTENT_DATA_API_PAGE_SIZE) {
+      break;
+    }
+
+    offset += page.length;
+  }
+
+  return rows;
+}
 
 function descriptionId(...parts: string[]) {
   return parts.filter(Boolean).join(":");
@@ -495,27 +547,57 @@ async function loadDestinationContentRowsFromDataApi(locale: AppLocale): Promise
     destinationImageOffset += page.length;
   }
 
-  const [{ data: descriptionData }, { data: insightData }, { data: strengthData }] = await Promise.all([
-    supabase
-      .from("destination_descriptions_v2")
-      .select("description,destination:destinations!inner(legacy_id)")
-      .eq("locale", locale)
-      .eq("translation_status", "published")
-      .eq("description_kind", "overview")
-      .neq("description", "")
-      .returns<DestinationDataApiDescriptionRow[]>(),
-    supabase
-      .from("active_destination_category_insights")
-      .select("destination_legacy_id,category,label,summary,chips,notes")
-      .eq("locale", locale)
-      .not("destination_legacy_id", "is", null),
-    supabase
-      .from("active_destination_category_neighborhood_strengths")
-      .select(
-        "parent_destination_legacy_id,neighborhood_destination_legacy_id,neighborhood_destination_name,category,field_key,score,rationale,source_urls",
-      )
-      .not("parent_destination_legacy_id", "is", null)
-      .not("neighborhood_destination_legacy_id", "is", null),
+  const [descriptionData, insightData, strengthData] = await Promise.all([
+    loadPaginatedDestinationContentRows<DestinationDataApiDescriptionRow>(
+      "destination descriptions",
+      async (from, to) => {
+        const { data, error } = await supabase
+          .from("destination_descriptions_v2")
+          .select("description,destination:destinations!inner(legacy_id)")
+          .eq("locale", locale)
+          .eq("translation_status", "published")
+          .eq("description_kind", "overview")
+          .neq("description", "")
+          .order("destination_id", { ascending: true })
+          .range(from, to)
+          .returns<DestinationDataApiDescriptionRow[]>();
+        return { data, error };
+      },
+    ),
+    loadPaginatedDestinationContentRows<DestinationDataApiCategoryInsightRow>(
+      "destination category insights",
+      async (from, to) => {
+        const { data, error } = await supabase
+          .from("active_destination_category_insights")
+          .select("destination_legacy_id,category,label,summary,chips,notes")
+          .eq("locale", locale)
+          .not("destination_legacy_id", "is", null)
+          .order("destination_legacy_id", { ascending: true })
+          .order("category", { ascending: true })
+          .range(from, to)
+          .returns<DestinationDataApiCategoryInsightRow[]>();
+        return { data, error };
+      },
+    ),
+    loadPaginatedDestinationContentRows<DestinationDataApiNeighborhoodStrengthRow>(
+      "destination neighborhood strengths",
+      async (from, to) => {
+        const { data, error } = await supabase
+          .from("active_destination_category_neighborhood_strengths")
+          .select(
+            "parent_destination_legacy_id,neighborhood_destination_legacy_id,neighborhood_destination_name,category,field_key,score,rationale,source_urls",
+          )
+          .not("parent_destination_legacy_id", "is", null)
+          .not("neighborhood_destination_legacy_id", "is", null)
+          .order("parent_destination_legacy_id", { ascending: true })
+          .order("neighborhood_destination_legacy_id", { ascending: true })
+          .order("category", { ascending: true })
+          .order("field_key", { ascending: true })
+          .range(from, to)
+          .returns<DestinationDataApiNeighborhoodStrengthRow[]>();
+        return { data, error };
+      },
+    ),
   ]);
 
   const descriptions: DestinationDescriptionRow[] = (descriptionData ?? []).flatMap((row) => {
@@ -716,7 +798,7 @@ const getCachedDestinationContentRows = unstable_cache(
   async (locale: AppLocale) => {
     return loadDestinationContentRows({ locale });
   },
-  ["destination-content-rows-v2", "city-images-v3-paginated"],
+  ["destination-content-rows-v3", "city-images-v3-paginated"],
   {
     revalidate: Number.isFinite(DESTINATION_DESCRIPTIONS_CACHE_SECONDS)
       ? DESTINATION_DESCRIPTIONS_CACHE_SECONDS
@@ -729,7 +811,7 @@ const getCachedRuntimeDestinationContentRows = unstable_cache(
   async (locale: AppLocale) => {
     return loadDestinationContentRows({ forceDatabase: true, locale });
   },
-  ["destination-content-rows-v2", "city-images-runtime-v2-paginated"],
+  ["destination-content-rows-v3", "city-images-runtime-v2-paginated"],
   {
     revalidate: Number.isFinite(DESTINATION_DESCRIPTIONS_CACHE_SECONDS)
       ? DESTINATION_DESCRIPTIONS_CACHE_SECONDS

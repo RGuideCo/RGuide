@@ -723,7 +723,7 @@ const getCachedCityEditorialGuidesFromSupabase = unstable_cache(
   async (cityName: string, locale: AppLocale) => {
     return loadEditorialGuidesFromSupabase({ cityName, locale });
   },
-  ["server-editorial-guides", "city-scoped"],
+  ["server-editorial-guides-v2", "city-scoped"],
   {
     revalidate: Number.isFinite(EDITORIAL_GUIDES_CACHE_SECONDS)
       ? EDITORIAL_GUIDES_CACHE_SECONDS
@@ -736,7 +736,7 @@ const getCachedCountryEditorialGuidesFromSupabase = unstable_cache(
   async (countryName: string, locale: AppLocale) => {
     return loadEditorialGuidesFromSupabase({ countryName, locale });
   },
-  ["server-editorial-guides", "country-scoped"],
+  ["server-editorial-guides-v2", "country-scoped"],
   {
     revalidate: Number.isFinite(EDITORIAL_GUIDES_CACHE_SECONDS)
       ? EDITORIAL_GUIDES_CACHE_SECONDS
@@ -749,7 +749,7 @@ const getCachedContinentEditorialGuidesFromSupabase = unstable_cache(
   async (continentName: string, locale: AppLocale) => {
     return loadEditorialGuidesFromSupabase({ continentName, locale });
   },
-  ["server-editorial-guides", "continent-scoped"],
+  ["server-editorial-guides-v2", "continent-scoped"],
   {
     revalidate: Number.isFinite(EDITORIAL_GUIDES_CACHE_SECONDS)
       ? EDITORIAL_GUIDES_CACHE_SECONDS
