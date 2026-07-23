@@ -9,6 +9,28 @@ const SIMPLIFICATION_TOLERANCE = Number.parseFloat(
   process.env.RGUIDE_BOUNDARY_SIMPLIFICATION_TOLERANCE ?? "0.00035",
 );
 
+function parseArgs(argv) {
+  const args = {
+    citySlugs: new Set(),
+    boundaryKeys: new Set(),
+  };
+
+  for (let index = 0; index < argv.length; index += 1) {
+    if (argv[index] === "--city" && argv[index + 1]) {
+      args.citySlugs.add(argv[index + 1]);
+      index += 1;
+      continue;
+    }
+
+    if (argv[index] === "--boundary" && argv[index + 1]) {
+      args.boundaryKeys.add(argv[index + 1]);
+      index += 1;
+    }
+  }
+
+  return args;
+}
+
 function loadEnvFile(filePath) {
   if (!fs.existsSync(filePath)) {
     return;
@@ -141,8 +163,12 @@ async function upsertBoundary(client, { cityId, destinationId, boundaryKey, feat
   );
 }
 
-async function backfillCityFile(client, fileName, stats) {
+async function backfillCityFile(client, fileName, stats, args) {
   const citySlug = fileName.replace(/\.json$/, "");
+  if (args.citySlugs.size > 0 && !args.citySlugs.has(citySlug)) {
+    return;
+  }
+
   const cityId = await getCityId(client, citySlug);
   if (!cityId) {
     stats.skippedCities.push({ citySlug, reason: "city destination not found" });
@@ -151,6 +177,10 @@ async function backfillCityFile(client, fileName, stats) {
 
   const boundaryMap = JSON.parse(fs.readFileSync(path.join(BOUNDARY_DIR, fileName), "utf8"));
   for (const [boundaryKey, feature] of Object.entries(boundaryMap)) {
+    if (args.boundaryKeys.size > 0 && !args.boundaryKeys.has(boundaryKey)) {
+      continue;
+    }
+
     const parts = boundaryKey.split("::");
     const destinationSlug = parts.at(-1);
     if (!destinationSlug) {
@@ -178,6 +208,7 @@ async function backfillCityFile(client, fileName, stats) {
 }
 
 async function main() {
+  const args = parseArgs(process.argv.slice(2));
   loadEnvFile(path.join(ROOT, ".env.local"));
   const databaseUrl = process.env.SUPABASE_DB_URL ?? process.env.SUPABASE_DATABASE_URL ?? process.env.DATABASE_URL;
   if (!databaseUrl) {
@@ -199,7 +230,7 @@ async function main() {
   try {
     await client.query("begin");
     for (const fileName of fs.readdirSync(BOUNDARY_DIR).filter((name) => name.endsWith(".json")).sort()) {
-      await backfillCityFile(client, fileName, stats);
+      await backfillCityFile(client, fileName, stats, args);
     }
     await client.query("commit");
   } catch (error) {

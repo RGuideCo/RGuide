@@ -2,6 +2,7 @@ import fs from "node:fs/promises";
 import path from "node:path";
 import vm from "node:vm";
 import polygonClipping from "polygon-clipping";
+import { feature as topojsonFeature } from "topojson-client";
 
 const OVERPASS_ENDPOINTS = [
   "https://overpass-api.de/api/interpreter",
@@ -367,8 +368,7 @@ async function writeBoundaryResult(boundaryKey, feature, boundaryResults) {
   const cityId = boundaryCityIdFromKey(boundaryKey);
   const cityBoundaryResults = Object.fromEntries(
     Object.entries(boundaryResults)
-      .filter(([key]) => boundaryCityIdFromKey(key) === cityId)
-      .sort(([a], [b]) => a.localeCompare(b)),
+      .filter(([key]) => boundaryCityIdFromKey(key) === cityId),
   );
 
   await writeJsonFile(path.join(BOUNDARY_OUTPUT_DIR, `${cityId}.json`), cityBoundaryResults);
@@ -678,7 +678,17 @@ async function fetchConfiguredBoundary(target, boundarySources, datasetCache) {
   }
 
   const sourceDataset = datasetCache.get(sourceId);
-  const features = Array.isArray(sourceDataset?.features) ? sourceDataset.features : [];
+  let features = Array.isArray(sourceDataset?.features) ? sourceDataset.features : [];
+  if (sourceDataset?.type === "Topology") {
+    const objectName = sourceConfig.objectName ?? Object.keys(sourceDataset.objects ?? {})[0];
+    const topologyObject = sourceDataset.objects?.[objectName];
+    if (!topologyObject) {
+      throw new Error(`Configured TopoJSON source missing object "${objectName}" for ${target.boundaryKey}`);
+    }
+
+    const converted = topojsonFeature(sourceDataset, topologyObject);
+    features = converted?.type === "FeatureCollection" ? converted.features : [converted];
+  }
   const matchField = sourceConfig.matchField;
   const sourceLabels = sourceConfig.mappings[target.boundaryKey];
   const matchedFeatures = sourceLabels
@@ -690,6 +700,10 @@ async function fetchConfiguredBoundary(target, boundarySources, datasetCache) {
   }
 
   const coordinates = matchedFeatures.flatMap((feature) => geometryToMultiPolygonCoordinates(feature.geometry));
+  const displayField = sourceConfig.displayField ?? matchField;
+  const displayLabels = matchedFeatures
+    .map((feature) => feature?.properties?.[displayField])
+    .filter(Boolean);
   const geometry =
     coordinates.length === 1
       ? { type: "Polygon", coordinates: coordinates[0] }
@@ -704,15 +718,19 @@ async function fetchConfiguredBoundary(target, boundarySources, datasetCache) {
       country: target.country,
       name: target.subareaName,
       parentName: target.parentSubareaName,
-      displayName: sourceLabels.join(", "),
+      displayName: displayLabels.join(", "),
       source: {
         sourceId,
         provider: sourceConfig.provider,
         datasetUrl: sourceConfig.datasetUrl,
         datasetId: sourceConfig.datasetId,
         format: sourceConfig.format,
+        objectName: sourceConfig.objectName,
         matchField,
+        displayField,
         labels: sourceLabels,
+        license: sourceConfig.license,
+        notes: sourceConfig.notes,
       },
     },
     geometry: normalizeNeighborhoodGeometry(geometry),

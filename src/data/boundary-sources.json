@@ -1,86 +1,25 @@
 {
-  "tokyo-ueno-park-tourist-core": {
-    "provider": "RGuide manual boundary from GO TOKYO Ueno area guide and OSM Ueno Park reference",
-    "datasetUrl": "https://www.gotokyo.org/en/destinations/northern-tokyo/ueno/index.html",
-    "datasetId": "tokyo-ueno-park-ameyoko-station-core",
-    "format": "manual-tourist-area-polygon",
-    "matchField": "manual",
-    "geometryByBoundaryKey": {
-      "tokyo::ueno": {
-        "type": "Polygon",
-        "coordinates": [
-          [
-            [
-              139.769,
-              35.705
-            ],
-            [
-              139.7752,
-              35.7046
-            ],
-            [
-              139.7801,
-              35.705
-            ],
-            [
-              139.7812,
-              35.7089
-            ],
-            [
-              139.781,
-              35.7132
-            ],
-            [
-              139.7806,
-              35.7165
-            ],
-            [
-              139.7799,
-              35.7215
-            ],
-            [
-              139.7768,
-              35.7218
-            ],
-            [
-              139.7734,
-              35.7215
-            ],
-            [
-              139.7707,
-              35.7202
-            ],
-            [
-              139.7687,
-              35.7193
-            ],
-            [
-              139.7675,
-              35.716
-            ],
-            [
-              139.7676,
-              35.7147
-            ],
-            [
-              139.768,
-              35.7123
-            ],
-            [
-              139.7683,
-              35.7108
-            ],
-            [
-              139.7689,
-              35.7092
-            ],
-            [
-              139.769,
-              35.705
-            ]
-          ]
-        ]
-      }
+  "tokyo-ueno-2020-census-town-boundaries": {
+    "provider": "ROIS-DS Center for Open Data in the Humanities, processed from Statistics Bureau of Japan 2020 Census town and aza boundaries",
+    "datasetUrl": "https://geoshape.ex.nii.ac.jp/ka/topojson/2020/13/r2ka13106.topojson",
+    "datasetId": "r2ka13106",
+    "format": "topojson",
+    "objectName": "town",
+    "matchField": "KEY_CODE",
+    "displayField": "S_NAME",
+    "license": "CC BY 4.0",
+    "notes": "Ueno uses the exact union of Ueno 1-chome through 7-chome and Ueno Park census town boundaries.",
+    "mappings": {
+      "tokyo::ueno": [
+        "13106004001",
+        "13106004002",
+        "13106004003",
+        "13106004004",
+        "13106004005",
+        "13106004006",
+        "13106004007",
+        "131060060"
+      ]
     }
   },
   "miami-official-neighborhoods": {

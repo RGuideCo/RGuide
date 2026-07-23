@@ -72,7 +72,7 @@ const priorityBoundaryLoaders: Partial<Record<string, BoundaryLoader[]>> = {
 };
 
 const boundaryCache = new Map<string, Promise<NeighborhoodBoundaryMap>>();
-const STATIC_BOUNDARY_ASSET_VERSION = "20260708-ueno";
+const STATIC_BOUNDARY_ASSET_VERSION = "20260723-ueno-official";
 
 function isPolygonBoundaryFeature(
   feature: unknown,
