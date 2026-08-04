@@ -140,6 +140,12 @@ For each city:
 - Neighborhoods: Duomo, Santa Maria Novella, Santa Croce, Sant'Ambrogio, San Lorenzo, Santo Spirito, San Frediano, Oltrarno, San Niccolo, Campo di Marte.
 - Category angle: Food should distinguish bistecca institutions, seasonal Tuscan trattorias, lampredotto counters, bakeries, and reservation-led modern rooms; Nightlife should keep enoteche and neighborhood bars separate from serious cocktails; Culture should connect Renaissance collections, churches, sculpture, architecture, and working artisan traditions; Stay should separate hotels from hostels and weigh historic-core access against Oltrarno calm; Nature should use Boboli, Bardini, the Arno, hill viewpoints, and Tuscan day routes; Activities should pace timed museum entries, market meals, workshops, and walking climbs without reducing the city to a checklist.
 
+**Venice, Italy**
+
+- City: lagoon geography, pedestrian calli and vaporetto links, cicchetti culture, republican and maritime history, major art institutions, palazzo hotels, island craft traditions, acqua alta logistics, and day-trip pressure that rewards overnight pacing.
+- Neighborhoods: San Marco, San Polo, Cannaregio, Dorsoduro, Castello, Santa Croce, Giudecca, Murano, Burano, Lido.
+- Category angle: Food should distinguish lagoon seafood, destination tasting menus, working bacari, cicchetti, tramezzini, markets, pastry and affordable counters; Nightlife should keep daylight bacari, natural-wine bars and late pubs separate from serious cocktail rooms and high-priced hotel lounges; Culture should connect Byzantine exchange, republican power, confraternity patronage, Venetian painting, opera, modern collecting and contemporary art; Stay must keep hotels separate from hostels and weigh island atmosphere, bridge-heavy walking, vaporetto cost, Mestre rail access and seasonal resort operations; Nature should use lagoon ecology, Lido beaches, gardens, cemetery and outer-island routes; Activities should pace timed San Marco visits, market mornings, Line 1, rowing, craft islands, performance calendars and the Biennale without turning the city into a rushed day-trip checklist.
+
 **Barcelona, Spain**
 
 - City: Mediterranean density, Gothic lanes, Eixample architecture, tapas timing, natural wine, design stays, hostels, hill parks, and beach edges.
@@ -176,6 +182,12 @@ For each city:
 - Neighborhoods: Innere Stadt, Neubau, Mariahilf, Wieden, Josefstadt, Alsergrund, Leopoldstadt, Ottakring, Döbling, Favoriten.
 - Category angle: Food should separate contemporary Austrian dining, Wirtshaus cooking, vegetarian tasting menus, markets, sausage stands, and affordable counters; Nightlife should keep worn-in café-bars, beer rooms, Gürtel live venues, and serious cocktail bars distinct; Culture should connect Habsburg collections, Vienna 1900, Jewish history, applied arts, city history, and music; Stay should keep hotels and hostels separate while weighing old-center access against neighborhood character and rail logistics; Nature should use palace gardens, Prater green space, Danube routes, vineyards, Vienna Woods, and hill viewpoints; Activities should pace timed imperial rooms and major museums with markets, performances, and weather-dependent outdoor views.
 
+**Zurich, Switzerland**
+
+- City: a compact lake-and-river city where guild-house history, precision design, contemporary art, serious dining, independent nightlife, wooded hills, swimming culture, finance, and unusually efficient local transit overlap without erasing neighborhood differences.
+- Neighborhoods: Altstadt, Niederdorf, Enge, Seefeld, Langstrasse, Sihlfeld, Gewerbeschule, Escher Wyss, Wollishofen, Zürichberg.
+- Category angle: Food should distinguish Zürcher institutions, vegetarian pioneers, destination tasting menus, bakeries, sausage counters, immigrant kitchens, and realistic value; Nightlife should keep dive bars, beer rooms, LGBTQ+ spaces, arts venues, serious cocktails, hotel lounges, and skyline bars distinct; Culture should connect Swiss modernism, national history, global collections, concrete art, design, science, horology, and architecture; Stay must keep hotels separate from hostels while treating capsules, guesthouses, airport access, and camping honestly; Nature should use the lake, Limmat, Uetliberg, wooded ridges, botanical spaces, and swimming access; Activities should pace church interiors, boat and rail timetables, mountain walks, markets, timed tickets, and short transit rides without reducing Zurich to Bahnhofstrasse.
+
 **Dublin, Ireland**
 
 - City: a compact literary capital where Georgian streets, revolutionary history, working pubs, new Irish cooking, whiskey, museums, parks, and a DART-linked bay can share one trip without pretending Temple Bar is the whole story.
@@ -193,6 +205,14 @@ For each city:
 - City: district-first planning, Cold War memory, museum corridors, canal neighborhoods, club culture, parks, lakes, and transit.
 - Neighborhoods: Mitte, Kreuzberg, Neukolln, Friedrichshain, Prenzlauer Berg, Charlottenburg, Wedding, Schoneberg, Tiergarten, Moabit.
 - Category angle: Food should map Turkish counters, modern German rooms, bakeries, market halls, cafes, and natural wine; Nightlife should split kneipen, bars, clubs, queer rooms, courtyard venues, and late transit logic; Culture should connect Museum Island, Wall sites, memorials, galleries, and industrial reuse; Stay should be base-first; Nature should use parks, canals, lakes, and Tempelhofer Feld; Activities should stitch districts rather than chase a single center.
+
+### Canada
+
+**Toronto, Canada**
+
+- City: a lakefront, ravine-cut metropolis best understood through neighborhoods, transit lines, immigrant food corridors, museums, live music, design hotels, islands, and a downtown skyline that is only one layer of the trip.
+- Neighborhoods: Downtown Core, Kensington Market, Chinatown, Queen West, Ossington, Yorkville, The Annex, Riverside, The Danforth, Scarborough.
+- Category angle: Food should prioritize the city’s immigrant kitchens alongside independent chef rooms; Nightlife should keep dives, live taverns, and serious cocktails distinct; Culture should connect major museums, film, design, sport, and material history; Stay must separate hotels from hostels and explain transit; Nature should use islands, ravines, lakefronts, and parks; Activities should pace downtown sights with west-end walks, a ferry day, and longer transit trips.
 
 ### United States
 
@@ -269,6 +289,12 @@ For each city:
 - City: harbor density, vertical neighborhoods, Cantonese dining, markets, ferries, hikes, cocktail bars, hotels, and island/Kowloon contrasts.
 - Neighborhoods: Central, Sheung Wan, Soho, Wan Chai, Tsim Sha Tsui, Mong Kok, Causeway Bay, Sham Shui Po, Sai Ying Pun, Kennedy Town.
 - Category angle: Food should balance dim sum, roast meats, dai pai dong, cha chaan teng, hotel dining, and modern Cantonese rooms; Nightlife should split cocktail bars, rooftops, live music, pub streets, and late Kowloon/Central energy; Culture should use temples, museums, markets, tram/ferry routes, and colonial/Chinese layers; Stay should choose island, Kowloon, or transit convenience; Nature should use hikes, islands, waterfronts, and beaches; Activities should move vertically and by ferry/MTR.
+
+**Shanghai, China**
+
+- City: Huangpu River geography, Bund and Pudong skylines, shikumen lanes, Jiangnan food, major art museums, design hotels, cocktail craft, and metro-linked scale.
+- Neighborhoods: The Bund, People's Square, Old City/Yuyuan, Former French Concession, Jing'an, Xintiandi, Lujiazui, West Bund, Hongkou, Changning.
+- Category angle: Food should separate xiaolongbao, noodles, Shanghainese and Jiangnan cooking, regional Chinese destination rooms, and international fine dining; Nightlife should split cocktail bars, listening rooms, live music, sports pubs, and neighborhood drinks; Culture should connect treaty-port history, ancient collections, Jewish refugee history, propaganda design, and contemporary art; Stay should distinguish hotels from hostels and compare Puxi convenience with Pudong views; Nature should use riverfronts, parks, gardens, and water-town edges; Activities should cluster by river and metro while respecting timed tickets, show calendars, holiday crowds, and full-day excursions.
 
 **Macau**
 
