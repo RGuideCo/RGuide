@@ -46,16 +46,49 @@ function getRequestedCityName(segments: string[], cities: ReturnType<typeof getC
 function getSpanishAlternatePath(
   route: NonNullable<ReturnType<typeof resolveCityDeepLink>>,
   spanishGuides: Awaited<ReturnType<typeof getServerEditorialGuides>>,
+  destinationTranslations: Awaited<ReturnType<typeof getDestinationRouteTranslations>>,
   localizedCitySlug?: string,
 ) {
+  const neighborhoodTranslation = route.neighborhood
+    ? findDestinationRouteTranslation(destinationTranslations, {
+        id: route.neighborhood.id,
+        name: route.neighborhood.name,
+        scope: "neighborhood",
+      })
+    : undefined;
+
   if (route.guide) {
     const translatedGuide = spanishGuides.find((guide) => guide.id === route.guide?.id);
     return translatedGuide
-      ? getLocalizedGuidePath("es", route.city, translatedGuide, route.neighborhood, localizedCitySlug)
+      ? getLocalizedGuidePath(
+          "es",
+          route.city,
+          translatedGuide,
+          route.neighborhood,
+          localizedCitySlug,
+          neighborhoodTranslation?.slug,
+        )
       : null;
   }
-  if (route.category) return getLocalizedCityCategoryPath("es", route.city, route.category, route.neighborhood, localizedCitySlug);
-  if (route.neighborhood) return getLocalizedCityNeighborhoodPath("es", route.city, route.neighborhood, localizedCitySlug);
+  if (route.category) {
+    return getLocalizedCityCategoryPath(
+      "es",
+      route.city,
+      route.category,
+      route.neighborhood,
+      localizedCitySlug,
+      neighborhoodTranslation?.slug,
+    );
+  }
+  if (route.neighborhood) {
+    return getLocalizedCityNeighborhoodPath(
+      "es",
+      route.city,
+      route.neighborhood,
+      localizedCitySlug,
+      neighborhoodTranslation?.slug,
+    );
+  }
   return getLocalizedCityPath("es", route.city, localizedCitySlug);
 }
 
@@ -91,7 +124,7 @@ export async function generateMetadata({ params }: CityDeepLinkPageProps): Promi
     scope: "city",
   });
   const spanishPath = spanishPublication.indexable
-    ? getSpanishAlternatePath(route, spanishGuides, cityTranslation?.slug)
+    ? getSpanishAlternatePath(route, spanishGuides, destinationTranslations, cityTranslation?.slug)
     : null;
 
   return {
@@ -163,7 +196,7 @@ export default async function CityDeepLinkPage({ params }: CityDeepLinkPageProps
     scope: "city",
   });
   const spanishPath = spanishPublication.indexable
-    ? getSpanishAlternatePath(route, spanishGuides, cityTranslation?.slug)
+    ? getSpanishAlternatePath(route, spanishGuides, destinationTranslations, cityTranslation?.slug)
     : null;
 
   return (

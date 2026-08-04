@@ -66,6 +66,54 @@ function compareComplementaryGuides(currentCategory: ListCategory, left: MapList
   return leftCategoryRank - rightCategoryRank || compareGuideQuality(left, right);
 }
 
+function getGuideIntentRank(currentGuide: MapList, candidate: MapList) {
+  const currentIntent = normalizePlace(currentGuide.seoSlug);
+  return currentIntent && normalizePlace(candidate.seoSlug) === currentIntent ? 0 : 1;
+}
+
+function compareGuideIntent(currentGuide: MapList, left: MapList, right: MapList) {
+  const leftIntentRank = getGuideIntentRank(currentGuide, left);
+  const rightIntentRank = getGuideIntentRank(currentGuide, right);
+
+  return leftIntentRank - rightIntentRank || compareGuideQuality(left, right);
+}
+
+function getGuideCenter(guide: MapList) {
+  const coordinates = guide.stops
+    .map((stop) => stop.coordinates)
+    .filter(([latitude, longitude]) => Number.isFinite(latitude) && Number.isFinite(longitude));
+  if (!coordinates.length) return null;
+
+  const [latitudeTotal, longitudeTotal] = coordinates.reduce(
+    ([latitudeSum, longitudeSum], [latitude, longitude]) => [
+      latitudeSum + latitude,
+      longitudeSum + longitude,
+    ],
+    [0, 0],
+  );
+
+  return [latitudeTotal / coordinates.length, longitudeTotal / coordinates.length] as const;
+}
+
+function getGuideDistanceScore(currentGuide: MapList, candidate: MapList) {
+  const currentCenter = getGuideCenter(currentGuide);
+  const candidateCenter = getGuideCenter(candidate);
+  if (!currentCenter || !candidateCenter) return Number.POSITIVE_INFINITY;
+
+  const latitudeDelta = candidateCenter[0] - currentCenter[0];
+  const longitudeScale = Math.cos((currentCenter[0] * Math.PI) / 180);
+  const longitudeDelta = (candidateCenter[1] - currentCenter[1]) * longitudeScale;
+  return latitudeDelta ** 2 + longitudeDelta ** 2;
+}
+
+function compareGuideIntentByProximity(currentGuide: MapList, left: MapList, right: MapList) {
+  const intentDifference = getGuideIntentRank(currentGuide, left) - getGuideIntentRank(currentGuide, right);
+  if (intentDifference) return intentDifference;
+
+  const distanceDifference = getGuideDistanceScore(currentGuide, left) - getGuideDistanceScore(currentGuide, right);
+  return distanceDifference || compareGuideQuality(left, right);
+}
+
 function buildGroup(
   id: GuideRecommendationGroup["id"],
   title: string,
@@ -110,12 +158,12 @@ export function getGuideCrossLinkGroups(
             Boolean(guide.location.neighborhood) &&
             normalizePlace(guide.location.neighborhood) !== currentNeighborhoodKey,
         )
-        .sort(compareGuideQuality),
+        .sort((left, right) => compareGuideIntentByProximity(currentGuide, left, right)),
       (guide) => normalizePlace(guide.location.neighborhood),
     ).slice(0, 2);
     const citywideGuides = cityGuides
       .filter((guide) => guide.category === currentGuide.category && !guide.location.neighborhood)
-      .sort(compareGuideQuality)
+      .sort((left, right) => compareGuideIntent(currentGuide, left, right))
       .slice(0, 1);
 
     return [
@@ -128,7 +176,7 @@ export function getGuideCrossLinkGroups(
   const neighborhoodGuides = uniqueGuidesBy(
     cityGuides
       .filter((guide) => guide.category === currentGuide.category && Boolean(guide.location.neighborhood))
-      .sort(compareGuideQuality),
+      .sort((left, right) => compareGuideIntent(currentGuide, left, right)),
     (guide) => normalizePlace(guide.location.neighborhood),
   ).slice(0, 4);
   const complementaryCitywideGuides = uniqueGuidesBy(

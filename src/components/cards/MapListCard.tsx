@@ -42,6 +42,7 @@ import {
   type GuideCrossLink,
   type GuideCrossLinkGroup,
 } from "@/components/cards/GuideCrossLinks";
+import { GuideEditorialReview } from "@/components/cards/GuideEditorialReview";
 import { GuideQuickLinks } from "@/components/cards/GuideQuickLinks";
 import { GuideStayLink, type GuideAffiliateLink } from "@/components/cards/GuideStayLink";
 import { useAppStore } from "@/store/app-store";
@@ -2649,6 +2650,11 @@ export function MapListCard({
                             <Plus className="h-4 w-4" />
                             <span>Add place</span>
                           </button>
+                        </li>
+                      ) : null}
+                      {!inlineEditing && !isEventGuide && isRGuide ? (
+                        <li className="guide-content-cascade-item list-none px-4 pb-1 pt-4">
+                          <GuideEditorialReview guide={list} className="border-t border-slate-950/10 pt-3" />
                         </li>
                       ) : null}
                       {!inlineEditing && !isEventGuide && guideCrossLinkGroups.length ? (

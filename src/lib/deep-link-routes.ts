@@ -101,7 +101,7 @@ export function isIndexableEditorialGuide(guide: MapList) {
     guide.submissionType !== "event" &&
     guide.visibility !== "private" &&
     guide.visibility !== "followers" &&
-    guide.stops.length > 0
+    guide.stops.length >= 3
   );
 }
 
