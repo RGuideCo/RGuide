@@ -1,6 +1,7 @@
 "use client";
 
 import { ChevronDown } from "@/components/icons/MaterialSymbol";
+import { ResponsiveR2Image } from "@/components/media/ResponsiveR2Image";
 
 import { CATEGORY_STYLES } from "@/lib/constants";
 
@@ -93,7 +94,14 @@ export function NestedPoiCard({
                   aria-label={`Open photo of ${place.name}`}
                   title={`Open photo of ${place.name}`}
                 >
-                  <img src={placePhoto} alt="" loading="lazy" decoding="async" className="h-full w-full object-cover" />
+                  <ResponsiveR2Image
+                    src={placePhoto}
+                    sizes="(max-width: 520px) calc(100vw - 2rem), (max-width: 1024px) 45vw, 520px"
+                    alt=""
+                    loading="lazy"
+                    decoding="async"
+                    className="h-full w-full object-cover"
+                  />
                 </button>
               ) : null}
               <div className="expanded-poi-copy expanded-poi-copy-place min-w-0">

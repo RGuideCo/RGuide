@@ -2,6 +2,7 @@
 
 import { Fragment, useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 import Image from "next/image";
+import { ResponsiveR2Image } from "@/components/media/ResponsiveR2Image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { createPortal } from "react-dom";
@@ -2924,8 +2925,9 @@ export function MapListCard({
         aria-label={`Expand ${list.title}`}
         title={`Expand ${list.title}`}
       >
-        <img
+        <ResponsiveR2Image
           src={collapsedFirstPoiPhoto}
+          sizes="144px"
           alt=""
           loading="lazy"
           decoding="async"

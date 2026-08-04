@@ -3,6 +3,7 @@
 import type { CSSProperties } from "react";
 
 import { CATEGORY_STYLES } from "@/lib/constants";
+import { ResponsiveR2Image } from "@/components/media/ResponsiveR2Image";
 import type { ListCategory } from "@/types";
 
 import type { GuideCardStyle, GuideStopHandlers, GuideStopItem } from "./types";
@@ -62,7 +63,14 @@ export function GuidePhotoStrip({
               title={stop.name}
             >
               {stopPhoto ? (
-                <img src={stopPhoto} alt="" loading="lazy" decoding="async" className="h-full w-full object-cover" />
+                <ResponsiveR2Image
+                  src={stopPhoto}
+                  sizes="60px"
+                  alt=""
+                  loading="lazy"
+                  decoding="async"
+                  className="h-full w-full object-cover"
+                />
               ) : (
                 <span className="ordered-poi-photo-fallback" aria-hidden="true">
                   {getAlphaMarker(index)}

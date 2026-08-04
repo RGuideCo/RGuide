@@ -1,6 +1,7 @@
 "use client";
 
 import { Upload } from "@/components/icons/MaterialSymbol";
+import { ResponsiveR2Image } from "@/components/media/ResponsiveR2Image";
 
 interface GuideStopMediaProps {
   name: string;
@@ -44,7 +45,14 @@ export function GuideStopMedia({
             onChange={(event) => onUploadPhoto?.(event.currentTarget.files?.[0])}
           />
           {photo ? (
-            <img src={photo} alt="" loading="lazy" decoding="async" className="h-full w-full object-cover" />
+            <ResponsiveR2Image
+              src={photo}
+              sizes="(max-width: 520px) calc(100vw - 2rem), (max-width: 1024px) 45vw, 520px"
+              alt=""
+              loading="lazy"
+              decoding="async"
+              className="h-full w-full object-cover"
+            />
           ) : (
             <span className="flex h-full w-full flex-col items-center justify-center gap-1 bg-slate-100 text-[11px] font-semibold uppercase tracking-[0.12em] text-slate-500">
               <Upload className="h-4 w-4" />
@@ -63,7 +71,16 @@ export function GuideStopMedia({
           aria-label={`Open photo of ${name}`}
           title={`Open photo of ${name}`}
         >
-          {photo ? <img src={photo} alt="" loading="lazy" decoding="async" className="h-full w-full object-cover" /> : null}
+          {photo ? (
+            <ResponsiveR2Image
+              src={photo}
+              sizes="(max-width: 520px) calc(100vw - 2rem), (max-width: 1024px) 45vw, 520px"
+              alt=""
+              loading="lazy"
+              decoding="async"
+              className="h-full w-full object-cover"
+            />
+          ) : null}
         </button>
       )}
     </>

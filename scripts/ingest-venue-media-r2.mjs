@@ -10,6 +10,10 @@ import { PutObjectCommand, S3Client } from "@aws-sdk/client-s3";
 import { getCountryCode } from "countries-list";
 import pg from "pg";
 import { getPgSslConfig } from "./database-ssl.mjs";
+import {
+  createR2ImageRenditions,
+  serializeR2ImageRenditions,
+} from "./lib/r2-image-renditions.mjs";
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const IMAGE_EXT_BY_TYPE = new Map([
@@ -27,7 +31,7 @@ const OPENVERSE_API_URL = "https://api.openverse.engineering/v1/images/";
 const OPENVERSE_ALLOWED_LICENSES = "by,by-sa,cc0,pdm";
 const USER_AGENT = "rGuide-media-ingest/1.0 (https://rguide.co; media@rguide.co)";
 const BROWSER_USER_AGENT = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0 Safari/537.36";
-const IMAGE_ACCEPT_HEADER = "image/avif,image/webp,image/png,image/jpeg,image/*;q=0.8,*/*;q=0.1";
+const IMAGE_ACCEPT_HEADER = "image/webp,image/jpeg,image/png,image/*;q=0.8,*/*;q=0.1";
 const CURL_IMAGE_MAX_BYTES = 25 * 1024 * 1024;
 const execFileAsync = promisify(execFile);
 
@@ -50,7 +54,7 @@ function parseArgs(argv) {
     city: null,
     slugs: [],
     id: null,
-    mediaId: null,
+    mediaIds: [],
     limit: 25,
     dryRun: false,
     force: false,
@@ -74,7 +78,9 @@ function parseArgs(argv) {
       options.slugs.push(...readValue().split(",").map((value) => value.trim()).filter(Boolean));
     }
     else if (arg === "--id") options.id = readValue();
-    else if (arg === "--media-id") options.mediaId = readValue();
+    else if (arg === "--media-id") {
+      options.mediaIds.push(...readValue().split(",").map((value) => value.trim()).filter(Boolean));
+    }
     else if (arg === "--limit") options.limit = Number(readValue());
     else if (arg === "--dry-run") options.dryRun = true;
     else if (arg === "--force") options.force = true;
@@ -460,12 +466,13 @@ async function searchOpenverseSource(row, originalError, minScore) {
   const queries = [
     [row.venue_name, row.city_name].filter(Boolean).join(" "),
     [row.venue_name, row.country_name].filter(Boolean).join(" "),
+    row.venue_name,
   ].filter((query, index, all) => query && all.indexOf(query) === index);
 
   for (const query of queries) {
     const apiUrl = new URL(OPENVERSE_API_URL);
     apiUrl.searchParams.set("q", query);
-    apiUrl.searchParams.set("page_size", "10");
+    apiUrl.searchParams.set("page_size", "50");
     apiUrl.searchParams.set("mature", "false");
     apiUrl.searchParams.set("license_type", "commercial");
     apiUrl.searchParams.set("license", OPENVERSE_ALLOWED_LICENSES);
@@ -567,6 +574,164 @@ async function resolveWikimediaSource(sourceUrl) {
     license: pickWikimediaMetadata(extmetadata, "LicenseShortName") ?? pickWikimediaMetadata(extmetadata, "License"),
     licenseUrl: pickWikimediaMetadata(extmetadata, "LicenseUrl"),
   };
+}
+
+function wikimediaSearchText(page) {
+  const metadata = page?.imageinfo?.[0]?.extmetadata ?? {};
+  return [
+    page?.title,
+    ...Object.values(metadata).map((value) => cleanWikimediaMetadataValue(value?.value)),
+  ]
+    .filter(Boolean)
+    .join(" ");
+}
+
+function scoreWikimediaSearchResult(row, page) {
+  const venueText = normalizeSearchText(row.venue_name);
+  const cityText = normalizeSearchText(row.city_name);
+  const countryText = normalizeSearchText(row.country_name);
+  const titleText = normalizeSearchText(page.title?.replace(/^File:/i, ""));
+  const combinedText = normalizeSearchText(wikimediaSearchText(page));
+  const tokens = venueSearchTokens(row.venue_name);
+  const matchedTokens = tokens.filter((token) => combinedText.includes(token));
+  const cityMatched = Boolean(cityText && combinedText.includes(cityText));
+  const countryMatched = Boolean(countryText && combinedText.includes(countryText));
+  const imageInfo = page?.imageinfo?.[0];
+
+  let score = 0;
+  if (venueText && titleText.includes(venueText)) score += 12;
+  if (venueText && combinedText.includes(venueText)) score += 8;
+  if (cityMatched) score += 4;
+  if (countryMatched) score += 2;
+  score += matchedTokens.length * 3;
+  if (tokens.length && matchedTokens.length === tokens.length) score += 5;
+  if (imageInfo?.width && imageInfo?.height) {
+    const megapixels = (Number(imageInfo.width) * Number(imageInfo.height)) / 1_000_000;
+    score += Math.min(3, Math.max(0, megapixels / 2));
+  }
+
+  return {
+    score,
+    cityMatched,
+    countryMatched,
+    venueInTitle: Boolean(venueText && titleText.includes(venueText)),
+    matchedTokenCount: matchedTokens.length,
+    tokenCount: tokens.length,
+  };
+}
+
+function isCredibleWikimediaSearchResult(result) {
+  if (result.venueInTitle && (result.cityMatched || result.countryMatched || result.tokenCount >= 3)) {
+    return true;
+  }
+  if (
+    result.tokenCount >= 2 &&
+    result.matchedTokenCount === result.tokenCount &&
+    (result.cityMatched || result.countryMatched)
+  ) {
+    return true;
+  }
+  return (
+    result.tokenCount >= 3 &&
+    result.matchedTokenCount >= 2 &&
+    (result.cityMatched || result.countryMatched)
+  );
+}
+
+async function searchWikimediaSource(row, originalError) {
+  const queries = [
+    [row.venue_name, row.city_name].filter(Boolean).join(" "),
+    [row.venue_name, row.country_name].filter(Boolean).join(" "),
+  ].filter((query, index, all) => query && all.indexOf(query) === index);
+
+  for (const query of queries) {
+    const apiUrl = new URL(WIKIMEDIA_API_URL);
+    apiUrl.searchParams.set("action", "query");
+    apiUrl.searchParams.set("format", "json");
+    apiUrl.searchParams.set("formatversion", "2");
+    apiUrl.searchParams.set("generator", "search");
+    apiUrl.searchParams.set("gsrsearch", query);
+    apiUrl.searchParams.set("gsrnamespace", "6");
+    apiUrl.searchParams.set("gsrlimit", "30");
+    apiUrl.searchParams.set("prop", "imageinfo");
+    apiUrl.searchParams.set("iiprop", "url|mime|size|extmetadata");
+    apiUrl.searchParams.set("iiurlwidth", "1920");
+
+    const response = await fetch(apiUrl, {
+      headers: {
+        "accept": "application/json",
+        "user-agent": USER_AGENT,
+      },
+    });
+    if (!response.ok) {
+      throw new Error(`wikimedia api returned ${response.status}`);
+    }
+
+    const body = await response.json();
+    const ranked = (body?.query?.pages ?? [])
+      .filter((page) => page?.imageinfo?.[0]?.url || page?.imageinfo?.[0]?.thumburl)
+      .map((page) => ({ page, ...scoreWikimediaSearchResult(row, page) }))
+      .filter(isCredibleWikimediaSearchResult)
+      .sort((a, b) => b.score - a.score);
+    const best = ranked[0];
+    if (!best) continue;
+
+    const imageInfo = best.page.imageinfo[0];
+    const extmetadata = imageInfo.extmetadata ?? {};
+    const canonicalUrl =
+      imageInfo.descriptionurl ??
+      `https://commons.wikimedia.org/wiki/${encodeURIComponent(best.page.title.replace(/ /g, "_"))}`;
+    return {
+      resolvedSourceUrl: canonicalUrl,
+      downloadUrl: imageInfo.thumburl ?? imageInfo.url,
+      sourceMetadata: {
+        provider: "wikimedia_commons",
+        file_title: best.page.title,
+        download_url: imageInfo.thumburl ?? imageInfo.url,
+        canonical_url: canonicalUrl,
+        mime: imageInfo.mime ?? null,
+        width: imageInfo.thumbwidth ?? imageInfo.width ?? null,
+        height: imageInfo.thumbheight ?? imageInfo.height ?? null,
+        credit:
+          pickWikimediaMetadata(extmetadata, "Artist") ??
+          pickWikimediaMetadata(extmetadata, "Credit"),
+        license:
+          pickWikimediaMetadata(extmetadata, "LicenseShortName") ??
+          pickWikimediaMetadata(extmetadata, "License"),
+        license_url: pickWikimediaMetadata(extmetadata, "LicenseUrl"),
+        matched_query: query,
+        match_score: best.score,
+        fallback_reason: originalError?.message ?? null,
+      },
+    };
+  }
+
+  throw originalError;
+}
+
+async function searchLicensedFallbackSource(row, originalError, minScore) {
+  try {
+    return await searchWikimediaSource(row, originalError);
+  } catch (wikimediaError) {
+    return searchOpenverseSource(row, wikimediaError, minScore);
+  }
+}
+
+function logFallbackSource(row, resolvedSource) {
+  const sourceMetadata = resolvedSource.sourceMetadata ?? {};
+  console.log(JSON.stringify({
+    phase: sourceMetadata.provider === "wikimedia_commons"
+      ? "wikimedia_fallback"
+      : "openverse_fallback",
+    mediaId: row.media_id,
+    venue: row.venue_name,
+    query: sourceMetadata.matched_query,
+    score: sourceMetadata.match_score,
+    source:
+      sourceMetadata.canonical_url ??
+      sourceMetadata.foreign_landing_url ??
+      resolvedSource.resolvedSourceUrl,
+  }));
 }
 
 function normalizeCountryFolder(row) {
@@ -704,9 +869,9 @@ async function loadCandidates(client, options, publicBaseUrl) {
     values.push(options.id);
     conditions.push("(entry.legacy_id = $" + values.length + " or entry.id::text = $" + values.length + ")");
   }
-  if (options.mediaId) {
-    values.push(options.mediaId);
-    conditions.push("media.id::text = $" + values.length);
+  if (options.mediaIds.length) {
+    values.push(options.mediaIds);
+    conditions.push("media.id::text = any($" + values.length + "::text[])");
   }
   if (options.failedOnly) {
     conditions.push("media.ingestion_status = 'failed'");
@@ -721,6 +886,7 @@ async function loadCandidates(client, options, publicBaseUrl) {
       "  media.id as media_id,",
       "  media.venue_id,",
       "  media.url,",
+      "  media.public_url,",
       "  media.source_url,",
       "  media.raw_metadata #>> '{quarantine_reason}' as quarantine_reason,",
       "  media.role,",
@@ -746,15 +912,17 @@ async function loadCandidates(client, options, publicBaseUrl) {
   return rows
     .map((row) => {
       const mediaUrl = String(row.url ?? "").trim();
+      const publicUrl = String(row.public_url ?? "").trim();
       const sourceUrl = String(row.source_url ?? "").trim();
+      const hasStoredR2Object = isR2Url(publicUrl, publicBaseUrl) || isR2Url(mediaUrl, publicBaseUrl);
 
       return {
         ...row,
         // Before ingestion, media.url is the image candidate while source_url may be a landing page.
-        // Once url is already an R2 object, source_url remains the correct re-ingestion fallback.
-        source_image_url: mediaUrl && !isR2Url(mediaUrl, publicBaseUrl)
-          ? mediaUrl
-          : sourceUrl || mediaUrl,
+        // Once either canonical URL identifies an R2 object, source_url is the re-ingestion source.
+        source_image_url: hasStoredR2Object
+          ? sourceUrl || mediaUrl
+          : mediaUrl || sourceUrl,
       };
     })
     .filter((row) => !isR2Url(row.source_image_url, publicBaseUrl));
@@ -804,6 +972,8 @@ async function findStoredMediaBySource(client, row, resolvedSource, publicBaseUr
        media.storage_key,
        media.content_type,
        media.byte_size,
+       media.width,
+       media.height,
        media.venue_id,
        media.source_url,
        media.source_type,
@@ -837,18 +1007,24 @@ async function reuseStoredMediaRow(client, row, storedMedia, resolvedSource) {
   const rawMetadataPatch = {
     deduped_from_media_id: storedMedia.id,
     ...(sourceMetadata ? { source_resolver: sourceMetadata } : {}),
+    ...(storedMedia.raw_metadata?.responsive_renditions
+      ? { responsive_renditions: storedMedia.raw_metadata.responsive_renditions }
+      : {}),
   };
 
   await client.query(
     `update public.venue_media
      set is_active = true,
          source_url = coalesce($9, source_url),
+         url = $2,
          public_url = $2,
          storage_provider = $3,
          storage_bucket = $4,
          storage_key = $5,
          content_type = $6,
          byte_size = $7,
+         width = $16,
+         height = $17,
          ingestion_status = 'stored',
          ingestion_error = null,
          validation_status = 'valid',
@@ -864,6 +1040,8 @@ async function reuseStoredMediaRow(client, row, storedMedia, resolvedSource) {
            - 'quarantine_reason'
            - 'quarantine_storage_key'
            - 'quarantine_owner_media_id'
+           - 'responsive_rendition_error'
+           - 'responsive_rendition_failed_at'
          ) || $8::jsonb,
          updated_at = now()
      where id = $1`,
@@ -883,6 +1061,8 @@ async function reuseStoredMediaRow(client, row, storedMedia, resolvedSource) {
       storedMedia.credit,
       sourceMetadata?.license ?? null,
       storedMedia.license,
+      storedMedia.width,
+      storedMedia.height,
     ],
   );
 }
@@ -930,12 +1110,15 @@ async function updateMediaRow(client, row, storage, bucket, publicBaseUrl) {
     `update public.venue_media
      set is_active = true,
          source_url = coalesce($7, nullif(source_url, ''), url),
+         url = $2,
          public_url = $2,
          storage_provider = 'cloudflare_r2',
          storage_bucket = $3,
          storage_key = $4,
          content_type = $5,
          byte_size = $6,
+         width = $12,
+         height = $13,
          ingestion_status = 'stored',
          ingestion_error = null,
          validation_status = 'valid',
@@ -951,6 +1134,8 @@ async function updateMediaRow(client, row, storage, bucket, publicBaseUrl) {
            - 'quarantine_reason'
            - 'quarantine_storage_key'
            - 'quarantine_owner_media_id'
+           - 'responsive_rendition_error'
+           - 'responsive_rendition_failed_at'
          ) || $11::jsonb,
          updated_at = now()
      where id = $1`,
@@ -965,7 +1150,12 @@ async function updateMediaRow(client, row, storage, bucket, publicBaseUrl) {
       storage.sourceMetadata?.provider ?? null,
       storage.sourceMetadata?.credit ?? null,
       storage.sourceMetadata?.license ?? null,
-      JSON.stringify(storage.sourceMetadata ? { source_resolver: storage.sourceMetadata } : {}),
+      JSON.stringify({
+        ...(storage.sourceMetadata ? { source_resolver: storage.sourceMetadata } : {}),
+        responsive_renditions: serializeR2ImageRenditions(storage.renditions),
+      }),
+      storage.renditions.original.width,
+      storage.renditions.original.height,
     ],
   );
   return publicUrl;
@@ -1065,15 +1255,12 @@ async function main() {
           if (!options.openverseFallback) {
             throw sourceError;
           }
-          resolvedSource = await searchOpenverseSource(row, sourceError, options.openverseMinScore);
-          console.log(JSON.stringify({
-            phase: "openverse_fallback",
-            mediaId: row.media_id,
-            venue: row.venue_name,
-            query: resolvedSource.sourceMetadata?.matched_query,
-            score: resolvedSource.sourceMetadata?.match_score,
-            source: resolvedSource.sourceMetadata?.foreign_landing_url,
-          }));
+          resolvedSource = await searchLicensedFallbackSource(
+            row,
+            sourceError,
+            options.openverseMinScore,
+          );
+          logFallbackSource(row, resolvedSource);
         }
         const storedMedia = await findStoredMediaBySource(client, row, resolvedSource, publicBaseUrl);
         if (storedMedia) {
@@ -1104,15 +1291,12 @@ async function main() {
             throw sourceError;
           }
 
-          resolvedSource = await searchOpenverseSource(row, sourceError, options.openverseMinScore);
-          console.log(JSON.stringify({
-            phase: "openverse_fallback",
-            mediaId: row.media_id,
-            venue: row.venue_name,
-            query: resolvedSource.sourceMetadata?.matched_query,
-            score: resolvedSource.sourceMetadata?.match_score,
-            source: resolvedSource.sourceMetadata?.foreign_landing_url,
-          }));
+          resolvedSource = await searchLicensedFallbackSource(
+            row,
+            sourceError,
+            options.openverseMinScore,
+          );
+          logFallbackSource(row, resolvedSource);
 
           const fallbackStoredMedia = await findStoredMediaBySource(client, row, resolvedSource, publicBaseUrl);
           if (fallbackStoredMedia) {
@@ -1138,6 +1322,7 @@ async function main() {
           image = await fetchResolvedImage(resolvedSource);
         }
         const key = buildStorageKey(row, image.contentType);
+        const renditions = await createR2ImageRenditions(image.bytes, key);
         const publicUrl = `${publicBaseUrl.replace(/\/$/, "")}/${key}`;
         console.log(JSON.stringify({
           phase: options.dryRun ? "would_upload" : "upload",
@@ -1145,18 +1330,33 @@ async function main() {
           venue: row.venue_name,
           bytes: image.bytes.length,
           contentType: image.contentType,
+          renditionBytes: renditions.variants.reduce((total, rendition) => total + rendition.byteSize, 0),
+          renditionCount: renditions.variants.length,
           publicUrl,
         }));
 
         if (!options.dryRun) {
-          await r2.send(new PutObjectCommand({
-            Bucket: bucket,
-            Key: key,
-            Body: image.bytes,
-            ContentType: image.contentType,
-            CacheControl: "public, max-age=31536000, immutable",
-          }));
-          await updateMediaRow(client, row, { key, ...image }, bucket, publicBaseUrl);
+          await Promise.all([
+            r2.send(new PutObjectCommand({
+              Bucket: bucket,
+              Key: key,
+              Body: image.bytes,
+              ContentType: image.contentType,
+              CacheControl: "public, max-age=31536000, immutable",
+            })),
+            ...renditions.variants.map((rendition) => r2.send(new PutObjectCommand({
+              Bucket: bucket,
+              Key: rendition.key,
+              Body: rendition.bytes,
+              ContentType: rendition.contentType,
+              CacheControl: "public, max-age=31536000, immutable",
+              Metadata: {
+                "rendition-version": "1",
+                "rendition-width": String(rendition.requestedWidth),
+              },
+            }))),
+          ]);
+          await updateMediaRow(client, row, { key, ...image, renditions }, bucket, publicBaseUrl);
           await promoteStoredMediaAsPrimary(client, row);
           touchedVenueIds.add(row.venue_id);
         }

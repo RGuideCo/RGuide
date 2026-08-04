@@ -32,6 +32,7 @@
     "sync:editorial-poi-photos": "node scripts/sync-editorial-poi-photos.mjs",
     "ingest:venue-hours-geoapify": "node scripts/ingest-venue-hours-geoapify.mjs",
     "ingest:venue-media-r2": "node scripts/ingest-venue-media-r2-pipeline.mjs",
+    "backfill:venue-media-r2-renditions": "node scripts/backfill-venue-media-r2-renditions.mjs",
     "audit:venue-media-primary-r2": "node scripts/audit-venue-media-primary-r2.mjs",
     "cleanup:venue-media-primary-r2": "node scripts/cleanup-venue-media-primary-r2.mjs",
     "translate:backfill": "node scripts/backfill-content-translations.mjs",
@@ -63,6 +64,7 @@
     "react": "19.2.6",
     "react-dom": "19.2.6",
     "react-leaflet": "5.0.0",
+    "sharp": "^0.34.5",
     "world-countries-capitals": "^3.4.0",
     "zustand": "5.0.13"
   },
