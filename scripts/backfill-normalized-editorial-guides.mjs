@@ -635,6 +635,11 @@ function buildGuideContexts(maps, selectedGuides) {
     const cityId = resolveCityId(maps, list.location?.city, list.location?.country);
     const countryId = list.location?.country ? maps.countryByName.get(normalizeName(list.location.country)) ?? null : null;
     const neighborhoodId = resolveNeighborhoodId(maps, cityId, list.location?.neighborhood);
+    if (list.location?.neighborhood && !neighborhoodId) {
+      throw new Error(
+        `Could not resolve neighborhood destination for ${list.id}: ${list.location.neighborhood}, ${list.location.city}`,
+      );
+    }
     const destinationId = neighborhoodId ?? cityId ?? countryId;
     if (!destinationId) {
       throw new Error(`Could not resolve destination for ${list.id}`);
@@ -1016,6 +1021,83 @@ async function upsertVenuesBatch(client, venueRows) {
   if (!venueRows.length) {
     return new Map();
   }
+  const matchedResult = await client.query(
+    `with incoming as (
+       select *
+       from jsonb_to_recordset($1::jsonb) as row(
+         row_key text,
+         legacy_id text,
+         slug text,
+         name text,
+         normalized_name text,
+         aliases text[],
+         destination_id uuid,
+         city_id uuid,
+         neighborhood_id uuid,
+         country text,
+         timezone text,
+         coordinates jsonb,
+         official_url text,
+         venue_kind public.venue_kind,
+         venue_kinds public.venue_kind[],
+         lodging_type public.lodging_type,
+         food_service_type public.food_service_type,
+         cuisine_types text[],
+         price_tier public.price_tier,
+         nightlife_type public.nightlife_type,
+         music_genres text[],
+         attribute_tags text[],
+         source_metadata jsonb
+       )
+     )
+     update public.venues venue
+     set
+       slug = incoming.slug,
+       name = incoming.name,
+       normalized_name = incoming.normalized_name,
+       aliases = array(select distinct unnest(venue.aliases || coalesce(incoming.aliases, '{}'))),
+       destination_id = coalesce(incoming.destination_id, venue.destination_id),
+       city_id = coalesce(incoming.city_id, venue.city_id),
+       neighborhood_id = coalesce(incoming.neighborhood_id, venue.neighborhood_id),
+       country = coalesce(incoming.country, venue.country),
+       timezone = coalesce(incoming.timezone, venue.timezone),
+       coordinates = coalesce(incoming.coordinates, venue.coordinates),
+       official_url = coalesce(incoming.official_url, venue.official_url),
+       venue_kind = case
+         when incoming.venue_kind = 'other' then venue.venue_kind
+         else incoming.venue_kind
+       end,
+       venue_kinds = array(
+         select distinct unnest(
+           venue.venue_kinds || coalesce(incoming.venue_kinds, '{}') ||
+           array[venue.venue_kind, incoming.venue_kind]::public.venue_kind[]
+         )
+       ),
+       lodging_type = coalesce(incoming.lodging_type, venue.lodging_type),
+       food_service_type = coalesce(incoming.food_service_type, venue.food_service_type),
+       cuisine_types = array(select distinct unnest(venue.cuisine_types || coalesce(incoming.cuisine_types, '{}'))),
+       price_tier = coalesce(incoming.price_tier, venue.price_tier),
+       nightlife_type = coalesce(incoming.nightlife_type, venue.nightlife_type),
+       music_genres = array(select distinct unnest(venue.music_genres || coalesce(incoming.music_genres, '{}'))),
+       attribute_tags = array(
+         select tag
+         from unnest(coalesce(incoming.attribute_tags, '{}') || venue.attribute_tags) with ordinality as merged(tag, ord)
+         where tag is not null and tag <> ''
+         group by tag
+         order by min(ord)
+       ),
+       source_metadata = venue.source_metadata || coalesce(incoming.source_metadata, '{}'::jsonb)
+     from incoming
+     where venue.legacy_id = incoming.legacy_id
+       and venue.merged_into_venue_id is null
+     returning incoming.row_key, venue.id`,
+    [JSON.stringify(venueRows)],
+  );
+  const venueIdByKey = new Map(matchedResult.rows.map((row) => [row.row_key, row.id]));
+  const remainingRows = venueRows.filter((row) => !venueIdByKey.has(row.row_key));
+  if (!remainingRows.length) {
+    return venueIdByKey;
+  }
   const result = await client.query(
     `with incoming as (
        select *
@@ -1112,9 +1194,12 @@ async function upsertVenuesBatch(client, venueRows) {
      join upserted
        on upserted.city_id is not distinct from resolved.city_id
       and upserted.slug = resolved.resolved_slug`,
-    [JSON.stringify(venueRows)],
+    [JSON.stringify(remainingRows)],
   );
-  return new Map(result.rows.map((row) => [row.row_key, row.id]));
+  for (const row of result.rows) {
+    venueIdByKey.set(row.row_key, row.id);
+  }
+  return venueIdByKey;
 }
 
 async function replaceEntryStopsBatch(client, stopRows, entryIdByLegacyId, venueIdByKey) {

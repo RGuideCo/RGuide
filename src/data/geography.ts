@@ -393,6 +393,13 @@ const specificNeighborhoodAngles = new Map<string, NeighborhoodAngle>([
     },
   ],
   [
+    "berlin|neukolln",
+    {
+      identity: "Berlin's southside collision of immigrant food cultures, municipal art spaces, canal edges, crowded bars, and rooftops that turn the skyline into part of the night",
+      route: "It works best from late afternoon onward, with one cultural anchor, food at street level, and enough flexibility to let the right bar or roof decide how late the district runs",
+    },
+  ],
+  [
     "berlin|charlottenburg",
     {
       identity: "Berlin's polished westside district, with palace gardens, old cinemas, Kurfurstendamm shopping, classic hotels, and calmer streets than the eastern nightlife zones",
@@ -1471,6 +1478,13 @@ const citySubareaSeeds = new Map<string, SubArea[]>([
         coordinates: [52.4986, 13.4034],
         description:
           "Known for alternative culture, street art, and globally influenced food, with strong day-to-night energy.",
+      },
+      {
+        id: "neukolln",
+        name: "Neukolln",
+        coordinates: [52.4815, 13.435],
+        description:
+          "A south Berlin district where canals, immigrant food culture, municipal arts spaces, neighborhood bars, and Tempelhofer Feld meet a fast-changing residential fabric.",
       },
       {
         id: "charlottenburg",
