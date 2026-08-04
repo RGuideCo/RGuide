@@ -38,7 +38,7 @@ function getLocalizedNeighborhoodTranslation(
 ) {
   if (!city || !slug) return undefined;
   const neighborhoods = (city.subareas ?? []).flatMap((subarea) => [subarea, ...(subarea.subareas ?? [])]);
-  return translations.find(
+  const translatedSlugMatch = translations.find(
     (translation) =>
       translation.scope === "neighborhood" &&
       translation.slug === slug &&
@@ -46,6 +46,16 @@ function getLocalizedNeighborhoodTranslation(
         (neighborhood) =>
           neighborhood.id === translation.legacyId || neighborhood.name === translation.sourceName,
       ),
+  );
+  if (translatedSlugMatch) return translatedSlugMatch;
+
+  const sourceNeighborhood = neighborhoods.find((neighborhood) => slugify(neighborhood.name) === slug);
+  if (!sourceNeighborhood) return undefined;
+
+  return translations.find(
+    (translation) =>
+      translation.scope === "neighborhood" &&
+      (translation.legacyId === sourceNeighborhood.id || translation.sourceName === sourceNeighborhood.name),
   );
 }
 

@@ -1,5 +1,6 @@
 import Link from "next/link";
 
+import { GuideEditorialReview } from "@/components/cards/GuideEditorialReview";
 import { CATEGORIES } from "@/lib/constants";
 import type { CityDeepLinkResolution } from "@/lib/deep-link-routes";
 import { getDictionary } from "@/lib/i18n/dictionaries";
@@ -123,6 +124,13 @@ export function LocalizedCityRouteSeoIndex({
                     </li>
                   ))}
                 </ol>
+                {route.guide ? (
+                  <GuideEditorialReview
+                    guide={guide}
+                    locale={locale}
+                    className="mt-4 border-t border-slate-200 pt-3"
+                  />
+                ) : null}
               </article>
             );
           })}
