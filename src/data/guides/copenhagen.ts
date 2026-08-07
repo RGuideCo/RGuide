@@ -10,6 +10,86 @@ const copenhagenLocation = {
   scope: "city" as const,
 };
 
+// Rejseplanen GTFS shapes, simplified to keep the published guide payload compact.
+const COPENHAGEN_AIRPORT_M2_ROUTE: [number, number][] = [
+  [55.629957, 12.649405], [55.632129, 12.648955], [55.633355, 12.648529], [55.637006, 12.646102],
+  [55.6393, 12.644869], [55.640201, 12.643887], [55.642028, 12.64083], [55.643483, 12.639375],
+  [55.657707, 12.630914], [55.660676, 12.629344], [55.661876, 12.628294], [55.66233, 12.627255],
+  [55.662997, 12.621701], [55.6611, 12.610439], [55.66123, 12.607524], [55.661999, 12.604923],
+  [55.664882, 12.60075], [55.665477, 12.599197], [55.666452, 12.595692], [55.667435, 12.594048],
+  [55.668035, 12.59353], [55.668928, 12.593119], [55.670207, 12.593045], [55.671065, 12.592615],
+  [55.672839, 12.590375], [55.675919, 12.587427], [55.678, 12.585756], [55.68068, 12.584537],
+  [55.681452, 12.583653], [55.681912, 12.582677], [55.682274, 12.581055], [55.68259, 12.57607],
+  [55.682876, 12.573964], [55.683306, 12.572475], [55.685154, 12.567694], [55.685452, 12.566416],
+  [55.685545, 12.565088], [55.685382, 12.563577], [55.684903, 12.562117], [55.684248, 12.561118],
+  [55.682322, 12.559033], [55.681705, 12.557656], [55.681451, 12.556487], [55.681463, 12.554228],
+  [55.682878, 12.547593], [55.683047, 12.545778], [55.682861, 12.544138], [55.681771, 12.539853],
+  [55.6813, 12.536835], [55.681206, 12.526052], [55.68734, 12.491429],
+];
+
+const COPENHAGEN_AIRPORT_TRAIN_ROUTE: [number, number][] = [
+  [55.629581, 12.649344], [55.629784, 12.645256], [55.63047, 12.639121], [55.630639, 12.632811],
+  [55.629664, 12.600027], [55.629453, 12.596495], [55.628393, 12.585733], [55.628333, 12.582231],
+  [55.628599, 12.575612], [55.629344, 12.569784], [55.629995, 12.566871], [55.630862, 12.563977],
+  [55.63268, 12.559581], [55.633809, 12.557569], [55.635264, 12.555428], [55.641238, 12.54818],
+  [55.64413, 12.54488], [55.645602, 12.543439], [55.646995, 12.5425], [55.652046, 12.539792],
+  [55.654209, 12.539001], [55.655461, 12.538924], [55.657411, 12.53929], [55.660597, 12.541042],
+  [55.661559, 12.541988], [55.662209, 12.543144], [55.66265, 12.544377], [55.663165, 12.5477],
+  [55.664512, 12.558608], [55.665005, 12.559909], [55.667568, 12.564835], [55.668218, 12.56569],
+  [55.668807, 12.566157], [55.669267, 12.566406], [55.670225, 12.566541], [55.671023, 12.566311],
+  [55.672755, 12.564894],
+];
+
+const COPENHAGEN_AIRPORT_5C_ROUTE: [number, number][] = [
+  [55.629836, 12.651168], [55.629959, 12.653445], [55.630378, 12.655957], [55.630298, 12.656467],
+  [55.630408, 12.65676], [55.630636, 12.656871], [55.630962, 12.656306], [55.632635, 12.655671],
+  [55.632909, 12.655698], [55.633161, 12.65438], [55.633573, 12.653496], [55.639404, 12.648056],
+  [55.638511, 12.641213], [55.637656, 12.636337], [55.635435, 12.619738], [55.64429, 12.615279],
+  [55.654131, 12.610782], [55.657274, 12.608729], [55.662968, 12.601886], [55.665492, 12.599429],
+  [55.667629, 12.590578], [55.667808, 12.587327], [55.668594, 12.582708], [55.669243, 12.581068],
+  [55.672009, 12.575505], [55.670939, 12.573942], [55.670465, 12.573609], [55.669962, 12.571172],
+  [55.669593, 12.570326], [55.672189, 12.56721], [55.67223, 12.566863], [55.67283, 12.566214],
+  [55.673026, 12.566303], [55.674557, 12.564484], [55.675821, 12.568086], [55.677028, 12.56658],
+  [55.678501, 12.565118], [55.67885, 12.566108], [55.680977, 12.568854], [55.681351, 12.569],
+  [55.682699, 12.570397], [55.683567, 12.571795], [55.689735, 12.55579], [55.699953, 12.540337],
+  [55.701017, 12.537919], [55.701872, 12.533227], [55.705496, 12.524194], [55.706005, 12.522134],
+  [55.706583, 12.517696], [55.706691, 12.516226], [55.706579, 12.514543], [55.704458, 12.499559],
+  [55.70514, 12.494012], [55.705974, 12.489981], [55.710268, 12.478217], [55.713013, 12.468106],
+  [55.717615, 12.455459], [55.721664, 12.445525], [55.722226, 12.443892], [55.722825, 12.441364],
+  [55.726658, 12.442564], [55.728096, 12.443317], [55.729249, 12.444368], [55.73006, 12.445531],
+  [55.730213, 12.445826], [55.729931, 12.446546],
+];
+
+const COPENHAGEN_AIRPORT_35_ROUTE: [number, number][] = [
+  [55.629836, 12.651168], [55.629959, 12.653445], [55.630378, 12.655957], [55.630331, 12.656632],
+  [55.6305, 12.656847], [55.630729, 12.656822], [55.632011, 12.659679], [55.632391, 12.661565],
+  [55.632395, 12.663301], [55.632087, 12.664485], [55.629408, 12.669748], [55.628505, 12.672587],
+  [55.627912, 12.673493], [55.62731, 12.674032], [55.619769, 12.676763], [55.619667, 12.676266],
+  [55.620322, 12.676041], [55.620374, 12.67648], [55.619769, 12.676763], [55.614197, 12.678706],
+  [55.614161, 12.678356], [55.614449, 12.678241], [55.614488, 12.678593], [55.611072, 12.679781],
+  [55.610064, 12.679662], [55.609254, 12.678942], [55.607465, 12.676169], [55.606844, 12.674339],
+  [55.606733, 12.672974], [55.606793, 12.663169], [55.606651, 12.661454], [55.602428, 12.661554],
+  [55.602459, 12.660318], [55.60109, 12.660195], [55.600904, 12.666444], [55.60071, 12.667974],
+  [55.597713, 12.669381], [55.595233, 12.669902], [55.595314, 12.669247], [55.594252, 12.669026],
+  [55.594282, 12.668438], [55.596149, 12.637674], [55.596301, 12.631682], [55.596756, 12.628845],
+  [55.597445, 12.626809], [55.598505, 12.624928], [55.599528, 12.623786], [55.606139, 12.617285],
+  [55.609306, 12.614925], [55.609827, 12.616672], [55.61018, 12.617306], [55.612831, 12.620047],
+  [55.613469, 12.621061], [55.613923, 12.622624], [55.614535, 12.627119], [55.615444, 12.629537],
+  [55.646748, 12.614142], [55.646707, 12.613636], [55.646295, 12.613493],
+];
+
+const COPENHAGEN_AIRPORT_36_ROUTE: [number, number][] = [
+  [55.629836, 12.651168], [55.629959, 12.653445], [55.630408, 12.65676], [55.630729, 12.656822],
+  [55.630962, 12.656306], [55.632635, 12.655671], [55.632909, 12.655698], [55.633329, 12.653922],
+  [55.634272, 12.652838], [55.633698, 12.648167], [55.632988, 12.64434], [55.638465, 12.64098],
+  [55.637656, 12.636337], [55.633288, 12.603797], [55.633224, 12.601882], [55.631876, 12.601394],
+  [55.630953, 12.601769], [55.630797, 12.601548], [55.630632, 12.601585], [55.630037, 12.602107],
+  [55.629921, 12.602616], [55.629546, 12.60295], [55.628297, 12.6036], [55.626716, 12.604077],
+  [55.623248, 12.604424], [55.623296, 12.599103], [55.622359, 12.592094], [55.609787, 12.593531],
+  [55.608189, 12.584028], [55.608072, 12.584137], [55.591614, 12.581361], [55.591509, 12.581644],
+  [55.591174, 12.581582], [55.59114, 12.581705], [55.591301, 12.581729],
+];
+
 const categoryColors: Record<ListCategory, string> = {
   Food: "0f766e",
   Nightlife: "7c3aed",
@@ -129,6 +209,11 @@ const images = {
   amagerBeach: "https://files.guidedanmark.org/files/382/289624_Amager_Stranpark.jpg?width=1600&height=727&mode=crop&scale=both&format=webp&webp.quality=60",
   frederiksbergGarden: "https://upload.wikimedia.org/wikipedia/commons/8/88/Frederiksberg_Have.jpg",
   amagerFaelled: "https://upload.wikimedia.org/wikipedia/commons/e/e7/Cityscape_-_Copenhagen_seen_from_Amager_F%C3%A6lled_%2851161985938%29.jpg",
+  airportMetro: "https://upload.wikimedia.org/wikipedia/commons/2/2e/Metro_Kopenhamns_flygplats_160713_N8B4601_%2828223894031%29.jpg",
+  airportTrain: "https://upload.wikimedia.org/wikipedia/commons/e/ee/Copenhagen_Airport_Station%2C_2025.jpg",
+  airportBus5c: "https://upload.wikimedia.org/wikipedia/commons/1/19/Movia_bus_line_5C_at_Hovedbaneg%C3%A5rden.jpg",
+  airportBus35: "https://upload.wikimedia.org/wikipedia/commons/8/86/Movia_bus_line_35_at_Copenhagen_Airport.JPG",
+  airportBus36: "https://upload.wikimedia.org/wikipedia/commons/0/01/Vest_Movia_bus_3248_line_36.JPG",
 };
 
 const foodImageCycle = [images.alchemist, images.kadeau, images.popl, images.banegaarden, images.nyhavn, images.copenhagen];
@@ -263,6 +348,19 @@ const sources = {
     source("Freetown Christiania official", "https://www.christiania.org/"),
     source("Google Maps - Copenhagen things to do", maps("best things to do Copenhagen")),
   ],
+  airport: [
+    source("Copenhagen Airport - metro", "https://www.cph.dk/en/parking-transport/bus-train-metro-taxi/metro"),
+    source("Copenhagen Airport - train", "https://www.cph.dk/en/parking-transport/bus-train-metro-taxi/train"),
+    source("Copenhagen Airport - buses", "https://www.cph.dk/en/parking-transport/bus-train-metro-taxi/bus"),
+    source("Copenhagen Metro - M2 route and timetable", "https://m.dk/en/routes-and-timetables/vanloese-koebenhavns-lufthavn/"),
+    source("Copenhagen Metro - airport station", "https://m.dk/en/plan-your-trip/koebenhavns-lufthavn/"),
+    source("DSB - Copenhagen and airport travel", "https://www.dsb.dk/en/travelling-in-the-cities/copenhagen/"),
+    source("DOT - journey planning and timetables", "https://dinoffentligetransport.dk/en/plan-your-journey"),
+    source("DOT - Copenhagen Airport station map", "https://dinoffentligetransport.dk/media/ujsnwyxm/dot_stationskort_cph-airport_web.pdf"),
+    source("DOT - day tickets and City Pass", "https://dinoffentligetransport.dk/en/find-tickets/day-tickets"),
+    source("Rejseplanen journey planner", "https://www.rejseplanen.dk/webapp/"),
+    source("Rejseplanen Labs - static GTFS", "https://labs.rejseplanen.dk/hc/en-us/articles/21639730766877-Om-GTFS-Schedule-Static"),
+  ],
 };
 
 type StopOptions = Partial<GuideStop> & {
@@ -308,6 +406,227 @@ function stop(id: string, name: string, coordinates: [number, number], descripti
     ...rest,
   };
 }
+
+function routePlace(
+  id: string,
+  name: string,
+  coordinates: [number, number],
+  description: string,
+  subcategory: "metro_station" | "train_station" | "bus_stop",
+): GuideStop {
+  return {
+    id,
+    name,
+    coordinates,
+    description,
+    category: "Essentials",
+    subcategory,
+    venueKind: "transport",
+  };
+}
+
+const airportStops: GuideStop[] = [
+  stop(
+    "copenhagen-airport-m2",
+    "M2 Metro: Airport to Vanlose",
+    [55.630137, 12.64939],
+    "M2 is the fastest all-purpose airport line for central Copenhagen, running directly from Terminal 3 through Christianshavn, Kongens Nytorv, and Norreport before continuing west to Frederiksberg and Vanlose. Trains are driverless and run all night; the airport to Norreport trip takes about 15 minutes.",
+    {
+      category: "Essentials",
+      subcategory: "airport_metro",
+      subcategories: ["airport_metro", "public_transport"],
+      venueKind: "transport",
+      attributeTags: ["airport", "metro", "overnight_service", "route", "accessible"],
+      hours: { default: "Open 24 hours daily. M2 runs about every 2 minutes in weekday rush hours, every 3 minutes off-peak and on weekends, every 8 minutes overnight after Friday-Saturday, and every 20 minutes overnight after Sunday-Thursday." },
+      officialUrl: "https://m.dk/en/routes-and-timetables/vanloese-koebenhavns-lufthavn/",
+      timetableUrl: "https://m.dk/en/routes-and-timetables/vanloese-koebenhavns-lufthavn/",
+      sourcePhoto: images.airportMetro,
+      imageSourceUrl: "https://commons.wikimedia.org/wiki/File:Metro_Kopenhamns_flygplats_160713_N8B4601_(28223894031).jpg",
+      imageSourceName: "Wikimedia Commons",
+      imageCredit: "Jenny Andersson / News Oresund",
+      imageLicense: "CC BY 2.0",
+      routeCoordinates: COPENHAGEN_AIRPORT_M2_ROUTE,
+      places: [
+        routePlace("copenhagen-m2-airport", "Copenhagen Airport", [55.630137, 12.64939], "The M2 terminus is attached to Terminal 3; follow Metro signs from arrivals.", "metro_station"),
+        routePlace("copenhagen-m2-kastrup", "Kastrup", [55.635747, 12.646732], "A local Kastrup stop one station from the terminal.", "metro_station"),
+        routePlace("copenhagen-m2-amager-strand", "Amager Strand", [55.656519, 12.631584], "Use this station for the beach park and the east side of Amager.", "metro_station"),
+        routePlace("copenhagen-m2-amagerbro", "Amagerbro", [55.663326, 12.602929], "A useful interchange for Amagerbrogade hotels and buses.", "metro_station"),
+        routePlace("copenhagen-m2-christianshavn", "Christianshavn", [55.672054, 12.591385], "Best for Christianshavn, the canals, and the western edge of Christiania.", "metro_station"),
+        routePlace("copenhagen-m2-kongens-nytorv", "Kongens Nytorv", [55.679185, 12.585228], "The most useful stop for Nyhavn, Stroget, and the inner harbor.", "metro_station"),
+        routePlace("copenhagen-m2-norreport", "Norreport", [55.683843, 12.571044], "Central interchange for S-trains, regional trains, buses, the Latin Quarter, and Torvehallerne.", "metro_station"),
+        routePlace("copenhagen-m2-frederiksberg", "Frederiksberg", [55.681223, 12.531719], "Change here for M3 and central Frederiksberg.", "metro_station"),
+        routePlace("copenhagen-m2-vanlose", "Vanlose", [55.687297, 12.491664], "Western terminus with S-train and bus connections.", "metro_station"),
+      ],
+      mapQuery: "Copenhagen Airport M2 Metro",
+      editorialUrls: [
+        "https://www.cph.dk/en/parking-transport/bus-train-metro-taxi/metro",
+        "https://m.dk/en/plan-your-trip/koebenhavns-lufthavn/",
+      ],
+      sourceEvidence: {
+        currentStatusUrl: "https://m.dk/en/operation-and-service/",
+        checkedAt: "2026-08-07",
+        notes: "Route geometry is simplified from Rejseplanen's official static GTFS shape 3959; service frequency is from the official M2 timetable.",
+      },
+    },
+  ),
+  stop(
+    "copenhagen-airport-direct-train",
+    "Airport Train: Terminal 3 to Copenhagen Central",
+    [55.629443, 12.649166],
+    "Main-line trains run below Terminal 3 to Tarnby, Orestad, and Copenhagen Central. They are the cleanest choice for hotels around the central station, Tivoli, Vesterbro, or an onward Danish rail connection; buy a ticket before boarding and confirm the platform on the airport screens.",
+    {
+      category: "Essentials",
+      subcategory: "airport_train",
+      subcategories: ["airport_train", "regional_train", "public_transport"],
+      venueKind: "transport",
+      attributeTags: ["airport", "train", "central_station", "route", "luggage_friendly"],
+      hours: { default: "Service operates 24 hours daily; daytime trains generally run every 10-20 minutes, with reduced overnight frequency. Exact departures and Tracks 1, 2, 11, or 12 depend on the live Rejseplanen timetable and Terminal 3 departure screens." },
+      officialUrl: "https://www.cph.dk/en/parking-transport/bus-train-metro-taxi/train",
+      timetableUrl: "https://www.rejseplanen.dk/webapp/",
+      sourcePhoto: images.airportTrain,
+      imageSourceUrl: "https://commons.wikimedia.org/wiki/File:Copenhagen_Airport_Station,_2025.jpg",
+      imageSourceName: "Wikimedia Commons",
+      imageCredit: "Thomas Dahlstrom Nielsen",
+      imageLicense: "CC BY 4.0",
+      routeCoordinates: COPENHAGEN_AIRPORT_TRAIN_ROUTE,
+      places: [
+        routePlace("copenhagen-train-airport", "CPH Airport Station", [55.629443, 12.649166], "The railway platforms sit below Terminal 3; check the screen because Copenhagen-bound platform assignments can change.", "train_station"),
+        routePlace("copenhagen-train-tarnby", "Tarnby", [55.629855, 12.602095], "A local interchange west of the airport.", "train_station"),
+        routePlace("copenhagen-train-orestad", "Orestad", [55.628434, 12.578776], "Use this stop for Orestad hotels, Field's, and M1 connections.", "train_station"),
+        routePlace("copenhagen-train-central", "Copenhagen Central Station", [55.673059, 12.565558], "The city terminal for Tivoli, Vesterbro, long-distance trains, S-trains, and M3/M4.", "train_station"),
+      ],
+      mapQuery: "Copenhagen Airport railway station",
+      editorialUrls: [
+        "https://www.dsb.dk/en/travelling-in-the-cities/copenhagen/",
+        "https://dinoffentligetransport.dk/en/plan-your-journey",
+      ],
+      sourceEvidence: {
+        currentStatusUrl: "https://www.rejseplanen.dk/webapp/",
+        checkedAt: "2026-08-07",
+        notes: "Route geometry is simplified from Rejseplanen's official static GTFS shape 1522 for the airport-Copenhagen Central rail segment.",
+      },
+    },
+  ),
+  stop(
+    "copenhagen-airport-bus-5c",
+    "Bus 5C: Airport, Central Station, and Norrebro",
+    [55.629832, 12.651157],
+    "5C is the slower but broadest city bus from the airport, crossing Amager before serving Copenhagen Central, City Hall Square, Norreport, Norrebro, Bronshoj, and Herlev. It is most useful when your address sits directly on the route or when the rail lines have stopped close to, but not at, your hotel.",
+    {
+      category: "Essentials",
+      subcategory: "airport_bus",
+      subcategories: ["airport_bus", "city_bus", "public_transport"],
+      venueKind: "transport",
+      attributeTags: ["airport", "bus", "overnight_service", "route", "norrebro"],
+      hours: { default: "Runs 24 hours daily. Overnight airport departures are generally hourly, with much more frequent daytime service; roadworks and event diversions appear in Rejseplanen." },
+      officialUrl: "https://www.cph.dk/en/parking-transport/bus-train-metro-taxi/bus",
+      timetableUrl: "https://www.rejseplanen.dk/webapp/",
+      sourcePhoto: images.airportBus5c,
+      imageSourceUrl: "https://commons.wikimedia.org/wiki/File:Movia_bus_line_5C_at_Hovedbaneg%C3%A5rden.jpg",
+      imageSourceName: "Wikimedia Commons",
+      imageCredit: "Leif Jorgensen",
+      imageLicense: "CC BY-SA 4.0",
+      routeCoordinates: COPENHAGEN_AIRPORT_5C_ROUTE,
+      places: [
+        routePlace("copenhagen-5c-airport", "Copenhagen Airport - Ellehammersvej", [55.629832, 12.651157], "The 5C airport stop is on Ellehammersvej outside Terminal 3.", "bus_stop"),
+        routePlace("copenhagen-5c-blue-planet", "Den Bla Planet", [55.636129, 12.651091], "The direct bus stop for Denmark's national aquarium.", "bus_stop"),
+        routePlace("copenhagen-5c-sundbyvester", "Sundbyvester Plads", [55.646319, 12.614324], "South Amager interchange for local buses and Amagerbrogade.", "bus_stop"),
+        routePlace("copenhagen-5c-amagerbro", "Amagerbro", [55.663326, 12.602929], "Bus and M2 interchange for central Amager.", "bus_stop"),
+        routePlace("copenhagen-5c-central", "Copenhagen Central - Tivoli", [55.672629, 12.566727], "The bus stop sits on Bernstorffsgade beside Tivoli and the central station.", "bus_stop"),
+        routePlace("copenhagen-5c-city-hall", "City Hall Square", [55.677295, 12.566468], "Useful for City Hall Square, Stroget, and the west side of the old center.", "bus_stop"),
+        routePlace("copenhagen-5c-norreport", "Norreport", [55.684048, 12.572622], "Central interchange for trains, metro, Torvehallerne, and the Latin Quarter.", "bus_stop"),
+        routePlace("copenhagen-5c-norrebro", "Norrebro Station", [55.701107, 12.537526], "Interchange for the M3 City Ring and S-train line F.", "bus_stop"),
+        routePlace("copenhagen-5c-herlev", "Herlev Hospital", [55.729924, 12.446539], "The northwestern end of the full 5C route.", "bus_stop"),
+      ],
+      mapQuery: "Bus 5C Copenhagen Airport",
+      editorialUrls: [
+        "https://dinoffentligetransport.dk/en/plan-your-journey",
+        "https://dinoffentligetransport.dk/media/ujsnwyxm/dot_stationskort_cph-airport_web.pdf",
+      ],
+      sourceEvidence: {
+        currentStatusUrl: "https://www.rejseplanen.dk/webapp/",
+        checkedAt: "2026-08-07",
+        notes: "Route geometry is simplified from Rejseplanen's official static GTFS shape 5482; operating span was checked against the same current feed.",
+      },
+    },
+  ),
+  stop(
+    "copenhagen-airport-bus-35",
+    "Bus 35: Airport, Dragor, and Sundbyvester",
+    [55.629832, 12.651157],
+    "Bus 35 links the airport with Dragor's old harbor town and then loops back toward Sundbyvester Plads. It is not a central-Copenhagen shortcut; it is the useful line for Dragor, Store Magleby, and southern Amager addresses that would otherwise require a rail-and-bus change.",
+    {
+      category: "Essentials",
+      subcategory: "airport_bus",
+      subcategories: ["airport_bus", "local_bus", "public_transport"],
+      venueKind: "transport",
+      attributeTags: ["airport", "bus", "dragor", "route", "south_amager"],
+      hours: { default: "Mon-Fri 4:45 AM-12:10 AM; Sat-Sun about 12:51 AM-12:10 AM the following night. Individual short workings and holiday schedules vary; use Rejseplanen for the exact departure." },
+      officialUrl: "https://www.cph.dk/en/parking-transport/bus-train-metro-taxi/bus",
+      timetableUrl: "https://www.rejseplanen.dk/webapp/",
+      sourcePhoto: images.airportBus35,
+      imageSourceUrl: "https://commons.wikimedia.org/wiki/File:Movia_bus_line_35_at_Copenhagen_Airport.JPG",
+      imageSourceName: "Wikimedia Commons",
+      imageCredit: "Leif Jorgensen",
+      imageLicense: "CC BY-SA 4.0",
+      routeCoordinates: COPENHAGEN_AIRPORT_35_ROUTE,
+      places: [
+        routePlace("copenhagen-35-airport", "Copenhagen Airport - Ellehammersvej", [55.629832, 12.651157], "The route begins outside Terminal 3 on Ellehammersvej.", "bus_stop"),
+        routePlace("copenhagen-35-dragor", "Dragor Stationsplads", [55.595301, 12.669273], "The main Dragor stop for the old town and harbor.", "bus_stop"),
+        routePlace("copenhagen-35-store-magleby", "Store Magleby", [55.596151, 12.634431], "Local stop for Store Magleby village and southern Amager.", "bus_stop"),
+        routePlace("copenhagen-35-sundbyvester", "Sundbyvester Plads", [55.64629, 12.613478], "The city-side terminus and interchange for Amager buses.", "bus_stop"),
+      ],
+      mapQuery: "Bus 35 Copenhagen Airport",
+      editorialUrls: [
+        "https://dinoffentligetransport.dk/en/plan-your-journey",
+        "https://dinoffentligetransport.dk/media/ujsnwyxm/dot_stationskort_cph-airport_web.pdf",
+      ],
+      sourceEvidence: {
+        currentStatusUrl: "https://www.rejseplanen.dk/webapp/",
+        checkedAt: "2026-08-07",
+        notes: "Route geometry is simplified from Rejseplanen's official static GTFS shape 4709; operating span was checked against the same current feed.",
+      },
+    },
+  ),
+  stop(
+    "copenhagen-airport-bus-36",
+    "Bus 36: Airport, Tarnby, and Vestamager",
+    [55.629832, 12.651157],
+    "Bus 36 stays local, running from the airport through Kastrup and Tarnby Station to residential Vestamager. It is useful for southern Amager addresses and Tarnby rail connections; for the old center, M2 or the airport train is faster and simpler.",
+    {
+      category: "Essentials",
+      subcategory: "airport_bus",
+      subcategories: ["airport_bus", "local_bus", "public_transport"],
+      venueKind: "transport",
+      attributeTags: ["airport", "bus", "tarnby", "route", "vestamager"],
+      hours: { default: "Mon-Fri 5:55 AM-12:22 AM; Sat 6:09 AM-1:43 AM; Sun 6:37 AM-1:43 AM. Holiday schedules and short workings are shown in Rejseplanen." },
+      officialUrl: "https://www.cph.dk/en/parking-transport/bus-train-metro-taxi/bus",
+      timetableUrl: "https://www.rejseplanen.dk/webapp/",
+      sourcePhoto: images.airportBus36,
+      imageSourceUrl: "https://commons.wikimedia.org/wiki/File:Vest_Movia_bus_3248_line_36.JPG",
+      imageSourceName: "Wikimedia Commons",
+      imageCredit: "Alf van Beem",
+      imageLicense: "CC0",
+      routeCoordinates: COPENHAGEN_AIRPORT_36_ROUTE,
+      places: [
+        routePlace("copenhagen-36-airport", "Copenhagen Airport - Ellehammersvej", [55.629832, 12.651157], "The route begins outside Terminal 3 on Ellehammersvej.", "bus_stop"),
+        routePlace("copenhagen-36-kastrup", "Kastruplundgade", [55.638465, 12.64098], "A local Kastrup stop near the town center.", "bus_stop"),
+        routePlace("copenhagen-36-tarnby", "Tarnby Station", [55.630062, 12.602065], "Change here for regional trains toward Copenhagen Central or the airport.", "bus_stop"),
+        routePlace("copenhagen-36-noragersmindevej", "Noragersmindevej", [55.591292, 12.581726], "The Vestamager end of the route near Kongelundsvej.", "bus_stop"),
+      ],
+      mapQuery: "Bus 36 Copenhagen Airport",
+      editorialUrls: [
+        "https://dinoffentligetransport.dk/en/plan-your-journey",
+        "https://dinoffentligetransport.dk/media/ujsnwyxm/dot_stationskort_cph-airport_web.pdf",
+      ],
+      sourceEvidence: {
+        currentStatusUrl: "https://www.rejseplanen.dk/webapp/",
+        checkedAt: "2026-08-07",
+        notes: "Route geometry is simplified from Rejseplanen's official static GTFS shape 4422; operating span was checked against the same current feed.",
+      },
+    },
+  ),
+];
 
 const diningStops: GuideStop[] = [
   stop("copenhagen-dining-geranium", "Geranium", [55.703533, 12.572067], "Book it as the night itself; the reservation calendar matters more than any casual drop-in fantasy.", { venueKind: "food_drink", foodServiceType: "restaurant", cuisineTypes: ["new_nordic", "fine_dining", "tasting_menu"], price: "$$$$", priceSource: "MICHELIN Guide / official booking calendar", attributeTags: ["fine_dining", "tasting_menu", "reservation_required", "wine_pairing"], hours: { default: "Official booking calendar controls lunch and dinner seatings on listed service dates." }, officialUrl: "https://www.geranium.dk/en/", sourcePhoto: images.geranium, editorialUrls: ["https://guide.michelin.com/us/en/capital-region/copenhagen/restaurant/geranium", "https://www.theworlds50best.com/discovery/Establishments/Denmark/Copenhagen/Geranium.html"] }),
@@ -463,4 +782,5 @@ export const copenhagenCitywideGuides: MapList[] = [
   guide("Culture", "list-copenhagen-citywide-culture", "copenhagen-best-culture-museums-landmarks-citywide", "best-culture", "Museums, Royal Rooms, and Art Beyond the Center", "Copenhagen culture reaches from national history, Danish design, and royal rooms to sculpture gardens, contemporary art, Christiania, the Round Tower, and museums beyond Nyhavn.", cultureStops, sources.culture, "Best Culture in Copenhagen for Museums, Design, Royal History, and Art", "Citywide Copenhagen culture guide with official evidence for the National Museum, SMK, Designmuseum Denmark, Glyptoteket, Rosenborg, Amalienborg, Cisternerne, Louisiana, ARKEN, Charlottenborg, Christiania, and the Round Tower."),
   guide("Nature", "list-copenhagen-scenic-citywide", "copenhagen-best-scenic-places-citywide", "best-scenic", "Gardens, Lakes, and Wild City Edges", "Copenhagen's green side runs from palace lawns and city lakes to inventive public spaces, an urban ski hill, a broad beach, and protected meadowland. These are places for walking, picnics, swimming, birdlife, and a little breathing room without committing an hour each way to a day trip.", scenicStops, sources.scenic, "Best Parks and Scenic Places in Copenhagen", "Copenhagen nature guide with Frederiksberg Gardens, Botanical Garden, Superkilen, CopenHill, Assistens Cemetery, Christiania, the Lakes, Kongens Have, Amager Beach Park, and Amager Fælled."),
   guide("Activities", "list-copenhagen-top-things-to-do", "copenhagen-top-things-to-do", "best-things-to-do", "Ten Stops That Make a First Trip Work", "Copenhagen's essentials mix Tivoli lights, harbor scenery, viewpoints, royal power, gardens, Norrebro public space, active architecture, Christiania, and an art-and-coast day trip beyond the postcard loop.", activityStops, sources.activities, "Top Things to Do in Copenhagen With 10 Strong Stops", "Ten source-backed Copenhagen things to do, from Tivoli, Nyhavn, the Round Tower, Christiansborg, and Botanical Garden to Superkilen, CopenHill, Assistens, Christiania, and Louisiana."),
+  guide("Essentials", "list-copenhagen-airport-transfers", "copenhagen-airport-transfer-guide", "airport-transfers", "Airport Trains, Metro, and Buses", "Copenhagen Airport connects cleanly to the city by M2, main-line train, and three useful bus routes. Choose by address: M2 for the old center and Norreport, the train for Central Station and Orestad, 5C for Norrebro and stops between, and buses 35 or 36 for southern Amager and Dragor.", airportStops, sources.airport, "Copenhagen Airport Transfer Guide: Metro, Train, and Buses", "Map the M2 metro, direct airport train, and Copenhagen bus routes 5C, 35, and 36 with key stops, operating hours, and official timetable links."),
 ];

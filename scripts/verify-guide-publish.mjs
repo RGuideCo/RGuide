@@ -205,7 +205,12 @@ function walkStops(list, callback, stops = list.stops ?? [], parentPath = []) {
   stops.forEach((stop, index) => {
     const pathParts = [...parentPath, stop.name || stop.id || `stop-${index + 1}`];
     callback(stop, list, pathParts);
-    if (Array.isArray(stop.places)) {
+    const placesAreRouteWaypoints =
+      stop.venueKind === "transport" &&
+      ["Essentials", "Routes"].includes(stop.category) &&
+      Array.isArray(stop.routeCoordinates) &&
+      stop.routeCoordinates.length > 1;
+    if (Array.isArray(stop.places) && !placesAreRouteWaypoints) {
       walkStops(list, callback, stop.places, pathParts);
     }
   });
@@ -218,6 +223,20 @@ function topLevelStopCount(list) {
 function isCitywideGuide(list) {
   const location = list.location ?? {};
   return Boolean(location.city) && !String(location.neighborhood ?? "").trim();
+}
+
+function isScopedTransitGuide(list) {
+  return (
+    ["Essentials", "Routes"].includes(list.category) &&
+    Array.isArray(list.stops) &&
+    list.stops.length > 0 &&
+    list.stops.every(
+      (stop) =>
+        stop.venueKind === "transport" &&
+        Array.isArray(stop.routeCoordinates) &&
+        stop.routeCoordinates.length > 1,
+    )
+  );
 }
 
 function hoursToText(value) {
@@ -417,7 +436,7 @@ function checkGuideBasics(list, report, options) {
   }
 
   const stopCount = topLevelStopCount(list);
-  if (isCitywideGuide(list) && stopCount > 0 && stopCount < MIN_CITYWIDE_STOPS) {
+  if (isCitywideGuide(list) && !isScopedTransitGuide(list) && stopCount > 0 && stopCount < MIN_CITYWIDE_STOPS) {
     addIssue(
       report,
       severityForStrict(options),
