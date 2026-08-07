@@ -66,8 +66,8 @@ async function loadRoute(segments: string[]) {
   const neighborhoodTranslation = getLocalizedNeighborhoodTranslation(city, segments[1], destinationTranslations);
   if (neighborhoodTranslation) normalizedSegments[1] = slugify(neighborhoodTranslation.sourceName);
   const [guides, englishGuides, publication] = await Promise.all([
-    getServerEditorialGuides({ cityName, locale: "es" }),
-    getServerEditorialGuides({ cityName, locale: "en" }),
+    getServerEditorialGuides({ cityName, locale: "es", bypassCache: true }),
+    getServerEditorialGuides({ cityName, locale: "en", bypassCache: true }),
     getLocalePublicationState("es"),
   ]);
   const canonicalTranslation = city

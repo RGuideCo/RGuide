@@ -66,9 +66,10 @@ export async function generateMetadata({ params }: CityDeepLinkPageProps): Promi
   const requestedCityName = getRequestedCityName(segments, cities);
   const editorialGuides = await getServerEditorialGuides({
     cityName: requestedCityName,
+    bypassCache: true,
   });
   const [spanishGuides, spanishPublication, destinationTranslations] = await Promise.all([
-    getServerEditorialGuides({ cityName: requestedCityName, locale: "es" }),
+    getServerEditorialGuides({ cityName: requestedCityName, locale: "es", bypassCache: true }),
     getLocalePublicationState("es"),
     getDestinationRouteTranslations("es"),
   ]);
@@ -137,9 +138,10 @@ export default async function CityDeepLinkPage({ params }: CityDeepLinkPageProps
   const requestedCityName = getRequestedCityName(segments, cities);
   const editorialGuides = await getServerEditorialGuides({
     cityName: requestedCityName,
+    bypassCache: true,
   });
   const [spanishGuides, spanishPublication, destinationTranslations] = await Promise.all([
-    getServerEditorialGuides({ cityName: requestedCityName, locale: "es" }),
+    getServerEditorialGuides({ cityName: requestedCityName, locale: "es", bypassCache: true }),
     getLocalePublicationState("es"),
     getDestinationRouteTranslations("es"),
   ]);
