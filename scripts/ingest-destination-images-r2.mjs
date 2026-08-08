@@ -10,6 +10,10 @@ import pg from "pg";
 import { getPgSslConfig } from "./database-ssl.mjs";
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
+const DESTINATION_IMAGE_FALLBACKS_PATH = path.join(
+  ROOT,
+  "src/data/destination-image-fallbacks.json",
+);
 const IMAGE_EXT_BY_TYPE = new Map([
   ["image/jpeg", "jpg"],
   ["image/jpg", "jpg"],
@@ -1105,6 +1109,28 @@ async function updateDestinationImage(client, row, storage, bucket, publicBaseUr
   return publicUrl;
 }
 
+function updateCityImageFallback(row, publicUrl) {
+  if (row.scope !== "city") return;
+
+  const fallbackKey = slugify(row.name || row.city_name || row.slug);
+  if (!fallbackKey) return;
+
+  const fallbacks = fs.existsSync(DESTINATION_IMAGE_FALLBACKS_PATH)
+    ? JSON.parse(fs.readFileSync(DESTINATION_IMAGE_FALLBACKS_PATH, "utf8"))
+    : {};
+  const versionedPublicUrl = `${publicUrl}?v=${encodeURIComponent(new Date().toISOString())}`;
+  const sortedFallbacks = Object.fromEntries(
+    Object.entries({ ...fallbacks, [fallbackKey]: versionedPublicUrl }).sort(([left], [right]) =>
+      left.localeCompare(right),
+    ),
+  );
+
+  fs.writeFileSync(
+    DESTINATION_IMAGE_FALLBACKS_PATH,
+    `${JSON.stringify(sortedFallbacks, null, 2)}\n`,
+  );
+}
+
 function reviewRecord(row, source, image, publicUrl, key) {
   const metadata = source.metadata ?? {};
   return {
@@ -1271,7 +1297,14 @@ async function main() {
             ContentType: storage.contentType,
             CacheControl: "public, max-age=31536000, immutable",
           }));
-          await updateDestinationImage(client, row, storage, bucket, publicBaseUrl);
+          const storedPublicUrl = await updateDestinationImage(
+            client,
+            row,
+            storage,
+            bucket,
+            publicBaseUrl,
+          );
+          updateCityImageFallback(row, storedPublicUrl);
         }
 
         stats.uploaded += 1;

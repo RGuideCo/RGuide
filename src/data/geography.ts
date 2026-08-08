@@ -1,6 +1,7 @@
 import { getCountryCode, getCountryData } from "countries-list";
 import capitalCoordinates from "@/data/capital-coordinates.json";
 import fetchedCityNeighborhoods from "@/data/city-neighborhoods.json";
+import destinationImageFallbacks from "@/data/destination-image-fallbacks.json";
 import worldCountries from "@/data/world-countries.json";
 import { slugify } from "@/lib/utils";
 import { City, Continent, Country, CountryState, RegionKind, SubArea } from "@/types";
@@ -115,11 +116,7 @@ const cityImageSlugAliases: Record<string, string> = {
   rio: "rio-de-janeiro",
 };
 
-const cityImageOverrides: Record<string, string> = {
-  dublin: "https://media.rguide.co/venues/ie/dublin/dublinia/9136c3f2-primary.jpg",
-  kyoto: "https://media.rguide.co/venues/jp/kyoto/fushimi-inari-taisha/ca3d253a-primary.jpg",
-  osaka: "https://media.rguide.co/venues/jp/osaka/osaka-castle-museum/db02ec7e-primary.jpg",
-};
+const cityImageOverrides = destinationImageFallbacks as Record<string, string>;
 
 const cityImage = (query: string) => {
   const normalizedQuery = slugify(query);
