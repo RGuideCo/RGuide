@@ -1,4 +1,4 @@
-import { US_NATURE_STOP_MEDIA } from "@/data/guides/us-nature-stop-media";
+import { NATURE_STOP_MEDIA } from "@/data/guides/nature-stop-media";
 
 function isRenderableImageUrl(value: string, officialUrl?: string) {
   const normalizedValue = value.replace(/\/$/, "");
@@ -22,7 +22,7 @@ export function getRenderableGuidePhoto(
   officialUrl?: string,
   stopId?: string,
 ) {
-  const canonicalNaturePhoto = stopId ? US_NATURE_STOP_MEDIA[stopId]?.photo : undefined;
+  const canonicalNaturePhoto = stopId ? NATURE_STOP_MEDIA[stopId]?.photo : undefined;
   if (canonicalNaturePhoto) return canonicalNaturePhoto;
 
   const value = photo?.trim();

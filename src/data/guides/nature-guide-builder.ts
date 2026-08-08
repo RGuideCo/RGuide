@@ -1,5 +1,5 @@
 import type { GuideStop, ListSource, MapList } from "@/types";
-import { US_NATURE_STOP_MEDIA } from "./us-nature-stop-media";
+import { NATURE_STOP_MEDIA } from "./nature-stop-media";
 
 type NatureHours = NonNullable<GuideStop["hours"]>;
 
@@ -91,8 +91,7 @@ function natureAvatar() {
 
 function buildNatureStop(seed: NatureStopSeed, guide: NatureGuideSeed): GuideStop {
   const mapUrl = maps(seed.mapQuery ?? `${seed.name} ${guide.city} ${guide.country}`);
-  const canonicalMedia =
-    guide.country === "United States" ? US_NATURE_STOP_MEDIA[seed.id] : undefined;
+  const canonicalMedia = NATURE_STOP_MEDIA[seed.id];
   const photo = canonicalMedia?.photo ?? seed.photo;
   const imageSourceUrl = seed.imageSourceUrl ?? canonicalMedia?.imageSourceUrl ?? photo;
   const editorialUrls = seed.editorialUrls ?? [];
