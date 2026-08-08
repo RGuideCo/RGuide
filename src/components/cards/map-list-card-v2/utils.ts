@@ -1,4 +1,5 @@
 import type { ListCategory, MapList } from "@/types";
+import { getRenderableGuidePhoto } from "@/lib/guide-photo";
 
 import type { GuideSource, GuideStopItem } from "./types";
 
@@ -93,9 +94,7 @@ export function getVariedGuideSources(sources: GuideSource[], seed: string) {
   return [...sources.slice(offset), ...sources.slice(0, offset)];
 }
 
-export function getPoiPhoto(photo?: string) {
-  return photo?.trim() || null;
-}
+export const getPoiPhoto = getRenderableGuidePhoto;
 
 export function getAlphaMarker(index: number) {
   return String.fromCharCode(65 + (index % 26));

@@ -42,7 +42,7 @@ export function GuidePhotoStrip({
       </div>
       <div className="ordered-poi-photo-strip">
         {stops.map((stop, index) => {
-          const stopPhoto = getPoiPhoto(stop.photo);
+          const stopPhoto = getPoiPhoto(stop.photo, stop.officialUrl, stop.id);
           const stopCategory = getStopCategory?.(stop, index) ?? stop.category ?? fallbackCategory;
           const categoryStyle = CATEGORY_STYLES[stopCategory];
           const isActive = activeStopId === stop.id || Boolean(stop.places?.some((place) => place.id === activeStopId));

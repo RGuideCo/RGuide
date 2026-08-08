@@ -21,7 +21,7 @@ export function NestedPoiCard({
   handlers,
 }: NestedPoiCardProps) {
   const categoryStyle = CATEGORY_STYLES[place.category ?? category];
-  const placePhoto = getPoiPhoto(place.photo);
+  const placePhoto = getPoiPhoto(place.photo, place.officialUrl, place.id);
 
   return (
     <div

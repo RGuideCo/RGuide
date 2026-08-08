@@ -1,4 +1,5 @@
 import type { GuideStop, ListSource, MapList } from "@/types";
+import { US_NATURE_STOP_MEDIA } from "./us-nature-stop-media";
 
 type NatureHours = NonNullable<GuideStop["hours"]>;
 
@@ -43,11 +44,11 @@ export function natureStopFromExisting(
     overrides.officialUrl ??
     stop.officialUrl ??
     stop.sourceEvidence?.officialUrl;
-  const photo = overrides.photo ?? stop.photo ?? officialUrl;
+  const photo = overrides.photo ?? stop.photo;
   const hours = overrides.hours ?? stop.hours;
 
-  if (!officialUrl || !photo || !hours) {
-    throw new Error(`Cannot reuse ${stop.name}: official URL, photo, and hours are required.`);
+  if (!officialUrl || !hours) {
+    throw new Error(`Cannot reuse ${stop.name}: official URL and hours are required.`);
   }
 
   return {
@@ -90,15 +91,17 @@ function natureAvatar() {
 
 function buildNatureStop(seed: NatureStopSeed, guide: NatureGuideSeed): GuideStop {
   const mapUrl = maps(seed.mapQuery ?? `${seed.name} ${guide.city} ${guide.country}`);
-  const photo = seed.photo ?? seed.officialUrl;
-  const imageSourceUrl = seed.imageSourceUrl ?? photo;
+  const canonicalMedia =
+    guide.country === "United States" ? US_NATURE_STOP_MEDIA[seed.id] : undefined;
+  const photo = canonicalMedia?.photo ?? seed.photo;
+  const imageSourceUrl = seed.imageSourceUrl ?? canonicalMedia?.imageSourceUrl ?? photo;
   const editorialUrls = seed.editorialUrls ?? [];
   const sourceUrls = [
     seed.officialUrl,
     mapUrl,
     imageSourceUrl,
     ...editorialUrls,
-  ];
+  ].filter((url): url is string => Boolean(url));
 
   return {
     id: seed.id,
@@ -106,8 +109,8 @@ function buildNatureStop(seed: NatureStopSeed, guide: NatureGuideSeed): GuideSto
     coordinates: seed.coordinates,
     description: seed.description,
     hours: seed.hours,
-    photo,
-    imageSourceUrl,
+    ...(photo ? { photo } : {}),
+    ...(imageSourceUrl ? { imageSourceUrl } : {}),
     officialUrl: seed.officialUrl,
     venueKind: "outdoors",
     subcategory: seed.subcategory ?? "nature",
@@ -117,7 +120,7 @@ function buildNatureStop(seed: NatureStopSeed, guide: NatureGuideSeed): GuideSto
       officialUrl: seed.officialUrl,
       mapUrl,
       currentStatusUrl: mapUrl,
-      imageSourceUrl,
+      ...(imageSourceUrl ? { imageSourceUrl } : {}),
       editorialUrls,
       checkedAt: guide.checkedAt,
       notes: "Official authority, current map status, and source-image evidence checked for the nature-guide population pass.",
@@ -152,7 +155,7 @@ export function buildNatureGuide(seed: NatureGuideSeed): MapList {
     seoDescription: seed.seoDescription,
     title: seed.title,
     description: seed.description,
-    photo: stops[0]?.photo,
+    photo: stops.find((stop) => Boolean(stop.photo))?.photo,
     url: maps(`${seed.title} ${seed.city} ${seed.country}`),
     category: "Nature",
     location: {

@@ -22,7 +22,7 @@ export function GuideStopCard({
   handlers,
 }: GuideStopCardProps) {
   const categoryStyle = CATEGORY_STYLES[category];
-  const stopPhoto = getPoiPhoto(stop.photo);
+  const stopPhoto = getPoiPhoto(stop.photo, stop.officialUrl, stop.id);
 
   return (
     <GuideStopCardChrome

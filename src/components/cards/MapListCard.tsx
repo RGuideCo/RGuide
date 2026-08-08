@@ -9,6 +9,7 @@ import { createPortal } from "react-dom";
 import { Check, ChevronDown, Heart, Plus, Trash2, X } from "@/components/icons/MaterialSymbol";
 
 import { getPoiAttributeTags } from "@/lib/poi-tags";
+import { getRenderableGuidePhoto } from "@/lib/guide-photo";
 import { getCreatorHref, getGuideHref, getVenueHref } from "@/lib/routes";
 import { resolveStopHours } from "@/lib/seasonal-hours";
 import {
@@ -820,9 +821,7 @@ function getAlphaMarker(index: number) {
   return String.fromCharCode(65 + (index % 26));
 }
 
-function getPoiPhoto(photo?: string) {
-  return photo?.trim() || null;
-}
+const getPoiPhoto = getRenderableGuidePhoto;
 
 function sameCoordinates(
   first: MapList["stops"][number]["coordinates"] | undefined,
@@ -1144,7 +1143,14 @@ export function MapListCard({
   );
   const GuideBodyComponent = isEventGuide ? EventCardBody : isItineraryGuide ? JourneyCardBody : GuideCardBody;
   const firstPoi = list.stops[0];
-  const collapsedFirstPoiPhoto = firstPoi ? getPoiPhoto(firstPoi.photo) ?? getPoiPhoto(firstPoi.places?.[0]?.photo) : null;
+  const collapsedFirstPoiPhoto = firstPoi
+    ? getPoiPhoto(firstPoi.photo, firstPoi.officialUrl, firstPoi.id) ??
+      getPoiPhoto(
+        firstPoi.places?.[0]?.photo,
+        firstPoi.places?.[0]?.officialUrl,
+        firstPoi.places?.[0]?.id,
+      )
+    : null;
   const preservingListChrome = preserveExpandedChrome && !fillPane;
   const retractingListChrome = preservingListChrome && retractExpandedChrome;
   const expandingListChrome = expandExpandedChrome && expandedChrome;
@@ -2437,7 +2443,7 @@ export function MapListCard({
                         const stopItineraryId = `${list.id}:${stop.id}`;
                         const stopCategory = isItineraryGuide ? inferJourneyStopCategory(stop, list.category) : stop.category ?? list.category;
                         const stopCategoryStyle = CATEGORY_STYLES[stopCategory];
-                        const stopPhoto = getPoiPhoto(stop.photo);
+                        const stopPhoto = getPoiPhoto(stop.photo, stop.officialUrl, stop.id);
                         const stopAttributeTags = getPoiAttributeTags(stop, stopCategory, list.location.neighborhood);
                         const hasStopCopy = stopContent.summary.trim().length > 0 || stopAttributeTags.length > 0;
                         const stayBookingDetails = getStayBookingDetails(list, stop, stopCategory);
