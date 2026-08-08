@@ -98,7 +98,7 @@ export function GuideStopHeader({
         </button>
       )}
       {placeCount ? (
-        <span className="rounded-md bg-slate-950/[0.04] px-2 py-0.5 text-[10px] font-medium uppercase text-slate-600 ring-1 ring-slate-950/[0.04]">
+        <span className="expanded-guide-stop-place-count rounded-md bg-white px-2 py-0.5 text-[10px] font-semibold uppercase text-slate-800 shadow-sm ring-1 ring-slate-950/10">
           {placeCount} places
         </span>
       ) : null}
