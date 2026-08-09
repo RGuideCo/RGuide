@@ -4,7 +4,7 @@ import fs from "node:fs";
 import path from "node:path";
 import process from "node:process";
 import { promisify } from "node:util";
-import { fileURLToPath } from "node:url";
+import { fileURLToPath, pathToFileURL } from "node:url";
 
 import { PutObjectCommand, S3Client } from "@aws-sdk/client-s3";
 import { getCountryCode } from "countries-list";
@@ -33,6 +33,7 @@ const USER_AGENT = "rGuide-media-ingest/1.0 (https://rguide.co; media@rguide.co)
 const BROWSER_USER_AGENT = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0 Safari/537.36";
 const IMAGE_ACCEPT_HEADER = "image/webp,image/jpeg,image/png,image/*;q=0.8,*/*;q=0.1";
 const CURL_IMAGE_MAX_BYTES = 25 * 1024 * 1024;
+const SOURCE_FETCH_TIMEOUT_MS = 15_000;
 const execFileAsync = promisify(execFile);
 
 function loadEnvFile(filePath) {
@@ -479,6 +480,7 @@ async function searchOpenverseSource(row, originalError, minScore) {
     apiUrl.searchParams.set("category", "photograph");
 
     const response = await fetch(apiUrl, {
+      signal: AbortSignal.timeout(SOURCE_FETCH_TIMEOUT_MS),
       headers: {
         "accept": "application/json",
         "user-agent": USER_AGENT,
@@ -545,6 +547,7 @@ async function resolveWikimediaSource(sourceUrl) {
   apiUrl.searchParams.set("iiurlwidth", "1920");
 
   const response = await fetch(apiUrl, {
+    signal: AbortSignal.timeout(SOURCE_FETCH_TIMEOUT_MS),
     headers: {
       "accept": "application/json",
       "user-agent": USER_AGENT,
@@ -658,6 +661,7 @@ async function searchWikimediaSource(row, originalError) {
     apiUrl.searchParams.set("iiurlwidth", "1920");
 
     const response = await fetch(apiUrl, {
+      signal: AbortSignal.timeout(SOURCE_FETCH_TIMEOUT_MS),
       headers: {
         "accept": "application/json",
         "user-agent": USER_AGENT,
@@ -709,7 +713,7 @@ async function searchWikimediaSource(row, originalError) {
   throw originalError;
 }
 
-async function searchLicensedFallbackSource(row, originalError, minScore) {
+export async function searchLicensedFallbackSource(row, originalError, minScore) {
   try {
     return await searchWikimediaSource(row, originalError);
   } catch (wikimediaError) {
@@ -773,6 +777,7 @@ async function fetchImage(url) {
 
   const fetchWithUserAgent = (userAgent) => fetch(url, {
     redirect: "follow",
+    signal: AbortSignal.timeout(SOURCE_FETCH_TIMEOUT_MS),
     headers: {
       "accept": IMAGE_ACCEPT_HEADER,
       "user-agent": userAgent,
@@ -805,7 +810,7 @@ async function fetchImage(url) {
   return { bytes, contentType };
 }
 
-async function resolveSource(sourceUrl) {
+export async function resolveSource(sourceUrl) {
   const wikimedia = await resolveWikimediaSource(sourceUrl);
   return {
     resolvedSourceUrl: wikimedia?.canonicalUrl ?? sourceUrl,
@@ -827,7 +832,7 @@ async function resolveSource(sourceUrl) {
   };
 }
 
-async function fetchResolvedImage(resolvedSource) {
+export async function fetchResolvedImage(resolvedSource) {
   const image = await fetchImage(resolvedSource.downloadUrl);
   return {
     ...image,
@@ -1385,7 +1390,9 @@ async function main() {
   }
 }
 
-main().catch((error) => {
-  console.error(error);
-  process.exit(1);
-});
+if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
+  main().catch((error) => {
+    console.error(error);
+    process.exit(1);
+  });
+}

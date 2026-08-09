@@ -1,0 +1,1782 @@
+{
+  "version": 1,
+  "generatedAt": "2026-08-09T12:57:10.546Z",
+  "items": [
+    {
+      "stopId": "athens-nature-hymettus",
+      "name": "Mount Hymettus and Kaisariani Forest",
+      "city": "Athens",
+      "country": "Greece",
+      "url": "https://media.rguide.co/venues/gr/athens/mount-hymettus-and-kaisariani-forest/159cd42c4699-nature-primary.jpg",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:%CE%91%CE%B9%CF%83%CE%B8%CE%B7%CF%84%CE%B9%CE%BA%CF%8C_%CE%B4%CE%AC%CF%83%CE%BF%CF%82_%CE%A5%CE%BC%CE%B7%CF%84%CF%84%CE%BF%CF%8D_-_Mount_Hymettus_Aesthetic_Forest_2.jpg"
+    },
+    {
+      "stopId": "athens-nature-national-garden",
+      "name": "National Garden",
+      "city": "Athens",
+      "country": "Greece",
+      "url": "https://media.rguide.co/venues/gr/athens/national-garden/c6d24fc8e05f-nature-primary.jpg",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Attica_06-13_Athens_12_National_Garden.jpg"
+    },
+    {
+      "stopId": "athens-nature-parnitha",
+      "name": "Parnitha National Park",
+      "city": "Athens",
+      "country": "Greece",
+      "url": "https://media.rguide.co/venues/gr/athens/parnitha-national-park/1ce5d6f6ba2a-nature-primary.jpg",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Parnitha_ast_2007201_lrg.jpg"
+    },
+    {
+      "stopId": "athens-nature-schinias",
+      "name": "Schinias National Park",
+      "city": "Athens",
+      "country": "Greece",
+      "url": "https://media.rguide.co/venues/gr/athens/schinias-national-park/4519e6a8be62-nature-primary.jpg",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Schinias_National_Park.jpg"
+    },
+    {
+      "stopId": "athens-nature-tritsis",
+      "name": "Antonis Tritsis Metropolitan Park",
+      "city": "Athens",
+      "country": "Greece",
+      "url": "https://media.rguide.co/venues/gr/athens/antonis-tritsis-metropolitan-park/7ad3b244c804-nature-primary.jpg",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Antonis_Tritsis_Metropolitan_Park_Athens_Greece_(252943307).jpeg"
+    },
+    {
+      "stopId": "athens-nature-vouliagmeni",
+      "name": "Lake Vouliagmeni",
+      "city": "Athens",
+      "country": "Greece",
+      "url": "https://media.rguide.co/venues/gr/athens/lake-vouliagmeni/ba5e7ed84d49-nature-primary.jpg",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Lake_Vouliagmeni_(Attica)_-_%CE%9B%CE%AF%CE%BC%CE%BD%CE%B7_%CE%92%CE%BF%CF%85%CE%BB%CE%B9%CE%B1%CE%B3%CE%BC%CE%AD%CE%BD%CE%B7%CF%82_(%CE%91%CF%84%CF%84%CE%B9%CE%BA%CE%AE).JPG"
+    },
+    {
+      "stopId": "bangkok-nature-bang-kachao",
+      "name": "Bang Kachao",
+      "city": "Bangkok",
+      "country": "Thailand",
+      "url": "https://media.rguide.co/venues/th/bangkok/bang-kachao/9eb06b218250-nature-primary.jpg",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Bang_Kachao_jungle_path.jpg"
+    },
+    {
+      "stopId": "bangkok-nature-benjakitti",
+      "name": "Benjakitti Forest Park",
+      "city": "Bangkok",
+      "country": "Thailand",
+      "url": "https://media.rguide.co/venues/th/bangkok/benjakitti-forest-park/9a331cef1531-nature-primary.jpg",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Benjakitti_Forest_Park_(I).jpg"
+    },
+    {
+      "stopId": "bangkok-nature-butterfly-garden",
+      "name": "Bangkok Butterfly Garden and Insectarium",
+      "city": "Bangkok",
+      "country": "Thailand",
+      "url": "https://media.rguide.co/venues/th/bangkok/bangkok-butterfly-garden-and-insectarium/95c5eee65046-nature-primary.jpg",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Bangkok_butterfly_garden_and_insectarium,_%E0%B8%AD%E0%B8%B8%E0%B8%97%E0%B8%A2%E0%B8%B2%E0%B8%99%E0%B8%9C%E0%B8%B5%E0%B9%80%E0%B8%AA%E0%B8%B7%E0%B9%89%E0%B8%AD%E0%B9%81%E0%B8%A5%E0%B8%B0%E0%B9%81%E0%B8%A1%E0%B8%A5%E0%B8%87%E0%B8%81%E0%B8%A3%E0%B8%B8%E0%B8%87%E0%B9%80%E0%B8%97%E0%B8%9E%E0%B8%AF_-_panoramio.jpg"
+    },
+    {
+      "stopId": "bangkok-nature-queen-sirikit",
+      "name": "Queen Sirikit Park",
+      "city": "Bangkok",
+      "country": "Thailand",
+      "url": "https://media.rguide.co/venues/th/bangkok/queen-sirikit-park/d09455b9b2f1-nature-primary.jpg",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Queen_Sirikit_Park_-_panoramio.jpg"
+    },
+    {
+      "stopId": "bangkok-nature-rama-nine",
+      "name": "Suan Luang Rama IX",
+      "city": "Bangkok",
+      "country": "Thailand",
+      "url": "https://media.rguide.co/venues/th/bangkok/suan-luang-rama-ix/4a936c9c4391-nature-primary.jpg",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Suan_Luang_Rama_IX_Station_02.jpg"
+    },
+    {
+      "stopId": "bangkok-nature-si-nakhon",
+      "name": "Si Nakhon Khuean Khan Park",
+      "city": "Bangkok",
+      "country": "Thailand",
+      "url": "https://media.rguide.co/venues/th/bangkok/si-nakhon-khuean-khan-park/738fe88fecb0-nature-primary.jpg",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Bird_Watching_Tower_at_Si_Nakhon_Khuean_Khan_Park.jpg"
+    },
+    {
+      "stopId": "bangkok-nature-wachirabenchathat",
+      "name": "Wachirabenchathat Park",
+      "city": "Bangkok",
+      "country": "Thailand",
+      "url": "https://media.rguide.co/venues/th/bangkok/wachirabenchathat-park/cab63ed3eebb-nature-primary.jpg",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Wachirabenchathat_Park_Stone_Garden_05.23.jpg"
+    },
+    {
+      "stopId": "dubai-nature-al-marmoom",
+      "name": "Al Marmoom Desert Conservation Reserve",
+      "city": "Dubai",
+      "country": "United Arab Emirates",
+      "url": "https://media.rguide.co/venues/ae/dubai/al-marmoom-desert-conservation-reserve/f8a333cf8291-nature-primary.jpg",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Al_Qudra_Lakes_at_Al_Marmoom_Desert_Conservation_Reserve.jpg"
+    },
+    {
+      "stopId": "dubai-nature-al-qudra",
+      "name": "Al Qudra Lakes",
+      "city": "Dubai",
+      "country": "United Arab Emirates",
+      "url": "https://media.rguide.co/venues/ae/dubai/al-qudra-lakes/46e784912459-nature-primary.jpg",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Al_Qudra_Lakes_from_Above.jpg"
+    },
+    {
+      "stopId": "dubai-nature-ddcr",
+      "name": "Dubai Desert Conservation Reserve",
+      "city": "Dubai",
+      "country": "United Arab Emirates",
+      "url": "https://media.rguide.co/venues/ae/dubai/dubai-desert-conservation-reserve/34cb1875d40e-nature-primary.jpg",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Dubai_Desert_Conservation_Reserve_1.jpg"
+    },
+    {
+      "stopId": "dubai-nature-hatta",
+      "name": "Hatta Mountain Reserve",
+      "city": "Dubai",
+      "country": "United Arab Emirates",
+      "url": "https://media.rguide.co/venues/ae/dubai/hatta-mountain-reserve/6ff639004bae-nature-primary.jpg",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Hatta_Mountain_Reserve_10.12.23.jpg"
+    },
+    {
+      "stopId": "dubai-nature-kite-beach",
+      "name": "Kite Beach",
+      "city": "Dubai",
+      "country": "United Arab Emirates",
+      "url": "https://media.rguide.co/venues/ae/dubai/kite-beach/0493cee5cb6f-nature-primary.jpg",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Kite_surfer_on_the_Kite_beach,_Dubai_-_January_2024.jpg"
+    },
+    {
+      "stopId": "dubai-nature-miracle-garden",
+      "name": "Dubai Miracle Garden",
+      "city": "Dubai",
+      "country": "United Arab Emirates",
+      "url": "https://media.rguide.co/venues/ae/dubai/dubai-miracle-garden/4984aa1ab3bc-nature-primary.jpg",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Dubai_Miracle_Garden_-_%E0%B4%A6%E0%B5%81%E0%B4%AC%E0%B4%BE%E0%B4%AF%E0%B5%8D_%E0%B4%AE%E0%B4%BF%E0%B4%B1%E0%B4%BE%E0%B4%95%E0%B5%8D%E0%B4%95%E0%B4%BF%E0%B5%BE_%E0%B4%97%E0%B4%BE%E0%B5%BC%E0%B4%A1%E0%B5%BB_01.jpg"
+    },
+    {
+      "stopId": "dubai-nature-mushrif",
+      "name": "Mushrif National Park",
+      "city": "Dubai",
+      "country": "United Arab Emirates",
+      "url": "https://media.rguide.co/venues/ae/dubai/mushrif-national-park/10b0d3efd384-nature-primary.jpg",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Mushrif_National_park,_Dubai_-_panoramio.jpg"
+    },
+    {
+      "stopId": "dubai-nature-quranic-park",
+      "name": "Quranic Park",
+      "city": "Dubai",
+      "country": "United Arab Emirates",
+      "url": "https://media.rguide.co/venues/ae/dubai/quranic-park/278a250edb50-nature-primary.jpg",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Moses_Lake_in_beautiful_Quranic_Park,_Dubai.jpg"
+    },
+    {
+      "stopId": "dubai-nature-ras-al-khor",
+      "name": "Ras Al Khor Wildlife Sanctuary",
+      "city": "Dubai",
+      "country": "United Arab Emirates",
+      "url": "https://media.rguide.co/venues/ae/dubai/ras-al-khor-wildlife-sanctuary/e2fd0ba1d89c-nature-primary.jpg",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Ras_Al_Khor_Wildlife_Sanctuary.jpg"
+    },
+    {
+      "stopId": "dubai-nature-safa",
+      "name": "Safa Park",
+      "city": "Dubai",
+      "country": "United Arab Emirates",
+      "url": "https://media.rguide.co/venues/ae/dubai/safa-park/46b69bf337c8-nature-primary.jpg",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Dubai_-_Safa_Park_-_%D8%AD%D8%AF%D9%8A%D9%82%D8%A9_%D8%A7%D9%84%D8%B5%D9%81%D8%A7_-_panoramio.jpg"
+    },
+    {
+      "stopId": "dublin-nature-botanic",
+      "name": "National Botanic Gardens",
+      "city": "Dublin",
+      "country": "Ireland",
+      "url": "https://media.rguide.co/venues/ie/dublin/national-botanic-gardens/f65c3c8f35e6-nature-primary.jpg",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:National_Botanic_Gardens,_Dublin_(6872756142).jpg"
+    },
+    {
+      "stopId": "dublin-nature-bull-island",
+      "name": "North Bull Island",
+      "city": "Dublin",
+      "country": "Ireland",
+      "url": "https://media.rguide.co/venues/ie/dublin/north-bull-island/3a93fd510bfc-nature-primary.jpg",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Dollymount_Beach_-_North_Bull_Island_-_panoramio.jpg"
+    },
+    {
+      "stopId": "dublin-nature-dodder",
+      "name": "Dodder Greenway",
+      "city": "Dublin",
+      "country": "Ireland",
+      "url": "https://media.rguide.co/venues/ie/dublin/dodder-greenway/cbaedc5e17ee-nature-primary.jpg",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Dodder_Greenway_Bridge.jpg"
+    },
+    {
+      "stopId": "dublin-nature-howth",
+      "name": "Howth Cliff Walk",
+      "city": "Dublin",
+      "country": "Ireland",
+      "url": "https://media.rguide.co/venues/ie/dublin/howth-cliff-walk/861c122cdf16-nature-primary.jpg",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Howth_Cliff_Walk.jpg"
+    },
+    {
+      "stopId": "dublin-nature-iveagh",
+      "name": "Iveagh Gardens",
+      "city": "Dublin",
+      "country": "Ireland",
+      "url": "https://media.rguide.co/venues/ie/dublin/iveagh-gardens/bb446ad1c343-nature-primary.jpg",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Iveagh_Gardens,_Dublin_-_infomatique.jpg"
+    },
+    {
+      "stopId": "dublin-nature-killiney",
+      "name": "Killiney Hill Park",
+      "city": "Dublin",
+      "country": "Ireland",
+      "url": "https://media.rguide.co/venues/ie/dublin/killiney-hill-park/4817a3153fd1-nature-primary.jpg",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:KILLINEY-157_(1424775656).jpg"
+    },
+    {
+      "stopId": "dublin-nature-phoenix",
+      "name": "Phoenix Park",
+      "city": "Dublin",
+      "country": "Ireland",
+      "url": "https://media.rguide.co/venues/ie/dublin/phoenix-park/78d22a04b5d9-nature-primary.jpg",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Phoenix_Park_is_an_urban_park_in_Dublin,_Ireland_(5489563092).jpg"
+    },
+    {
+      "stopId": "dublin-nature-st-annes",
+      "name": "St Anne's Park",
+      "city": "Dublin",
+      "country": "Ireland",
+      "url": "https://media.rguide.co/venues/ie/dublin/st-anne-s-park/6f94796937d8-nature-primary.jpg",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:St._Anne%27s_Park_-_Dublin_(2469353356).jpg"
+    },
+    {
+      "stopId": "dublin-nature-stephens-green",
+      "name": "St Stephen's Green",
+      "city": "Dublin",
+      "country": "Ireland",
+      "url": "https://media.rguide.co/venues/ie/dublin/st-stephen-s-green/49c77a8a71cc-nature-primary.jpg",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Dubl%C3%ADn_-_St_Stephen%27s_Green_-_20170802165050.jpg"
+    },
+    {
+      "stopId": "dublin-nature-ticknock",
+      "name": "Ticknock Forest",
+      "city": "Dublin",
+      "country": "Ireland",
+      "url": "https://media.rguide.co/venues/ie/dublin/ticknock-forest/a3aaff290c4c-nature-primary.jpg",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Tiknock.jpg"
+    },
+    {
+      "stopId": "florence-nature-bardini",
+      "name": "Bardini Garden",
+      "city": "Florence",
+      "country": "Italy",
+      "url": "https://media.rguide.co/venues/it/florence/bardini-garden/f2f439c33edb-nature-primary.jpg",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Firenze_-_Florence_-_Piazetto_beneath_Piazzale_Michelangelo_-_View_West_on_Bardini_Gardens,_Ponte_Vecchio_%26_Palazzo_Vecchio.jpg"
+    },
+    {
+      "stopId": "florence-nature-boboli",
+      "name": "Boboli Gardens",
+      "city": "Florence",
+      "country": "Italy",
+      "url": "https://media.rguide.co/venues/it/florence/boboli-gardens/11e63243dafc-nature-primary.jpg",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Florence_-_Boboli_Gardens_-_20220610115047.jpg"
+    },
+    {
+      "stopId": "florence-nature-cascine",
+      "name": "Parco delle Cascine",
+      "city": "Florence",
+      "country": "Italy",
+      "url": "https://media.rguide.co/venues/it/florence/parco-delle-cascine/dbb02d463dde-nature-primary.jpg",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Parco_delle_cascine,_anfiteatro.JPG"
+    },
+    {
+      "stopId": "florence-nature-castello",
+      "name": "Villa di Castello Garden",
+      "city": "Florence",
+      "country": "Italy",
+      "url": "https://media.rguide.co/venues/it/florence/villa-di-castello-garden/4793900e0198-nature-primary.jpg",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Villa_medicea_di_Castello_-_Nymphaea.jpg"
+    },
+    {
+      "stopId": "florence-nature-iris-garden",
+      "name": "Iris Garden",
+      "city": "Florence",
+      "country": "Italy",
+      "url": "https://media.rguide.co/venues/it/florence/iris-garden/871be9edf588-nature-primary.jpg",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Iris_alba_pianta_fiorita.jpg"
+    },
+    {
+      "stopId": "florence-nature-monte-ceceri",
+      "name": "Monte Ceceri",
+      "city": "Florence",
+      "country": "Italy",
+      "url": "https://media.rguide.co/venues/it/florence/monte-ceceri/e5e3f3b034f1-nature-primary.jpg",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:In_and_out_of_Florence;_a_new_introduction_to_a_well-known_city_(1910)_(14779431211).jpg"
+    },
+    {
+      "stopId": "florence-nature-orto-botanico",
+      "name": "Orto Botanico di Firenze",
+      "city": "Florence",
+      "country": "Italy",
+      "url": "https://media.rguide.co/venues/it/florence/orto-botanico-di-firenze/d76a1d4109ae-nature-primary.jpg",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Orto_Botanico_di_Firenze_-_general_view.JPG"
+    },
+    {
+      "stopId": "florence-nature-petraia",
+      "name": "Villa La Petraia Gardens",
+      "city": "Florence",
+      "country": "Italy",
+      "url": "https://media.rguide.co/venues/it/florence/villa-la-petraia-gardens/e8dcd001d05f-nature-primary.jpg",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Villa_La_Petraia_giardini_all%27italiana.JPG"
+    },
+    {
+      "stopId": "florence-nature-rose-garden",
+      "name": "Rose Garden",
+      "city": "Florence",
+      "country": "Italy",
+      "url": "https://media.rguide.co/venues/it/florence/rose-garden/5973b8fd6ceb-nature-primary.jpg",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Firenze_Giardino_delle_Rose_Vista_su_Firenze_2.jpg"
+    },
+    {
+      "stopId": "hanoi-nature-ba-vi",
+      "name": "Ba Vi National Park",
+      "city": "Hanoi",
+      "country": "Vietnam",
+      "url": "https://media.rguide.co/venues/vn/hanoi/ba-vi-national-park/90650b4349cf-nature-primary.jpg",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Nha_co_Ba_Vi.JPG"
+    },
+    {
+      "stopId": "hanoi-nature-botanical",
+      "name": "Hanoi Botanical Garden",
+      "city": "Hanoi",
+      "country": "Vietnam",
+      "url": "https://media.rguide.co/venues/vn/hanoi/hanoi-botanical-garden/f7acb7d6b00e-nature-primary.jpg",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Walkway_-_Hanoi_Botanical_Garden_-_Hanoi,_Vietnam_-_DSC03623.JPG"
+    },
+    {
+      "stopId": "hanoi-nature-ham-lon",
+      "name": "Ham Lon Mountain",
+      "city": "Hanoi",
+      "country": "Vietnam",
+      "url": "https://media.rguide.co/venues/vn/hanoi/ham-lon-mountain/26b6829118f8-nature-primary.jpg",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:H%C3%A0m_L%E1%BB%A3n_panorama.jpg"
+    },
+    {
+      "stopId": "hanoi-nature-hoan-kiem",
+      "name": "Hoan Kiem Lake",
+      "city": "Hanoi",
+      "country": "Vietnam",
+      "url": "https://media.rguide.co/venues/vn/hanoi/hoan-kiem-lake/98c9347e0db6-nature-primary.jpg",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Hoan_Kiem_Lake_-_Hanoi,_Vietnam_-_DSC03688.JPG"
+    },
+    {
+      "stopId": "hanoi-nature-red-river",
+      "name": "Red River Middle Ground",
+      "city": "Hanoi",
+      "country": "Vietnam",
+      "url": "https://media.rguide.co/venues/vn/hanoi/red-river-middle-ground/31b94d3e1c96-nature-primary.jpg",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:U.S._Marines_in_Vietnam_-_the_defining_year,_1968_(IA_usmarinesinvietn00jack).pdf"
+    },
+    {
+      "stopId": "hanoi-nature-thong-nhat",
+      "name": "Thong Nhat Park",
+      "city": "Hanoi",
+      "country": "Vietnam",
+      "url": "https://media.rguide.co/venues/vn/hanoi/thong-nhat-park/752e1ac1cd34-nature-primary.jpg",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Thong_Nhat_Park_(49356302283).jpg"
+    },
+    {
+      "stopId": "hanoi-nature-truc-bach",
+      "name": "Truc Bach Lake",
+      "city": "Hanoi",
+      "country": "Vietnam",
+      "url": "https://media.rguide.co/venues/vn/hanoi/truc-bach-lake/18a5ee640867-nature-primary.jpg",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Truc_Bach_Lake_1.jpg"
+    },
+    {
+      "stopId": "hanoi-nature-west-lake",
+      "name": "West Lake",
+      "city": "Hanoi",
+      "country": "Vietnam",
+      "url": "https://media.rguide.co/venues/vn/hanoi/west-lake/5e0073586a65-nature-primary.jpg",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Temple_on_West_Lake,_2003,_Hanoi_2.jpg"
+    },
+    {
+      "stopId": "hanoi-nature-yen-so",
+      "name": "Yen So Park",
+      "city": "Hanoi",
+      "country": "Vietnam",
+      "url": "https://media.rguide.co/venues/vn/hanoi/yen-so-park/24b339e64f1d-nature-primary.jpg",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Sunday_morning_at_Trung_Y%C3%AAn_Park_23-11-2025_E1.jpg"
+    },
+    {
+      "stopId": "hong-kong-nature-dragons-back",
+      "name": "Dragon's Back",
+      "city": "Hong Kong",
+      "country": "Hong Kong",
+      "url": "https://media.rguide.co/venues/hk/hong-kong/dragon-s-back/600a304fd4a6-nature-primary.jpg",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:%E9%BE%99%E8%84%8A%E5%BE%84%E8%B5%B7%E7%82%B9_-_Starting_Point_of_Dragon%27s_Back_Trail_-_2015.01_-_panoramio.jpg"
+    },
+    {
+      "stopId": "hong-kong-nature-hk-park",
+      "name": "Hong Kong Park",
+      "city": "Hong Kong",
+      "country": "Hong Kong",
+      "url": "https://media.rguide.co/venues/hk/hong-kong/hong-kong-park/c7c1bd44764f-nature-primary.jpg",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Hong_Kong_Park_3.JPG"
+    },
+    {
+      "stopId": "hong-kong-nature-lantau",
+      "name": "Lantau Trail",
+      "city": "Hong Kong",
+      "country": "Hong Kong",
+      "url": "https://media.rguide.co/venues/hk/hong-kong/lantau-trail/e8bd45ea139d-nature-primary.jpg",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Lantau_Trail_2.jpg"
+    },
+    {
+      "stopId": "hong-kong-nature-lion-rock",
+      "name": "Lion Rock",
+      "city": "Hong Kong",
+      "country": "Hong Kong",
+      "url": "https://media.rguide.co/venues/hk/hong-kong/lion-rock/bf8dd204f3ae-nature-primary.jpg",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Hong_Kong_from_Lion_Rock.JPG"
+    },
+    {
+      "stopId": "hong-kong-nature-mai-po",
+      "name": "Mai Po Nature Reserve",
+      "city": "Hong Kong",
+      "country": "Hong Kong",
+      "url": "https://media.rguide.co/venues/hk/hong-kong/mai-po-nature-reserve/9948a0370961-nature-primary.jpg",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Mai_Po_Nature_Reserve_Gei_wai_pano_201611.jpg"
+    },
+    {
+      "stopId": "hong-kong-nature-nan-lian",
+      "name": "Nan Lian Garden",
+      "city": "Hong Kong",
+      "country": "Hong Kong",
+      "url": "https://media.rguide.co/venues/hk/hong-kong/nan-lian-garden/304040649dda-nature-primary.jpg",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Nan_Lian_Garden,_Song_Cha_Xie_(Hong_Kong).jpg"
+    },
+    {
+      "stopId": "hong-kong-nature-sai-kung",
+      "name": "Sai Kung East Country Park",
+      "city": "Hong Kong",
+      "country": "Hong Kong",
+      "url": "https://media.rguide.co/venues/hk/hong-kong/sai-kung-east-country-park/933e25ffa3f0-nature-primary.jpg",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Basalt_Columns_-_Hong_Kong.jpg"
+    },
+    {
+      "stopId": "hong-kong-nature-tai-mo-shan",
+      "name": "Tai Mo Shan",
+      "city": "Hong Kong",
+      "country": "Hong Kong",
+      "url": "https://media.rguide.co/venues/hk/hong-kong/tai-mo-shan/8ed20b4b1ef4-nature-primary.jpg",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Tai_Mo_Shan_Country_Park_bus_stop_24-08-2025(2).jpg"
+    },
+    {
+      "stopId": "hong-kong-nature-wetland-park",
+      "name": "Hong Kong Wetland Park",
+      "city": "Hong Kong",
+      "country": "Hong Kong",
+      "url": "https://media.rguide.co/venues/hk/hong-kong/hong-kong-wetland-park/3d268f1879f0-nature-primary.jpg",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Hong_Kong_Wetland_Park_Visitor_Centre.jpg"
+    },
+    {
+      "stopId": "kuala-lumpur-nature-batu-caves",
+      "name": "Batu Caves Limestone Hill",
+      "city": "Kuala Lumpur",
+      "country": "Malaysia",
+      "url": "https://media.rguide.co/venues/my/kuala-lumpur/batu-caves-limestone-hill/7232bff81218-nature-primary.jpg",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Batu_Caves_from_Kuala_Lumpur_Tower_(3325049307).jpg"
+    },
+    {
+      "stopId": "kuala-lumpur-nature-bukit-gasing",
+      "name": "Bukit Gasing",
+      "city": "Kuala Lumpur",
+      "country": "Malaysia",
+      "url": "https://media.rguide.co/venues/my/kuala-lumpur/bukit-gasing/2c3f85e2d5bd-nature-primary.jpg",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Bukit_Gasing_Hiking_Trail.jpg"
+    },
+    {
+      "stopId": "kuala-lumpur-nature-forest-eco",
+      "name": "KL Forest Eco Park",
+      "city": "Kuala Lumpur",
+      "country": "Malaysia",
+      "url": "https://media.rguide.co/venues/my/kuala-lumpur/kl-forest-eco-park/2fb8e5bd9aa5-nature-primary.jpg",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Canopy_of_KL_Forest_Eco_Park_at_Kuala_Lumpur_Tower_(Menara_KL),_Malaysia_on_28_July_2020_at_152017.jpg"
+    },
+    {
+      "stopId": "kuala-lumpur-nature-frim",
+      "name": "Forest Research Institute Malaysia",
+      "city": "Kuala Lumpur",
+      "country": "Malaysia",
+      "url": "https://media.rguide.co/venues/my/kuala-lumpur/forest-research-institute-malaysia/84625bc6e137-nature-primary.jpg",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Dryobalanops_Aromatica_canopy.jpg"
+    },
+    {
+      "stopId": "kuala-lumpur-nature-kepong",
+      "name": "Kepong Metropolitan Park",
+      "city": "Kuala Lumpur",
+      "country": "Malaysia",
+      "url": "https://media.rguide.co/venues/my/kuala-lumpur/kepong-metropolitan-park/d9990d58cb7d-nature-primary.jpg",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:The_lake_at_the_Kite_Flying_Kepong_Metropolitan_Park_Kuala_Lumpur_(6763396117).jpg"
+    },
+    {
+      "stopId": "kuala-lumpur-nature-klcc",
+      "name": "KLCC Park",
+      "city": "Kuala Lumpur",
+      "country": "Malaysia",
+      "url": "https://media.rguide.co/venues/my/kuala-lumpur/klcc-park/a3fb695ae82b-nature-primary.jpg",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:KLCC_Park_Kuala_Lumpur.jpg"
+    },
+    {
+      "stopId": "kuala-lumpur-nature-perdana",
+      "name": "Perdana Botanical Gardens",
+      "city": "Kuala Lumpur",
+      "country": "Malaysia",
+      "url": "https://media.rguide.co/venues/my/kuala-lumpur/perdana-botanical-gardens/3df22b8aff0b-nature-primary.jpg",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Perdana_Botanical_Gardens,_Kuala_Lumpur,_Federal_Territory_of_Kuala_Lumpur,_Malaysia_-_panoramio.jpg"
+    },
+    {
+      "stopId": "kuala-lumpur-nature-putrajaya",
+      "name": "Putrajaya Wetlands Park",
+      "city": "Kuala Lumpur",
+      "country": "Malaysia",
+      "url": "https://media.rguide.co/venues/my/kuala-lumpur/putrajaya-wetlands-park/14dc0bc9b9b6-nature-primary.jpg",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Putrajaya_Wetlands_Park.JPG"
+    },
+    {
+      "stopId": "kuala-lumpur-nature-taman-tugu",
+      "name": "Taman Tugu",
+      "city": "Kuala Lumpur",
+      "country": "Malaysia",
+      "url": "https://media.rguide.co/venues/my/kuala-lumpur/taman-tugu/290fb887749b-nature-primary.jpg",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Spiral_ginger_plant_in_Taman_Tugu_20250827.jpg"
+    },
+    {
+      "stopId": "kuala-lumpur-nature-titiwangsa",
+      "name": "Titiwangsa Lake Gardens",
+      "city": "Kuala Lumpur",
+      "country": "Malaysia",
+      "url": "https://media.rguide.co/venues/my/kuala-lumpur/titiwangsa-lake-gardens/debc7ff9a89d-nature-primary.jpg",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Kuala_Lumpur_-_Titiwangsa_-_Panorama_0002.JPG"
+    },
+    {
+      "stopId": "lisbon-nature-ajuda",
+      "name": "Ajuda Botanical Garden",
+      "city": "Lisbon",
+      "country": "Portugal",
+      "url": "https://media.rguide.co/venues/pt/lisbon/ajuda-botanical-garden/06ec0cfe0b91-nature-primary.jpg",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Lisboa,_Ajuda_03.jpg"
+    },
+    {
+      "stopId": "lisbon-nature-botanical",
+      "name": "Lisbon Botanical Garden",
+      "city": "Lisbon",
+      "country": "Portugal",
+      "url": "https://media.rguide.co/venues/pt/lisbon/lisbon-botanical-garden/753694370778-nature-primary.jpg",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Lisbon_botanical_garden_28.JPG"
+    },
+    {
+      "stopId": "lisbon-nature-caparica",
+      "name": "Costa da Caparica",
+      "city": "Lisbon",
+      "country": "Portugal",
+      "url": "https://media.rguide.co/venues/pt/lisbon/costa-da-caparica/5d723bfb1628-nature-primary.jpg",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Seine_fishing_in_Portugal,_at_Praia_da_Sa%C3%BAde_beach,_Costa_da_Caparica_(1).jpg"
+    },
+    {
+      "stopId": "lisbon-nature-eduardo-vii",
+      "name": "Eduardo VII Park",
+      "city": "Lisbon",
+      "country": "Portugal",
+      "url": "https://media.rguide.co/venues/pt/lisbon/eduardo-vii-park/5c7517377a7c-nature-primary.jpg",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Lisbon_Portugal_563_Eduardo_VII_Park_(5108877604).jpg"
+    },
+    {
+      "stopId": "lisbon-nature-estrela",
+      "name": "Jardim da Estrela",
+      "city": "Lisbon",
+      "country": "Portugal",
+      "url": "https://media.rguide.co/venues/pt/lisbon/jardim-da-estrela/fa6a57c11253-nature-primary.jpg",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Jardim_da_Estrela_-_Lissabon.JPG"
+    },
+    {
+      "stopId": "lisbon-nature-estufa-fria",
+      "name": "Estufa Fria",
+      "city": "Lisbon",
+      "country": "Portugal",
+      "url": "https://media.rguide.co/venues/pt/lisbon/estufa-fria/1ca065dfec75-nature-primary.jpg",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Reflection_of_the_greenhouse%27s_roof_on_a_pond,_Estufa_Fria,_Parque_Eduardo_VII,_Lisbon,_Portugal_julesvernex2.jpg"
+    },
+    {
+      "stopId": "lisbon-nature-gulbenkian",
+      "name": "Gulbenkian Garden",
+      "city": "Lisbon",
+      "country": "Portugal",
+      "url": "https://media.rguide.co/venues/pt/lisbon/gulbenkian-garden/ba569088b01c-nature-primary.jpg",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Bamboo,_Calouste_Gulbenkian_Garden,_Lisbon,_Portugal_julesvernex2.jpg"
+    },
+    {
+      "stopId": "lisbon-nature-monsanto",
+      "name": "Monsanto Forest Park",
+      "city": "Lisbon",
+      "country": "Portugal",
+      "url": "https://media.rguide.co/venues/pt/lisbon/monsanto-forest-park/e167f431ccef-nature-primary.jpg",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Vine_on_a_tree,_Monsanto_Forest_Park,_Lisbon,_Portugal_(approx._GPS_location)_julesvernex2.jpg"
+    },
+    {
+      "stopId": "lisbon-nature-ribeira-naus",
+      "name": "Ribeira das Naus",
+      "city": "Lisbon",
+      "country": "Portugal",
+      "url": "https://media.rguide.co/venues/pt/lisbon/ribeira-das-naus/7f56c5232327-nature-primary.jpg",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Ribeira_das_Naus_(32708285440).jpg"
+    },
+    {
+      "stopId": "lisbon-nature-sintra-cascais",
+      "name": "Sintra-Cascais Natural Park",
+      "city": "Lisbon",
+      "country": "Portugal",
+      "url": "https://media.rguide.co/venues/pt/lisbon/sintra-cascais-natural-park/914baee9f19e-nature-primary.jpg",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Sintra-Cascais_Natural_Park.jpg"
+    },
+    {
+      "stopId": "madrid-nature-botanical",
+      "name": "Royal Botanical Garden",
+      "city": "Madrid",
+      "country": "Spain",
+      "url": "https://media.rguide.co/venues/es/madrid/royal-botanical-garden/c0c84c71a641-nature-primary.jpg",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Royal_Botanical_Garden,_Madrid_-_view_01.JPG"
+    },
+    {
+      "stopId": "madrid-nature-capricho",
+      "name": "El Capricho Park",
+      "city": "Madrid",
+      "country": "Spain",
+      "url": "https://media.rguide.co/venues/es/madrid/el-capricho-park/bac3183ce071-nature-primary.jpg",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Madrid,_El_Capricho_1977_01.jpg"
+    },
+    {
+      "stopId": "madrid-nature-casa-campo",
+      "name": "Casa de Campo",
+      "city": "Madrid",
+      "country": "Spain",
+      "url": "https://media.rguide.co/venues/es/madrid/casa-de-campo/a95737d63c14-nature-primary.jpg",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Viveros_en_la_Casa_de_Campo,_Madrid_-_51002460070.jpg"
+    },
+    {
+      "stopId": "madrid-nature-dehesa",
+      "name": "Dehesa de la Villa",
+      "city": "Madrid",
+      "country": "Spain",
+      "url": "https://media.rguide.co/venues/es/madrid/dehesa-de-la-villa/6947c0d6d0c2-nature-primary.jpg",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Dehesa_de_la_Villa_(Madrid).JPG"
+    },
+    {
+      "stopId": "madrid-nature-el-pardo",
+      "name": "Monte de El Pardo",
+      "city": "Madrid",
+      "country": "Spain",
+      "url": "https://media.rguide.co/venues/es/madrid/monte-de-el-pardo/ea4bc159348c-nature-primary.jpg",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Querqus_Ilex_Monte_de_El_Pardo_Madrid.jpg"
+    },
+    {
+      "stopId": "madrid-nature-juan-carlos",
+      "name": "Juan Carlos I Park",
+      "city": "Madrid",
+      "country": "Spain",
+      "url": "https://media.rguide.co/venues/es/madrid/juan-carlos-i-park/9e52a19bda44-nature-primary.jpg",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Madrid-Parque_Juan_Carlos_I-Espacio_Mexico_01.jpg"
+    },
+    {
+      "stopId": "madrid-nature-quinta-molinos",
+      "name": "Quinta de los Molinos",
+      "city": "Madrid",
+      "country": "Spain",
+      "url": "https://media.rguide.co/venues/es/madrid/quinta-de-los-molinos/5c774565d50b-nature-primary.jpg",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Almendro_-_Parque_de_la_Quinta_de_los_Molinos_-_Madrid_01.jpg"
+    },
+    {
+      "stopId": "madrid-nature-rio",
+      "name": "Madrid Río",
+      "city": "Madrid",
+      "country": "Spain",
+      "url": "https://media.rguide.co/venues/es/madrid/madrid-rio/7affe07263c2-nature-primary.jpg",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Madrid_R%C3%ADo_Obras1_Avenidad_de_Portugal_mjsm_02.jpg"
+    },
+    {
+      "stopId": "madrid-nature-tio-pio",
+      "name": "Cerro del Tío Pío",
+      "city": "Madrid",
+      "country": "Spain",
+      "url": "https://media.rguide.co/venues/es/madrid/cerro-del-tio-pio/a59b790a0b8d-nature-primary.jpg",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Cerro_del_Tio_Pio_en_Vallecas_(Parque_de_las_Tetas)_By_Chefo.jpg"
+    },
+    {
+      "stopId": "marais-nature-jardin-anne-frank",
+      "name": "Jardin Anne Frank",
+      "city": "Paris",
+      "country": "France",
+      "url": "https://media.rguide.co/venues/fr/paris/jardin-anne-frank/b29b306fa6da-nature-primary.jpg",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Jardin_Anne_Frank_@_Beaubourg_@_Paris_(30834144581).jpg"
+    },
+    {
+      "stopId": "marais-nature-place-vosges",
+      "name": "Place des Vosges",
+      "city": "Paris",
+      "country": "France",
+      "url": "https://media.rguide.co/venues/fr/paris/place-des-vosges/c377d4c96505-nature-primary.jpg",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Place_des_Vosges,_Paris,_porte_du_n%C2%B0_18.JPG"
+    },
+    {
+      "stopId": "marais-nature-square-temple",
+      "name": "Square du Temple - Elie Wiesel",
+      "city": "Paris",
+      "country": "France",
+      "url": "https://media.rguide.co/venues/fr/paris/square-du-temple-elie-wiesel/15d177141e65-nature-primary.jpg",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Square_du_Temple_@_Paris_(27916529095).jpg"
+    },
+    {
+      "stopId": "melbourne-nature-albert-park",
+      "name": "Albert Park Lake",
+      "city": "Melbourne",
+      "country": "Australia",
+      "url": "https://media.rguide.co/venues/au/melbourne/albert-park-lake/cf21e12f3cd6-nature-primary.jpg",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Albert_Park_Lake_swans_Stevage.jpg"
+    },
+    {
+      "stopId": "melbourne-nature-brighton",
+      "name": "Brighton Beach",
+      "city": "Melbourne",
+      "country": "Australia",
+      "url": "https://media.rguide.co/venues/au/melbourne/brighton-beach/60798b7813d7-nature-primary.jpg",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Brighton_Beach,_Vic_Pano,_10.01.2009.jpg"
+    },
+    {
+      "stopId": "melbourne-nature-dandenong",
+      "name": "Dandenong Ranges National Park",
+      "city": "Melbourne",
+      "country": "Australia",
+      "url": "https://media.rguide.co/venues/au/melbourne/dandenong-ranges-national-park/cc8c40e6cb35-nature-primary.jpg",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Platycercus_elegans_at_Dandenong_Ranges_National_Park.jpg"
+    },
+    {
+      "stopId": "melbourne-nature-merri-creek",
+      "name": "Merri Creek Trail",
+      "city": "Melbourne",
+      "country": "Australia",
+      "url": "https://media.rguide.co/venues/au/melbourne/merri-creek-trail/ed2f76f71a3c-nature-primary.jpg",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Merri_Creek_Trail,_Preston_(44647171500).jpg"
+    },
+    {
+      "stopId": "melbourne-nature-organ-pipes",
+      "name": "Organ Pipes National Park",
+      "city": "Melbourne",
+      "country": "Australia",
+      "url": "https://media.rguide.co/venues/au/melbourne/organ-pipes-national-park/b76920de2940-nature-primary.jpg",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Merri_Creek_Gorge_-_Galada_Tamboore_Grasslands,_Campbellfield_(5883874761).jpg"
+    },
+    {
+      "stopId": "melbourne-nature-phillip-island",
+      "name": "Phillip Island Nature Parks",
+      "city": "Melbourne",
+      "country": "Australia",
+      "url": "https://media.rguide.co/venues/au/melbourne/phillip-island-nature-parks/ae221627dc40-nature-primary.jpg",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:The_Nobbies_Phillip_Island_Nature_Parks.jpg"
+    },
+    {
+      "stopId": "melbourne-nature-royal-botanic",
+      "name": "Royal Botanic Gardens Victoria",
+      "city": "Melbourne",
+      "country": "Australia",
+      "url": "https://media.rguide.co/venues/au/melbourne/royal-botanic-gardens-victoria/f648bfd2c662-nature-primary.jpg",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:PXL_20241006_043548729_Royal_Botanic_Gardens_Victoria_-_Melbourne_Gardens_5X9J%2BW3_Melbourne,_Victoria,_Australia_01.jpg"
+    },
+    {
+      "stopId": "melbourne-nature-st-kilda",
+      "name": "St Kilda Foreshore",
+      "city": "Melbourne",
+      "country": "Australia",
+      "url": "https://media.rguide.co/venues/au/melbourne/st-kilda-foreshore/b1a6c69bcb0f-nature-primary.jpg",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:St_Kilda_Winter_Sunset.jpg"
+    },
+    {
+      "stopId": "melbourne-nature-yarra-bend",
+      "name": "Yarra Bend Park",
+      "city": "Melbourne",
+      "country": "Australia",
+      "url": "https://media.rguide.co/venues/au/melbourne/yarra-bend-park/fd3ecefd19af-nature-primary.jpg",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Psephotus_haematonotus_-Yarra_Bend_Park,_Melbourne,_Australia_-male-8.jpg"
+    },
+    {
+      "stopId": "mexico-city-nature-ajusco",
+      "name": "Cumbres del Ajusco National Park",
+      "city": "Mexico City",
+      "country": "Mexico",
+      "url": "https://media.rguide.co/venues/mx/mexico-city/cumbres-del-ajusco-national-park/0bc03f75b585-nature-primary.jpg",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Mexico_City_ESA412648.jpg"
+    },
+    {
+      "stopId": "mexico-city-nature-bosque-tlalpan",
+      "name": "Bosque de Tlalpan",
+      "city": "Mexico City",
+      "country": "Mexico",
+      "url": "https://media.rguide.co/venues/mx/mexico-city/bosque-de-tlalpan/61e4b530dd6f-nature-primary.jpg",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Animales_Bosque_de_Tlalpan_03.JPG"
+    },
+    {
+      "stopId": "mexico-city-nature-desierto-leones",
+      "name": "Desierto de los Leones National Park",
+      "city": "Mexico City",
+      "country": "Mexico",
+      "url": "https://media.rguide.co/venues/mx/mexico-city/desierto-de-los-leones-national-park/f6fb284702c1-nature-primary.jpg",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Venado_Macho.jpg"
+    },
+    {
+      "stopId": "mexico-city-nature-los-dinamos",
+      "name": "Los Dinamos",
+      "city": "Mexico City",
+      "country": "Mexico",
+      "url": "https://media.rguide.co/venues/mx/mexico-city/los-dinamos/9a3c667c39f3-nature-primary.jpg",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Creek_(Los_Dinamos).jpg"
+    },
+    {
+      "stopId": "mexico-city-nature-parque-hundido",
+      "name": "Parque Hundido",
+      "city": "Mexico City",
+      "country": "Mexico",
+      "url": "https://media.rguide.co/venues/mx/mexico-city/parque-hundido/4a222712af01-nature-primary.jpg",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Estela_en_Parque_Hundido_en_la_Ciudad_de_M%C3%A9xico.jpg"
+    },
+    {
+      "stopId": "mexico-city-nature-parque-mexico",
+      "name": "Parque México",
+      "city": "Mexico City",
+      "country": "Mexico",
+      "url": "https://media.rguide.co/venues/mx/mexico-city/parque-mexico/ccaad0ea51b9-nature-primary.jpg",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Bamb%C3%BA_en_Parque_M%C3%A9xico,_Colonia_Condesa.jpg"
+    },
+    {
+      "stopId": "mexico-city-nature-unam-botanical",
+      "name": "UNAM Botanical Garden",
+      "city": "Mexico City",
+      "country": "Mexico",
+      "url": "https://media.rguide.co/venues/mx/mexico-city/unam-botanical-garden/3da62f070001-nature-primary.jpg",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Graphic_spiny_lizard_(Sceloporus_grammicus_microlepidotus)_male_UNAM_2.jpg"
+    },
+    {
+      "stopId": "mexico-city-nature-viveros",
+      "name": "Viveros de Coyoacán",
+      "city": "Mexico City",
+      "country": "Mexico",
+      "url": "https://media.rguide.co/venues/mx/mexico-city/viveros-de-coyoacan/0758981b39e4-nature-primary.jpg",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Viveros_de_Coyoacan_(2546293329).jpg"
+    },
+    {
+      "stopId": "mexico-city-nature-xochimilco",
+      "name": "Parque Ecológico de Xochimilco",
+      "city": "Mexico City",
+      "country": "Mexico",
+      "url": "https://media.rguide.co/venues/mx/mexico-city/parque-ecologico-de-xochimilco/fa9d4decb5c2-nature-primary.jpg",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Parque_Ecol%C3%B3gico_de_Xochimilco.jpg"
+    },
+    {
+      "stopId": "milan-nature-bam",
+      "name": "Biblioteca degli Alberi",
+      "city": "Milan",
+      "country": "Italy",
+      "url": "https://media.rguide.co/venues/it/milan/biblioteca-degli-alberi/9e46c24bd1ca-nature-primary.jpg",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Parco_Biblioteca_degli_alberi.jpg"
+    },
+    {
+      "stopId": "milan-nature-boscoincitta",
+      "name": "Boscoincittà",
+      "city": "Milan",
+      "country": "Italy",
+      "url": "https://media.rguide.co/venues/it/milan/boscoincitta/e5e76462bee1-nature-primary.jpg",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:MilanoBoscoInCitta.jpg"
+    },
+    {
+      "stopId": "milan-nature-brera-botanical",
+      "name": "Brera Botanical Garden",
+      "city": "Milan",
+      "country": "Italy",
+      "url": "https://media.rguide.co/venues/it/milan/brera-botanical-garden/ec0141eda0d7-nature-primary.jpg",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Brera_Botanical_Garden_-_3.jpg"
+    },
+    {
+      "stopId": "milan-nature-cave",
+      "name": "Parco delle Cave",
+      "city": "Milan",
+      "country": "Italy",
+      "url": "https://media.rguide.co/venues/it/milan/parco-delle-cave/8c237fd801cd-nature-primary.jpg",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Parco_delle_Cave,_a_public_park_in_Milano,_Italy.jpg"
+    },
+    {
+      "stopId": "milan-nature-idroscalo",
+      "name": "Idroscalo",
+      "city": "Milan",
+      "country": "Italy",
+      "url": "https://media.rguide.co/venues/it/milan/idroscalo/54b3bb8ca5a1-nature-primary.jpg",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Poolsurfer_at_Idroscalo_%22Waterparadise%22_-_Milan.jpg"
+    },
+    {
+      "stopId": "milan-nature-montanelli",
+      "name": "Giardini Indro Montanelli",
+      "city": "Milan",
+      "country": "Italy",
+      "url": "https://media.rguide.co/venues/it/milan/giardini-indro-montanelli/76d6aff09e6e-nature-primary.jpg",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Giardini_Indro_Montanelli.jpg"
+    },
+    {
+      "stopId": "milan-nature-parco-nord",
+      "name": "Parco Nord Milano",
+      "city": "Milan",
+      "country": "Italy",
+      "url": "https://media.rguide.co/venues/it/milan/parco-nord-milano/e92362092448-nature-primary.jpg",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Platano_comune_-_Parco_Nord_Milano.jpg"
+    },
+    {
+      "stopId": "milan-nature-sempione",
+      "name": "Parco Sempione",
+      "city": "Milan",
+      "country": "Italy",
+      "url": "https://media.rguide.co/venues/it/milan/parco-sempione/37ff038b1da2-nature-primary.jpg",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Parco_Sempione_Milano.jpg"
+    },
+    {
+      "stopId": "milan-nature-villa-reale",
+      "name": "Villa Reale Gardens",
+      "city": "Milan",
+      "country": "Italy",
+      "url": "https://media.rguide.co/venues/it/milan/villa-reale-gardens/54d526d4c7d1-nature-primary.jpg",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Platanus_x_acerifolia_-_Villa_Belgioioso_Bonaparte_-_Milano.jpg"
+    },
+    {
+      "stopId": "munich-nature-botanical",
+      "name": "Botanical Garden Munich-Nymphenburg",
+      "city": "Munich",
+      "country": "Germany",
+      "url": "https://media.rguide.co/venues/de/munich/botanical-garden-munich-nymphenburg/dbad2f8c178b-nature-primary.jpg",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Porcelain_figure_Botanical_Garden_Munich_Nymphenburg_IMGP1520.jpg"
+    },
+    {
+      "stopId": "munich-nature-hirschgarten",
+      "name": "Hirschgarten",
+      "city": "Munich",
+      "country": "Germany",
+      "url": "https://media.rguide.co/venues/de/munich/hirschgarten/67ceaecca314-nature-primary.jpg",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Spielzeugbagger_auf_einem_Spielplatz_im_Hirschgarten_2023-05-25.jpg"
+    },
+    {
+      "stopId": "munich-nature-nymphenburg",
+      "name": "Nymphenburg Palace Park",
+      "city": "Munich",
+      "country": "Germany",
+      "url": "https://media.rguide.co/venues/de/munich/nymphenburg-palace-park/0f060142bbfe-nature-primary.jpg",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Aerial_image_of_Nymphenburg_Palace_Park.jpg"
+    },
+    {
+      "stopId": "munich-nature-olympiapark",
+      "name": "Olympiapark",
+      "city": "Munich",
+      "country": "Germany",
+      "url": "https://media.rguide.co/venues/de/munich/olympiapark/dc18582101f6-nature-primary.jpg",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:M%C3%BCnchen,_Olympiapark_--_2011_--_1036.jpg"
+    },
+    {
+      "stopId": "munich-nature-ostpark",
+      "name": "Ostpark",
+      "city": "Munich",
+      "country": "Germany",
+      "url": "https://media.rguide.co/venues/de/munich/ostpark/9ead1ad76d25-nature-primary.jpg",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Ostpark_20170525d9.jpg"
+    },
+    {
+      "stopId": "munich-nature-perlacher",
+      "name": "Perlacher Forst",
+      "city": "Munich",
+      "country": "Germany",
+      "url": "https://media.rguide.co/venues/de/munich/perlacher-forst/d42c0f7d4fd2-nature-primary.jpg",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:M%C3%BCnchen,_Friedhof_am_Perlacher_Forst,_Statue_%C3%B6stlich_Aussegnungshalle,_2.jpeg"
+    },
+    {
+      "stopId": "munich-nature-starnberg",
+      "name": "Lake Starnberg",
+      "city": "Munich",
+      "country": "Germany",
+      "url": "https://media.rguide.co/venues/de/munich/lake-starnberg/8ceea02c658b-nature-primary.jpg",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Christian_Morgenstern_-_View_Across_Lake_Starnberg_to_the_Benedikte.jpg"
+    },
+    {
+      "stopId": "munich-nature-westpark",
+      "name": "Westpark",
+      "city": "Munich",
+      "country": "Germany",
+      "url": "https://media.rguide.co/venues/de/munich/westpark/79a3077717bf-nature-primary.jpg",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Aerial_image_of_Westpark_in_Munich_(view_from_the_west).jpg"
+    },
+    {
+      "stopId": "osaka-nature-castle-park",
+      "name": "Osaka Castle Park",
+      "city": "Osaka",
+      "country": "Japan",
+      "url": "https://media.rguide.co/venues/jp/osaka/osaka-castle-park/c8ff1b4afaeb-nature-primary.jpg",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:JP-Osaka-Osaka-Castle-Park-Morinomiya-Side-Entrance.JPG"
+    },
+    {
+      "stopId": "osaka-nature-expo",
+      "name": "Expo '70 Commemorative Park",
+      "city": "Osaka",
+      "country": "Japan",
+      "url": "https://media.rguide.co/venues/jp/osaka/expo-70-commemorative-park/5ad40f79bab7-nature-primary.jpg",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Spot-billed_duck_taking_off_from_the_water,_Expo%E2%80%9970_Commemorative_Park,_Osaka,_October_2015.jpg"
+    },
+    {
+      "stopId": "osaka-nature-kongo",
+      "name": "Mount Kongō",
+      "city": "Osaka",
+      "country": "Japan",
+      "url": "https://media.rguide.co/venues/jp/osaka/mount-kongo/78b8682536e7-nature-primary.jpg",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Mount_Kongo(Kongosanchi)3.jpg"
+    },
+    {
+      "stopId": "osaka-nature-minoh",
+      "name": "Minoh Park",
+      "city": "Osaka",
+      "country": "Japan",
+      "url": "https://media.rguide.co/venues/jp/osaka/minoh-park/3f8a7fb41d45-nature-primary.jpg",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Minoh-Park.jpg"
+    },
+    {
+      "stopId": "osaka-nature-nagai",
+      "name": "Nagai Park and Botanical Garden",
+      "city": "Osaka",
+      "country": "Japan",
+      "url": "https://media.rguide.co/venues/jp/osaka/nagai-park-and-botanical-garden/95fb9f2a0db7-nature-primary.jpg",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:View_of_the_pond_in_Nagai_Park,_January_2024_-_9782.jpg"
+    },
+    {
+      "stopId": "osaka-nature-nakanoshima",
+      "name": "Nakanoshima Park",
+      "city": "Osaka",
+      "country": "Japan",
+      "url": "https://media.rguide.co/venues/jp/osaka/nakanoshima-park/e94ae3eb71a5-nature-primary.jpg",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Nakanoshima_Park_Kensaki_Fountain.JPG"
+    },
+    {
+      "stopId": "osaka-nature-nanko",
+      "name": "Osaka Nanko Bird Sanctuary",
+      "city": "Osaka",
+      "country": "Japan",
+      "url": "https://media.rguide.co/venues/jp/osaka/osaka-nanko-bird-sanctuary/7bac74e2d97c-nature-primary.jpg",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Osaka_Nankou_Bird_Sanctuary1.jpg"
+    },
+    {
+      "stopId": "osaka-nature-rinku",
+      "name": "Rinku Park",
+      "city": "Osaka",
+      "country": "Japan",
+      "url": "https://media.rguide.co/venues/jp/osaka/rinku-park/2ab7449e1fa5-nature-primary.jpg",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Rinku_park01s3200.jpg"
+    },
+    {
+      "stopId": "osaka-nature-sumiyoshi",
+      "name": "Sumiyoshi Park",
+      "city": "Osaka",
+      "country": "Japan",
+      "url": "https://media.rguide.co/venues/jp/osaka/sumiyoshi-park/e01c9e9a7136-nature-primary.jpg",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Sumiyoshi_Park.jpg"
+    },
+    {
+      "stopId": "osaka-nature-tsurumi",
+      "name": "Tsurumi Ryokuchi Park",
+      "city": "Osaka",
+      "country": "Japan",
+      "url": "https://media.rguide.co/venues/jp/osaka/tsurumi-ryokuchi-park/3e0252fc5c3d-nature-primary.jpg",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Gusto_Tsurumi-Ryokuchi_Park_store.jpg"
+    },
+    {
+      "stopId": "paris-nature-buttes-chaumont",
+      "name": "Parc des Buttes-Chaumont",
+      "city": "Paris",
+      "country": "France",
+      "url": "https://media.rguide.co/venues/fr/paris/parc-des-buttes-chaumont/a4d7f7d765ba-nature-primary.jpg",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Parc_des_Buttes-Chaumont,_grotte_02_stereographical_fused.jpg"
+    },
+    {
+      "stopId": "paris-nature-coulee-verte",
+      "name": "Coulee verte Rene-Dumont",
+      "city": "Paris",
+      "country": "France",
+      "url": "https://media.rguide.co/venues/fr/paris/coulee-verte-rene-dumont/caa90c5ac9bf-nature-primary.jpg",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Coul%C3%A9e_verte_Ren%C3%A9-Dumont,_Paris_16_January_2016_002.jpg"
+    },
+    {
+      "stopId": "paris-nature-parc-belleville",
+      "name": "Parc de Belleville",
+      "city": "Paris",
+      "country": "France",
+      "url": "https://media.rguide.co/venues/fr/paris/parc-de-belleville/3d8b879a791b-nature-primary.jpg",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Belv%C3%A9d%C3%A8re_de_Belleville_@_Parc_de_Belleville_@_Paris_20_(25137120823).jpg"
+    },
+    {
+      "stopId": "paris-nature-pere-lachaise",
+      "name": "Cimetiere du Pere-Lachaise",
+      "city": "Paris",
+      "country": "France",
+      "url": "https://media.rguide.co/venues/fr/paris/cimetiere-du-pere-lachaise/941ba2880182-nature-primary.jpg",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Cimeti%C3%A8re_du_P%C3%A8re-Lachaise_-_02.jpg"
+    },
+    {
+      "stopId": "prague-nature-botanical",
+      "name": "Prague Botanical Garden",
+      "city": "Prague",
+      "country": "Czech Republic",
+      "url": "https://media.rguide.co/venues/cz/prague/prague-botanical-garden/7c2e2c540db1-nature-primary.jpg",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Prague_Botanic_Crystal_Garden_2.jpg"
+    },
+    {
+      "stopId": "prague-nature-divoka-sarka",
+      "name": "Divoká Šárka",
+      "city": "Prague",
+      "country": "Czech Republic",
+      "url": "https://media.rguide.co/venues/cz/prague/divoka-sarka/e5a92aabdae6-nature-primary.jpg",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Smy%C4%8Dka_Divok%C3%A1_%C5%A0%C3%A1rka,_14T_z_profilu.jpg"
+    },
+    {
+      "stopId": "prague-nature-grebovka",
+      "name": "Havlíčkovy sady",
+      "city": "Prague",
+      "country": "Czech Republic",
+      "url": "https://media.rguide.co/venues/cz/prague/havlickovy-sady/b2aacadc14a2-nature-primary.jpg",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Praha,_Vr%C5%A1ovice,_Havl%C3%AD%C4%8Dkovy_sady,_lavi%C4%8Dky_u_Gr%C3%B6bovky.jpg"
+    },
+    {
+      "stopId": "prague-nature-hostivar",
+      "name": "Hostivař Reservoir",
+      "city": "Prague",
+      "country": "Czech Republic",
+      "url": "https://media.rguide.co/venues/cz/prague/hostivar-reservoir/4355da8d3968-nature-primary.jpg",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Hostiva%C5%99,_prol%C3%A9za%C4%8Dky_p%C5%99ed_vstupem_p%C5%99ehrady.jpg"
+    },
+    {
+      "stopId": "prague-nature-kunratice",
+      "name": "Kunratice Forest",
+      "city": "Prague",
+      "country": "Czech Republic",
+      "url": "https://media.rguide.co/venues/cz/prague/kunratice-forest/7d5646006c59-nature-primary.jpg",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Kunratick%C3%BD_les,_most_p%C5%99es_Kunratick%C3%BD_potok_(02).jpg"
+    },
+    {
+      "stopId": "prague-nature-letna",
+      "name": "Letná Park",
+      "city": "Prague",
+      "country": "Czech Republic",
+      "url": "https://media.rguide.co/venues/cz/prague/letna-park/6d951eb8be4a-nature-primary.jpg",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Letn%C3%A1_Park_in_late_October,_Prague.JPG"
+    },
+    {
+      "stopId": "prague-nature-petrin",
+      "name": "Petřín Hill",
+      "city": "Prague",
+      "country": "Czech Republic",
+      "url": "https://media.rguide.co/venues/cz/prague/petrin-hill/fa90f391e4a4-nature-primary.jpg",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Tent_of_Trdeln%C3%ADk,_Pet%C5%99%C3%ADn_Hill,_Prague.JPG"
+    },
+    {
+      "stopId": "prague-nature-prokop",
+      "name": "Prokop Valley",
+      "city": "Prague",
+      "country": "Czech Republic",
+      "url": "https://media.rguide.co/venues/cz/prague/prokop-valley/88f057066432-nature-primary.jpg",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Praha,_Hlubo%C4%8Depy,_Prokopsk%C3%A9_%C3%BAdol%C3%AD.jpg"
+    },
+    {
+      "stopId": "prague-nature-stromovka",
+      "name": "Stromovka",
+      "city": "Prague",
+      "country": "Czech Republic",
+      "url": "https://media.rguide.co/venues/cz/prague/stromovka/184ec5ae0ae5-nature-primary.jpg",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Praha,_Bubene%C4%8D,_Stromovka,_b%C4%9Bh.jpg"
+    },
+    {
+      "stopId": "prague-nature-vitkov",
+      "name": "Vítkov Hill",
+      "city": "Prague",
+      "country": "Czech Republic",
+      "url": "https://media.rguide.co/venues/cz/prague/vitkov-hill/ddca9bc425de-nature-primary.jpg",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:National_Monument_at_V%C3%ADtkov_Hill,_Prague_03.jpg"
+    },
+    {
+      "stopId": "seoul-nature-botanic",
+      "name": "Seoul Botanic Park",
+      "city": "Seoul",
+      "country": "South Korea",
+      "url": "https://media.rguide.co/venues/kr/seoul/seoul-botanic-park/76f8df33789f-nature-primary.jpg",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Seoul_botanic_park_03.jpg"
+    },
+    {
+      "stopId": "seoul-nature-cheonggyecheon",
+      "name": "Cheonggyecheon",
+      "city": "Seoul",
+      "country": "South Korea",
+      "url": "https://media.rguide.co/venues/kr/seoul/cheonggyecheon/6e4375332448-nature-primary.jpg",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Cheonggyecheon_evening_2.jpg"
+    },
+    {
+      "stopId": "seoul-nature-gwanaksan",
+      "name": "Gwanaksan",
+      "city": "Seoul",
+      "country": "South Korea",
+      "url": "https://media.rguide.co/venues/kr/seoul/gwanaksan/6187516b9ae3-nature-primary.jpg",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Harmony_of_city_and_nature_-_Gwanaksan_mountain.jpg"
+    },
+    {
+      "stopId": "seoul-nature-haneul",
+      "name": "Haneul Park",
+      "city": "Seoul",
+      "country": "South Korea",
+      "url": "https://media.rguide.co/venues/kr/seoul/haneul-park/9d017f4152a7-nature-primary.jpg",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Haneul_Park_Day_and_Night_(14859556712).jpg"
+    },
+    {
+      "stopId": "seoul-nature-inwangsan",
+      "name": "Inwangsan",
+      "city": "Seoul",
+      "country": "South Korea",
+      "url": "https://media.rguide.co/venues/kr/seoul/inwangsan/0d0061a53f3a-nature-primary.jpg",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Korea-Seoul-Inwangsan-01.jpg"
+    },
+    {
+      "stopId": "seoul-nature-namsan",
+      "name": "Namsan Park",
+      "city": "Seoul",
+      "country": "South Korea",
+      "url": "https://media.rguide.co/venues/kr/seoul/namsan-park/20ece7358006-nature-primary.jpg",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Wesol_Choi_Hyunbae_Monument,_Namsan_Park_-_Seoul,_Korea.jpg"
+    },
+    {
+      "stopId": "seoul-nature-olympic",
+      "name": "Olympic Park",
+      "city": "Seoul",
+      "country": "South Korea",
+      "url": "https://media.rguide.co/venues/kr/seoul/olympic-park/9be6859ddda8-nature-primary.jpg",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Kim_Yuna%27s_foot_at_Olympic_Park,_Seoul.jpg"
+    },
+    {
+      "stopId": "seoul-nature-seoul-forest",
+      "name": "Seoul Forest",
+      "city": "Seoul",
+      "country": "South Korea",
+      "url": "https://media.rguide.co/venues/kr/seoul/seoul-forest/e055c36c9608-nature-primary.jpg",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Q24058_Seoul-forest_A02.JPG"
+    },
+    {
+      "stopId": "seoul-nature-yeouido-hangang",
+      "name": "Yeouido Hangang Park",
+      "city": "Seoul",
+      "country": "South Korea",
+      "url": "https://media.rguide.co/venues/kr/seoul/yeouido-hangang-park/df26094a11ad-nature-primary.jpg",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Yeouido_Hangang_Park_seen_from_Dangsan_Railway_Bridge.jpg"
+    },
+    {
+      "stopId": "seventh-nature-invalides",
+      "name": "Esplanade des Invalides",
+      "city": "Paris",
+      "country": "France",
+      "url": "https://media.rguide.co/venues/fr/paris/esplanade-des-invalides/55984bc11f8f-nature-primary.jpg",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Esplanade_des_Invalides,_Succursale_of_Air_France,_Paris.jpg"
+    },
+    {
+      "stopId": "singapore-nature-botanic",
+      "name": "Singapore Botanic Gardens",
+      "city": "Singapore",
+      "country": "Singapore",
+      "url": "https://media.rguide.co/venues/sg/singapore/singapore-botanic-gardens/953051c89f96-nature-primary.jpg",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Sundial_Garden_in_Singapore_Botanic_Gardens.jpg"
+    },
+    {
+      "stopId": "singapore-nature-bukit-timah",
+      "name": "Bukit Timah Nature Reserve",
+      "city": "Singapore",
+      "country": "Singapore",
+      "url": "https://media.rguide.co/venues/sg/singapore/bukit-timah-nature-reserve/64f6dc5faa36-nature-primary.jpg",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Singapore_Bukit_Timah_Nature_Reserve_5.jpg"
+    },
+    {
+      "stopId": "singapore-nature-east-coast",
+      "name": "East Coast Park",
+      "city": "Singapore",
+      "country": "Singapore",
+      "url": "https://media.rguide.co/venues/sg/singapore/east-coast-park/6f2b6f8a3c79-nature-primary.jpg",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:East_Coast_Park-Singapore_-_panoramio.jpg"
+    },
+    {
+      "stopId": "singapore-nature-gardens-bay",
+      "name": "Gardens by the Bay",
+      "city": "Singapore",
+      "country": "Singapore",
+      "url": "https://media.rguide.co/venues/sg/singapore/gardens-by-the-bay/1f14da307533-nature-primary.jpg",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Singapore_Gardens-by-the-Bay-01.jpg"
+    },
+    {
+      "stopId": "singapore-nature-labrador",
+      "name": "Labrador Nature Reserve",
+      "city": "Singapore",
+      "country": "Singapore",
+      "url": "https://media.rguide.co/venues/sg/singapore/labrador-nature-reserve/ff2633a3ca70-nature-primary.jpg",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Labrador_Nature_Reserve_12-11-2023(11).jpg"
+    },
+    {
+      "stopId": "singapore-nature-macritchie",
+      "name": "MacRitchie Reservoir",
+      "city": "Singapore",
+      "country": "Singapore",
+      "url": "https://media.rguide.co/venues/sg/singapore/macritchie-reservoir/28c124403ded-nature-primary.jpg",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Have_a_nice_day_sign,_MacRitchie_Reservoir,_Singapore.jpg"
+    },
+    {
+      "stopId": "singapore-nature-pulau-ubin",
+      "name": "Pulau Ubin",
+      "city": "Singapore",
+      "country": "Singapore",
+      "url": "https://media.rguide.co/venues/sg/singapore/pulau-ubin/02d1d8890627-nature-primary.jpg",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Compact_excavator,_Pulau_Ubin,_Singapore_-_20070211.jpg"
+    },
+    {
+      "stopId": "singapore-nature-rail-corridor",
+      "name": "Rail Corridor",
+      "city": "Singapore",
+      "country": "Singapore",
+      "url": "https://media.rguide.co/venues/sg/singapore/rail-corridor/4cb730b50641-nature-primary.jpg",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Rail_Corridor_from_under_Pan_Island_Expressway_exit_onto_Jalan_Anak_Bukit,_looking_northwest.jpg"
+    },
+    {
+      "stopId": "singapore-nature-southern-ridges",
+      "name": "Southern Ridges",
+      "city": "Singapore",
+      "country": "Singapore",
+      "url": "https://media.rguide.co/venues/sg/singapore/southern-ridges/21a9f9d603ca-nature-primary.jpg",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Singapore_Southern_Ridges_03.jpg"
+    },
+    {
+      "stopId": "singapore-nature-sungei-buloh",
+      "name": "Sungei Buloh Wetland Reserve",
+      "city": "Singapore",
+      "country": "Singapore",
+      "url": "https://media.rguide.co/venues/sg/singapore/sungei-buloh-wetland-reserve/cfbc24142148-nature-primary.jpg",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Singapore_rhododendron_(Melastoma_malabathricum),_Sungei_Buloh_Wetland_Reserve,_Singapore_-_20071020.jpg"
+    },
+    {
+      "stopId": "sydney-nature-blue-mountains",
+      "name": "Blue Mountains National Park",
+      "city": "Sydney",
+      "country": "Australia",
+      "url": "https://media.rguide.co/venues/au/sydney/blue-mountains-national-park/d93c1eb665e7-nature-primary.jpg",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Blue_Mountains_National_Park_(AU),_Jamison_Valley_--_2019_--_1874.jpg"
+    },
+    {
+      "stopId": "sydney-nature-centennial",
+      "name": "Centennial Parklands",
+      "city": "Sydney",
+      "country": "Australia",
+      "url": "https://media.rguide.co/venues/au/sydney/centennial-parklands/7f4aab191ac3-nature-primary.jpg",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:(1)Centennial_Parklands_building.jpg"
+    },
+    {
+      "stopId": "sydney-nature-harbour-np",
+      "name": "Sydney Harbour National Park",
+      "city": "Sydney",
+      "country": "Australia",
+      "url": "https://media.rguide.co/venues/au/sydney/sydney-harbour-national-park/a50bfae9a57b-nature-primary.jpg",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Shadow_Play_Sydney_harbour_National_Park,_Manly,_Australia.jpg"
+    },
+    {
+      "stopId": "sydney-nature-ku-ring-gai",
+      "name": "Ku-ring-gai Chase National Park",
+      "city": "Sydney",
+      "country": "Australia",
+      "url": "https://media.rguide.co/venues/au/sydney/ku-ring-gai-chase-national-park/ab468ca8cb9d-nature-primary.jpg",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Graffiti_and_Cockle_creek_-_Ku-ring-gai_chase_national_park_-Sydney_2022.jpg"
+    },
+    {
+      "stopId": "sydney-nature-mount-annan",
+      "name": "Australian Botanic Garden Mount Annan",
+      "city": "Sydney",
+      "country": "Australia",
+      "url": "https://media.rguide.co/venues/au/sydney/australian-botanic-garden-mount-annan/7d9114ef0c59-nature-primary.jpg",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Water_Dragon_at_the_Australian_Botanic_Gardens_at_Mount_Annan.jpg"
+    },
+    {
+      "stopId": "sydney-nature-royal-national",
+      "name": "Royal National Park",
+      "city": "Sydney",
+      "country": "Australia",
+      "url": "https://media.rguide.co/venues/au/sydney/royal-national-park/3574638027b9-nature-primary.jpg",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:A_goose_barnacle_from_Royal_National_Park.JPG"
+    },
+    {
+      "stopId": "sydney-nature-spit-manly",
+      "name": "Spit to Manly Walk",
+      "city": "Sydney",
+      "country": "Australia",
+      "url": "https://media.rguide.co/venues/au/sydney/spit-to-manly-walk/75ea1858ffb6-nature-primary.jpg",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Spit_Bridge_open.jpg"
+    },
+    {
+      "stopId": "taipei-nature-botanical-garden",
+      "name": "Taipei Botanical Garden",
+      "city": "Taipei",
+      "country": "Taiwan",
+      "url": "https://media.rguide.co/venues/tw/taipei/taipei-botanical-garden/73a0bcf5374a-nature-primary.jpg",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:%E5%8F%B0%E5%8C%97%E6%A4%8D%E7%89%A9%E5%9C%92_Taipei_Botanical_Garden_-_panoramio.jpg"
+    },
+    {
+      "stopId": "taipei-nature-daan-forest",
+      "name": "Daan Forest Park",
+      "city": "Taipei",
+      "country": "Taiwan",
+      "url": "https://media.rguide.co/venues/tw/taipei/daan-forest-park/cef43a10af2f-nature-primary.jpg",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Typhoon_Soudelor_2015_August_-_Taipei_Daan_Forest_Park_01.jpg"
+    },
+    {
+      "stopId": "taipei-nature-dajia-riverside",
+      "name": "Dajia Riverside Park",
+      "city": "Taipei",
+      "country": "Taiwan",
+      "url": "https://media.rguide.co/venues/tw/taipei/dajia-riverside-park/c5bab40849cc-nature-primary.jpg",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Chientan_Mountain_and_Dajia_Riverside_Park.jpg"
+    },
+    {
+      "stopId": "taipei-nature-fuyang",
+      "name": "Fuyang Eco Park",
+      "city": "Taipei",
+      "country": "Taiwan",
+      "url": "https://media.rguide.co/venues/tw/taipei/fuyang-eco-park/03db77493a96-nature-primary.jpg",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Fuyang_Eco_Park_Map,_Taipei.jpg"
+    },
+    {
+      "stopId": "taipei-nature-guandu",
+      "name": "Guandu Nature Park",
+      "city": "Taipei",
+      "country": "Taiwan",
+      "url": "https://media.rguide.co/venues/tw/taipei/guandu-nature-park/e646801b44b3-nature-primary.jpg",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Guandu_Nature_Park%2BMacaca_Sapiens%2B20200512-2.jpg"
+    },
+    {
+      "stopId": "taipei-nature-shilin-residence",
+      "name": "Shilin Official Residence Gardens",
+      "city": "Taipei",
+      "country": "Taiwan",
+      "url": "https://media.rguide.co/venues/tw/taipei/shilin-official-residence-gardens/a9f215aed79a-nature-primary.jpg",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Shilin_Official_Residence_Gardens_%E5%A3%AB%E6%9E%97%E5%AE%98%E9%82%B8_-_panoramio.jpg"
+    },
+    {
+      "stopId": "taipei-nature-thermal-valley",
+      "name": "Beitou Thermal Valley",
+      "city": "Taipei",
+      "country": "Taiwan",
+      "url": "https://media.rguide.co/venues/tw/taipei/beitou-thermal-valley/77c3148d5e32-nature-primary.jpg",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Brief_Note_of_Beitou_Thermal_Valley_Green_Sulfur_Spring_20120429.jpg"
+    },
+    {
+      "stopId": "taipei-nature-xiangshan",
+      "name": "Xiangshan (Elephant Mountain)",
+      "city": "Taipei",
+      "country": "Taiwan",
+      "url": "https://media.rguide.co/venues/tw/taipei/xiangshan-elephant-mountain/1c1e6367dcf6-nature-primary.jpg",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Xiangshan_(78648867).jpeg"
+    },
+    {
+      "stopId": "taipei-nature-yangmingshan",
+      "name": "Yangmingshan National Park",
+      "city": "Taipei",
+      "country": "Taiwan",
+      "url": "https://media.rguide.co/venues/tw/taipei/yangmingshan-national-park/e2fc41b6569e-nature-primary.jpg",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Yangmingshan_National_Park_02.jpg"
+    },
+    {
+      "stopId": "tokyo-nature-hamarikyu",
+      "name": "Hama-rikyu Gardens",
+      "city": "Tokyo",
+      "country": "Japan",
+      "url": "https://media.rguide.co/venues/jp/tokyo/hama-rikyu-gardens/3f1afdd7c7a9-nature-primary.jpg",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Hama-rikyu_Gardens,_Tokyo_(53142611913).jpg"
+    },
+    {
+      "stopId": "tokyo-nature-kasai-rinkai",
+      "name": "Kasai Rinkai Park",
+      "city": "Tokyo",
+      "country": "Japan",
+      "url": "https://media.rguide.co/venues/jp/tokyo/kasai-rinkai-park/8d2767623a24-nature-primary.jpg",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Kasai_Rinkai_Park_20160219.jpg"
+    },
+    {
+      "stopId": "tokyo-nature-koishikawa-korakuen",
+      "name": "Koishikawa Korakuen Gardens",
+      "city": "Tokyo",
+      "country": "Japan",
+      "url": "https://media.rguide.co/venues/jp/tokyo/koishikawa-korakuen-gardens/336a2458075e-nature-primary.jpg",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Koishikawa_Korakuen_Gardens_(11168060255).jpg"
+    },
+    {
+      "stopId": "tokyo-nature-meiji-jingu",
+      "name": "Meiji Jingu Forest",
+      "city": "Tokyo",
+      "country": "Japan",
+      "url": "https://media.rguide.co/venues/jp/tokyo/meiji-jingu-forest/e77ed38ccea7-nature-primary.jpg",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Meiji_Jingu_Shrine_@_Yoyogi_(11931540663).jpg"
+    },
+    {
+      "stopId": "tokyo-nature-mount-takao",
+      "name": "Mount Takao",
+      "city": "Tokyo",
+      "country": "Japan",
+      "url": "https://media.rguide.co/venues/jp/tokyo/mount-takao/c87eb248625d-nature-primary.jpg",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Caves_on_Mount_Takao_hiking_course_6_(24731).jpg"
+    },
+    {
+      "stopId": "tokyo-nature-nature-study",
+      "name": "Institute for Nature Study",
+      "city": "Tokyo",
+      "country": "Japan",
+      "url": "https://media.rguide.co/venues/jp/tokyo/institute-for-nature-study/7182ab1afdbe-nature-primary.jpg",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Institute_for_Nature_Study,_Tokyo_-_DSC02068.JPG"
+    },
+    {
+      "stopId": "tokyo-nature-rikugien",
+      "name": "Rikugien Gardens",
+      "city": "Tokyo",
+      "country": "Japan",
+      "url": "https://media.rguide.co/venues/jp/tokyo/rikugien-gardens/ae4e28f34d01-nature-primary.jpg",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Rikugien_Gardens_-_Tokyo_-_Japan_-_01_(47117919324).jpg"
+    },
+    {
+      "stopId": "tokyo-nature-showa-kinen",
+      "name": "Showa Kinen Park",
+      "city": "Tokyo",
+      "country": "Japan",
+      "url": "https://media.rguide.co/venues/jp/tokyo/showa-kinen-park/73ed57c47813-nature-primary.jpg",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Orychophragmus_violaceus_in_Showa_kinen_park.jpg"
+    },
+    {
+      "stopId": "tokyo-nature-ueno-park",
+      "name": "Ueno Park",
+      "city": "Tokyo",
+      "country": "Japan",
+      "url": "https://media.rguide.co/venues/jp/tokyo/ueno-park/bf1d97efd7f0-nature-primary.jpg",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Mensen_op_een_trap_in_het_Ueno-park_in_Tokyo_Ueno_Park,_at_Tokyo_(titel_op_object),_RP-F-F01102-AY.jpg"
+    },
+    {
+      "stopId": "toronto-nature-allan-gardens",
+      "name": "Allan Gardens Conservatory",
+      "city": "Toronto",
+      "country": "Canada",
+      "url": "https://media.rguide.co/venues/ca/toronto/allan-gardens-conservatory/41d7f3845e29-nature-primary.jpg",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Toronto_Ontario_-_Canada_-_Allan_Gardens_Conservatory_-_Toronto_Tropical_Garden_-_White_Lily_Macro_-_Flickr_-_Onasill_~_Bill_-_73_Million.jpg"
+    },
+    {
+      "stopId": "toronto-nature-botanical-garden",
+      "name": "Toronto Botanical Garden",
+      "city": "Toronto",
+      "country": "Canada",
+      "url": "https://media.rguide.co/venues/ca/toronto/toronto-botanical-garden/047987b73037-nature-primary.jpg",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Toronto_Botanical_Garden.jpg"
+    },
+    {
+      "stopId": "toronto-nature-humber-bay",
+      "name": "Humber Bay Park",
+      "city": "Toronto",
+      "country": "Canada",
+      "url": "https://media.rguide.co/venues/ca/toronto/humber-bay-park/79e242c706b8-nature-primary.jpg",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Humber_Bay_Park_November_2012.jpg"
+    },
+    {
+      "stopId": "toronto-nature-islands",
+      "name": "Toronto Islands",
+      "city": "Toronto",
+      "country": "Canada",
+      "url": "https://media.rguide.co/venues/ca/toronto/toronto-islands/1ebd494fb8f8-nature-primary.jpg",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Toronto_Islands,_Toronto,_Canada.jpg"
+    },
+    {
+      "stopId": "toronto-nature-rouge",
+      "name": "Rouge National Urban Park",
+      "city": "Toronto",
+      "country": "Canada",
+      "url": "https://media.rguide.co/venues/ca/toronto/rouge-national-urban-park/40452d64cc87-nature-primary.jpg",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Branta_canadensis_in_Rouge_National_Urban_Park.jpg"
+    },
+    {
+      "stopId": "toronto-nature-scarborough-bluffs",
+      "name": "Scarborough Bluffs",
+      "city": "Toronto",
+      "country": "Canada",
+      "url": "https://media.rguide.co/venues/ca/toronto/scarborough-bluffs/8c4a4905bb4a-nature-primary.jpg",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Scarborough_Bluffs_-_Laslovarga_(27).jpg"
+    },
+    {
+      "stopId": "toronto-nature-tommy-thompson",
+      "name": "Tommy Thompson Park",
+      "city": "Toronto",
+      "country": "Canada",
+      "url": "https://media.rguide.co/venues/ca/toronto/tommy-thompson-park/1136620f9a8d-nature-primary.jpg",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Red-tailed_Hawk,_Tommy_Thompson_Park,_Toronto_(8632922145).jpg"
+    },
+    {
+      "stopId": "venice-nature-alberoni",
+      "name": "Alberoni Dunes",
+      "city": "Venice",
+      "country": "Italy",
+      "url": "https://media.rguide.co/venues/it/venice/alberoni-dunes/0ac9b92faf9d-nature-primary.jpg",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:04_-_Alberoni_Dune,_Venezia.jpg"
+    },
+    {
+      "stopId": "venice-nature-certosa",
+      "name": "Isola della Certosa",
+      "city": "Venice",
+      "country": "Italy",
+      "url": "https://media.rguide.co/venues/it/venice/isola-della-certosa/3dc735a0d578-nature-primary.jpg",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Ansicht_von_Venedig-_Die_Lagune_mit_Blick_auf_die_Isola_della_Certosa,_Francesco_Guardi_-_3129.jpg"
+    },
+    {
+      "stopId": "venice-nature-giardini-biennale",
+      "name": "Giardini della Biennale",
+      "city": "Venice",
+      "country": "Italy",
+      "url": "https://media.rguide.co/venues/it/venice/giardini-della-biennale/4922a6356e7f-nature-primary.jpg",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Giardini_della_Biennale,_Venice_001.jpg"
+    },
+    {
+      "stopId": "venice-nature-lido",
+      "name": "Lido di Venezia Beach",
+      "city": "Venice",
+      "country": "Italy",
+      "url": "https://media.rguide.co/venues/it/venice/lido-di-venezia-beach/e0625277e05a-nature-primary.jpg",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Stabilimento_Balneari_Lido_di_Venezia.jpg"
+    },
+    {
+      "stopId": "venice-nature-royal-gardens",
+      "name": "Royal Gardens of Venice",
+      "city": "Venice",
+      "country": "Italy",
+      "url": "https://media.rguide.co/venues/it/venice/royal-gardens-of-venice/fb3317bf27a6-nature-primary.jpg",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Studio_of_Marco_Ricci_(Belluno_1676-Venice_1730)_-_A_View_of_the_Cascade,_Bushy_Park_Water_Gardens_-_RCIN_402592_-_Royal_Collection.jpg"
+    },
+    {
+      "stopId": "venice-nature-san-giuliano",
+      "name": "Parco San Giuliano",
+      "city": "Venice",
+      "country": "Italy",
+      "url": "https://media.rguide.co/venues/it/venice/parco-san-giuliano/e936ad360115-nature-primary.jpg",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:ISS065-E-112886_-_View_of_Italy_-_Murano_-_San_Michele_-_Venetian_Lagoon_-_Batteria_Tessera_-_Canale_di_Tessera_-_Canale_Tortolo_-_Venezia-Campalto_-_island_Campalto_-_Parco_San_Giuliano_(Mestre)_(cropped).jpg"
+    },
+    {
+      "stopId": "venice-nature-santelena",
+      "name": "Parco delle Rimembranze at Sant'Elena",
+      "city": "Venice",
+      "country": "Italy",
+      "url": "https://media.rguide.co/venues/it/venice/parco-delle-rimembranze-at-sant-elena/7f23a2dc9d5e-nature-primary.jpg",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Parco_delle_Rimembranze_-_panoramio.jpg"
+    },
+    {
+      "stopId": "venice-nature-torcello",
+      "name": "Torcello Lagoon Landscape",
+      "city": "Venice",
+      "country": "Italy",
+      "url": "https://media.rguide.co/venues/it/venice/torcello-lagoon-landscape/3877f64cf33e-nature-primary.jpg",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Paolo_Monti_-_Serie_fotografica_-_BEIC_6343052.jpg"
+    },
+    {
+      "stopId": "vienna-nature-botanical-garden",
+      "name": "Botanical Garden of the University of Vienna",
+      "city": "Vienna",
+      "country": "Austria",
+      "url": "https://media.rguide.co/venues/at/vienna/botanical-garden-of-the-university-of-vienna/49cb7e02ea12-nature-primary.jpg",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Wien_-_Belvedere_Garden_1700_by_Dominique_Girard_-_View_East_towards_Botanical_Garden_of_the_University_of_Vienna_1754_II.jpg"
+    },
+    {
+      "stopId": "vienna-nature-danube-island",
+      "name": "Danube Island",
+      "city": "Vienna",
+      "country": "Austria",
+      "url": "https://media.rguide.co/venues/at/vienna/danube-island/6d0ece1f951f-nature-primary.jpg",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:%E5%B0%8F%E8%8A%B1%E7%B3%96%E8%8A%A5_Erysimum_cheiranthoides_-%E5%A5%A7%E5%9C%B0%E5%88%A9%E7%B6%AD%E4%B9%9F%E7%B4%8D_Vienna_Danube_Island,_Austria-_(27856524666).jpg"
+    },
+    {
+      "stopId": "vienna-nature-kahlenberg",
+      "name": "Kahlenberg and the Vienna Woods",
+      "city": "Vienna",
+      "country": "Austria",
+      "url": "https://media.rguide.co/venues/at/vienna/kahlenberg-and-the-vienna-woods/252a3683d012-nature-primary.jpg",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:D%C3%B6bling_(Wien)_-_Kahlenberg.JPG"
+    },
+    {
+      "stopId": "vienna-nature-lainzer-tiergarten",
+      "name": "Lainzer Tiergarten",
+      "city": "Vienna",
+      "country": "Austria",
+      "url": "https://media.rguide.co/venues/at/vienna/lainzer-tiergarten/f33d92a20aeb-nature-primary.jpg",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Lainzer_Tiergarten_M%C3%A4rz_2014_Damhirsch_(Dama_dama)_2.jpg"
+    },
+    {
+      "stopId": "vienna-nature-lobau",
+      "name": "Lobau",
+      "city": "Vienna",
+      "country": "Austria",
+      "url": "https://media.rguide.co/venues/at/vienna/lobau/96626b5d2f13-nature-primary.jpg",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Lobau_0750.jpg"
+    },
+    {
+      "stopId": "vienna-nature-schoenbrunn",
+      "name": "Schönbrunn Palace Park",
+      "city": "Vienna",
+      "country": "Austria",
+      "url": "https://media.rguide.co/venues/at/vienna/schonbrunn-palace-park/c7adf50448ad-nature-primary.jpg",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Schlosspark_Sch%C3%B6nbrunn_Regenbogen_September_2014_a.jpg"
+    },
+    {
+      "stopId": "vienna-nature-stadtpark",
+      "name": "Stadtpark",
+      "city": "Vienna",
+      "country": "Austria",
+      "url": "https://media.rguide.co/venues/at/vienna/stadtpark/0979c0d8b40f-nature-primary.jpg",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Vienna_Stadtpark_from_above.jpg"
+    },
+    {
+      "stopId": "vienna-nature-tuerkenschanzpark",
+      "name": "Türkenschanzpark",
+      "city": "Vienna",
+      "country": "Austria",
+      "url": "https://media.rguide.co/venues/at/vienna/turkenschanzpark/c9126203ec2e-nature-primary.jpg",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:T%C3%BCrkenschanzpark_S45.JPG"
+    },
+    {
+      "stopId": "vienna-nature-volksgarten",
+      "name": "Volksgarten",
+      "city": "Vienna",
+      "country": "Austria",
+      "url": "https://media.rguide.co/venues/at/vienna/volksgarten/ce3993c11e43-nature-primary.jpg",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Meierei-Volksgarten-Wien.jpg"
+    },
+    {
+      "stopId": "zurich-nature-chinese-garden",
+      "name": "Chinese Garden",
+      "city": "Zurich",
+      "country": "Switzerland",
+      "url": "https://media.rguide.co/venues/ch/zurich/chinese-garden/91d0e12a12bc-nature-primary.jpg",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Chinese_Garden_in_Zurich_-_Switzerland_-_27.3.2025.jpg"
+    },
+    {
+      "stopId": "zurich-nature-old-botanical-garden",
+      "name": "Old Botanical Garden",
+      "city": "Zurich",
+      "country": "Switzerland",
+      "url": "https://media.rguide.co/venues/ch/zurich/old-botanical-garden/d6cdc6411378-nature-primary.jpg",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Z%C3%BCrich_-_Alter_Botanischer_Garten_IMG_0669.JPG"
+    }
+  ]
+}

@@ -68,9 +68,10 @@ import {
   tokyoNeighborhoodGuides,
 } from "@/data/guides/tokyo";
 import { enrichGuidesCuisineTypes } from "@/lib/guide-cuisine";
+import { applyGuideMediaCache } from "@/lib/guide-media-cache";
 import type { MapList } from "@/types";
 
-export const editorialGuideLists: MapList[] = enrichGuidesCuisineTypes([
+export const editorialGuideLists: MapList[] = applyGuideMediaCache(enrichGuidesCuisineTypes([
   ...parisNeighborhoodGuides,
   ...parisCitywideGuides,
   ...parisSeoQueryGuides,
@@ -126,4 +127,4 @@ export const editorialGuideLists: MapList[] = enrichGuidesCuisineTypes([
   ...madridCitywideGuides,
   ...barcelonaItineraryGuides,
   ...sanFranciscoGuides,
-]);
+]));

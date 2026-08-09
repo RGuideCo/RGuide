@@ -1,4 +1,5 @@
 import { NATURE_STOP_MEDIA } from "@/data/guides/nature-stop-media";
+import { resolveCachedGuidePhoto } from "@/lib/guide-media-cache";
 
 function isRenderableImageUrl(value: string, officialUrl?: string) {
   const normalizedValue = value.replace(/\/$/, "");
@@ -25,7 +26,7 @@ export function getRenderableGuidePhoto(
   const canonicalNaturePhoto = stopId ? NATURE_STOP_MEDIA[stopId]?.photo : undefined;
   if (canonicalNaturePhoto) return canonicalNaturePhoto;
 
-  const value = photo?.trim();
+  const value = resolveCachedGuidePhoto(photo);
   if (!value || !isRenderableImageUrl(value, officialUrl)) return null;
   return value;
 }

@@ -9,6 +9,7 @@ import { createClient, type SupabaseClient } from "@supabase/supabase-js";
 import { mapLists } from "@/data/lists";
 import { weeklyCityEventRuns, weeklyEventToGuideList } from "@/data/weekly-events";
 import { getPgSslConfig } from "@/lib/database-ssl";
+import { applyGuideMediaCache } from "@/lib/guide-media-cache";
 import { DEFAULT_LOCALE, normalizeLocale, type AppLocale } from "@/lib/i18n/config";
 import { getServerDatabaseUrl } from "@/lib/server-database-url";
 import type { MapList } from "@/types";
@@ -780,15 +781,19 @@ export async function getServerEditorialGuides(scope: EditorialGuideScope = {}) 
   });
 
   if (supabaseGuides) {
-    return supabaseGuides;
+    return applyGuideMediaCache(supabaseGuides);
   }
 
   if (locale !== DEFAULT_LOCALE) {
     return [];
   }
 
-  return filterCurrentEventGuides(filterGuidesByScope(
-    [...mapLists.map(normalizeWeeklyEventGuide), ...getLocalWeeklyEventGuides()],
-    scope,
-  ));
+  return applyGuideMediaCache(
+    filterCurrentEventGuides(
+      filterGuidesByScope(
+        [...mapLists.map(normalizeWeeklyEventGuide), ...getLocalWeeklyEventGuides()],
+        scope,
+      ),
+    ),
+  );
 }

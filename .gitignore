@@ -9,6 +9,8 @@ build/
 
 *.tsbuildinfo
 *.log
+.guide-image-r2-failures.json
+.nature-image-r2-failures.json
 
 translation-batches/work/
 

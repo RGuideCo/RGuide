@@ -32,6 +32,8 @@
     "sync:editorial-poi-photos": "node scripts/sync-editorial-poi-photos.mjs",
     "ingest:venue-hours-geoapify": "node scripts/ingest-venue-hours-geoapify.mjs",
     "ingest:venue-media-r2": "node scripts/ingest-venue-media-r2-pipeline.mjs",
+    "ingest:editorial-guide-images-r2": "node scripts/ingest-editorial-guide-images-r2.mjs",
+    "ingest:missing-nature-images-r2": "node scripts/ingest-missing-nature-images-r2.mjs",
     "backfill:venue-media-r2-renditions": "node scripts/backfill-venue-media-r2-renditions.mjs",
     "audit:venue-media-primary-r2": "node scripts/audit-venue-media-primary-r2.mjs",
     "cleanup:venue-media-primary-r2": "node scripts/cleanup-venue-media-primary-r2.mjs",
