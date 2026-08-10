@@ -750,10 +750,7 @@ export function getDefaultSelection(_continents: Continent[]): SelectionState {
 export const MORPH_GROW_MS = 340;
 export const MORPH_LEFT_MS = 280;
 export const MORPH_UP_MS = 320;
-export const MORPH_LEFT_SETTLE_MS = 24;
-export const MORPH_UP_START_MS = MORPH_GROW_MS + MORPH_LEFT_MS + MORPH_LEFT_SETTLE_MS;
-export const MORPH_SETTLE_MS = 20;
-export const MORPH_TOTAL_MS = MORPH_UP_START_MS + MORPH_UP_MS;
+export const MORPH_TOTAL_MS = MORPH_GROW_MS + MORPH_LEFT_MS + MORPH_UP_MS;
 export const MORPH_LEFT_ALIGN_OFFSET_PX = 0;
 export const REVEAL_SUBTITLE_MS = 0;
 export const REVEAL_DESCRIPTION_MS = 70;

@@ -35,7 +35,6 @@ export type ContinentTitleMorph = {
   toWidth: number;
   toHeight: number;
   toFontSize: number;
-  animate: boolean;
 };
 
 export function useSplitScreenAnimationState({
@@ -48,7 +47,6 @@ export function useSplitScreenAnimationState({
   const [continentLabelRevealKey, setContinentLabelRevealKey] = useState(0);
   const [countryRevealKey, setCountryRevealKey] = useState(0);
   const [continentTitleMorph, setContinentTitleMorph] = useState<ContinentTitleMorph | null>(null);
-  const [morphStage, setMorphStage] = useState<"idle" | "grow" | "left" | "settle" | "up">("idle");
   const [postMorphRevealPhase, setPostMorphRevealPhase] = useState<0 | 1 | 2 | 3>(3);
   const [exitingRailIcons, setExitingRailIcons] = useState<Partial<Record<ExitingRailIcon["kind"], ExitingRailIcon>>>({});
   const [profileIntroNonce, setProfileIntroNonce] = useState(0);
@@ -71,10 +69,7 @@ export function useSplitScreenAnimationState({
   const guideContentRevealTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const guideContentRevealFrameRef = useRef<ReturnType<typeof requestAnimationFrame> | null>(null);
   const initialGuideContentRevealScheduledRef = useRef(false);
-  const morphCommitTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
-  const morphCleanupTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const morphFrameRef = useRef<ReturnType<typeof requestAnimationFrame> | null>(null);
-  const morphStageTimeoutsRef = useRef<ReturnType<typeof setTimeout>[]>([]);
   const postMorphRevealTimeoutsRef = useRef<ReturnType<typeof setTimeout>[]>([]);
   const shellModeTimeoutsRef = useRef<ReturnType<typeof setTimeout>[]>([]);
   const wasProfileModeRef = useRef(false);
@@ -99,8 +94,6 @@ export function useSplitScreenAnimationState({
     setCountryRevealKey,
     continentTitleMorph,
     setContinentTitleMorph,
-    morphStage,
-    setMorphStage,
     postMorphRevealPhase,
     setPostMorphRevealPhase,
     exitingRailIcons,
@@ -125,10 +118,7 @@ export function useSplitScreenAnimationState({
     guideContentRevealTimeoutRef,
     guideContentRevealFrameRef,
     initialGuideContentRevealScheduledRef,
-    morphCommitTimeoutRef,
-    morphCleanupTimeoutRef,
     morphFrameRef,
-    morphStageTimeoutsRef,
     postMorphRevealTimeoutsRef,
     shellModeTimeoutsRef,
     wasProfileModeRef,

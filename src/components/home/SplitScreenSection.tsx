@@ -50,10 +50,8 @@ import {
   MORPH_GROW_MS,
   MORPH_LEFT_ALIGN_OFFSET_PX,
   MORPH_LEFT_MS,
-  MORPH_SETTLE_MS,
   MORPH_TOTAL_MS,
   MORPH_UP_MS,
-  MORPH_UP_START_MS,
   NIGHTLIFE_BAR_TYPE_ANY,
   NIGHTLIFE_BAR_TYPE_OPTIONS,
   NIGHTLIFE_MUSIC_TYPE_ANY,
@@ -871,8 +869,6 @@ export function SplitScreenSection({
     setCountryRevealKey,
     continentTitleMorph,
     setContinentTitleMorph,
-    morphStage,
-    setMorphStage,
     postMorphRevealPhase,
     setPostMorphRevealPhase,
     exitingRailIcons,
@@ -897,10 +893,7 @@ export function SplitScreenSection({
     guideContentRevealTimeoutRef,
     guideContentRevealFrameRef,
     initialGuideContentRevealScheduledRef,
-    morphCommitTimeoutRef,
-    morphCleanupTimeoutRef,
     morphFrameRef,
-    morphStageTimeoutsRef,
     postMorphRevealTimeoutsRef,
     shellModeTimeoutsRef,
     wasProfileModeRef,
@@ -1278,16 +1271,10 @@ export function SplitScreenSection({
   };
   const titleRef = useRef<HTMLHeadingElement | null>(null);
   const titleTextRef = useRef<HTMLSpanElement | null>(null);
+  const morphTitleRef = useRef<HTMLDivElement | null>(null);
+  const morphAnimationRef = useRef<Animation | null>(null);
+  const morphCommitActionRef = useRef<(() => void) | null>(null);
   const detailRef = useRef<HTMLDivElement | null>(null);
-  const clearMorphStageTimeouts = () => {
-    if (!morphStageTimeoutsRef.current.length) {
-      return;
-    }
-    for (const timeoutId of morphStageTimeoutsRef.current) {
-      clearTimeout(timeoutId);
-    }
-    morphStageTimeoutsRef.current = [];
-  };
   const clearPostMorphRevealTimeouts = () => {
     if (!postMorphRevealTimeoutsRef.current.length) {
       return;
@@ -1319,67 +1306,103 @@ export function SplitScreenSection({
       setTimeout(() => setPostMorphRevealPhase(3), REVEAL_BODY_MS),
     );
   };
-  const startMorphSequence = () => {
-    const syncMorphTargetToHeader = () => {
-      const paneRect = leftPaneRef.current?.getBoundingClientRect();
-      const titleEl = titleTextRef.current ?? titleRef.current;
-      const titleRect = titleEl?.getBoundingClientRect();
-      if (!paneRect || !titleRect) {
-        return;
-      }
-      setContinentTitleMorph((current) =>
-        current
-          ? {
-              ...current,
-              toTop: titleRect.top - paneRect.top,
-              toLeft: titleRect.left - paneRect.left - MORPH_LEFT_ALIGN_OFFSET_PX,
-              toWidth: getMorphTextTargetWidth(current, getMorphHeaderTargetWidth(titleRect.width)),
-              toHeight: titleRect.height,
-              toFontSize: (() => {
-                if (!titleEl || typeof window === "undefined") {
-                  return current.toFontSize;
-                }
-                const parsed = Number.parseFloat(window.getComputedStyle(titleEl).fontSize);
-                return Number.isFinite(parsed) && parsed > 0 ? parsed : current.toFontSize;
-              })(),
-            }
-          : current,
-      );
-    };
-
-    clearMorphStageTimeouts();
+  const cancelMorphSequence = () => {
+    morphAnimationRef.current?.cancel();
+    morphAnimationRef.current = null;
+    morphCommitActionRef.current = null;
+    if (morphFrameRef.current) {
+      cancelAnimationFrame(morphFrameRef.current);
+      morphFrameRef.current = null;
+    }
+  };
+  const startMorphSequence = (commitAction: () => void) => {
+    cancelMorphSequence();
+    morphCommitActionRef.current = commitAction;
     clearPostMorphRevealTimeouts();
     setPostMorphRevealPhase(0);
-    setMorphStage("idle");
-    morphFrameRef.current = requestAnimationFrame(() => {
-      morphFrameRef.current = requestAnimationFrame(() => {
-        syncMorphTargetToHeader();
-        setContinentTitleMorph((current) =>
-          current ? { ...current, animate: true } : current,
-        );
-        setMorphStage("grow");
-        morphStageTimeoutsRef.current.push(
-          setTimeout(() => {
-            syncMorphTargetToHeader();
-            setMorphStage("left");
-          }, MORPH_GROW_MS),
-        );
-        morphStageTimeoutsRef.current.push(
-          setTimeout(() => {
-            syncMorphTargetToHeader();
-            setMorphStage("settle");
-          }, MORPH_GROW_MS + MORPH_LEFT_MS),
-        );
-        morphStageTimeoutsRef.current.push(
-          setTimeout(() => {
-            syncMorphTargetToHeader();
-            setMorphStage("up");
-          }, MORPH_UP_START_MS),
-        );
-        morphFrameRef.current = null;
-      });
-    });
   };
+
+  useLayoutEffect(() => {
+    const element = morphTitleRef.current;
+    const morph = continentTitleMorph;
+    if (!element || !morph) {
+      return;
+    }
+
+    const paneRect = leftPaneRef.current?.getBoundingClientRect();
+    const titleEl = titleTextRef.current ?? titleRef.current;
+    const titleRect = titleEl?.getBoundingClientRect();
+    const offsetParentRect = (element.offsetParent as HTMLElement | null)?.getBoundingClientRect();
+    const targetTop = offsetParentRect && titleRect
+      ? titleRect.top - offsetParentRect.top
+      : morph.toTop;
+    const targetLeft = offsetParentRect && titleRect
+      ? titleRect.left - offsetParentRect.left - MORPH_LEFT_ALIGN_OFFSET_PX
+      : morph.toLeft;
+    const targetWidth = titleRect
+      ? getMorphHeaderTargetWidth(titleRect.width)
+      : morph.toWidth;
+
+    element.style.top = `${targetTop}px`;
+    element.style.left = `${targetLeft}px`;
+    element.style.width = `${targetWidth}px`;
+
+    const targetHeight = element.offsetHeight || morph.toHeight;
+    const fromScale = morph.toFontSize > 0 ? morph.fromFontSize / morph.toFontSize : 1;
+    const sourceX = paneRect && titleRect
+      ? paneRect.left + morph.fromLeft - titleRect.left
+      : morph.fromLeft - targetLeft;
+    const sourceY = paneRect && titleRect
+      ? paneRect.top + morph.fromTop - titleRect.top
+      : morph.fromTop - targetTop;
+    const grownY = paneRect && titleRect
+      ? paneRect.top + morph.fromTop + morph.fromHeight - targetHeight - titleRect.top
+      : morph.fromTop + morph.fromHeight - targetHeight - targetTop;
+    const growOffset = MORPH_GROW_MS / MORPH_TOTAL_MS;
+    const leftOffset = (MORPH_GROW_MS + MORPH_LEFT_MS) / MORPH_TOTAL_MS;
+    const sourceTransform = `translate3d(${sourceX}px, ${sourceY}px, 0) scale(${fromScale})`;
+    const grownTransform = `translate3d(${sourceX}px, ${grownY}px, 0) scale(1)`;
+    const leftTransform = `translate3d(0, ${grownY}px, 0) scale(1)`;
+    const targetTransform = "translate3d(0, 0, 0) scale(1)";
+
+    const animation = element.animate(
+      [
+        { offset: 0, transform: sourceTransform, easing: "cubic-bezier(0.22,0.61,0.36,1)" },
+        { offset: growOffset, transform: grownTransform, easing: "cubic-bezier(0.22,0.61,0.36,1)" },
+        { offset: leftOffset, transform: leftTransform, easing: "cubic-bezier(0.22,1,0.36,1)" },
+        { offset: 1, transform: targetTransform },
+      ],
+      {
+        duration: MORPH_TOTAL_MS,
+        fill: "both",
+      },
+    );
+    morphAnimationRef.current = animation;
+
+    animation.onfinish = () => {
+      animation.onfinish = null;
+      morphAnimationRef.current = null;
+      const action = morphCommitActionRef.current;
+      morphCommitActionRef.current = null;
+      action?.();
+
+      morphFrameRef.current = requestAnimationFrame(() => {
+        morphFrameRef.current = requestAnimationFrame(() => {
+          setContinentTitleMorph(null);
+          startPostMorphReveal();
+          morphFrameRef.current = null;
+        });
+      });
+    };
+
+    return () => {
+      animation.onfinish = null;
+      animation.cancel();
+      if (morphAnimationRef.current === animation) {
+        morphAnimationRef.current = null;
+      }
+    };
+  }, [continentTitleMorph]);
   const pushExplorerPath = (path: string) => {
     if (typeof window !== "undefined" && window.location.pathname !== path) {
       window.history.pushState(null, "", path);
@@ -1540,10 +1563,6 @@ export function SplitScreenSection({
   };
   const getMorphHeaderTargetWidth = (fallbackWidth: number) =>
     Math.max(fallbackWidth, titleRef.current?.getBoundingClientRect().width ?? 0);
-  const getMorphTextTargetWidth = (morph: NonNullable<typeof continentTitleMorph>, fallbackWidth: number) => {
-    const scaleRatio = morph.fromFontSize > 0 ? morph.toFontSize / morph.fromFontSize : 1;
-    return Math.max(fallbackWidth, morph.fromWidth * scaleRatio);
-  };
   const getMorphOriginMetrics = (triggerEl?: HTMLButtonElement | null) => {
     const fallbackRect = triggerEl?.getBoundingClientRect();
     if (!triggerEl || !fallbackRect) {
@@ -1609,16 +1628,7 @@ export function SplitScreenSection({
     const titleEl = titleTextRef.current ?? titleRef.current;
     const titleRect = titleEl?.getBoundingClientRect();
 
-    if (morphCommitTimeoutRef.current) {
-      clearTimeout(morphCommitTimeoutRef.current);
-    }
-    if (morphCleanupTimeoutRef.current) {
-      clearTimeout(morphCleanupTimeoutRef.current);
-    }
-    if (morphFrameRef.current) {
-      cancelAnimationFrame(morphFrameRef.current);
-    }
-    clearMorphStageTimeouts();
+    cancelMorphSequence();
 
     const triggerMetrics = getMorphOriginMetrics(triggerEl);
     const triggerRect = triggerMetrics?.rect;
@@ -1645,26 +1655,14 @@ export function SplitScreenSection({
         fromFontSize,
         toTop: titleRect.top - paneRect.top,
         toLeft: titleRect.left - paneRect.left - MORPH_LEFT_ALIGN_OFFSET_PX,
-        toWidth: Math.max(
-          getMorphHeaderTargetWidth(titleRect.width),
-          triggerRect.width * (toFontSize / fromFontSize),
-        ),
+        toWidth: getMorphHeaderTargetWidth(titleRect.width),
         toHeight: titleRect.height,
         toFontSize,
-        animate: false,
       });
-      startMorphSequence();
+      startMorphSequence(() => handleSelectContinent(continentId));
+      return;
     }
-    morphCommitTimeoutRef.current = setTimeout(() => {
-      handleSelectContinent(continentId);
-      morphCommitTimeoutRef.current = null;
-    }, MORPH_TOTAL_MS + MORPH_SETTLE_MS);
-    morphCleanupTimeoutRef.current = setTimeout(() => {
-      setContinentTitleMorph(null);
-      setMorphStage("idle");
-      startPostMorphReveal();
-      morphCleanupTimeoutRef.current = null;
-    }, MORPH_TOTAL_MS + MORPH_SETTLE_MS);
+    handleSelectContinent(continentId);
   };
   const handleSelectCountryFromContinentList = (
     continentId: string,
@@ -1677,16 +1675,7 @@ export function SplitScreenSection({
     const titleEl = titleTextRef.current ?? titleRef.current;
     const titleRect = titleEl?.getBoundingClientRect();
 
-    if (morphCommitTimeoutRef.current) {
-      clearTimeout(morphCommitTimeoutRef.current);
-    }
-    if (morphCleanupTimeoutRef.current) {
-      clearTimeout(morphCleanupTimeoutRef.current);
-    }
-    if (morphFrameRef.current) {
-      cancelAnimationFrame(morphFrameRef.current);
-    }
-    clearMorphStageTimeouts();
+    cancelMorphSequence();
 
     const triggerMetrics = getMorphOriginMetrics(triggerEl);
     const triggerRect = triggerMetrics?.rect;
@@ -1709,27 +1698,14 @@ export function SplitScreenSection({
         fromFontSize,
         toTop: titleRect.top - paneRect.top,
         toLeft: titleRect.left - paneRect.left - MORPH_LEFT_ALIGN_OFFSET_PX,
-        toWidth: Math.max(
-          getMorphHeaderTargetWidth(titleRect.width),
-          triggerRect.width * (toFontSize / fromFontSize),
-        ),
+        toWidth: getMorphHeaderTargetWidth(titleRect.width),
         toHeight: titleRect.height,
         toFontSize,
-        animate: false,
       });
-      startMorphSequence();
+      startMorphSequence(() => handleSelectCountry(continentId, countryId));
+      return;
     }
-
-    morphCommitTimeoutRef.current = setTimeout(() => {
-      handleSelectCountry(continentId, countryId);
-      morphCommitTimeoutRef.current = null;
-    }, MORPH_TOTAL_MS + MORPH_SETTLE_MS);
-    morphCleanupTimeoutRef.current = setTimeout(() => {
-      setContinentTitleMorph(null);
-      setMorphStage("idle");
-      startPostMorphReveal();
-      morphCleanupTimeoutRef.current = null;
-    }, MORPH_TOTAL_MS + MORPH_SETTLE_MS);
+    handleSelectCountry(continentId, countryId);
   };
   const handleSelectCity = (continentId: string, countryId: string, cityId: string) => {
     setFocusedCountrySignal(null);
@@ -1811,16 +1787,7 @@ export function SplitScreenSection({
     const titleEl = titleTextRef.current ?? titleRef.current;
     const titleRect = titleEl?.getBoundingClientRect();
 
-    if (morphCommitTimeoutRef.current) {
-      clearTimeout(morphCommitTimeoutRef.current);
-    }
-    if (morphCleanupTimeoutRef.current) {
-      clearTimeout(morphCleanupTimeoutRef.current);
-    }
-    if (morphFrameRef.current) {
-      cancelAnimationFrame(morphFrameRef.current);
-    }
-    clearMorphStageTimeouts();
+    cancelMorphSequence();
 
     const triggerMetrics = getMorphOriginMetrics(triggerEl);
     const triggerRect = triggerMetrics?.rect;
@@ -1848,27 +1815,14 @@ export function SplitScreenSection({
         fromFontSize,
         toTop: titleRect.top - paneRect.top,
         toLeft: titleRect.left - paneRect.left - MORPH_LEFT_ALIGN_OFFSET_PX,
-        toWidth: Math.max(
-          getMorphHeaderTargetWidth(titleRect.width),
-          triggerRect.width * (toFontSize / fromFontSize),
-        ),
+        toWidth: getMorphHeaderTargetWidth(titleRect.width),
         toHeight: titleRect.height,
         toFontSize,
-        animate: false,
       });
-      startMorphSequence();
+      startMorphSequence(() => handleSelectCity(continentId, countryId, cityId));
+      return;
     }
-
-    morphCommitTimeoutRef.current = setTimeout(() => {
-      handleSelectCity(continentId, countryId, cityId);
-      morphCommitTimeoutRef.current = null;
-    }, MORPH_TOTAL_MS + MORPH_SETTLE_MS);
-    morphCleanupTimeoutRef.current = setTimeout(() => {
-      setContinentTitleMorph(null);
-      setMorphStage("idle");
-      startPostMorphReveal();
-      morphCleanupTimeoutRef.current = null;
-    }, MORPH_TOTAL_MS + MORPH_SETTLE_MS);
+    handleSelectCity(continentId, countryId, cityId);
   };
   const handleSelectSubarea = (
     continentId: string,
@@ -2009,16 +1963,7 @@ export function SplitScreenSection({
     const paneRect = leftPaneRef.current?.getBoundingClientRect();
     const titleEl = titleTextRef.current ?? titleRef.current;
     const titleRect = titleEl?.getBoundingClientRect();
-    if (morphCommitTimeoutRef.current) {
-      clearTimeout(morphCommitTimeoutRef.current);
-    }
-    if (morphCleanupTimeoutRef.current) {
-      clearTimeout(morphCleanupTimeoutRef.current);
-    }
-    if (morphFrameRef.current) {
-      cancelAnimationFrame(morphFrameRef.current);
-    }
-    clearMorphStageTimeouts();
+    cancelMorphSequence();
 
     const triggerMetrics = getMorphOriginMetrics(triggerEl);
     const triggerRect = triggerMetrics?.rect;
@@ -2043,27 +1988,16 @@ export function SplitScreenSection({
         fromFontSize,
         toTop: titleRect.top - paneRect.top,
         toLeft: titleRect.left - paneRect.left - MORPH_LEFT_ALIGN_OFFSET_PX,
-        toWidth: Math.max(
-          getMorphHeaderTargetWidth(titleRect.width),
-          triggerRect.width * (toFontSize / fromFontSize),
-        ),
+        toWidth: getMorphHeaderTargetWidth(titleRect.width),
         toHeight: titleRect.height,
         toFontSize,
-        animate: false,
       });
-      startMorphSequence();
+      startMorphSequence(() =>
+        handleSelectState(continentId, countryId, countrySubareaId, stateId),
+      );
+      return;
     }
-
-    morphCommitTimeoutRef.current = setTimeout(() => {
-      handleSelectState(continentId, countryId, countrySubareaId, stateId);
-      morphCommitTimeoutRef.current = null;
-    }, MORPH_TOTAL_MS + MORPH_SETTLE_MS);
-    morphCleanupTimeoutRef.current = setTimeout(() => {
-      setContinentTitleMorph(null);
-      setMorphStage("idle");
-      startPostMorphReveal();
-      morphCleanupTimeoutRef.current = null;
-    }, MORPH_TOTAL_MS + MORPH_SETTLE_MS);
+    handleSelectState(continentId, countryId, countrySubareaId, stateId);
   };
 
   const activeLocation = useMemo(() => {
@@ -3836,12 +3770,8 @@ export function SplitScreenSection({
       if (guideContentRevealFrameRef.current) {
         cancelAnimationFrame(guideContentRevealFrameRef.current);
       }
-      if (morphCommitTimeoutRef.current) {
-        clearTimeout(morphCommitTimeoutRef.current);
-      }
-      if (morphCleanupTimeoutRef.current) {
-        clearTimeout(morphCleanupTimeoutRef.current);
-      }
+      morphAnimationRef.current?.cancel();
+      morphCommitActionRef.current = null;
       if (morphFrameRef.current) {
         cancelAnimationFrame(morphFrameRef.current);
       }
@@ -6880,78 +6810,38 @@ export function SplitScreenSection({
               />
               {continentTitleMorph ? (
                 <div
-                  className="pointer-events-none absolute z-30 overflow-hidden opacity-100"
+                  ref={morphTitleRef}
+                  className="pointer-events-none absolute z-30 overflow-visible opacity-100"
                   style={(() => {
-                    const growTop =
-                      continentTitleMorph.fromTop +
-                      (continentTitleMorph.fromHeight - continentTitleMorph.toHeight);
-                    const stage = continentTitleMorph.animate ? morphStage : "idle";
-                    const top =
-                      stage === "grow"
-                        ? growTop
-                        : stage === "left"
-                          ? growTop
-                          : stage === "settle"
-                            ? growTop
-                          : stage === "up"
-                            ? continentTitleMorph.toTop
-                            : continentTitleMorph.fromTop;
-                    const left =
-                      stage === "left" || stage === "settle" || stage === "up"
-                        ? continentTitleMorph.toLeft
-                        : continentTitleMorph.fromLeft;
-                    const width = continentTitleMorph.toWidth;
-                    const height = continentTitleMorph.toHeight;
-                    const transition =
-                      stage === "grow"
-                        ? `top ${MORPH_GROW_MS}ms cubic-bezier(0.22,0.61,0.36,1)`
-                        : stage === "left"
-                          ? `left ${MORPH_LEFT_MS}ms cubic-bezier(0.22,0.61,0.36,1)`
-                          : stage === "settle"
-                            ? "none"
-                          : stage === "up"
-                            ? `top ${MORPH_UP_MS}ms cubic-bezier(0.34,1.34,0.64,1)`
-                            : "none";
+                    const fromScale =
+                      continentTitleMorph.toFontSize > 0
+                        ? continentTitleMorph.fromFontSize / continentTitleMorph.toFontSize
+                        : 1;
+                    const sourceX = continentTitleMorph.fromLeft - continentTitleMorph.toLeft;
+                    const sourceY = continentTitleMorph.fromTop - continentTitleMorph.toTop;
 
                     return {
-                      top,
-                      left,
-                      width,
-                      height,
-                      transition,
-                      transformOrigin: "left bottom",
+                      top: continentTitleMorph.toTop,
+                      left: continentTitleMorph.toLeft,
+                      width: continentTitleMorph.toWidth,
+                      transform: `translate3d(${sourceX}px, ${sourceY}px, 0) scale(${fromScale})`,
+                      transformOrigin: "left top",
+                      willChange: "transform",
                     };
                   })()}
                 >
-                  <div className="flex h-full min-w-0 items-start">
-                    {(() => {
-                      const stage = continentTitleMorph.animate ? morphStage : "idle";
-                      const fromScale =
-                        continentTitleMorph.toFontSize > 0
-                          ? continentTitleMorph.fromFontSize / continentTitleMorph.toFontSize
-                          : 1;
-                      const scale = stage === "idle" ? fromScale : 1;
-                      return (
+                  <div className="min-w-0">
                     <p
-                      className={`inline-block max-w-full whitespace-nowrap font-semibold ${
-                        activeDestinationImage ? "text-white drop-shadow-sm" : "text-slate-900"
+                      className={`block w-full max-w-full break-words whitespace-normal text-left font-black text-white ${
+                        activeDestinationImage ? "drop-shadow-sm" : ""
                       }`}
                       style={{
                         fontSize: `${continentTitleMorph.toFontSize}px`,
-                        lineHeight: "1.15",
-                        transform: `scale(${scale})`,
-                        transformOrigin: "left bottom",
-                        willChange: stage === "grow" ? "transform" : "auto",
-                        transition:
-                          stage === "grow"
-                            ? `transform ${MORPH_GROW_MS}ms cubic-bezier(0.22,0.61,0.36,1)`
-                            : "none",
+                        lineHeight: "1.02",
                       }}
                     >
                       {continentTitleMorph.name}
                     </p>
-                      );
-                    })()}
                   </div>
                 </div>
               ) : null}
@@ -6977,7 +6867,11 @@ export function SplitScreenSection({
                     ) : null}
                     <h1
                       ref={titleRef}
-                      className={`max-w-[calc(100%-8rem)] text-[30px] font-black leading-[1.02] tracking-[0] ${activeDestinationImage ? "text-white drop-shadow-sm" : "text-white"}`}
+                      className={`${
+                        activeLocation.city || continentTitleMorph?.kind === "city"
+                          ? "max-w-[calc(100%-8rem)]"
+                          : "max-w-[calc(100%-3rem)]"
+                      } break-words text-[30px] font-black leading-[1.02] tracking-[0] ${activeDestinationImage ? "text-white drop-shadow-sm" : "text-white"}`}
                     >
                       {activeCategory && activeLocation.city && !expandedGuide ? (
                         <button
@@ -6987,12 +6881,12 @@ export function SplitScreenSection({
                           aria-label={`Show all ${activeSeoPlaceLabel} guides`}
                           title={`Show all ${activeSeoPlaceLabel} guides`}
                         >
-                          <span ref={titleTextRef} className="inline-block">
+                          <span ref={titleTextRef} className="inline-block max-w-full">
                             {visibleSeoHeading}
                           </span>
                         </button>
                       ) : (
-                        <span ref={titleTextRef} className="inline-block">
+                        <span ref={titleTextRef} className="inline-block max-w-full">
                           {visibleSeoHeading}
                         </span>
                       )}
