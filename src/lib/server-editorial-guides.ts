@@ -231,13 +231,13 @@ async function loadEditorialGuidesFromSupabase(scope: EditorialGuideScope = {}):
       return loadRenderCacheGuides(client, scope);
     }
 
-    const normalizedGuides = await loadNormalizedGuides(client, scope);
+    const renderCacheGuides = await loadRenderCacheGuides(client, scope);
 
-    if (normalizedGuides) {
-      return normalizedGuides;
+    if (renderCacheGuides) {
+      return renderCacheGuides;
     }
 
-    return loadRenderCacheGuides(client, scope);
+    return loadNormalizedGuides(client, scope);
   } catch (error) {
     console.error("Failed to load server editorial guides", error);
     return locale === DEFAULT_LOCALE
@@ -400,6 +400,12 @@ async function loadEditorialGuidesFromDataApi(scope: EditorialGuideScope = {}): 
     return loadRenderCacheGuidesFromDataApi(supabase, scope);
   }
 
+  const renderCacheGuides = await loadRenderCacheGuidesFromDataApi(supabase, scope);
+
+  if (renderCacheGuides) {
+    return renderCacheGuides;
+  }
+
   const cityId = await getCityIdFromDataApi(supabase, scope.cityName);
   let query = supabase
     .from("entries_maplist")
@@ -425,7 +431,7 @@ async function loadEditorialGuidesFromDataApi(scope: EditorialGuideScope = {}): 
     ]);
   }
 
-  return loadRenderCacheGuidesFromDataApi(supabase, scope);
+  return null;
 }
 
 async function loadWeeklyEventsFromDataApi(
@@ -585,7 +591,10 @@ async function loadNormalizedGuides(client: Client, scope: EditorialGuideScope =
   }
 }
 
-async function loadRenderCacheGuides(client: Client, scope: EditorialGuideScope = {}): Promise<MapList[]> {
+async function loadRenderCacheGuides(
+  client: Client,
+  scope: EditorialGuideScope = {},
+): Promise<MapList[] | null> {
   const { clause: locationFilter, values } = getDatabaseScopeFilter(
     scope,
     "city.name",
@@ -613,6 +622,10 @@ async function loadRenderCacheGuides(client: Client, scope: EditorialGuideScope 
     ].join(" "),
     values,
   );
+
+  if (!rows.length) {
+    return null;
+  }
 
   const weeklyEventRows = await loadWeeklyEventsFromDatabase(client, scope);
   const weeklyEventGuides = weeklyEventRows.length
