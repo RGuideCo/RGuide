@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import { notFound, permanentRedirect } from "next/navigation";
 
 import { SplitScreenClientLoader } from "@/components/home/SplitScreenClientLoader";
-import { LocaleSwitcher } from "@/components/i18n/LocaleSwitcher";
 import { LocalizedCityRouteSeoIndex } from "@/components/i18n/LocalizedCityRouteSeoIndex";
 import { ProgressiveEnhancementShell } from "@/components/shared/ProgressiveEnhancementShell";
 import { getContinentsWithDestinationDescriptions } from "@/lib/destination-descriptions";
@@ -175,7 +174,6 @@ export default async function SpanishCityPage({ params }: SpanishCityPageProps) 
           destinationTranslations={destinationTranslations}
         />
       </ProgressiveEnhancementShell>
-      <LocaleSwitcher locale="es" links={{ en: englishPath, es: route.canonicalPath }} />
     </>
   );
 }

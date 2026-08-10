@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 
-import { LocaleSwitcher } from "@/components/i18n/LocaleSwitcher";
 import { getLocalePublicationState } from "@/lib/i18n/server";
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -37,7 +36,6 @@ export default function SpanishContactPage() {
           </div>
         </section>
       </main>
-      <LocaleSwitcher locale="es" links={{ en: "/contact", es: "/es/contacto" }} />
     </>
   );
 }

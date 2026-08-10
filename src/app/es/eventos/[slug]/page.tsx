@@ -3,7 +3,6 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 
 import { MapListCard } from "@/components/cards/MapListCard";
-import { LocaleSwitcher } from "@/components/i18n/LocaleSwitcher";
 import { getLocalizedCityPath } from "@/lib/i18n/paths";
 import {
   findDestinationRouteTranslation,
@@ -97,7 +96,6 @@ export default async function SpanishEventPage({ params }: SpanishEventPageProps
           ) : null}
         </div>
       </div>
-      <LocaleSwitcher locale="es" links={{ en: getEventHref(event), es: canonical }} />
     </>
   );
 }

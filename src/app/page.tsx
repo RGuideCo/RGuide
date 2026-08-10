@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 
 import { HomeServerContent } from "@/components/home/HomeServerContent";
-import { LocaleSwitcher } from "@/components/i18n/LocaleSwitcher";
 import { SplitScreenClientLoader } from "@/components/home/SplitScreenClientLoader";
 import { ProgressiveEnhancementShell } from "@/components/shared/ProgressiveEnhancementShell";
 import { SITE_DESCRIPTION, SITE_SEARCH_NAME } from "@/lib/constants";
@@ -43,10 +42,9 @@ const homePageJsonLd = {
 };
 
 export default async function HomePage() {
-  const [continents, editorialGuides, spanish] = await Promise.all([
+  const [continents, editorialGuides] = await Promise.all([
     getContinentsWithDestinationDescriptions(),
     getServerEditorialGuides(),
-    getLocalePublicationState("es"),
   ]);
 
   return (
@@ -60,7 +58,6 @@ export default async function HomePage() {
       >
         <SplitScreenClientLoader initialAppData={{ continents, guides: [] }} />
       </ProgressiveEnhancementShell>
-      {spanish.indexable ? <LocaleSwitcher locale="en" links={{ en: "/", es: "/es" }} /> : null}
     </>
   );
 }

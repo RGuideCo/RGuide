@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 
 import { LocalizedHomeServerContent } from "@/components/i18n/LocalizedHomeServerContent";
-import { LocaleSwitcher } from "@/components/i18n/LocaleSwitcher";
 import { SplitScreenClientLoader } from "@/components/home/SplitScreenClientLoader";
 import { ProgressiveEnhancementShell } from "@/components/shared/ProgressiveEnhancementShell";
 import { getContinentsWithDestinationDescriptions } from "@/lib/destination-descriptions";
@@ -68,7 +67,6 @@ export default async function SpanishHomePage() {
           destinationTranslations={destinationTranslations}
         />
       </ProgressiveEnhancementShell>
-      <LocaleSwitcher locale="es" links={{ en: "/", es: "/es" }} />
     </>
   );
 }

@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 
-import { LocaleSwitcher } from "@/components/i18n/LocaleSwitcher";
 import { getLocalePublicationState } from "@/lib/i18n/server";
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -28,7 +27,6 @@ export default function SpanishTermsPage() {
           </div>
         </article>
       </main>
-      <LocaleSwitcher locale="es" links={{ en: "/terms", es: "/es/terminos" }} />
     </>
   );
 }
