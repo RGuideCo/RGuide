@@ -1,32 +1,46 @@
-import Link from "next/link";
+"use client";
 
 import { LOCALES, type AppLocale } from "@/lib/i18n/config";
 
 interface LocaleSwitcherProps {
   locale: AppLocale;
-  links: Partial<Record<AppLocale, string>>;
 }
-export function LocaleSwitcher({ locale, links }: LocaleSwitcherProps) {
+
+function getLanguageHref(option: AppLocale) {
+  const alternate = document.querySelector<HTMLLinkElement>(
+    `link[rel="alternate"][hreflang="${LOCALES[option].hreflang}"]`,
+  );
+  return alternate?.href ?? (LOCALES[option].pathPrefix || "/");
+}
+
+export function LocaleSwitcher({ locale }: LocaleSwitcherProps) {
   return (
     <nav
       aria-label={locale === "es" ? "Idioma" : "Language"}
-      className="fixed bottom-4 right-4 z-[700] flex items-center gap-1 rounded-md border border-slate-200 bg-white/95 p-1 text-xs font-semibold shadow-lg backdrop-blur"
+      className="grid grid-cols-2 gap-1.5 rounded-full border border-white/[0.1] bg-black/20 p-1"
     >
       {(Object.keys(LOCALES) as AppLocale[]).map((option) => {
-        const href = links[option];
         const isCurrent = option === locale;
-        return href ? (
-          <Link
+        return (
+          <button
             key={option}
-            href={href}
-            hrefLang={LOCALES[option].hreflang}
-            lang={option}
+            type="button"
+            onClick={() => {
+              if (isCurrent) return;
+              window.localStorage.setItem("rguide-locale", option);
+              window.location.assign(getLanguageHref(option));
+            }}
+            disabled={isCurrent}
             aria-current={isCurrent ? "page" : undefined}
-            className={`rounded px-2.5 py-1.5 ${isCurrent ? "bg-slate-950 text-white" : "text-slate-600 hover:bg-slate-100 hover:text-slate-950"}`}
+            className={`rounded-full px-3 py-1.5 text-xs font-semibold uppercase tracking-[0.12em] transition ${
+              isCurrent
+                ? "profile-light-surface cursor-default shadow-sm"
+                : "text-white/[0.58] hover:bg-white/[0.08] hover:text-white"
+            }`}
           >
-            {option.toUpperCase()}
-          </Link>
-        ) : null;
+            {LOCALES[option].nativeLabel}
+          </button>
+        );
       })}
     </nav>
   );

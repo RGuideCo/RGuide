@@ -3,7 +3,6 @@ import Link from "next/link";
 import { notFound, permanentRedirect } from "next/navigation";
 
 import { SplitScreenClientLoader } from "@/components/home/SplitScreenClientLoader";
-import { LocaleSwitcher } from "@/components/i18n/LocaleSwitcher";
 import { ProgressiveEnhancementShell } from "@/components/shared/ProgressiveEnhancementShell";
 import { getContinentsWithDestinationDescriptions } from "@/lib/destination-descriptions";
 import { getIndexableCitiesForCountry, resolveCountryDeepLink } from "@/lib/deep-link-routes";
@@ -100,7 +99,6 @@ export default async function SpanishCountryPage({ params }: SpanishCountryPageP
       }>
         <SplitScreenClientLoader initialAppData={{ continents, guides: [], locale: "es" }} appDataScope={{ countryName: route.country.name, locale: "es" }} initialRouteState={{ selection: route.selection }} seoContent={{ h1: title, intro: route.country.description }} destinationTranslations={destinationTranslations} />
       </ProgressiveEnhancementShell>
-      <LocaleSwitcher locale="es" links={{ en: route.canonicalPath, es: canonical }} />
     </>
   );
 }

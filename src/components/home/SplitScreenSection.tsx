@@ -37,6 +37,7 @@ import {
   MaterialRoute,
 } from "@/components/icons/MaterialSymbol";
 import { SubmitListForm } from "@/components/list/SubmitListForm";
+import { LocaleSwitcher } from "@/components/i18n/LocaleSwitcher";
 import { ContinentList } from "@/components/map/ContinentList";
 import { InteractiveMap } from "@/components/map/InteractiveMap";
 import { StateShapeIcon } from "@/components/map/StateShapeIcon";
@@ -8738,6 +8739,16 @@ export function SplitScreenSection({
                               );
                             })}
                           </div>
+                        </div>
+
+                        <div className="rounded-xl border border-white/[0.12] bg-white/[0.07] p-3 shadow-[inset_0_1px_0_rgba(255,255,255,0.08),0_12px_24px_rgba(0,0,0,0.14)]">
+                          <p className="text-[10px] font-semibold uppercase tracking-[0.14em] text-white/[0.48]">
+                            {locale === "es" ? "Idioma del sitio" : "Site language"}
+                          </p>
+                          <p className="mt-1 mb-3 text-sm font-medium text-white/[0.84]">
+                            {locale === "es" ? "Elige el idioma de RGuide." : "Choose your RGuide language."}
+                          </p>
+                          <LocaleSwitcher locale={locale} />
                         </div>
 
                         <div className="rounded-xl border border-white/[0.12] bg-white/[0.07] p-3 shadow-[inset_0_1px_0_rgba(255,255,255,0.08),0_12px_24px_rgba(0,0,0,0.14)]">

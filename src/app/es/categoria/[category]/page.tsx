@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound, permanentRedirect } from "next/navigation";
 
-import { LocaleSwitcher } from "@/components/i18n/LocaleSwitcher";
 import { CATEGORIES } from "@/lib/constants";
 import { isIndexableEditorialGuide } from "@/lib/deep-link-routes";
 import { getCitiesFromContinents } from "@/lib/geography-tree";
@@ -194,10 +193,6 @@ export default async function SpanishCategoryPage({ params }: SpanishCategoryPag
         ))}
       </section>
     </main>
-    <LocaleSwitcher
-      locale="es"
-      links={{ en: getCategoryHref(data.category), es: canonicalPath }}
-    />
     </>
   );
 }

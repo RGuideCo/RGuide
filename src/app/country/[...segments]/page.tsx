@@ -3,7 +3,6 @@ import Link from "next/link";
 import { notFound, permanentRedirect } from "next/navigation";
 
 import { SplitScreenClientLoader } from "@/components/home/SplitScreenClientLoader";
-import { LocaleSwitcher } from "@/components/i18n/LocaleSwitcher";
 import { ProgressiveEnhancementShell } from "@/components/shared/ProgressiveEnhancementShell";
 import { getContinentsWithDestinationDescriptions } from "@/lib/destination-descriptions";
 import {
@@ -103,11 +102,9 @@ export async function generateMetadata({ params }: CountryDeepLinkPageProps): Pr
 
 export default async function CountryDeepLinkPage({ params }: CountryDeepLinkPageProps) {
   const { segments } = await params;
-  const [continents, editorialGuides, spanishPublication, destinationTranslations] = await Promise.all([
+  const [continents, editorialGuides] = await Promise.all([
     getContinentsWithDestinationDescriptions(),
     getServerEditorialGuides(),
-    getLocalePublicationState("es"),
-    getDestinationRouteTranslations("es"),
   ]);
   const route = resolveCountryDeepLink(segments, { continents, guides: editorialGuides });
 
@@ -119,15 +116,6 @@ export default async function CountryDeepLinkPage({ params }: CountryDeepLinkPag
   if (requestedPath !== route.canonicalPath) {
     permanentRedirect(route.canonicalPath);
   }
-  const countryTranslation = findDestinationRouteTranslation(destinationTranslations, {
-    id: route.country.id,
-    name: route.country.name,
-    scope: "country",
-  });
-  const spanishPath = spanishPublication.indexable && countryTranslation
-    ? getLocalizedCountryPath("es", route.country, countryTranslation.slug)
-    : null;
-
   return (
     <>
       {route.structuredData.map((item, index) => (
@@ -171,7 +159,6 @@ export default async function CountryDeepLinkPage({ params }: CountryDeepLinkPag
           }}
         />
       </ProgressiveEnhancementShell>
-      {spanishPath ? <LocaleSwitcher locale="en" links={{ en: route.canonicalPath, es: spanishPath }} /> : null}
     </>
   );
 }

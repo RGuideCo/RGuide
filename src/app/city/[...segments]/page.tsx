@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import { notFound, permanentRedirect } from "next/navigation";
 
 import { SplitScreenClientLoader } from "@/components/home/SplitScreenClientLoader";
-import { LocaleSwitcher } from "@/components/i18n/LocaleSwitcher";
 import { CityRouteSeoIndex } from "@/components/seo/CityRouteSeoIndex";
 import { ProgressiveEnhancementShell } from "@/components/shared/ProgressiveEnhancementShell";
 import { getContinentsWithDestinationDescriptions } from "@/lib/destination-descriptions";
@@ -83,9 +82,6 @@ export async function generateMetadata({ params }: CityDeepLinkPageProps): Promi
     return { title: "City not found" };
   }
 
-  const socialImageSource =
-    route.guide?.photo ?? route.guide?.stops.find((stop) => Boolean(stop.photo))?.photo ?? route.city.image;
-  const socialImageUrl = `${socialImageSource}${socialImageSource.includes("?") ? "&" : "?"}title=1`;
   const cityTranslation = findDestinationRouteTranslation(destinationTranslations, {
     id: route.city.id,
     name: route.city.name,
@@ -95,6 +91,9 @@ export async function generateMetadata({ params }: CityDeepLinkPageProps): Promi
     ? getSpanishAlternatePath(route, spanishGuides, cityTranslation?.slug)
     : null;
 
+  const socialImageSource =
+    route.guide?.photo ?? route.guide?.stops.find((stop) => Boolean(stop.photo))?.photo ?? route.city.image;
+  const socialImageUrl = `${socialImageSource}${socialImageSource.includes("?") ? "&" : "?"}title=1`;
   return {
     title: route.title,
     description: route.description,
@@ -192,9 +191,6 @@ export default async function CityDeepLinkPage({ params }: CityDeepLinkPageProps
           }}
         />
       </ProgressiveEnhancementShell>
-      {spanishPath ? (
-        <LocaleSwitcher locale="en" links={{ en: route.canonicalPath, es: spanishPath }} />
-      ) : null}
     </>
   );
 }

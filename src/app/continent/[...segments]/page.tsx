@@ -3,7 +3,6 @@ import Link from "next/link";
 import { notFound, permanentRedirect } from "next/navigation";
 
 import { SplitScreenClientLoader } from "@/components/home/SplitScreenClientLoader";
-import { LocaleSwitcher } from "@/components/i18n/LocaleSwitcher";
 import { ProgressiveEnhancementShell } from "@/components/shared/ProgressiveEnhancementShell";
 import { getContinentsWithDestinationDescriptions } from "@/lib/destination-descriptions";
 import {
@@ -90,11 +89,9 @@ export async function generateMetadata({ params }: ContinentDeepLinkPageProps): 
 
 export default async function ContinentDeepLinkPage({ params }: ContinentDeepLinkPageProps) {
   const { segments } = await params;
-  const [continents, editorialGuides, spanishPublication, destinationTranslations] = await Promise.all([
+  const [continents, editorialGuides] = await Promise.all([
     getContinentsWithDestinationDescriptions(),
     getServerEditorialGuides(),
-    getLocalePublicationState("es"),
-    getDestinationRouteTranslations("es"),
   ]);
   const route = resolveContinentDeepLink(segments, { continents, guides: editorialGuides });
 
@@ -106,15 +103,6 @@ export default async function ContinentDeepLinkPage({ params }: ContinentDeepLin
   if (requestedPath !== route.canonicalPath) {
     permanentRedirect(route.canonicalPath);
   }
-  const continentTranslation = findDestinationRouteTranslation(destinationTranslations, {
-    id: route.continent.id,
-    name: route.continent.name,
-    scope: "continent",
-  });
-  const spanishPath = spanishPublication.indexable && continentTranslation
-    ? getLocalizedContinentPath("es", route.continent, continentTranslation.slug)
-    : null;
-
   return (
     <>
       {route.structuredData.map((item, index) => (
@@ -158,7 +146,6 @@ export default async function ContinentDeepLinkPage({ params }: ContinentDeepLin
           }}
         />
       </ProgressiveEnhancementShell>
-      {spanishPath ? <LocaleSwitcher locale="en" links={{ en: route.canonicalPath, es: spanishPath }} /> : null}
     </>
   );
 }
