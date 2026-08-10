@@ -494,6 +494,19 @@ textarea:focus-visible {
   display: none;
 }
 
+.left-pane-scrollbar-hidden,
+.left-pane-scrollbar-hidden * {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.left-pane-scrollbar-hidden::-webkit-scrollbar,
+.left-pane-scrollbar-hidden *::-webkit-scrollbar {
+  display: none;
+  width: 0;
+  height: 0;
+}
+
 .rguide-material-symbol {
   direction: ltr;
   font-feature-settings: "liga";

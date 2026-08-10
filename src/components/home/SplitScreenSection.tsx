@@ -7839,7 +7839,7 @@ export function SplitScreenSection({
               {!isSavedPlacesRailActive ? (
                 <div
                   data-directory-scroll
-                  className={`mt-2 hidden min-h-0 flex-1 overflow-y-auto overscroll-contain pr-1 transition-opacity duration-150 lg:block ${
+                  className={`left-pane-scrollbar-hidden mt-2 hidden min-h-0 flex-1 overflow-y-auto overscroll-contain pr-1 transition-opacity duration-150 lg:block ${
                     isStateMorphing ? "opacity-0 pointer-events-none" : "opacity-100"
                   }`}
                   style={{
@@ -8877,12 +8877,12 @@ export function SplitScreenSection({
                   className={`relative shrink-0 transition-[height,margin-bottom,opacity] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] lg:hidden ${
                     isGuidePaneTakingFullListPane || isPublicProfileMode
                       ? "mb-0 h-0 overflow-hidden opacity-0"
-                      : "mb-2 h-[5.35rem] overflow-visible opacity-100"
+                      : "mb-1 h-[3.875rem] overflow-visible opacity-100"
                   }`}
                   onPointerDown={handleMobileListSheetDragStart}
                 >
                   <div
-                    className={`flex h-9 items-center gap-2 transition-[opacity,transform] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] ${
+                    className={`flex h-5 items-center gap-2 transition-[opacity,transform] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] ${
                       isGuidePaneTakingFullListPane ? "pointer-events-none -translate-y-2 opacity-0" : "translate-y-0 opacity-100"
                     }`}
                   >
@@ -8893,11 +8893,11 @@ export function SplitScreenSection({
                     </div>
                   </div>
                   <div
-                    className={`mt-1.5 w-full overflow-x-auto pb-1 transition-[opacity,transform] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] ${
+                    className={`mt-0.5 w-full overflow-x-auto transition-[opacity,transform] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] ${
                       isGuidePaneTakingFullListPane ? "pointer-events-none -translate-y-2 opacity-0" : "translate-y-0 opacity-100"
                     }`}
                   >
-                    <div className="flex min-w-max items-center gap-2 px-0.5 py-0.5">
+                    <div className="flex min-w-max items-center gap-2 px-0.5">
                       {categoryOptions.map((option, index) => {
                         const isActive = activeCategory === option.category;
                         return (

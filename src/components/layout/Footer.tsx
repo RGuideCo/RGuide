@@ -1,6 +1,7 @@
 "use client";
 
-import { type MouseEvent, useEffect, useState } from "react";
+import { Menu, X } from "@/components/icons/MaterialSymbol";
+import { type MouseEvent, useEffect, useRef, useState } from "react";
 import { usePathname } from "next/navigation";
 
 type FooterModal = "about" | "contact" | "privacy" | "terms" | "affiliate-disclosure" | null;
@@ -123,6 +124,8 @@ const spanishPolicyCopy: Record<"privacy" | "terms" | "affiliate-disclosure", st
 
 export function Footer() {
   const [activeModal, setActiveModal] = useState<FooterModal>(null);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const menuRef = useRef<HTMLDivElement>(null);
   const pathname = usePathname();
   const isSpanish = pathname === "/es" || pathname.startsWith("/es/");
   const visibleFooterLinks = isSpanish ? spanishFooterLinks : footerLinks;
@@ -136,48 +139,75 @@ export function Footer() {
     }
 
     event.preventDefault();
+    setIsMenuOpen(false);
     setActiveModal(modal);
   };
 
   useEffect(() => {
-    if (!activeModal) {
+    if (!activeModal && !isMenuOpen) {
       return;
     }
 
     const handleKeyDown = (event: KeyboardEvent) => {
       if (event.key === "Escape") {
         setActiveModal(null);
+        setIsMenuOpen(false);
+      }
+    };
+
+    const handlePointerDown = (event: PointerEvent) => {
+      if (isMenuOpen && !menuRef.current?.contains(event.target as Node)) {
+        setIsMenuOpen(false);
       }
     };
 
     window.addEventListener("keydown", handleKeyDown);
-    return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [activeModal]);
+    window.addEventListener("pointerdown", handlePointerDown);
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+      window.removeEventListener("pointerdown", handlePointerDown);
+    };
+  }, [activeModal, isMenuOpen]);
 
   return (
     <>
-      <footer className="border-t border-slate-950/10 bg-[#f3f4f1]/95 lg:mt-2">
-        <div className="flex min-h-10 w-full items-center py-2 lg:min-h-[2.375rem] lg:py-0">
-          <div className="hidden shrink-0 lg:block lg:w-14" aria-hidden="true" />
-          <div className="min-w-0 flex-1 px-3 sm:px-4 lg:px-2">
-            <nav
-              className="ml-auto flex w-full flex-wrap items-center justify-end gap-x-5 gap-y-2 text-right font-mono text-[0.68rem] font-semibold uppercase tracking-[0.18em] text-slate-500"
-              aria-label={isSpanish ? "Información del pie de página" : "Footer information"}
-            >
-              {visibleFooterLinks.map((link) => (
-                <a
-                  key={link.href}
-                  href={link.href}
-                  onClick={(event) => handleModalLinkClick(event, link.modal)}
-                  className="transition hover:text-slate-950"
-                >
-                  {link.label}
-                </a>
-              ))}
-            </nav>
-          </div>
+      <div className="fixed bottom-2 left-0 z-[75] hidden w-14 justify-center lg:flex">
+        <div ref={menuRef} className="relative">
+          <button
+            type="button"
+            onClick={() => setIsMenuOpen((current) => !current)}
+            className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-white/40 bg-[#111111] text-white/80 shadow-[0_4px_14px_rgba(0,0,0,0.24)] transition hover:border-white hover:bg-[#1d1d1d] hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/70"
+            aria-label={isSpanish ? "Abrir información del sitio" : "Open site information"}
+            aria-expanded={isMenuOpen}
+            aria-controls="footer-information-menu"
+            title={isSpanish ? "Información" : "Information"}
+          >
+            {isMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+          </button>
+          <nav
+            id="footer-information-menu"
+            className={`absolute bottom-0 left-[calc(100%+1rem)] z-[90] min-w-44 overflow-hidden rounded-sm border border-white/15 bg-[#1a1a1a] p-1 shadow-[0_18px_45px_rgba(15,23,42,0.24)] transition-[opacity,transform] duration-150 ${
+              isMenuOpen
+                ? "translate-x-0 opacity-100"
+                : "pointer-events-none -translate-x-1 opacity-0"
+            }`}
+            aria-label={isSpanish ? "Información del sitio" : "Site information"}
+            aria-hidden={!isMenuOpen}
+          >
+            {visibleFooterLinks.map((link) => (
+              <a
+                key={link.href}
+                href={link.href}
+                onClick={(event) => handleModalLinkClick(event, link.modal)}
+                className="flex h-9 items-center border-b border-white/10 px-3 font-mono text-[0.68rem] font-semibold uppercase tracking-[0.16em] text-white/65 transition last:border-b-0 hover:bg-white/8 hover:text-white focus-visible:bg-white/8 focus-visible:text-white focus-visible:outline-none"
+                tabIndex={isMenuOpen ? 0 : -1}
+              >
+                {link.label}
+              </a>
+            ))}
+          </nav>
         </div>
-      </footer>
+      </div>
 
       {activeModal ? (
         <div
