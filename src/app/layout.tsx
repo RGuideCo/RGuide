@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Host_Grotesk, Inter } from "next/font/google";
 import Script from "next/script";
 import type { ReactNode } from "react";
@@ -40,6 +40,7 @@ const inter = Inter({
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   applicationName: SITE_SEARCH_NAME,
+  manifest: "/manifest.webmanifest",
   title: {
     default: `${SITE_SEARCH_NAME} | Curated City Travel Guides`,
     template: `%s | ${SITE_SEARCH_NAME}`,
@@ -76,9 +77,20 @@ export const metadata: Metadata = {
     title: SITE_SEARCH_NAME,
     description: SITE_DESCRIPTION,
   },
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: "black",
+    title: "RGuide",
+  },
   other: {
     "agd-partner-manual-verification": "",
+    "apple-mobile-web-app-capable": "yes",
   },
+};
+
+export const viewport: Viewport = {
+  colorScheme: "light",
+  themeColor: "#1a1a1a",
 };
 
 const websiteJsonLd = {
@@ -167,6 +179,11 @@ export default function RootLayout({
         <AuthModal />
         <SiteAnalyticsEvents />
         <Analytics />
+        {process.env.NODE_ENV === "production" ? (
+          <Script id="rguide-service-worker" strategy="afterInteractive">
+            {`if ("serviceWorker" in navigator) { navigator.serviceWorker.register("/sw.js").catch(function () {}); }`}
+          </Script>
+        ) : null}
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: serializeJsonForHtml(websiteJsonLd) }}
