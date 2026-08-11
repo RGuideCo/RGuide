@@ -153,7 +153,7 @@ function collectCandidates(guides, options, publicBaseUrl, existingEntries, retr
       guideSlug: guide.slug,
     };
     add(guide.photo, { ...common, name: guide.title, entityId: guide.id, kind: "guide" });
-    visitStops(guide.stops, (stop) => add(stop.photo, {
+    visitStops(guide.stops, (stop) => add(stop.photo ?? stop.imageSourceUrl ?? stop.sourceEvidence?.imageSourceUrl, {
       ...common,
       name: stop.name,
       entityId: stop.poiId ?? stop.id,
