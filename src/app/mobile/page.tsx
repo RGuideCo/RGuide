@@ -29,6 +29,7 @@ export default function MobilePreviewPage() {
           <iframe
             title="RGuide mobile viewport"
             src="/"
+            allow="geolocation"
             className="h-[844px] w-[390px] max-w-full border-0"
           />
         </div>
