@@ -6756,12 +6756,15 @@ export function SplitScreenSection({
 		            </div>
 		          </div>
 		          <div
-            className="pointer-events-none relative z-10 grid h-full grid-rows-[minmax(0,1fr)] gap-0 lg:grid-rows-none lg:[grid-template-columns:var(--shell-cols)]"
+            className="pointer-events-none relative z-10 grid h-full grid-rows-[minmax(0,1fr)] gap-0 lg:grid-rows-none lg:[grid-template-columns:var(--shell-cols)] min-[2560px]:[grid-template-columns:var(--shell-cols-ultrawide)]"
             style={
               {
                 "--shell-cols": isLeftPaneCollapsed
                   ? "0px minmax(0,1fr) minmax(520px,1fr)"
                   : "minmax(260px,2fr) minmax(0,3.5fr) minmax(520px,4.5fr)",
+                "--shell-cols-ultrawide": isLeftPaneCollapsed
+                  ? "0px minmax(680px,960px) minmax(720px,960px) minmax(0,1fr)"
+                  : "minmax(320px,420px) minmax(680px,960px) minmax(720px,960px) minmax(0,1fr)",
               } as React.CSSProperties
             }
           >
