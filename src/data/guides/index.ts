@@ -30,6 +30,7 @@ import {
   berlinNeighborhoodGuides,
 } from "@/data/guides/berlin";
 import { copenhagenCitywideGuides } from "@/data/guides/copenhagen";
+import { cuscoCitywideGuides } from "@/data/guides/cusco";
 import { dublinCitywideGuides } from "@/data/guides/dublin";
 import { dubaiCitywideGuides } from "@/data/guides/dubai";
 import { florenceCitywideGuides } from "@/data/guides/florence";
@@ -39,6 +40,7 @@ import { istanbulCitywideGuides } from "@/data/guides/istanbul";
 import { kyotoCitywideGuides } from "@/data/guides/kyoto";
 import { kualaLumpurCitywideGuides } from "@/data/guides/kuala-lumpur";
 import { lasVegasCitywideGuides } from "@/data/guides/las-vegas";
+import { limaCitywideGuides } from "@/data/guides/lima";
 import { lisbonCitywideGuides } from "@/data/guides/lisbon";
 import { losAngelesCitywideGuides } from "@/data/guides/los-angeles";
 import { miamiCitywideGuides } from "@/data/guides/miami";
@@ -56,6 +58,7 @@ import { pragueCitywideGuides } from "@/data/guides/prague";
 import { romeGuides } from "@/data/guides/rome";
 import { sanFranciscoGuides } from "@/data/guides/san-francisco";
 import { seoulCitywideGuides } from "@/data/guides/seoul";
+import { santiagoCitywideGuides } from "@/data/guides/santiago";
 import { shanghaiCitywideGuides } from "@/data/guides/shanghai";
 import { singaporeCitywideGuides } from "@/data/guides/singapore";
 import { sydneyCitywideGuides } from "@/data/guides/sydney";
@@ -106,14 +109,17 @@ export const editorialGuideLists: MapList[] = applyGuideMediaCache(enrichGuidesC
   ...kyotoCitywideGuides,
   ...kualaLumpurCitywideGuides,
   ...lasVegasCitywideGuides,
+  ...limaCitywideGuides,
   ...osakaCitywideGuides,
   ...berlinNeighborhoodGuides,
   ...berlinCitywideGuides,
   ...copenhagenCitywideGuides,
+  ...cuscoCitywideGuides,
   ...dublinCitywideGuides,
   ...dubaiCitywideGuides,
   ...florenceCitywideGuides,
   ...seoulCitywideGuides,
+  ...santiagoCitywideGuides,
   ...shanghaiCitywideGuides,
   ...singaporeCitywideGuides,
   ...sydneyCitywideGuides,
