@@ -6340,6 +6340,7 @@ export function SplitScreenSection({
                     </button>
                   </div>
                   <div className="flex flex-col items-end gap-1.5">
+                    <div className="h-8 w-8" aria-hidden="true" />
                     <div
                       className={`relative flex w-8 flex-col items-center gap-0.5 rounded-lg border border-slate-200 bg-white p-0.5 shadow-sm transition-[box-shadow] duration-200 ${
                         isMobileGuideSourceMenuOpen ? "shadow-md" : ""

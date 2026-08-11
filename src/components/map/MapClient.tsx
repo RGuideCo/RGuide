@@ -6280,7 +6280,7 @@ export function MapClient({
         type="button"
         onClick={focusUserLocation}
         disabled={locationStatus === "locating"}
-        className={`rguide-locate-control absolute top-[18.25rem] z-[70] flex h-8 w-8 items-center justify-center rounded-lg border bg-white text-slate-700 shadow-sm transition hover:border-slate-300 hover:text-slate-950 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky-400/70 disabled:cursor-wait disabled:opacity-80 ${
+        className={`rguide-locate-control absolute top-[3.125rem] z-[70] flex h-8 w-8 items-center justify-center rounded-lg border bg-white text-slate-700 shadow-sm transition hover:border-slate-300 hover:text-slate-950 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky-400/70 disabled:cursor-wait disabled:opacity-80 ${
           locationStatus === "located"
             ? "border-sky-300 text-sky-700 ring-2 ring-sky-200/80"
             : locationStatus === "error"
