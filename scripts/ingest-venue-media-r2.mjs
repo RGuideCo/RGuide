@@ -1051,7 +1051,7 @@ async function reuseStoredMediaRow(client, row, storedMedia, resolvedSource) {
          updated_at = now()
      where id = $1`,
     [
-      row.media_id,
+      storedMedia.id,
       storedMedia.public_url ?? storedMedia.url,
       storedMedia.storage_provider,
       storedMedia.storage_bucket,
@@ -1070,6 +1070,24 @@ async function reuseStoredMediaRow(client, row, storedMedia, resolvedSource) {
       storedMedia.height,
     ],
   );
+
+  await client.query(
+    `update public.venue_media
+     set is_active = false,
+         ingestion_error = null,
+         raw_metadata = raw_metadata || $2::jsonb,
+         updated_at = now()
+     where id = $1`,
+    [
+      row.media_id,
+      JSON.stringify({
+        deduped_to_media_id: storedMedia.id,
+        deduped_at: new Date().toISOString(),
+      }),
+    ],
+  );
+
+  return storedMedia.id;
 }
 
 async function promoteStoredMediaAsPrimary(client, row) {
@@ -1279,8 +1297,8 @@ async function main() {
           }));
 
           if (!options.dryRun) {
-            await reuseStoredMediaRow(client, row, storedMedia, resolvedSource);
-            await promoteStoredMediaAsPrimary(client, row);
+            const storedMediaId = await reuseStoredMediaRow(client, row, storedMedia, resolvedSource);
+            await promoteStoredMediaAsPrimary(client, { ...row, media_id: storedMediaId });
             touchedVenueIds.add(row.venue_id);
           }
 
@@ -1315,8 +1333,8 @@ async function main() {
             }));
 
             if (!options.dryRun) {
-              await reuseStoredMediaRow(client, row, fallbackStoredMedia, resolvedSource);
-              await promoteStoredMediaAsPrimary(client, row);
+              const storedMediaId = await reuseStoredMediaRow(client, row, fallbackStoredMedia, resolvedSource);
+              await promoteStoredMediaAsPrimary(client, { ...row, media_id: storedMediaId });
               touchedVenueIds.add(row.venue_id);
             }
 

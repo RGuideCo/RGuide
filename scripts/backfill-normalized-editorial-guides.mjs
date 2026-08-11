@@ -694,16 +694,25 @@ async function ensureSelectedDestinationTimezones(client, selectedGuides) {
   return result.rowCount ?? 0;
 }
 
+function getStopSourcePhoto(stop) {
+  return (
+    stop.photo?.trim() ||
+    stop.imageSourceUrl?.trim() ||
+    stop.sourceEvidence?.imageSourceUrl?.trim() ||
+    null
+  );
+}
+
 function getGuideCoverPhoto(list) {
   const explicitPhoto = list.photo?.trim();
   if (explicitPhoto) return explicitPhoto;
 
   for (const stop of list.stops ?? []) {
-    const stopPhoto = stop.photo?.trim();
+    const stopPhoto = getStopSourcePhoto(stop);
     if (stopPhoto) return stopPhoto;
 
     for (const place of stop.places ?? []) {
-      const placePhoto = place.photo?.trim();
+      const placePhoto = getStopSourcePhoto(place);
       if (placePhoto) return placePhoto;
     }
   }
@@ -857,10 +866,11 @@ function buildStopPayload(selectedGuides, contexts) {
         },
       });
 
-      if (stop.photo?.trim()) {
-        mediaRowsByKey.set(`${venueKey}|${stop.photo.trim()}`, {
+      const stopPhoto = getStopSourcePhoto(stop);
+      if (stopPhoto) {
+        mediaRowsByKey.set(`${venueKey}|${stopPhoto}`, {
           venue_key: venueKey,
-          url: stop.photo.trim(),
+          url: stopPhoto,
           role: "primary",
           source_type: "editorial_guides",
           source_entity_type: "entry_stop",

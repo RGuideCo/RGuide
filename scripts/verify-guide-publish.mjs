@@ -525,14 +525,15 @@ function checkStopBasics(list, stop, pathParts, report, options) {
     addIssue(report, "error", label, "Missing image source evidence.");
   }
 
-  if (!stop.photo) {
+  const localImageCandidate = stop.photo ?? stop.imageSourceUrl ?? stop.sourceEvidence?.imageSourceUrl;
+  if (!localImageCandidate) {
     addIssue(report, severityForStrict(options), label, "Missing local image candidate before R2 ingestion.");
   } else {
-    if (looksLikePlaceholderPhoto(stop.photo)) {
-      addIssue(report, severityForStrict(options), label, "Image candidate looks like a placeholder, logo, favicon, or generic stock fallback.", { photo: stop.photo });
+    if (looksLikePlaceholderPhoto(localImageCandidate)) {
+      addIssue(report, severityForStrict(options), label, "Image candidate looks like a placeholder, logo, favicon, or generic stock fallback.", { photo: localImageCandidate });
     }
-    if (looksLikeBrokenImageUrl(stop.photo)) {
-      addIssue(report, severityForStrict(options), label, "Image candidate URL looks broken or non-image-like.", { photo: stop.photo });
+    if (looksLikeBrokenImageUrl(localImageCandidate)) {
+      addIssue(report, severityForStrict(options), label, "Image candidate URL looks broken or non-image-like.", { photo: localImageCandidate });
     }
   }
 
