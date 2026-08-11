@@ -2,7 +2,7 @@ import Link from "next/link";
 
 import { GuideEditorialReview } from "@/components/cards/GuideEditorialReview";
 import { CATEGORIES } from "@/lib/constants";
-import type { CityDeepLinkResolution } from "@/lib/deep-link-routes";
+import { isIndexableEditorialGuide, type CityDeepLinkResolution } from "@/lib/deep-link-routes";
 import { getDictionary } from "@/lib/i18n/dictionaries";
 import {
   getLocalizedCityCategoryPath,
@@ -31,13 +31,16 @@ export function LocalizedCityRouteSeoIndex({
   destinationTranslations = [],
 }: LocalizedCityRouteSeoIndexProps) {
   const dictionary = getDictionary(locale);
-  const visibleGuides = guides.filter((guide) => {
-    if (guide.location.city !== route.city.name) return false;
-    if (route.category && guide.category !== route.category) return false;
-    if (route.neighborhood && guide.location.neighborhood !== route.neighborhood.name) return false;
-    if (route.guide && guide.id !== route.guide.id) return false;
-    return guide.visibility !== "private" && guide.visibility !== "followers";
-  });
+  const matchingGuides = guides
+    .filter((guide) => {
+      if (guide.location.city !== route.city.name) return false;
+      if (route.category && guide.category !== route.category) return false;
+      if (route.neighborhood && guide.location.neighborhood !== route.neighborhood.name) return false;
+      if (route.guide && guide.id !== route.guide.id) return false;
+      return isIndexableEditorialGuide(guide);
+    })
+    .sort((left, right) => right.upvotes - left.upvotes || left.title.localeCompare(right.title));
+  const visibleGuides = matchingGuides.slice(0, route.guide ? 1 : 12);
   const categories = CATEGORIES.filter((category) =>
     guides.some((guide) => guide.location.city === route.city.name && guide.category === category),
   );
@@ -56,6 +59,25 @@ export function LocalizedCityRouteSeoIndex({
           (translation.legacyId === route.neighborhood?.id || translation.sourceName === route.neighborhood?.name),
       )?.displayName ?? route.neighborhood.name
     : undefined;
+  const getGuideHref = (guide: MapList) => {
+    const neighborhood = guide.location.neighborhood ? { name: guide.location.neighborhood } : undefined;
+    const guideNeighborhoodTranslation = guide.location.neighborhood
+      ? destinationTranslations.find(
+          (candidate) =>
+            candidate.scope === "neighborhood" &&
+            candidate.sourceName === guide.location.neighborhood,
+        )
+      : undefined;
+
+    return getLocalizedGuidePath(
+      locale,
+      route.city,
+      guide,
+      neighborhood,
+      localizedCitySlug,
+      guideNeighborhoodTranslation?.slug ?? localizedNeighborhoodSlug,
+    );
+  };
 
   return (
     <section className="page-shell py-8 sm:py-10" aria-labelledby="localized-city-heading">
@@ -89,27 +111,12 @@ export function LocalizedCityRouteSeoIndex({
 
         <div className="mt-8 grid gap-5 lg:grid-cols-2">
           {visibleGuides.map((guide) => {
-            const neighborhood = guide.location.neighborhood ? { name: guide.location.neighborhood } : undefined;
-            const guideNeighborhoodTranslation = guide.location.neighborhood
-              ? destinationTranslations.find(
-                  (candidate) =>
-                    candidate.scope === "neighborhood" &&
-                    candidate.sourceName === guide.location.neighborhood,
-                )
-              : undefined;
             return (
               <article key={guide.id} className="rounded-md border border-slate-200 bg-white p-4">
                 <p className="text-xs font-semibold uppercase text-slate-500">{dictionary.categories[guide.category]}</p>
                 <h2 className="mt-2 text-xl font-semibold text-slate-950">
                   <Link
-                    href={getLocalizedGuidePath(
-                      locale,
-                      route.city,
-                      guide,
-                      neighborhood,
-                      localizedCitySlug,
-                      guideNeighborhoodTranslation?.slug ?? localizedNeighborhoodSlug,
-                    )}
+                    href={getGuideHref(guide)}
                     className="hover:text-orange-700"
                   >
                     {guide.seoTitle ?? guide.title}
@@ -135,6 +142,26 @@ export function LocalizedCityRouteSeoIndex({
             );
           })}
         </div>
+
+        {!route.guide && matchingGuides.length ? (
+          <nav className="mt-8 border-t border-slate-200 pt-5" aria-label={`Todas las guias de ${cityName}`}>
+            <div className="flex flex-wrap items-baseline justify-between gap-2">
+              <h2 className="text-lg font-semibold text-slate-950">Todas las guias de {neighborhoodName ?? cityName}</h2>
+              <span className="text-xs font-medium text-slate-500">{matchingGuides.length} guias</span>
+            </div>
+            <div className="mt-3 grid gap-x-6 gap-y-2 sm:grid-cols-2 lg:grid-cols-3">
+              {matchingGuides.map((guide) => (
+                <Link
+                  key={guide.id}
+                  href={getGuideHref(guide)}
+                  className="text-sm font-medium text-slate-700 hover:text-orange-700"
+                >
+                  {guide.seoTitle ?? guide.title}
+                </Link>
+              ))}
+            </div>
+          </nav>
+        ) : null}
 
         {!route.neighborhood ? (
           <nav className="mt-8 border-t border-slate-200 pt-5" aria-label="Barrios">

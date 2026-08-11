@@ -4,6 +4,7 @@ import { notFound, permanentRedirect } from "next/navigation";
 import { SplitScreenClientLoader } from "@/components/home/SplitScreenClientLoader";
 import { LocalizedCityRouteSeoIndex } from "@/components/i18n/LocalizedCityRouteSeoIndex";
 import { ProgressiveEnhancementShell } from "@/components/shared/ProgressiveEnhancementShell";
+import { getClientGeography } from "@/lib/client-geography";
 import { getContinentsWithDestinationDescriptions } from "@/lib/destination-descriptions";
 import { getCityBySimpleSlug } from "@/lib/deep-link-routes";
 import {
@@ -154,6 +155,7 @@ export default async function SpanishCityPage({ params }: SpanishCityPageProps) 
   const requestedPath = `/es/ciudad/${segments.join("/")}`;
   if (requestedPath !== route.canonicalPath) permanentRedirect(route.canonicalPath);
   const englishPath = getEnglishAlternateForLocalizedCityRoute(route, englishGuides);
+  const clientContinents = getClientGeography(continents, { cityName: route.city.name });
 
   return (
     <>
@@ -173,7 +175,7 @@ export default async function SpanishCityPage({ params }: SpanishCityPageProps) 
         )}
       >
         <SplitScreenClientLoader
-          initialAppData={{ continents, guides, locale: "es" }}
+          initialAppData={{ continents: clientContinents, guides, locale: "es" }}
           appDataScope={{ cityName, locale: "es" }}
           initialRouteState={{
             selection: route.selection,

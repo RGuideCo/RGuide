@@ -69,7 +69,6 @@ function loadAppData(options: { forceRefresh?: boolean; scope?: AppDataScope } =
 
   if (!appDataPromises.has(key) || options.forceRefresh) {
     const promise = fetch(getAppDataUrl(options.scope), {
-      cache: "no-store",
       headers: {
         Accept: "application/json",
       },

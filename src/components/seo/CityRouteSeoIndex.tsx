@@ -181,6 +181,7 @@ export function CityRouteSeoIndex({ route, guides }: CityRouteSeoIndexProps) {
   const indexableGuides = getIndexableListsForCityRoute(route.city, route.neighborhood, route.category, route.guide, guides)
     .sort((left, right) => right.upvotes - left.upvotes || left.title.localeCompare(right.title));
   const visibleGuides = indexableGuides.slice(0, route.guide ? 1 : 12);
+  const guideDirectory = route.guide ? [] : indexableGuides;
   const relatedGuides = route.guide
     ? getGuideCrossLinkGroups(route.guide, guides).flatMap((group) => group.guides).slice(0, 6)
     : getRelatedCityRouteGuides(route, guides).slice(0, 6);
@@ -272,6 +273,32 @@ export function CityRouteSeoIndex({ route, guides }: CityRouteSeoIndexProps) {
             <p className="text-sm font-medium text-slate-900">More guides are being added for this route.</p>
           </div>
         )}
+
+        {guideDirectory.length ? (
+          <nav className="mt-8 border-t border-slate-200 pt-6" aria-label={`All published guides for ${placeName}`}>
+            <div className="flex flex-wrap items-baseline justify-between gap-2">
+              <h2 className="text-base font-semibold text-slate-950">All guides for {placeName}</h2>
+              <span className="text-xs font-medium text-slate-500">{pluralize(guideDirectory.length, "guide")}</span>
+            </div>
+            <div className="mt-3 grid gap-x-6 gap-y-2 sm:grid-cols-2 lg:grid-cols-3">
+              {guideDirectory.map((guide) => {
+                const guideNeighborhood = guide.location.neighborhood
+                  ? { name: guide.location.neighborhood }
+                  : undefined;
+
+                return (
+                  <Link
+                    key={guide.id}
+                    href={getCanonicalGuidePath(route.city, guide, guideNeighborhood, guides)}
+                    className="text-sm font-medium text-slate-700 hover:text-orange-700"
+                  >
+                    {getGuideSeoTitle(guide, route.city, guideNeighborhood)}
+                  </Link>
+                );
+              })}
+            </div>
+          </nav>
+        ) : null}
 
         {!route.guide && neighborhoods.length ? (
           <div className="mt-8 border-t border-slate-200 pt-6">

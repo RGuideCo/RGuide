@@ -4,6 +4,7 @@ import { notFound, permanentRedirect } from "next/navigation";
 import { SplitScreenClientLoader } from "@/components/home/SplitScreenClientLoader";
 import { CityRouteSeoIndex } from "@/components/seo/CityRouteSeoIndex";
 import { ProgressiveEnhancementShell } from "@/components/shared/ProgressiveEnhancementShell";
+import { getClientGeography } from "@/lib/client-geography";
 import { getContinentsWithDestinationDescriptions } from "@/lib/destination-descriptions";
 import { getCityBySimpleSlug, getCityDeepLinkStaticParams, resolveCityDeepLink } from "@/lib/deep-link-routes";
 import { getCitiesFromContinents } from "@/lib/geography-tree";
@@ -199,6 +200,7 @@ export default async function CityDeepLinkPage({ params }: CityDeepLinkPageProps
   const spanishPath = spanishPublication.indexable
     ? getSpanishAlternatePath(route, spanishGuides, destinationTranslations, cityTranslation?.slug)
     : null;
+  const clientContinents = getClientGeography(continents, { cityName: route.city.name });
 
   return (
     <>
@@ -211,7 +213,7 @@ export default async function CityDeepLinkPage({ params }: CityDeepLinkPageProps
       ))}
       <ProgressiveEnhancementShell fallback={<CityRouteSeoIndex route={route} guides={editorialGuides} />}>
         <SplitScreenClientLoader
-          initialAppData={{ continents, guides: editorialGuides }}
+          initialAppData={{ continents: clientContinents, guides: editorialGuides }}
           appDataScope={{ cityName: requestedCityName }}
           initialRouteState={{
             selection: route.selection,
