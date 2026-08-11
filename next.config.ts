@@ -5,7 +5,7 @@ const contentSecurityPolicy = [
   "default-src 'self'",
   "base-uri 'self'",
   "form-action 'self'",
-  "frame-ancestors 'none'",
+  "frame-ancestors 'self'",
   "object-src 'none'",
   `script-src 'self' 'unsafe-inline'${isDevelopment ? " 'unsafe-eval'" : ""} https://*.stay22.com`,
   "script-src-attr 'none'",
@@ -15,13 +15,14 @@ const contentSecurityPolicy = [
   "connect-src 'self' https: wss:",
   "media-src 'self' blob: https:",
   "worker-src 'self' blob:",
-  "frame-src https:",
+  "frame-src 'self' https:",
   "manifest-src 'self'",
   ...(isDevelopment ? [] : ["upgrade-insecure-requests"]),
 ].join("; ");
 
 const nextConfig: NextConfig = {
   poweredByHeader: false,
+  devIndicators: false,
   images: {
     remotePatterns: [
       {
@@ -52,7 +53,7 @@ const nextConfig: NextConfig = {
           { key: "Referrer-Policy", value: "strict-origin-when-cross-origin" },
           { key: "Strict-Transport-Security", value: "max-age=63072000; includeSubDomains; preload" },
           { key: "X-Content-Type-Options", value: "nosniff" },
-          { key: "X-Frame-Options", value: "DENY" },
+          { key: "X-Frame-Options", value: "SAMEORIGIN" },
         ],
       },
     ];

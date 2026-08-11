@@ -137,6 +137,18 @@ const STAY22_DEFAULT_LMA_ID = "6a16094744a8f50eb135b857";
 
 const stay22LmaId = process.env.NEXT_PUBLIC_STAY22_LMA_ID?.trim() || STAY22_DEFAULT_LMA_ID;
 
+// Keep the indexable server HTML from painting before the interactive explorer is ready.
+const progressiveLoadingCriticalCss = `
+  .rguide-progressive-loading{display:none}
+  .rguide-js-enabled:not(.rguide-split-screen-ready):not(.rguide-hydration-timeout) .rguide-progressive-shell{min-height:100vh}
+  .rguide-js-enabled:not(.rguide-split-screen-ready):not(.rguide-hydration-timeout) .rguide-progressive-fallback{position:absolute;width:1px;height:1px;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap}
+  .rguide-js-enabled:not(.rguide-split-screen-ready):not(.rguide-hydration-timeout) .rguide-progressive-loading{position:fixed;inset:0;z-index:999;display:flex;align-items:center;justify-content:center;gap:14px;background:radial-gradient(circle at 50% 42%,rgba(255,255,255,.1),transparent 34rem),#0f0f0d;color:#fafaf7}
+  .rguide-progressive-loading-mark{display:inline-flex;width:44px;height:44px;align-items:center;justify-content:center;border:1px solid rgba(250,250,247,.22);border-radius:50%;background:rgba(250,250,247,.08);color:#f97316;font-size:1rem;font-weight:700;letter-spacing:0}
+  .rguide-progressive-loading-copy{display:grid;gap:2px}
+  .rguide-progressive-loading-copy span:first-child{color:#fafaf7;font-size:.95rem;font-weight:650}
+  .rguide-progressive-loading-copy span:last-child{color:rgba(250,250,247,.62);font-size:.78rem;font-weight:500}
+`;
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -148,9 +160,10 @@ export default function RootLayout({
         <script
           dangerouslySetInnerHTML={{
             __html:
-              "document.documentElement.classList.add('rguide-js-enabled');setTimeout(function(){if(!document.documentElement.classList.contains('rguide-split-screen-ready'))document.documentElement.classList.add('rguide-hydration-timeout')},8000);",
+              "document.documentElement.classList.add('rguide-js-enabled');setTimeout(function(){if(document.querySelector('.rguide-progressive-shell')&&!document.documentElement.classList.contains('rguide-split-screen-ready'))document.documentElement.classList.add('rguide-hydration-timeout')},8000);",
           }}
         />
+        <style dangerouslySetInnerHTML={{ __html: progressiveLoadingCriticalCss }} />
         <meta name="agd-partner-manual-verification" />
         <link rel="preconnect" href="https://tiles.openfreemap.org" crossOrigin="anonymous" />
         {stay22LmaId ? (
