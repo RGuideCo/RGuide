@@ -1,0 +1,4 @@
+interface:
+  display_name: "Populate rGuide City"
+  short_description: "Research, publish, and verify rGuide cities"
+  default_prompt: "Use $populate-rguide-city to populate editorial guides for a requested city or category."
