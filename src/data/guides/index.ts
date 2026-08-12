@@ -23,6 +23,7 @@ import {
   amsterdamNeighborhoodGuides,
 } from "@/data/guides/amsterdam";
 import { athensCitywideGuides } from "@/data/guides/athens";
+import { aucklandCitywideGuides } from "@/data/guides/auckland";
 import { bangkokCitywideGuides } from "@/data/guides/bangkok";
 import { buenosAiresCitywideGuides } from "@/data/guides/buenos-aires";
 import { cairoCitywideGuides } from "@/data/guides/cairo";
@@ -110,6 +111,7 @@ export const editorialGuideLists: MapList[] = applyGuideMediaCache(enrichGuidesC
   ...cairoCitywideGuides,
   ...capeTownCitywideGuides,
   ...athensCitywideGuides,
+  ...aucklandCitywideGuides,
   ...hanoiCitywideGuides,
   ...hongKongCitywideGuides,
   ...kyotoCitywideGuides,
