@@ -38,6 +38,7 @@ import { dublinCitywideGuides } from "@/data/guides/dublin";
 import { dubaiCitywideGuides } from "@/data/guides/dubai";
 import { florenceCitywideGuides } from "@/data/guides/florence";
 import { hanoiCitywideGuides } from "@/data/guides/hanoi";
+import { hamburgCitywideGuides } from "@/data/guides/hamburg";
 import { hongKongCitywideGuides } from "@/data/guides/hong-kong";
 import { istanbulCitywideGuides } from "@/data/guides/istanbul";
 import { kyotoCitywideGuides } from "@/data/guides/kyoto";
@@ -48,9 +49,11 @@ import { lisbonCitywideGuides } from "@/data/guides/lisbon";
 import { losAngelesCitywideGuides } from "@/data/guides/los-angeles";
 import { miamiCitywideGuides } from "@/data/guides/miami";
 import { mexicoCityCitywideGuides } from "@/data/guides/mexico-city";
+import { marrakeshCitywideGuides } from "@/data/guides/marrakesh";
 import { melbourneCitywideGuides } from "@/data/guides/melbourne";
 import { medellinCitywideGuides } from "@/data/guides/medellin";
 import { nairobiCitywideGuides } from "@/data/guides/nairobi";
+import { zanzibarCitywideGuides } from "@/data/guides/zanzibar";
 import { bogotaCitywideGuides } from "@/data/guides/bogota";
 import { milanCitywideGuides } from "@/data/guides/milan";
 import { munichCitywideGuides } from "@/data/guides/munich";
@@ -92,9 +95,11 @@ export const editorialGuideLists: MapList[] = applyGuideMediaCache(enrichGuidesC
   ...miamiCitywideGuides,
   ...orlandoCitywideGuides,
   ...mexicoCityCitywideGuides,
+  ...marrakeshCitywideGuides,
   ...melbourneCitywideGuides,
   ...medellinCitywideGuides,
   ...nairobiCitywideGuides,
+  ...zanzibarCitywideGuides,
   ...bogotaCitywideGuides,
   ...milanCitywideGuides,
   ...munichCitywideGuides,
@@ -114,6 +119,7 @@ export const editorialGuideLists: MapList[] = applyGuideMediaCache(enrichGuidesC
   ...athensCitywideGuides,
   ...aucklandCitywideGuides,
   ...hanoiCitywideGuides,
+  ...hamburgCitywideGuides,
   ...hongKongCitywideGuides,
   ...kyotoCitywideGuides,
   ...kualaLumpurCitywideGuides,
