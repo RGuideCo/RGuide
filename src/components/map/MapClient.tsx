@@ -4029,27 +4029,26 @@ export function MapClient({
           handlersRef.current.continents,
           guideLists,
         );
+        const accuracy = position.coords.accuracy;
+        const zoom =
+          accuracy <= 100 ? 15 : accuracy <= 500 ? 14.2 : accuracy <= 2_000 ? 12.8 : 11.5;
 
-        if (locationCityTarget) {
-          handlersRef.current.onSelectCity(
-            locationCityTarget.continentId,
-            locationCityTarget.countryId,
-            locationCityTarget.cityId,
-          );
-          setLocationStatus("located");
-          setLocationMessage(`Showing ${locationCityTarget.cityName}`);
-          return;
-        }
-
+        map.stop();
+        resetCameraPadding(map);
         map.easeTo({
           center: coordinates,
-          zoom: Math.max(map.getZoom(), 14.2),
+          zoom,
+          padding: getViewportInsets(map, viewportModeRef.current, viewportInsetsRef.current),
           duration: 850,
           easing: smoothCameraEasing,
           essential: true,
         });
         setLocationStatus("located");
-        setLocationMessage("Centered on your location");
+        setLocationMessage(
+          locationCityTarget
+            ? `Centered on your location near ${locationCityTarget.cityName}`
+            : "Centered on your location",
+        );
       },
       (error) => {
         setLocationStatus("error");
@@ -6280,7 +6279,7 @@ export function MapClient({
         type="button"
         onClick={focusUserLocation}
         disabled={locationStatus === "locating"}
-        className={`rguide-locate-control absolute top-[3.125rem] z-[70] flex h-8 w-8 items-center justify-center rounded-lg border bg-white text-slate-700 shadow-sm transition hover:border-slate-300 hover:text-slate-950 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky-400/70 disabled:cursor-wait disabled:opacity-80 ${
+        className={`rguide-locate-control absolute top-[3.125rem] z-[90] flex h-8 w-8 items-center justify-center rounded-lg border bg-white text-slate-700 shadow-sm transition hover:border-slate-300 hover:text-slate-950 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky-400/70 disabled:cursor-wait disabled:opacity-80 ${
           locationStatus === "located"
             ? "border-sky-300 text-sky-700 ring-2 ring-sky-200/80"
             : locationStatus === "error"
