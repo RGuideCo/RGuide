@@ -59,6 +59,20 @@ function seedAppData(initialData: AppData, scope: AppDataScope = {}) {
   appDataPromises.set(key, Promise.resolve(initialData));
 }
 
+function hasCompleteInitialData(initialData: AppData, scope: AppDataScope) {
+  if (initialData.guides.length === 0) {
+    return false;
+  }
+
+  if (!scope.cityName) {
+    return true;
+  }
+
+  return initialData.guides.every((guide) =>
+    guide.stops.length > 0 && guide.stops.every((stop) => Boolean(stop.photo?.trim())),
+  );
+}
+
 function loadAppData(options: { forceRefresh?: boolean; scope?: AppDataScope } = {}) {
   const key = getAppDataKey(options.scope);
   const snapshot = appDataSnapshots.get(key);
@@ -102,21 +116,26 @@ export function useAppData(initialData?: AppData, scope: AppDataScope = {}) {
     const requestScope = { cityName, countryName, continentName, locale };
     const key = getAppDataKey(requestScope);
 
-    const hasCompleteInitialData = Boolean(initialData?.guides.length);
+    const initialDataIsComplete = initialData
+      ? hasCompleteInitialData(initialData, requestScope)
+      : false;
 
     if (initialData) {
-      seedAppData(initialData, requestScope);
       setData(initialData);
       setError(null);
 
-      if (hasCompleteInitialData) {
+      if (initialDataIsComplete) {
+        seedAppData(initialData, requestScope);
         return () => {
           isMounted = false;
         };
       }
     }
 
-    loadAppData({ scope: requestScope })
+    loadAppData({
+      scope: requestScope,
+      forceRefresh: Boolean(initialData && !initialDataIsComplete),
+    })
       .then((nextData) => {
         if (isMounted) {
           setData(nextData);
