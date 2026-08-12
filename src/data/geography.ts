@@ -3284,6 +3284,16 @@ const curatedCitySeeds: Record<string, Omit<City, "listCount">[]> = {
       image: cityImage("munich"),
       description: topCityDescriptionOverrides.get("munich")!,
     },
+    {
+      id: "hamburg",
+      name: "Hamburg",
+      country: "Germany",
+      continent: "Europe",
+      coordinates: [53.5511, 9.9937],
+      image: cityImage("hamburg"),
+      description:
+        "Hamburg is a port city where brick warehouses, working ferries, Alster water, ambitious restaurants, neighborhood bars, and serious museums reward planning by district. It works best when harbor infrastructure anchors the route and St. Pauli, the Schanze, and quieter residential areas supply the changes in tempo.",
+    },
   ],
   "czech-republic": [
     {
@@ -3384,6 +3394,18 @@ const curatedCitySeeds: Record<string, Omit<City, "listCount">[]> = {
       image: cityImage("nairobi"),
       description:
         "Nairobi is an urban safari gateway where cafes, design shops, national-park access, museums, markets, restaurants, and hotel bases connect city life with wider Kenya routes. The best days hinge on timing: start in the city, then let the season, drive, and landscape decide how far the route stretches.",
+    },
+  ],
+  "united-republic-of-tanzania": [
+    {
+      id: "zanzibar",
+      name: "Zanzibar",
+      country: "United Republic of Tanzania",
+      continent: "Africa",
+      coordinates: [-6.1659, 39.2026],
+      image: cityImage("zanzibar"),
+      description:
+        "Zanzibar pairs Stone Town's Swahili trading history with Unguja's reef coast, spice farms, beach villages, and marine reserves. Plan it as an island destination: use the old city for culture and food, then choose the coast around tides, weather, transfers, and the character of each village.",
     },
   ],
   japan: [
