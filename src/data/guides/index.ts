@@ -49,6 +49,7 @@ import { miamiCitywideGuides } from "@/data/guides/miami";
 import { mexicoCityCitywideGuides } from "@/data/guides/mexico-city";
 import { melbourneCitywideGuides } from "@/data/guides/melbourne";
 import { medellinCitywideGuides } from "@/data/guides/medellin";
+import { nairobiCitywideGuides } from "@/data/guides/nairobi";
 import { bogotaCitywideGuides } from "@/data/guides/bogota";
 import { milanCitywideGuides } from "@/data/guides/milan";
 import { munichCitywideGuides } from "@/data/guides/munich";
@@ -91,6 +92,7 @@ export const editorialGuideLists: MapList[] = applyGuideMediaCache(enrichGuidesC
   ...mexicoCityCitywideGuides,
   ...melbourneCitywideGuides,
   ...medellinCitywideGuides,
+  ...nairobiCitywideGuides,
   ...bogotaCitywideGuides,
   ...milanCitywideGuides,
   ...munichCitywideGuides,
