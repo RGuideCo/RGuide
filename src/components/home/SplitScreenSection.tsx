@@ -6299,14 +6299,14 @@ export function SplitScreenSection({
                 </button>
               </div>
 	              <div
-                  className={`pointer-events-auto absolute right-3 top-3 flex flex-col items-end gap-1.5 lg:hidden ${
+                  className={`pointer-events-none absolute right-3 top-3 flex flex-col items-end gap-1.5 lg:hidden ${
                     isMobileExplorerSearchOpen ? "z-[180]" : "z-[80]"
                   }`}
                   role="toolbar"
                   aria-label="Menu bar"
                 >
 	                <div
-                    className={`relative flex h-8 items-center justify-end overflow-visible rounded-lg transition-[width,background-color,border-color,box-shadow] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] ${
+                    className={`pointer-events-auto relative flex h-8 items-center justify-end overflow-visible rounded-lg transition-[width,background-color,border-color,box-shadow] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] ${
                       isMobileExplorerSearchOpen
                         ? "z-[180] w-[min(22rem,calc(100vw-1.5rem))] border border-slate-200 bg-white shadow-sm"
                         : "z-10 w-8 border border-transparent bg-transparent"
@@ -6340,9 +6340,9 @@ export function SplitScreenSection({
                     </button>
                   </div>
                   <div className="flex flex-col items-end gap-1.5">
-                    <div className="h-8 w-8" aria-hidden="true" />
+                    <div className="pointer-events-none h-8 w-8" aria-hidden="true" />
                     <div
-                      className={`relative flex w-8 flex-col items-center gap-0.5 rounded-lg border border-slate-200 bg-white p-0.5 shadow-sm transition-[box-shadow] duration-200 ${
+                      className={`pointer-events-auto relative flex w-8 flex-col items-center gap-0.5 rounded-lg border border-slate-200 bg-white p-0.5 shadow-sm transition-[box-shadow] duration-200 ${
                         isMobileGuideSourceMenuOpen ? "shadow-md" : ""
                       }`}
                       role="group"
@@ -6381,7 +6381,7 @@ export function SplitScreenSection({
                       })}
                     </div>
                     <div
-                      className={`relative flex w-8 flex-col items-center gap-0.5 rounded-lg border border-slate-200 bg-white p-0.5 transition-[box-shadow] duration-200 ${
+                      className={`pointer-events-auto relative flex w-8 flex-col items-center gap-0.5 rounded-lg border border-slate-200 bg-white p-0.5 transition-[box-shadow] duration-200 ${
                         isMobileGuideTypeMenuOpen ? "shadow-md" : "shadow-sm"
                       }`}
                       role="group"
