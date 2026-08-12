@@ -192,6 +192,18 @@ export interface SplitScreenSectionProps {
   onGuideDataRequested?: (scope: { cityName?: string; countryName?: string; continentName?: string }) => void;
 }
 
+function areGuideStopsEquivalent(left: MapList["stops"], right: MapList["stops"]): boolean {
+  return left.length === right.length && left.every((stop, index) => {
+    const candidate = right[index];
+
+    return (
+      candidate?.id === stop.id &&
+      candidate.photo === stop.photo &&
+      areGuideStopsEquivalent(stop.places ?? [], candidate.places ?? [])
+    );
+  });
+}
+
 function areGuideCollectionsEquivalent(left: MapList[], right: MapList[]) {
   if (left === right) {
     return true;
@@ -209,7 +221,8 @@ function areGuideCollectionsEquivalent(left: MapList[], right: MapList[]) {
       candidate.title === guide.title &&
       candidate.description === guide.description &&
       candidate.upvotes === guide.upvotes &&
-      candidate.stops.length === guide.stops.length
+      candidate.photo === guide.photo &&
+      areGuideStopsEquivalent(guide.stops, candidate.stops)
     );
   });
 }
