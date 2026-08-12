@@ -3592,6 +3592,17 @@ const curatedCitySeeds: Record<string, Omit<City, "listCount">[]> = {
         "Auckland is a harbor city where island ferries, volcano walks, seafood, neighborhood dining, wine routes, design stays, and North Island road trips start close to town. The payoff is pairing the view with a real plan: a useful base, a few strong anchors, and room for the weather.",
     },
     {
+      id: "wellington",
+      name: "Wellington",
+      country: "New Zealand",
+      continent: "Oceania",
+      coordinates: [-41.2866, 174.7756],
+      countrySubareaId: "north-island",
+      image: cityImage("wellington-new-zealand"),
+      description:
+        "Wellington is a compact harbour capital where steep green hills, native wildlife, film craft, museums, serious coffee, breweries, and small dining rooms sit within a walkable centre. The strongest routes use the cable car and waterfront as a spine, then leave room for wind, ridge views, and neighbourhood nights.",
+    },
+    {
       id: "nelson",
       name: "Nelson",
       country: "New Zealand",
