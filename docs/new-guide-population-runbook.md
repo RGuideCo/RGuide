@@ -251,6 +251,8 @@ npm run ingest:venue-media-r2 -- --slug {guide-slug}
 
 This command runs the R2 ingestion pipeline and then promotes stored R2 media into `venues.primary_photo_id` through `scripts/enforce-r2-venue-photos.mjs`.
 
+The scoped command must process the full city or guide in one run and must exit nonzero if any candidate upload fails or any scoped published stop lacks a stored R2 primary photo in the rendered payload. Do not interpret a partial batch, a nonzero failure count, or a check limited to newly promoted venues as successful ingestion.
+
 ## Stage 7: Live Verification
 
 After publishing and R2 ingestion, run:

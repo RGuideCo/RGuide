@@ -150,6 +150,22 @@ async function findEntriesForVenues(client, venueIds) {
   return rows.map((row) => row.entry_id);
 }
 
+async function findScopedVenueIds(client, options) {
+  const values = [];
+  const where = scopedWhereClause(options, values);
+  const { rows } = await client.query(
+    `select distinct venue.id
+     from public.entries entry
+     join public.entry_stops stop on stop.entry_id = entry.id
+     join public.venues venue on venue.id = stop.venue_id
+     left join public.destinations city on city.id = entry.city_id
+     where ${where}
+       and entry.status = 'published'::public.rguide_entry_status`,
+    values,
+  );
+  return rows.map((row) => row.id);
+}
+
 async function promoteEntryCoverPhotos(client, options, publicBaseUrl) {
   const values = [];
   const where = scopedWhereClause(options, values);
@@ -248,22 +264,39 @@ async function verifyR2Rendering(client, venueIds, publicBaseUrl) {
        select
          entry.slug as entry_slug,
          stop.name as stop_name,
+         coalesce(media.public_url, media.url) as primary_photo,
+         media.storage_provider,
+         media.ingestion_status,
          stop_payload ->> 'photo' as rendered_photo
        from public.entry_stops stop
        join public.entries entry on entry.id = stop.entry_id
+       join public.venues venue on venue.id = stop.venue_id
+       left join public.venue_media media on media.id = venue.primary_photo_id
        join public.entry_render_cache cache
          on cache.entry_id = entry.id
         and cache.render_format = 'maplist'
         and cache.is_current = true
-       cross join lateral jsonb_array_elements(
-         coalesce(cache.rendered_payload -> 'pois', '[]'::jsonb)
-       ) as stop_payload
+       left join lateral jsonb_array_elements(
+         coalesce(
+           cache.rendered_payload -> 'pois',
+           cache.rendered_payload -> 'stops',
+           '[]'::jsonb
+         )
+       ) as stop_payload on stop.poi_legacy_id = stop_payload ->> 'poiId'
        where stop.venue_id = any($1::uuid[])
-         and stop.poi_legacy_id = stop_payload ->> 'poiId'
      )
-     select entry_slug, stop_name, rendered_photo
+     select
+       entry_slug,
+       stop_name,
+       primary_photo,
+       storage_provider,
+       ingestion_status,
+       rendered_photo
      from rendered_stops
-     where coalesce(rendered_photo, '') not like $2
+     where coalesce(primary_photo, '') not like $2
+        or storage_provider is distinct from 'cloudflare_r2'
+        or ingestion_status is distinct from 'stored'
+        or coalesce(rendered_photo, '') not like $2
      limit 20`,
     [venueIds, `${publicBaseUrl.replace(/\/$/, "")}/%`],
   );
@@ -287,19 +320,20 @@ async function main() {
   await client.connect();
   try {
     await client.query("begin");
+    const scopedVenueIds = await findScopedVenueIds(client, options);
     const promotedVenueIds = await promoteR2PrimaryPhotos(client, options, publicBaseUrl);
-    const entryIds = await findEntriesForVenues(client, promotedVenueIds);
+    const entryIds = await findEntriesForVenues(client, scopedVenueIds);
     const coverEntryIds = await promoteEntryCoverPhotos(client, options, publicBaseUrl);
     const affectedEntryIds = [...new Set([...entryIds, ...coverEntryIds])];
     const cacheRefreshed = await refreshRenderCaches(client, affectedEntryIds);
-    const failures = await verifyR2Rendering(client, promotedVenueIds, publicBaseUrl);
+    const failures = await verifyR2Rendering(client, scopedVenueIds, publicBaseUrl);
 
-    if (options.dryRun) {
-      await client.query("rollback");
-    } else if (failures.length) {
+    if (failures.length) {
       await client.query("rollback");
       console.error(JSON.stringify({ phase: "r2_render_verification_failed", failures }, null, 2));
-      throw new Error("Some promoted R2 venue photos still render as non-R2 URLs.");
+      throw new Error("Some scoped venue photos are missing from R2 or still render as non-R2 URLs.");
+    } else if (options.dryRun) {
+      await client.query("rollback");
     } else {
       await client.query("commit");
     }
@@ -307,6 +341,7 @@ async function main() {
     console.log(JSON.stringify({
       ok: true,
       dryRun: options.dryRun,
+      scopedVenues: scopedVenueIds.length,
       promotedVenues: promotedVenueIds.length,
       promotedEntryCovers: coverEntryIds.length,
       affectedEntries: affectedEntryIds.length,

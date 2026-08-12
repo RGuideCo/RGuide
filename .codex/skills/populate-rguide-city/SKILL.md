@@ -37,7 +37,7 @@ Keep the stages ordered. Do not start guide writing before the source ledger and
 5. **Verify locally:** Run the strict local verification command for the scoped city or guide. Repair every error before publishing. Explain unresolved warnings.
 6. **Publish normalized data:** Use only the normalized writer described by the runbook. Never reintroduce legacy blob tables as source of truth.
 7. **Check canonical hours:** Run the rendered-hours report after publishing. Use the capped Google Places plan and ingestion only when official, property, booking, and calendar sources still leave canonical hours missing or invalid. Never bypass configured limits.
-8. **Ingest R2 media:** Run the canonical venue-media R2 pipeline for the scoped city or guide. Do not treat local image URLs as final live media.
+8. **Ingest R2 media:** Run the canonical venue-media R2 pipeline for the scoped city or guide. Require the command to cover the full scope with zero failed candidates; a successful partial batch is not completion. Do not treat local image URLs as final live media.
 9. **Verify live:** Run strict live verification and confirm the normalized records, render cache, canonical hours, stop counts, venue links, and R2-backed rendered photos pass.
 
 Use the exact commands and conditional branches in the current runbooks rather than copying command variants into this skill. When a command fails because Supabase, R2, Vercel, credentials, or network access is unavailable, preserve completed local work, report the exact blocker, and do not claim the live site changed.

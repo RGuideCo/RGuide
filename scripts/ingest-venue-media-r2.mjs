@@ -56,7 +56,10 @@ function parseArgs(argv) {
     slugs: [],
     id: null,
     mediaIds: [],
-    limit: 25,
+    // A normal city population pass currently creates roughly 70-100 unique
+    // venue candidates. Keep the default large enough for one scoped command
+    // to finish the city instead of silently stopping after the first batch.
+    limit: 500,
     dryRun: false,
     force: false,
     failedOnly: false,
@@ -1402,7 +1405,11 @@ async function main() {
       stats.cacheRefreshed = await refreshRenderCaches(client, touchedEntryIds);
     }
 
-    console.log(JSON.stringify({ ok: true, stats }, null, 2));
+    const ok = stats.failed === 0;
+    console.log(JSON.stringify({ ok, stats }, null, 2));
+    if (!ok) {
+      throw new Error(`Venue media ingestion failed for ${stats.failed} candidate${stats.failed === 1 ? "" : "s"}.`);
+    }
   } finally {
     await client.end();
   }
