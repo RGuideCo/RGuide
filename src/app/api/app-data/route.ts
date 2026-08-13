@@ -8,8 +8,6 @@ import { getServerEditorialGuides } from "@/lib/server-editorial-guides";
 
 const APP_DATA_CACHE_SECONDS = Number.parseInt(process.env.APP_DATA_CACHE_SECONDS ?? "21600", 10);
 const cacheSeconds = Number.isFinite(APP_DATA_CACHE_SECONDS) ? APP_DATA_CACHE_SECONDS : 21600;
-const APP_DATA_SCOPED_CACHE_SECONDS = Number.parseInt(process.env.APP_DATA_SCOPED_CACHE_SECONDS ?? "300", 10);
-const scopedCacheSeconds = Number.isFinite(APP_DATA_SCOPED_CACHE_SECONDS) ? APP_DATA_SCOPED_CACHE_SECONDS : 300;
 
 export const revalidate = 21600;
 export const dynamic = "force-dynamic";
@@ -52,7 +50,7 @@ export async function GET(request: Request) {
 
     const clientContinents = getClientGeography(continents, { cityName, countryName, continentName });
     const cacheControl = cityName || countryName || continentName
-      ? `public, s-maxage=${scopedCacheSeconds}, stale-while-revalidate=${scopedCacheSeconds * 4}`
+      ? "no-store, max-age=0"
       : `public, s-maxage=${cacheSeconds}, stale-while-revalidate=${cacheSeconds * 4}`;
 
     return withRateLimitHeaders(

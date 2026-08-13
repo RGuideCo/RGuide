@@ -56,7 +56,6 @@ function seedAppData(initialData: AppData, scope: AppDataScope = {}) {
     return;
   }
   appDataSnapshots.set(key, initialData);
-  appDataPromises.set(key, Promise.resolve(initialData));
 }
 
 function hasCompleteInitialData(initialData: AppData, scope: AppDataScope) {
@@ -73,16 +72,13 @@ function hasCompleteInitialData(initialData: AppData, scope: AppDataScope) {
   );
 }
 
-function loadAppData(options: { forceRefresh?: boolean; scope?: AppDataScope } = {}) {
-  const key = getAppDataKey(options.scope);
-  const snapshot = appDataSnapshots.get(key);
+function loadAppData(scope: AppDataScope = {}) {
+  const key = getAppDataKey(scope);
+  const isDestinationScoped = Boolean(scope.cityName || scope.countryName || scope.continentName);
 
-  if (snapshot && !options.forceRefresh) {
-    return Promise.resolve(snapshot);
-  }
-
-  if (!appDataPromises.has(key) || options.forceRefresh) {
-    const promise = fetch(getAppDataUrl(options.scope), {
+  if (!appDataPromises.has(key)) {
+    const promise = fetch(getAppDataUrl(scope), {
+      cache: isDestinationScoped ? "no-store" : "default",
       headers: {
         Accept: "application/json",
       },
@@ -95,6 +91,8 @@ function loadAppData(options: { forceRefresh?: boolean; scope?: AppDataScope } =
     }).then((nextData) => {
       appDataSnapshots.set(key, nextData);
       return nextData;
+    }).finally(() => {
+      appDataPromises.delete(key);
     });
 
     appDataPromises.set(key, promise);
@@ -119,6 +117,7 @@ export function useAppData(initialData?: AppData, scope: AppDataScope = {}) {
     const initialDataIsComplete = initialData
       ? hasCompleteInitialData(initialData, requestScope)
       : false;
+    const cachedData = appDataSnapshots.get(key);
 
     if (initialData) {
       setData(initialData);
@@ -130,19 +129,18 @@ export function useAppData(initialData?: AppData, scope: AppDataScope = {}) {
           isMounted = false;
         };
       }
+    } else if (cachedData) {
+      setData(cachedData);
+      setError(null);
     }
 
-    loadAppData({
-      scope: requestScope,
-      forceRefresh: Boolean(initialData && !initialDataIsComplete),
-    })
+    loadAppData(requestScope)
       .then((nextData) => {
         if (isMounted) {
           setData(nextData);
         }
       })
       .catch((nextError: Error) => {
-        appDataPromises.delete(key);
         console.error(nextError);
         if (isMounted) {
           setError(nextError);
