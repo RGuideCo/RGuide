@@ -879,12 +879,17 @@ function cloneCityWithDescription(
   const foodCuisines = cityFoodCuisines.get(cityDescriptionId)?.cuisines.filter(Boolean);
   const cityImage = destinationImages.get(cityDescriptionId);
   const imageUrl = versionedImageUrl(cityImage?.imageUrl, cityImage?.imageUpdatedAt);
+  const resolvedImageUrl =
+    imageUrl?.startsWith("/api/destination-image/") &&
+    city.image.startsWith("https://media.rguide.co/")
+      ? city.image
+      : (imageUrl ?? city.image);
   const cityLeftPanelStayUrl = affiliateLink?.cityLeftPanelStayUrl;
 
   return {
     ...city,
     description: descriptions.get(cityDescriptionId) ?? city.description,
-    image: imageUrl ?? city.image,
+    image: resolvedImageUrl,
     affiliateLinks: cityLeftPanelStayUrl
       ? {
           ...city.affiliateLinks,
