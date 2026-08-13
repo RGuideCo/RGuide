@@ -3992,6 +3992,7 @@ export function MapClient({
   const [visibleGuideMarkerAnimationTick, setVisibleGuideMarkerAnimationTick] = useState(0);
   const [locationStatus, setLocationStatus] = useState<"idle" | "locating" | "located" | "error">("idle");
   const [locationMessage, setLocationMessage] = useState("Find my location");
+  const [locationSelectionNonce, setLocationSelectionNonce] = useState(0);
   activeGuideIdRef.current = activeGuide?.id ?? null;
   selectedStopIdRef.current = selectedStopId;
 
@@ -4029,6 +4030,19 @@ export function MapClient({
           handlersRef.current.continents,
           guideLists,
         );
+
+        if (locationCityTarget) {
+          handlersRef.current.onSelectCity(
+            locationCityTarget.continentId,
+            locationCityTarget.countryId,
+            locationCityTarget.cityId,
+          );
+          setLocationSelectionNonce((current) => current + 1);
+          setLocationStatus("located");
+          setLocationMessage(`Showing guides near ${locationCityTarget.cityName}`);
+          return;
+        }
+
         const accuracy = position.coords.accuracy;
         const zoom =
           accuracy <= 100 ? 15 : accuracy <= 500 ? 14.2 : accuracy <= 2_000 ? 12.8 : 11.5;
@@ -4044,11 +4058,7 @@ export function MapClient({
           essential: true,
         });
         setLocationStatus("located");
-        setLocationMessage(
-          locationCityTarget
-            ? `Centered on your location near ${locationCityTarget.cityName}`
-            : "Centered on your location",
-        );
+        setLocationMessage("Centered on your location");
       },
       (error) => {
         setLocationStatus("error");
@@ -4234,6 +4244,7 @@ export function MapClient({
         selection.subareaId ?? "",
         selection.nestedSubareaId ?? "",
         activeNeighborhoodBoundary?.properties.name ?? "",
+        locationSelectionNonce,
       ].join("|"),
     [
       activeNeighborhoodBoundary,
@@ -4242,6 +4253,7 @@ export function MapClient({
       selection.continentSubareaId,
       selection.countryId,
       selection.countrySubareaId,
+      locationSelectionNonce,
       selection.nestedSubareaId,
       selection.stateId,
       selection.subareaId,
