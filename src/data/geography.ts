@@ -109,6 +109,7 @@ const cityImageSlugAliases: Record<string, string> = {
   saopaulo: "sao-paulo",
   buenosaires: "buenos-aires",
   capetown: "cape-town",
+  wellingtonnewzealand: "wellington",
   chiangmai: "chiang-mai",
   kualalumpur: "kuala-lumpur",
   hongkong: "hong-kong",
@@ -3620,7 +3621,7 @@ const curatedCitySeeds: Record<string, Omit<City, "listCount">[]> = {
       continent: "Oceania",
       coordinates: [-41.2866, 174.7756],
       countrySubareaId: "north-island",
-      image: cityImage("wellington-new-zealand"),
+      image: cityImage("wellington"),
       description:
         "Wellington is a compact harbour capital where steep green hills, native wildlife, film craft, museums, serious coffee, breweries, and small dining rooms sit within a walkable centre. The strongest routes use the cable car and waterfront as a spine, then leave room for wind, ridge views, and neighbourhood nights.",
     },
