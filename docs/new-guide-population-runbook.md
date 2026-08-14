@@ -158,7 +158,10 @@ Hours rules:
 - verify hours from the official site, a booking platform, an official calendar, or another source-backed current-status page first;
 - use Google Maps/Places only as a capped last-resort fallback when official/property/booking/calendar sources do not expose usable hours;
 - use structured day keys where possible;
-- use `{ default: "..." }` when the source gives summary hours or when the venue is schedule-driven;
+- use `mon` through `sun` keys whenever hours differ by weekday; the UI selects the current weekday only from these structured keys and does not infer today's hours from weekday prose packed into `default`;
+- use `{ default: "..." }` only for one schedule that applies independently of weekday, a genuinely schedule-driven caveat, or an exact month-range summary;
+- for exact month-range summaries, keep every segment parseable and month-led, for example `Jan-Mar daily 7:00 AM-8:00 PM; Apr daily 7:00 AM-10:00 PM; May-Sep daily 7:00 AM-11:00 PM; Oct-Dec daily 7:00 AM-8:00 PM`; the renderer selects only the active month segment;
+- never flatten a weekday-varying schedule into one `default` sentence merely to satisfy the non-empty-hours check;
 - use a schedule caveat only when hours are genuinely event-dependent, seasonal, weather-dependent, or unavailable from reliable sources, and make the caveat source-backed;
 - do not use vague placeholders like `Hours vary`, `verify current hours`, `confirm before going`, `current-status evidence is map-based`, or `open and active in the current source set`;
 - if hours truly vary, the caveat must name the exact dependency and source, such as the official calendar, booking page, show schedule, market-day schedule, weather policy, seasonal opening, or property page;

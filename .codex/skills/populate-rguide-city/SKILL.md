@@ -49,6 +49,7 @@ Do not describe the work as complete, live, polished, published, or R2-backed un
 - Source ledger and candidate selection completed before substantive writing.
 - Required guide and stop counts satisfied without filler.
 - Every real stop has source-backed hours or a precise source-backed schedule dependency.
+- Weekday-varying hours use structured day keys, and month-varying daily summaries use parseable month-led ranges so the UI can resolve the currently applicable hours.
 - Strict local verification passed.
 - Normalized publication succeeded.
 - Conditional hours remediation completed when needed.
