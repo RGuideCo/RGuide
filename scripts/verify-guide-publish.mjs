@@ -12,6 +12,7 @@ import {
   hasEditorialGuideFilters,
   loadEditorialGuideLists,
 } from "./editorial-guides-data.mjs";
+import { isScreenshotServiceUrl } from "./lib/media-source-policy.mjs";
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const DEFAULT_R2_BASE_URL = "https://media.rguide.co";
@@ -529,6 +530,9 @@ function checkStopBasics(list, stop, pathParts, report, options) {
   if (!localImageCandidate) {
     addIssue(report, severityForStrict(options), label, "Missing local image candidate before R2 ingestion.");
   } else {
+    if (isScreenshotServiceUrl(localImageCandidate)) {
+      addIssue(report, "error", label, "Image candidate uses a forbidden webpage screenshot service.", { photo: localImageCandidate });
+    }
     if (looksLikePlaceholderPhoto(localImageCandidate)) {
       addIssue(report, severityForStrict(options), label, "Image candidate looks like a placeholder, logo, favicon, or generic stock fallback.", { photo: localImageCandidate });
     }
