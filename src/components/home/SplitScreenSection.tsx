@@ -7871,6 +7871,7 @@ export function SplitScreenSection({
                   }}
                 >
                 {isCitySelection ? (
+                  rankedCityListItems.length ? (
                   <div className="flex h-full min-h-0 flex-col">
                     <div className="mb-2 shrink-0 flex items-center justify-between">
                       <p
@@ -7890,8 +7891,7 @@ export function SplitScreenSection({
                       <div className="h-8" aria-hidden="true" />
                     </div>
                     <div className="min-h-0 flex-1 overflow-y-auto">
-                      {rankedCityListItems.length ? (
-                        <div className="overflow-hidden">
+                      <div className="overflow-hidden">
                           {rankedCityListItems.map((item) => {
                             const isSelected = (item.isNested ? selection.nestedSubareaId : selection.subareaId) === item.id;
                             const isDescriptionHovered = hoveredDescriptionNeighborhoodId === item.id;
@@ -7957,12 +7957,10 @@ export function SplitScreenSection({
                               </button>
                             );
                             })}
-                        </div>
-                      ) : (
-                        <p className="px-3 py-2 text-sm text-slate-500">No neighborhoods available yet.</p>
-                      )}
+                      </div>
                     </div>
                   </div>
+                  ) : null
                 ) : isRegionSelection ? (
                   <div className="flex h-full min-h-0 flex-col">
                     <div className="mb-2 shrink-0 flex items-center justify-between">
@@ -10322,6 +10320,7 @@ export function SplitScreenSection({
               {!isSavedPlacesRailActive ? (
                 <div className="min-h-0 flex-1 overflow-y-auto px-4 pb-4">
                   {isCitySelection ? (
+                    rankedCityListItems.length ? (
                     <div className="flex min-h-0 flex-col">
                       <div className="mb-2 shrink-0 flex items-center justify-between">
                         <p className="text-sm font-semibold text-slate-700">
@@ -10332,8 +10331,7 @@ export function SplitScreenSection({
                               : "Neighborhoods"}
                         </p>
                       </div>
-                      {rankedCityListItems.length ? (
-                        <div className="space-y-2">
+                      <div className="space-y-2">
                           {rankedCityListItems.map((item) => {
                             const isSelected = (item.isNested ? selection.nestedSubareaId : selection.subareaId) === item.id;
                             const isDescriptionHovered = hoveredDescriptionNeighborhoodId === item.id;
@@ -10407,11 +10405,9 @@ export function SplitScreenSection({
                               </button>
                             );
                           })}
-                        </div>
-                      ) : (
-                        <p className="px-3 py-2 text-sm text-slate-500">No neighborhoods available yet.</p>
-                      )}
+                      </div>
                     </div>
+                    ) : null
                   ) : activeLocation.country && hasDirectoryChips ? (
                     <div className="space-y-3">
                       {showCountryFilterToggle ? (
