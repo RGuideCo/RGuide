@@ -130,6 +130,7 @@ export const Pencil = createMaterialSymbol("edit");
 export const Plus = Add;
 export const Road = createMaterialSymbol("road");
 export const Route = createMaterialSymbol("route");
+export const SatelliteAlt = createMaterialSymbol("satellite_alt");
 export const Search = createMaterialSymbol("search");
 export const Settings = createMaterialSymbol("settings");
 export const Sparkles = createMaterialSymbol("auto_awesome");

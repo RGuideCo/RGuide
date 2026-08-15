@@ -4,7 +4,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import type { Feature, FeatureCollection, Geometry, LineString, Point } from "geojson";
 import type { ExpressionSpecification } from "@maplibre/maplibre-gl-style-spec";
 import maplibregl, { GeoJSONSource, LngLatBounds } from "maplibre-gl";
-import { LocateFixed } from "@/components/icons/MaterialSymbol";
+import { LocateFixed, SatelliteAlt } from "@/components/icons/MaterialSymbol";
 
 import { mapLists } from "@/data/lists";
 import {
@@ -223,6 +223,8 @@ const worldCountryIso3 = new Map(
 const EMPTY_NEIGHBORHOOD_BOUNDARY_LOOKUP: NeighborhoodBoundaryMap = {};
 
 const MAP_STYLE = "https://tiles.openfreemap.org/styles/liberty";
+const SATELLITE_SOURCE_ID = "satellite-imagery";
+const SATELLITE_LAYER_ID = "satellite-imagery-layer";
 const COUNTRY_SOURCE_ID = "countries";
 const CONTINENT_LABEL_SOURCE_ID = "continent-labels";
 const CITY_SOURCE_ID = "cities";
@@ -3993,6 +3995,7 @@ export function MapClient({
   const [locationStatus, setLocationStatus] = useState<"idle" | "locating" | "located" | "error">("idle");
   const [locationMessage, setLocationMessage] = useState("Find my location");
   const [locationSelectionNonce, setLocationSelectionNonce] = useState(0);
+  const [isSatelliteView, setIsSatelliteView] = useState(false);
   activeGuideIdRef.current = activeGuide?.id ?? null;
   selectedStopIdRef.current = selectedStopId;
 
@@ -4513,6 +4516,26 @@ export function MapClient({
       });
       isStyleReadyRef.current = true;
       setStyleReadyTick((current) => current + 1);
+
+      map.addSource(SATELLITE_SOURCE_ID, {
+        type: "raster",
+        tiles: [
+          "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
+        ],
+        tileSize: 256,
+        maxzoom: 19,
+        attribution: "Source: Esri, Vantor, Earthstar Geographics, and the GIS User Community",
+      });
+      map.addLayer({
+        id: SATELLITE_LAYER_ID,
+        type: "raster",
+        source: SATELLITE_SOURCE_ID,
+        layout: { visibility: "none" },
+        paint: {
+          "raster-opacity": 1,
+          "raster-fade-duration": 180,
+        },
+      });
 
       map.addSource(COUNTRY_SOURCE_ID, {
         type: "geojson",
@@ -6281,6 +6304,19 @@ export function MapClient({
     visibleGuideMarkerData,
   ]);
 
+  useEffect(() => {
+    const map = mapRef.current;
+    if (!map || !isStyleReadyRef.current || !map.getLayer(SATELLITE_LAYER_ID)) {
+      return;
+    }
+
+    map.setLayoutProperty(
+      SATELLITE_LAYER_ID,
+      "visibility",
+      isSatelliteView ? "visible" : "none",
+    );
+  }, [isSatelliteView, styleReadyTick]);
+
   return (
     <div className="relative h-full min-h-[60vh] lg:min-h-[calc(100vh-15rem)]">
       <div
@@ -6302,6 +6338,20 @@ export function MapClient({
         title={locationMessage}
       >
         <LocateFixed className={`h-3.5 w-3.5 ${locationStatus === "locating" ? "animate-pulse" : ""}`} />
+      </button>
+      <button
+        type="button"
+        onClick={() => setIsSatelliteView((current) => !current)}
+        className={`rguide-satellite-control absolute top-[5.5rem] z-[90] flex h-8 w-8 items-center justify-center rounded-lg border bg-white shadow-sm transition hover:border-slate-300 hover:text-slate-950 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky-400/70 ${
+          isSatelliteView
+            ? "border-sky-300 text-sky-700 ring-2 ring-sky-200/80"
+            : "border-slate-200 text-slate-700"
+        }`}
+        aria-label={isSatelliteView ? "Show standard map" : "Show satellite map"}
+        aria-pressed={isSatelliteView}
+        title={isSatelliteView ? "Standard map" : "Satellite map"}
+      >
+        <SatelliteAlt className="h-3.5 w-3.5" />
       </button>
     </div>
   );

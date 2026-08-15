@@ -118,18 +118,27 @@ textarea:focus-visible {
   opacity: 0.68;
 }
 
-.rguide-locate-control {
+.rguide-locate-control,
+.rguide-satellite-control {
   right: 12px;
 }
 
 @media (min-width: 1024px) {
-  .rguide-locate-control {
+  .rguide-locate-control,
+  .rguide-satellite-control {
     width: 29px;
     height: 29px;
     top: auto;
     right: calc(var(--rguide-map-controls-right, 12px) + 10px);
-    bottom: 88px;
     border-radius: 4px;
+  }
+
+  .rguide-locate-control {
+    bottom: 123px;
+  }
+
+  .rguide-satellite-control {
+    bottom: 88px;
   }
 }
 
