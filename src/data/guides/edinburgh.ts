@@ -784,13 +784,13 @@ const pubGuide = guide(
   "Nightlife",
   "list-edinburgh-citywide-pubs",
   "edinburgh-citywide-pubs",
-  "best-pubs",
-  "Cask Ale, Whisky & Traditional Sessions",
-  "Edinburgh’s pub culture lives in tiny Victorian rooms, Leith locals, whisky-heavy bars and spontaneous folk sessions. These ten pubs distinguish the beer, music, crowd and architecture without confusing genuine character with tartan decoration.",
+  "best-dive-bars",
+  "Cellars, Locals & No-Frills Pints",
+  "Edinburgh’s dive-bar character lives in tiny Victorian rooms, Leith locals, whisky-heavy cellars and spontaneous folk sessions. These ten worn-in pubs distinguish beer, music, crowd and architecture without manufactured tartan theater.",
   pubStops,
   completeSources(pubEditorialSources, pubStops),
-  "Best Pubs in Edinburgh for Whisky, Real Ale and Live Folk Music",
-  "Ten verified Edinburgh pubs covering cask ale, deep whisky lists, traditional music, historic interiors and independent neighborhood locals.",
+  "Best Dive Bars in Edinburgh for Whisky, Real Ale and Live Folk Music",
+  "Ten verified Edinburgh dive bars and no-frills pubs covering cask ale, deep whisky lists, traditional music, historic interiors and independent neighborhood locals.",
 );
 
 const cocktailGuide = guide(

@@ -1279,6 +1279,8 @@ const casualBarStops = [
   barStop("zanzibar-casual-africa-house", "africaHouse"),
 ];
 
+const diveBarStops = casualBarStops.slice(0, 6);
+
 const cocktailStops = [
   venueStop("zanzibar-cocktail-fifth", "fifth", {
     description:
@@ -1862,16 +1864,16 @@ export const zanzibarCitywideGuides: MapList[] = [
     "Nightlife",
     "list-zanzibar-casual-bars",
     "zanzibar-best-beach-bars",
-    "best-beach-bars",
-    "Zanzibar Beach Bars, Sunset Terraces, and Social Rooms",
-    "Ten casual drinking places ranging from Nungwi sand bars and Paje traveler rooms to Michamvi sunset shows and Stone Town terraces, with event dependencies named clearly.",
-    casualBarStops,
+    "best-dive-bars",
+    "Beach Shacks, Sand Floors & Late Local Bars",
+    "Zanzibar's dive bars are beach shacks and barefoot social rooms rather than dark city taverns. These six strongest equivalents cover reggae, live music, cheap drinks, sand-floor dancing, and recurring party nights across the island.",
+    diveBarStops,
     sourcesFor(
-      casualBarStops,
+      diveBarStops,
       source("Current Zanzibar beach-bar guide", editorial.beachBars),
     ),
-    "Best Beach Bars in Zanzibar for Sunsets, Live Music, and DJ Nights",
-    "Source-backed Zanzibar bar guide to Gerry's, B4, Kendwa Rocks, Kae Funk, Paje by Night, and lower-key Stone Town sundowners.",
+    "Best Dive Bars in Zanzibar for Beach Drinks and Live Music",
+    "Six source-backed Zanzibar dive-bar equivalents: Gerry's, B4, Kendwa Rocks, Drifters, Paje by Night, and Kae Funk, with current event dependencies and hours.",
   ),
   guide(
     "Nightlife",

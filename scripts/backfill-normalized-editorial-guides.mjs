@@ -1271,9 +1271,12 @@ async function replaceEntryStopsBatch(client, stopRows, entryIdByLegacyId, venue
 }
 
 async function upsertVenueMediaBatch(client, mediaRows, venueIdByKey) {
-  const rows = mediaRows
+  const candidates = mediaRows
     .map((row) => ({ ...row, venue_id: venueIdByKey.get(row.venue_key) ?? null }))
     .filter((row) => row.venue_id && row.url);
+  const rows = [...new Map(
+    candidates.map((row) => [`${row.venue_id}\u0000${row.url}`, row]),
+  ).values()];
   if (!rows.length) {
     return 0;
   }

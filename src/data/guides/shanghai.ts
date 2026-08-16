@@ -2000,12 +2000,12 @@ export const shanghaiCitywideGuides: MapList[] = [
   ),
   guide(
     "list-shanghai-citywide-casual-bars",
-    "Sports Pubs, Punk Rooms & Neighborhood Beer",
+    "Punk Rooms, Sports Pubs & Neighborhood Beer",
     "Nightlife",
-    "best-bars",
-    "Best Casual Bars in Shanghai",
-    "Best casual bars in Shanghai for sports screens, patios, punk music, draft beer, group nights, Jing'an pubs, and neighborhood drinking.",
-    "Outside the cocktail circuit, Shanghai drinks through sports pubs, patios, dive bars, live music, and neighborhood rooms built around regulars. These picks separate downtown energy from useful Hongqiao, Pudong, and Minhang locals.",
+    "best-dive-bars",
+    "Best Dive Bars in Shanghai",
+    "The best dive bars in Shanghai for punk music, sports screens, patios, draft beer, group nights, and neighborhood drinking.",
+    "Outside the cocktail circuit, Shanghai drinks through punk rooms, sports pubs, patios, live music, and neighborhood bars built around regulars. The citywide set reaches beyond downtown into Hongqiao, Pudong, and Minhang locals.",
     casualBarStops,
     [
       source(
