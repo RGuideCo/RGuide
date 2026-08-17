@@ -28,6 +28,7 @@ import type { PointerEvent as ReactPointerEvent, ReactNode } from "react";
 
 import { MapListCard } from "@/components/cards/MapListCard";
 import type { GuideCrossLink, GuideCrossLinkGroup } from "@/components/cards/GuideCrossLinks";
+import { GuideRailSkeleton } from "@/components/home/GuideRailSkeleton";
 import {
   MaterialCalendarMonth,
   MaterialFavorite,
@@ -172,6 +173,7 @@ export interface SplitScreenSectionProps {
     intro: string;
   };
   locale?: AppLocale;
+  isGuideDataLoading?: boolean;
   destinationTranslations?: DestinationRouteTranslation[];
   publicProfile?: {
     creator: {
@@ -606,6 +608,7 @@ export function SplitScreenSection({
   initialRouteState,
   seoContent,
   locale = "en",
+  isGuideDataLoading = false,
   destinationTranslations = [],
   publicProfile,
   onGuideDataRequested,
@@ -640,8 +643,9 @@ export function SplitScreenSection({
   const editorialLists = useAppStore((state) => state.editorialLists);
   const submittedLists = useAppStore((state) => state.submittedLists);
   const submitList = useAppStore((state) => state.submitList);
-  const hydratedEditorialLists =
-    initialEditorialGuides.length && !areGuideCollectionsEquivalent(editorialLists, initialEditorialGuides)
+  const hydratedEditorialLists = isGuideDataLoading
+    ? []
+    : initialEditorialGuides.length && !areGuideCollectionsEquivalent(editorialLists, initialEditorialGuides)
       ? initialEditorialGuides
       : editorialLists.length
         ? editorialLists
@@ -814,14 +818,14 @@ export function SplitScreenSection({
   } = useMobileControlsState();
 
   useEffect(() => {
-    if (!initialEditorialGuides.length) {
+    if (isGuideDataLoading) {
       return;
     }
 
     if (!areGuideCollectionsEquivalent(useAppStore.getState().editorialLists, initialEditorialGuides)) {
       setEditorialLists(initialEditorialGuides);
     }
-  }, [initialEditorialGuides, setEditorialLists]);
+  }, [initialEditorialGuides, isGuideDataLoading, setEditorialLists]);
   const {
     activeProfileLeftRail,
     setActiveProfileLeftRail,
@@ -6197,7 +6201,7 @@ export function SplitScreenSection({
               isSubcategoryMenuOpen && !isGuidePaneTakingFullListPane ? "overflow-visible" : "overflow-hidden"
             } ${explorerPaneHeight}`}
           >
-          <div className="absolute inset-0 z-0">
+          <div className="explorer-map-layer absolute inset-0 z-0 overflow-hidden lg:rounded-lg">
             <InteractiveMap
               continents={continents}
               selection={mapSelection}
@@ -9581,7 +9585,16 @@ export function SplitScreenSection({
                       : `mt-2 ${explorerBodyMaxHeight} overflow-y-auto pb-0 pr-1`
                   }`}
                 >
-                  {displayedGuide ? (
+                  {isGuideDataLoading ? (
+                    <GuideRailSkeleton
+                      locationName={
+                        activeLocation.city?.name ??
+                        activeLocation.country?.name ??
+                        activeLocation.continent?.name ??
+                        "RGuide"
+                      }
+                    />
+                  ) : displayedGuide ? (
                     <div className={isGuideTakingFullListPane ? "flex h-full min-h-0 flex-col" : "space-y-4"}>
                       <div
                         key={displayedGuide.id}

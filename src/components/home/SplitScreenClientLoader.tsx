@@ -40,7 +40,7 @@ export function SplitScreenClientLoader({ initialAppData, appDataScope, ...props
     requestedLocale === initialLocale
       ? initialAppData
       : undefined;
-  const { data } = useAppData(initialDataForScope, requestedScope);
+  const { data, isLoading } = useAppData(initialDataForScope, requestedScope);
 
   useEffect(() => {
     setRequestedScope(appDataScope);
@@ -85,6 +85,7 @@ export function SplitScreenClientLoader({ initialAppData, appDataScope, ...props
       locale={requestedLocale}
       continents={data.continents}
       initialEditorialGuides={data.guides}
+      isGuideDataLoading={isLoading}
       onGuideDataRequested={handleGuideDataRequested}
     />
   );

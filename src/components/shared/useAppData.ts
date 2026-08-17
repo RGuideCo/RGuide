@@ -18,7 +18,6 @@ export interface AppDataScope {
   locale?: AppLocale;
 }
 
-const appDataPromises = new Map<string, Promise<AppData>>();
 const appDataSnapshots = new Map<string, AppData>();
 
 function getAppDataKey(scope: AppDataScope = {}) {
@@ -72,38 +71,34 @@ function hasCompleteInitialData(initialData: AppData, scope: AppDataScope) {
   );
 }
 
-function loadAppData(scope: AppDataScope = {}) {
+function loadAppData(scope: AppDataScope = {}, signal?: AbortSignal) {
   const key = getAppDataKey(scope);
   const isDestinationScoped = Boolean(scope.cityName || scope.countryName || scope.continentName);
 
-  if (!appDataPromises.has(key)) {
-    const promise = fetch(getAppDataUrl(scope), {
-      cache: isDestinationScoped ? "no-store" : "default",
-      headers: {
-        Accept: "application/json",
-      },
-    }).then(async (response) => {
-      if (!response.ok) {
-        throw new Error(`Failed to load RGuide app data (${response.status})`);
-      }
+  return fetch(getAppDataUrl(scope), {
+    cache: isDestinationScoped ? "no-store" : "default",
+    headers: {
+      Accept: "application/json",
+    },
+    signal,
+  }).then(async (response) => {
+    if (!response.ok) {
+      throw new Error(`Failed to load RGuide app data (${response.status})`);
+    }
 
-      return response.json() as Promise<AppData>;
-    }).then((nextData) => {
-      appDataSnapshots.set(key, nextData);
-      return nextData;
-    }).finally(() => {
-      appDataPromises.delete(key);
-    });
-
-    appDataPromises.set(key, promise);
-  }
-
-  return appDataPromises.get(key) as Promise<AppData>;
+    return response.json() as Promise<AppData>;
+  }).then((nextData) => {
+    appDataSnapshots.set(key, nextData);
+    return nextData;
+  });
 }
 
 export function useAppData(initialData?: AppData, scope: AppDataScope = {}) {
   const [data, setData] = useState<AppData | null>(null);
   const [error, setError] = useState<Error | null>(null);
+  const [isLoading, setIsLoading] = useState(
+    () => !initialData || !hasCompleteInitialData(initialData, scope),
+  );
   const cityName = scope.cityName ?? null;
   const countryName = scope.countryName ?? null;
   const continentName = scope.continentName ?? null;
@@ -111,6 +106,7 @@ export function useAppData(initialData?: AppData, scope: AppDataScope = {}) {
 
   useEffect(() => {
     let isMounted = true;
+    const controller = new AbortController();
     const requestScope = { cityName, countryName, continentName, locale };
     const key = getAppDataKey(requestScope);
 
@@ -124,6 +120,7 @@ export function useAppData(initialData?: AppData, scope: AppDataScope = {}) {
       setError(null);
 
       if (initialDataIsComplete) {
+        setIsLoading(false);
         seedAppData(initialData, requestScope);
         return () => {
           isMounted = false;
@@ -132,25 +129,36 @@ export function useAppData(initialData?: AppData, scope: AppDataScope = {}) {
     } else if (cachedData) {
       setData(cachedData);
       setError(null);
+      setIsLoading(false);
+    } else {
+      setData((current) => current ? { ...current, guides: [] } : null);
+      setError(null);
     }
 
-    loadAppData(requestScope)
+    setIsLoading(!cachedData);
+    loadAppData(requestScope, controller.signal)
       .then((nextData) => {
         if (isMounted) {
           setData(nextData);
+          setIsLoading(false);
         }
       })
       .catch((nextError: Error) => {
+        if (nextError.name === "AbortError") {
+          return;
+        }
         console.error(nextError);
         if (isMounted) {
           setError(nextError);
+          setIsLoading(false);
         }
       });
 
     return () => {
       isMounted = false;
+      controller.abort();
     };
   }, [initialData, cityName, countryName, continentName, locale]);
 
-  return { data, error };
+  return { data, error, isLoading };
 }

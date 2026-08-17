@@ -90,7 +90,7 @@ textarea:focus-visible {
   pointer-events: auto;
 }
 
-.explorer-map-pane .maplibregl-map {
+.explorer-map-layer .maplibregl-map {
   border-radius: 0;
   transform: translateZ(0);
   backface-visibility: hidden;
@@ -456,6 +456,183 @@ textarea:focus-visible {
     rgba(255, 255, 255, 0.94);
   box-shadow:
     0 1px 0 rgba(255, 255, 255, 0.92) inset;
+}
+
+.guide-rail-skeleton {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 0.55rem 0.125rem 0.25rem 0;
+  overflow: hidden;
+}
+
+.guide-rail-skeleton-item {
+  position: relative;
+  min-height: 7.05rem;
+  padding-top: 0.55rem;
+  padding-left: 5.75rem;
+  opacity: 0;
+  transform: translateY(7px);
+  animation: guide-rail-skeleton-enter 340ms cubic-bezier(0.22, 1, 0.36, 1) var(--skeleton-delay, 0ms) forwards;
+}
+
+.guide-rail-skeleton-image {
+  position: absolute;
+  inset: 0 auto 0.55rem 0;
+  width: 9rem;
+  border: 1px solid rgba(100, 116, 139, 0.5);
+  border-radius: 6px;
+  background-color: rgba(159, 173, 176, 0.82);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.48);
+}
+
+.guide-rail-skeleton-card {
+  position: relative;
+  z-index: 1;
+  min-height: 6.5rem;
+  padding: 0.75rem 1rem 0.625rem 1.4rem;
+  overflow: hidden;
+  border: 1px solid rgba(148, 163, 184, 0.38);
+  border-radius: 6px;
+  background: rgba(250, 250, 248, 0.84);
+}
+
+.guide-rail-skeleton-heading,
+.guide-rail-skeleton-meta,
+.guide-rail-skeleton-sources {
+  display: flex;
+  align-items: center;
+}
+
+.guide-rail-skeleton-heading {
+  min-height: 1.35rem;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 1rem;
+}
+
+.guide-rail-skeleton-title-group {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  padding-top: 0.1rem;
+}
+
+.guide-rail-skeleton-title {
+  display: block;
+  width: 100%;
+  height: 0.95rem;
+  border-radius: 3px;
+}
+
+.guide-rail-skeleton-actions {
+  display: flex;
+  flex: none;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.guide-rail-skeleton-action {
+  width: 1.9rem;
+  height: 1.9rem;
+  border-radius: 50%;
+}
+
+.guide-rail-skeleton-chevron {
+  width: 0.85rem;
+  height: 0.5rem;
+  border-radius: 2px;
+}
+
+.guide-rail-skeleton-meta {
+  gap: 0.65rem;
+  margin-top: 0.375rem;
+}
+
+.guide-rail-skeleton-chip {
+  height: 0.82rem;
+  min-width: 4.2rem;
+  max-width: 8rem;
+  border-radius: 999px;
+}
+
+.guide-rail-skeleton-meta-line {
+  width: 5.4rem;
+  height: 0.6rem;
+  border-radius: 2px;
+}
+
+.guide-rail-skeleton-divider {
+  height: 1px;
+  margin: 0.5rem 0 0.375rem;
+  background: rgba(148, 163, 184, 0.28);
+}
+
+.guide-rail-skeleton-sources {
+  gap: 0.35rem;
+}
+
+.guide-rail-skeleton-source-icon {
+  width: 1.35rem;
+  height: 1.35rem;
+  border-radius: 2px;
+}
+
+.guide-rail-skeleton-source-line {
+  height: 0.62rem;
+  min-width: 5rem;
+  margin-left: 0.25rem;
+  border-radius: 2px;
+}
+
+.guide-rail-skeleton-shimmer {
+  overflow: hidden;
+  background-color: rgba(181, 193, 196, 0.55);
+  background: linear-gradient(
+    100deg,
+    rgba(181, 193, 196, 0.55) 18%,
+    rgba(235, 239, 238, 0.86) 46%,
+    rgba(181, 193, 196, 0.55) 74%
+  );
+  background-position: 120% 0;
+  background-size: 240% 100%;
+  animation: guide-rail-skeleton-shimmer 1.35s ease-in-out infinite;
+}
+
+.guide-rail-skeleton-image.guide-rail-skeleton-shimmer {
+  position: absolute;
+  background-color: rgba(159, 173, 176, 0.82);
+}
+
+@keyframes guide-rail-skeleton-enter {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes guide-rail-skeleton-shimmer {
+  to {
+    background-position: -120% 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .guide-rail-skeleton-item {
+    opacity: 1;
+    transform: none;
+    animation: none;
+  }
+
+  .guide-rail-skeleton-shimmer {
+    animation: none;
+  }
+}
+
+@media (max-width: 1023px) {
+  .guide-rail-skeleton-item {
+    padding-left: 4.6rem;
+  }
 }
 
 .category-icon-button {

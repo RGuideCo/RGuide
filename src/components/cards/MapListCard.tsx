@@ -2317,9 +2317,10 @@ export function MapListCard({
             expanded ? `relative -mx-3 px-3 ${fillPane ? "bg-transparent" : "bg-slate-50"}` : ""
           }`}
         >
-          <div
-            className={`guide-expand-panel-content ${fillPane && expanded ? "-mx-3 flex min-h-0 w-[calc(100%+1.5rem)] flex-1 flex-col overflow-hidden pb-3" : "overflow-hidden"}`}
-          >
+          {expandedChrome || inlineEditing ? (
+            <div
+              className={`guide-expand-panel-content ${fillPane && expanded ? "-mx-3 flex min-h-0 w-[calc(100%+1.5rem)] flex-1 flex-col overflow-hidden pb-3" : "overflow-hidden"}`}
+            >
             <div
               id={`guide-scroll-container-${list.id}`}
               onScroll={(event) => {
@@ -2682,7 +2683,8 @@ export function MapListCard({
               </div>
               </GuideBodyComponent>
             </div>
-          </div>
+            </div>
+          ) : null}
         </div>
       ) : null}
 
