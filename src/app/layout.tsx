@@ -103,7 +103,7 @@ const websiteJsonLd = {
       alternateName: SITE_ALTERNATE_NAMES,
       url: getAbsoluteHref("/"),
       description: SITE_DESCRIPTION,
-      inLanguage: "en",
+      inLanguage: ["en", "es"],
       publisher: {
         "@id": getAbsoluteHref("/#organization"),
       },

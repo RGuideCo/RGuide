@@ -4,6 +4,7 @@ import { pathToFileURL } from "node:url";
 
 const SITEMAP_PATH = ".next/server/app/sitemap.xml.body";
 const SITEMAP_ROUTE_PATH = ".next/server/app/sitemap.xml/route.js";
+const SITEMAP_URL = process.env.SEO_AUDIT_SITEMAP_URL?.trim();
 const CANONICAL_ORIGIN = "https://www.rguide.co";
 const FORBIDDEN_PATH_PREFIXES = ["/api/", "/admin/", "/auth/", "/events/", "/favorites", "/list/", "/mobile", "/submit", "/venues/"];
 
@@ -19,6 +20,12 @@ function getRouteClass(pathname) {
 }
 
 async function readBuiltSitemap() {
+  if (SITEMAP_URL) {
+    const response = await fetch(SITEMAP_URL);
+    assert(response.ok, `Sitemap returned HTTP ${response.status}: ${SITEMAP_URL}`);
+    return response.text();
+  }
+
   try {
     return await readFile(SITEMAP_PATH, "utf8");
   } catch (error) {
@@ -37,6 +44,15 @@ const xml = await readBuiltSitemap();
 const locations = [...xml.matchAll(/<loc>([^<]+)<\/loc>/g)].map((match) => match[1]);
 const lastModifiedValues = [...xml.matchAll(/<lastmod>([^<]+)<\/lastmod>/g)].map((match) => match[1]);
 const uniqueLocations = new Set(locations);
+const sitemapEntries = [...xml.matchAll(/<url>([\s\S]*?)<\/url>/g)].map((match) => {
+  const entry = match[1];
+  return {
+    location: entry.match(/<loc>([^<]+)<\/loc>/)?.[1],
+    english: entry.match(/hreflang="en" href="([^"]+)"/)?.[1],
+    spanish: entry.match(/hreflang="es" href="([^"]+)"/)?.[1],
+    default: entry.match(/hreflang="x-default" href="([^"]+)"/)?.[1],
+  };
+});
 
 assert(locations.length > 0, "The built sitemap is empty.");
 assert(uniqueLocations.size === locations.length, "The built sitemap contains duplicate URLs.");
@@ -51,6 +67,21 @@ for (const location of locations) {
     !FORBIDDEN_PATH_PREFIXES.some((prefix) => url.pathname === prefix || url.pathname.startsWith(prefix)),
     `Non-indexable route found in sitemap: ${location}`,
   );
+}
+
+const entriesByLocation = new Map(sitemapEntries.map((entry) => [entry.location, entry]));
+const spanishEntries = sitemapEntries.filter((entry) => entry.location?.includes("/es/"));
+
+for (const entry of spanishEntries) {
+  assert(entry.spanish === entry.location, `Spanish sitemap entry is not self-referential: ${entry.location}`);
+  assert(entry.english, `Spanish sitemap entry is missing an English alternate: ${entry.location}`);
+  assert(entry.default === entry.english, `Spanish sitemap entry has an invalid x-default alternate: ${entry.location}`);
+
+  const englishEntry = entriesByLocation.get(entry.english);
+  assert(englishEntry, `Spanish sitemap entry points to an English URL outside the sitemap: ${entry.location}`);
+  assert(englishEntry.english === entry.english, `English alternate is not self-referential: ${entry.english}`);
+  assert(englishEntry.spanish === entry.location, `English and Spanish sitemap alternates are not reciprocal: ${entry.location}`);
+  assert(englishEntry.default === entry.english, `English sitemap entry has an invalid x-default alternate: ${entry.english}`);
 }
 
 const tomorrow = Date.now() + 86_400_000;
@@ -70,6 +101,7 @@ console.log(
   JSON.stringify(
     {
       sitemapUrls: locations.length,
+      spanishUrls: spanishEntries.length,
       urlsWithLastModified: lastModifiedValues.length,
       routeCounts,
     },

@@ -4,6 +4,7 @@ import { notFound, permanentRedirect } from "next/navigation";
 
 import { SplitScreenClientLoader } from "@/components/home/SplitScreenClientLoader";
 import { ProgressiveEnhancementShell } from "@/components/shared/ProgressiveEnhancementShell";
+import { getClientGeography } from "@/lib/client-geography";
 import { getContinentsWithDestinationDescriptions } from "@/lib/destination-descriptions";
 import { getIndexableCitiesForCountry, resolveCountryDeepLink } from "@/lib/deep-link-routes";
 import { getDictionary } from "@/lib/i18n/dictionaries";
@@ -71,6 +72,7 @@ export default async function SpanishCountryPage({ params }: SpanishCountryPageP
     scope: "continent",
   })?.displayName ?? route.continent.name;
   const title = `Guías de viaje de ${placeName}`;
+  const clientContinents = getClientGeography(continents, { countryName: route.country.name });
   const jsonLd = { "@context": "https://schema.org", "@type": "CollectionPage", "@id": `${getAbsoluteHref(canonical)}#webpage`, url: getAbsoluteHref(canonical), name: title, description: route.country.description, inLanguage: "es" };
   return (
     <>
@@ -97,7 +99,7 @@ export default async function SpanishCountryPage({ params }: SpanishCountryPageP
           </section>
         </main>
       }>
-        <SplitScreenClientLoader initialAppData={{ continents, guides: [], locale: "es" }} appDataScope={{ countryName: route.country.name, locale: "es" }} initialRouteState={{ selection: route.selection }} seoContent={{ h1: title, intro: route.country.description }} destinationTranslations={destinationTranslations} />
+        <SplitScreenClientLoader initialAppData={{ continents: clientContinents, guides: [], locale: "es" }} appDataScope={{ countryName: route.country.name, locale: "es" }} initialRouteState={{ selection: route.selection }} seoContent={{ h1: title, intro: route.country.description }} destinationTranslations={destinationTranslations} />
       </ProgressiveEnhancementShell>
     </>
   );

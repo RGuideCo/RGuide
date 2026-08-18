@@ -4,8 +4,14 @@ import { notFound, permanentRedirect } from "next/navigation";
 
 import { SplitScreenClientLoader } from "@/components/home/SplitScreenClientLoader";
 import { ProgressiveEnhancementShell } from "@/components/shared/ProgressiveEnhancementShell";
+import { getClientGeography } from "@/lib/client-geography";
 import { getContinentsWithDestinationDescriptions } from "@/lib/destination-descriptions";
-import { getIndexableCountriesForContinent, resolveContinentDeepLink } from "@/lib/deep-link-routes";
+import {
+  getIndexableCitiesForCountry,
+  getIndexableCountriesForContinent,
+  getIndexableGuidesForContinent,
+  resolveContinentDeepLink,
+} from "@/lib/deep-link-routes";
 import { getDictionary } from "@/lib/i18n/dictionaries";
 import { getLocalizedContinentPath, getLocalizedCountryPath } from "@/lib/i18n/paths";
 import {
@@ -17,9 +23,25 @@ import { getAbsoluteHref } from "@/lib/routes";
 import { getServerEditorialGuides } from "@/lib/server-editorial-guides";
 import { serializeJsonForHtml } from "@/lib/serialize-json";
 import { slugify } from "@/lib/utils";
+import type { Continent, MapList } from "@/types";
 
 interface SpanishContinentPageProps { params: Promise<{ segments: string[] }> }
 export const revalidate = 300;
+
+function getSpanishContinentCopy(continent: Continent, guides: MapList[], placeName: string) {
+  const countries = getIndexableCountriesForContinent(continent, guides);
+  const cityCount = countries.reduce(
+    (total, country) => total + getIndexableCitiesForCountry(country, guides).length,
+    0,
+  );
+  const guideCount = getIndexableGuidesForContinent(continent, guides).length;
+  const description = `Explora ${guideCount} guías de viaje seleccionadas de ${placeName}, con ${cityCount} ciudades en ${countries.length} países.`;
+
+  return {
+    description,
+    intro: `${description} Abre un país o una ciudad para comparar barrios, hoteles, restaurantes, bares, cultura, naturaleza y actividades.`,
+  };
+}
 
 async function loadRoute(segments: string[]) {
   const [continents, guides, publication, destinationTranslations] = await Promise.all([
@@ -47,12 +69,13 @@ export async function generateMetadata({ params }: SpanishContinentPageProps): P
   const canonical = getLocalizedContinentPath("es", route.continent, canonicalTranslation?.slug);
   const placeName = canonicalTranslation?.displayName ?? route.continent.name;
   const title = `Guías de viaje de ${placeName}`;
+  const copy = getSpanishContinentCopy(route.continent, guides, placeName);
   return {
     title,
-    description: route.description,
+    description: copy.description,
     alternates: { canonical, languages: { en: route.canonicalPath, es: canonical, "x-default": route.canonicalPath } },
     robots: publication.indexable && route.indexable && guides.length ? undefined : { index: false, follow: true },
-    openGraph: { title, description: route.description, url: canonical, locale: "es_ES", type: "website" },
+    openGraph: { title, description: copy.description, url: canonical, locale: "es_ES", type: "website" },
   };
 }
 
@@ -65,7 +88,9 @@ export default async function SpanishContinentPage({ params }: SpanishContinentP
   const dictionary = getDictionary("es");
   const placeName = canonicalTranslation?.displayName ?? route.continent.name;
   const title = `Guías de viaje de ${placeName}`;
-  const jsonLd = { "@context": "https://schema.org", "@type": "CollectionPage", "@id": `${getAbsoluteHref(canonical)}#webpage`, url: getAbsoluteHref(canonical), name: title, description: route.description, inLanguage: "es" };
+  const copy = getSpanishContinentCopy(route.continent, guides, placeName);
+  const clientContinents = getClientGeography(continents, { continentName: route.continent.name });
+  const jsonLd = { "@context": "https://schema.org", "@type": "CollectionPage", "@id": `${getAbsoluteHref(canonical)}#webpage`, url: getAbsoluteHref(canonical), name: title, description: copy.description, inLanguage: "es" };
   return (
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: serializeJsonForHtml(jsonLd) }} />
@@ -73,7 +98,7 @@ export default async function SpanishContinentPage({ params }: SpanishContinentP
         <main className="mx-auto max-w-5xl px-6 py-12">
           <p className="text-sm font-medium text-slate-500">{dictionary.continentEyebrow}</p>
           <h1 className="mt-2 text-4xl font-semibold text-slate-950">{title}</h1>
-          <p className="mt-4 max-w-3xl text-base leading-7 text-slate-700">{route.intro}</p>
+          <p className="mt-4 max-w-3xl text-base leading-7 text-slate-700">{copy.intro}</p>
           <section className="mt-10 grid gap-3 sm:grid-cols-2 lg:grid-cols-3" aria-label={dictionary.countriesLabel(placeName)}>
             {getIndexableCountriesForContinent(route.continent, guides).map((country) => (
               <Link
@@ -91,7 +116,7 @@ export default async function SpanishContinentPage({ params }: SpanishContinentP
           </section>
         </main>
       }>
-        <SplitScreenClientLoader initialAppData={{ continents, guides: [], locale: "es" }} appDataScope={{ continentName: route.continent.name, locale: "es" }} initialRouteState={{ selection: route.selection }} seoContent={{ h1: title, intro: route.intro }} destinationTranslations={destinationTranslations} />
+        <SplitScreenClientLoader initialAppData={{ continents: clientContinents, guides: [], locale: "es" }} appDataScope={{ continentName: route.continent.name, locale: "es" }} initialRouteState={{ selection: route.selection }} seoContent={{ h1: title, intro: copy.intro }} destinationTranslations={destinationTranslations} />
       </ProgressiveEnhancementShell>
     </>
   );

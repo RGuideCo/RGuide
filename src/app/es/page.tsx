@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import { LocalizedHomeServerContent } from "@/components/i18n/LocalizedHomeServerContent";
 import { SplitScreenClientLoader } from "@/components/home/SplitScreenClientLoader";
 import { ProgressiveEnhancementShell } from "@/components/shared/ProgressiveEnhancementShell";
+import { getClientGeography } from "@/lib/client-geography";
 import { getContinentsWithDestinationDescriptions } from "@/lib/destination-descriptions";
 import { DICTIONARIES } from "@/lib/i18n/dictionaries";
 import { getDestinationRouteTranslations, getLocalePublicationState } from "@/lib/i18n/server";
@@ -47,6 +48,7 @@ export default async function SpanishHomePage() {
     description: DICTIONARIES.es.siteDescription,
     inLanguage: "es",
   };
+  const clientContinents = getClientGeography(continents);
 
   return (
     <>
@@ -62,7 +64,7 @@ export default async function SpanishHomePage() {
         }
       >
         <SplitScreenClientLoader
-          initialAppData={{ continents, guides: editorialGuides, locale: "es" }}
+          initialAppData={{ continents: clientContinents, guides: [], locale: "es" }}
           appDataScope={{ locale: "es" }}
           destinationTranslations={destinationTranslations}
         />
