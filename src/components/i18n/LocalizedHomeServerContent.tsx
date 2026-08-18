@@ -70,7 +70,7 @@ export function LocalizedHomeServerContent({
                     {cityTranslation?.displayName ?? city.name}
                   </h2>
                   <p className="mt-2 line-clamp-3 text-sm leading-6 text-slate-600">{city.description}</p>
-                  <p className="mt-3 text-xs font-semibold text-orange-700">{guides.length} guias</p>
+                  <p className="mt-3 text-xs font-semibold text-orange-700">{guides.length} guías</p>
                 </div>
               </Link>
               <ul className="border-t border-slate-100 px-4 py-3 text-sm">

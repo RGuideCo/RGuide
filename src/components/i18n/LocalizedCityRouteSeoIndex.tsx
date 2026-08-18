@@ -123,14 +123,20 @@ export function LocalizedCityRouteSeoIndex({
                   </Link>
                 </h2>
                 <p className="mt-3 text-sm leading-6 text-slate-600">{guide.description}</p>
-                <ol className="mt-4 space-y-3">
-                  {guide.stops.slice(0, route.guide ? guide.stops.length : 4).map((stop, index) => (
-                    <li key={stop.id} className="rounded-md bg-stone-50 px-3 py-2.5">
-                      <p className="font-medium text-slate-950">{index + 1}. {stop.name}</p>
-                      <p className="mt-1 text-xs leading-5 text-slate-600">{stop.description}</p>
-                    </li>
-                  ))}
-                </ol>
+                {route.guide ? (
+                  <ol className="mt-4 space-y-3">
+                    {guide.stops.map((stop, index) => (
+                      <li key={stop.id} className="rounded-md bg-stone-50 px-3 py-2.5">
+                        <p className="font-medium text-slate-950">{index + 1}. {stop.name}</p>
+                        <p className="mt-1 text-xs leading-5 text-slate-600">{stop.description}</p>
+                      </li>
+                    ))}
+                  </ol>
+                ) : (
+                  <p className="mt-4 text-xs font-semibold text-slate-500">
+                    {guide.stops.length} {guide.stops.length === 1 ? "lugar seleccionado" : "lugares seleccionados"}
+                  </p>
+                )}
                 {route.guide ? (
                   <GuideEditorialReview
                     guide={guide}
