@@ -239,6 +239,7 @@ export interface MapList {
   description: string;
   highlights?: string[];
   photo?: string;
+  routeCoordinates?: [number, number][];
   url: string;
   category: ListCategory;
   submissionType?: SubmissionType;
