@@ -61,6 +61,21 @@ export function GuideExpandedIntro({
           {list.description}
         </p>
       )}
+      {list.routeLegend ? (
+        <div
+          className="guide-content-cascade-item relative z-10 mt-3 flex items-center gap-3 px-4"
+          style={{ animationDelay: "48ms" }}
+          aria-label={[list.routeLegend.label, list.routeLegend.dateRange].filter(Boolean).join(", ")}
+        >
+          <span className="w-12 shrink-0 border-t-2 border-dashed border-blue-600 sm:w-16" aria-hidden="true" />
+          <span className="flex min-w-0 flex-wrap items-baseline gap-x-2 text-xs leading-4 text-slate-600">
+            <span className="font-semibold text-slate-800">{list.routeLegend.label}</span>
+            {list.routeLegend.dateRange ? (
+              <span className="text-slate-500">{list.routeLegend.dateRange}</span>
+            ) : null}
+          </span>
+        </div>
+      ) : null}
       {afterDescription}
       <Link
         href={getCreatorHref({ name: list.creator.name })}

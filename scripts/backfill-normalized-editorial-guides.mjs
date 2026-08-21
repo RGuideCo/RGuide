@@ -749,6 +749,7 @@ function buildEntryRows(selectedGuides, contexts) {
       metadata: {
         editorialGuideId: list.id,
         ...(list.routeCoordinates ? { routeCoordinates: list.routeCoordinates } : {}),
+        ...(list.routeLegend ? { routeLegend: list.routeLegend } : {}),
       },
     };
   });
@@ -1021,7 +1022,7 @@ async function upsertEntriesBatch(client, rows) {
          upvotes = excluded.upvotes,
          created_on = excluded.created_on,
          source_table = excluded.source_table,
-         metadata = (public.entries.metadata - 'routeCoordinates') || excluded.metadata
+         metadata = (public.entries.metadata - 'routeCoordinates' - 'routeLegend') || excluded.metadata
        returning id, legacy_id
      )
      select id, legacy_id from upserted`,
@@ -2391,7 +2392,7 @@ async function upsertEntry(client, list, context, stats) {
        upvotes = excluded.upvotes,
        created_on = excluded.created_on,
        source_table = excluded.source_table,
-       metadata = (public.entries.metadata - 'routeCoordinates') || excluded.metadata
+       metadata = (public.entries.metadata - 'routeCoordinates' - 'routeLegend') || excluded.metadata
      returning id`,
     [
       list.id,
@@ -2420,6 +2421,7 @@ async function upsertEntry(client, list, context, stats) {
       toJsonObject({
         editorialGuideId: list.id,
         ...(list.routeCoordinates ? { routeCoordinates: list.routeCoordinates } : {}),
+        ...(list.routeLegend ? { routeLegend: list.routeLegend } : {}),
       }),
     ],
   );

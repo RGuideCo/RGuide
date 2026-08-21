@@ -240,6 +240,10 @@ export interface MapList {
   highlights?: string[];
   photo?: string;
   routeCoordinates?: [number, number][];
+  routeLegend?: {
+    label: string;
+    dateRange?: string;
+  };
   url: string;
   category: ListCategory;
   submissionType?: SubmissionType;
