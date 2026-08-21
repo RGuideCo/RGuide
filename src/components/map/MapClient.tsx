@@ -4174,6 +4174,13 @@ export function MapClient({
         .join("|"),
     [activeGuide],
   );
+  const activeGuideRouteSignature = useMemo(
+    () =>
+      (activeGuide?.routeCoordinates ?? [])
+        .map(([lat, lng]) => `${lat.toFixed(5)},${lng.toFixed(5)}`)
+        .join("|"),
+    [activeGuide],
+  );
   const activeNeighborhoodBoundary = useMemo(() => {
     return findNeighborhoodBoundaryFeature(
       neighborhoodBoundaryLookup,
@@ -5799,6 +5806,7 @@ export function MapClient({
           activeGuide.id,
           activeGuideFitNonce,
           activeGuideStopSignature,
+          activeGuideRouteSignature,
           activeGuidePoiMarkerSignature,
           viewportModeRef.current,
         ].join("|");
@@ -5884,6 +5892,10 @@ export function MapClient({
           guideCoordinateCount += 1;
         }
       }
+      for (const [lat, lng] of activeGuide.routeCoordinates ?? []) {
+        guideBounds.extend([lng, lat]);
+        guideCoordinateCount += 1;
+      }
       for (const markerFeature of cameraPoiMapMarkerData.features) {
         const markerCoordinates = getGeometryCoordinates(markerFeature.geometry);
         if (!markerCoordinates) {
@@ -5954,6 +5966,7 @@ export function MapClient({
     activeGuide,
     activeGuideFitNonce,
     activeGuidePoiMarkerSignature,
+    activeGuideRouteSignature,
     activeGuideStopSignature,
     cameraPoiMapMarkerData,
     selectionCameraKey,
