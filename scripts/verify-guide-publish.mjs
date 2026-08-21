@@ -458,6 +458,21 @@ function checkGuideBasics(list, report, options) {
     addIssue(report, "error", label, "Guide routeCoordinates must contain 2 to 5,000 valid [latitude, longitude] points.");
   }
 
+  if (list.routeLegend !== undefined) {
+    const routeLegend = list.routeLegend;
+    if (
+      !routeLegend ||
+      typeof routeLegend !== "object" ||
+      Array.isArray(routeLegend) ||
+      typeof routeLegend.label !== "string" ||
+      !routeLegend.label.trim() ||
+      (routeLegend.dateRange !== undefined &&
+        (typeof routeLegend.dateRange !== "string" || !routeLegend.dateRange.trim()))
+    ) {
+      addIssue(report, "error", label, "Guide routeLegend requires a non-empty label and an optional non-empty dateRange.");
+    }
+  }
+
   if (isValidRouteCoordinates(list.routeCoordinates) && Array.isArray(list.stops)) {
     const duplicatedGuideRouteCount = list.stops.filter(
       (stop) => JSON.stringify(stop.routeCoordinates) === JSON.stringify(list.routeCoordinates),

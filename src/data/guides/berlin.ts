@@ -4129,6 +4129,7 @@ type GuideSpec = {
   stopIds: string[];
   stopDescriptions?: Partial<Record<string, string>>;
   routeCoordinates?: [number, number][];
+  routeLegend?: MapList["routeLegend"];
   submissionType?: SubmissionType;
   neighborhood?: string;
 };
@@ -4154,6 +4155,7 @@ function guide(spec: GuideSpec): MapList {
     url: `https://www.google.com/maps/search/${encodeURIComponent(spec.seoTitle.toLowerCase())}`,
     category: spec.category,
     ...(spec.routeCoordinates ? { routeCoordinates: spec.routeCoordinates } : {}),
+    ...(spec.routeLegend ? { routeLegend: spec.routeLegend } : {}),
     ...(spec.submissionType ? { submissionType: spec.submissionType } : {}),
     location: spec.neighborhood
       ? { ...berlinLocation, neighborhood: spec.neighborhood }
@@ -4328,6 +4330,10 @@ const citywideGuides: GuideSpec[] = [
     submissionType: "guide",
     sourceKey: "wallRoute",
     routeCoordinates: BERLIN_WALL_FULL_ROUTE,
+    routeLegend: {
+      label: "Berlin Wall placement",
+      dateRange: "13 Aug 1961 - 9 Nov 1989",
+    },
     stopIds: [
       "bornholmerCrossing",
       "mauerpark",
