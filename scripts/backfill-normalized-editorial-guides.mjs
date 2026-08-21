@@ -746,7 +746,10 @@ function buildEntryRows(selectedGuides, contexts) {
       creator_avatar: list.creator?.avatar ?? null,
       upvotes: list.upvotes ?? 0,
       created_on: list.createdAt ?? new Date().toISOString().slice(0, 10),
-      metadata: { editorialGuideId: list.id },
+      metadata: {
+        editorialGuideId: list.id,
+        ...(list.routeCoordinates ? { routeCoordinates: list.routeCoordinates } : {}),
+      },
     };
   });
 }
@@ -1018,7 +1021,7 @@ async function upsertEntriesBatch(client, rows) {
          upvotes = excluded.upvotes,
          created_on = excluded.created_on,
          source_table = excluded.source_table,
-         metadata = public.entries.metadata || excluded.metadata
+         metadata = (public.entries.metadata - 'routeCoordinates') || excluded.metadata
        returning id, legacy_id
      )
      select id, legacy_id from upserted`,
@@ -2388,7 +2391,7 @@ async function upsertEntry(client, list, context, stats) {
        upvotes = excluded.upvotes,
        created_on = excluded.created_on,
        source_table = excluded.source_table,
-       metadata = public.entries.metadata || excluded.metadata
+       metadata = (public.entries.metadata - 'routeCoordinates') || excluded.metadata
      returning id`,
     [
       list.id,
@@ -2414,7 +2417,10 @@ async function upsertEntry(client, list, context, stats) {
       list.upvotes ?? 0,
       list.createdAt ?? new Date().toISOString().slice(0, 10),
       "editorial_guides",
-      toJsonObject({ editorialGuideId: list.id }),
+      toJsonObject({
+        editorialGuideId: list.id,
+        ...(list.routeCoordinates ? { routeCoordinates: list.routeCoordinates } : {}),
+      }),
     ],
   );
   stats.entries += 1;
