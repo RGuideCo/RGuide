@@ -397,6 +397,25 @@ function guideLabel(list) {
   return `${list.slug || list.id || "<unknown guide>"}`;
 }
 
+function isValidRouteCoordinates(value) {
+  return (
+    Array.isArray(value) &&
+    value.length > 1 &&
+    value.length <= 5000 &&
+    value.every(
+      (coordinate) =>
+        Array.isArray(coordinate) &&
+        coordinate.length === 2 &&
+        typeof coordinate[0] === "number" &&
+        typeof coordinate[1] === "number" &&
+        Number.isFinite(coordinate[0]) &&
+        Number.isFinite(coordinate[1]) &&
+        Math.abs(coordinate[0]) <= 90 &&
+        Math.abs(coordinate[1]) <= 180,
+    )
+  );
+}
+
 function stopLabel(list, stop, pathParts) {
   return `${guideLabel(list)} > ${pathParts.join(" > ") || stop.name || stop.id || "<unknown stop>"}`;
 }
@@ -433,6 +452,24 @@ function checkGuideBasics(list, report, options) {
 
   if (!Array.isArray(list.stops) || !list.stops.length) {
     addIssue(report, "error", label, "Guide has no stops.");
+  }
+
+  if (list.routeCoordinates !== undefined && !isValidRouteCoordinates(list.routeCoordinates)) {
+    addIssue(report, "error", label, "Guide routeCoordinates must contain 2 to 5,000 valid [latitude, longitude] points.");
+  }
+
+  if (isValidRouteCoordinates(list.routeCoordinates) && Array.isArray(list.stops)) {
+    const duplicatedGuideRouteCount = list.stops.filter(
+      (stop) => JSON.stringify(stop.routeCoordinates) === JSON.stringify(list.routeCoordinates),
+    ).length;
+    if (duplicatedGuideRouteCount > 0) {
+      addIssue(
+        report,
+        "error",
+        label,
+        `Guide-level route geometry is duplicated on ${duplicatedGuideRouteCount} stop${duplicatedGuideRouteCount === 1 ? "" : "s"}. Keep the full route only on the guide.`,
+      );
+    }
   }
 
   const stopCount = topLevelStopCount(list);

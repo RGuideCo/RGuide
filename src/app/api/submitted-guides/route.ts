@@ -216,6 +216,13 @@ function toEntryCoordinates(value: unknown): Coordinates | null {
   return null;
 }
 
+function toRouteCoordinates(value: unknown): Coordinates[] | null {
+  if (!Array.isArray(value) || value.length < 2 || value.length > 5000) return null;
+  const coordinates = value.map(toEntryCoordinates);
+  if (coordinates.some((coordinate) => coordinate === null)) return null;
+  return coordinates as Coordinates[];
+}
+
 function distanceMeters(a?: Coordinates | null, b?: Coordinates | null) {
   if (!a || !b) return Number.POSITIVE_INFINITY;
 
@@ -858,6 +865,7 @@ function buildSubmittedEntryPayload(params: {
   stopCount: number;
 }) {
   const { list, user, slug, visibility, status, destinationId, cityId, neighborhoodId, stopCount } = params;
+  const routeCoordinates = toRouteCoordinates(list.routeCoordinates);
 
   return {
     legacy_id: list.id,
@@ -899,6 +907,7 @@ function buildSubmittedEntryPayload(params: {
       savePath: "server_resolved_venues",
       visibility,
       stopCount,
+      ...(routeCoordinates ? { routeCoordinates } : {}),
     },
   };
 }
@@ -977,6 +986,10 @@ function validateList(list: MapList) {
 
   if (!stops.length) {
     return { ok: false as const, error: "Add at least one stop before saving." };
+  }
+
+  if (list.routeCoordinates !== undefined && !toRouteCoordinates(list.routeCoordinates)) {
+    return { ok: false as const, error: "Route geometry must contain 2 to 5,000 valid latitude/longitude points." };
   }
 
   const stopTree: Array<{ stop: GuideStop; depth: number }> = stops.map((stop) => ({ stop, depth: 1 }));

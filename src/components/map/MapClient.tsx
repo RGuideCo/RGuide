@@ -2342,6 +2342,8 @@ function createGuideRouteData(
   const focusedNestedStop =
     selectedParentStop ??
     activeGuide?.stops.find((stop) => visibleNestedStopParentIds.includes(stop.id) && (stop.places?.length ?? 0) > 1);
+  const explicitGuideRouteCoordinates =
+    activeGuide?.routeCoordinates?.map(([lat, lng]) => [lng, lat] as [number, number]) ?? [];
   const explicitNestedRouteCoordinates =
     focusedNestedStop?.routeCoordinates?.map(([lat, lng]) => [lng, lat] as [number, number]) ?? [];
   const placeSequenceRouteCoordinates =
@@ -2356,7 +2358,8 @@ function createGuideRouteData(
       : [];
   const shouldShowNestedRoute = focusedNestedRouteCoordinates.length > 1;
   const shouldShowGuideRoute =
-    activeGuide?.creator.id === "user-rguide-history" && (activeGuide.stops?.length ?? 0) > 1;
+    explicitGuideRouteCoordinates.length > 1 ||
+    (activeGuide?.creator.id === "user-rguide-history" && (activeGuide.stops?.length ?? 0) > 1);
 
   if ((!shouldShowGuideRoute && !shouldShowNestedRoute) || !activeGuide) {
     return {
@@ -2369,11 +2372,15 @@ function createGuideRouteData(
   const baseRouteCoordinates =
     shouldShowNestedRoute
       ? focusedNestedRouteCoordinates
+      : explicitGuideRouteCoordinates.length > 1
+      ? explicitGuideRouteCoordinates
       : activeGuide.id === "list-r-history-magellan-elcano-circumnavigation"
       ? getMagellanElcanoRouteCoordinates(activeGuide)
       : activeGuide.stops.map((stop) => [stop.coordinates[1], stop.coordinates[0]] as [number, number]);
   const routeCoordinates =
     shouldShowNestedRoute && explicitNestedRouteCoordinates.length > 1
+      ? baseRouteCoordinates
+      : explicitGuideRouteCoordinates.length > 1
       ? baseRouteCoordinates
       : activeGuide.id === "list-r-history-magellan-elcano-circumnavigation"
       ? baseRouteCoordinates
