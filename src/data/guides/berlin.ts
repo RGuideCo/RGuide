@@ -1812,7 +1812,7 @@ const stops: Record<string, GuideStop> = {
     "berlin-route-bornholmer-strasse-crossing",
     "Platz des 9. November 1989",
     [52.5548003, 13.4008435],
-    "Below the Bösebrücke, this open-air memorial marks Bornholmer Strasse, the first border crossing to open on 9 November 1989. Photographs and a dated timeline keep the night human: confused orders, mounting pressure, then thousands crossing without violence. The site is exposed and concise, so pair it with the longer Wall trail rather than expecting a museum.",
+    "Beneath the Bösebrücke, this open-air memorial marks Bornholmer Strasse, the first border crossing to open on 9 November 1989. Photographs and a minute-by-minute timeline show contradictory orders, mounting pressure, then thousands of people crossing without violence. The display is modest: no replica checkpoint, just photographs beneath the bridge and the former crossing overhead.",
     {
       category: "Routes",
       venueKind: "culture",
@@ -1840,7 +1840,7 @@ const stops: Record<string, GuideStop> = {
     "berlin-route-guenter-litfin-memorial",
     "Günter Litfin Memorial",
     [52.5337183, 13.3693053],
-    "A surviving GDR command post at Kieler Eck now tells the story of Günter Litfin, shot while trying to swim across the nearby Humboldthafen in August 1961. The cramped tower makes the machinery of surveillance physical, but access is seasonal, limited to fifteen people, and not wheelchair-accessible. Visit only during the foundation's published weekend window.",
+    "Inside a surviving GDR command post at Kieler Eck, the memorial tells the story of Günter Litfin, shot nearby while trying to swim across the Humboldthafen in August 1961. The cramped tower turns the surveillance apparatus back into rooms, sightlines, and border guards. Weekend opening is seasonal, admission is capped at fifteen people, and the tower is not wheelchair-accessible.",
     {
       category: "Routes",
       venueKind: "culture",
@@ -1869,7 +1869,7 @@ const stops: Record<string, GuideStop> = {
     "berlin-route-parliament-of-trees",
     "Parliament of Trees Against War and Violence",
     [52.5212579, 13.3774442],
-    "Ben Wagin began this living memorial in the former death strip in 1990, combining sixteen trees, stones, texts, sculpture, and painted Wall remnants opposite the Reichstag. It is intimate and deliberately unruly beside the controlled government quarter. Public entry is narrow and seasonal, and the grounds are not wheelchair-accessible.",
+    "Artist Ben Wagin began this living memorial in the former death strip in 1990, planting sixteen trees among stones, texts, sculptures, and painted Wall remnants opposite the Reichstag. Its improvised materials refuse the polished solemnity of the government quarter across the street. Public hours are limited and seasonal, and the grounds are not wheelchair-accessible.",
     {
       category: "Routes",
       venueKind: "culture",
@@ -1898,7 +1898,7 @@ const stops: Record<string, GuideStop> = {
     "berlin-route-potsdamer-platz-wall-remains",
     "Berlin Wall Remains at Potsdamer Platz",
     [52.5097809, 13.3765446],
-    "Several original Wall slabs stand near the Potsdamer Platz station, while a double row of cobblestones marks the former border across a square once emptied into a vast death strip. The fragments are no longer in their exact original positions, which the panels make clear. Read the ground line as seriously as the concrete; the rebuilt skyline is part of the evidence.",
+    "Several original Wall slabs stand near Potsdamer Platz station, though the panels acknowledge that they are no longer in their exact positions. The double row of cobblestones is the sharper evidence, cutting through a district that the border once emptied into wasteland. Today's glass towers make the speed and scale of Berlin's post-reunification rebuild impossible to miss.",
     {
       category: "Routes",
       venueKind: "culture",
@@ -1927,7 +1927,7 @@ const stops: Record<string, GuideStop> = {
     "berlin-route-checkpoint-charlie",
     "Checkpoint Charlie",
     [52.5074321, 13.3903814],
-    "Checkpoint Charlie is the Wall's most overproduced address: the guardhouse is a replica, commerce crowds the corners, and the real border line is easier to miss than the souvenir signs. It still matters because American and Soviet tanks faced one another here in October 1961. Read the free outdoor panels, find the cobblestone trace, and keep the reconstruction separate from the history.",
+    "Checkpoint Charlie has been packaged almost beyond recognition: the guardhouse is a replica, souvenir shops crowd the corners, and the actual border line is easy to miss. The history underneath the commerce is an October 1961 confrontation in which American and Soviet tanks faced one another across Friedrichstrasse. The free outdoor chronology and cobblestone trace tell that story more honestly than the reconstruction.",
     {
       category: "Routes",
       venueKind: "culture",
@@ -4347,11 +4347,11 @@ const citywideGuides: GuideSpec[] = [
       "eastSideGallery",
     ],
     stopDescriptions: {
-      mauerpark: "Mauerpark occupies land that once formed part of the border strip between Wedding and Prenzlauer Berg, with surviving hinterland-wall sections still visible above the park. Sunday crowds, karaoke, and the flea market can bury that history under noise, so look for the Wall traces before the lawn fills. The change from controlled ground to public stage is the point.",
-      wallMemorial: "The Berlin Wall Memorial on Bernauer Strasse is where the border system becomes legible: preserved outer wall, patrol road, signal fence, watchtower, and death strip held together across the original terrain. The 1.4-kilometer grounds reward slow reading rather than a photograph. Use the documentation center's viewing platform before walking the outdoor exhibition.",
-      brandenburgGate: "Brandenburg Gate stood inside the sealed border zone, inaccessible from either side and framed by the Wall just to its west. Its later life as a reunification symbol can make the years of enforced emptiness feel inevitable, which they were not. Stand on Pariser Platz, then follow the cobblestone border trace south along Ebertstrasse.",
-      topography: "Along Niederkirchnerstrasse, roughly 200 meters of original outer Wall survive beside the Topography of Terror grounds. The juxtaposition is brutal and useful: the physical border of the GDR sits on land where the Gestapo and SS once administered Nazi terror. The Wall segment is outdoors; the free documentation center adds a different, heavier history and is open daily.",
-      eastSideGallery: "The East Side Gallery preserves 1.3 kilometers of the former inner wall, painted by 118 artists from 21 countries after the border opened. That distinction matters: this was the side facing East Berlin, not the western graffiti face. Walk the full river edge early or late, when the murals and the scale can register without the densest crowds.",
+      mauerpark: "Mauerpark covers ground that once belonged to the border strip between Wedding and Prenzlauer Berg; sections of the hinterland wall survive above it. On Sundays, karaoke, flea-market stalls, and crowds nearly erase the old geography. That collision is the evidence: terrain built to keep people apart has become one of Berlin's loudest commons.",
+      wallMemorial: "On Bernauer Strasse, the Berlin Wall Memorial preserves the machinery of division: outer wall, patrol road, signal fence, watchtower, and death strip aligned across the original ground. The documentation center's viewing platform exposes the whole geometry at once; the 1.4-kilometer outdoor exhibition fills it with escape attempts, demolished homes, and individual deaths.",
+      brandenburgGate: "From 1961 to 1989, Brandenburg Gate stood inside the sealed border zone, cut off by the Wall just to its west. A square built for ceremony became controlled emptiness, then returned as a national stage after reunification. The double row of cobblestones along Ebertstrasse records where that rupture actually ran.",
+      topography: "Roughly 200 meters of original outer Wall survive along Niederkirchnerstrasse beside the Topography of Terror. The two histories occupy the same ground but are not interchangeable: the concrete records the GDR border regime, while the free documentation center examines the Gestapo and SS institutions that operated here under National Socialism. Both demand precision, not atmosphere.",
+      eastSideGallery: "The East Side Gallery preserves 1.3 kilometers of the former inner wall, painted in 1990 by 118 artists from 21 countries. This was the concrete facing East Berlin, not the spontaneous graffiti surface seen from the West, and the murals form a deliberate international response to the border's collapse. At riverfront scale, it reads as history claimed in public rather than a strip of isolated photo backdrops.",
     },
   },
 ];

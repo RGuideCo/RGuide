@@ -29,6 +29,17 @@ const GENERIC_DESCRIPTION_PATTERNS = [
   /\bperfect for (locals|tourists|visitors) alike\b/i,
   /\boffers a unique\b/i,
   /\bis known for its delicious\b/i,
+  /\bpair (?:it|this|that|the (?:stop|visit|place|venue))(?: (?:carefully|deliberately|well))? with\b/i,
+  /\buse (?:it|this|that) (?:before|after)\b/i,
+  /\bfollow (?:it|this|that) (?:with|by)\b/i,
+  /\b(?:start|end) here\b/i,
+  /\bmake (?:it|this|that) (?:your )?(?:first|last) stop\b/i,
+  /\bsave (?:it|this|that) for (?:before|after|later)\b/i,
+  /\b(?:set|sets|setting) the pace\b/i,
+  /\bkeeps? (?:the|your) (?:day|night|route) moving\b/i,
+  /\banchors? (?:the|your) (?:day|night|route)\b/i,
+  /\bworks? (?:well )?(?:before|after)\b/i,
+  /\bthe perfect follow-up\b/i,
 ];
 const BANNED_SEO_SLUG_PATTERNS = [
   /\bcitywide\b/i,

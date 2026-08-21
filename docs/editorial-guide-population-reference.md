@@ -542,7 +542,7 @@ Keep search fields stable and generic; make visible guide copy editorial.
 
 Editorial voice standard:
 
-- Write with Anthony Bourdain curiosity and TripAdvisor usefulness: alert to place, appetite, craft, history, and contradiction, while remaining accurate enough to help someone decide. This is a tonal shorthand, not permission to imitate a person or manufacture swagger.
+- Write with the curiosity, candor, human attention, and appetite associated with strong Bourdain-era travel television, edited with the accuracy and restraint of a serious travel desk. This is a method, not permission to imitate a persona, borrow signature phrasing, or manufacture swagger.
 - Lead with the venue itself. Name what it cooks, pours, plays, exhibits, stages, rents, or provides before discussing itinerary fit.
 - Use real facts from source pages: signature dishes, cooking method, music format, room type, collection focus, amenities, crowd, reservation posture, price tradeoff, design, or view.
 - Make editorial judgments from those facts. A description may be opinionated, but the opinion must point back to something observable.
@@ -551,6 +551,58 @@ Editorial voice standard:
 - Direct advice should concern the place itself: what to order, which room to book, where to sit, which performance format to choose, or when its own service changes. Do not pad descriptions with instructions to visit before or after another stop.
 - Avoid tourist-board adjectives, review-site filler, keyword chains, fake insider language, and cute metaphors that obscure what the place offers.
 - Do not use meta-copy such as `earns its spot`, `belongs in this guide`, `gives the route`, `anchors the day`, `use it as a stop`, `the night needs`, or `before/after nearby plans`.
+
+### Transcript-Derived Voice Method
+
+This standard was sharpened through a comparative read of CNN transcripts for the Detroit, Tokyo, Iran, Beirut, Manila, Chicago, and Sicily episodes of *Parts Unknown*. Keep the analysis in the runbook; do not copy episode transcripts, monologues, signature lines, or a host persona into guide data.
+
+Reference transcripts:
+
+- Detroit: https://transcripts.cnn.com/show/abpu/date/2013-11-16/segment/02
+- Tokyo: https://transcripts.cnn.com/show/abpu/date/2013-11-03/segment/02
+- Iran: https://transcripts.cnn.com/show/abpu/date/2015-03-11/segment/01
+- Beirut: https://transcripts.cnn.com/show/abpu/date/2015-12-10/segment/01
+- Manila: https://transcripts.cnn.com/show/abpu/date/2016-04-24/segment/02
+- Chicago: https://transcripts.cnn.com/show/abpu/date/2016-05-01/segment/01
+- Sicily: https://transcripts.cnn.com/show/abpu/date/2014-12-18/segment/01
+
+What the transcript study contributes to R Guide:
+
+- Start from a tension the facts can support: reputation versus reality, polish versus labor, spectacle versus substance, public myth versus physical evidence. Avoid the empty `old meets new` version of contrast.
+- Put concrete nouns first. Name the counter, dish, room, wall, collection, landscape, worker, ritual, or piece of machinery before reaching for mood.
+- Move from evidence to judgment. A useful stop description usually has a source-backed fact, a clear editorial reading of that fact, and only then a material caveat.
+- Let people and consequences remain visible. Food has cooks, markets have workers, music rooms have performers, and memorials have named systems and human costs. Never invent dialogue, behavior, or local sentiment to create color.
+- Admit complexity without dissolving into neutrality. Contradictory facts can sit beside each other; the prose should still say what is commercialized, moving, compromised, overpriced, difficult, or genuinely excellent and explain why.
+- Aim skepticism upward: at power, official mythology, tourism packaging, prestige, price, and the writer's own assumptions. Do not use locals, victims, service workers, poverty, or cultural difference as the punch line.
+- Use humor sparingly and only when the facts have already done the work. On memorial, conflict, atrocity, or disaster sites, trade wit for precision and moral clarity; suffering is never atmosphere.
+- Vary sentence length when the subject earns it, but do not imitate television voice-over fragments or force a hard-boiled cadence. R Guide speaks as an editorial desk, not as a fictional host.
+- Keep the strongest observation and delete the performance around it. Profanity, faux cynicism, macho posturing, and decorative gloom are not substitutes for judgment.
+
+Hard ban on itinerary choreography in stop descriptions:
+
+- Do not write `pair it with`, `pair this with`, `use this before`, `use it after`, `follow it with`, `start here`, `end here`, `save this for later`, `make this your first stop`, or `make it the last stop`.
+- Do not write that a venue `sets the pace`, `keeps the day moving`, `keeps the night moving`, `anchors the route`, `anchors the day`, `works well before/after`, or is `the perfect follow-up`.
+- Do not replace those phrases with a fresh metaphor for the same imagined itinerary. State the venue fact, observable tradeoff, or access constraint directly.
+- A nearby landmark may be named only when location materially changes the decision, such as transit access, a genuine edge-of-neighborhood case, or walking access from a hotel. Proximity alone is not editorial value.
+
+Four-pass sentence test:
+
+1. **Fact:** What exact, source-backed detail does the sentence add?
+2. **Judgment:** What does that detail reveal about the place?
+3. **Decision:** Does any advice change admission, booking, cost, access, timing, comfort, or what is actually ordered or seen?
+4. **Swap:** If another venue name could be dropped into the sentence without making it false or strange, rewrite or delete it.
+
+Bad:
+
+```text
+Use the viewing platform before walking the exhibition, then pair it with another Wall stop nearby.
+```
+
+Better:
+
+```text
+The viewing platform exposes the outer wall, patrol road, signal fence, watchtower, and death strip as one engineered system.
+```
 
 Good pattern:
 

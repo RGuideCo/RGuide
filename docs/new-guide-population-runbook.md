@@ -146,9 +146,12 @@ Description rules:
 - lead with what the venue cooks, pours, plays, exhibits, stages, rents, or provides;
 - name the source-backed draw: dish, technique, music programming, room, collection, amenities, crowd, price tradeoff, booking posture, view, or design;
 - add a caveat only when it materially changes the visit, such as a reservation, queue, door policy, event calendar, accessibility issue, seasonal opening, or room/noise tradeoff;
-- write with Anthony Bourdain curiosity and TripAdvisor usefulness: textured, opinionated, and specific, but still practical for someone deciding where to go;
+- apply the transcript-derived voice method in `docs/editorial-guide-population-reference.md`: concrete observation, human stakes, fact-backed contradiction, clear judgment, and practical accuracy without imitating a host persona;
 - do not use generic keyword chains, tourist-board wording, repeated sentence frames, or phrases like `hidden gem`, `must-see`, or `something for everyone`;
 - do not use selection-role or itinerary filler such as `the pick`, `the stop`, `earns its spot`, `belongs in this guide`, `gives the route`, `anchors the day`, `use it before/after`, or `the night needs`;
+- hard-ban itinerary choreography such as `pair it with`, `pair this with`, `follow it with`, `start here`, `end here`, `save this for later`, `make this your first/last stop`, `sets the pace`, `keeps the day/night moving`, `works well before/after`, or `the perfect follow-up`;
+- run the four-pass fact/judgment/decision/swap test from the copy reference; if a different venue name can replace the real one without breaking the sentence, rewrite or delete it;
+- for memorials, conflict, atrocity, and disaster sites, name the physical evidence, responsible system, and human stakes precisely; do not turn suffering into mood or use victims as material for wit;
 - keep source support, review patterns, map evidence, and selection rationale in evidence fields rather than narrating them in the public description;
 - when the same venue appears in two guides, keep its factual core consistent and add guide-specific copy only when it explains a genuinely different use; do not manufacture variation.
 
