@@ -4,6 +4,7 @@ import { users } from "@/data";
 import { CATEGORIES } from "@/lib/constants";
 import {
   getCityDeepLinkStaticParams,
+  getIndexableListsForCityRoute,
   getLatestGuideLastModified,
   isIndexableEditorialGuide,
   resolveCityDeepLink,
@@ -79,7 +80,7 @@ function getSpanishCityRoutePath(
     : undefined;
   if (route.guide) {
     const guide = spanishGuides.find((candidate) => candidate.id === route.guide?.id);
-    return guide
+    return guide && isIndexableEditorialGuide(guide)
       ? getLocalizedGuidePath(
           "es",
           route.city,
@@ -91,6 +92,14 @@ function getSpanishCityRoutePath(
       : null;
   }
   if (route.category) {
+    const categoryGuides = getIndexableListsForCityRoute(
+      route.city,
+      route.neighborhood,
+      route.category,
+      undefined,
+      spanishGuides,
+    );
+    if (categoryGuides.length < 2) return null;
     return getLocalizedCityCategoryPath(
       "es",
       route.city,
@@ -101,6 +110,14 @@ function getSpanishCityRoutePath(
     );
   }
   if (route.neighborhood) {
+    const neighborhoodGuides = getIndexableListsForCityRoute(
+      route.city,
+      route.neighborhood,
+      undefined,
+      undefined,
+      spanishGuides,
+    );
+    if (neighborhoodGuides.length < 2) return null;
     return getLocalizedCityNeighborhoodPath(
       "es",
       route.city,
@@ -108,6 +125,9 @@ function getSpanishCityRoutePath(
       cityTranslation.slug,
       neighborhoodTranslation?.slug,
     );
+  }
+  if (getIndexableListsForCityRoute(route.city, undefined, undefined, undefined, spanishGuides).length < 1) {
+    return null;
   }
   return getLocalizedCityPath("es", route.city, cityTranslation.slug);
 }

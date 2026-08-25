@@ -1,5 +1,7 @@
 import {
   getCanonicalGuidePath,
+  getIndexableListsForCityRoute,
+  normalizeRouteNeighborhoodName,
   resolveCityDeepLink,
   type CityDeepLinkResolution,
 } from "@/lib/deep-link-routes";
@@ -19,6 +21,36 @@ import {
 import { slugify } from "@/lib/utils";
 import type { DestinationRouteTranslation } from "@/lib/i18n/types";
 import type { City, Continent, MapList } from "@/types";
+
+function normalizePlaceLabel(value?: string | null) {
+  return (value ?? "")
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/\s+/g, " ")
+    .trim()
+    .toLocaleLowerCase();
+}
+
+function getLocalizedGuideTitle(
+  guide: MapList,
+  cityName: string,
+  neighborhoodName?: string,
+) {
+  const title = guide.seoTitle?.trim() || guide.title;
+  const normalizedTitle = normalizePlaceLabel(title);
+  const normalizedCity = normalizePlaceLabel(cityName);
+  const normalizedNeighborhood = normalizePlaceLabel(neighborhoodName);
+
+  if (normalizedCity && normalizedTitle.includes(normalizedCity)) {
+    return title;
+  }
+  if (normalizedNeighborhood && normalizedTitle.includes(normalizedNeighborhood)) {
+    return `${title}, ${cityName}`;
+  }
+
+  const placeLabel = neighborhoodName ? `${neighborhoodName}, ${cityName}` : cityName;
+  return `${title} en ${placeLabel}`;
+}
 
 function normalizeLocalizedCitySegments(
   locale: AppLocale,
@@ -142,36 +174,54 @@ function localizeResolution(
   localizedNeighborhoodName?: string,
 ): CityDeepLinkResolution {
   const dictionary = getDictionary(locale);
+  const cityName = localizedCityName ?? route.city.name;
+  const neighborhoodName =
+    route.guide?.location.neighborhood ?? localizedNeighborhoodName ?? route.neighborhood?.name;
   const placeLabel = route.neighborhood
-    ? `${localizedNeighborhoodName ?? route.neighborhood.name}, ${localizedCityName ?? route.city.name}`
-    : localizedCityName ?? route.city.name;
-  const canonicalPath = route.guide
-    ? getLocalizedGuidePath(locale, route.city, route.guide, route.neighborhood, localizedCitySlug, localizedNeighborhoodSlug)
-    : route.category
-      ? getLocalizedCityCategoryPath(locale, route.city, route.category, route.neighborhood, localizedCitySlug, localizedNeighborhoodSlug)
-      : route.neighborhood
-        ? getLocalizedCityNeighborhoodPath(locale, route.city, route.neighborhood, localizedCitySlug, localizedNeighborhoodSlug)
-        : getLocalizedCityPath(locale, route.city, localizedCitySlug);
+    ? `${neighborhoodName}, ${cityName}`
+    : cityName;
   const matchingGuides = route.guide
     ? [route.guide]
     : guides.filter((guide) => {
         if (guide.location.city !== route.city.name) return false;
         if (route.category && guide.category !== route.category) return false;
-        if (route.neighborhood && guide.location.neighborhood !== route.neighborhood.name) return false;
+        if (
+          route.neighborhood &&
+          normalizeRouteNeighborhoodName(guide.location.neighborhood) !==
+            normalizeRouteNeighborhoodName(route.neighborhood.name)
+        ) return false;
         return true;
       });
+  const soleCategoryGuide = !route.guide && route.category && matchingGuides.length === 1
+    ? matchingGuides[0]
+    : undefined;
+  const canonicalGuide = route.guide ?? soleCategoryGuide;
+  const canonicalPath = canonicalGuide
+    ? getLocalizedGuidePath(
+        locale,
+        route.city,
+        canonicalGuide,
+        route.neighborhood,
+        localizedCitySlug,
+        localizedNeighborhoodSlug,
+      )
+    : route.category
+      ? getLocalizedCityCategoryPath(locale, route.city, route.category, route.neighborhood, localizedCitySlug, localizedNeighborhoodSlug)
+      : route.neighborhood
+        ? getLocalizedCityNeighborhoodPath(locale, route.city, route.neighborhood, localizedCitySlug, localizedNeighborhoodSlug)
+        : getLocalizedCityPath(locale, route.city, localizedCitySlug);
   const guideCount = matchingGuides.length;
   const stopCount = matchingGuides.reduce((total, guide) => total + guide.stops.length, 0);
   const h1 = route.guide
-    ? route.guide.seoTitle ?? route.guide.title
+    ? getLocalizedGuideTitle(route.guide, cityName, neighborhoodName)
     : route.category
       ? dictionary.categoryGuidesTitle(route.category, placeLabel)
       : route.neighborhood
         ? dictionary.neighborhoodGuidesTitle(
-            localizedNeighborhoodName ?? route.neighborhood.name,
-            localizedCityName ?? route.city.name,
+            neighborhoodName ?? route.neighborhood.name,
+            cityName,
           )
-        : dictionary.cityGuidesTitle(localizedCityName ?? route.city.name);
+        : dictionary.cityGuidesTitle(cityName);
   const intro = route.guide
     ? route.guide.seoDescription ?? route.guide.description
     : route.category || route.neighborhood
@@ -231,6 +281,16 @@ export function getEnglishAlternateForLocalizedCityRoute(
 ) {
   if (!route.guide) {
     if (route.category) {
+      const categoryGuides = getIndexableListsForCityRoute(
+        route.city,
+        route.neighborhood,
+        route.category,
+        undefined,
+        englishGuides,
+      );
+      if (categoryGuides.length === 1) {
+        return getCanonicalGuidePath(route.city, categoryGuides[0], route.neighborhood, englishGuides);
+      }
       return getLocalizedCityCategoryPath(DEFAULT_LOCALE, route.city, route.category, route.neighborhood);
     }
     if (route.neighborhood) {
