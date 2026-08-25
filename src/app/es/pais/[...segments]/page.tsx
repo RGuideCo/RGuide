@@ -20,6 +20,7 @@ import { serializeJsonForHtml } from "@/lib/serialize-json";
 import { slugify } from "@/lib/utils";
 
 interface SpanishCountryPageProps { params: Promise<{ segments: string[] }> }
+export const dynamic = "force-static";
 export const revalidate = 300;
 
 async function loadRoute(segments: string[]) {

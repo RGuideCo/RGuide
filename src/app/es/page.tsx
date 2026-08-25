@@ -11,6 +11,10 @@ import { getAbsoluteHref } from "@/lib/routes";
 import { getServerEditorialGuides } from "@/lib/server-editorial-guides";
 import { serializeJsonForHtml } from "@/lib/serialize-json";
 
+// Localized pages are generated on first request and then served through ISR.
+// Without an explicit static mode, Next renders these Supabase-backed routes on
+// every request, which is unnecessarily slow for crawlers and visitors.
+export const dynamic = "force-static";
 export const revalidate = 300;
 
 export async function generateMetadata(): Promise<Metadata> {

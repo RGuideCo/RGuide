@@ -26,6 +26,9 @@ interface SpanishCategoryPageProps {
   params: Promise<{ category: string }>;
 }
 
+export const dynamic = "force-static";
+export const revalidate = 300;
+
 const CATEGORY_INTROS: Record<ListCategory, string> = {
   Food: "Explora guías de restaurantes y comida por ciudad y barrio: mercados, casas de comidas, barras informales y mesas que justifican el viaje.",
   Nightlife: "Encuentra bares, pubs, clubes, coctelerías y salas de música organizados según la ciudad, el barrio y el tipo de noche que quieras vivir.",

@@ -26,6 +26,7 @@ import { slugify } from "@/lib/utils";
 import type { Continent, MapList } from "@/types";
 
 interface SpanishContinentPageProps { params: Promise<{ segments: string[] }> }
+export const dynamic = "force-static";
 export const revalidate = 300;
 
 function getSpanishContinentCopy(continent: Continent, guides: MapList[], placeName: string) {
