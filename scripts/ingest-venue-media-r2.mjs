@@ -14,6 +14,7 @@ import {
   createR2ImageRenditions,
   serializeR2ImageRenditions,
 } from "./lib/r2-image-renditions.mjs";
+import { assertAllowedMediaSourceUrl } from "./lib/media-source-policy.mjs";
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const IMAGE_EXT_BY_TYPE = new Map([
@@ -814,6 +815,7 @@ async function fetchImage(url) {
 }
 
 export async function resolveSource(sourceUrl) {
+  assertAllowedMediaSourceUrl(sourceUrl);
   const wikimedia = await resolveWikimediaSource(sourceUrl);
   return {
     resolvedSourceUrl: wikimedia?.canonicalUrl ?? sourceUrl,

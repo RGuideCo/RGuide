@@ -13,7 +13,10 @@ function run(command, args) {
 }
 
 const args = process.argv.slice(2);
-const skipMediaEnforcement = args.includes("--copy-only") || args.includes("--title-only");
+const skipMediaEnforcement =
+  args.includes("--copy-only") ||
+  args.includes("--title-only") ||
+  args.includes("--keep-draft");
 
 await run(process.execPath, ["scripts/backfill-normalized-editorial-guides.mjs", ...args]);
 if (!skipMediaEnforcement) {

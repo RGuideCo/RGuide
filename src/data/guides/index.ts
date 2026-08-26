@@ -75,6 +75,7 @@ import { torontoCitywideGuides } from "@/data/guides/toronto";
 import { veniceCitywideGuides } from "@/data/guides/venice";
 import { viennaCitywideGuides } from "@/data/guides/vienna";
 import { wellingtonCitywideGuides } from "@/data/guides/wellington";
+import { warsawCitywideGuides } from "@/data/guides/warsaw";
 import { zurichCitywideGuides } from "@/data/guides/zurich";
 import {
   tokyoCitywideGuides,
@@ -145,6 +146,7 @@ export const editorialGuideLists: MapList[] = applyGuideMediaCache(enrichGuidesC
   ...veniceCitywideGuides,
   ...viennaCitywideGuides,
   ...wellingtonCitywideGuides,
+  ...warsawCitywideGuides,
   ...zurichCitywideGuides,
   ...amsterdamNeighborhoodGuides,
   ...amsterdamCitywideGuides,

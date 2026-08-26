@@ -611,13 +611,30 @@ function parsePublishArgs(argv) {
   const dryRun = argv.includes("--dry-run") || argv.includes("--check");
   const copyOnly = argv.includes("--copy-only");
   const titleOnly = argv.includes("--title-only");
+  const keepDraft = argv.includes("--keep-draft");
   if (copyOnly && titleOnly) {
     throw new Error("Use either --copy-only or --title-only, not both.");
   }
   const filterArgs = argv.filter(
-    (arg) => !["--dry-run", "--check", "--copy-only", "--title-only"].includes(arg),
+    (arg) => !["--dry-run", "--check", "--copy-only", "--title-only", "--keep-draft"].includes(arg),
   );
-  return { dryRun, copyOnly, titleOnly, filters: parseEditorialGuideArgs(filterArgs) };
+  return { dryRun, copyOnly, titleOnly, keepDraft, filters: parseEditorialGuideArgs(filterArgs) };
+}
+
+async function keepSelectedGuidesDraft(client, selectedGuides) {
+  const legacyIds = selectedGuides.map((guide) => guide.id);
+  if (!legacyIds.length) return 0;
+
+  const { rowCount } = await client.query(
+    `update public.entries
+     set status = 'draft'::public.rguide_entry_status,
+         updated_at = now()
+     where source_table = 'editorial_guides'
+       and legacy_id = any($1::text[])
+       and status is distinct from 'draft'::public.rguide_entry_status`,
+    [legacyIds],
+  );
+  return rowCount ?? 0;
 }
 
 function logPhase(message, metadata = undefined) {
@@ -2593,7 +2610,7 @@ async function main() {
   loadEnvFile(path.join(ROOT, ".env.local"));
   loadEnvFile(path.join(ROOT, ".env"));
 
-  const { dryRun, copyOnly, titleOnly, filters } = parsePublishArgs(process.argv.slice(2));
+  const { dryRun, copyOnly, titleOnly, keepDraft, filters } = parsePublishArgs(process.argv.slice(2));
   requireScopedFilters(filters);
 
   const databaseUrl = process.env.SUPABASE_DB_URL ?? process.env.SUPABASE_DATABASE_URL ?? process.env.DATABASE_URL;
@@ -2614,6 +2631,7 @@ async function main() {
     dryRun,
     copyOnly,
     titleOnly,
+    keepDraft,
   });
 
   const client = new pg.Client({
@@ -2650,6 +2668,10 @@ async function main() {
       logPhase("phase destination_maps:done");
       verification = await publishBatched(client, maps, selectedGuides, stats);
     }
+    if (keepDraft) {
+      const draftEntries = await keepSelectedGuidesDraft(client, selectedGuides);
+      logPhase("phase keep_draft:done", { affected: draftEntries });
+    }
     if (dryRun) {
       await client.query("rollback");
       logPhase("dry run rolled back");
@@ -2662,6 +2684,7 @@ async function main() {
       dryRun,
       copyOnly,
       titleOnly,
+      keepDraft,
       selectedGuides: selectedGuides.length,
       stats,
       verification,
