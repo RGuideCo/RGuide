@@ -41,6 +41,7 @@ import { florenceCitywideGuides } from "@/data/guides/florence";
 import { hanoiCitywideGuides } from "@/data/guides/hanoi";
 import { hamburgCitywideGuides } from "@/data/guides/hamburg";
 import { hongKongCitywideGuides } from "@/data/guides/hong-kong";
+import { houstonCitywideGuides } from "@/data/guides/houston";
 import { istanbulCitywideGuides } from "@/data/guides/istanbul";
 import { kyotoCitywideGuides } from "@/data/guides/kyoto";
 import { kualaLumpurCitywideGuides } from "@/data/guides/kuala-lumpur";
@@ -123,6 +124,7 @@ export const editorialGuideLists: MapList[] = applyGuideMediaCache(enrichGuidesC
   ...hanoiCitywideGuides,
   ...hamburgCitywideGuides,
   ...hongKongCitywideGuides,
+  ...houstonCitywideGuides,
   ...kyotoCitywideGuides,
   ...kualaLumpurCitywideGuides,
   ...lasVegasCitywideGuides,
