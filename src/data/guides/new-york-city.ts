@@ -96,7 +96,7 @@ const images = {
   sunnys: "https://images.getbento.com/accounts/3c990d71fb6550eb15bbf0d8c635d5e4/media/images/36207facade-truck.jpg?w=1200&fit=max&auto=compress,format&cs=origin",
   fraunces: "https://static.spotapps.co/website_images/ab_websites/2802_website/hideout_bar_bg_new.jpg",
   oldTownBar: commons("Old Town Bar & Restaurant, Manhattan, New York City (4026975387).jpg"),
-  rudys: commons("Rudy's Bar and Grill New York City.jpg"),
+  rudys: "https://newyorkdrinksguide.com/cont/blog/imagePot/12022021023132000000-61a8846439495.jpg",
   bemelmans: commons("Bemelmans Bar at The Carlyle.jpg"),
   deadRabbit: "https://images.squarespace-cdn.com/content/v1/685080dd8e7237157b3c865e/25ccf4aa-aa73-4acd-b9dd-e221903daf66/TDRAUXSIGN4-1.webp?format=1000w",
   employeesOnly: "https://www.employeesonlynyc.com/content/3-galleries/03-space/space_04.jpg",

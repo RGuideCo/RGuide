@@ -25,6 +25,7 @@ import {
 import { athensCitywideGuides } from "@/data/guides/athens";
 import { aucklandCitywideGuides } from "@/data/guides/auckland";
 import { bangkokCitywideGuides } from "@/data/guides/bangkok";
+import { belgradeCitywideGuides } from "@/data/guides/belgrade";
 import { buenosAiresCitywideGuides } from "@/data/guides/buenos-aires";
 import { cairoCitywideGuides } from "@/data/guides/cairo";
 import { capeTownCitywideGuides } from "@/data/guides/cape-town";
@@ -48,6 +49,7 @@ import { kualaLumpurCitywideGuides } from "@/data/guides/kuala-lumpur";
 import { lasVegasCitywideGuides } from "@/data/guides/las-vegas";
 import { limaCitywideGuides } from "@/data/guides/lima";
 import { lisbonCitywideGuides } from "@/data/guides/lisbon";
+import { lagosCitywideGuides } from "@/data/guides/lagos";
 import { losAngelesCitywideGuides } from "@/data/guides/los-angeles";
 import { miamiCitywideGuides } from "@/data/guides/miami";
 import { mexicoCityCitywideGuides } from "@/data/guides/mexico-city";
@@ -63,6 +65,7 @@ import { newYorkCityCitywideGuides } from "@/data/guides/new-york-city";
 import { newYorkBoroughFoodStayNightlifeGuides } from "@/data/guides/new-york-boroughs";
 import { orlandoCitywideGuides } from "@/data/guides/orlando";
 import { osakaCitywideGuides } from "@/data/guides/osaka";
+import { osloCitywideGuides } from "@/data/guides/oslo";
 import { pragueCitywideGuides } from "@/data/guides/prague";
 import { romeGuides } from "@/data/guides/rome";
 import { sanFranciscoGuides } from "@/data/guides/san-francisco";
@@ -70,9 +73,12 @@ import { seoulCitywideGuides } from "@/data/guides/seoul";
 import { santiagoCitywideGuides } from "@/data/guides/santiago";
 import { shanghaiCitywideGuides } from "@/data/guides/shanghai";
 import { singaporeCitywideGuides } from "@/data/guides/singapore";
+import { stockholmCitywideGuides } from "@/data/guides/stockholm";
 import { sydneyCitywideGuides } from "@/data/guides/sydney";
 import { taipeiCitywideGuides } from "@/data/guides/taipei";
 import { torontoCitywideGuides } from "@/data/guides/toronto";
+import { tbilisiCitywideGuides } from "@/data/guides/tbilisi";
+import { tiranaCitywideGuides } from "@/data/guides/tirana";
 import { veniceCitywideGuides } from "@/data/guides/venice";
 import { viennaCitywideGuides } from "@/data/guides/vienna";
 import { wellingtonCitywideGuides } from "@/data/guides/wellington";
@@ -110,12 +116,14 @@ export const editorialGuideLists: MapList[] = applyGuideMediaCache(enrichGuidesC
   ...globalGuides,
   ...istanbulCitywideGuides,
   ...lisbonCitywideGuides,
+  ...lagosCitywideGuides,
   ...pragueCitywideGuides,
   ...tokyoNeighborhoodGuides,
   ...tokyoCitywideGuides,
   ...barcelonaCoreGuides,
   ...barcelonaSeoQueryGuides,
   ...bangkokCitywideGuides,
+  ...belgradeCitywideGuides,
   ...buenosAiresCitywideGuides,
   ...cairoCitywideGuides,
   ...capeTownCitywideGuides,
@@ -130,6 +138,7 @@ export const editorialGuideLists: MapList[] = applyGuideMediaCache(enrichGuidesC
   ...lasVegasCitywideGuides,
   ...limaCitywideGuides,
   ...osakaCitywideGuides,
+  ...osloCitywideGuides,
   ...berlinNeighborhoodGuides,
   ...berlinCitywideGuides,
   ...copenhagenCitywideGuides,
@@ -142,9 +151,12 @@ export const editorialGuideLists: MapList[] = applyGuideMediaCache(enrichGuidesC
   ...santiagoCitywideGuides,
   ...shanghaiCitywideGuides,
   ...singaporeCitywideGuides,
+  ...stockholmCitywideGuides,
   ...sydneyCitywideGuides,
   ...taipeiCitywideGuides,
   ...torontoCitywideGuides,
+  ...tbilisiCitywideGuides,
+  ...tiranaCitywideGuides,
   ...veniceCitywideGuides,
   ...viennaCitywideGuides,
   ...wellingtonCitywideGuides,

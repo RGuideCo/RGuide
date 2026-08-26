@@ -86,7 +86,7 @@ const images = {
   boilerman: "https://boilerman-hafenamt.de/wp-content/uploads/sites/9/2023/11/118_2_25hours_Hotel_Altes_Hafenamt_The_Boilerman_Bar_gross-5.jpg",
   dacaio: "https://www.thegeorge-hotel.de/site/assets/files/67661/the-george-hotel-hamburg_bar-dacaio_moods_01.1760x1100.jpg",
   rabbithole: "https://www.the-rabbithole.de/cdn/shop/files/DSC01175.jpg?v=1761732813",
-  collab: "https://static1.squarespace.com/static/6448e200cd7c5e07776aafff/t/64841695347a9a7820fdd463/1686378133971/Collab_frame_purple.png?format=1500w",
+  collab: "https://images.squarespace-cdn.com/content/v1/6448e200cd7c5e07776aafff/60431404-47fc-4bb6-b10b-5a17a6b76adf/230629-5146.jpg?format=1000w",
   liquidGarden: "https://static.wixstatic.com/media/419118_c2cf22d777d54d9588b5a29459e4629e~mv2.png/v1/fill/w_2500,h_1395,al_c/419118_c2cf22d777d54d9588b5a29459e4629e~mv2.png",
   pelican: "https://static.wixstatic.com/media/5fdd45_0c72486e14b04d13ab53ff420e21c884~mv2.jpg/v1/fill/w_1470,h_2210,al_c,q_90/DSC02191.jpg",
   kunsthalle: "https://upload.wikimedia.org/wikipedia/commons/a/a3/Galerie_der_Gegenwart_der_Hamburger_Kunsthalle_in_Hamburg-Altstadt.jpg",

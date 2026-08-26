@@ -25,6 +25,7 @@ This repository is rGuide, the travel guide and destination website. Do not appl
 - If hours are seasonal, event-driven, show-driven, or otherwise variable, name the exact dependency, such as the official calendar, reservation page, booking page, show schedule, market days, weather policy, or property page.
 - Stop descriptions must use actual venue/source facts with editorial judgment. Avoid generic travel copy, keyword chains, and repeated filler.
 - Every stop should include useful category classification fields and `attributeTags` for filtering.
+- When populating a city for the first time, inspect its left-panel destination image. If it is missing, generic, unrelated, or a placeholder, use the reviewed destination-image R2 workflow in the population runbook and make `destinations.image_url` the canonical city-specific R2 image before calling the city complete.
 
 ## Media And R2
 

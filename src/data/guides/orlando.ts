@@ -172,7 +172,7 @@ const images = {
   frostys: "https://media.cntraveler.com/photos/5cbf54761c3fda1d2a2c53e5/master/w_1200,c_limit/Frostys-Christmastime-Lounge_2019190414183155.jpg",
   traderSams: "https://media.cntraveler.com/photos/5cbf4a5cb222235cbac1fa11/master/w_1200,c_limit/0325ZV_0864DR.jpg",
   wineBarGeorge: "https://media.cntraveler.com/photos/5cbdefea04fdc245a96725b0/master/w_1200,c_limit/Wine-Bar-George_2019_First-Floor-Bar.jpg",
-  robinson: "http://static1.squarespace.com/static/62542d2ea488d8278102d780/t/625442fd0a91c4424c51cbc3/1649689341343/FiYaa4-g+copy.png?format=1500w",
+  robinson: "https://images.squarespace-cdn.com/content/v1/62542d2ea488d8278102d780/ea39c87a-f0fb-4136-811e-60729b5944b2/010A7333-2.jpeg",
   oma: commons("Orlando FL Museum of Art01.jpg"),
   scienceCenter: commons("Orlando FL Science Center04.jpg"),
   historyCenter: commons("Orange Cty crths history center01.jpg"),

@@ -168,7 +168,7 @@ const photoCandidates: Record<string, string> = {
   "wild-rover": "https://wildroverhostels.com/wp-content/uploads/2023/01/My-project-1-5-scaled.jpg",
   loki: "https://www.lokihostel.com/rails/active_storage/blobs/proxy/eyJfcmFpbHMiOnsiZGF0YSI6Mjc4NywicHVyIjoiYmxvYl9pZCJ9fQ==--2a6a234fc2b264324565e95f0242933529900111/LRM_20250312_132733.jpg",
   "black-llama": "https://www.blackllamahostels.com/videos/hero-poster-mobile.webp",
-  "nao-victoria": "https://cdn.shopify.com/s/files/1/0419/1118/9653/files/NVYT_652a00da-467a-4c5a-a4e3-bc8938205fc6.png?v=1625053778",
+  "nao-victoria": "https://cf.bstatic.com/xdata/images/hotel/max1024x768/151197236.jpg?hp=1&k=2c27506b23b0088773001816ccdd026233fd8dbecfe0a155713a108e5d91f36a&o=",
   "cerveceria-valle": "https://cerveceriadelvalle.com/assets/images/horizontales-mesa-de-trabajo-1-copia-2-2576x1449.png",
   "museo-pisco": "https://museodelpisco.org/wp-content/uploads/2020/11/slide-1.jpg",
   divino: "https://www.restaurantcusco.com/divinopiscobar/wp-content/uploads/sites/3/2021/07/IMG_7226-min-scaled.jpg",

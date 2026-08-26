@@ -245,7 +245,7 @@ const diningStops: GuideStop[] = [
     description: "Andy McFadden’s polished room overlooks St Stephen’s Green and applies French technique to Irish produce through tasting and à-la-carte formats. Service and setting make this a particularly formal Dublin reservation.",
     officialUrl: "https://gloversalley.com/",
     bookingUrl: "https://gloversalley.com/reservations/",
-    photo: "https://gloversalley.com/wp-content/uploads/2023/07/1.jpg",
+    photo: "https://wp-otstatic.opentable.com/uploads/sites/524/2023/11/90f678a231edaa84e5d20c5d7837d4cf.webp",
     hours: {
       mon: "Closed",
       tue: "Dinner 18:00–21:00",

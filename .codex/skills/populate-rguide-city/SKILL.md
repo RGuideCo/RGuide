@@ -30,15 +30,16 @@ Also follow the current repository `AGENTS.md`. If the documents disagree, follo
 
 Keep the stages ordered. Do not start guide writing before the source ledger and candidate selection are complete.
 
-1. **Bootstrap:** Locate the matching city module. Create and register a missing module only as allowed by Stage 0; do not add substantive guide data yet.
+1. **Bootstrap:** Locate the matching city module. Create and register a missing module only as allowed by Stage 0; do not add substantive guide data yet. For a city receiving its first population, inspect the current left-panel destination image and record whether it is missing, generic, unrelated, or a placeholder.
 2. **Build the source ledger:** Research the required current, meaningful sources for every guide. Prefer official venue, property, attraction, booking, calendar, and tourism sources; use current platform and editorial sources where the runbook requires them.
 3. **Select candidates:** Vet every proposed stop for identity, category, neighborhood, coordinates, open status, hours plan, source support, image source, offering, and visit-changing caveats. Reject weak, duplicate, closed, unclear, or miscategorized candidates.
 4. **Write local guide data:** Edit only the scoped city module and necessary registry entry. Apply every SEO, source-evidence, hours, description, category-field, stop-count, lodging-separation, and media-source rule from the runbooks.
 5. **Verify locally:** Run the strict local verification command for the scoped city or guide. Repair every error before publishing. Explain unresolved warnings.
 6. **Publish normalized data:** Use only the normalized writer described by the runbook. Never reintroduce legacy blob tables as source of truth.
 7. **Check canonical hours:** Run the rendered-hours report after publishing. Use the capped Google Places plan and ingestion only when official, property, booking, and calendar sources still leave canonical hours missing or invalid. Never bypass configured limits.
-8. **Ingest R2 media:** Run the canonical venue-media R2 pipeline for the scoped city or guide. Require the command to cover the full scope with zero failed candidates; a successful partial batch is not completion. Do not treat local image URLs as final live media.
-9. **Verify live:** Run strict live verification and confirm the normalized records, render cache, canonical hours, stop counts, venue links, and R2-backed rendered photos pass.
+8. **Set the destination image:** When a newly populated city has no credible left-panel image, or still uses a generic, unrelated, or placeholder image, run the destination-image dry-run and review flow from the runbook. Approve a city-specific licensed image, ingest it to R2, and confirm `destinations.image_url` uses `https://media.rguide.co/...`. Do not accept an automatic search match without visually checking the candidate.
+9. **Ingest R2 venue media:** Run the canonical venue-media R2 pipeline for the scoped city or guide. Require the command to cover the full scope with zero failed candidates; a successful partial batch is not completion. Do not treat local image URLs as final live media.
+10. **Verify live:** Run strict live verification and confirm the normalized records, render cache, canonical hours, stop counts, venue links, destination image, and R2-backed rendered photos pass.
 
 Use the exact commands and conditional branches in the current runbooks rather than copying command variants into this skill. When a command fails because Supabase, R2, Vercel, credentials, or network access is unavailable, preserve completed local work, report the exact blocker, and do not claim the live site changed.
 
@@ -53,6 +54,7 @@ Do not describe the work as complete, live, polished, published, or R2-backed un
 - Strict local verification passed.
 - Normalized publication succeeded.
 - Conditional hours remediation completed when needed.
+- A newly populated city's left-panel image is city-specific, non-placeholder, visually reviewed, stored in R2, and referenced by `destinations.image_url`.
 - R2 ingestion succeeded.
 - Strict live verification passed with rendered R2 media.
 
@@ -66,6 +68,7 @@ Use the final-report structure required by `docs/new-guide-population-runbook.md
 - Source count for each guide.
 - Source-ledger weaknesses, blocked sources, and replacements.
 - R2 uploaded, skipped, failed, and cache-refresh results.
+- Destination left-panel image source, review, R2 URL, and live verification result when the city image was added or replaced.
 - Strict local and strict live verification outcomes.
 - Rendered-photo status and any exceptions.
 - Stops needing manual editorial review.

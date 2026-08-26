@@ -61,6 +61,8 @@ When you receive one of the short prompts above:
    - lead with what the venue actually cooks, pours, plays, exhibits, stages, rents, or provides; itinerary position is never the main description;
    - do not use meta or route filler such as `earns its spot`, `belongs in this guide`, `gives the route`, `anchors the day`, `use it before/after`, `pair it with`, `follow it with`, `start here`, `end here`, `sets the pace`, `keeps the day/night moving`, or `the night needs`;
    - practical advice is optional and must change the venue decision: what to order/book, queue or reservation posture, room choice, door policy, schedule, accessibility, or a real price/noise tradeoff.
+   - when this is the city's first population, inspect its left-panel destination image before writing; if it is missing, generic, unrelated, or a placeholder, the task must include the reviewed destination-image R2 workflow after normalized publish;
+   - a city population is not complete while `destinations.image_url` is empty, non-R2, or still points to a placeholder; the selected replacement must clearly depict the correct city and must be visually reviewed before upload.
 6. Do not call the task done until strict local verification, normalized publish, R2 ingestion, and strict live verification have passed.
 
 Required final commands:
@@ -71,6 +73,8 @@ npm run push:editorial-guides -- --city {City}
 npm run report:venue-hours -- {city-slug} --rendered-bad
 npm run ingest:venue-hours-google -- --city {city-slug} --plan-only
 npm run ingest:venue-hours-google -- --city {city-slug} --limit 25
+npm run ingest:destination-images-r2 -- --scope city --slug {city-slug} --published-entries-only --force --dry-run --review-output .destination-image-review-{city-slug}.html
+npm run ingest:destination-images-r2 -- --scope city --slug {city-slug} --published-entries-only --force
 npm run ingest:venue-media-r2 -- --city {City}
 npm run report:venue-hours -- {city-slug} --rendered-summary
 npm run verify:guide-publish -- --city {City} --strict --live
@@ -78,6 +82,8 @@ npm run verify:guide-publish -- --city {City} --strict --live
 
 Only run `ingest:venue-hours-google` after the official/source-backed hours pass and only when `report:venue-hours --rendered-bad` still shows missing or placeholder canonical hours. The script is capped by `GOOGLE_PLACES_DAILY_LIMIT` and `GOOGLE_PLACES_MONTHLY_LIMIT`; never bypass those caps for normal guide population.
 
-If verification reports fewer than 10 top-level stops in a citywide guide, missing hours, placeholder hours, missing canonical venue hours, or schedule caveats without source evidence, stop and repair the guide data before rerunning publish. Do not describe the guide as complete while hours are only implied by sources or visible on a website.
+Only run the two `ingest:destination-images-r2` commands when a newly populated city's current left-panel image is missing or fails the city-image quality check. Open the generated HTML review, visually confirm the candidate depicts the correct city and is not a logo, generic skyline, stock placeholder, or wrong location, and only then run the non-dry command. The non-dry command writes the canonical R2 URL and source metadata to `destinations.image_url`/`destinations.metadata` and updates the local fallback map. Delete the temporary review file after verification; do not commit it.
+
+If verification reports fewer than 10 top-level stops in a citywide guide, missing hours, placeholder hours, missing canonical venue hours, schedule caveats without source evidence, or a newly populated city still has a missing/generic/placeholder left-panel image, stop and repair the data before completion. Do not describe the guide as complete while hours are only implied by sources or visible on a website, or while the city still displays fallback artwork.
 
 If the prompt is category- or neighborhood-scoped, use the same workflow and narrow the guide set to that requested scope.

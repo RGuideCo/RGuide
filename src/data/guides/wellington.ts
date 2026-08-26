@@ -49,10 +49,6 @@ function commons(fileName: string) {
   );
 }
 
-function foodGuide(slug: string) {
-  return "https://foodguide.nz/og/wellington/" + slug + ".png";
-}
-
 type StopOptions = Partial<GuideStop> & {
   officialUrl: string;
   sourcePhoto: string;
@@ -233,7 +229,8 @@ const diningStops: GuideStop[] = [
       },
       officialUrl: "https://www.janobistro.co.nz/contact",
       bookingUrl: "https://www.janobistro.co.nz/book",
-      sourcePhoto: foodGuide("jano-bistro"),
+      sourcePhoto:
+        "https://images.squarespace-cdn.com/content/v1/5477be16e4b0780d55b98966/8139af28-6756-4c61-903c-f8335ce39048/Jano%2BBistro%2BWellington%2BPork%2BDish",
       editorialUrls: [editorial.dining],
     },
   ),
@@ -264,7 +261,8 @@ const diningStops: GuideStop[] = [
       },
       officialUrl: "https://kojirestaurant.co.nz/visit/",
       bookingUrl: "https://kojirestaurant.co.nz/book/",
-      sourcePhoto: foodGuide("koji"),
+      sourcePhoto:
+        "https://wellingtonnz.bynder.com/transform/cd13cb28-d85c-42c4-93d5-b4b20e270bb5/Koji-2025-11?io=transform%3Afill%2Cwidth%3A576%2Cheight%3A450&quality=80",
       editorialUrls: [editorial.dining],
     },
   ),
@@ -362,7 +360,8 @@ const diningStops: GuideStop[] = [
       },
       officialUrl: "https://www.damascusnz.com/",
       bookingUrl: "https://www.damascusnz.com/bookings",
-      sourcePhoto: foodGuide("damascus"),
+      sourcePhoto:
+        "https://cdn.broadsheet.com.au/cache/60/50/60506445aecd4f50f952d2e9d4cb96be.jpg",
       editorialUrls: [editorial.dining],
     },
   ),
@@ -393,7 +392,8 @@ const diningStops: GuideStop[] = [
       },
       officialUrl: "https://www.ombra.co.nz/",
       bookingUrl: "https://www.ombra.co.nz/book",
-      sourcePhoto: foodGuide("ombra"),
+      sourcePhoto:
+        "https://framerusercontent.com/images/gU1VBWJLm4CYPuUbTNb8A0yys.jpg?width=1920&height=1280",
       editorialUrls: [editorial.dining],
     },
   ),
@@ -485,7 +485,8 @@ const cheapEatStops: GuideStop[] = [
       price: "$",
       hours: { default: "Daily 11:00 AM-10:00 PM." },
       officialUrl: "https://www.kccafeandtakeaway.co.nz/",
-      sourcePhoto: foodGuide("k-c-cafe-takeaway"),
+      sourcePhoto:
+        "https://neatplaces.co.nz/cdn-cgi/image/format%3Dauto%2Cwidth%3D665%2Cheight%3D444%2Cfit%3Dcover/media/uploads/stories/feature/take_a_seat_your_guide_to_dining_solo_in_wellington/KC_Cafe__Takeaway_Wellington.jpg",
       editorialUrls: [editorial.cheap],
     },
   ),
@@ -536,7 +537,8 @@ const cheapEatStops: GuideStop[] = [
         sun: "4:30 PM-9:00 PM",
       },
       officialUrl: "https://soulshackhotchicken.co.nz/",
-      sourcePhoto: foodGuide("soul-shack"),
+      sourcePhoto:
+        "https://soulshackhotchicken.co.nz/wp-content/uploads/2025/11/275287883_3334218803473236_2291884047530371146_n-600x400.jpg",
       editorialUrls: [
         editorial.cheap,
         "https://www.wellingtonnz.com/visit/eat-and-drink",
@@ -564,7 +566,8 @@ const cheapEatStops: GuideStop[] = [
         sun: "11:00 AM-9:00 PM",
       },
       officialUrl: "https://www.sataykingdomcafe.co.nz/",
-      sourcePhoto: foodGuide("satay-kingdom-cafe"),
+      sourcePhoto:
+        "https://tb-static.uber.com/prod/image-proc/processed_images/63e5953f6b51da9f05c992e983f53f86/16bb0a3ab8ea98cfe8906135767f7bf4.jpeg",
       editorialUrls: [editorial.cheap],
     },
   ),
@@ -594,7 +597,8 @@ const cheapEatStops: GuideStop[] = [
         sun: "Closed",
       },
       officialUrl: "https://www.pizzapomodoro.co.nz/faqs",
-      sourcePhoto: foodGuide("pizza-pomodoro"),
+      sourcePhoto:
+        "https://neatplaces.co.nz/cdn-cgi/image/fit%3Dcover%2Cheight%3D425%2Cwidth%3D650%2Cformat%3Dauto/media/uploads/places/place/pizza_pomodoro/Pizza_Pomodoro_Wellington_1.jpg",
       editorialUrls: [editorial.cheap],
     },
   ),
@@ -619,7 +623,8 @@ const cheapEatStops: GuideStop[] = [
         sun: "11:30 AM-4:30 PM",
       },
       officialUrl: "https://www.machajomtapau.co.nz/",
-      sourcePhoto: foodGuide("macha-jom-tapau"),
+      sourcePhoto:
+        "https://adminapi.sipocloudpos.com/public/uploads/568c235ae869a1-WhatsApp%20Image%202025-09-11%20at%202.34.50%20PM.jpeg",
       editorialUrls: [editorial.cheap],
     },
   ),
@@ -644,7 +649,7 @@ const cheapEatStops: GuideStop[] = [
         sun: "5:00 PM-9:00 PM",
       },
       officialUrl: "https://foodguide.nz/wellington/basin-noodle-house/",
-      sourcePhoto: foodGuide("basin-noodle-house"),
+      sourcePhoto: "https://foodguide.nz/_astro/01.BemH2yep_ZuxFT7.webp",
       editorialUrls: [editorial.cheap],
     },
   ),
@@ -700,7 +705,8 @@ const cheapEatStops: GuideStop[] = [
         sun: "Closed",
       },
       officialUrl: "https://motherofcoffee.co.nz/",
-      sourcePhoto: foodGuide("mother-of-coffee"),
+      sourcePhoto:
+        "https://img1.wsimg.com/isteam/ip/5e8645b8-1239-4f69-be63-945638cc9dc9/2a94b053c24b29ec7892483a353367fc.jpg",
       editorialUrls: [
         editorial.cheap,
         "https://foodguide.nz/wellington/mother-of-coffee/",
@@ -782,7 +788,7 @@ const hotelStops: GuideStop[] = [
       bookingUrl:
         "https://www.booking.com/hotel/nz/cq-quality-hotel-wellington.en-gb.html",
       sourcePhoto:
-        "https://d18slle4wlf9ku.cloudfront.net/naumihotels.com-1365503697/cms/cache/v2/68d26d1032ea6.png/1200x630/fit/80/2a9d802e5728c142d485cc1cd34ca5b4.png",
+        "https://d18slle4wlf9ku.cloudfront.net/naumihotels.com-1365503697/cms/cache/v2/68afc5e51d10b.jpg/630x500/fit/80/094bd57198d3697c70fa6de6d57e880e.jpg",
       editorialUrls: [editorial.hotels],
     },
   ),
@@ -1323,7 +1329,8 @@ const pubStops: GuideStop[] = [
         sun: "12:00 PM-1:00 AM",
       },
       officialUrl: "https://rogueandvagabond.co.nz/",
-      sourcePhoto: foodGuide("the-rogue-vagabond"),
+      sourcePhoto:
+        "https://neatplaces.co.nz/cdn-cgi/image/width%3D650%2Cformat%3Dauto%2Cheight%3D425%2Cfit%3Dcover/media/uploads/places/place/rogue__vagabond/the_bar_area.jpg",
       editorialUrls: [
         editorial.pubs,
         "https://www.bestrestaurants.nz/north-island/wellington/te-aro/restaurant/the-rogue-and-vagabond",
@@ -1351,7 +1358,8 @@ const pubStops: GuideStop[] = [
         sun: "12:00 PM-11:00 PM",
       },
       officialUrl: "https://goldingsfreedive.co.nz/",
-      sourcePhoto: foodGuide("goldings-free-dive"),
+      sourcePhoto:
+        "https://neatplaces.co.nz/media/thumbs/uploads/places/place/goldings_free_dive_bar/a_woman_serving.jpg.1300x850_q80_crop-smart_upscale.jpg",
       editorialUrls: [
         editorial.pubs,
         "https://neatplaces.co.nz/places/wellington/eat-drink/goldings-free-dive-bar",
@@ -1415,7 +1423,7 @@ const pubStops: GuideStop[] = [
       },
       officialUrl: "https://www.meandoses.co.nz/contact",
       sourcePhoto:
-        "https://images.squarespace-cdn.com/content/v1/64bf4839e1c44a61f84c1256/d1228ac0-2efb-476a-b566-be7f644c72c0/meandoses-landing.jpg",
+        "https://images.squarespace-cdn.com/content/v1/64bf4839e1c44a61f84c1256/7d438072-2212-45e4-b106-05045ef41f0a/20230630+MeanDoses-SoftLaunch+9265.jpeg?format=2500w",
       editorialUrls: [editorial.pubs],
     },
   ),
@@ -1445,7 +1453,8 @@ const pubStops: GuideStop[] = [
         sun: "12:00 PM-7:00 PM; kitchen closes 6:00 PM",
       },
       officialUrl: "https://www.heydaybeer.com/contact",
-      sourcePhoto: foodGuide("heyday-beer-co"),
+      sourcePhoto:
+        "https://static.wixstatic.com/media/45a77e_b8f11c94e5a34201b3d27096192360ce~mv2.jpg/v1/fill/w_693%2Ch_462%2Cal_c%2Cq_80%2Cusm_0.66_1.00_0.01%2Cenc_auto/45a77e_b8f11c94e5a34201b3d27096192360ce~mv2.jpg",
       editorialUrls: [editorial.pubs],
     },
   ),
@@ -1505,7 +1514,8 @@ const pubStops: GuideStop[] = [
         sun: "Closed",
       },
       officialUrl: "https://themalthouse.co.nz/",
-      sourcePhoto: foodGuide("the-malthouse"),
+      sourcePhoto:
+        "https://themalthouse.co.nz/wp-content/uploads/2023/05/DSC08713-Enhanced-NR-min.jpg",
       editorialUrls: [editorial.pubs],
     },
   ),
@@ -1534,7 +1544,8 @@ const pubStops: GuideStop[] = [
         sun: "12:00 PM-8:00 PM",
       },
       officialUrl: "https://garageproject.co.nz/locations/aro-taproom",
-      sourcePhoto: foodGuide("garage-project-aro-taproom"),
+      sourcePhoto:
+        "https://cdn.sanity.io/images/pu92n0w3/production/debc8f3ae8e6c38fed7dd199b43de98f78167d53-5935x3957.jpg",
       editorialUrls: [editorial.pubs],
     },
   ),
@@ -1564,7 +1575,8 @@ const pubStops: GuideStop[] = [
         sun: "Closed",
       },
       officialUrl: "https://forkandbrewer.co.nz/",
-      sourcePhoto: foodGuide("fork-and-brewer"),
+      sourcePhoto:
+        "https://forkandbrewer.co.nz/wp-content/uploads/2022/08/West-Coast-IPA-Challenge_2022_By-Johnny-Hendrikus-69-scaled.jpg",
       editorialUrls: [editorial.pubs],
     },
   ),
@@ -1591,7 +1603,8 @@ const cocktailStops: GuideStop[] = [
         sun: "Closed",
       },
       officialUrl: "https://hawthornlounge.co.nz/",
-      sourcePhoto: foodGuide("hawthorn-lounge"),
+      sourcePhoto:
+        "https://neatplaces.co.nz/cdn-cgi/image/fit%3Dcover%2Cheight%3D425%2Cwidth%3D650%2Cformat%3Dauto/media/uploads/places/place/hawthorn_lounge/making-drinks.jpg",
       editorialUrls: [editorial.cocktails],
     },
   ),
@@ -1607,7 +1620,8 @@ const cocktailStops: GuideStop[] = [
       price: "$$$",
       hours: { default: "Daily 4:00 PM-12:00 AM." },
       officialUrl: "https://hangingditch.co.nz/home",
-      sourcePhoto: foodGuide("hanging-ditch"),
+      sourcePhoto:
+        "https://wellingtonnz.bynder.com/transform/2bc6744a-6a89-4e9a-9bc7-aef55e8417d4/Hanging-Ditch-1",
       editorialUrls: [editorial.cocktails],
     },
   ),
@@ -1631,7 +1645,8 @@ const cocktailStops: GuideStop[] = [
         sun: "12:00 PM-late",
       },
       officialUrl: "https://www.theramwellington.co.nz/",
-      sourcePhoto: foodGuide("the-ram"),
+      sourcePhoto:
+        "https://images.squarespace-cdn.com/content/v1/66a82f8caa2be96bc34d8231/2eae7fdb-fe90-4dbb-8f04-0819bd806d30/interior.jpg?format=2500w",
       editorialUrls: [editorial.cocktails],
     },
   ),
@@ -1657,7 +1672,8 @@ const cocktailStops: GuideStop[] = [
         sun: "Closed",
       },
       officialUrl: "https://www.havanabar.co.nz/",
-      sourcePhoto: foodGuide("havana-bar"),
+      sourcePhoto:
+        "https://images.squarespace-cdn.com/content/v1/65eea45ca098e30aad24f544/1710138461230-EBIADKM49KMCE20F4WV7/Havana+Imagery_01.jpg",
       editorialUrls: [editorial.cocktails],
     },
   ),
@@ -1681,7 +1697,8 @@ const cocktailStops: GuideStop[] = [
         sun: "Closed",
       },
       officialUrl: "https://www.instagram.com/deesplace.wgtn/",
-      sourcePhoto: foodGuide("dees-place"),
+      sourcePhoto:
+        "https://wellingtonnz.bynder.com/transform/698c4553-83bd-447a-9812-81ec2b63c1e3/Dee-s-Place-33?io=transform%3Afill%2Cwidth%3A576%2Cheight%3A450&quality=80",
       editorialUrls: [
         editorial.cocktails,
         "https://restaurantguru.com/Dees-Place-Wellington",
@@ -1713,7 +1730,8 @@ const cocktailStops: GuideStop[] = [
           "Wednesday-Saturday 4:00 PM-late; walk-ins only, with holiday changes published on the official page.",
       },
       officialUrl: "https://www.ascotbar.com/",
-      sourcePhoto: "https://www.ascotbar.com/assets/images/card.jpg?v=2a47454c",
+      sourcePhoto:
+        "https://neatplaces.co.nz/cdn-cgi/image/format%3Dauto%2Cwidth%3D650%2Cheight%3D425%2Cfit%3Dcover/media/uploads/places/place/the_ascot/ascot2.jpg",
       editorialUrls: [editorial.cocktails],
     },
   ),
@@ -1771,7 +1789,8 @@ const cocktailStops: GuideStop[] = [
         sun: "12:00 PM-late",
       },
       officialUrl: "https://dirtylittlesecret.co.nz/",
-      sourcePhoto: foodGuide("dirty-little-secret"),
+      sourcePhoto:
+        "https://dirtylittlesecret.co.nz/wp-content/uploads/2022/10/D.L.S.-07952-595x490.jpg",
       editorialUrls: [editorial.cocktails],
     },
   ),
@@ -1801,7 +1820,8 @@ const cocktailStops: GuideStop[] = [
         sun: "12:00 PM-late",
       },
       officialUrl: "https://www.rosellawinebar.nz/",
-      sourcePhoto: foodGuide("rosella"),
+      sourcePhoto:
+        "https://images.squarespace-cdn.com/content/v1/64befce014d292278bd1ef8e/b1d3dc6a-8e31-404e-8bee-43be922906b6/Cuisine_Rosella_126.jpg?format=2500w",
       editorialUrls: [editorial.cocktails],
     },
   ),
@@ -1817,7 +1837,8 @@ const cocktailStops: GuideStop[] = [
       price: "$$$",
       hours: { default: "Daily 5:00 PM-late." },
       officialUrl: "https://www.thelibrary.co.nz/",
-      sourcePhoto: foodGuide("the-library"),
+      sourcePhoto:
+        "https://neatplaces.co.nz/media/thumbs/uploads/places/place/the_library/seating_area_and_books.jpg.1579x1032_q80_crop-smart_upscale.jpg",
       editorialUrls: [editorial.cocktails],
     },
   ),
@@ -1924,7 +1945,7 @@ const cultureStops: GuideStop[] = [
       },
       officialUrl: "https://www.adamartgallery.nz/visit",
       sourcePhoto:
-        "https://cdn.sanity.io/images/h84sqrxf/production/75a12d07d0766dbec968dfa695e1d2afbfb84b3b-1133x473.png",
+        "https://cdn.sanity.io/images/h84sqrxf/production/8606e55d12dd1bc90a7f869b447ff6a36e20cb70-2880x1920.jpg?auto=format&fit=clip&q=95&w=3840",
       editorialUrls: [editorial.culture],
     },
   ),
