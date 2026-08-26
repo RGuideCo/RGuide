@@ -17,7 +17,8 @@ Do not pause to ask where guide modules live. Stage 0 tells you how to create/re
 Do not edit guide data beyond Stage 0 scaffolding until the source ledger and candidate selection are complete.
 Do not write, publish, or verify a guide until every selected stop has a concrete hours plan: structured hours when available, or a source-backed schedule caveat when hours are genuinely variable. Google Places API is only a capped last-resort fallback after official/property/booking/calendar sources fail.
 Do not write a citywide guide with fewer than 10 top-level stops unless Brandon explicitly requested a smaller scoped guide.
-Do not call the task done until strict local verification, normalized publish, R2 ingestion, and strict live verification have passed.
+When this is the city's first population, inspect its left-panel destination image. If it is missing, generic, unrelated, or a placeholder, replace it through the reviewed destination-image R2 workflow after normalized publish.
+Do not call the task done until strict local verification, normalized publish, destination-image remediation when required, R2 venue ingestion, and strict live verification have passed.
 ```
 
 ## Reusable City Prompt Template
@@ -48,6 +49,7 @@ Use one existing city file as the structural pattern only:
 - For North American cities, prefer src/data/guides/san-francisco.ts or the closest existing city file.
 - Do not pause to report that the module is missing. Create it and continue.
 - Do not broadly audit the registry unless the import/export fails.
+- Inspect the city's current left-panel image. Record whether it is a credible city-specific image or is missing, generic, unrelated, or a placeholder. Do not treat an existing URL by itself as proof that the image is acceptable.
 
 Target guide set:
 - Food: 1 citywide dining guide and 1 medium-to-cheap eats guide. Each citywide guide needs at least 10 top-level stops.
@@ -148,6 +150,14 @@ npm run ingest:venue-hours-google -- --city {city-id} --limit 25
 
 `--plan-only` does not make Google requests; the real fallback command does. Do not run the Google fallback as a first pass. Respect `GOOGLE_PLACES_DAILY_LIMIT` and `GOOGLE_PLACES_MONTHLY_LIMIT`; do not pass `--force` for normal guide population.
 
+If this is the city's first population and its left-panel image is missing, generic, unrelated, or a placeholder, review and ingest a canonical destination image after publish:
+npm run ingest:destination-images-r2 -- --scope city --slug {city-id} --published-entries-only --force --dry-run --review-output .destination-image-review-{city-id}.html
+
+Open the generated HTML review and visually confirm that the selected image clearly depicts the correct city and is not a logo, stock placeholder, generic unrelated skyline, or wrong destination. If the candidate is wrong, refine the query/provider or supply a properly licensed source; do not upload it. Once approved, run:
+npm run ingest:destination-images-r2 -- --scope city --slug {city-id} --published-entries-only --force
+
+Confirm the normalized city row now has an R2-backed `destinations.image_url`, source/license metadata under `destinations.metadata.destination_image`, and that the left panel renders the replacement. Delete the temporary review file after checking it; do not commit the review artifact.
+
 Then ingest images into R2:
 npm run ingest:venue-media-r2 -- --city {City}
 
@@ -160,6 +170,7 @@ Final response must include:
 - Guides created/updated
 - Source count per guide
 - Weak or blocked sources
+- Destination left-panel image source, review result, and R2 status when added or replaced
 - R2 ingestion result
 - Verification result
 - Any stops needing manual editorial review

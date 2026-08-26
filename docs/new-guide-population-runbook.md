@@ -25,10 +25,24 @@ Final report must include:
 - guides created or updated
 - source count per guide
 - source ledger notes and weak/blocked sources
+- destination left-panel image result when added or replaced
 - R2 ingestion result
 - verification command output summary
 - any stops needing manual editorial review
 ```
+
+## Stage 0: Bootstrap And City Image Audit
+
+Locate `src/data/guides/{city-id}.ts`. Create and register a missing city module using the repository's existing guide registry pattern, but do not add substantive guide data before Stage 1 and Stage 2 are complete.
+
+When the city has not previously been populated, inspect the image currently shown in its left panel as part of bootstrap. Check both the canonical destination row and the rendered app state. Classify the image as one of:
+
+- credible city-specific image;
+- missing;
+- generic or unrelated image;
+- placeholder or fallback artwork.
+
+An existing image URL is not enough. The image must visibly depict the correct city and be suitable as the city's primary destination image. Record a required destination-image remediation when it is missing or fails this quality check. Perform the actual reviewed R2 replacement after normalized publication, when the city is linked to published entries.
 
 ## Stage 1: Source Ledger
 
@@ -239,7 +253,36 @@ npm run push:editorial-guides -- --slug {guide-slug}
 
 Do not regenerate or depend on legacy blob tables. The normalized publish writes `entries`, `entry_stops`, `venues`, `sources`, `entity_sources`, `venue_media`, and `entry_render_cache`.
 
-## Stage 6: R2 Media Ingestion
+## Stage 6: Destination Left-Panel Image
+
+This stage is required for a newly populated city whose Stage 0 audit found a missing, generic, unrelated, or placeholder left-panel image. The canonical source is `public.destinations.image_url`; the final URL must be R2-backed. Do not solve this by adding another frontend-only fallback.
+
+First search without writing and create a visual review page:
+
+```bash
+npm run ingest:destination-images-r2 -- --scope city --slug {city-id} --published-entries-only --force --dry-run --review-output .destination-image-review-{city-id}.html
+```
+
+Open the generated HTML file and visually inspect the candidate. Approve it only when it:
+
+- clearly depicts the correct city;
+- is not a logo, favicon, map screenshot, generic stock skyline, unrelated landmark, or placeholder;
+- has a credible source and usable license/credit metadata;
+- is large and clear enough for the left panel.
+
+If the automatic candidate is wrong, refine `--query` or `--provider`, or use a properly licensed explicit source. Never upload a candidate merely because the script returned it. After approving the candidate, run the same scoped ingestion without `--dry-run`:
+
+```bash
+npm run ingest:destination-images-r2 -- --scope city --slug {city-id} --published-entries-only --force
+```
+
+The ingestion must upload the image to R2, write the R2 URL to `destinations.image_url`, store attribution and source data under `destinations.metadata.destination_image`, and update the local destination fallback map. Delete the temporary review artifact after inspection; do not commit it.
+
+Verify the city left panel renders the new image and that the normalized URL starts with `https://media.rguide.co/`. A newly populated city is incomplete while it still displays a placeholder or generic fallback.
+
+Skip this replacement stage when the Stage 0 audit confirms the city already has a credible, city-specific R2 image. Do not replace good destination media just because a city guide was republished.
+
+## Stage 7: Venue R2 Media Ingestion
 
 R2 ingestion is mandatory. Local image URLs are source candidates, not the final live media target.
 
@@ -259,7 +302,7 @@ This command runs the R2 ingestion pipeline and then promotes stored R2 media in
 
 The scoped command must process the full city or guide in one run and must exit nonzero if any candidate upload fails or any scoped published stop lacks a stored R2 primary photo in the rendered payload. Do not interpret a partial batch, a nonzero failure count, or a check limited to newly promoted venues as successful ingestion.
 
-## Stage 7: Live Verification
+## Stage 8: Live Verification
 
 After publishing and R2 ingestion, run:
 
@@ -283,6 +326,7 @@ This checks:
 - stored R2 media;
 - current `entry_render_cache`;
 - rendered MapList stop photos using `https://media.rguide.co/...`.
+- the newly populated city's left-panel destination image when Stage 6 was required.
 
 If this command fails, the guide is not done.
 
@@ -299,6 +343,9 @@ Source counts:
 
 Weak or blocked sources:
 - ...
+
+Destination image:
+- Existing credible R2 image, or reviewed source + stored R2 URL + live left-panel result
 
 R2 ingestion:
 - uploaded/skipped/failed/cache refreshed summary
