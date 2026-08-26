@@ -3170,6 +3170,16 @@ const curatedCitySeeds: Record<string, Omit<City, "listCount">[]> = {
       description:
         "Madrid is a late-running capital where big museums, tapas streets, market halls, vermouth bars, Retiro walks, galleries, and generous plazas set an easy rhythm. The route works best when daytime culture has room to loosen into La Latina, Chueca, or Malasana after dark nights.",
     },
+    {
+      id: "valencia",
+      name: "Valencia",
+      country: "Spain",
+      continent: "Europe",
+      coordinates: [39.4699, -0.3763],
+      image: cityImage("valencia"),
+      description:
+        "Valencia is a Mediterranean city shaped by the Turia Garden, rice fields, urban beaches, modernista markets, Gothic trade history, and the City of Arts and Sciences. The most useful routes connect Ciutat Vella, Ruzafa, Cabanyal, the coast, and Albufera without reducing the city to paella and futuristic architecture.",
+    },
   ],
   portugal: [
     {
@@ -3307,6 +3317,30 @@ const curatedCitySeeds: Record<string, Omit<City, "listCount">[]> = {
       image: cityImage("prague"),
       description:
         "Prague is a compact river city where castle routes, old-town lanes, beer halls, cafes, design stays, galleries, and Vltava walks help visitors move beyond the busiest squares. The payoff is pairing the view with a real plan: a useful base, a few strong anchors, and room for the weather.",
+    },
+  ],
+  poland: [
+    {
+      id: "warsaw",
+      name: "Warsaw",
+      country: "Poland",
+      continent: "Europe",
+      coordinates: [52.2297, 21.0122],
+      countrySubareaId: "warsaw-central",
+      image: cityImage("warsaw"),
+      description:
+        "Warsaw is a rebuilt capital whose useful route connects royal streets, postwar reconstruction, Jewish and uprising history, contemporary museums, Praga rooms, river life, and fast-moving modern Polish dining. Strong transit makes the spread manageable, but the neighborhoods deserve more than a checklist day.",
+    },
+    {
+      id: "krakow",
+      name: "Kraków",
+      country: "Poland",
+      continent: "Europe",
+      coordinates: [50.0647, 19.945],
+      countrySubareaId: "krakow-south",
+      image: cityImage("krakow"),
+      description:
+        "Kraków compresses royal history, university streets, Jewish and wartime memory, cellar bars, and modern Polish cooking into a walkable core. The useful route moves beyond Rynek and Wawel toward Kazimierz, Podgórze, and Nowa Huta, with enough time for the city's heavier history and living craft.",
     },
   ],
   austria: [
@@ -3480,6 +3514,18 @@ const curatedCitySeeds: Record<string, Omit<City, "listCount">[]> = {
       coordinates: [7.8804, 98.3923],
       image: cityImage("phuket"),
       description: topCityDescriptionOverrides.get("phuket")!,
+    },
+  ],
+  vietnam: [
+    {
+      id: "danang",
+      name: "Danang",
+      country: "Vietnam",
+      continent: "Asia",
+      coordinates: [16.0544, 108.2022],
+      image: cityImage("danang"),
+      description:
+        "Danang is a central Vietnamese coastal city where My Khe Beach, the Han River, Cham heritage, Son Tra forest, Marble Mountains, regional noodle cooking, and a fast-growing hotel and bar scene fit into compact routes. Weather and bridge, market, and mountain schedules should shape each day.",
     },
   ],
   "south-korea": [

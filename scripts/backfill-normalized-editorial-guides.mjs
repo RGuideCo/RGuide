@@ -18,6 +18,7 @@ import {
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const CITY_TIMEZONE_FALLBACKS = new Map([
+  ["krakow|poland", "Europe/Warsaw"],
   ["tokyo|japan", "Asia/Tokyo"],
 ]);
 

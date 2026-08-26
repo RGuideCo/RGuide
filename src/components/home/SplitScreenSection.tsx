@@ -810,6 +810,7 @@ export function SplitScreenSection({
     setIsMobileListSheetDragging,
     mobileListSheetDragHeight,
     setMobileListSheetDragHeight,
+    mobileListSheetDragHeightRef,
     mobileListSheetDraggingRef,
     mobileListSheetDragStartRef,
     mobileListSheetTapCandidateRef,
@@ -3564,6 +3565,9 @@ export function SplitScreenSection({
     }
     const target = event.target as HTMLElement | null;
     const isSheetHandle = Boolean(target?.closest("[data-mobile-sheet-handle]"));
+    if (isMobileListSheetExpanded && !isSheetHandle) {
+      return;
+    }
     if (!isSheetHandle && target?.closest("button, a, input, select, textarea")) {
       return;
     }
@@ -3575,6 +3579,7 @@ export function SplitScreenSection({
     mobileListSheetTapCandidateRef.current = true;
     mobileListSheetDraggingRef.current = true;
     setIsMobileListSheetDragging(true);
+    mobileListSheetDragHeightRef.current = currentHeight;
     setMobileListSheetDragHeight(currentHeight);
     event.currentTarget.setPointerCapture(event.pointerId);
   };
@@ -3588,6 +3593,7 @@ export function SplitScreenSection({
       mobileListSheetTapCandidateRef.current = false;
     }
     const nextHeight = Math.min(max, Math.max(min, mobileListSheetDragStartRef.current.height - deltaY));
+    mobileListSheetDragHeightRef.current = nextHeight;
     setMobileListSheetDragHeight(nextHeight);
   };
   const handleMobileListSheetDragEnd = (event: ReactPointerEvent<HTMLElement>) => {
@@ -3595,14 +3601,33 @@ export function SplitScreenSection({
       return;
     }
     const { min, max } = getMobileListSheetBounds();
-    const finalHeight = mobileListSheetDragHeight ?? mobileListSheetDragStartRef.current.height;
+    const finalHeight = mobileListSheetDragHeightRef.current ?? mobileListSheetDragStartRef.current.height;
+    const deltaY = event.clientY - mobileListSheetDragStartRef.current.y;
     if (mobileListSheetTapCandidateRef.current) {
       setIsMobileListSheetExpanded((current) => !current);
+    } else if (deltaY <= -36) {
+      setIsMobileListSheetExpanded(true);
+    } else if (deltaY >= 36) {
+      setIsMobileListSheetExpanded(false);
     } else {
       setIsMobileListSheetExpanded(finalHeight >= min + (max - min) * 0.42);
     }
     mobileListSheetTapCandidateRef.current = false;
     mobileListSheetDraggingRef.current = false;
+    mobileListSheetDragHeightRef.current = null;
+    setIsMobileListSheetDragging(false);
+    setMobileListSheetDragHeight(null);
+    if (event.currentTarget.hasPointerCapture(event.pointerId)) {
+      event.currentTarget.releasePointerCapture(event.pointerId);
+    }
+  };
+  const handleMobileListSheetDragCancel = (event: ReactPointerEvent<HTMLElement>) => {
+    if (!mobileListSheetDraggingRef.current) {
+      return;
+    }
+    mobileListSheetTapCandidateRef.current = false;
+    mobileListSheetDraggingRef.current = false;
+    mobileListSheetDragHeightRef.current = null;
     setIsMobileListSheetDragging(false);
     setMobileListSheetDragHeight(null);
     if (event.currentTarget.hasPointerCapture(event.pointerId)) {
@@ -8866,6 +8891,8 @@ export function SplitScreenSection({
             <div
               ref={rightPaneRef}
               className={`frosted-pane-right pointer-events-auto absolute inset-x-0 bottom-0 z-40 rounded-t-lg rounded-tl-none border-t border-slate-950/15 ${
+                isMobileListSheetExpanded ? "" : "touch-pan-x lg:touch-auto"
+              } ${
                 isMobileListSheetDragging ? "transition-none" : "transition-[height] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)]"
               } lg:relative lg:inset-auto lg:z-20 lg:rounded-none lg:border-t-0 lg:shadow-none ${
                 isMobileListSheetExpanded ? "h-[60svh]" : "h-36"
@@ -8875,17 +8902,14 @@ export function SplitScreenSection({
                 isSubcategoryMenuOpen && !isGuidePaneTakingFullListPane ? "lg:overflow-visible" : "lg:overflow-hidden"
               } lg:ml-0 lg:w-full lg:h-auto ${explorerPaneHeight}`}
               style={mobileListSheetDragHeight === null ? undefined : { height: `${mobileListSheetDragHeight}px` }}
+              onPointerDown={handleMobileListSheetDragStart}
               onPointerMove={handleMobileListSheetDragMove}
               onPointerUp={handleMobileListSheetDragEnd}
-              onPointerCancel={handleMobileListSheetDragEnd}
+              onPointerCancel={handleMobileListSheetDragCancel}
             >
               <div
                 className="mobile-rguides-tab absolute left-0 -top-7 z-[80] flex h-7 min-w-[6.25rem] touch-none items-center rounded-t-lg border border-b-0 border-slate-200 bg-[#1a1a1a] px-3 text-[10px] font-semibold uppercase tracking-[0.16em] text-white shadow-[0_-5px_12px_rgba(15,23,42,0.12)] transition-opacity duration-300 lg:hidden"
                 data-mobile-sheet-handle
-                onPointerDown={handleMobileListSheetDragStart}
-                onPointerMove={handleMobileListSheetDragMove}
-                onPointerUp={handleMobileListSheetDragEnd}
-                onPointerCancel={handleMobileListSheetDragEnd}
               >
                 {menuBarTitleLabel}
               </div>
@@ -8893,10 +8917,6 @@ export function SplitScreenSection({
                 type="button"
                 className="absolute left-1/2 -top-7 z-[85] flex h-7 -translate-x-1/2 touch-none items-center justify-center transition-opacity duration-300 lg:hidden"
                 data-mobile-sheet-handle
-                onPointerDown={handleMobileListSheetDragStart}
-                onPointerMove={handleMobileListSheetDragMove}
-                onPointerUp={handleMobileListSheetDragEnd}
-                onPointerCancel={handleMobileListSheetDragEnd}
                 aria-label="Drag guides panel"
               >
                 <span className="h-1.5 w-12 rounded-full bg-slate-300/80" />
@@ -8904,12 +8924,11 @@ export function SplitScreenSection({
               <div className="frosted-pane-right pointer-events-none absolute inset-0 z-[82] rounded-t-lg rounded-tl-none lg:rounded-none" aria-hidden="true" />
               <div className={`relative z-[85] flex h-full flex-col ${paneTransitionClass} ${publicProfilePaneTransitionClass}`}>
                 <div
-                  className={`relative shrink-0 transition-[height,margin-bottom,opacity] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] lg:hidden ${
+                  className={`relative shrink-0 touch-pan-x transition-[height,margin-bottom,opacity] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] lg:hidden ${
                     isGuidePaneTakingFullListPane || isPublicProfileMode
                       ? "mb-0 h-0 overflow-hidden opacity-0"
                       : "mb-1 h-[3.875rem] overflow-visible opacity-100"
                   }`}
-                  onPointerDown={handleMobileListSheetDragStart}
                 >
                   <div
                     className={`flex h-5 items-center gap-2 transition-[opacity,transform] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] ${

@@ -22,6 +22,8 @@ import {
   amsterdamItineraryGuides,
   amsterdamNeighborhoodGuides,
 } from "@/data/guides/amsterdam";
+import { valenciaCitywideGuides } from "@/data/guides/valencia";
+import { addisAbabaCitywideGuides } from "@/data/guides/addis-ababa";
 import { athensCitywideGuides } from "@/data/guides/athens";
 import { aucklandCitywideGuides } from "@/data/guides/auckland";
 import { bangkokCitywideGuides } from "@/data/guides/bangkok";
@@ -35,6 +37,7 @@ import {
 } from "@/data/guides/berlin";
 import { copenhagenCitywideGuides } from "@/data/guides/copenhagen";
 import { cuscoCitywideGuides } from "@/data/guides/cusco";
+import { danangCitywideGuides } from "@/data/guides/danang";
 import { dublinCitywideGuides } from "@/data/guides/dublin";
 import { edinburghCitywideGuides } from "@/data/guides/edinburgh";
 import { dubaiCitywideGuides } from "@/data/guides/dubai";
@@ -45,6 +48,7 @@ import { hongKongCitywideGuides } from "@/data/guides/hong-kong";
 import { houstonCitywideGuides } from "@/data/guides/houston";
 import { istanbulCitywideGuides } from "@/data/guides/istanbul";
 import { kyotoCitywideGuides } from "@/data/guides/kyoto";
+import { krakowCitywideGuides } from "@/data/guides/krakow";
 import { kualaLumpurCitywideGuides } from "@/data/guides/kuala-lumpur";
 import { lasVegasCitywideGuides } from "@/data/guides/las-vegas";
 import { limaCitywideGuides } from "@/data/guides/lima";
@@ -93,6 +97,8 @@ import { applyGuideMediaCache } from "@/lib/guide-media-cache";
 import type { MapList } from "@/types";
 
 export const editorialGuideLists: MapList[] = applyGuideMediaCache(enrichGuidesCuisineTypes([
+  ...valenciaCitywideGuides,
+  ...addisAbabaCitywideGuides,
   ...parisNeighborhoodGuides,
   ...parisCitywideGuides,
   ...parisSeoQueryGuides,
@@ -134,6 +140,7 @@ export const editorialGuideLists: MapList[] = applyGuideMediaCache(enrichGuidesC
   ...hongKongCitywideGuides,
   ...houstonCitywideGuides,
   ...kyotoCitywideGuides,
+  ...krakowCitywideGuides,
   ...kualaLumpurCitywideGuides,
   ...lasVegasCitywideGuides,
   ...limaCitywideGuides,
@@ -143,6 +150,7 @@ export const editorialGuideLists: MapList[] = applyGuideMediaCache(enrichGuidesC
   ...berlinCitywideGuides,
   ...copenhagenCitywideGuides,
   ...cuscoCitywideGuides,
+  ...danangCitywideGuides,
   ...dublinCitywideGuides,
   ...edinburghCitywideGuides,
   ...dubaiCitywideGuides,
