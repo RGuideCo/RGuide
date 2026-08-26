@@ -8,6 +8,13 @@ import { getServerEditorialGuides } from "@/lib/server-editorial-guides";
 
 const APP_DATA_CACHE_SECONDS = Number.parseInt(process.env.APP_DATA_CACHE_SECONDS ?? "21600", 10);
 const cacheSeconds = Number.isFinite(APP_DATA_CACHE_SECONDS) ? APP_DATA_CACHE_SECONDS : 21600;
+const APP_DATA_SCOPED_CACHE_SECONDS = Number.parseInt(
+  process.env.APP_DATA_SCOPED_CACHE_SECONDS ?? "60",
+  10,
+);
+const scopedCacheSeconds = Number.isFinite(APP_DATA_SCOPED_CACHE_SECONDS)
+  ? Math.max(0, APP_DATA_SCOPED_CACHE_SECONDS)
+  : 60;
 
 export const revalidate = 21600;
 export const dynamic = "force-dynamic";
@@ -26,6 +33,7 @@ export async function GET(request: Request) {
     const continentName = cityName || countryName
       ? undefined
       : searchParams.get("continent")?.trim() || undefined;
+    const isDestinationScoped = Boolean(cityName || countryName || continentName);
     const rateLimit = await checkRateLimit(request, {
       namespace: "app-data",
       limit: 120,
@@ -44,13 +52,16 @@ export async function GET(request: Request) {
         countryName,
         continentName,
         locale,
-        bypassCache: Boolean(cityName || countryName || continentName),
+        bypassCache: isDestinationScoped,
       }),
     ]);
 
     const clientContinents = getClientGeography(continents, { cityName, countryName, continentName });
-    const cacheControl = cityName || countryName || continentName
-      ? "no-store, max-age=0"
+    const cacheControl = isDestinationScoped
+      ? guides.length > 0 && scopedCacheSeconds > 0
+        // Keep repeat navigation fast without recreating the old long-lived stale/empty cache failure.
+        ? `public, max-age=0, s-maxage=${scopedCacheSeconds}, must-revalidate`
+        : "no-store, max-age=0"
       : `public, s-maxage=${cacheSeconds}, stale-while-revalidate=${cacheSeconds * 4}`;
 
     return withRateLimitHeaders(

@@ -73,10 +73,10 @@ function hasCompleteInitialData(initialData: AppData, scope: AppDataScope) {
 
 function loadAppData(scope: AppDataScope = {}, signal?: AbortSignal) {
   const key = getAppDataKey(scope);
-  const isDestinationScoped = Boolean(scope.cityName || scope.countryName || scope.continentName);
 
   return fetch(getAppDataUrl(scope), {
-    cache: isDestinationScoped ? "no-store" : "default",
+    // The API owns the short scoped cache policy. `no-store` here would bypass it on every navigation.
+    cache: "default",
     headers: {
       Accept: "application/json",
     },
@@ -88,7 +88,11 @@ function loadAppData(scope: AppDataScope = {}, signal?: AbortSignal) {
 
     return response.json() as Promise<AppData>;
   }).then((nextData) => {
-    appDataSnapshots.set(key, nextData);
+    if (nextData.guides.length > 0) {
+      appDataSnapshots.set(key, nextData);
+    } else {
+      appDataSnapshots.delete(key);
+    }
     return nextData;
   });
 }
