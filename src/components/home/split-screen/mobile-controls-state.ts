@@ -20,6 +20,7 @@ export function useMobileControlsState() {
   const [isMobileListSheetExpanded, setIsMobileListSheetExpanded] = useState(false);
   const [isMobileListSheetDragging, setIsMobileListSheetDragging] = useState(false);
   const [mobileListSheetDragHeight, setMobileListSheetDragHeight] = useState<number | null>(null);
+  const mobileListSheetDragHeightRef = useRef<number | null>(null);
   const mobileListSheetDraggingRef = useRef(false);
   const mobileListSheetDragStartRef = useRef({ y: 0, height: 0 });
   const mobileListSheetTapCandidateRef = useRef(false);
@@ -42,6 +43,7 @@ export function useMobileControlsState() {
     setIsMobileListSheetDragging,
     mobileListSheetDragHeight,
     setMobileListSheetDragHeight,
+    mobileListSheetDragHeightRef,
     mobileListSheetDraggingRef,
     mobileListSheetDragStartRef,
     mobileListSheetTapCandidateRef,
