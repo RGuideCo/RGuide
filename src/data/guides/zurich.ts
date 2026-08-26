@@ -86,7 +86,8 @@ const verifiedVenuePhotos: Record<string, string> = {
     "https://static.wixstatic.com/media/4f7ded_57bc852c7b6a4c4caf8c940214180645~mv2.jpg/v1/crop/x_494,y_0,w_1752,h_1920/fill/w_730,h_800,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/DSCF5017.jpg",
   "Raclette Factory":
     "https://static.wixstatic.com/media/ea6ef6_a338bc187a4a44aaa0408cedda5cd6c5%7Emv2_d_2339_1654_s_2.png/v1/fit/w_2500,h_1330,al_c/ea6ef6_a338bc187a4a44aaa0408cedda5cd6c5%7Emv2_d_2339_1654_s_2.png",
-  "Wesley's Kitchen": "https://wesleys-kitchen.ch/imagetypes/share/facebook2.jpg",
+  "Wesley's Kitchen":
+    "https://www.zuerich.com/sites/default/files/styles/1920_1152_focal_scale_crop/public/image/2021/web_zuerich_wesleys_kitchen_1280x960_7549.jpg?h=2021-02-21T10%3A52%3A44+01%3A00",
   "Holy Cow! Niederdorf":
     "https://holycow.ch/wp-content/uploads/2021/03/HolyCoW_Accompagnement_PortionFrites.jpg",
   "Café & Conditorei 1842":

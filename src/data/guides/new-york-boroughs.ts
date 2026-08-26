@@ -31,7 +31,7 @@ const categoryColors: Record<ListCategory, string> = {
 const photoOverrides: Record<string, string> = {
   "nyc-manhattan-hotel-faena": "https://www.ahstatic.com/photos/c0q9_ho_00_p_1024x768.jpg",
   "nyc-manhattan-hostel-international-student-center": "https://nystudentcenter.hostelsnap.com/media/uploads/nystudentcenter/62dbe2fb05c8bThe_Block.jpg",
-  "nyc-manhattan-bar-overstory": "https://theme-assets.getbento.com/overstory/7abda94.overstory/assets/img/bg.jpg",
+  "nyc-manhattan-bar-overstory": "https://media.cntraveler.com/photos/6633cf0385ebe006e5d45881/16%3A9/w_2560%2Cc_limit/Overstory_Overstory%2520Interior%2520Dusk_Natalie%2520Black.jpg",
   "nyc-brooklyn-food-peter-luger": "https://peterluger.com/cdn/shop/files/246_2.jpg?v=1717036712",
   "nyc-brooklyn-food-gage-tollner": "https://images.getbento.com/accounts/01e00818a7c206a52f282e3ab9590831/media/images/1556Dining_room_circa_1950s_Photographic_print_2016.034_Brooklyn_Historical_Society..jpg?w=1200&fit=max&auto=compress,format&cs=origin",
   "nyc-brooklyn-food-lilia": "https://images.getbento.com/accounts/7bf67b2820625f9f7c33d7b0403a8cca/media/suS7yQ83TqbuYEHpfn2R_Lilia-0276.jpg?w=1200&fit=max&auto=compress,format&cs=origin",
@@ -83,7 +83,7 @@ const photoOverrides: Record<string, string> = {
   "nyc-queens-bar-dutch-kills": "https://static.wixstatic.com/media/702430_ee49f8eee93446b48a363ef7d60e4668~mv2.png/v1/fit/w_1955,h_3804,q_90,enc_avif,quality_auto/702430_ee49f8eee93446b48a363ef7d60e4668~mv2.png",
   "nyc-queens-bar-last-word": "https://static.wixstatic.com/media/7996d3_82cde3c6da244844b835d12e063a7648~mv2.jpg/v1/fill/w_2048,h_1151,al_c,q_90,enc_avif,quality_auto/52508071_2184165691622195_28981915542146.jpg",
   "nyc-queens-bar-maggie-halls": "https://images.squarespace-cdn.com/content/v1/5fd13d5a5bf7b6051ace48a8/089f12a9-b495-48ca-a240-204b6435ab1e/Screenshot_20250306-162709%7E2.jpg?format=1500w",
-  "nyc-queens-bar-mosaic": "https://imagedelivery.net/aPDHOWLzkdlEAMvg3YLQug/production-hddopu1royxs1fgj2eear2jbkfa1/large",
+  "nyc-queens-bar-mosaic": "https://imagedelivery.net/aPDHOWLzkdlEAMvg3YLQug/production-anm220exp5h2dtg2016lt6hcep4o/fit=contain,format=auto,width=1200",
   "nyc-queens-bar-sweet-afton": "https://images.getbento.com/accounts/77c6458147d8d4a9ec405a518915724f/media/images/92193Bar_patrons-photo_credit_Joey_Wehner.jpg?w=1200&fit=max&auto=compress,format&cs=origin",
   "nyc-queens-bar-bonnie": "https://images.getbento.com/accounts/a293c8c7225fd8130a2afd6c0c61a1d8/media/images/64187Oak_Room_1.jpg?w=1200&fit=crop&auto=compress,format&cs=origin&crop=focalpoint&fp-x=0.5&fp-y=0.63",
   "nyc-queens-bar-ditty": "https://static.spotapps.co/website_images/ab_websites/11875_website_v1/video_poster.jpg",

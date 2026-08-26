@@ -559,7 +559,7 @@ const hotelStops: GuideStop[] = [
     hours: schedule.hotel,
     officialUrl: "https://wake.com.co/biohotel/es/",
     bookingUrl: "https://wake.com.co/biohotel/es/habitaciones/",
-    sourcePhoto: "https://wake.com.co/biohotel/wp-content/uploads/2025/02/WakeBioHotal-02.webp",
+    sourcePhoto: "https://wake.com.co/biohotel/wp-content/uploads/2025/03/Wake-Biohotel-espacio-interior.webp",
     editorialUrls: ["https://www.medellin.guide/guides/best-hotels-medellin"],
   }),
   lodging({

@@ -1546,7 +1546,7 @@ const moreVenues = {
       },
       officialUrl: "https://www.ncai254.com/",
       sourcePhoto:
-        "https://static.wixstatic.com/media/7b6770_f66600c4168746d8ae73977aa5767b35%7Emv2.png/v1/fit/w_2500,h_1330,al_c/7b6770_f66600c4168746d8ae73977aa5767b35%7Emv2.png",
+        "https://static.wixstatic.com/media/7b6770_eec2630f97344d85aa7c41faa1e48438~mv2.jpg/v1/fit/w_1450%2Ch_1160%2Cq_90%2Cenc_avif%2Cquality_auto/7b6770_eec2630f97344d85aa7c41faa1e48438~mv2.jpg",
     },
   },
   heritageHouse: {
