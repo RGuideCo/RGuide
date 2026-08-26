@@ -111,12 +111,12 @@ async function upsertBoundary(client, { cityId, destinationId, boundaryKey, feat
   await client.query(
     `with incoming as (
        select
-         st_multi(st_setsrid(st_makevalid(st_geomfromgeojson($4)), 4326))::public.geometry(MultiPolygon, 4326) as geometry
+         st_multi(st_setsrid(st_makevalid(st_geomfromgeojson($4)), 4326))::geometry(MultiPolygon, 4326) as geometry
      ),
      prepared as (
        select
          geometry,
-         st_multi(st_simplifypreservetopology(geometry, $8))::public.geometry(MultiPolygon, 4326) as simplified_geometry,
+         st_multi(st_simplifypreservetopology(geometry, $8))::geometry(MultiPolygon, 4326) as simplified_geometry,
          jsonb_build_array(
            jsonb_build_array(st_ymin(st_envelope(geometry)), st_xmin(st_envelope(geometry))),
            jsonb_build_array(st_ymax(st_envelope(geometry)), st_xmax(st_envelope(geometry)))
@@ -229,6 +229,7 @@ async function main() {
   await client.connect();
   try {
     await client.query("begin");
+    await client.query("set local search_path = public, extensions");
     for (const fileName of fs.readdirSync(BOUNDARY_DIR).filter((name) => name.endsWith(".json")).sort()) {
       await backfillCityFile(client, fileName, stats, args);
     }

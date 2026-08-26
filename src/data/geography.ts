@@ -3398,6 +3398,18 @@ const curatedCitySeeds: Record<string, Omit<City, "listCount">[]> = {
         "Nairobi is an urban safari gateway where cafes, design shops, national-park access, museums, markets, restaurants, and hotel bases connect city life with wider Kenya routes. The best days hinge on timing: start in the city, then let the season, drive, and landscape decide how far the route stretches.",
     },
   ],
+  nigeria: [
+    {
+      id: "lagos",
+      name: "Lagos",
+      country: "Nigeria",
+      continent: "Africa",
+      coordinates: [6.5244, 3.3792],
+      image: cityImage("lagos"),
+      description:
+        "Lagos is a coastal megacity where Nigerian kitchens, live music, art spaces, beaches, markets, hotels, and late-night rooms spread across the mainland and islands. Strong routes account for traffic, cluster stops by district, and leave room for the city's pace to set the night.",
+    },
+  ],
   "united-republic-of-tanzania": [
     {
       id: "zanzibar",
