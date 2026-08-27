@@ -2250,12 +2250,12 @@ export function MapListCard({
               }}
               aria-expanded={expanded}
               aria-controls={`guide-panel-${list.id}`}
-              className="inline-flex h-7 w-5 shrink-0 items-center justify-center text-white/85 transition hover:text-white"
+              className="inline-flex h-11 w-10 shrink-0 items-center justify-center text-white/85 transition hover:text-white lg:h-7 lg:w-5"
               aria-label={`${expanded ? "Collapse" : "Expand"} ${list.title}`}
               title={`${expanded ? "Collapse" : "Expand"} ${list.title}`}
             >
               <ChevronDown
-                className={`h-4 w-4 shrink-0 transition-transform duration-300 ${
+                className={`h-6 w-6 shrink-0 transition-transform duration-300 lg:h-4 lg:w-4 ${
                   expanded
                     ? `rotate-180 ${expandingListChrome ? "guide-chrome-chevron--expand" : ""}`
                     : retractingListChrome
