@@ -651,6 +651,9 @@ function buildCollapsedCategoryChip(list: MapList) {
   }
 
   if (list.category === "Activities") {
+    if (/\b(thrift|second[-\s]?hand|vintage|resale|shopping)\b/i.test(headingText)) {
+      return { label: "Shopping" };
+    }
     return { label: "Top 10" };
   }
 

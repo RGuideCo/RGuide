@@ -4741,7 +4741,7 @@ const citywideGuides: GuideSpec[] = [
     seoSlug: "best-second-hand-shops",
     seoTitle: "Best Second-Hand Shops in Berlin",
     seoDescription: "Best second-hand shops in Berlin for kilo vintage, cheap thrift, designer resale, sneakers, East German homeware, charity finds, furniture, and serious reuse.",
-    title: "Berlin Second-Hand Without the Treasure-Hunt Myth",
+    title: "Berlin Thrift, Done Right",
     description: "Berlin second-hand runs from five-floor thrift warehouses and kilo rails to severe designer edits, charity shops, and a municipal reuse department store. The good version is not ten identical racks of nostalgia: it is knowing when to dig, when to pay for curation, and when to take the U-Bahn north for furniture instead of another jacket.",
     category: "Activities",
     submissionType: "guide",
