@@ -3,7 +3,7 @@ import { BedDouble, SquareArrowOutUpRight } from "@/components/icons/MaterialSym
 export type GuideAffiliateLink = {
   href: string;
   label: string;
-  platformLabel: "Agoda" | "Stay22";
+  platformLabel: "Agoda" | "Booking.com";
 };
 
 type GuideStayLinkProps = {

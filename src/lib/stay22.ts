@@ -3,7 +3,7 @@ import type { GuideStop } from "@/types";
 export const STAY22_AID = process.env.NEXT_PUBLIC_STAY22_AID ?? "rguide";
 export const STAY22_LMA_ID = process.env.NEXT_PUBLIC_STAY22_LMA_ID?.trim() || "6a16094744a8f50eb135b857";
 
-const STAY22_ALLEZ_BASE_URL = "https://www.stay22.com/allez/roam";
+const STAY22_BOOKING_BASE_URL = "https://www.stay22.com/allez/booking";
 const STAY22_AGODA_BASE_URL = "https://www.stay22.com/allez/agoda";
 
 type Stay22AllezUrlInput = {
@@ -16,6 +16,7 @@ type Stay22AllezUrlInput = {
   checkOut?: string | null;
   guests?: number | null;
   rooms?: number | null;
+  targetUrl?: string | null;
 };
 
 type Stay22DestinationUrlInput = {
@@ -84,30 +85,64 @@ function appendNumberParam(url: URL, key: string, value?: number | null) {
   }
 }
 
-const AGODA_SEARCH_BASE_URL = "https://www.agoda.com/search";
-const AGODA_CITY_IDS: Record<string, string> = {
-  "bangkok-thailand": "9395",
-  "hanoi-vietnam": "2758",
-  "hong-kong-hong-kong": "16808",
-  "tokyo-japan": "5085",
-};
-
 const AGODA_ASIA_COUNTRIES = new Set([
+  "afghanistan",
+  "armenia",
+  "azerbaijan",
+  "bahrain",
+  "bangladesh",
+  "bhutan",
+  "brunei",
+  "cambodia",
+  "china",
+  "georgia",
   "hong-kong",
+  "india",
+  "indonesia",
+  "iran",
+  "iraq",
+  "israel",
   "japan",
+  "jordan",
+  "kazakhstan",
+  "kuwait",
+  "kyrgyzstan",
+  "laos",
+  "lebanon",
+  "macau",
+  "malaysia",
+  "maldives",
+  "mongolia",
+  "myanmar",
+  "nepal",
+  "north-korea",
+  "oman",
+  "pakistan",
+  "palestine",
+  "philippines",
+  "qatar",
+  "saudi-arabia",
+  "singapore",
   "south-korea",
+  "sri-lanka",
+  "syria",
+  "taiwan",
+  "tajikistan",
   "thailand",
+  "timor-leste",
+  "turkey",
+  "turkmenistan",
+  "uae",
+  "united-arab-emirates",
+  "uzbekistan",
   "vietnam",
+  "yemen",
 ]);
 
 const COMMERCIAL_LODGING_SOURCE_HOSTS = new Set([
   "booking.com",
   "hostelworld.com",
 ]);
-
-function getAgodaCityId(city?: string | null, country?: string | null) {
-  return AGODA_CITY_IDS[[normalizeKey(city), normalizeKey(country)].filter(Boolean).join("-")];
-}
 
 function isAgodaAsiaDestination({ continent, country }: Pick<StayAffiliatePreferenceInput, "continent" | "country">) {
   return normalizeKey(continent) === "asia" || AGODA_ASIA_COUNTRIES.has(normalizeKey(country));
@@ -119,39 +154,22 @@ export function shouldUseAgodaForStay(input: StayAffiliatePreferenceInput) {
 
   return (
     (isStayCategory || isLodgingStop) &&
-    isAgodaAsiaDestination(input) &&
-    Boolean(getAgodaCityId(input.city, input.country))
+    isAgodaAsiaDestination(input)
   );
-}
-
-function buildRawAgodaStaySearchUrl({ stop, city, country, neighborhood }: AgodaStaySearchUrlInput) {
-  const url = new URL(AGODA_SEARCH_BASE_URL);
-  const cityId = getAgodaCityId(city, country);
-  const searchText = [stop?.name, neighborhood, city, country].filter(hasText).join(", ");
-
-  if (cityId) {
-    url.searchParams.set("city", cityId);
-  }
-  appendTextParam(url, "text", searchText || [neighborhood, city, country].filter(hasText).join(", "));
-
-  return url.toString();
 }
 
 export function buildAgodaStaySearchUrl(input: AgodaStaySearchUrlInput) {
   const { stop, city, country, neighborhood, campaign } = input;
-  const agodaUrl = buildRawAgodaStaySearchUrl(input);
+  const [latitude, longitude] = stop?.coordinates ?? [];
   const url = new URL(STAY22_AGODA_BASE_URL);
   const address = [neighborhood, city, country].filter(hasText).join(", ");
 
   url.searchParams.set("aid", STAY22_AID);
   url.searchParams.set("campaign", normalizeCampaign(campaign || `agoda_asia_stay_${city ?? "destination"}`));
-  url.searchParams.set("product", "lma");
-  url.searchParams.set("source", "direct");
-  url.searchParams.set("medium", "deeplink");
-  appendTextParam(url, "lmaID", STAY22_LMA_ID);
   appendTextParam(url, "address", address);
   appendTextParam(url, "hotelname", stop?.name);
-  url.searchParams.set("link", agodaUrl);
+  appendNumberParam(url, "lat", latitude);
+  appendNumberParam(url, "lng", longitude);
 
   return url.toString();
 }
@@ -173,16 +191,20 @@ export function isCommercialLodgingSourceUrl(url?: string | null) {
 }
 
 export function buildStay22AllezUrl(input: Stay22AllezUrlInput) {
-  const url = new URL(STAY22_ALLEZ_BASE_URL);
+  const url = new URL(STAY22_BOOKING_BASE_URL);
 
   url.searchParams.set("aid", STAY22_AID);
   url.searchParams.set("campaign", normalizeCampaign(input.campaign));
-  appendTextParam(url, "address", input.address);
-  appendTextParam(url, "hotelname", input.hotelName);
+  if (hasText(input.targetUrl)) {
+    url.searchParams.set("link", input.targetUrl.trim());
+  } else {
+    appendTextParam(url, "address", input.address);
+    appendTextParam(url, "hotelname", input.hotelName);
+    appendNumberParam(url, "lat", input.latitude);
+    appendNumberParam(url, "lng", input.longitude);
+  }
   appendTextParam(url, "checkin", input.checkIn);
   appendTextParam(url, "checkout", input.checkOut);
-  appendNumberParam(url, "lat", input.latitude);
-  appendNumberParam(url, "lng", input.longitude);
   appendNumberParam(url, "guests", input.guests);
   appendNumberParam(url, "rooms", input.rooms);
 
@@ -205,7 +227,21 @@ export function buildStay22StopUrl({ stop, city, country, neighborhood, campaign
     address: [stop.name, neighborhood, city, country].filter(hasText).join(", "),
     latitude,
     longitude,
+    targetUrl: isBookingComUrl(stop.bookingUrl) ? stop.bookingUrl : undefined,
   });
+}
+
+function isBookingComUrl(url?: string | null) {
+  if (!url) {
+    return false;
+  }
+
+  try {
+    const hostname = new URL(url).hostname.toLowerCase().replace(/^www\./, "");
+    return hostname === "booking.com" || hostname.endsWith(".booking.com");
+  } catch {
+    return false;
+  }
 }
 
 export function isStay22Url(url?: string | null): url is string {

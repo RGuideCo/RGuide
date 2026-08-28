@@ -19,7 +19,6 @@ import {
   buildAgodaStaySearchUrl,
   buildStay22StopUrl,
   isCommercialLodgingSourceUrl,
-  isStay22Url,
   shouldUseAgodaForStay,
 } from "@/lib/stay22";
 import { MapList } from "@/types";
@@ -39,8 +38,6 @@ function getStayBookingDetails(guide: MapList, stop: MapList["stops"][number]) {
   if ((stop.category ?? guide.category) !== "Stay") {
     return null;
   }
-
-  const existingBookingUrl = stop.bookingUrl;
 
   if (
     shouldUseAgodaForStay({
@@ -63,13 +60,6 @@ function getStayBookingDetails(guide: MapList, stop: MapList["stops"][number]) {
     };
   }
 
-  if (isStay22Url(existingBookingUrl)) {
-    return {
-      href: existingBookingUrl,
-      platformLabel: "Stay22",
-    };
-  }
-
   return {
     href: buildStay22StopUrl({
       stop,
@@ -78,7 +68,7 @@ function getStayBookingDetails(guide: MapList, stop: MapList["stops"][number]) {
       neighborhood: guide.location.neighborhood,
       campaign: `seo_stay_${guide.location.city ?? "destination"}_${guide.id}`,
     }),
-    platformLabel: "Stay22",
+    platformLabel: "Booking.com",
   };
 }
 
@@ -147,7 +137,7 @@ function GuidePreviewCard({
                   <a
                     href={stayBookingDetails.href}
                     className="mt-2 inline-flex rounded-md border border-cyan-800 bg-cyan-800 px-2.5 py-1 text-xs font-semibold text-white hover:border-cyan-900 hover:bg-cyan-900"
-                    rel="noreferrer"
+                    rel="sponsored noopener noreferrer"
                     aria-label={`Book ${stop.name} on ${stayBookingDetails.platformLabel}`}
                   >
                     Book on {stayBookingDetails.platformLabel}

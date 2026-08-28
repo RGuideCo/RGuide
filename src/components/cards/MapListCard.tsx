@@ -17,7 +17,6 @@ import {
   buildStay22DestinationUrl,
   buildStay22StopUrl,
   isCommercialLodgingSourceUrl,
-  isStay22Url,
   shouldUseAgodaForStay,
 } from "@/lib/stay22";
 import { CATEGORIES, CATEGORY_STYLES } from "@/lib/constants";
@@ -912,15 +911,6 @@ function getStayBookingDetails(list: MapList, stop: MapList["stops"][number], re
     };
   }
 
-  const existingBookingUrl = stop.bookingUrl;
-
-  if (isStay22Url(existingBookingUrl)) {
-    return {
-      href: existingBookingUrl,
-      platformLabel: "Stay22",
-    };
-  }
-
   return {
     href: buildStay22StopUrl({
       stop,
@@ -929,7 +919,7 @@ function getStayBookingDetails(list: MapList, stop: MapList["stops"][number], re
       neighborhood: list.location.neighborhood,
       campaign: `guide_stop_${list.location.city ?? "destination"}_${list.id}`,
     }),
-    platformLabel: "Stay22",
+    platformLabel: "Booking.com",
   };
 }
 
@@ -1051,7 +1041,7 @@ function getGuideStayAffiliateLink(list: MapList): GuideAffiliateLink | null {
           campaign: `guide_quick_${scopeCampaign}_stay_${city}_${neighborhood ?? "citywide"}_${list.id}`,
         }),
     label: `Stay in ${scopeName}`,
-    platformLabel: useAgoda ? "Agoda" : "Stay22",
+    platformLabel: useAgoda ? "Agoda" : "Booking.com",
   };
 }
 

@@ -4234,8 +4234,7 @@ export function SplitScreenSection({
           neighborhood: activeStayBookingNeighborhood,
           campaign: `neighborhood_left_panel_${activeLocation.city.id}_${activeStayBookingNeighborhood}`,
         })
-      : activeLocation.city.affiliateLinks?.cityLeftPanelStayUrl ??
-        buildStay22DestinationUrl({
+      : buildStay22DestinationUrl({
           city: activeLocation.city.name,
           country: activeLocation.country?.name ?? activeLocation.city.country,
           campaign: `city_left_panel_${activeLocation.city.id}`,

@@ -120,7 +120,7 @@ export function GuideStopFooterActions({
                 <Link
                   href={nearbyStayDetails.href}
                   target="_blank"
-                  rel="noreferrer"
+                  rel="sponsored noopener noreferrer"
                   onClick={(event) => {
                     event.stopPropagation();
                     onCloseDirectionsPicker();
@@ -160,7 +160,7 @@ export function GuideStopFooterActions({
           <Link
             href={stayBookingDetails.href}
             target="_blank"
-            rel="noreferrer"
+            rel="sponsored noopener noreferrer"
             onClick={(event) => event.stopPropagation()}
             className="inline-flex items-center gap-1.5 rounded-md border border-cyan-800 bg-cyan-800 px-2.5 py-1.5 text-[11px] font-semibold text-white transition hover:border-cyan-900 hover:bg-cyan-900"
             aria-label={`Book ${stop.name} on ${stayBookingDetails.platformLabel}`}
